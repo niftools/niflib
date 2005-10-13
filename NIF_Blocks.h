@@ -168,7 +168,7 @@ public:
 	void IncSkinRef( IBlock * skin_data );
 	void DecSkinRef( IBlock * skin_data );
 
-private:
+protected:
 	float bindPosition[4][4];
 	list<IBlock*> skin_refs;
 };
@@ -232,105 +232,7 @@ public:
 	NiNode(){}
 	~NiNode(){}
 	string GetBlockType() { return "NiNode"; }
-	void Print( ostream &out ) {
-		out << ABlock::asString();
-
-		//matrix m;
-		//GetAttr("Rotation")->asMatrix( m );
-
-		//Vector rows[3];
-
-		//rows[0] = Vector(m[0][0], m[0][1], m[0][2]);
-		//rows[1] = Vector(m[1][0], m[1][1], m[1][2]);
-		//rows[2] = Vector(m[2][0], m[2][1], m[2][2]);
-
-
-		////out << "Rotation Matrix Test:" << endl
-		////	<< "   Dot Products of each row with each other row:" << endl;
-
-		////for (int i = 0; i < 3; ++i) {
-		////	for (int j = 0; j < 3; ++j) {
-		////		out << "      Rows " << i << " & " << j << ":  " << rows[i].dot(rows[j]) << endl;
-		////	}
-		////}
-
-		//float pi = 3.141592653589793f;
-		//out << "Euler Angles:" << endl
-		//	<< "   X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
-		//	<< "   Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
-		//	<< "   Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
-
-		//Quat q = MatrixToQuat( m );
-		//out << "Quaternion:  [" << setw(6) << q.w << " (" << setw(6) << q.x << "," << setw(6) << q.y << "," << setw(6) << q.z << ")]" << endl;
-
-		//Matrix built_up = IdentityMatrix();
-		//GetBuiltUpTransform(blk_ref(this), built_up);
-		//out << "Built Up Transformations:" << endl
-		//	<< "   |" << setw(6) << built_up(0,0) << "," << setw(6) << built_up(0,1) << "," << setw(6) << built_up(0,2) << "," << setw(6) << built_up(0,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(1,0) << "," << setw(6) << built_up(1,1) << "," << setw(6) << built_up(1,2) << "," << setw(6) << built_up(1,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(2,0) << "," << setw(6) << built_up(2,1) << "," << setw(6) << built_up(2,2) << "," << setw(6) << built_up(2,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(3,0) << "," << setw(6) << built_up(3,1) << "," << setw(6) << built_up(3,2) << "," << setw(6) << built_up(3,3) << " |" << endl;
-
-		//for ( int r = 0; r < 3; ++r ) {
-		//	for ( int c = 0; c < 3; ++c) {
-		//		m[r][c] = built_up(r,c);
-		//	}
-		//}
-		//q = MatrixToQuat( m );
-		//out << "Quaternion:  [" << setw(6) << q.w << " (" << setw(6) << q.x << "," << setw(6) << q.y << "," << setw(6) << q.z << ")]" << endl;
-		//out << "Euler Angles:" << endl
-		//	<< "   X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
-		//	<< "   Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
-		//	<< "   Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
-
-		//built_up = built_up.inverse();
-
-		//out << "Inverse Built Up:" << endl
-		//	<< "   |" << setw(6) << built_up(0,0) << "," << setw(6) << built_up(0,1) << "," << setw(6) << built_up(0,2) << "," << setw(6) << built_up(0,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(1,0) << "," << setw(6) << built_up(1,1) << "," << setw(6) << built_up(1,2) << "," << setw(6) << built_up(1,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(2,0) << "," << setw(6) << built_up(2,1) << "," << setw(6) << built_up(2,2) << "," << setw(6) << built_up(2,3) << " |" << endl
-		//	<< "   |" << setw(6) << built_up(3,0) << "," << setw(6) << built_up(3,1) << "," << setw(6) << built_up(3,2) << "," << setw(6) << built_up(3,3) << " |" << endl;
-
-		//for ( int r = 0; r < 3; ++r ) {
-		//	for ( int c = 0; c < 3; ++c) {
-		//		m[r][c] = built_up(r,c);
-		//	}
-		//}
-		//q = MatrixToQuat( m );
-		//out << "Quaternion:  [" << setw(6) << q.w << " (" << setw(6) << q.x << "," << setw(6) << q.y << "," << setw(6) << q.z << ")]" << endl;
-
-		//out << "Euler Angles:" << endl
-		//	<< "   X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
-		//	<< "   Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
-		//	<< "   Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
-
-		out << "Flag Analysis:" << endl
-			<< "   Hidden:  ";
-
-		int flags = GetAttr("Flags")->asInt();
-
-		if (flags & 1)
-			out << "Yes" << endl;
-		else
-			out << "No" << endl;
-
-		out << "   Collision Detection Mode:  ";
-
-		
-		if (flags & 2)
-			out << "Use Triangles" << endl;
-		else if (flags & 4)
-			out << "Use Oriented Bounding Boxes" << endl;
-		else
-			out << "None" << endl;
-
-		out << "   Is Skin Influence:  ";
-
-		if (flags & 8)
-			out << "No" << endl;
-		else
-			out << "Yes" << endl;
-	}
+	string asString();
 };
 
 /**
