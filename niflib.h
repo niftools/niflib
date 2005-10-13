@@ -54,6 +54,7 @@ class IAttr;
 class IBlock;
 class ITriShapeData;
 class ISkinData;
+class INode;
 class blk_ref;
 class attr_ref;
 struct blk_link;
@@ -98,6 +99,9 @@ unsigned int BlocksInMemory();
 // These are shorthands for using QueryInterface, and required for scripting languages
 ITriShapeData * QueryTriShapeData( blk_ref block );
 ISkinData * QuerySkinData( blk_ref block );
+INode * QueryNode( blk_ref block );
+
+//--TypeDefs--//
 
 typedef float float3[3];
 typedef float matrix[3][3];

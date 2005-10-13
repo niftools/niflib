@@ -475,3 +475,7 @@ ITriShapeData * QueryTriShapeData( blk_ref block ) {
 ISkinData * QuerySkinData( blk_ref block ) {
 	return (ISkinData*)block->QueryInterface( SkinData );
 }
+
+INode * QueryNode( blk_ref block ) {
+	return (INode*)block->QueryInterface( Node );
+}
