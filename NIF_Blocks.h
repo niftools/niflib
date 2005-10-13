@@ -43,6 +43,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <list>
 #include <map>
 #include <cmath>
+#include <sstream>
 
 //--Types--//
 typedef	pair<attr_ref, blk_ref> LinkPair;
@@ -1288,7 +1289,7 @@ public:
 		ABlock::Write( out );
 		UnknownMixIn::Write( out );
 	}
-	void Print( ostream & out ) {
+	void asString( ostream & out ) {
 		out << ABlock::asString();
 		out << UnknownMixIn::asString;
 	}
@@ -1307,9 +1308,15 @@ public:
 		ABlock::Write( out );
 		UnknownMixIn::Write( out );
 	}
-	void Print( ostream & out ) {
+	string asString() {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
 		out << ABlock::asString();
 		out << UnknownMixIn::asString();
+
+		return out.str();
 	}
 	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
 };
@@ -1326,9 +1333,15 @@ public:
 		ABlock::Write( out );
 		UnknownMixIn::Write( out );
 	}
-	void Print( ostream & out ) {
+	string asString() {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
 		out << ABlock::asString();
 		out << UnknownMixIn::asString();
+
+		return out.str();
 	}
 	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
 };
