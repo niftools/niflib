@@ -56,6 +56,7 @@ typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
 const int BlockInternal = -1;
 const int SkinInstInternal = -2;
 const int SkinDataInternal = -3;
+const int NodeInternal = -4;
 
 
 //void GetBuiltUpTransform(blk_ref block, Matrix & m/*, blk_ref stop*/);
@@ -128,7 +129,13 @@ public:
 	~ANamed(){}
 };
 
-class ANode : public ANamed, public INode {
+class INodeInternal {
+public:
+	virtual void IncSkinRef( IBlock * skin_data ) = 0;
+	virtual void DecSkinRef( IBlock * skin_data ) = 0;
+};
+
+class ANode : public ANamed, public INode, public INodeInternal {
 public:
 	ANode(){
 		AddAttr( "flags", "Flags" );
@@ -141,7 +148,7 @@ public:
 
 		SetIdentity44(bindPosition);
 	}
-	~ANode(){}
+	~ANode();
 	void * QueryInterface( int id );
 	void Read( ifstream& in ) {
 		ABlock::Read( in );
@@ -150,15 +157,20 @@ public:
 		SetBindPosition( transform );
 	}
 
-	//Node Functions
+	//INode Functions
 	void GetLocalTransform( float out_matrix[4][4] );
 	void GetWorldTransform( float out_matrix[4][4] );
 	void GetBindPosition( float out_matrix[4][4] );
 	void GetLocalBindPos( float out_matrix[4][4] );
 	void SetBindPosition( float in_matrix[4][4] );
 
+	//INodeInternal Functions
+	void IncSkinRef( IBlock * skin_data );
+	void DecSkinRef( IBlock * skin_data );
+
 private:
 	float bindPosition[4][4];
+	list<IBlock*> skin_refs;
 };
 
 class AParentNode : public ANode {
@@ -1095,6 +1107,7 @@ public:
 	virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
 	virtual void RepositionTriShape() = 0;
 	virtual void StraightenSkeleton() = 0;
+	virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
 };
 
 class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
@@ -1102,7 +1115,7 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 	public:
 
 		NiSkinData(){}
-		~NiSkinData(){}
+		~NiSkinData();
 
 		void Read( ifstream& in );
 		void Write( ofstream& out );
@@ -1114,12 +1127,13 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		void SetBones( vector<blk_ref> bone_blocks );
 		void RepositionTriShape();
 		void StraightenSkeleton();
+		void RemoveBoneByPtr( IBlock * bone );
 
         //ISkinData
 		vector<blk_ref> GetBones();
 		map<int, float> GetWeights( blk_ref bone );
 		void AddBone( blk_ref bone, map<int, float> in );
-		void RemoveBone( blk_ref bone ) { bone_map.erase( bone ); }
+		void RemoveBone( blk_ref bone );
 	private:
 		struct Bone {
 			matrix rotation;
@@ -1133,7 +1147,7 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		fVector3 translation;
 		float  scale;
 		nifIndex unknown;
-		map<blk_ref, Bone> bone_map;
+		map<IBlock*, Bone> bone_map;
 		vector<Bone> bones;		
 };
 

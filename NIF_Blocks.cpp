@@ -38,7 +38,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <sstream>
 
 extern bool verbose;
-extern int blocks_in_memory;
+extern unsigned int blocks_in_memory;
 
 #define endl "\r\n"
 
@@ -284,6 +284,8 @@ void * ANode::QueryInterface( int id ) {
 	// Contains INode Interface
 	if ( id == Node ) {
 		return (void*)static_cast<INode*>(this);
+	} else if (id == NodeInternal ) {
+		return (void*)static_cast<INodeInternal*>(this);
 	} else {
 		return ABlock::QueryInterface( id );
 	}
@@ -370,6 +372,25 @@ void ANode::SetBindPosition( float in_matrix[4][4] ) {
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 4; ++j) {
 			bindPosition[i][j] = in_matrix[i][j];
+		}
+	}
+}
+
+void ANode::IncSkinRef( IBlock * skin_data ) {
+	skin_refs.push_back(skin_data);
+}
+
+void ANode::DecSkinRef( IBlock * skin_data ) {
+	skin_refs.remove(skin_data);
+}
+
+ANode::~ANode() {
+	// Inform all NiSkinData blocks that have added their references that this block is dying
+	list<IBlock*>::iterator it;
+	for (it = skin_refs.begin(); it != skin_refs.end(); ++it) {
+		ISkinDataInternal * data = (ISkinDataInternal*)(*it)->QueryInterface(SkinDataInternal);
+		if ( data != NULL ) {
+			data->RemoveBoneByPtr(this);
 		}
 	}
 }
@@ -764,7 +785,7 @@ void NiSkinData::Write( ofstream& out ) {
 	WriteUInt(short(bones.size()), out);
 	unknown.Write( out );
 
-	map<blk_ref, Bone>::iterator it;
+	map<IBlock*, Bone>::iterator it;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
@@ -840,7 +861,7 @@ string NiSkinData::asString() {
 	//	<< "Unknown Index:  " << unknown << endl
 	//	<< "Bones:" << endl;
 
-	map<blk_ref, Bone>::iterator it;
+	map<IBlock*, Bone>::iterator it;
 	int num = 0;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//Friendlier name
@@ -848,7 +869,7 @@ string NiSkinData::asString() {
 
 		num++;
 		out << "Bone " << num << ":" << endl
-			<< "   Block:  " << it->first << endl
+			<< "   Block:  " << blk_ref(it->first) << endl
 			<< "   Bone Offset Transforms:" << endl
 			<< "      Rotation:" << endl
 			<< "         |" << setw(6) << bone.rotation[0][0] << "," << setw(6) << bone.rotation[0][1] << "," << setw(6) << bone.rotation[0][2] << " |" << endl
@@ -997,9 +1018,21 @@ void * NiSkinData::QueryInterface( int id ) {
 void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
 	//Move bones from temproary vector to map, sorted by blk_ref
 	for (uint i = 0; i < bones.size(); ++i) {
-		bone_map.insert( pair<blk_ref, Bone>(bone_blocks[i], bones[i]) );
+			//Make sure bone is a node
+			INodeInternal * node_int = (INodeInternal*)bone_blocks[i]->QueryInterface(NodeInternal);
+
+			if (node_int == NULL)
+				throw runtime_error("Attempted to add a block as a bone that is not a node.");
+
+			//move the data
+			bone_map.insert( pair<IBlock*, Bone>(bone_blocks[i].get_block(), bones[i]) );
+			
+			//Increment reference at bone node site
+			node_int->IncSkinRef(this);
 	}
-	bones.clear();	
+
+	//Clear temporary vector data
+	bones.clear();
 }
 
 void NiSkinData::StraightenSkeleton() {
@@ -1019,7 +1052,7 @@ void NiSkinData::StraightenSkeleton() {
 	//}
 
 	//Loop through all bones
-	map<blk_ref, Bone>::iterator it;
+	map<IBlock*, Bone>::iterator it;
 	for ( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//Friendlier name for current bone
 		Bone & bone = it->second;
@@ -1032,7 +1065,7 @@ void NiSkinData::StraightenSkeleton() {
 			bone.translation[0], bone.translation[1], bone.translation[2], 1.0f
 		}; 
 		//Loop through all bones again, checking for any that have this bone as a parent
-		map<blk_ref, Bone>::iterator it2;
+		map<IBlock*, Bone>::iterator it2;
 		for ( it2 = bone_map.begin(); it2 != bone_map.end(); ++it2 ) {
 			if ( it2->first->GetParent() == it->first ) {
 				//Block 2 has block 1 as a parent
@@ -1158,10 +1191,10 @@ vector<blk_ref> NiSkinData::GetBones() {
 	//Put all the valid bones from the map into a vector to return
 	vector<blk_ref> bone_blks( bone_map.size() );
 
-	map<blk_ref, Bone>::iterator it;
+	map<IBlock*, Bone>::iterator it;
 	int count = 0;
 	for (it = bone_map.begin(); it != bone_map.end(); ++it ) {
-		bone_blks[count] = it->first;
+		bone_blks[count] = blk_ref(it->first);
 		count++;
 	}
 
@@ -1169,12 +1202,48 @@ vector<blk_ref> NiSkinData::GetBones() {
 }
 
 map<int, float> NiSkinData::GetWeights( blk_ref bone ) {
-	return bone_map[bone].weights;
+	return bone_map[bone.get_block()].weights;
 }
 
 void NiSkinData::AddBone( blk_ref bone, map<int, float> in ) {
-	bone_map[bone].weights = in;
+	//Make sure bone is a node
+	INodeInternal * node_int = (INodeInternal*)bone->QueryInterface(NodeInternal);
+
+	if (node_int == NULL)
+		throw runtime_error("Attempted to add a block as a bone that is not a node.");
+	
+	//Add bone to internal list
+	bone_map[bone.get_block()].weights = in;
+	
+	//Increment reference at bone node site
+	node_int->IncSkinRef(this);
 }
+
+void NiSkinData::RemoveBoneByPtr( IBlock * bone ) {
+	//Remove bone from internal list
+	bone_map.erase( bone );
+
+	//Do not decrement bone node locatoin because it is already dead
+}
+
+void NiSkinData::RemoveBone( blk_ref bone ) {
+	//Remove bone from internal list
+	bone_map.erase( bone.get_block() );
+
+	//Decrement reference at bone node site
+	INodeInternal * node_int = (INodeInternal*)bone->QueryInterface(NodeInternal);
+	node_int->DecSkinRef(this);
+}
+
+NiSkinData::~NiSkinData() {
+	//Inform all linked bone nodes that this NiSkinData block is dying
+	map<IBlock*, Bone>::iterator it;
+	for (it = bone_map.begin(); it != bone_map.end(); ++it) {
+		INodeInternal * node_int = (INodeInternal*)it->first->QueryInterface(NodeInternal);
+		node_int->DecSkinRef(this);
+	}
+}
+
 /***********************************************************
  * NiGeomMorpherController methods
  **********************************************************/
