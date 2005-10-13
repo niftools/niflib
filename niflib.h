@@ -91,6 +91,9 @@ void SetVerboseMode( bool val );
 //Creates a new block of the given type and returns a reference to it
 blk_ref CreateBlock( string block_type );
 
+//Retrns total number of blocks in memory
+unsigned int BlocksInMemory();
+
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
 ITriShapeData * QueryTriShapeData( blk_ref block );

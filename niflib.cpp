@@ -41,7 +41,7 @@ using namespace std;
 bool verbose = false;
 
 //Temporary Global to test reference counting
-int blocks_in_memory = 0;
+unsigned int blocks_in_memory = 0;
 
 //Utility Functions
 void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block );
@@ -450,6 +450,13 @@ void BuildUpBindPositions( blk_ref block ) {
 		}
 	}
 }
+
+//Returns the total number of blocks in memory
+unsigned int BlocksInMemory() {
+	return blocks_in_memory;
+}
+
+
 
 //--Attribute Reference Functions--//
 
