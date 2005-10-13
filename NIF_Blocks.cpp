@@ -377,11 +377,51 @@ void ANode::SetBindPosition( float in_matrix[4][4] ) {
 }
 
 void ANode::IncSkinRef( IBlock * skin_data ) {
+	size_t prev_size = skin_refs.size();
+
 	skin_refs.push_back(skin_data);
+
+	// if the size of the reference list is now not zero, make sure the  'not skin influence flag' is not set
+	if ( skin_refs.size() > 0 && prev_size == 0 ) {
+		attr_ref flag_attr = GetAttr("Flags");
+		int flags = flag_attr->asInt();
+
+		//Make sure it's not already set
+		if ((flags & 8) == 0) {
+			//Already not set, return
+			return;
+		}
+		
+		//Currently set, flip the bit
+		flags ^= 8;
+
+		//Store result
+		flag_attr->Set(flags);
+	}
 }
 
 void ANode::DecSkinRef( IBlock * skin_data ) {
+	size_t prev_size = skin_refs.size();
+
 	skin_refs.remove(skin_data);
+
+	//If the size of the reference list is now zero, set the 'not skin influence' flag
+	if ( skin_refs.size() == 0 && prev_size != 0 ) {
+		attr_ref flag_attr = GetAttr("Flags");
+		int flags = flag_attr->asInt();
+
+		//Make sure it's not already set
+		if ((flags & 8) != 0) {
+			//Already set, return
+			return;
+		}
+		
+		//Currently not set, flip the bit
+		flags ^= 8;
+
+		//Store result
+		flag_attr->Set(flags);
+	}
 }
 
 ANode::~ANode() {
