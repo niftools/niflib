@@ -907,9 +907,7 @@ void NiSkinData::Read( ifstream& in ) {
 	ReadFVector3( translation, in );
 	scale = ReadFloat( in );
 	int boneCount = ReadUInt( in );
-
-	unknown.Read( in );
-
+	unknown = ReadUInt( in );
 	bones.resize(boneCount);
 	for( int i = 0; i < boneCount; i++ ) {
 		for (int c = 0; c < 3; ++c) {
@@ -919,7 +917,6 @@ void NiSkinData::Read( ifstream& in ) {
 		}
 		ReadFVector3( bones[i].translation, in );
 		bones[i].scale = ReadFloat( in );
-
 		ReadFVector4( bones[i].unknown4Floats, in );
 		short numWeights = ReadUShort( in );
 		bones[i].weights.clear();
@@ -932,6 +929,9 @@ void NiSkinData::Read( ifstream& in ) {
 }
 
 void NiSkinData::Write( ofstream& out ) {
+	//Calculate offset matrices prior to writing data
+	CalculateBoneOffsets();
+
 	WriteString( "NiSkinData", out );
 
 	for (int c = 0; c < 3; ++c) {
@@ -941,11 +941,11 @@ void NiSkinData::Write( ofstream& out ) {
 	}
 	WriteFVector3( translation, out );
 	WriteFloat( scale, out );
-	WriteUInt(short(bones.size()), out);
-	unknown.Write( out );
+	WriteUInt(short(bone_map.size()), out);
+	WriteUInt(unknown, out);
 
 	map<IBlock*, Bone>::iterator it;
-	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
+	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {		
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				WriteFloat( it->second.rotation[r][c], out );
@@ -955,6 +955,10 @@ void NiSkinData::Write( ofstream& out ) {
 		WriteFloat( it->second.scale, out );
 
 		WriteFVector4( it->second.unknown4Floats, out );
+		//WriteFloat( 0.0f, out );
+		//WriteFloat( 0.0f, out );
+		//WriteFloat( 0.0f, out );
+		//WriteFloat( 0.0f, out );
 		WriteUShort( short(it->second.weights.size() ), out );
 		
 		map<int, float>::iterator it2;
@@ -1008,17 +1012,18 @@ string NiSkinData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	//out //<< setprecision(6)
-	//	<< "Rotate:" << endl
-	//	<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
-	//	<< "   |" << setw(6) << rotation[1][0] << "," << setw(6) << rotation[1][1] << "," << setw(6) << rotation[1][2] << " |" << endl
-	//	<< "   |" << setw(6) << rotation[2][0] << "," << setw(6) << rotation[2][1] << "," << setw(6) << rotation[2][2] << " |" << endl
-	//	<< "Translate:  " << translation << endl
-	//	<< "Scale:  " << scale << endl
-	//	<< "Bone Count:  " << uint(bone_map.size()) << endl
-	//	//<< setprecision(3)
-	//	<< "Unknown Index:  " << unknown << endl
-	//	<< "Bones:" << endl;
+	//Calculate bone offsets pior to printing readout
+	CalculateBoneOffsets();
+
+	out << "Rotate:" << endl
+		<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
+		<< "   |" << setw(6) << rotation[1][0] << "," << setw(6) << rotation[1][1] << "," << setw(6) << rotation[1][2] << " |" << endl
+		<< "   |" << setw(6) << rotation[2][0] << "," << setw(6) << rotation[2][1] << "," << setw(6) << rotation[2][2] << " |" << endl
+		<< "Translate:  " << translation << endl
+		<< "Scale:  " << scale << endl
+		<< "Bone Count:  " << uint(bone_map.size()) << endl
+		<< "Unknown Index:  " << unknown << endl
+		<< "Bones:" << endl;
 
 	map<IBlock*, Bone>::iterator it;
 	int num = 0;
@@ -1037,114 +1042,12 @@ string NiSkinData::asString() {
 			<< "      Translate:  " << bone.translation << endl
 			<< "      Scale:  " << bone.scale << endl;
 
-		//float pi = 3.141592653589793f;
-
-		//out << "      Euler Angles:" << endl
-		//	<< "         X:  " << atan2( bone.rotation[1][2], bone.rotation[2][2] ) / pi * 180.0 << endl
-		//	<< "         Y:  " << asin( -bone.rotation[0][2] ) / pi * 180.0 << endl
-		//	<< "         Z:  " << atan2( bone.rotation[0][1], bone.rotation[0][0] ) / pi * 180.0 << endl;
-
-		//if ( bone_blks.size() > 0 ) {
-		//	blk_ref start_blk = GetParent()->GetParent()->GetParent();
-		//	//cout << "TriShape Parent:  " << parent << endl;
-		//	Matrix start_mat = IdentityMatrix();
-		//	GetBuiltUpTransform( start_blk, start_mat );
-
-		//	Matrix end_mat( bone.rotation[0][0], bone.rotation[0][1], bone.rotation[0][2], 0.0f,
-		//					 bone.rotation[1][0], bone.rotation[1][1], bone.rotation[1][2], 0.0f,
-		//					 bone.rotation[2][0], bone.rotation[2][1], bone.rotation[2][2], 0.0f,
-		//					 bone.translation[0], bone.translation[1], bone.translation[2], 1.0f);
-		//	
-		//	//Get built up rotations to the root of the skeleton from this bone
-		//	GetBuiltUpTransform( bone_blks[i], end_mat );
-
-		//	out << "Start:" << endl;
-		//	out << "      |" << setw(6) << start_mat(0,0) << "," << setw(6) << start_mat(0,1) << "," << setw(6) << start_mat(0,2) << "," << setw(6) << start_mat(0,3) << " |" << endl
-		//		<< "      |" << setw(6) << start_mat(1,0) << "," << setw(6) << start_mat(1,1) << "," << setw(6) << start_mat(1,2) << "," << setw(6) << start_mat(1,3) << " |" << endl
-		//		<< "      |" << setw(6) << start_mat(2,0) << "," << setw(6) << start_mat(2,1) << "," << setw(6) << start_mat(2,2) << "," << setw(6) << start_mat(2,3) << " |" << endl
-		//		<< "      |" << setw(6) << start_mat(3,0) << "," << setw(6) << start_mat(3,1) << "," << setw(6) << start_mat(3,2) << "," << setw(6) << start_mat(3,3) << " |" << endl;
-
-		//	out << "Euler Angles:" << endl
-		//		<< "      X:  " << atan2( start_mat(1,2), start_mat(2,2) ) / pi * 180.0 << endl
-		//		<< "      Y:  " << asin( -start_mat(0,2) ) / pi * 180.0 << endl
-		//		<< "      Z:  " << atan2( start_mat(0,1), start_mat(0,0) ) / pi * 180.0 << endl;
-
-		//	out << "End:" << endl;
-		//	out << "      |" << setw(6) << end_mat(0,0) << "," << setw(6) << end_mat(0,1) << "," << setw(6) << end_mat(0,2) << "," << setw(6) << end_mat(0,3) << " |" << endl
-		//		<< "      |" << setw(6) << end_mat(1,0) << "," << setw(6) << end_mat(1,1) << "," << setw(6) << end_mat(1,2) << "," << setw(6) << end_mat(1,3) << " |" << endl
-		//		<< "      |" << setw(6) << end_mat(2,0) << "," << setw(6) << end_mat(2,1) << "," << setw(6) << end_mat(2,2) << "," << setw(6) << end_mat(2,3) << " |" << endl
-		//		<< "      |" << setw(6) << end_mat(3,0) << "," << setw(6) << end_mat(3,1) << "," << setw(6) << end_mat(3,2) << "," << setw(6) << end_mat(3,3) << " |" << endl;
-
-		//	out << "Euler Angles:" << endl
-		//		<< "      X:  " << atan2( end_mat(1,2), end_mat(2,2) ) / pi * 180.0 << endl
-		//		<< "      Y:  " << asin( -end_mat(0,2) ) / pi * 180.0 << endl
-		//		<< "      Z:  " << atan2( end_mat(0,1), end_mat(0,0) ) / pi * 180.0 << endl;
-		//	
-		//	Matrix built_up = end_mat * start_mat.inverse();
-
-		//	//blk_ref cur = bone_blks[i];
-		//	//matrix temp;
-		//	//float3 t2;
-		//	//float scale;
-		//	//attr_ref rot_attr;
-		//	//attr_ref trn_attr;
-		//	//attr_ref scl_attr;
-		//	//while ( cur.is_null() == false && cur != parent ) {
-		//	//	rot_attr = cur->GetAttr("Rotation");
-		//	//	trn_attr = cur->GetAttr("Translation");
-		//	//	scl_attr = cur->GetAttr("Scale");
-
-		//	//	if ( rot_attr != NULL && trn_attr != NULL && scl_attr != NULL ) {
-		//	//		rot_attr->asMatrix(temp);
-		//	//		trn_attr->asFloat3(t2);
-		//	//		scale = scl_attr->asFloat();
-
-		//	//		Matrix tr = Matrix( temp[0][0], temp[0][1], temp[0][2], 0.0f,
-		//	//					temp[1][0], temp[1][1], temp[1][2], 0.0f,
-		//	//					temp[2][0], temp[2][1], temp[2][2], 0.0f,
-		//	//					t2[0], t2[1], t2[2], 1.0f);
-
-		//	//		Matrix s = Matrix( scale, 0.0f, 0.0f, 0.0f,
-		//	//							0.0f, scale, 0.0f, 0.0f,
-		//	//							0.0f, 0.0f, scale, 0.0f,
-		//	//							0.0f, 0.0f, 0.0f, 1.0f );
-
-		//	//		built_up = built_up * (tr * s);
-		//	//	}
-
-		//	//	cur = cur->GetParent();
-		//	//}
-		//	
-		//	out << "      Difference from current position?:" << endl;
-		//	out << "      |" << setw(6) << built_up(0,0) << "," << setw(6) << built_up(0,1) << "," << setw(6) << built_up(0,2) << "," << setw(6) << built_up(0,3) << " |" << endl
-		//		<< "      |" << setw(6) << built_up(1,0) << "," << setw(6) << built_up(1,1) << "," << setw(6) << built_up(1,2) << "," << setw(6) << built_up(1,3) << " |" << endl
-		//		<< "      |" << setw(6) << built_up(2,0) << "," << setw(6) << built_up(2,1) << "," << setw(6) << built_up(2,2) << "," << setw(6) << built_up(2,3) << " |" << endl
-		//		<< "      |" << setw(6) << built_up(3,0) << "," << setw(6) << built_up(3,1) << "," << setw(6) << built_up(3,2) << "," << setw(6) << built_up(3,3) << " |" << endl;
-
-		//	out << "Euler Angles:" << endl
-		//		<< "      X:  " << atan2( built_up(1,2), built_up(2,2) ) / pi * 180.0 << endl
-		//		<< "      Y:  " << asin( -built_up(0,2) ) / pi * 180.0 << endl
-		//		<< "      Z:  " << atan2( built_up(0,1), built_up(0,0) ) / pi * 180.0 << endl;
-		//}
-		//
 		float q[4] = {  bone.unknown4Floats[0],
 					    bone.unknown4Floats[1],
 					    bone.unknown4Floats[2],
 					    bone.unknown4Floats[3] };
 
-		//////Normalize Quaternion
-		////float mag = sqrt(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3]);
-		////q[0] /= mag;
-		////q[1] /= mag;
-		////q[2] /= mag;
-		////q[3] /= mag;
-
 		out << "Unknown 4 Floats:  " << setw(6) << q[0] << "," << setw(6) << q[1] << "," << setw(6) << q[2] << "," << setw(6) << q[3] << endl;
-		//	<< "      As Matrix:";
-		//
-		//QuatToMatrix(q, out);
-		//out << "      As Angles:";
-		////QuatToEuler(quat, out);
 
 		out << "   Weights:  " << uint(bone.weights.size()) << endl;
 
@@ -1400,6 +1303,74 @@ NiSkinData::~NiSkinData() {
 	for (it = bone_map.begin(); it != bone_map.end(); ++it) {
 		INodeInternal * node_int = (INodeInternal*)it->first->QueryInterface(NodeInternal);
 		node_int->DecSkinRef(this);
+	}
+}
+
+void NiSkinData::CalculateBoneOffsets() {
+
+	//--Get Node Parent Bind Pose--//
+
+	blk_ref par_block;
+	try {
+		par_block = GetParent()->GetParent();
+	}
+	catch (...) {
+		throw runtime_error("SkinData block does not have parent of parent.");
+	}
+
+	INode * par_node = QueryNode(par_block);	
+	if ( par_node == NULL )
+		throw runtime_error("SkinData block's parent of parent is not a node.");
+
+
+	//Cycle through all bones, calculating their offsets and storing the values
+	map<IBlock*, Bone>::iterator it;
+	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
+		//--Get Bone Bind Pose--//
+
+		//Get Bone Node
+		INode * bone_node = (INode*)it->first->QueryInterface(Node);
+
+		//Get bind matricies
+
+		float par_mat[4][4], bone_mat[4][4], inv_mat[4][4], res_mat[4][4];
+		par_node->GetBindPosition(par_mat);
+		bone_node->GetBindPosition(bone_mat);
+
+		//Inverse bone matrix & multiply with parent node matrix
+		InverseMatrix44(bone_mat, inv_mat);
+		MultMatrix44(par_mat, inv_mat, res_mat);
+
+		//--Extract Scale from first 3 rows--//
+		float scale[3];
+		for (int r = 0; r < 3; ++r) {
+			//Get scale for this row
+			scale[r] = sqrt(res_mat[r][0] * res_mat[r][0] + res_mat[r][1] * res_mat[r][1] + res_mat[r][2] * res_mat[r][2] + res_mat[r][3] * res_mat[r][3]);
+
+			//Normalize the row by dividing each factor by scale
+			res_mat[r][0] /= scale[r];
+			res_mat[r][1] /= scale[r];
+			res_mat[r][2] /= scale[r];
+			res_mat[r][3] /= scale[r];
+		}
+
+		//--Store Results--//
+
+		//Store rotation matrix
+		for (int c = 0; c < 3; ++c) {
+			for (int r = 0; r < 3; ++r) {
+				it->second.rotation[r][c] = res_mat[r][c];
+			}
+		}
+
+		//Store transform vector
+		it->second.translation[0] = res_mat[3][0];
+		it->second.translation[1] = res_mat[3][1];
+		it->second.translation[2] = res_mat[3][2];
+
+		
+		//Store average scale
+		it->second.scale = (scale[0] + scale[1] + scale[2]) / 3.0f;
 	}
 }
 

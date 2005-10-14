@@ -1017,7 +1017,14 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 
 	public:
 
-		NiSkinData(){}
+		NiSkinData(){ 
+			SetIdentity33(rotation);
+			translation[0] = 0.0f;
+			translation[1] = 0.0f;
+			translation[2] = 0.0f;
+			scale = 1.0f;
+			unknown = -1;
+		}
 		~NiSkinData();
 
 		void Read( ifstream& in );
@@ -1046,10 +1053,11 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 			map<int, float> weights;
 		};
 
+		void CalculateBoneOffsets();
 		matrix rotation;
 		fVector3 translation;
 		float  scale;
-		nifIndex unknown;
+		int unknown;
 		map<IBlock*, Bone> bone_map;
 		vector<Bone> bones;		
 };

@@ -456,8 +456,6 @@ unsigned int BlocksInMemory() {
 	return blocks_in_memory;
 }
 
-
-
 //--Attribute Reference Functions--//
 
 attr_ref::operator blk_ref() { return _attr->asLink(); }

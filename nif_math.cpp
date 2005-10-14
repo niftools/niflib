@@ -46,10 +46,10 @@ void MultVect3( fVector3 u, fVector3 v, fVector3 answer ) {
 	answer[2] = u[0] * v[1] - u[1] * v[0];
 }
 
-void SetIdentity33( float m[9] ) {
-	m[0] = 1.0f;	m[1] = 0.0f;	m[2] = 0.0f;
-	m[3] = 0.0f;	m[4] = 1.0f;	m[5] = 0.0f;
-	m[6] = 0.0f;	m[7] = 0.0f;	m[8] = 1.0f;
+void SetIdentity33( float m[3][3] ) {
+	m[0][0] = 1.0f;	m[0][1] = 0.0f;	m[0][2] = 0.0f;
+	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;
+	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;
 }
 
 void SetIdentity44( float m[4][4] ) {
