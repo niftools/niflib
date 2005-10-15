@@ -114,8 +114,8 @@ void ABlock::AddAttr( string type, string name ) {
 		attr = new MipMapFormatAttr( name, this );
 	} else if ( type == "alphaformat" ) {
 		attr = new AlphaFormatAttr( name, this );
-	} else if ( type == "parent" ) {
-		attr = new ParentAttr( name, this );
+	} else if ( type == "nodeancestor" ) {
+		attr = new NodeAncestorAttr( name, this );
 	} else if ( type == "root" ) {
 		attr = new RootAttr( name, this );
 	} else {

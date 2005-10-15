@@ -200,7 +200,7 @@ public:
 		AddAttr( "float", "Phase" );
 		AddAttr( "float", "Start Time" );
 		AddAttr( "float", "Stop Time" );
-		AddAttr( "int", "Target Node" );
+		AddAttr( "nodeancestor", "Target Node" );
 	}
 	~AController() {}
 };
@@ -976,7 +976,7 @@ class NiSkinInstance : public ABlock, public ISkinInstInternal {
 
 		NiSkinInstance(){
 			AddAttr( "index", "Data" );
-			AddAttr( "int", "Skeleton Root" );
+			AddAttr( "root", "Skeleton Root" );
 			AddAttr( "bones", "Bones" );
 		}
 		~NiSkinInstance(){}

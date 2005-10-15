@@ -1195,29 +1195,48 @@ private:
 	int data;
 };
 
-class ParentAttr : public AAttr {
+class NodeAncestorAttr : public AAttr {
 public:
-	ParentAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
-	~ParentAttr() {}
-	string GetType() const { return "parent"; }
+	NodeAncestorAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	~NodeAncestorAttr() {}
+	string GetType() const { return "nodeancestor"; }
 	void Read( ifstream& in ) {
-		ReadUInt(in);  //Read data but do nothing with it
-		//_owner->SetParent( blk_ref(ReadUInt(in)) );
+		ReadUInt(in);
 	}
 	void Write( ofstream& out ) {
 		WriteUInt( _owner->GetParent()->GetBlockNum(), out );
+	}
+	blk_ref FindNodeAncestor() const {
+		//Find first ancestor that is a node
+		blk_ref block(_owner);
+		blk_ref par;
+		while ( true ) {
+			//Get parent
+			par = block->GetParent();
+
+			//If parent is null, we're done - there are no node ancestors so return a null reference
+			if (par.is_null() == true)
+				return blk_ref(-1);
+
+			//If parent is a node, return it
+			if ( QueryNode(par) != NULL ) {
+				return par;
+			}
+
+			//We didn't find a node this time, set block to par and try again
+			block = par;
+		}
 	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << _owner->GetParent();
+		out << FindNodeAncestor();
 
 		return out.str();
 	}
-private:
-	IBlock * _owner;
+	blk_ref asLink() const { return FindNodeAncestor(); }
 };
 
 class RootAttr : public AAttr {
@@ -1232,11 +1251,30 @@ public:
 		WriteUInt( FindRoot().get_index(), out );
 	}
 	blk_ref FindRoot() const {
-		blk_ref itr = _owner;
-		while ( itr.is_null() == false ) {
-			itr = itr->GetParent();
+		//Find Skeleton Root - first node in ancestry that has 'not a skin influence' flag set
+		blk_ref block(_owner);
+		blk_ref par;
+		int flags;
+		while ( true ) {
+			//Get parent
+			par = block->GetParent();
+
+			//If parent is null, we're done - every node is an influence or there are no nodes
+			//Probably shouldn't happen
+			if (par.is_null() == true)
+				return block;
+
+			//If parent is a node and its 'not a skin influence' flag is set, it is the root for this skeleton
+			if ( QueryNode(par) != NULL ) {
+				flags = par->GetAttr("Flags")->asInt();
+
+				if ( (flags & 8) == 1 )
+					return par;
+			}
+
+			//We didn't find the root this time, set block to par and try again
+			block = par;
 		}
-		return itr;
 	}
 	string asString() const {
 		stringstream out;
@@ -1249,8 +1287,7 @@ public:
 
 		return out.str();
 	}
-private:
-	IBlock * _owner;
+	blk_ref asLink() const { return FindRoot(); }
 };
 
 #endif
