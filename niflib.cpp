@@ -478,3 +478,7 @@ ISkinData * QuerySkinData( blk_ref block ) {
 INode * QueryNode( blk_ref block ) {
 	return (INode*)block->QueryInterface( Node );
 }
+
+IKeyframeData * QueryKeyframeData( blk_ref block ) {
+	return (IKeyframeData*)block->QueryInterface( KeyframeData );
+}

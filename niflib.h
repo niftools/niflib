@@ -54,6 +54,7 @@ class IAttr;
 class IBlock;
 class ITriShapeData;
 class ISkinData;
+class IKeyframeData;
 class INode;
 class blk_ref;
 class attr_ref;
@@ -101,6 +102,7 @@ unsigned int BlocksInMemory();
 ITriShapeData * QueryTriShapeData( blk_ref block );
 ISkinData * QuerySkinData( blk_ref block );
 INode * QueryNode( blk_ref block );
+IKeyframeData * QueryKeyframeData( blk_ref block );
 
 //--TypeDefs--//
 

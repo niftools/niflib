@@ -928,7 +928,7 @@ void NiSkinData::Read( ifstream& in ) {
 
 void NiSkinData::Write( ofstream& out ) {
 	//Calculate offset matrices prior to writing data
-	//CalculateBoneOffsets();
+	CalculateBoneOffsets();
 
 	WriteString( "NiSkinData", out );
 
@@ -1011,7 +1011,7 @@ string NiSkinData::asString() {
 	out << setprecision(1);
 
 	//Calculate bone offsets pior to printing readout
-	//CalculateBoneOffsets();
+	CalculateBoneOffsets();
 
 	out << "Rotate:" << endl
 		<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
