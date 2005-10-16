@@ -1801,33 +1801,66 @@ string NiStringExtraData::asString() {
  **********************************************************/
 
 void NiMorphData::Read( ifstream& in ) {
-	morphCount = ReadUInt( in );
+	uint morphCount = ReadUInt( in );
 	vertCount = ReadUInt( in );
-	unknownByte = ReadByte( in );
+
+	GetAttr("Unknown Byte")->Read( in );
 
 	morphs.resize(morphCount);
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
-		morphs[i].timeCount = ReadUInt( in );
-		morphs[i].keyType = ReadUInt( in );
+		uint timeCount = ReadUInt( in );
+		morphs[i].keyType = KeyType(ReadUInt( in ));
 
-		if (morphs[i].timeCount > 0 && morphs[i].keyType != 2) {
-			cout << "NiMorphData is thought to only support keyType of 2, but this NIF has a keyType of " << morphs[i].keyType << ".  Please report it to NIFLA.  Aborting" << endl;
+		if (timeCount > 0 && morphs[i].keyType != 2) {
+			cout << "NiMorphData is thought to only support keyType of 2, but this NIF has a keyType of " << morphs[i].keyType << ".  Please report it to NifTools.  Aborting." << endl;
 			throw runtime_error("Abort");
 		}
 
-		Key<float> t_key;
-		for (uint j = 0; j < morphs[i].timeCount; ++j ) {
-			t_key.time = ReadFloat( in );
-			t_key.data = ReadFloat( in );
-			t_key.forward_tangent = ReadFloat( in );
-			t_key.backward_tangent = ReadFloat( in );
-
-			morphs[i].keys.push_back(t_key);
+		morphs[i].keys.resize( timeCount );
+		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
+			morphs[i].keys[j].time = ReadFloat( in );
+			morphs[i].keys[j].data = ReadFloat( in );
+			morphs[i].keys[j].forward_tangent = ReadFloat( in );
+			morphs[i].keys[j].backward_tangent = ReadFloat( in );
 		}
 		
-		morphs[i].morph = new fVector3[vertCount];
-		for (uint k = 0; k < vertCount ; ++k ) {
-			ReadFVector3( morphs[i].morph[k], in );
+		morphs[i].morph.resize( vertCount );
+		for (uint j = 0; j < vertCount ; ++j ) {
+			morphs[i].morph[j].x = ReadFloat( in );
+			morphs[i].morph[j].y = ReadFloat( in );
+			morphs[i].morph[j].z = ReadFloat( in );
+		}
+	}
+}
+
+void NiMorphData::Write( ofstream& out ) {
+	WriteString( "NiMorphData", out );
+
+	WriteUInt( uint(morphs.size()), out );
+	WriteUInt( vertCount, out );
+
+	GetAttr("Unknown Byte")->Write( out );
+
+	for ( uint i = 0; i < morphs.size() ; ++i ) {
+		WriteUInt( uint(morphs[i].keys.size()), out );
+		WriteUInt( KeyType(morphs[i].keyType), out );
+
+		if (morphs[i].keys.size() > 0 && morphs[i].keyType != 2) {
+			cout << "NiMorphData is thought to only support keyType of 2, but this NIF has a keyType of " << morphs[i].keyType << ".  Please report it to NifTools.  Aborting." << endl;
+			throw runtime_error("Abort");
+		}
+
+		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
+			WriteFloat( morphs[i].keys[j].time, out );
+			WriteFloat( morphs[i].keys[j].data, out );
+			WriteFloat( morphs[i].keys[j].forward_tangent, out );
+			WriteFloat( morphs[i].keys[j].backward_tangent, out );
+		}
+		
+		for (uint j = 0; j < vertCount ; ++j ) {
+			WriteFloat( morphs[i].morph[j].x, out );
+			WriteFloat( morphs[i].morph[j].y, out );
+			WriteFloat( morphs[i].morph[j].z, out );
 		}
 	}
 }
@@ -1837,14 +1870,14 @@ string NiMorphData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Morph Count:  " << morphCount << endl
+	out << "Morph Count:  " << uint(morphs.size()) << endl
 		<< "Vert Count:  " << vertCount << endl
-		<< "Unknown Byte:  " << int(unknownByte) << endl;
+		<< "Unknown Byte:  " << GetAttr("Unknown Byte")->asString() << endl;
 
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		out << "---Morph " << i + 1 << "---" << endl;
 
-		out << "Time Count:  " << morphs[i].timeCount << endl
+		out << "Time Count:  " << uint(morphs[i].keys.size()) << endl
 			<< "Key Type:  " << morphs[i].keyType << endl;
 		
 		if (verbose) {
@@ -1852,8 +1885,8 @@ string NiMorphData::asString() {
 				out << "Key Time:  " << morphs[i].keys[j].time << " Influence?: " << morphs[i].keys[j].data << " F: " << morphs[i].keys[j].forward_tangent << " B: " << morphs[i].keys[j].backward_tangent << endl;
 			}
 			
-			for (uint k = 0; k < vertCount ; ++k ) {
-				out << "Morph " << k + 1 << ":  " << morphs[i].morph[k] << endl;
+			for (uint j = 0; j < vertCount ; ++j ) {
+				out << "Morph " << j + 1 << ":  (" << morphs[i].morph[j].x << ", " << morphs[i].morph[j].y << ", " << morphs[i].morph[j].z << ")" << endl;
 			}
 		} else {
 			out << "<<Data Not Shown>>" << endl;

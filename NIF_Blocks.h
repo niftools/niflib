@@ -1141,26 +1141,24 @@ class NiMorphData : public ABlock{
 
 	public:
 
-		NiMorphData(){}
+		NiMorphData(){
+			AddAttr( "byte", "Unknown Byte" );
+		}
 		~NiMorphData(){}
 
 		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Write( ofstream& out );
 		string asString();
 		string GetBlockType() { return "NiMorphData"; };
 
 	private:
 		struct Morph {
-			Morph() { morph = NULL; }
-			~Morph() { if (morph != NULL) delete [] morph; }
-			uint timeCount;
-			uint keyType;
-			vector<Key<float> > keys;
-			fVector3 * morph;
+			KeyType keyType;
+			vector< Key<float> > keys;
+			vector< Vector3D > morph;
 		};
 		
-		uint morphCount, vertCount;
-		byte unknownByte;
+		uint vertCount;
 		vector<Morph> morphs;
 };
 
