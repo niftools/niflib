@@ -1437,7 +1437,9 @@ void NiKeyframeData::Read( ifstream& in ) {
 			}
 
 			if (rotationType == 3) {
-				ReadFVector3( rotKeys[i].tbc, in ) ;
+				rotKeys[i].tension = ReadFloat( in );
+				rotKeys[i].bias = ReadFloat( in );
+				rotKeys[i].continuity = ReadFloat( in );
 			} else if (rotationType == 4) {
 				throw runtime_error("NiKeyframeData rotation type 4 currently unsupported");
 				//cout << "Rotation Type 4 Unsupported - Data will not be read" << endl;
@@ -1477,13 +1479,22 @@ void NiKeyframeData::Read( ifstream& in ) {
 		for ( unsigned int i = 0; i < numTranslations; ++i ) {
 			transKeys[i].time = ReadFloat( in );
 			
-			ReadFVector3( transKeys[i].data, in );
+			transKeys[i].data.x = ReadFloat( in );
+			transKeys[i].data.y = ReadFloat( in );
+			transKeys[i].data.z = ReadFloat( in );
 
 			if (translationType == 2) {
-				ReadFVector3( transKeys[i].forward_tangent, in );
-				ReadFVector3( transKeys[i].backward_tangent, in );
+				transKeys[i].forward_tangent.x = ReadFloat( in );
+				transKeys[i].forward_tangent.y = ReadFloat( in );
+				transKeys[i].forward_tangent.y = ReadFloat( in );
+
+				transKeys[i].backward_tangent.x = ReadFloat( in );
+				transKeys[i].backward_tangent.y = ReadFloat( in );
+				transKeys[i].backward_tangent.y = ReadFloat( in );
 			}else if (translationType == 3) {
-				ReadFVector3( transKeys[i].tbc, in );
+				transKeys[i].tension = ReadFloat( in );
+				transKeys[i].bias = ReadFloat( in );
+				transKeys[i].continuity = ReadFloat( in );
 			}
 		}
 	}
@@ -1505,7 +1516,9 @@ void NiKeyframeData::Read( ifstream& in ) {
 				scaleKeys[i].forward_tangent = ReadFloat( in );
 				scaleKeys[i].backward_tangent = ReadFloat( in );
 			} else if (scaleType == 3) {
-				ReadFVector3( scaleKeys[i].tbc, in );
+				scaleKeys[i].tension = ReadFloat( in );
+				scaleKeys[i].bias = ReadFloat( in );
+				scaleKeys[i].continuity = ReadFloat( in );
 			}
 		}
 	}
@@ -1532,7 +1545,9 @@ void NiKeyframeData::Write( ofstream& out ) {
 			}
 
 			if (rotationType == 3) {
-				WriteFVector3( rotKeys[i].tbc, out ) ;
+				WriteFloat( rotKeys[i].tension, out );
+				WriteFloat( rotKeys[i].bias, out );
+				WriteFloat( rotKeys[i].continuity, out );
 			} else if (rotationType == 4) {
 				throw runtime_error("NiKeyframeData rotation type 4 currently unsupported");
 			}
@@ -1548,14 +1563,23 @@ void NiKeyframeData::Write( ofstream& out ) {
 
 		for ( unsigned int i = 0; i < transKeys.size(); ++i ) {
 			WriteFloat( transKeys[i].time, out );
-			
-			WriteFVector3( transKeys[i].data, out );
+
+			WriteFloat( transKeys[i].data.x, out );
+			WriteFloat( transKeys[i].data.y, out );
+			WriteFloat( transKeys[i].data.z, out );
 
 			if (translationType == 2) {
-				WriteFVector3( transKeys[i].forward_tangent, out );
-				WriteFVector3( transKeys[i].backward_tangent, out );
+				WriteFloat( transKeys[i].forward_tangent.x, out );
+				WriteFloat( transKeys[i].forward_tangent.y, out );
+				WriteFloat( transKeys[i].forward_tangent.z, out );
+
+				WriteFloat( transKeys[i].backward_tangent.x, out );
+				WriteFloat( transKeys[i].backward_tangent.y, out );
+				WriteFloat( transKeys[i].backward_tangent.z, out );
 			}else if (translationType == 3) {
-				WriteFVector3( transKeys[i].tbc, out );
+				WriteFloat( transKeys[i].tension, out );
+				WriteFloat( transKeys[i].bias, out );
+				WriteFloat( transKeys[i].continuity, out );
 			}
 		}
 	}
@@ -1575,7 +1599,9 @@ void NiKeyframeData::Write( ofstream& out ) {
 				WriteFloat( scaleKeys[i].forward_tangent, out );
 				WriteFloat( scaleKeys[i].backward_tangent, out );
 			} else if (scaleType == 3) {
-				WriteFVector3( scaleKeys[i].tbc, out );
+				WriteFloat( scaleKeys[i].tension, out );
+				WriteFloat( scaleKeys[i].bias, out );
+				WriteFloat( scaleKeys[i].continuity, out );
 			}
 		}
 	}
@@ -1606,7 +1632,7 @@ string NiKeyframeData::asString() {
 				}
 				
 				if (rotationType == 3) {
-					out << ",  TBC" << rotKeys[i].tbc;
+					out << ", T " << rotKeys[i].tension << ", B " << rotKeys[i].bias << ", C " << rotKeys[i].continuity;
 				} else if (rotationType == 4) {
 					out << "Rotation Type 4 Unsupported - Data was not read" << endl;
 				}
@@ -1627,12 +1653,12 @@ string NiKeyframeData::asString() {
 			for (unsigned int i = 0; i < transKeys.size(); i++) {
 				out << "Key Time:  " << transKeys[i].time << "  ";
 				
-				out << "Data:  V" << transKeys[i].data;
+				out << "Data:  V(" << transKeys[i].data.x << ", " << transKeys[i].data.y << ", " << transKeys[i].data.z;
 
 				if (translationType == 2) {
-					out << ", F" << transKeys[i].forward_tangent << ", B" << transKeys[i].backward_tangent;
+					out << "), F(" << transKeys[i].forward_tangent.x << ", " << transKeys[i].forward_tangent.y << ", " << transKeys[i].forward_tangent.z << "), B(" << transKeys[i].backward_tangent.x << ", " << transKeys[i].backward_tangent.y << ", " << transKeys[i].backward_tangent.z << ")";
 				}else if (translationType == 3) {
-					out << ", TBC" << transKeys[i].tbc;
+					out << ", T " << transKeys[i].tension << ", B " << transKeys[i].bias << ", C " << transKeys[i].continuity;
 				}
 				out << endl;
 			}
@@ -1655,9 +1681,9 @@ string NiKeyframeData::asString() {
 				out << "Data:  S(" << scaleKeys[i].data << ")";
 
 				if (scaleType == 2) {
-					out << ", F(" << scaleKeys[i].forward_tangent << "), B(" << scaleKeys[i].backward_tangent << ")";
+					out << ", FT(" << scaleKeys[i].forward_tangent << "), BT(" << scaleKeys[i].backward_tangent << ")";
 				} else if (scaleType == 3) {
-					out << ", TBC" << scaleKeys[i].tbc;
+					out << ", T " << scaleKeys[i].tension << ", B " << scaleKeys[i].bias << ", C " << scaleKeys[i].continuity;
 				}
 				out << endl;
 			}
@@ -1896,6 +1922,22 @@ string NiMorphData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 	return out.str();
+}
+
+void NiMorphData::SetVertexCount( int n ) {
+	vertCount = n;
+	for ( uint i = 0; i < morphs.size(); ++i ) {
+		morphs[i].morph.resize( n );
+	}
+}
+
+void NiMorphData::SetMorphVerts( int n, const vector<Vector3D> & in ) {
+	// Make sure the size of the incoming vector equal vertCount
+	if ( in.size() != vertCount )
+		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
+
+	//It's the right size, so go ahead and set it
+	morphs[n].morph = in;
 }
 
 /***********************************************************

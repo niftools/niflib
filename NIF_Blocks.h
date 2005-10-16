@@ -939,8 +939,8 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		//Translate
 		KeyType GetTranslateType() { return translationType; }
 		void SetTranslateType( KeyType t ) { translationType = t; }
-		vector< Key<float3> > GetTranslateKeys() { return transKeys; }
-		void SetTranslateKeys( vector< Key<float3> > & keys ) { transKeys = keys; }
+		vector< Key<Vector3D> > GetTranslateKeys() { return transKeys; }
+		void SetTranslateKeys( vector< Key<Vector3D> > & keys ) { transKeys = keys; }
 		//Scale
 		KeyType GetScaleType() { return scaleType; }
 		void SetScaleType( KeyType t ) { scaleType = t; }
@@ -952,7 +952,7 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		vector< Key<Quaternion> > rotKeys;
 
 		KeyType translationType;
-		vector< Key<float3> >	transKeys;
+		vector< Key<Vector3D> >	transKeys;
 
 		KeyType scaleType;
 		vector< Key<float> > scaleKeys;
@@ -1137,7 +1137,7 @@ class NiStringExtraData : public AExtraData{
 		string strData;
 };
 
-class NiMorphData : public ABlock{
+class NiMorphData : public ABlock, public IMorphData {
 
 	public:
 
@@ -1151,8 +1151,28 @@ class NiMorphData : public ABlock{
 		string asString();
 		string GetBlockType() { return "NiMorphData"; };
 
+		void * QueryInterface( int id ) {
+			if ( id == MorphData ) {
+				return (void*)static_cast<IMorphData*>(this);;
+			} else {
+				return ABlock::QueryInterface( id );
+			}
+		}
+
+		//--IMorphData Functions --//
+		int GetVertexCount() { return vertCount; }
+		void SetVertexCount( int n );
+		int GetMorphCount() { return int(morphs.size()); }
+		void SetMorphCount( int n ) { morphs.resize( n ); }
+		vector< Key<float> > GetMorphKeys( int n ) { return morphs[n].keys; }
+		void SetMorphKeys( int n, vector< Key<float> > & keys ) { morphs[n].keys = keys; }
+		vector<Vector3D> GetMorphVerts( int n) { return morphs[n].morph; }
+		void SetMorphVerts( int n, const vector<Vector3D> & in );
+
 	private:
 		struct Morph {
+			Morph() :  keyType(QUADRATIC_KEY) {}
+			~Morph() {}
 			KeyType keyType;
 			vector< Key<float> > keys;
 			vector< Vector3D > morph;

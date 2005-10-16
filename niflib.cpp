@@ -486,3 +486,7 @@ IKeyframeData * QueryKeyframeData( blk_ref & block ) {
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
 	return (ITextKeyExtraData*)block->QueryInterface( TextKeyExtraData );
 }
+
+IMorphData * QueryMorphData ( blk_ref & block ) {
+	return (IMorphData*)block->QueryInterface( MorphData );
+}

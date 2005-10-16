@@ -56,6 +56,7 @@ class ITriShapeData;
 class ISkinData;
 class IKeyframeData;
 class ITextKeyExtraData;
+class IMorphData;
 class INode;
 class blk_ref;
 class attr_ref;
@@ -75,6 +76,7 @@ const int SkinData = 1;
 const int Node = 2;
 const int KeyframeData = 3;
 const int TextKeyExtraData = 4;
+const int MorphData = 5;
 
 //--Main Functions--//
 
@@ -106,7 +108,7 @@ ISkinData * QuerySkinData( blk_ref & block );
 INode * QueryNode( blk_ref & block );
 IKeyframeData * QueryKeyframeData( blk_ref & block );
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
-
+IMorphData * QueryMorphData ( blk_ref & block );
 //--TypeDefs--//
 
 typedef float float3[3];
@@ -209,11 +211,11 @@ struct Quaternion {
 	float w, x, y, z;
 };
 
-template <class T>
+template <class T> 
 struct Key {
 	float time;
 	T data, forward_tangent, backward_tangent;
-	float3 tbc;
+	float tension, bias, continuity;
 };
 
 enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };
@@ -279,8 +281,8 @@ public:
 	//Translate
 	virtual KeyType GetTranslateType() = 0;
 	virtual void SetTranslateType( KeyType t ) = 0;
-	virtual vector< Key<float3> > GetTranslateKeys() = 0;
-	virtual void SetTranslateKeys( vector< Key<float3> > & keys ) = 0;
+	virtual vector< Key<Vector3D> > GetTranslateKeys() = 0;
+	virtual void SetTranslateKeys( vector< Key<Vector3D> > & keys ) = 0;
 	//Scale
 	virtual KeyType GetScaleType() = 0;
 	virtual void SetScaleType( KeyType t ) = 0;
@@ -294,6 +296,20 @@ public:
 	virtual ~ITextKeyExtraData () {}
 	virtual vector< Key<string> > GetRotateKeys() = 0;
 	virtual void SetRotateKeys( vector< Key<string> > & keys ) = 0;
+};
+
+class IMorphData {
+public:
+	IMorphData() {}
+	virtual ~IMorphData () {}
+	virtual int GetVertexCount() = 0;
+	virtual void SetVertexCount( int n ) = 0;
+	virtual int GetMorphCount() = 0;
+	virtual void SetMorphCount( int n ) = 0;
+	virtual vector< Key<float> > GetMorphKeys( int n ) = 0;
+	virtual void SetMorphKeys( int n, vector< Key<float> > & keys ) = 0;
+	virtual vector<Vector3D> GetMorphVerts( int n) = 0;
+	virtual void SetMorphVerts( int n, const vector<Vector3D> & in ) = 0;
 };
 
 //--Attribute Reference--//
