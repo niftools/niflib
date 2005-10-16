@@ -2124,10 +2124,10 @@ void NiTextKeyExtraData::Read( ifstream& in ) {
 
 	uint keyCount = ReadUInt( in );
 
-	keys.resize(keyCount);
-	for (uint i = 0; i < keys.size(); ++i ) {
-		keys[i].time = ReadFloat( in );
-		keys[i].data = ReadString( in );
+	_keys.resize(keyCount);
+	for (uint i = 0; i < _keys.size(); ++i ) {
+		_keys[i].time = ReadFloat( in );
+		_keys[i].data = ReadString( in );
 	}
 }
 
@@ -2138,11 +2138,11 @@ void NiTextKeyExtraData::Write( ofstream& out ) {
 	GetAttr("Next Extra Data")->Write( out );
 	GetAttr("Unknown Int")->Write( out );
 
-	WriteUInt( uint(keys.size()), out );
+	WriteUInt( uint(_keys.size()), out );
 
-	for (uint i = 0; i < keys.size(); ++i ) {
-		WriteFloat( keys[i].time, out );
-		WriteString( keys[i].data, out );
+	for (uint i = 0; i < _keys.size(); ++i ) {
+		WriteFloat( _keys[i].time, out );
+		WriteString( _keys[i].data, out );
 	}
 }
 
@@ -2153,12 +2153,12 @@ string NiTextKeyExtraData::asString() {
 
 	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
 		<< "Unknown Int (Key Type?):  " << GetAttr("Unknown Int")->asInt() << endl
-		<< "Key Count:  " << uint(keys.size()) << endl;
+		<< "Key Count:  " << uint(_keys.size()) << endl;
 
 	if (verbose) {
-		for (uint i = 0; i < keys.size(); ++i ) {
-			out << "Key Time:  " << keys[i].time << endl
-				<< "Key Text:  " << keys[i].data << endl;
+		for (uint i = 0; i < _keys.size(); ++i ) {
+			out << "Key Time:  " << _keys[i].time << endl
+				<< "Key Text:  " << _keys[i].data << endl;
 		}
 	} else {
 		out << "<<Data Not Shown>>" << endl;

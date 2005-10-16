@@ -1197,12 +1197,12 @@ class NiRotatingParticlesData : public ABlock{
 
 };
 
-class NiTextKeyExtraData : public AExtraData{
+class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 
 	public:
 
 		NiTextKeyExtraData(){
-			AddAttr( "int", "Unknown Int" );	
+			AddAttr( "int", "Unknown Int" );
 		}
 		~NiTextKeyExtraData(){}
 
@@ -1211,8 +1211,20 @@ class NiTextKeyExtraData : public AExtraData{
 		string asString();
 		string GetBlockType() { return "NiTextKeyExtraData"; }
 
+		void * QueryInterface( int id ) {
+			if ( id == TextKeyExtraData ) {
+				return (void*)static_cast<ITextKeyExtraData*>(this);;
+			} else {
+				return AExtraData::QueryInterface( id );
+			}
+		}
+
+		//--ITextKeyExtraData Functions--//
+		virtual vector< Key<string> > GetRotateKeys() { return _keys; }
+		virtual void SetRotateKeys( vector< Key<string> > & keys ) { _keys = keys; }
+
 	private:
-		vector< Key<string> > keys;
+		vector< Key<string> > _keys;
 };
 
 class NiUVData : public ABlock{

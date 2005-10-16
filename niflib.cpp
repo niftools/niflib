@@ -467,18 +467,22 @@ attr_ref::operator Texture() { return _attr->asTexture(); }
 
 //--Query Functions--//
 
-ITriShapeData * QueryTriShapeData( blk_ref block ) {
+ITriShapeData * QueryTriShapeData( blk_ref & block ) {
 	return (ITriShapeData*)block->QueryInterface( TriShapeData );
 }
 
-ISkinData * QuerySkinData( blk_ref block ) {
+ISkinData * QuerySkinData( blk_ref & block ) {
 	return (ISkinData*)block->QueryInterface( SkinData );
 }
 
-INode * QueryNode( blk_ref block ) {
+INode * QueryNode( blk_ref & block ) {
 	return (INode*)block->QueryInterface( Node );
 }
 
-IKeyframeData * QueryKeyframeData( blk_ref block ) {
+IKeyframeData * QueryKeyframeData( blk_ref & block ) {
 	return (IKeyframeData*)block->QueryInterface( KeyframeData );
+}
+
+ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
+	return (ITextKeyExtraData*)block->QueryInterface( TextKeyExtraData );
 }

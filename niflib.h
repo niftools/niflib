@@ -55,6 +55,7 @@ class IBlock;
 class ITriShapeData;
 class ISkinData;
 class IKeyframeData;
+class ITextKeyExtraData;
 class INode;
 class blk_ref;
 class attr_ref;
@@ -73,6 +74,7 @@ const int TriShapeData = 0;
 const int SkinData = 1;
 const int Node = 2;
 const int KeyframeData = 3;
+const int TextKeyExtraData = 4;
 
 //--Main Functions--//
 
@@ -99,10 +101,11 @@ unsigned int BlocksInMemory();
 
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
-ITriShapeData * QueryTriShapeData( blk_ref block );
-ISkinData * QuerySkinData( blk_ref block );
-INode * QueryNode( blk_ref block );
-IKeyframeData * QueryKeyframeData( blk_ref block );
+ITriShapeData * QueryTriShapeData( blk_ref & block );
+ISkinData * QuerySkinData( blk_ref & block );
+INode * QueryNode( blk_ref & block );
+IKeyframeData * QueryKeyframeData( blk_ref & block );
+ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 
 //--TypeDefs--//
 
@@ -283,6 +286,14 @@ public:
 	virtual void SetScaleType( KeyType t ) = 0;
 	virtual vector< Key<float> > GetScaleKeys() = 0;
 	virtual void SetScaleKeys( vector< Key<float> > & keys ) = 0;
+};
+
+class ITextKeyExtraData {
+public:
+	ITextKeyExtraData() {}
+	virtual ~ITextKeyExtraData () {}
+	virtual vector< Key<string> > GetRotateKeys() = 0;
+	virtual void SetRotateKeys( vector< Key<string> > & keys ) = 0;
 };
 
 //--Attribute Reference--//
