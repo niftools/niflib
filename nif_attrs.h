@@ -460,7 +460,7 @@ public:
 		}
 	}
 	void Write( ofstream& out ) {
-		//See if there is a data block
+		ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
 			//Get Bone data from data block
@@ -631,7 +631,7 @@ public:
 	~BBoxAttr() {}
 	string GetType() const { return "bbox"; }
 	void Read( ifstream& in ) { 
-	data.isUsed = (ReadUInt( in ) != 0);
+		data.isUsed = (ReadUInt( in ) != 0);
 		if ( data.isUsed ){
 			data.unknownInt = ReadUInt( in );
 			ReadFVector3( data.translation, in );
@@ -1256,7 +1256,7 @@ public:
 	~RootAttr() {}
 	string GetType() const { return "root"; }
 	void Read( ifstream& in ) {
-		ReadUInt( in );  //Read data but do nothing with it
+		original_root = ReadUInt( in );  //Read data but do nothing with it
 	}
 	void Write( ofstream& out ) {
 		WriteUInt( FindRoot().get_index(), out );
@@ -1272,15 +1272,18 @@ public:
 
 			//If parent is null, we're done - every node is an influence or there are no nodes
 			//Probably shouldn't happen
-			if (par.is_null() == true)
+			if (par.is_null() == true) {
 				return block;
 
+			}
+
 			//If parent is a node and its 'not a skin influence' flag is set, it is the root for this skeleton
-			if ( QueryNode(par) != NULL ) {
+			if ( par->QueryInterface(Node) != NULL ) {
 				flags = par->GetAttr("Flags")->asInt();
 
-				if ( (flags & 8) == 1 )
+				if ( (flags & 8) != 0 ) {
 					return par;
+				}
 			}
 
 			//We didn't find the root this time, set block to par and try again
@@ -1299,6 +1302,8 @@ public:
 		return out.str();
 	}
 	blk_ref asLink() const { return FindRoot(); }
+private:
+	int original_root;
 };
 
 #endif
