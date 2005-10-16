@@ -510,13 +510,20 @@ public:
 typedef list<lnk_ref> LinkSetList;
 typedef LinkSetList::iterator LinkSetIt;
 
-class GroupAttr : public AAttr {
+class LinkGroupAttr : public AAttr {
 public:
-	GroupAttr( string name, IBlock * owner ) : AAttr( name, owner ) {}
-	~GroupAttr() {}
-	string GetType() const { return "group"; }
+	LinkGroupAttr( string name, IBlock * owner ) : AAttr( name, owner ) {}
+	~LinkGroupAttr() {}
+	string GetType() const { return "linkgroup"; }
 	void Read( ifstream& in ) {
 		int len = ReadUInt( in );
+		cout << "Link Group Size:  " << len << endl;
+
+		if ( len > 30 ) {
+			cout << _owner->asString() << endl;
+			return;
+		}
+
 		for (int i = 0; i < len; ++i ) {
 			int index = ReadUInt( in );
 			if (index != -1 )
@@ -526,6 +533,12 @@ public:
 	void Write( ofstream& out ) {
 		//Write the number of links
 		WriteUInt( uint(links.size()), out );
+		cout << "Link Group Size:  " << uint(links.size()) << endl;
+
+		if ( links.size() > 30 ) {
+			cout << "\a" << endl;
+			cin.get();
+		}
 
 		//Write the block indices
 		for (LinkSetIt it = links.begin(); it != links.end(); ++it ) {
@@ -637,11 +650,9 @@ public:
 		if ( data.isUsed ){
 			WriteUInt( data.unknownInt, out );
 			WriteFVector3( data.translation, out );
-			for (int i = 0; i < 9; ++i) {
-				for (int c = 0; c < 3; ++c) {
-					for (int r = 0; r < 3; ++r) {
-						WriteFloat( data.rotation[r][c], out );
-					}
+			for (int c = 0; c < 3; ++c) {
+				for (int r = 0; r < 3; ++r) {
+					WriteFloat(data.rotation[r][c], out );
 				}
 			}
 			WriteFloat( data.radius_x, out );

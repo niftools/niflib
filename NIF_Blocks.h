@@ -120,6 +120,14 @@ private:
 	vector<IBlock*> _parents;
 };
 
+class AExtraData : public ABlock {
+public:
+	AExtraData() {
+		AddAttr( "index", "Next Extra Data" );
+	}
+	~AExtraData() {};
+};
+
 class ANamed : public ABlock {
 public:
 	ANamed(){
@@ -144,7 +152,7 @@ public:
 		AddAttr( "matrix", "Rotation" );
 		AddAttr( "float", "Scale" );
 		AddAttr( "float3", "velocity" );
-		AddAttr( "properties", "Properties" );
+		AddAttr( "linkgroup", "Properties" );
 		AddAttr( "bbox", "Bounding Box" );
 
 		SetIdentity44(bindPosition);
@@ -177,8 +185,8 @@ protected:
 class AParentNode : public ANode {
 public:
 	AParentNode(){
-		AddAttr( "children", "Children" );
-		AddAttr( "effects", "Effects" );
+		AddAttr( "linkgroup", "Children" );
+		AddAttr( "linkgroup", "Effects" );
 	}
 	~AParentNode(){}
 };
@@ -916,39 +924,23 @@ class NiKeyframeData : public ABlock{
 
 	public:
 
-		NiKeyframeData(){
-			rotKeys = NULL;
-			transKeys = NULL;
-			scaleKeys = NULL;
-		}
-		~NiKeyframeData(){
-			if (rotKeys != NULL)
-				delete[] rotKeys;
-			if (transKeys != NULL)
-				delete[] transKeys;
-			if (scaleKeys != NULL)
-				delete[] scaleKeys;
-		}
+		NiKeyframeData(){}
+		~NiKeyframeData(){}
 
 		void Read( ifstream& in );
-		void Write( ofstream& out ){}
+		void Write( ofstream& out );
 		string asString();
 		string GetBlockType() { return "NiKeyframeData"; }
 
 	private:
+		uint rotationType;
+		vector< Key<fVector4> > rotKeys;
 
-		uint				numRotations;
-		uint				rotationType;
-		Key<fVector4> *		rotKeys;
+		uint translationType;
+		vector< Key<fVector3> >	transKeys;
 
-		uint				numTranslations;
-		uint				translationType;
-		Key<fVector3> *		transKeys;
-
-		uint				numScalings;
-		uint				scaleType;
-		Key<float> *		scaleKeys;
-
+		uint scaleType;
+		vector< Key<float> > scaleKeys;
 };
 
 
@@ -1112,7 +1104,7 @@ class NiFloatData : public ABlock{
 		vector<Key<float> > keys;
 };
 
-class NiStringExtraData : public ABlock{
+class NiStringExtraData : public AExtraData{
 
 	public:
 
@@ -1120,15 +1112,12 @@ class NiStringExtraData : public ABlock{
 		~NiStringExtraData(){}
 
 		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Write( ofstream& out );
 		string asString();
 		string GetBlockType() { return "NiStringExtraData"; };
 
 	private:
-		nifIndex next_index;
-		uint bytesRemaining;
 		string strData;
-
 };
 
 class NiMorphData : public ABlock{
@@ -1191,7 +1180,7 @@ class NiRotatingParticlesData : public ABlock{
 
 };
 
-class NiTextKeyExtraData : public ABlock{
+class NiTextKeyExtraData : public AExtraData{
 
 	public:
 
@@ -1199,14 +1188,14 @@ class NiTextKeyExtraData : public ABlock{
 		~NiTextKeyExtraData(){}
 
 		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Write( ofstream& out );
 		string asString();
 		string GetBlockType() { return "NiTextKeyExtraData"; }
 
 	private:
-		nifIndex next_index;
+		blk_ref next_index;
 		uint unknownInt, keyCount;
-		vector<Key<string> > keys;
+		vector< Key<string> > keys;
 };
 
 class NiUVData : public ABlock{
@@ -1230,7 +1219,7 @@ class NiUVData : public ABlock{
 		UVGroup groups[4];
 };
 
-class NiVertWeightsExtraData : public ABlock{
+class NiVertWeightsExtraData : public AExtraData{
 
 	public:
 
@@ -1243,7 +1232,6 @@ class NiVertWeightsExtraData : public ABlock{
 		string GetBlockType() { return "NiVertWeightsExtraData"; }
 
 	private:
-		nifIndex next_index;
 		uint bytes;
 		ushort verts;
 		vector<float> weights;

@@ -84,12 +84,8 @@ void ABlock::AddAttr( string type, string name ) {
 		attr = new FlagsAttr( name, this );
 	} else if ( type == "matrix" ) {
 		attr = new MatrixAttr( name, this );
-	} else if ( type == "properties" ) {
-		attr = new GroupAttr( name, this );
-	} else if ( type == "children" ) {
-		attr = new GroupAttr( name, this );
-	} else if ( type == "effects" ) {
-		attr = new GroupAttr( name, this );
+	} else if ( type == "linkgroup" ) {
+		attr = new LinkGroupAttr( name, this );
 	} else if ( type == "bones" ) {
 		attr = new BoneAttr( name, this );
 	} else if ( type == "bbox" ) {
@@ -156,6 +152,7 @@ blk_ref ABlock::GetParent() {
 void ABlock::Read( ifstream& in ) {
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		_attr_vect[i]->Read( in );
+		cout << "   " << _attr_vect[i]->GetName() << endl;
 	}
 }
 
@@ -165,6 +162,7 @@ void ABlock::Write( ofstream& out ) {
 
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
+		cout << "Writing " << blk_ref(this) << " " << _attr_vect[i]->GetName() << endl;
 		_attr_vect[i]->Write( out );
 	}
 }
@@ -1421,13 +1419,13 @@ void NiKeyframeData::Read( ifstream& in ) {
 	scaleType = rotationType = translationType = 0;
 
 	//--Rotation--//
-	numRotations = ReadUInt( in );
+	uint numRotations = ReadUInt( in );
 
 	if (numRotations > 0) {
 		rotationType = ReadUInt( in );
-	
-		rotKeys = new Key<fVector4>[numRotations];
-		for (unsigned int i = 0; i < numRotations; i++) {
+
+		rotKeys.resize( numRotations );
+		for ( unsigned int i = 0; i < numRotations; ++i ) {
 			rotKeys[i].time = ReadFloat( in );
 
 			if (rotationType != 4) {
@@ -1466,13 +1464,13 @@ void NiKeyframeData::Read( ifstream& in ) {
 	}
 
 	//--Translation--//
-	numTranslations = ReadUInt( in );
+	uint numTranslations = ReadUInt( in );
 
 	if (numTranslations > 0) {
 		translationType = ReadUInt( in );
 
-		transKeys = new Key<fVector3>[numTranslations];
-		for (unsigned int i = 0; i < numTranslations; i++) {
+		transKeys.resize( numTranslations );
+		for ( unsigned int i = 0; i < numTranslations; ++i ) {
 			transKeys[i].time = ReadFloat( in );
 			
 			ReadFVector3( transKeys[i].data, in );
@@ -1485,15 +1483,16 @@ void NiKeyframeData::Read( ifstream& in ) {
 			}
 		}
 	}
-                        
+
 	//--Scale--//
-	numScalings = ReadUInt( in );
+	uint numScalings = ReadUInt( in );
 
 	if (numScalings > 0) {
 		scaleType = ReadUInt( in );
+		cout << "Scale Type:  " << scaleType << endl;
 
-		scaleKeys = new Key<float>[numScalings];
-		for (unsigned int i = 0; i < numScalings; i++) {
+		scaleKeys.resize( numScalings );
+		for ( unsigned int i = 0; i < numScalings; ++i ) {
 			scaleKeys[i].time = ReadFloat( in );
 
 			scaleKeys[i].data = ReadFloat( in );
@@ -1508,29 +1507,94 @@ void NiKeyframeData::Read( ifstream& in ) {
 	}
 }
 
+void NiKeyframeData::Write( ofstream& out ) {
+
+	WriteString( "NiKeyframeData", out );
+
+	//--Rotation--//
+	WriteUInt( uint(rotKeys.size()), out );
+
+	if (rotKeys.size() > 0) {
+		WriteUInt( rotationType, out );
+
+		for ( unsigned int i = 0; i < rotKeys.size(); ++i ) {
+			WriteFloat( rotKeys[i].time, out );
+
+			if (rotationType != 4) {
+				WriteFVector4(rotKeys[i].data, out );
+			}
+
+			if (rotationType == 3) {
+				WriteFVector3( rotKeys[i].tbc, out ) ;
+			} else if (rotationType == 4) {
+				throw runtime_error("NiKeyframeData rotation type 4 currently unsupported");
+			}
+		}
+	}
+
+	//--Translation--//
+
+	WriteUInt( uint(transKeys.size()), out );
+
+	if (transKeys.size() > 0) {
+		WriteUInt( translationType, out );
+
+		for ( unsigned int i = 0; i < transKeys.size(); ++i ) {
+			WriteFloat( transKeys[i].time, out );
+			
+			WriteFVector3( transKeys[i].data, out );
+
+			if (translationType == 2) {
+				WriteFVector3( transKeys[i].forward_tangent, out );
+				WriteFVector3( transKeys[i].backward_tangent, out );
+			}else if (translationType == 3) {
+				WriteFVector3( transKeys[i].tbc, out );
+			}
+		}
+	}
+                        
+	//--Scale--//
+	WriteUInt( uint(scaleKeys.size()), out );
+
+	if ( scaleKeys.size() > 0) {
+		WriteUInt( scaleType, out );
+
+		for ( unsigned int i = 0; i < scaleKeys.size(); ++i ) {
+			WriteFloat( scaleKeys[i].time, out );
+
+			WriteFloat( scaleKeys[i].data, out );
+
+			if (scaleType == 2) {
+				WriteFloat( scaleKeys[i].forward_tangent, out );
+				WriteFloat( scaleKeys[i].backward_tangent, out );
+			} else if (scaleType == 3) {
+				WriteFVector3( scaleKeys[i].tbc, out );
+			}
+		}
+	}
+}
+
 string NiKeyframeData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	//out << setprecision(2);
-
 	//--Rotation--//
-	out << "Rotations:  " << numRotations << endl;
+	out << "Rotations:  " << uint(rotKeys.size()) << endl;
 
-	if (numRotations > 0) {
+	if (rotKeys.size() > 0) {
 		out << "Rotation Type:  " << rotationType << endl;
 
 		if (verbose) {
-			for (unsigned int i = 0; i < numRotations; i++) {
+			for (unsigned int i = 0; i < rotKeys.size(); i++) {
 				out << "Key Time:  " << rotKeys[i].time << "  ";
 
 				if (rotationType != 4) {
-					out << "Rotation:  Q[" << rotKeys[i].data
-						<< "   As Matrix:";
-					QuatToMatrix(rotKeys[i].data, out );
-					out << "   As Angles:";
-					QuatToEuler(rotKeys[i].data, out );
+					out << "Rotation:  Q[" << rotKeys[i].data << endl;
+					//	<< "   As Matrix:";
+					//QuatToMatrix(rotKeys[i].data, out );
+					//out << "   As Angles:";
+					//QuatToEuler(rotKeys[i].data, out );
 
 				}
 				
@@ -1547,13 +1611,13 @@ string NiKeyframeData::asString() {
 	}
 
 	//--Translation--//
-	out << "Translations:  " << numTranslations << endl;
+	out << "Translations:  " << uint(transKeys.size()) << endl;
 
-	if (numTranslations > 0) {
+	if (transKeys.size() > 0) {
 		out << "Translation Type:  " << translationType << endl;
 
 		if (verbose) {
-			for (unsigned int i = 0; i < numTranslations; i++) {
+			for (unsigned int i = 0; i < transKeys.size(); i++) {
 				out << "Key Time:  " << transKeys[i].time << "  ";
 				
 				out << "Data:  V" << transKeys[i].data;
@@ -1572,13 +1636,13 @@ string NiKeyframeData::asString() {
 	}
                         
 	//--Scale--//
-	out << "Scalings:  " << numScalings << endl;
+	out << "Scalings:  " << uint(scaleKeys.size()) << endl;
 
 	if (verbose) {
-		if (numScalings > 0) {
+		if (scaleKeys.size() > 0) {
 			out << "Scale Type:  " << scaleType << endl;
 
-			for (unsigned int i = 0; i < numScalings; i++) {
+			for (unsigned int i = 0; i < scaleKeys.size(); i++) {
 				out << "Key Time:  " << scaleKeys[i].time  << "  ";
 
 				out << "Data:  S(" << scaleKeys[i].data << ")";
@@ -1689,10 +1753,23 @@ string NiFloatData::asString() {
  **********************************************************/
 
 void NiStringExtraData::Read( ifstream& in ) {
+	GetAttr("Next Extra Data")->Read( in );
 
-	next_index.Read( in );// = ReadUInt( in );
-	bytesRemaining = ReadUInt( in );
+	//Read Bytes Remaining but don't bother to store it
+	ReadUInt( in );
+
 	strData = ReadString( in );
+}
+
+void NiStringExtraData::Write( ofstream& out ) {
+	WriteString( "NiStringExtraData", out );
+
+	GetAttr("Next Extra Data")->Write( out );
+
+	//Write Bytes Remaining - length of string + 4
+	WriteUInt( uint(strData.length()) + 4, out );
+
+	WriteString( strData, out );
 }
 
 string NiStringExtraData::asString() {
@@ -1700,8 +1777,8 @@ string NiStringExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " << next_index << endl
-		<< "Bytes Remaining:  " << bytesRemaining << endl
+	out << "Next Extra Data:  " << GetAttr("Next Extra Data")->asLink() << endl
+		<< "Bytes Remaining:  " << uint(strData.length()) + 4 << endl
 		<< "String:  " << strData << endl;
 	
 	return out.str();
@@ -2029,7 +2106,9 @@ void NiRotatingParticlesData::Read( ifstream& in ) {
  **********************************************************/
 
 void NiTextKeyExtraData::Read( ifstream& in ) {
-	next_index.Read( in );
+
+	GetAttr("Next Extra Data")->Read( in );
+
 	unknownInt = ReadUInt( in );
 	keyCount = ReadUInt( in );
 
@@ -2040,12 +2119,27 @@ void NiTextKeyExtraData::Read( ifstream& in ) {
 	}
 }
 
+void NiTextKeyExtraData::Write( ofstream& out ) {
+
+	WriteString( "NiTextKeyExtraData", out );
+
+	GetAttr("Next Extra Data")->Write( out );
+
+	WriteUInt( unknownInt, out );
+	WriteUInt( keyCount, out );
+
+	for (uint i = 0; i < keys.size(); ++i ) {
+		WriteFloat( keys[i].time, out );
+		WriteString( keys[i].data, out );
+	}
+}
+
 string NiTextKeyExtraData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " << next_index << endl
+	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
 		<< "Unknown Int (Key Type?):  " << unknownInt << endl
 		<< "Key Count:  " << keyCount << endl;
 
@@ -2121,7 +2215,7 @@ string NiUVData::asString() {
  **********************************************************/
  
 void NiVertWeightsExtraData ::Read( ifstream& in ) {
-	next_index.Read( in );
+	GetAttr("Next Extra Data")->Read( in );
 	bytes = ReadUInt( in );
 	verts = ReadUShort( in );
 
@@ -2136,7 +2230,7 @@ string NiVertWeightsExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " << next_index << endl
+	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
 		<< "Bytes:  " << bytes << endl
 		<< "Verts:  " << verts << endl;
 

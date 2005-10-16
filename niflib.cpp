@@ -238,7 +238,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	for (uint i = 0; i < numBlocks; i++) {
 		// Find which block type this is.
 		uint blockNameLength = ReadUInt( in );
-		if (blockNameLength > 40 || blockNameLength < 5) {
+		if (blockNameLength > 30 || blockNameLength < 6) {
 			cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
 			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 			cout << blocks[i - 1]->asString();
@@ -253,6 +253,8 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			cout << blocks[i - 1]->asString();
 			cin.get();
 		}
+
+		cout << i << " " << blockName << endl;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -377,7 +379,6 @@ void WriteNifTree( string file_name, blk_ref & root_block ) {
 
 	//Close file
 	out.close();
-	cin.get();
 }
 void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
 	//Get internal interface
