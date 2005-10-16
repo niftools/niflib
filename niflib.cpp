@@ -254,7 +254,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			cin.get();
 		}
 
-		cout << i << " " << blockName << endl;
+		//cout << i << " " << blockName << endl;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -390,7 +390,7 @@ void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
 	list<blk_ref> links = block->GetLinks();
 	list<blk_ref>::iterator it;
 	for (it = links.begin(); it != links.end(); ++it) {
-		if ( it->is_null() == false ) {
+		if ( it->is_null() == false && (*it)->GetParent() == block ) {
 			ReorderNifTree( blk_list, *it );
 		}
 	}

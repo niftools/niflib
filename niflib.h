@@ -71,6 +71,7 @@ const unsigned int HEADER_STRING_LEN = 39;
 const int TriShapeData = 0;
 const int SkinData = 1;
 const int Node = 2;
+const int KeyframeData = 3;
 
 //--Main Functions--//
 
@@ -199,6 +200,19 @@ struct Color {
 	float r, g, b, a;
 };
 
+struct Quaternion {
+	float w, x, y, z;
+};
+
+template <class T>
+struct Key {
+	float time;
+	T data, forward_tangent, backward_tangent;
+	float3 tbc;
+};
+
+enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };
+
 class INode {
 public:
 	INode() {}
@@ -246,6 +260,27 @@ public:
 	virtual map<int, float> GetWeights( blk_ref bone ) = 0;
 	virtual void AddBone( blk_ref bone, map<int, float> in ) = 0;
 	virtual void RemoveBone( blk_ref bone ) = 0;
+};
+
+class IKeyframeData {
+public:
+	IKeyframeData() {}
+	virtual ~IKeyframeData () {}
+	//Rotate
+	virtual KeyType GetRotateType() = 0;
+	virtual void SetRotateType( KeyType t ) = 0;
+	virtual vector< Key<Quaternion> > GetRotateKeys() = 0;
+	virtual void SetRotateKeys( vector< Key<Quaternion> > & keys ) = 0;
+	//Translate
+	virtual KeyType GetTranslateType() = 0;
+	virtual void SetTranslateType( KeyType t ) = 0;
+	virtual vector< Key<float3> > GetTranslateKeys() = 0;
+	virtual void SetTranslateKeys( vector< Key<float3> > & keys ) = 0;
+	//Scale
+	virtual KeyType GetScaleType() = 0;
+	virtual void SetScaleType( KeyType t ) = 0;
+	virtual vector< Key<float> > GetScaleKeys() = 0;
+	virtual void SetScaleKeys( vector< Key<float> > & keys ) = 0;
 };
 
 //--Attribute Reference--//

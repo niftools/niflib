@@ -908,19 +908,10 @@ public:
 //    float unknown     = 1
 //    float unknown[3]
 
-
-
-template <class T>
-struct Key {
-	float time;
-	T data, forward_tangent, backward_tangent;
-	fVector3 tbc;
-};
-
 /**
  * NiKeyframeData -
  */
-class NiKeyframeData : public ABlock{
+class NiKeyframeData : public ABlock, public IKeyframeData {
 
 	public:
 
@@ -931,15 +922,39 @@ class NiKeyframeData : public ABlock{
 		void Write( ofstream& out );
 		string asString();
 		string GetBlockType() { return "NiKeyframeData"; }
+		
+		void * QueryInterface( int id ) {
+			if ( id == KeyframeData ) {
+				return (void*)static_cast<IKeyframeData*>(this);;
+			} else {
+				return ABlock::QueryInterface( id );
+			}
+		}
+
+		//--IKeyframeData Functions--//
+		KeyType GetRotateType() { return rotationType; }
+		void SetRotateType( KeyType t ) { rotationType = t; }
+		vector< Key<Quaternion> > GetRotateKeys() { return rotKeys; }
+		void SetRotateKeys( vector< Key<Quaternion> > & keys ) { rotKeys = keys; }
+		//Translate
+		KeyType GetTranslateType() { return translationType; }
+		void SetTranslateType( KeyType t ) { translationType = t; }
+		vector< Key<float3> > GetTranslateKeys() { return transKeys; }
+		void SetTranslateKeys( vector< Key<float3> > & keys ) { transKeys = keys; }
+		//Scale
+		KeyType GetScaleType() { return scaleType; }
+		void SetScaleType( KeyType t ) { scaleType = t; }
+		vector< Key<float> > GetScaleKeys() { return scaleKeys; }
+		void SetScaleKeys( vector< Key<float> > & keys ) { scaleKeys = keys; }
 
 	private:
-		uint rotationType;
-		vector< Key<fVector4> > rotKeys;
+		KeyType rotationType;
+		vector< Key<Quaternion> > rotKeys;
 
-		uint translationType;
-		vector< Key<fVector3> >	transKeys;
+		KeyType translationType;
+		vector< Key<float3> >	transKeys;
 
-		uint scaleType;
+		KeyType scaleType;
 		vector< Key<float> > scaleKeys;
 };
 
@@ -1108,7 +1123,9 @@ class NiStringExtraData : public AExtraData{
 
 	public:
 
-		NiStringExtraData(){}
+		NiStringExtraData(){
+			AddAttr( "string", "String Data" );
+		}
 		~NiStringExtraData(){}
 
 		void Read( ifstream& in );
@@ -1184,7 +1201,9 @@ class NiTextKeyExtraData : public AExtraData{
 
 	public:
 
-		NiTextKeyExtraData(){}
+		NiTextKeyExtraData(){
+			AddAttr( "int", "Unknown Int" );	
+		}
 		~NiTextKeyExtraData(){}
 
 		void Read( ifstream& in );
@@ -1193,8 +1212,6 @@ class NiTextKeyExtraData : public AExtraData{
 		string GetBlockType() { return "NiTextKeyExtraData"; }
 
 	private:
-		blk_ref next_index;
-		uint unknownInt, keyCount;
 		vector< Key<string> > keys;
 };
 

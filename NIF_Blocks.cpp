@@ -152,7 +152,7 @@ blk_ref ABlock::GetParent() {
 void ABlock::Read( ifstream& in ) {
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		_attr_vect[i]->Read( in );
-		cout << "   " << _attr_vect[i]->GetName() << endl;
+		//cout << "   " << _attr_vect[i]->GetName() << endl;
 	}
 }
 
@@ -162,7 +162,7 @@ void ABlock::Write( ofstream& out ) {
 
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
-		cout << "Writing " << blk_ref(this) << " " << _attr_vect[i]->GetName() << endl;
+		//cout << "Writing " << blk_ref(this) << " " << _attr_vect[i]->GetName() << endl;
 		_attr_vect[i]->Write( out );
 	}
 }
@@ -1416,20 +1416,23 @@ string NiGeomMorpherController::asString() {
 
 void NiKeyframeData::Read( ifstream& in ) {
 
-	scaleType = rotationType = translationType = 0;
+	scaleType = rotationType = translationType = KeyType(0);
 
 	//--Rotation--//
 	uint numRotations = ReadUInt( in );
 
 	if (numRotations > 0) {
-		rotationType = ReadUInt( in );
+		rotationType = KeyType(ReadUInt( in ));
 
 		rotKeys.resize( numRotations );
 		for ( unsigned int i = 0; i < numRotations; ++i ) {
 			rotKeys[i].time = ReadFloat( in );
 
 			if (rotationType != 4) {
-				ReadFVector4(rotKeys[i].data, in );
+				rotKeys[i].data.w = ReadFloat( in );
+				rotKeys[i].data.x = ReadFloat( in );
+				rotKeys[i].data.y = ReadFloat( in );
+				rotKeys[i].data.z = ReadFloat( in );
 			}
 
 			if (rotationType == 3) {
@@ -1467,7 +1470,7 @@ void NiKeyframeData::Read( ifstream& in ) {
 	uint numTranslations = ReadUInt( in );
 
 	if (numTranslations > 0) {
-		translationType = ReadUInt( in );
+		translationType = KeyType(ReadUInt( in ));
 
 		transKeys.resize( numTranslations );
 		for ( unsigned int i = 0; i < numTranslations; ++i ) {
@@ -1488,7 +1491,7 @@ void NiKeyframeData::Read( ifstream& in ) {
 	uint numScalings = ReadUInt( in );
 
 	if (numScalings > 0) {
-		scaleType = ReadUInt( in );
+		scaleType = KeyType(ReadUInt( in ));
 		cout << "Scale Type:  " << scaleType << endl;
 
 		scaleKeys.resize( numScalings );
@@ -1521,7 +1524,10 @@ void NiKeyframeData::Write( ofstream& out ) {
 			WriteFloat( rotKeys[i].time, out );
 
 			if (rotationType != 4) {
-				WriteFVector4(rotKeys[i].data, out );
+				WriteFloat( rotKeys[i].data.w, out );
+				WriteFloat( rotKeys[i].data.x, out );
+				WriteFloat( rotKeys[i].data.y, out );
+				WriteFloat( rotKeys[i].data.z, out );
 			}
 
 			if (rotationType == 3) {
@@ -1590,7 +1596,7 @@ string NiKeyframeData::asString() {
 				out << "Key Time:  " << rotKeys[i].time << "  ";
 
 				if (rotationType != 4) {
-					out << "Rotation:  Q[" << rotKeys[i].data << endl;
+					out << "Rotation:  Q[" << rotKeys[i].data.w << " ( " << rotKeys[i].data.x << ", " << rotKeys[i].data.y << ", " << rotKeys[i].data.z << ")]" << endl;
 					//	<< "   As Matrix:";
 					//QuatToMatrix(rotKeys[i].data, out );
 					//out << "   As Angles:";
@@ -1758,7 +1764,7 @@ void NiStringExtraData::Read( ifstream& in ) {
 	//Read Bytes Remaining but don't bother to store it
 	ReadUInt( in );
 
-	strData = ReadString( in );
+	GetAttr("String Data")->Read( in );
 }
 
 void NiStringExtraData::Write( ofstream& out ) {
@@ -1767,9 +1773,11 @@ void NiStringExtraData::Write( ofstream& out ) {
 	GetAttr("Next Extra Data")->Write( out );
 
 	//Write Bytes Remaining - length of string + 4
-	WriteUInt( uint(strData.length()) + 4, out );
+	attr_ref string_data = GetAttr("String Data");
+	
+	WriteUInt( uint(string_data->asString().length()) + 4, out );
 
-	WriteString( strData, out );
+	string_data->Write( out );
 }
 
 string NiStringExtraData::asString() {
@@ -1777,9 +1785,12 @@ string NiStringExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " << GetAttr("Next Extra Data")->asLink() << endl
+	attr_ref next_data = GetAttr("Next Extra Data");
+	attr_ref string_data = GetAttr("String Data");
+
+	out << next_data->GetName() << ":  " << next_data->asLink() << endl
 		<< "Bytes Remaining:  " << uint(strData.length()) + 4 << endl
-		<< "String:  " << strData << endl;
+		<< string_data->GetName() << ":  " << string_data->asString() << endl;
 	
 	return out.str();
 }
@@ -2108,9 +2119,9 @@ void NiRotatingParticlesData::Read( ifstream& in ) {
 void NiTextKeyExtraData::Read( ifstream& in ) {
 
 	GetAttr("Next Extra Data")->Read( in );
+	GetAttr("Unknown Int")->Read( in );
 
-	unknownInt = ReadUInt( in );
-	keyCount = ReadUInt( in );
+	uint keyCount = ReadUInt( in );
 
 	keys.resize(keyCount);
 	for (uint i = 0; i < keys.size(); ++i ) {
@@ -2124,9 +2135,9 @@ void NiTextKeyExtraData::Write( ofstream& out ) {
 	WriteString( "NiTextKeyExtraData", out );
 
 	GetAttr("Next Extra Data")->Write( out );
+	GetAttr("Unknown Int")->Write( out );
 
-	WriteUInt( unknownInt, out );
-	WriteUInt( keyCount, out );
+	WriteUInt( uint(keys.size()), out );
 
 	for (uint i = 0; i < keys.size(); ++i ) {
 		WriteFloat( keys[i].time, out );
@@ -2140,8 +2151,8 @@ string NiTextKeyExtraData::asString() {
 	out << setprecision(1);
 
 	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
-		<< "Unknown Int (Key Type?):  " << unknownInt << endl
-		<< "Key Count:  " << keyCount << endl;
+		<< "Unknown Int (Key Type?):  " << GetAttr("Unknown Int")->asInt() << endl
+		<< "Key Count:  " << uint(keys.size()) << endl;
 
 	if (verbose) {
 		for (uint i = 0; i < keys.size(); ++i ) {

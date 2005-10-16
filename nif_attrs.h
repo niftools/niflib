@@ -517,7 +517,7 @@ public:
 	string GetType() const { return "linkgroup"; }
 	void Read( ifstream& in ) {
 		int len = ReadUInt( in );
-		cout << "Link Group Size:  " << len << endl;
+		//cout << "Link Group Size:  " << len << endl;
 
 		if ( len > 30 ) {
 			cout << _owner->asString() << endl;
@@ -533,7 +533,7 @@ public:
 	void Write( ofstream& out ) {
 		//Write the number of links
 		WriteUInt( uint(links.size()), out );
-		cout << "Link Group Size:  " << uint(links.size()) << endl;
+		//cout << "Link Group Size:  " << uint(links.size()) << endl;
 
 		if ( links.size() > 30 ) {
 			cout << "\a" << endl;
