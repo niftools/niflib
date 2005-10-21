@@ -43,14 +43,14 @@ POSSIBILITY OF SUCH DAMAGE. */
     try {
       $action
     }
-    SWIG_CATCH_STDEXCEPT // catch std::exception 
+    //SWIG_CATCH_STDEXCEPT // catch std::exception 
     catch (...) {
-     SWIG_exception(SWIG_UnknownError, "Unknown exception");
+      SWIG_exception(SWIG_UnknownError, "Unknown exception");
     }
 }
 
 %{
-	#include "NIFlib/niflib.h"
+#include "niflib.h"
 %}
 
 template <class T> 
@@ -62,7 +62,7 @@ struct Key {
 
 %template(vector_float) std::vector<float>;
 %template(vector_blk_ref) std::vector<blk_ref>;
-%template(vector_Vector3D) std::vector<Vector3D>;
+%template(vector_Vector3) std::vector<Vector3>;
 %template(vector_Color) std::vector<Color>;
 %template(vector_UVCoord) std::vector<UVCoord>;
 %template(vector_Triangle) std::vector<Triangle>;
@@ -71,13 +71,13 @@ struct Key {
 %template(map_int_float) std::map<int, float>;
 %template(Key_Quaternion) Key<Quaternion>;
 %template(vector_Key_Quaternion) std::vector< Key<Quaternion> >;
-%template(Key_Vector3D) Key<Vector3D>;
-%template(vector_Key_Vector3D) std::vector< Key<Vector3D> >;
+%template(Key_Vector3) Key<Vector3>;
+%template(vector_Key_Vector3) std::vector< Key<Vector3> >;
 %template(Key_float) Key<float>;
 %template(vector_Key_float) std::vector< Key<float> >;
 %template(Key_string) Key<std::string>;
 %template(vector_Key_string) std::vector< Key<std::string> >;
 
-%include "../NIFlib/niflib.h"
+%include "niflib.h"
 
 

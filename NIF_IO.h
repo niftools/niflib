@@ -89,7 +89,9 @@ typedef uint writeResult;
 //typedef uint	nifIndex;
 typedef ushort	nifFlags;
 
+#ifndef NULL
 #define NULL 0
+#endif
 
 /* Valid values for some texturingproperty attributes. */
 typedef enum {
