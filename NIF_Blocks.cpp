@@ -289,89 +289,84 @@ void * ANode::QueryInterface( int id ) {
 	}
 }
 
-void ANode::GetLocalTransform( float out_matrix[4][4] ) {
+Matrix44 ANode::GetLocalTransform() {
 	//Get transform data from atributes
-	float3 tran;
-	matrix f;
-	GetAttr("Rotation")->asMatrix( f );
-	GetAttr("Translation")->asFloat3( tran );
+	Matrix33 f = GetAttr("Rotation")->asMatrix();
+	Float3 tran = GetAttr("Translation")->asFloat3();
 	float scale = GetAttr("Scale")->asFloat();
 
 	//Set up a matrix with rotate and translate information
-	float rt[4][4];
+	Matrix44 rt;
 	rt[0][0] = f[0][0];	rt[0][1] = f[0][1];	rt[0][2] = f[0][2];	rt[0][3] = 0.0f;
 	rt[1][0] = f[1][0];	rt[1][1] = f[1][1];	rt[1][2] = f[1][2];	rt[1][3] = 0.0f;
 	rt[2][0] = f[2][0];	rt[2][1] = f[2][1];	rt[2][2] = f[2][2];	rt[2][3] = 0.0f;
 	rt[3][0] = tran[0];	rt[3][1] = tran[1];	rt[3][2] = tran[2];	rt[3][3] = 1.0f;
 
 	//Set up another matrix with the scale information
-	float s[4][4];
+	Matrix44 s;
 	s[0][0] = scale;	s[0][1] = 0.0f;		s[0][2] = 0.0f;		s[0][3] = 0.0f;
 	s[1][0] = 0.0f;		s[1][1] = scale;	s[1][2] = 0.0f;		s[1][3] = 0.0f;
 	s[2][0] = 0.0f;		s[2][1] = 0.0f;		s[2][2] = scale;	s[2][3] = 0.0f;
 	s[3][0] = 0.0f;		s[3][1] = 0.0f;		s[3][2] = 0.0f;		s[3][3] = 1.0f;
 
 	//Multiply the two for the resulting local transform
-	MultMatrix44(rt, s, out_matrix);
+	return MultMatrix44(rt, s);
 }
 
-void ANode::GetWorldTransform( float out_matrix[4][4] ) {
+Matrix44 ANode::GetWorldTransform() {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
 	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(Node) ) != NULL) {
 		//Get Local Transform
-		float local[4][4];
-		GetLocalTransform( local );
+		Matrix44 local = GetLocalTransform();
 
 		//Get Parent World Transform
-		float par_world[4][4];
-		node->GetWorldTransform( par_world );
+		Matrix44 par_world = node->GetWorldTransform();
 
-		//Multipy local matrix parent world matrix for result
-		MultMatrix44( par_world, local, out_matrix );
+		//Multipy local matrix and parent world matrix for result
+		return MultMatrix44( par_world, local);
 	}
 	else {
 		//No parent transform, simply return local transform
-		GetLocalTransform( out_matrix );
+		return GetLocalTransform();
 	}
 }
 
-void ANode::GetBindPosition( float out_matrix[4][4] ) {
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 4; ++j) {
-			out_matrix[i][j] = bindPosition[i][j];
-		}
-	}
+Matrix44 ANode::GetBindPosition() {
+	return bindPosition;
+	//for (int i = 0; i < 4; ++i) {
+	//	for (int j = 0; j < 4; ++j) {
+	//		out_matrix[i][j] = bindPosition[i][j];
+	//	}
+	//}
 }
 
-void ANode::GetLocalBindPos( float out_matrix[4][4] ) {
+Matrix44 ANode::GetLocalBindPos() {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
 	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(Node) ) != NULL) {
 		//There is a node parent
 		//multiply its inverse with this block's bind position to get the local bind position
-
-		float par_mat[4][4];
-		node->GetBindPosition( par_mat );
-		float par_inv[4][4];
-		InverseMatrix44( par_mat, par_inv );
+		Matrix44 par_mat = node->GetBindPosition();
+		Matrix44 par_inv = InverseMatrix44( par_mat);
 		
-		MultMatrix44( bindPosition, par_inv, out_matrix );
+		return MultMatrix44( bindPosition, par_inv);
 	}
 	else {
 		//No parent transform, simply return local transform
-		GetBindPosition( out_matrix );
+		return GetBindPosition();
 	}
 }
 
-void ANode::SetBindPosition( float in_matrix[4][4] ) {
-	for (int i = 0; i < 4; ++i) {
-		for (int j = 0; j < 4; ++j) {
-			bindPosition[i][j] = in_matrix[i][j];
-		}
-	}
+void ANode::SetBindPosition( Matrix44 & m ) {
+	bindPosition = m;
+	//for (int i = 0; i < 4; ++i) {
+	//	for (int j = 0; j < 4; ++j) {
+	//		bindPosition[i][j] = in_matrix[i][j];
+	//	}
+	//}
 }
 
 void ANode::IncSkinRef( IBlock * skin_data ) {
@@ -444,7 +439,7 @@ string NiNode::asString() {
 	
 	out << ABlock::asString();
 
-	//matrix m;
+	//Matrix33 m;
 	//GetAttr("Rotation")->asMatrix( m );
 
 	//Vector rows[3];
@@ -861,13 +856,13 @@ void NiTriShapeData::SetTriangleCount(int n) {
 }
 
 //--Setters--//
-void NiTriShapeData::SetVertices( const vector<Vector3D> & in ) {
+void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
 	if (in.size() != vertices.size())
 		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
 	vertices = in;
 }
 
-void NiTriShapeData::SetNormals( const vector<Vector3D> & in ) {
+void NiTriShapeData::SetNormals( const vector<Vector3> & in ) {
 	if (in.size() != vertices.size())
 		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
 	normals = in;
@@ -968,7 +963,7 @@ void NiSkinData::Write( ofstream& out ) {
 }
 
 //void GetBuiltUpTransform(blk_ref block, Matrix & m/*, blk_ref stop*/) {
-//	matrix temp;
+//	Matrix33 temp;
 //	float3 t2;
 //
 //	// Do multiplication
@@ -1118,8 +1113,9 @@ void NiSkinData::StraightenSkeleton() {
 		//Friendlier name for current bone
 		Bone & bone = it->second;
 
-		//Get current offset matrix for this bone
-		float parent_offset[4][4] = {
+		//Get current offset Matrix33 for this bone
+
+		Matrix44 parent_offset = {
 			bone.rotation[0][0], bone.rotation[0][1], bone.rotation[0][2], 0.0f,
 			bone.rotation[1][0], bone.rotation[1][1], bone.rotation[1][2], 0.0f,
 			bone.rotation[2][0], bone.rotation[2][1], bone.rotation[2][2], 0.0f,
@@ -1133,8 +1129,8 @@ void NiSkinData::StraightenSkeleton() {
 
 				Bone & bone2 = it2->second;
 
-				//Get child offset matrix
-				float child_offset[4][4] = {
+				//Get child offset Matrix33
+				Matrix44 child_offset = {
 					bone2.rotation[0][0], bone2.rotation[0][1], bone2.rotation[0][2], 0.0f,
 					bone2.rotation[1][0], bone2.rotation[1][1], bone2.rotation[1][2], 0.0f,
 					bone2.rotation[2][0], bone2.rotation[2][1], bone2.rotation[2][2], 0.0f,
@@ -1142,11 +1138,8 @@ void NiSkinData::StraightenSkeleton() {
 				};
 
 				//Do calculation to get correct bone postion in relation to parent
-				float inverse_co[4][4];
-				InverseMatrix44(child_offset, inverse_co);
-				float child_pos[4][4];
-				MultMatrix44( inverse_co, parent_offset, child_pos);
-				//Matrix child_pos = child_offset.inverse() * parent_offset;
+				Matrix44 inverse_co = InverseMatrix44(child_offset);
+				Matrix44 child_pos = MultMatrix44( inverse_co, parent_offset);
 
 				//Store result in block's Bind Position Matrix
 				INode * node = (INode*)it2->first->QueryInterface(Node);
@@ -1155,7 +1148,7 @@ void NiSkinData::StraightenSkeleton() {
 				}
 
     //            //Store result in child block
-				//matrix rotate = { 
+				//Matrix33 rotate = { 
 				//	child_pos[0][0], child_pos[0][1], child_pos[0][2],
 				//	child_pos[1][0], child_pos[1][1], child_pos[1][2],
 				//	child_pos[2][0], child_pos[2][1], child_pos[2][2]
@@ -1205,7 +1198,7 @@ void NiSkinData::RepositionTriShape() {
 		//	return;
 		//}
 
-		float offset_mat[4][4] = {
+		Matrix44 offset_mat = {
 			bone.rotation[0][0], bone.rotation[0][1], bone.rotation[0][2], 0.0f,
 			bone.rotation[1][0], bone.rotation[1][1], bone.rotation[1][2], 0.0f,
 			bone.rotation[2][0], bone.rotation[2][1], bone.rotation[2][2], 0.0f,
@@ -1217,11 +1210,9 @@ void NiSkinData::RepositionTriShape() {
 		if (bone_node == NULL)
 			throw runtime_error("Failed to get Node interface.");
 
-		float bone_mat[4][4];
-		bone_node->GetBindPosition( bone_mat );
+		Matrix44 bone_mat = bone_node->GetBindPosition();
 
-		float result_mat[4][4];
-		MultMatrix44( offset_mat, bone_mat, result_mat );
+		Matrix44 result_mat = MultMatrix44( offset_mat, bone_mat);
 
 		//GetBuiltUpTransform( bone_blk, end_mat );
 
@@ -1238,7 +1229,7 @@ void NiSkinData::RepositionTriShape() {
 
 		//tri_shape->GetAttr("Translation")->Set( res_mat(3,0), res_mat(3,1), res_mat(3,2) );
 
-		//matrix rotation = { res_mat(0,0), res_mat(0,1), res_mat(0,2),
+		//Matrix33 rotation = { res_mat(0,0), res_mat(0,1), res_mat(0,2),
 		//					res_mat(1,0), res_mat(1,1), res_mat(1,2),
 		//					res_mat(2,0), res_mat(2,1), res_mat(2,2) };
 		//tri_shape->GetAttr("Rotation")->Set( rotation );
@@ -1332,13 +1323,13 @@ void NiSkinData::CalculateBoneOffsets() {
 
 		//Get bind matricies
 
-		float par_mat[4][4], bone_mat[4][4], inv_mat[4][4], res_mat[4][4];
-		par_node->GetBindPosition(par_mat);
-		bone_node->GetBindPosition(bone_mat);
+		Matrix44 par_mat, bone_mat, inv_mat, res_mat;
+		par_mat = par_node->GetBindPosition();
+		bone_mat = bone_node->GetBindPosition();
 
 		//Inverse bone matrix & multiply with parent node matrix
-		InverseMatrix44(bone_mat, inv_mat);
-		MultMatrix44(par_mat, inv_mat, res_mat);
+		inv_mat = InverseMatrix44(bone_mat);
+		res_mat = MultMatrix44(par_mat, inv_mat);
 
 		//--Extract Scale from first 3 rows--//
 		float scale[3];
@@ -1362,7 +1353,7 @@ void NiSkinData::CalculateBoneOffsets() {
 			}
 		}
 
-		//Store transform vector
+		//Store translate vector
 		it->second.translation[0] = res_mat[3][0];
 		it->second.translation[1] = res_mat[3][1];
 		it->second.translation[2] = res_mat[3][2];
@@ -1931,7 +1922,7 @@ void NiMorphData::SetVertexCount( int n ) {
 	}
 }
 
-void NiMorphData::SetMorphVerts( int n, const vector<Vector3D> & in ) {
+void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 	// Make sure the size of the incoming vector equal vertCount
 	if ( in.size() != vertCount )
 		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");

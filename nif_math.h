@@ -40,23 +40,22 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "NIF_IO.h"
 using namespace std;
 
-struct Quat {
-	float w, x, y, z;
-};
+//struct Quat {
+//	float w, x, y, z;
+//};
 
-void QuatToMatrix( fVector4 quat, ostream & out );
-void QuatToEuler( fVector4 quat, ostream & out );
-void PrintMatrix( float m[3], ostream & out );
-void MultVect3( fVector3 u, fVector3 v, fVector3 answer );
-void MultMatrix33( float a[9], float b[9], float answer[9] );
-void MultMatrix44( float a[4][4], float b[4][4], float result[4][4] );
-float DetMatrix33( float a[3][3] );
-float DetMatrix44( float a[4][4] );
-float AdjMatrix44(float a[4][4], int m, int n);
-void InverseMatrix44( float a[4][4], float result[4][4] );
-void SetIdentity33( float m[3][3] );
-void SetIdentity44( float m[4][4] );
-void PrintMatrix( float m[9], ostream & out );
-Quat MatrixToQuat( matrix m );
+void QuatToMatrix( Quaternion & quat, ostream & out );
+void QuatToEuler( Quaternion & quat, ostream & out );
+Vector3 MultVector3( Vector3 & a, Vector3 & b);
+Matrix33 MultMatrix33( Matrix33 & a, Matrix33 & b );
+Matrix44 MultMatrix44( Matrix44 & a, Matrix44 & b );
+float DetMatrix33( Matrix33 & m );
+float DetMatrix44( Matrix44 & m );
+float AdjMatrix44( Matrix44 & m, int r, int c );
+Matrix44 InverseMatrix44( Matrix44 & m );
+void SetIdentity33( Matrix33 & m );
+void SetIdentity44( Matrix44 & m );
+void PrintMatrix33( Matrix33 & m, ostream & out );
+Quaternion MatrixToQuat( Matrix33 & m );
 
 #endif

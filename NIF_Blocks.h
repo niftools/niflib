@@ -161,24 +161,24 @@ public:
 	void * QueryInterface( int id );
 	void Read( ifstream& in ) {
 		ABlock::Read( in );
-		float transform[4][4];
-		GetLocalTransform( transform );
+		Matrix44 transform;
+		transform = GetLocalTransform();
 		SetBindPosition( transform );
 	}
 
 	//INode Functions
-	void GetLocalTransform( float out_matrix[4][4] );
-	void GetWorldTransform( float out_matrix[4][4] );
-	void GetBindPosition( float out_matrix[4][4] );
-	void GetLocalBindPos( float out_matrix[4][4] );
-	void SetBindPosition( float in_matrix[4][4] );
+	Matrix44 GetLocalTransform();
+	Matrix44 GetWorldTransform();
+	Matrix44 GetBindPosition();
+	Matrix44 GetLocalBindPos();
+	void SetBindPosition( Matrix44 & m );
 
 	//INodeInternal Functions
 	void IncSkinRef( IBlock * skin_data );
 	void DecSkinRef( IBlock * skin_data );
 
 protected:
-	float bindPosition[4][4];
+	Matrix44 bindPosition;
 	list<IBlock*> skin_refs;
 };
 
@@ -566,21 +566,21 @@ class NiTriShapeData : public ABlock, public ITriShapeData {
 		void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
 		bool GetMatchDetectionMode() { return match_group_mode; }
 		//Getters
-		vector<Vector3D> GetVertices() { return vertices; }
-		vector<Vector3D> GetNormals() { return normals; }
+		vector<Vector3> GetVertices() { return vertices; }
+		vector<Vector3> GetNormals() { return normals; }
 		vector<Color> GetColors() { return colors; }
 		vector<UVCoord> GetUVSet( int index ) { return uv_sets[index]; }
 		vector<Triangle> GetTriangles() { return triangles; }
 		//Setters
-		void SetVertices( const vector<Vector3D> & in );
-		void SetNormals( const vector<Vector3D> & in );
+		void SetVertices( const vector<Vector3> & in );
+		void SetNormals( const vector<Vector3> & in );
 		void SetColors( const vector<Color> & in );
 		void SetUVSet( int index, const vector<UVCoord> & in );
 		void SetTriangles( const vector<Triangle> & in );
 
 	private:
-		vector<Vector3D> vertices;
-		vector<Vector3D> normals;
+		vector<Vector3> vertices;
+		vector<Vector3> normals;
 		vector<Color> colors;
 		vector< vector<UVCoord> > uv_sets;
 		vector<Triangle> triangles;
@@ -939,8 +939,8 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		//Translate
 		KeyType GetTranslateType() { return translationType; }
 		void SetTranslateType( KeyType t ) { translationType = t; }
-		vector< Key<Vector3D> > GetTranslateKeys() { return transKeys; }
-		void SetTranslateKeys( vector< Key<Vector3D> > & keys ) { transKeys = keys; }
+		vector< Key<Vector3> > GetTranslateKeys() { return transKeys; }
+		void SetTranslateKeys( vector< Key<Vector3> > & keys ) { transKeys = keys; }
 		//Scale
 		KeyType GetScaleType() { return scaleType; }
 		void SetScaleType( KeyType t ) { scaleType = t; }
@@ -952,7 +952,7 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		vector< Key<Quaternion> > rotKeys;
 
 		KeyType translationType;
-		vector< Key<Vector3D> >	transKeys;
+		vector< Key<Vector3> >	transKeys;
 
 		KeyType scaleType;
 		vector< Key<float> > scaleKeys;
@@ -1053,7 +1053,7 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		void RemoveBone( blk_ref bone );
 	private:
 		struct Bone {
-			matrix rotation;
+			Matrix33 rotation;
 			fVector3 translation;
 			float scale;
 			fVector4 unknown4Floats;
@@ -1061,7 +1061,7 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		};
 
 		void CalculateBoneOffsets();
-		matrix rotation;
+		Matrix33 rotation;
 		fVector3 translation;
 		float  scale;
 		int unknown;
@@ -1166,8 +1166,8 @@ class NiMorphData : public ABlock, public IMorphData {
 		void SetMorphCount( int n ) { morphs.resize( n ); }
 		vector< Key<float> > GetMorphKeys( int n ) { return morphs[n].keys; }
 		void SetMorphKeys( int n, vector< Key<float> > & keys ) { morphs[n].keys = keys; }
-		vector<Vector3D> GetMorphVerts( int n) { return morphs[n].morph; }
-		void SetMorphVerts( int n, const vector<Vector3D> & in );
+		vector<Vector3> GetMorphVerts( int n) { return morphs[n].morph; }
+		void SetMorphVerts( int n, const vector<Vector3> & in );
 
 	private:
 		struct Morph {
@@ -1175,7 +1175,7 @@ class NiMorphData : public ABlock, public IMorphData {
 			~Morph() {}
 			KeyType keyType;
 			vector< Key<float> > keys;
-			vector< Vector3D > morph;
+			vector< Vector3 > morph;
 		};
 		
 		uint vertCount;

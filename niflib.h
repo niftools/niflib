@@ -78,6 +78,9 @@ const int KeyframeData = 3;
 const int TextKeyExtraData = 4;
 const int MorphData = 5;
 
+//Key Types
+enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };
+
 //--Main Functions--//
 
 //Reads the given file by file name and returns a vector of block references
@@ -109,12 +112,152 @@ INode * QueryNode( blk_ref & block );
 IKeyframeData * QueryKeyframeData( blk_ref & block );
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 IMorphData * QueryMorphData ( blk_ref & block );
-//--TypeDefs--//
 
-typedef float float3[3];
-typedef float matrix[3][3];
-typedef float transform[4][4];
-//typedef pair<link_type, blk_ref> blk_pair;
+//--Simlpe Structures--//
+
+struct Float3 {
+	float data[3];
+	float & operator[](int n) {
+		return data[n];
+	}
+	float operator[](int n) const {
+		return data[n];
+	}
+	float & Get(int n) {
+		return data[n];
+	}
+};
+
+struct UVCoord {
+	float u, v;
+	void Set(float u, float v) {
+		this->u = u;
+		this->v = v;
+	}
+};
+
+struct Triangle {
+	short v1, v2, v3;
+	void Set(short v1, short v2, short v3) {
+		this->v1 = v1;
+		this->v2 = v2;
+		this->v3 = v3;
+	}
+};
+
+struct Vector3 {
+	float x, y, z;
+	void Set(float x, float y, float z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+};
+
+struct MatrixRow3 {
+	float cols[3];
+	float & operator[](int n) {
+		return cols[n];
+	}
+	float operator[](int n) const {
+		return cols[n];
+	}
+};
+
+struct Matrix33 {
+	MatrixRow3 rows[3];
+	MatrixRow3 & operator[](int n) {
+		return rows[n];
+	}
+	const MatrixRow3 & operator[](int n) const {
+		return rows[n];
+	}
+	void Set(
+		float m11, float m12, float m13,
+		float m21, float m22, float m23,
+		float m31, float m32, float m33
+	) {
+		rows[0][2] = m11; rows[0][2] = m12; rows[0][2] = m13;
+		rows[1][0] = m21; rows[1][1] = m22; rows[1][2] = m23;
+		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33;
+	}
+	void Set( int row, int col, float value ) {
+		rows[row][col] = value;
+	}
+	float & Get( int row, int col ) {
+		return rows[row][col];
+	}
+	void AsFloatArr( float out[3][3] ) {
+		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2];
+		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2];
+		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2];
+	}
+};
+
+struct MatrixRow4 {
+	float cols[4];
+	float & operator[](int n) {
+		return cols[n];
+	}
+};
+
+struct Matrix44 {
+	MatrixRow4 rows[4];
+	MatrixRow4 & operator[](int n) {
+		return rows[n];
+	}
+	void Set(
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44
+	) {
+		rows[0][0] = m11; rows[0][1] = m12; rows[0][2] = m13; rows[0][3] = m14;
+		rows[1][0] = m21; rows[1][1] = m22; rows[1][2] = m23; rows[1][3] = m24;
+		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33; rows[2][3] = m34;
+		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
+	}
+	void AsFloatArr( float out[4][4] ) {
+		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
+		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2]; out[1][3] = rows[1][3];
+		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2]; out[2][3] = rows[2][3];
+		out[3][0] = rows[3][0]; out[3][1] = rows[3][1]; out[3][2] = rows[3][2]; out[3][3] = rows[3][3];
+	}
+	void Set(int row, int col, float value) {
+		rows[row][col] = value;
+	}
+	float & Get(int row, int col) {
+		return rows[row][col];
+	}
+};
+
+
+struct Color {
+	float r, g, b, a;
+	void Set(float r, float g, float b) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+	}
+};
+
+struct Quaternion {
+	float w, x, y, z;
+	void Set(float w, float x, float y, float z) {
+		this->w = w;
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+};
+
+
+template <class T> 
+struct Key {
+	float time;
+	T data, forward_tangent, backward_tangent;
+	float tension, bias, continuity;
+};
 
 //--Main Interfaces--//
 
@@ -160,28 +303,26 @@ public:
 	//Getters
 	virtual int asInt() const = 0;
 	virtual float asFloat() const = 0;
-	virtual void asFloat3( float3 &out ) const = 0;
+	virtual Float3 asFloat3() const = 0;
 	virtual string asString() const = 0;
-	virtual void asMatrix( matrix &out ) const = 0;
+	virtual Matrix33 asMatrix() const = 0;
 	virtual blk_ref asLink() const = 0;
 	virtual TextureSource asTextureSource() const = 0;
 	virtual BoundingBox asBoundingBox() const = 0;
 	virtual ConditionalInt asConditionalInt() const = 0;
 	virtual Texture asTexture() const = 0;
-	virtual vector<float> asFloatList() const = 0;
 	virtual list<blk_ref> asLinkList() const = 0;
 	//Setters
 	virtual void Set(int) = 0;
 	virtual void Set(float) = 0;
 	virtual void Set(float, float, float) = 0;
-	virtual void Set(string) = 0;
-	virtual void Set(matrix) = 0;
+	virtual void Set(string&) = 0;
+	virtual void Set(Matrix33&) = 0;
 	virtual void Set( blk_ref & n ) = 0;
 	virtual void Set(TextureSource&) = 0;
 	virtual void Set(BoundingBox&) = 0;
 	virtual void Set(ConditionalInt&) = 0;
 	virtual void Set(Texture&) = 0;
-	virtual void Set(vector<float>) = 0;
 	//Link functions
 	virtual bool HasLinks() = 0;
 	virtual void AddLink( blk_ref block ) = 0;
@@ -191,44 +332,17 @@ public:
 	virtual blk_ref FindLink( string block_type ) = 0;
 };
 
-struct UVCoord {
-	float u, v;
-};
 
-struct Triangle {
-	short v1, v2, v3;
-};
-
-struct Vector3D {
-	float x, y, z;
-};
-
-struct Color {
-	float r, g, b, a;
-};
-
-struct Quaternion {
-	float w, x, y, z;
-};
-
-template <class T> 
-struct Key {
-	float time;
-	T data, forward_tangent, backward_tangent;
-	float tension, bias, continuity;
-};
-
-enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };
 
 class INode {
 public:
 	INode() {}
 	virtual ~INode() {}
-	virtual void GetLocalTransform( float out_matrix[4][4] ) = 0;
-	virtual void GetWorldTransform( float out_matrix[4][4] ) = 0;
-	virtual void GetBindPosition( float out_matrix[4][4] ) = 0;
-	virtual void SetBindPosition( float in_matrix[4][4] ) = 0;
-	virtual void GetLocalBindPos( float out_matrix[4][4] ) = 0;
+	virtual Matrix44 GetLocalTransform() = 0;
+	virtual Matrix44 GetWorldTransform() = 0;
+	virtual Matrix44 GetBindPosition() = 0;
+	virtual void SetBindPosition( Matrix44 & m ) = 0;
+	virtual Matrix44 GetLocalBindPos() = 0;
 };
 
 class ITriShapeData {
@@ -246,14 +360,14 @@ public:
 	virtual void SetMatchDetectionMode(bool choice) = 0;
 	virtual bool GetMatchDetectionMode() = 0;
 	//Getters
-	virtual vector<Vector3D> GetVertices() = 0;
-	virtual vector<Vector3D> GetNormals() = 0;
+	virtual vector<Vector3> GetVertices() = 0;
+	virtual vector<Vector3> GetNormals() = 0;
 	virtual vector<Color> GetColors() = 0;
 	virtual vector<UVCoord> GetUVSet( int index ) = 0;
 	virtual vector<Triangle> GetTriangles() = 0;
 	//Setters
-	virtual void SetVertices( const vector<Vector3D> & in ) = 0;
-	virtual void SetNormals( const vector<Vector3D> & in ) = 0;
+	virtual void SetVertices( const vector<Vector3> & in ) = 0;
+	virtual void SetNormals( const vector<Vector3> & in ) = 0;
 	virtual void SetColors( const vector<Color> & in ) = 0;
 	virtual void SetUVSet( int index, const vector<UVCoord> & in ) = 0;
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
@@ -281,8 +395,8 @@ public:
 	//Translate
 	virtual KeyType GetTranslateType() = 0;
 	virtual void SetTranslateType( KeyType t ) = 0;
-	virtual vector< Key<Vector3D> > GetTranslateKeys() = 0;
-	virtual void SetTranslateKeys( vector< Key<Vector3D> > & keys ) = 0;
+	virtual vector< Key<Vector3> > GetTranslateKeys() = 0;
+	virtual void SetTranslateKeys( vector< Key<Vector3> > & keys ) = 0;
 	//Scale
 	virtual KeyType GetScaleType() = 0;
 	virtual void SetScaleType( KeyType t ) = 0;
@@ -308,8 +422,8 @@ public:
 	virtual void SetMorphCount( int n ) = 0;
 	virtual vector< Key<float> > GetMorphKeys( int n ) = 0;
 	virtual void SetMorphKeys( int n, vector< Key<float> > & keys ) = 0;
-	virtual vector<Vector3D> GetMorphVerts( int n) = 0;
-	virtual void SetMorphVerts( int n, const vector<Vector3D> & in ) = 0;
+	virtual vector<Vector3> GetMorphVerts( int n) = 0;
+	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
 };
 
 //--Attribute Reference--//
@@ -363,7 +477,7 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(float3 & n) {
+	attr_ref & operator=(Float3 & n) {
 		_attr->Set(n[0], n[1], n[2]);
 		return *this;
 	}
@@ -371,7 +485,7 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(matrix & n) {
+	attr_ref & operator=(Matrix33 & n) {
 		_attr->Set(n);
 		return *this;
 	}
@@ -399,9 +513,10 @@ public:
 	//Conversion fuctions
 	operator int() { return _attr->asInt(); }
 	operator float() { return _attr->asFloat(); }
-	//Float3
+	operator Float3() { return _attr->asFloat3(); }
 	operator string() { return _attr->asString(); }
-	//operator matrix();
+	
+	operator Matrix33() { return _attr->asMatrix(); }
 	operator blk_ref();
 	operator TextureSource();
 	operator BoundingBox();

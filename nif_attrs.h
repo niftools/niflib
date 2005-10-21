@@ -53,27 +53,25 @@ public:
 	//Getters
 	int asInt() const { throw runtime_error(ATTRERR); }
 	float asFloat() const { throw runtime_error(ATTRERR); }
-	void asFloat3( float3 &out ) const { throw runtime_error(ATTRERR); }
-	void asMatrix( matrix &out ) const { throw runtime_error(ATTRERR); }
+	Float3 asFloat3() const { throw runtime_error(ATTRERR); }
+	Matrix33 asMatrix() const { throw runtime_error(ATTRERR); }
 	blk_ref asLink() const { throw runtime_error(ATTRERR); }
 	TextureSource asTextureSource() const { throw runtime_error(ATTRERR); }
 	BoundingBox asBoundingBox() const { throw runtime_error(ATTRERR); }
 	ConditionalInt asConditionalInt() const { throw runtime_error(ATTRERR); }
 	Texture asTexture() const { throw runtime_error(ATTRERR); }
-	vector<float> asFloatList() const { throw runtime_error(ATTRERR); }
 	list<blk_ref> asLinkList() const { throw runtime_error(ATTRERR); }
 	//Setters
 	void Set(int) { throw runtime_error(ATTRERR); }
 	void Set(float) { throw runtime_error(ATTRERR); }
 	void Set(float, float, float) { throw runtime_error(ATTRERR); }
-	void Set(string) { throw runtime_error(ATTRERR); }
-	void Set(matrix) { throw runtime_error(ATTRERR); }
+	void Set(string&) { throw runtime_error(ATTRERR); }
+	void Set(Matrix33&) { throw runtime_error(ATTRERR); }
 	void Set(blk_ref&) { throw runtime_error(ATTRERR); }
 	void Set(TextureSource&) { throw runtime_error(ATTRERR); }
 	void Set(BoundingBox&) { throw runtime_error(ATTRERR); }
 	void Set(ConditionalInt&) { throw runtime_error(ATTRERR); }
 	void Set(Texture&) { throw runtime_error(ATTRERR); }
-	void Set(vector<float>) { throw runtime_error(ATTRERR); }
 	//Link functions
 	bool HasLinks() { return false; }
 	void AddLink( blk_ref block ) { cout << "AddLink" << endl; throw runtime_error(ATTRERR); }
@@ -258,8 +256,16 @@ public:
 	}
 	~Float3Attr() {}
 	string GetType() const { return "float3"; }
-	void Read( ifstream& in ) { ReadFVector3( data, in ); }
-	void Write( ofstream& out ) { WriteFVector3( data, out ); }
+	void Read( ifstream& in ) { 
+		data[0] = ReadFloat( in );
+		data[1] = ReadFloat( in );
+		data[2] = ReadFloat( in );
+	}
+	void Write( ofstream& out ) {
+		WriteFloat( data[0], out );
+		WriteFloat( data[1], out );
+		WriteFloat( data[2], out );
+	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -269,21 +275,21 @@ public:
 		
 		return out.str();
 	}
-	void asFloat3( float3 &out ) const { out[0] = data[0];  out[1] = data[1]; out[2] = data[2]; }
+	Float3 asFloat3() const { return data; }
 	void Set(float n0, float n1, float n2) { data[0] = n0; data[1] = n1; data[2] = n2; }
 	
-	vector<float> asFloatList() const {
-		vector<float> list(3);
-		list[0] = data[0];	list[1] = data[1];	list[2] = data[2];
-		return list;
-	}
-	void Set(vector<float> n ) {
-		if ( n.size() != 3)
-			throw runtime_error("List size must equal 3");
-		data[0] = n[0];	data[1] = n[1];	data[2] = n[2];
-	}
+	//vector<float> asFloatList() const {
+	//	vector<float> list(3);
+	//	list[0] = data[0];	list[1] = data[1];	list[2] = data[2];
+	//	return list;
+	//}
+	//void Set(vector<float> n ) {
+	//	if ( n.size() != 3)
+	//		throw runtime_error("List size must equal 3");
+	//	data[0] = n[0];	data[1] = n[1];	data[2] = n[2];
+	//}
 private:
-	float3 data;
+	Float3 data;
 };
 
 class StringAttr : public AAttr {
@@ -294,7 +300,7 @@ public:
 	void Read( ifstream& in ) { data = ReadString( in ); }
 	void Write( ofstream& out ) { WriteString( data, out ); }
 	string asString() const { return data; }
-	void Set(string n) { data = n; }
+	void Set(string & n) { data = n; }
 private:
 	string data;
 };
@@ -413,14 +419,15 @@ public:
 		
 		return out.str();
 	}
-	void asMatrix( matrix &out ) const {
-		for (int c = 0; c < 3; ++c) {
-			for (int r = 0; r < 3; ++r) {
-				out[r][c] = data[r][c];
-			}
-		}
+	Matrix33 asMatrix() const {
+		return data;
+		//for (int c = 0; c < 3; ++c) {
+		//	for (int r = 0; r < 3; ++r) {
+		//		out[r][c] = data[r][c];
+		//	}
+		//}
 	}
-	void Set( matrix n ) {
+	void Set( Matrix33 & n ) {
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				data[r][c] = n[r][c];
@@ -428,23 +435,23 @@ public:
 		}
 	}
 
-	vector<float> asFloatList() const {
-		vector<float> list(9);
-		list[0] = data[0][0];	list[1] = data[0][1];	list[2] = data[0][2];
-		list[0] = data[1][0];	list[1] = data[1][1];	list[2] = data[1][2];
-		list[0] = data[2][0];	list[1] = data[2][1];	list[2] = data[2][2];
-		return list;
-	}
-	void Set(vector<float> n ) {
-		if ( n.size() != 9)
-			throw runtime_error("List size must equal 9");
+	//vector<float> asFloatList() const {
+	//	vector<float> list(9);
+	//	list[0] = data[0][0];	list[1] = data[0][1];	list[2] = data[0][2];
+	//	list[0] = data[1][0];	list[1] = data[1][1];	list[2] = data[1][2];
+	//	list[0] = data[2][0];	list[1] = data[2][1];	list[2] = data[2][2];
+	//	return list;
+	//}
+	//void Set(vector<float> n ) {
+	//	if ( n.size() != 9)
+	//		throw runtime_error("List size must equal 9");
 
-		data[0][0] = n[0];	data[0][1] = n[1];	data[0][2] = n[2];
-		data[1][0] = n[0];	data[1][1] = n[1];	data[1][2] = n[2];
-		data[2][0] = n[0];	data[2][1] = n[1];	data[2][2] = n[2];
-	}
+	//	data[0][0] = n[0];	data[0][1] = n[1];	data[0][2] = n[2];
+	//	data[1][0] = n[0];	data[1][1] = n[1];	data[1][2] = n[2];
+	//	data[2][0] = n[0];	data[2][1] = n[1];	data[2][2] = n[2];
+	//}
 private:
-	matrix data;
+	Matrix33 data;
 };
 
 class BoneAttr : public AAttr {

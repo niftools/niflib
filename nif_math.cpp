@@ -33,41 +33,39 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "nif_math.h"
 
-void PrintMatrix( float m[9], ostream & out ) {
+void PrintMatrix( Matrix33 & m, ostream & out ) {
 	out << endl
-		<< "      |" << setw(8) << m[0] << "," << setw(8) << m[1] << "," << setw(8) << m[2] << " |" << endl
-		<< "      |" << setw(8) << m[3] << "," << setw(8) << m[4] << "," << setw(8) << m[5] << " |" << endl
-		<< "      |" << setw(8) << m[6] << "," << setw(8) << m[7] << "," << setw(8) << m[8] << " |" <<endl;
+		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
+		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
+		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" <<endl;
 }
 
-void MultVect3( fVector3 u, fVector3 v, fVector3 answer ) {
-	answer[0] = u[1] * v[2] - u[2] * v[1];
-	answer[1] = u[2] * v[0] - u[0] * v[2];
-	answer[2] = u[0] * v[1] - u[1] * v[0];
+Vector3 MultVector3( Vector3 & a, Vector3 & b ) {
+	Vector3 answer;
+	answer.x = a.y * b.z - a.z * b.y;
+	answer.y = a.z * b.x - a.x * b.z;
+	answer.z = a.x * b.y - a.y * b.x;
+
+	return answer;
 }
 
-void SetIdentity33( float m[3][3] ) {
+void SetIdentity33( Matrix33 & m ) {
 	m[0][0] = 1.0f;	m[0][1] = 0.0f;	m[0][2] = 0.0f;
 	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;
 	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;
 }
 
-void SetIdentity44( float m[4][4] ) {
+void SetIdentity44( Matrix44 & m ) {
 	m[0][0] = 1.0f;	m[0][1] = 0.0f;	m[0][2] = 0.0f;	m[0][3] = 0.0f;
 	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;	m[1][3] = 0.0f;
 	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;	m[2][3] = 0.0f;
 	m[3][0] = 0.0f;	m[3][1] = 0.0f;	m[3][2] = 0.0f;	m[3][3] = 1.0f;
 }
 
-void MatrixToEuler( float m[9], fVector3 answer ) {
+//Vector3 MatrixToEuler( Matrix33 & m ) {}
 
-
-
-
-}
-
-Quat MatrixToQuat( matrix m ) {
-	Quat quat;
+Quaternion MatrixToQuat( Matrix33 & m ) {
+	Quaternion quat;
 	float tr, s, q[4];
 	int i, j, k;
 
@@ -110,22 +108,10 @@ Quat MatrixToQuat( matrix m ) {
 	return quat;
 }
 
-void MultMatrix33( float a[9], float b[9], float answer[9] ) {
-	for (int c = 0; c < 3; ++c) {
-		for (int r = 0; r < 3; ++r) {
-			float t = 0.0f;
-			for (int i = 0; i < 3; ++i) {
-				t += a[c * 3 + i] * b[i * 3 + r];
-			}
-			answer[c * 3 + r] = t;
-		}
-	}
-}
-
-void MultMatrix44( float a[4][4], float b[4][4], float result[4][4] ) {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			//result[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j] + a[i][2] * b[2][j];
+Matrix33 MultMatrix33( Matrix33 & a, Matrix33 & b ) {
+	Matrix33 result;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
 			float t = 0.0f;
 			for (int k = 0; k < 4; k++) {
 				t += a[i][k] * b[k][j];
@@ -133,80 +119,97 @@ void MultMatrix44( float a[4][4], float b[4][4], float result[4][4] ) {
 			result[i][j] = t;
 		}
 	}
+	return result;
 }
 
-float DetMatrix33( float a[3][3] ) {
-	return  a[0][0]*(a[1][1]*a[2][2]-a[1][2]*a[2][1])
-		  - a[0][1]*(a[1][0]*a[2][2]-a[1][2]*a[2][0])
-		  + a[0][2]*(a[1][0]*a[2][1]-a[1][1]*a[2][0]);
+Matrix44 MultMatrix44( Matrix44 & a, Matrix44 & b ) {
+	Matrix44 result;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			float t = 0.0f;
+			for (int k = 0; k < 4; k++) {
+				t += a[i][k] * b[k][j];
+			}
+			result[i][j] = t;
+		}
+	}
+	return result;
 }
 
-float DetMatrix44( float a[4][4] ) {
-	float sub1[3][3] = {
-		a[1][1], a[1][2], a[1][3],
-		a[2][1], a[2][2], a[2][3],
-		a[3][1], a[3][2], a[3][3]
-	};
-
-	float sub2[3][3] = {
-		a[1][0], a[1][2], a[1][3],
-		a[2][0], a[2][2], a[2][3],
-		a[3][0], a[3][2], a[3][3]
-	};
-
-	float sub3[3][3] = {
-		a[1][0], a[1][1], a[1][3],
-		a[2][0], a[2][1], a[2][3],
-		a[3][0], a[3][1], a[3][3] 
-	};
-
-	float sub4[3][3] = {
-		a[1][0], a[1][1], a[1][2],
-		a[2][0], a[2][1], a[2][2],
-		a[3][0], a[3][1], a[3][2]
-	};
-
-	return  a[0][0] * DetMatrix33( sub1 )
-	      - a[0][1] * DetMatrix33( sub2 )
-	      + a[0][2] * DetMatrix33( sub3 )
-	      - a[0][3] * DetMatrix33( sub4 );
+float DetMatrix33( Matrix33 & m ) {
+	return  m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1])
+		  - m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0])
+		  + m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
 }
 
-float AdjMatrix44(float a[4][4], int m, int n) {
-	float sub[3][3];
+float DetMatrix44( Matrix44 & m ) {
+	Matrix33 sub1 = {
+		m[1][1], m[1][2], m[1][3],
+		m[2][1], m[2][2], m[2][3],
+		m[3][1], m[3][2], m[3][3]
+	};
+
+	Matrix33 sub2 = {
+		m[1][0], m[1][2], m[1][3],
+		m[2][0], m[2][2], m[2][3],
+		m[3][0], m[3][2], m[3][3]
+	};
+
+	Matrix33 sub3  = {
+		m[1][0], m[1][1], m[1][3],
+		m[2][0], m[2][1], m[2][3],
+		m[3][0], m[3][1], m[3][3] 
+	};
+
+	Matrix33 sub4 = {
+		m[1][0], m[1][1], m[1][2],
+		m[2][0], m[2][1], m[2][2],
+		m[3][0], m[3][1], m[3][2]
+	};
+
+	return  m[0][0] * DetMatrix33( sub1 )
+	      - m[0][1] * DetMatrix33( sub2 )
+	      + m[0][2] * DetMatrix33( sub3 )
+	      - m[0][3] * DetMatrix33( sub4 );
+}
+
+float AdjMatrix44(Matrix44 & m, int skip_r, int skip_c) {
+	Matrix33 sub;
 	int i = 0, j = 0;
 	for (int r = 0; r < 4; r++) {
-		if (r == n)
+		if (r == skip_c)
 			continue;
 		for (int c = 0; c < 4; c++) {
-			if (c == m)
+			if (c == skip_r)
 				continue;
-			sub[i][j] = a[r][c];
+			sub[i][j] = m[r][c];
 			j++;
 		}
 		i++;
 		j = 0;
 	}
 
-	return pow(-1.0f, float(m + n)) * DetMatrix33( sub );
+	return pow(-1.0f, float(skip_r + skip_c)) * DetMatrix33( sub );
 }
 
-void InverseMatrix44( float a[4][4], float result[4][4] ) {
-	float det = DetMatrix44(a);
+Matrix44 InverseMatrix44( Matrix44 & m ) {
+	Matrix44 result;
+	float det = DetMatrix44(m);
 	for (int r = 0; r < 4; r++) {
 		for (int c = 0; c < 4; c++) {
-			result[r][c] = AdjMatrix44(a, r, c) / det;
+			result[r][c] = AdjMatrix44(m, r, c) / det;
 		}
 	}
+	return result;
 }
 
-void QuatToMatrix( fVector4 quat, ostream & out ) {
-	float m[3][3]; // Matrix
+void QuatToMatrix( Quaternion & quat, ostream & out ) {
+	Matrix33 m;
 
-	float w = quat[0];
-	float x = quat[1];
-	float y = quat[2];
-	float z = quat[3];
+	float w = quat.w;
+	float x = quat.x;
+	float y = quat.y;
+	float z = quat.z;
 
 	float w2 = w * w;
 	float x2 = x * x;
@@ -237,11 +240,11 @@ void QuatToMatrix( fVector4 quat, ostream & out ) {
 		<< "         Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
 }
 
-void QuatToEuler( fVector4 quat, ostream & out ) {
-	float w = quat[0];
-	float x = quat[1];
-	float y = quat[2];
-	float z = quat[3];
+void QuatToEuler( Quaternion & quat, ostream & out ) {
+	float w = quat.w;
+	float x = quat.x;
+	float y = quat.y;
+	float z = quat.z;
 
 //heading = atan2(2*qy*qw-2*qx*qz , 1 - 2*qy2 - 2*qz2)
 //attitude = asin(2*qx*qy + 2*qz*qw)
