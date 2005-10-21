@@ -123,7 +123,10 @@ struct Float3 {
 	float operator[](int n) const {
 		return data[n];
 	}
-	float & Get(int n) {
+	void Set(int n, float value) {
+		data[n] = value;
+	}
+	float Get(int n) {
 		return data[n];
 	}
 };
@@ -184,7 +187,7 @@ struct Matrix33 {
 	void Set( int row, int col, float value ) {
 		rows[row][col] = value;
 	}
-	float & Get( int row, int col ) {
+	float Get( int row, int col ) {
 		return rows[row][col];
 	}
 	void AsFloatArr( float out[3][3] ) {
@@ -226,7 +229,7 @@ struct Matrix44 {
 	void Set(int row, int col, float value) {
 		rows[row][col] = value;
 	}
-	float & Get(int row, int col) {
+	float Get(int row, int col) {
 		return rows[row][col];
 	}
 };
