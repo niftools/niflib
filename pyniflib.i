@@ -43,14 +43,14 @@ POSSIBILITY OF SUCH DAMAGE. */
     try {
       $action
     }
-    //SWIG_CATCH_STDEXCEPT // catch std::exception 
+    SWIG_CATCH_STDEXCEPT // catch std::exception 
     catch (...) {
-      SWIG_exception(SWIG_UnknownError, "Unknown exception");
+     SWIG_exception(SWIG_UnknownError, "Unknown exception");
     }
 }
 
 %{
-#include "niflib.h"
+	#include "niflib.h"
 %}
 
 template <class T> 
@@ -72,7 +72,7 @@ struct Key {
 %template(Key_Quaternion) Key<Quaternion>;
 %template(vector_Key_Quaternion) std::vector< Key<Quaternion> >;
 %template(Key_Vector3) Key<Vector3>;
-%template(vector_Key_Vector3) std::vector< Key<Vector3> >;
+%template(vector_Key_Vector3D) std::vector< Key<Vector3> >;
 %template(Key_float) Key<float>;
 %template(vector_Key_float) std::vector< Key<float> >;
 %template(Key_string) Key<std::string>;
