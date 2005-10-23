@@ -81,7 +81,7 @@ public:
 	~ABlock();
 	void AddAttr( string type, string name );
 	attr_ref GetAttr(string attr_name);
-	vector<attr_ref> GetAttrList();
+	vector<attr_ref> GetAttrs();
 	int GetBlockNum() { return _block_num; }
 	string asString();
 

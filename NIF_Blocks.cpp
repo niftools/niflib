@@ -135,7 +135,7 @@ attr_ref ABlock::GetAttr(string attr_name) {
 }
 
 
-vector<attr_ref> ABlock::GetAttrList() {
+vector<attr_ref> ABlock::GetAttrs() {
 	return _attr_vect;
 }
 

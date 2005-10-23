@@ -285,7 +285,7 @@ public:
 
 	//Attribute Functions
 	virtual attr_ref GetAttr(string attr_name) = 0;
-	virtual vector<attr_ref> GetAttrList() = 0;
+	virtual vector<attr_ref> GetAttrs() = 0;
 
 	//Link Functions
 	virtual list<blk_ref> GetLinks() = 0;
