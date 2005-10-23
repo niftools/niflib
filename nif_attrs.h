@@ -64,7 +64,7 @@ public:
 	//Setters
 	void Set(int) { throw runtime_error(ATTRERR); }
 	void Set(float) { throw runtime_error(ATTRERR); }
-	void Set(float, float, float) { throw runtime_error(ATTRERR); }
+	void Set(Float3&) { throw runtime_error(ATTRERR); }
 	void Set(string&) { throw runtime_error(ATTRERR); }
 	void Set(Matrix33&) { throw runtime_error(ATTRERR); }
 	void Set(blk_ref&) { throw runtime_error(ATTRERR); }
@@ -276,7 +276,7 @@ public:
 		return out.str();
 	}
 	Float3 asFloat3() const { return data; }
-	void Set(float n0, float n1, float n2) { data[0] = n0; data[1] = n1; data[2] = n2; }
+	void Set(Float3& n) { data = n; }
 	
 	//vector<float> asFloatList() const {
 	//	vector<float> list(3);

@@ -317,7 +317,7 @@ public:
 	//Setters
 	virtual void Set(int) = 0;
 	virtual void Set(float) = 0;
-	virtual void Set(float, float, float) = 0;
+	virtual void Set(Float3&) = 0;
 	virtual void Set(string&) = 0;
 	virtual void Set(Matrix33&) = 0;
 	virtual void Set( blk_ref & n ) = 0;
@@ -480,7 +480,7 @@ public:
 		return *this;
 	}
 	attr_ref & operator=(Float3 & n) {
-		_attr->Set(n[0], n[1], n[2]);
+		_attr->Set(n);
 		return *this;
 	}
 	attr_ref & operator=(string & n) {
