@@ -1332,7 +1332,7 @@ public:
 	}
 	void asString( ostream & out ) {
 		out << ABlock::asString();
-		out << UnknownMixIn::asString;
+		out << UnknownMixIn::asString();
 	}
 	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
 };
@@ -1487,6 +1487,5 @@ public:
 //	~NiParticleSystemController(){}
 //	string GetBlockType() { return "NiParticleSystemController"; }
 //};
-
 
 #endif // TAH_NIF_LIB_NIF_BLOCKS_H

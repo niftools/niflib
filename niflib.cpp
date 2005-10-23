@@ -173,7 +173,8 @@ blk_ref CreateBlock( string block_type ) {
 //Reads the given file by file name and returns a reference to the root block
 blk_ref ReadNifTree( string file_name ) {
 	//Read block list
-	return FindRoot( ReadNifList( file_name ) );
+	vector<blk_ref> blocks = ReadNifList( file_name );
+	return FindRoot( blocks );
 }
 
 blk_ref FindRoot( vector<blk_ref> & blocks ) {
@@ -248,7 +249,8 @@ vector<blk_ref> ReadNifList( string file_name ) {
 		in.read( blockName, blockNameLength );
 		blockName[blockNameLength] = 0;
 		if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
-			cout << "ERROR!  Bad block position.  Invalid Name:  " << Str(blockName, blockNameLength) << "\a" << endl;
+			Str block_name(blockName, blockNameLength);
+			cout << "ERROR!  Bad block position.  Invalid Name:  " << block_name << "\a" << endl;
 			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 			cout << blocks[i - 1]->asString();
 			throw runtime_error("Read failue - Bad block position");

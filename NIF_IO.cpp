@@ -301,3 +301,38 @@ ostream & operator<<(ostream & lh, nifIndex & rh) {
 	}
 	return lh;
 }
+
+ostream & operator<<(ostream & lh, Str & rh) {
+	//Fix string
+	char * s = new char[rh._n + 1];
+	strncpy(s, rh._c, rh._n);
+	s[rh._n] = 0;
+	lh << s;
+	delete [] s;
+	return lh;
+}
+
+ostream & operator<<(ostream & lh, Hex & rh) {
+	return lh << dec << rh._n << " (0x" << hex << uppercase << rh._n << ")" << dec;
+}
+
+ostream & operator<<(ostream & lh, Index & rh) {
+	if (int(rh._n) != -1)
+		return lh << "Block " << rh._n;
+	else
+		return lh << "None";
+}
+
+ostream & operator<<(ostream & lh, Bin & rh) {
+	uint x = rh._n;
+	for (uint i = 0; i < rh._w; i++) {
+		if((x & 0x80) !=0) {
+			lh << "1";
+		}
+		else {
+			lh << "0";
+		}
+		x <<= 1;
+	}
+	return lh;
+}

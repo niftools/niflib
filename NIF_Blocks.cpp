@@ -210,7 +210,8 @@ list<blk_ref> ABlock::GetLinks() {
 	vector<attr_ref>::iterator it;
 	for ( it = _attr_vect.begin(); it != _attr_vect.end(); ++it ) {
 		if ( (*it)->HasLinks() == true ) {
-			links.merge( list<blk_ref>(*it) );
+			list<blk_ref> link_list = (*it)->asLinkList();
+			links.merge( link_list );
 		}
 	}
 
