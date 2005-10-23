@@ -463,7 +463,9 @@ class NiSourceTexture : public ANamed{
 class NiPixelData : public ABlock{
 
 	public:
-		NiPixelData(){ data = NULL; }
+		NiPixelData(){
+			AddAttr( "index", "Unknown Index" );
+			data = NULL; }
 		~NiPixelData(){ if (data != NULL) delete [] data; }
 
 		void Read( ifstream& in );
@@ -478,7 +480,7 @@ class NiPixelData : public ABlock{
 		
 		uint unknownInt, rMask, gMask, bMask, aMask, bpp;
 		byte unknown8Bytes[8];
-		uint unknownIndex, mipCount, bytesPerPixel;
+		uint mipCount, bytesPerPixel;
 		vector<MipMap> mipmaps;
 		uint dataSize;
 		byte * data;

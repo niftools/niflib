@@ -1945,7 +1945,8 @@ void NiPixelData::Read( ifstream& in ) {
 		unknown8Bytes[i] = ReadByte( in );
 	}
 
-	unknownIndex = ReadUInt( in );
+	GetAttr("Unknown Index")->Read( in );
+
 	mipCount = ReadUInt( in );
 	bytesPerPixel = ReadUInt( in );
 
@@ -1967,20 +1968,23 @@ string NiPixelData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
+	Hex r_mask(rMask), b_mask(bMask), g_mask(gMask), a_mask(aMask);
+
 	out << "Unknown Int:  " << unknownInt << endl
-		<< "Red Mask:   " << Hex(rMask) << endl
-		<< "Blue Mask:  " << Hex(bMask) << endl
-		<< "Green Mask: " << Hex(gMask) << endl
-		<< "Alpha Mask: " << Hex(aMask) << endl
+		<< "Red Mask:   " << r_mask << endl
+		<< "Blue Mask:  " << b_mask << endl
+		<< "Green Mask: " << g_mask << endl
+		<< "Alpha Mask: " << a_mask << endl
 		<< "Bits Per Pixel:  " << bpp << endl
 		<< "Unknown 8 Bytes:" << endl;
 
 	for (int i = 0; i < 8; ++i) {
-		out << Hex(unknown8Bytes[i]) << "  ";
+		Hex unk8by(unknown8Bytes[i]);
+		out << unk8by << "  ";
 	}
 	out << endl;
 
-	out << "Unkown Index:  " << Index(unknownIndex) << endl
+	out << "Unknown Index:  " <<  GetAttr("Next Extra Data")->asLink() << endl
 		<< "Mipmap Count:  " << mipCount << endl
 		<< "Bytes Per Pixel:  " << bytesPerPixel << endl;
 
