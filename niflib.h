@@ -123,6 +123,11 @@ struct Float3 {
 	float operator[](int n) const {
 		return data[n];
 	}
+	void Set( float f1, float f2, float f3 ) {
+		data[0] = f1;
+		data[1] = f2;
+		data[3] = f3;
+	}
 	void Set(int n, float value) {
 		data[n] = value;
 	}
