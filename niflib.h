@@ -280,8 +280,7 @@ public:
 
 	//Attribute Functions
 	virtual attr_ref GetAttr(string attr_name) = 0;
-	virtual attr_ref GetAttr(int index) = 0;
-	virtual int AttrCount() = 0;
+	virtual vector<attr_ref> GetAttrList() = 0;
 
 	//Link Functions
 	virtual list<blk_ref> GetLinks() = 0;
@@ -633,9 +632,6 @@ public:
 		}
 	}
 	attr_ref operator[] ( string index ) {
-		return _block->GetAttr(index);
-	}
-	attr_ref operator[] ( int index ) {
 		return _block->GetAttr(index);
 	}
 	int get_index() const {

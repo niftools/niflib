@@ -81,10 +81,8 @@ public:
 	~ABlock();
 	void AddAttr( string type, string name );
 	attr_ref GetAttr(string attr_name);
-	attr_ref GetAttr(int index);
-	int AttrCount();
+	vector<attr_ref> GetAttrList();
 	int GetBlockNum() { return _block_num; }
-	bool IsNode() { return false; }
 	string asString();
 
 	//Links

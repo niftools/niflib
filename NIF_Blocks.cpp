@@ -134,12 +134,9 @@ attr_ref ABlock::GetAttr(string attr_name) {
 	//return _attr_map[attr_name]; 
 }
 
-attr_ref ABlock::GetAttr(int index) {
-	return attr_ref(_attr_vect[index]);
-}
 
-int ABlock::AttrCount() {
-	return int(_attr_vect.size());
+vector<attr_ref> ABlock::GetAttrList() {
+	return _attr_vect;
 }
 
 blk_ref ABlock::GetParent() {

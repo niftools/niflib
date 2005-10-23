@@ -242,7 +242,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
 			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 			cout << blocks[i - 1]->asString();
-			cin.get();
+			throw runtime_error("Read failue - Bad block position");
 		}
 		char* blockName = new char[blockNameLength + 1];
 		in.read( blockName, blockNameLength );
@@ -251,7 +251,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			cout << "ERROR!  Bad block position.  Invalid Name:  " << Str(blockName, blockNameLength) << "\a" << endl;
 			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 			cout << blocks[i - 1]->asString();
-			cin.get();
+			throw runtime_error("Read failue - Bad block position");
 		}
 
 		//cout << i << " " << blockName << endl;
