@@ -119,34 +119,6 @@ IMorphData * QueryMorphData ( blk_ref & block );
 
 //--Simlpe Structures--//
 
-struct Float3 {
-	float data[3];
-	float & operator[](int n) {
-		return data[n];
-	}
-	float operator[](int n) const {
-		return data[n];
-	}
-
-	void Set( float f1, float f2, float f3 ) {
-		data[0] = f1;
-		data[1] = f2;
-		data[3] = f3;
-	}
-	//Python Operator Overloads
-	float __getitem__(int n) {
-		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for Float3");
-
-        return data[n];
-    }
-	void __setitem__(int n, float value) {
-		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for Float3");
-		data[n] = value;
-	}
-};
-
 struct UVCoord {
 	float u, v;
 	void Set(float u, float v) {
@@ -173,33 +145,87 @@ struct Vector3 {
 	}
 };
 
-struct MatrixRow3 {
-	float cols[3];
+struct Float2 {
+	float data[2];
 	float & operator[](int n) {
-		return cols[n];
+		return data[n];
 	}
 	float operator[](int n) const {
-		return cols[n];
+		return data[n];
+	}
+	void Set( float f1, float f2 ) {
+		data[0] = f1;
+		data[1] = f2;
+	}
+	//Python Operator Overloads
+	float __getitem__(int n) {
+		if (n > 1 || n < 0)
+			throw std::out_of_range("Index out of range for MatrixRow3");
+        return data[n];
+    }
+	void __setitem__(int n, float value) {
+		if (n > 1 || n < 0)
+			throw std::out_of_range("Index out of range for MatrixRow3");
+		data[n] = value;
+	}
+};
+
+struct Matrix22 {
+	Float2 rows[2];
+	Float2 & operator[](int n) {
+		return rows[n];
+	}
+	const Float2 & operator[](int n) const {
+		return rows[n];
+	}
+	void Set(
+		float m11, float m12,
+		float m21, float m22
+	) {
+		rows[0][2] = m11; rows[0][2] = m12;
+		rows[1][0] = m21; rows[1][1] = m22;
+	}
+	//Python Operator Overloads
+	Float2 & __getitem__(int n) {
+		if (n > 1 || n < 0)
+			throw std::out_of_range("Index out of range for MatrixRow3");
+        return rows[n];
+    }
+};
+
+struct Float3 {
+	float data[3];
+	float & operator[](int n) {
+		return data[n];
+	}
+	float operator[](int n) const {
+		return data[n];
+	}
+	void Set( float f1, float f2, float f3 ) {
+		data[0] = f1;
+		data[1] = f2;
+		data[3] = f3;
 	}
 	//Python Operator Overloads
 	float __getitem__(int n) {
 		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-        return cols[n];
+			throw std::out_of_range("Index out of range for Float3");
+
+        return data[n];
     }
 	void __setitem__(int n, float value) {
 		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-		cols[n] = value;
+			throw std::out_of_range("Index out of range for Float3");
+		data[n] = value;
 	}
 };
 
 struct Matrix33 {
-	MatrixRow3 rows[3];
-	MatrixRow3 & operator[](int n) {
+	Float3 rows[3];
+	Float3 & operator[](int n) {
 		return rows[n];
 	}
-	const MatrixRow3 & operator[](int n) const {
+	const Float3 & operator[](int n) const {
 		return rows[n];
 	}
 	void Set(
@@ -218,34 +244,40 @@ struct Matrix33 {
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2];
 	}
 	//Python Operator Overloads
-	MatrixRow3 & __getitem__(int n) {
+	Float3 & __getitem__(int n) {
 		if (n > 2 || n < 0)
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
     }
 };
 
-struct MatrixRow4 {
-	float cols[4];
+struct Float4 {
+	float data[4];
 	float & operator[](int n) {
-		return cols[n];
+		return data[n];
+	}
+	void Set( float f1, float f2, float f3, float f4 ) {
+		data[0] = f1;
+		data[1] = f2;
+		data[3] = f3;
+		data[4] = f4;
 	}
 	//Python Operator Overloads
 	float __getitem__(int n) {
 		if (n > 3 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow4");
-        return cols[n];
+			throw std::out_of_range("Index out of range for Float4");
+        return data[n];
     }
 	void __setitem__(int n, float value) {
 		if (n > 3 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow4");
-		cols[n] = value;
+			throw std::out_of_range("Index out of range for Float4");
+		data[n] = value;
 	}
 };
 
 struct Matrix44 {
-	MatrixRow4 rows[4];
-	MatrixRow4 & operator[](int n) {
+	Float4 rows[4];
+	Float4 & operator[](int n) {
 		return rows[n];
 	}
 	void Set(
@@ -266,7 +298,7 @@ struct Matrix44 {
 		out[3][0] = rows[3][0]; out[3][1] = rows[3][1]; out[3][2] = rows[3][2]; out[3][3] = rows[3][3];
 	}
 	//Python Operator Overloads
-	MatrixRow4 & __getitem__(int n) {
+	Float4 & __getitem__(int n) {
 		if (n > 3 || n < 0)
 			throw std::out_of_range("Index out of range for Matrix44");
         return rows[n];
@@ -346,7 +378,7 @@ public:
 	virtual float asFloat() const = 0;
 	virtual Float3 asFloat3() const = 0;
 	virtual string asString() const = 0;
-	virtual Matrix33 asMatrix() const = 0;
+	virtual Matrix33 asMatrix33() const = 0;
 	virtual blk_ref asLink() const = 0;
 	virtual TextureSource asTextureSource() const = 0;
 	virtual BoundingBox asBoundingBox() const = 0;
@@ -557,7 +589,7 @@ public:
 	operator Float3() { return _attr->asFloat3(); }
 	operator string() { return _attr->asString(); }
 	
-	operator Matrix33() { return _attr->asMatrix(); }
+	operator Matrix33() { return _attr->asMatrix33(); }
 	operator blk_ref();
 	operator TextureSource();
 	operator BoundingBox();
@@ -803,9 +835,9 @@ struct blk_link {
 struct BoundingBox {
 	bool isUsed;
 	int unknownInt;
-	float translation[3];
-	float rotation[3][3];
-	float radius_x, radius_y, radius_z;
+	Vector3 translation;
+	Matrix33 rotation;
+	Vector3 radius;
 };
 
 struct ConditionalInt {
@@ -823,7 +855,7 @@ struct Texture {
 	short unknownShort;
 	float bmLumaOffset;
 	float bmLumaScale;
-	float bmMatrix[2][2];
+	Matrix22 bmMatrix;
 };
 
 struct TextureSource {

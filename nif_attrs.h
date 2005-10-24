@@ -54,7 +54,7 @@ public:
 	int asInt() const { throw runtime_error(ATTRERR); }
 	float asFloat() const { throw runtime_error(ATTRERR); }
 	Float3 asFloat3() const { throw runtime_error(ATTRERR); }
-	Matrix33 asMatrix() const { throw runtime_error(ATTRERR); }
+	Matrix33 asMatrix33() const { throw runtime_error(ATTRERR); }
 	blk_ref asLink() const { throw runtime_error(ATTRERR); }
 	TextureSource asTextureSource() const { throw runtime_error(ATTRERR); }
 	BoundingBox asBoundingBox() const { throw runtime_error(ATTRERR); }
@@ -242,7 +242,7 @@ public:
 		return out.str();
 	}
 	float asFloat() const { return data; }
-	void Set(float n ) { data = char(n); }
+	void Set(float n ) { data = n; }
 private:
 	float data;
 };
@@ -419,7 +419,7 @@ public:
 		
 		return out.str();
 	}
-	Matrix33 asMatrix() const {
+	Matrix33 asMatrix33() const {
 		return data;
 		//for (int c = 0; c < 3; ++c) {
 		//	for (int r = 0; r < 3; ++r) {
@@ -625,15 +625,15 @@ public:
 		
 		data.unknownInt = 0;
 
-		data.translation[0] = 0.0f;	data.translation[1] = 0.0f;	data.translation[2] = 0.0f;
+		data.translation.x = 0.0f;	data.translation.y = 0.0f;	data.translation.z = 0.0f;
 
 		data.rotation[0][0] = 1.0f;	data.rotation[0][1] = 0.0f;	data.rotation[0][2] = 0.0f;
 		data.rotation[1][0] = 0.0f;	data.rotation[1][1] = 1.0f;	data.rotation[1][2] = 0.0f;
 		data.rotation[2][0] = 0.0f;	data.rotation[2][1] = 0.0f;	data.rotation[2][2] = 1.0f;
 
-		data.radius_x = 0.0f;
-		data.radius_y = 0.0f;
-		data.radius_z = 0.0f;
+		data.radius.x = 0.0f;
+		data.radius.y = 0.0f;
+		data.radius.z = 0.0f;
 	}
 	~BBoxAttr() {}
 	string GetType() const { return "bbox"; }
@@ -641,30 +641,34 @@ public:
 		data.isUsed = (ReadUInt( in ) != 0);
 		if ( data.isUsed ){
 			data.unknownInt = ReadUInt( in );
-			ReadFVector3( data.translation, in );
+			data.translation.x = ReadFloat( in );
+			data.translation.y = ReadFloat( in );
+			data.translation.z = ReadFloat( in );
 			for (int c = 0; c < 3; ++c) {
 				for (int r = 0; r < 3; ++r) {
 					data.rotation[r][c] = ReadFloat( in );
 				}
 			}
-			data.radius_x = ReadFloat( in );
-			data.radius_y = ReadFloat( in );
-			data.radius_z = ReadFloat( in );
+			data.radius.x = ReadFloat( in );
+			data.radius.y = ReadFloat( in );
+			data.radius.z = ReadFloat( in );
 		}
 	}
 	void Write( ofstream& out ) {
 		WriteUInt(int(data.isUsed), out );
 		if ( data.isUsed ){
 			WriteUInt( data.unknownInt, out );
-			WriteFVector3( data.translation, out );
+			WriteFloat( data.translation.x, out );
+			WriteFloat( data.translation.y, out );
+			WriteFloat( data.translation.z, out );
 			for (int c = 0; c < 3; ++c) {
 				for (int r = 0; r < 3; ++r) {
 					WriteFloat(data.rotation[r][c], out );
 				}
 			}
-			WriteFloat( data.radius_x, out );
-			WriteFloat( data.radius_y, out );
-			WriteFloat( data.radius_z, out );
+			WriteFloat( data.radius.x, out );
+			WriteFloat( data.radius.y, out );
+			WriteFloat( data.radius.z, out );
 		}
 	}
 	string asString() const {
@@ -674,14 +678,14 @@ public:
 
 		if ( data.isUsed ) {
 			out << endl
-				<< "   Position:  " << "(" << setw(5) << data.translation[0] << ", " << setw(5) << data.translation[1] << ", " << setw(5) << data.translation[2] << " )" << endl
+				<< "   Position:  " << "(" << setw(5) << data.translation.x << ", " << setw(5) << data.translation.y << ", " << setw(5) << data.translation.z << " )" << endl
 				<< "   Rotation:"  << endl
 				<< "      |" << setw(5) << data.rotation[0][0] << ", " << setw(5) << data.rotation[0][1] << ", " << setw(5) << data.rotation[0][2] << " |" << endl
 				<< "      |" << setw(5) << data.rotation[1][0] << ", " << setw(5) << data.rotation[1][1] << ", " << setw(5) << data.rotation[1][2] << " |" << endl
 				<< "      |" << setw(5) << data.rotation[2][0] << ", " << setw(5) << data.rotation[2][1] << ", " << setw(5) << data.rotation[2][2] << " |" << endl
-				<< "   X Radius:  " << data.radius_x << endl
-				<< "   Y Radius:  " << data.radius_y << endl
-				<< "   Z Radius:  " << data.radius_z;
+				<< "   X Radius:  " << data.radius.x << endl
+				<< "   Y Radius:  " << data.radius.y << endl
+				<< "   Z Radius:  " << data.radius.z;
 		} 
 		else {
 			out << "None";

@@ -289,7 +289,7 @@ void * ANode::QueryInterface( int id ) {
 
 Matrix44 ANode::GetLocalTransform() {
 	//Get transform data from atributes
-	Matrix33 f = GetAttr("Rotation")->asMatrix();
+	Matrix33 f = GetAttr("Rotation")->asMatrix33();
 	Float3 tran = GetAttr("Translation")->asFloat3();
 	float scale = GetAttr("Scale")->asFloat();
 
@@ -438,7 +438,7 @@ string NiNode::asString() {
 	out << ABlock::asString();
 
 	//Matrix33 m;
-	//GetAttr("Rotation")->asMatrix( m );
+	//GetAttr("Rotation")->asMatrix33( m );
 
 	//Vector rows[3];
 
@@ -970,7 +970,7 @@ void NiSkinData::Write( ofstream& out ) {
 //	attr_ref scl_attr = block["Scale"];
 //
 //	if ( rot_attr.is_null() == false && trn_attr.is_null() == false && scl_attr.is_null() == false ) {
-//		rot_attr->asMatrix(temp);
+//		rot_attr->asMatrix33(temp);
 //		trn_attr->asFloat3(t2);
 //		float scale = scl_attr->asFloat();
 //
