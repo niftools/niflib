@@ -678,6 +678,10 @@ public:
 		}
 		return lh;
 	}
+	//Python Operator Overloads
+	attr_ref __getitem__(string index) {
+        return _block->GetAttr(index);
+    }
 protected:
 	int _index;
 	IBlock * _block;

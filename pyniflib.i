@@ -82,5 +82,3 @@ struct Key {
 %template(vector_Key_string) std::vector< Key<std::string> >;
 
 %include "niflib.h"
-
-
