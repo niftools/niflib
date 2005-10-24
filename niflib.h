@@ -530,10 +530,10 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	//attr_ref & operator=(blk_ref & n) {
-	//	_attr->Set(n);
-	//	return *this;
-	//}
+	attr_ref & operator=(blk_ref & n) {
+		_attr->Set(n);
+		return *this;
+	}
 	attr_ref & operator=(TextureSource & n) {
 		_attr->Set(n);
 		return *this;
@@ -712,6 +712,66 @@ public:
 	attr_ref __getitem__(string index) {
         return _block->GetAttr(index);
     }
+	void __setitem__(string index, int value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, float value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, Float3 & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, string & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, Matrix33 & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, blk_ref & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, TextureSource & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, BoundingBox & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, ConditionalInt & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, Texture & value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
 protected:
 	int _index;
 	IBlock * _block;
