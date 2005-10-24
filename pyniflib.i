@@ -62,7 +62,7 @@ struct Key {
 };
 
 %template(vector_float) std::vector<float>;
-%template(vector_blk_ref) std::vector<attr_ref>;
+%template(vector_attr_ref) std::vector<attr_ref>;
 %template(vector_blk_ref) std::vector<blk_ref>;
 %template(list_blk_ref) std::list<blk_ref>;
 %template(vector_Vector3) std::vector<Vector3>;
