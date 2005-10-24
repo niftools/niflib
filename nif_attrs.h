@@ -471,7 +471,7 @@ public:
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
 			//Get Bone data from data block
-			ISkinData * data = (ISkinData*)data_blk->QueryInterface( SkinData );
+			ISkinData * data = (ISkinData*)data_blk->QueryInterface( ID_SKIN_DATA );
 			vector<blk_ref> bones = data->GetBones();
 
 			//Write bone indices to file
@@ -494,7 +494,7 @@ public:
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
 			//Get Bone data from data block
-			ISkinData * data = (ISkinData*)data_blk->QueryInterface( SkinData );
+			ISkinData * data = (ISkinData*)data_blk->QueryInterface( ID_SKIN_DATA );
 			vector<blk_ref> bones = data->GetBones();
 
 			//Print Bone List
@@ -1285,7 +1285,7 @@ public:
 			}
 
 			//If parent is a node and its 'not a skin influence' flag is set, it is the root for this skeleton
-			if ( par->QueryInterface(Node) != NULL ) {
+			if ( par->QueryInterface(ID_NODE) != NULL ) {
 				flags = par->GetAttr("Flags")->asInt();
 
 				if ( (flags & 8) != 0 ) {

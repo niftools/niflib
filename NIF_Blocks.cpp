@@ -278,7 +278,7 @@ void ABlock::RemoveParent( IBlock * match ) {
 
 void * ANode::QueryInterface( int id ) {
 	// Contains INode Interface
-	if ( id == Node ) {
+	if ( id == ID_NODE ) {
 		return (void*)static_cast<INode*>(this);
 	} else if (id == NodeInternal ) {
 		return (void*)static_cast<INodeInternal*>(this);
@@ -315,7 +315,7 @@ Matrix44 ANode::GetWorldTransform() {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
-	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(Node) ) != NULL) {
+	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(ID_NODE) ) != NULL) {
 		//Get Local Transform
 		Matrix44 local = GetLocalTransform();
 
@@ -344,7 +344,7 @@ Matrix44 ANode::GetLocalBindPos() {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
-	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(Node) ) != NULL) {
+	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(ID_NODE) ) != NULL) {
 		//There is a node parent
 		//multiply its inverse with this block's bind position to get the local bind position
 		Matrix44 par_mat = node->GetBindPosition();
@@ -829,7 +829,7 @@ void NiTriShapeData::Write( ofstream& out ){
 
 void * NiTriShapeData::QueryInterface( int id ) {
 	// Contains TriShapeData Interface
-	if ( id == TriShapeData ) {
+	if ( id == ID_TRI_SHAPE_DATA ) {
 		return (void*)static_cast<ITriShapeData*>(this);
 	} else {
 		return ABlock::QueryInterface( id );
@@ -1060,7 +1060,7 @@ string NiSkinData::asString() {
 
 void * NiSkinData::QueryInterface( int id ) {
 	// Contains ISkinData Interface
-	if ( id == SkinData ) {
+	if ( id == ID_SKIN_DATA ) {
 		return (void*)static_cast<ISkinData*>(this);
 	} else if ( id == SkinDataInternal ) {
 		return (void*)static_cast<ISkinDataInternal*>(this);
@@ -1140,7 +1140,7 @@ void NiSkinData::StraightenSkeleton() {
 				Matrix44 child_pos = MultMatrix44( inverse_co, parent_offset);
 
 				//Store result in block's Bind Position Matrix
-				INode * node = (INode*)it2->first->QueryInterface(Node);
+				INode * node = (INode*)it2->first->QueryInterface(ID_NODE);
 				if (node != NULL) {
 					node->SetBindPosition(child_pos);
 				}
@@ -1204,7 +1204,7 @@ void NiSkinData::RepositionTriShape() {
 		};
 			
 		//Get built up rotations to the root of the skeleton from this bone
-		INode * bone_node = (INode*)bone_blk->QueryInterface(Node);
+		INode * bone_node = (INode*)bone_blk->QueryInterface(ID_NODE);
 		if (bone_node == NULL)
 			throw runtime_error("Failed to get Node interface.");
 
@@ -1215,7 +1215,7 @@ void NiSkinData::RepositionTriShape() {
 		//GetBuiltUpTransform( bone_blk, end_mat );
 
 		//--Set TriShape Bind Position to Result--//
-		INode * shape_node = (INode*)tri_shape->QueryInterface(Node);
+		INode * shape_node = (INode*)tri_shape->QueryInterface(ID_NODE);
 		if (shape_node == NULL)
 			throw runtime_error("Failed to get Node interface.");
 
@@ -1317,7 +1317,7 @@ void NiSkinData::CalculateBoneOffsets() {
 		//--Get Bone Bind Pose--//
 
 		//Get Bone Node
-		INode * bone_node = (INode*)it->first->QueryInterface(Node);
+		INode * bone_node = (INode*)it->first->QueryInterface(ID_NODE);
 
 		//Get bind matricies
 

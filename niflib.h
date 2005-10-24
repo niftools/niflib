@@ -71,12 +71,16 @@ struct SkinWeight;
 const unsigned int HEADER_STRING_LEN = 39;
 
 //Interface IDs
-const int TriShapeData = 0;
-const int SkinData = 1;
-const int Node = 2;
-const int KeyframeData = 3;
-const int TextKeyExtraData = 4;
-const int MorphData = 5;
+const int ID_TRI_SHAPE_DATA = 0;
+const int ID_SKIN_DATA = 1;
+const int ID_NODE = 2;
+const int ID_KEYFRAME_DATA = 3;
+const int ID_TEXT_KEY_EXTRA_DATA = 4;
+const int ID_MORPH_DATA = 5;
+
+#ifndef NULL
+#define NULL 0
+#endif
 
 //Key Types
 enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };

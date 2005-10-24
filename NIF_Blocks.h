@@ -924,7 +924,7 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		string GetBlockType() { return "NiKeyframeData"; }
 		
 		void * QueryInterface( int id ) {
-			if ( id == KeyframeData ) {
+			if ( id == ID_KEYFRAME_DATA ) {
 				return (void*)static_cast<IKeyframeData*>(this);;
 			} else {
 				return ABlock::QueryInterface( id );
@@ -1152,7 +1152,7 @@ class NiMorphData : public ABlock, public IMorphData {
 		string GetBlockType() { return "NiMorphData"; };
 
 		void * QueryInterface( int id ) {
-			if ( id == MorphData ) {
+			if ( id == ID_MORPH_DATA ) {
 				return (void*)static_cast<IMorphData*>(this);;
 			} else {
 				return ABlock::QueryInterface( id );
@@ -1230,7 +1230,7 @@ class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 		string GetBlockType() { return "NiTextKeyExtraData"; }
 
 		void * QueryInterface( int id ) {
-			if ( id == TextKeyExtraData ) {
+			if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
 				return (void*)static_cast<ITextKeyExtraData*>(this);;
 			} else {
 				return AExtraData::QueryInterface( id );

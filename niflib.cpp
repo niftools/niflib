@@ -183,7 +183,7 @@ blk_ref FindRoot( vector<blk_ref> & blocks ) {
 	//Find the first Node
 	blk_ref root;
 	for (uint i = 0; i < blocks.size(); ++i) {
-		if ( blocks[i]->QueryInterface(Node) || blocks[i]->GetBlockType() == "NiPixelData" ) {
+		if ( blocks[i]->QueryInterface(ID_NODE) || blocks[i]->GetBlockType() == "NiPixelData" ) {
 			root = blocks[i];
 			break;
 		}
@@ -421,14 +421,14 @@ void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
 void BuildUpBindPositions( blk_ref block ) {
 
 	//Return if this is not a node
-	INode * blk_node = (INode*)block->QueryInterface(Node);
+	INode * blk_node = (INode*)block->QueryInterface(ID_NODE);
 	if (blk_node == NULL)
 		return;
 
 	//Get parent if there is one
 	blk_ref par = block->GetParent();
 	if (par.is_null() == false) {
-		INode * par_node = (INode*)par->QueryInterface(Node);
+		INode * par_node = (INode*)par->QueryInterface(ID_NODE);
 		if (par_node != NULL) {
 			//There is a node parent
 			//Post-multipy the block's bind matrix with the parent's bind matrix
@@ -468,25 +468,25 @@ attr_ref::operator Texture() { return _attr->asTexture(); }
 //--Query Functions--//
 
 ITriShapeData * QueryTriShapeData( blk_ref & block ) {
-	return (ITriShapeData*)block->QueryInterface( TriShapeData );
+	return (ITriShapeData*)block->QueryInterface( ID_TRI_SHAPE_DATA );
 }
 
 ISkinData * QuerySkinData( blk_ref & block ) {
-	return (ISkinData*)block->QueryInterface( SkinData );
+	return (ISkinData*)block->QueryInterface( ID_SKIN_DATA );
 }
 
 INode * QueryNode( blk_ref & block ) {
-	return (INode*)block->QueryInterface( Node );
+	return (INode*)block->QueryInterface( ID_NODE );
 }
 
 IKeyframeData * QueryKeyframeData( blk_ref & block ) {
-	return (IKeyframeData*)block->QueryInterface( KeyframeData );
+	return (IKeyframeData*)block->QueryInterface( ID_KEYFRAME_DATA );
 }
 
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
-	return (ITextKeyExtraData*)block->QueryInterface( TextKeyExtraData );
+	return (ITextKeyExtraData*)block->QueryInterface( ID_TEXT_KEY_EXTRA_DATA );
 }
 
 IMorphData * QueryMorphData ( blk_ref & block ) {
-	return (IMorphData*)block->QueryInterface( MorphData );
+	return (IMorphData*)block->QueryInterface( ID_MORPH_DATA );
 }
