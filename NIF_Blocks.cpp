@@ -1805,7 +1805,7 @@ string NiStringExtraData::asString() {
 	attr_ref string_data = GetAttr("String Data");
 
 	out << next_data->GetName() << ":  " << next_data->asLink() << endl
-		<< "Bytes Remaining:  " << uint(strData.length()) + 4 << endl
+		<< "Bytes Remaining:  " << uint(string_data->asString().length()) + 4 << endl
 		<< string_data->GetName() << ":  " << string_data->asString() << endl;
 	
 	return out.str();
