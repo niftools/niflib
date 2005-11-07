@@ -102,8 +102,8 @@ blk_ref CreateBlock( string block_type ) {
 		block = new NiParticleGrowFade;
 	} else if (block_type == "NiParticleRotation") {
 		block = new NiParticleRotation;
-	//} else if (block_type == "NiParticleSystemController") {
-	//	block = new NiParticleSystemController;
+	} else if (block_type == "NiParticleSystemController") {
+		block = new NiParticleSystemController;
 	} else if (block_type == "NiPathController") {
 		block = new NiPathController;
 	} else if (block_type == "NiPixelData") {
@@ -208,19 +208,17 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	ifstream in( file_name.c_str(), ifstream::binary );
 
 	//--Read Header--//
-	char header_string[HEADER_STRING_LEN];
-	in.read( header_string, HEADER_STRING_LEN );
-	byte unknownByte = ReadByte( in );
-	char ver[4];
-	in.read(ver, 4);
+	char header_string[256];
+	in.getline( header_string, 256 );
+	uint version = ReadUInt( in );
 	uint numBlocks = ReadUInt( in );
 
-	////Output
-	//cout << "====[ NiHeader ]====" << endl <<
-	//		"Header:  " << Str(header_string, HEADER_STRING_LEN) << endl <<
-	//		"Unknown Byte:  " << Hex(unknownByte) << endl <<
-	//		"Version:  " << int(ver[3]) << "." << int(ver[2]) << "." << int(ver[1]) << "." << int(ver[0]) << endl <<
-	//		"Number of blocks: " << int(numBlocks) << endl;
+	//Output
+	//cout << endl 
+	//	 << "====[ File Header ]====" << endl
+	//	 << "Header:  " << header_string << endl
+	//	 << "Version:  " << Hex(version) << endl
+	//	 << "Number of blocks: " << int(numBlocks) << endl;
 
 	//vector<blk_ref> v;
 	//return v;
@@ -256,7 +254,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			throw runtime_error("Read failue - Bad block position");
 		}
 
-		//cout << i << " " << blockName << endl;
+		//cout << endl << i << ":  " << blockName << endl;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -269,7 +267,9 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			bk_intl->SetBlockNum(i);
 
 			//Read the block from the file
-			bk_intl->Read( in );
+			bk_intl->Read( in, version );
+
+			//cout << blocks[i]->asString() << endl;
 		}
 		else {
 			throw runtime_error("Failed to create block.");
@@ -349,7 +349,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 }
 
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string file_name, blk_ref & root_block ) {
+void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -369,10 +369,19 @@ void WriteNifTree( string file_name, blk_ref & root_block ) {
 
 	//--WriteBlocks--//
 	for (uint i = 0; i < blk_list.size(); ++i) {
+		if (version < 0x05000001) {
+			//Write Block Type
+			WriteString( blk_list[i]->GetBlockType() , out );
+		}
+
 		//Get internal interface
 		IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
 
-		bk_intl->Write( out );
+		bk_intl->Write( out, version );
+
+		if (version >= 0x05000001) {
+			WriteUInt( 0, out );
+		}
 	}
 
 	//--Write Footer--//

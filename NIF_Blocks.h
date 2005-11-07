@@ -71,15 +71,15 @@ public:
 	virtual void FixUpLinks( const vector<blk_ref> & blocks ) = 0;
 
 	//File I/O
-	virtual void Read( ifstream& in ) = 0;
-	virtual void Write( ofstream& out ) = 0;	
+	virtual void Read( ifstream& in, unsigned int version ) = 0;
+	virtual void Write( ofstream& out, unsigned int version ) = 0;	
 };
 
 class ABlock : public IBlock, public IBlockInternal {
 public:
 	ABlock();
 	~ABlock();
-	void AddAttr( string type, string name );
+	void AddAttr( string type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
 	attr_ref GetAttr(string attr_name);
 	vector<attr_ref> GetAttrs();
 	int GetBlockNum() { return _block_num; }
@@ -108,11 +108,12 @@ public:
 	void SetBlockNum( int n ) { _block_num = n; }
 	void FixUpLinks( const vector<blk_ref> & blocks );
 
-	void Read( ifstream& in );
-	void Write( ofstream& out );
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
 private:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
+	vector< pair< unsigned int, unsigned int > > _attr_vers;
 	int _block_num;
 	unsigned int _ref_count;
 	vector<IBlock*> _parents;
@@ -121,7 +122,7 @@ private:
 class AExtraData : public ABlock {
 public:
 	AExtraData() {
-		AddAttr( "index", "Next Extra Data" );
+		AddAttr( "link", "Next Extra Data" );
 	}
 	~AExtraData() {};
 };
@@ -130,8 +131,8 @@ class ANamed : public ABlock {
 public:
 	ANamed(){
 		AddAttr( "string", "Name" );
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
 	}
 	~ANamed(){}
 };
@@ -147,18 +148,19 @@ public:
 	ANode(){
 		AddAttr( "flags", "Flags" );
 		AddAttr( "float3", "Translation" );
-		AddAttr( "matrix", "Rotation" );
+		AddAttr( "matrix33", "Rotation" );
 		AddAttr( "float", "Scale" );
-		AddAttr( "float3", "velocity" );
+		AddAttr( "float3", "Velocity" );
 		AddAttr( "linkgroup", "Properties" );
-		AddAttr( "bbox", "Bounding Box" );
+		AddAttr( "bbox", "Bounding Box", 0, VER_4_0_0_2 );
+		AddAttr( "byte" , "Unknown Byte", VER_4_2_0_2 );
 
 		SetIdentity44(bindPosition);
 	}
 	~ANode();
 	void * QueryInterface( int id );
-	void Read( ifstream& in ) {
-		ABlock::Read( in );
+	void Read( ifstream& in, unsigned int version ) {
+		ABlock::Read( in, version );
 		Matrix44 transform;
 		transform = GetLocalTransform();
 		SetBindPosition( transform );
@@ -200,7 +202,7 @@ public:
 class AController : public ABlock {
 public:
 	AController() {
-		AddAttr( "index", "Next Controller" );
+		AddAttr( "link", "Next Controller" );
 		AddAttr( "flags", "Flags" );
 		AddAttr( "float", "Frequency" );
 		AddAttr( "float", "Phase" );
@@ -211,11 +213,11 @@ public:
 	~AController() {}
 };
 
-class ALight   : public ANamed {
+class ALight   : public ANode {
 public:
 	ALight  (){
-		AddAttr( "int", "Unknown Int 1" );
-		AddAttr( "int", "Unknown Int 2" );
+		//AddAttr( "int", "Unknown Int 1" );
+		//AddAttr( "int", "Unknown Int 2" );
 		AddAttr( "float", "Dimmer" );
 		AddAttr( "float3", "Ambient Color" );
 		AddAttr( "float3", "Diffuse Color" );
@@ -315,7 +317,9 @@ class NiZBufferProperty : public AProperty {
 
 	public:
 
-		NiZBufferProperty(){}
+		NiZBufferProperty(){
+			AddAttr( "int", "Unknown Int", VER_4_2_0_2 );
+		}
 		~NiZBufferProperty(){}
 
 		string GetBlockType() { return "NiZBufferProperty"; }
@@ -396,8 +400,8 @@ class NiVertexColorProperty : public AProperty{
 class NiTriShape : public ANode {
 	public:
 		NiTriShape() {
-			AddAttr( "index", "Data" );
-			AddAttr( "index", "Skin Instance" );
+			AddAttr( "link", "Data" );
+			AddAttr( "link", "Skin Instance" );
 		}
 		~NiTriShape(){}
 		string GetBlockType() { return "NiTriShape"; }
@@ -464,12 +468,12 @@ class NiPixelData : public ABlock{
 
 	public:
 		NiPixelData(){
-			AddAttr( "index", "Unknown Index" );
+			AddAttr( "link", "Unknown Index" );
 			data = NULL; }
 		~NiPixelData(){ if (data != NULL) delete [] data; }
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ){}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ){}
 		string asString();
 		string GetBlockType() { return "NiPixelData"; }
 
@@ -548,8 +552,8 @@ class NiTriShapeData : public ABlock, public ITriShapeData {
 		}
 		~NiTriShapeData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiTriShapeData"; }
 		void * QueryInterface( int id );
@@ -594,7 +598,7 @@ class NiTriShapeData : public ABlock, public ITriShapeData {
 class NiKeyframeController : public AController {
 public:
 	NiKeyframeController(){
-		AddAttr( "index", "Data" );
+		AddAttr( "link", "Data" );
 	}
 	~NiKeyframeController(){}
 	string GetBlockType() { return "NiKeyframeController"; }
@@ -606,7 +610,7 @@ public:
 class NiAlphaController : public AController {
 public:
 	NiAlphaController(){
-		AddAttr( "index", "Data" );
+		AddAttr( "link", "Data" );
 	}
 	~NiAlphaController(){}
 	string GetBlockType() { return "NiAlphaController"; }
@@ -618,7 +622,7 @@ public:
 class NiVisController : public AController {
 public:
 	NiVisController(){
-		AddAttr( "index", "Data" );
+		AddAttr( "link", "Data" );
 	}
 	~NiVisController(){}
 	string GetBlockType() { return "NiVisController"; }
@@ -631,7 +635,7 @@ class NiMaterialColorController : public AController {
 public:
 
 	NiMaterialColorController(){
-		AddAttr( "index", "Data" );
+		AddAttr( "link", "Data" );
 	}
 	~NiMaterialColorController(){}
 	string GetBlockType() { return "NiMaterialColorController"; }
@@ -643,7 +647,7 @@ public:
 class NiUVController : public AController {
 public:
 	NiUVController (){
-		AddAttr( "index", "Data" );
+		AddAttr( "link", "Data" );
 		AddAttr( "short", "Unknown Short" );
 	}
 	~NiUVController (){}
@@ -661,8 +665,8 @@ public:
 		AddAttr( "int", "Unknown Int 2" );
 		AddAttr( "int", "Unknown Int 3" );
 		AddAttr( "short", "Unknown Short" );
-		AddAttr( "index", "Pos Data" );
-		AddAttr( "index", "Float Data" );
+		AddAttr( "link", "Pos Data" );
+		AddAttr( "link", "Float Data" );
 	}
 	~NiPathController  (){}
 	string GetBlockType() { return "NiPathController"; }
@@ -697,8 +701,8 @@ public:
 class NiAutoNormalParticles : public ANode {
 public:
 	NiAutoNormalParticles  (){
-		AddAttr( "index", "Data" );
-		AddAttr( "index", "Unknown Index?" ); // Always -1
+		AddAttr( "link", "Data" );
+		AddAttr( "link", "Unknown Index?" ); // Always -1
 	}
 	~NiAutoNormalParticles  (){}
 	string GetBlockType() { return "NiAutoNormalParticles"; }
@@ -711,8 +715,8 @@ public:
 class NiRotatingParticles : public ANode {
 public:
 	NiRotatingParticles  (){
-		AddAttr( "index", "Data" );
-		AddAttr( "index", "Unknown Index?" ); // Always -1
+		AddAttr( "link", "Data" );
+		AddAttr( "link", "Unknown Index?" ); // Always -1
 	}
 	~NiRotatingParticles  (){}
 	string GetBlockType() { return "NiRotatingParticles"; }
@@ -725,7 +729,7 @@ public:
 class NiTextureEffect : public ANode {
 public:
 	NiTextureEffect  (){
-		AddAttr( "cint", "Conditional Int" );
+		AddAttr( "condint", "Conditional Int" );
 		AddAttr( "float", "Unknown Float 1" );
 		AddAttr( "float", "Unknown Float 2" );
 		AddAttr( "float", "Unknown Float 3" );
@@ -742,7 +746,7 @@ public:
 		AddAttr( "int", "Unknown Int 2" );
 		AddAttr( "int", "Unknown Int 3" );
 		AddAttr( "int", "Unknown Int 4" );
-		AddAttr( "index", "Source Texture" );
+		AddAttr( "link", "Source Texture" );
 		AddAttr( "byte", "Unknown Byte" );
 		AddAttr( "float", "Unknown Float 13" );
 		AddAttr( "float", "Unknown Float 14" );
@@ -774,7 +778,7 @@ public:
 		AddAttr( "float", "Viewport Top" );
 		AddAttr( "float", "Viewport Bottom" );
 		AddAttr( "float", "LOLAdjust" );
-		AddAttr( "index", "Unknown Index?" ); // Always -1
+		AddAttr( "link", "Unknown Index?" ); // Always -1
 		AddAttr( "int", "Unknown Int" ); // Always 0
 	}
 	~NiCamera  (){}
@@ -788,8 +792,8 @@ public:
 class NiGravity : public ABlock {
 public:
 	NiGravity  (){
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
 		AddAttr( "float", "Unknown Float 1" );
 		AddAttr( "float", "Unknown Float 2" );
 		AddAttr( "int", "Unknown Int 1" );
@@ -811,8 +815,8 @@ public:
 class NiPlanarCollider : public ABlock {
 public:
 	NiPlanarCollider  (){
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
 		AddAttr( "float", "Unknown Float 1" );
 		AddAttr( "float", "Unknown Float 2" );
 		AddAttr( "float", "Unknown Float 3" );
@@ -841,8 +845,8 @@ public:
 class NiParticleGrowFade : public ABlock {
 public:
 	NiParticleGrowFade  (){
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
 		AddAttr( "float", "Unknown Float 1" );
 		AddAttr( "float", "Unknown Float 2" );
 	}
@@ -857,9 +861,9 @@ public:
 class NiParticleColorModifier : public ABlock {
 public:
 	NiParticleColorModifier  (){
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
-		AddAttr( "index", "Color Data" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
+		AddAttr( "link", "Color Data" );
 	}
 	~NiParticleColorModifier  (){}
 	string GetBlockType() { return "NiParticleColorModifier"; }
@@ -872,8 +876,8 @@ public:
 class NiParticleRotation : public ABlock {
 public:
 	NiParticleRotation  (){
-		AddAttr( "index", "Extra Data" );
-		AddAttr( "index", "Controller" );
+		AddAttr( "link", "Extra Data" );
+		AddAttr( "link", "Controller" );
 		AddAttr( "byte", "Unknown Byte" );
 		AddAttr( "float", "Unknown Float 1" );
 		AddAttr( "float", "Unknown Float 2" );
@@ -918,8 +922,8 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		NiKeyframeData(){}
 		~NiKeyframeData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiKeyframeData"; }
 		
@@ -982,8 +986,8 @@ class NiSkinInstance : public ABlock, public ISkinInstInternal {
 	public:
 
 		NiSkinInstance(){
-			AddAttr( "index", "Data" );
-			AddAttr( "root", "Skeleton Root" );
+			AddAttr( "link", "Data" );
+			AddAttr( "skeletonroot", "Skeleton Root" );
 			AddAttr( "bones", "Bones" );
 		}
 		~NiSkinInstance(){}
@@ -1034,8 +1038,8 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		}
 		~NiSkinData();
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiSkinData"; }
 		void * QueryInterface( int id );
@@ -1076,7 +1080,7 @@ class NiGeomMorpherController : public AController{
 	public:
 
 		NiGeomMorpherController(){
-			AddAttr( "index", "Morph Data" );
+			AddAttr( "link", "Morph Data" );
 			AddAttr( "byte", "Unknown Byte" );
 		}
 		~NiGeomMorpherController(){}
@@ -1092,8 +1096,8 @@ class NiColorData : public ABlock{
 		NiColorData(){}
 		~NiColorData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiColorData"; };
 
@@ -1109,8 +1113,8 @@ class NiFloatData : public ABlock{
 		NiFloatData(){}
 		~NiFloatData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiFloatData"; };
 
@@ -1128,8 +1132,8 @@ class NiStringExtraData : public AExtraData{
 		}
 		~NiStringExtraData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiStringExtraData"; };
 
@@ -1146,8 +1150,8 @@ class NiMorphData : public ABlock, public IMorphData {
 		}
 		~NiMorphData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiMorphData"; };
 
@@ -1189,8 +1193,8 @@ class NiPosData : public ABlock{
 		NiPosData(){}
 		~NiPosData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiPosData"; }
 
@@ -1206,8 +1210,8 @@ class NiRotatingParticlesData : public ABlock{
 		NiRotatingParticlesData(){}
 		~NiRotatingParticlesData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString() { return string(""); };
 		string GetBlockType() { return "NiRotationparticlesData"; }
 
@@ -1224,8 +1228,8 @@ class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 		}
 		~NiTextKeyExtraData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out );
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version );
 		string asString();
 		string GetBlockType() { return "NiTextKeyExtraData"; }
 
@@ -1252,8 +1256,8 @@ class NiUVData : public ABlock{
 		NiUVData(){}
 		~NiUVData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiUVData"; }
 
@@ -1273,8 +1277,8 @@ class NiVertWeightsExtraData : public AExtraData{
 		NiVertWeightsExtraData(){}
 		~NiVertWeightsExtraData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiVertWeightsExtraData"; }
 
@@ -1291,8 +1295,8 @@ class NiVisData : public ABlock{
 		NiVisData(){}
 		~NiVisData(){}
 
-		void Read( ifstream& in );
-		void Write( ofstream& out ) {}
+		void Read( ifstream& in, unsigned int version );
+		void Write( ofstream& out, unsigned int version ) {}
 		string asString();
 		string GetBlockType() { return "NiVisData"; }
 
@@ -1308,8 +1312,8 @@ public:
 		_block_type = block_type;
 	}
 	~UnknownMixIn(){ if (data != NULL) delete [] data; }
-	void Read( ifstream& in );
-	void Write( ofstream& out );
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
 	string asString();
 	string GetBlockType() { return _block_type; }
 
@@ -1323,14 +1327,14 @@ class UnknownBlock : public ABlock, public UnknownMixIn {
 public:
 	UnknownBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownBlock(){}
-	void Read( ifstream& in ) {
+	void Read( ifstream& in, unsigned int version ) {
 		//cout << endl << "Unknown Block Type found:  " << GetBlockType() << "\a" << endl;
-		ABlock::Read( in );
-		UnknownMixIn::Read( in );
+		ABlock::Read( in, version );
+		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out ) {
-		ABlock::Write( out );
-		UnknownMixIn::Write( out );
+	void Write( ofstream& out, unsigned int version ) {
+		ABlock::Write( out, version );
+		UnknownMixIn::Write( out, version );
 	}
 	void asString( ostream & out ) {
 		out << ABlock::asString();
@@ -1343,13 +1347,13 @@ class UnknownControllerBlock : public AController, public UnknownMixIn {
 public:
 	UnknownControllerBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownControllerBlock(){}
-	void Read( ifstream& in ) {
-		ABlock::Read( in );
-		UnknownMixIn::Read( in );
+	void Read( ifstream& in, unsigned int version ) {
+		ABlock::Read( in, version );
+		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out ) {
-		ABlock::Write( out );
-		UnknownMixIn::Write( out );
+	void Write( ofstream& out, unsigned int version ) {
+		ABlock::Write( out, version );
+		UnknownMixIn::Write( out, version );
 	}
 	string asString() {
 		stringstream out;
@@ -1368,13 +1372,13 @@ class UnknownPropertyBlock : public AProperty, public UnknownMixIn {
 public:
 	UnknownPropertyBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownPropertyBlock(){}
-	void Read( ifstream& in ) {
-		ABlock::Read( in );
-		UnknownMixIn::Read( in );
+	void Read( ifstream& in, unsigned int version ) {
+		ABlock::Read( in, version );
+		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out ) {
-		ABlock::Write( out );
-		UnknownMixIn::Write( out );
+	void Write( ofstream& out, unsigned int version ) {
+		ABlock::Write( out, version );
+		UnknownMixIn::Write( out, version );
 	}
 	string asString() {
 		stringstream out;
@@ -1389,105 +1393,114 @@ public:
 	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
 };
 
-///**
-// * NiParticleSystemController
-// */
-//class NiParticleSystemController : public UnknownControllerBlock {
-//public:
-//	NiParticleSystemController() : UnknownControllerBlock("NiParticleSystemController") {	
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "byte", "Byte?" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "float", "Guess" );
-//		AddAttr( "short", "Count?" );
-//		
-//	
-//	}
-//	
-//	//void Read( ifstream& in ) {
-//
-//	//	ABlock::Read( in );
-//
-//
-//	//	
-//
-//
-//	//	uint count = GetAttr("Count")->asInt();
-//
-//	//	cout << "Count:  " << count << endl;
-//
-//	//	short num = 0;
-//	//	short last_num = -1;
-//	//	int n = 0;
-//	//	//IAttr * attr = new MatrixAttr( "" );
-//	//	//cout << setprecision(3);
-//	//	while (true) {
-//	//		//attr->Read( in );
-//	//		//attr->Print( cout );
-//	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-//	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-//	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-//	//		ReadUShort( in );
-//	//		num = ReadUShort( in );
-//	//		//cout << "  " << num << endl;
-//
-//	//		if ( num != last_num + 1 )
-//	//			break;
-//
-//	//		last_num = num;
-//	//		++n;
-//
-//	//	}
-//
-//	//	in.seekg( -40, ios::cur );
-//
-//	//	cout << "True Count:  " << n << endl;
-//
-//	//	if ( n != count ) {
-//	//		cout << "\a";
-//	//		cin.get();
-//	//	}
-//
-//	//	unk.Read( in );
-//
-//	//	
-//	//	//if (!b) {
-//	//	//	cout << ReadFloat( in ) << endl
-//	//	//		<< ReadFloat( in ) << endl
-//	//	//		<< ReadFloat( in ) << endl
-//	//	//		<< ReadFloat( in ) << endl;
-//	//	//}
-//	//	
-//	//	
-//	//}
-//
-//	~NiParticleSystemController(){}
-//	string GetBlockType() { return "NiParticleSystemController"; }
-//};
+/**
+ * NiParticleSystemController
+ */
+class NiParticleSystemController : public AController {
+public:
+	NiParticleSystemController() {	
+		AddAttr( "float", "Unknown 16 Floats[0]" );
+		AddAttr( "float", "Unknown 16 Floats[1]" );
+		AddAttr( "float", "Unknown 16 Floats[2]" );
+		AddAttr( "float", "Unknown 16 Floats[3]" );
+		AddAttr( "float", "Unknown 16 Floats[4]" );
+		AddAttr( "float", "Unknown 16 Floats[5]" );
+		AddAttr( "float", "Unknown 16 Floats[6]" );
+		AddAttr( "float", "Unknown 16 Floats[7]" );
+		AddAttr( "float", "Unknown 16 Floats[8]" );
+		AddAttr( "float", "Unknown 16 Floats[9]" );
+		AddAttr( "float", "Unknown 16 Floats[10]" );
+		AddAttr( "float", "Unknown 16 Floats[11]" );
+		AddAttr( "float", "Unknown 16 Floats[12]" );
+		AddAttr( "float", "Unknown 16 Floats[13]" );
+		AddAttr( "float", "Unknown 16 Floats[14]" );
+		AddAttr( "float", "Unknown 16 Floats[15]" );
+		AddAttr( "byte", "Unknown Byte" );
+		AddAttr( "float3", "Unknown 3 Floats" );
+		AddAttr( "short", "Unknown Short" );
+		AddAttr( "float3", "Unknown 3 Floats 2" );
+		AddAttr( "link", "Emitter" );
+		AddAttr( "byte", "Unknown 16 Bytes[0]" );
+		AddAttr( "byte", "Unknown 16 Bytes[1]" );
+		AddAttr( "byte", "Unknown 16 Bytes[2]" );
+		AddAttr( "byte", "Unknown 16 Bytes[3]" );
+		AddAttr( "byte", "Unknown 16 Bytes[4]" );
+		AddAttr( "byte", "Unknown 16 Bytes[5]" );
+		AddAttr( "byte", "Unknown 16 Bytes[6]" );
+		AddAttr( "byte", "Unknown 16 Bytes[7]" );
+		AddAttr( "byte", "Unknown 16 Bytes[8]" );
+		AddAttr( "byte", "Unknown 16 Bytes[9]" );
+		AddAttr( "byte", "Unknown 16 Bytes[10]" );
+		AddAttr( "byte", "Unknown 16 Bytes[11]" );
+		AddAttr( "byte", "Unknown 16 Bytes[12]" );
+		AddAttr( "byte", "Unknown 16 Bytes[13]" );
+		AddAttr( "byte", "Unknown 16 Bytes[14]" );
+		AddAttr( "byte", "Unknown 16 Bytes[15]" );
+		AddAttr( "particlegroup", "Particles" );
+		AddAttr( "link", "Unknown Link" );
+		AddAttr( "link", "Particle Extra" );
+		AddAttr( "link", "Unknown Link 2" );
+		AddAttr( "byte", "Trailer" );
+		
+	
+	}
+	
+	//void Read( ifstream& in, unsigned int version ) {
+
+	//	ABlock::Read( in, version );
+
+	//	uint count = GetAttr("Num Particles")->asInt();
+
+	//	//cout << "Count:  " << count << endl;
+
+	//	//short num = 0;
+	//	//short last_num = -1;
+	//	//int n = 0;
+	//	//IAttr * attr = new MatrixAttr( "" );
+	//	//cout << setprecision(3);
+	//	for ( int i = 0; i < count; ++i ) {
+	//		//attr->Read( in );
+	//		//attr->Print( cout );
+	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
+	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
+	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
+	//		ReadUShort( in );
+	//		ReadUShort( in );
+	//		//cout << "  " << num << endl;
+
+	//		//if ( num != last_num + 1 )
+	//		//	break;
+
+	//		//last_num = num;
+	//		//++n;
+
+	//	}
+
+	//	//in.seekg( -40, ios::cur );
+
+	//	//cout << "True Count:  " << n << endl;
+
+	//	//if ( n != count ) {
+	//	//	cout << "\a";
+	//	//	cin.get();
+	//	//}
+
+	//	
+	//	UnknownMixIn::Read( in, version );
+
+	//	
+	//	//if (!b) {
+	//	//	cout << ReadFloat( in ) << endl
+	//	//		<< ReadFloat( in ) << endl
+	//	//		<< ReadFloat( in ) << endl
+	//	//		<< ReadFloat( in ) << endl;
+	//	//}
+	//	
+	//	
+	//}
+
+	~NiParticleSystemController(){}
+	string GetBlockType() { return "NiParticleSystemController"; }
+};
 
 #endif // TAH_NIF_LIB_NIF_BLOCKS_H

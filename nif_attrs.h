@@ -305,11 +305,11 @@ private:
 	string data;
 };
 
-class IndexAttr : public AAttr {
+class LinkAttr : public AAttr {
 public:
-	IndexAttr( string name, IBlock * owner ) : AAttr( name, owner ), link( owner ) {}
-	~IndexAttr() {}
-	string GetType() const { return "index"; }
+	LinkAttr( string name, IBlock * owner ) : AAttr( name, owner ), link( owner ) {}
+	~LinkAttr() {}
+	string GetType() const { return "link"; }
 	void Read( ifstream& in ) {
 		////Remove all links beloning to this attribute
 		//_owner->RemoveAttrLinks(this);
@@ -392,7 +392,7 @@ public:
 		data[2][0] = 0.0f;	data[2][1] = 0.0f;	data[2][2] = 1.0f;
 	}
 	~MatrixAttr() {}
-	string GetType() const { return "matrix"; }
+	string GetType() const { return "matrix33"; }
 	void Read( ifstream& in ) { 
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
@@ -526,9 +526,8 @@ public:
 		int len = ReadUInt( in );
 		//cout << "Link Group Size:  " << len << endl;
 
-		if ( len > 30 ) {
-			cout << _owner->asString() << endl;
-			return;
+		if ( len > 1000 ) {
+			throw runtime_error("Unlikley number of links found. (>1000)");
 		}
 
 		for (int i = 0; i < len; ++i ) {
@@ -542,9 +541,8 @@ public:
 		WriteUInt( uint(links.size()), out );
 		//cout << "Link Group Size:  " << uint(links.size()) << endl;
 
-		if ( links.size() > 30 ) {
-			cout << "\a" << endl;
-			cin.get();
+		if ( links.size() > 1000 ) {
+			throw runtime_error("You probably shouldn't write more than 1000 links");
 		}
 
 		//Write the block indices
@@ -707,7 +705,7 @@ public:
 		data.unknownInt = 0;
 	}
 	~CIntAttr() {}
-	string GetType() const { return "cint"; }
+	string GetType() const { return "condint"; }
 	void Read( ifstream& in ) {
 		data.isUsed = ( ReadUInt( in ) != 0 );
 		if (data.isUsed) {
@@ -821,9 +819,9 @@ private:
     //                 0 - lighting emmisive
     //  1 - lighting emmisive amb diff
 
-class TextureAttr : public IndexAttr {
+class TextureAttr : public LinkAttr {
 public:
-	TextureAttr( string name, IBlock * owner, bool isBumpMap = false ) : IndexAttr(name, owner),  _isBumpMap(isBumpMap) {
+	TextureAttr( string name, IBlock * owner, bool isBumpMap = false ) : LinkAttr(name, owner),  _isBumpMap(isBumpMap) {
 		memset( &data, 0, sizeof(data) );
 	}
 	~TextureAttr() {}
@@ -832,7 +830,7 @@ public:
 		data.isUsed = ( ReadUInt( in ) != 0 );
 		if ( data.isUsed ) {	
 			//Read in link for TextureSource
-			IndexAttr::Read( in );
+			LinkAttr::Read( in );
 
 			data.clampMode = TexClampMode( ReadUInt( in ) );
 			data.filterMode = TexFilterMode( ReadUInt( in ) );
@@ -854,7 +852,7 @@ public:
 		WriteUInt( uint(data.isUsed), out );
 		if ( data.isUsed ) {
 			//Write link
-			IndexAttr::Write( out );
+			LinkAttr::Write( out );
 
 			WriteUInt( data.clampMode, out );
 			WriteUInt( data.filterMode, out );
@@ -1029,9 +1027,9 @@ private:
     //                    3 - hilight
     //                    4 - hilight2
 
-class TexSourceAttr : public IndexAttr {
+class TexSourceAttr : public LinkAttr {
 public:
-	TexSourceAttr( string name, IBlock * owner ) : IndexAttr(name, owner) {}
+	TexSourceAttr( string name, IBlock * owner ) : LinkAttr(name, owner) {}
 	~TexSourceAttr() {
 		memset(&data, 0, sizeof(data) );
 	}
@@ -1044,7 +1042,7 @@ public:
 			data.unknownByte = ReadByte( in );
 
 			//Read link for Pixel Data
-			IndexAttr::Read( in );
+			LinkAttr::Read( in );
 		}
 	}
 	void Write( ofstream& out ) {
@@ -1054,7 +1052,7 @@ public:
 		} else {
 			WriteByte ( data.unknownByte, out );
 			//Write link for Pixel Data
-			IndexAttr::Write( out );
+			LinkAttr::Write( out );
 		}
 	}
 	string asString() const {
@@ -1261,11 +1259,11 @@ public:
 	blk_ref asLink() const { return FindNodeAncestor(); }
 };
 
-class RootAttr : public AAttr {
+class SkeletonRootAttr : public AAttr {
 public:
-	RootAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
-	~RootAttr() {}
-	string GetType() const { return "root"; }
+	SkeletonRootAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	~SkeletonRootAttr() {}
+	string GetType() const { return "skeletonroot"; }
 	void Read( ifstream& in ) {
 		original_root = ReadUInt( in );  //Read data but do nothing with it
 	}
@@ -1316,5 +1314,77 @@ public:
 private:
 	int original_root;
 };
+
+class ParticleGroupAttr : public AAttr {
+public:
+	ParticleGroupAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	~ParticleGroupAttr() {}
+	string GetType() const { return "particlegroup"; }
+
+	void Read( ifstream& in ) {
+		num_particles = ReadUShort( in );
+		num_valid = ReadUShort( in );
+
+		particles.resize(num_particles);
+		for ( int i = 0; i < num_particles; ++i ) {
+			for (int c = 0; c < 3; ++c) {
+				for (int r = 0; r < 3; ++r) {
+					particles[i].unk_matrix[r][c] = ReadFloat( in );
+				}
+			}
+			particles[i].unk_short = ReadUShort( in );
+			particles[i].vert_id = ReadUShort( in );
+		}
+	}
+
+	void Write( ofstream& out ) {
+		WriteUShort( num_particles, out );
+		WriteUShort( num_valid, out );
+
+		for ( int i = 0; i < num_particles; ++i ) {
+			for (int c = 0; c < 3; ++c) {
+				for (int r = 0; r < 3; ++r) {
+					WriteFloat( particles[i].unk_matrix[r][c], out );
+				}
+			}
+
+			WriteUShort( particles[i].unk_short, out );
+			WriteUShort( particles[i].vert_id, out );
+		}
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << "Num Particles:  " << num_particles << endl
+			<< "Num Valid:  " << num_valid << endl
+			<< "Particles:" << endl;
+
+		for ( int i = 0; i < num_particles; ++i ) {
+			out << "   Particle " << i << ":" << endl;
+			const Matrix33 & m = particles[i].unk_matrix;
+			out << "      |" << setw(6) << m[0][0] << "," << setw(6) << m[0][1] << "," << setw(6) << m[0][2] << " |" << endl
+				<< "      |" << setw(6) << m[1][0] << "," << setw(6) << m[1][1] << "," << setw(6) << m[1][2] << " |" << endl
+				<< "      |" << setw(6) << m[2][0] << "," << setw(6) << m[2][1] << "," << setw(6) << m[2][2] << " |" << endl;
+
+			out << "      Unknown Short:  " << particles[i].unk_short << endl
+				<< "      Vertex ID:  " << particles[i].vert_id << endl;
+		}
+		return out.str();
+	}
+	
+private:
+	struct Particle {
+		Matrix33 unk_matrix;
+		short unk_short;
+		short vert_id;
+	};
+	short num_particles;
+	short num_valid;
+	vector<Particle> particles;
+};
+
 
 #endif

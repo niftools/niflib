@@ -78,6 +78,10 @@ const int ID_KEYFRAME_DATA = 3;
 const int ID_TEXT_KEY_EXTRA_DATA = 4;
 const int ID_MORPH_DATA = 5;
 
+//NIF Versions
+const int VER_4_0_0_2 = 0x04000002;
+const int VER_4_2_0_2 = 0x04020002;
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -94,7 +98,7 @@ vector<blk_ref> ReadNifList( string file_name );
 blk_ref ReadNifTree( string file_name );
 
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string file_name, blk_ref & root_block );
+void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version = VER_4_2_0_2 );
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
@@ -499,6 +503,131 @@ public:
 	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
 };
 
+//struct ComplexVertex {
+//	ComplexVertex() : has_color(false), has_normal(false), vertex_index(0), normal_index(0), color_index(0) {}
+//	~ComplexVertex();
+//	bool has_color, has_normal;
+//	int vertex_index, color_index, normal_index;
+//	vector<int> uv_indices;
+//}
+//
+//struct ComplexFace {
+//	vector<ComplexVertex> points;
+//	int base_map_index;
+//	int glow_map_index;
+//};
+//
+//class ComplexShape {
+//
+//	void CombineTriShapes( list<blk_ref> & tri_shapes );
+////	void SetVertices( vector<Vector3> & vertices );
+////	void SetUVs( vector<UVCoord> & uvs );
+////	void SetColors( vector<Color> & colors );
+////	void SetNormals( vector<Vector3> & normals );
+////	void SetBones( vector<blk_ref> & bones );
+////	void SetFaces( list< vector< ComplexVertex > > & faces );
+////
+////	vector<Vector3> GetVertices();
+////	vector<UVCoord> GetUVs();
+////	vector<Color> GetColors();
+////	vector<Vector3> GetNormals();
+////	vector<blk_ref> GetBones();
+////	list< vector< ComplexVertex > > GetFaces();
+//
+//private:
+//	vector<Vector3> _vertices;
+//	vector<Color> _colors;
+//	vector<Vector3> _normals;
+//	list<ComplexFace> _faces;
+//	map<string, blk_ref> _materials;
+//	map<string, vector<UVCoord> > _uvs;
+//	map<blk_ref, map<int, float> > _bones;
+//};
+//
+//void ComplexShape::CombineTriShapes( list<blk_ref> & tri_shapes ) {
+//	//Clear all internal datea
+//	_vertices.clear();
+//	_colors.clear();
+//	_normals.clear();
+//	_materials.clear();
+//	_uvs.clear();
+//	_faces.clear();
+//	_bones.clear();
+//
+//	//Create a temporary spot to hold the triangle lists from each TriShape
+//	vector< vector<Triangle> > ts_faces;
+//
+//	//Create lists to hold the lookup tables
+//	vector<int> tri_lookup, nor_lookup, col_lookup;
+//	map<string, vector<int> > mat_lookup, uv_lookup;
+//	
+//	//--Cycle through all the TriShapes, adding their data to the lists--//
+//	list<blk_ref>::iterator it;
+//
+//	for (it = tri_shapes.begin(); it != tri_shapes.end(); ++it) {
+//		ITriShapeData * data = QueryTriShapeData(*it);
+//
+//		//Vertices
+//		vector<Vector3> ts_verts = data->GetVertices();
+//		_vertices.insert(_vertices.end(), ts_verts.begin(), ts_verts.end();
+//
+//		//Normals
+//		vector<Vector3> ts_norms = data->GetNormals();
+//		_normals.insert(_normals.end(), ts_norms.begin(), ts_norms.end();
+//		
+//		//Colors
+//		vector<Colors> ts_cols = data->GetColors();
+//		_colors.insert(_colors.end(), ts_colors.begin(), ts_colors.end();
+//
+//		//Triangles
+//		ts_faces[i] = data->GetTriangles();
+//
+//		//UV Coords
+//		vector< vector<UVCoords> > uvs(data->GetUVSetCount());
+//		for (int i = 0; i < data->GetUVSetCount(); ++i) {
+//			uvs[i] = data->GetUVSet(i);
+//		}
+//
+//		//Associate UV Coord Data with proper map name
+//		blk_ref tx_prop = par["Properties"]->FindLink( "NiTexturingProperty");
+//		if ( tx_prop.is_null() == false ) {
+//			int uv_set = 0;
+//			for (int i = 0; i < 7; ++i) {
+//				string attr_name, map;
+//				switch(i) {
+//					case 0:	attr_name = "Base Texture";     map = "map1";   break;
+//					case 1:	attr_name = "Dark Texture";     map = "dark";   break;
+//					case 2:	attr_name = "Detail Texture";   map = "detail"; break;
+//					case 3:	attr_name = "Gloss Texture";    map = "gloss";  break;
+//					case 4:	attr_name = "Glow Texture";     map = "glow";   break;
+//					case 5:	attr_name = "Bump Map Texture"; map = "bump";   break;
+//					case 6:	attr_name = "Decal 0 Texture";  map = "decal0";
+//				}
+//
+//				if ( tx_prop[attr_name]->asTexture().isUsed == true ) {
+//					//How to merge all UVs?
+//				}
+//
+//		}
+//
+//
+//		//blk_ref material = (*it)->GetAttr("Propreties")->FindLink("NiMaterialProperty");
+//		//blk_ref skin_inst = (*it)->GetAttr("Skin Instance")->asLink();
+//		//blk_ref skin_data;
+//		//vector<blk_ref> bones;
+//		//map<int, float> weights;
+//		//if ( skin_inst.is_null() == false ) {
+//		//	skin_block = skin_inst->GetAttr("Data");
+//		//	if (skin_block.is_null() == false ) {
+//		//		ISkinData * skin_data = QuerySkinData(skin_block);
+//		//		weights = skin_data->GetWeights();
+//		//		bones = skin_data->GetBones();
+//		//	}
+//		//}
+//
+//	}
+//}
+
 //--Attribute Reference--//
 class attr_ref {
 public:
@@ -542,11 +671,11 @@ public:
 	}
 
 	//Assignment operators
-	attr_ref & operator=(int & n) {
+	attr_ref & operator=(int n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(float & n) {
+	attr_ref & operator=(float n) {
 		_attr->Set(n);
 		return *this;
 	}

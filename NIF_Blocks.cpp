@@ -64,7 +64,7 @@ ABlock::~ABlock() {
 	}
 }
 
-void ABlock::AddAttr( string type, string name ) {
+void ABlock::AddAttr( string type, string name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
 	if ( type == "int" ) {
 		attr = new IntAttr( name, this );
@@ -78,11 +78,11 @@ void ABlock::AddAttr( string type, string name ) {
 		attr = new Float3Attr( name, this );
 	} else if ( type == "string" ) {
 		attr = new StringAttr( name, this );
-	} else if ( type == "index" ) {
-		attr = new IndexAttr( name, this );
+	} else if ( type == "link" ) {
+		attr = new LinkAttr( name, this );
 	} else if ( type == "flags" ) {
 		attr = new FlagsAttr( name, this );
-	} else if ( type == "matrix" ) {
+	} else if ( type == "matrix33" ) {
 		attr = new MatrixAttr( name, this );
 	} else if ( type == "linkgroup" ) {
 		attr = new LinkGroupAttr( name, this );
@@ -90,7 +90,7 @@ void ABlock::AddAttr( string type, string name ) {
 		attr = new BoneAttr( name, this );
 	} else if ( type == "bbox" ) {
 		attr = new BBoxAttr( name, this );
-	} else if ( type == "cint" ) {
+	} else if ( type == "condint" ) {
 		attr = new CIntAttr( name, this );
 	} else if ( type == "vertmode" ) {
 		attr = new VertModeAttr( name, this );
@@ -112,8 +112,10 @@ void ABlock::AddAttr( string type, string name ) {
 		attr = new AlphaFormatAttr( name, this );
 	} else if ( type == "nodeancestor" ) {
 		attr = new NodeAncestorAttr( name, this );
-	} else if ( type == "root" ) {
-		attr = new RootAttr( name, this );
+	} else if ( type == "skeletonroot" ) {
+		attr = new SkeletonRootAttr( name, this );
+	} else if ( type == "particlegroup" ) {
+		attr = new ParticleGroupAttr( name, this );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -121,6 +123,7 @@ void ABlock::AddAttr( string type, string name ) {
 
 	_attr_map[name] = attr_ref(attr);
 	_attr_vect.push_back(attr_ref(attr));
+	_attr_vers.push_back( pair<unsigned int, unsigned int>(first_ver, last_ver) );
 }
 
 attr_ref ABlock::GetAttr(string attr_name) {
@@ -146,17 +149,16 @@ blk_ref ABlock::GetParent() {
 		return blk_ref(-1);
 }
 
-void ABlock::Read( ifstream& in ) {
+void ABlock::Read( ifstream& in, unsigned int version ) {
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
-		_attr_vect[i]->Read( in );
-		//cout << "   " << _attr_vect[i]->GetName() << endl;
+		if ( version >= _attr_vers[i].first && version <= _attr_vers[i].second ) {
+			_attr_vect[i]->Read( in );
+			//cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
+		}
 	}
 }
 
-void ABlock::Write( ofstream& out ) {
-	//Write Block Type
-	WriteString( this->GetBlockType() , out );
-
+void ABlock::Write( ofstream& out, unsigned int version ) {
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		//cout << "Writing " << blk_ref(this) << " " << _attr_vect[i]->GetName() << endl;
@@ -552,7 +554,7 @@ string NiNode::asString() {
 /**
  * NiTriShapeData::Read - Assumes block name has already been read from in
  */
-void NiTriShapeData::Read( ifstream& in ){
+void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 
 	short vert_count = ReadUShort( in );
 	int hasVertices = ReadUInt( in );
@@ -731,9 +733,7 @@ string NiTriShapeData::asString() {
 /**
  * NiTriShapeData::Write - Writes block name to out, in addition to data.
  */
-void NiTriShapeData::Write( ofstream& out ){
-
-	WriteString( "NiTriShapeData", out );
+void NiTriShapeData::Write( ofstream& out, unsigned int version ){
 
 	WriteUShort( short(vertices.size()), out );
 
@@ -888,7 +888,7 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
  * NiSkinData methods
  **********************************************************/
 
-void NiSkinData::Read( ifstream& in ) {
+void NiSkinData::Read( ifstream& in, unsigned int version ) {
 	
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
@@ -919,11 +919,9 @@ void NiSkinData::Read( ifstream& in ) {
 	}
 }
 
-void NiSkinData::Write( ofstream& out ) {
+void NiSkinData::Write( ofstream& out, unsigned int version ) {
 	//Calculate offset matrices prior to writing data
 	CalculateBoneOffsets();
-
-	WriteString( "NiSkinData", out );
 
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
@@ -1404,7 +1402,7 @@ string NiGeomMorpherController::asString() {
  * NiKeyframeData methods
  **********************************************************/
 
-void NiKeyframeData::Read( ifstream& in ) {
+void NiKeyframeData::Read( ifstream& in, unsigned int version ) {
 
 	scaleType = rotationType = translationType = KeyType(0);
 
@@ -1493,7 +1491,6 @@ void NiKeyframeData::Read( ifstream& in ) {
 
 	if (numScalings > 0) {
 		scaleType = KeyType(ReadUInt( in ));
-		cout << "Scale Type:  " << scaleType << endl;
 
 		scaleKeys.resize( numScalings );
 		for ( unsigned int i = 0; i < numScalings; ++i ) {
@@ -1513,9 +1510,7 @@ void NiKeyframeData::Read( ifstream& in ) {
 	}
 }
 
-void NiKeyframeData::Write( ofstream& out ) {
-
-	WriteString( "NiKeyframeData", out );
+void NiKeyframeData::Write( ofstream& out, unsigned int version ) {
 
 	//--Rotation--//
 	WriteUInt( uint(rotKeys.size()), out );
@@ -1690,7 +1685,7 @@ string NiKeyframeData::asString() {
  * NiColorData methods
  **********************************************************/
 
-void NiColorData::Read( ifstream& in ) {
+void NiColorData::Read( ifstream& in, unsigned int version ) {
 	colorCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
@@ -1731,7 +1726,7 @@ string NiColorData::asString() {
  * NiFloatData methods
  **********************************************************/
 
-void NiFloatData::Read( ifstream& in ) {	
+void NiFloatData::Read( ifstream& in, unsigned int version ) {	
 	colorCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
@@ -1774,7 +1769,7 @@ string NiFloatData::asString() {
  * NiStringExtraData methods
  **********************************************************/
 
-void NiStringExtraData::Read( ifstream& in ) {
+void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 	GetAttr("Next Extra Data")->Read( in );
 
 	//Read Bytes Remaining but don't bother to store it
@@ -1783,8 +1778,7 @@ void NiStringExtraData::Read( ifstream& in ) {
 	GetAttr("String Data")->Read( in );
 }
 
-void NiStringExtraData::Write( ofstream& out ) {
-	WriteString( "NiStringExtraData", out );
+void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
 
 	GetAttr("Next Extra Data")->Write( out );
 
@@ -1815,7 +1809,7 @@ string NiStringExtraData::asString() {
  * NiMorphData methods
  **********************************************************/
 
-void NiMorphData::Read( ifstream& in ) {
+void NiMorphData::Read( ifstream& in, unsigned int version ) {
 	uint morphCount = ReadUInt( in );
 	vertCount = ReadUInt( in );
 
@@ -1848,9 +1842,7 @@ void NiMorphData::Read( ifstream& in ) {
 	}
 }
 
-void NiMorphData::Write( ofstream& out ) {
-	WriteString( "NiMorphData", out );
-
+void NiMorphData::Write( ofstream& out, unsigned int version ) {
 	WriteUInt( uint(morphs.size()), out );
 	WriteUInt( vertCount, out );
 
@@ -1933,7 +1925,7 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
  * NiPixelData methods
  **********************************************************/
 
-void NiPixelData::Read( ifstream& in ) {
+void NiPixelData::Read( ifstream& in, unsigned int version ) {
 	unknownInt = ReadUInt( in );
 	rMask = ReadUInt( in );
 	gMask = ReadUInt( in );
@@ -1984,7 +1976,7 @@ string NiPixelData::asString() {
 	}
 	out << endl;
 
-	out << "Unknown Index:  " <<  GetAttr("Next Extra Data")->asLink() << endl
+	out << "Unknown Index:  " <<  GetAttr("Unknown Index")->asLink() << endl
 		<< "Mipmap Count:  " << mipCount << endl
 		<< "Bytes Per Pixel:  " << bytesPerPixel << endl;
 
@@ -2004,7 +1996,7 @@ string NiPixelData::asString() {
  * NiPosData methods
  **********************************************************/
 
-void NiPosData::Read( ifstream& in ) {
+void NiPosData::Read( ifstream& in, unsigned int version ) {
 	posCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
@@ -2053,7 +2045,7 @@ string NiPosData::asString() {
  * NiRotatingParticlesData methods
  **********************************************************/
 
-void NiRotatingParticlesData::Read( ifstream& in ) {
+void NiRotatingParticlesData::Read( ifstream& in, unsigned int version ) {
 
  //   short count1
 
@@ -2185,7 +2177,7 @@ void NiRotatingParticlesData::Read( ifstream& in ) {
  * NiTextKeyExtraData methods
  **********************************************************/
 
-void NiTextKeyExtraData::Read( ifstream& in ) {
+void NiTextKeyExtraData::Read( ifstream& in, unsigned int version ) {
 
 	GetAttr("Next Extra Data")->Read( in );
 	GetAttr("Unknown Int")->Read( in );
@@ -2199,9 +2191,7 @@ void NiTextKeyExtraData::Read( ifstream& in ) {
 	}
 }
 
-void NiTextKeyExtraData::Write( ofstream& out ) {
-
-	WriteString( "NiTextKeyExtraData", out );
+void NiTextKeyExtraData::Write( ofstream& out, unsigned int version ) {
 
 	GetAttr("Next Extra Data")->Write( out );
 	GetAttr("Unknown Int")->Write( out );
@@ -2239,7 +2229,7 @@ string NiTextKeyExtraData::asString() {
  * NiUVData methods
  **********************************************************/
 
-void NiUVData::Read( ifstream& in ) {	
+void NiUVData::Read( ifstream& in, unsigned int version ) {	
 	for (uint i = 0; i < 4; ++i) {
 		groups[i].count = ReadUInt( in );
 
@@ -2294,7 +2284,7 @@ string NiUVData::asString() {
  * NiVertWeightsExtraData methods
  **********************************************************/
  
-void NiVertWeightsExtraData ::Read( ifstream& in ) {
+void NiVertWeightsExtraData ::Read( ifstream& in, unsigned int version ) {
 	GetAttr("Next Extra Data")->Read( in );
 	bytes = ReadUInt( in );
 	verts = ReadUShort( in );
@@ -2329,7 +2319,7 @@ string NiVertWeightsExtraData::asString() {
  * NiVisData methods
  **********************************************************/
 
-void NiVisData ::Read( ifstream& in ) {
+void NiVisData ::Read( ifstream& in, unsigned int version ) {
 	visCount = ReadUInt( in );
 
 	keys.resize( visCount );
@@ -2361,7 +2351,7 @@ string NiVisData::asString() {
  * UnknownMixIn methods
  **********************************************************/
 
-void UnknownMixIn::Read( ifstream &in ) {
+void UnknownMixIn::Read( ifstream &in, unsigned int version ) {
 	len = BlockSearch(in);
 
 	//Create byte array and read in unknown block
@@ -2398,7 +2388,7 @@ string UnknownMixIn::asString() {
 	return out.str();
 }
 
-void UnknownMixIn::Write( ofstream& out ) {
+void UnknownMixIn::Write( ofstream& out, unsigned int version ) {
 	out.write( (const char*)data, len );
 }
 
