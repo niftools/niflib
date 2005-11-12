@@ -79,6 +79,16 @@ const int ID_TEXT_KEY_EXTRA_DATA = 4;
 const int ID_MORPH_DATA = 5;
 const int ID_SHAPE_DATA = 6;
 
+//Attribute types
+const enum AttrTypes {
+	attr_int, attr_short, attr_byte, attr_float, attr_float3, attr_string,
+	attr_link, attr_flags, attr_matrix33, attr_linkgroup, attr_bones,
+	attr_bbox, attr_condint, attr_vertmode, attr_lightmode, attr_texture,
+	attr_bumpmap, attr_applymode, attr_texsource, attr_pixellayout,
+	attr_mipmapformat, attr_alphaformat, attr_nodeancestor,
+	attr_skeletonroot, attr_particlegroup, attr_lodrangegroup
+};
+
 //NIF Versions
 const int VER_4_0_0_2 = 0x04000002;
 const int VER_4_2_0_2 = 0x04020002;

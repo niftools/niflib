@@ -64,57 +64,57 @@ ABlock::~ABlock() {
 	}
 }
 
-void ABlock::AddAttr( string type, string name, unsigned int first_ver, unsigned int last_ver ) {
+void ABlock::AddAttr( AttrTypes type, string name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
-	if ( type == "int" ) {
+	if ( type == attr_int ) {
 		attr = new IntAttr( name, this, first_ver, last_ver );
-	} else if ( type == "short" ) {
+	} else if ( type == attr_short ) {
 		attr = new ShortAttr( name, this, first_ver, last_ver );
-	} else if ( type == "byte" ) {
+	} else if ( type == attr_byte ) {
 		attr = new ByteAttr( name, this, first_ver, last_ver );
-	} else if ( type == "float" ) {
+	} else if ( type == attr_float ) {
 		attr = new FloatAttr( name, this, first_ver, last_ver );
-	} else if ( type == "float3" ) {
+	} else if ( type == attr_float3 ) {
 		attr = new Float3Attr( name, this, first_ver, last_ver );
-	} else if ( type == "string" ) {
+	} else if ( type == attr_string ) {
 		attr = new StringAttr( name, this, first_ver, last_ver );
-	} else if ( type == "link" ) {
+	} else if ( type == attr_link ) {
 		attr = new LinkAttr( name, this, first_ver, last_ver );
-	} else if ( type == "flags" ) {
+	} else if ( type == attr_flags ) {
 		attr = new FlagsAttr( name, this, first_ver, last_ver );
-	} else if ( type == "matrix33" ) {
+	} else if ( type == attr_matrix33 ) {
 		attr = new MatrixAttr( name, this, first_ver, last_ver );
-	} else if ( type == "linkgroup" ) {
+	} else if ( type == attr_linkgroup ) {
 		attr = new LinkGroupAttr( name, this, first_ver, last_ver );
-	} else if ( type == "bones" ) {
+	} else if ( type == attr_bones ) {
 		attr = new BoneAttr( name, this, first_ver, last_ver );
-	} else if ( type == "bbox" ) {
+	} else if ( type == attr_bbox ) {
 		attr = new BBoxAttr( name, this, first_ver, last_ver );
-	} else if ( type == "condint" ) {
+	} else if ( type == attr_condint ) {
 		attr = new CIntAttr( name, this, first_ver, last_ver );
-	} else if ( type == "vertmode" ) {
+	} else if ( type == attr_vertmode ) {
 		attr = new VertModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == "lightmode" ) {
+	} else if ( type == attr_lightmode ) {
 		attr = new LightModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == "texture" ) {
+	} else if ( type == attr_texture ) {
 		attr = new TextureAttr( name, this, first_ver, last_ver, false );
-	} else if ( type == "bumpmap" ) {
+	} else if ( type == attr_bumpmap ) {
 		attr = new TextureAttr( name, this, first_ver, last_ver, true );
-	} else if ( type == "applymode" ) {
+	} else if ( type == attr_applymode ) {
 		attr = new ApplyModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == "texsource" ) {
+	} else if ( type == attr_texsource ) {
 		attr = new TexSourceAttr( name, this, first_ver, last_ver );
-	} else if ( type == "pixellayout" ) {
+	} else if ( type == attr_pixellayout ) {
 		attr = new PixelLayoutAttr( name, this, first_ver, last_ver );
-	} else if ( type == "mipmapformat" ) {
+	} else if ( type == attr_mipmapformat ) {
 		attr = new MipMapFormatAttr( name, this, first_ver, last_ver );
-	} else if ( type == "alphaformat" ) {
+	} else if ( type == attr_alphaformat ) {
 		attr = new AlphaFormatAttr( name, this, first_ver, last_ver );
-	} else if ( type == "nodeancestor" ) {
+	} else if ( type == attr_nodeancestor ) {
 		attr = new NodeAncestorAttr( name, this, first_ver, last_ver );
-	} else if ( type == "skeletonroot" ) {
+	} else if ( type == attr_skeletonroot ) {
 		attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
-	} else if ( type == "particlegroup" ) {
+	} else if ( type == attr_particlegroup ) {
 		attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;

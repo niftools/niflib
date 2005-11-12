@@ -40,6 +40,11 @@ using namespace std;
 
 bool verbose = false;
 
+//Stores the mapping between block names and factory function pointers to create them
+typedef IBlock * (*blk_factory_func)();
+bool global_block_map_init = false;
+map<string, blk_factory_func> global_block_map;
+
 //Temporary Global to test reference counting
 unsigned int blocks_in_memory = 0;
 
@@ -47,163 +52,182 @@ unsigned int blocks_in_memory = 0;
 void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block );
 void BuildUpBindPositions( blk_ref block );
 blk_ref FindRoot( vector<blk_ref> & blocks );
+void RegisterBlockFactories ();
 
 //--Function Bodies--//
 void SetVerboseMode( bool val ) { verbose = val; }
 
 blk_ref CreateBlock( string block_type ) {
-	IBlock * block = NULL;
-
-	if (block_type == "AvoidNode") {
-		block = new AvoidNode;
-	} else if (block_type == "NiAlphaController") {
-		block = new NiAlphaController;
-	} else if (block_type == "NiAlphaProperty") {
-		block = new NiAlphaProperty;
-	} else if (block_type == "NiAmbientLight") {
-		block = new NiAmbientLight;
-	} else if (block_type == "NiAutoNormalParticles") {
-		block = new NiAutoNormalParticles;
-		} else if (block_type == "NiAutoNormalParticlesData") {
-		block = new NiAutoNormalParticlesData;
-	} else if (block_type == "NiBillboardNode") {
-		block = new NiBillboardNode;
-	} else if (block_type == "NiBooleanExtraData") {
-		block = new NiBooleanExtraData;
-	} else if (block_type == "NiBSAnimationNode") {
-		block = new NiBSAnimationNode;
-	} else if (block_type == "NiBSPArrayController") {
-		block = new NiBSPArrayController;
-	} else if (block_type == "NiBSParticleNode") {
-		block = new NiBSParticleNode;
-	} else if (block_type == "NiCamera") {
-		block = new NiCamera;
-	} else if (block_type == "NiCollisionData") {
-		block = new NiCollisionData;
-	} else if (block_type == "NiColorData") {
-		block = new NiColorData;
-	//} else if (block_type == "NiControllerSequence") {
-	//	block = new NiControllerSequence;
-	} else if (block_type == "NiDirectionalLight") {
-		block = new NiDirectionalLight;
-	} else if (block_type == "NiDitherProperty") {
-		block = new NiDitherProperty;
-	} else if (block_type == "NiFlipController") {
-		block = new NiFlipController;
-	} else if (block_type == "NiFloatData") {
-		block = new NiFloatData;
-	} else if (block_type == "NiGeomMorpherController") {
-		block = new NiGeomMorpherController;
-	} else if (block_type == "NiGravity") {
-		block = new NiGravity;
-	} else if (block_type == "NiIntegerExtraData") {
-		block = new NiIntegerExtraData;
-	} else if (block_type == "NiKeyframeController") {
-		block = new NiKeyframeController;
-	} else if (block_type == "NiKeyframeData") {
-		block = new NiKeyframeData;
-	} else if (block_type == "NiLODNode") {
-		block = new NiLODNode;
-	} else if (block_type == "NiLookAtController") {
-		block = new NiLookAtController;
-	} else if (block_type == "NiMaterialColorController") {
-		block = new NiMaterialColorController;
-	} else if (block_type == "NiMaterialProperty") {
-		block = new NiMaterialProperty;
-	} else if (block_type == "NiMorphData") {
-		block = new NiMorphData;
-	} else if (block_type == "NiNode") {
-		block = new NiNode;
-	} else if (block_type == "NiPalette") {
-		block = new NiPalette;
-	} else if (block_type == "NiParticleBomb") {
-		block = new NiParticleBomb;
-	} else if (block_type == "NiParticleColorModifier") {
-		block = new NiParticleColorModifier;
-	} else if (block_type == "NiParticleGrowFade") {
-		block = new NiParticleGrowFade;
-	} else if (block_type == "NiParticleMeshes") {
-		block = new NiParticleMeshes;
-	} else if (block_type == "NiParticleMeshesData") {
-		block = new NiParticleMeshesData;
-	} else if (block_type == "NiParticleMeshModifier") {
-		block = new NiParticleMeshModifier;
-	} else if (block_type == "NiParticleRotation") {
-		block = new NiParticleRotation;
-	} else if (block_type == "NiParticleSystemController") {
-		block = new NiParticleSystemController;
-	} else if (block_type == "NiPathController") {
-		block = new NiPathController;
-	} else if (block_type == "NiPixelData") {
-		block = new NiPixelData;
-	} else if (block_type == "NiPlanarCollider") {
-		block = new NiPlanarCollider;
-	} else if (block_type == "NiPosData") {
-		block = new NiPosData;
-	} else if (block_type == "NiRotatingParticles") {
-		block = new NiRotatingParticles;
-	} else if (block_type == "NiRotatingParticlesData") {
-		block = new NiRotatingParticlesData;
-	} else if ( block_type == "NiSequenceStreamHelper") {
-		block = new NiSequenceStreamHelper;
-	} else if (block_type == "NiShadeProperty") {
-		block = new NiShadeProperty;
-	} else if (block_type == "NiSkinData") {
-		block = new NiSkinData;
-	} else if (block_type == "NiSkinInstance") {
-		block = new NiSkinInstance;
-	//} else if (block_type == "NiSkinPartition") {
-	//	block = new NiSkinPartition;
-	} else if (block_type == "NiSourceTexture") {
-		block = new NiSourceTexture;
-	} else if (block_type == "NiSpecularProperty") {
-		block = new NiSpecularProperty;
-	} else if (block_type == "NiSphericalCollider") {
-		block = new NiSphericalCollider;
-	} else if (block_type == "NiStencilProperty") {
-		block = new NiStencilProperty;
-	} else if (block_type == "NiStringExtraData") {
-		block = new NiStringExtraData;
-	} else if (block_type == "NiTextKeyExtraData") {
-		block = new NiTextKeyExtraData;
-	} else if (block_type == "NiTextureEffect") {
-		block = new NiTextureEffect;
-	} else if (block_type == "NiTexturingProperty") {
-		block = new NiTexturingProperty;
-	} else if (block_type == "NiTriShape") {
-		block = new NiTriShape;
-	} else if (block_type == "NiTriStrips") {
-		block = new NiTriStrips;
-	} else if (block_type == "NiTriShapeData") {
-		block = new NiTriShapeData;
-	} else if ( block_type == "NiUVController") {
-		block = new NiUVController;
-	} else if (block_type == "NiUVData") {
-		block = new NiUVData;
-	} else if ( block_type == "NiVertexColorProperty") {
-		block = new NiVertexColorProperty;
-	} else if (block_type == "NiVertWeightsExtraData") {
-		block = new NiVertWeightsExtraData;
-	} else if (block_type == "NiVisController") {
-		block = new NiVisController;
-	} else if (block_type == "NiVisData") {
-		block = new NiVisData;
-	} else if (block_type == "NiWireframeProperty") {
-		block = new NiWireframeProperty;
-	} else if (block_type == "NiZBufferProperty") {
-		block = new NiZBufferProperty;
-	} else if (block_type == "RootCollisionNode") {
-		block = new RootCollisionNode;
-	// Unknown Blocks
-	} else if ( block_type == "NiRendererSpecificProperty" ) {
-		block = new UnknownPropertyBlock( block_type );
-	} else if ( block_type == "NiBSPArrayController" || block_type == "NiParticleSystemController" ) {
-		block = new UnknownControllerBlock( block_type );
-	} else {
-		block = new UnknownBlock( block_type );
+	
+	//Initialize the global block list if it hasn't been done yet
+	if ( global_block_map_init == false ) {
+		RegisterBlockFactories();
+		global_block_map_init = true;
 	}
 
+	IBlock * block = NULL;
+
+	map<string, blk_factory_func>::iterator it;
+	it = global_block_map.find(block_type);
+
+	if ( it != global_block_map.end() ) {
+		//Requested type has been registered
+		block = it->second();
+	} else {
+		//An unknown type has been encountered
+		block = new UnknownBlock( block_type );
+	}
+	
 	return blk_ref(block);
+
+	//if (block_type == "AvoidNode") {
+	//	block = new AvoidNode;
+	//} else if (block_type == "NiAlphaController") {
+	//	block = new NiAlphaController;
+	//} else if (block_type == "NiAlphaProperty") {
+	//	block = new NiAlphaProperty;
+	//} else if (block_type == "NiAmbientLight") {
+	//	block = new NiAmbientLight;
+	//} else if (block_type == "NiAutoNormalParticles") {
+	//	block = new NiAutoNormalParticles;
+	//	} else if (block_type == "NiAutoNormalParticlesData") {
+	//	block = new NiAutoNormalParticlesData;
+	//} else if (block_type == "NiBillboardNode") {
+	//	block = new NiBillboardNode;
+	//} else if (block_type == "NiBooleanExtraData") {
+	//	block = new NiBooleanExtraData;
+	//} else if (block_type == "NiBSAnimationNode") {
+	//	block = new NiBSAnimationNode;
+	//} else if (block_type == "NiBSPArrayController") {
+	//	block = new NiBSPArrayController;
+	//} else if (block_type == "NiBSParticleNode") {
+	//	block = new NiBSParticleNode;
+	//} else if (block_type == "NiCamera") {
+	//	block = new NiCamera;
+	//} else if (block_type == "NiCollisionData") {
+	//	block = new NiCollisionData;
+	//} else if (block_type == "NiColorData") {
+	//	block = new NiColorData;
+	////} else if (block_type == "NiControllerSequence") {
+	////	block = new NiControllerSequence;
+	//} else if (block_type == "NiDirectionalLight") {
+	//	block = new NiDirectionalLight;
+	//} else if (block_type == "NiDitherProperty") {
+	//	block = new NiDitherProperty;
+	//} else if (block_type == "NiFlipController") {
+	//	block = new NiFlipController;
+	//} else if (block_type == "NiFloatData") {
+	//	block = new NiFloatData;
+	//} else if (block_type == "NiGeomMorpherController") {
+	//	block = new NiGeomMorpherController;
+	//} else if (block_type == "NiGravity") {
+	//	block = new NiGravity;
+	//} else if (block_type == "NiIntegerExtraData") {
+	//	block = new NiIntegerExtraData;
+	//} else if (block_type == "NiKeyframeController") {
+	//	block = new NiKeyframeController;
+	//} else if (block_type == "NiKeyframeData") {
+	//	block = new NiKeyframeData;
+	//} else if (block_type == "NiLODNode") {
+	//	block = new NiLODNode;
+	//} else if (block_type == "NiLookAtController") {
+	//	block = new NiLookAtController;
+	//} else if (block_type == "NiMaterialColorController") {
+	//	block = new NiMaterialColorController;
+	//} else if (block_type == "NiMaterialProperty") {
+	//	block = new NiMaterialProperty;
+	//} else if (block_type == "NiMorphData") {
+	//	block = new NiMorphData;
+	//} else if (block_type == "NiNode") {
+	//	block = new NiNode;
+	//} else if (block_type == "NiPalette") {
+	//	block = new NiPalette;
+	//} else if (block_type == "NiParticleBomb") {
+	//	block = new NiParticleBomb;
+	//} else if (block_type == "NiParticleColorModifier") {
+	//	block = new NiParticleColorModifier;
+	//} else if (block_type == "NiParticleGrowFade") {
+	//	block = new NiParticleGrowFade;
+	//} else if (block_type == "NiParticleMeshes") {
+	//	block = new NiParticleMeshes;
+	//} else if (block_type == "NiParticleMeshesData") {
+	//	block = new NiParticleMeshesData;
+	//} else if (block_type == "NiParticleMeshModifier") {
+	//	block = new NiParticleMeshModifier;
+	//} else if (block_type == "NiParticleRotation") {
+	//	block = new NiParticleRotation;
+	//} else if (block_type == "NiParticleSystemController") {
+	//	block = new NiParticleSystemController;
+	//} else if (block_type == "NiPathController") {
+	//	block = new NiPathController;
+	//} else if (block_type == "NiPixelData") {
+	//	block = new NiPixelData;
+	//} else if (block_type == "NiPlanarCollider") {
+	//	block = new NiPlanarCollider;
+	//} else if (block_type == "NiPosData") {
+	//	block = new NiPosData;
+	//} else if (block_type == "NiRotatingParticles") {
+	//	block = new NiRotatingParticles;
+	//} else if (block_type == "NiRotatingParticlesData") {
+	//	block = new NiRotatingParticlesData;
+	//} else if ( block_type == "NiSequenceStreamHelper") {
+	//	block = new NiSequenceStreamHelper;
+	//} else if (block_type == "NiShadeProperty") {
+	//	block = new NiShadeProperty;
+	//} else if (block_type == "NiSkinData") {
+	//	block = new NiSkinData;
+	//} else if (block_type == "NiSkinInstance") {
+	//	block = new NiSkinInstance;
+	////} else if (block_type == "NiSkinPartition") {
+	////	block = new NiSkinPartition;
+	//} else if (block_type == "NiSourceTexture") {
+	//	block = new NiSourceTexture;
+	//} else if (block_type == "NiSpecularProperty") {
+	//	block = new NiSpecularProperty;
+	//} else if (block_type == "NiSphericalCollider") {
+	//	block = new NiSphericalCollider;
+	//} else if (block_type == "NiStencilProperty") {
+	//	block = new NiStencilProperty;
+	//} else if (block_type == "NiStringExtraData") {
+	//	block = new NiStringExtraData;
+	//} else if (block_type == "NiTextKeyExtraData") {
+	//	block = new NiTextKeyExtraData;
+	//} else if (block_type == "NiTextureEffect") {
+	//	block = new NiTextureEffect;
+	//} else if (block_type == "NiTexturingProperty") {
+	//	block = new NiTexturingProperty;
+	//} else if (block_type == "NiTriShape") {
+	//	block = new NiTriShape;
+	//} else if (block_type == "NiTriStrips") {
+	//	block = new NiTriStrips;
+	//} else if (block_type == "NiTriShapeData") {
+	//	block = new NiTriShapeData;
+	//} else if ( block_type == "NiUVController") {
+	//	block = new NiUVController;
+	//} else if (block_type == "NiUVData") {
+	//	block = new NiUVData;
+	//} else if ( block_type == "NiVertexColorProperty") {
+	//	block = new NiVertexColorProperty;
+	//} else if (block_type == "NiVertWeightsExtraData") {
+	//	block = new NiVertWeightsExtraData;
+	//} else if (block_type == "NiVisController") {
+	//	block = new NiVisController;
+	//} else if (block_type == "NiVisData") {
+	//	block = new NiVisData;
+	//} else if (block_type == "NiWireframeProperty") {
+	//	block = new NiWireframeProperty;
+	//} else if (block_type == "NiZBufferProperty") {
+	//	block = new NiZBufferProperty;
+	//} else if (block_type == "RootCollisionNode") {
+	//	block = new RootCollisionNode;
+	//// Unknown Blocks
+	//} else if ( block_type == "NiRendererSpecificProperty" ) {
+	//	block = new UnknownPropertyBlock( block_type );
+	//} else if ( block_type == "NiBSPArrayController" || block_type == "NiParticleSystemController" ) {
+	//	block = new UnknownControllerBlock( block_type );
+	//} else {
+	//	block = new UnknownBlock( block_type );
+	//}
 }
 
 //Reads the given file by file name and returns a reference to the root block
@@ -249,12 +273,12 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	uint version = ReadUInt( in );
 	uint numBlocks = ReadUInt( in );
 
-	//Output
-	cout << endl << endl 
-		 << "====[ " << file_name << " | File Header ]====" << endl
-		 << "Header:  " << header_string << endl
-		 << "Version:  " << Hex(version) << endl
-		 << "Number of blocks: " << int(numBlocks) << endl;
+	////Output
+	//cout << endl << endl 
+	//	 << "====[ " << file_name << " | File Header ]====" << endl
+	//	 << "Header:  " << header_string << endl
+	//	 << "Version:  " << Hex(version) << endl
+	//	 << "Number of blocks: " << int(numBlocks) << endl;
 
 	//vector<blk_ref> v;
 	//return v;
@@ -290,7 +314,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			throw runtime_error("Read failue - Bad block position");
 		}
 
-		cout << endl << i << ":  " << blockName;
+		//cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -315,7 +339,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			delete [] blockName;
 	}
 
-	cout << endl;
+	//cout << endl;
 
 	//--Read Footer--//
 	uint unknownInt = ReadUInt( in );

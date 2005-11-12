@@ -79,7 +79,7 @@ class ABlock : public IBlock, public IBlockInternal {
 public:
 	ABlock();
 	~ABlock();
-	void AddAttr( string type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
+	void AddAttr( AttrTypes type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
 	attr_ref GetAttr(string attr_name);
 	vector<attr_ref> GetAttrs();
 	int GetBlockNum() { return _block_num; }
@@ -216,7 +216,7 @@ public:
 	AExtraData() {
 		_namable = true;
 		_first_named_ver = 0x10000100;
-		AddAttr( "link", "Next Extra Data", 0, 0x04020200 );
+		AddAttr( attr_link, "Next Extra Data", 0, 0x04020200 );
 	}
 	~AExtraData() {};
 };
@@ -456,7 +456,7 @@ public:
 class NiPixelData : public AData {
 public:
 	NiPixelData() {
-		AddAttr( "link", "Unknown Index" );
+		AddAttr( attr_link, "Unknown Index" );
 		data = NULL; }
 	~NiPixelData() { if (data != NULL) delete [] data; }
 
@@ -528,8 +528,8 @@ public:
 class AShapeData : public AData, public IShapeData {
 public:
 	AShapeData() {
-		AddAttr( "float3", "Center" );
-		AddAttr( "float", "Radius" );
+		AddAttr( attr_float3, "Center" );
+		AddAttr( attr_float, "Radius" );
 	}
 	~AShapeData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -568,8 +568,8 @@ protected:
 class AParticlesData : public AShapeData {
 public:
 	AParticlesData() {
-		AddAttr( "float", "Active Radius" );
-		AddAttr( "short", "Unknown Short", 0x0401000C );
+		AddAttr( attr_float, "Active Radius" );
+		AddAttr( attr_short, "Unknown Short", 0x0401000C );
 	}
 	~AParticlesData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -604,7 +604,7 @@ protected:
 class NiParticleMeshesData : public ARotatingParticlesData {
 public:
 	NiParticleMeshesData() {
-		AddAttr( "link", "Unknown Link" );
+		AddAttr( attr_link, "Unknown Link" );
 	}
 	~NiParticleMeshesData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -680,12 +680,12 @@ private:
 class NiCollisionData : public AData {
 public:
 	NiCollisionData() {
-		AddAttr( "int", "Unknown Int 1" );
-		AddAttr( "int", "Unknown Int 2" );
-		AddAttr( "byte", "Unknown Byte" );
-		AddAttr( "int", "Unknown Int 3" );
-		AddAttr( "int", "Unknown Int 4" );
-		AddAttr( "float3", "Radius" );
+		AddAttr( attr_int, "Unknown Int 1" );
+		AddAttr( attr_int, "Unknown Int 2" );
+		AddAttr( attr_byte, "Unknown Byte" );
+		AddAttr( attr_int, "Unknown Int 3" );
+		AddAttr( attr_int, "Unknown Int 4" );
+		AddAttr( attr_float3, "Radius" );
 	}
 	~NiCollisionData() {}
 
@@ -1059,9 +1059,9 @@ public:
 class NiSkinInstance : public AData, public ISkinInstInternal {
 public:
 	NiSkinInstance(){
-		AddAttr( "link", "Data" );
-		AddAttr( "skeletonroot", "Skeleton Root" );
-		AddAttr( "bones", "Bones" );
+		AddAttr( attr_link, "Data" );
+		AddAttr( attr_skeletonroot, "Skeleton Root" );
+		AddAttr( attr_bones, "Bones" );
 	}
 	~NiSkinInstance() {}
 	string GetBlockType() { return "NiSkinInstance"; }
@@ -1208,7 +1208,7 @@ private:
 class NiStringExtraData : public AExtraData {
 public:
 	NiStringExtraData() {
-		AddAttr( "string", "String Data" );
+		AddAttr( attr_string, "String Data" );
 	}
 	~NiStringExtraData() {}
 
@@ -1221,7 +1221,7 @@ public:
 class NiBooleanExtraData : public AExtraData {
 public:
 	NiBooleanExtraData() {
-		AddAttr( "byte", "Boolean Data" );
+		AddAttr( attr_byte, "Boolean Data" );
 	}
 	~NiBooleanExtraData() {}
 
@@ -1231,7 +1231,7 @@ public:
 class NiIntegerExtraData : public AExtraData {
 public:
 	NiIntegerExtraData() {
-		AddAttr( "int", "Integer Data" );
+		AddAttr( attr_int, "Integer Data" );
 	}
 	~NiIntegerExtraData() {}
 
@@ -1241,7 +1241,7 @@ public:
 class NiMorphData : public AData, public IMorphData {
 public:
 	NiMorphData() {
-		AddAttr( "byte", "Unknown Byte" );
+		AddAttr( attr_byte, "Unknown Byte" );
 	}
 	~NiMorphData() {}
 
@@ -1307,7 +1307,7 @@ public:
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 public:
 	NiTextKeyExtraData() {
-		AddAttr( "int", "Unknown Int", 0, 0x04020200 );
+		AddAttr( attr_int, "Unknown Int", 0, 0x04020200 );
 	}
 	~NiTextKeyExtraData() {}
 
