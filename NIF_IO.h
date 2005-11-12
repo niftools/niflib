@@ -196,6 +196,8 @@ float ReadFloat( ifstream &in );
 
 string ReadString( ifstream &in );
 
+bool ReadBool( ifstream &in, unsigned int version );
+
 void ReadUSVector3( usVector3& vec, ifstream& in );
 
 void ReadFVector2( fVector2& fvec, ifstream& in );
@@ -218,6 +220,8 @@ void WriteUSVector3( usVector3& fvec, ofstream& out );
 void WriteFloat( float val, ofstream& out );
 
 void WriteString( string val, ofstream& out );
+
+void WriteBool( bool val, ofstream& out, unsigned int version );
 
 void WriteFVector2( fVector2& fvec, ofstream& out );
 
@@ -251,4 +255,4 @@ private:
 
 
 
-#endif // TAH_NIF_LIB_NIF_IO_H
+#endif

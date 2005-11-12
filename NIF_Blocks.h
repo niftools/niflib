@@ -102,6 +102,11 @@ public:
 		}
 	}
 
+	//Name Functions
+	virtual bool Namable() { return _namable; }
+	virtual void SetName( string & name ) { _name = name; }
+	virtual string GetName() { return _name; }
+
 	//--Internal Functions--//
 	void AddParent( blk_ref parent);
 	void RemoveParent( IBlock * match );
@@ -110,31 +115,29 @@ public:
 
 	void Read( ifstream& in, unsigned int version );
 	void Write( ofstream& out, unsigned int version );
-private:
+protected:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
-	vector< pair< unsigned int, unsigned int > > _attr_vers;
 	int _block_num;
 	unsigned int _ref_count;
 	vector<IBlock*> _parents;
+	bool _namable;
+	unsigned int _first_named_ver;
+	string _name;
 };
 
-class AExtraData : public ABlock {
+class AControllable : public ABlock {
 public:
-	AExtraData() {
-		AddAttr( "link", "Next Extra Data" );
-	}
-	~AExtraData() {};
+	AControllable();
+	void Init() {}
+	~AControllable() {}
 };
 
-class ANamed : public ABlock {
+class ANamed : public AControllable {
 public:
-	ANamed(){
-		AddAttr( "string", "Name" );
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-	}
-	~ANamed(){}
+	ANamed();
+	void Init() { _namable = true; }
+	~ANamed() {}
 };
 
 class INodeInternal {
@@ -145,19 +148,10 @@ public:
 
 class ANode : public ANamed, public INode, public INodeInternal {
 public:
-	ANode(){
-		AddAttr( "flags", "Flags" );
-		AddAttr( "float3", "Translation" );
-		AddAttr( "matrix33", "Rotation" );
-		AddAttr( "float", "Scale" );
-		AddAttr( "float3", "Velocity" );
-		AddAttr( "linkgroup", "Properties" );
-		AddAttr( "bbox", "Bounding Box", 0, VER_4_0_0_2 );
-		AddAttr( "byte" , "Unknown Byte", VER_4_2_0_2 );
-
-		SetIdentity44(bindPosition);
-	}
+	ANode();
+	void Init() { SetIdentity44(bindPosition); };
 	~ANode();
+	void InitAttrs();
 	void * QueryInterface( int id );
 	void Read( ifstream& in, unsigned int version ) {
 		ABlock::Read( in, version );
@@ -184,53 +178,63 @@ protected:
 
 class AParentNode : public ANode {
 public:
-	AParentNode(){
-		AddAttr( "linkgroup", "Children" );
-		AddAttr( "linkgroup", "Effects" );
-	}
-	~AParentNode(){}
+	AParentNode();
+	void Init() {}
+	~AParentNode() {}
+};
+
+class AShape : public ANode {
+public:
+	AShape();
+	void Init() {}
+	~AShape() {}
 };
 
 class AProperty : public ANamed {
 public:
-	AProperty() {
-		AddAttr( "flags", "Flags" );
-	}
+	AProperty();
+	void Init() {}
 	~AProperty() {}
 };
 
 class AController : public ABlock {
 public:
-	AController() {
-		AddAttr( "link", "Next Controller" );
-		AddAttr( "flags", "Flags" );
-		AddAttr( "float", "Frequency" );
-		AddAttr( "float", "Phase" );
-		AddAttr( "float", "Start Time" );
-		AddAttr( "float", "Stop Time" );
-		AddAttr( "nodeancestor", "Target Node" );
-	}
+	AController();
+	void Init() {}
 	~AController() {}
+};
+
+class AData : public ABlock {
+public:
+	AData() {}
+	void Init() {}
+	~AData() {}
+};
+
+class AExtraData : public AData {
+public:
+	AExtraData() {
+		_namable = true;
+		_first_named_ver = 0x10000100;
+		AddAttr( "link", "Next Extra Data", 0, 0x04020200 );
+	}
+	~AExtraData() {};
+};
+
+
+class AParticleSystemController : public AController {
+public:
+	AParticleSystemController();
+	void Init() {}
+	~AParticleSystemController() {}
 };
 
 class ALight   : public ANode {
 public:
-	ALight  (){
-		//AddAttr( "int", "Unknown Int 1" );
-		//AddAttr( "int", "Unknown Int 2" );
-		AddAttr( "float", "Dimmer" );
-		AddAttr( "float3", "Ambient Color" );
-		AddAttr( "float3", "Diffuse Color" );
-		AddAttr( "float3", "Specular Color" );
-	}
-	~ALight  (){}
+	ALight();
+	void Init() {}
+	~ALight() {}
 };
-
-// Used to move temporarily stored bone indicies into SkinInstanceData block to facilitate
-// the illusion that these are stored together with the bone data
-class ISkinInstance { 
-};
-
 
 /**
  * NiNode - Root of each model component.
@@ -238,8 +242,9 @@ class ISkinInstance {
 class NiNode : public AParentNode {
 public:
 
-	NiNode(){}
-	~NiNode(){}
+	NiNode();
+	void Init() {}
+	~NiNode() {}
 	string GetBlockType() { return "NiNode"; }
 	string asString();
 };
@@ -248,148 +253,151 @@ public:
  * RootCollisionNode
  */
 class RootCollisionNode : public AParentNode {
+public:
 
-	public:
+	RootCollisionNode();
+	void Init() {}
+	~RootCollisionNode() {}
 
-		RootCollisionNode(){}
-		~RootCollisionNode(){}
-
-		string GetBlockType() { return "RootCollisionNode"; }
+	string GetBlockType() { return "RootCollisionNode"; }
 };
 
 /**
  * AvoidNode
  */
 class AvoidNode : public AParentNode {
+public:
 
-	public:
+	AvoidNode();
+	void Init() {}
+	~AvoidNode() {}
 
-		AvoidNode(){}
-		~AvoidNode(){}
-
-		string GetBlockType() { return "AvoidNode"; }
+	string GetBlockType() { return "AvoidNode"; }
 };
 
 /**
  * NiBillboardNode
  */
 class NiBillboardNode : public AParentNode {
+public:
+	NiBillboardNode();
+	void Init() {}
+	~NiBillboardNode() {}
 
-	public:
-
-		NiBillboardNode(){}
-		~NiBillboardNode(){}
-
-		string GetBlockType() { return "NiBillboardNode"; }
-};
-
-/**
- * NiBSParticleNode
- */
-class NiBSParticleNode : public AParentNode {
-
-	public:
-
-		NiBSParticleNode(){}
-		~NiBSParticleNode(){}
-
-		string GetBlockType() { return "NiBSParticleNode"; }
+	string GetBlockType() { return "NiBillboardNode"; }
 };
 
 /**
  * NiBSAnimationNode
  */
 class NiBSAnimationNode : public AParentNode {
+public:
+	NiBSAnimationNode();
+	void Init() {}
+	~NiBSAnimationNode() {}
 
-	public:
-
-		NiBSAnimationNode(){}
-		~NiBSAnimationNode(){}
-
-		string GetBlockType() { return "NiBSAnimationNode"; }
+	string GetBlockType() { return "NiBSAnimationNode"; }
 };
 
+/**
+ * NiBSParticleNode
+ */
+class NiBSParticleNode : public AParentNode {
+public:
+	NiBSParticleNode();
+	void Init() {}
+	~NiBSParticleNode() {}
+
+	string GetBlockType() { return "NiBSParticleNode"; }
+};
+
+/**
+ * NiLODNode
+ */
+class NiLODNode : public AParentNode {
+public:
+	NiLODNode();
+	void Init() {}
+	~NiLODNode() {}
+
+	string GetBlockType() { return "NiLODNode"; }
+};
 
 /**
  * ZBuffer data.
  */
 class NiZBufferProperty : public AProperty {
+public:
+	NiZBufferProperty();
+	void Init() {}
+	~NiZBufferProperty() {}
 
-	public:
-
-		NiZBufferProperty(){
-			AddAttr( "int", "Unknown Int", VER_4_2_0_2 );
-		}
-		~NiZBufferProperty(){}
-
-		string GetBlockType() { return "NiZBufferProperty"; }
+	string GetBlockType() { return "NiZBufferProperty"; }
 };
 
 /**
  * NiShadeProperty
  */
 class NiShadeProperty : public AProperty {
+public:
 
-	public:
+	NiShadeProperty();
+	void Init() {}
+	~NiShadeProperty() {}
 
-		NiShadeProperty(){}
-		~NiShadeProperty(){}
-
-		string GetBlockType() { return "NiShadeProperty"; }
+	string GetBlockType() { return "NiShadeProperty"; }
 };
 
 /**
  * ZBuffer data.NiWireframeProperty
  */
 class NiWireframeProperty : public AProperty {
+public:
 
-	public:
+	NiWireframeProperty();
+	void Init() {}
+	~NiWireframeProperty() {}
 
-		NiWireframeProperty(){}
-		~NiWireframeProperty(){}
-
-		string GetBlockType() { return "NiWireframeProperty"; }
+	string GetBlockType() { return "NiWireframeProperty"; }
 };
 
 /**
  * NiDitherProperty
  */
 class NiDitherProperty : public AProperty {
+public:
 
-	public:
+	NiDitherProperty();
+	void Init() {}
+	~NiDitherProperty() {}
 
-		NiDitherProperty(){}
-		~NiDitherProperty(){}
-
-		string GetBlockType() { return "NiDitherProperty"; }
+	string GetBlockType() { return "NiDitherProperty"; }
 };
 
 /**
  * NiSequenceStreamHelper 
  */
 class NiSequenceStreamHelper  : public ANamed {
+public:
 
-	public:
+	NiSequenceStreamHelper ();
+	void Init() {}
+	~NiSequenceStreamHelper () {}
 
-		NiSequenceStreamHelper (){}
-		~NiSequenceStreamHelper (){}
-
-		string GetBlockType() { return "NiSequenceStreamHelper"; }
+	string GetBlockType() { return "NiSequenceStreamHelper"; }
 };
 
 /**
  * NiVertexColorProperty - Vertex colour data.
  */
 class NiVertexColorProperty : public AProperty{
-	public:
+public:
 
-		NiVertexColorProperty(){
-			AddAttr( "vertmode", "Vertex Mode" );
-			AddAttr( "lightmode", "Lighting Mode" );
-		}
-		~NiVertexColorProperty(){}
+	NiVertexColorProperty();
+	void Init() {}
+	~NiVertexColorProperty() {}
 
-		string GetBlockType() { return "NiVertexColorProperty"; }
+	string GetBlockType() { return "NiVertexColorProperty"; }
 };
 
 
@@ -397,66 +405,47 @@ class NiVertexColorProperty : public AProperty{
 /**
  * NiTriShape - 
  */
-class NiTriShape : public ANode {
-	public:
-		NiTriShape() {
-			AddAttr( "link", "Data" );
-			AddAttr( "link", "Skin Instance" );
-		}
-		~NiTriShape(){}
-		string GetBlockType() { return "NiTriShape"; }
+class NiTriShape : public AShape {
+public:
+	NiTriShape();
+	void Init() {}
+	~NiTriShape() {}
+
+	string GetBlockType() { return "NiTriShape"; }
+};
+
+/**
+ * NiTriStrips - 
+ */
+class NiTriStrips : public AShape {
+public:
+	NiTriStrips();
+	void Init() {}
+	~NiTriStrips() {}
+
+	string GetBlockType() { return "NiTriStrips"; }
 };
 
 /**
  * NiTexturingProperty -
  */
 class NiTexturingProperty : public AProperty {
-
-	public:
-		NiTexturingProperty( ) {
-			AddAttr( "applymode", "Apply Mode" );
-			AddAttr( "int", "Texture Count?" );
-			AddAttr( "texture", "Base Texture" );
-			AddAttr( "texture", "Dark Texture" );
-			AddAttr( "texture", "Detail Texture" );
-			AddAttr( "texture", "Gloss Texture" );
-			AddAttr( "texture", "Glow Texture" );
-			AddAttr( "bumpmap", "Bump Map Texture" );
-			AddAttr( "texture", "Decal 0 Texture" );
-		}
-		~NiTexturingProperty(){}
-		string GetBlockType() { return "NiTexturingProperty"; }
+public:
+	NiTexturingProperty( );
+	void Init() {}
+	~NiTexturingProperty() {}
+	string GetBlockType() { return "NiTexturingProperty"; }
 };
-
-    //byte useExternal      - set to 0 or 1
-
-    //if(useExternal == 0)
-    //    byte unknown      = 1
-    //    int pixelIndex    - index of NiPixelData record
-    //else
-    //    string file       - texture file name
-
-    //int pixelLayout
-    //int mipmap
-    //int alpha             - see the NIFLA spec
-
-    //byte unknown          = 1
 
 /**
  * NiSourceTexture - Data for the associated texture, included in nif or external.
  */
 class NiSourceTexture : public ANamed{
-
-	public:
-		NiSourceTexture(){
-			AddAttr( "texsource", "Texture Source" );
-			AddAttr( "pixellayout", "Pixel Layout" );
-			AddAttr( "mipmapformat", "Use Mipmaps" );
-			AddAttr( "alphaformat", "Alpha Format" );
-			AddAttr( "byte", "Unknown Byte" );
-		}
-		~NiSourceTexture(){}
-		string GetBlockType() { return "NiSourceTexture"; }
+public:
+	NiSourceTexture();
+	void Init() {}
+	~NiSourceTexture() {}
+	string GetBlockType() { return "NiSourceTexture"; }
 };
 
 
@@ -464,144 +453,267 @@ class NiSourceTexture : public ANamed{
 /**
  * NiPixelData - Texture data for an included texture.
  */
-class NiPixelData : public ABlock{
+class NiPixelData : public AData {
+public:
+	NiPixelData() {
+		AddAttr( "link", "Unknown Index" );
+		data = NULL; }
+	~NiPixelData() { if (data != NULL) delete [] data; }
 
-	public:
-		NiPixelData(){
-			AddAttr( "link", "Unknown Index" );
-			data = NULL; }
-		~NiPixelData(){ if (data != NULL) delete [] data; }
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiPixelData"; }
 
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ){}
-		string asString();
-		string GetBlockType() { return "NiPixelData"; }
-
- 	private:
-		struct MipMap {
-			uint width, height, offset;
-		};
-		
-		uint unknownInt, rMask, gMask, bMask, aMask, bpp;
-		byte unknown8Bytes[8];
-		uint mipCount, bytesPerPixel;
-		vector<MipMap> mipmaps;
-		uint dataSize;
-		byte * data;
-
+private:
+	struct MipMap {
+		uint width, height, offset;
+	};
+	
+	uint unknownInt, rMask, gMask, bMask, aMask, bpp;
+	byte unknown8Bytes[8];
+	uint bytesPerPixel;
+	vector<MipMap> mipmaps;
+	uint dataSize;
+	byte * data;
 };
-
-
 
 /**
  * NiMaterialProperty - material properties
  */
 class NiMaterialProperty : public AProperty{
-	public:
-		NiMaterialProperty(){
-			AddAttr( "float3", "Ambient Color" );
-			AddAttr( "float3", "Diffuse Color" );
-			AddAttr( "float3", "Specular Color" );
-			AddAttr( "float3", "Emissive Color" );
-			AddAttr( "float", "Glossiness" );
-			AddAttr( "float", "Alpha" );
-		}
-		~NiMaterialProperty(){}
-		string GetBlockType() { return "NiMaterialProperty"; };
+public:
+	NiMaterialProperty();
+	void Init() {}
+	~NiMaterialProperty() {}
+	string GetBlockType() { return "NiMaterialProperty"; };
 };
 
 /**
  * NiSpecularProperty -
  */
 class NiSpecularProperty : public AProperty {
-
-	public:
-		NiSpecularProperty() {}
-		~NiSpecularProperty(){}
-		string GetBlockType() { return "NiSpecularProperty"; };
+public:
+	NiSpecularProperty();
+	void Init() {}
+	~NiSpecularProperty() {}
+	string GetBlockType() { return "NiSpecularProperty"; };
 };
 
-
+/**
+ * NiStencilProperty -
+ */
+class NiStencilProperty : public AProperty {
+public:
+	NiStencilProperty();
+	void Init() {}
+	~NiStencilProperty() {}
+	string GetBlockType() { return "NiStencilProperty"; };
+};
 
 /**
  * NiAlphaProperty - Does the mesh have alpha-blending enabled?
  */
 class NiAlphaProperty : public AProperty {
-
-	public:
-
-		NiAlphaProperty(){ 
-			AddAttr( "byte", "Unknown Byte" );
-		}
-		~NiAlphaProperty(){}
-		string GetBlockType() { return "NiAlphaProperty"; }
+public:
+	NiAlphaProperty();
+	void Init() {}
+	~NiAlphaProperty() {}
+	string GetBlockType() { return "NiAlphaProperty"; }
 };
-
-
 
 /**
- * Contains the mesh data of a group.
+ * AShapeData - Mesh data: vertices, vertex normals, etc.
  */
-class NiTriShapeData : public ABlock, public ITriShapeData {
+class AShapeData : public AData, public IShapeData {
+public:
+	AShapeData() {
+		AddAttr( "float3", "Center" );
+		AddAttr( "float", "Radius" );
+	}
+	~AShapeData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
 
-	public:
+	void * QueryInterface( int id );
 
-		NiTriShapeData() : match_group_mode(false) {
-			AddAttr( "float3", "Center" );
-			AddAttr( "float", "Radius" );
-		}
-		~NiTriShapeData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiTriShapeData"; }
-		void * QueryInterface( int id );
-
-		//--ITriShapeData--//
-		//Counts
-		short GetVertexCount() { return short(vertices.size()); }
-		short GetUVSetCount() { return short(uv_sets.size()); }
-		short GetTriangleCount() { return short(triangles.size()); }
-		void SetVertexCount(int n);
-		void SetUVSetCount(int n);
-		void SetTriangleCount(int n);
-		//Match Detection
-		void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
-		bool GetMatchDetectionMode() { return match_group_mode; }
-		//Getters
-		vector<Vector3> GetVertices() { return vertices; }
-		vector<Vector3> GetNormals() { return normals; }
-		vector<Color> GetColors() { return colors; }
-		vector<UVCoord> GetUVSet( int index ) { return uv_sets[index]; }
-		vector<Triangle> GetTriangles() { return triangles; }
-		//Setters
-		void SetVertices( const vector<Vector3> & in );
-		void SetNormals( const vector<Vector3> & in );
-		void SetColors( const vector<Color> & in );
-		void SetUVSet( int index, const vector<UVCoord> & in );
-		void SetTriangles( const vector<Triangle> & in );
-
-	private:
-		vector<Vector3> vertices;
-		vector<Vector3> normals;
-		vector<Color> colors;
-		vector< vector<UVCoord> > uv_sets;
-		vector<Triangle> triangles;
-		bool match_group_mode;
-		//short vert_count;
+	//--IShapeData--//
+	//Counts
+	short GetVertexCount() { return short(vertices.size()); }
+	short GetUVSetCount() { return short(uv_sets.size()); }
+	void SetVertexCount(int n);
+	void SetUVSetCount(int n);
+	//Getters
+	vector<Vector3> GetVertices() { return vertices; }
+	vector<Vector3> GetNormals() { return normals; }
+	vector<Color> GetColors() { return colors; }
+	vector<UVCoord> GetUVSet( int index ) { return uv_sets[index]; }
+	//Setters
+	void SetVertices( const vector<Vector3> & in );
+	void SetNormals( const vector<Vector3> & in );
+	void SetColors( const vector<Color> & in );
+	void SetUVSet( int index, const vector<UVCoord> & in );
+protected:
+	vector<Vector3> vertices;
+	vector<Vector3> normals;
+	vector<Color> colors;
+	vector< vector<UVCoord> > uv_sets;
 };
+
+/**
+ * AParticlesData - Generic particle system data block.
+ */
+
+class AParticlesData : public AShapeData {
+public:
+	AParticlesData() {
+		AddAttr( "float", "Active Radius" );
+		AddAttr( "short", "Unknown Short", 0x0401000C );
+	}
+	~AParticlesData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+protected:
+	bool hasSizes;
+	short numActive, numValid;
+	vector<float> sizes;
+};
+
+/**
+ * ARotatingParticlesData - Generic rotating particles data block. 
+ */
+
+class ARotatingParticlesData : public AParticlesData {
+public:
+	ARotatingParticlesData() {}
+	~ARotatingParticlesData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+protected:
+	bool hasRotations;
+	vector<Quaternion> rotations;
+};
+
+/**
+ * NiParticleMeshesData - Particle meshes data. 
+ */
+
+class NiParticleMeshesData : public ARotatingParticlesData {
+public:
+	NiParticleMeshesData() {
+		AddAttr( "link", "Unknown Link" );
+	}
+	~NiParticleMeshesData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+
+	string GetBlockType() { return "NiParticleMeshesData"; }
+protected:
+	
+};
+
+/**
+ * NiAutoNormalParticlesData - Particle system data block (emits particles along vertex normals?).
+ */
+
+class NiAutoNormalParticlesData : public AParticlesData {
+public:
+	NiAutoNormalParticlesData() {}
+	~NiAutoNormalParticlesData() {}
+	string GetBlockType() { return "NiAutoNormalParticlesData"; }
+};
+
+/**
+ * NiTriShapeData - Holds mesh data using a list of singular triangles.
+ */
+class NiTriShapeData : public AShapeData, public ITriShapeData {
+public:
+	NiTriShapeData() : match_group_mode(false) {}
+	~NiTriShapeData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiTriShapeData"; }
+	void * QueryInterface( int id );
+
+	//--ITriShapeData--//
+	//Counts
+	short GetTriangleCount() { return short(triangles.size()); }
+	void SetTriangleCount(int n);
+	//Match Detection
+	void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
+	bool GetMatchDetectionMode() { return match_group_mode; }
+	//Getters
+	vector<Triangle> GetTriangles() { return triangles; }
+	//Setters
+	void SetTriangles( const vector<Triangle> & in );
+
+private:
+	vector<Triangle> triangles;
+	bool match_group_mode;
+};
+
+/**
+ * NiTriStripsData - Holds mesh data using strips of triangles.
+ */
+class NiTriStripsData : public AShapeData {
+public:
+	NiTriStripsData() {}
+	~NiTriStripsData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+
+	string GetBlockType() { return "NiTriStripsData"; }
+
+private:
+	vector< vector<short> > strips;
+};
+
+/**
+ * NiCollisionData - Collision box.
+ */
+class NiCollisionData : public AData {
+public:
+	NiCollisionData() {
+		AddAttr( "int", "Unknown Int 1" );
+		AddAttr( "int", "Unknown Int 2" );
+		AddAttr( "byte", "Unknown Byte" );
+		AddAttr( "int", "Unknown Int 3" );
+		AddAttr( "int", "Unknown Int 4" );
+		AddAttr( "float3", "Radius" );
+	}
+	~NiCollisionData() {}
+
+	string GetBlockType() { return "NiCollisionData"; }
+};
+
+
 
 /**
  * NiKeyframeController
  */
 class NiKeyframeController : public AController {
 public:
-	NiKeyframeController(){
-		AddAttr( "link", "Data" );
-	}
-	~NiKeyframeController(){}
+	NiKeyframeController();
+	void Init() {}
+	~NiKeyframeController() {}
 	string GetBlockType() { return "NiKeyframeController"; }
+};
+
+/**
+ * NiKeyframeController
+ */
+class NiLookAtController : public AController {
+public:
+	NiLookAtController();
+	void Init() {}
+	~NiLookAtController() {}
+	string GetBlockType() { return "NiLookAtController"; }
 };
 
 /**
@@ -609,11 +721,21 @@ public:
  */
 class NiAlphaController : public AController {
 public:
-	NiAlphaController(){
-		AddAttr( "link", "Data" );
-	}
-	~NiAlphaController(){}
+	NiAlphaController();
+	void Init() {}
+	~NiAlphaController() {}
 	string GetBlockType() { return "NiAlphaController"; }
+};
+
+/**
+ * NiFlipController
+ */
+class NiFlipController : public AController {
+public:
+	NiFlipController();
+	void Init() {}
+	~NiFlipController() {}
+	string GetBlockType() { return "NiFlipController"; }
 };
 
 /**
@@ -621,10 +743,9 @@ public:
  */
 class NiVisController : public AController {
 public:
-	NiVisController(){
-		AddAttr( "link", "Data" );
-	}
-	~NiVisController(){}
+	NiVisController();
+	void Init() {}
+	~NiVisController() {}
 	string GetBlockType() { return "NiVisController"; }
 };
 
@@ -633,11 +754,9 @@ public:
  */
 class NiMaterialColorController : public AController {
 public:
-
-	NiMaterialColorController(){
-		AddAttr( "link", "Data" );
-	}
-	~NiMaterialColorController(){}
+	NiMaterialColorController();
+	void Init() {}
+	~NiMaterialColorController() {}
 	string GetBlockType() { return "NiMaterialColorController"; }
 };
 
@@ -646,11 +765,9 @@ public:
  */
 class NiUVController : public AController {
 public:
-	NiUVController (){
-		AddAttr( "link", "Data" );
-		AddAttr( "short", "Unknown Short" );
-	}
-	~NiUVController (){}
+	NiUVController();
+	void Init() {}
+	~NiUVController() {}
 	string GetBlockType() { return "NiUVController"; }
 };
 
@@ -660,15 +777,9 @@ public:
 
 class NiPathController : public AController {
 public:
-	NiPathController  (){
-		AddAttr( "int", "Unknown Int 1" );
-		AddAttr( "int", "Unknown Int 2" );
-		AddAttr( "int", "Unknown Int 3" );
-		AddAttr( "short", "Unknown Short" );
-		AddAttr( "link", "Pos Data" );
-		AddAttr( "link", "Float Data" );
-	}
-	~NiPathController  (){}
+	NiPathController();
+	void Init() {}
+	~NiPathController() {}
 	string GetBlockType() { return "NiPathController"; }
 };
 
@@ -678,8 +789,9 @@ public:
 
 class NiAmbientLight : public ALight {
 public:
-	NiAmbientLight  (){}
-	~NiAmbientLight  (){}
+	NiAmbientLight();
+	void Init() {}
+	~NiAmbientLight() {}
 	string GetBlockType() { return "NiAmbientLight"; }
 };
 
@@ -689,8 +801,9 @@ public:
 
 class NiDirectionalLight : public ALight {
 public:
-	NiDirectionalLight  (){}
-	~NiDirectionalLight  (){}
+	NiDirectionalLight();
+	void Init() {}
+	~NiDirectionalLight() {}
 	string GetBlockType() { return "NiDirectionalLight"; }
 };
 
@@ -700,11 +813,9 @@ public:
 
 class NiAutoNormalParticles : public ANode {
 public:
-	NiAutoNormalParticles  (){
-		AddAttr( "link", "Data" );
-		AddAttr( "link", "Unknown Index?" ); // Always -1
-	}
-	~NiAutoNormalParticles  (){}
+	NiAutoNormalParticles();
+	void Init() {}
+	~NiAutoNormalParticles() {}
 	string GetBlockType() { return "NiAutoNormalParticles"; }
 };
 
@@ -714,11 +825,9 @@ public:
 
 class NiRotatingParticles : public ANode {
 public:
-	NiRotatingParticles  (){
-		AddAttr( "link", "Data" );
-		AddAttr( "link", "Unknown Index?" ); // Always -1
-	}
-	~NiRotatingParticles  (){}
+	NiRotatingParticles();
+	void Init() {}
+	~NiRotatingParticles() {}
 	string GetBlockType() { return "NiRotatingParticles"; }
 }; 
 
@@ -728,35 +837,9 @@ public:
 
 class NiTextureEffect : public ANode {
 public:
-	NiTextureEffect  (){
-		AddAttr( "condint", "Conditional Int" );
-		AddAttr( "float", "Unknown Float 1" );
-		AddAttr( "float", "Unknown Float 2" );
-		AddAttr( "float", "Unknown Float 3" );
-		AddAttr( "float", "Unknown Float 4" );
-		AddAttr( "float", "Unknown Float 5" );
-		AddAttr( "float", "Unknown Float 6" );
-		AddAttr( "float", "Unknown Float 7" );
-		AddAttr( "float", "Unknown Float 8" );
-		AddAttr( "float", "Unknown Float 9" );
-		AddAttr( "float", "Unknown Float 10" );
-		AddAttr( "float", "Unknown Float 11" );
-		AddAttr( "float", "Unknown Float 12" );
-		AddAttr( "int", "Unknown Int 1" );
-		AddAttr( "int", "Unknown Int 2" );
-		AddAttr( "int", "Unknown Int 3" );
-		AddAttr( "int", "Unknown Int 4" );
-		AddAttr( "link", "Source Texture" );
-		AddAttr( "byte", "Unknown Byte" );
-		AddAttr( "float", "Unknown Float 13" );
-		AddAttr( "float", "Unknown Float 14" );
-		AddAttr( "float", "Unknown Float 15" );
-		AddAttr( "float", "Unknown Float 16" );
-		AddAttr( "short", "PS2 L?" );
-		AddAttr( "short", "PS2 K?" );
-		AddAttr( "short", "Unknown Short" );
-	}
-	~NiTextureEffect  (){}
+	NiTextureEffect();
+	void Init() {}
+	~NiTextureEffect() {}
 	string GetBlockType() { return "NiTextureEffect"; }
 }; 
 
@@ -766,106 +849,105 @@ public:
 
 class NiCamera : public ANode {
 public:
-	NiCamera  (){
-		AddAttr( "float", "Frustum Left" );
-		AddAttr( "float", "Frustum Right" );
-		AddAttr( "float", "Frustum Top" );
-		AddAttr( "float", "Frustum Bottom" );
-		AddAttr( "float", "Frustum Near" );
-		AddAttr( "float", "Frustum Far" );
-		AddAttr( "float", "Viewport Left" );
-		AddAttr( "float", "Viewport Right" );
-		AddAttr( "float", "Viewport Top" );
-		AddAttr( "float", "Viewport Bottom" );
-		AddAttr( "float", "LOLAdjust" );
-		AddAttr( "link", "Unknown Index?" ); // Always -1
-		AddAttr( "int", "Unknown Int" ); // Always 0
-	}
-	~NiCamera  (){}
+	NiCamera();
+	void Init() {}
+	~NiCamera() {}
 	string GetBlockType() { return "NiCamera"; }
+}; 
+
+/**
+ * NiParticleMeshes
+ */
+
+class NiParticleMeshes : public ANode {
+public:
+	NiParticleMeshes();
+	void Init() {}
+	~NiParticleMeshes() {}
+	string GetBlockType() { return "NiParticleMeshes"; }
 }; 
 
 /**
  * NiGravity
  */
 
-class NiGravity : public ABlock {
+class NiGravity : public AControllable {
 public:
-	NiGravity  (){
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-		AddAttr( "float", "Unknown Float 1" );
-		AddAttr( "float", "Unknown Float 2" );
-		AddAttr( "int", "Unknown Int 1" );
-		AddAttr( "float", "Unknown Float 3" );
-		AddAttr( "float", "Unknown Float 4" );
-		AddAttr( "float", "Unknown Float 5" );
-		AddAttr( "float", "Unknown Float 6" );
-		AddAttr( "float", "Unknown Float 7" );
-		AddAttr( "float", "Unknown Float 8" );
-	}
-	~NiGravity  (){}
+	NiGravity();
+	void Init() {}
+	~NiGravity() {}
 	string GetBlockType() { return "NiGravity"; }
+}; 
+
+/**
+ * NiParticleBomb
+ */
+
+class NiParticleBomb : public AControllable {
+public:
+	NiParticleBomb();
+	void Init() {}
+	~NiParticleBomb() {}
+	string GetBlockType() { return "NiParticleBomb"; }
 }; 
 
 /**
  * NiPlanarCollider
  */
 
-class NiPlanarCollider : public ABlock {
+class NiPlanarCollider : public AControllable {
 public:
-	NiPlanarCollider  (){
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-		AddAttr( "float", "Unknown Float 1" );
-		AddAttr( "float", "Unknown Float 2" );
-		AddAttr( "float", "Unknown Float 3" );
-		AddAttr( "float", "Unknown Float 4" );
-		AddAttr( "float", "Unknown Float 5" );
-		AddAttr( "float", "Unknown Float 6" );
-		AddAttr( "float", "Unknown Float 7" );
-		AddAttr( "float", "Unknown Float 8" );
-		AddAttr( "float", "Unknown Float 9" );
-		AddAttr( "float", "Unknown Float 10" );
-		AddAttr( "float", "Unknown Float 11" );
-		AddAttr( "float", "Unknown Float 12" );
-		AddAttr( "float", "Unknown Float 13" );
-		AddAttr( "float", "Unknown Float 14" );
-		AddAttr( "float", "Unknown Float 15" );
-		AddAttr( "float", "Unknown Float 16" );
-	}
-	~NiPlanarCollider  (){}
+	NiPlanarCollider();
+	void Init() {}
+	~NiPlanarCollider() {}
 	string GetBlockType() { return "NiPlanarCollider"; }
 }; 
 
 /**
- * NiParticleGrowFade
+ * NiPlanarCollider
  */
 
-class NiParticleGrowFade : public ABlock {
+class NiSphericalCollider : public AControllable {
 public:
-	NiParticleGrowFade  (){
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-		AddAttr( "float", "Unknown Float 1" );
-		AddAttr( "float", "Unknown Float 2" );
-	}
-	~NiParticleGrowFade  (){}
-	string GetBlockType() { return "NiParticleGrowFade"; }
+	NiSphericalCollider();
+	void Init() {}
+	~NiSphericalCollider() {}
+	string GetBlockType() { return "NiSphericalCollider"; }
 }; 
 
 /**
  * NiParticleGrowFade
  */
 
-class NiParticleColorModifier : public ABlock {
+class NiParticleGrowFade : public AControllable {
 public:
-	NiParticleColorModifier  (){
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-		AddAttr( "link", "Color Data" );
-	}
-	~NiParticleColorModifier  (){}
+	NiParticleGrowFade();
+	void Init() {}
+	~NiParticleGrowFade() {}
+	string GetBlockType() { return "NiParticleGrowFade"; }
+}; 
+
+/**
+ * NiParticleMeshModifier
+ */
+
+class NiParticleMeshModifier : public AControllable {
+public:
+	NiParticleMeshModifier();
+	void Init() {}
+	~NiParticleMeshModifier() {}
+	string GetBlockType() { return "NiParticleMeshModifier"; }
+}; 
+
+/**
+ * NiParticleColorModifier
+ */
+
+class NiParticleColorModifier : public AControllable {
+public:
+	NiParticleColorModifier();
+	void Init() {}
+	~NiParticleColorModifier() {}
 	string GetBlockType() { return "NiParticleColorModifier"; }
 }; 
 
@@ -873,54 +955,23 @@ public:
  * NiGravity
  */
 
-class NiParticleRotation : public ABlock {
+class NiParticleRotation : public AControllable {
 public:
-	NiParticleRotation  (){
-		AddAttr( "link", "Extra Data" );
-		AddAttr( "link", "Controller" );
-		AddAttr( "byte", "Unknown Byte" );
-		AddAttr( "float", "Unknown Float 1" );
-		AddAttr( "float", "Unknown Float 2" );
-		AddAttr( "float", "Unknown Float 3" );
-		AddAttr( "float", "Unknown Float 4" );
-	}
-	~NiParticleRotation  (){}
+	NiParticleRotation();
+	void Init() {}
+	~NiParticleRotation() {}
 	string GetBlockType() { return "NiParticleRotation"; }
 }; 
-
-//NiGravity : Controlled
-//
-//    float[2] unknown
-//    int unknown
-//    float[6] unknown
-//
-//NiPlanarCollider : Controlled
-//
-//    float unknown[16]
-//
-//NiParticleGrowFade : Controlled
-//
-//    float unknown[2]
-//
-//NiParticleColorModifier : Controlled
-//
-//    int colorIndex    - index to NiColorData record
-//
-//NiParticleRotation : Controlled
-//
-//    byte unknown
-//    float unknown     = 1
-//    float unknown[3]
 
 /**
  * NiKeyframeData -
  */
-class NiKeyframeData : public ABlock, public IKeyframeData {
+class NiKeyframeData : public AData, public IKeyframeData {
 
 	public:
 
-		NiKeyframeData(){}
-		~NiKeyframeData(){}
+		NiKeyframeData() {}
+		~NiKeyframeData() {}
 
 		void Read( ifstream& in, unsigned int version );
 		void Write( ofstream& out, unsigned int version );
@@ -962,13 +1013,37 @@ class NiKeyframeData : public ABlock, public IKeyframeData {
 		vector< Key<float> > scaleKeys;
 };
 
+/**
+ * NiPalette
+ */
 
-//-- Skin Stuff --//
+class NiPalette : public AData {
+public:
+	NiPalette() {}
+	void Init() {}
+	~NiPalette() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
 
-    //int data              - NiSkinData index
-    //int root              - Skeleton root NiNode index (?)
-    //int boneCount
-    //int bones[boneCount]  - Index of bones (NiNode records)
+	string GetBlockType() { return "NiPalette"; }
+private:
+	byte unknownBytes[5];
+	byte palette[256][4];
+};
+
+/**
+ * NiSkinPartition
+ */
+
+class NiSkinPartition : public AData {
+public:
+	NiSkinPartition();
+	void Init() {}
+	~NiSkinPartition() {}
+	string GetBlockType() { return "NiSkinPartition"; }
+};
+
 
 /**
  * NiSkinInstance
@@ -981,37 +1056,35 @@ public:
 	virtual void ReadBoneList( ifstream& in ) = 0;
 };
 
-class NiSkinInstance : public ABlock, public ISkinInstInternal {
+class NiSkinInstance : public AData, public ISkinInstInternal {
+public:
+	NiSkinInstance(){
+		AddAttr( "link", "Data" );
+		AddAttr( "skeletonroot", "Skeleton Root" );
+		AddAttr( "bones", "Bones" );
+	}
+	~NiSkinInstance() {}
+	string GetBlockType() { return "NiSkinInstance"; }
 
-	public:
-
-		NiSkinInstance(){
-			AddAttr( "link", "Data" );
-			AddAttr( "skeletonroot", "Skeleton Root" );
-			AddAttr( "bones", "Bones" );
+	void * QueryInterface( int id ) {
+		if ( id == SkinInstInternal ) {
+			return (void*)static_cast<ISkinInstInternal*>(this);;
+		} else {
+			return ABlock::QueryInterface( id );
 		}
-		~NiSkinInstance(){}
-		string GetBlockType() { return "NiSkinInstance"; }
+	}
 
-		void * QueryInterface( int id ) {
-			if ( id == SkinInstInternal ) {
-				return (void*)static_cast<ISkinInstInternal*>(this);;
-			} else {
-				return ABlock::QueryInterface( id );
-			}
+	//ISkinInstInternal
+
+	vector<int> GetBoneList() { return bones; }
+
+	void ReadBoneList( ifstream& in ) {
+		int len = ReadUInt( in );
+		bones.resize( len );
+		for (int i = 0; i < len; ++i ) {
+			bones[i] = ReadUInt( in );
 		}
-
-		//ISkinInstInternal
-
-		vector<int> GetBoneList() { return bones; }
-
-		void ReadBoneList( ifstream& in ) {
-			int len = ReadUInt( in );
-			bones.resize( len );
-			for (int i = 0; i < len; ++i ) {
-				bones[i] = ReadUInt( in );
-			}
-		}
+	}
 private:
 	vector<int> bones;
 };
@@ -1024,17 +1097,18 @@ public:
 	virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
 };
 
-class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
+class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 
 	public:
 
-		NiSkinData(){ 
+		NiSkinData() { 
 			SetIdentity33(rotation);
 			translation[0] = 0.0f;
 			translation[1] = 0.0f;
 			translation[2] = 0.0f;
 			scale = 1.0f;
-			unknown = -1;
+			unknownInt = -1;
+			unknownByte = 1;
 		}
 		~NiSkinData();
 
@@ -1068,7 +1142,8 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 		Matrix33 rotation;
 		fVector3 translation;
 		float  scale;
-		int unknown;
+		int unknownInt;
+		byte unknownByte;
 		map<IBlock*, Bone> bone_map;
 		vector<Bone> bones;		
 };
@@ -1076,233 +1151,232 @@ class NiSkinData : public ABlock, public ISkinData, public ISkinDataInternal {
 //-- New Nodes--//
 
 class NiGeomMorpherController : public AController{
+public:
+	NiGeomMorpherController();
+	void Init() {}
+	~NiGeomMorpherController() {}
 
-	public:
+	string asString();
+	string GetBlockType() { return "NiGeomMorpherController"; }
+};
 
-		NiGeomMorpherController(){
-			AddAttr( "link", "Morph Data" );
-			AddAttr( "byte", "Unknown Byte" );
+class NiColorData : public AData {
+public:
+	NiColorData() {}
+	~NiColorData() {}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiColorData"; };
+
+private:
+	uint keyType;
+	vector< Key<fVector4> > keys;
+};
+
+/**
+ * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and up).
+ */
+class NiControllerSequence : public AData {
+public:
+	NiControllerSequence() {
+		_namable = true;
+	}
+	~NiControllerSequence() {}
+
+	string GetBlockType() { return "NiControllerSequence"; }
+private:
+	vector< pair< string, blk_ref> > controllers;
+};
+
+class NiFloatData : public AData {
+public:
+	NiFloatData() {}
+	~NiFloatData() {}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiFloatData"; };
+
+private:
+	uint keyType;
+	vector<Key<float> > keys;
+};
+
+class NiStringExtraData : public AExtraData {
+public:
+	NiStringExtraData() {
+		AddAttr( "string", "String Data" );
+	}
+	~NiStringExtraData() {}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiStringExtraData"; }
+};
+
+class NiBooleanExtraData : public AExtraData {
+public:
+	NiBooleanExtraData() {
+		AddAttr( "byte", "Boolean Data" );
+	}
+	~NiBooleanExtraData() {}
+
+	string GetBlockType() { return "NiBooleanExtraData"; };
+};
+
+class NiIntegerExtraData : public AExtraData {
+public:
+	NiIntegerExtraData() {
+		AddAttr( "int", "Integer Data" );
+	}
+	~NiIntegerExtraData() {}
+
+	string GetBlockType() { return "NiIntegerExtraData"; };
+};
+
+class NiMorphData : public AData, public IMorphData {
+public:
+	NiMorphData() {
+		AddAttr( "byte", "Unknown Byte" );
+	}
+	~NiMorphData() {}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiMorphData"; };
+
+	void * QueryInterface( int id ) {
+		if ( id == ID_MORPH_DATA ) {
+			return (void*)static_cast<IMorphData*>(this);;
+		} else {
+			return ABlock::QueryInterface( id );
 		}
-		~NiGeomMorpherController(){}
+	}
 
-		string asString();
-		string GetBlockType() { return "NiGeomMorpherController"; }
+	//--IMorphData Functions --//
+	int GetVertexCount() { return vertCount; }
+	void SetVertexCount( int n );
+	int GetMorphCount() { return int(morphs.size()); }
+	void SetMorphCount( int n ) { morphs.resize( n ); }
+	vector< Key<float> > GetMorphKeys( int n ) { return morphs[n].keys; }
+	void SetMorphKeys( int n, vector< Key<float> > & keys ) { morphs[n].keys = keys; }
+	vector<Vector3> GetMorphVerts( int n) { return morphs[n].morph; }
+	void SetMorphVerts( int n, const vector<Vector3> & in );
+
+private:
+	struct Morph {
+		Morph() :  keyType(QUADRATIC_KEY) {}
+		~Morph() {}
+		KeyType keyType;
+		vector< Key<float> > keys;
+		vector< Vector3 > morph;
+	};
+	
+	uint vertCount;
+	vector<Morph> morphs;
 };
 
-class NiColorData : public ABlock{
+class NiPosData : public AData {
+public:
+	NiPosData() {}
+	~NiPosData() {}
 
-	public:
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiPosData"; }
 
-		NiColorData(){}
-		~NiColorData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiColorData"; };
-
-	private:
-		uint colorCount, keyType;
-		vector<Key<fVector4> > keys;
+private:
+	uint keyType;
+	vector<Key<fVector3> > keys;
 };
 
-class NiFloatData : public ABlock{
+class NiRotatingParticlesData : public ARotatingParticlesData {
+public:
+	NiRotatingParticlesData() {}
+	~NiRotatingParticlesData() {}
 
-	public:
-
-		NiFloatData(){}
-		~NiFloatData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiFloatData"; };
-
-	private:
-		uint colorCount, keyType;
-		vector<Key<float> > keys;
-};
-
-class NiStringExtraData : public AExtraData{
-
-	public:
-
-		NiStringExtraData(){
-			AddAttr( "string", "String Data" );
-		}
-		~NiStringExtraData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiStringExtraData"; };
-
-	private:
-		string strData;
-};
-
-class NiMorphData : public ABlock, public IMorphData {
-
-	public:
-
-		NiMorphData(){
-			AddAttr( "byte", "Unknown Byte" );
-		}
-		~NiMorphData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiMorphData"; };
-
-		void * QueryInterface( int id ) {
-			if ( id == ID_MORPH_DATA ) {
-				return (void*)static_cast<IMorphData*>(this);;
-			} else {
-				return ABlock::QueryInterface( id );
-			}
-		}
-
-		//--IMorphData Functions --//
-		int GetVertexCount() { return vertCount; }
-		void SetVertexCount( int n );
-		int GetMorphCount() { return int(morphs.size()); }
-		void SetMorphCount( int n ) { morphs.resize( n ); }
-		vector< Key<float> > GetMorphKeys( int n ) { return morphs[n].keys; }
-		void SetMorphKeys( int n, vector< Key<float> > & keys ) { morphs[n].keys = keys; }
-		vector<Vector3> GetMorphVerts( int n) { return morphs[n].morph; }
-		void SetMorphVerts( int n, const vector<Vector3> & in );
-
-	private:
-		struct Morph {
-			Morph() :  keyType(QUADRATIC_KEY) {}
-			~Morph() {}
-			KeyType keyType;
-			vector< Key<float> > keys;
-			vector< Vector3 > morph;
-		};
-		
-		uint vertCount;
-		vector<Morph> morphs;
-};
-
-class NiPosData : public ABlock{
-
-	public:
-
-		NiPosData(){}
-		~NiPosData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiPosData"; }
-
-	private:
-		uint posCount, keyType;
-		vector<Key<fVector3> > keys;
-};
-
-class NiRotatingParticlesData : public ABlock{
-
-	public:
-
-		NiRotatingParticlesData(){}
-		~NiRotatingParticlesData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString() { return string(""); };
-		string GetBlockType() { return "NiRotationparticlesData"; }
-
-	private:
-
+	string GetBlockType() { return "NiRotationparticlesData"; }
 };
 
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
+public:
+	NiTextKeyExtraData() {
+		AddAttr( "int", "Unknown Int", 0, 0x04020200 );
+	}
+	~NiTextKeyExtraData() {}
 
-	public:
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiTextKeyExtraData"; }
 
-		NiTextKeyExtraData(){
-			AddAttr( "int", "Unknown Int" );
+	void * QueryInterface( int id ) {
+		if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
+			return (void*)static_cast<ITextKeyExtraData*>(this);;
+		} else {
+			return AExtraData::QueryInterface( id );
 		}
-		~NiTextKeyExtraData(){}
+	}
 
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiTextKeyExtraData"; }
+	//--ITextKeyExtraData Functions--//
+	virtual vector< Key<string> > GetRotateKeys() { return _keys; }
+	virtual void SetRotateKeys( vector< Key<string> > & keys ) { _keys = keys; }
 
-		void * QueryInterface( int id ) {
-			if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
-				return (void*)static_cast<ITextKeyExtraData*>(this);;
-			} else {
-				return AExtraData::QueryInterface( id );
-			}
-		}
-
-		//--ITextKeyExtraData Functions--//
-		virtual vector< Key<string> > GetRotateKeys() { return _keys; }
-		virtual void SetRotateKeys( vector< Key<string> > & keys ) { _keys = keys; }
-
-	private:
-		vector< Key<string> > _keys;
+private:
+	vector< Key<string> > _keys;
 };
 
-class NiUVData : public ABlock{
+class NiUVData : public AData {
+public:
+	NiUVData() {}
+	~NiUVData() {}
 
-	public:
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiUVData"; }
 
-		NiUVData(){}
-		~NiUVData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiUVData"; }
-
-	private:
-		struct UVGroup {
-			uint count;
-			uint keyType;
-			vector<Key<float> > keys;
-		};
-		UVGroup groups[4];
+private:
+	struct UVGroup {
+		uint keyType;
+		vector<Key<float> > keys;
+	};
+	UVGroup groups[4];
 };
 
 class NiVertWeightsExtraData : public AExtraData{
+public:
+	NiVertWeightsExtraData() {}
+	~NiVertWeightsExtraData() {}
 
-	public:
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiVertWeightsExtraData"; }
 
-		NiVertWeightsExtraData(){}
-		~NiVertWeightsExtraData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiVertWeightsExtraData"; }
-
-	private:
-		uint bytes;
-		ushort verts;
-		vector<float> weights;
+private:
+	uint bytes;
+	vector<float> weights;
 };
 
-class NiVisData : public ABlock{
+class NiVisData : public AData {
+public:
+	NiVisData() {}
+	~NiVisData() {}
 
-	public:
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+	string GetBlockType() { return "NiVisData"; }
 
-		NiVisData(){}
-		~NiVisData(){}
-
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) {}
-		string asString();
-		string GetBlockType() { return "NiVisData"; }
-
-	private:
-		uint visCount;
-		vector<Key<byte> > keys;
+private:
+	vector<Key<byte> > keys;
 };
 
 class UnknownMixIn {
@@ -1311,7 +1385,7 @@ public:
 		data = NULL;
 		_block_type = block_type;
 	}
-	~UnknownMixIn(){ if (data != NULL) delete [] data; }
+	~UnknownMixIn() { if (data != NULL) delete [] data; }
 	void Read( ifstream& in, unsigned int version );
 	void Write( ofstream& out, unsigned int version );
 	string asString();
@@ -1326,7 +1400,7 @@ private:
 class UnknownBlock : public ABlock, public UnknownMixIn {
 public:
 	UnknownBlock( string block_type ) : UnknownMixIn(block_type) {}
-	~UnknownBlock(){}
+	~UnknownBlock() {}
 	void Read( ifstream& in, unsigned int version ) {
 		//cout << endl << "Unknown Block Type found:  " << GetBlockType() << "\a" << endl;
 		ABlock::Read( in, version );
@@ -1346,7 +1420,7 @@ public:
 class UnknownControllerBlock : public AController, public UnknownMixIn {
 public:
 	UnknownControllerBlock( string block_type ) : UnknownMixIn(block_type) {}
-	~UnknownControllerBlock(){}
+	~UnknownControllerBlock() {}
 	void Read( ifstream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
@@ -1371,7 +1445,7 @@ public:
 class UnknownPropertyBlock : public AProperty, public UnknownMixIn {
 public:
 	UnknownPropertyBlock( string block_type ) : UnknownMixIn(block_type) {}
-	~UnknownPropertyBlock(){}
+	~UnknownPropertyBlock() {}
 	void Read( ifstream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
@@ -1396,111 +1470,23 @@ public:
 /**
  * NiParticleSystemController
  */
-class NiParticleSystemController : public AController {
+class NiParticleSystemController : public AParticleSystemController {
 public:
-	NiParticleSystemController() {	
-		AddAttr( "float", "Unknown 16 Floats[0]" );
-		AddAttr( "float", "Unknown 16 Floats[1]" );
-		AddAttr( "float", "Unknown 16 Floats[2]" );
-		AddAttr( "float", "Unknown 16 Floats[3]" );
-		AddAttr( "float", "Unknown 16 Floats[4]" );
-		AddAttr( "float", "Unknown 16 Floats[5]" );
-		AddAttr( "float", "Unknown 16 Floats[6]" );
-		AddAttr( "float", "Unknown 16 Floats[7]" );
-		AddAttr( "float", "Unknown 16 Floats[8]" );
-		AddAttr( "float", "Unknown 16 Floats[9]" );
-		AddAttr( "float", "Unknown 16 Floats[10]" );
-		AddAttr( "float", "Unknown 16 Floats[11]" );
-		AddAttr( "float", "Unknown 16 Floats[12]" );
-		AddAttr( "float", "Unknown 16 Floats[13]" );
-		AddAttr( "float", "Unknown 16 Floats[14]" );
-		AddAttr( "float", "Unknown 16 Floats[15]" );
-		AddAttr( "byte", "Unknown Byte" );
-		AddAttr( "float3", "Unknown 3 Floats" );
-		AddAttr( "short", "Unknown Short" );
-		AddAttr( "float3", "Unknown 3 Floats 2" );
-		AddAttr( "link", "Emitter" );
-		AddAttr( "byte", "Unknown 16 Bytes[0]" );
-		AddAttr( "byte", "Unknown 16 Bytes[1]" );
-		AddAttr( "byte", "Unknown 16 Bytes[2]" );
-		AddAttr( "byte", "Unknown 16 Bytes[3]" );
-		AddAttr( "byte", "Unknown 16 Bytes[4]" );
-		AddAttr( "byte", "Unknown 16 Bytes[5]" );
-		AddAttr( "byte", "Unknown 16 Bytes[6]" );
-		AddAttr( "byte", "Unknown 16 Bytes[7]" );
-		AddAttr( "byte", "Unknown 16 Bytes[8]" );
-		AddAttr( "byte", "Unknown 16 Bytes[9]" );
-		AddAttr( "byte", "Unknown 16 Bytes[10]" );
-		AddAttr( "byte", "Unknown 16 Bytes[11]" );
-		AddAttr( "byte", "Unknown 16 Bytes[12]" );
-		AddAttr( "byte", "Unknown 16 Bytes[13]" );
-		AddAttr( "byte", "Unknown 16 Bytes[14]" );
-		AddAttr( "byte", "Unknown 16 Bytes[15]" );
-		AddAttr( "particlegroup", "Particles" );
-		AddAttr( "link", "Unknown Link" );
-		AddAttr( "link", "Particle Extra" );
-		AddAttr( "link", "Unknown Link 2" );
-		AddAttr( "byte", "Trailer" );
-		
-	
-	}
-	
-	//void Read( ifstream& in, unsigned int version ) {
-
-	//	ABlock::Read( in, version );
-
-	//	uint count = GetAttr("Num Particles")->asInt();
-
-	//	//cout << "Count:  " << count << endl;
-
-	//	//short num = 0;
-	//	//short last_num = -1;
-	//	//int n = 0;
-	//	//IAttr * attr = new MatrixAttr( "" );
-	//	//cout << setprecision(3);
-	//	for ( int i = 0; i < count; ++i ) {
-	//		//attr->Read( in );
-	//		//attr->Print( cout );
-	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-	//		ReadFloat( in );	ReadFloat( in );	ReadFloat( in );
-	//		ReadUShort( in );
-	//		ReadUShort( in );
-	//		//cout << "  " << num << endl;
-
-	//		//if ( num != last_num + 1 )
-	//		//	break;
-
-	//		//last_num = num;
-	//		//++n;
-
-	//	}
-
-	//	//in.seekg( -40, ios::cur );
-
-	//	//cout << "True Count:  " << n << endl;
-
-	//	//if ( n != count ) {
-	//	//	cout << "\a";
-	//	//	cin.get();
-	//	//}
-
-	//	
-	//	UnknownMixIn::Read( in, version );
-
-	//	
-	//	//if (!b) {
-	//	//	cout << ReadFloat( in ) << endl
-	//	//		<< ReadFloat( in ) << endl
-	//	//		<< ReadFloat( in ) << endl
-	//	//		<< ReadFloat( in ) << endl;
-	//	//}
-	//	
-	//	
-	//}
-
-	~NiParticleSystemController(){}
+	NiParticleSystemController();
+	void Init() {}
+	~NiParticleSystemController() {}
 	string GetBlockType() { return "NiParticleSystemController"; }
 };
 
-#endif // TAH_NIF_LIB_NIF_BLOCKS_H
+/**
+ * NiBSPArrayController
+ */
+class NiBSPArrayController : public AParticleSystemController {
+public:
+	NiBSPArrayController();
+	void Init() {}
+	~NiBSPArrayController() {}
+	string GetBlockType() { return "NiBSPArrayController"; }
+};
+
+#endif

@@ -46,7 +46,7 @@ const char ATTRERR[] = "Attribute type Missmatch.";
 
 class AAttr : public IAttr {
 public:
-	AAttr( string name, IBlock * owner ) : _name(name), _owner(owner) {}
+	AAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : _name(name), _owner(owner), _first_ver(first_ver), _last_ver(last_ver) {}
 	~AAttr() {}
 	string GetType() const { return "void"; }
 	string GetName() const { return _name; }
@@ -79,9 +79,25 @@ public:
 	void ClearLinks() { cout << "ClearLinks" << endl; throw runtime_error(ATTRERR); }
 	void RemoveLinks( blk_ref block ) { cout << "RemoveLinks" << endl; throw runtime_error(ATTRERR); }
 	blk_ref FindLink( string block_type ) { cout << "FindLink" << endl; throw runtime_error(ATTRERR); }
+	//Read/WriteFunctions
+	void Read( ifstream& in, unsigned int version ) {
+		if ( version >= _first_ver && version <= _last_ver ) {
+			this->ReadAttr( in, version );
+		}
+	}
+	void Write( ofstream& out, unsigned int version ) {
+		if ( version >= _first_ver && version <= _last_ver ) {
+			this->WriteAttr( out, version );
+		}
+	}
 protected:
+	//Internal Read/Write Functions
+	virtual void ReadAttr( ifstream& in, unsigned int version ) = 0;
+	virtual void WriteAttr( ofstream& out, unsigned int version ) = 0;
+
 	string _name;
 	IBlock * _owner;
+	unsigned int _first_ver, _last_ver;
 };
 
 class lnk_ref : public blk_ref {
@@ -161,11 +177,11 @@ private:
 
 class IntAttr : public AAttr {
 public:
-	IntAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	IntAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~IntAttr() {}
 	string GetType() const { return "int"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -183,11 +199,11 @@ private:
 
 class ShortAttr : public AAttr {
 public:
-	ShortAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	ShortAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~ShortAttr() {}
 	string GetType() const { return "short"; }
-	void Read( ifstream& in ) { data = ReadUShort( in ); }
-	void Write( ofstream& out ) { WriteUShort( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUShort( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUShort( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -205,11 +221,11 @@ private:
 
 class ByteAttr : public AAttr {
 public:
-	ByteAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	ByteAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~ByteAttr() {}
 	string GetType() const { return "byte"; }
-	void Read( ifstream& in ) { data = ReadByte( in ); }
-	void Write( ofstream& out ) { WriteByte( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadByte( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteByte( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -227,11 +243,11 @@ private:
 
 class FloatAttr : public AAttr {
 public:
-	FloatAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0.0f) {}
+	FloatAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0.0f) {}
 	~FloatAttr() {}
 	string GetType() const { return "float"; }
-	void Read( ifstream& in ) { data = ReadFloat( in ); }
-	void Write( ofstream& out ) { WriteFloat( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadFloat( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteFloat( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -249,19 +265,19 @@ private:
 
 class Float3Attr : public AAttr {
 public:
-	Float3Attr( string name, IBlock * owner) : AAttr(name, owner) {
+	Float3Attr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : AAttr(name, owner, first_ver, last_ver) {
 		data[0] = 0.0f;
 		data[1] = 0.0f;
 		data[2] = 0.0f;
 	}
 	~Float3Attr() {}
 	string GetType() const { return "float3"; }
-	void Read( ifstream& in ) { 
+	void ReadAttr( ifstream& in, unsigned int version ) { 
 		data[0] = ReadFloat( in );
 		data[1] = ReadFloat( in );
 		data[2] = ReadFloat( in );
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteFloat( data[0], out );
 		WriteFloat( data[1], out );
 		WriteFloat( data[2], out );
@@ -294,11 +310,11 @@ private:
 
 class StringAttr : public AAttr {
 public:
-	StringAttr( string name, IBlock * owner) : AAttr( name, owner ) {}
+	StringAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
 	~StringAttr() {}
 	string GetType() const { return "string"; }
-	void Read( ifstream& in ) { data = ReadString( in ); }
-	void Write( ofstream& out ) { WriteString( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadString( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteString( data, out ); }
 	string asString() const { return data; }
 	void Set(string & n) { data = n; }
 private:
@@ -307,10 +323,10 @@ private:
 
 class LinkAttr : public AAttr {
 public:
-	LinkAttr( string name, IBlock * owner ) : AAttr( name, owner ), link( owner ) {}
+	LinkAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), link( owner ) {}
 	~LinkAttr() {}
 	string GetType() const { return "link"; }
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		////Remove all links beloning to this attribute
 		//_owner->RemoveAttrLinks(this);
 
@@ -323,7 +339,7 @@ public:
 		//Set block index only
 		link.set_index( ReadUInt( in ) );
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteUInt( link.get_index(), out );
 	}
 	string asString() const {
@@ -357,11 +373,11 @@ private:
 
 class FlagsAttr : public AAttr {
 public:
-	FlagsAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	FlagsAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~FlagsAttr() {}
 	string GetType() const { return "flags"; }
-	void Read( ifstream& in ) { data = ReadUShort( in ); }
-	void Write( ofstream& out ) { WriteUShort( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUShort( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUShort( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -386,21 +402,21 @@ private:
 
 class MatrixAttr : public AAttr {
 public:
-	MatrixAttr( string name, IBlock * owner) : AAttr( name, owner ) {
+	MatrixAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
 		data[0][0] = 1.0f;	data[0][1] = 0.0f;	data[0][2] = 0.0f;
 		data[1][0] = 0.0f;	data[1][1] = 1.0f;	data[1][2] = 0.0f;
 		data[2][0] = 0.0f;	data[2][1] = 0.0f;	data[2][2] = 1.0f;
 	}
 	~MatrixAttr() {}
 	string GetType() const { return "matrix33"; }
-	void Read( ifstream& in ) { 
+	void ReadAttr( ifstream& in, unsigned int version ) { 
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				data[r][c] = ReadFloat( in );
 			}
 		}
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				WriteFloat( data[r][c], out );
@@ -456,9 +472,9 @@ private:
 
 class BoneAttr : public AAttr {
 public:
-	BoneAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	BoneAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~BoneAttr() {}
-	void Read ( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		if ( data != NULL ) {
 			data->ReadBoneList( in );
@@ -466,7 +482,7 @@ public:
 			throw runtime_error ("Attempted to use a bone list attribute on a block that doesn't support it.");
 		}
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
@@ -519,10 +535,10 @@ typedef LinkSetList::iterator LinkSetIt;
 
 class LinkGroupAttr : public AAttr {
 public:
-	LinkGroupAttr( string name, IBlock * owner ) : AAttr( name, owner ) {}
+	LinkGroupAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
 	~LinkGroupAttr() {}
 	string GetType() const { return "linkgroup"; }
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		int len = ReadUInt( in );
 		//cout << "Link Group Size:  " << len << endl;
 
@@ -536,7 +552,7 @@ public:
 				AddLink( blk_ref( index ) );
 		}
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		//Write the number of links
 		WriteUInt( uint(links.size()), out );
 		//cout << "Link Group Size:  " << uint(links.size()) << endl;
@@ -618,7 +634,7 @@ private:
 
 class BBoxAttr : public AAttr {
 public:
-	BBoxAttr( string name, IBlock * owner) : AAttr( name, owner ) {
+	BBoxAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
 		data.isUsed = false;
 		
 		data.unknownInt = 0;
@@ -635,8 +651,8 @@ public:
 	}
 	~BBoxAttr() {}
 	string GetType() const { return "bbox"; }
-	void Read( ifstream& in ) { 
-		data.isUsed = (ReadUInt( in ) != 0);
+	void ReadAttr( ifstream& in, unsigned int version ) { 
+		data.isUsed = ReadBool( in, version );
 		if ( data.isUsed ){
 			data.unknownInt = ReadUInt( in );
 			data.translation.x = ReadFloat( in );
@@ -652,8 +668,8 @@ public:
 			data.radius.z = ReadFloat( in );
 		}
 	}
-	void Write( ofstream& out ) {
-		WriteUInt(int(data.isUsed), out );
+	void WriteAttr( ofstream& out, unsigned int version ) {
+		WriteBool( data.isUsed, out, version );
 		if ( data.isUsed ){
 			WriteUInt( data.unknownInt, out );
 			WriteFloat( data.translation.x, out );
@@ -700,20 +716,20 @@ private:
 
 class CIntAttr : public AAttr {
 public:
-	CIntAttr( string name, IBlock * owner) : AAttr( name, owner ) {
+	CIntAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
 		data.isUsed = false;
 		data.unknownInt = 0;
 	}
 	~CIntAttr() {}
 	string GetType() const { return "condint"; }
-	void Read( ifstream& in ) {
-		data.isUsed = ( ReadUInt( in ) != 0 );
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		data.isUsed = ReadBool( in, version );
 		if (data.isUsed) {
 			data.unknownInt = ReadUInt( in );
 		}
 	}
-	void Write( ofstream& out ) { 
-		WriteUInt( int(data.isUsed), out );
+	void WriteAttr( ofstream& out, unsigned int version ) { 
+		WriteBool( data.isUsed, out, version );
 		if (data.isUsed) {
 			WriteUInt( data.unknownInt, out );
 		}
@@ -743,11 +759,11 @@ private:
 
 class VertModeAttr : public AAttr {
 public:
-	VertModeAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	VertModeAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~VertModeAttr() {}
 	string GetType() const { return "vertmode"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -778,11 +794,11 @@ private:
 
 class LightModeAttr : public AAttr {
 public:
-	LightModeAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	LightModeAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~LightModeAttr() {}
 	string GetType() const { return "lightmode"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -821,23 +837,28 @@ private:
 
 class TextureAttr : public LinkAttr {
 public:
-	TextureAttr( string name, IBlock * owner, bool isBumpMap = false ) : LinkAttr(name, owner),  _isBumpMap(isBumpMap) {
+	TextureAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver, bool isBumpMap = false ) : LinkAttr(name, owner, first_ver, last_ver),  _isBumpMap(isBumpMap) {
 		memset( &data, 0, sizeof(data) );
 	}
 	~TextureAttr() {}
 	string GetType() const { return "texture"; }
-	void Read( ifstream& in ) {
-		data.isUsed = ( ReadUInt( in ) != 0 );
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		data.isUsed = ReadBool( in, version );
 		if ( data.isUsed ) {	
 			//Read in link for TextureSource
-			LinkAttr::Read( in );
+			LinkAttr::ReadAttr( in, version );
 
 			data.clampMode = TexClampMode( ReadUInt( in ) );
 			data.filterMode = TexFilterMode( ReadUInt( in ) );
 			data.textureSet = ReadUInt( in );
 			data.PS2_L = ReadUShort( in );
 			data.PS2_K = ReadUShort( in );
-			data.unknownShort = ReadUShort( in );
+
+			//unknownShort exists up to version 4.1.0.12
+			if ( version <= 0x0401000C ) {
+				data.unknownShort = ReadUShort( in );
+			}
+
 			if ( _isBumpMap ) {
 				data.bmLumaScale = ReadFloat( in );
 				data.bmLumaOffset = ReadFloat( in );
@@ -848,18 +869,21 @@ public:
 			}
 		}
 	}
-	void Write( ofstream& out ) {
-		WriteUInt( uint(data.isUsed), out );
+	void WriteAttr( ofstream& out, unsigned int version ) {
+		WriteBool( data.isUsed, out, version );
 		if ( data.isUsed ) {
 			//Write link
-			LinkAttr::Write( out );
+			LinkAttr::WriteAttr( out, version );
 
 			WriteUInt( data.clampMode, out );
 			WriteUInt( data.filterMode, out );
 			WriteUInt( data.textureSet, out );
 			WriteUShort( data.PS2_L, out );
 			WriteUShort( data.PS2_K, out );
-			WriteUShort( data.unknownShort, out );
+			//unknownShort exists up to version 4.1.0.12
+			if ( version <= 0x0401000C ) {
+				WriteUShort( data.unknownShort, out );
+			}
 			if ( _isBumpMap ) {
 				WriteFloat( data.bmLumaScale, out );
 				WriteFloat( data.bmLumaOffset, out );
@@ -981,11 +1005,11 @@ private:
 
 class ApplyModeAttr : public AAttr {
 public:
-	ApplyModeAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	ApplyModeAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~ApplyModeAttr() {}
 	string GetType() const { return "applymode"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -1029,12 +1053,12 @@ private:
 
 class TexSourceAttr : public LinkAttr {
 public:
-	TexSourceAttr( string name, IBlock * owner ) : LinkAttr(name, owner) {}
+	TexSourceAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {}
 	~TexSourceAttr() {
 		memset(&data, 0, sizeof(data) );
 	}
 	string GetType() const { return "texsource"; }
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		data.useExternal = ( ReadByte( in ) != 0 );
 		if ( data.useExternal ) {
 			data.fileName = ReadString( in );
@@ -1042,17 +1066,17 @@ public:
 			data.unknownByte = ReadByte( in );
 
 			//Read link for Pixel Data
-			LinkAttr::Read( in );
+			LinkAttr::ReadAttr( in, version );
 		}
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteByte( byte(data.useExternal), out );
 		if ( data.useExternal ) {
 			WriteString( data.fileName, out );
 		} else {
 			WriteByte ( data.unknownByte, out );
 			//Write link for Pixel Data
-			LinkAttr::Write( out );
+			LinkAttr::WriteAttr( out, version );
 		}
 	}
 	string asString() const {
@@ -1085,11 +1109,11 @@ private:
 
 class PixelLayoutAttr : public AAttr {
 public:
-	PixelLayoutAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	PixelLayoutAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~PixelLayoutAttr() {}
 	string GetType() const { return "pixellayout"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -1138,11 +1162,11 @@ private:
 
 class MipMapFormatAttr : public AAttr {
 public:
-	MipMapFormatAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	MipMapFormatAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~MipMapFormatAttr() {}
 	string GetType() const { return "mipmapformat"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -1179,11 +1203,11 @@ private:
 
 class AlphaFormatAttr : public AAttr {
 public:
-	AlphaFormatAttr( string name, IBlock * owner) : AAttr( name, owner ), data(0) {}
+	AlphaFormatAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~AlphaFormatAttr() {}
 	string GetType() const { return "alphaformat"; }
-	void Read( ifstream& in ) { data = ReadUInt( in ); }
-	void Write( ofstream& out ) { WriteUInt( data, out ); }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ofstream& out, unsigned int version ) { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -1217,13 +1241,13 @@ private:
 
 class NodeAncestorAttr : public AAttr {
 public:
-	NodeAncestorAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	NodeAncestorAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~NodeAncestorAttr() {}
 	string GetType() const { return "nodeancestor"; }
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		ReadUInt(in);
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteUInt( _owner->GetParent()->GetBlockNum(), out );
 	}
 	blk_ref FindNodeAncestor() const {
@@ -1261,13 +1285,13 @@ public:
 
 class SkeletonRootAttr : public AAttr {
 public:
-	SkeletonRootAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	SkeletonRootAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~SkeletonRootAttr() {}
 	string GetType() const { return "skeletonroot"; }
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		original_root = ReadUInt( in );  //Read data but do nothing with it
 	}
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteUInt( FindRoot().get_index(), out );
 	}
 	blk_ref FindRoot() const {
@@ -1317,11 +1341,11 @@ private:
 
 class ParticleGroupAttr : public AAttr {
 public:
-	ParticleGroupAttr( string name, IBlock * owner ) : AAttr(name, owner) {}
+	ParticleGroupAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ParticleGroupAttr() {}
 	string GetType() const { return "particlegroup"; }
 
-	void Read( ifstream& in ) {
+	void ReadAttr( ifstream& in, unsigned int version ) {
 		num_particles = ReadUShort( in );
 		num_valid = ReadUShort( in );
 
@@ -1337,7 +1361,7 @@ public:
 		}
 	}
 
-	void Write( ofstream& out ) {
+	void WriteAttr( ofstream& out, unsigned int version ) {
 		WriteUShort( num_particles, out );
 		WriteUShort( num_valid, out );
 

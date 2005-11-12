@@ -77,6 +77,7 @@ const int ID_NODE = 2;
 const int ID_KEYFRAME_DATA = 3;
 const int ID_TEXT_KEY_EXTRA_DATA = 4;
 const int ID_MORPH_DATA = 5;
+const int ID_SHAPE_DATA = 6;
 
 //NIF Versions
 const int VER_4_0_0_2 = 0x04000002;
@@ -362,6 +363,11 @@ public:
 
 	//To check for specialized Interfaces
 	virtual void * QueryInterface( int id ) = 0;
+
+	//Name Functions
+	virtual bool Namable() = 0;
+	virtual void SetName( string & name ) = 0;
+	virtual string GetName() = 0;
 	
 protected:
 	friend class blk_ref;
@@ -375,8 +381,8 @@ public:
 	virtual ~IAttr() {}
 	virtual string GetType() const = 0;
 	virtual string GetName() const = 0;
-	virtual void Read( ifstream& in ) = 0;
-	virtual void Write( ofstream& out ) = 0;
+	virtual void Read( ifstream& in, unsigned int version ) = 0;
+	virtual void Write( ofstream& out, unsigned int version ) = 0;
 	//Getters
 	virtual int asInt() const = 0;
 	virtual float asFloat() const = 0;
@@ -422,31 +428,41 @@ public:
 	virtual Matrix44 GetLocalBindPos() = 0;
 };
 
-class ITriShapeData {
+class IShapeData {
 public:
-	ITriShapeData() {}
-	virtual ~ITriShapeData () {}
+	IShapeData() {}
+	virtual ~IShapeData() {}
 	//Counts
 	virtual short GetVertexCount() = 0;
 	virtual short GetUVSetCount() = 0;
-	virtual short GetTriangleCount() = 0;
 	virtual void SetVertexCount(int n) = 0;
 	virtual void SetUVSetCount(int n) = 0;
-	virtual void SetTriangleCount(int n) = 0;
-	//Match Detection
-	virtual void SetMatchDetectionMode(bool choice) = 0;
-	virtual bool GetMatchDetectionMode() = 0;
 	//Getters
 	virtual vector<Vector3> GetVertices() = 0;
 	virtual vector<Vector3> GetNormals() = 0;
 	virtual vector<Color> GetColors() = 0;
 	virtual vector<UVCoord> GetUVSet( int index ) = 0;
-	virtual vector<Triangle> GetTriangles() = 0;
 	//Setters
 	virtual void SetVertices( const vector<Vector3> & in ) = 0;
 	virtual void SetNormals( const vector<Vector3> & in ) = 0;
 	virtual void SetColors( const vector<Color> & in ) = 0;
 	virtual void SetUVSet( int index, const vector<UVCoord> & in ) = 0;
+};
+
+
+class ITriShapeData {
+public:
+	ITriShapeData() {}
+	virtual ~ITriShapeData () {}
+	//Counts
+	virtual short GetTriangleCount() = 0;
+	virtual void SetTriangleCount(int n) = 0;
+	//Match Detection
+	virtual void SetMatchDetectionMode(bool choice) = 0;
+	virtual bool GetMatchDetectionMode() = 0;
+	//Getters
+	virtual vector<Triangle> GetTriangles() = 0;
+	//Setters
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
 };
 
@@ -857,9 +873,10 @@ public:
 	friend ostream & operator<<(ostream & lh, const blk_ref & rh) {
 		if (rh._block != NULL) {
 			lh << rh._block->GetBlockType() << "(Block " << rh._block->GetBlockNum() << ")";
+			
 			attr_ref attr = rh._block->GetAttr("Name");
-			if (attr.is_null() == false ) {
-				lh << " [" << attr->asString() << "]";
+			if ( rh->Namable() == true ) {
+				lh << " [" << rh->GetName() << "]";
 			}
 		} else {
 			if (rh._index == -1)

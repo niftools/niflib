@@ -48,7 +48,7 @@ extern string current_file;
  * ABlock methods
  **********************************************************/
 
-ABlock::ABlock() : _ref_count(0), _block_num(-1) {
+ABlock::ABlock() : _ref_count(0), _block_num(-1), _namable(false), _first_named_ver(0) {
 		//Temporary to test reference counting
 		blocks_in_memory++;
 	}
@@ -67,55 +67,55 @@ ABlock::~ABlock() {
 void ABlock::AddAttr( string type, string name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
 	if ( type == "int" ) {
-		attr = new IntAttr( name, this );
+		attr = new IntAttr( name, this, first_ver, last_ver );
 	} else if ( type == "short" ) {
-		attr = new ShortAttr( name, this );
+		attr = new ShortAttr( name, this, first_ver, last_ver );
 	} else if ( type == "byte" ) {
-		attr = new ByteAttr( name, this );
+		attr = new ByteAttr( name, this, first_ver, last_ver );
 	} else if ( type == "float" ) {
-		attr = new FloatAttr( name, this );
+		attr = new FloatAttr( name, this, first_ver, last_ver );
 	} else if ( type == "float3" ) {
-		attr = new Float3Attr( name, this );
+		attr = new Float3Attr( name, this, first_ver, last_ver );
 	} else if ( type == "string" ) {
-		attr = new StringAttr( name, this );
+		attr = new StringAttr( name, this, first_ver, last_ver );
 	} else if ( type == "link" ) {
-		attr = new LinkAttr( name, this );
+		attr = new LinkAttr( name, this, first_ver, last_ver );
 	} else if ( type == "flags" ) {
-		attr = new FlagsAttr( name, this );
+		attr = new FlagsAttr( name, this, first_ver, last_ver );
 	} else if ( type == "matrix33" ) {
-		attr = new MatrixAttr( name, this );
+		attr = new MatrixAttr( name, this, first_ver, last_ver );
 	} else if ( type == "linkgroup" ) {
-		attr = new LinkGroupAttr( name, this );
+		attr = new LinkGroupAttr( name, this, first_ver, last_ver );
 	} else if ( type == "bones" ) {
-		attr = new BoneAttr( name, this );
+		attr = new BoneAttr( name, this, first_ver, last_ver );
 	} else if ( type == "bbox" ) {
-		attr = new BBoxAttr( name, this );
+		attr = new BBoxAttr( name, this, first_ver, last_ver );
 	} else if ( type == "condint" ) {
-		attr = new CIntAttr( name, this );
+		attr = new CIntAttr( name, this, first_ver, last_ver );
 	} else if ( type == "vertmode" ) {
-		attr = new VertModeAttr( name, this );
+		attr = new VertModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == "lightmode" ) {
-		attr = new LightModeAttr( name, this );
+		attr = new LightModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == "texture" ) {
-		attr = new TextureAttr( name, this );
+		attr = new TextureAttr( name, this, first_ver, last_ver, false );
 	} else if ( type == "bumpmap" ) {
-		attr = new TextureAttr( name, this, true );
+		attr = new TextureAttr( name, this, first_ver, last_ver, true );
 	} else if ( type == "applymode" ) {
-		attr = new ApplyModeAttr( name, this );
+		attr = new ApplyModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == "texsource" ) {
-		attr = new TexSourceAttr( name, this );
+		attr = new TexSourceAttr( name, this, first_ver, last_ver );
 	} else if ( type == "pixellayout" ) {
-		attr = new PixelLayoutAttr( name, this );
+		attr = new PixelLayoutAttr( name, this, first_ver, last_ver );
 	} else if ( type == "mipmapformat" ) {
-		attr = new MipMapFormatAttr( name, this );
+		attr = new MipMapFormatAttr( name, this, first_ver, last_ver );
 	} else if ( type == "alphaformat" ) {
-		attr = new AlphaFormatAttr( name, this );
+		attr = new AlphaFormatAttr( name, this, first_ver, last_ver );
 	} else if ( type == "nodeancestor" ) {
-		attr = new NodeAncestorAttr( name, this );
+		attr = new NodeAncestorAttr( name, this, first_ver, last_ver );
 	} else if ( type == "skeletonroot" ) {
-		attr = new SkeletonRootAttr( name, this );
+		attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
 	} else if ( type == "particlegroup" ) {
-		attr = new ParticleGroupAttr( name, this );
+		attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -123,7 +123,6 @@ void ABlock::AddAttr( string type, string name, unsigned int first_ver, unsigned
 
 	_attr_map[name] = attr_ref(attr);
 	_attr_vect.push_back(attr_ref(attr));
-	_attr_vers.push_back( pair<unsigned int, unsigned int>(first_ver, last_ver) );
 }
 
 attr_ref ABlock::GetAttr(string attr_name) {
@@ -150,44 +149,52 @@ blk_ref ABlock::GetParent() {
 }
 
 void ABlock::Read( ifstream& in, unsigned int version ) {
+	//Read Name if there is one
+	if ( _namable == true && version >= _first_named_ver ) {
+		_name = ReadString( in );
+	}
+
+	//Read Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
-		if ( version >= _attr_vers[i].first && version <= _attr_vers[i].second ) {
-			_attr_vect[i]->Read( in );
-			//cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
-		}
+		_attr_vect[i]->Read( in, version );
+		//cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
 	}
 }
 
 void ABlock::Write( ofstream& out, unsigned int version ) {
+	//Write Name if there is one
+	if ( _namable == true && version >= _first_named_ver  ) {
+		WriteString( _name, out );
+	}
+
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		//cout << "Writing " << blk_ref(this) << " " << _attr_vect[i]->GetName() << endl;
-		_attr_vect[i]->Write( out );
+		_attr_vect[i]->Write( out, version );
 	}
 }
 
 string ABlock::asString() {
+	// Create a stringstream and set the floating point format
+	// fixed notation with one decimal place
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out.setf(ios::fixed, ios::floatfield);
-	out << setprecision(1);
-
+	//Output the first parent of this block
 	out << "Parent:  " << GetParent() << endl;
+
+	//Output the name if there is one
+	if ( _namable == true ) {
+		out << "Name:  " << _name << endl;
+	}
+
+	//Output Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		out << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
 	}
 
-	//if ( _parents.size() > 1 ) {
-	//	cout << endl  << "Parents:";
-	//	for (unsigned int i = 0; i < _parents.size(); ++i ) {
-	//		cout << "   " << _parents[i]->GetBlockType();
-	//	}
-	//	cout << endl << "Node:  " << GetBlockType() << "\a";
-	//	cin.get();
-	//}
-
+	//Return result as a string
 	return out.str();
 }
 
@@ -548,16 +555,16 @@ string NiNode::asString() {
 }
 
 /***********************************************************
- * NiTriShapeData methods
+ * AShapeData methods
  **********************************************************/
 
 /**
- * NiTriShapeData::Read - Assumes block name has already been read from in
+ * AShapeData::Read - Assumes block name has already been read from in
  */
-void NiTriShapeData::Read( ifstream& in, unsigned int version ){
+void AShapeData::Read( ifstream& in, unsigned int version ){
 
 	short vert_count = ReadUShort( in );
-	int hasVertices = ReadUInt( in );
+	bool hasVertices = ReadBool( in, version );;
 	if ( hasVertices != 0 ){
 		vertices.resize( vert_count );
 		for ( uint i = 0; i < vertices.size(); ++i ){
@@ -567,7 +574,13 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	int hasNormals = ReadUInt( in );
+	/// numTexSets up here up after from version 10.0.1.0 on
+	short numTexSets;
+	if ( version >= 0x0A000100 ) {
+		numTexSets = ReadUShort( in );
+	}
+
+	bool hasNormals = ReadBool( in, version );;
 	if ( hasNormals != 0 ){
 		normals.resize( vert_count );
 		for ( uint i = 0; i < normals.size(); ++i ){
@@ -577,10 +590,10 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	GetAttr("Center")->Read( in );
-	GetAttr("Radius")->Read( in );
+	GetAttr("Center")->Read( in, version );
+	GetAttr("Radius")->Read( in, version );
 
-	int hasVertexColors = ReadUInt( in );
+	bool hasVertexColors = ReadBool( in, version );;
 	if ( hasVertexColors != 0 ){
 		colors.resize( vert_count );
 		for ( uint i = 0; i < colors.size(); ++i ){
@@ -590,9 +603,15 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 			colors[i].a = ReadFloat( in );
 		}
 	}
-
-	short numTexSets = ReadUShort( in );
-	int hasUVs = ReadUInt( in );
+	// numTexSets down here up to version 4.2.2.0
+	if ( version <= 0x04020200 ) {
+		numTexSets = ReadUShort( in );
+	}
+	// hasUVs does not exist after version 4.0.0.2
+	bool hasUVs = true;
+	if ( version <= 0x04000002 ) {
+		hasUVs = ReadBool( in, version );
+	}
 	if ( numTexSets > 0 && hasUVs != 0 ){
 		uv_sets.resize( numTexSets );
 		//UVs = new fVector2[numVertices * numTexSets];
@@ -605,30 +624,14 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	short numTriangles = ReadUShort( in );
-	if (numTriangles > 0) {
-		int numVertexIndices = ReadUInt( in );
-		triangles.resize( numTriangles );
-		for ( int i = 0; i < numTriangles; ++i ){
-			triangles[i].v1 = ReadUShort( in );
-			triangles[i].v2 = ReadUShort( in );
-			triangles[i].v3 = ReadUShort( in );
-		}
-	}
-
-	short matchGroupCount = ReadUShort( in );
-	match_group_mode = ( matchGroupCount != 0 );  // Only record whether or not file prefers to have match data generated
-
-	short sub_count;
-	for ( int i = 0; i < matchGroupCount; ++i ){
-		sub_count = ReadUShort( in );
-		for (ushort j = 0; j < sub_count; ++j) {
-			ReadUShort( in );  // Read data, but don't care what it is
-		}
+	// Unknown Short here from version 10.0.1.0 on
+	// Just read it and throw it away for now
+	if ( version >= 0x0A000100 ) {
+		ReadUShort( in );
 	}
 }
 
-string NiTriShapeData::asString() {
+string AShapeData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -706,6 +709,325 @@ string NiTriShapeData::asString() {
 	}
 	out << endl;
 
+	return out.str();
+}
+
+/**
+ * AShapeData::Write
+ */
+void AShapeData::Write( ofstream& out, unsigned int version ){
+
+	WriteUShort( short(vertices.size()), out );
+
+	if ( vertices.size() > 0 )
+		WriteBool( true, out, version );
+	else
+		WriteBool( false, out, version );
+
+	for ( uint i = 0; i < vertices.size(); ++i ){
+		WriteFloat( vertices[i].x, out );
+		WriteFloat( vertices[i].y, out );
+		WriteFloat( vertices[i].z, out );
+	}
+
+	if ( normals.size() > 0 )
+		WriteBool( true, out, version );
+	else
+		WriteBool( false, out, version );
+
+	for ( uint i = 0; i < normals.size(); ++i) {
+		WriteFloat( normals[i].x, out );
+		WriteFloat( normals[i].y, out );
+		WriteFloat( normals[i].z, out );
+	}
+
+	GetAttr("Center")->Write( out, version );
+	GetAttr("Radius")->Write( out, version );
+
+	if ( colors.size() > 0 )
+		WriteBool( true, out, version );
+	else
+		WriteBool( false, out, version );
+
+	for ( uint i = 0; i < colors.size(); ++i ){
+		WriteFloat( colors[i].r, out );
+		WriteFloat( colors[i].g, out );
+		WriteFloat( colors[i].b, out );
+		WriteFloat( colors[i].a, out );
+	}
+
+	WriteUShort( ushort(uv_sets.size()), out );
+	if ( uv_sets.size() > 0 && uv_sets[0].size() > 0 ) // hasUVs
+		WriteBool( true, out, version );
+	else
+		WriteBool( false, out, version );
+
+	for ( uint i = 0; i < uv_sets.size(); ++i) {
+		for ( uint j = 0; j < uv_sets[i].size(); ++j) {
+			WriteFloat( uv_sets[i][j].u, out );
+			WriteFloat( uv_sets[i][j].v, out );
+		}
+	}
+}
+
+void * AShapeData::QueryInterface( int id ) {
+	// Contains ShapeData Interface
+	if ( id == ID_SHAPE_DATA ) {
+		return (void*)static_cast<IShapeData*>(this);
+	} else {
+		return AData::QueryInterface( id );
+	}
+}
+
+void AShapeData::SetVertexCount(int n) {
+	vertices.resize(n);
+	normals.resize(n);
+	colors.resize(n);
+	for (uint i = 0; i < uv_sets.size(); ++i) {
+		uv_sets[i].resize(n);
+	}
+}
+
+void AShapeData::SetUVSetCount(int n) {
+	uv_sets.resize(n);
+}
+
+//--Setters--//
+void AShapeData::SetVertices( const vector<Vector3> & in ) {
+	if (in.size() != vertices.size())
+		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	vertices = in;
+}
+
+void AShapeData::SetNormals( const vector<Vector3> & in ) {
+	if (in.size() != vertices.size())
+		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	normals = in;
+}
+
+void AShapeData::SetColors( const vector<Color> & in ) {
+	if (in.size() != vertices.size())
+		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	colors = in;
+}
+
+void AShapeData::SetUVSet( int index, const vector<UVCoord> & in ) {
+	if (in.size() != vertices.size())
+		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	uv_sets[index] = in;
+}
+
+/***********************************************************
+ * AParticlesData methods
+ **********************************************************/
+
+void AParticlesData::Read( ifstream& in, unsigned int version ) {
+	AShapeData::Read( in, version );
+
+	//numActive exists up to version 4.0.0.2
+	if ( version <= 0x04000002 ) {
+		numActive = ReadUShort( in );
+	}
+
+	GetAttr("Active Radius")->Read( in, version );
+
+	//numValid exists up to version 4.0.0.2
+	if ( version <= 0x04000002 ) {
+		numValid = ReadUShort( in );
+	}
+
+	GetAttr("Unknown Short")->Read( in, version );
+
+	hasSizes = ReadBool( in, version );
+
+	if ( hasSizes ) {
+		sizes.resize( vertices.size() );
+		for ( uint i = 0; i < sizes.size(); ++i ) {
+			sizes[i] = ReadFloat( in );
+		}
+	}
+}
+
+void AParticlesData::Write( ofstream& out, unsigned int version ) {
+	AShapeData::Write( out, version );
+
+	//numActive exists up to version 4.0.0.2
+	if ( version <= 0x04000002 ) {
+		WriteUShort( numActive, out );
+	}
+
+	GetAttr("Active Radius")->Write( out, version );
+
+	//numValid exists up to version 4.0.0.2
+	if ( version <= 0x04000002 ) {
+		WriteUShort( numValid, out );
+	}
+
+	
+	GetAttr("Unknown Short")->Write( out, version );
+
+	WriteBool( hasSizes, out, version );
+
+	if ( hasSizes ) {
+		for ( uint i = 0; i < sizes.size(); ++i ) {
+			WriteFloat( sizes[i], out );
+		}
+	}
+}
+
+string AParticlesData::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
+	out << "Num Active:  " << numActive << endl
+		<< "Active Radius:  " << GetAttr("Active Radius")->asFloat() << endl
+		<< "Num Valid:  " << numValid << endl
+		<< "Unknown Short:  " << GetAttr("Unknown Short")->asInt() << endl
+		<< "Sizes:  ";
+	
+	if ( hasSizes ) {
+		if (verbose) {
+			for ( uint i = 0; i < sizes.size(); ++i) {
+				out << i << ":  " << sizes[i] << endl;
+			}
+		} else {
+			out << endl << "<<Data Not Shown>>";
+		}
+	} else {
+		out << "None" << endl;
+	}
+
+	return out.str();
+}
+
+/***********************************************************
+ * ARotatingParticlesData methods
+ **********************************************************/
+
+void ARotatingParticlesData::Read( ifstream& in, unsigned int version ) {
+	AParticlesData::Read( in, version );
+
+	hasRotations = ReadBool( in, version );
+
+	if ( hasRotations ) {
+		rotations.resize( vertices.size() );
+		for ( uint i = 0; i < rotations.size(); ++i ) {
+			rotations[i].w = ReadFloat( in );
+			rotations[i].x = ReadFloat( in );
+			rotations[i].y = ReadFloat( in );
+			rotations[i].z = ReadFloat( in );
+		}
+	}
+}
+
+void ARotatingParticlesData::Write( ofstream& out, unsigned int version ) {
+	AParticlesData::Write( out, version );
+
+	WriteBool( hasRotations, out, version );
+
+	if ( hasRotations ) {
+		for ( uint i = 0; i < rotations.size(); ++i ) {
+			WriteFloat( rotations[i].w, out );
+			WriteFloat( rotations[i].x, out );
+			WriteFloat( rotations[i].y, out );
+			WriteFloat( rotations[i].z, out );
+		}
+	}
+}
+
+string ARotatingParticlesData::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AParticlesData::asString()
+		<< "Rotations:  ";
+	
+	if ( hasRotations ) {
+		if (verbose) {
+			for ( uint i = 0; i < rotations.size(); ++i) {
+				out << i << ":  [" << rotations[i].w << " (" << rotations[i].x << ", " << rotations[i].y << ", " << rotations[1].z << ")]" << endl;
+			}
+		} else {
+			out << endl << "<<Data Not Shown>>";
+		}
+	} else {
+		out << "None" << endl;
+	}
+
+	return out.str();
+}
+
+/***********************************************************
+ * NiParticleMeshesData methods
+ **********************************************************/
+
+void NiParticleMeshesData::Read( ifstream& in, unsigned int version ) {
+	ARotatingParticlesData::Read( in, version );
+
+	GetAttr("Unknown Link")->Read( in, version );
+}
+
+void NiParticleMeshesData::Write( ofstream& out, unsigned int version ) {
+	ARotatingParticlesData::Write( out, version );
+
+	GetAttr("Unknown Link")->Write( out, version );
+}
+
+string NiParticleMeshesData::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << ARotatingParticlesData::asString()
+		<< "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl;
+
+	return out.str();
+}
+
+/***********************************************************
+ * NiTriShapeData methods
+ **********************************************************/
+
+/**
+ * NiTriShapeData::Read - Assumes block name has already been read from in
+ */
+void NiTriShapeData::Read( ifstream& in, unsigned int version ){
+	AShapeData::Read( in, version );
+
+	short numTriangles = ReadUShort( in );
+	if (numTriangles > 0) {
+		int numVertexIndices = ReadUInt( in );
+		triangles.resize( numTriangles );
+		for ( int i = 0; i < numTriangles; ++i ){
+			triangles[i].v1 = ReadUShort( in );
+			triangles[i].v2 = ReadUShort( in );
+			triangles[i].v3 = ReadUShort( in );
+		}
+	}
+
+	short matchGroupCount = ReadUShort( in );
+	match_group_mode = ( matchGroupCount != 0 );  // Only record whether or not file prefers to have match data generated
+
+	short sub_count;
+	for ( int i = 0; i < matchGroupCount; ++i ){
+		sub_count = ReadUShort( in );
+		for (ushort j = 0; j < sub_count; ++j) {
+			ReadUShort( in );  // Read data, but don't care what it is
+		}
+	}
+}
+
+string NiTriShapeData::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
 	out << "Triangles:  " << uint(triangles.size());
 	if (verbose) {
 		for ( uint i = 0; i < triangles.size(); ++i) {
@@ -735,57 +1057,7 @@ string NiTriShapeData::asString() {
  */
 void NiTriShapeData::Write( ofstream& out, unsigned int version ){
 
-	WriteUShort( short(vertices.size()), out );
-
-	if ( vertices.size() > 0 )
-		WriteUInt( 1, out );
-	else
-		WriteUInt( 0, out );
-
-	for ( uint i = 0; i < vertices.size(); ++i ){
-		WriteFloat( vertices[i].x, out );
-		WriteFloat( vertices[i].y, out );
-		WriteFloat( vertices[i].z, out );
-	}
-
-	if ( normals.size() > 0 )
-		WriteUInt( 1, out );
-	else
-		WriteUInt( 0, out );
-
-	for ( uint i = 0; i < normals.size(); ++i) {
-		WriteFloat( normals[i].x, out );
-		WriteFloat( normals[i].y, out );
-		WriteFloat( normals[i].z, out );
-	}
-
-	GetAttr("Center")->Write( out );
-	GetAttr("Radius")->Write( out );
-
-	if ( colors.size() > 0 )
-		WriteUInt( 1, out );
-	else
-		WriteUInt( 0, out );
-
-	for ( uint i = 0; i < colors.size(); ++i ){
-		WriteFloat( colors[i].r, out );
-		WriteFloat( colors[i].g, out );
-		WriteFloat( colors[i].b, out );
-		WriteFloat( colors[i].a, out );
-	}
-
-	WriteUShort( ushort(uv_sets.size()), out );
-	if ( uv_sets.size() > 0 && uv_sets[0].size() > 0 ) // hasUVs
-		WriteUInt( 1, out );
-	else
-		WriteUInt( 0, out );
-
-	for ( uint i = 0; i < uv_sets.size(); ++i) {
-		for ( uint j = 0; j < uv_sets[i].size(); ++j) {
-			WriteFloat( uv_sets[i][j].u, out );
-			WriteFloat( uv_sets[i][j].v, out );
-		}
-	}
+	AShapeData::Write( out, version );
 
 	WriteUShort( ushort(triangles.size()), out );
 
@@ -799,8 +1071,6 @@ void NiTriShapeData::Write( ofstream& out, unsigned int version ){
 			WriteUShort( triangles[i].v3, out );
 		}
 	}
-
-	
 
 	if ( match_group_mode ) {
 		WriteUShort( ushort(vertices.size()), out ); //Match Group Count = Vertex Count
@@ -832,21 +1102,8 @@ void * NiTriShapeData::QueryInterface( int id ) {
 	if ( id == ID_TRI_SHAPE_DATA ) {
 		return (void*)static_cast<ITriShapeData*>(this);
 	} else {
-		return ABlock::QueryInterface( id );
+		return AShapeData::QueryInterface( id );
 	}
-}
-
-void NiTriShapeData::SetVertexCount(int n) {
-	vertices.resize(n);
-	normals.resize(n);
-	colors.resize(n);
-	for (uint i = 0; i < uv_sets.size(); ++i) {
-		uv_sets[i].resize(n);
-	}
-}
-
-void NiTriShapeData::SetUVSetCount(int n) {
-	uv_sets.resize(n);
 }
 
 void NiTriShapeData::SetTriangleCount(int n) {
@@ -854,34 +1111,96 @@ void NiTriShapeData::SetTriangleCount(int n) {
 }
 
 //--Setters--//
-void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
-	vertices = in;
-}
-
-void NiTriShapeData::SetNormals( const vector<Vector3> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
-	normals = in;
-}
-
-void NiTriShapeData::SetColors( const vector<Color> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
-	colors = in;
-}
-
-void NiTriShapeData::SetUVSet( int index, const vector<UVCoord> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
-	uv_sets[index] = in;
-}
 
 void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 	if (in.size() != vertices.size())
 		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
 	triangles = in;
+}
+
+/***********************************************************
+ * NiTriStripsData methods
+ **********************************************************/
+
+void NiTriStripsData::Read( ifstream& in, unsigned int version ){
+	AShapeData::Read( in, version );
+
+	//Read number of Triangles but discard it
+	ReadUShort( in );
+
+	//Initialize vectors to number and size of strips
+	short numStrips = ReadUShort( in );
+	strips.resize( numStrips );
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		short stripSize = ReadUShort( in );
+		strips[i].resize( stripSize );
+	}
+
+	//Read points
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		for ( uint j = 0; j < strips[i].size(); ++j ) {
+			strips[i][j] = ReadUShort( in );
+		}
+	}
+}
+
+void NiTriStripsData::Write( ofstream& out, unsigned int version ){
+
+	AShapeData::Write( out, version );
+
+	//Calculate number of triangles
+	//Sum of length of each strip - 2
+	short numTriangles = 0;
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		numTriangles += short(strips[i].size() - 2);
+	}
+
+	//Write number of triangles and strips
+	WriteUShort( numTriangles, out );
+	WriteUShort( ushort(strips.size()), out );
+
+	//Write Strip Sizes
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		WriteUShort( ushort(strips[i].size()), out );
+	}
+
+	//Write points
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		for ( uint j = 0; j < strips[i].size(); ++j ) {
+			WriteUShort( strips[i][j], out );
+		}
+	}
+}
+
+string NiTriStripsData::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
+	//Calculate number of triangles
+	//Sum of length of each strip - 2
+	short numTriangles = 0;
+	for ( uint i = 0; i < strips.size(); ++i ) {
+		numTriangles += short(strips[i].size() - 2);
+	}
+
+	out << "Triangles:  " << numTriangles << endl
+		<< "Strips:  " << ushort(strips.size()) << endl;
+
+	if (verbose) {
+		for ( uint i = 0; i < strips.size(); ++i ) {
+			out << "   Strip " << i + 1 << endl;
+			for ( uint j = 0; j < strips[i].size(); ++j ) {
+				out << "      " << strips[i][j] << endl;
+			}
+		}
+	} else {
+		out << endl << "   <<Data Not Shown>>";
+	}
+
+	return out.str();
 }
 
 /***********************************************************
@@ -898,7 +1217,11 @@ void NiSkinData::Read( ifstream& in, unsigned int version ) {
 	ReadFVector3( translation, in );
 	scale = ReadFloat( in );
 	int boneCount = ReadUInt( in );
-	unknown = ReadUInt( in );
+	unknownInt = ReadUInt( in );
+	//unknownByte exists from version 4.2.1.0 on
+	if ( version >= 0x04020100 ) {
+		unknownByte = ReadByte( in );
+	}
 	bones.resize(boneCount);
 	for( int i = 0; i < boneCount; i++ ) {
 		for (int c = 0; c < 3; ++c) {
@@ -931,7 +1254,11 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) {
 	WriteFVector3( translation, out );
 	WriteFloat( scale, out );
 	WriteUInt(short(bone_map.size()), out);
-	WriteUInt(unknown, out);
+	WriteUInt(unknownInt, out);
+	//unknownByte exists from version 4.2.1.0 on
+	if ( version >= 0x04020100 ) {
+		WriteByte( unknownByte, out );
+	}
 
 	map<IBlock*, Bone>::iterator it;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {		
@@ -1011,7 +1338,8 @@ string NiSkinData::asString() {
 		<< "Translate:  " << translation << endl
 		<< "Scale:  " << scale << endl
 		<< "Bone Count:  " << uint(bone_map.size()) << endl
-		<< "Unknown Index:  " << unknown << endl
+		<< "Unknown Index:  " << unknownInt << endl
+		<< "Unknown Byte:  " << unknownByte << endl
 		<< "Bones:" << endl;
 
 	map<IBlock*, Bone>::iterator it;
@@ -1686,28 +2014,45 @@ string NiKeyframeData::asString() {
  **********************************************************/
 
 void NiColorData::Read( ifstream& in, unsigned int version ) {
-	colorCount = ReadUInt( in );
+	uint colorCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
 	if (keyType != 1) {
-		cout << "NiColorData is thought to only support keyType of 1, but this NIF has a keyType of " << keyType << ".  Please report it to NIFLA.  Aborting" << endl;
-		throw runtime_error("Abort");
+		stringstream str;
+        str << "NiColorData is thought to only support keyType of 1, but this NIF has a keyType of " << keyType << "." << endl;
+		throw runtime_error( str.str() );
 	}
 
-	Key<fVector4> tmp;
-	for (uint i = 0; i < colorCount; i++) {
-		tmp.time = ReadFloat( in );
-		ReadFVector4( tmp.data, in );
-		keys.push_back(tmp);
+	keys.resize( colorCount );
+	for (uint i = 0; i < keys.size(); i++) {
+		keys[i].time = ReadFloat( in );
+		ReadFVector4( keys[i].data, in );
 	}
 }
+
+void NiColorData::Write( ofstream& out, unsigned int version ) {
+	WriteUInt( uint(keys.size()), out );
+	WriteUInt( keyType, out );
+
+	if (keyType != 1) {
+		stringstream str;
+        str << "NiColorData is thought to only support keyType of 1, but this NIF has a keyType of " << keyType << "." << endl;
+		throw runtime_error( str.str() );
+	}
+
+	for (uint i = 0; i < keys.size(); i++) {
+		WriteFloat( keys[i].time, out );
+		WriteFVector4( keys[i].data, out );
+	}
+}
+
 
 string NiColorData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Color Count:  " << colorCount << endl
+	out << "Color Count:  " << uint(keys.size()) << endl
 		<< "Key Type:  " << keyType << endl;
 
 	if (verbose) {
@@ -1727,21 +2072,39 @@ string NiColorData::asString() {
  **********************************************************/
 
 void NiFloatData::Read( ifstream& in, unsigned int version ) {	
-	colorCount = ReadUInt( in );
+	uint keyCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
 	if (keyType != 2) {
-		cout << "NiFloatata is thought to only support keyType of 2, but this NIF has a keyType of " << keyType << ".  Please report it to NIFLA.  Aborting" << endl;
-		throw runtime_error("Abort");
+		stringstream str;
+		str << "NiFloatata is thought to only support keyType of 2, but this NIF has a keyType of " << keyType << ".";
+		throw runtime_error( str.str() );
 	}
 
-	Key<float> tmp;
-	for (uint i = 0; i < colorCount; i++) {
-		tmp.time = ReadFloat( in );
-		tmp.data = ReadFloat( in );
-		tmp.forward_tangent = ReadFloat( in );
-		tmp.backward_tangent = ReadFloat( in );
-		keys.push_back(tmp);
+	keys.resize( keyCount );
+	for (uint i = 0; i < keys.size(); i++) {
+		keys[i].time = ReadFloat( in );
+		keys[i].data = ReadFloat( in );
+		keys[i].forward_tangent = ReadFloat( in );
+		keys[i].backward_tangent = ReadFloat( in );
+	}
+}
+
+void NiFloatData::Write( ofstream& out, unsigned int version ) {	
+	WriteUInt( uint(keys.size()), out );
+	WriteUInt( keyType, out );
+
+	if (keyType != 2) {
+		stringstream str;
+		str << "NiFloatata is thought to only support keyType of 2, but this NIF has a keyType of " << keyType << ".";
+		throw runtime_error( str.str() );
+	}
+
+	for (uint i = 0; i < keys.size(); i++) {
+		WriteFloat( keys[i].time, out );
+		WriteFloat( keys[i].data, out );
+		WriteFloat( keys[i].forward_tangent, out );
+		WriteFloat( keys[i].backward_tangent, out );
 	}
 }
 
@@ -1750,7 +2113,7 @@ string NiFloatData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Vector Count:  " << colorCount << endl
+	out << "Key Count:  " << uint(keys.size()) << endl
 		<< "Key Type:  " << keyType << endl;
 
 	if (verbose) {
@@ -1770,24 +2133,38 @@ string NiFloatData::asString() {
  **********************************************************/
 
 void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
-	GetAttr("Next Extra Data")->Read( in );
+	GetAttr("Next Extra Data")->Read( in, version );
 
-	//Read Bytes Remaining but don't bother to store it
-	ReadUInt( in );
+	//Read Name if there is one
+	if ( _namable == true && version >= _first_named_ver ) {
+		_name = ReadString( in );
+	}
 
-	GetAttr("String Data")->Read( in );
+	//Up to version 4.2.2.0, read bytes remaining but don't bother to store it
+	if ( version <= 0x04020200 ) {
+		ReadUInt( in );
+	}
+
+	GetAttr("String Data")->Read( in, version );
 }
 
 void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
 
-	GetAttr("Next Extra Data")->Write( out );
+	//Write Name if there is one
+	if ( _namable == true && version >= _first_named_ver ) {
+		WriteString( _name, out );
+	}
 
-	//Write Bytes Remaining - length of string + 4
+	GetAttr("Next Extra Data")->Write( out, version );
+
 	attr_ref string_data = GetAttr("String Data");
-	
-	WriteUInt( uint(string_data->asString().length()) + 4, out );
 
-	string_data->Write( out );
+	//Up to version 4.2.2.0, Write Bytes Remaining - length of string + 4
+	if ( version <= 0x04020200 ) {
+		WriteUInt( uint(string_data->asString().length()) + 4, out );
+	}
+
+	string_data->Write( out, version );
 }
 
 string NiStringExtraData::asString() {
@@ -1798,7 +2175,8 @@ string NiStringExtraData::asString() {
 	attr_ref next_data = GetAttr("Next Extra Data");
 	attr_ref string_data = GetAttr("String Data");
 
-	out << next_data->GetName() << ":  " << next_data->asLink() << endl
+	out << "Name:  " << _name << endl
+		<< next_data->GetName() << ":  " << next_data->asLink() << endl
 		<< "Bytes Remaining:  " << uint(string_data->asString().length()) + 4 << endl
 		<< string_data->GetName() << ":  " << string_data->asString() << endl;
 	
@@ -1813,24 +2191,37 @@ void NiMorphData::Read( ifstream& in, unsigned int version ) {
 	uint morphCount = ReadUInt( in );
 	vertCount = ReadUInt( in );
 
-	GetAttr("Unknown Byte")->Read( in );
+	GetAttr("Unknown Byte")->Read( in, version );
 
 	morphs.resize(morphCount);
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		uint timeCount = ReadUInt( in );
 		morphs[i].keyType = KeyType(ReadUInt( in ));
 
-		if (timeCount > 0 && morphs[i].keyType != 2) {
-			cout << "NiMorphData is thought to only support keyType of 2, but this NIF has a keyType of " << morphs[i].keyType << ".  Please report it to NifTools.  Aborting." << endl;
-			throw runtime_error("Abort");
+		if (timeCount > 0 && (morphs[i].keyType < 1 || morphs[i].keyType > 3 ) ) {
+			stringstream s;
+			s << "NiMorphData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << morphs[i].keyType << ".";
+			throw runtime_error(s.str());
 		}
 
 		morphs[i].keys.resize( timeCount );
 		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
+
+			//Always read the time and data
 			morphs[i].keys[j].time = ReadFloat( in );
 			morphs[i].keys[j].data = ReadFloat( in );
-			morphs[i].keys[j].forward_tangent = ReadFloat( in );
-			morphs[i].keys[j].backward_tangent = ReadFloat( in );
+
+			if ( morphs[i].keyType == 2 ) {
+				//Uses Quadratic interpolation
+				morphs[i].keys[j].forward_tangent = ReadFloat( in );
+				morphs[i].keys[j].backward_tangent = ReadFloat( in );
+			} else if ( morphs[i].keyType == 3 ) {
+				//Uses TBC interpolation
+				morphs[i].keys[j].tension = ReadFloat( in );
+				morphs[i].keys[j].bias = ReadFloat( in );
+				morphs[i].keys[j].continuity = ReadFloat( in );
+
+			}
 		}
 		
 		morphs[i].morph.resize( vertCount );
@@ -1846,22 +2237,35 @@ void NiMorphData::Write( ofstream& out, unsigned int version ) {
 	WriteUInt( uint(morphs.size()), out );
 	WriteUInt( vertCount, out );
 
-	GetAttr("Unknown Byte")->Write( out );
+	GetAttr("Unknown Byte")->Write( out, version );
 
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		WriteUInt( uint(morphs[i].keys.size()), out );
 		WriteUInt( KeyType(morphs[i].keyType), out );
 
-		if (morphs[i].keys.size() > 0 && morphs[i].keyType != 2) {
-			cout << "NiMorphData is thought to only support keyType of 2, but this NIF has a keyType of " << morphs[i].keyType << ".  Please report it to NifTools.  Aborting." << endl;
-			throw runtime_error("Abort");
+		if ( morphs[i].keyType < 1 || morphs[i].keyType > 3 ) {
+			stringstream s;
+			s << "NiMorphData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << morphs[i].keyType << ".";
+			throw runtime_error(s.str());
 		}
 
 		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
+
+			//Always write the time and data
 			WriteFloat( morphs[i].keys[j].time, out );
 			WriteFloat( morphs[i].keys[j].data, out );
-			WriteFloat( morphs[i].keys[j].forward_tangent, out );
-			WriteFloat( morphs[i].keys[j].backward_tangent, out );
+
+			if ( morphs[i].keyType == 2 ) {
+				//Uses Quadratic interpolation
+				WriteFloat( morphs[i].keys[j].forward_tangent, out );
+				WriteFloat( morphs[i].keys[j].backward_tangent, out );
+			} else if ( morphs[i].keyType == 3 ) {
+				//Uses TBC interpolation
+				WriteFloat ( morphs[i].keys[j].tension, out );
+				WriteFloat ( morphs[i].keys[j].bias, out );
+				WriteFloat ( morphs[i].keys[j].continuity, out );
+
+			}
 		}
 		
 		for (uint j = 0; j < vertCount ; ++j ) {
@@ -1889,7 +2293,15 @@ string NiMorphData::asString() {
 		
 		if (verbose) {
 			for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
-				out << "Key Time:  " << morphs[i].keys[j].time << " Influence?: " << morphs[i].keys[j].data << " F: " << morphs[i].keys[j].forward_tangent << " B: " << morphs[i].keys[j].backward_tangent << endl;
+				//Always show time and data
+				out << "Key Time:  " << morphs[i].keys[j].time << ", Influence?: " << morphs[i].keys[j].data;
+				if ( morphs[i].keyType == 2 ) {
+					//Uses Quadratic interpolation
+					out << ", FT(" << morphs[i].keys[j].forward_tangent << ") BT(" << morphs[i].keys[j].backward_tangent << ")";
+				} else if ( morphs[i].keyType == 3 ) {
+					out << ", T " << morphs[i].keys[j].tension << ", B " << morphs[i].keys[j].bias << ", C " << morphs[i].keys[j].continuity;
+				}
+				out << endl;
 			}
 			
 			for (uint j = 0; j < vertCount ; ++j ) {
@@ -1922,6 +2334,63 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 }
 
 /***********************************************************
+ * NiPalette methods
+ **********************************************************/
+
+void NiPalette::Read( ifstream& in, unsigned int version ) {
+	//Read 5 unknown bytes
+	for (int i = 0; i < 5; ++i) {
+		unknownBytes[i] = ReadByte( in );
+	}
+
+	//Read Palette
+	for (int i = 0; i < 256; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			palette[i][j] = ReadByte( in );
+		}
+	}
+}
+
+void NiPalette::Write( ofstream& out, unsigned int version ) {
+	//Write 5 unknown bytes
+	for (int i = 0; i < 5; ++i) {
+		WriteByte( unknownBytes[i], out );
+	}
+
+	//Read Palette
+	for (int i = 0; i < 256; ++i) {
+		for (int j = 0; j < 4; ++j) {
+			WriteByte( palette[i][j], out );
+		}
+	}
+}
+
+
+string NiPalette::asString() {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	//Print 5 unknown bytes
+	for (int i = 0; i < 5; ++i) {
+		out << "Unknown Byte " << i + 1 << ":  " << unknownBytes[i] << endl;
+	}
+
+	//Print Palette
+	out << "Palette:" << endl;
+	if (verbose) {
+		for (int i = 0; i < 256; ++i) {
+			out << i + 1 << ":  " << int(palette[i][0]) << ", " << int(palette[i][1]) << ", " << int(palette[i][2]) << ", " << int(palette[i][3]) << endl;
+		}
+	} else {
+		out << "  <<Data Not Shown>>" << endl;
+	}
+
+	return out.str();
+}
+
+
+/***********************************************************
  * NiPixelData methods
  **********************************************************/
 
@@ -1937,22 +2406,48 @@ void NiPixelData::Read( ifstream& in, unsigned int version ) {
 		unknown8Bytes[i] = ReadByte( in );
 	}
 
-	GetAttr("Unknown Index")->Read( in );
+	GetAttr("Unknown Index")->Read( in, version );
 
-	mipCount = ReadUInt( in );
+	uint mipCount = ReadUInt( in );
 	bytesPerPixel = ReadUInt( in );
 
-	MipMap temp;
+	mipmaps.resize( mipCount );
 	for ( uint i = 0; i < mipCount; ++i ) {
-		temp.width = ReadUInt( in );
-		temp.height = ReadUInt( in );
-		temp.offset = ReadUInt( in );
-		mipmaps.push_back(temp);
+		mipmaps[i].width = ReadUInt( in );
+		mipmaps[i].height = ReadUInt( in );
+		mipmaps[i].offset = ReadUInt( in );
 	}
 
 	dataSize = ReadUInt( in );
 	data = new byte[dataSize];
 	in.read( (char *)data, dataSize);
+}
+
+void NiPixelData::Write( ofstream& out, unsigned int version ) {
+	WriteUInt( unknownInt, out );
+	WriteUInt( rMask, out );
+	WriteUInt( gMask, out );
+	WriteUInt( bMask, out );
+	WriteUInt( aMask, out );
+	WriteUInt( bpp, out );
+		
+	for (int i = 0; i < 8; ++i) {
+		WriteByte( unknown8Bytes[i], out );
+	}
+
+	GetAttr("Unknown Index")->Write( out, version );
+
+	WriteUInt( uint(mipmaps.size()), out );
+	WriteUInt( bytesPerPixel, out );
+
+	for ( uint i = 0; i < mipmaps.size(); ++i ) {
+		WriteUInt( mipmaps[i].width, out );
+		WriteUInt( mipmaps[i].height, out );
+		WriteUInt( mipmaps[i].offset, out );
+	}
+
+	WriteUInt( dataSize, out );
+	out.write( (char *)data, dataSize);
 }
 
 string NiPixelData::asString() {
@@ -1977,7 +2472,7 @@ string NiPixelData::asString() {
 	out << endl;
 
 	out << "Unknown Index:  " <<  GetAttr("Unknown Index")->asLink() << endl
-		<< "Mipmap Count:  " << mipCount << endl
+		<< "Mipmap Count:  " << uint(mipmaps.size()) << endl
 		<< "Bytes Per Pixel:  " << bytesPerPixel << endl;
 
 	for ( uint i = 0; i < mipmaps.size(); ++i ) {
@@ -1997,10 +2492,10 @@ string NiPixelData::asString() {
  **********************************************************/
 
 void NiPosData::Read( ifstream& in, unsigned int version ) {
-	posCount = ReadUInt( in );
+	uint keyCount = ReadUInt( in );
 	keyType = ReadUInt( in );
 
-	keys.resize(posCount);
+	keys.resize(keyCount);
 	for (uint i = 0; i < keys.size(); i++) {
 		keys[i].time = ReadFloat( in );
 		ReadFVector3( keys[i].data, in );
@@ -2011,8 +2506,30 @@ void NiPosData::Read( ifstream& in, unsigned int version ) {
 		}
 
 		if (keyType != 1 && keyType != 2) {
-			cout << "NiPosData is thought to only support keyTypes of 1 and 2, but this NIF has a keyType of " << keyType << ".  Please report it to NIFLA.  Aborting" << endl;
-			throw runtime_error("Abort");
+			stringstream str;
+            str << "NiPosData is thought to only support keyTypes of 1 and 2, but this NIF has a keyType of " << keyType << ".";
+			throw runtime_error( str.str() );
+		}
+	}
+}
+
+void NiPosData::Write( ofstream& out, unsigned int version ) {
+	WriteUInt( uint(keys.size()), out );
+	WriteUInt( keyType, out );
+
+	for (uint i = 0; i < keys.size(); i++) {
+		WriteFloat( keys[i].time, out );
+		WriteFVector3( keys[i].data, out );
+
+		if (keyType == 2) {
+			WriteFVector3( keys[i].forward_tangent, out );
+			WriteFVector3( keys[i].backward_tangent, out );
+		}
+
+		if (keyType != 1 && keyType != 2) {
+			stringstream str;
+            str << "NiPosData is thought to only support keyTypes of 1 and 2, but this NIF has a keyType of " << keyType << ".";
+			throw runtime_error( str.str() );
 		}
 	}
 }
@@ -2022,7 +2539,7 @@ string NiPosData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Pos Count:  " << posCount << endl
+	out << "Key Count:  " << uint(keys.size()) << endl
 		<< "Key Type:  " << keyType << endl;
 
 	if (verbose) {
@@ -2042,146 +2559,12 @@ string NiPosData::asString() {
 }
 
 /***********************************************************
- * NiRotatingParticlesData methods
- **********************************************************/
-
-void NiRotatingParticlesData::Read( ifstream& in, unsigned int version ) {
-
- //   short count1
-
- //   int b1
- //   if(b1 != 0)
- //       foreach count1
- //           float[3] unknown
-
- //   int or float = 0
- //   float[4] unknown
-
- //   int b2
- //   if(b2 != 0)
- //       foreach count1
- //           float[4] unknown
-
- //   int = 0
- //   short unknown
- //   short count2             - always equal to count1 ?
- //   float unknown
- //   short unknown
-
- //   int b3
- //   if(b3 != 0)
- //       foreach count2 (or count1)
- //           float unknown
-
- //   int b4
- //   if(b4 != 0)
- //       foreach count2 (or count1)
- //           float[4] unknown
-
-	ushort count1 = ReadUShort( in );
-	uint b1 = ReadUInt( in );
-
-	cout << "Count 1:  " << count1 << endl
-		 << "Bool 1:  " << b1 << endl;
-
-	if (b1) {
-		fVector3 vect;
-		for (uint i = 0; i < count1; ++i) {
-			ReadFVector3( vect, in );
-			cout << "Unknown 3 Floats:  " << vect << endl;
-		}
-	}
-
-	uint unknownInt = ReadUInt( in );
-
-	fVector4 unknown4Floats;
-	ReadFVector4( unknown4Floats, in );
-	uint b2 = ReadUInt( in );
-
-	cout << "Unknown Int:  " << unknownInt << endl
-		 << "Unknown 4 Floats:  " << unknown4Floats << endl
-		 << "Bool 2:  " << b2 << endl;
-
-	if (b2) {
-		fVector4 unknown4Floats2;
-		for (uint i = 0; i < count1; ++i) {
-			ReadFVector4( unknown4Floats2, in );
-			cout << "Unkown 4 Floats:  " << unknown4Floats2 << endl;
-		}
-	}
-
-	uint unknownInt2 = ReadUInt( in );
-	ushort unknownShort = ReadUShort( in );
-	ushort count2 = ReadUShort( in );
-	float unknownFloat = ReadFloat( in );
-	ushort unknownShort2 = ReadUShort( in );
-	uint b3 = ReadUInt( in );
-
-	cout << "Unknown Int 2:  " << unknownInt2 << endl
-		 << "Unknown Short:  " << unknownShort << endl
-		 << "Count 2:  " << count2 << endl
-		 << "Unknown Float:  " << unknownFloat << endl
-		 << "Unknown Short 2:  " << unknownShort2 << endl
-		 << "Bool 3:  " << b3 << endl;
-
-	if (b3) {
-		float temp;
-		for (uint i = 0; i < count1; ++i) {
-			temp = ReadFloat( in );
-			cout << "Unkown Float:  " << temp << endl;
-		}
-	}
-
-	uint b4 = ReadUInt( in );
-
-	cout << "Bool 4:  " << b4 << endl;
-
-	if (b4) {
-		fVector4 unknown4Floats3;
-		for (uint i = 0; i < count1; ++i) {
-			ReadFVector4( unknown4Floats3, in );
-			cout << "Unkown 4 Floats:  " << unknown4Floats3 << endl;
-		}
-	}
-
-	//int len = BlockSearch(in);
-
-	////Create byte array and read in unknown block
-	//byte * data = new byte [len];
-	//in.read((char*)data, len);
-
-	//Display Data in Hex form
-	//cout << hex << setfill('0');
-	//for (int j = 0; j < len; j++) {
-	//	cout << uppercase << setw(2) << uint(data[j]);
-	//	if (j % 16 == 15 || j == len - 1)
-	//		cout << endl;
-	//	else if (j % 16 == 7)
-	//		cout << "   ";
-	//	else if (j % 8 == 3)
-	//		cout << "  ";
-	//	else
-	//		cout << " ";
-	//}
-	//cout << dec << setfill(' ');
-
-	/*delete [] data;*/
-
-	//if (count1 != count2) {
-	//	cout << "\a";
-	//	cin.get();
-	//}
-}
-
-/***********************************************************
  * NiTextKeyExtraData methods
  **********************************************************/
 
 void NiTextKeyExtraData::Read( ifstream& in, unsigned int version ) {
-
-	GetAttr("Next Extra Data")->Read( in );
-	GetAttr("Unknown Int")->Read( in );
-
+	ABlock::Read( in, version );
+	
 	uint keyCount = ReadUInt( in );
 
 	_keys.resize(keyCount);
@@ -2193,8 +2576,7 @@ void NiTextKeyExtraData::Read( ifstream& in, unsigned int version ) {
 
 void NiTextKeyExtraData::Write( ofstream& out, unsigned int version ) {
 
-	GetAttr("Next Extra Data")->Write( out );
-	GetAttr("Unknown Int")->Write( out );
+	ABlock::Write( out, version );
 
 	WriteUInt( uint(_keys.size()), out );
 
@@ -2231,12 +2613,12 @@ string NiTextKeyExtraData::asString() {
 
 void NiUVData::Read( ifstream& in, unsigned int version ) {	
 	for (uint i = 0; i < 4; ++i) {
-		groups[i].count = ReadUInt( in );
+		uint count = ReadUInt( in );
 
-		if ( groups[i].count > 0 ) {
+		if ( count > 0 ) {
 			groups[i].keyType = ReadUInt( in );
 
-			groups[i].keys.resize(groups[i].count);
+			groups[i].keys.resize(count);
 			for (uint j = 0; j < groups[i].keys.size(); ++j) {
 				groups[i].keys[j].time = ReadFloat( in );
 				groups[i].keys[j].data = ReadFloat( in );
@@ -2250,6 +2632,26 @@ void NiUVData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
+void NiUVData::Write( ofstream& out, unsigned int version ) {	
+	for (uint i = 0; i < 4; ++i) {
+		WriteUInt( uint(groups[i].keys.size()), out );
+
+		if ( groups[i].keys.size() > 0 ) {
+			WriteUInt( groups[i].keyType, out );
+
+			for (uint j = 0; j < groups[i].keys.size(); ++j) {
+				WriteFloat( groups[i].keys[j].time, out );
+				WriteFloat( groups[i].keys[j].data, out );
+
+				if ( groups[i].keyType == 2) {
+					WriteFloat( groups[i].keys[j].forward_tangent, out );
+					WriteFloat( groups[i].keys[j].backward_tangent, out );
+				}
+			}
+		}
+	}
+}
+
 string NiUVData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
@@ -2257,9 +2659,9 @@ string NiUVData::asString() {
 
 	for (uint i = 0; i < 4; ++i) {
 		out << "UV Group " << i + 1 << ":" << endl
-			<< "   Count:  " << groups[i].count << endl;
+			<< "   Key Count:  " << uint(groups[i].keys.size()) << endl;
 
-		if ( groups[i].count > 0 ) {
+		if ( groups[i].keys.size() > 0 ) {
 			out << "   Key Type:  " << groups[i].keyType << endl;
 
 			if (verbose) {
@@ -2284,14 +2686,26 @@ string NiUVData::asString() {
  * NiVertWeightsExtraData methods
  **********************************************************/
  
-void NiVertWeightsExtraData ::Read( ifstream& in, unsigned int version ) {
-	GetAttr("Next Extra Data")->Read( in );
+void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
+	ABlock::Read( in, version );
+
 	bytes = ReadUInt( in );
-	verts = ReadUShort( in );
+	ushort verts = ReadUShort( in );
 
 	weights.resize( verts );
 	for (uint i = 0; i < weights.size(); ++i) {
 		weights[i] = ReadFloat( in );
+	}
+}
+
+void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) {
+	ABlock::Write( out, version );
+
+	WriteUInt( bytes, out );
+	WriteUShort( ushort(weights.size()), out );
+
+	for (uint i = 0; i < weights.size(); ++i) {
+		 WriteFloat( weights[i], out );
 	}
 }
 
@@ -2300,9 +2714,10 @@ string NiVertWeightsExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
-		<< "Bytes:  " << bytes << endl
-		<< "Verts:  " << verts << endl;
+	out << ABlock::asString();
+
+	out << "Bytes:  " << bytes << endl
+		<< "Verts:  " << uint(weights.size()) << endl;
 
 	if (verbose) {
 		for (uint i = 0; i < weights.size(); ++i) {
@@ -2320,12 +2735,21 @@ string NiVertWeightsExtraData::asString() {
  **********************************************************/
 
 void NiVisData ::Read( ifstream& in, unsigned int version ) {
-	visCount = ReadUInt( in );
+	uint keyCount = ReadUInt( in );
 
-	keys.resize( visCount );
+	keys.resize( keyCount );
 	for (uint i = 0; i < keys.size(); ++i) {
 		keys[i].time = ReadFloat( in );
 		keys[i].data = ReadByte( in ); // Is Visible? True/False
+	}
+}
+
+void NiVisData ::Write( ofstream& out, unsigned int version ) {
+	WriteUInt( uint(keys.size()), out );
+
+	for (uint i = 0; i < keys.size(); ++i) {
+		WriteFloat( keys[i].time, out );
+		WriteByte( keys[i].data, out ); // Is Visible? True/False
 	}
 }
 
@@ -2334,7 +2758,7 @@ string NiVisData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Visibility Count:  "  << visCount << endl;
+	out << "Key Count:  "  << uint(keys.size()) << endl;
 
 	if (verbose) {
 		for (uint i = 0; i < keys.size(); ++i) {

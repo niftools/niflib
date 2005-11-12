@@ -231,6 +231,16 @@ string ReadString( ifstream &in ) {
 	return out;
 }
 
+bool ReadBool( ifstream &in, unsigned int version ) {
+	if ( version < 0x04010001 ) {
+		//Bools are stored as integers before version 4.1.0.1
+		return (ReadUInt( in ) != 0);
+	} else {
+		//And as bytes from 4.1.0.1 on
+		return (ReadByte( in ) != 0);
+	}
+}
+
 /**
  * Write utility functions.
  */
@@ -285,6 +295,16 @@ void WriteFVector4( fVector4& fvec, ofstream& out ){
 void WriteString( string val, ofstream& out ) {
 	WriteUInt( uint(val.size()), out );
 	out.write( val.c_str(), std::streamsize(val.size()) );
+}
+
+void WriteBool( bool val, ofstream& out, unsigned int version ) {
+	if ( version < 0x04010001 ) {
+		//Bools are stored as integers before version 4.1.0.1
+		WriteUInt(int(val), out );
+	} else {
+		//And as bytes from 4.1.0.1 on
+		WriteByte(byte(val), out );
+	}
 }
 
 void WriteBlockName( const char* name, uint nameLength, ofstream& out ){
