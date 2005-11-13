@@ -152,12 +152,13 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 	//Read Name if there is one
 	if ( _namable == true && version >= _first_named_ver ) {
 		_name = ReadString( in );
+		//cout << "Name:  " << _name << endl;
 	}
 
 	//Read Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		_attr_vect[i]->Read( in, version );
-		//cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
+		cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
 	}
 }
 
@@ -626,9 +627,9 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 
 	// Unknown Short here from version 10.0.1.0 on
 	// Just read it and throw it away for now
-	if ( version >= 0x0A000100 ) {
-		ReadUShort( in );
-	}
+	//if ( version >= 0x0A000100 ) {
+	//	ReadUShort( in );
+	//}
 }
 
 string AShapeData::asString() {

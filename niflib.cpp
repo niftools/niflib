@@ -79,155 +79,6 @@ blk_ref CreateBlock( string block_type ) {
 	}
 	
 	return blk_ref(block);
-
-	//if (block_type == "AvoidNode") {
-	//	block = new AvoidNode;
-	//} else if (block_type == "NiAlphaController") {
-	//	block = new NiAlphaController;
-	//} else if (block_type == "NiAlphaProperty") {
-	//	block = new NiAlphaProperty;
-	//} else if (block_type == "NiAmbientLight") {
-	//	block = new NiAmbientLight;
-	//} else if (block_type == "NiAutoNormalParticles") {
-	//	block = new NiAutoNormalParticles;
-	//	} else if (block_type == "NiAutoNormalParticlesData") {
-	//	block = new NiAutoNormalParticlesData;
-	//} else if (block_type == "NiBillboardNode") {
-	//	block = new NiBillboardNode;
-	//} else if (block_type == "NiBooleanExtraData") {
-	//	block = new NiBooleanExtraData;
-	//} else if (block_type == "NiBSAnimationNode") {
-	//	block = new NiBSAnimationNode;
-	//} else if (block_type == "NiBSPArrayController") {
-	//	block = new NiBSPArrayController;
-	//} else if (block_type == "NiBSParticleNode") {
-	//	block = new NiBSParticleNode;
-	//} else if (block_type == "NiCamera") {
-	//	block = new NiCamera;
-	//} else if (block_type == "NiCollisionData") {
-	//	block = new NiCollisionData;
-	//} else if (block_type == "NiColorData") {
-	//	block = new NiColorData;
-	////} else if (block_type == "NiControllerSequence") {
-	////	block = new NiControllerSequence;
-	//} else if (block_type == "NiDirectionalLight") {
-	//	block = new NiDirectionalLight;
-	//} else if (block_type == "NiDitherProperty") {
-	//	block = new NiDitherProperty;
-	//} else if (block_type == "NiFlipController") {
-	//	block = new NiFlipController;
-	//} else if (block_type == "NiFloatData") {
-	//	block = new NiFloatData;
-	//} else if (block_type == "NiGeomMorpherController") {
-	//	block = new NiGeomMorpherController;
-	//} else if (block_type == "NiGravity") {
-	//	block = new NiGravity;
-	//} else if (block_type == "NiIntegerExtraData") {
-	//	block = new NiIntegerExtraData;
-	//} else if (block_type == "NiKeyframeController") {
-	//	block = new NiKeyframeController;
-	//} else if (block_type == "NiKeyframeData") {
-	//	block = new NiKeyframeData;
-	//} else if (block_type == "NiLODNode") {
-	//	block = new NiLODNode;
-	//} else if (block_type == "NiLookAtController") {
-	//	block = new NiLookAtController;
-	//} else if (block_type == "NiMaterialColorController") {
-	//	block = new NiMaterialColorController;
-	//} else if (block_type == "NiMaterialProperty") {
-	//	block = new NiMaterialProperty;
-	//} else if (block_type == "NiMorphData") {
-	//	block = new NiMorphData;
-	//} else if (block_type == "NiNode") {
-	//	block = new NiNode;
-	//} else if (block_type == "NiPalette") {
-	//	block = new NiPalette;
-	//} else if (block_type == "NiParticleBomb") {
-	//	block = new NiParticleBomb;
-	//} else if (block_type == "NiParticleColorModifier") {
-	//	block = new NiParticleColorModifier;
-	//} else if (block_type == "NiParticleGrowFade") {
-	//	block = new NiParticleGrowFade;
-	//} else if (block_type == "NiParticleMeshes") {
-	//	block = new NiParticleMeshes;
-	//} else if (block_type == "NiParticleMeshesData") {
-	//	block = new NiParticleMeshesData;
-	//} else if (block_type == "NiParticleMeshModifier") {
-	//	block = new NiParticleMeshModifier;
-	//} else if (block_type == "NiParticleRotation") {
-	//	block = new NiParticleRotation;
-	//} else if (block_type == "NiParticleSystemController") {
-	//	block = new NiParticleSystemController;
-	//} else if (block_type == "NiPathController") {
-	//	block = new NiPathController;
-	//} else if (block_type == "NiPixelData") {
-	//	block = new NiPixelData;
-	//} else if (block_type == "NiPlanarCollider") {
-	//	block = new NiPlanarCollider;
-	//} else if (block_type == "NiPosData") {
-	//	block = new NiPosData;
-	//} else if (block_type == "NiRotatingParticles") {
-	//	block = new NiRotatingParticles;
-	//} else if (block_type == "NiRotatingParticlesData") {
-	//	block = new NiRotatingParticlesData;
-	//} else if ( block_type == "NiSequenceStreamHelper") {
-	//	block = new NiSequenceStreamHelper;
-	//} else if (block_type == "NiShadeProperty") {
-	//	block = new NiShadeProperty;
-	//} else if (block_type == "NiSkinData") {
-	//	block = new NiSkinData;
-	//} else if (block_type == "NiSkinInstance") {
-	//	block = new NiSkinInstance;
-	////} else if (block_type == "NiSkinPartition") {
-	////	block = new NiSkinPartition;
-	//} else if (block_type == "NiSourceTexture") {
-	//	block = new NiSourceTexture;
-	//} else if (block_type == "NiSpecularProperty") {
-	//	block = new NiSpecularProperty;
-	//} else if (block_type == "NiSphericalCollider") {
-	//	block = new NiSphericalCollider;
-	//} else if (block_type == "NiStencilProperty") {
-	//	block = new NiStencilProperty;
-	//} else if (block_type == "NiStringExtraData") {
-	//	block = new NiStringExtraData;
-	//} else if (block_type == "NiTextKeyExtraData") {
-	//	block = new NiTextKeyExtraData;
-	//} else if (block_type == "NiTextureEffect") {
-	//	block = new NiTextureEffect;
-	//} else if (block_type == "NiTexturingProperty") {
-	//	block = new NiTexturingProperty;
-	//} else if (block_type == "NiTriShape") {
-	//	block = new NiTriShape;
-	//} else if (block_type == "NiTriStrips") {
-	//	block = new NiTriStrips;
-	//} else if (block_type == "NiTriShapeData") {
-	//	block = new NiTriShapeData;
-	//} else if ( block_type == "NiUVController") {
-	//	block = new NiUVController;
-	//} else if (block_type == "NiUVData") {
-	//	block = new NiUVData;
-	//} else if ( block_type == "NiVertexColorProperty") {
-	//	block = new NiVertexColorProperty;
-	//} else if (block_type == "NiVertWeightsExtraData") {
-	//	block = new NiVertWeightsExtraData;
-	//} else if (block_type == "NiVisController") {
-	//	block = new NiVisController;
-	//} else if (block_type == "NiVisData") {
-	//	block = new NiVisData;
-	//} else if (block_type == "NiWireframeProperty") {
-	//	block = new NiWireframeProperty;
-	//} else if (block_type == "NiZBufferProperty") {
-	//	block = new NiZBufferProperty;
-	//} else if (block_type == "RootCollisionNode") {
-	//	block = new RootCollisionNode;
-	//// Unknown Blocks
-	//} else if ( block_type == "NiRendererSpecificProperty" ) {
-	//	block = new UnknownPropertyBlock( block_type );
-	//} else if ( block_type == "NiBSPArrayController" || block_type == "NiParticleSystemController" ) {
-	//	block = new UnknownControllerBlock( block_type );
-	//} else {
-	//	block = new UnknownBlock( block_type );
-	//}
 }
 
 //Reads the given file by file name and returns a reference to the root block
@@ -271,50 +122,94 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	char header_string[256];
 	in.getline( header_string, 256 );
 	uint version = ReadUInt( in );
+
+	//There is an unknownInt here from version 5.0.0.1 on
+	uint unknownInt1;
+	if ( version >= 0x05000001 ) {
+		unknownInt1 = ReadUInt( in );
+	}
+
 	uint numBlocks = ReadUInt( in );
 
-	////Output
-	//cout << endl << endl 
-	//	 << "====[ " << file_name << " | File Header ]====" << endl
-	//	 << "Header:  " << header_string << endl
-	//	 << "Version:  " << Hex(version) << endl
-	//	 << "Number of blocks: " << int(numBlocks) << endl;
+	vector<string> blockTypes;
+	vector<short> blockTypeIndex;
+	//New header data exists from version 5.0.0.1 on
+	if ( version >= 0x05000001 ) {
+		short numBlockTypes = ReadUShort( in );
+		blockTypes.resize(numBlockTypes);
+		for ( uint i = 0; i < blockTypes.size(); ++i ) {
+			blockTypes[i] = ReadString( in );
+		}
 
-	//vector<blk_ref> v;
-	//return v;
+		blockTypeIndex.resize(numBlocks);
+		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+			blockTypeIndex[i] = ReadUShort( in );
+		}
 
-	//if ( unknownByte != 10 ) {
-	//	cout << "Unknown Byte != 10\a" << endl;
-	//	cin.get();
-	//}
-	//if ( version != 67108866 ) {
-	//	cout << "Version != 67108866\a" << endl;
-	//	cin.get();
-	//}
+		uint unknownInt2 = ReadUInt( in );
+		uint unknownInt3 = ReadUInt( in );
+
+		//Output
+		cout << endl << endl 
+			 << "====[ " << file_name << " | File Header ]====" << endl
+			 << "Header:  " << header_string << endl
+			 << "Version:  " << Hex(version) << endl
+			 << "Unknown Int 1:  " << unknownInt1 << endl
+			 << "Number of Blocks: " << int(numBlocks) << endl
+			 << "Block Types:  " << uint(blockTypes.size()) << endl;
+
+		for ( uint i = 0; i < blockTypes.size(); ++i ) {
+			cout << "   " << i + 1 << ":  " << blockTypes[i] << endl;
+		}
+
+		cout << "Block Type Indices:  " << numBlocks << endl;
+		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << endl;
+		}
+
+		cout << "Unknown Int 2:  " << unknownInt2 << endl;
+	} else {
+		//Output
+		cout << endl << endl 
+			<< "====[ " << file_name << " | File Header ]====" << endl
+			<< "Header:  " << header_string << endl
+			<< "Version:  " << Hex(version) << endl
+			<< "Number of Blocks: " << int(numBlocks) << endl;
+	}
+
 
 	//--Read Blocks--//
 	vector<blk_ref> blocks( numBlocks );
+	string blockName;
 	for (uint i = 0; i < numBlocks; i++) {
-		// Find which block type this is.
-		uint blockNameLength = ReadUInt( in );
-		if (blockNameLength > 30 || blockNameLength < 6) {
-			cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
-			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
-			cout << blocks[i - 1]->asString();
-			throw runtime_error("Read failue - Bad block position");
-		}
-		char* blockName = new char[blockNameLength + 1];
-		in.read( blockName, blockNameLength );
-		blockName[blockNameLength] = 0;
-		if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
-			Str block_name(blockName, blockNameLength);
-			cout << "ERROR!  Bad block position.  Invalid Name:  " << block_name << "\a" << endl;
-			cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
-			cout << blocks[i - 1]->asString();
-			throw runtime_error("Read failue - Bad block position");
+	
+		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
+		if ( version >= 0x05000001 ) {
+			// Find which block type this is by using the header arrays
+			blockName = blockTypes[ blockTypeIndex[i] ];
+		} else {
+			// Find which block type this is by reading the string at this location
+			uint blockNameLength = ReadUInt( in );
+			if (blockNameLength > 30 || blockNameLength < 6) {
+				cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
+				cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << blocks[i - 1]->asString();
+				throw runtime_error("Read failue - Bad block position");
+			}
+			char* charBlockName = new char[blockNameLength + 1];
+			in.read( charBlockName, blockNameLength );
+			charBlockName[blockNameLength] = 0;
+			blockName = string(charBlockName);
+			delete [] charBlockName;
+			if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
+				cout << "ERROR!  Bad block position.  Invalid Name:  " << blockName << "\a" << endl;
+				cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << blocks[i - 1]->asString();
+				throw runtime_error("Read failue - Bad block position");
+			}
 		}
 
-		//cout << endl << i << ":  " << blockName;
+		cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -329,14 +224,25 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			//Read the block from the file
 			bk_intl->Read( in, version );
 
+			//From version 5.0.0.1 on there is a zero byte at the end of each block
+			//Throw an exception if it's not zero
+			if ( version >= 0x05000001 ) {
+				uint checkByte = ReadUInt( in );
+
+				/*if ( checkByte != 0 ) {
+					cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
+					cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+					cout << blocks[i - 1]->asString();
+					throw runtime_error("Read failue - Bad block position");
+				}*/
+			}
+
+
 			//cout << blocks[i]->asString() << endl;
 		}
 		else {
 			throw runtime_error("Failed to create block.");
 		}
-
-		if (blockName != NULL)
-			delete [] blockName;
 	}
 
 	//cout << endl;
@@ -350,14 +256,6 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	//		"Unknown Int 1:  " << Hex(unknownInt) << endl <<
 	//		"Unknown Int 2: " << Hex(unknownInt2) << endl;
 
-	//if ( unknownInt != 1 ) {
-	//	cout << "Unknown Int 1 != 1\a" << endl;
-	//	cin.get();
-	//}
-	//if ( unknownInt2 != 0 ) {
-	//	cout << "Unknown Int 2 != 0\a" << endl;
-	//	cin.get();
-	//}
 
 	//--Close File--//
 	in.close();
