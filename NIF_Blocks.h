@@ -215,7 +215,7 @@ class AExtraData : public AData {
 public:
 	AExtraData() {
 		_namable = true;
-		_first_named_ver = 0x10000100;
+		_first_named_ver = 0x0A000100; //10.0.1.0
 		AddAttr( attr_link, "Next Extra Data", 0, 0x04020200 );
 	}
 	~AExtraData() {};

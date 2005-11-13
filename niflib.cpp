@@ -75,7 +75,8 @@ blk_ref CreateBlock( string block_type ) {
 		block = it->second();
 	} else {
 		//An unknown type has been encountered
-		block = new UnknownBlock( block_type );
+		return blk_ref(-1); //Return null block_ref
+		//block = new UnknownBlock( block_type );
 	}
 	
 	return blk_ref(block);
@@ -123,9 +124,9 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	in.getline( header_string, 256 );
 	uint version = ReadUInt( in );
 
-	//There is an unknownInt here from version 5.0.0.1 on
+	//There is an unknownInt here from version 10.1.0.0 on
 	uint unknownInt1;
-	if ( version >= 0x05000001 ) {
+	if ( version >= 0x0A010000 ) {
 		unknownInt1 = ReadUInt( in );
 	}
 
@@ -147,34 +148,34 @@ vector<blk_ref> ReadNifList( string file_name ) {
 		}
 
 		uint unknownInt2 = ReadUInt( in );
-		uint unknownInt3 = ReadUInt( in );
+		//uint unknownInt3 = ReadUInt( in );
 
-		//Output
-		cout << endl << endl 
-			 << "====[ " << file_name << " | File Header ]====" << endl
-			 << "Header:  " << header_string << endl
-			 << "Version:  " << Hex(version) << endl
-			 << "Unknown Int 1:  " << unknownInt1 << endl
-			 << "Number of Blocks: " << int(numBlocks) << endl
-			 << "Block Types:  " << uint(blockTypes.size()) << endl;
+		////Output
+		//cout << endl << endl 
+		//	 << "====[ " << file_name << " | File Header ]====" << endl
+		//	 << "Header:  " << header_string << endl
+		//	 << "Version:  " << Hex(version) << endl
+		//	 << "Unknown Int 1:  " << unknownInt1 << endl
+		//	 << "Number of Blocks: " << int(numBlocks) << endl
+		//	 << "Block Types:  " << uint(blockTypes.size()) << endl;
 
-		for ( uint i = 0; i < blockTypes.size(); ++i ) {
-			cout << "   " << i + 1 << ":  " << blockTypes[i] << endl;
-		}
+		//for ( uint i = 0; i < blockTypes.size(); ++i ) {
+		//	cout << "   " << i + 1 << ":  " << blockTypes[i] << endl;
+		//}
 
-		cout << "Block Type Indices:  " << numBlocks << endl;
-		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << endl;
-		}
+		//cout << "Block Type Indices:  " << numBlocks << endl;
+		//for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+		//	cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << endl;
+		//}
 
-		cout << "Unknown Int 2:  " << unknownInt2 << endl;
+		//cout << "Unknown Int 2:  " << unknownInt2 << endl;
 	} else {
-		//Output
-		cout << endl << endl 
-			<< "====[ " << file_name << " | File Header ]====" << endl
-			<< "Header:  " << header_string << endl
-			<< "Version:  " << Hex(version) << endl
-			<< "Number of Blocks: " << int(numBlocks) << endl;
+		////Output
+		//cout << endl << endl 
+		//	<< "====[ " << file_name << " | File Header ]====" << endl
+		//	<< "Header:  " << header_string << endl
+		//	<< "Version:  " << Hex(version) << endl
+		//	<< "Number of Blocks: " << int(numBlocks) << endl;
 	}
 
 
@@ -185,6 +186,16 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	
 		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
 		if ( version >= 0x05000001 ) {
+			//From version 5.0.0.1 on there is a zero byte at the end of each block
+			//Throw an exception if it's not zero
+			uint checkValue = ReadUInt( in );
+			if ( checkValue != 0 ) {
+				cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
+				cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << blocks[i - 1]->asString();
+				throw runtime_error("Read failue - Bad block position");
+			}
+
 			// Find which block type this is by using the header arrays
 			blockName = blockTypes[ blockTypeIndex[i] ];
 		} else {
@@ -209,10 +220,23 @@ vector<blk_ref> ReadNifList( string file_name ) {
 			}
 		}
 
-		cout << endl << i << ":  " << blockName;
+		//cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
+
+		//Check for an unknown block type
+		if ( blocks[i].is_null() == true ) {
+			//For version 5.0.0.1 and up, throw an exception - there's nothing we can do
+			if ( version >= 0x05000001 ) {
+				stringstream str;
+				str << "Unknown block type encountered during file read:  " << blockName;
+				throw runtime_error( str.str() );
+			} else {
+				//We can skip over this block in older versions
+				blocks[i] = new UnknownBlock(blockName);
+			}
+		}
 
 		//Get internal interface
 		IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
@@ -223,20 +247,6 @@ vector<blk_ref> ReadNifList( string file_name ) {
 
 			//Read the block from the file
 			bk_intl->Read( in, version );
-
-			//From version 5.0.0.1 on there is a zero byte at the end of each block
-			//Throw an exception if it's not zero
-			if ( version >= 0x05000001 ) {
-				uint checkByte = ReadUInt( in );
-
-				/*if ( checkByte != 0 ) {
-					cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
-					cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
-					cout << blocks[i - 1]->asString();
-					throw runtime_error("Read failue - Bad block position");
-				}*/
-			}
-
 
 			//cout << blocks[i]->asString() << endl;
 		}

@@ -158,7 +158,7 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 	//Read Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		_attr_vect[i]->Read( in, version );
-		cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
+		//cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
 	}
 }
 
@@ -565,7 +565,7 @@ string NiNode::asString() {
 void AShapeData::Read( ifstream& in, unsigned int version ){
 
 	short vert_count = ReadUShort( in );
-	bool hasVertices = ReadBool( in, version );;
+	bool hasVertices = ReadBool( in, version );
 	if ( hasVertices != 0 ){
 		vertices.resize( vert_count );
 		for ( uint i = 0; i < vertices.size(); ++i ){
@@ -625,11 +625,11 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	// Unknown Short here from version 10.0.1.0 on
-	// Just read it and throw it away for now
-	//if ( version >= 0x0A000100 ) {
-	//	ReadUShort( in );
-	//}
+	//Unknown Short here from version 10.0.1.0 on
+	//Just read it and throw it away for now
+	if ( version >= 0x0A000100 ) {
+		ReadUShort( in );
+	}
 }
 
 string AShapeData::asString() {
