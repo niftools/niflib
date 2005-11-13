@@ -68,7 +68,6 @@ struct ConditionalInt;
 struct SkinWeight;
 
 //--Constants--//
-const unsigned int HEADER_STRING_LEN = 39;
 
 //Interface IDs
 const int ID_TRI_SHAPE_DATA = 0;
@@ -91,7 +90,14 @@ const enum AttrTypes {
 
 //NIF Versions
 const int VER_4_0_0_2 = 0x04000002;
+const int VER_4_1_0_12 = 0x0401000C;
 const int VER_4_2_0_2 = 0x04020002;
+const int VER_4_2_1_0 = 0x04020100;
+const int VER_4_2_2_0 = 0x04020200;
+const int VER_10_0_1_0 = 0x0A000100;
+const int VER_10_1_0_0 = 0x0A010000;
+const int VER_10_2_0_0 = 0x0A020000;
+const int VER_20_0_0_4 = 0x14000004;
 
 #ifndef NULL
 #define NULL 0
@@ -109,7 +115,7 @@ vector<blk_ref> ReadNifList( string file_name );
 blk_ref ReadNifTree( string file_name );
 
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version = VER_4_2_0_2 );
+void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version = VER_4_0_0_2 );
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);

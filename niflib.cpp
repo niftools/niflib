@@ -126,7 +126,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 
 	//There is an unknownInt here from version 10.1.0.0 on
 	uint unknownInt1;
-	if ( version >= 0x0A010000 ) {
+	if ( version >= VER_10_1_0_0 ) {
 		unknownInt1 = ReadUInt( in );
 	}
 
@@ -331,10 +331,22 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 	ofstream out( file_name.c_str(), ofstream::binary );
 
 	//--Write Header--//
-	out.write( "NetImmerse File Format, Version 4.0.0.2 \n", HEADER_STRING_LEN );
+	//Version 10.0.1.0 is the last known to use the name NetImmerse
+	stringstream header_string;
+	if ( version <= VER_10_0_1_0 ) {
+		header_string << "NetImmerse File Format, Version ";
+	} else {
+		header_string << "Gamebryo File Format, Version ";
+	}
+	char * byte_ver = (char*)&version;
+	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
+
+
+	header_string << int_ver[3] << "." << int_ver[2] << "." << int_ver[1] << "." << int_ver[0] << " ";
+
+	out << header_string.str();
 	WriteByte( 10, out ); // Unknown Byte = 10
-	char ver[] = {2,0,0,4}; // Version = 4.0.0.2 for Morrowind
-	out.write( ver, 4 );
+	WriteUInt( version, out );
 	WriteUInt( uint(blk_list.size()), out ); //Number of blocks
 
 	//--WriteBlocks--//

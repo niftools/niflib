@@ -215,8 +215,8 @@ class AExtraData : public AData {
 public:
 	AExtraData() {
 		_namable = true;
-		_first_named_ver = 0x0A000100; //10.0.1.0
-		AddAttr( attr_link, "Next Extra Data", 0, 0x04020200 );
+		_first_named_ver = VER_10_0_1_0; //10.0.1.0
+		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
 };
@@ -569,7 +569,7 @@ class AParticlesData : public AShapeData {
 public:
 	AParticlesData() {
 		AddAttr( attr_float, "Active Radius" );
-		AddAttr( attr_short, "Unknown Short", 0x0401000C );
+		AddAttr( attr_short, "Unknown Short", VER_4_1_0_12 );
 	}
 	~AParticlesData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -1307,7 +1307,7 @@ public:
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 public:
 	NiTextKeyExtraData() {
-		AddAttr( attr_int, "Unknown Int", 0, 0x04020200 );
+		AddAttr( attr_int, "Unknown Int", 0, VER_4_2_2_0 );
 	}
 	~NiTextKeyExtraData() {}
 

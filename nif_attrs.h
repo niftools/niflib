@@ -855,7 +855,7 @@ public:
 			data.PS2_K = ReadUShort( in );
 
 			//unknownShort exists up to version 4.1.0.12
-			if ( version <= 0x0401000C ) {
+			if ( version <= VER_4_1_0_12) {
 				data.unknownShort = ReadUShort( in );
 			}
 
@@ -881,7 +881,7 @@ public:
 			WriteUShort( data.PS2_L, out );
 			WriteUShort( data.PS2_K, out );
 			//unknownShort exists up to version 4.1.0.12
-			if ( version <= 0x0401000C ) {
+			if ( version <= VER_4_1_0_12 ) {
 				WriteUShort( data.unknownShort, out );
 			}
 			if ( _isBumpMap ) {

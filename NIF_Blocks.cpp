@@ -577,7 +577,7 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 
 	/// numTexSets up here up after from version 10.0.1.0 on
 	short numTexSets;
-	if ( version >= 0x0A000100 ) {
+	if ( version >= VER_10_0_1_0 ) {
 		numTexSets = ReadUShort( in );
 	}
 
@@ -605,12 +605,12 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 	// numTexSets down here up to version 4.2.2.0
-	if ( version <= 0x04020200 ) {
+	if ( version <= VER_4_2_2_0 ) {
 		numTexSets = ReadUShort( in );
 	}
 	// hasUVs does not exist after version 4.0.0.2
 	bool hasUVs = true;
-	if ( version <= 0x04000002 ) {
+	if ( version <= VER_4_0_0_2 ) {
 		hasUVs = ReadBool( in, version );
 	}
 	if ( numTexSets > 0 && hasUVs != 0 ){
@@ -627,7 +627,7 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 
 	//Unknown Short here from version 10.0.1.0 on
 	//Just read it and throw it away for now
-	if ( version >= 0x0A000100 ) {
+	if ( version >= VER_10_0_1_0) {
 		ReadUShort( in );
 	}
 }
@@ -826,14 +826,14 @@ void AParticlesData::Read( ifstream& in, unsigned int version ) {
 	AShapeData::Read( in, version );
 
 	//numActive exists up to version 4.0.0.2
-	if ( version <= 0x04000002 ) {
+	if ( version <= VER_4_0_0_2 ) {
 		numActive = ReadUShort( in );
 	}
 
 	GetAttr("Active Radius")->Read( in, version );
 
 	//numValid exists up to version 4.0.0.2
-	if ( version <= 0x04000002 ) {
+	if ( version <= VER_4_0_0_2 ) {
 		numValid = ReadUShort( in );
 	}
 
@@ -853,14 +853,14 @@ void AParticlesData::Write( ofstream& out, unsigned int version ) {
 	AShapeData::Write( out, version );
 
 	//numActive exists up to version 4.0.0.2
-	if ( version <= 0x04000002 ) {
+	if ( version <= VER_4_0_0_2 ) {
 		WriteUShort( numActive, out );
 	}
 
 	GetAttr("Active Radius")->Write( out, version );
 
 	//numValid exists up to version 4.0.0.2
-	if ( version <= 0x04000002 ) {
+	if ( version <= VER_4_0_0_2 ) {
 		WriteUShort( numValid, out );
 	}
 
@@ -1220,7 +1220,7 @@ void NiSkinData::Read( ifstream& in, unsigned int version ) {
 	int boneCount = ReadUInt( in );
 	unknownInt = ReadUInt( in );
 	//unknownByte exists from version 4.2.1.0 on
-	if ( version >= 0x04020100 ) {
+	if ( version >= VER_4_2_1_0 ) {
 		unknownByte = ReadByte( in );
 	}
 	bones.resize(boneCount);
@@ -1257,7 +1257,7 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) {
 	WriteUInt(short(bone_map.size()), out);
 	WriteUInt(unknownInt, out);
 	//unknownByte exists from version 4.2.1.0 on
-	if ( version >= 0x04020100 ) {
+	if ( version >= VER_4_2_1_0) {
 		WriteByte( unknownByte, out );
 	}
 
@@ -2142,7 +2142,7 @@ void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 	}
 
 	//Up to version 4.2.2.0, read bytes remaining but don't bother to store it
-	if ( version <= 0x04020200 ) {
+	if ( version <= VER_4_2_2_0 ) {
 		ReadUInt( in );
 	}
 
@@ -2160,8 +2160,8 @@ void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
 
 	attr_ref string_data = GetAttr("String Data");
 
-	//Up to version 4.2.2.0, Write Bytes Remaining - length of string + 4
-	if ( version <= 0x04020200 ) {
+	//Up to version 4.2.2.0, Write Bytes Remaining; length of string + 4
+	if ( version <= VER_4_2_2_0 ) {
 		WriteUInt( uint(string_data->asString().length()) + 4, out );
 	}
 

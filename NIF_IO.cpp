@@ -232,7 +232,7 @@ string ReadString( ifstream &in ) {
 }
 
 bool ReadBool( ifstream &in, unsigned int version ) {
-	if ( version < 0x04010001 ) {
+	if ( version <= 0x04010001 ) {
 		//Bools are stored as integers before version 4.1.0.1
 		return (ReadUInt( in ) != 0);
 	} else {
