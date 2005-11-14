@@ -129,6 +129,7 @@ attr_ref ABlock::GetAttr(string attr_name) {
 	map<string, attr_ref>::iterator it;
 	it = _attr_map.find(attr_name);
 	if (it == _attr_map.end()) {
+		//cout << "Requested Attribute does not exist:  " << attr_name << endl;
 		return attr_ref(NULL);
 	} else {
 		return attr_ref((*it).second);

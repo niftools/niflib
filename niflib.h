@@ -52,6 +52,7 @@ using namespace std;
 //--Forward Declarations of Classes & Structs--//
 class IAttr;
 class IBlock;
+class IShapeData;
 class ITriShapeData;
 class ISkinData;
 class IKeyframeData;
@@ -131,6 +132,7 @@ unsigned int BlocksInMemory();
 
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
+IShapeData * QueryShapeData( blk_ref & block );
 ITriShapeData * QueryTriShapeData( blk_ref & block );
 ISkinData * QuerySkinData( blk_ref & block );
 INode * QueryNode( blk_ref & block );
@@ -382,7 +384,7 @@ public:
 
 	//Name Functions
 	virtual bool Namable() = 0;
-	virtual void SetName( string & name ) = 0;
+	virtual void SetName( string name ) = 0;
 	virtual string GetName() = 0;
 	
 protected:

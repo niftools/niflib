@@ -104,7 +104,7 @@ public:
 
 	//Name Functions
 	virtual bool Namable() { return _namable; }
-	virtual void SetName( string & name ) { _name = name; }
+	virtual void SetName( string name ) { _name = name; }
 	virtual string GetName() { return _name; }
 
 	//--Internal Functions--//
