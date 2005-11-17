@@ -40,6 +40,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include "niflib.h"
 using namespace std;
 
 /* TYPE DEFINITIONS */
@@ -187,24 +188,59 @@ ostream & operator<<(ostream & lh, nifAlphaFormat & rh);
  * Read utility functions
  */
 uint ReadUInt( ifstream& in );
-
 ushort ReadUShort( ifstream& in );
-
 byte ReadByte( ifstream& in );
-
 float ReadFloat( ifstream &in );
-
 string ReadString( ifstream &in );
-
 bool ReadBool( ifstream &in, unsigned int version );
-
 void ReadUSVector3( usVector3& vec, ifstream& in );
-
 void ReadFVector2( fVector2& fvec, ifstream& in );
-
 void ReadFVector3( fVector3& fvec, ifstream& in );
-
 void ReadFVector4( fVector4& fvec, ifstream& in );
+
+//Read
+void NifStream( uint & val, ifstream& in );
+void NifStream( ushort & val, ifstream& in );
+void NifStream( byte & val, ifstream& in );
+void NifStream( float & val, ifstream& in );
+void NifStream( string & val, ifstream& in );
+void NifStream( Vector3 & val, ifstream& in );
+void NifStream( Quaternion & val, ifstream& in );
+void NifStream( KeyType & val, ifstream& in );
+void NifStream( Color & val, ifstream& in );
+void NifStream( Triangle & val, ifstream& in );
+
+template <class T> 
+void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
+	key.time = ReadFloat( file );
+
+	//If key type is not 1, 2, or 3, throw an exception
+	if ( type < 1 || type > 3 ) {
+		throw runtime_error("Invalid key type.");
+	}
+
+	//Read data based on the type of key
+	NifStream( key.data, file );
+	if ( type == QUADRATIC_KEY ) {
+		//Uses Quadratic interpolation
+		NifStream( key.forward_tangent, file );
+		NifStream( key.backward_tangent, file );
+	} else if ( type == TBC_KEY ) {
+		//Uses TBC interpolation
+		key.tension = ReadFloat( file );
+		key.bias = ReadFloat( file );
+		key.continuity = ReadFloat( file );
+	}
+}
+
+template <class T>
+void NifStream( vector<T> & val, ifstream& file ) {
+	vector<T>::iterator it;
+	for ( it = val.begin(); it != val.end(); ++it ) {
+		NifStream( *it, file );
+	}
+}
+
 
 /**
  * Write utility functions.
@@ -230,6 +266,49 @@ void WriteFVector3( fVector3& fvec, ofstream& out );
 void WriteFVector4( fVector4& fvec, ofstream& out );
 
 void WriteBlockName( const char* name, uint nameLength, ofstream& out );
+
+//Write
+void NifStream( uint & val, ofstream& out );
+void NifStream( ushort & val, ofstream& out );
+void NifStream( byte & val, ofstream& out );
+void NifStream( float & val, ofstream& out );
+void NifStream( string & val, ofstream& out );
+void NifStream( Vector3 & val, ofstream& out );
+void NifStream( Quaternion & val, ofstream& out );
+void NifStream( KeyType & val, ofstream& out );
+void NifStream( Color & val, ofstream& out );
+void NifStream( Triangle & val, ofstream& out );
+
+template <class T> 
+void NifStream( Key<T> & key, ofstream& file, KeyType type ) {
+	WriteFloat( key.time, file );
+
+	//If key type is not 1, 2, or 3, throw an exception
+	if ( type < 1 || type > 3 ) {
+		throw runtime_error("Invalid key type.");
+	}
+
+	//Read data based on the type of key
+	NifStream( key.data, file );
+	if ( type == QUADRATIC_KEY ) {
+		//Uses Quadratic interpolation
+		NifStream( key.forward_tangent, file );
+		NifStream( key.backward_tangent, file );
+	} else if ( type == TBC_KEY ) {
+		//Uses TBC interpolation
+		WriteFloat( key.tension, file);
+		WriteFloat( key.bias, file);
+		WriteFloat( key.continuity, file);
+	}
+}
+
+template <class T>
+void NifStream( vector<T> & val, ofstream& file ) {
+	vector<T>::iterator it;
+	for ( it = val.begin(); it != val.end(); ++it ) {
+		NifStream( *it, file );
+	}
+}
 
 class NIF;
 

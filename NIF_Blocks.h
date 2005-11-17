@@ -183,6 +183,13 @@ public:
 	~AParentNode() {}
 };
 
+class AParticleNode : public ANode {
+public:
+	AParticleNode();
+	void Init() {}
+	~AParticleNode() {}
+};
+
 class AShape : public ANode {
 public:
 	AShape();
@@ -195,6 +202,13 @@ public:
 	AProperty();
 	void Init() {}
 	~AProperty() {}
+};
+
+class AParticleProperty : public AControllable {
+public:
+	AParticleProperty();
+	void Init() {}
+	~AParticleProperty() {}
 };
 
 class AController : public ABlock {
@@ -660,7 +674,7 @@ private:
 /**
  * NiTriStripsData - Holds mesh data using strips of triangles.
  */
-class NiTriStripsData : public AShapeData {
+class NiTriStripsData : public AShapeData, public ITriStripsData {
 public:
 	NiTriStripsData() {}
 	~NiTriStripsData() {}
@@ -669,6 +683,19 @@ public:
 	string asString();
 
 	string GetBlockType() { return "NiTriStripsData"; }
+
+	void * QueryInterface( int id );
+
+	//--ITriStripsData--//
+	//Counts
+	short GetStripCount();
+	void SetStripCount(int n);
+	short GetTriangleCount();
+	//Getters
+	vector<short> GetStrip( int index );
+	vector<Triangle> GetTriangles();
+	//Setter
+	void SetStrip( int index, const vector<short> & in );
 
 private:
 	vector< vector<short> > strips;
@@ -679,17 +706,19 @@ private:
  */
 class NiCollisionData : public AData {
 public:
-	NiCollisionData() {
-		AddAttr( attr_int, "Unknown Int 1" );
-		AddAttr( attr_int, "Unknown Int 2" );
-		AddAttr( attr_byte, "Unknown Byte" );
-		AddAttr( attr_int, "Unknown Int 3" );
-		AddAttr( attr_int, "Unknown Int 4" );
-		AddAttr( attr_float3, "Radius" );
-	}
+	NiCollisionData() {}
 	~NiCollisionData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
 
 	string GetBlockType() { return "NiCollisionData"; }
+private:
+	int unknownInt1, collisionType, unknownInt2;
+	byte unknownByte;
+	fVector3 unknown3Floats;
+	float unknown15Floats[15];
+	float unknown8Floats[8]; 
 };
 
 
@@ -811,7 +840,7 @@ public:
  * NiAutoNormalParticles
  */
 
-class NiAutoNormalParticles : public ANode {
+class NiAutoNormalParticles : public AParticleNode {
 public:
 	NiAutoNormalParticles();
 	void Init() {}
@@ -823,7 +852,7 @@ public:
  * NiRotatingParticles
  */
 
-class NiRotatingParticles : public ANode {
+class NiRotatingParticles : public AParticleNode {
 public:
 	NiRotatingParticles();
 	void Init() {}
@@ -859,7 +888,7 @@ public:
  * NiParticleMeshes
  */
 
-class NiParticleMeshes : public ANode {
+class NiParticleMeshes : public AParticleNode {
 public:
 	NiParticleMeshes();
 	void Init() {}
@@ -871,7 +900,7 @@ public:
  * NiGravity
  */
 
-class NiGravity : public AControllable {
+class NiGravity : public AParticleProperty {
 public:
 	NiGravity();
 	void Init() {}
@@ -883,7 +912,7 @@ public:
  * NiParticleBomb
  */
 
-class NiParticleBomb : public AControllable {
+class NiParticleBomb : public AParticleProperty {
 public:
 	NiParticleBomb();
 	void Init() {}
@@ -895,7 +924,7 @@ public:
  * NiPlanarCollider
  */
 
-class NiPlanarCollider : public AControllable {
+class NiPlanarCollider : public AParticleProperty {
 public:
 	NiPlanarCollider();
 	void Init() {}
@@ -904,10 +933,10 @@ public:
 }; 
 
 /**
- * NiPlanarCollider
+ * NiSphericalCollider
  */
 
-class NiSphericalCollider : public AControllable {
+class NiSphericalCollider : public AParticleProperty {
 public:
 	NiSphericalCollider();
 	void Init() {}
@@ -919,7 +948,7 @@ public:
  * NiParticleGrowFade
  */
 
-class NiParticleGrowFade : public AControllable {
+class NiParticleGrowFade : public AParticleProperty {
 public:
 	NiParticleGrowFade();
 	void Init() {}
@@ -931,7 +960,7 @@ public:
  * NiParticleMeshModifier
  */
 
-class NiParticleMeshModifier : public AControllable {
+class NiParticleMeshModifier : public AParticleProperty {
 public:
 	NiParticleMeshModifier();
 	void Init() {}
@@ -943,7 +972,7 @@ public:
  * NiParticleColorModifier
  */
 
-class NiParticleColorModifier : public AControllable {
+class NiParticleColorModifier : public AParticleProperty {
 public:
 	NiParticleColorModifier();
 	void Init() {}
@@ -955,7 +984,7 @@ public:
  * NiGravity
  */
 
-class NiParticleRotation : public AControllable {
+class NiParticleRotation : public AParticleProperty {
 public:
 	NiParticleRotation();
 	void Init() {}
@@ -1011,6 +1040,9 @@ class NiKeyframeData : public AData, public IKeyframeData {
 
 		KeyType scaleType;
 		vector< Key<float> > scaleKeys;
+
+		KeyType xyzTypes[3];
+		vector< Key<float> > xyzKeys[3];
 };
 
 /**
@@ -1038,10 +1070,24 @@ private:
 
 class NiSkinPartition : public AData {
 public:
-	NiSkinPartition();
+	NiSkinPartition() {}
 	void Init() {}
 	~NiSkinPartition() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version );
+	string asString();
+
 	string GetBlockType() { return "NiSkinPartition"; }
+private:
+	struct SkinPartition {
+		vector<ushort> bones;
+		vector<ushort> vertexMap;
+		vector< vector<float> > vertexWeights;
+		vector< vector<ushort> > strips;
+		vector<Triangle> triangles;
+		vector< vector<byte> > boneIndices;
+	};
+	vector<SkinPartition> partitions;
 };
 
 
@@ -1102,6 +1148,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 	public:
 
 		NiSkinData() { 
+			AddAttr( attr_link, "Skin Partition" );
 			SetIdentity33(rotation);
 			translation[0] = 0.0f;
 			translation[1] = 0.0f;
@@ -1171,8 +1218,8 @@ public:
 	string GetBlockType() { return "NiColorData"; };
 
 private:
-	uint keyType;
-	vector< Key<fVector4> > keys;
+	KeyType keyType;
+	vector< Key<Color> > keys;
 };
 
 /**

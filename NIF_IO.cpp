@@ -356,3 +356,69 @@ ostream & operator<<(ostream & lh, Bin & rh) {
 	}
 	return lh;
 }
+
+//--Overloaded versions of Read/Write functions ReadData/WriteData
+
+void NifStream( uint & val, ifstream& in ) { val = ReadUInt( in ); };
+void NifStream( ushort & val, ifstream& in ) { val = ReadUShort( in ); };
+void NifStream( byte & val, ifstream& in ) { val = ReadByte( in ); };
+void NifStream( float & val, ifstream& in ) { val = ReadFloat( in ); };
+void NifStream( string & val, ifstream& in ) { val = ReadString( in ); };
+void NifStream( KeyType & val, ifstream& in ) { val = KeyType(ReadUInt( in )); };
+
+void NifStream( Vector3 & val, ifstream& in ) {
+	val.x = ReadFloat( in );
+	val.y = ReadFloat( in );
+	val.z = ReadFloat( in );
+};
+
+void NifStream( Quaternion & val, ifstream& in ) {
+	val.w = ReadFloat( in );
+	val.x = ReadFloat( in );
+	val.y = ReadFloat( in );
+	val.z = ReadFloat( in );
+};
+
+void NifStream( Color & val, ifstream& in ) {
+	val.r = ReadFloat( in );
+	val.g = ReadFloat( in );
+	val.b = ReadFloat( in );
+	val.a = ReadFloat( in );
+};
+
+void NifStream( Triangle & val, ifstream& in ) {
+	val.v1 = ReadUShort( in );
+	val.v2 = ReadUShort( in );
+	val.v3 = ReadUShort( in );
+};
+
+
+
+void NifStream( uint & val, ofstream& out ) { WriteUInt( val, out ); }
+void NifStream( ushort & val, ofstream& out ) { WriteUShort( val, out ); }
+void NifStream( byte & val, ofstream& out ) { WriteByte( val, out ); }
+void NifStream( float & val, ofstream& out ) { WriteFloat( val, out ); }
+void NifStream( string & val, ofstream& out ) { WriteString( val, out ); }
+void NifStream( KeyType & val, ofstream& out ) { WriteUInt( val, out ); }
+void NifStream( Vector3 & val, ofstream& out ) {
+	WriteFloat( val.x, out );
+	WriteFloat( val.y, out );
+	WriteFloat( val.z, out );
+};
+void NifStream( Quaternion & val, ofstream& out ) {
+	WriteFloat( val.w, out );
+	WriteFloat( val.x, out );
+	WriteFloat( val.y, out );
+	WriteFloat( val.z, out );
+};
+void NifStream( Color & val, ofstream& out ) {
+	WriteFloat( val.r, out );
+	WriteFloat( val.g, out );
+	WriteFloat( val.b, out );
+	WriteFloat( val.a, out );
+};
+void NifStream( Triangle & val, ofstream& out ) {
+	WriteUShort( val.v1, out );
+	WriteUShort( val.v2, out );
+	WriteUShort( val.v3, out );
+};

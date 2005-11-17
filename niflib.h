@@ -58,6 +58,7 @@ class ISkinData;
 class IKeyframeData;
 class ITextKeyExtraData;
 class IMorphData;
+class ITriStripsData;
 class INode;
 class blk_ref;
 class attr_ref;
@@ -78,6 +79,7 @@ const int ID_KEYFRAME_DATA = 3;
 const int ID_TEXT_KEY_EXTRA_DATA = 4;
 const int ID_MORPH_DATA = 5;
 const int ID_SHAPE_DATA = 6;
+const int ID_TRI_STRIPS_DATA = 7;
 
 //Attribute types
 const enum AttrTypes {
@@ -105,7 +107,7 @@ const int VER_20_0_0_4 = 0x14000004;
 #endif
 
 //Key Types
-enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3 };
+enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3, XYZ_ROTATION_KEY = 4 };
 
 //--Main Functions--//
 
@@ -139,6 +141,7 @@ INode * QueryNode( blk_ref & block );
 IKeyframeData * QueryKeyframeData( blk_ref & block );
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 IMorphData * QueryMorphData ( blk_ref & block );
+ITriStripsData * QueryTriStripsData ( blk_ref & block );
 
 //--Simlpe Structures--//
 
@@ -482,6 +485,21 @@ public:
 	virtual vector<Triangle> GetTriangles() = 0;
 	//Setters
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
+};
+
+class ITriStripsData {
+public:
+	ITriStripsData() {}
+	virtual ~ITriStripsData () {}
+	//Counts
+	virtual short GetTriangleCount() = 0;
+	virtual short GetStripCount() = 0;
+	virtual void SetStripCount(int n) = 0;
+	//Getter
+	virtual vector<short> GetStrip( int index ) = 0;
+	virtual vector<Triangle> GetTriangles() = 0;
+	//Setter
+	virtual void SetStrip( int index, const vector<short> & in ) = 0;
 };
 
 class ISkinData {
@@ -1016,10 +1034,16 @@ struct Texture {
 	int textureSet;
 	short PS2_L;
 	short PS2_K;
-	short unknownShort;
+	short unknownShort;  //exists up to version 4.1.0.12
+	//Unknown Block in version 10.1.0.0 and up
+	bool hasUnknownData;
+	float unknown5Floats[5];
+	int unknownInt;
+	float unknownFloat1, unknownFloat2;
+	//Bitmap block - only exists if this texture is in the bitmap slot
 	float bmLumaOffset;
 	float bmLumaScale;
-	Matrix22 bmMatrix;
+	Matrix22 bmMatrix;	
 };
 
 struct TextureSource {

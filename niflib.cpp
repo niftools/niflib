@@ -183,6 +183,11 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	vector<blk_ref> blocks( numBlocks );
 	string blockName;
 	for (uint i = 0; i < numBlocks; i++) {
+
+		//Check for EOF
+		if (in.eof() ) {
+			throw runtime_error("End of file reached prematurely.  This NIF may be corrupt or improperly supported.");
+		}
 	
 		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
 		if ( version >= 0x05000001 ) {
@@ -484,4 +489,8 @@ ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
 
 IMorphData * QueryMorphData ( blk_ref & block ) {
 	return (IMorphData*)block->QueryInterface( ID_MORPH_DATA );
+}
+
+ITriStripsData * QueryTriStripsData ( blk_ref & block ) {
+	return (ITriStripsData*)block->QueryInterface( ID_TRI_STRIPS_DATA );
 }

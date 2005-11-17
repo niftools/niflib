@@ -859,6 +859,19 @@ public:
 				data.unknownShort = ReadUShort( in );
 			}
 
+			//From version 10.1.0.0 and up, this unknown data block may exist
+			if ( version >= VER_10_1_0_0 ) {
+				data.hasUnknownData = ReadBool( in, version );
+				if ( data.hasUnknownData == true ) {
+					for (int i = 0; i < 5; ++i ) {
+						data.unknown5Floats[i] = ReadFloat( in );;
+					}
+					data.unknownInt = ReadUInt( in );
+					data.unknownFloat1 = ReadFloat( in );
+					data.unknownFloat2 = ReadFloat( in );
+				}
+			}
+
 			if ( _isBumpMap ) {
 				data.bmLumaScale = ReadFloat( in );
 				data.bmLumaOffset = ReadFloat( in );
@@ -880,10 +893,25 @@ public:
 			WriteUInt( data.textureSet, out );
 			WriteUShort( data.PS2_L, out );
 			WriteUShort( data.PS2_K, out );
+
 			//unknownShort exists up to version 4.1.0.12
 			if ( version <= VER_4_1_0_12 ) {
 				WriteUShort( data.unknownShort, out );
 			}
+
+			//From version 10.1.0.0 and up, this unknown data block may exist
+			if ( version >= VER_10_1_0_0 ) {
+				WriteBool( data.hasUnknownData, out, version );
+				if ( data.hasUnknownData == true ) {
+					for (int i = 0; i < 5; ++i ) {
+						WriteFloat( data.unknown5Floats[i], out );;
+					}
+					WriteUInt( data.unknownInt, out );
+					WriteFloat( data.unknownFloat1, out );
+					WriteFloat( data.unknownFloat2, out );
+				}
+			}
+
 			if ( _isBumpMap ) {
 				WriteFloat( data.bmLumaScale, out );
 				WriteFloat( data.bmLumaOffset, out );
@@ -950,7 +978,24 @@ public:
 				<< "   Texture Set:  " << data.textureSet << endl
 				<< "   PS2 L Setting:  " << data.PS2_L << endl
 				<< "   PS2 K Setting:  " << data.PS2_K << endl
-				<< "   Unknown Short:  " << data.unknownShort;
+				<< "   Unknown Short:  " << data.unknownShort
+				<< "   Unknown Data:   ";
+
+
+			//From version 10.1.0.0 and up, this unknown data block may exist
+			if ( data.hasUnknownData == true ) {
+				out << endl
+					<< "      Unknown 5 Floats:" << endl;
+				for (int i = 0; i < 5; ++i ) {
+					out << "         " << i + 1 << ":  " << data.unknown5Floats[i] << endl;
+				}
+				out << "      Unknown Int:  " << data.unknownInt << endl
+					<< "      Unknown Float 1:  " << data.unknownFloat1 << endl
+					<< "      Unknown Float 2:  " << data.unknownFloat2 << endl;
+			} else {
+				out << "None" << endl;
+			}
+
 			if ( _isBumpMap ) {
 				out << endl
 					<< "   BumpMap Info:" << endl
@@ -1408,6 +1453,54 @@ private:
 	short num_particles;
 	short num_valid;
 	vector<Particle> particles;
+};
+
+
+
+class LODRangeGroupAttr : public AAttr {
+public:
+	LODRangeGroupAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	~LODRangeGroupAttr() {}
+	string GetType() const { return "lodrangegroup"; }
+
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		int numRanges = ReadUInt( in );
+		ranges.resize( numRanges );
+		for ( uint i = 0; i < ranges.size(); ++i ) {
+			ranges[i].near = ReadFloat( in );
+			ranges[i].far = ReadFloat( in );		
+		}
+	}
+
+	void WriteAttr( ofstream& out, unsigned int version ) {
+		WriteUInt( uint(ranges.size()), out );
+
+		for ( uint i = 0; i < ranges.size(); ++i ) {
+			WriteFloat( ranges[i].near, out );
+			WriteFloat( ranges[i].far, out );		
+		}
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << uint(ranges.size()) << endl;
+
+		for ( uint i = 0; i < ranges.size(); ++i ) {
+			out << "   " << i + 1 << ")   Near:  " << ranges[i].near << "   Far:  " << ranges[i].far << endl;
+		}
+
+		return out.str();
+	}
+	
+private:
+	struct LODRange {
+		float near;
+		float far;
+	};
+	vector<LODRange> ranges;
 };
 
 
