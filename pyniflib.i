@@ -44,7 +44,9 @@ POSSIBILITY OF SUCH DAMAGE. */
     try {
       $action
     }
-    SWIG_CATCH_STDEXCEPT // catch std::exception 
+#if SWIG_VERSION >= 0x010322
+    SWIG_CATCH_STDEXCEPT // catch std::exception
+#endif
     catch (...) {
      SWIG_exception(SWIG_UnknownError, "Unknown exception");
     }

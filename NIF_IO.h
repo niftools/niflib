@@ -235,10 +235,13 @@ void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
 
 template <class T>
 void NifStream( vector<T> & val, ifstream& file ) {
-	vector<T>::iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file );
-	}
+  //vector<T>::iterator it;
+  //for ( it = val.begin(); it != val.end(); ++it ) {
+  //	NifStream( *it, file );
+  //}
+  for ( int i = 0; i < val.size(); i++) {
+    NifStream( val[i], file );
+  };
 }
 
 
@@ -304,10 +307,13 @@ void NifStream( Key<T> & key, ofstream& file, KeyType type ) {
 
 template <class T>
 void NifStream( vector<T> & val, ofstream& file ) {
-	vector<T>::iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file );
-	}
+  //vector<T>::iterator it;
+  //for ( it = val.begin(); it != val.end(); ++it ) {
+  //	NifStream( *it, file );
+  //}
+  for ( int i = 0; i < val.size(); i++) {
+    NifStream( val[i], file );
+  };
 }
 
 class NIF;

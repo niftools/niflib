@@ -82,7 +82,7 @@ const int ID_SHAPE_DATA = 6;
 const int ID_TRI_STRIPS_DATA = 7;
 
 //Attribute types
-const enum AttrTypes {
+enum AttrTypes {
 	attr_int, attr_short, attr_byte, attr_float, attr_float3, attr_string,
 	attr_link, attr_flags, attr_matrix33, attr_linkgroup, attr_bones,
 	attr_bbox, attr_condint, attr_vertmode, attr_lightmode, attr_texture,
