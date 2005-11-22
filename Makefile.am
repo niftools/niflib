@@ -25,7 +25,7 @@ nif_math.cpp \
 NIF_Blocks.cpp \
 NIF_IO.cpp
 
-libniflib_la_LDFLAGS = -version-info 0:0:0
+libniflib_la_LDFLAGS = -version-info 0:0:0 -shared -no-undefined
 
 BUILT_SOURCES = swig_wrap.cpp
 SWIG_SOURCES = pyniflib.i
@@ -33,7 +33,7 @@ pkgpython_PYTHON = niflib.py
 pkgpyexec_LTLIBRARIES = _niflib.la
 _niflib_la_SOURCES = swig_wrap.cpp $(SWIG_SOURCES)
 _niflib_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS)
-_niflib_la_LDFLAGS = -module
+_niflib_la_LDFLAGS = -module -shared -no-undefined
 _niflib_la_LIBADD = libniflib.la
 
 swig_wrap.cpp: $(SWIG_SOURCES)
