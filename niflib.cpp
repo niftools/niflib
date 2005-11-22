@@ -148,7 +148,6 @@ vector<blk_ref> ReadNifList( string file_name ) {
 		}
 
 		uint unknownInt2 = ReadUInt( in );
-		//uint unknownInt3 = ReadUInt( in );
 
 		////Output
 		//cout << endl << endl 
