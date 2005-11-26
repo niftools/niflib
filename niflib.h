@@ -208,7 +208,7 @@ struct Matrix22 {
 		float m11, float m12,
 		float m21, float m22
 	) {
-		rows[0][2] = m11; rows[0][2] = m12;
+		rows[0][0] = m11; rows[0][1] = m12;
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
 	//Python Operator Overloads
