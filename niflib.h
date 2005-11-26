@@ -259,7 +259,7 @@ struct Matrix33 {
 		float m21, float m22, float m23,
 		float m31, float m32, float m33
 	) {
-		rows[0][2] = m11; rows[0][2] = m12; rows[0][2] = m13;
+		rows[0][0] = m11; rows[0][1] = m12; rows[0][2] = m13;
 		rows[1][0] = m21; rows[1][1] = m22; rows[1][2] = m23;
 		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33;
 	}
