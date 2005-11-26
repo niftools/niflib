@@ -41,27 +41,22 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "std_list.i"
 
 %exception {
-    try {
-      $action
-    }
+	try {
+		$action
+	}
 #if SWIG_VERSION >= 0x010322
-    SWIG_CATCH_STDEXCEPT // catch std::exception
+	SWIG_CATCH_STDEXCEPT // catch std::exception
 #endif
-    catch (...) {
-     SWIG_exception(SWIG_UnknownError, "Unknown exception");
-    }
+	catch (...) {
+		SWIG_exception(SWIG_UnknownError, "Unknown exception");
+	}
 }
 
 %{
 	#include "niflib.h"
 %}
 
-template <class T> 
-struct Key {
-	float time;
-	T data, forward_tangent, backward_tangent;
-	float tension, bias, continuity;
-};
+template <class T> struct Key;
 
 %template(vector_float) std::vector<float>;
 %template(vector_short) std::vector<short>;
@@ -84,4 +79,16 @@ struct Key {
 %template(Key_string) Key<std::string>;
 %template(vector_Key_string) std::vector< Key<std::string> >;
 
+%ignore Float2::operator[](int n);
+%ignore Float2::operator[](int n) const;
+%ignore Float3::operator[](int n);
+%ignore Float3::operator[](int n) const;
+%ignore Float4::operator[](int n);
+%ignore Float4::operator[](int n) const;
+%ignore Matrix22::operator[](int n);
+%ignore Matrix22::operator[](int n) const;
+%ignore Matrix33::operator[](int n);
+%ignore Matrix33::operator[](int n) const;
+%ignore Matrix44::operator[](int n);
+%ignore Matrix44::operator[](int n) const;
 %include "niflib.h"

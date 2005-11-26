@@ -236,13 +236,19 @@ struct Float3 {
 	float __getitem__(int n) {
 		if (n > 2 || n < 0)
 			throw std::out_of_range("Index out of range for Float3");
-
-        return data[n];
-    }
+		return data[n];
+	}
 	void __setitem__(int n, float value) {
 		if (n > 2 || n < 0)
 			throw std::out_of_range("Index out of range for Float3");
 		data[n] = value;
+	}
+	Float3 __mul__(float value) {
+		Float3 result;
+		result.data[0] = data[0] * value;
+		result.data[1] = data[1] * value;
+		result.data[2] = data[2] * value;
+		return result;
 	}
 };
 
@@ -390,6 +396,11 @@ public:
 	virtual void SetName( string name ) = 0;
 	virtual string GetName() = 0;
 	
+	// Python Operator Overloads
+	string __str__() {
+		return asString();
+	};
+	
 protected:
 	friend class blk_ref;
 	virtual void AddRef() = 0;
@@ -434,6 +445,11 @@ public:
 	virtual void ClearLinks() = 0;
 	virtual void RemoveLinks( blk_ref block ) = 0;
 	virtual blk_ref FindLink( string block_type ) = 0;
+
+	// Python Operator Overloads
+	string __str__() {
+		return asString();
+	};
 };
 
 
@@ -787,7 +803,7 @@ public:
 	//	return lh;
 	//}
 
-	private:
+private:
 	IAttr * _attr;
 };
 
@@ -924,8 +940,8 @@ public:
 	}
 	//Python Operator Overloads
 	attr_ref __getitem__(string index) {
-        return _block->GetAttr(index);
-    }
+		return _block->GetAttr(index);
+	}
 	void __setitem__(string index, int value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
@@ -938,25 +954,25 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, Float3 & value) {
+	void __setitem__(string index, Float3 value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, string & value) {
+	void __setitem__(string index, string value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, Matrix33 & value) {
+	void __setitem__(string index, Matrix33 value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, blk_ref & value) {
+	void __setitem__(string index, blk_ref value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
