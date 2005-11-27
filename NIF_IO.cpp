@@ -300,10 +300,16 @@ void WriteString( string val, ofstream& out ) {
 void WriteBool( bool val, ofstream& out, unsigned int version ) {
 	if ( version < 0x04010001 ) {
 		//Bools are stored as integers before version 4.1.0.1
-		WriteUInt(int(val), out );
+		if (val)
+			WriteUInt( 0xFFFFFFFF, out ); // NifTexture workaround
+		else
+			WriteUInt( 0, out );
 	} else {
 		//And as bytes from 4.1.0.1 on
-		WriteByte(byte(val), out );
+		if (val)
+			WriteByte( 1, out );
+		else
+			WriteByte( 0, out );
 	}
 }
 

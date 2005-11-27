@@ -568,6 +568,7 @@ public:
 	void SetNormals( const vector<Vector3> & in );
 	void SetColors( const vector<Color> & in );
 	void SetUVSet( int index, const vector<UVCoord> & in );
+	void AppendVertex(  Vector3 v, bool hasn, Vector3 n, bool hasvc, Color vc, bool hasuv, UVCoord uv );
 protected:
 	vector<Vector3> vertices;
 	vector<Vector3> normals;
@@ -665,6 +666,7 @@ public:
 	vector<Triangle> GetTriangles() { return triangles; }
 	//Setters
 	void SetTriangles( const vector<Triangle> & in );
+	void AppendTriangle( Triangle t );
 
 private:
 	vector<Triangle> triangles;

@@ -92,4 +92,5 @@ template <class T> struct Key;
 %ignore Matrix33::operator[](int n) const;
 %ignore Matrix44::operator[](int n);
 %ignore Matrix44::operator[](int n) const;
+%ignore blk_ref::operator[](string index);
 %include "niflib.h"

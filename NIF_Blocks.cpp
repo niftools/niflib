@@ -823,6 +823,17 @@ void AShapeData::SetUVSet( int index, const vector<UVCoord> & in ) {
 	uv_sets[index] = in;
 }
 
+void AShapeData::AppendVertex( Vector3 v, bool hasn, Vector3 n, bool hasvc, Color vc, bool hasuv, UVCoord uv ) {
+	vertices.push_back(v);
+	if (hasn) normals.push_back(n);
+	if (hasvc) colors.push_back(vc);
+	if (hasuv) uv_sets[0].push_back(uv); // one UV set assumed; TODO: support for multiple UV sets
+}
+
+void NiTriShapeData::AppendTriangle( Triangle t ) {
+	triangles.push_back(t);
+}
+
 /***********************************************************
  * AParticlesData methods
  **********************************************************/

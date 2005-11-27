@@ -583,6 +583,10 @@ public:
 
 	bool HasLinks() { return true; }
 
+	int asInt() const {
+		return links.size();
+	}
+
 	list<blk_ref> asLinkList() const { 
 		list<blk_ref> out;
 
