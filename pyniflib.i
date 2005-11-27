@@ -40,17 +40,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "exception.i"
 %include "std_list.i"
 
+// we need a version of SWIG that has SWIG_CATCH_STDEXCEPT support
+#if SWIG_VERSION >= 0x010322
 %exception {
 	try {
 		$action
 	}
-#if SWIG_VERSION >= 0x010322
 	SWIG_CATCH_STDEXCEPT // catch std::exception
-#endif
 	catch (...) {
 		SWIG_exception(SWIG_UnknownError, "Unknown exception");
 	}
 }
+#endif
 
 %{
 	#include "niflib.h"
