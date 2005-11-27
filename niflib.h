@@ -143,12 +143,12 @@ ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 IMorphData * QueryMorphData ( blk_ref & block );
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
 
-//--Simlpe Structures--//
+//--Simple Structures--//
 
-struct UVCoord {
+struct TexCoord {
 	float u, v;
-	UVCoord() : u(0.0), v(0.0) {}
-	UVCoord(float _u, float _v) : u(_u), v(_v) {}
+	TexCoord() : u(0.0f), v(0.0f) {}
+	TexCoord(float _u, float _v) : u(_u), v(_v) {}
 	void Set(float u, float v) {
 		this->u = u;
 		this->v = v;
@@ -166,26 +166,12 @@ struct Triangle {
 
 struct Vector3 {
 	float x, y, z;
-	Vector3() : x(0.0), y(0.0), z(0.0) {}
+	Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
 	Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 	void Set(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
-	}
-	Vector3 __mul__(float a) {
-		Vector3 result(*this);
-		result.x *= a;
-		result.y *= a;
-		result.z *= a;
-		return result;
-	}
-	Vector3 __div__(float a) {
-		Vector3 result(*this);
-		result.x /= a;
-		result.y /= a;
-		result.z /= a;
-		return result;
 	}
 };
 
@@ -246,9 +232,9 @@ struct Float3 {
 		return data[n];
 	}
 	Float3() {
-		data[0] = 0.0;
-		data[1] = 0.0;
-		data[2] = 0.0;
+		data[0] = 0.0f;
+		data[1] = 0.0f;
+		data[2] = 0.0f;
 	}
 	Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
@@ -276,13 +262,6 @@ struct Float3 {
 			throw std::out_of_range("Index out of range for Float3");
 		data[n] = value;
 	}
-	Float3 __mul__(float value) {
-		Float3 result(*this);
-		result.data[0] *= value;
-		result.data[1] *= value;
-		result.data[2] *= value;
-		return result;
-	}
 };
 
 struct Matrix33 {
@@ -294,9 +273,9 @@ struct Matrix33 {
 		return rows[n];
 	}
 	Matrix33() {
-		rows[0][0] = 1.0; rows[0][1] = 0.0; rows[0][2] = 0.0;
-		rows[1][0] = 0.0; rows[1][1] = 1.0; rows[1][2] = 0.0;
-		rows[2][0] = 0.0; rows[2][1] = 0.0; rows[2][2] = 1.0;
+		rows[0][0] = 1.0f; rows[0][1] = 0.0f; rows[0][2] = 0.0f;
+		rows[1][0] = 0.0f; rows[1][1] = 1.0f; rows[1][2] = 0.0f;
+		rows[2][0] = 0.0f; rows[2][1] = 0.0f; rows[2][2] = 1.0f;
 	}
 	Matrix33(
 		float m11, float m12, float m13,
@@ -387,30 +366,14 @@ struct Matrix44 {
 
 struct Color {
 	float r, g, b, a;
-	Color() : r(1.0), g(1.0), b(1.0), a(1.0) {}
-	Color(float _r, float _g, float _b, float _a = 1.0) : r(_r), g(_g), b(_b), a(_a) {}
-	void Set(float r, float g, float b, float a = 1.0) {
+	Color() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
+	Color(float _r, float _g, float _b, float _a = 1.0f) : r(_r), g(_g), b(_b), a(_a) {}
+	void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = a;
 	}
-	Color __mul__(float q) {
-		Color result(*this);
-		result.r *= q;
-		result.g *= q;
-		result.b *= q;
-		result.a *= q;
-		return result;
-	};
-	Color __div__(float q) {
-		Color result(*this);
-		result.r /= q;
-		result.g /= q;
-		result.b /= q;
-		result.a /= q;
-		return result;
-	};
 };
 
 struct Quaternion {
@@ -544,13 +507,12 @@ public:
 	virtual vector<Vector3> GetVertices() = 0;
 	virtual vector<Vector3> GetNormals() = 0;
 	virtual vector<Color> GetColors() = 0;
-	virtual vector<UVCoord> GetUVSet( int index ) = 0;
+	virtual vector<TexCoord> GetUVSet( int index ) = 0;
 	//Setters
 	virtual void SetVertices( const vector<Vector3> & in ) = 0;
 	virtual void SetNormals( const vector<Vector3> & in ) = 0;
 	virtual void SetColors( const vector<Color> & in ) = 0;
-	virtual void SetUVSet( int index, const vector<UVCoord> & in ) = 0;
-	virtual void AppendVertex( Vector3 v, bool hasn, Vector3 n, bool hasvc, Color vc, bool hasuv, UVCoord uv ) = 0;
+	virtual void SetUVSet( int index, const vector<TexCoord> & in ) = 0;
 };
 
 class ITriShapeData {
@@ -567,7 +529,6 @@ public:
 	virtual vector<Triangle> GetTriangles() = 0;
 	//Setters
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
-	virtual void AppendTriangle( Triangle t ) = 0;
 };
 
 class ITriStripsData {
@@ -656,14 +617,14 @@ public:
 //
 //	void CombineTriShapes( list<blk_ref> & tri_shapes );
 ////	void SetVertices( vector<Vector3> & vertices );
-////	void SetUVs( vector<UVCoord> & uvs );
+////	void SetUVs( vector<TexCoord> & uvs );
 ////	void SetColors( vector<Color> & colors );
 ////	void SetNormals( vector<Vector3> & normals );
 ////	void SetBones( vector<blk_ref> & bones );
 ////	void SetFaces( list< vector< ComplexVertex > > & faces );
 ////
 ////	vector<Vector3> GetVertices();
-////	vector<UVCoord> GetUVs();
+////	vector<TexCoord> GetUVs();
 ////	vector<Color> GetColors();
 ////	vector<Vector3> GetNormals();
 ////	vector<blk_ref> GetBones();
@@ -675,7 +636,7 @@ public:
 //	vector<Vector3> _normals;
 //	list<ComplexFace> _faces;
 //	map<string, blk_ref> _materials;
-//	map<string, vector<UVCoord> > _uvs;
+//	map<string, vector<TexCoord> > _uvs;
 //	map<blk_ref, map<int, float> > _bones;
 //};
 //
@@ -718,7 +679,7 @@ public:
 //		ts_faces[i] = data->GetTriangles();
 //
 //		//UV Coords
-//		vector< vector<UVCoords> > uvs(data->GetUVSetCount());
+//		vector< vector<TexCoords> > uvs(data->GetUVSetCount());
 //		for (int i = 0; i < data->GetUVSetCount(); ++i) {
 //			uvs[i] = data->GetUVSet(i);
 //		}
@@ -1111,13 +1072,13 @@ struct ConditionalInt {
 };
 
 struct Texture {
-	Texture() : isUsed(0), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
+	Texture() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
 	bool isUsed;
 	TexClampMode clampMode;
 	TexFilterMode filterMode;
 	int textureSet;
-	short PS2_L;
-	short PS2_K;
+	unsigned short PS2_L;
+	unsigned short PS2_K;
 	short unknownShort;  //exists up to version 4.1.0.12
 	//Unknown Block in version 10.1.0.0 and up
 	bool hasUnknownData;

@@ -786,10 +786,26 @@ void * AShapeData::QueryInterface( int id ) {
 }
 
 void AShapeData::SetVertexCount(int n) {
+	if ( n == 0 ) {
+		vertices.clear();
+		normals.clear();
+		colors.clear();
+		for (uint i = 0; i < uv_sets.size(); ++i) {
+			uv_sets[i].clear();
+		}
+		return;
+	}
+
+	//n != 0
 	vertices.resize(n);
-	normals.resize(n);
-	colors.resize(n);
-	for (uint i = 0; i < uv_sets.size(); ++i) {
+
+	if ( normals.size() != 0 ) { 
+		normals.resize(n);
+	}
+	if ( colors.size() != 0 ) {
+		colors.resize(n);
+	}
+	for (uint i = 0; i < uv_sets.size(); ++i) {	
 		uv_sets[i].resize(n);
 	}
 }
@@ -800,38 +816,27 @@ void AShapeData::SetUVSetCount(int n) {
 
 //--Setters--//
 void AShapeData::SetVertices( const vector<Vector3> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	if (in.size() != vertices.size() && in.size() != 0 )
+		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
 	vertices = in;
 }
 
 void AShapeData::SetNormals( const vector<Vector3> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Input array size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	if (in.size() != vertices.size() && in.size() != 0 )
+		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
 	normals = in;
 }
 
 void AShapeData::SetColors( const vector<Color> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	if (in.size() != vertices.size() && in.size() != 0 )
+		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
 	colors = in;
 }
 
-void AShapeData::SetUVSet( int index, const vector<UVCoord> & in ) {
+void AShapeData::SetUVSet( int index, const vector<TexCoord> & in ) {
 	if (in.size() != vertices.size())
 		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
 	uv_sets[index] = in;
-}
-
-void AShapeData::AppendVertex( Vector3 v, bool hasn, Vector3 n, bool hasvc, Color vc, bool hasuv, UVCoord uv ) {
-	vertices.push_back(v);
-	if (hasn) normals.push_back(n);
-	if (hasvc) colors.push_back(vc);
-	if (hasuv) uv_sets[0].push_back(uv); // one UV set assumed; TODO: support for multiple UV sets
-}
-
-void NiTriShapeData::AppendTriangle( Triangle t ) {
-	triangles.push_back(t);
 }
 
 /***********************************************************
