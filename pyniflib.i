@@ -66,7 +66,7 @@ template <class T> struct Key;
 %template(list_blk_ref) std::list<blk_ref>;
 %template(vector_Vector3) std::vector<Vector3>;
 %template(vector_Color) std::vector<Color>;
-%template(vector_UVCoord) std::vector<UVCoord>;
+%template(vector_TexCoord) std::vector<TexCoord>;
 %template(vector_Triangle) std::vector<Triangle>;
 %template(vector_SkinWeight) std::vector<SkinWeight>;
 %template(pair_int_float) std::pair<int, float>;
@@ -93,4 +93,33 @@ template <class T> struct Key;
 %ignore Matrix44::operator[](int n);
 %ignore Matrix44::operator[](int n) const;
 %ignore blk_ref::operator[](string index);
+
+%ignore attr_ref::operator=(int n);
+%ignore attr_ref::operator=(float n);
+%ignore attr_ref::operator=(Float3 & n);
+%ignore attr_ref::operator=(string & n);
+%ignore attr_ref::operator=(Matrix33 & n);
+%ignore attr_ref::operator=(blk_ref & n);
+%ignore attr_ref::operator=(TextureSource & n);
+%ignore attr_ref::operator=(BoundingBox & n);
+%ignore attr_ref::operator=(ConditionalInt & n);
+%ignore attr_ref::operator=(Texture & n);
+
+%ignore blk_ref::operator=(const blk_ref & rh );
+
+%ignore attr_ref::operator int();
+%ignore attr_ref::operator float();
+%ignore attr_ref::operator Float3();
+%ignore attr_ref::operator std::string();
+
+%ignore attr_ref::operator Matrix33();
+%ignore attr_ref::operator blk_ref();
+%ignore attr_ref::operator TextureSource();
+%ignore attr_ref::operator BoundingBox();
+%ignore attr_ref::operator ConditionalInt();
+%ignore attr_ref::operator Texture();
+%ignore attr_ref::operator std::list<blk_ref>();
+
+%ignore blk_ref::operator<<(ostream & lh, const blk_ref & rh);
+
 %include "niflib.h"
