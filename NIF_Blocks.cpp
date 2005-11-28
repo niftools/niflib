@@ -776,6 +776,9 @@ void * AShapeData::QueryInterface( int id ) {
 }
 
 void AShapeData::SetVertexCount(int n) {
+	if ( n > 65535 || n < 0 )
+		throw runtime_error("Invalid Vertex Count: must be between 0 and 65535.");
+
 	if ( n == 0 ) {
 		vertices.clear();
 		normals.clear();
@@ -785,7 +788,7 @@ void AShapeData::SetVertexCount(int n) {
 		}
 		return;
 	}
-
+	
 	//n != 0
 	vertices.resize(n);
 
@@ -1128,14 +1131,20 @@ void * NiTriShapeData::QueryInterface( int id ) {
 }
 
 void NiTriShapeData::SetTriangleCount(int n) {
-	triangles.resize(n);
+	if ( n > 65535 || n < 0 )
+		throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
+
+	if ( n == 0 )
+		triangles.clear();
+	else
+		triangles.resize(n);
 }
 
 //--Setters--//
 
 void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
-	if (in.size() != vertices.size())
-		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
+	if (in.size() != triangles.size())
+		throw runtime_error("Vector size must equal Triangle Count.  Call SetTriangleCount() to resize.");
 	triangles = in;
 }
 
