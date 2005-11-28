@@ -49,7 +49,7 @@ AController::AController() {
 	AddAttr( attr_float, "Phase", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Start Time", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Stop Time", 0, 0xFFFFFFFF );
-	AddAttr( attr_nodeancestor, "Target Node", 0, 0xFFFFFFFF );
+	AddAttr( attr_controllertarget, "Target Node", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -64,9 +64,9 @@ ALight::ALight() {
 	AddAttr( attr_int, "Unknown Int 2", 0, 67108866 );
 	AddAttr( attr_int, "Unknown3", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Ambient Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Diffuse Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Specular Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Specular Color", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -79,10 +79,10 @@ ANode::ANode() {
 	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
 	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Translation", 0, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "Translation", 0, 0xFFFFFFFF );
 	AddAttr( attr_matrix33, "Rotation", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Scale", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Velocity", 0, 67240448 );
+	AddAttr( attr_vector3, "Velocity", 0, 67240448 );
 	AddAttr( attr_linkgroup, "Properties", 0, 0xFFFFFFFF );
 	AddAttr( attr_bbox, "Bounding Box", 0, 67240448 );
 	AddAttr( attr_link, "Collision Data", 167772416, 0xFFFFFFFF );
@@ -131,7 +131,7 @@ AParticleSystemController::AParticleSystemController() {
 	AddAttr( attr_float, "Start Size", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Life Time", 0, 0xFFFFFFFF );
 	AddAttr( attr_short, "Unknown Short 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Start Random", 0, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "Start Random", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Emitter", 0, 0xFFFFFFFF );
 	AddAttr( attr_short, "Unknown Short 2?", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 13?", 0, 0xFFFFFFFF );
@@ -288,7 +288,7 @@ NiKeyframeController::NiKeyframeController() {
 
 NiLODNode::NiLODNode() {
 	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "LOD Center", 0, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "LOD Center", 0, 0xFFFFFFFF );
 	AddAttr( attr_lodrangegroup, "LOD Levels", 0, 0xFFFFFFFF );
 	Init();
 }
@@ -307,10 +307,10 @@ NiMaterialColorController::NiMaterialColorController() {
 
 NiMaterialProperty::NiMaterialProperty() {
 	AddAttr( attr_flags, "Flags", 0, 167772416 );
-	AddAttr( attr_float3, "Ambient Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Diffuse Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Specular Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float3, "Emissive Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Specular Color", 0, 0xFFFFFFFF );
+	AddAttr( attr_color3, "Emissive Color", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Glossiness", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Alpha", 0, 0xFFFFFFFF );
 	Init();

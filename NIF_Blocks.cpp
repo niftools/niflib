@@ -64,7 +64,7 @@ ABlock::~ABlock() {
 	}
 }
 
-void ABlock::AddAttr( AttrTypes type, string name, unsigned int first_ver, unsigned int last_ver ) {
+void ABlock::AddAttr( AttrType type, string name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
 	if ( type == attr_int ) {
 		attr = new IntAttr( name, this, first_ver, last_ver );
@@ -97,9 +97,9 @@ void ABlock::AddAttr( AttrTypes type, string name, unsigned int first_ver, unsig
 	} else if ( type == attr_lightmode ) {
 		attr = new LightModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_texture ) {
-		attr = new TextureAttr( name, this, first_ver, last_ver, false );
+		attr = new TextureAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_bumpmap ) {
-		attr = new TextureAttr( name, this, first_ver, last_ver, true );
+		attr = new BumpMapAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_applymode ) {
 		attr = new ApplyModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_texsource ) {
@@ -110,14 +110,18 @@ void ABlock::AddAttr( AttrTypes type, string name, unsigned int first_ver, unsig
 		attr = new MipMapFormatAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_alphaformat ) {
 		attr = new AlphaFormatAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_nodeancestor ) {
-		attr = new NodeAncestorAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_controllertarget ) {
+		attr = new ControllerTargetAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_skeletonroot ) {
 		attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_particlegroup ) {
 		attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_lodrangegroup ) {
 		attr = new LODRangeGroupAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_vector3 ) {
+		attr = new Vector3Attr( name, this, first_ver, last_ver );
+	} else if ( type == attr_color3 ) {
+		attr = new Color3Attr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -1628,12 +1632,12 @@ void NiSkinData::StraightenSkeleton() {
 
 		//Get current offset Matrix33 for this bone
 
-		Matrix44 parent_offset = {
+		Matrix44 parent_offset(
 			bone.rotation[0][0], bone.rotation[0][1], bone.rotation[0][2], 0.0f,
 			bone.rotation[1][0], bone.rotation[1][1], bone.rotation[1][2], 0.0f,
 			bone.rotation[2][0], bone.rotation[2][1], bone.rotation[2][2], 0.0f,
 			bone.translation[0], bone.translation[1], bone.translation[2], 1.0f
-		}; 
+		); 
 		//Loop through all bones again, checking for any that have this bone as a parent
 		map<IBlock*, Bone>::iterator it2;
 		for ( it2 = bone_map.begin(); it2 != bone_map.end(); ++it2 ) {
@@ -1643,12 +1647,12 @@ void NiSkinData::StraightenSkeleton() {
 				Bone & bone2 = it2->second;
 
 				//Get child offset Matrix33
-				Matrix44 child_offset = {
+				Matrix44 child_offset(
 					bone2.rotation[0][0], bone2.rotation[0][1], bone2.rotation[0][2], 0.0f,
 					bone2.rotation[1][0], bone2.rotation[1][1], bone2.rotation[1][2], 0.0f,
 					bone2.rotation[2][0], bone2.rotation[2][1], bone2.rotation[2][2], 0.0f,
 					bone2.translation[0], bone2.translation[1], bone2.translation[2], 1.0f
-				};
+				);
 
 				//Do calculation to get correct bone postion in relation to parent
 				Matrix44 inverse_co = InverseMatrix44(child_offset);
@@ -1711,12 +1715,12 @@ void NiSkinData::RepositionTriShape() {
 		//	return;
 		//}
 
-		Matrix44 offset_mat = {
+		Matrix44 offset_mat(
 			bone.rotation[0][0], bone.rotation[0][1], bone.rotation[0][2], 0.0f,
 			bone.rotation[1][0], bone.rotation[1][1], bone.rotation[1][2], 0.0f,
 			bone.rotation[2][0], bone.rotation[2][1], bone.rotation[2][2], 0.0f,
 			bone.translation[0], bone.translation[1], bone.translation[2], 1.0f
-		};
+		);
 			
 		//Get built up rotations to the root of the skeleton from this bone
 		INode * bone_node = (INode*)bone_blk->QueryInterface(ID_NODE);

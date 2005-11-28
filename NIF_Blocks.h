@@ -79,10 +79,11 @@ class ABlock : public IBlock, public IBlockInternal {
 public:
 	ABlock();
 	~ABlock();
-	void AddAttr( AttrTypes type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
+	void AddAttr( AttrType type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
 	attr_ref GetAttr(string attr_name);
 	vector<attr_ref> GetAttrs();
 	int GetBlockNum() { return _block_num; }
+	bool IsControllable() { return false; }
 	string asString();
 
 	//Links
@@ -130,6 +131,7 @@ class AControllable : public ABlock {
 public:
 	AControllable();
 	void Init() {}
+	bool IsControllable() { return true; }
 	~AControllable() {}
 };
 

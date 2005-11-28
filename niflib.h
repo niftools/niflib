@@ -82,13 +82,14 @@ const int ID_SHAPE_DATA = 6;
 const int ID_TRI_STRIPS_DATA = 7;
 
 //Attribute types
-enum AttrTypes {
+enum AttrType {
 	attr_int, attr_short, attr_byte, attr_float, attr_float3, attr_string,
 	attr_link, attr_flags, attr_matrix33, attr_linkgroup, attr_bones,
 	attr_bbox, attr_condint, attr_vertmode, attr_lightmode, attr_texture,
 	attr_bumpmap, attr_applymode, attr_texsource, attr_pixellayout,
-	attr_mipmapformat, attr_alphaformat, attr_nodeancestor,
-	attr_skeletonroot, attr_particlegroup, attr_lodrangegroup
+	attr_mipmapformat, attr_alphaformat, attr_controllertarget,
+	attr_skeletonroot, attr_particlegroup, attr_lodrangegroup, attr_vector3,
+	attr_color3
 };
 
 //NIF Versions
@@ -147,8 +148,11 @@ ITriStripsData * QueryTriStripsData ( blk_ref & block );
 
 struct TexCoord {
 	float u, v;
-	TexCoord() : u(0.0f), v(0.0f) {}
-	TexCoord(float _u, float _v) : u(_u), v(_v) {}
+	TexCoord() {}
+	TexCoord(float u, float v) {
+		this->u = u;
+		this->v = v;
+	}
 	void Set(float u, float v) {
 		this->u = u;
 		this->v = v;
@@ -157,6 +161,12 @@ struct TexCoord {
 
 struct Triangle {
 	short v1, v2, v3;
+	Triangle() {}
+	Triangle(short v1, short v2, short v3) {
+		this->v1 = v1;
+		this->v2 = v2;
+		this->v3 = v3;
+	}
 	void Set(short v1, short v2, short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
@@ -166,8 +176,12 @@ struct Triangle {
 
 struct Vector3 {
 	float x, y, z;
-	Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
-	Vector3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+	Vector3() {}
+	Vector3(float x, float y, float z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 	void Set(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
@@ -182,6 +196,11 @@ struct Float2 {
 	}
 	float operator[](int n) const {
 		return data[n];
+	}
+	Float2() {}
+	Float2( float f1, float f2 ) {
+		data[0] = f1;
+		data[1] = f2;
 	}
 	void Set( float f1, float f2 ) {
 		data[0] = f1;
@@ -208,6 +227,14 @@ struct Matrix22 {
 	const Float2 & operator[](int n) const {
 		return rows[n];
 	}
+	Matrix22() {}
+	Matrix22(
+		float m11, float m12,
+		float m21, float m22
+	) {
+		rows[0][0] = m11; rows[0][1] = m12;
+		rows[1][0] = m21; rows[1][1] = m22;
+	}
 	void Set(
 		float m11, float m12,
 		float m21, float m22
@@ -231,20 +258,11 @@ struct Float3 {
 	float operator[](int n) const {
 		return data[n];
 	}
-	Float3() {
-		data[0] = 0.0f;
-		data[1] = 0.0f;
-		data[2] = 0.0f;
-	}
+	Float3() {}
 	Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[2] = f3;
-	}
-	Float3( Float3 const & f3 ) {
-		data[0] = f3.data[0];
-		data[1] = f3.data[1];
-		data[2] = f3.data[2];
 	}
 	void Set( float f1, float f2, float f3 ) {
 		data[0] = f1;
@@ -272,11 +290,7 @@ struct Matrix33 {
 	const Float3 & operator[](int n) const {
 		return rows[n];
 	}
-	Matrix33() {
-		rows[0][0] = 1.0f; rows[0][1] = 0.0f; rows[0][2] = 0.0f;
-		rows[1][0] = 0.0f; rows[1][1] = 1.0f; rows[1][2] = 0.0f;
-		rows[2][0] = 0.0f; rows[2][1] = 0.0f; rows[2][2] = 1.0f;
-	}
+	Matrix33() {}
 	Matrix33(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
@@ -314,6 +328,13 @@ struct Float4 {
 	float & operator[](int n) {
 		return data[n];
 	}
+	Float4() {}
+	Float4( float f1, float f2, float f3, float f4 ) {
+		data[0] = f1;
+		data[1] = f2;
+		data[3] = f3;
+		data[4] = f4;
+	}
 	void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -337,6 +358,18 @@ struct Matrix44 {
 	Float4 rows[4];
 	Float4 & operator[](int n) {
 		return rows[n];
+	}
+	Matrix44() {}
+	Matrix44(
+		float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44
+	) {
+		rows[0][0] = m11; rows[0][1] = m12; rows[0][2] = m13; rows[0][3] = m14;
+		rows[1][0] = m21; rows[1][1] = m22; rows[1][2] = m23; rows[1][3] = m24;
+		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33; rows[2][3] = m34;
+		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
 	void Set(
 		float m11, float m12, float m13, float m14,
@@ -366,8 +399,13 @@ struct Matrix44 {
 
 struct Color {
 	float r, g, b, a;
-	Color() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
-	Color(float _r, float _g, float _b, float _a = 1.0f) : r(_r), g(_g), b(_b), a(_a) {}
+	Color() {}
+	Color(float r, float g, float b, float a = 1.0f) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+		this->a = a;
+	}
 	void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
@@ -378,6 +416,13 @@ struct Color {
 
 struct Quaternion {
 	float w, x, y, z;
+	Quaternion() {}
+	Quaternion(float w, float x, float y, float z) {
+		this->w = w;
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 	void Set(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
@@ -409,6 +454,7 @@ public:
 	virtual blk_ref GetParent() = 0;
 	virtual string asString() = 0;
 	virtual string GetBlockType() = 0;
+	virtual bool IsControllable() = 0;
 
 	//Attribute Functions
 	virtual attr_ref GetAttr(string attr_name) = 0;
@@ -440,7 +486,7 @@ class IAttr {
 public:
 	IAttr() {}
 	virtual ~IAttr() {}
-	virtual string GetType() const = 0;
+	virtual AttrType GetType() const = 0;
 	virtual string GetName() const = 0;
 	virtual void Read( ifstream& in, unsigned int version ) = 0;
 	virtual void Write( ofstream& out, unsigned int version ) = 0;
