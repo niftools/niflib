@@ -98,6 +98,7 @@ template <class T> struct Key;
 %ignore attr_ref::operator=(float n);
 %ignore attr_ref::operator=(Float3 & n);
 %ignore attr_ref::operator=(string & n);
+%ignore attr_ref::operator=(const char * n);
 %ignore attr_ref::operator=(Matrix33 & n);
 %ignore attr_ref::operator=(blk_ref & n);
 %ignore attr_ref::operator=(TextureSource & n);

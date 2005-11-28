@@ -39,6 +39,10 @@ extern map<string, blk_factory_func> global_block_map;
 //--Block Class Constructors--//
 
 AControllable::AControllable() {
+	AddAttr( attr_string, "Name", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Extra Data", 0, 67240448 );
+	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
+	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -58,11 +62,16 @@ AController::AController() {
 //	AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
 //	Init();
 //}
+//
+//AInterpolator::AInterpolator() {
+//	Init();
+//}
 
 ALight::ALight() {
 	AddAttr( attr_int, "Unknown Int 1", 0, 67108866 );
 	AddAttr( attr_int, "Unknown Int 2", 0, 67108866 );
 	AddAttr( attr_int, "Unknown3", 167837696, 0xFFFFFFFF );
+	AddAttr( attr_byte, "Unknown4", 167903232, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
@@ -70,14 +79,7 @@ ALight::ALight() {
 	Init();
 }
 
-ANamed::ANamed() {
-	Init();
-}
-
 ANode::ANode() {
-	AddAttr( attr_link, "Extra Data", 0, 67240448 );
-	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
 	AddAttr( attr_vector3, "Translation", 0, 0xFFFFFFFF );
 	AddAttr( attr_matrix33, "Rotation", 0, 0xFFFFFFFF );
@@ -89,10 +91,15 @@ ANode::ANode() {
 	Init();
 }
 
-
 AParentNode::AParentNode() {
 	AddAttr( attr_linkgroup, "Children", 0, 0xFFFFFFFF );
 	AddAttr( attr_linkgroup, "Effects", 0, 0xFFFFFFFF );
+	Init();
+}
+
+AParticleModifier::AParticleModifier() {
+	AddAttr( attr_link, "Extra Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Previous Modifier", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -103,19 +110,13 @@ AParticleNode::AParticleNode() {
 	Init();
 }
 
-AParticleProperty::AParticleProperty() {
-	AddAttr( attr_link, "Extra Data", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
-	Init();
-}
-
 AParticleSystemController::AParticleSystemController() {
 	AddAttr( attr_float, "Speed", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Speed Random", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Emit Angle", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Emit Angle Random", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "pi", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
@@ -123,13 +124,13 @@ AParticleSystemController::AParticleSystemController() {
 	AddAttr( attr_float, "Unknown Float 9", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 10", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 11", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 12", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Size", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Emit Start Time", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Emit Stop Time", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Emit Rate", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Start Size", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Life Time", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Lifetime", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Lifetime Random", 0, 0xFFFFFFFF );
 	AddAttr( attr_short, "Unknown Short 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_vector3, "Start Random", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Emitter", 0, 0xFFFFFFFF );
@@ -147,11 +148,16 @@ AParticleSystemController::AParticleSystemController() {
 }
 
 AProperty::AProperty() {
-	AddAttr( attr_link, "Extra Data", 0, 67240448 );
-	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	Init();
 }
+
+//APSysModifier::APSysModifier() {
+//	AddAttr( attr_string, "Name", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Modifier ID", 0, 0xFFFFFFFF );
+//	AddAttr( attr_controllertarget, "Target Node", 0, 0xFFFFFFFF );
+//	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
+//	Init();
+//}
 
 AShape::AShape() {
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
@@ -212,6 +218,12 @@ NiBillboardNode::NiBillboardNode() {
 //	Init();
 //}
 
+//NiBoolInterpolator::NiBoolInterpolator() {
+//	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
 NiBSAnimationNode::NiBSAnimationNode() {
 	Init();
 }
@@ -261,6 +273,12 @@ NiFlipController::NiFlipController() {
 	Init();
 }
 
+//NiFloatInterpolator::NiFloatInterpolator() {
+//	AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
 NiGeomMorpherController::NiGeomMorpherController() {
 	AddAttr( attr_short, "Unknown", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
@@ -286,6 +304,12 @@ NiKeyframeController::NiKeyframeController() {
 	Init();
 }
 
+//NiLightColorController::NiLightColorController() {
+//	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
+//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
 NiLODNode::NiLODNode() {
 	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
 	AddAttr( attr_vector3, "LOD Center", 0, 0xFFFFFFFF );
@@ -299,9 +323,19 @@ NiLookAtController::NiLookAtController() {
 	Init();
 }
 
+//NiLookAtInterpolator::NiLookAtInterpolator() {
+//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Num Floats", 0, 0xFFFFFFFF );
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+//	AddAttr( attr_byte, "Unknown Bytes", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
 NiMaterialColorController::NiMaterialColorController() {
-	AddAttr( attr_short, "Unknown", 167837696, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown", 167837696, 167837696 );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown Short", 167903232, 0xFFFFFFFF );
 	Init();
 }
 
@@ -315,6 +349,18 @@ NiMaterialProperty::NiMaterialProperty() {
 	AddAttr( attr_float, "Alpha", 0, 0xFFFFFFFF );
 	Init();
 }
+
+//NiMeshParticleSystem::NiMeshParticleSystem() {
+//	AddAttr( attr_byte, "Unknown4", 0, 0xFFFFFFFF );
+//	AddAttr( attr_linkgroup, "Modifiers", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
+//NiMultiTargetTransformController::NiMultiTargetTransformController() {
+//	AddAttr( attr_short, "Num Targets", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Targets", 0, 0xFFFFFFFF );
+//	Init();
+//}
 
 NiNode::NiNode() {
 	Init();
@@ -342,8 +388,8 @@ NiParticleColorModifier::NiParticleColorModifier() {
 }
 
 NiParticleGrowFade::NiParticleGrowFade() {
-	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Grow", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Fade", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -380,6 +426,7 @@ NiParticleSystemController::NiParticleSystemController() {
 }
 
 NiPathController::NiPathController() {
+	AddAttr( attr_short, "Unknown Short 2", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
@@ -409,16 +456,103 @@ NiPlanarCollider::NiPlanarCollider() {
 	Init();
 }
 
-//NiPSysAgeDeathModifier::NiPSysAgeDeathModifier() {
-//	Init();
-//}
-
-//NiPSysEmitterCtlr::NiPSysEmitterCtlr() {
-//	AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
+//NiPoint3Interpolator::NiPoint3Interpolator() {
+//	AddAttr( attr_vector3, "Unknown Vector", 0, 0xFFFFFFFF );
 //	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
 //	Init();
 //}
 
+//NiPointLight::NiPointLight() {
+//	AddAttr( attr_color3, "Unknown Color", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
+//NiPSysAgeDeathModifier::NiPSysAgeDeathModifier() {
+//	AddAttr( attr_byte, "Unknown Byte 2", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysBoundUpdateModifier::NiPSysBoundUpdateModifier() {
+//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysBoxEmitter::NiPSysBoxEmitter() {
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Unknown Ints", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysColliderManager::NiPSysColliderManager() {
+//	AddAttr( attr_link, "Collider", 0, 0xFFFFFFFF );
+//	AddAttr( attr_float, "Unknown1", 0, 0xFFFFFFFF );
+//	AddAttr( attr_short, "Unknown2", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysColorModifier::NiPSysColorModifier() {
+//	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysCylinderEmitter::NiPSysCylinderEmitter() {
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysEmitterCtlr::NiPSysEmitterCtlr() {
+//	AddAttr( attr_link, "Interpolator", 167903232, 0xFFFFFFFF );
+//	AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysGravityModifier::NiPSysGravityModifier() {
+//	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysGrowFadeModifier::NiPSysGrowFadeModifier() {
+//	AddAttr( attr_vector3, "Unknown Vector", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysMeshUpdateModifier::NiPSysMeshUpdateModifier() {
+//	AddAttr( attr_linkgroup, "Meshes", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysPlanarCollider::NiPSysPlanarCollider() {
+//	AddAttr( attr_float, "Unknown", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysPositionModifier::NiPSysPositionModifier() {
+//	Init();
+//}
+//
+//NiPSysResetOnLoopCtlr::NiPSysResetOnLoopCtlr() {
+//	Init();
+//}
+//
+//NiPSysRotationModifier::NiPSysRotationModifier() {
+//	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
+//	AddAttr( attr_byte, "Unknown Byte 2", 0, 0xFFFFFFFF );
+//	AddAttr( attr_vector3, "Unknown Vector", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
+//NiPSysSpawnModifier::NiPSysSpawnModifier() {
+//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+//	AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
+//	AddAttr( attr_short, "Unknown Shorts", 0, 0xFFFFFFFF );
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	Init();
+//}
+//
 //NiPSysUpdateCtlr::NiPSysUpdateCtlr() {
 //	Init();
 //}
@@ -428,9 +562,6 @@ NiRotatingParticles::NiRotatingParticles() {
 }
 
 NiSequenceStreamHelper::NiSequenceStreamHelper() {
-	AddAttr( attr_link, "Extra Data", 0, 67240448 );
-	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -440,15 +571,12 @@ NiShadeProperty::NiShadeProperty() {
 }
 
 NiSourceTexture::NiSourceTexture() {
-	AddAttr( attr_link, "Extra Data", 0, 67240448 );
-	AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
 	AddAttr( attr_texsource, "Texture Source", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown1", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_pixellayout, "Pixel Layout", 0, 0xFFFFFFFF );
 	AddAttr( attr_mipmapformat, "Use Mipmaps", 0, 0xFFFFFFFF );
 	AddAttr( attr_alphaformat, "Alpha Format", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
+	AddAttr( attr_byte, "Unknown Byte 2", 167903232, 0xFFFFFFFF );
 	Init();
 }
 
@@ -468,7 +596,7 @@ NiSphericalCollider::NiSphericalCollider() {
 }
 
 NiStencilProperty::NiStencilProperty() {
-	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
+	AddAttr( attr_flags, "Flags", 0, 167772416 );
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
@@ -533,6 +661,17 @@ NiTexturingProperty::NiTexturingProperty() {
 	AddAttr( attr_int, "Unknown1", 167772416, 0xFFFFFFFF );
 	Init();
 }
+
+//NiTransformController::NiTransformController() {
+//	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
+//NiTransformInterpolator::NiTransformInterpolator() {
+//	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+//	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+//	Init();
+//}
 
 NiTriShape::NiTriShape() {
 	AddAttr( attr_byte, "Unknown Byte", 167772416, 0xFFFFFFFF );

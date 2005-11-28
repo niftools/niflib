@@ -465,11 +465,6 @@ public:
 
 	//To check for specialized Interfaces
 	virtual void * QueryInterface( int id ) = 0;
-
-	//Name Functions
-	virtual bool Namable() = 0;
-	virtual void SetName( string name ) = 0;
-	virtual string GetName() = 0;
 	
 	// Python Operator Overloads
 	string __str__() {
@@ -829,6 +824,10 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
+	attr_ref & operator=(const char * n) {
+		_attr->Set( string(n) );
+		return *this;
+	}
 	attr_ref & operator=(Matrix33 & n) {
 		_attr->Set(n);
 		return *this;
@@ -1001,8 +1000,8 @@ public:
 			lh << rh._block->GetBlockType() << "(Block " << rh._block->GetBlockNum() << ")";
 			
 			attr_ref attr = rh._block->GetAttr("Name");
-			if ( rh->Namable() == true ) {
-				lh << " [" << rh->GetName() << "]";
+			if ( attr.is_null() == false ) {
+				lh << " [" << attr->asString() << "]";
 			}
 		} else {
 			if (rh._index == -1)

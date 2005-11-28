@@ -48,7 +48,7 @@ extern string current_file;
  * ABlock methods
  **********************************************************/
 
-ABlock::ABlock() : _ref_count(0), _block_num(-1), _namable(false), _first_named_ver(0) {
+ABlock::ABlock() : _ref_count(0), _block_num(-1) {
 		//Temporary to test reference counting
 		blocks_in_memory++;
 	}
@@ -156,11 +156,6 @@ blk_ref ABlock::GetParent() {
 }
 
 void ABlock::Read( ifstream& in, unsigned int version ) {
-	//Read Name if there is one
-	if ( _namable == true && version >= _first_named_ver ) {
-		_name = ReadString( in );
-		//cout << "Name:  " << _name << endl;
-	}
 
 	//Read Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -172,10 +167,6 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 }
 
 void ABlock::Write( ofstream& out, unsigned int version ) {
-	//Write Name if there is one
-	if ( _namable == true && version >= _first_named_ver  ) {
-		WriteString( _name, out );
-	}
 
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -193,11 +184,6 @@ string ABlock::asString() {
 
 	//Output the first parent of this block
 	out << "Parent:  " << GetParent() << endl;
-
-	//Output the name if there is one
-	if ( _namable == true ) {
-		out << "Name:  " << _name << endl;
-	}
 
 	//Output Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -2261,12 +2247,9 @@ string NiFloatData::asString() {
  **********************************************************/
 
 void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
+	GetAttr("Name")->Read( in, version );
 	GetAttr("Next Extra Data")->Read( in, version );
-
-	//Read Name if there is one
-	if ( _namable == true && version >= _first_named_ver ) {
-		_name = ReadString( in );
-	}
+	
 
 	//Up to version 4.2.2.0, read bytes remaining but don't bother to store it
 	if ( version <= VER_4_2_2_0 ) {
@@ -2277,12 +2260,7 @@ void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 }
 
 void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
-
-	//Write Name if there is one
-	if ( _namable == true && version >= _first_named_ver ) {
-		WriteString( _name, out );
-	}
-
+	GetAttr("Name")->Write( out, version );
 	GetAttr("Next Extra Data")->Write( out, version );
 
 	attr_ref string_data = GetAttr("String Data");
@@ -2300,10 +2278,11 @@ string NiStringExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
+	attr_ref name_attr = GetAttr("Name");
 	attr_ref next_data = GetAttr("Next Extra Data");
 	attr_ref string_data = GetAttr("String Data");
 
-	out << "Name:  " << _name << endl
+	out << "Name:  " << name_attr->asString() << endl
 		<< next_data->GetName() << ":  " << next_data->asLink() << endl
 		<< "Bytes Remaining:  " << uint(string_data->asString().length()) + 4 << endl
 		<< string_data->GetName() << ":  " << string_data->asString() << endl;

@@ -103,11 +103,6 @@ public:
 		}
 	}
 
-	//Name Functions
-	virtual bool Namable() { return _namable; }
-	virtual void SetName( string name ) { _name = name; }
-	virtual string GetName() { return _name; }
-
 	//--Internal Functions--//
 	void AddParent( blk_ref parent);
 	void RemoveParent( IBlock * match );
@@ -122,9 +117,6 @@ protected:
 	int _block_num;
 	unsigned int _ref_count;
 	vector<IBlock*> _parents;
-	bool _namable;
-	unsigned int _first_named_ver;
-	string _name;
 };
 
 class AControllable : public ABlock {
@@ -135,20 +127,13 @@ public:
 	~AControllable() {}
 };
 
-class ANamed : public AControllable {
-public:
-	ANamed();
-	void Init() { _namable = true; }
-	~ANamed() {}
-};
-
 class INodeInternal {
 public:
 	virtual void IncSkinRef( IBlock * skin_data ) = 0;
 	virtual void DecSkinRef( IBlock * skin_data ) = 0;
 };
 
-class ANode : public ANamed, public INode, public INodeInternal {
+class ANode : public AControllable, public INode, public INodeInternal {
 public:
 	ANode();
 	void Init() { SetIdentity44(bindPosition); };
@@ -199,18 +184,11 @@ public:
 	~AShape() {}
 };
 
-class AProperty : public ANamed {
+class AProperty : public AControllable {
 public:
 	AProperty();
 	void Init() {}
 	~AProperty() {}
-};
-
-class AParticleProperty : public AControllable {
-public:
-	AParticleProperty();
-	void Init() {}
-	~AParticleProperty() {}
 };
 
 class AController : public ABlock {
@@ -227,11 +205,17 @@ public:
 	~AData() {}
 };
 
+class AParticleModifier : public ABlock {
+public:
+	AParticleModifier();
+	void Init() {}
+	~AParticleModifier() {}
+};
+
 class AExtraData : public AData {
 public:
 	AExtraData() {
-		_namable = true;
-		_first_named_ver = VER_10_0_1_0; //10.0.1.0
+		AddAttr( attr_link, "Name", VER_10_0_1_0 );
 		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
@@ -393,7 +377,7 @@ public:
 /**
  * NiSequenceStreamHelper 
  */
-class NiSequenceStreamHelper  : public ANamed {
+class NiSequenceStreamHelper  : public AControllable {
 public:
 
 	NiSequenceStreamHelper ();
@@ -456,7 +440,7 @@ public:
 /**
  * NiSourceTexture - Data for the associated texture, included in nif or external.
  */
-class NiSourceTexture : public ANamed{
+class NiSourceTexture : public AControllable{
 public:
 	NiSourceTexture();
 	void Init() {}
@@ -902,7 +886,7 @@ public:
  * NiGravity
  */
 
-class NiGravity : public AParticleProperty {
+class NiGravity : public AParticleModifier {
 public:
 	NiGravity();
 	void Init() {}
@@ -914,7 +898,7 @@ public:
  * NiParticleBomb
  */
 
-class NiParticleBomb : public AParticleProperty {
+class NiParticleBomb : public AParticleModifier {
 public:
 	NiParticleBomb();
 	void Init() {}
@@ -926,7 +910,7 @@ public:
  * NiPlanarCollider
  */
 
-class NiPlanarCollider : public AParticleProperty {
+class NiPlanarCollider : public AParticleModifier {
 public:
 	NiPlanarCollider();
 	void Init() {}
@@ -938,7 +922,7 @@ public:
  * NiSphericalCollider
  */
 
-class NiSphericalCollider : public AParticleProperty {
+class NiSphericalCollider : public AParticleModifier {
 public:
 	NiSphericalCollider();
 	void Init() {}
@@ -950,7 +934,7 @@ public:
  * NiParticleGrowFade
  */
 
-class NiParticleGrowFade : public AParticleProperty {
+class NiParticleGrowFade : public AParticleModifier {
 public:
 	NiParticleGrowFade();
 	void Init() {}
@@ -962,7 +946,7 @@ public:
  * NiParticleMeshModifier
  */
 
-class NiParticleMeshModifier : public AParticleProperty {
+class NiParticleMeshModifier : public AParticleModifier {
 public:
 	NiParticleMeshModifier();
 	void Init() {}
@@ -974,7 +958,7 @@ public:
  * NiParticleColorModifier
  */
 
-class NiParticleColorModifier : public AParticleProperty {
+class NiParticleColorModifier : public AParticleModifier {
 public:
 	NiParticleColorModifier();
 	void Init() {}
@@ -986,7 +970,7 @@ public:
  * NiGravity
  */
 
-class NiParticleRotation : public AParticleProperty {
+class NiParticleRotation : public AParticleModifier {
 public:
 	NiParticleRotation();
 	void Init() {}
@@ -1230,7 +1214,7 @@ private:
 class NiControllerSequence : public AData {
 public:
 	NiControllerSequence() {
-		_namable = true;
+		AddAttr( attr_string, "Name" );
 	}
 	~NiControllerSequence() {}
 
