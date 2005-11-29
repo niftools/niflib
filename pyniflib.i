@@ -39,6 +39,16 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "std_map.i"
 %include "exception.i"
 %include "std_list.i"
+%include "typemaps.i"
+
+// enable string assignment in structure member functions
+%typemap(in) std::string* ($*1_ltype tempstr) {
+	char * temps; int templ;
+ 	if (PyString_AsStringAndSize($input, &temps, &templ)) return NULL;
+ 	tempstr = $*1_ltype(temps, templ);
+ 	$1 = &tempstr;
+}
+%typemap(out) std::string* "$result = PyString_FromStringAndSize($1->data(), $1->length());";
 
 // we need a version of SWIG that has SWIG_CATCH_STDEXCEPT support
 #if SWIG_VERSION >= 0x010322
