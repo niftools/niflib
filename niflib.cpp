@@ -346,7 +346,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
 
 
-	header_string << int_ver[3] << "." << int_ver[2] << "." << int_ver[1] << "." << int_ver[0] << " ";
+	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 
 	out << header_string.str();
 	WriteByte( 10, out ); // Unknown Byte = 10

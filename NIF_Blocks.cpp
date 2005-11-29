@@ -713,7 +713,7 @@ string AShapeData::asString() {
  */
 void AShapeData::Write( ofstream& out, unsigned int version ){
 
-	WriteUShort( short(vertices.size()), out );
+	WriteUShort( ushort(vertices.size()), out );
 
 	if ( vertices.size() > 0 )
 		WriteBool( true, out, version );
