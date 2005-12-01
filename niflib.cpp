@@ -322,8 +322,8 @@ vector<blk_ref> ReadNifList( string file_name ) {
 	return blocks;
 }
 
-//Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
+// Writes a valid Nif File given a file name, a pointer to the root block of a file tree
+void WriteRawNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -377,6 +377,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 	//Close file
 	out.close();
 }
+
 void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
 	//Get internal interface
 	IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
@@ -445,6 +446,81 @@ void BuildUpBindPositions( blk_ref block ) {
 			BuildUpBindPositions( *it );
 		}
 	}
+}
+
+// Searches for the first block in the hierarchy of type block_name.
+blk_ref SearchNifTree( blk_ref & root_block, string block_name ) {
+	if ( root_block->GetBlockType() == block_name ) return root_block;
+	list<blk_ref> links = root_block->GetLinks();
+	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
+			blk_ref result = SearchNifTree( *it, block_name );
+			if ( result.is_null() == false ) return result;
+		};
+	};
+	return blk_ref(); // return null block
+};
+
+// Returns all blocks in the tree of type block_name.
+list<blk_ref> SearchAllNifTree( blk_ref & root_block, string block_name ) {
+	list<blk_ref> result;
+	if ( root_block->GetBlockType() == block_name ) result.push_back( root_block );
+	list<blk_ref> links = root_block->GetLinks();
+	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
+		if ( it->is_null() == false && (*it)->GetParent() == root_block )
+			result.merge( SearchAllNifTree( *it, block_name ) );
+	};
+	return result;
+};
+
+// Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree.
+// (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
+void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
+	// Write the full Nif file.
+	WriteRawNifTree( file_name, root_block, version );
+	
+	// Do we have animation groups (a NiTextKeyExtraData block)?
+	// If so, write out XNif and XKf files.
+	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
+	if ( txtkey_block.is_null() == false ) {
+		// Create file names for the XKf and XNif files.
+		int file_name_dot = file_name.rfind(".");
+		string file_name_base;
+		if ( file_name_dot != string::npos )
+			file_name_base = file_name.substr(0, file_name_dot);
+		else
+			file_name_base = file_name;
+		string xkf_name = "x" + file_name + ".kf";
+		string xnif_name = "x" + file_name + ".nif";
+	
+		// Create xkf root header.
+		blk_ref xkf_root = CreateBlock("NiSequenceStreamHelper");
+		
+		// Link the NiTextKeyExtraData block to it.
+		xkf_root["Extra Data"] = txtkey_block;
+		
+		// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
+		list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
+		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); )
+			if ( (*it)->GetAttr("Controller").is_null() )
+				it = nodes.erase( it );
+			else
+				++it;
+		
+		blk_ref last_block = txtkey_block;
+		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+			blk_ref nodextra = CreateBlock("NiStringExtraData");
+			nodextra["String Data"] = (*it)->GetAttr("Name");
+			last_block["Next Extra Data"] = nodextra;
+		};
+		
+		// Now add controllers & controller data...
+		
+		// Now write it out...
+		//WriteRawNifTree( )
+		
+		// Now construct the XNif file...
+	};
 }
 
 //Returns the total number of blocks in memory
