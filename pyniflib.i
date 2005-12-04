@@ -95,6 +95,8 @@ struct Key {
 %template(vector_Key_Vector3) std::vector< Key<Vector3> >;
 %template(Key_float) Key<float>;
 %template(vector_Key_float) std::vector< Key<float> >;
+%template(Key_Color) Key<Color>;
+%template(vector_Key_Color) std::vector< Key<Color> >;
 %template(Key_string) Key<std::string>;
 %template(vector_Key_string) std::vector< Key<std::string> >;
 %template(blablabla) Key<double>;

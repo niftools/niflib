@@ -1195,7 +1195,7 @@ public:
 	string GetBlockType() { return "NiGeomMorpherController"; }
 };
 
-class NiColorData : public AData {
+class NiColorData : public AData, public IColorData {
 public:
 	NiColorData() {}
 	~NiColorData() {}
@@ -1205,9 +1205,23 @@ public:
 	string asString();
 	string GetBlockType() { return "NiColorData"; };
 
+	void * QueryInterface( int id ) {
+		if ( id == ID_COLOR_DATA ) {
+			return (void*)static_cast<IColorData*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//--IColorData Functions--//
+	KeyType GetKeyType() { return _type; }
+	void SetKeyType( KeyType t ) { _type = t; }
+	vector< Key<Color> > GetKeys() { return _keys; }
+	void SetKeys( vector< Key<Color> > & keys ) { _keys = keys; }
+
 private:
-	KeyType keyType;
-	vector< Key<Color> > keys;
+	KeyType _type;
+	vector<Key<Color> > _keys;
 };
 
 /**
@@ -1225,7 +1239,7 @@ private:
 	vector< pair< string, blk_ref> > controllers;
 };
 
-class NiFloatData : public AData {
+class NiFloatData : public AData, public IFloatData {
 public:
 	NiFloatData() {}
 	~NiFloatData() {}
@@ -1235,9 +1249,23 @@ public:
 	string asString();
 	string GetBlockType() { return "NiFloatData"; };
 
+	void * QueryInterface( int id ) {
+		if ( id == ID_FLOAT_DATA ) {
+			return (void*)static_cast<IFloatData*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//--IFloatData Functions--//
+	KeyType GetKeyType() { return _type; }
+	void SetKeyType( KeyType t ) { _type = t; }
+	vector< Key<float> > GetKeys() { return _keys; }
+	void SetKeys( vector< Key<float> > & keys ) { _keys = keys; }
+
 private:
-	uint keyType;
-	vector<Key<float> > keys;
+	KeyType _type;
+	vector<Key<float> > _keys;
 };
 
 class NiStringExtraData : public AExtraData {
@@ -1316,7 +1344,7 @@ private:
 	vector<Morph> morphs;
 };
 
-class NiPosData : public AData {
+class NiPosData : public AData, public IPosData {
 public:
 	NiPosData() {}
 	~NiPosData() {}
@@ -1326,9 +1354,23 @@ public:
 	string asString();
 	string GetBlockType() { return "NiPosData"; }
 
+	void * QueryInterface( int id ) {
+		if ( id == ID_POS_DATA ) {
+			return (void*)static_cast<IPosData*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//--IPosData Functions--//
+	KeyType GetKeyType() { return _type; }
+	void SetKeyType( KeyType t ) { _type = t; }
+	vector< Key<Vector3> > GetKeys() { return _keys; }
+	void SetKeys( vector< Key<Vector3> > & keys ) { _keys = keys; }
+
 private:
-	uint keyType;
-	vector<Key<fVector3> > keys;
+	KeyType _type;
+	vector<Key<Vector3> > _keys;
 };
 
 class NiRotatingParticlesData : public ARotatingParticlesData {

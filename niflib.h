@@ -59,6 +59,9 @@ class IKeyframeData;
 class ITextKeyExtraData;
 class IMorphData;
 class ITriStripsData;
+class IColorData;
+class IFloatData;
+class IPosData;
 class INode;
 class blk_ref;
 class attr_ref;
@@ -80,6 +83,9 @@ const int ID_TEXT_KEY_EXTRA_DATA = 4;
 const int ID_MORPH_DATA = 5;
 const int ID_SHAPE_DATA = 6;
 const int ID_TRI_STRIPS_DATA = 7;
+const int ID_COLOR_DATA = 8;
+const int ID_FLOAT_DATA = 9;
+const int ID_POS_DATA = 10;
 
 //Attribute types
 enum AttrType {
@@ -146,6 +152,9 @@ IKeyframeData * QueryKeyframeData( blk_ref & block );
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 IMorphData * QueryMorphData ( blk_ref & block );
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
+IColorData * QueryColorData ( blk_ref & block );
+IFloatData * QueryFloatData ( blk_ref & block );
+IPosData * QueryPosData ( blk_ref & block );
 
 //--Simple Structures--//
 
@@ -628,7 +637,39 @@ public:
 	virtual ~ITextKeyExtraData () {}
 	virtual vector< Key<string> > GetKeys() = 0;
 	virtual void SetKeys( vector< Key<string> > const & keys ) = 0;
+
 };
+
+class IColorData {
+public:
+	IColorData() {}
+	virtual ~IColorData () {}
+	virtual KeyType GetKeyType() = 0;
+	virtual void SetKeyType( KeyType t ) = 0;
+	virtual vector< Key<Color> > GetKeys() = 0;
+	virtual void SetKeys( vector< Key<Color> > & keys ) = 0;
+};
+
+class IFloatData {
+public:
+	IFloatData() {}
+	virtual ~IFloatData () {}
+	virtual KeyType GetKeyType() = 0;
+	virtual void SetKeyType( KeyType t ) = 0;
+	virtual vector< Key<float> > GetKeys() = 0;
+	virtual void SetKeys( vector< Key<float> > & keys ) = 0;
+};
+
+class IPosData {
+public:
+	IPosData() {}
+	virtual ~IPosData () {}
+	virtual KeyType GetKeyType() = 0;
+	virtual void SetKeyType( KeyType t ) = 0;
+	virtual vector< Key<Vector3> > GetKeys() = 0;
+	virtual void SetKeys( vector< Key<Vector3> > & keys ) = 0;
+};
+
 
 class IMorphData {
 public:

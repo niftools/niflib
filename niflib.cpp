@@ -606,3 +606,15 @@ IMorphData * QueryMorphData ( blk_ref & block ) {
 ITriStripsData * QueryTriStripsData ( blk_ref & block ) {
 	return (ITriStripsData*)block->QueryInterface( ID_TRI_STRIPS_DATA );
 }
+
+IColorData * QueryColorData ( blk_ref & block ) {
+	return (IColorData*)block->QueryInterface( ID_COLOR_DATA );
+}
+
+IFloatData * QueryFloatData ( blk_ref & block ) {
+	return (IFloatData*)block->QueryInterface( ID_FLOAT_DATA );
+}
+
+IPosData * QueryPosData ( blk_ref & block ) {
+	return (IPosData*)block->QueryInterface( ID_POS_DATA );
+}

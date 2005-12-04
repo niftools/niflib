@@ -2124,35 +2124,34 @@ string NiKeyframeData::asString() {
 
 void NiColorData::Read( ifstream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
-	NifStream( keyType, file );
+	NifStream( _type, file );
 
-	keys.resize( keyCount );
-	for (uint i = 0; i < keys.size(); i++) {
-		NifStream( keys[i], file, keyType );
+	_keys.resize( keyCount );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
 
 void NiColorData::Write( ofstream& file, unsigned int version ) {
-	WriteUInt( uint(keys.size()), file );
-	NifStream( keyType, file );
+	WriteUInt( uint(_keys.size()), file );
+	NifStream( _type, file );
 
-	for (uint i = 0; i < keys.size(); i++) {
-		NifStream( keys[i], file, keyType );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
-
 
 string NiColorData::asString() {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Color Count:  " << uint(keys.size()) << endl
-		<< "Key Type:  " << keyType << endl;
+	out << "Key Count:  " << uint(_keys.size()) << endl
+		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
 		vector< Key<Color> >::iterator it;
-		for ( it = keys.begin(); it != keys.end(); ++it ) {
+		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Color:  " << it->data.r << ", " << it->data.g << ", " << it->data.b << ", " << it->data.a << endl;
 		}
 	} else {
@@ -2166,58 +2165,22 @@ string NiColorData::asString() {
  * NiFloatData methods
  **********************************************************/
 
-void NiFloatData::Read( ifstream& in, unsigned int version ) {	
-	uint keyCount = ReadUInt( in );
-	keyType = ReadUInt( in );
+void NiFloatData::Read( ifstream& file, unsigned int version ) {
+	uint keyCount = ReadUInt( file );
+	NifStream( _type, file );
 
-	if (keyCount > 0 && (keyType < 1 || keyType > 3 ) ) {
-		stringstream s;
-		s << "NiFloatData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << keyType << ".";
-		throw runtime_error(s.str());
-	}
-
-	keys.resize( keyCount );
-	for (uint i = 0; i < keys.size(); i++) {
-		//Always read the time and data
-		keys[i].time = ReadFloat( in );
-		keys[i].data = ReadFloat( in );
-		if ( keyType == 2 ) {
-			//Uses Quadratic interpolation
-			keys[i].forward_tangent = ReadFloat( in );
-			keys[i].backward_tangent = ReadFloat( in );
-		} else if ( keyType == 3 ) {
-			//Uses TBC interpolation
-			keys[i].tension = ReadFloat( in );
-			keys[i].bias = ReadFloat( in );
-			keys[i].continuity = ReadFloat( in );
-		}
+	_keys.resize( keyCount );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
 
-void NiFloatData::Write( ofstream& out, unsigned int version ) {	
-	WriteUInt( uint(keys.size()), out );
-	WriteUInt( keyType, out );
+void NiFloatData::Write( ofstream& file, unsigned int version ) {
+	WriteUInt( uint(_keys.size()), file );
+	NifStream( _type, file );
 
-	if (keys.size() > 0 && (keyType < 1 || keyType > 3 ) ) {
-		stringstream s;
-		s << "NiFloatData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << keyType << ".";
-		throw runtime_error(s.str());
-	}
-
-	for (uint i = 0; i < keys.size(); i++) {
-		//Always write the time and data
-		WriteFloat( keys[i].time, out );
-		WriteFloat( keys[i].data, out );
-		if ( keyType == 2 ) {
-			//Uses Quadratic interpolation
-			WriteFloat( keys[i].forward_tangent, out );
-			WriteFloat( keys[i].backward_tangent, out );
-		} else if ( keyType == 3 ) {
-			//Uses TBC interpolation
-			WriteFloat( keys[i].tension, out );
-			WriteFloat( keys[i].bias, out );
-			WriteFloat( keys[i].continuity, out );
-		}
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
 
@@ -2226,30 +2189,18 @@ string NiFloatData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Key Count:  " << uint(keys.size()) << endl
-		<< "Key Type:  " << keyType << endl
-		<< "Keys:" << endl;
+	out << "Key Count:  " << uint(_keys.size()) << endl
+		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		vector<Key<float> >::iterator it;
-		for ( it = keys.begin(); it != keys.end(); ++it ) {
-			for (uint i = 0; i < keys.size(); i++) {
-				//Always print the time and data
-				out << "   " << i + 1 << ")   Time:  " << it->time << "   Data:  " << it->data;
-				if ( keyType == 2 ) {
-					//Uses Quadratic interpolation
-					out << "   FT:  " << it->forward_tangent << "   BT:  " << it->backward_tangent;
-				} else if ( keyType == 3 ) {
-					//Uses TBC interpolation
-					out << "   T:  " << it->tension << "   B:  " << it->bias << "   C:  " << it->continuity;
-				}
-				out << endl;
-			}
+		vector< Key<float> >::iterator it;
+		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Float Value:  " << it->data << endl;
 		}
 	} else {
-		out << "   <<Data Not Shown>>" << endl;
+		out << "<<Data Not Shown>>" << endl;
 	}
-	
+
 	return out.str();
 }
 
@@ -2826,46 +2777,22 @@ string NiPixelData::asString() {
  * NiPosData methods
  **********************************************************/
 
-void NiPosData::Read( ifstream& in, unsigned int version ) {
-	uint keyCount = ReadUInt( in );
-	keyType = ReadUInt( in );
+void NiPosData::Read( ifstream& file, unsigned int version ) {
+	uint keyCount = ReadUInt( file );
+	NifStream( _type, file );
 
-	keys.resize(keyCount);
-	for (uint i = 0; i < keys.size(); i++) {
-		keys[i].time = ReadFloat( in );
-		ReadFVector3( keys[i].data, in );
-
-		if (keyType == 2) {
-			ReadFVector3( keys[i].forward_tangent, in );
-			ReadFVector3( keys[i].backward_tangent, in );
-		}
-
-		if (keyType != 1 && keyType != 2) {
-			stringstream str;
-            str << "NiPosData is thought to only support keyTypes of 1 and 2, but this NIF has a keyType of " << keyType << ".";
-			throw runtime_error( str.str() );
-		}
+	_keys.resize( keyCount );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
 
-void NiPosData::Write( ofstream& out, unsigned int version ) {
-	WriteUInt( uint(keys.size()), out );
-	WriteUInt( keyType, out );
+void NiPosData::Write( ofstream& file, unsigned int version ) {
+	WriteUInt( uint(_keys.size()), file );
+	NifStream( _type, file );
 
-	for (uint i = 0; i < keys.size(); i++) {
-		WriteFloat( keys[i].time, out );
-		WriteFVector3( keys[i].data, out );
-
-		if (keyType == 2) {
-			WriteFVector3( keys[i].forward_tangent, out );
-			WriteFVector3( keys[i].backward_tangent, out );
-		}
-
-		if (keyType != 1 && keyType != 2) {
-			stringstream str;
-            str << "NiPosData is thought to only support keyTypes of 1 and 2, but this NIF has a keyType of " << keyType << ".";
-			throw runtime_error( str.str() );
-		}
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
 	}
 }
 
@@ -2874,22 +2801,18 @@ string NiPosData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Key Count:  " << uint(keys.size()) << endl
-		<< "Key Type:  " << keyType << endl;
+	out << "Key Count:  " << uint(_keys.size()) << endl
+		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		for (uint i = 0; i < keys.size(); i++) {
-			out << "Key Time:  " << keys[i].time << "   Position:  " << keys[i].data;
-
-			if (keyType == 2) {
-				out << " F: " << keys[i].forward_tangent << "  B: " << keys[i].backward_tangent;
-			}
-			out << endl;
+		vector< Key<Vector3> >::iterator it;
+		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Position:  " << it->data.x << ", " << it->data.y << ", " << it->data.z << endl;
 		}
 	} else {
 		out << "<<Data Not Shown>>" << endl;
 	}
-	
+
 	return out.str();
 }
 
@@ -2897,27 +2820,24 @@ string NiPosData::asString() {
  * NiTextKeyExtraData methods
  **********************************************************/
 
-void NiTextKeyExtraData::Read( ifstream& in, unsigned int version ) {
-	ABlock::Read( in, version );
-	
-	uint keyCount = ReadUInt( in );
+void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
+	uint keyCount = ReadUInt( file );
+	//Read type but throw it away, always LINEAR_KEY
+	ReadUInt( file );
 
-	_keys.resize(keyCount);
-	for (uint i = 0; i < _keys.size(); ++i ) {
-		_keys[i].time = ReadFloat( in );
-		_keys[i].data = ReadString( in );
+	_keys.resize( keyCount );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, LINEAR_KEY );
 	}
 }
 
-void NiTextKeyExtraData::Write( ofstream& out, unsigned int version ) {
+void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) {
+	WriteUInt( uint(_keys.size()), file );
+	KeyType _type = LINEAR_KEY;
+	NifStream( _type, file );
 
-	ABlock::Write( out, version );
-
-	WriteUInt( uint(_keys.size()), out );
-
-	for (uint i = 0; i < _keys.size(); ++i ) {
-		WriteFloat( _keys[i].time, out );
-		WriteString( _keys[i].data, out );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, LINEAR_KEY );
 	}
 }
 
@@ -2926,19 +2846,17 @@ string NiTextKeyExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Next Extra Data:  " <<  GetAttr("Next Extra Data")->asLink() << endl
-		<< "Unknown Int (Key Type?):  " << GetAttr("Unknown Int")->asInt() << endl
-		<< "Key Count:  " << uint(_keys.size()) << endl;
+	out << "Key Count:  " << uint(_keys.size()) << endl;
 
 	if (verbose) {
-		for (uint i = 0; i < _keys.size(); ++i ) {
-			out << "Key Time:  " << _keys[i].time << endl
-				<< "Key Text:  " << _keys[i].data << endl;
+		vector< Key<string> >::iterator it;
+		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Key Text:  " << it->data << endl;
 		}
 	} else {
 		out << "<<Data Not Shown>>" << endl;
 	}
-	
+
 	return out.str();
 }
 
