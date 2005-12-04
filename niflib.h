@@ -553,15 +553,15 @@ public:
 	IShapeData() {}
 	virtual ~IShapeData() {}
 	//Counts
-	virtual short GetVertexCount() = 0;
-	virtual short GetUVSetCount() = 0;
+	virtual short GetVertexCount() const = 0;
+	virtual short GetUVSetCount() const = 0;
 	virtual void SetVertexCount(int n) = 0;
 	virtual void SetUVSetCount(int n) = 0;
 	//Getters
-	virtual vector<Vector3> GetVertices() = 0;
-	virtual vector<Vector3> GetNormals() = 0;
-	virtual vector<Color> GetColors() = 0;
-	virtual vector<TexCoord> GetUVSet( int index ) = 0;
+	virtual vector<Vector3> GetVertices() const = 0;
+	virtual vector<Vector3> GetNormals() const = 0;
+	virtual vector<Color> GetColors() const = 0;
+	virtual vector<TexCoord> GetUVSet( int index ) const = 0;
 	//Setters
 	virtual void SetVertices( const vector<Vector3> & in ) = 0;
 	virtual void SetNormals( const vector<Vector3> & in ) = 0;
@@ -647,7 +647,7 @@ public:
 	virtual KeyType GetKeyType() = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<Color> > GetKeys() = 0;
-	virtual void SetKeys( vector< Key<Color> > & keys ) = 0;
+	virtual void SetKeys( vector< Key<Color> > const & keys ) = 0;
 };
 
 class IFloatData {
@@ -657,7 +657,7 @@ public:
 	virtual KeyType GetKeyType() = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<float> > GetKeys() = 0;
-	virtual void SetKeys( vector< Key<float> > & keys ) = 0;
+	virtual void SetKeys( vector< Key<float> > const & keys ) = 0;
 };
 
 class IPosData {
@@ -667,7 +667,7 @@ public:
 	virtual KeyType GetKeyType() = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<Vector3> > GetKeys() = 0;
-	virtual void SetKeys( vector< Key<Vector3> > & keys ) = 0;
+	virtual void SetKeys( vector< Key<Vector3> > const & keys ) = 0;
 };
 
 

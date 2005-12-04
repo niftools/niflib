@@ -542,15 +542,15 @@ public:
 
 	//--IShapeData--//
 	//Counts
-	short GetVertexCount() { return short(vertices.size()); }
-	short GetUVSetCount() { return short(uv_sets.size()); }
+	short GetVertexCount() const { return short(vertices.size()); }
+	short GetUVSetCount() const { return short(uv_sets.size()); }
 	void SetVertexCount(int n);
 	void SetUVSetCount(int n);
 	//Getters
-	vector<Vector3> GetVertices() { return vertices; }
-	vector<Vector3> GetNormals() { return normals; }
-	vector<Color> GetColors() { return colors; }
-	vector<TexCoord> GetUVSet( int index ) { return uv_sets[index]; }
+	vector<Vector3> GetVertices() const { return vertices; }
+	vector<Vector3> GetNormals() const { return normals; }
+	vector<Color> GetColors() const { return colors; }
+	vector<TexCoord> GetUVSet( int index ) const { return uv_sets[index]; }
 	//Setters
 	void SetVertices( const vector<Vector3> & in );
 	void SetNormals( const vector<Vector3> & in );
@@ -1217,7 +1217,7 @@ public:
 	KeyType GetKeyType() { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
 	vector< Key<Color> > GetKeys() { return _keys; }
-	void SetKeys( vector< Key<Color> > & keys ) { _keys = keys; }
+	void SetKeys( vector< Key<Color> > const & keys ) { _keys = keys; }
 
 private:
 	KeyType _type;
@@ -1261,7 +1261,7 @@ public:
 	KeyType GetKeyType() { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
 	vector< Key<float> > GetKeys() { return _keys; }
-	void SetKeys( vector< Key<float> > & keys ) { _keys = keys; }
+	void SetKeys( vector< Key<float> > const & keys ) { _keys = keys; }
 
 private:
 	KeyType _type;
@@ -1366,7 +1366,7 @@ public:
 	KeyType GetKeyType() { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
 	vector< Key<Vector3> > GetKeys() { return _keys; }
-	void SetKeys( vector< Key<Vector3> > & keys ) { _keys = keys; }
+	void SetKeys( vector< Key<Vector3> > const & keys ) { _keys = keys; }
 
 private:
 	KeyType _type;
