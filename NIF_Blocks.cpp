@@ -2821,9 +2821,11 @@ string NiPosData::asString() {
  **********************************************************/
 
 void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
+	GetAttr("Name")->Read( file, version );
+	GetAttr("Next Extra Data")->Read( file, version );
+	GetAttr("Unknown Int")->Read( file, version );
+
 	uint keyCount = ReadUInt( file );
-	//Read type but throw it away, always LINEAR_KEY
-	ReadUInt( file );
 
 	_keys.resize( keyCount );
 	for (uint i = 0; i < _keys.size(); i++) {
@@ -2832,9 +2834,11 @@ void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
 }
 
 void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) {
+	GetAttr("Name")->Write( file, version );
+	GetAttr("Next Extra Data")->Write( file, version );
+	GetAttr("Unknown Int")->Write( file, version );
+
 	WriteUInt( uint(_keys.size()), file );
-	KeyType _type = LINEAR_KEY;
-	NifStream( _type, file );
 
 	for (uint i = 0; i < _keys.size(); i++) {
 		NifStream( _keys[i], file, LINEAR_KEY );
