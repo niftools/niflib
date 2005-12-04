@@ -453,6 +453,9 @@ blk_ref SearchNifTree( blk_ref & root_block, string block_name ) {
 	if ( root_block->GetBlockType() == block_name ) return root_block;
 	list<blk_ref> links = root_block->GetLinks();
 	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+		// if the link is not null, and if the child's first parent is root_block
+		// (this makes sure we only check every child once, even if it is shared by multiple parents),
+		// then look for a match in the tree starting from the child.
 		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
 			blk_ref result = SearchNifTree( *it, block_name );
 			if ( result.is_null() == false ) return result;
@@ -469,6 +472,17 @@ list<blk_ref> SearchAllNifTree( blk_ref & root_block, string block_name ) {
 	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
 		if ( it->is_null() == false && (*it)->GetParent() == root_block )
 			result.merge( SearchAllNifTree( *it, block_name ) );
+	};
+	return result;
+};
+
+list<blk_ref> GetNifTree( blk_ref & root_block ) {
+	list<blk_ref> result;
+	result.push_back( root_block );
+	list<blk_ref> links = root_block->GetLinks();
+	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
+		if ( it->is_null() == false && (*it)->GetParent() == root_block )
+			result.merge( GetNifTree( *it ) );
 	};
 	return result;
 };
@@ -492,7 +506,12 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 			file_name_base = file_name;
 		string xkf_name = "x" + file_name + ".kf";
 		string xnif_name = "x" + file_name + ".nif";
-	
+		
+		// Now construct the XNif file...
+		// Ha, we are lazy. Copy the Nif file.
+		WriteRawNifTree( xnif_name, root_block, version );
+		
+		// Now the XKf file...
 		// Create xkf root header.
 		blk_ref xkf_root = CreateBlock("NiSequenceStreamHelper");
 		
@@ -502,7 +521,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
 		list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
 		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); )
-			if ( (*it)->GetAttr("Controller").is_null() )
+			if ( blk_ref( (*it)->GetAttr("Controller") ).is_null() )
 				it = nodes.erase( it );
 			else
 				++it;
@@ -510,16 +529,34 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		blk_ref last_block = txtkey_block;
 		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
 			blk_ref nodextra = CreateBlock("NiStringExtraData");
-			nodextra["String Data"] = (*it)->GetAttr("Name");
+			nodextra["String Data"] = string( (*it)["Name"] );
 			last_block["Next Extra Data"] = nodextra;
 		};
 		
-		// Now add controllers & controller data...
+		// Add controllers & controller data.
+		last_block = xkf_root;
+		list<blk_ref> orig_controllertargets;
+		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+			blk_ref controller = blk_ref( (*it)->GetAttr("Controller") );
+			if ( ! blk_ref( last_block["Next Controller"] ).is_null() )
+				throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+			if ( last_block == xkf_root )
+				last_block["Controller"] = controller;
+			else
+				last_block["Next Controller"] = controller;
+			orig_controllertargets.push_back(controller["Target Node"]); // save this to restore later
+			controller["Target Node"] = blk_ref(); // destroy link
+			last_block = controller;
+		};
 		
 		// Now write it out...
-		//WriteRawNifTree( )
+		WriteRawNifTree( xkf_name, xkf_root, version );
 		
-		// Now construct the XNif file...
+		// Restore the target controllers.
+		for ( list<blk_ref>::iterator it = nodes.begin(), it2 = orig_controllertargets.begin(); it != nodes.end(); ++it, ++it2 ) {
+			blk_ref controller = blk_ref( (*it)->GetAttr("Controller") );
+			controller["Target Node"] = *it2;
+		};
 	};
 }
 

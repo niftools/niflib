@@ -189,7 +189,7 @@ NiAlphaController::NiAlphaController() {
 }
 
 NiAlphaProperty::NiAlphaProperty() {
-	AddAttr( attr_flags, "flags", 0, 0xFFFFFFFF );
+	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
 	Init();
 }

@@ -67,7 +67,15 @@ POSSIBILITY OF SUCH DAMAGE. */
 	#include "niflib.h"
 %}
 
-template <class T> struct Key;
+// we need the definition of the template classes before we define the template Python names below
+template <class T> 
+struct Key {
+	float time;
+	T data, forward_tangent, backward_tangent;
+	float tension, bias, continuity;
+};
+
+%ignore Key;
 
 %template(vector_float) std::vector<float>;
 %template(vector_short) std::vector<short>;
@@ -84,11 +92,12 @@ template <class T> struct Key;
 %template(Key_Quaternion) Key<Quaternion>;
 %template(vector_Key_Quaternion) std::vector< Key<Quaternion> >;
 %template(Key_Vector3) Key<Vector3>;
-%template(vector_Key_Vector3D) std::vector< Key<Vector3> >;
+%template(vector_Key_Vector3) std::vector< Key<Vector3> >;
 %template(Key_float) Key<float>;
 %template(vector_Key_float) std::vector< Key<float> >;
 %template(Key_string) Key<std::string>;
 %template(vector_Key_string) std::vector< Key<std::string> >;
+%template(blablabla) Key<double>;
 
 %ignore Float2::operator[](int n);
 %ignore Float2::operator[](int n) const;

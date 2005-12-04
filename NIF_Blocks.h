@@ -1007,17 +1007,17 @@ class NiKeyframeData : public AData, public IKeyframeData {
 		KeyType GetRotateType() { return rotationType; }
 		void SetRotateType( KeyType t ) { rotationType = t; }
 		vector< Key<Quaternion> > GetRotateKeys() { return rotKeys; }
-		void SetRotateKeys( vector< Key<Quaternion> > & keys ) { rotKeys = keys; }
+		void SetRotateKeys( vector< Key<Quaternion> > const & keys ) { rotKeys = keys; }
 		//Translate
 		KeyType GetTranslateType() { return translationType; }
 		void SetTranslateType( KeyType t ) { translationType = t; }
 		vector< Key<Vector3> > GetTranslateKeys() { return transKeys; }
-		void SetTranslateKeys( vector< Key<Vector3> > & keys ) { transKeys = keys; }
+		void SetTranslateKeys( vector< Key<Vector3> > const & keys ) { transKeys = keys; }
 		//Scale
 		KeyType GetScaleType() { return scaleType; }
 		void SetScaleType( KeyType t ) { scaleType = t; }
 		vector< Key<float> > GetScaleKeys() { return scaleKeys; }
-		void SetScaleKeys( vector< Key<float> > & keys ) { scaleKeys = keys; }
+		void SetScaleKeys( vector< Key<float> > const & keys ) { scaleKeys = keys; }
 
 	private:
 		KeyType rotationType;
@@ -1360,8 +1360,8 @@ public:
 	}
 
 	//--ITextKeyExtraData Functions--//
-	virtual vector< Key<string> > GetRotateKeys() { return _keys; }
-	virtual void SetRotateKeys( vector< Key<string> > & keys ) { _keys = keys; }
+	virtual vector< Key<string> > GetKeys() { return _keys; }
+	virtual void SetKeys( vector< Key<string> > const & keys ) { _keys = keys; }
 
 private:
 	vector< Key<string> > _keys;

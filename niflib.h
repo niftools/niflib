@@ -121,6 +121,9 @@ blk_ref ReadNifTree( string file_name );
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
 void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version = VER_4_0_0_2 );
 
+// Returns list of all blocks in the tree rooted by root block.
+list<blk_ref> GetNifTree( blk_ref & root_block );
+
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
 
@@ -606,25 +609,25 @@ public:
 	virtual KeyType GetRotateType() = 0;
 	virtual void SetRotateType( KeyType t ) = 0;
 	virtual vector< Key<Quaternion> > GetRotateKeys() = 0;
-	virtual void SetRotateKeys( vector< Key<Quaternion> > & keys ) = 0;
+	virtual void SetRotateKeys( vector< Key<Quaternion> > const & keys ) = 0;
 	//Translate
 	virtual KeyType GetTranslateType() = 0;
 	virtual void SetTranslateType( KeyType t ) = 0;
 	virtual vector< Key<Vector3> > GetTranslateKeys() = 0;
-	virtual void SetTranslateKeys( vector< Key<Vector3> > & keys ) = 0;
+	virtual void SetTranslateKeys( vector< Key<Vector3> > const & keys ) = 0;
 	//Scale
 	virtual KeyType GetScaleType() = 0;
 	virtual void SetScaleType( KeyType t ) = 0;
 	virtual vector< Key<float> > GetScaleKeys() = 0;
-	virtual void SetScaleKeys( vector< Key<float> > & keys ) = 0;
+	virtual void SetScaleKeys( vector< Key<float> > const & keys ) = 0;
 };
 
 class ITextKeyExtraData {
 public:
 	ITextKeyExtraData() {}
 	virtual ~ITextKeyExtraData () {}
-	virtual vector< Key<string> > GetRotateKeys() = 0;
-	virtual void SetRotateKeys( vector< Key<string> > & keys ) = 0;
+	virtual vector< Key<string> > GetKeys() = 0;
+	virtual void SetKeys( vector< Key<string> > const & keys ) = 0;
 };
 
 class IMorphData {
