@@ -1268,7 +1268,7 @@ public:
 		ReadUInt(in);
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) {
-		WriteUInt( _owner->GetParent()->GetBlockNum(), out );
+		WriteUInt( FindTarget()->GetBlockNum(), out );
 	}
 	blk_ref FindTarget() const {
 		//Find first ancestor that is controllable
@@ -1301,6 +1301,8 @@ public:
 		return out.str();
 	}
 	blk_ref asLink() const { return FindTarget(); }
+	void Set(blk_ref&) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
+
 };
 
 class SkeletonRootAttr : public AAttr {
@@ -1355,6 +1357,8 @@ public:
 		return out.str();
 	}
 	blk_ref asLink() const { return FindRoot(); }
+	void Set(blk_ref&) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
+
 private:
 	int original_root;
 };

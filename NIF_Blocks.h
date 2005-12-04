@@ -84,6 +84,7 @@ public:
 	vector<attr_ref> GetAttrs();
 	int GetBlockNum() { return _block_num; }
 	bool IsControllable() { return false; }
+	bool IsController() { return false; }
 	string asString();
 
 	//Links
@@ -195,6 +196,7 @@ class AController : public ABlock {
 public:
 	AController();
 	void Init() {}
+	bool IsController() { return true; }
 	~AController() {}
 };
 

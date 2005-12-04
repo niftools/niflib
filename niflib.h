@@ -455,6 +455,7 @@ public:
 	virtual string asString() = 0;
 	virtual string GetBlockType() = 0;
 	virtual bool IsControllable() = 0;
+	virtual bool IsController() = 0;
 
 	//Attribute Functions
 	virtual attr_ref GetAttr(string attr_name) = 0;
