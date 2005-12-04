@@ -122,6 +122,8 @@ void ABlock::AddAttr( AttrType type, string name, unsigned int first_ver, unsign
 		attr = new Vector3Attr( name, this, first_ver, last_ver );
 	} else if ( type == attr_color3 ) {
 		attr = new Color3Attr( name, this, first_ver, last_ver );
+	} else if ( type == attr_parent ) {
+		attr = new ParentAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");

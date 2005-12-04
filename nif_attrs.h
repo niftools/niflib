@@ -1363,6 +1363,30 @@ private:
 	int original_root;
 };
 
+class ParentAttr : public AAttr {
+public:
+	ParentAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	~ParentAttr() {}
+	AttrType GetType() const { return attr_parent; }
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		ReadUInt(in);
+	}
+	void WriteAttr( ofstream& out, unsigned int version ) {
+		WriteUInt( _owner->GetParent()->GetBlockNum(), out );
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << _owner->GetParent();
+
+		return out.str();
+	}
+	blk_ref asLink() const { return _owner->GetParent(); }
+	void Set(blk_ref&) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
+};
+
 class ParticleGroupAttr : public AAttr {
 public:
 	ParticleGroupAttr( string name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}

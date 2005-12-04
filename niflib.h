@@ -89,7 +89,7 @@ enum AttrType {
 	attr_bumpmap, attr_applymode, attr_texsource, attr_pixellayout,
 	attr_mipmapformat, attr_alphaformat, attr_controllertarget,
 	attr_skeletonroot, attr_particlegroup, attr_lodrangegroup, attr_vector3,
-	attr_color3
+	attr_color3, attr_parent
 };
 
 //NIF Versions

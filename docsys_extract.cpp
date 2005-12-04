@@ -98,8 +98,8 @@ AParentNode::AParentNode() {
 }
 
 AParticleModifier::AParticleModifier() {
-	AddAttr( attr_link, "Extra Data", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Previous Modifier", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Next Modifier", 0, 0xFFFFFFFF );
+	AddAttr( attr_parent, "Previous Modifier", 0, 0xFFFFFFFF );
 	Init();
 }
 
