@@ -166,6 +166,14 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 		//	cout << "   " << _attr_vect[i]->GetName() << ":  " << _attr_vect[i]->asString() << endl;
 		//}
 	}
+	//map<string, attr_ref>::iterator it;
+	//it = _attr_map.find("Scale");
+	//if (it != _attr_map.end()) {
+	//	if ( _attr_map["Scale"]->asFloat() != 1.0f ) {
+	//		cout << "\a Non-1.0 Scale found!!!" << endl;
+	//		cin.get();
+	//	}
+	//}
 }
 
 void ABlock::Write( ofstream& out, unsigned int version ) {
@@ -2834,6 +2842,7 @@ void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
 }
 
 void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) {
+
 	GetAttr("Name")->Write( file, version );
 	GetAttr("Next Extra Data")->Write( file, version );
 	GetAttr("Unknown Int")->Write( file, version );
@@ -2850,7 +2859,10 @@ string NiTextKeyExtraData::asString() {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << "Key Count:  " << uint(_keys.size()) << endl;
+	out << "Name:  " << GetAttr("Name")->asString() << endl
+		<< "Next Extra Data:  " << GetAttr("Next Extra Data")->asString() << endl
+		<< "Unknown Int:  " << GetAttr("Unknown Int")->asString() << endl
+		<< "Key Count:  " << uint(_keys.size()) << endl;
 
 	if (verbose) {
 		vector< Key<string> >::iterator it;
