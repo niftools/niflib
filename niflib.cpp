@@ -498,65 +498,85 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
 	if ( txtkey_block.is_null() == false ) {
 		// Create file names for the XKf and XNif files.
-		int file_name_dot = file_name.rfind(".");
-		string file_name_base;
-		if ( file_name_dot != string::npos )
-			file_name_base = file_name.substr(0, file_name_dot);
-		else
-			file_name_base = file_name;
-		string xkf_name = "x" + file_name + ".kf";
-		string xnif_name = "x" + file_name + ".nif";
+		int file_name_slash = file_name.rfind("\\") + 1;
+		string file_name_path = file_name.substr(0, file_name_slash);
+		string file_name_base = file_name.substr(file_name_slash, file_name.length());
+		int file_name_dot = file_name_base.rfind(".");
+		file_name_base = file_name_base.substr(0, file_name_dot);
+		string xkf_name = file_name_path + "x" + file_name_base + ".kf";
+		string xnif_name = file_name_path + "x" + file_name_base + ".nif";
 		
 		// Now construct the XNif file...
-		// Ha, we are lazy. Copy the Nif file.
+		// We are lazy. Copy the Nif file. (TODO: remove keyframe controllers & keyframe data)
 		WriteRawNifTree( xnif_name, root_block, version );
+		cout << xnif_name << " written" << endl;
 		
 		// Now the XKf file...
 		// Create xkf root header.
 		blk_ref xkf_root = CreateBlock("NiSequenceStreamHelper");
 		
-		// Link the NiTextKeyExtraData block to it.
-		xkf_root["Extra Data"] = txtkey_block;
+		// Add a copy of the NiTextKeyExtraData block to the XKf header.
+		blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
+		xkf_root["Extra Data"] = xkf_txtkey_block;
+		
+		ITextKeyExtraData *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
+		ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
+		ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
 		
 		// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
 		list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
-		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); )
-			if ( blk_ref( (*it)->GetAttr("Controller") ).is_null() )
+		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ) {
+			if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
 				it = nodes.erase( it );
 			else
-				++it;
+				it++;
+		};
 		
-		blk_ref last_block = txtkey_block;
+		blk_ref last_block = xkf_txtkey_block;
 		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
 			blk_ref nodextra = CreateBlock("NiStringExtraData");
-			nodextra["String Data"] = string( (*it)["Name"] );
+			nodextra["String Data"] = (*it)["Name"]->asString();
 			last_block["Next Extra Data"] = nodextra;
+			last_block = nodextra;
 		};
 		
 		// Add controllers & controller data.
 		last_block = xkf_root;
-		list<blk_ref> orig_controllertargets;
 		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-			blk_ref controller = blk_ref( (*it)->GetAttr("Controller") );
-			if ( ! blk_ref( last_block["Next Controller"] ).is_null() )
-				throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-			if ( last_block == xkf_root )
-				last_block["Controller"] = controller;
-			else
-				last_block["Next Controller"] = controller;
-			orig_controllertargets.push_back(controller["Target Node"]); // save this to restore later
-			controller["Target Node"] = blk_ref(); // destroy link
-			last_block = controller;
+			blk_ref controller = (*it)->GetAttr("Controller")->asLink();
+			blk_ref xkf_controller = CreateBlock("NiKeyframeController");
+			xkf_controller["Flags"] = controller["Flags"]->asInt();
+			xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
+			xkf_controller["Phase"] = controller["Phase"]->asFloat();
+			xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
+			xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
+			
+			blk_ref xkf_data = CreateBlock("NiKeyframeData");
+			xkf_controller["Data"] = xkf_data;
+			IKeyframeData *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
+			IKeyframeData *ixkfdata = QueryKeyframeData(xkf_controller["Data"]->asLink());
+			ixkfdata->SetRotateType(ikfdata->GetRotateType());
+			ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
+			ixkfdata->SetScaleType(ikfdata->GetScaleType());
+			ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
+			ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
+			ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
+
+			if ( last_block == xkf_root ) {
+				if ( ! last_block["Controller"]->asLink().is_null() )
+					throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+				last_block["Controller"] = xkf_controller;
+			} else {
+				if ( ! last_block["Next Controller"]->asLink().is_null() )
+					throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+				last_block["Next Controller"] = xkf_controller;
+			};
+			last_block = xkf_controller;
+			// note: targets are automatically calculated, we don't need to reset them
 		};
 		
 		// Now write it out...
-		WriteRawNifTree( xkf_name, xkf_root, version );
-		
-		// Restore the target controllers.
-		for ( list<blk_ref>::iterator it = nodes.begin(), it2 = orig_controllertargets.begin(); it != nodes.end(); ++it, ++it2 ) {
-			blk_ref controller = blk_ref( (*it)->GetAttr("Controller") );
-			controller["Target Node"] = *it2;
-		};
+		WriteRawNifTree( xkf_name, xkf_root, version );		
 	};
 }
 

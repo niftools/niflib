@@ -1268,7 +1268,8 @@ public:
 		ReadUInt(in);
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) {
-		WriteUInt( FindTarget()->GetBlockNum(), out );
+		//WriteUInt( FindTarget()->GetBlockNum(), out );
+		WriteUInt( FindTarget().get_index(), out ); // we need get_index(), GetBlockNum() chokes on null block references
 	}
 	blk_ref FindTarget() const {
 		//Find first ancestor that is controllable
@@ -1282,10 +1283,13 @@ public:
 			if (par.is_null() == true)
 				return blk_ref(-1);
 
+			// If parent is NiSequenceStreamHelper, return null reference (this is necessary to create consistent XKf files)
+			if ( par->GetBlockType() == "NiSequenceStreamHelper" )
+				return blk_ref(-1);
+
 			//If parent is controllable, return it
-			if ( par->IsControllable() == true ) {
+			if ( par->IsControllable() == true )
 				return par;
-			}
 
 			//We didn't find a node this time, set block to par and try again
 			block = par;
