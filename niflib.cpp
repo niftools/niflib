@@ -509,7 +509,6 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		// Now construct the XNif file...
 		// We are lazy. Copy the Nif file. (TODO: remove keyframe controllers & keyframe data)
 		WriteRawNifTree( xnif_name, root_block, version );
-		cout << xnif_name << " written" << endl;
 		
 		// Now the XKf file...
 		// Create xkf root header.
