@@ -127,8 +127,8 @@ blk_ref ReadNifTree( string const & file_name );
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
 void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
-// Returns list of all blocks in the tree rooted by root block.
-list<blk_ref> GetNifTree( blk_ref const & root_block );
+//// Returns list of all blocks in the tree rooted by root block.
+//list<blk_ref> GetNifTree( blk_ref const & root_block );
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);

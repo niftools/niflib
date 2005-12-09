@@ -1200,13 +1200,14 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 			map<int, float> weights;
 		};
 
-		void CalculateBoneOffsets();
+		INode * GetNodeParent() const;
+		void CalculateBoneOffset( INode const * const par_node, IBlock const * const bone_block, Bone & result ) const;
 		Matrix33 rotation;
 		fVector3 translation;
 		float  scale;
 		int unknownInt;
 		byte unknownByte;
-		map<IBlock *, Bone> bone_map;
+		map<IBlock *, Bone > bone_map;
 		vector<Bone> bones;
 };
 

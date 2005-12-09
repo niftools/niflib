@@ -478,18 +478,18 @@ list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) 
 	return result;
 };
 
-list<blk_ref> GetNifTree( blk_ref const & root_block ) {
-	list<blk_ref> result;
-	result.push_back( root_block );
-	list<blk_ref> links = root_block->GetLinks();
-	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
-		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
-			list<blk_ref> childresult = GetNifTree( *it );
-			result.merge( childresult );
-		};
-	};
-	return result;
-};
+//list<blk_ref> GetNifTree( blk_ref const & root_block ) {
+//	list<blk_ref> result;
+//	result.push_back( root_block );
+//	list<blk_ref> links = root_block->GetLinks();
+//	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
+//		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
+//			list<blk_ref> childresult = GetNifTree( *it );
+//			result.merge( childresult );
+//		};
+//	};
+//	return result;
+//};
 
 // Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree.
 // (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
@@ -502,10 +502,10 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
 	if ( txtkey_block.is_null() == false ) {
 		// Create file names for the XKf and XNif files.
-		int file_name_slash = file_name.rfind("\\") + 1;
+		uint file_name_slash = uint(file_name.rfind("\\") + 1);
 		string file_name_path = file_name.substr(0, file_name_slash);
 		string file_name_base = file_name.substr(file_name_slash, file_name.length());
-		int file_name_dot = file_name_base.rfind(".");
+		uint file_name_dot = uint(file_name_base.rfind("."));
 		file_name_base = file_name_base.substr(0, file_name_dot);
 		string xkf_name = file_name_path + "x" + file_name_base + ".kf";
 		string xnif_name = file_name_path + "x" + file_name_base + ".nif";

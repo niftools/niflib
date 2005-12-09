@@ -1496,21 +1496,26 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) const {
 		WriteByte( unknownByte, out );
 	}
 
-	map<IBlock *, Bone>::const_iterator it;
-	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {		
+	//Get parent node for bone calculations
+	INode const * const par_node = this->GetNodeParent();
+	Bone bone; // temporary value
+
+	map<IBlock *, Bone >::const_iterator it;
+	int num = 0;
+	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
+		//Calculae offset for this bone (data is not stored)
+		CalculateBoneOffset( par_node, it->first, bone );	
+
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
-				WriteFloat( it->second.rotation[r][c], out );
+				WriteFloat( bone.rotation[r][c], out );
 			}
 		}
-		WriteFVector3( it->second.translation, out );
-		WriteFloat( it->second.scale, out );
+		WriteFVector3( bone.translation, out );
+		WriteFloat( bone.scale, out );
 
-		WriteFVector4( it->second.unknown4Floats, out );
-		//WriteFloat( 0.0f, out );
-		//WriteFloat( 0.0f, out );
-		//WriteFloat( 0.0f, out );
-		//WriteFloat( 0.0f, out );
+		WriteFVector4( bone.unknown4Floats, out );
+
 		WriteUShort( short(it->second.weights.size() ), out );
 		
 		map<int, float>::const_iterator it2;
@@ -1564,9 +1569,6 @@ string NiSkinData::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	//Calculate bone offsets pior to printing readout
-	//CalculateBoneOffsets(); // non-const!
-
 	out << "Rotate:" << endl
 		<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
 		<< "   |" << setw(6) << rotation[1][0] << "," << setw(6) << rotation[1][1] << "," << setw(6) << rotation[1][2] << " |" << endl
@@ -1578,12 +1580,15 @@ string NiSkinData::asString() const {
 		<< "Unknown Byte:  " << int(unknownByte) << endl
 		<< "Bones:" << endl;
 
-	map<IBlock *, Bone>::const_iterator it;
-	//vector<Bone>::iterator it;
+	//Get parent node for bone calculations
+	INode const * const par_node = this->GetNodeParent();
+	Bone bone; // temporary value
+
+	map<IBlock *, Bone >::const_iterator it;
 	int num = 0;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
-		//Friendlier name
-		Bone const & bone = it->second;
+		//Calculae offset for this bone (data is not stored)
+		CalculateBoneOffset( par_node, it->first, bone );
 
 		num++;
 		out << "Bone " << num << ":" << endl
@@ -1603,11 +1608,11 @@ string NiSkinData::asString() const {
 
 		out << "Unknown 4 Floats:  " << setw(6) << q[0] << "," << setw(6) << q[1] << "," << setw(6) << q[2] << "," << setw(6) << q[3] << endl;
 
-		out << "   Weights:  " << uint(bone.weights.size()) << endl;
+		out << "   Weights:  " << uint( it->second.weights.size()) << endl;
 
 		if (verbose) {
 			map<int, float>::const_iterator it2;
-			for ( it2 = bone.weights.begin(); it2 != bone.weights.end(); ++it2 ){
+			for ( it2 = it->second.weights.begin(); it2 != it->second.weights.end(); ++it2 ){
 				out << "   Vertex: " << it2->first << "\tWeight: " << it2->second << endl;
 			}
 		} else {
@@ -1869,8 +1874,7 @@ NiSkinData::~NiSkinData() {
 	}
 }
 
-void NiSkinData::CalculateBoneOffsets() {
-
+INode * NiSkinData::GetNodeParent() const {
 	//--Get Node Parent Bind Pose--//
 
 	blk_ref par_block;
@@ -1881,60 +1885,59 @@ void NiSkinData::CalculateBoneOffsets() {
 		throw runtime_error("SkinData block does not have parent of parent.");
 	}
 
-	INode * par_node = QueryNode(par_block);	
+	INode * par_node = (INode*)par_block->QueryInterface(ID_NODE);	
 	if ( par_node == NULL )
 		throw runtime_error("SkinData block's parent of parent is not a node.");
 
+	return par_node;
+}
 
-	//Cycle through all bones, calculating their offsets and storing the values
-	map<IBlock *, Bone>::iterator it;
-	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
-		//--Get Bone Bind Pose--//
+void NiSkinData::CalculateBoneOffset( INode const * const par_node, IBlock const * const bone_block, Bone & result ) const {
 
-		//Get Bone Node
-		INode * bone_node = (INode*)it->first->QueryInterface(ID_NODE);
+	//--Get Bone Bind Pose--//
 
-		//Get bind matricies
+	//Get Bone Node
+	INode * const bone_node = (INode*)bone_block->QueryInterface(ID_NODE);
 
-		Matrix44 par_mat, bone_mat, inv_mat, res_mat;
-		par_mat = par_node->GetBindPosition();
-		bone_mat = bone_node->GetBindPosition();
+	//Get bind matricies
+	Matrix44 par_mat, bone_mat, inv_mat, res_mat;
+	par_mat = par_node->GetBindPosition();
+	bone_mat = bone_node->GetBindPosition();
 
-		//Inverse bone matrix & multiply with parent node matrix
-		inv_mat = InverseMatrix44(bone_mat);
-		res_mat = MultMatrix44(par_mat, inv_mat);
+	//Inverse bone matrix & multiply with parent node matrix
+	inv_mat = InverseMatrix44(bone_mat);
+	res_mat = MultMatrix44(par_mat, inv_mat);
 
-		//--Extract Scale from first 3 rows--//
-		float scale[3];
-		for (int r = 0; r < 3; ++r) {
-			//Get scale for this row
-			scale[r] = sqrt(res_mat[r][0] * res_mat[r][0] + res_mat[r][1] * res_mat[r][1] + res_mat[r][2] * res_mat[r][2] + res_mat[r][3] * res_mat[r][3]);
+	//--Extract Scale from first 3 rows--//
+	float scale[3];
+	for (int r = 0; r < 3; ++r) {
+		//Get scale for this row
+		scale[r] = sqrt(res_mat[r][0] * res_mat[r][0] + res_mat[r][1] * res_mat[r][1] + res_mat[r][2] * res_mat[r][2] + res_mat[r][3] * res_mat[r][3]);
 
-			//Normalize the row by dividing each factor by scale
-			res_mat[r][0] /= scale[r];
-			res_mat[r][1] /= scale[r];
-			res_mat[r][2] /= scale[r];
-			res_mat[r][3] /= scale[r];
-		}
-
-		//--Store Results--//
-
-		//Store rotation matrix
-		for (int c = 0; c < 3; ++c) {
-			for (int r = 0; r < 3; ++r) {
-				it->second.rotation[r][c] = res_mat[r][c];
-			}
-		}
-
-		//Store translate vector
-		it->second.translation[0] = res_mat[3][0];
-		it->second.translation[1] = res_mat[3][1];
-		it->second.translation[2] = res_mat[3][2];
-
-		
-		//Store average scale
-		it->second.scale = (scale[0] + scale[1] + scale[2]) / 3.0f;
+		//Normalize the row by dividing each factor by scale
+		res_mat[r][0] /= scale[r];
+		res_mat[r][1] /= scale[r];
+		res_mat[r][2] /= scale[r];
+		res_mat[r][3] /= scale[r];
 	}
+
+	//--Store Result--//
+
+	//Store rotation matrix
+	for (int c = 0; c < 3; ++c) {
+		for (int r = 0; r < 3; ++r) {
+			result.rotation[r][c] = res_mat[r][c];
+		}
+	}
+
+	//Store translate vector
+	result.translation[0] = res_mat[3][0];
+	result.translation[1] = res_mat[3][1];
+	result.translation[2] = res_mat[3][2];
+
+	
+	//Store average scale
+	result.scale = (scale[0] + scale[1] + scale[2]) / 3.0f;
 }
 
 /***********************************************************
