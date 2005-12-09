@@ -291,7 +291,7 @@ public:
 		return out.str();
 	}
 	Float3 asFloat3() const { return data; }
-	void Set(Float3& n) { data = n; }
+	void Set(Float3 const & n) { data = n; }
 private:
 	Float3 data;
 };
@@ -318,7 +318,7 @@ public:
 	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadString( in ); }
 	void WriteAttr( ofstream& out, unsigned int version ) const { WriteString( data, out ); }
 	string asString() const { return data; }
-	void Set(string & n) { data = n; }
+	void Set(string const & n) { data = n; }
 private:
 	string data;
 };
@@ -362,13 +362,13 @@ public:
 		return out; 
 	}
 	void ClearLinks() { link = blk_ref(-1); }
-	void AddLinks( list<blk_ref> new_links ) {
+	void AddLinks( list<blk_ref> const & new_links ) {
 		//Just take the first one
 		link = *(new_links.begin());
 	}
 
 	blk_ref asLink() const { return blk_ref(link); }
-	void Set( blk_ref & n ) { link = n; }
+	void Set( blk_ref const & n ) { link = n; }
 private:
 	lnk_ref link;
 };
@@ -597,13 +597,13 @@ public:
 		return out; 
 	}
 
-	void AddLink( blk_ref block ) {
+	void AddLink( blk_ref const & block ) {
 		links.push_back( lnk_ref(_owner, block) );
 	}
 
-	void AddLinks( list<blk_ref> new_links ) {
+	void AddLinks( list<blk_ref> const & new_links ) {
 		//Add new list of links
-		list<blk_ref>::iterator it;
+		list<blk_ref>::const_iterator it;
 		for (it = new_links.begin(); it != new_links.end(); ++it ) {
 			lnk_ref l(_owner, *it );
 			try {
@@ -712,7 +712,7 @@ public:
 		return out.str();
 	}
 	BoundingBox asBoundingBox() const { return data; }
-	void Set(BoundingBox& n ) { data = n; }
+	void Set(BoundingBox const & n ) { data = n; }
 
 private:
 	BoundingBox data;
@@ -753,7 +753,7 @@ public:
 		return out.str();
 	}
 	ConditionalInt asConditionalInt() const { return data; }
-	void Set(ConditionalInt & n ) {
+	void Set(ConditionalInt const & n ) {
 		data.isUsed = n.isUsed;
 		data.unknownInt = n.unknownInt;
 	}
@@ -977,7 +977,7 @@ public:
 		return out.str();
 	}
 	Texture asTexture() const { return data; }
-	void Set( Texture &n ) { data = n; }
+	void Set( Texture const & n ) { data = n; }
 protected:
 	Texture data;
 };
@@ -1134,7 +1134,7 @@ public:
 		return out.str();
 	}
 	TextureSource asTextureSource() const { return data; }
-	void Set( TextureSource &n ) {
+	void Set( TextureSource const &n ) {
 		data.useExternal = n.useExternal;
 		data.unknownByte = n.unknownByte;
 		data.fileName = n.fileName;

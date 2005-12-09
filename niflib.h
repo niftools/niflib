@@ -1114,25 +1114,25 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, TextureSource & value) {
+	void __setitem__(string index, TextureSource const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, BoundingBox & value) {
+	void __setitem__(string index, BoundingBox const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, ConditionalInt & value) {
+	void __setitem__(string index, ConditionalInt const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, Texture & value) {
+	void __setitem__(string index, Texture const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
