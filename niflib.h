@@ -119,16 +119,16 @@ enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3, XYZ_ROTATION_KEY 
 //--Main Functions--//
 
 //Reads the given file by file name and returns a vector of block references
-vector<blk_ref> ReadNifList( string file_name );
+vector<blk_ref> ReadNifList( string const & file_name );
 
 //Reads the given file by file name and returns a reference to the root block
-blk_ref ReadNifTree( string file_name );
+blk_ref ReadNifTree( string const & file_name );
 
 //Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version = VER_4_0_0_2 );
+void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
 // Returns list of all blocks in the tree rooted by root block.
-list<blk_ref> GetNifTree( blk_ref & root_block );
+list<blk_ref> GetNifTree( blk_ref const & root_block );
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
@@ -145,16 +145,27 @@ unsigned int BlocksInMemory();
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
 IShapeData * QueryShapeData( blk_ref & block );
+IShapeData const * QueryShapeData( blk_ref const & block );
 ITriShapeData * QueryTriShapeData( blk_ref & block );
+ITriShapeData const * QueryTriShapeData( blk_ref const & block );
 ISkinData * QuerySkinData( blk_ref & block );
+ISkinData const * QuerySkinData( blk_ref const & block );
 INode * QueryNode( blk_ref & block );
+INode const * QueryNode( blk_ref const & block );
 IKeyframeData * QueryKeyframeData( blk_ref & block );
+IKeyframeData const * QueryKeyframeData( blk_ref const & block );
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
+ITextKeyExtraData const * QueryTextKeyExtraData ( blk_ref const & block );
 IMorphData * QueryMorphData ( blk_ref & block );
+IMorphData const * QueryMorphData ( blk_ref const & block );
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
+ITriStripsData const * QueryTriStripsData ( blk_ref const & block );
 IColorData * QueryColorData ( blk_ref & block );
+IColorData const * QueryColorData ( blk_ref const & block );
 IFloatData * QueryFloatData ( blk_ref & block );
+IFloatData const * QueryFloatData ( blk_ref const & block );
 IPosData * QueryPosData ( blk_ref & block );
+IPosData const * QueryPosData ( blk_ref const & block );
 
 //--Simple Structures--//
 
@@ -340,6 +351,9 @@ struct Float4 {
 	float & operator[](int n) {
 		return data[n];
 	}
+	float operator[](int n) const {
+		return data[n];
+	}
 	Float4() {}
 	Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
@@ -369,6 +383,9 @@ struct Float4 {
 struct Matrix44 {
 	Float4 rows[4];
 	Float4 & operator[](int n) {
+		return rows[n];
+	}
+	Float4 const & operator[](int n) const {
 		return rows[n];
 	}
 	Matrix44() {}
@@ -462,25 +479,26 @@ public:
 	IBlock( ){}
 	virtual ~IBlock() {}
 
-	virtual int GetBlockNum() = 0;
-	virtual blk_ref GetParent() = 0;
-	virtual string asString() = 0;
-	virtual string GetBlockType() = 0;
-	virtual bool IsControllable() = 0;
-	virtual bool IsController() = 0;
+	virtual int GetBlockNum() const = 0;
+	virtual blk_ref GetParent() const = 0;
+	virtual string asString() const = 0;
+	virtual string GetBlockType() const = 0;
+	virtual bool IsControllable() const = 0;
+	virtual bool IsController() const = 0;
 
 	//Attribute Functions
-	virtual attr_ref GetAttr(string attr_name) = 0;
-	virtual vector<attr_ref> GetAttrs() = 0;
+	virtual attr_ref GetAttr(string const & attr_name) const = 0;
+	virtual vector<attr_ref> GetAttrs() const = 0;
 
 	//Link Functions
-	virtual list<blk_ref> GetLinks() = 0;
+	virtual list<blk_ref> GetLinks() const = 0;
 
 	//To check for specialized Interfaces
 	virtual void * QueryInterface( int id ) = 0;
+	virtual void const * QueryInterface( int id ) const = 0;
 	
 	// Python Operator Overloads
-	string __str__() {
+	string __str__() const {
 		return asString();
 	};
 	
@@ -497,7 +515,7 @@ public:
 	virtual AttrType GetType() const = 0;
 	virtual string GetName() const = 0;
 	virtual void Read( ifstream& in, unsigned int version ) = 0;
-	virtual void Write( ofstream& out, unsigned int version ) = 0;
+	virtual void Write( ofstream& out, unsigned int version ) const = 0;
 	//Getters
 	virtual int asInt() const = 0;
 	virtual float asFloat() const = 0;
@@ -513,21 +531,21 @@ public:
 	//Setters
 	virtual void Set(int) = 0;
 	virtual void Set(float) = 0;
-	virtual void Set(Float3&) = 0;
-	virtual void Set(string&) = 0;
-	virtual void Set(Matrix33&) = 0;
-	virtual void Set( blk_ref & n ) = 0;
-	virtual void Set(TextureSource&) = 0;
-	virtual void Set(BoundingBox&) = 0;
-	virtual void Set(ConditionalInt&) = 0;
-	virtual void Set(Texture&) = 0;
+	virtual void Set(Float3 const &) = 0;
+	virtual void Set(string const &) = 0;
+	virtual void Set(Matrix33 const &) = 0;
+	virtual void Set( blk_ref const & n ) = 0;
+	virtual void Set(TextureSource const &) = 0;
+	virtual void Set(BoundingBox const &) = 0;
+	virtual void Set(ConditionalInt const &) = 0;
+	virtual void Set(Texture const &) = 0;
 	//Link functions
-	virtual bool HasLinks() = 0;
-	virtual void AddLink( blk_ref block ) = 0;
-	virtual void AddLinks( list<blk_ref> new_links ) = 0;
+	virtual bool HasLinks() const = 0;
+	virtual void AddLink( blk_ref const & block ) = 0;
+	virtual void AddLinks( list<blk_ref> const & new_links ) = 0;
 	virtual void ClearLinks() = 0;
-	virtual void RemoveLinks( blk_ref block ) = 0;
-	virtual blk_ref FindLink( string block_type ) = 0;
+	virtual void RemoveLinks( blk_ref const & block ) = 0;
+	virtual blk_ref FindLink( string const & block_type ) const = 0;
 
 	// Python Operator Overloads
 	string __str__() {
@@ -541,11 +559,11 @@ class INode {
 public:
 	INode() {}
 	virtual ~INode() {}
-	virtual Matrix44 GetLocalTransform() = 0;
-	virtual Matrix44 GetWorldTransform() = 0;
-	virtual Matrix44 GetBindPosition() = 0;
-	virtual void SetBindPosition( Matrix44 & m ) = 0;
-	virtual Matrix44 GetLocalBindPos() = 0;
+	virtual Matrix44 GetLocalTransform() const = 0;
+	virtual Matrix44 GetWorldTransform() const = 0;
+	virtual Matrix44 GetBindPosition() const = 0;
+	virtual void SetBindPosition( Matrix44 const & m ) = 0;
+	virtual Matrix44 GetLocalBindPos() const = 0;
 };
 
 class IShapeData {
@@ -574,13 +592,13 @@ public:
 	ITriShapeData() {}
 	virtual ~ITriShapeData () {}
 	//Counts
-	virtual short GetTriangleCount() = 0;
+	virtual short GetTriangleCount() const = 0;
 	virtual void SetTriangleCount(int n) = 0;
 	//Match Detection
 	virtual void SetMatchDetectionMode(bool choice) = 0;
-	virtual bool GetMatchDetectionMode() = 0;
+	virtual bool GetMatchDetectionMode() const = 0;
 	//Getters
-	virtual vector<Triangle> GetTriangles() = 0;
+	virtual vector<Triangle> GetTriangles() const = 0;
 	//Setters
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
 };
@@ -590,12 +608,12 @@ public:
 	ITriStripsData() {}
 	virtual ~ITriStripsData () {}
 	//Counts
-	virtual short GetTriangleCount() = 0;
-	virtual short GetStripCount() = 0;
+	virtual short GetTriangleCount() const = 0;
+	virtual short GetStripCount() const = 0;
 	virtual void SetStripCount(int n) = 0;
 	//Getter
-	virtual vector<short> GetStrip( int index ) = 0;
-	virtual vector<Triangle> GetTriangles() = 0;
+	virtual vector<short> GetStrip( int index ) const = 0;
+	virtual vector<Triangle> GetTriangles() const = 0;
 	//Setter
 	virtual void SetStrip( int index, const vector<short> & in ) = 0;
 };
@@ -604,10 +622,10 @@ class ISkinData {
 public:
 	ISkinData() {}
 	virtual ~ISkinData () {}
-	virtual vector<blk_ref> GetBones() = 0;
-	virtual map<int, float> GetWeights( blk_ref bone ) = 0;
-	virtual void AddBone( blk_ref bone, map<int, float> in ) = 0;
-	virtual void RemoveBone( blk_ref bone ) = 0;
+	virtual vector<blk_ref> GetBones() = 0; // Can't be const, since it changes the bone blk_ref reference 
+	virtual map<int, float> GetWeights( blk_ref const & bone ) const = 0;
+	virtual void AddBone( blk_ref const & bone, map<int, float> const & in ) = 0;
+	virtual void RemoveBone( blk_ref const & bone ) = 0;
 };
 
 class IKeyframeData {
@@ -615,19 +633,19 @@ public:
 	IKeyframeData() {}
 	virtual ~IKeyframeData () {}
 	//Rotate
-	virtual KeyType GetRotateType() = 0;
+	virtual KeyType GetRotateType() const = 0;
 	virtual void SetRotateType( KeyType t ) = 0;
-	virtual vector< Key<Quaternion> > GetRotateKeys() = 0;
+	virtual vector< Key<Quaternion> > GetRotateKeys() const = 0;
 	virtual void SetRotateKeys( vector< Key<Quaternion> > const & keys ) = 0;
 	//Translate
-	virtual KeyType GetTranslateType() = 0;
+	virtual KeyType GetTranslateType() const = 0;
 	virtual void SetTranslateType( KeyType t ) = 0;
-	virtual vector< Key<Vector3> > GetTranslateKeys() = 0;
+	virtual vector< Key<Vector3> > GetTranslateKeys() const = 0;
 	virtual void SetTranslateKeys( vector< Key<Vector3> > const & keys ) = 0;
 	//Scale
-	virtual KeyType GetScaleType() = 0;
+	virtual KeyType GetScaleType() const = 0;
 	virtual void SetScaleType( KeyType t ) = 0;
-	virtual vector< Key<float> > GetScaleKeys() = 0;
+	virtual vector< Key<float> > GetScaleKeys() const = 0;
 	virtual void SetScaleKeys( vector< Key<float> > const & keys ) = 0;
 };
 
@@ -635,7 +653,7 @@ class ITextKeyExtraData {
 public:
 	ITextKeyExtraData() {}
 	virtual ~ITextKeyExtraData () {}
-	virtual vector< Key<string> > GetKeys() = 0;
+	virtual vector< Key<string> > GetKeys() const = 0;
 	virtual void SetKeys( vector< Key<string> > const & keys ) = 0;
 
 };
@@ -644,9 +662,9 @@ class IColorData {
 public:
 	IColorData() {}
 	virtual ~IColorData () {}
-	virtual KeyType GetKeyType() = 0;
+	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
-	virtual vector< Key<Color> > GetKeys() = 0;
+	virtual vector< Key<Color> > GetKeys() const = 0;
 	virtual void SetKeys( vector< Key<Color> > const & keys ) = 0;
 };
 
@@ -654,9 +672,9 @@ class IFloatData {
 public:
 	IFloatData() {}
 	virtual ~IFloatData () {}
-	virtual KeyType GetKeyType() = 0;
+	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
-	virtual vector< Key<float> > GetKeys() = 0;
+	virtual vector< Key<float> > GetKeys() const = 0;
 	virtual void SetKeys( vector< Key<float> > const & keys ) = 0;
 };
 
@@ -664,9 +682,9 @@ class IPosData {
 public:
 	IPosData() {}
 	virtual ~IPosData () {}
-	virtual KeyType GetKeyType() = 0;
+	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
-	virtual vector< Key<Vector3> > GetKeys() = 0;
+	virtual vector< Key<Vector3> > GetKeys() const = 0;
 	virtual void SetKeys( vector< Key<Vector3> > const & keys ) = 0;
 };
 
@@ -675,14 +693,14 @@ class IMorphData {
 public:
 	IMorphData() {}
 	virtual ~IMorphData () {}
-	virtual int GetVertexCount() = 0;
+	virtual int GetVertexCount() const = 0;
 	virtual void SetVertexCount( int n ) = 0;
-	virtual int GetMorphCount() = 0;
+	virtual int GetMorphCount() const = 0;
 	virtual void SetMorphCount( int n ) = 0;
-	virtual vector< Key<float> > GetMorphKeys( int n ) = 0;
-	virtual void SetMorphKeys( int n, vector< Key<float> > & keys ) = 0;
-	virtual vector<Vector3> GetMorphVerts( int n) = 0;
-	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
+	virtual vector< Key<float> > GetMorphKeys( int n ) const = 0;
+	virtual void SetMorphKeys( int n, vector< Key<float> > const & keys ) = 0;
+	virtual vector<Vector3> GetMorphVerts( int n) const = 0;
+	virtual void SetMorphVerts( int n, vector<Vector3> const & in ) = 0;
 };
 
 //struct ComplexVertex {
@@ -815,7 +833,7 @@ class attr_ref {
 public:
 	attr_ref() : _attr(NULL) {}
 	attr_ref( IAttr * ptr ) : _attr(ptr) {}
-	IAttr * operator->() {
+	IAttr * operator->() const {
 		if ( _attr == NULL ) {
 			//pointer has not been fixed, throw exception
 			throw runtime_error("Attempted to dereference a null Attribute reference.");
@@ -823,29 +841,29 @@ public:
 			return _attr;
 		}
 	}
-	bool is_null() {
+	bool is_null() const {
 		if (_attr == NULL )
 			return true;
 		else
 			return false;
 	}
-	IAttr * ptr() {
+	IAttr * ptr() const {
 		return _attr;
 	}
 	//Comparison operators
-	bool operator==(attr_ref & rh) {
+	bool operator==(attr_ref & rh) const {
 		if (_attr == rh._attr)
 			return true;
 		else
 			return false;
 	}
-	bool operator!=(attr_ref & rh) {
+	bool operator!=(attr_ref & rh) const {
 		if (_attr != rh._attr)
 			return true;
 		else
 			return false;
 	}
-	bool operator<(attr_ref & rh) {
+	bool operator<(attr_ref & rh) const {
 		if (_attr < rh._attr)
 			return true;
 		else
@@ -861,11 +879,11 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(Float3 & n) {
+	attr_ref & operator=(Float3 const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(string & n) {
+	attr_ref & operator=(string const & n) {
 		_attr->Set(n);
 		return *this;
 	}
@@ -873,44 +891,44 @@ public:
 		_attr->Set( string(n) );
 		return *this;
 	}
-	attr_ref & operator=(Matrix33 & n) {
+	attr_ref & operator=(Matrix33 const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(blk_ref & n) {
+	attr_ref & operator=(blk_ref const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(TextureSource & n) {
+	attr_ref & operator=(TextureSource const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(BoundingBox & n) {
+	attr_ref & operator=(BoundingBox const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(ConditionalInt & n) {
+	attr_ref & operator=(ConditionalInt const & n) {
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(Texture & n) {
+	attr_ref & operator=(Texture const & n) {
 		_attr->Set(n);
 		return *this;
 	}
 
 	//Conversion fuctions
-	operator int() { return _attr->asInt(); }
-	operator float() { return _attr->asFloat(); }
-	operator Float3() { return _attr->asFloat3(); }
-	operator string() { return _attr->asString(); }
+	operator int() const { return _attr->asInt(); }
+	operator float() const { return _attr->asFloat(); }
+	operator Float3() const { return _attr->asFloat3(); }
+	operator string() const { return _attr->asString(); }
 	
-	operator Matrix33() { return _attr->asMatrix33(); }
-	operator blk_ref();
-	operator TextureSource();
-	operator BoundingBox();
-	operator ConditionalInt();
-	operator Texture();
-	operator list<blk_ref>() { return _attr->asLinkList(); }
+	operator Matrix33() const { return _attr->asMatrix33(); }
+	operator blk_ref() const;
+	operator TextureSource() const;
+	operator BoundingBox() const;
+	operator ConditionalInt() const;
+	operator Texture() const;
+	operator list<blk_ref>() const { return _attr->asLinkList(); }
 
 	//friend ostream & operator<<(ostream & lh, const attr_ref & rh) {
 	//	if ( rh._attr == NULL )
@@ -967,7 +985,7 @@ public:
 		return *this;
 	}
 	// Equality Operator
-	bool operator==(const blk_ref & rh) {
+	bool operator==(const blk_ref & rh) const {
 		if ( _block == rh._block && _index == rh._index )
 			return true;
 		else
@@ -981,10 +999,10 @@ public:
 			return false;
 	}
 	// Non-Equality Operator
-	bool operator!=(const blk_ref & rh) {
+	bool operator!=(const blk_ref & rh) const {
 		return !(*this == rh);
 	}
-	bool is_null() {
+	bool is_null() const {
 		if (_block == NULL && _index == -1)
 			return true;
 		else
@@ -1017,7 +1035,7 @@ public:
 			return _block;
 		}
 	}
-	attr_ref operator[] ( string index ) {
+	attr_ref operator[] ( string const & index ) const {
 		return _block->GetAttr(index);
 	}
 	int get_index() const {

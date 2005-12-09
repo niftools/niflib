@@ -44,18 +44,18 @@ using namespace std;
 //	float w, x, y, z;
 //};
 
-void QuatToMatrix( Quaternion & quat, ostream & out );
-void QuatToEuler( Quaternion & quat, ostream & out );
-Vector3 MultVector3( Vector3 & a, Vector3 & b);
-Matrix33 MultMatrix33( Matrix33 & a, Matrix33 & b );
-Matrix44 MultMatrix44( Matrix44 & a, Matrix44 & b );
-float DetMatrix33( Matrix33 & m );
-float DetMatrix44( Matrix44 & m );
-float AdjMatrix44( Matrix44 & m, int r, int c );
-Matrix44 InverseMatrix44( Matrix44 & m );
+void QuatToMatrix( Quaternion const & quat, ostream & out );
+void QuatToEuler( Quaternion const & quat, ostream & out );
+Vector3 MultVector3( Vector3 const & a, Vector3 const & b);
+Matrix33 MultMatrix33( Matrix33 const & a, Matrix33 const & b );
+Matrix44 MultMatrix44( Matrix44 const & a, Matrix44 const & b );
+float DetMatrix33( Matrix33 const & m );
+float DetMatrix44( Matrix44 const & m );
+float AdjMatrix44( Matrix44 const & m, int r, int c );
+Matrix44 InverseMatrix44( Matrix44 const & m );
 void SetIdentity33( Matrix33 & m );
 void SetIdentity44( Matrix44 & m );
-void PrintMatrix33( Matrix33 & m, ostream & out );
-Quaternion MatrixToQuat( Matrix33 & m );
+void PrintMatrix33( Matrix33 const & m, ostream & out );
+Quaternion MatrixToQuat( Matrix33 const & m );
 
 #endif

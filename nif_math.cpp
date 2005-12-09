@@ -33,14 +33,14 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "nif_math.h"
 
-void PrintMatrix( Matrix33 & m, ostream & out ) {
+void PrintMatrix( Matrix33 const & m, ostream & out ) {
 	out << endl
 		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
 		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
 		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" <<endl;
 }
 
-Vector3 MultVector3( Vector3 & a, Vector3 & b ) {
+Vector3 MultVector3( Vector3 const & a, Vector3 const & b ) {
 	Vector3 answer;
 	answer.x = a.y * b.z - a.z * b.y;
 	answer.y = a.z * b.x - a.x * b.z;
@@ -64,7 +64,7 @@ void SetIdentity44( Matrix44 & m ) {
 
 //Vector3 MatrixToEuler( Matrix33 & m ) {}
 
-Quaternion MatrixToQuat( Matrix33 & m ) {
+Quaternion MatrixToQuat( Matrix33 const & m ) {
 	Quaternion quat;
 	float tr, s, q[4];
 	int i, j, k;
@@ -108,7 +108,7 @@ Quaternion MatrixToQuat( Matrix33 & m ) {
 	return quat;
 }
 
-Matrix33 MultMatrix33( Matrix33 & a, Matrix33 & b ) {
+Matrix33 MultMatrix33( Matrix33 const & a, Matrix33 const & b ) {
 	Matrix33 result;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -122,7 +122,7 @@ Matrix33 MultMatrix33( Matrix33 & a, Matrix33 & b ) {
 	return result;
 }
 
-Matrix44 MultMatrix44( Matrix44 & a, Matrix44 & b ) {
+Matrix44 MultMatrix44( Matrix44 const & a, Matrix44 const & b ) {
 	Matrix44 result;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -136,13 +136,13 @@ Matrix44 MultMatrix44( Matrix44 & a, Matrix44 & b ) {
 	return result;
 }
 
-float DetMatrix33( Matrix33 & m ) {
+float DetMatrix33( Matrix33 const & m ) {
 	return  m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1])
 		  - m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0])
 		  + m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
 }
 
-float DetMatrix44( Matrix44 & m ) {
+float DetMatrix44( Matrix44 const & m ) {
 	Matrix33 sub1(
 		m[1][1], m[1][2], m[1][3],
 		m[2][1], m[2][2], m[2][3],
@@ -173,7 +173,7 @@ float DetMatrix44( Matrix44 & m ) {
 	      - m[0][3] * DetMatrix33( sub4 );
 }
 
-float AdjMatrix44(Matrix44 & m, int skip_r, int skip_c) {
+float AdjMatrix44(Matrix44 const & m, int skip_r, int skip_c) {
 	Matrix33 sub;
 	int i = 0, j = 0;
 	for (int r = 0; r < 4; r++) {
@@ -192,7 +192,7 @@ float AdjMatrix44(Matrix44 & m, int skip_r, int skip_c) {
 	return pow(-1.0f, float(skip_r + skip_c)) * DetMatrix33( sub );
 }
 
-Matrix44 InverseMatrix44( Matrix44 & m ) {
+Matrix44 InverseMatrix44( Matrix44 const & m ) {
 	Matrix44 result;
 	float det = DetMatrix44(m);
 	for (int r = 0; r < 4; r++) {
@@ -203,7 +203,7 @@ Matrix44 InverseMatrix44( Matrix44 & m ) {
 	return result;
 }
 
-void QuatToMatrix( Quaternion & quat, ostream & out ) {
+void QuatToMatrix( Quaternion const & quat, ostream & out ) {
 	Matrix33 m;
 
 	float w = quat.w;
@@ -240,7 +240,7 @@ void QuatToMatrix( Quaternion & quat, ostream & out ) {
 		<< "         Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
 }
 
-void QuatToEuler( Quaternion & quat, ostream & out ) {
+void QuatToEuler( Quaternion const & quat, ostream & out ) {
 	float w = quat.w;
 	float x = quat.x;
 	float y = quat.y;

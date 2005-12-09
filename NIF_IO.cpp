@@ -104,23 +104,23 @@ int BlockSearch( ifstream& in ) {
 
 //--IO Stream Functions--//
 
-ostream & operator<<(ostream & lh, fVector2 & rh) {
+ostream & operator<<(ostream & lh, fVector2 const & rh) {
 	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ")";
 }
 
-ostream & operator<<(ostream & lh, fVector3 & rh) {
+ostream & operator<<(ostream & lh, fVector3 const & rh) {
 	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ", " << setw(5) << rh[2] << ")";
 }
 
-ostream & operator<<(ostream & lh, fVector4 & rh) {
+ostream & operator<<(ostream & lh, fVector4 const & rh) {
 	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ", " << setw(5) << rh[2] << ", " << setw(5) << rh[3] << ")";
 }
 
-ostream & operator<<(ostream & lh, usVector3 & rh) {
+ostream & operator<<(ostream & lh, usVector3 const & rh) {
 	return lh << "(" << setw(4) << rh[0] << ", " << setw(4) << rh[1] << ", " << setw(4) << rh[2] << ")";
 }
 
-ostream & operator<<(ostream & lh, nifApplyMode & rh) {
+ostream & operator<<(ostream & lh, nifApplyMode const & rh) {
 	switch (int(rh)) {
 		case 0: return lh << "Replace (0)";
 		case 1: return lh << "Decal (1)";
@@ -131,7 +131,7 @@ ostream & operator<<(ostream & lh, nifApplyMode & rh) {
 	return lh;
 }
 
-ostream & operator<<(ostream & lh, nifPixelLayout & rh) {
+ostream & operator<<(ostream & lh, nifPixelLayout const & rh) {
 	switch (int(rh)) {
 		case 0: return lh << "Palettised (0)";
 		case 1: return lh << "16-bit High Color (1)";
@@ -143,7 +143,7 @@ ostream & operator<<(ostream & lh, nifPixelLayout & rh) {
 	return lh;
 }
 
-ostream & operator<<(ostream & lh, nifMipMapFormat & rh) {
+ostream & operator<<(ostream & lh, nifMipMapFormat const & rh) {
 	switch (int(rh)) {
 		case 0: return lh << "No (0)";
 		case 1: return lh << "Yes (1)";
@@ -152,7 +152,7 @@ ostream & operator<<(ostream & lh, nifMipMapFormat & rh) {
 	return lh;
 }
 
-ostream & operator<<(ostream & lh, nifAlphaFormat & rh) {
+ostream & operator<<(ostream & lh, nifAlphaFormat const & rh) {
 	switch (int(rh)) {
 		case 0: return lh << "None (0)";
 		case 1: return lh << "Binary (1)";
@@ -259,7 +259,7 @@ void WriteByte( byte val, ofstream& out ){
 	out.write( (char*)&val, 1 );
 }
 
-void WriteUSVector3( usVector3& vec, ofstream& out ){
+void WriteUSVector3( usVector3 const & vec, ofstream& out ){
 
 	WriteUShort( vec[0], out );
 	WriteUShort( vec[1], out );
@@ -271,20 +271,20 @@ void WriteFloat( float val, ofstream& out ){
 	out.write( reinterpret_cast<char*>(&val), sizeof(val) );
 }
 
-void WriteFVector2( fVector2& fvec, ofstream& out ){
+void WriteFVector2( fVector2 const & fvec, ofstream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
 }
 
-void WriteFVector3( fVector3& fvec, ofstream& out ){
+void WriteFVector3( fVector3 const & fvec, ofstream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
 	WriteFloat( fvec[2], out );
 }
 
-void WriteFVector4( fVector4& fvec, ofstream& out ){
+void WriteFVector4( fVector4 const & fvec, ofstream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
@@ -292,7 +292,7 @@ void WriteFVector4( fVector4& fvec, ofstream& out ){
 	WriteFloat( fvec[3], out );
 }
 
-void WriteString( string val, ofstream& out ) {
+void WriteString( string const & val, ofstream& out ) {
 	WriteUInt( uint(val.size()), out );
 	out.write( val.c_str(), std::streamsize(val.size()) );
 }
@@ -319,7 +319,7 @@ void WriteBlockName( const char* name, uint nameLength, ofstream& out ){
 	out.write( name, nameLength );
 }
 
-ostream & operator<<(ostream & lh, nifIndex & rh) {
+ostream & operator<<(ostream & lh, nifIndex const & rh) {
 	if (rh._index != -1) {
 		lh << "Block " << rh._index;
 	} else {
@@ -328,7 +328,7 @@ ostream & operator<<(ostream & lh, nifIndex & rh) {
 	return lh;
 }
 
-ostream & operator<<(ostream & lh, Str & rh) {
+ostream & operator<<(ostream & lh, Str const & rh) {
 	//Fix string
 	char * s = new char[rh._n + 1];
 	strncpy(s, rh._c, rh._n);
@@ -338,18 +338,18 @@ ostream & operator<<(ostream & lh, Str & rh) {
 	return lh;
 }
 
-ostream & operator<<(ostream & lh, Hex & rh) {
+ostream & operator<<(ostream & lh, Hex const & rh) {
 	return lh << dec << rh._n << " (0x" << hex << uppercase << rh._n << ")" << dec;
 }
 
-ostream & operator<<(ostream & lh, Index & rh) {
+ostream & operator<<(ostream & lh, Index const & rh) {
 	if (int(rh._n) != -1)
 		return lh << "Block " << rh._n;
 	else
 		return lh << "None";
 }
 
-ostream & operator<<(ostream & lh, Bin & rh) {
+ostream & operator<<(ostream & lh, Bin const & rh) {
 	uint x = rh._n;
 	for (uint i = 0; i < rh._w; i++) {
 		if((x & 0x80) !=0) {
@@ -400,30 +400,30 @@ void NifStream( Triangle & val, ifstream& in ) {
 
 
 
-void NifStream( uint & val, ofstream& out ) { WriteUInt( val, out ); }
-void NifStream( ushort & val, ofstream& out ) { WriteUShort( val, out ); }
-void NifStream( byte & val, ofstream& out ) { WriteByte( val, out ); }
-void NifStream( float & val, ofstream& out ) { WriteFloat( val, out ); }
-void NifStream( string & val, ofstream& out ) { WriteString( val, out ); }
-void NifStream( KeyType & val, ofstream& out ) { WriteUInt( val, out ); }
-void NifStream( Vector3 & val, ofstream& out ) {
+void NifStream( uint const & val, ofstream& out ) { WriteUInt( val, out ); }
+void NifStream( ushort const & val, ofstream& out ) { WriteUShort( val, out ); }
+void NifStream( byte const & val, ofstream& out ) { WriteByte( val, out ); }
+void NifStream( float const & val, ofstream& out ) { WriteFloat( val, out ); }
+void NifStream( string const & val, ofstream& out ) { WriteString( val, out ); }
+void NifStream( KeyType const & val, ofstream& out ) { WriteUInt( val, out ); }
+void NifStream( Vector3 const & val, ofstream& out ) {
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Quaternion & val, ofstream& out ) {
+void NifStream( Quaternion const & val, ofstream& out ) {
 	WriteFloat( val.w, out );
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Color & val, ofstream& out ) {
+void NifStream( Color const & val, ofstream& out ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );
 	WriteFloat( val.a, out );
 };
-void NifStream( Triangle & val, ofstream& out ) {
+void NifStream( Triangle const & val, ofstream& out ) {
 	WriteUShort( val.v1, out );
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );

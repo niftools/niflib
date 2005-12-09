@@ -72,24 +72,24 @@ public:
 
 	//File I/O
 	virtual void Read( ifstream& in, unsigned int version ) = 0;
-	virtual void Write( ofstream& out, unsigned int version ) = 0;	
+	virtual void Write( ofstream& out, unsigned int version ) const = 0;	
 };
 
 class ABlock : public IBlock, public IBlockInternal {
 public:
 	ABlock();
 	~ABlock();
-	void AddAttr( AttrType type, string name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
-	attr_ref GetAttr(string attr_name);
-	vector<attr_ref> GetAttrs();
-	int GetBlockNum() { return _block_num; }
-	bool IsControllable() { return false; }
-	bool IsController() { return false; }
-	string asString();
+	void AddAttr( AttrType type, string const & name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
+	attr_ref GetAttr(string const & attr_name) const;
+	vector<attr_ref> GetAttrs() const;
+	int GetBlockNum() const { return _block_num; }
+	bool IsControllable() const { return false; }
+	bool IsController() const { return false; }
+	string asString() const;
 
 	//Links
-	blk_ref GetParent();
-	list<blk_ref> GetLinks();
+	blk_ref GetParent() const;
+	list<blk_ref> GetLinks() const;
 
 	//Reference Counting
 	void AddRef();
@@ -104,6 +104,14 @@ public:
 		}
 	}
 
+	void const * QueryInterface( int id ) const {
+		if ( id == BlockInternal ) {
+			return (void const *)static_cast<IBlockInternal const *>(this);;
+		} else {
+			return NULL;
+		}
+	}
+
 	//--Internal Functions--//
 	void AddParent( blk_ref parent);
 	void RemoveParent( IBlock * match );
@@ -111,7 +119,7 @@ public:
 	void FixUpLinks( const vector<blk_ref> & blocks );
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
 protected:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
@@ -141,6 +149,7 @@ public:
 	~ANode();
 	void InitAttrs();
 	void * QueryInterface( int id );
+	void const * QueryInterface( int id ) const;
 	void Read( ifstream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		Matrix44 transform;
@@ -149,11 +158,11 @@ public:
 	}
 
 	//INode Functions
-	Matrix44 GetLocalTransform();
-	Matrix44 GetWorldTransform();
-	Matrix44 GetBindPosition();
-	Matrix44 GetLocalBindPos();
-	void SetBindPosition( Matrix44 & m );
+	Matrix44 GetLocalTransform() const;
+	Matrix44 GetWorldTransform() const;
+	Matrix44 GetBindPosition() const;
+	Matrix44 GetLocalBindPos() const;
+	void SetBindPosition( Matrix44 const & m );
 
 	//INodeInternal Functions
 	void IncSkinRef( IBlock * skin_data );
@@ -247,8 +256,8 @@ public:
 	NiNode();
 	void Init() {}
 	~NiNode() {}
-	string GetBlockType() { return "NiNode"; }
-	string asString();
+	string GetBlockType() const { return "NiNode"; }
+	string asString() const;
 };
 
 /**
@@ -261,7 +270,7 @@ public:
 	void Init() {}
 	~RootCollisionNode() {}
 
-	string GetBlockType() { return "RootCollisionNode"; }
+	string GetBlockType() const { return "RootCollisionNode"; }
 };
 
 /**
@@ -274,7 +283,7 @@ public:
 	void Init() {}
 	~AvoidNode() {}
 
-	string GetBlockType() { return "AvoidNode"; }
+	string GetBlockType() const { return "AvoidNode"; }
 };
 
 /**
@@ -286,7 +295,7 @@ public:
 	void Init() {}
 	~NiBillboardNode() {}
 
-	string GetBlockType() { return "NiBillboardNode"; }
+	string GetBlockType() const { return "NiBillboardNode"; }
 };
 
 /**
@@ -298,7 +307,7 @@ public:
 	void Init() {}
 	~NiBSAnimationNode() {}
 
-	string GetBlockType() { return "NiBSAnimationNode"; }
+	string GetBlockType() const { return "NiBSAnimationNode"; }
 };
 
 /**
@@ -310,7 +319,7 @@ public:
 	void Init() {}
 	~NiBSParticleNode() {}
 
-	string GetBlockType() { return "NiBSParticleNode"; }
+	string GetBlockType() const { return "NiBSParticleNode"; }
 };
 
 /**
@@ -322,7 +331,7 @@ public:
 	void Init() {}
 	~NiLODNode() {}
 
-	string GetBlockType() { return "NiLODNode"; }
+	string GetBlockType() const { return "NiLODNode"; }
 };
 
 /**
@@ -334,7 +343,7 @@ public:
 	void Init() {}
 	~NiZBufferProperty() {}
 
-	string GetBlockType() { return "NiZBufferProperty"; }
+	string GetBlockType() const { return "NiZBufferProperty"; }
 };
 
 /**
@@ -347,7 +356,7 @@ public:
 	void Init() {}
 	~NiShadeProperty() {}
 
-	string GetBlockType() { return "NiShadeProperty"; }
+	string GetBlockType() const { return "NiShadeProperty"; }
 };
 
 /**
@@ -360,7 +369,7 @@ public:
 	void Init() {}
 	~NiWireframeProperty() {}
 
-	string GetBlockType() { return "NiWireframeProperty"; }
+	string GetBlockType() const { return "NiWireframeProperty"; }
 };
 
 /**
@@ -373,7 +382,7 @@ public:
 	void Init() {}
 	~NiDitherProperty() {}
 
-	string GetBlockType() { return "NiDitherProperty"; }
+	string GetBlockType() const { return "NiDitherProperty"; }
 };
 
 /**
@@ -386,7 +395,7 @@ public:
 	void Init() {}
 	~NiSequenceStreamHelper () {}
 
-	string GetBlockType() { return "NiSequenceStreamHelper"; }
+	string GetBlockType() const { return "NiSequenceStreamHelper"; }
 };
 
 /**
@@ -399,7 +408,7 @@ public:
 	void Init() {}
 	~NiVertexColorProperty() {}
 
-	string GetBlockType() { return "NiVertexColorProperty"; }
+	string GetBlockType() const { return "NiVertexColorProperty"; }
 };
 
 
@@ -413,7 +422,7 @@ public:
 	void Init() {}
 	~NiTriShape() {}
 
-	string GetBlockType() { return "NiTriShape"; }
+	string GetBlockType() const { return "NiTriShape"; }
 };
 
 /**
@@ -425,7 +434,7 @@ public:
 	void Init() {}
 	~NiTriStrips() {}
 
-	string GetBlockType() { return "NiTriStrips"; }
+	string GetBlockType() const { return "NiTriStrips"; }
 };
 
 /**
@@ -436,7 +445,7 @@ public:
 	NiTexturingProperty( );
 	void Init() {}
 	~NiTexturingProperty() {}
-	string GetBlockType() { return "NiTexturingProperty"; }
+	string GetBlockType() const { return "NiTexturingProperty"; }
 };
 
 /**
@@ -447,7 +456,7 @@ public:
 	NiSourceTexture();
 	void Init() {}
 	~NiSourceTexture() {}
-	string GetBlockType() { return "NiSourceTexture"; }
+	string GetBlockType() const { return "NiSourceTexture"; }
 };
 
 
@@ -463,9 +472,9 @@ public:
 	~NiPixelData() { if (data != NULL) delete [] data; }
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiPixelData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiPixelData"; }
 
 private:
 	struct MipMap {
@@ -488,7 +497,7 @@ public:
 	NiMaterialProperty();
 	void Init() {}
 	~NiMaterialProperty() {}
-	string GetBlockType() { return "NiMaterialProperty"; };
+	string GetBlockType() const { return "NiMaterialProperty"; };
 };
 
 /**
@@ -499,7 +508,7 @@ public:
 	NiSpecularProperty();
 	void Init() {}
 	~NiSpecularProperty() {}
-	string GetBlockType() { return "NiSpecularProperty"; };
+	string GetBlockType() const { return "NiSpecularProperty"; };
 };
 
 /**
@@ -510,7 +519,7 @@ public:
 	NiStencilProperty();
 	void Init() {}
 	~NiStencilProperty() {}
-	string GetBlockType() { return "NiStencilProperty"; };
+	string GetBlockType() const { return "NiStencilProperty"; };
 };
 
 /**
@@ -521,7 +530,7 @@ public:
 	NiAlphaProperty();
 	void Init() {}
 	~NiAlphaProperty() {}
-	string GetBlockType() { return "NiAlphaProperty"; }
+	string GetBlockType() const { return "NiAlphaProperty"; }
 };
 
 /**
@@ -535,10 +544,11 @@ public:
 	}
 	~AShapeData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
 	void * QueryInterface( int id );
+	void const * QueryInterface( int id ) const;
 
 	//--IShapeData--//
 	//Counts
@@ -575,8 +585,8 @@ public:
 	}
 	~AParticlesData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 protected:
 	bool hasSizes;
 	short numActive, numValid;
@@ -592,8 +602,8 @@ public:
 	ARotatingParticlesData() {}
 	~ARotatingParticlesData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 protected:
 	bool hasRotations;
 	vector<Quaternion> rotations;
@@ -610,10 +620,10 @@ public:
 	}
 	~NiParticleMeshesData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
-	string GetBlockType() { return "NiParticleMeshesData"; }
+	string GetBlockType() const { return "NiParticleMeshesData"; }
 protected:
 	
 };
@@ -626,7 +636,7 @@ class NiAutoNormalParticlesData : public AParticlesData {
 public:
 	NiAutoNormalParticlesData() {}
 	~NiAutoNormalParticlesData() {}
-	string GetBlockType() { return "NiAutoNormalParticlesData"; }
+	string GetBlockType() const { return "NiAutoNormalParticlesData"; }
 };
 
 /**
@@ -637,20 +647,21 @@ public:
 	NiTriShapeData() : match_group_mode(false) {}
 	~NiTriShapeData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiTriShapeData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiTriShapeData"; }
 	void * QueryInterface( int id );
+	void const * QueryInterface( int id ) const;
 
 	//--ITriShapeData--//
 	//Counts
-	short GetTriangleCount() { return short(triangles.size()); }
+	short GetTriangleCount() const { return short(triangles.size()); }
 	void SetTriangleCount(int n);
 	//Match Detection
 	void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
-	bool GetMatchDetectionMode() { return match_group_mode; }
+	bool GetMatchDetectionMode() const { return match_group_mode; }
 	//Getters
-	vector<Triangle> GetTriangles() { return triangles; }
+	vector<Triangle> GetTriangles() const { return triangles; }
 	//Setters
 	void SetTriangles( const vector<Triangle> & in );
 
@@ -667,21 +678,22 @@ public:
 	NiTriStripsData() {}
 	~NiTriStripsData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
-	string GetBlockType() { return "NiTriStripsData"; }
+	string GetBlockType() const { return "NiTriStripsData"; }
 
 	void * QueryInterface( int id );
+	void const * QueryInterface( int id ) const;
 
 	//--ITriStripsData--//
 	//Counts
-	short GetStripCount();
+	short GetStripCount() const;
 	void SetStripCount(int n);
-	short GetTriangleCount();
+	short GetTriangleCount() const;
 	//Getters
-	vector<short> GetStrip( int index );
-	vector<Triangle> GetTriangles();
+	vector<short> GetStrip( int index ) const;
+	vector<Triangle> GetTriangles() const;
 	//Setter
 	void SetStrip( int index, const vector<short> & in );
 
@@ -697,10 +709,10 @@ public:
 	NiCollisionData() {}
 	~NiCollisionData() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
-	string GetBlockType() { return "NiCollisionData"; }
+	string GetBlockType() const { return "NiCollisionData"; }
 private:
 	int unknownInt1, collisionType, unknownInt2;
 	byte unknownByte;
@@ -719,7 +731,7 @@ public:
 	NiKeyframeController();
 	void Init() {}
 	~NiKeyframeController() {}
-	string GetBlockType() { return "NiKeyframeController"; }
+	string GetBlockType() const { return "NiKeyframeController"; }
 };
 
 /**
@@ -730,7 +742,7 @@ public:
 	NiLookAtController();
 	void Init() {}
 	~NiLookAtController() {}
-	string GetBlockType() { return "NiLookAtController"; }
+	string GetBlockType() const { return "NiLookAtController"; }
 };
 
 /**
@@ -741,7 +753,7 @@ public:
 	NiAlphaController();
 	void Init() {}
 	~NiAlphaController() {}
-	string GetBlockType() { return "NiAlphaController"; }
+	string GetBlockType() const { return "NiAlphaController"; }
 };
 
 /**
@@ -752,7 +764,7 @@ public:
 	NiFlipController();
 	void Init() {}
 	~NiFlipController() {}
-	string GetBlockType() { return "NiFlipController"; }
+	string GetBlockType() const { return "NiFlipController"; }
 };
 
 /**
@@ -763,7 +775,7 @@ public:
 	NiVisController();
 	void Init() {}
 	~NiVisController() {}
-	string GetBlockType() { return "NiVisController"; }
+	string GetBlockType() const { return "NiVisController"; }
 };
 
 /**
@@ -774,7 +786,7 @@ public:
 	NiMaterialColorController();
 	void Init() {}
 	~NiMaterialColorController() {}
-	string GetBlockType() { return "NiMaterialColorController"; }
+	string GetBlockType() const { return "NiMaterialColorController"; }
 };
 
 /**
@@ -785,7 +797,7 @@ public:
 	NiUVController();
 	void Init() {}
 	~NiUVController() {}
-	string GetBlockType() { return "NiUVController"; }
+	string GetBlockType() const { return "NiUVController"; }
 };
 
 /**
@@ -797,7 +809,7 @@ public:
 	NiPathController();
 	void Init() {}
 	~NiPathController() {}
-	string GetBlockType() { return "NiPathController"; }
+	string GetBlockType() const { return "NiPathController"; }
 };
 
 /**
@@ -809,7 +821,7 @@ public:
 	NiAmbientLight();
 	void Init() {}
 	~NiAmbientLight() {}
-	string GetBlockType() { return "NiAmbientLight"; }
+	string GetBlockType() const { return "NiAmbientLight"; }
 };
 
 /**
@@ -821,7 +833,7 @@ public:
 	NiDirectionalLight();
 	void Init() {}
 	~NiDirectionalLight() {}
-	string GetBlockType() { return "NiDirectionalLight"; }
+	string GetBlockType() const { return "NiDirectionalLight"; }
 };
 
 /**
@@ -833,7 +845,7 @@ public:
 	NiAutoNormalParticles();
 	void Init() {}
 	~NiAutoNormalParticles() {}
-	string GetBlockType() { return "NiAutoNormalParticles"; }
+	string GetBlockType() const { return "NiAutoNormalParticles"; }
 };
 
 /**
@@ -845,7 +857,7 @@ public:
 	NiRotatingParticles();
 	void Init() {}
 	~NiRotatingParticles() {}
-	string GetBlockType() { return "NiRotatingParticles"; }
+	string GetBlockType() const { return "NiRotatingParticles"; }
 }; 
 
 /**
@@ -857,7 +869,7 @@ public:
 	NiTextureEffect();
 	void Init() {}
 	~NiTextureEffect() {}
-	string GetBlockType() { return "NiTextureEffect"; }
+	string GetBlockType() const { return "NiTextureEffect"; }
 }; 
 
 /**
@@ -869,7 +881,7 @@ public:
 	NiCamera();
 	void Init() {}
 	~NiCamera() {}
-	string GetBlockType() { return "NiCamera"; }
+	string GetBlockType() const { return "NiCamera"; }
 }; 
 
 /**
@@ -881,7 +893,7 @@ public:
 	NiParticleMeshes();
 	void Init() {}
 	~NiParticleMeshes() {}
-	string GetBlockType() { return "NiParticleMeshes"; }
+	string GetBlockType() const { return "NiParticleMeshes"; }
 }; 
 
 /**
@@ -893,7 +905,7 @@ public:
 	NiGravity();
 	void Init() {}
 	~NiGravity() {}
-	string GetBlockType() { return "NiGravity"; }
+	string GetBlockType() const { return "NiGravity"; }
 }; 
 
 /**
@@ -905,7 +917,7 @@ public:
 	NiParticleBomb();
 	void Init() {}
 	~NiParticleBomb() {}
-	string GetBlockType() { return "NiParticleBomb"; }
+	string GetBlockType() const { return "NiParticleBomb"; }
 }; 
 
 /**
@@ -917,7 +929,7 @@ public:
 	NiPlanarCollider();
 	void Init() {}
 	~NiPlanarCollider() {}
-	string GetBlockType() { return "NiPlanarCollider"; }
+	string GetBlockType() const { return "NiPlanarCollider"; }
 }; 
 
 /**
@@ -929,7 +941,7 @@ public:
 	NiSphericalCollider();
 	void Init() {}
 	~NiSphericalCollider() {}
-	string GetBlockType() { return "NiSphericalCollider"; }
+	string GetBlockType() const { return "NiSphericalCollider"; }
 }; 
 
 /**
@@ -941,7 +953,7 @@ public:
 	NiParticleGrowFade();
 	void Init() {}
 	~NiParticleGrowFade() {}
-	string GetBlockType() { return "NiParticleGrowFade"; }
+	string GetBlockType() const { return "NiParticleGrowFade"; }
 }; 
 
 /**
@@ -953,7 +965,7 @@ public:
 	NiParticleMeshModifier();
 	void Init() {}
 	~NiParticleMeshModifier() {}
-	string GetBlockType() { return "NiParticleMeshModifier"; }
+	string GetBlockType() const { return "NiParticleMeshModifier"; }
 }; 
 
 /**
@@ -965,7 +977,7 @@ public:
 	NiParticleColorModifier();
 	void Init() {}
 	~NiParticleColorModifier() {}
-	string GetBlockType() { return "NiParticleColorModifier"; }
+	string GetBlockType() const { return "NiParticleColorModifier"; }
 }; 
 
 /**
@@ -977,7 +989,7 @@ public:
 	NiParticleRotation();
 	void Init() {}
 	~NiParticleRotation() {}
-	string GetBlockType() { return "NiParticleRotation"; }
+	string GetBlockType() const { return "NiParticleRotation"; }
 }; 
 
 /**
@@ -991,9 +1003,9 @@ class NiKeyframeData : public AData, public IKeyframeData {
 		~NiKeyframeData() {}
 
 		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiKeyframeData"; }
+		void Write( ofstream& out, unsigned int version ) const;
+		string asString() const;
+		string GetBlockType() const { return "NiKeyframeData"; }
 		
 		void * QueryInterface( int id ) {
 			if ( id == ID_KEYFRAME_DATA ) {
@@ -1002,21 +1014,28 @@ class NiKeyframeData : public AData, public IKeyframeData {
 				return ABlock::QueryInterface( id );
 			}
 		}
+		void const * QueryInterface( int id ) const {
+			if ( id == ID_KEYFRAME_DATA ) {
+				return (void const *)static_cast<IKeyframeData const *>(this);;
+			} else {
+				return ABlock::QueryInterface( id );
+			}
+		}
 
 		//--IKeyframeData Functions--//
-		KeyType GetRotateType() { return rotationType; }
+		KeyType GetRotateType() const { return rotationType; }
 		void SetRotateType( KeyType t ) { rotationType = t; }
-		vector< Key<Quaternion> > GetRotateKeys() { return rotKeys; }
+		vector< Key<Quaternion> > GetRotateKeys() const { return rotKeys; }
 		void SetRotateKeys( vector< Key<Quaternion> > const & keys ) { rotKeys = keys; }
 		//Translate
-		KeyType GetTranslateType() { return translationType; }
+		KeyType GetTranslateType() const { return translationType; }
 		void SetTranslateType( KeyType t ) { translationType = t; }
-		vector< Key<Vector3> > GetTranslateKeys() { return transKeys; }
+		vector< Key<Vector3> > GetTranslateKeys() const { return transKeys; }
 		void SetTranslateKeys( vector< Key<Vector3> > const & keys ) { transKeys = keys; }
 		//Scale
-		KeyType GetScaleType() { return scaleType; }
+		KeyType GetScaleType() const { return scaleType; }
 		void SetScaleType( KeyType t ) { scaleType = t; }
-		vector< Key<float> > GetScaleKeys() { return scaleKeys; }
+		vector< Key<float> > GetScaleKeys() const { return scaleKeys; }
 		void SetScaleKeys( vector< Key<float> > const & keys ) { scaleKeys = keys; }
 
 	private:
@@ -1043,10 +1062,10 @@ public:
 	void Init() {}
 	~NiPalette() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
-	string GetBlockType() { return "NiPalette"; }
+	string GetBlockType() const { return "NiPalette"; }
 private:
 	byte unknownBytes[5];
 	byte palette[256][4];
@@ -1062,10 +1081,10 @@ public:
 	void Init() {}
 	~NiSkinPartition() {}
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
 
-	string GetBlockType() { return "NiSkinPartition"; }
+	string GetBlockType() const { return "NiSkinPartition"; }
 private:
 	struct SkinPartition {
 		vector<ushort> bones;
@@ -1086,7 +1105,7 @@ private:
 //Non-Public interface to allow NiSkinData to get the bone list read by NiSkinInstance
 class ISkinInstInternal {
 public:
-	virtual vector<int> GetBoneList() = 0;
+	virtual vector<int> GetBoneList() const = 0;
 	virtual void ReadBoneList( ifstream& in ) = 0;
 };
 
@@ -1098,7 +1117,7 @@ public:
 		AddAttr( attr_bones, "Bones" );
 	}
 	~NiSkinInstance() {}
-	string GetBlockType() { return "NiSkinInstance"; }
+	string GetBlockType() const { return "NiSkinInstance"; }
 
 	void * QueryInterface( int id ) {
 		if ( id == SkinInstInternal ) {
@@ -1107,10 +1126,17 @@ public:
 			return ABlock::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == SkinInstInternal ) {
+			return (void const *)static_cast<ISkinInstInternal const *>(this);;
+		} else {
+			return ABlock::QueryInterface( id );
+		}
+	}
 
 	//ISkinInstInternal
 
-	vector<int> GetBoneList() { return bones; }
+	vector<int> GetBoneList() const { return bones; }
 
 	void ReadBoneList( ifstream& in ) {
 		int len = ReadUInt( in );
@@ -1128,7 +1154,7 @@ public:
 	virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
 	virtual void RepositionTriShape() = 0;
 	virtual void StraightenSkeleton() = 0;
-	virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
+	virtual void RemoveBoneByPtr( blk_ref const & bone ) = 0;
 };
 
 class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
@@ -1148,22 +1174,23 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		~NiSkinData();
 
 		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version );
-		string asString();
-		string GetBlockType() { return "NiSkinData"; }
+		void Write( ofstream& out, unsigned int version ) const;
+		string asString() const;
+		string GetBlockType() const { return "NiSkinData"; }
 		void * QueryInterface( int id );
+		void const * QueryInterface( int id ) const;
 
 		//ISkinDataInternal
-		void SetBones( vector<blk_ref> bone_blocks );
+		void SetBones( vector<blk_ref> bone_blocks ); // not vector<blk_ref> const &, since we must cast the blk_ref's into (non-constant) IBlock * pointers
 		void RepositionTriShape();
 		void StraightenSkeleton();
-		void RemoveBoneByPtr( IBlock * bone );
+		void RemoveBoneByPtr( blk_ref const & bone );
 
         //ISkinData
-		vector<blk_ref> GetBones();
-		map<int, float> GetWeights( blk_ref bone );
-		void AddBone( blk_ref bone, map<int, float> in );
-		void RemoveBone( blk_ref bone );
+		vector<blk_ref> GetBones(); // cannot be const, since this changes the reference counts for the bone blocks!
+		map<int, float> GetWeights( blk_ref const & bone ) const;
+		void AddBone( blk_ref const & bone, map<int, float> const & in );
+		void RemoveBone( blk_ref const & bone );
 	private:
 		struct Bone {
 			Matrix33 rotation;
@@ -1179,8 +1206,8 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		float  scale;
 		int unknownInt;
 		byte unknownByte;
-		map<IBlock*, Bone> bone_map;
-		vector<Bone> bones;		
+		map<IBlock *, Bone> bone_map;
+		vector<Bone> bones;
 };
 
 //-- New Nodes--//
@@ -1191,8 +1218,8 @@ public:
 	void Init() {}
 	~NiGeomMorpherController() {}
 
-	string asString();
-	string GetBlockType() { return "NiGeomMorpherController"; }
+	string asString() const;
+	string GetBlockType() const { return "NiGeomMorpherController"; }
 };
 
 class NiColorData : public AData, public IColorData {
@@ -1201,9 +1228,9 @@ public:
 	~NiColorData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiColorData"; };
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiColorData"; };
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_COLOR_DATA ) {
@@ -1212,11 +1239,18 @@ public:
 			return AData::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_COLOR_DATA ) {
+			return (void const *)static_cast<IColorData const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
 
 	//--IColorData Functions--//
-	KeyType GetKeyType() { return _type; }
+	KeyType GetKeyType() const { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
-	vector< Key<Color> > GetKeys() { return _keys; }
+	vector< Key<Color> > GetKeys() const { return _keys; }
 	void SetKeys( vector< Key<Color> > const & keys ) { _keys = keys; }
 
 private:
@@ -1234,7 +1268,7 @@ public:
 	}
 	~NiControllerSequence() {}
 
-	string GetBlockType() { return "NiControllerSequence"; }
+	string GetBlockType() const { return "NiControllerSequence"; }
 private:
 	vector< pair< string, blk_ref> > controllers;
 };
@@ -1245,9 +1279,9 @@ public:
 	~NiFloatData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiFloatData"; };
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiFloatData"; };
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_FLOAT_DATA ) {
@@ -1256,11 +1290,18 @@ public:
 			return AData::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_FLOAT_DATA ) {
+			return (void const *)static_cast<IFloatData const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
 
 	//--IFloatData Functions--//
-	KeyType GetKeyType() { return _type; }
+	KeyType GetKeyType() const { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
-	vector< Key<float> > GetKeys() { return _keys; }
+	vector< Key<float> > GetKeys() const { return _keys; }
 	void SetKeys( vector< Key<float> > const & keys ) { _keys = keys; }
 
 private:
@@ -1276,9 +1317,9 @@ public:
 	~NiStringExtraData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiStringExtraData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiStringExtraData"; }
 };
 
 class NiBooleanExtraData : public AExtraData {
@@ -1288,7 +1329,7 @@ public:
 	}
 	~NiBooleanExtraData() {}
 
-	string GetBlockType() { return "NiBooleanExtraData"; };
+	string GetBlockType() const { return "NiBooleanExtraData"; };
 };
 
 class NiIntegerExtraData : public AExtraData {
@@ -1298,7 +1339,7 @@ public:
 	}
 	~NiIntegerExtraData() {}
 
-	string GetBlockType() { return "NiIntegerExtraData"; };
+	string GetBlockType() const { return "NiIntegerExtraData"; };
 };
 
 class NiMorphData : public AData, public IMorphData {
@@ -1309,9 +1350,9 @@ public:
 	~NiMorphData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiMorphData"; };
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiMorphData"; };
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_MORPH_DATA ) {
@@ -1320,15 +1361,22 @@ public:
 			return ABlock::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_MORPH_DATA ) {
+			return (void const *)static_cast<IMorphData const *>(this);;
+		} else {
+			return ABlock::QueryInterface( id );
+		}
+	}
 
 	//--IMorphData Functions --//
-	int GetVertexCount() { return vertCount; }
+	int GetVertexCount() const { return vertCount; }
 	void SetVertexCount( int n );
-	int GetMorphCount() { return int(morphs.size()); }
+	int GetMorphCount() const { return int(morphs.size()); }
 	void SetMorphCount( int n ) { morphs.resize( n ); }
-	vector< Key<float> > GetMorphKeys( int n ) { return morphs[n].keys; }
-	void SetMorphKeys( int n, vector< Key<float> > & keys ) { morphs[n].keys = keys; }
-	vector<Vector3> GetMorphVerts( int n) { return morphs[n].morph; }
+	vector< Key<float> > GetMorphKeys( int n ) const { return morphs[n].keys; }
+	void SetMorphKeys( int n, vector< Key<float> > const & keys ) { morphs[n].keys = keys; }
+	vector<Vector3> GetMorphVerts( int n) const { return morphs[n].morph; }
 	void SetMorphVerts( int n, const vector<Vector3> & in );
 
 private:
@@ -1350,9 +1398,9 @@ public:
 	~NiPosData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiPosData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiPosData"; }
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_POS_DATA ) {
@@ -1361,11 +1409,18 @@ public:
 			return AData::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_POS_DATA ) {
+			return (void const *)static_cast<IPosData const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
 
 	//--IPosData Functions--//
-	KeyType GetKeyType() { return _type; }
+	KeyType GetKeyType() const { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
-	vector< Key<Vector3> > GetKeys() { return _keys; }
+	vector< Key<Vector3> > GetKeys() const { return _keys; }
 	void SetKeys( vector< Key<Vector3> > const & keys ) { _keys = keys; }
 
 private:
@@ -1378,7 +1433,7 @@ public:
 	NiRotatingParticlesData() {}
 	~NiRotatingParticlesData() {}
 
-	string GetBlockType() { return "NiRotationparticlesData"; }
+	string GetBlockType() const { return "NiRotationparticlesData"; }
 };
 
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
@@ -1389,9 +1444,9 @@ public:
 	~NiTextKeyExtraData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiTextKeyExtraData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiTextKeyExtraData"; }
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
@@ -1400,9 +1455,16 @@ public:
 			return AExtraData::QueryInterface( id );
 		}
 	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
+			return (void const *)static_cast<ITextKeyExtraData const *>(this);;
+		} else {
+			return AExtraData::QueryInterface( id );
+		}
+	}
 
 	//--ITextKeyExtraData Functions--//
-	virtual vector< Key<string> > GetKeys() { return _keys; }
+	virtual vector< Key<string> > GetKeys() const { return _keys; }
 	virtual void SetKeys( vector< Key<string> > const & keys ) { _keys = keys; }
 
 private:
@@ -1415,9 +1477,9 @@ public:
 	~NiUVData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiUVData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiUVData"; }
 
 private:
 	struct UVGroup {
@@ -1433,9 +1495,9 @@ public:
 	~NiVertWeightsExtraData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiVertWeightsExtraData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiVertWeightsExtraData"; }
 
 private:
 	uint bytes;
@@ -1448,9 +1510,9 @@ public:
 	~NiVisData() {}
 
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return "NiVisData"; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiVisData"; }
 
 private:
 	vector<Key<byte> > keys;
@@ -1464,9 +1526,9 @@ public:
 	}
 	~UnknownMixIn() { if (data != NULL) delete [] data; }
 	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version );
-	string asString();
-	string GetBlockType() { return _block_type; }
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return _block_type; }
 
 private:
 	string _block_type;
@@ -1483,7 +1545,7 @@ public:
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) {
+	void Write( ofstream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -1491,7 +1553,7 @@ public:
 		out << ABlock::asString();
 		out << UnknownMixIn::asString();
 	}
-	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
+	string GetBlockType() const { return UnknownMixIn::GetBlockType(); }
 };
 
 class UnknownControllerBlock : public AController, public UnknownMixIn {
@@ -1502,7 +1564,7 @@ public:
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) {
+	void Write( ofstream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -1516,7 +1578,7 @@ public:
 
 		return out.str();
 	}
-	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
+	string GetBlockType() const { return UnknownMixIn::GetBlockType(); }
 };
 
 class UnknownPropertyBlock : public AProperty, public UnknownMixIn {
@@ -1527,7 +1589,7 @@ public:
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) {
+	void Write( ofstream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -1541,7 +1603,7 @@ public:
 
 		return out.str();
 	}
-	string GetBlockType() { return UnknownMixIn::GetBlockType(); }
+	string GetBlockType() const { return UnknownMixIn::GetBlockType(); }
 };
 
 /**
@@ -1552,7 +1614,7 @@ public:
 	NiParticleSystemController();
 	void Init() {}
 	~NiParticleSystemController() {}
-	string GetBlockType() { return "NiParticleSystemController"; }
+	string GetBlockType() const { return "NiParticleSystemController"; }
 };
 
 /**
@@ -1563,7 +1625,7 @@ public:
 	NiBSPArrayController();
 	void Init() {}
 	~NiBSPArrayController() {}
-	string GetBlockType() { return "NiBSPArrayController"; }
+	string GetBlockType() const { return "NiBSPArrayController"; }
 };
 
 #endif

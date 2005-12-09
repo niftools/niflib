@@ -137,7 +137,7 @@ int BlockSearch( ifstream& in );
 class Str {
 public:
 	Str(const char * c, int n) { _c = c; _n = n; }
-	friend ostream & operator<<(ostream & lh, Str & rh);
+	friend ostream & operator<<(ostream & lh, Str const & rh);
 private:
 	const char * _c;
 	uint _n;
@@ -145,44 +145,44 @@ private:
 
 class Hex {
 public:
-	Hex(uint & n) { _n = n; }
-	Hex(ushort & n) { _n = uint(n); }
-	Hex(byte & n) { _n = uint(n); }
-	friend ostream & operator<<(ostream & lh, Hex & rh);
+	Hex(uint const & n) { _n = n; }
+	Hex(ushort const & n) { _n = uint(n); }
+	Hex(byte const & n) { _n = uint(n); }
+	friend ostream & operator<<(ostream & lh, Hex const & rh);
 private:
 	uint _n;
 };
 
 class Index {
 public:
-	Index(uint & n) { _n = n; }
-	Index(ushort & n) { _n = uint(n); }
-	Index(byte & n) { _n = uint(n); }
-	friend ostream & operator<<(ostream & lh, Index & rh);
+	Index(uint const & n) { _n = n; }
+	Index(ushort const & n) { _n = uint(n); }
+	Index(byte const & n) { _n = uint(n); }
+	friend ostream & operator<<(ostream & lh, Index const & rh);
 private:
 	uint _n;
 };
 
 class Bin {
 public:
-	Bin(uint &  n) { _n = n; _w = 32; }
-	Bin(ushort & n) {_n = uint(n); _w = 16; }
-	Bin(byte & n) { _n = uint(n); _w = 8; }
-	friend ostream & operator<<(ostream & lh, Bin & rh);
+	Bin(uint const &  n) { _n = n; _w = 32; }
+	Bin(ushort const & n) {_n = uint(n); _w = 16; }
+	Bin(byte const & n) { _n = uint(n); _w = 8; }
+	friend ostream & operator<<(ostream & lh, Bin const & rh);
 private:
 	uint _n;
 	uint _w;
 };
 
-ostream & operator<<(ostream & lh, fVector2 & rh);
-ostream & operator<<(ostream & lh, fVector3 & rh);
-ostream & operator<<(ostream & lh, fVector4 & rh);
-ostream & operator<<(ostream & lh, usVector3 & rh);
-ostream & operator<<(ostream & lh, nifApplyMode & rh);
+ostream & operator<<(ostream & lh, fVector2 const & rh);
+ostream & operator<<(ostream & lh, fVector3 const & rh);
+ostream & operator<<(ostream & lh, fVector4 const & rh);
+ostream & operator<<(ostream & lh, usVector3 const & rh);
+ostream & operator<<(ostream & lh, nifApplyMode const & rh);
 
-ostream & operator<<(ostream & lh, nifPixelLayout & rh);
-ostream & operator<<(ostream & lh, nifMipMapFormat & rh);
-ostream & operator<<(ostream & lh, nifAlphaFormat & rh);
+ostream & operator<<(ostream & lh, nifPixelLayout const & rh);
+ostream & operator<<(ostream & lh, nifMipMapFormat const & rh);
+ostream & operator<<(ostream & lh, nifAlphaFormat const & rh);
 
 /**
  * Read utility functions
@@ -251,36 +251,36 @@ void WriteUShort( ushort val, ofstream& out );
 
 void WriteByte( byte val, ofstream& out );
 
-void WriteUSVector3( usVector3& fvec, ofstream& out );
+void WriteUSVector3( usVector3 const & fvec, ofstream& out );
 
 void WriteFloat( float val, ofstream& out );
 
-void WriteString( string val, ofstream& out );
+void WriteString( string const & val, ofstream& out );
 
 void WriteBool( bool val, ofstream& out, unsigned int version );
 
-void WriteFVector2( fVector2& fvec, ofstream& out );
+void WriteFVector2( fVector2 const & fvec, ofstream& out );
 
-void WriteFVector3( fVector3& fvec, ofstream& out );
+void WriteFVector3( fVector3 const & fvec, ofstream& out );
 
-void WriteFVector4( fVector4& fvec, ofstream& out );
+void WriteFVector4( fVector4 const & fvec, ofstream& out );
 
 void WriteBlockName( const char* name, uint nameLength, ofstream& out );
 
 //Write
-void NifStream( uint & val, ofstream& out );
-void NifStream( ushort & val, ofstream& out );
-void NifStream( byte & val, ofstream& out );
-void NifStream( float & val, ofstream& out );
-void NifStream( string & val, ofstream& out );
-void NifStream( Vector3 & val, ofstream& out );
-void NifStream( Quaternion & val, ofstream& out );
-void NifStream( KeyType & val, ofstream& out );
-void NifStream( Color & val, ofstream& out );
-void NifStream( Triangle & val, ofstream& out );
+void NifStream( uint const & val, ofstream& out );
+void NifStream( ushort const & val, ofstream& out );
+void NifStream( byte const & val, ofstream& out );
+void NifStream( float const & val, ofstream& out );
+void NifStream( string const & val, ofstream& out );
+void NifStream( Vector3 const & val, ofstream& out );
+void NifStream( Quaternion const & val, ofstream& out );
+void NifStream( KeyType const & val, ofstream& out );
+void NifStream( Color const & val, ofstream& out );
+void NifStream( Triangle const & val, ofstream& out );
 
 template <class T> 
-void NifStream( Key<T> & key, ofstream& file, KeyType type ) {
+void NifStream( Key<T> const & key, ofstream& file, KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -303,8 +303,8 @@ void NifStream( Key<T> & key, ofstream& file, KeyType type ) {
 }
 
 template <class T>
-void NifStream( vector<T> & val, ofstream& file ) {
-	typename vector<T>::iterator it;
+void NifStream( vector<T> const & val, ofstream& file ) {
+	typename vector<T>::const_iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file );
 	}
@@ -316,17 +316,17 @@ class nifIndex {
 public:
 	nifIndex(){}
 	~nifIndex() {};
-	uint GetIndex() { return _index; }
+	uint GetIndex() const { return _index; }
 	uint SetIndex( int index ) {
 		_index = index;
 	}
 	void Read( ifstream &in ) {
 		_index = ReadUInt( in );
 	}
-	void Write( ofstream &out ) {
+	void Write( ofstream &out ) const {
 		WriteUInt( _index, out );
 	}
-	friend ostream & operator<<(ostream & lh, nifIndex & rh);
+	friend ostream & operator<<(ostream & lh, nifIndex const & rh);
 
 private:
 	int _index;

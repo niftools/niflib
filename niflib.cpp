@@ -49,9 +49,9 @@ map<string, blk_factory_func> global_block_map;
 unsigned int blocks_in_memory = 0;
 
 //Utility Functions
-void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block );
-void BuildUpBindPositions( blk_ref block );
-blk_ref FindRoot( vector<blk_ref> & blocks );
+void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref const & block );
+void BuildUpBindPositions( blk_ref const & block );
+blk_ref FindRoot( vector<blk_ref> const & blocks );
 void RegisterBlockFactories ();
 
 //--Function Bodies--//
@@ -83,13 +83,13 @@ blk_ref CreateBlock( string block_type ) {
 }
 
 //Reads the given file by file name and returns a reference to the root block
-blk_ref ReadNifTree( string file_name ) {
+blk_ref ReadNifTree( string const & file_name ) {
 	//Read block list
 	vector<blk_ref> blocks = ReadNifList( file_name );
 	return FindRoot( blocks );
 }
 
-blk_ref FindRoot( vector<blk_ref> & blocks ) {
+blk_ref FindRoot( vector<blk_ref> const & blocks ) {
 	//--Look for a NiNode that has no parents--//
 
 	//Find the first Node
@@ -114,7 +114,7 @@ blk_ref FindRoot( vector<blk_ref> & blocks ) {
 }
 
 //Reads the given file by file name and returns a vector of block references
-vector<blk_ref> ReadNifList( string file_name ) {
+vector<blk_ref> ReadNifList( string const & file_name ) {
 
 	//--Open File--//
 	ifstream in( file_name.c_str(), ifstream::binary );
@@ -323,7 +323,7 @@ vector<blk_ref> ReadNifList( string file_name ) {
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteRawNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
+void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsigned int version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -378,7 +378,7 @@ void WriteRawNifTree( string file_name, blk_ref & root_block, unsigned int versi
 	out.close();
 }
 
-void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
+void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref const & block ) {
 	//Get internal interface
 	IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
 
@@ -414,7 +414,7 @@ void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref block ) {
 //	
 //}
 
-void BuildUpBindPositions( blk_ref block ) {
+void BuildUpBindPositions( blk_ref const & block ) {
 
 	//Return if this is not a node
 	INode * blk_node = (INode*)block->QueryInterface(ID_NODE);
@@ -449,7 +449,7 @@ void BuildUpBindPositions( blk_ref block ) {
 }
 
 // Searches for the first block in the hierarchy of type block_name.
-blk_ref SearchNifTree( blk_ref & root_block, string block_name ) {
+blk_ref SearchNifTree( blk_ref const & root_block, string const & block_name ) {
 	if ( root_block->GetBlockType() == block_name ) return root_block;
 	list<blk_ref> links = root_block->GetLinks();
 	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
@@ -465,31 +465,35 @@ blk_ref SearchNifTree( blk_ref & root_block, string block_name ) {
 };
 
 // Returns all blocks in the tree of type block_name.
-list<blk_ref> SearchAllNifTree( blk_ref & root_block, string block_name ) {
+list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) {
 	list<blk_ref> result;
 	if ( root_block->GetBlockType() == block_name ) result.push_back( root_block );
 	list<blk_ref> links = root_block->GetLinks();
 	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
-		if ( it->is_null() == false && (*it)->GetParent() == root_block )
-			result.merge( SearchAllNifTree( *it, block_name ) );
+		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
+			list<blk_ref> childresult = SearchAllNifTree( *it, block_name );
+			result.merge( childresult );
+		};
 	};
 	return result;
 };
 
-list<blk_ref> GetNifTree( blk_ref & root_block ) {
+list<blk_ref> GetNifTree( blk_ref const & root_block ) {
 	list<blk_ref> result;
 	result.push_back( root_block );
 	list<blk_ref> links = root_block->GetLinks();
 	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
-		if ( it->is_null() == false && (*it)->GetParent() == root_block )
-			result.merge( GetNifTree( *it ) );
+		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
+			list<blk_ref> childresult = GetNifTree( *it );
+			result.merge( childresult );
+		};
 	};
 	return result;
 };
 
 // Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree.
 // (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
-void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version ) {
+void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version ) {
 	// Write the full Nif file.
 	WriteRawNifTree( file_name, root_block, version );
 	
@@ -518,7 +522,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
 		xkf_root["Extra Data"] = xkf_txtkey_block;
 		
-		ITextKeyExtraData *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
+		ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
 		ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
 		ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
 		
@@ -532,7 +536,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		};
 		
 		blk_ref last_block = xkf_txtkey_block;
-		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+		for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
 			blk_ref nodextra = CreateBlock("NiStringExtraData");
 			nodextra["String Data"] = (*it)["Name"]->asString();
 			last_block["Next Extra Data"] = nodextra;
@@ -541,7 +545,7 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 		
 		// Add controllers & controller data.
 		last_block = xkf_root;
-		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+		for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
 			blk_ref controller = (*it)->GetAttr("Controller")->asLink();
 			blk_ref xkf_controller = CreateBlock("NiKeyframeController");
 			xkf_controller["Flags"] = controller["Flags"]->asInt();
@@ -552,8 +556,8 @@ void WriteNifTree( string file_name, blk_ref & root_block, unsigned int version 
 			
 			blk_ref xkf_data = CreateBlock("NiKeyframeData");
 			xkf_controller["Data"] = xkf_data;
-			IKeyframeData *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
-			IKeyframeData *ixkfdata = QueryKeyframeData(xkf_controller["Data"]->asLink());
+			IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
+			IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
 			ixkfdata->SetRotateType(ikfdata->GetRotateType());
 			ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
 			ixkfdata->SetScaleType(ikfdata->GetScaleType());
@@ -586,11 +590,11 @@ unsigned int BlocksInMemory() {
 
 //--Attribute Reference Functions--//
 
-attr_ref::operator blk_ref() { return _attr->asLink(); }
-attr_ref::operator TextureSource() { return _attr->asTextureSource(); }
-attr_ref::operator BoundingBox() { return _attr->asBoundingBox(); }
-attr_ref::operator ConditionalInt() { return _attr->asConditionalInt(); }
-attr_ref::operator Texture() { return _attr->asTexture(); }
+attr_ref::operator blk_ref() const { return _attr->asLink(); }
+attr_ref::operator TextureSource() const { return _attr->asTextureSource(); }
+attr_ref::operator BoundingBox() const { return _attr->asBoundingBox(); }
+attr_ref::operator ConditionalInt() const { return _attr->asConditionalInt(); }
+attr_ref::operator Texture() const { return _attr->asTexture(); }
 
 //--Query Functions--//
 
@@ -598,42 +602,86 @@ IShapeData * QueryShapeData( blk_ref & block ) {
 	return (IShapeData*)block->QueryInterface( ID_SHAPE_DATA );
 }
 
+IShapeData const * QueryShapeData( blk_ref const & block ) {
+	return (IShapeData const *)block->QueryInterface( ID_SHAPE_DATA );
+}
+
 ITriShapeData * QueryTriShapeData( blk_ref & block ) {
 	return (ITriShapeData*)block->QueryInterface( ID_TRI_SHAPE_DATA );
+}
+
+ITriShapeData const * QueryTriShapeData( blk_ref const & block ) {
+	return (ITriShapeData const *)block->QueryInterface( ID_TRI_SHAPE_DATA );
 }
 
 ISkinData * QuerySkinData( blk_ref & block ) {
 	return (ISkinData*)block->QueryInterface( ID_SKIN_DATA );
 }
 
+ISkinData const * QuerySkinData( blk_ref const & block ) {
+	return (ISkinData const *)block->QueryInterface( ID_SKIN_DATA );
+}
+
 INode * QueryNode( blk_ref & block ) {
 	return (INode*)block->QueryInterface( ID_NODE );
+}
+
+INode const * QueryNode( blk_ref const & block ) {
+	return (INode const *)block->QueryInterface( ID_NODE );
 }
 
 IKeyframeData * QueryKeyframeData( blk_ref & block ) {
 	return (IKeyframeData*)block->QueryInterface( ID_KEYFRAME_DATA );
 }
 
+IKeyframeData const * QueryKeyframeData( blk_ref const & block ) {
+	return (IKeyframeData const *)block->QueryInterface( ID_KEYFRAME_DATA );
+}
+
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
 	return (ITextKeyExtraData*)block->QueryInterface( ID_TEXT_KEY_EXTRA_DATA );
+}
+
+ITextKeyExtraData const * QueryTextKeyExtraData ( blk_ref const & block ) {
+	return (ITextKeyExtraData const *)block->QueryInterface( ID_TEXT_KEY_EXTRA_DATA );
 }
 
 IMorphData * QueryMorphData ( blk_ref & block ) {
 	return (IMorphData*)block->QueryInterface( ID_MORPH_DATA );
 }
 
+IMorphData const * QueryMorphData ( blk_ref const & block ) {
+	return (IMorphData const *)block->QueryInterface( ID_MORPH_DATA );
+}
+
 ITriStripsData * QueryTriStripsData ( blk_ref & block ) {
 	return (ITriStripsData*)block->QueryInterface( ID_TRI_STRIPS_DATA );
+}
+
+ITriStripsData const * QueryTriStripsData ( blk_ref const & block ) {
+	return (ITriStripsData const *)block->QueryInterface( ID_TRI_STRIPS_DATA );
 }
 
 IColorData * QueryColorData ( blk_ref & block ) {
 	return (IColorData*)block->QueryInterface( ID_COLOR_DATA );
 }
 
+IColorData const * QueryColorData ( blk_ref const & block ) {
+	return (IColorData const *)block->QueryInterface( ID_COLOR_DATA );
+}
+
 IFloatData * QueryFloatData ( blk_ref & block ) {
-	return (IFloatData*)block->QueryInterface( ID_FLOAT_DATA );
+	return (IFloatData *)block->QueryInterface( ID_FLOAT_DATA );
+}
+
+IFloatData const * QueryFloatData ( blk_ref const & block ) {
+	return (IFloatData const *)block->QueryInterface( ID_FLOAT_DATA );
 }
 
 IPosData * QueryPosData ( blk_ref & block ) {
 	return (IPosData*)block->QueryInterface( ID_POS_DATA );
+}
+
+IPosData const * QueryPosData ( blk_ref const & block ) {
+	return (IPosData const *)block->QueryInterface( ID_POS_DATA );
 }

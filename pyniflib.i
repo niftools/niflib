@@ -113,35 +113,47 @@ struct Key {
 %ignore Matrix33::operator[](int n) const;
 %ignore Matrix44::operator[](int n);
 %ignore Matrix44::operator[](int n) const;
-%ignore blk_ref::operator[](string index);
+%ignore blk_ref::operator[](string const & index) const;
 
 %ignore attr_ref::operator=(int n);
 %ignore attr_ref::operator=(float n);
-%ignore attr_ref::operator=(Float3 & n);
-%ignore attr_ref::operator=(string & n);
+%ignore attr_ref::operator=(Float3 const & n);
+%ignore attr_ref::operator=(string const & n);
 %ignore attr_ref::operator=(const char * n);
-%ignore attr_ref::operator=(Matrix33 & n);
-%ignore attr_ref::operator=(blk_ref & n);
-%ignore attr_ref::operator=(TextureSource & n);
-%ignore attr_ref::operator=(BoundingBox & n);
-%ignore attr_ref::operator=(ConditionalInt & n);
-%ignore attr_ref::operator=(Texture & n);
+%ignore attr_ref::operator=(Matrix33 const & n);
+%ignore attr_ref::operator=(blk_ref const & n);
+%ignore attr_ref::operator=(TextureSource const & n);
+%ignore attr_ref::operator=(BoundingBox const & n);
+%ignore attr_ref::operator=(ConditionalInt const & n);
+%ignore attr_ref::operator=(Texture const & n);
 
 %ignore blk_ref::operator=(const blk_ref & rh );
 
-%ignore attr_ref::operator int();
-%ignore attr_ref::operator float();
-%ignore attr_ref::operator Float3();
-%ignore attr_ref::operator std::string();
-
-%ignore attr_ref::operator Matrix33();
-%ignore attr_ref::operator blk_ref();
-%ignore attr_ref::operator TextureSource();
-%ignore attr_ref::operator BoundingBox();
-%ignore attr_ref::operator ConditionalInt();
-%ignore attr_ref::operator Texture();
-%ignore attr_ref::operator std::list<blk_ref>();
+%ignore attr_ref::operator int() const;
+%ignore attr_ref::operator float() const;
+%ignore attr_ref::operator Float3() const;
+%ignore attr_ref::operator std::string() const;
+%ignore attr_ref::operator Matrix33() const;
+%ignore attr_ref::operator blk_ref() const;
+%ignore attr_ref::operator TextureSource() const;
+%ignore attr_ref::operator BoundingBox() const;
+%ignore attr_ref::operator ConditionalInt() const;
+%ignore attr_ref::operator Texture() const;
+%ignore attr_ref::operator std::list<blk_ref>() const;
 
 %ignore blk_ref::operator<<(ostream & lh, const blk_ref & rh);
+
+%rename QueryShapeData( blk_ref & block ) QueryShapeData_const;
+%rename QueryTriShapeData( blk_ref const & block ) QueryTriShapeData_const;
+%rename QuerySkinData( blk_ref const & block ) QuerySkinData_const;
+%rename QueryNode( blk_ref const & block ) QueryNode_const;
+%rename QueryKeyframeData( blk_ref const & block ) QueryKeyframeData_const;
+%rename QueryTextKeyExtraData( blk_ref const & block ) QueryTextKeyExtraData_const;
+%rename QueryMorphData( blk_ref const & block ) QueryMorphData_const;
+%rename QueryTriStripsData( blk_ref const & block ) QueryTriStripsData_const;
+%rename QueryColorData( blk_ref const & block ) QueryColorData_const;
+%rename QueryFloatData( blk_ref const & block ) QueryFloatData_const;
+%rename QueryPosData( blk_ref const & block ) QueryPosData_const;
+
 
 %include "niflib.h"

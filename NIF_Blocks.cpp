@@ -64,7 +64,7 @@ ABlock::~ABlock() {
 	}
 }
 
-void ABlock::AddAttr( AttrType type, string name, unsigned int first_ver, unsigned int last_ver ) {
+void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
 	if ( type == attr_int ) {
 		attr = new IntAttr( name, this, first_ver, last_ver );
@@ -133,8 +133,8 @@ void ABlock::AddAttr( AttrType type, string name, unsigned int first_ver, unsign
 	_attr_vect.push_back(attr_ref(attr));
 }
 
-attr_ref ABlock::GetAttr(string attr_name) {
-	map<string, attr_ref>::iterator it;
+attr_ref ABlock::GetAttr(string const & attr_name) const {
+	map<string, attr_ref>::const_iterator it;
 	it = _attr_map.find(attr_name);
 	if (it == _attr_map.end()) {
 		//cout << "Requested Attribute does not exist:  " << attr_name << endl;
@@ -146,11 +146,11 @@ attr_ref ABlock::GetAttr(string attr_name) {
 }
 
 
-vector<attr_ref> ABlock::GetAttrs() {
+vector<attr_ref> ABlock::GetAttrs() const {
 	return _attr_vect;
 }
 
-blk_ref ABlock::GetParent() {
+blk_ref ABlock::GetParent() const {
 	if (_parents.size() > 0 )
 		return blk_ref(_parents[0]);
 	else
@@ -176,7 +176,7 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 	//}
 }
 
-void ABlock::Write( ofstream& out, unsigned int version ) {
+void ABlock::Write( ofstream& out, unsigned int version ) const {
 
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -185,7 +185,7 @@ void ABlock::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string ABlock::asString() {
+string ABlock::asString() const {
 	// Create a stringstream and set the floating point format
 	// fixed notation with one decimal place
 	stringstream out;
@@ -218,11 +218,11 @@ void ABlock::SubtractRef() {
 	}
 }
 
-list<blk_ref> ABlock::GetLinks() {
+list<blk_ref> ABlock::GetLinks() const {
 	list<blk_ref> links;
 
 	//Search through all attributes for any links and add them to the list
-	vector<attr_ref>::iterator it;
+	vector<attr_ref>::const_iterator it;
 	for ( it = _attr_vect.begin(); it != _attr_vect.end(); ++it ) {
 		if ( (*it)->HasLinks() == true ) {
 			list<blk_ref> link_list = (*it)->asLinkList();
@@ -302,7 +302,18 @@ void * ANode::QueryInterface( int id ) {
 	}
 }
 
-Matrix44 ANode::GetLocalTransform() {
+void const * ANode::QueryInterface( int id ) const {
+	// Contains INode Interface
+	if ( id == ID_NODE ) {
+		return (void const *)static_cast<INode const *>(this);
+	} else if (id == NodeInternal ) {
+		return (void const *)static_cast<INodeInternal const *>(this);
+	} else {
+		return ABlock::QueryInterface( id );
+	}
+}
+
+Matrix44 ANode::GetLocalTransform() const {
 	//Get transform data from atributes
 	Matrix33 f = GetAttr("Rotation")->asMatrix33();
 	Float3 tran = GetAttr("Translation")->asFloat3();
@@ -326,7 +337,7 @@ Matrix44 ANode::GetLocalTransform() {
 	return MultMatrix44(rt, s);
 }
 
-Matrix44 ANode::GetWorldTransform() {
+Matrix44 ANode::GetWorldTransform() const {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
@@ -346,7 +357,7 @@ Matrix44 ANode::GetWorldTransform() {
 	}
 }
 
-Matrix44 ANode::GetBindPosition() {
+Matrix44 ANode::GetBindPosition() const {
 	return bindPosition;
 	//for (int i = 0; i < 4; ++i) {
 	//	for (int j = 0; j < 4; ++j) {
@@ -355,7 +366,7 @@ Matrix44 ANode::GetBindPosition() {
 	//}
 }
 
-Matrix44 ANode::GetLocalBindPos() {
+Matrix44 ANode::GetLocalBindPos() const {
 	//Get Parent Transform if there is one
 	blk_ref par = GetParent();
 	INode * node;
@@ -373,7 +384,7 @@ Matrix44 ANode::GetLocalBindPos() {
 	}
 }
 
-void ANode::SetBindPosition( Matrix44 & m ) {
+void ANode::SetBindPosition( Matrix44 const & m ) {
 	bindPosition = m;
 	//for (int i = 0; i < 4; ++i) {
 	//	for (int j = 0; j < 4; ++j) {
@@ -445,7 +456,7 @@ ANode::~ANode() {
  * NiNode methods
  **********************************************************/
 
-string NiNode::asString() {
+string NiNode::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -551,7 +562,7 @@ string NiNode::asString() {
 	if (skin_refs.size() > 0) {
 		out << "Influenced Skins:" << endl;
 
-		list<IBlock*>::iterator it;
+		list<IBlock*>::const_iterator it;
 		for (it = skin_refs.begin(); it != skin_refs.end(); ++it ) {
 			out << "   " << blk_ref(*it) << endl;
 		}
@@ -637,7 +648,7 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 	}
 }
 
-string AShapeData::asString() {
+string AShapeData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -721,7 +732,7 @@ string AShapeData::asString() {
 /**
  * AShapeData::Write
  */
-void AShapeData::Write( ofstream& out, unsigned int version ){
+void AShapeData::Write( ofstream& out, unsigned int version ) const {
 
 	WriteUShort( ushort(vertices.size()), out );
 
@@ -780,6 +791,15 @@ void * AShapeData::QueryInterface( int id ) {
 	// Contains ShapeData Interface
 	if ( id == ID_SHAPE_DATA ) {
 		return (void*)static_cast<IShapeData*>(this);
+	} else {
+		return AData::QueryInterface( id );
+	}
+}
+
+void const * AShapeData::QueryInterface( int id ) const {
+	// Contains ShapeData Interface
+	if ( id == ID_SHAPE_DATA ) {
+		return (void const *)static_cast<IShapeData const *>(this);
 	} else {
 		return AData::QueryInterface( id );
 	}
@@ -873,7 +893,7 @@ void AParticlesData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void AParticlesData::Write( ofstream& out, unsigned int version ) {
+void AParticlesData::Write( ofstream& out, unsigned int version ) const {
 	AShapeData::Write( out, version );
 
 	//numActive exists up to version 4.0.0.2
@@ -900,7 +920,7 @@ void AParticlesData::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string AParticlesData::asString() {
+string AParticlesData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -948,7 +968,7 @@ void ARotatingParticlesData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void ARotatingParticlesData::Write( ofstream& out, unsigned int version ) {
+void ARotatingParticlesData::Write( ofstream& out, unsigned int version ) const {
 	AParticlesData::Write( out, version );
 
 	WriteBool( hasRotations, out, version );
@@ -963,7 +983,7 @@ void ARotatingParticlesData::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string ARotatingParticlesData::asString() {
+string ARotatingParticlesData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -996,13 +1016,13 @@ void NiParticleMeshesData::Read( ifstream& in, unsigned int version ) {
 	GetAttr("Unknown Link")->Read( in, version );
 }
 
-void NiParticleMeshesData::Write( ofstream& out, unsigned int version ) {
+void NiParticleMeshesData::Write( ofstream& out, unsigned int version ) const {
 	ARotatingParticlesData::Write( out, version );
 
 	GetAttr("Unknown Link")->Write( out, version );
 }
 
-string NiParticleMeshesData::asString() {
+string NiParticleMeshesData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -1054,7 +1074,7 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 	}
 }
 
-string NiTriShapeData::asString() {
+string NiTriShapeData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -1088,7 +1108,7 @@ string NiTriShapeData::asString() {
 /**
  * NiTriShapeData::Write - Writes block name to out, in addition to data.
  */
-void NiTriShapeData::Write( ofstream& out, unsigned int version ){
+void NiTriShapeData::Write( ofstream& out, unsigned int version ) const {
 
 	AShapeData::Write( out, version );
 
@@ -1135,6 +1155,15 @@ void * NiTriShapeData::QueryInterface( int id ) {
 	// Contains TriShapeData Interface
 	if ( id == ID_TRI_SHAPE_DATA ) {
 		return (void*)static_cast<ITriShapeData*>(this);
+	} else {
+		return AShapeData::QueryInterface( id );
+	}
+}
+
+void const * NiTriShapeData::QueryInterface( int id ) const {
+	// Contains TriShapeData Interface
+	if ( id == ID_TRI_SHAPE_DATA ) {
+		return (void const *)static_cast<ITriShapeData const *>(this);
 	} else {
 		return AShapeData::QueryInterface( id );
 	}
@@ -1193,7 +1222,7 @@ void NiTriStripsData::Read( ifstream& in, unsigned int version ){
 	}
 }
 
-void NiTriStripsData::Write( ofstream& out, unsigned int version ){
+void NiTriStripsData::Write( ofstream& out, unsigned int version ) const {
 
 	AShapeData::Write( out, version );
 
@@ -1220,7 +1249,7 @@ void NiTriStripsData::Write( ofstream& out, unsigned int version ){
 	}
 }
 
-string NiTriStripsData::asString() {
+string NiTriStripsData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -1253,7 +1282,16 @@ void * NiTriStripsData::QueryInterface( int id ) {
 	}
 }
 
-short NiTriStripsData::GetStripCount() {
+void const * NiTriStripsData::QueryInterface( int id ) const {
+	// Contains TriShapeData Interface
+	if ( id == ID_TRI_STRIPS_DATA ) {
+		return (void const *)static_cast<ITriStripsData const *>(this);
+	} else {
+		return AShapeData::QueryInterface( id );
+	}
+}
+
+short NiTriStripsData::GetStripCount() const {
 	return short(strips.size());
 }
 
@@ -1262,18 +1300,18 @@ void NiTriStripsData::SetStripCount(int n) {
 }
 
 //Getters
-vector<short> NiTriStripsData::GetStrip( int index ) {
+vector<short> NiTriStripsData::GetStrip( int index ) const {
 	return strips[index];
 }
 
-vector<Triangle> NiTriStripsData::GetTriangles() {
+vector<Triangle> NiTriStripsData::GetTriangles() const {
 
 	//Create a vector to hold the triangles
 	vector<Triangle> triangles( GetTriangleCount() );
 	int n = 0; // Current triangle
 
 	//Cycle through all strips
-	vector< vector<short> >::iterator it;
+	vector< vector<short> >::const_iterator it;
 	for (it = strips.begin(); it != strips.end(); ++it ) {
 		//The first three values in the strip are the first triangle
 		triangles[n].Set( (*it)[0], (*it)[1], (*it)[2] );
@@ -1302,7 +1340,7 @@ void NiTriStripsData::SetStrip( int index, const vector<short> & in ) {
 	strips[index] = in;
 }
 
-short NiTriStripsData::GetTriangleCount() {
+short NiTriStripsData::GetTriangleCount() const {
 
 	//Calculate number of triangles
 	//Sum of length of each strip - 2
@@ -1344,7 +1382,7 @@ void NiCollisionData::Read( ifstream& in, unsigned int version ){
 	} 
 }
 
-void NiCollisionData::Write( ofstream& out, unsigned int version ){
+void NiCollisionData::Write( ofstream& out, unsigned int version ) const {
 
 	//Write Parent node number
 	WriteUInt( GetParent().get_index(), out );
@@ -1369,7 +1407,7 @@ void NiCollisionData::Write( ofstream& out, unsigned int version ){
 	} 
 }
 
-string NiCollisionData::asString() {
+string NiCollisionData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -1440,9 +1478,9 @@ void NiSkinData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiSkinData::Write( ofstream& out, unsigned int version ) {
+void NiSkinData::Write( ofstream& out, unsigned int version ) const {
 	//Calculate offset matrices prior to writing data
-	CalculateBoneOffsets();
+	//CalculateBoneOffsets(); // non-const! (we should calculate the data on the fly while writing, without actually storing it in the class)
 
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
@@ -1458,7 +1496,7 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) {
 		WriteByte( unknownByte, out );
 	}
 
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::const_iterator it;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {		
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
@@ -1475,7 +1513,7 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) {
 		//WriteFloat( 0.0f, out );
 		WriteUShort( short(it->second.weights.size() ), out );
 		
-		map<int, float>::iterator it2;
+		map<int, float>::const_iterator it2;
 		for ( it2 = it->second.weights.begin(); it2 != it->second.weights.end(); ++it2 ){
 			WriteUShort( it2->first, out );
 			WriteFloat( it2->second, out );
@@ -1521,13 +1559,13 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) {
 //	}
 //}
 
-string NiSkinData::asString() {
+string NiSkinData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
 	//Calculate bone offsets pior to printing readout
-	CalculateBoneOffsets();
+	//CalculateBoneOffsets(); // non-const!
 
 	out << "Rotate:" << endl
 		<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
@@ -1540,16 +1578,16 @@ string NiSkinData::asString() {
 		<< "Unknown Byte:  " << int(unknownByte) << endl
 		<< "Bones:" << endl;
 
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::const_iterator it;
 	//vector<Bone>::iterator it;
 	int num = 0;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//Friendlier name
-		Bone & bone = it->second;
+		Bone const & bone = it->second;
 
 		num++;
 		out << "Bone " << num << ":" << endl
-			<< "   Block:  " << blk_ref(it->first) << endl
+			<< "   Block:  " << it->first->GetBlockNum() << endl //blk_ref(it->first) << endl
 			<< "   Bone Offset Transforms:" << endl
 			<< "      Rotation:" << endl
 			<< "         |" << setw(6) << bone.rotation[0][0] << "," << setw(6) << bone.rotation[0][1] << "," << setw(6) << bone.rotation[0][2] << " |" << endl
@@ -1568,7 +1606,7 @@ string NiSkinData::asString() {
 		out << "   Weights:  " << uint(bone.weights.size()) << endl;
 
 		if (verbose) {
-			map<int, float>::iterator it2;
+			map<int, float>::const_iterator it2;
 			for ( it2 = bone.weights.begin(); it2 != bone.weights.end(); ++it2 ){
 				out << "   Vertex: " << it2->first << "\tWeight: " << it2->second << endl;
 			}
@@ -1593,20 +1631,31 @@ void * NiSkinData::QueryInterface( int id ) {
 	}
 }
 
+void const * NiSkinData::QueryInterface( int id ) const {
+	// Contains ISkinData Interface
+	if ( id == ID_SKIN_DATA ) {
+		return (void const *)static_cast<ISkinData const *>(this);
+	} else if ( id == SkinDataInternal ) {
+		return (void const *)static_cast<ISkinDataInternal const *>(this);
+	} else {
+		return ABlock::QueryInterface( id );
+	}
+}
+
 void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
 	//Move bones from temproary vector to map, sorted by blk_ref
 	for (uint i = 0; i < bones.size(); ++i) {
-			//Make sure bone is a node
-			INodeInternal * node_int = (INodeInternal*)bone_blocks[i]->QueryInterface(NodeInternal);
+		//Make sure bone is a node
+		INodeInternal * node_int = (INodeInternal*)bone_blocks[i]->QueryInterface(NodeInternal);
 
-			if (node_int == NULL)
-				throw runtime_error("Attempted to add a block as a bone that is not a node.");
+		if (node_int == NULL)
+			throw runtime_error("Attempted to add a block as a bone that is not a node.");
 
-			//move the data
-			bone_map.insert( pair<IBlock*, Bone>(bone_blocks[i].get_block(), bones[i]) );
-			
-			//Increment reference at bone node site
-			node_int->IncSkinRef(this);
+		//move the data
+		bone_map.insert( pair<IBlock *, Bone>(bone_blocks[i].get_block(), bones[i]) );
+
+		//Increment reference at bone node site
+		node_int->IncSkinRef(this);
 	}
 
 	//Clear temporary vector data
@@ -1630,7 +1679,7 @@ void NiSkinData::StraightenSkeleton() {
 	//}
 
 	//Loop through all bones
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::iterator it;
 	for ( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//Friendlier name for current bone
 		Bone & bone = it->second;
@@ -1644,7 +1693,7 @@ void NiSkinData::StraightenSkeleton() {
 			bone.translation[0], bone.translation[1], bone.translation[2], 1.0f
 		); 
 		//Loop through all bones again, checking for any that have this bone as a parent
-		map<IBlock*, Bone>::iterator it2;
+		map<IBlock *, Bone>::iterator it2;
 		for ( it2 = bone_map.begin(); it2 != bone_map.end(); ++it2 ) {
 			if ( it2->first->GetParent() == it->first ) {
 				//Block 2 has block 1 as a parent
@@ -1695,7 +1744,7 @@ void NiSkinData::RepositionTriShape() {
 		//--End Position--//
 
 		//Get first bone
-		blk_ref bone_blk = bone_map.begin()->first;
+		IBlock * bone_blk = bone_map.begin()->first;
 		Bone & bone = bone_map.begin()->second;
 
 
@@ -1765,21 +1814,23 @@ vector<blk_ref> NiSkinData::GetBones() {
 	//Put all the valid bones from the map into a vector to return
 	vector<blk_ref> bone_blks( bone_map.size() );
 
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::const_iterator it;
 	int count = 0;
 	for (it = bone_map.begin(); it != bone_map.end(); ++it ) {
-		bone_blks[count] = blk_ref(it->first);
+		bone_blks[count] = it->first;
 		count++;
 	}
 
 	return bone_blks;
 }
 
-map<int, float> NiSkinData::GetWeights( blk_ref bone ) {
-	return bone_map[bone.get_block()].weights;
+map<int, float> NiSkinData::GetWeights( blk_ref const & bone ) const {
+	// since operator[] might insert a new element, it can't be const
+	// so we need the find function
+	return bone_map.find(bone.get_block())->second.weights;
 }
 
-void NiSkinData::AddBone( blk_ref bone, map<int, float> in ) {
+void NiSkinData::AddBone( blk_ref const & bone, map<int, float> const & in ) {
 	//Make sure bone is a node
 	INodeInternal * node_int = (INodeInternal*)bone->QueryInterface(NodeInternal);
 
@@ -1793,14 +1844,14 @@ void NiSkinData::AddBone( blk_ref bone, map<int, float> in ) {
 	node_int->IncSkinRef(this);
 }
 
-void NiSkinData::RemoveBoneByPtr( IBlock * bone ) {
+void NiSkinData::RemoveBoneByPtr( blk_ref const & bone ) {
 	//Remove bone from internal list
-	bone_map.erase( bone );
+	bone_map.erase( bone.get_block() );
 
 	//Do not decrement bone node locatoin because it is already dead
 }
 
-void NiSkinData::RemoveBone( blk_ref bone ) {
+void NiSkinData::RemoveBone( blk_ref const & bone ) {
 	//Remove bone from internal list
 	bone_map.erase( bone.get_block() );
 
@@ -1811,7 +1862,7 @@ void NiSkinData::RemoveBone( blk_ref bone ) {
 
 NiSkinData::~NiSkinData() {
 	//Inform all linked bone nodes that this NiSkinData block is dying
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::iterator it;
 	for (it = bone_map.begin(); it != bone_map.end(); ++it) {
 		INodeInternal * node_int = (INodeInternal*)it->first->QueryInterface(NodeInternal);
 		node_int->DecSkinRef(this);
@@ -1836,7 +1887,7 @@ void NiSkinData::CalculateBoneOffsets() {
 
 
 	//Cycle through all bones, calculating their offsets and storing the values
-	map<IBlock*, Bone>::iterator it;
+	map<IBlock *, Bone>::iterator it;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//--Get Bone Bind Pose--//
 
@@ -1890,7 +1941,7 @@ void NiSkinData::CalculateBoneOffsets() {
  * NiGeomMorpherController methods
  **********************************************************/
 
-string NiGeomMorpherController::asString() {
+string NiGeomMorpherController::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -1985,7 +2036,7 @@ void NiKeyframeData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiKeyframeData::Write( ofstream& file, unsigned int version ) {
+void NiKeyframeData::Write( ofstream& file, unsigned int version ) const {
 
 	//--Rotation--//
 	WriteUInt( uint(rotKeys.size()) , file );
@@ -2036,7 +2087,7 @@ void NiKeyframeData::Write( ofstream& file, unsigned int version ) {
 	}
 }
 
-string NiKeyframeData::asString() {
+string NiKeyframeData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2140,7 +2191,7 @@ void NiColorData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiColorData::Write( ofstream& file, unsigned int version ) {
+void NiColorData::Write( ofstream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -2149,7 +2200,7 @@ void NiColorData::Write( ofstream& file, unsigned int version ) {
 	}
 }
 
-string NiColorData::asString() {
+string NiColorData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2158,7 +2209,7 @@ string NiColorData::asString() {
 		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		vector< Key<Color> >::iterator it;
+		vector< Key<Color> >::const_iterator it;
 		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Color:  " << it->data.r << ", " << it->data.g << ", " << it->data.b << ", " << it->data.a << endl;
 		}
@@ -2183,7 +2234,7 @@ void NiFloatData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiFloatData::Write( ofstream& file, unsigned int version ) {
+void NiFloatData::Write( ofstream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -2192,7 +2243,7 @@ void NiFloatData::Write( ofstream& file, unsigned int version ) {
 	}
 }
 
-string NiFloatData::asString() {
+string NiFloatData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2201,7 +2252,7 @@ string NiFloatData::asString() {
 		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		vector< Key<float> >::iterator it;
+		vector< Key<float> >::const_iterator it;
 		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Float Value:  " << it->data << endl;
 		}
@@ -2229,7 +2280,7 @@ void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 	GetAttr("String Data")->Read( in, version );
 }
 
-void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
+void NiStringExtraData::Write( ofstream& out, unsigned int version ) const {
 	GetAttr("Name")->Write( out, version );
 	GetAttr("Next Extra Data")->Write( out, version );
 
@@ -2243,7 +2294,7 @@ void NiStringExtraData::Write( ofstream& out, unsigned int version ) {
 	string_data->Write( out, version );
 }
 
-string NiStringExtraData::asString() {
+string NiStringExtraData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2310,7 +2361,7 @@ void NiMorphData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiMorphData::Write( ofstream& out, unsigned int version ) {
+void NiMorphData::Write( ofstream& out, unsigned int version ) const {
 	WriteUInt( uint(morphs.size()), out );
 	WriteUInt( vertCount, out );
 
@@ -2353,7 +2404,7 @@ void NiMorphData::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string NiMorphData::asString() {
+string NiMorphData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2428,7 +2479,7 @@ void NiPalette::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiPalette::Write( ofstream& out, unsigned int version ) {
+void NiPalette::Write( ofstream& out, unsigned int version ) const {
 	//Write 5 unknown bytes
 	for (int i = 0; i < 5; ++i) {
 		WriteByte( unknownBytes[i], out );
@@ -2443,7 +2494,7 @@ void NiPalette::Write( ofstream& out, unsigned int version ) {
 }
 
 
-string NiPalette::asString() {
+string NiPalette::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2558,11 +2609,11 @@ void NiSkinPartition::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiSkinPartition::Write( ofstream& file, unsigned int version ) {
+void NiSkinPartition::Write( ofstream& file, unsigned int version ) const {
 
 	WriteUInt( uint(partitions.size()), file );
 
-	vector<SkinPartition>::iterator it;
+	vector<SkinPartition>::const_iterator it;
 	for (it = partitions.begin(); it != partitions.end(); ++it ) {
 		//Write counts
 		WriteUShort( ushort( it->vertexMap.size()), file );
@@ -2620,13 +2671,13 @@ void NiSkinPartition::Write( ofstream& file, unsigned int version ) {
 }
 
 
-string NiSkinPartition::asString() {
+string NiSkinPartition::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
 	int count = 0;
-	vector<SkinPartition>::iterator it;
+	vector<SkinPartition>::const_iterator it;
 	for (it = partitions.begin(); it != partitions.end(); ++it ) {
 		count++;
 		//Write counts
@@ -2717,7 +2768,7 @@ void NiPixelData::Read( ifstream& in, unsigned int version ) {
 	in.read( (char *)data, dataSize);
 }
 
-void NiPixelData::Write( ofstream& out, unsigned int version ) {
+void NiPixelData::Write( ofstream& out, unsigned int version ) const {
 	WriteUInt( unknownInt, out );
 	WriteUInt( rMask, out );
 	WriteUInt( gMask, out );
@@ -2744,7 +2795,7 @@ void NiPixelData::Write( ofstream& out, unsigned int version ) {
 	out.write( (char *)data, dataSize);
 }
 
-string NiPixelData::asString() {
+string NiPixelData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2795,7 +2846,7 @@ void NiPosData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiPosData::Write( ofstream& file, unsigned int version ) {
+void NiPosData::Write( ofstream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -2804,7 +2855,7 @@ void NiPosData::Write( ofstream& file, unsigned int version ) {
 	}
 }
 
-string NiPosData::asString() {
+string NiPosData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2813,7 +2864,7 @@ string NiPosData::asString() {
 		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		vector< Key<Vector3> >::iterator it;
+		vector< Key<Vector3> >::const_iterator it;
 		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Position:  " << it->data.x << ", " << it->data.y << ", " << it->data.z << endl;
 		}
@@ -2841,7 +2892,7 @@ void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) {
+void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) const {
 
 	GetAttr("Name")->Write( file, version );
 	GetAttr("Next Extra Data")->Write( file, version );
@@ -2854,7 +2905,7 @@ void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) {
 	}
 }
 
-string NiTextKeyExtraData::asString() {
+string NiTextKeyExtraData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2865,7 +2916,7 @@ string NiTextKeyExtraData::asString() {
 		<< "Key Count:  " << uint(_keys.size()) << endl;
 
 	if (verbose) {
-		vector< Key<string> >::iterator it;
+		vector< Key<string> >::const_iterator it;
 		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Key Text:  " << it->data << endl;
 		}
@@ -2901,7 +2952,7 @@ void NiUVData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiUVData::Write( ofstream& out, unsigned int version ) {	
+void NiUVData::Write( ofstream& out, unsigned int version ) const {
 	for (uint i = 0; i < 4; ++i) {
 		WriteUInt( uint(groups[i].keys.size()), out );
 
@@ -2921,7 +2972,7 @@ void NiUVData::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string NiUVData::asString() {
+string NiUVData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -2967,7 +3018,7 @@ void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) {
+void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) const {
 	ABlock::Write( out, version );
 
 	WriteUInt( bytes, out );
@@ -2978,7 +3029,7 @@ void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string NiVertWeightsExtraData::asString() {
+string NiVertWeightsExtraData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -3013,7 +3064,7 @@ void NiVisData ::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiVisData ::Write( ofstream& out, unsigned int version ) {
+void NiVisData ::Write( ofstream& out, unsigned int version ) const {
 	WriteUInt( uint(keys.size()), out );
 
 	for (uint i = 0; i < keys.size(); ++i) {
@@ -3022,7 +3073,7 @@ void NiVisData ::Write( ofstream& out, unsigned int version ) {
 	}
 }
 
-string NiVisData::asString() {
+string NiVisData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -3052,7 +3103,7 @@ void UnknownMixIn::Read( ifstream &in, unsigned int version ) {
 	in.read((char*)data, len);
 }
 
-string UnknownMixIn::asString() {
+string UnknownMixIn::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -3081,7 +3132,7 @@ string UnknownMixIn::asString() {
 	return out.str();
 }
 
-void UnknownMixIn::Write( ofstream& out, unsigned int version ) {
+void UnknownMixIn::Write( ofstream& out, unsigned int version ) const {
 	out.write( (const char*)data, len );
 }
 
