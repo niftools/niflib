@@ -33,11 +33,19 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "nif_math.h"
 
-void PrintMatrix( Matrix33 const & m, ostream & out ) {
+void PrintMatrix33( Matrix33 const & m, ostream & out ) {
 	out << endl
 		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
 		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
 		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" <<endl;
+}
+
+void PrintMatrix44( Matrix44 const & m, ostream & out ) {
+	out << endl
+		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << setw(8) << m[0][3] << " |" << endl
+		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << setw(8) << m[1][3] << " |" << endl
+		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << setw(8) << m[2][3] << " |" << endl
+		<< "      |" << setw(8) << m[3][0] << "," << setw(8) << m[3][1] << "," << setw(8) << m[3][2] << setw(8) << m[3][3] << " |" << endl;
 }
 
 Vector3 MultVector3( Vector3 const & a, Vector3 const & b ) {
@@ -289,4 +297,76 @@ void QuatToEuler( Quaternion const & quat, ostream & out ) {
 		<< "         Attitude:  " << a << endl
 		<< "         Bank:  " << b << endl;
 	
+}
+
+float Length(Vector3 const & a) {
+	return sqrt(a.x*a.x + a.y*a.y + a.z*a.z);
+}
+
+Vector3 Normalize(Vector3 const & a) {
+	float l = Length(a);
+	return Vector3(a.x/l, a.y/l, a.z/l);
+}
+
+float DotProduct(Vector3 const & a, Vector3 const & b) {
+	return a.x*b.x + a.y*b.y + a.z*b.z;
+}
+
+Vector3 CrossProduct(Vector3 const & a, Vector3 const & b) {
+	return Vector3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+}
+
+float Angle(Vector3 const & a, Vector3 const & b) {
+	float pi = 3.141592653589793f;
+	float s = Length(a) * Length(b);
+	float f = DotProduct(a, b) / s;
+	if (f >=  1.0f) return 0.0f;
+	if (f <= -1.0f) return pi / 2.0f;
+	return atan(-f / sqrt(1.0f - f * f)) + pi / 2.0f;
+}
+
+Matrix44 RotateMatrix44( Vector3 const & axis, float angle) {
+	float vx = axis.x;
+	float vy = axis.y;
+	float vz = axis.z;
+	float vx2 = vx * vx;
+	float vy2 = vy * vy;
+	float vz2 = vz * vz;
+	float cs = cos(angle);
+	float sn = sin(angle);
+	float co1 = 1.0f - cs;
+	return Matrix44(
+		vx2 * co1 + cs,	vx * vy * co1 + vz * sn,	vz * vx * co1 - vy * sn,	0.0f,
+		vx * vy * co1 - vz * sn,	vy2 * co1 + cs,	vy * vz * co1 + vx * sn,	0.0f,
+		vz * vx * co1 + vy * sn,	vy * vz * co1 - vx * sn,	vz2 * co1 + cs,	0.0f,
+		0.0f,	0.0f,	0.0f,	1.0f);
+}
+
+Matrix44 BoneToMatrix44( Vector3 const & bone_vec, float roll ) {
+	float theta;
+	Matrix44 bMatrix, rMatrix, result;
+
+	Vector3 target(1.0f, 0.0f, 0.0f);
+	Vector3 nor = Normalize(bone_vec);
+	Vector3 axis = CrossProduct(target, nor);
+	if (DotProduct(axis, axis) > 0.0000000000001) {
+		axis = Normalize(axis);
+		theta = acos(DotProduct(target, nor));
+		bMatrix = RotateMatrix44(axis, theta);
+	} else {
+		float updown;
+		if (DotProduct(target, nor) > 0.0) updown =  1.0f;
+		else updown = -1.0f;
+		bMatrix = Matrix44(
+			updown, 0.0f, 0.0f, 0.0f,
+			0.0f, updown, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
+	};
+	rMatrix = RotateMatrix44(nor, roll);
+	result = MultMatrix44(bMatrix, rMatrix);
+	result[3][0] = bone_vec.x;
+	result[3][1] = bone_vec.y;
+	result[3][2] = bone_vec.z;
+	return result;
 }

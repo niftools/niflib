@@ -425,6 +425,8 @@ struct Matrix44 {
     }
 };
 
+// Bone calculation helper function from the nif_math module.
+Matrix44 BoneToMatrix44( Vector3 const & bone_vec, float roll );
 
 struct Color {
 	float r, g, b, a;
