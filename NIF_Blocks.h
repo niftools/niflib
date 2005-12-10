@@ -1154,7 +1154,7 @@ public:
 	virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
 	virtual void RepositionTriShape() = 0;
 	virtual void StraightenSkeleton() = 0;
-	virtual void RemoveBoneByPtr( blk_ref const & bone ) = 0;
+	virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
 };
 
 class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
@@ -1184,7 +1184,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		void SetBones( vector<blk_ref> bone_blocks ); // not vector<blk_ref> const &, since we must cast the blk_ref's into (non-constant) IBlock * pointers
 		void RepositionTriShape();
 		void StraightenSkeleton();
-		void RemoveBoneByPtr( blk_ref const & bone );
+		void RemoveBoneByPtr( IBlock * bone );
 
         //ISkinData
 		vector<blk_ref> GetBones(); // cannot be const, since this changes the reference counts for the bone blocks!

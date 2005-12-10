@@ -1656,11 +1656,13 @@ void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
 		if (node_int == NULL)
 			throw runtime_error("Attempted to add a block as a bone that is not a node.");
 
+		//---------------Problem Area---------------//
 		//move the data
 		bone_map.insert( pair<IBlock *, Bone>(bone_blocks[i].get_block(), bones[i]) );
 
 		//Increment reference at bone node site
 		node_int->IncSkinRef(this);
+		//------------------------------------------//
 	}
 
 	//Clear temporary vector data
@@ -1849,9 +1851,9 @@ void NiSkinData::AddBone( blk_ref const & bone, map<int, float> const & in ) {
 	node_int->IncSkinRef(this);
 }
 
-void NiSkinData::RemoveBoneByPtr( blk_ref const & bone ) {
+void NiSkinData::RemoveBoneByPtr( IBlock * bone ) {
 	//Remove bone from internal list
-	bone_map.erase( bone.get_block() );
+	bone_map.erase( bone );
 
 	//Do not decrement bone node locatoin because it is already dead
 }
