@@ -342,11 +342,15 @@ Matrix44 RotateMatrix44( Vector3 const & axis, float angle) {
 		0.0f,	0.0f,	0.0f,	1.0f);
 }
 
-Matrix44 BoneToMatrix44( Vector3 const & bone_vec, float roll ) {
+Matrix44 BoneToMatrix44( Vector3 const & bone_head, Vector3 const & bone_tail, float roll, float parent_len ) {
 	float theta;
+	Vector3 bone_vec;
+	bone_vec.x = bone_tail.x - bone_head.x;
+	bone_vec.y = bone_tail.y - bone_head.y;
+	bone_vec.z = bone_tail.z - bone_head.z;
 	Matrix44 bMatrix, rMatrix, result;
 
-	Vector3 target(1.0f, 0.0f, 0.0f);
+	Vector3 target(1.0f, 0.0f, 0.0f); // X-aligned
 	Vector3 nor = Normalize(bone_vec);
 	Vector3 axis = CrossProduct(target, nor);
 	if (DotProduct(axis, axis) > 0.0000000000001) {
@@ -355,7 +359,7 @@ Matrix44 BoneToMatrix44( Vector3 const & bone_vec, float roll ) {
 		bMatrix = RotateMatrix44(axis, theta);
 	} else {
 		float updown;
-		if (DotProduct(target, nor) > 0.0) updown =  1.0f;
+		if (DotProduct(target, nor) > 0.0f) updown =  1.0f;
 		else updown = -1.0f;
 		bMatrix = Matrix44(
 			updown, 0.0f, 0.0f, 0.0f,
@@ -365,8 +369,8 @@ Matrix44 BoneToMatrix44( Vector3 const & bone_vec, float roll ) {
 	};
 	rMatrix = RotateMatrix44(nor, roll);
 	result = MultMatrix44(bMatrix, rMatrix);
-	result[3][0] = bone_vec.x;
-	result[3][1] = bone_vec.y;
-	result[3][2] = bone_vec.z;
+	result[3][0] = bone_head.x + parent_len; // X-aligned
+	result[3][1] = bone_head.y;
+	result[3][2] = bone_head.z;
 	return result;
 }
