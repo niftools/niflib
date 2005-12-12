@@ -58,10 +58,5 @@ void SetIdentity44( Matrix44 & m );
 void PrintMatrix33( Matrix33 const & m, ostream & out );
 void PrintMatrix44( Matrix44 const & m, ostream & out );
 Quaternion MatrixToQuat( Matrix33 const & m );
-Vector3 Normalize(Vector3 const & a);
-float DotProduct(Vector3 const & a, Vector3 const & b);
-Vector3 CrossProduct(Vector3 const & a, Vector3 const & b); // = MultVector3
-float Angle(Vector3 const & a, Vector3 const & b);
-Matrix44 BoneToMatrix44( Vector3 const & bone_head, Vector3 const & bone_tail, float roll, float parent_len );
 
 #endif
