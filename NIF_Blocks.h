@@ -145,7 +145,14 @@ public:
 class ANode : public AControllable, public INode, public INodeInternal {
 public:
 	ANode();
-	void Init() { SetIdentity44(bindPosition); };
+	void Init() { 
+		//Start the bind pose at an identity matrix
+		SetIdentity44(bindPosition);
+
+		//Start the flags at "Not a skin influence"
+		GetAttr("Flags")->Set(8);
+	
+	};
 	~ANode();
 	void InitAttrs();
 	void * QueryInterface( int id );
