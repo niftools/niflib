@@ -132,7 +132,7 @@ class AControllable : public ABlock {
 public:
 	AControllable();
 	void Init() {}
-	bool IsControllable() { return true; }
+	bool IsControllable() const { return true; }
 	~AControllable() {}
 };
 
