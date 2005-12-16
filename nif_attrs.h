@@ -1322,8 +1322,27 @@ public:
 		WriteUInt( FindRoot().get_index(), out );
 	}
 	blk_ref FindRoot() const {
-		//Find Skeleton Root - first node in ancestry that has 'not a skin influence' flag set
-		blk_ref block(_owner);
+		//Find Skeleton Root - first node in ancestry of any bone that has 'not a skin influence' flag set
+		
+		//Get skin data to find a bone
+		blk_ref skin_dat_blk = _owner->GetAttr("Data");
+
+		//If there is no skin data, return a null block
+		if ( skin_dat_blk.is_null() == true ) {
+			return blk_ref(-1);
+		}
+
+		//Get bones from skin data
+		ISkinData * skin_dat_int = QuerySkinData(skin_dat_blk);
+		vector<blk_ref> bones = skin_dat_int->GetBones();
+
+		//If size of bones is zero, return a null block
+		if ( bones.size() == 0 ) {
+			return blk_ref(-1);
+		}
+
+		//Arbitrarily start at the first bone in the list
+		blk_ref block = bones[0];
 		blk_ref par;
 		int flags;
 		while ( true ) {
