@@ -1514,7 +1514,13 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) const {
 		WriteFVector3( bone.translation, out );
 		WriteFloat( bone.scale, out );
 
-		WriteFVector4( bone.unknown4Floats, out );
+		//Write 4 zeros for unknown floats
+		WriteFloat( 0.0f, out );
+		WriteFloat( 0.0f, out );
+		WriteFloat( 0.0f, out );
+		WriteFloat( 0.0f, out );
+
+		//WriteFVector4( bone.unknown4Floats, out );
 
 		WriteUShort( short(it->second.weights.size() ), out );
 		
