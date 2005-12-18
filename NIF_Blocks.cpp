@@ -2326,92 +2326,52 @@ string NiStringExtraData::asString() const {
  * NiMorphData methods
  **********************************************************/
 
-void NiMorphData::Read( ifstream& in, unsigned int version ) {
-	uint morphCount = ReadUInt( in );
-	vertCount = ReadUInt( in );
+void NiMorphData::Read( ifstream& file, unsigned int version ) {
 
-	GetAttr("Unknown Byte")->Read( in, version );
+	uint morphCount = ReadUInt( file );
+	NifStream( vertCount, file );
+
+	GetAttr("Unknown Byte")->Read( file, version );
 
 	morphs.resize(morphCount);
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
-		uint timeCount = ReadUInt( in );
-		morphs[i].keyType = KeyType(ReadUInt( in ));
+		uint numKeys = ReadUInt( file );
 
-		if (timeCount > 0 && (morphs[i].keyType < 1 || morphs[i].keyType > 3 ) ) {
-			stringstream s;
-			s << "NiMorphData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << morphs[i].keyType << ".";
-			throw runtime_error(s.str());
+		NifStream( morphs[i].keyType, file );
+
+		
+		morphs[i].keys.resize( numKeys );
+		
+		for (uint j = 0; j < morphs[i].keys.size(); j++) {
+			NifStream( morphs[i].keys[j], file, morphs[i].keyType );
 		}
 
-		morphs[i].keys.resize( timeCount );
-		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
-
-			//Always read the time and data
-			morphs[i].keys[j].time = ReadFloat( in );
-			morphs[i].keys[j].data = ReadFloat( in );
-
-			if ( morphs[i].keyType == 2 ) {
-				//Uses Quadratic interpolation
-				morphs[i].keys[j].forward_tangent = ReadFloat( in );
-				morphs[i].keys[j].backward_tangent = ReadFloat( in );
-			} else if ( morphs[i].keyType == 3 ) {
-				//Uses TBC interpolation
-				morphs[i].keys[j].tension = ReadFloat( in );
-				morphs[i].keys[j].bias = ReadFloat( in );
-				morphs[i].keys[j].continuity = ReadFloat( in );
-
-			}
-		}
 		
 		morphs[i].morph.resize( vertCount );
-		for (uint j = 0; j < vertCount ; ++j ) {
-			morphs[i].morph[j].x = ReadFloat( in );
-			morphs[i].morph[j].y = ReadFloat( in );
-			morphs[i].morph[j].z = ReadFloat( in );
-		}
+		//Stream whole array of Vector3
+		NifStream( morphs[i].morph, file );
 	}
 }
 
-void NiMorphData::Write( ofstream& out, unsigned int version ) const {
-	WriteUInt( uint(morphs.size()), out );
-	WriteUInt( vertCount, out );
+void NiMorphData::Write( ofstream& file, unsigned int version ) const {
+	WriteUInt( uint(morphs.size()), file );
+	NifStream( vertCount, file );
 
-	GetAttr("Unknown Byte")->Write( out, version );
+	GetAttr("Unknown Byte")->Write( file, version );
 
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
-		WriteUInt( uint(morphs[i].keys.size()), out );
-		WriteUInt( KeyType(morphs[i].keyType), out );
+		WriteUInt( uint(morphs[i].keys.size()), file );
 
-		if ( morphs[i].keyType < 1 || morphs[i].keyType > 3 ) {
-			stringstream s;
-			s << "NiMorphData is thought to only support keyType of 1, 2, or 3, but this NIF has a keyType of " << morphs[i].keyType << ".";
-			throw runtime_error(s.str());
-		}
+		if (morphs[i].keys.size() > 0) {
+			NifStream( morphs[i].keyType, file );
 
-		for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
-
-			//Always write the time and data
-			WriteFloat( morphs[i].keys[j].time, out );
-			WriteFloat( morphs[i].keys[j].data, out );
-
-			if ( morphs[i].keyType == 2 ) {
-				//Uses Quadratic interpolation
-				WriteFloat( morphs[i].keys[j].forward_tangent, out );
-				WriteFloat( morphs[i].keys[j].backward_tangent, out );
-			} else if ( morphs[i].keyType == 3 ) {
-				//Uses TBC interpolation
-				WriteFloat ( morphs[i].keys[j].tension, out );
-				WriteFloat ( morphs[i].keys[j].bias, out );
-				WriteFloat ( morphs[i].keys[j].continuity, out );
-
+			for (uint j = 0; j < morphs[i].keys.size(); j++) {
+				NifStream( morphs[i].keys[j], file, morphs[i].keyType );
 			}
 		}
 		
-		for (uint j = 0; j < vertCount ; ++j ) {
-			WriteFloat( morphs[i].morph[j].x, out );
-			WriteFloat( morphs[i].morph[j].y, out );
-			WriteFloat( morphs[i].morph[j].z, out );
-		}
+		//Stream whole array of Vector3
+		NifStream( morphs[i].morph, file );
 	}
 }
 
@@ -2751,18 +2711,7 @@ string NiSkinPartition::asString() const {
  **********************************************************/
 
 void NiPixelData::Read( ifstream& in, unsigned int version ) {
-	unknownInt = ReadUInt( in );
-	rMask = ReadUInt( in );
-	gMask = ReadUInt( in );
-	bMask = ReadUInt( in );
-	aMask = ReadUInt( in );
-	bpp = ReadUInt( in );
-		
-	for (int i = 0; i < 8; ++i) {
-		unknown8Bytes[i] = ReadByte( in );
-	}
-
-	GetAttr("Unknown Index")->Read( in, version );
+	ABlock::Read( in, version );
 
 	uint mipCount = ReadUInt( in );
 	bytesPerPixel = ReadUInt( in );
@@ -2780,18 +2729,7 @@ void NiPixelData::Read( ifstream& in, unsigned int version ) {
 }
 
 void NiPixelData::Write( ofstream& out, unsigned int version ) const {
-	WriteUInt( unknownInt, out );
-	WriteUInt( rMask, out );
-	WriteUInt( gMask, out );
-	WriteUInt( bMask, out );
-	WriteUInt( aMask, out );
-	WriteUInt( bpp, out );
-		
-	for (int i = 0; i < 8; ++i) {
-		WriteByte( unknown8Bytes[i], out );
-	}
-
-	GetAttr("Unknown Index")->Write( out, version );
+	ABlock::Write( out, version );
 
 	WriteUInt( uint(mipmaps.size()), out );
 	WriteUInt( bytesPerPixel, out );
@@ -2811,23 +2749,9 @@ string NiPixelData::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	Hex r_mask(rMask), b_mask(bMask), g_mask(gMask), a_mask(aMask);
+	out << ABlock::asString();
 
-	out << "Unknown Int:  " << unknownInt << endl
-		<< "Red Mask:   " << r_mask << endl
-		<< "Blue Mask:  " << b_mask << endl
-		<< "Green Mask: " << g_mask << endl
-		<< "Alpha Mask: " << a_mask << endl
-		<< "Bits Per Pixel:  " << bpp << endl
-		<< "Unknown 8 Bytes:" << endl;
-
-	for (int i = 0; i < 8; ++i) {
-		Hex unk8by(unknown8Bytes[i]);
-		out << unk8by << "  ";
-	}
-	out << endl;
-
-	out << "Unknown Index:  " <<  GetAttr("Unknown Index")->asLink() << endl
+	out << endl
 		<< "Mipmap Count:  " << uint(mipmaps.size()) << endl
 		<< "Bytes Per Pixel:  " << bytesPerPixel << endl;
 

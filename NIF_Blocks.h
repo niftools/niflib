@@ -474,8 +474,18 @@ public:
 class NiPixelData : public AData {
 public:
 	NiPixelData() {
-		AddAttr( attr_link, "Unknown Index" );
-		data = NULL; }
+		data = NULL;
+		AddAttr( attr_int, "Unknown Int" );
+		AddAttr( attr_int, "Red Mask" );
+		AddAttr( attr_int, "Blue Mask" );
+		AddAttr( attr_int, "Green Mask" );
+		AddAttr( attr_int, "Alpha Mask" );
+		AddAttr( attr_int, "Bits Per Pixel" );
+		AddAttr( attr_float, "Unknown 4 Bytes 1" );
+		AddAttr( attr_float, "Unknown 4 Bytes 2" );
+		AddAttr( attr_link, "Unknown Link" );
+		AddAttr( attr_link, "Palette", VER_10_1_0_0);
+	}
 	~NiPixelData() { if (data != NULL) delete [] data; }
 
 	void Read( ifstream& in, unsigned int version );
@@ -488,8 +498,6 @@ private:
 		uint width, height, offset;
 	};
 	
-	uint unknownInt, rMask, gMask, bMask, aMask, bpp;
-	byte unknown8Bytes[8];
 	uint bytesPerPixel;
 	vector<MipMap> mipmaps;
 	uint dataSize;

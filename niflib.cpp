@@ -356,6 +356,7 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	//--WriteBlocks--//
 	for (uint i = 0; i < blk_list.size(); ++i) {
 		if (version < 0x05000001) {
+			//cout << i << ":  " << blk_list[i]->GetBlockType() << endl;
 			//Write Block Type
 			WriteString( blk_list[i]->GetBlockType() , out );
 		}
