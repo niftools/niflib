@@ -233,7 +233,7 @@ public:
 class AExtraData : public AData {
 public:
 	AExtraData() {
-		AddAttr( attr_link, "Name", VER_10_0_1_0 );
+		AddAttr( attr_string, "Name", VER_10_0_1_0 );
 		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
