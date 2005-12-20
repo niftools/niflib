@@ -1480,15 +1480,19 @@ void NiSkinData::Read( ifstream& in, unsigned int version ) {
 
 void NiSkinData::Write( ofstream& out, unsigned int version ) const {
 	//Calculate offset matrices prior to writing data
-	//CalculateBoneOffsets(); // non-const! (we should calculate the data on the fly while writing, without actually storing it in the class)
+
+	Matrix33 rot;
+	fVector3 tr;
+	float sc;
+	CalculateOverallOffset(rot, tr, sc);
 
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
-			WriteFloat( rotation[r][c], out );
+			WriteFloat( rot[r][c], out );
 		}
 	}
-	WriteFVector3( translation, out );
-	WriteFloat( scale, out );
+	WriteFVector3( tr, out );
+	WriteFloat( sc, out );
 	WriteUInt(short(bone_map.size()), out);
 	GetAttr("Skin Partition")->Write( out, version );
 	//unknownByte exists from version 4.2.1.0 on
@@ -1574,13 +1578,18 @@ string NiSkinData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
+	
+	Matrix33 rot;
+	fVector3 tr;
+	float sc;
+	CalculateOverallOffset(rot, tr, sc);
 
 	out << "Rotate:" << endl
-		<< "   |" << setw(6) << rotation[0][0] << "," << setw(6) << rotation[0][1] << "," << setw(6) << rotation[0][2] << " |" << endl
-		<< "   |" << setw(6) << rotation[1][0] << "," << setw(6) << rotation[1][1] << "," << setw(6) << rotation[1][2] << " |" << endl
-		<< "   |" << setw(6) << rotation[2][0] << "," << setw(6) << rotation[2][1] << "," << setw(6) << rotation[2][2] << " |" << endl
-		<< "Translate:  " << translation << endl
-		<< "Scale:  " << scale << endl
+		<< "   |" << setw(6) << rot[0][0] << "," << setw(6) << rot[0][1] << "," << setw(6) << rot[0][2] << " |" << endl
+		<< "   |" << setw(6) << rot[1][0] << "," << setw(6) << rot[1][1] << "," << setw(6) << rot[1][2] << " |" << endl
+		<< "   |" << setw(6) << rot[2][0] << "," << setw(6) << rot[2][1] << "," << setw(6) << rot[2][2] << " |" << endl
+		<< "Translate:  " << tr << endl
+		<< "Scale:  " << sc << endl
 		<< "Bone Count:  " << uint(bone_map.size()) << endl
 		<< "Skin Partition:  " << GetAttr("Skin Partition")->asLink() << endl
 		<< "Unknown Byte:  " << int(unknownByte) << endl
@@ -1946,6 +1955,50 @@ void NiSkinData::CalculateBoneOffset( INode const * const par_node, IBlock const
 	
 	//Store average scale
 	result.scale = (scale[0] + scale[1] + scale[2]) / 3.0f;
+}
+
+void NiSkinData::CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const {
+	// Node parent world transform
+	INode const * par = this->GetNodeParent();
+	Matrix44 par_mat = par->GetWorldTransform();
+	
+	// Skeleton root world transform
+	blk_ref skel = GetParent()->GetAttr("Skeleton Root")->asLink();
+	INode const * iskel = (INode const *)skel->QueryInterface(ID_NODE);
+	if ( iskel == NULL )
+		throw runtime_error("SkinInfluence skeleton root is not a node.");
+	Matrix44 skel_mat = iskel->GetWorldTransform();
+	
+	// Inverse parent node transform & multiply with skeleton matrix
+	Matrix44 inv_mat = InverseMatrix44(par_mat);
+	Matrix44 res_mat = MultMatrix44(inv_mat, skel_mat);
+
+	//--Extract Scale from first 3 rows--//
+	float scale[3];
+	for (int r = 0; r < 3; ++r) {
+		//Get scale for this row
+		scale[r] = sqrt(res_mat[r][0] * res_mat[r][0] + res_mat[r][1] * res_mat[r][1] + res_mat[r][2] * res_mat[r][2]);
+
+		//Normalize the row by dividing each factor by scale
+		res_mat[r][0] /= scale[r];
+		res_mat[r][1] /= scale[r];
+		res_mat[r][2] /= scale[r];
+	}
+
+	//--Store Result--//
+
+	//Store rotation matrix
+	for (int c = 0; c < 3; ++c)
+		for (int r = 0; r < 3; ++r)
+			rot[r][c] = res_mat[r][c];
+
+	//Store translate vector
+	tr[0] = res_mat[3][0];
+	tr[1] = res_mat[3][1];
+	tr[2] = res_mat[3][2];
+
+	//Store average scale
+	sc = (scale[0] + scale[1] + scale[2]) / 3.0f;
 }
 
 /***********************************************************

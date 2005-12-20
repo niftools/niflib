@@ -1222,6 +1222,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		};
 
 		INode * GetNodeParent() const;
+		void CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const;
 		void CalculateBoneOffset( INode const * const par_node, IBlock const * const bone_block, Bone & result ) const;
 		Matrix33 rotation;
 		fVector3 translation;
