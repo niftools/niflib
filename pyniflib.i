@@ -135,10 +135,10 @@ struct Key {
 %ignore attr_ref::operator std::string() const;
 %ignore attr_ref::operator Matrix33() const;
 %ignore attr_ref::operator blk_ref() const;
-%ignore attr_ref::operator TextureSource() const;
+%ignore attr_ref::operator TexSource() const;
 %ignore attr_ref::operator BoundingBox() const;
 %ignore attr_ref::operator ConditionalInt() const;
-%ignore attr_ref::operator Texture() const;
+%ignore attr_ref::operator TexDesc() const;
 %ignore attr_ref::operator std::list<blk_ref>() const;
 
 %ignore blk_ref::operator<<(ostream & lh, const blk_ref & rh);

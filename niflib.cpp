@@ -592,10 +592,10 @@ unsigned int BlocksInMemory() {
 //--Attribute Reference Functions--//
 
 attr_ref::operator blk_ref() const { return _attr->asLink(); }
-attr_ref::operator TextureSource() const { return _attr->asTextureSource(); }
+attr_ref::operator TexSource() const { return _attr->asTexSource(); }
 attr_ref::operator BoundingBox() const { return _attr->asBoundingBox(); }
 attr_ref::operator ConditionalInt() const { return _attr->asConditionalInt(); }
-attr_ref::operator Texture() const { return _attr->asTexture(); }
+attr_ref::operator TexDesc() const { return _attr->asTexDesc(); }
 
 //--Query Functions--//
 

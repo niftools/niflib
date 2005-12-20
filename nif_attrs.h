@@ -55,10 +55,10 @@ public:
 	Float3 asFloat3() const { throw runtime_error(ATTRERR); }
 	Matrix33 asMatrix33() const { throw runtime_error(ATTRERR); }
 	blk_ref asLink() const { throw runtime_error(ATTRERR); }
-	TextureSource asTextureSource() const { throw runtime_error(ATTRERR); }
+	TexSource asTexSource() const { throw runtime_error(ATTRERR); }
 	BoundingBox asBoundingBox() const { throw runtime_error(ATTRERR); }
 	ConditionalInt asConditionalInt() const { throw runtime_error(ATTRERR); }
-	Texture asTexture() const { throw runtime_error(ATTRERR); }
+	TexDesc asTexDesc() const { throw runtime_error(ATTRERR); }
 	list<blk_ref> asLinkList() const { throw runtime_error(ATTRERR); }
 	//Setters
 	void Set(int) { throw runtime_error(ATTRERR); }
@@ -67,10 +67,10 @@ public:
 	void Set(string const &) { throw runtime_error(ATTRERR); }
 	void Set(Matrix33 const &) { throw runtime_error(ATTRERR); }
 	void Set(blk_ref const &) { throw runtime_error(ATTRERR); }
-	void Set(TextureSource const &) { throw runtime_error(ATTRERR); }
+	void Set(TexSource const &) { throw runtime_error(ATTRERR); }
 	void Set(BoundingBox const &) { throw runtime_error(ATTRERR); }
 	void Set(ConditionalInt const &) { throw runtime_error(ATTRERR); }
-	void Set(Texture const &) { throw runtime_error(ATTRERR); }
+	void Set(TexDesc const &) { throw runtime_error(ATTRERR); }
 	//Link functions
 	bool HasLinks() const { return false; }
 	void AddLink( blk_ref const & block ) { cout << "AddLink" << endl; throw runtime_error(ATTRERR); }
@@ -828,17 +828,17 @@ public:
     //                 0 - lighting emmisive
     //  1 - lighting emmisive amb diff
 
-class TextureAttr : public LinkAttr {
+class TexDescAttr : public LinkAttr {
 public:
-	TextureAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
+	TexDescAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
 		memset( &data, 0, sizeof(data) );
 	}
-	~TextureAttr() {}
+	~TexDescAttr() {}
 	AttrType GetType() const { return attr_texture; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
 		data.isUsed = ReadBool( in, version );
 		if ( data.isUsed ) {	
-			//Read in link for TextureSource
+			//Read in link for TexSource
 			LinkAttr::ReadAttr( in, version );
 
 			data.clampMode = TexClampMode( ReadUInt( in ) );
@@ -976,19 +976,19 @@ public:
 
 		return out.str();
 	}
-	Texture asTexture() const { return data; }
-	void Set( Texture const & n ) { data = n; }
+	TexDesc asTexDesc() const { return data; }
+	void Set( TexDesc const & n ) { data = n; }
 protected:
-	Texture data;
+	TexDesc data;
 };
 
-class BumpMapAttr : public TextureAttr {
+class BumpMapAttr : public TexDescAttr {
 public:
-	BumpMapAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : TextureAttr(name, owner, first_ver, last_ver) {}
+	BumpMapAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : TexDescAttr(name, owner, first_ver, last_ver) {}
 	~BumpMapAttr() {}
 	AttrType GetType() const { return attr_bumpmap; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
-		TextureAttr::ReadAttr( in, version );
+		TexDescAttr::ReadAttr( in, version );
 		if ( data.isUsed ) {
 			data.bmLumaScale = ReadFloat( in );
 			data.bmLumaOffset = ReadFloat( in );
@@ -999,7 +999,7 @@ public:
 		}
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
-		TextureAttr::WriteAttr( out, version );
+		TexDescAttr::WriteAttr( out, version );
 
 		if ( data.isUsed ) {
 			WriteFloat( data.bmLumaScale, out );
@@ -1015,7 +1015,7 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << TextureAttr::asString();
+		out << TexDescAttr::asString();
 
 		if ( data.isUsed ) {
 			out << endl
@@ -1133,14 +1133,14 @@ public:
 
 		return out.str();
 	}
-	TextureSource asTextureSource() const { return data; }
-	void Set( TextureSource const &n ) {
+	TexSource asTexSource() const { return data; }
+	void Set( TexSource const &n ) {
 		data.useExternal = n.useExternal;
 		data.unknownByte = n.unknownByte;
 		data.fileName = n.fileName;
 	}
 private:
-	TextureSource data;
+	TexSource data;
 };
 
 class PixelLayoutAttr : public IntAttr {

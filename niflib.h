@@ -134,6 +134,24 @@ const unsigned int VER_10_1_0_0 = 0x0A010000; /*!< Nif Version 10.1.0.0 */
 const unsigned int VER_10_2_0_0 = 0x0A020000; /*!< Nif Version 10.2.0.0 */ 
 const unsigned int VER_20_0_0_4 = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
 
+/*! Specifies the availiable texture clamp modes.  That is, the behavior of pixels outside the range of the texture.*/
+enum TexClampMode {
+	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */ 
+	CLAMP_S_WRAP_T = 1, /*!< Clamp in the S direction but wrap in the T direction. */ 
+	WRAP_S_CLAMP_T = 2, /*!< Wrap in the S direction but clamp in the T direction. */ 
+	WRAP_S_WRAP_T = 3 /*!< Wrap in both directions. */ 
+};
+
+/*! Specifies the availiable texture filter modes.  That is, the way pixels within a texture are blended together when textures are displayed on the screen at a size other than their original dimentions.*/
+enum TexFilterMode {
+	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */ 
+	FILTER_BILERP = 1, /*!< Uses bilinear filtering. */ 
+	FILTER_TRILERP = 2, /*!< Uses trilinear filtering. */ 
+	FILTER_NEAREST_MIPNEAREST = 3, /*!< Uses the nearest pixel from the mipmap that is closest to the display size. */ 
+	FILTER_NEAREST_MIPLERP = 4, /*!< Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result. */ 
+	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */ 
+};
+
 #ifndef NULL
 #define NULL 0
 #endif
@@ -981,15 +999,35 @@ struct Matrix44 {
     }
 };
 
+/*! Stores a color along with alpha translucency */
 struct Color4 {
-	float r, g, b, a;
+	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
+	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
+	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
+	float a; /*!< The alpha translucency component of this color.  Should be between 0.0f and 1.0f. */ 
+
+	/*! Default constructor */
 	Color4() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	\param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	\param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	\param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	*/
 	Color4(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = a;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	\param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	\param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	\param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	*/
 	void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
@@ -998,15 +1036,35 @@ struct Color4 {
 	}
 };
 
+/*! Represents a quaternion - a 4D extention of complex numbers used as an alternitive to matrices to represent rotation.*/
 struct Quaternion {
-	float w, x, y, z;
+	float w; /*!< The W scalar component of this Quaternion. */ 
+	float x; /*!< The X vector component of this Quaternion. */ 
+	float y; /*!< The Y vector component of this Quaternion. */ 
+	float z; /*!< The Z vector component of this Quaternion. */ 
+
+	/*! Default constructor. */
 	Quaternion() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param w The value to set the W scalar component of this quaternion to.
+	\param x The value to set the X vector component of this quaternion to.
+	\param y The value to set the Y vector component of this quaternion to.
+	\param z The value to set the Z vector component of this quaternion to.
+	*/
 	Quaternion(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
 		this->y = y;
 		this->z = z;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param w The value to set the W scalar component of this quaternion to.
+	\param x The value to set the X vector component of this quaternion to.
+	\param y The value to set the Y vector component of this quaternion to.
+	\param z The value to set the Z vector component of this quaternion to.
+	*/
 	void Set(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
@@ -1015,19 +1073,73 @@ struct Quaternion {
 	}
 };
 
+/*! Represents a bounding box - the smallest rectangular shape that a particular node can fit inside. */
+struct BoundingBox {
+	bool isUsed; /*!< Determines whether this bounding box is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
+	int unknownInt; /*!< An integer whos function is still unknown. */
+	Vector3 translation; /*!< The translation vector (position relative to the origin) of this bounding box. */
+	Matrix33 rotation; /*!< The rotation of this bounding box expressed as a 3x3 matrix. */
+	Vector3 radius; /*!< A vector containing the radius of this box in the direction of each axis, X, Y, and Z. */
+};
 
+/*! Holds an integer that may or may not be used. */
+struct ConditionalInt {
+	bool isUsed; /*!< Determines whether the integer contained within this structure is used or not.  If this value is true, the integer is significant.  If false, it is ignored. */ 
+	int unknownInt; /*!< The integer value which may or may not be in use.  Its function is unknown. */ 
+};
+
+/*! Represents a texture description that specify various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
+struct TexDesc {
+	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
+	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
+	
+	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
+	TexClampMode clampMode;  /*!< The texture wraping/clamping mode. */ 
+	TexFilterMode filterMode; /*!< The texture filtering mode. */ 
+	int textureSet; /*!< Texture set? Usually 0. */ 
+	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0. */ 
+	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5. */ 
+	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
+	//Unknown Block in version 10.1.0.0 and up
+	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
+	float unknown5Floats[5]; /*!< 5 unkown floating point values that exist from version 10.1.0.0 on. */ 
+	int unknownInt; /*!< An unknown integer value that exist from version 10.1.0.0 on. */ 
+	float unknownFloat1; /*!< An unknown floating point value that exist from version 10.1.0.0 on. */ 
+	float unknownFloat2; /*!< An unknown floating point value that exist from version 10.1.0.0 on. */ 
+	//Bitmap block - only exists if this texture is in the bitmap slot
+	float bmLumaOffset; /*!< The bitmap luma offset.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
+	float bmLumaScale; /*!< The bitmap luma scale.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
+	Matrix22 bmMatrix; /*!< The bitmap 2x2 matrix.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
+};
+
+/*! Stores texture source data.  Specifies where to find the image data; in an external file, or within a NiPixelData block. */
+struct TexSource {
+	bool useExternal; /*!< Specifies whether to use an external file for the texture or not.  If true, an external file is used.  If false, the image data is stored within a NiPixelData block.  This block can be retrieved by using the asLink function on the same attribute. */ 
+	unsigned char unknownByte; /*!< A byte whos function is unknown. */
+	string fileName; /*!< The filename of the texture, if stored externally.  Can be an image file such as a TGA, BMP, or DDS file, or another NIF file which stores the image data within a NiPixelData block. */ 
+};
+
+/*! Stores one skin weight of a vertex by number. */
+struct SkinWeight {
+	unsigned short vertexNum; /*!< The vertex number that this weight is for. */
+	float vertexWeight; /*!< The amount a particular bone affects the movement of this vertex.  Should be a number between 0.0f and 1.0f. */
+};
+
+/*! Stores an animation key and the time in the animation that it takes affect. It is a template class so it can hold any kind of data as different blocks key different sorts of information to the animation timeline.*/
 template <class T> 
 struct Key {
-	float time;
-	T data, forward_tangent, backward_tangent;
-	float tension, bias, continuity;
+	float time; /*!< The time on the animation timeline that this keyframe takes affect. */ 
+	T data; /*!< The data being keyed to the timeline. */ 
+	T forward_tangent; /*!< A piece of data of the same type as is being keyed to the time line used as the forward tangent in quadratic interpolation.  Ignored if key type is set as something else. */ 
+	T backward_tangent; /*!< A piece of data of the same type as is being keyed to the time line used as the backward tangent in quadratic interpolation.  Ignored if key type is set as something else. */ 
+	float tension; /*!< The amount of tension to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
+	float bias; /*!< The amount of bias to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
+	float continuity; /*!< The amount of continuity to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
 };
 
 //--Main Interfaces--//
 
-/**
- * Interface for most Ni-blocks.
- */
+/*! The base interface for all NIF blocks. */
 class IBlock{
 public:
 
@@ -1078,10 +1190,10 @@ public:
 	virtual string asString() const = 0;
 	virtual Matrix33 asMatrix33() const = 0;
 	virtual blk_ref asLink() const = 0;
-	virtual TextureSource asTextureSource() const = 0;
+	virtual TexSource asTexSource() const = 0;
 	virtual BoundingBox asBoundingBox() const = 0;
 	virtual ConditionalInt asConditionalInt() const = 0;
-	virtual Texture asTexture() const = 0;
+	virtual TexDesc asTexDesc() const = 0;
 	virtual list<blk_ref> asLinkList() const = 0;
 	//Setters
 	virtual void Set(int) = 0;
@@ -1090,10 +1202,10 @@ public:
 	virtual void Set(string const &) = 0;
 	virtual void Set(Matrix33 const &) = 0;
 	virtual void Set( blk_ref const & n ) = 0;
-	virtual void Set(TextureSource const &) = 0;
+	virtual void Set(TexSource const &) = 0;
 	virtual void Set(BoundingBox const &) = 0;
 	virtual void Set(ConditionalInt const &) = 0;
-	virtual void Set(Texture const &) = 0;
+	virtual void Set(TexDesc const &) = 0;
 	//Link functions
 	virtual bool HasLinks() const = 0;
 	virtual void AddLink( blk_ref const & block ) = 0;
@@ -1359,7 +1471,7 @@ public:
 //					case 6:	attr_name = "Decal 0 Texture";  map = "decal0";
 //				}
 //
-//				if ( tx_prop[attr_name]->asTexture().isUsed == true ) {
+//				if ( tx_prop[attr_name]->asTexDesc().isUsed == true ) {
 //					//How to merge all UVs?
 //				}
 //
@@ -1454,7 +1566,7 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(TextureSource const & n) {
+	attr_ref & operator=(TexSource const & n) {
 		_attr->Set(n);
 		return *this;
 	}
@@ -1466,7 +1578,7 @@ public:
 		_attr->Set(n);
 		return *this;
 	}
-	attr_ref & operator=(Texture const & n) {
+	attr_ref & operator=(TexDesc const & n) {
 		_attr->Set(n);
 		return *this;
 	}
@@ -1479,10 +1591,10 @@ public:
 	
 	operator Matrix33() const { return _attr->asMatrix33(); }
 	operator blk_ref() const;
-	operator TextureSource() const;
+	operator TexSource() const;
 	operator BoundingBox() const;
 	operator ConditionalInt() const;
-	operator Texture() const;
+	operator TexDesc() const;
 	operator list<blk_ref>() const { return _attr->asLinkList(); }
 
 	//friend ostream & operator<<(ostream & lh, const attr_ref & rh) {
@@ -1669,7 +1781,7 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, TextureSource const & value) {
+	void __setitem__(string index, TexSource const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
@@ -1687,7 +1799,7 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, Texture const & value) {
+	void __setitem__(string index, TexDesc const & value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
@@ -1696,73 +1808,6 @@ public:
 protected:
 	int _index;
 	IBlock * _block;
-};
-
-enum TexClampMode {
-	CLAMP_S_CLAMP_T = 0,
-	CLAMP_S_WRAP_T = 1,
-	WRAP_S_CLAMP_T = 2,
-	WRAP_S_WRAP_T = 3
-};
-
-enum TexFilterMode {
-	FILTER_NEAREST = 0,
-	FILTER_BILERP = 1,
-	FILTER_TRILERP = 2,
-	FILTER_NEAREST_MIPNEAREST = 3,
-	FILTER_NEAREST_MIPLERP = 4,
-	FILTER_BILERP_MIPNEAREST = 5,
-};
-
-//--Structures--//
-
-struct blk_link {
-	blk_ref block;
-	attr_ref attr;
-};
-
-struct BoundingBox {
-	bool isUsed;
-	int unknownInt;
-	Vector3 translation;
-	Matrix33 rotation;
-	Vector3 radius;
-};
-
-struct ConditionalInt {
-	bool isUsed;
-	int unknownInt;
-};
-
-struct Texture {
-	Texture() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
-	bool isUsed;
-	TexClampMode clampMode;
-	TexFilterMode filterMode;
-	int textureSet;
-	unsigned short PS2_L;
-	unsigned short PS2_K;
-	short unknownShort;  //exists up to version 4.1.0.12
-	//Unknown Block in version 10.1.0.0 and up
-	bool hasUnknownData;
-	float unknown5Floats[5];
-	int unknownInt;
-	float unknownFloat1, unknownFloat2;
-	//Bitmap block - only exists if this texture is in the bitmap slot
-	float bmLumaOffset;
-	float bmLumaScale;
-	Matrix22 bmMatrix;
-};
-
-struct TextureSource {
-	bool useExternal;
-	unsigned char unknownByte;
-	string fileName;
-};
-
-struct SkinWeight {
-	unsigned short vertexNum;
-	float vertexWeight;
 };
 
 #endif

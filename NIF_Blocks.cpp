@@ -97,7 +97,7 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 	} else if ( type == attr_lightmode ) {
 		attr = new LightModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_texture ) {
-		attr = new TextureAttr( name, this, first_ver, last_ver );
+		attr = new TexDescAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_bumpmap ) {
 		attr = new BumpMapAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_applymode ) {
