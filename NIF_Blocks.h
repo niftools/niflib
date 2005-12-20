@@ -481,8 +481,14 @@ public:
 		AddAttr( attr_int, "Green Mask" );
 		AddAttr( attr_int, "Alpha Mask" );
 		AddAttr( attr_int, "Bits Per Pixel" );
-		AddAttr( attr_float, "Unknown 4 Bytes 1" );
-		AddAttr( attr_float, "Unknown 4 Bytes 2" );
+		AddAttr( attr_byte, "Unknown Byte 1" );
+		AddAttr( attr_byte, "Unknown Byte 2" );
+		AddAttr( attr_byte, "Unknown Byte 3" );
+		AddAttr( attr_byte, "Unknown Byte 4" );
+		AddAttr( attr_byte, "Unknown Byte 5" );
+		AddAttr( attr_byte, "Unknown Byte 6" );
+		AddAttr( attr_byte, "Unknown Byte 7" );
+		AddAttr( attr_byte, "Unknown Byte 8" );
 		AddAttr( attr_link, "Unknown Link" );
 		AddAttr( attr_link, "Palette", VER_10_1_0_0);
 	}
@@ -574,17 +580,17 @@ public:
 	//Getters
 	vector<Vector3> GetVertices() const { return vertices; }
 	vector<Vector3> GetNormals() const { return normals; }
-	vector<Color> GetColors() const { return colors; }
+	vector<Color4> GetColors() const { return colors; }
 	vector<TexCoord> GetUVSet( int index ) const { return uv_sets[index]; }
 	//Setters
 	void SetVertices( const vector<Vector3> & in );
 	void SetNormals( const vector<Vector3> & in );
-	void SetColors( const vector<Color> & in );
+	void SetColors( const vector<Color4> & in );
 	void SetUVSet( int index, const vector<TexCoord> & in );
 protected:
 	vector<Vector3> vertices;
 	vector<Vector3> normals;
-	vector<Color> colors;
+	vector<Color4> colors;
 	vector< vector<TexCoord> > uv_sets;
 };
 
@@ -1266,12 +1272,12 @@ public:
 	//--IColorData Functions--//
 	KeyType GetKeyType() const { return _type; }
 	void SetKeyType( KeyType t ) { _type = t; }
-	vector< Key<Color> > GetKeys() const { return _keys; }
-	void SetKeys( vector< Key<Color> > const & keys ) { _keys = keys; }
+	vector< Key<Color4> > GetKeys() const { return _keys; }
+	void SetKeys( vector< Key<Color4> > const & keys ) { _keys = keys; }
 
 private:
 	KeyType _type;
-	vector<Key<Color> > _keys;
+	vector<Key<Color4> > _keys;
 };
 
 /**

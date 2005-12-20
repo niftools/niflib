@@ -75,56 +75,140 @@ struct SkinWeight;
 //--Constants--//
 
 //Interface IDs
-const int ID_TRI_SHAPE_DATA = 0;
-const int ID_SKIN_DATA = 1;
-const int ID_NODE = 2;
-const int ID_KEYFRAME_DATA = 3;
-const int ID_TEXT_KEY_EXTRA_DATA = 4;
-const int ID_MORPH_DATA = 5;
-const int ID_SHAPE_DATA = 6;
-const int ID_TRI_STRIPS_DATA = 7;
-const int ID_COLOR_DATA = 8;
-const int ID_FLOAT_DATA = 9;
-const int ID_POS_DATA = 10;
+const int ID_TRI_SHAPE_DATA = 0; /*!< ID for ITriShapeData Interface */  
+const int ID_SKIN_DATA = 1; /*!< ID for ISkinData Interface */ 
+const int ID_NODE = 2; /*!< ID for INode Interface */ 
+const int ID_KEYFRAME_DATA = 3; /*!< ID for IKeyframeData Interface */ 
+const int ID_TEXT_KEY_EXTRA_DATA = 4; /*!< ID for ITextKeyExtraData Interface */ 
+const int ID_MORPH_DATA = 5; /*!< ID for IMorphData Interface */ 
+const int ID_SHAPE_DATA = 6; /*!< ID for IShapeData Interface */ 
+const int ID_TRI_STRIPS_DATA = 7; /*!< ID for ITriStripsData Interface */ 
+const int ID_COLOR_DATA = 8; /*!< ID for IColorData Interface */ 
+const int ID_FLOAT_DATA = 9; /*!< ID for IFloatData Interface */ 
+const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */ 
 
-//Attribute types
+//!  Attribute types
+/*!
+  This enum contains all the attribute types used by Niflib.
+*/
 enum AttrType {
-	attr_int, attr_short, attr_byte, attr_float, attr_float3, attr_string,
-	attr_link, attr_flags, attr_matrix33, attr_linkgroup, attr_bones,
-	attr_bbox, attr_condint, attr_vertmode, attr_lightmode, attr_texture,
-	attr_bumpmap, attr_applymode, attr_texsource, attr_pixellayout,
-	attr_mipmapformat, attr_alphaformat, attr_controllertarget,
-	attr_skeletonroot, attr_particlegroup, attr_lodrangegroup, attr_vector3,
-	attr_color3, attr_parent
+	attr_int, /*!< Integer Attribute.  Holds a 32-bit integer. */  
+	attr_short, /*!< Short Integer Attribute.  Holds a 16-bit integer. */ 
+	attr_byte, /*!< Byte Attribute.  Holds an 8-bit integer. */ 
+	attr_float, /*!< Float Attribute.  Holds a 32-bit floating point number. */ 
+	attr_float3, /*!< Float3 Attribute.  Holds a Float3 structure. */ 
+	attr_string, /*!< String Attribute.  Holds a text string. */ 
+	attr_link, /*!< Link Attribute.  Links to one other Nif block lower in the Nif tree. */ 
+	attr_flags, /*!< Flags Attribute.  Holds a set of 16 bit flags whos function depends on the block that uses them. */ 
+	attr_matrix33, /*!< Matrix33 Attribute.  Holds a Matrix33 structure. */ 
+	attr_linkgroup, /*!< Link Group Attribute.  Links to several other Nif blocks lower in the Nif tree. */ 
+	attr_bones, /*!< Bones Attribute.  Automatic. */ 
+	attr_bbox, /*!< Bounding Box Attribute.  Holds a BoundingBox structure. */ 
+	attr_condint, /*!< Conditional Integer Attribute.  Holds a ConditionalInt structure. */ 
+	attr_vertmode, /*!< Vertex Mode Attribute.  Holds an integer that corresponds to the vertex mode. */ 
+	attr_lightmode, /*!< Light Mode Attribute.  Holds an integer that corresponds to the light mode. */ 
+	attr_texture, /*!< Texture Attribute.  Holds a Texture structure but ignores the bump map information. */ 
+	attr_bumpmap, /*!< Bump Map Atrribute  Holds a Texture structure and uses the bump map information. */ 
+	attr_applymode, /*!< Apply Mode Attribute.  Holds an integer that corresponds to the apply mode. */ 
+	attr_texsource, /*!< Texture Source Attribute.  Holds a Texture Source structure. */ 
+	attr_pixellayout, /*!< Light Mode Attribute.  Holds an integer that corresponds to the light mode. */ 
+	attr_mipmapformat, /*!< Mipmap Format Attribute.  Holds an integer that corresponds to the mipmap format. */ 
+	attr_alphaformat, /*!< Alpha Format Attribute.  Holds an integer that corresponds to the alpha format. */ 
+	attr_controllertarget, /*!< Controller Target Attribute.  Automatic. */ 
+	attr_skeletonroot, /*!< Skeleton Root Attribute.  Automatic. */ 
+	attr_particlegroup, /*!< Particle Group Attribute. */ 
+	attr_lodrangegroup, /*!< Level of Detail Range Group Attribute. */ 
+	attr_vector3, /*!< Vector3 Attribute.  Holds a Float3 structure that corresponds to a vector in 3D space. */ 
+	attr_color3, /*!< Color3 Attribute.  Holds a Float3 structure that corresponds to an RGB color. */ 
+	attr_parent /*!< Parent Attribute.  Automatic. */ 
 };
 
 //NIF Versions
-const int VER_4_0_0_2 = 0x04000002;
-const int VER_4_1_0_12 = 0x0401000C;
-const int VER_4_2_0_2 = 0x04020002;
-const int VER_4_2_1_0 = 0x04020100;
-const int VER_4_2_2_0 = 0x04020200;
-const int VER_10_0_1_0 = 0x0A000100;
-const int VER_10_1_0_0 = 0x0A010000;
-const int VER_10_2_0_0 = 0x0A020000;
-const int VER_20_0_0_4 = 0x14000004;
+const unsigned int VER_4_0_0_2 = 0x04000002; /*!< Nif Version 4.0.0.2 */ 
+const unsigned int VER_4_1_0_12 = 0x0401000C; /*!< Nif Version 4.1.0.12 */ 
+const unsigned int VER_4_2_0_2 = 0x04020002; /*!< Nif Version 4.2.0.2 */ 
+const unsigned int VER_4_2_1_0 = 0x04020100; /*!< Nif Version 4.2.1.0 */ 
+const unsigned int VER_4_2_2_0 = 0x04020200; /*!< Nif Version 4.2.2.0 */ 
+const unsigned int VER_10_0_1_0 = 0x0A000100; /*!< Nif Version 10.0.1.0 */ 
+const unsigned int VER_10_1_0_0 = 0x0A010000; /*!< Nif Version 10.1.0.0 */ 
+const unsigned int VER_10_2_0_0 = 0x0A020000; /*!< Nif Version 10.2.0.0 */ 
+const unsigned int VER_20_0_0_4 = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
 
 #ifndef NULL
 #define NULL 0
 #endif
 
-//Key Types
-enum KeyType { LINEAR_KEY = 1, QUADRATIC_KEY = 2, TBC_KEY = 3, XYZ_ROTATION_KEY = 4 };
+//!  Key Types
+/*!
+  This enum contains all the animation key types used by Niflib.
+*/
+enum KeyType {
+	LINEAR_KEY = 1, /*!< Use linear interpolation. */ 
+	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored.*/ 
+	TBC_KEY = 3, /*!< Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored.*/ 
+	XYZ_ROTATION_KEY = 4 /*!< For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions. */ 
+};
 
 //--Main Functions--//
 
-//Reads the given file by file name and returns a vector of block references
+/*!
+Reads the given file by file name and returns a vector of block references
+\param file_name The name of the file to load, or the complete path if it is not in the working directory.
+\return A vector of block references that point to all the blocks read from the Nif file.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifList("test_in.nif");
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifList("test_in.nif")
+\endcode
+
+\sa ReadNifTree, WriteNifTree
+*/
 vector<blk_ref> ReadNifList( string const & file_name );
 
-//Reads the given file by file name and returns a reference to the root block
+/*!
+Reads the given file by file name and returns a reference to the root block.
+\param file_name The name of the file to load, or the complete path if it is not in the working directory.
+\return A block reference that points to the root of tree of data blocks contained in the NIF file.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+\endcode
+
+\sa ReadNifList, WriteNifTree
+*/
 blk_ref ReadNifTree( string const & file_name );
 
-//Writes a valid Nif File given a file name, a pointer to the root block of a file tree
+/*!
+Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.  Automatically writes a kf file and an x/nif file if animation is present.
+\param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
+\param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
+\param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+WriteNifTree( "test_out.nif", my_block );
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+WriteNifTree( "test_out.nif", my_block )
+\endcode
+
+\sa ReadNifList, WriteNifTree
+*/
 void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
 //// Returns list of all blocks in the tree rooted by root block.
@@ -133,63 +217,351 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
 
-//Sets whether data/hex areas are shown by Print commands... yes it uses a global right now <sigh>
+//... yes it uses a global right now <sigh>
+/*!
+Sets whether data/hex areas are shown by asString functions
+\param val A boolean value that specifies whether verbose mode should be turned on.  True = Verbose, False = Brief.
+
+<b>Example:</b> 
+\code
+SetVerboseMode(true);
+\endcode
+
+<b>In Python:</b>
+\code
+SetVerboseMode(True)
+\endcode
+
+\sa IBlock::asString, IAttr::asString
+*/
 void SetVerboseMode( bool val );
 
-//Creates a new block of the given type and returns a reference to it
+/*!
+Creates a new block of the given type and returns a reference to it
+\param block_type – The type of block you want to create.  This value is case sensitive and spelling is important.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
+\return This function will return a newly created block of the requested type.  Beware, if the block type is unrecognized, this function will return a featureless block with whatever you sent it as the type.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = CreateBlock("NiNode");
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = CreateBlock("NiNode")
+\endcode
+
+\sa BlocksInMemory
+*/
 blk_ref CreateBlock( string block_type );
 
+/*!
+Returns the current total number of blocks in memory.
+\return Returns the number of blocks currently in memory.  This includes both blocks loading from nif files and blocks created by the user.  Reference counting is used to ensure that multiple copies of the same block are not created, and blocks that are no longer being used are automatically freed.
+
+<b>Example:</b> 
+\code
+unsigned int block_count = BlocksInMemory();
+\endcode
+
+<b>In Python:</b>
+\code
+block_count = BlocksInMemory()
+\endcode
+
+\sa CreateBlock
+*/
 //Retrns total number of blocks in memory
 unsigned int BlocksInMemory();
 
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_SHAPE_DATA ).  It queries the block for an IShapeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IShapeData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IShapeData * shape_data = QueryShapeData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+shape_data = QueryShapeData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IShapeData * QueryShapeData( blk_ref & block );
 IShapeData const * QueryShapeData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TRI_SHAPE_DATA ).  It queries the block for an ITriShapeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITriShapeData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the ITriShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+ITriShapeData * tri_shape_data = QueryTriShapeData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+tri_shape_data = QueryTriShapeData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 ITriShapeData * QueryTriShapeData( blk_ref & block );
 ITriShapeData const * QueryTriShapeData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_SKIN_DATA ).  It queries the block for an ISkinData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ISkinData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the ISkinData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+ISkinData * skin_data = QuerySkinData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+skin_data = QuerySkinData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 ISkinData * QuerySkinData( blk_ref & block );
 ISkinData const * QuerySkinData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_NODE).  It queries the block for an INode interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the INode interface available.
+\param block The block to query the interface from.
+\return If the given block implements the INode interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+INode * node = QueryNode(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+node = QueryNode(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 INode * QueryNode( blk_ref & block );
 INode const * QueryNode( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_KEYFRAME_DATA ).  It queries the block for an IKeyframeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IKeyframeData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IKeyframeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IKeyframeData * keyframe_data = QueryKeyframeData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+keyframe_data = QueryKeyframeData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IKeyframeData * QueryKeyframeData( blk_ref & block );
 IKeyframeData const * QueryKeyframeData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TEXT_KEY_EXTRA_DATA ).  It queries the block for an ITextKeyExtraData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITextKeyExtraData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the ITextKeyExtraData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+ITextKeyExtraData * text_key_extra_data = QueryTextKeyExtraData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+text_key_extra_data = QueryTextKeyExtraData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 ITextKeyExtraData const * QueryTextKeyExtraData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_MORPH_DATA ).  It queries the block for an IMorphData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IMorphData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IMorphData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IMorphData * morph_data = QueryMorphData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+morph_data = QueryMorphData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IMorphData * QueryMorphData ( blk_ref & block );
 IMorphData const * QueryMorphData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TRI_STRIPS_DATA ).  It queries the block for an ITriStripsData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITriStripsData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the ITriStripsData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+ITriStripsData * tri_strips_data = QueryTriStripsData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+tri_strips_data = QueryTriStripsData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
 ITriStripsData const * QueryTriStripsData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_COLOR_DATA ).  It queries the block for an IColorData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IColorData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IColorData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IColorData * color_data = QueryColorData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+color_data = QueryColorData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IColorData * QueryColorData ( blk_ref & block );
 IColorData const * QueryColorData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_FLOAT_DATA ).  It queries the block for an IFloatData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IFloatData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IFloatData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IFloatData * float_data = QueryFloatData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+float_data = QueryFloatData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IFloatData * QueryFloatData ( blk_ref & block );
 IFloatData const * QueryFloatData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_POS_DATA ).  It queries the block for an IPosData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IPosData interface available.
+\param block The block to query the interface from.
+\return If the given block implements the IPosData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+
+<b>Example:</b> 
+\code
+blk_ref my_block = ReadNifTree("test_in.nif");
+IPosData * pos_data = QueryPosData(my_block);
+\endcode
+
+<b>In Python:</b>
+\code
+my_block = ReadNifTree("test_in.nif")
+pos_data = QueryPosData(my_block);
+\endcode
+
+\sa IBlock::QueryInterface
+*/
 IPosData * QueryPosData ( blk_ref & block );
 IPosData const * QueryPosData ( blk_ref const & block );
 
 //--Simple Structures--//
 
+/*! Stores 2D texture coordinates – two floating point variables, u and v. */
 struct TexCoord {
-	float u, v;
+	float u; /*!< The U value in this coordinate pair. */ 
+	float v; /*!< The V value in this coordinate pair. */ 
+
+	/*! Default constructor	*/
 	TexCoord() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param u The value to set U to.
+	\param v The value to set V to.
+	*/
 	TexCoord(float u, float v) {
 		this->u = u;
 		this->v = v;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param u The value to set U to.
+	\param v The value to set V to.
+	*/
 	void Set(float u, float v) {
 		this->u = u;
 		this->v = v;
 	}
 };
 
+/*! Represents a triangle face formed between three vertices referenced by number */
 struct Triangle {
-	short v1, v2, v3;
+	short v1; /*!< The index of the first vertex. */ 
+	short v2; /*!< The index of the second vertex. */ 
+	short v3; /*!< The index of the third vertex. */ 
+
+	/*! Default constructor */
 	Triangle() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param v1 The index of the first vertex.
+	\param v2 The index of the second vertex.
+	\param v3 The index of the third vertex.
+	*/
 	Triangle(short v1, short v2, short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param v1 The index of the first vertex.
+	\param v2 The index of the second vertex.
+	\param v3 The index of the third vertex.
+	*/
 	void Set(short v1, short v2, short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
@@ -197,14 +569,31 @@ struct Triangle {
 	}
 };
 
+/*!Represents a position or direction in 3D space*/
 struct Vector3 {
-	float x, y, z;
+	float x; /*!< The X component of this vector. */ 
+	float y; /*!< The Y component of this vector. */ 
+	float z; /*!< The Z component of this vector. */ 
+
+	/*!Default constructor.*/
 	Vector3() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param x The value to set X to.
+	\param y The value to set Y to.
+	\param z The value to set Z to.
+	*/
 	Vector3(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param x The value to set X to.
+	\param y The value to set Y to.
+	\param z The value to set Z to.
+	*/
 	void Set(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
@@ -212,23 +601,42 @@ struct Vector3 {
 	}
 };
 
+/* Stores two floating point numbers.  Used as a row of a Matrix22 */
 struct Float2 {
-	float data[2];
+	float data[2]; /*!< The two floating point numbers stored as an array. */ 
+	
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	\param n The index into the data array.  Should be 0 or 1.
+	\return The value at the given array index by reference so it can be read or set via the bracket operator.
+	*/
 	float & operator[](int n) {
 		return data[n];
 	}
 	float operator[](int n) const {
 		return data[n];
 	}
+
+	/*! Default constructor. */
 	Float2() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	*/
 	Float2( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	*/
 	void Set( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
 	}
+
 	//Python Operator Overloads
 	float __getitem__(int n) {
 		if (n > 1 || n < 0)
@@ -242,15 +650,30 @@ struct Float2 {
 	}
 };
 
+/*! Stores a 2 by 2 matrix used for bump maps. */
 struct Matrix22 {
-	Float2 rows[2];
+	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
+	
+	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
+	\param n The index into the row array.  Should be 0 or 1.
+	\return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
+	*/
 	Float2 & operator[](int n) {
 		return rows[n];
 	}
 	const Float2 & operator[](int n) const {
 		return rows[n];
 	}
+
+	/*! Default Constructor */
 	Matrix22() {}
+
+	/*! This constructor can be used to set all values in this matrix during initialization
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	*/
 	Matrix22(
 		float m11, float m12,
 		float m21, float m22
@@ -258,6 +681,13 @@ struct Matrix22 {
 		rows[0][0] = m11; rows[0][1] = m12;
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
+
+	/*! This function can be used to set all values in this matrix at the same time.
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	*/
 	void Set(
 		float m11, float m12,
 		float m21, float m22
@@ -265,6 +695,7 @@ struct Matrix22 {
 		rows[0][0] = m11; rows[0][1] = m12;
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
+
 	//Python Operator Overloads
 	Float2 & __getitem__(int n) {
 		if (n > 1 || n < 0)
@@ -273,25 +704,46 @@ struct Matrix22 {
     }
 };
 
+/* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
 struct Float3 {
-	float data[3];
+	float data[3]; /*!< The three floating point numbers stored as an array. */ 
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	\param n The index into the data array.  Should be 0, 1, or 2.
+	\return The value at the given array index by reference so it can be read or set via the bracket operator.
+	*/
 	float & operator[](int n) {
 		return data[n];
 	}
 	float operator[](int n) const {
 		return data[n];
 	}
+
+	/*!Default constructor.*/
 	Float3() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	\param f3 The value to set the third floating point number to.
+	*/
 	Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[2] = f3;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	\param f3 The value to set the third floating point number to.
+	*/
 	void Set( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[2] = f3;
 	}
+
 	//Python Operator Overloads
 	float __getitem__(int n) {
 		if (n > 2 || n < 0)
@@ -305,15 +757,35 @@ struct Float3 {
 	}
 };
 
+/*! Stores a 3 by 3 matrix used for rotation. */
 struct Matrix33 {
-	Float3 rows[3];
+	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
+	
+	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
+	\param n The index into the row array.  Should be 0, 1, or 2.
+	\return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
+	*/
 	Float3 & operator[](int n) {
 		return rows[n];
 	}
 	const Float3 & operator[](int n) const {
 		return rows[n];
 	}
+
+	/*! Default constructor. */
 	Matrix33() {}
+
+	/*! This constructor can be used to set all values in this matrix during initialization
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m13 The value to set at row 1, column 3.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	\param m23 The value to set at row 2, column 3.
+	\param m31 The value to set at row 3, column 1.
+	\param m32 The value to set at row 3, column 2.
+	\param m33 The value to set at row 3, column 3.
+	*/
 	Matrix33(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
@@ -323,6 +795,18 @@ struct Matrix33 {
 		rows[1][0] = m21; rows[1][1] = m22; rows[1][2] = m23;
 		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33;
 	}
+
+	/*! This function can be used to set all values in this matrix at the same time.
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m13 The value to set at row 1, column 3.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	\param m23 The value to set at row 2, column 3.
+	\param m31 The value to set at row 3, column 1.
+	\param m32 The value to set at row 3, column 2.
+	\param m33 The value to set at row 3, column 3.
+	*/
 	void Set(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
@@ -338,6 +822,7 @@ struct Matrix33 {
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2];
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2];
 	}
+
 	//Python Operator Overloads
 	Float3 & __getitem__(int n) {
 		if (n > 2 || n < 0)
@@ -346,27 +831,50 @@ struct Matrix33 {
     }
 };
 
+/* Stores four floating point numbers.  Used as a row of a Matrix44. */
 struct Float4 {
-	float data[4];
+	float data[4]; /*!< The four floating point numbers stored as an array. */ 
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	\param n The index into the data array.  Should be 0, 1, 2, or 3.
+	\return The value at the given array index by reference so it can be read or set via the bracket operator.
+	*/
 	float & operator[](int n) {
 		return data[n];
 	}
 	float operator[](int n) const {
 		return data[n];
 	}
+
+	/*! Default Constructor.*/
 	Float4() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	\param f3 The value to set the third floating point number to.
+	\param f4 The value to set the fourth floating point number to.
+	*/
 	Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[3] = f3;
 		data[4] = f4;
 	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	\param f1 The value to set the first floating point number to.
+	\param f2 The value to set the second floating point number to.
+	\param f3 The value to set the third floating point number to.
+	\param f4 The value to set the fourth floating point number to.
+	*/
 	void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[3] = f3;
 		data[4] = f4;
 	}
+
 	//Python Operator Overloads
 	float __getitem__(int n) {
 		if (n > 3 || n < 0)
@@ -380,15 +888,42 @@ struct Float4 {
 	}
 };
 
+/*! Stores a 4 by 4 matrix used for combined transformations. */
 struct Matrix44 {
-	Float4 rows[4];
+	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
+	
+	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
+	\param n The index into the row array.  Should be 0, 1, 2, or 3.
+	\return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
+	*/
 	Float4 & operator[](int n) {
 		return rows[n];
 	}
 	Float4 const & operator[](int n) const {
 		return rows[n];
 	}
+
+	/*! Default constructor. */
 	Matrix44() {}
+
+	/*! This constructor can be used to set all values in this matrix during initialization
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m13 The value to set at row 1, column 3.
+	\param m14 The value to set at row 1, column 4.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	\param m23 The value to set at row 2, column 3.
+	\param m24 The value to set at row 2, column 4.
+	\param m31 The value to set at row 3, column 1.
+	\param m32 The value to set at row 3, column 2.
+	\param m33 The value to set at row 3, column 3.
+	\param m34 The value to set at row 3, column 4.
+	\param m41 The value to set at row 4, column 1.
+	\param m42 The value to set at row 4, column 2.
+	\param m43 The value to set at row 4, column 3.
+	\param m44 The value to set at row 4, column 4.
+	*/
 	Matrix44(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
@@ -400,6 +935,25 @@ struct Matrix44 {
 		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33; rows[2][3] = m34;
 		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
+
+	/*! This function can be used to set all values in this matrix at the same time.
+	\param m11 The value to set at row 1, column 1.
+	\param m12 The value to set at row 1, column 2.
+	\param m13 The value to set at row 1, column 3.
+	\param m14 The value to set at row 1, column 4.
+	\param m21 The value to set at row 2, column 1.
+	\param m22 The value to set at row 2, column 2.
+	\param m23 The value to set at row 2, column 3.
+	\param m24 The value to set at row 2, column 4.
+	\param m31 The value to set at row 3, column 1.
+	\param m32 The value to set at row 3, column 2.
+	\param m33 The value to set at row 3, column 3.
+	\param m34 The value to set at row 3, column 4.
+	\param m41 The value to set at row 4, column 1.
+	\param m42 The value to set at row 4, column 2.
+	\param m43 The value to set at row 4, column 3.
+	\param m44 The value to set at row 4, column 4.
+	*/
 	void Set(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
@@ -411,12 +965,14 @@ struct Matrix44 {
 		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33; rows[2][3] = m34;
 		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
+
 	void AsFloatArr( float out[4][4] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2]; out[1][3] = rows[1][3];
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2]; out[2][3] = rows[2][3];
 		out[3][0] = rows[3][0]; out[3][1] = rows[3][1]; out[3][2] = rows[3][2]; out[3][3] = rows[3][3];
 	}
+
 	//Python Operator Overloads
 	Float4 & __getitem__(int n) {
 		if (n > 3 || n < 0)
@@ -425,10 +981,10 @@ struct Matrix44 {
     }
 };
 
-struct Color {
+struct Color4 {
 	float r, g, b, a;
-	Color() {}
-	Color(float r, float g, float b, float a = 1.0f) {
+	Color4() {}
+	Color4(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
@@ -577,12 +1133,12 @@ public:
 	//Getters
 	virtual vector<Vector3> GetVertices() const = 0;
 	virtual vector<Vector3> GetNormals() const = 0;
-	virtual vector<Color> GetColors() const = 0;
+	virtual vector<Color4> GetColors() const = 0;
 	virtual vector<TexCoord> GetUVSet( int index ) const = 0;
 	//Setters
 	virtual void SetVertices( const vector<Vector3> & in ) = 0;
 	virtual void SetNormals( const vector<Vector3> & in ) = 0;
-	virtual void SetColors( const vector<Color> & in ) = 0;
+	virtual void SetColors( const vector<Color4> & in ) = 0;
 	virtual void SetUVSet( int index, const vector<TexCoord> & in ) = 0;
 };
 
@@ -663,8 +1219,8 @@ public:
 	virtual ~IColorData () {}
 	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
-	virtual vector< Key<Color> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<Color> > const & keys ) = 0;
+	virtual vector< Key<Color4> > GetKeys() const = 0;
+	virtual void SetKeys( vector< Key<Color4> > const & keys ) = 0;
 };
 
 class IFloatData {
@@ -721,21 +1277,21 @@ public:
 //	void CombineTriShapes( list<blk_ref> & tri_shapes );
 ////	void SetVertices( vector<Vector3> & vertices );
 ////	void SetUVs( vector<TexCoord> & uvs );
-////	void SetColors( vector<Color> & colors );
+////	void SetColors( vector<Color4> & colors );
 ////	void SetNormals( vector<Vector3> & normals );
 ////	void SetBones( vector<blk_ref> & bones );
 ////	void SetFaces( list< vector< ComplexVertex > > & faces );
 ////
 ////	vector<Vector3> GetVertices();
 ////	vector<TexCoord> GetUVs();
-////	vector<Color> GetColors();
+////	vector<Color4> GetColors();
 ////	vector<Vector3> GetNormals();
 ////	vector<blk_ref> GetBones();
 ////	list< vector< ComplexVertex > > GetFaces();
 //
 //private:
 //	vector<Vector3> _vertices;
-//	vector<Color> _colors;
+//	vector<Color4> _colors;
 //	vector<Vector3> _normals;
 //	list<ComplexFace> _faces;
 //	map<string, blk_ref> _materials;

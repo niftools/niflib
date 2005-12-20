@@ -385,7 +385,7 @@ void NifStream( Quaternion & val, ifstream& in ) {
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Color & val, ifstream& in ) {
+void NifStream( Color4 & val, ifstream& in ) {
 	val.r = ReadFloat( in );
 	val.g = ReadFloat( in );
 	val.b = ReadFloat( in );
@@ -417,7 +417,7 @@ void NifStream( Quaternion const & val, ofstream& out ) {
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Color const & val, ofstream& out ) {
+void NifStream( Color4 const & val, ofstream& out ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );

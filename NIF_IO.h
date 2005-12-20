@@ -207,7 +207,7 @@ void NifStream( string & val, ifstream& in );
 void NifStream( Vector3 & val, ifstream& in );
 void NifStream( Quaternion & val, ifstream& in );
 void NifStream( KeyType & val, ifstream& in );
-void NifStream( Color & val, ifstream& in );
+void NifStream( Color4 & val, ifstream& in );
 void NifStream( Triangle & val, ifstream& in );
 
 template <class T> 
@@ -276,7 +276,7 @@ void NifStream( string const & val, ofstream& out );
 void NifStream( Vector3 const & val, ofstream& out );
 void NifStream( Quaternion const & val, ofstream& out );
 void NifStream( KeyType const & val, ofstream& out );
-void NifStream( Color const & val, ofstream& out );
+void NifStream( Color4 const & val, ofstream& out );
 void NifStream( Triangle const & val, ofstream& out );
 
 template <class T> 

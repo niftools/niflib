@@ -850,7 +850,7 @@ void AShapeData::SetNormals( const vector<Vector3> & in ) {
 	normals = in;
 }
 
-void AShapeData::SetColors( const vector<Color> & in ) {
+void AShapeData::SetColors( const vector<Color4> & in ) {
 	if (in.size() != vertices.size() && in.size() != 0 )
 		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
 	colors = in;
@@ -2220,7 +2220,7 @@ string NiColorData::asString() const {
 		<< "Key Type:  " << _type << endl;
 
 	if (verbose) {
-		vector< Key<Color> >::const_iterator it;
+		vector< Key<Color4> >::const_iterator it;
 		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
 			out << "Key Time:  " <<  it->time << "  Color:  " << it->data.r << ", " << it->data.g << ", " << it->data.b << ", " << it->data.a << endl;
 		}
