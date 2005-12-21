@@ -87,10 +87,10 @@ const int ID_COLOR_DATA = 8; /*!< ID for IColorData Interface */
 const int ID_FLOAT_DATA = 9; /*!< ID for IFloatData Interface */ 
 const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */ 
 
-//!  Attribute types
+
 /*!
-  This enum contains all the attribute types used by Niflib.
-*/
+ * This enum contains all the attribute types used by Niflib.
+ */
 enum AttrType {
 	attr_int, /*!< Integer Attribute.  Holds a 32-bit integer. */  
 	attr_short, /*!< Short Integer Attribute.  Holds a 16-bit integer. */ 
@@ -156,10 +156,10 @@ enum TexFilterMode {
 #define NULL 0
 #endif
 
-//!  Key Types
+
 /*!
-  This enum contains all the animation key types used by Niflib.
-*/
+ *   This enum contains all the animation key types used by Niflib.
+ */
 enum KeyType {
 	LINEAR_KEY = 1, /*!< Use linear interpolation. */ 
 	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored.*/ 
@@ -170,63 +170,63 @@ enum KeyType {
 //--Main Functions--//
 
 /*!
-Reads the given file by file name and returns a vector of block references
-\param file_name The name of the file to load, or the complete path if it is not in the working directory.
-\return A vector of block references that point to all the blocks read from the Nif file.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifList("test_in.nif");
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifList("test_in.nif")
-\endcode
-
-\sa ReadNifTree, WriteNifTree
-*/
+ * Reads the given file by file name and returns a vector of block references
+ * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
+ * \return A vector of block references that point to all the blocks read from the Nif file.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifList("test_in.nif");
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifList("test_in.nif")
+ * \endcode
+ * 
+ * \sa ReadNifTree, WriteNifTree
+ */
 vector<blk_ref> ReadNifList( string const & file_name );
 
 /*!
-Reads the given file by file name and returns a reference to the root block.
-\param file_name The name of the file to load, or the complete path if it is not in the working directory.
-\return A block reference that points to the root of tree of data blocks contained in the NIF file.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-\endcode
-
-\sa ReadNifList, WriteNifTree
-*/
+ * Reads the given file by file name and returns a reference to the root block.
+ * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
+ * \return A block reference that points to the root of tree of data blocks contained in the NIF file.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * \endcode
+ * 
+ * \sa ReadNifList, WriteNifTree
+ */
 blk_ref ReadNifTree( string const & file_name );
 
 /*!
-Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.  Automatically writes a kf file and an x/nif file if animation is present.
-\param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
-\param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
-\param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-WriteNifTree( "test_out.nif", my_block );
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-WriteNifTree( "test_out.nif", my_block )
-\endcode
-
-\sa ReadNifList, WriteNifTree
-*/
+ * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.  Automatically writes a kf file and an x/nif file if animation is present.
+ * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
+ * \param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
+ * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * WriteNifTree( "test_out.nif", my_block );
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * WriteNifTree( "test_out.nif", my_block )
+ * \endcode
+ * 
+ * \sa ReadNifList, WriteNifTree
+ */
 void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
 //// Returns list of all blocks in the tree rooted by root block.
@@ -235,294 +235,293 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
 
-//... yes it uses a global right now <sigh>
+
 /*!
-Sets whether data/hex areas are shown by asString functions
-\param val A boolean value that specifies whether verbose mode should be turned on.  True = Verbose, False = Brief.
-
-<b>Example:</b> 
-\code
-SetVerboseMode(true);
-\endcode
-
-<b>In Python:</b>
-\code
-SetVerboseMode(True)
-\endcode
-
-\sa IBlock::asString, IAttr::asString
-*/
+ * Sets whether data/hex areas are shown by asString functions
+ * \param val A boolean value that specifies whether verbose mode should be turned on.  True = Verbose, False = Brief.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * SetVerboseMode(true);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * SetVerboseMode(True)
+ * \endcode
+ * 
+ * \sa IBlock::asString, IAttr::asString
+ */
 void SetVerboseMode( bool val );
 
 /*!
-Creates a new block of the given type and returns a reference to it
-\param block_type – The type of block you want to create.  This value is case sensitive and spelling is important.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
-\return This function will return a newly created block of the requested type.  Beware, if the block type is unrecognized, this function will return a featureless block with whatever you sent it as the type.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = CreateBlock("NiNode");
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = CreateBlock("NiNode")
-\endcode
-
-\sa BlocksInMemory
-*/
+ * Creates a new block of the given type and returns a reference to it
+ * \param block_type – The type of block you want to create.  This value is case sensitive and spelling is important.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
+ * \return This function will return a newly created block of the requested type.  Beware, if the block type is unrecognized, this function will return a featureless block with whatever you sent it as the type.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = CreateBlock("NiNode");
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = CreateBlock("NiNode")
+ * \endcode
+ * 
+ * sa BlocksInMemory
+ */
 blk_ref CreateBlock( string block_type );
 
 /*!
-Returns the current total number of blocks in memory.
-\return Returns the number of blocks currently in memory.  This includes both blocks loading from nif files and blocks created by the user.  Reference counting is used to ensure that multiple copies of the same block are not created, and blocks that are no longer being used are automatically freed.
-
-<b>Example:</b> 
-\code
-unsigned int block_count = BlocksInMemory();
-\endcode
-
-<b>In Python:</b>
-\code
-block_count = BlocksInMemory()
-\endcode
-
-\sa CreateBlock
-*/
-//Retrns total number of blocks in memory
+ * Returns the current total number of blocks in memory.
+ * \return Returns the number of blocks currently in memory.  This includes both blocks loading from nif files and blocks created by the user.  Reference counting is used to ensure that multiple copies of the same block are not created, and blocks that are no longer being used are automatically freed.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * unsigned int block_count = BlocksInMemory();
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * block_count = BlocksInMemory()
+ * \endcode
+ * 
+ * \sa CreateBlock
+ */
 unsigned int BlocksInMemory();
 
 //--Query Functions--//
 // These are shorthands for using QueryInterface, and required for scripting languages
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_SHAPE_DATA ).  It queries the block for an IShapeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IShapeData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IShapeData * shape_data = QueryShapeData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-shape_data = QueryShapeData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IShapeData * shape_data = QueryShapeData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * shape_data = QueryShapeData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IShapeData * QueryShapeData( blk_ref & block );
 IShapeData const * QueryShapeData( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TRI_SHAPE_DATA ).  It queries the block for an ITriShapeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITriShapeData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the ITriShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-ITriShapeData * tri_shape_data = QueryTriShapeData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-tri_shape_data = QueryTriShapeData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the ITriShapeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * ITriShapeData * tri_shape_data = QueryTriShapeData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * tri_shape_data = QueryTriShapeData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 ITriShapeData * QueryTriShapeData( blk_ref & block );
 ITriShapeData const * QueryTriShapeData( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_SKIN_DATA ).  It queries the block for an ISkinData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ISkinData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the ISkinData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-ISkinData * skin_data = QuerySkinData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-skin_data = QuerySkinData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the ISkinData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * ISkinData * skin_data = QuerySkinData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * skin_data = QuerySkinData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 ISkinData * QuerySkinData( blk_ref & block );
 ISkinData const * QuerySkinData( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_NODE).  It queries the block for an INode interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the INode interface available.
-\param block The block to query the interface from.
-\return If the given block implements the INode interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-INode * node = QueryNode(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-node = QueryNode(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the INode interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * INode * node = QueryNode(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * node = QueryNode(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 INode * QueryNode( blk_ref & block );
 INode const * QueryNode( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_KEYFRAME_DATA ).  It queries the block for an IKeyframeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IKeyframeData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IKeyframeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IKeyframeData * keyframe_data = QueryKeyframeData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-keyframe_data = QueryKeyframeData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IKeyframeData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IKeyframeData * keyframe_data = QueryKeyframeData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * keyframe_data = QueryKeyframeData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IKeyframeData * QueryKeyframeData( blk_ref & block );
 IKeyframeData const * QueryKeyframeData( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TEXT_KEY_EXTRA_DATA ).  It queries the block for an ITextKeyExtraData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITextKeyExtraData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the ITextKeyExtraData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-ITextKeyExtraData * text_key_extra_data = QueryTextKeyExtraData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-text_key_extra_data = QueryTextKeyExtraData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the ITextKeyExtraData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * ITextKeyExtraData * text_key_extra_data = QueryTextKeyExtraData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * text_key_extra_data = QueryTextKeyExtraData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block );
 ITextKeyExtraData const * QueryTextKeyExtraData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_MORPH_DATA ).  It queries the block for an IMorphData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IMorphData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IMorphData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IMorphData * morph_data = QueryMorphData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-morph_data = QueryMorphData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IMorphData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IMorphData * morph_data = QueryMorphData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * morph_data = QueryMorphData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IMorphData * QueryMorphData ( blk_ref & block );
 IMorphData const * QueryMorphData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TRI_STRIPS_DATA ).  It queries the block for an ITriStripsData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITriStripsData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the ITriStripsData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-ITriStripsData * tri_strips_data = QueryTriStripsData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-tri_strips_data = QueryTriStripsData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the ITriStripsData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * ITriStripsData * tri_strips_data = QueryTriStripsData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * tri_strips_data = QueryTriStripsData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
 ITriStripsData const * QueryTriStripsData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_COLOR_DATA ).  It queries the block for an IColorData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IColorData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IColorData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IColorData * color_data = QueryColorData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-color_data = QueryColorData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IColorData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IColorData * color_data = QueryColorData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * color_data = QueryColorData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IColorData * QueryColorData ( blk_ref & block );
 IColorData const * QueryColorData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_FLOAT_DATA ).  It queries the block for an IFloatData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IFloatData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IFloatData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IFloatData * float_data = QueryFloatData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-float_data = QueryFloatData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IFloatData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IFloatData * float_data = QueryFloatData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * float_data = QueryFloatData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IFloatData * QueryFloatData ( blk_ref & block );
 IFloatData const * QueryFloatData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_POS_DATA ).  It queries the block for an IPosData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IPosData interface available.
-\param block The block to query the interface from.
-\return If the given block implements the IPosData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
-
-<b>Example:</b> 
-\code
-blk_ref my_block = ReadNifTree("test_in.nif");
-IPosData * pos_data = QueryPosData(my_block);
-\endcode
-
-<b>In Python:</b>
-\code
-my_block = ReadNifTree("test_in.nif")
-pos_data = QueryPosData(my_block);
-\endcode
-
-\sa IBlock::QueryInterface
-*/
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IPosData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IPosData * pos_data = QueryPosData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * pos_data = QueryPosData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
 IPosData * QueryPosData ( blk_ref & block );
 IPosData const * QueryPosData ( blk_ref const & block );
 
@@ -537,18 +536,18 @@ struct TexCoord {
 	TexCoord() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param u The value to set U to.
-	\param v The value to set V to.
-	*/
+	 * \param u The value to set U to.
+	 * \param v The value to set V to.
+	 */
 	TexCoord(float u, float v) {
 		this->u = u;
 		this->v = v;
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param u The value to set U to.
-	\param v The value to set V to.
-	*/
+	 * \param u The value to set U to.
+	 * \param v The value to set V to.
+	 */
 	void Set(float u, float v) {
 		this->u = u;
 		this->v = v;
@@ -565,10 +564,10 @@ struct Triangle {
 	Triangle() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param v1 The index of the first vertex.
-	\param v2 The index of the second vertex.
-	\param v3 The index of the third vertex.
-	*/
+	 * \param v1 The index of the first vertex.
+	 * \param v2 The index of the second vertex.
+	 * \param v3 The index of the third vertex.
+	 */
 	Triangle(short v1, short v2, short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
@@ -576,10 +575,10 @@ struct Triangle {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param v1 The index of the first vertex.
-	\param v2 The index of the second vertex.
-	\param v3 The index of the third vertex.
-	*/
+	 * \param v1 The index of the first vertex.
+	 * \param v2 The index of the second vertex.
+	 * \param v3 The index of the third vertex.
+	 */
 	void Set(short v1, short v2, short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
@@ -597,10 +596,10 @@ struct Vector3 {
 	Vector3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param x The value to set X to.
-	\param y The value to set Y to.
-	\param z The value to set Z to.
-	*/
+	 * \param x The value to set X to.
+	 * \param y The value to set Y to.
+	 * \param z The value to set Z to.
+	 */
 	Vector3(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
@@ -608,10 +607,10 @@ struct Vector3 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param x The value to set X to.
-	\param y The value to set Y to.
-	\param z The value to set Z to.
-	*/
+	 * \param x The value to set X to.
+	 * \param y The value to set Y to.
+	 * \param z The value to set Z to.
+	 */
 	void Set(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
@@ -624,9 +623,9 @@ struct Float2 {
 	float data[2]; /*!< The two floating point numbers stored as an array. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	\param n The index into the data array.  Should be 0 or 1.
-	\return The value at the given array index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the data array.  Should be 0 or 1.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
 	float & operator[](int n) {
 		return data[n];
 	}
@@ -638,18 +637,18 @@ struct Float2 {
 	Float2() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 */
 	Float2( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 */
 	void Set( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -673,9 +672,9 @@ struct Matrix22 {
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
-	\param n The index into the row array.  Should be 0 or 1.
-	\return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the row array.  Should be 0 or 1.
+	 * \return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
+	 */
 	Float2 & operator[](int n) {
 		return rows[n];
 	}
@@ -687,11 +686,11 @@ struct Matrix22 {
 	Matrix22() {}
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 */
 	Matrix22(
 		float m11, float m12,
 		float m21, float m22
@@ -701,11 +700,11 @@ struct Matrix22 {
 	}
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 */
 	void Set(
 		float m11, float m12,
 		float m21, float m22
@@ -727,9 +726,9 @@ struct Float3 {
 	float data[3]; /*!< The three floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	\param n The index into the data array.  Should be 0, 1, or 2.
-	\return The value at the given array index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the data array.  Should be 0, 1, or 2.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
 	float & operator[](int n) {
 		return data[n];
 	}
@@ -741,10 +740,10 @@ struct Float3 {
 	Float3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	\param f3 The value to set the third floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 * \param f3 The value to set the third floating point number to.
+	 */
 	Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -752,10 +751,10 @@ struct Float3 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	\param f3 The value to set the third floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 * \param f3 The value to set the third floating point number to.
+	 */
 	void Set( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -780,9 +779,9 @@ struct Matrix33 {
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
-	\param n The index into the row array.  Should be 0, 1, or 2.
-	\return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the row array.  Should be 0, 1, or 2.
+	 * \return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
+	 */
 	Float3 & operator[](int n) {
 		return rows[n];
 	}
@@ -794,16 +793,16 @@ struct Matrix33 {
 	Matrix33() {}
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m13 The value to set at row 1, column 3.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	\param m23 The value to set at row 2, column 3.
-	\param m31 The value to set at row 3, column 1.
-	\param m32 The value to set at row 3, column 2.
-	\param m33 The value to set at row 3, column 3.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m13 The value to set at row 1, column 3.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 * \param m23 The value to set at row 2, column 3.
+	 * \param m31 The value to set at row 3, column 1.
+	 * \param m32 The value to set at row 3, column 2.
+	 * \param m33 The value to set at row 3, column 3.
+	 */
 	Matrix33(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
@@ -815,16 +814,16 @@ struct Matrix33 {
 	}
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m13 The value to set at row 1, column 3.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	\param m23 The value to set at row 2, column 3.
-	\param m31 The value to set at row 3, column 1.
-	\param m32 The value to set at row 3, column 2.
-	\param m33 The value to set at row 3, column 3.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m13 The value to set at row 1, column 3.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 * \param m23 The value to set at row 2, column 3.
+	 * \param m31 The value to set at row 3, column 1.
+	 * \param m32 The value to set at row 3, column 2.
+	 * \param m33 The value to set at row 3, column 3.
+	 */
 	void Set(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
@@ -854,9 +853,9 @@ struct Float4 {
 	float data[4]; /*!< The four floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	\param n The index into the data array.  Should be 0, 1, 2, or 3.
-	\return The value at the given array index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the data array.  Should be 0, 1, 2, or 3.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
 	float & operator[](int n) {
 		return data[n];
 	}
@@ -868,11 +867,11 @@ struct Float4 {
 	Float4() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	\param f3 The value to set the third floating point number to.
-	\param f4 The value to set the fourth floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 * \param f3 The value to set the third floating point number to.
+	 * \param f4 The value to set the fourth floating point number to.
+	 */
 	Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -881,11 +880,11 @@ struct Float4 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param f1 The value to set the first floating point number to.
-	\param f2 The value to set the second floating point number to.
-	\param f3 The value to set the third floating point number to.
-	\param f4 The value to set the fourth floating point number to.
-	*/
+	 * \param f1 The value to set the first floating point number to.
+	 * \param f2 The value to set the second floating point number to.
+	 * \param f3 The value to set the third floating point number to.
+	 * \param f4 The value to set the fourth floating point number to.
+	 */
 	void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
@@ -911,9 +910,9 @@ struct Matrix44 {
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
-	\param n The index into the row array.  Should be 0, 1, 2, or 3.
-	\return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
-	*/
+	 * \param n The index into the row array.  Should be 0, 1, 2, or 3.
+	 * \return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
+	 */
 	Float4 & operator[](int n) {
 		return rows[n];
 	}
@@ -925,23 +924,23 @@ struct Matrix44 {
 	Matrix44() {}
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m13 The value to set at row 1, column 3.
-	\param m14 The value to set at row 1, column 4.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	\param m23 The value to set at row 2, column 3.
-	\param m24 The value to set at row 2, column 4.
-	\param m31 The value to set at row 3, column 1.
-	\param m32 The value to set at row 3, column 2.
-	\param m33 The value to set at row 3, column 3.
-	\param m34 The value to set at row 3, column 4.
-	\param m41 The value to set at row 4, column 1.
-	\param m42 The value to set at row 4, column 2.
-	\param m43 The value to set at row 4, column 3.
-	\param m44 The value to set at row 4, column 4.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m13 The value to set at row 1, column 3.
+	 * \param m14 The value to set at row 1, column 4.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 * \param m23 The value to set at row 2, column 3.
+	 * \param m24 The value to set at row 2, column 4.
+	 * \param m31 The value to set at row 3, column 1.
+	 * \param m32 The value to set at row 3, column 2.
+	 * \param m33 The value to set at row 3, column 3.
+	 * \param m34 The value to set at row 3, column 4.
+	 * \param m41 The value to set at row 4, column 1.
+	 * \param m42 The value to set at row 4, column 2.
+	 * \param m43 The value to set at row 4, column 3.
+	 * \param m44 The value to set at row 4, column 4.
+	 */
 	Matrix44(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
@@ -955,23 +954,23 @@ struct Matrix44 {
 	}
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	\param m11 The value to set at row 1, column 1.
-	\param m12 The value to set at row 1, column 2.
-	\param m13 The value to set at row 1, column 3.
-	\param m14 The value to set at row 1, column 4.
-	\param m21 The value to set at row 2, column 1.
-	\param m22 The value to set at row 2, column 2.
-	\param m23 The value to set at row 2, column 3.
-	\param m24 The value to set at row 2, column 4.
-	\param m31 The value to set at row 3, column 1.
-	\param m32 The value to set at row 3, column 2.
-	\param m33 The value to set at row 3, column 3.
-	\param m34 The value to set at row 3, column 4.
-	\param m41 The value to set at row 4, column 1.
-	\param m42 The value to set at row 4, column 2.
-	\param m43 The value to set at row 4, column 3.
-	\param m44 The value to set at row 4, column 4.
-	*/
+	 * \param m11 The value to set at row 1, column 1.
+	 * \param m12 The value to set at row 1, column 2.
+	 * \param m13 The value to set at row 1, column 3.
+	 * \param m14 The value to set at row 1, column 4.
+	 * \param m21 The value to set at row 2, column 1.
+	 * \param m22 The value to set at row 2, column 2.
+	 * \param m23 The value to set at row 2, column 3.
+	 * \param m24 The value to set at row 2, column 4.
+	 * \param m31 The value to set at row 3, column 1.
+	 * \param m32 The value to set at row 3, column 2.
+	 * \param m33 The value to set at row 3, column 3.
+	 * \param m34 The value to set at row 3, column 4.
+	 * \param m41 The value to set at row 4, column 1.
+	 * \param m42 The value to set at row 4, column 2.
+	 * \param m43 The value to set at row 4, column 3.
+	 * \param m44 The value to set at row 4, column 4.
+	 */
 	void Set(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
@@ -1010,11 +1009,11 @@ struct Color4 {
 	Color4() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	\param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	\param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	\param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
-	*/
+	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 */
 	Color4(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
@@ -1023,11 +1022,11 @@ struct Color4 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	\param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	\param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	\param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
-	*/
+	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 */
 	void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
@@ -1047,11 +1046,11 @@ struct Quaternion {
 	Quaternion() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	\param w The value to set the W scalar component of this quaternion to.
-	\param x The value to set the X vector component of this quaternion to.
-	\param y The value to set the Y vector component of this quaternion to.
-	\param z The value to set the Z vector component of this quaternion to.
-	*/
+	 * \param w The value to set the W scalar component of this quaternion to.
+	 * \param x The value to set the X vector component of this quaternion to.
+	 * \param y The value to set the Y vector component of this quaternion to.
+	 * \param z The value to set the Z vector component of this quaternion to.
+	 */
 	Quaternion(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
@@ -1060,11 +1059,11 @@ struct Quaternion {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	\param w The value to set the W scalar component of this quaternion to.
-	\param x The value to set the X vector component of this quaternion to.
-	\param y The value to set the Y vector component of this quaternion to.
-	\param z The value to set the Z vector component of this quaternion to.
-	*/
+	 * \param w The value to set the W scalar component of this quaternion to.
+	 * \param x The value to set the X vector component of this quaternion to.
+	 * \param y The value to set the Y vector component of this quaternion to.
+	 * \param z The value to set the Z vector component of this quaternion to.
+	 */
 	void Set(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
@@ -1088,7 +1087,7 @@ struct ConditionalInt {
 	int unknownInt; /*!< The integer value which may or may not be in use.  Its function is unknown. */ 
 };
 
-/*! Represents a texture description that specify various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
+/*! Represents a texture description that specifies various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
 struct TexDesc {
 	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
 	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
@@ -1103,9 +1102,9 @@ struct TexDesc {
 	//Unknown Block in version 10.1.0.0 and up
 	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
 	float unknown5Floats[5]; /*!< 5 unkown floating point values that exist from version 10.1.0.0 on. */ 
-	int unknownInt; /*!< An unknown integer value that exist from version 10.1.0.0 on. */ 
-	float unknownFloat1; /*!< An unknown floating point value that exist from version 10.1.0.0 on. */ 
-	float unknownFloat2; /*!< An unknown floating point value that exist from version 10.1.0.0 on. */ 
+	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
+	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
+	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
 	//Bitmap block - only exists if this texture is in the bitmap slot
 	float bmLumaOffset; /*!< The bitmap luma offset.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
 	float bmLumaScale; /*!< The bitmap luma scale.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
@@ -1139,28 +1138,176 @@ struct Key {
 
 //--Main Interfaces--//
 
-/*! The base interface for all NIF blocks. */
+/*! The base interface for all NIF blocks. 
+ * \sa blk_ref, CreateBlock
+ */
 class IBlock{
 public:
-
 	IBlock( ){}
 	virtual ~IBlock() {}
 
+	/*! Returns the last known block number.  Block numbers are set automatically when a Nif file is first read and again each time a tree is written.
+	 * \return The last known block number.  Will not update until the block is written to a file.
+	 * \sa WriteNifTree, blk_ref::get_index
+	 */
 	virtual int GetBlockNum() const = 0;
+
+	/*!
+	 * Used to retrieve the first parent that was linked to this block.
+	 * \return A block reference to the first parent that was linked to this block.  If there is no parent, a null reference is returned.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * blk_ref parent_blk = my_block->GetParent();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * parent_blk =  block.GetParent()
+	 * \endcode
+	 * 
+	 * \sa IAttr::Set(blk_ref const &), IAttr::AddLink, IAttr::AddLinks, IAttr::RemoveLinks, IAttr::ClearLinks
+	 */
 	virtual blk_ref GetParent() const = 0;
+
+	/*!
+	 * Summarizes the information contained in this block in English.
+	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * cout << my_block->asString();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * print block.asString()
+	 * \endcode
+	 * 
+	 * \sa IAttr::asString, SetVerboseMode
+	 */
 	virtual string asString() const = 0;
+
+	/*!
+	 * Used to determine a block’s type.  These type strings are the same as the class names of the blocks in the <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.
+	 * \return A string containing the type of the block.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * cout << my_block->GetBlockType();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * print block.GetBlockType()
+	 * \endcode
+	 * 
+	 * \sa CreateBlock
+	 */
 	virtual string GetBlockType() const = 0;
+
+	/*!
+	 * Used to determine whether this block is controllable - i.e. a controller can animate it.  This means it decends from the AControllable class in the <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.
+	 * \return True if the block is controllable.  False otherwise.
+	 * \sa IBlock::IsController, QueryNode
+	 */
 	virtual bool IsControllable() const = 0;
+
+	/*!
+	 * Used to determine whether this block is an animation controller.  This means it decends from the AController class in the <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.
+	 * \return True if the block is an animation controller.  False otherwise.
+	 * \sa IBlock::IsControllable, QueryNode
+	 */
 	virtual bool IsController() const = 0;
 
-	//Attribute Functions
+	//--Attribute Functions--//
+
+	/*!
+	 * Used to get an attribute reference from a block by name.
+	 * \param attr_name The name of the attribute you are requesting.  Ex. Translation, Bounding Box, Unknown Int 1, ec.
+	 * \return If the attribute exits in the block, a reference to it is returned.  Otherwise a null reference is returned.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * attr_ref my_attr = my_block["NiNode"]; // Shortcut using [] operator
+	 * my_attr = my_block->GetAttr("NiNode"); // Same thing but longer
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * my_attr = my_block["NiNode"] # Shortcut using __getitem__ operator
+	 * my_attr = my_block.GetAttr("NiNode") # Same thing but longer
+	 * \endcode
+	 * 
+	 * \sa IBlock::GetAttrs, attr_ref, blk_ref::operator[]
+	 */
 	virtual attr_ref GetAttr(string const & attr_name) const = 0;
+
+	/*!
+	 * Used to get a vector holding a reference to every all attribute contained in a block.
+	 * \return A vector of references for the complete list of attributes contained within a block.  The list can then be used to visit each attribute.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * vector<attr_ref> attr_list = my_block->GetAttrs();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * attr_list = my_block.GetAttrs();
+	 * \endcode
+	 * 
+	 * \sa IBlock::GetAttr, attr_ref
+	 */
 	virtual vector<attr_ref> GetAttrs() const = 0;
 
-	//Link Functions
+	//--Link Function--//
+
+	/*!
+	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
+	 * \return A list of references to blocks that this attribute links its owner block to.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * list<blk_ref> attr_list = my_block->GetLinks();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * attr_list = my_block.GetLinks()
+	 * \endcode
+	 * 
+	 * \sa IAttr::asLink, IAttr::asLinkList, IAttr::FindLink
+	 */
 	virtual list<blk_ref> GetLinks() const = 0;
 
-	//To check for specialized Interfaces
+	//--To check for specialized Interfaces--//
+
+	/*!
+	 * Used to query for advanced block interfaces such as INode and IShapeData.  This function is not availiable from Python; you will need to use one of the many shorthand Query functions such as QueryNode and QueryShapeData.
+	 * \param id The ID constant of the interface you're querying, such as ID_NODE or ID_SHAPE_DATA.
+	 * \return If this block implements the requested interface, a pointer to it is returned.  Otherwise zero is returned - a null pointer.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * block = CreateBlock("NiNode");
+	 * INode * node = (INode*)block->QueryInterface(ID_NODE);
+	 * \endcode
+	 * 
+	 * \sa QueryShapeData, QueryTriShapeData, QuerySkinData, QueryNode, QueryKeyframeData, QueryTextKeyExtraData, QueryMorphData, QueryTriStripsData, QueryColorData, QueryFloatData, QueryPosData
+	 */
 	virtual void * QueryInterface( int id ) = 0;
 	virtual void const * QueryInterface( int id ) const = 0;
 	
@@ -1175,61 +1322,392 @@ protected:
 	virtual void SubtractRef() = 0;
 };
 
+/*! The base interface for all NIF attributes.
+ * \sa attr_ref
+ */
 class IAttr {
 public:
 	IAttr() {}
 	virtual ~IAttr() {}
+
+	/*!
+	 * Used to determine the type of an attribute at runtime.
+	 * \return An AttrType constant reffering to the type of the attribute. Ex. attr_float, attr_texture, attr_byte, etc.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * AttrType attr_type = my_block["Scale"]->GetType();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * attr_type = my_block["Scale"].GetType()
+	 * \endcode
+	 * 
+	 * \sa IBlock::GetBlockType
+	 */
 	virtual AttrType GetType() const = 0;
+
+	/*!
+	 * Used to determine an attribute’s friendly name.
+	 * \return A string that contains the friendly name of the attribute.  This is the same name used with the IBlock::GetAttr function to retrieve an attribute. Ex. Scale, Texture, Skeleton Root, etc.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * vector<attr_ref> attr_list = my_block->GetAttrs();
+	 * for ( int i = 0; i < attr_list.size(); ++i ) {
+     *	cout << attr_list[i]->GetName() << endl;
+	 * }
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * attr_list = my_block.GetAttrs()
+	 * for attr in attr_list:
+     *	print attr.GetName()
+	 * \endcode
+	 * 
+	 * \sa IBlock::GetBlockType
+	 */
 	virtual string GetName() const = 0;
+
 	virtual void Read( ifstream& in, unsigned int version ) = 0;
 	virtual void Write( ofstream& out, unsigned int version ) const = 0;
-	//Getters
+
+	//--Getters--//
+
+	/*!
+	 * Used to get a copy of the integer value stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the integer value stored in this attribute.
+	 */
 	virtual int asInt() const = 0;
+
+	/*!
+	 * Used to get a copy of the floating point value stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the floating point value stored in this attribute.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * float scale = my_block["Scale"]; // Shortcut using overloaded float operator
+	 * scale = my_block["Scale"]->asFloat();  // Same thing but longer
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * scale = my_block["Scale"].asFloat() # shortcut not available due to Python assignment semantics
+	 * \endcode
+	 */
 	virtual float asFloat() const = 0;
+
+	/*!
+	 * Used to get a copy of the Float3 structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the Float3 structure stored in this attribute.
+	 */
 	virtual Float3 asFloat3() const = 0;
+
+	/*!
+	 * Used to get a copy of the text string stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the text string stored in this attribute.
+	 */
 	virtual string asString() const = 0;
+
+	/*!
+	 * Used to get a copy of the Matrix33 structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the Matrix33 structure stored in this attribute.
+	 */
 	virtual Matrix33 asMatrix33() const = 0;
+
+	/*!
+	 * Used to get a block reference to the block linked through this attribute to its owner block.  Raises an exception if the attribute does not store this type of value.
+	 * \return A block reference to the block linked through this attribute to its owner block.  If no block is linked through this attribute, a null reference is returned.
+	 */
 	virtual blk_ref asLink() const = 0;
+
+	/*!
+	 * Used to get a copy of the TexSource structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the TexSource structure stored in this attribute.
+	 */
 	virtual TexSource asTexSource() const = 0;
+
+	/*!
+	 * Used to get a copy of the BoundingBox structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the BoundingBox structure stored in this attribute.
+	 */
 	virtual BoundingBox asBoundingBox() const = 0;
+
+	/*!
+	 * Used to get a copy of the ConditionalInt structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the ConditionalInt structure stored in this attribute.
+	 */
 	virtual ConditionalInt asConditionalInt() const = 0;
+
+	/*!
+	 * Used to get a copy of the TexDesc structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the TexDesc structure stored in this attribute.
+	 */
 	virtual TexDesc asTexDesc() const = 0;
+
+	/*!
+	 * Used to retrieve a list of all the blocks linked through this attribute to its owner block.  Raises an exception if the attribute does not store this type of value.
+	 * \return A list of all the blocks linked through this attribute to its owner block. The list will be empty if no blocks are linked through this attribute.
+	 */
 	virtual list<blk_ref> asLinkList() const = 0;
-	//Setters
-	virtual void Set(int) = 0;
-	virtual void Set(float) = 0;
-	virtual void Set(Float3 const &) = 0;
-	virtual void Set(string const &) = 0;
-	virtual void Set(Matrix33 const &) = 0;
-	virtual void Set( blk_ref const & n ) = 0;
-	virtual void Set(TexSource const &) = 0;
-	virtual void Set(BoundingBox const &) = 0;
-	virtual void Set(ConditionalInt const &) = 0;
-	virtual void Set(TexDesc const &) = 0;
-	//Link functions
+
+	//--Setters--//
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( int val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * my_block["Scale"] = 0.7f; //Shortcut using overloaded = operator
+	 * my_block["Scale"]->Set(0.7f);  //Same thing but longer
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * my_block["Scale"] = 0.7 # Shortcut using overloaded __setitem__ operator
+	 * my_block["Scale"].Set(0.7) # Same thing but longer
+	 * \endcode
+	 */
+	virtual void Set( float val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( Float3 const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( string const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( Matrix33 const & val ) = 0;
+
+	/*!
+	 * Used to retrieve the block that the current block is linked to through this attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This is the block to be linked to the block which owns this attribute. Passing a null block reference will break the link.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * blk_ref new_controller = CreateBlock("NiKeyframeController");
+	 * my_block["Controller"] = new_controller; //Shortcut using overloaded = operator
+	 * my_block["Controller"]->Set(new_controller);  //Same thing but longer
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * new_controller = CreateBlock("NiKeyframeController")
+	 * my_block["Controller"].Set(new_controller) #shortcuts not available
+	 * \endcode
+	 */
+	virtual void Set( blk_ref const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( TexSource const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( BoundingBox const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( ConditionalInt const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( TexDesc const & val ) = 0;
+
+	//--Link functions--//
+
+	/*!
+	 * Used to determine whether this attribute can store links or not.  Several attribute types can store links, but with this function you can quickly tell if any links are within an attribute.
+	 * \return True if this attribute can store one or more links. False if it cannot store any links.
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::asLink, IAttr::asLinkList, IAttr::AddLink, IAttr::AddLinks, IAttr::ClearLinks, IAttr::RemoveLinks, IAttr::FindLink
+	 */
 	virtual bool HasLinks() const = 0;
+
+	/*!
+	 * Used to add a link to this attribute’s list of blocks that are linked to its owner block.
+	 * \param block A reference to the block to add to the list of blocks that are linked to this attribute’s owner block.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * blk_ref block2 = CreateBlock("NiNode");
+	 * my_block["Children"]->AddLink(block2);
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * block2 = CreateBlock("NiNode")
+	 * my_block["Children"].AddLink(block2);
+	 * \endcode
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::HasLinks, IAttr::asLink, IAttr::asLinkList, IAttr::AddLinks, IAttr::ClearLinks, IAttr::RemoveLinks, IAttr::FindLink
+	 */
 	virtual void AddLink( blk_ref const & block ) = 0;
+
+	/*!
+	 * Used to add several links at once to this attribute’s list of blocks that are linked to its owner block.
+	 * \param new_links A list of block references to add to the list of blocks that are linked to this attribute’s owner block.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * list<blk_ref> blk_list;
+	 * blk_list.push_back( CreateBlock("NiNode") );
+	 * blk_list.push_back( CreateBlock("NiTriShape") );
+	 * my_block["Children"]->AddLinks(blk_list);
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * blk_list = ( CreateBlock("NiNode"), CreateBlock("NiTriShape") )
+	 * my_block["Children"].AddLinks(blk_list)
+	 * \endcode
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::HasLinks, IAttr::asLink, IAttr::asLinkList, IAttr::AddLink, IAttr::ClearLinks, IAttr::RemoveLinks, IAttr::FindLink
+	 */
 	virtual void AddLinks( list<blk_ref> const & new_links ) = 0;
+
+	/*!
+	 * Used to remove <i>all</i> links from the owner block of this attribute to any other block.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * my_block->ClearLinks();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * my_block.ClearLinks();
+	 * \endcode
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::HasLinks, IAttr::asLink, IAttr::asLinkList, IAttr::AddLink, IAttr::AddLinks, IAttr::RemoveLinks, IAttr::FindLink
+	 */
 	virtual void ClearLinks() = 0;
+
+	/*!
+	 * Used to remove all links between a particular block and this attribute’s owner block.  A block should never be linked multiple times to the same block, but this function will remove any accidental duplicates.
+	 * \param block A reference to the block whose links are to be removed from this block.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * blk_ref block2 = CreateBlock("NiNode");
+	 * my_block["Children"]->AddLink(block2);
+	 * my_block["Children"]->RemoveLinks(block2);
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * block2 = CreateBlock("NiNode")
+	 * my_block.["Children"].AddLink(block2);
+	 * my_block.["Children"].RemoveLinks(block2);
+	 * \endcode
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::HasLinks, IAttr::asLink, IAttr::asLinkList, IAttr::AddLink, IAttr::AddLinks, IAttr::ClearLinks, IAttr::FindLink
+	 */
 	virtual void RemoveLinks( blk_ref const & block ) = 0;
+
+	/*!
+	 * Used to conveniently find the first link of a particular block type.  Especially convenient for property groups which should have only one property of each type.
+	 * \param block_type The type of block to search for. Ex. NiMaterialProperty, NiTexturingProperty, NiShadeProperty, etc.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * blk_ref material = my_block->FindLink("NiMaterialProperty");
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * material = my_block.FindLink("NiMaterialProperty")
+	 * \endcode
+	 * \sa IAttr:Set( blk_ref const & ), IAttr::HasLinks, IAttr::asLink, IAttr::asLinkList, IAttr::AddLink, IAttr::AddLinks, IAttr::ClearLinks, IAttr::RemoveLinks, IAttr::FindLink
+	 */
 	virtual blk_ref FindLink( string const & block_type ) const = 0;
 
-	// Python Operator Overloads
+	//Python Operator Overloads
 	string __str__() {
 		return asString();
 	};
 };
 
-
-
+/*! 
+ * An advanced interface for blocks that are nodes.
+ * \sa IBlock::QueryInterface, QueryNode
+ */
 class INode {
 public:
 	INode() {}
 	virtual ~INode() {}
+
+	/*! 
+	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
+	 * \return A 4x4 transformation matrix built from the node's transform attributes.
+	 */
 	virtual Matrix44 GetLocalTransform() const = 0;
+
+	/*! 
+	 * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
+	 * \return The 4x4 world transform matrix of this node.
+	 */
 	virtual Matrix44 GetWorldTransform() const = 0;
-	virtual Matrix44 GetBindPosition() const = 0;
-	virtual void SetBindPosition( Matrix44 const & m ) = 0;
+
+	/*!
+	 * This function returns the bind position world matrix.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 world bind position matrix of this node.
+	 * \sa INode::GetLocalBindPos, INode::SetWorldBindPos
+	 */
+	virtual Matrix44 GetWorldBindPos() const = 0;
+
+	/*!
+	 * This function sets the bind position of this object relative to the origin.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.  This function must be called on every object in a skin and bones system (the bones and the skinned shapes) in order for skinning information to be written to a Nif file.
+	 * \param m The 4x4 world bind position matrix of this node
+	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
+	 */
+	virtual void SetWorldBindPos( Matrix44 const & m ) = 0;
+
+	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 local bind position matrix of this node.
+	 * \sa INode::SetWorldBindPos, INode::GetWorldBindPos
+	 */
 	virtual Matrix44 GetLocalBindPos() const = 0;
 };
 
@@ -1496,10 +1974,21 @@ public:
 //}
 
 //--Attribute Reference--//
+/*!
+ * Stores a reference to an attribute in a NIF block and offers functions to help use it.
+ * \sa IAttr
+ */
 class attr_ref {
 public:
+	/*! Default constructor.  Initializes the attribute reference in null state. */
 	attr_ref() : _attr(NULL) {}
+
 	attr_ref( IAttr * ptr ) : _attr(ptr) {}
+
+	/*! This operator allows you to use an attribute reference as if it were a pointer to an IAttr interface.  You can call any IAttr function by using it.
+	 * \return An IAttr pointer which can be used to call functions.
+	 * \sa IAttr
+	 */
 	IAttr * operator->() const {
 		if ( _attr == NULL ) {
 			//pointer has not been fixed, throw exception
@@ -1508,6 +1997,27 @@ public:
 			return _attr;
 		}
 	}
+
+	/*!
+	 * Used to determine whether an attribute reference is null, i.e. it points to nothing and thus no functions can be called on it.
+	 * \return True if the attribute is null and false otherwise.
+	 *
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * attr_ref my_attr = my_block["NiNode"];
+	 * if ( my_attr.is_null() == true )
+	 *      cout << "Null Attribute" << endl;
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * my_attr = my_block["NiNode"]
+	 * if attr.is_null() == True:
+	 *      print "Null Attribute"
+	 * \endcode
+	 */
 	bool is_null() const {
 		if (_attr == NULL )
 			return true;
@@ -1517,19 +2027,35 @@ public:
 	IAttr * ptr() const {
 		return _attr;
 	}
-	//Comparison operators
+
+	//--Comparison operators--//
+
+	/*! This operator allows you to compare two attribute references to see if they point to the same attribute.  It does not compare the values held by the attributes.
+	 * \param rh The right hand operand to the == operator.
+	 * \return True if both references point to the same attribute.  False otherwise.
+	 */
 	bool operator==(attr_ref & rh) const {
 		if (_attr == rh._attr)
 			return true;
 		else
 			return false;
 	}
+
+	/*! This operator alows you to compare two attribute references to see if they <i>do not</i> point to the same attribute.  It does not compare the values held by the attributes.
+	 * \param rh The right hand operand to the != operator.
+	 * \return True if both references <i>do not</i> point to the same attribute.  False otherwise.
+	 */
 	bool operator!=(attr_ref & rh) const {
 		if (_attr != rh._attr)
 			return true;
 		else
 			return false;
 	}
+
+	/*! This operator is provided to allow associative STL containers to use attribute references as keys.  The comparison is based on the value of the IAtter pointer held by each reference.
+	 * \param rh The right hand operand to the < operator.
+	 * \return True if the pointer value of the left hand reference holds a pointer value that is less than that held by the right hand operand.  False otherwise.
+	 */
 	bool operator<(attr_ref & rh) const {
 		if (_attr < rh._attr)
 			return true;
@@ -1537,64 +2063,162 @@ public:
 			return false;
 	}
 
-	//Assignment operators
+	//--Assignment operators--//
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(int n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(float n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(Float3 const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(string const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(const char * n) {
 		_attr->Set( string(n) );
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(Matrix33 const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(blk_ref const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(TexSource const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(BoundingBox const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(ConditionalInt const & n) {
 		_attr->Set(n);
 		return *this;
 	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(TexDesc const & n) {
 		_attr->Set(n);
 		return *this;
 	}
 
-	//Conversion fuctions
+	//--Conversion fuctions--//
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator int() const { return _attr->asInt(); }
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator float() const { return _attr->asFloat(); }
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator Float3() const { return _attr->asFloat3(); }
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator string() const { return _attr->asString(); }
 	
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator Matrix33() const { return _attr->asMatrix33(); }
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator blk_ref() const;
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator TexSource() const;
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator BoundingBox() const;
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator ConditionalInt() const;
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator TexDesc() const;
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
 	operator list<blk_ref>() const { return _attr->asLinkList(); }
 
 	//friend ostream & operator<<(ostream & lh, const attr_ref & rh) {
@@ -1612,11 +2236,20 @@ private:
 
 //--Block Reference--//
 
+/*! An automatic pointer that stores a reference to a particular NIF block.  It uses reference counting to keep track of when a block should be destroyed. 
+ * \sa IBlock
+ */
 class blk_ref {
 public:
+	/*! Default constructor.  Initializes reference to null state. */
 	blk_ref() : _index(-1), _block(NULL) {}
 	blk_ref( int index ) : _index(index), _block(NULL) {}
-	//Copy Constructor
+	
+	//--Copy Constructor--//
+
+	/*! The copy constructor allows you to copy one block reference to another.  It does not actually makea copy of the data, it only creates a new pointer and increments the reference count of the existing data.
+	 * \param rh The right hand operand to the = operator
+	 */
 	blk_ref(const blk_ref & rh ) {
 		_block = rh._block;
 		_index = rh._index;
@@ -1627,7 +2260,13 @@ public:
 			_block->AddRef();
 		}
 	}
-	//Asignment Operator
+
+	//--Asignment Operator--//
+
+	/*! The asignment operator allows you to assign one block reference to another.  It does not actually make a copy of the data, it only changes the value of one pointer, causing the reference count on the block it originally pointed to to go down, and the reference count of the new block it points to to go up.
+	 * \param rh The right hand operand to the = operator
+	 * \return a reference to this object.
+	 */
 	blk_ref & operator=(const blk_ref & rh ) {
 		//Make sure it's not already equal
 		if (_block == rh._block && get_index() == rh.get_index() ) {
@@ -1651,24 +2290,44 @@ public:
 
 		return *this;
 	}
-	// Equality Operator
+
+	//--Equality Operator--//
+
+	/*! The equality operator allows you to determine whether two references point to the same block.  It does not compare data within the blocks.
+	 * \param rh The right hand operand to the == opearator.
+	 * \return True if both references point to the same block.  False otherwise.
+	 */
 	bool operator==(const blk_ref & rh) const {
 		if ( _block == rh._block && _index == rh._index )
 			return true;
 		else
 			return false;
 	}
-	// Less-Than Operator
-	bool operator<( const blk_ref & rh ) const {
-		if ( get_index() < rh.get_index() )
-			return true;
-		else
-			return false;
-	}
-	// Non-Equality Operator
+
+	// Inequality Operator
+
+	/*! The inequality operator allows you to determine whether two references <i>do not</i> point to the same block.  It does not compare data within the blocks.
+	 * \param rh The right hand operand to the != opearator.
+	 * \return True if both references <i>do not</i> point to the same block.  False otherwise.
+	 */
 	bool operator!=(const blk_ref & rh) const {
 		return !(*this == rh);
 	}
+
+	// Less-Than Operator
+
+	/*! The less-than opearator is provided to allow associative STL containers to use block references as keys.  The comparison is based on the value of the IBlock pointer held by each reference.
+	 * \param rh The right hand operand to the < operator.
+	 * \return True if the pointer value of the left hand reference holds a pointer value that is less than that held by the right hand operand.  False otherwise.
+	 */
+	bool operator<( const blk_ref & rh ) const {
+		return ( _block < rh._block );
+	}
+	
+	/*!
+	 * Used to determine whether a block reference is null, i.e. it points to nothing and thus no functions can be called on it.
+	 * \return True if the attribute is null and false otherwise.
+	 */
 	bool is_null() const {
 		if (_block == NULL && _index == -1)
 			return true;
@@ -1681,6 +2340,8 @@ public:
 		//cout << "Creating from block - ";
 		_block->AddRef();
 	}
+
+	/*! Default destructor.  Automatically decrements reference counts, causing the IBlock to destroy itself if the count drops to zero. */
 	~blk_ref() {
 		//If pointer has been fixed
 		if ( _block != NULL ) {
@@ -1689,10 +2350,16 @@ public:
 			_block->SubtractRef();
 		}
 	}
+
 	void set_block( IBlock * block ) {
 		//Use assignment operator code
 		*this = blk_ref( block );
 	}
+
+	/*! The dereference operator allows you to use a block reference as if it were a pointer to an IBlock interface.  You can call any IBlock function by using it.
+	 * \return An IBlock pointer which can be used to call functions.
+	 * \sa IBlock
+	 */
 	IBlock * operator->() const {
 		if ( _block == NULL ) {
 			//pointer has not been fixed, throw exception
@@ -1702,9 +2369,16 @@ public:
 			return _block;
 		}
 	}
+
+	/*! The bracket operator allows you to use a block reference as if it were an associative array of attribute values.  It is shorthand for calling the IBlock::GetAttr function with the name of the attribute you want to retrieve.
+	 * \param index The name of the attribute you want to retrieve with the GetAttr function.  Ex. "Scale," "Skeleton Root," "Controller," etc.
+	 * \return An attribute reference pointing to the attribute that was requested.  If the attribute is not present, a null reference is returned.
+	 * \sa IBlock::GetAttr
+	 */
 	attr_ref operator[] ( string const & index ) const {
 		return _block->GetAttr(index);
 	}
+
 	int get_index() const {
 
 		if (_block != NULL)
@@ -1712,19 +2386,28 @@ public:
 		else
 			return _index; 
 	}
+
 	IBlock * get_block() const {
 		return _block;
 	}
+
 	void set_index( int index ) { 
 		//Use assigntment operator code
 		*this = blk_ref( index );
 	}
+
 	bool is_fixed() const {
 		if ( _block == NULL )
 			return false;
 		else
 			return true;
 	}
+
+	/*! The << stream operator allows you to use a block reference in standard C++ string stream operations.  It causes a short description of the block that is pointed to by this reference to be writen to the given ostream.  Ex:  NiNode(Block 14) [Pelvis]
+	 * \param lh The left hand operand to the << operator, the ostream to write the short description to.
+	 * \param rh The right hand operand to the << operator, the blk_ref whos short description is to be written.
+	 * \return The same ostream that was given in lh so that stream operations can be concatenated.
+	 */
 	friend ostream & operator<<(ostream & lh, const blk_ref & rh) {
 		if (rh._block != NULL) {
 			lh << rh._block->GetBlockType() << "(Block " << rh._block->GetBlockNum() << ")";
@@ -1741,6 +2424,7 @@ public:
 		}
 		return lh;
 	}
+
 	//Python Operator Overloads
 	attr_ref __getitem__(string index) {
 		return _block->GetAttr(index);

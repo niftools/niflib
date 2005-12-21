@@ -53,7 +53,7 @@ AController::AController() {
 	AddAttr( attr_float, "Phase", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Start Time", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Stop Time", 0, 0xFFFFFFFF );
-	AddAttr( attr_controllertarget, "Target Node", 0, 0xFFFFFFFF );
+	AddAttr( attr_controllertarget, "Target", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -154,7 +154,7 @@ AProperty::AProperty() {
 //APSysModifier::APSysModifier() {
 //	AddAttr( attr_string, "Name", 0, 0xFFFFFFFF );
 //	AddAttr( attr_int, "Modifier ID", 0, 0xFFFFFFFF );
-//	AddAttr( attr_controllertarget, "Target Node", 0, 0xFFFFFFFF );
+//	AddAttr( attr_controllertarget, "Target", 0, 0xFFFFFFFF );
 //	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
 //	Init();
 //}

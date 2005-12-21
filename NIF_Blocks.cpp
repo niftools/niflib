@@ -357,7 +357,7 @@ Matrix44 ANode::GetWorldTransform() const {
 	}
 }
 
-Matrix44 ANode::GetBindPosition() const {
+Matrix44 ANode::GetWorldBindPos() const {
 	return bindPosition;
 	//for (int i = 0; i < 4; ++i) {
 	//	for (int j = 0; j < 4; ++j) {
@@ -373,18 +373,18 @@ Matrix44 ANode::GetLocalBindPos() const {
 	if ( par.is_null() == false && ( node = (INode*)par->QueryInterface(ID_NODE) ) != NULL) {
 		//There is a node parent
 		//multiply its inverse with this block's bind position to get the local bind position
-		Matrix44 par_mat = node->GetBindPosition();
+		Matrix44 par_mat = node->GetWorldBindPos();
 		Matrix44 par_inv = InverseMatrix44( par_mat);
 		
 		return MultMatrix44( bindPosition, par_inv);
 	}
 	else {
 		//No parent transform, simply return local transform
-		return GetBindPosition();
+		return GetWorldBindPos();
 	}
 }
 
-void ANode::SetBindPosition( Matrix44 const & m ) {
+void ANode::SetWorldBindPos( Matrix44 const & m ) {
 	bindPosition = m;
 	//for (int i = 0; i < 4; ++i) {
 	//	for (int j = 0; j < 4; ++j) {
@@ -1737,7 +1737,7 @@ void NiSkinData::StraightenSkeleton() {
 				//Store result in block's Bind Position Matrix
 				INode * node = (INode*)it2->first->QueryInterface(ID_NODE);
 				if (node != NULL) {
-					node->SetBindPosition(child_pos);
+					node->SetWorldBindPos(child_pos);
 				}
 
     //            //Store result in child block
@@ -1803,7 +1803,7 @@ void NiSkinData::RepositionTriShape() {
 		if (bone_node == NULL)
 			throw runtime_error("Failed to get Node interface.");
 
-		Matrix44 bone_mat = bone_node->GetBindPosition();
+		Matrix44 bone_mat = bone_node->GetWorldBindPos();
 
 		Matrix44 result_mat = MultMatrix44( offset_mat, bone_mat);
 
@@ -1814,7 +1814,7 @@ void NiSkinData::RepositionTriShape() {
 		if (shape_node == NULL)
 			throw runtime_error("Failed to get Node interface.");
 
-		shape_node->SetBindPosition( result_mat );
+		shape_node->SetWorldBindPos( result_mat );
 
 		
 
@@ -1918,8 +1918,8 @@ void NiSkinData::CalculateBoneOffset( INode const * const par_node, IBlock const
 
 	//Get bind matricies
 	Matrix44 par_mat, bone_mat, inv_mat, res_mat;
-	par_mat = par_node->GetBindPosition();
-	bone_mat = bone_node->GetBindPosition();
+	par_mat = par_node->GetWorldBindPos();
+	bone_mat = bone_node->GetWorldBindPos();
 
 	//Inverse bone matrix & multiply with parent node matrix
 	inv_mat = InverseMatrix44(bone_mat);

@@ -64,6 +64,9 @@ const int NodeInternal = -4;
 
 class IBlockInternal {
 public:
+	IBlockInternal() {}
+	virtual ~IBlockInternal() {}
+
 	//Cross Reference
 	virtual void AddParent( blk_ref parent ) = 0;
 	virtual void RemoveParent( IBlock * match ) = 0;
@@ -161,15 +164,15 @@ public:
 		ABlock::Read( in, version );
 		Matrix44 transform;
 		transform = GetLocalTransform();
-		SetBindPosition( transform );
+		SetWorldBindPos( transform );
 	}
 
 	//INode Functions
 	Matrix44 GetLocalTransform() const;
 	Matrix44 GetWorldTransform() const;
-	Matrix44 GetBindPosition() const;
+	Matrix44 GetWorldBindPos() const;
 	Matrix44 GetLocalBindPos() const;
-	void SetBindPosition( Matrix44 const & m );
+	void SetWorldBindPos( Matrix44 const & m );
 
 	//INodeInternal Functions
 	void IncSkinRef( IBlock * skin_data );

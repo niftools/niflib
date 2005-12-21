@@ -429,12 +429,12 @@ void BuildUpBindPositions( blk_ref const & block ) {
 		if (par_node != NULL) {
 			//There is a node parent
 			//Post-multipy the block's bind matrix with the parent's bind matrix
-			Matrix44 par_mat = par_node->GetBindPosition();
-			Matrix44 blk_mat = blk_node->GetBindPosition();
+			Matrix44 par_mat = par_node->GetWorldBindPos();
+			Matrix44 blk_mat = blk_node->GetWorldBindPos();
 			Matrix44 result = MultMatrix44( blk_mat, par_mat);
 
 			//Store result back to block bind position
-			blk_node->SetBindPosition( result );
+			blk_node->SetWorldBindPos( result );
 		}
 	}
 
