@@ -2433,16 +2433,15 @@ void NiMorphData::Read( ifstream& file, unsigned int version ) {
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		uint numKeys = ReadUInt( file );
 
-		NifStream( morphs[i].keyType, file );
+		NifStream( morphs[i]._type, file );
 
 		
 		morphs[i].keys.resize( numKeys );
 		
 		for (uint j = 0; j < morphs[i].keys.size(); j++) {
-			NifStream( morphs[i].keys[j], file, morphs[i].keyType );
+			NifStream( morphs[i].keys[j], file, morphs[i]._type );
 		}
 
-		
 		morphs[i].morph.resize( vertCount );
 		//Stream whole array of Vector3
 		NifStream( morphs[i].morph, file );
@@ -2458,13 +2457,10 @@ void NiMorphData::Write( ofstream& file, unsigned int version ) const {
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		WriteUInt( uint(morphs[i].keys.size()), file );
 
-		NifStream( morphs[i].keyType, file );
+		NifStream( morphs[i]._type, file );
 
-		if (morphs[i].keys.size() > 0) {
-
-			for (uint j = 0; j < morphs[i].keys.size(); j++) {
-				NifStream( morphs[i].keys[j], file, morphs[i].keyType );
-			}
+		for (uint j = 0; j < morphs[i].keys.size(); j++) {
+			NifStream( morphs[i].keys[j], file, morphs[i]._type );
 		}
 		
 		//Stream whole array of Vector3
@@ -2485,16 +2481,16 @@ string NiMorphData::asString() const {
 		out << "---Morph " << i + 1 << "---" << endl;
 
 		out << "Time Count:  " << uint(morphs[i].keys.size()) << endl
-			<< "Key Type:  " << morphs[i].keyType << endl;
+			<< "Key Type:  " << morphs[i]._type << endl;
 		
 		if (verbose) {
 			for (uint j = 0; j < morphs[i].keys.size(); ++j ) {
 				//Always show time and data
 				out << "Key Time:  " << morphs[i].keys[j].time << ", Influence?: " << morphs[i].keys[j].data;
-				if ( morphs[i].keyType == 2 ) {
+				if ( morphs[i]._type == 2 ) {
 					//Uses Quadratic interpolation
 					out << ", FT(" << morphs[i].keys[j].forward_tangent << ") BT(" << morphs[i].keys[j].backward_tangent << ")";
-				} else if ( morphs[i].keyType == 3 ) {
+				} else if ( morphs[i]._type == 3 ) {
 					out << ", T " << morphs[i].keys[j].tension << ", B " << morphs[i].keys[j].bias << ", C " << morphs[i].keys[j].continuity;
 				}
 				out << endl;

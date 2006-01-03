@@ -1793,6 +1793,8 @@ public:
 	}
 
 	//--IMorphData Functions --//
+	KeyType GetMorphKeyType( int n ) const { return morphs[n]._type; }
+	void SetMorphKeyType( int n, KeyType t ) { morphs[n]._type = t; }
 	int GetVertexCount() const { return vertCount; }
 	void SetVertexCount( int n );
 	int GetMorphCount() const { return int(morphs.size()); }
@@ -1804,9 +1806,9 @@ public:
 
 private:
 	struct Morph {
-		Morph() :  keyType(QUADRATIC_KEY) {}
+		Morph() :  _type(QUADRATIC_KEY) {}
 		~Morph() {}
-		KeyType keyType;
+		KeyType _type;
 		vector< Key<float> > keys;
 		vector< Vector3 > morph;
 	};

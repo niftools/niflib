@@ -1842,6 +1842,8 @@ class IMorphData {
 public:
 	IMorphData() {}
 	virtual ~IMorphData () {}
+	virtual KeyType GetMorphKeyType( int n ) const = 0;
+	virtual void SetMorphKeyType( int n, KeyType t ) = 0;
 	virtual int GetVertexCount() const = 0;
 	virtual void SetVertexCount( int n ) = 0;
 	virtual int GetMorphCount() const = 0;
