@@ -58,6 +58,7 @@ const int BlockInternal = -1;
 const int SkinInstInternal = -2;
 const int SkinDataInternal = -3;
 const int NodeInternal = -4;
+const int ChainLinkInternal = -5;
 
 
 //void GetBuiltUpTransform(blk_ref block, Matrix & m/*, blk_ref stop*/);
@@ -183,11 +184,25 @@ protected:
 	list<IBlock*> skin_refs;
 };
 
+/**
+ * AParentNode
+ */
 class AParentNode : public ANode {
 public:
 	AParentNode();
 	void Init() {}
 	~AParentNode() {}
+};
+
+/**
+ * AFx
+ */
+class AFx : public AParentNode {
+public:
+
+	AFx();
+	void Init() {}
+	~AFx() {}
 };
 
 class AParticleNode : public ANode {
@@ -226,11 +241,25 @@ public:
 	~AData() {}
 };
 
+class AInterpolator : public ABlock {
+public:
+	AInterpolator();
+	void Init() {}
+	~AInterpolator() {}
+};
+
 class AParticleModifier : public ABlock {
 public:
 	AParticleModifier();
 	void Init() {}
 	~AParticleModifier() {}
+};
+
+class APSysModifier : public ABlock {
+public:
+	APSysModifier();
+	void Init() {}
+	~APSysModifier() {}
 };
 
 class AExtraData : public AData {
@@ -240,6 +269,22 @@ public:
 		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
+	void Read( ifstream& in, unsigned int version ) {
+		GetAttr("Name")->Read( in, version );
+		GetAttr("Next Extra Data")->Read( in, version );
+	}
+	void Write( ofstream& out, unsigned int version ) const {
+		GetAttr("Name")->Write( out, version );
+		GetAttr("Next Extra Data")->Write( out, version );
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << "Name:  " << GetAttr("Name")->asString() << endl
+			<< "Next Extra Data:  " << GetAttr("Next Extra Data")->asString() << endl;
+
+		return out.str();
+	}
 };
 
 
@@ -255,6 +300,45 @@ public:
 	ALight();
 	void Init() {}
 	~ALight() {}
+};
+
+/**
+ * FxButton
+ */
+class FxButton : public AFx {
+public:
+
+	FxButton();
+	void Init() {}
+	~FxButton() {}
+
+	string GetBlockType() const { return "FxButton"; }
+};
+
+/**
+ * FxRadioButton
+ */
+class FxRadioButton : public AFx {
+public:
+
+	FxRadioButton();
+	void Init() {}
+	~FxRadioButton() {}
+
+	string GetBlockType() const { return "FxRadioButton"; }
+};
+
+/**
+ * FxWidget
+ */
+class FxWidget : public AFx {
+public:
+
+	FxWidget();
+	void Init() {}
+	~FxWidget() {}
+
+	string GetBlockType() const { return "FxWidget"; }
 };
 
 /**
@@ -563,8 +647,10 @@ public:
 class AShapeData : public AData, public IShapeData {
 public:
 	AShapeData() {
+		AddAttr( attr_string, "Name", VER_10_2_0_0 );
 		AddAttr( attr_float3, "Center" );
 		AddAttr( attr_float, "Radius" );
+		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
 	}
 	~AShapeData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -759,6 +845,17 @@ public:
 };
 
 /**
+ * NiLightColorController
+ */
+class NiLightColorController : public AController {
+public:
+	NiLightColorController();
+	void Init() {}
+	~NiLightColorController() {}
+	string GetBlockType() const { return "NiLightColorController"; }
+};
+
+/**
  * NiKeyframeController
  */
 class NiLookAtController : public AController {
@@ -814,6 +911,61 @@ public:
 };
 
 /**
+ * NiPSysEmitterCtlr
+ */
+class NiPSysEmitterCtlr : public AController {
+public:
+	NiPSysEmitterCtlr();
+	void Init() {}
+	~NiPSysEmitterCtlr() {}
+	string GetBlockType() const { return "NiPSysEmitterCtlr"; }
+};
+
+/**
+ * NiPSysResetOnLoopCtlr
+ */
+class NiPSysResetOnLoopCtlr : public AController {
+public:
+	NiPSysResetOnLoopCtlr();
+	void Init() {}
+	~NiPSysResetOnLoopCtlr() {}
+	string GetBlockType() const { return "NiPSysResetOnLoopCtlr"; }
+};
+
+/**
+ * NiPSysUpdateCtlr
+ */
+class NiPSysUpdateCtlr : public AController {
+public:
+	NiPSysUpdateCtlr();
+	void Init() {}
+	~NiPSysUpdateCtlr() {}
+	string GetBlockType() const { return "NiPSysUpdateCtlr"; }
+};
+
+/**
+ * NiTextureTransformController
+ */
+class NiTextureTransformController : public AController {
+public:
+	NiTextureTransformController();
+	void Init() {}
+	~NiTextureTransformController() {}
+	string GetBlockType() const { return "NiTextureTransformController"; }
+};
+
+/**
+ * NiTransformController
+ */
+class NiTransformController : public AController {
+public:
+	NiTransformController();
+	void Init() {}
+	~NiTransformController() {}
+	string GetBlockType() const { return "NiTransformController"; }
+};
+
+/**
  * NiUVController 
  */
 class NiUVController : public AController {
@@ -861,6 +1013,42 @@ public:
 };
 
 /**
+ * NiPointLight
+ */
+
+class NiPointLight : public ALight {
+public:
+	NiPointLight();
+	void Init() {}
+	~NiPointLight() {}
+	string GetBlockType() const { return "NiPointLight"; }
+};
+
+/**
+ * NiParticles
+ */
+
+class NiParticles : public AParticleNode {
+public:
+	NiParticles();
+	void Init() {}
+	~NiParticles() {}
+	string GetBlockType() const { return "NiParticles"; }
+};
+
+/**
+ * NiParticleSystem
+ */
+
+class NiParticleSystem : public AParticleNode {
+public:
+	NiParticleSystem();
+	void Init() {}
+	~NiParticleSystem() {}
+	string GetBlockType() const { return "NiParticleSystem"; }
+};
+
+/**
  * NiAutoNormalParticles
  */
 
@@ -870,6 +1058,18 @@ public:
 	void Init() {}
 	~NiAutoNormalParticles() {}
 	string GetBlockType() const { return "NiAutoNormalParticles"; }
+};
+
+/**
+ * NiMeshParticleSystem
+ */
+
+class NiMeshParticleSystem : public AParticleNode {
+public:
+	NiMeshParticleSystem();
+	void Init() {}
+	~NiMeshParticleSystem() {}
+	string GetBlockType() const { return "NiMeshParticleSystem"; }
 };
 
 /**
@@ -1017,8 +1217,165 @@ public:
 }; 
 
 /**
+ * NiPSysPlanarCollider
+ */
+
+class NiPSysPlanarCollider : public ABlock {
+public:
+	NiPSysPlanarCollider();
+	void Init() {}
+	~NiPSysPlanarCollider() {}
+	string GetBlockType() const { return "NiPSysPlanarCollider"; }
+};
+
+/**
+ * NiPSysAgeDeathModifier
+ */
+
+class NiPSysAgeDeathModifier : public APSysModifier {
+public:
+	NiPSysAgeDeathModifier();
+	void Init() {}
+	~NiPSysAgeDeathModifier() {}
+	string GetBlockType() const { return "NiPSysAgeDeathModifier"; }
+}; 
+
+/**
+ * NiPSysBoundUpdateModifier
+ */
+
+class NiPSysBoundUpdateModifier : public APSysModifier {
+public:
+	NiPSysBoundUpdateModifier();
+	void Init() {}
+	~NiPSysBoundUpdateModifier() {}
+	string GetBlockType() const { return "NiPSysBoundUpdateModifier"; }
+}; 
+
+/**
+ * NiPSysBoxEmitter
+ */
+
+class NiPSysBoxEmitter : public APSysModifier {
+public:
+	NiPSysBoxEmitter();
+	void Init() {}
+	~NiPSysBoxEmitter() {}
+	string GetBlockType() const { return "NiPSysBoxEmitter"; }
+}; 
+
+/**
+ * NiPSysColliderManager
+ */
+
+class NiPSysColliderManager : public APSysModifier {
+public:
+	NiPSysColliderManager();
+	void Init() {}
+	~NiPSysColliderManager() {}
+	string GetBlockType() const { return "NiPSysColliderManager"; }
+}; 
+
+/**
+ * NiPSysColorModifier
+ */
+
+class NiPSysColorModifier : public APSysModifier {
+public:
+	NiPSysColorModifier();
+	void Init() {}
+	~NiPSysColorModifier() {}
+	string GetBlockType() const { return "NiPSysColorModifier"; }
+}; 
+
+/**
+ * NiPSysCylinderEmitter
+ */
+
+class NiPSysCylinderEmitter : public APSysModifier {
+public:
+	NiPSysCylinderEmitter();
+	void Init() {}
+	~NiPSysCylinderEmitter() {}
+	string GetBlockType() const { return "NiPSysCylinderEmitter"; }
+}; 
+
+/**
+ * NiPSysGravityModifier
+ */
+
+class NiPSysGravityModifier : public APSysModifier {
+public:
+	NiPSysGravityModifier();
+	void Init() {}
+	~NiPSysGravityModifier() {}
+	string GetBlockType() const { return "NiPSysGravityModifier"; }
+}; 
+
+/**
+ * NiPSysGrowFadeModifier
+ */
+
+class NiPSysGrowFadeModifier : public APSysModifier {
+public:
+	NiPSysGrowFadeModifier();
+	void Init() {}
+	~NiPSysGrowFadeModifier() {}
+	string GetBlockType() const { return "NiPSysGrowFadeModifier"; }
+}; 
+
+/**
+ * NiPSysMeshUpdateModifier
+ */
+
+class NiPSysMeshUpdateModifier : public APSysModifier {
+public:
+	NiPSysMeshUpdateModifier();
+	void Init() {}
+	~NiPSysMeshUpdateModifier() {}
+	string GetBlockType() const { return "NiPSysMeshUpdateModifier"; }
+}; 
+
+/**
+ * NiPSysPositionModifier
+ */
+
+class NiPSysPositionModifier : public APSysModifier {
+public:
+	NiPSysPositionModifier();
+	void Init() {}
+	~NiPSysPositionModifier() {}
+	string GetBlockType() const { return "NiPSysPositionModifier"; }
+}; 
+
+/**
+ * NiPSysRotationModifier
+ */
+
+class NiPSysRotationModifier : public APSysModifier {
+public:
+	NiPSysRotationModifier();
+	void Init() {}
+	~NiPSysRotationModifier() {}
+	string GetBlockType() const { return "NiPSysRotationModifier"; }
+}; 
+
+/**
+ * NiPSysSpawnModifier
+ */
+
+class NiPSysSpawnModifier : public APSysModifier {
+public:
+	NiPSysSpawnModifier();
+	void Init() {}
+	~NiPSysSpawnModifier() {}
+	string GetBlockType() const { return "NiPSysSpawnModifier"; }
+}; 
+
+/**
  * NiKeyframeData -
  */
+
 class NiKeyframeData : public AData, public IKeyframeData {
 
 	public:
@@ -1354,8 +1711,28 @@ public:
 		AddAttr( attr_byte, "Boolean Data" );
 	}
 	~NiBooleanExtraData() {}
-
 	string GetBlockType() const { return "NiBooleanExtraData"; };
+
+	void Read( ifstream& in, unsigned int version ) {
+		AExtraData::Read( in, version );
+		GetAttr("Boolean Data")->Read( in, version );
+	}
+	void Write( ofstream& out, unsigned int version ) const {
+		AExtraData::Write( out, version );
+		GetAttr("Boolean Data")->Write( out, version );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Boolean Data:  " << GetAttr("Boolean Data")->asString() << endl;
+
+		return out.str();
+	}
+	
 };
 
 class NiIntegerExtraData : public AExtraData {
@@ -1366,6 +1743,26 @@ public:
 	~NiIntegerExtraData() {}
 
 	string GetBlockType() const { return "NiIntegerExtraData"; };
+
+		void Read( ifstream& in, unsigned int version ) {
+		AExtraData::Read( in, version );
+		GetAttr("Integer Data")->Read( in, version );
+	}
+	void Write( ofstream& out, unsigned int version ) const {
+		AExtraData::Write( out, version );
+		GetAttr("Integer Data")->Write( out, version );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Boolean Data:  " << GetAttr("Integer Data")->asString() << endl;
+
+		return out.str();
+	}
 };
 
 class NiMorphData : public AData, public IMorphData {
@@ -1461,6 +1858,15 @@ public:
 
 	string GetBlockType() const { return "NiRotationparticlesData"; }
 };
+
+class NiParticlesData : public ARotatingParticlesData {
+public:
+	NiParticlesData() {}
+	~NiParticlesData() {}
+
+	string GetBlockType() const { return "NiParticlesData"; }
+};
+
 
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 public:
@@ -1652,6 +2058,61 @@ public:
 	void Init() {}
 	~NiBSPArrayController() {}
 	string GetBlockType() const { return "NiBSPArrayController"; }
+};
+
+/**
+ * NiBoolInterpolator
+ */
+class NiBoolInterpolator : public AInterpolator {
+public:
+	NiBoolInterpolator();
+	void Init() {}
+	~NiBoolInterpolator() {}
+	string GetBlockType() const { return "NiBoolInterpolator"; }
+};
+
+/**
+ * NiFloatInterpolator
+ */
+class NiFloatInterpolator : public AInterpolator {
+public:
+	NiFloatInterpolator();
+	void Init() {}
+	~NiFloatInterpolator() {}
+	string GetBlockType() const { return "NiFloatInterpolator"; }
+};
+
+/**
+ * NiLookAtInterpolator
+ */
+class NiLookAtInterpolator : public AInterpolator {
+public:
+	NiLookAtInterpolator();
+	void Init() {}
+	~NiLookAtInterpolator() {}
+	string GetBlockType() const { return "NiLookAtInterpolator"; }
+};
+
+/**
+ * NiPoint3Interpolator
+ */
+class NiPoint3Interpolator : public AInterpolator {
+public:
+	NiPoint3Interpolator();
+	void Init() {}
+	~NiPoint3Interpolator() {}
+	string GetBlockType() const { return "NiPoint3Interpolator"; }
+};
+
+/**
+ * NiTransformInterpolator
+ */
+class NiTransformInterpolator : public AInterpolator {
+public:
+	NiTransformInterpolator();
+	void Init() {}
+	~NiTransformInterpolator() {}
+	string GetBlockType() const { return "NiTransformInterpolator"; }
 };
 
 #endif

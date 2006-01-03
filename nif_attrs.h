@@ -240,6 +240,28 @@ private:
 	char data;
 };
 
+class BoolAttr : public AAttr {
+public:
+	BoolAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
+	~BoolAttr() {}
+	AttrType GetType() const { return attr_bool; }
+	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadBool( in, version ); }
+	void WriteAttr( ofstream& out, unsigned int version ) const { WriteBool( data, out, version ); }
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << int(data);
+
+		return out.str();
+	}
+	int asInt() const { return int(data); }
+	void Set(int n ) { data = (n != 0); }
+private:
+	bool data;
+};
+
 class FloatAttr : public AAttr {
 public:
 	FloatAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0.0f) {}
@@ -511,7 +533,7 @@ public:
 
 		//See if there is a data block
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
-		if ( data_blk.is_null() == false )  {
+		if ( data_blk.is_null() == false && data_blk.is_fixed() == true )  {
 			//Get Bone data from data block
 			ISkinData * data = (ISkinData*)data_blk->QueryInterface( ID_SKIN_DATA );
 			vector<blk_ref> bones = data->GetBones();
@@ -1328,7 +1350,7 @@ public:
 		blk_ref skin_dat_blk = _owner->GetAttr("Data");
 
 		//If there is no skin data, return a null block
-		if ( skin_dat_blk.is_null() == true ) {
+		if ( skin_dat_blk.is_null() == true || skin_dat_blk.is_fixed() == false ) {
 			return blk_ref(-1);
 		}
 
@@ -1528,6 +1550,48 @@ private:
 		float far;
 	};
 	vector<LODRange> ranges;
+};
+
+
+class Unk292BytesAttr : public AAttr {
+public:
+	Unk292BytesAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
+		memset( data, 0, 292 );
+	}
+	~Unk292BytesAttr() {}
+	AttrType GetType() const { return attr_unk292bytes; }
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		in.read( (char*)data, 292 );
+	}
+	void WriteAttr( ofstream& out, unsigned int version ) const {
+		out.write( (char*)data, 292 );
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << "Unknown Data (292 bytes):" << endl;
+	
+		//Display Data in Hex form
+		out << hex << setfill('0');
+		for (int j = 0; j < 292; j++) {
+			out << uppercase << setw(2) << uint(data[j]);
+			if (j % 16 == 15 || j == 292 - 1)
+				out << endl;
+			else if (j % 16 == 7)
+				out << "   ";
+			else if (j % 8 == 3)
+				out << "  ";
+			else
+				out << " ";
+		}
+		out << dec << setfill(' ');
+
+		return out.str();
+	}
+protected:
+	byte data[292];
 };
 
 

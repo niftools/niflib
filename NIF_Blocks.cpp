@@ -580,7 +580,15 @@ string NiNode::asString() const {
  */
 void AShapeData::Read( ifstream& in, unsigned int version ){
 
+	GetAttr("Name")->Read( in, version );
+	
 	short vert_count = ReadUShort( in );
+
+	//There is an unknown short here from version 10.1.0.0 on
+	if ( version >= VER_10_1_0_0 ) {
+		ReadUShort( in );
+	}
+
 	bool hasVertices = ReadBool( in, version );
 	if ( hasVertices != 0 ){
 		vertices.resize( vert_count );
@@ -591,10 +599,17 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	/// numTexSets up here up after from version 10.0.1.0 on
+	/// numTexSets up here up from version 10.0.1.0 on
 	short numTexSets;
+	
 	if ( version >= VER_10_0_1_0 ) {
 		numTexSets = ReadUShort( in );
+	}
+
+	//There is an unknown byte here after version 10.2.0.0
+	byte unkByte;
+	if ( version >= VER_10_2_0_0 ) {
+		unkByte = ReadByte( in );
 	}
 
 	bool hasNormals = ReadBool( in, version );;
@@ -604,6 +619,19 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 			normals[i].x = ReadFloat( in );
 			normals[i].y = ReadFloat( in );
 			normals[i].z = ReadFloat( in );
+		}
+	}
+
+	//After version 10.2.0.0 there's several unknown vectors here
+	if ( version >= VER_10_2_0_0 && unkByte != 0 ) {
+		for ( uint i = 0; i < normals.size(); ++i ){
+			ReadFloat( in );
+			ReadFloat( in );
+			ReadFloat( in );
+
+			ReadFloat( in );
+			ReadFloat( in );
+			ReadFloat( in );
 		}
 	}
 
@@ -629,9 +657,8 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 	if ( version <= VER_4_0_0_2 ) {
 		hasUVs = ReadBool( in, version );
 	}
-	if ( numTexSets > 0 && hasUVs != 0 ){
+	if ( numTexSets > 0 && hasUVs == true ){
 		uv_sets.resize( numTexSets );
-		//UVs = new fVector2[numVertices * numTexSets];
 		for ( uint i = 0; i < uv_sets.size(); ++i ){
 			uv_sets[i].resize( vert_count );
 			for ( uint j = 0; j < uv_sets[i].size(); ++j){
@@ -646,12 +673,16 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 	if ( version >= VER_10_0_1_0) {
 		ReadUShort( in );
 	}
+
+	GetAttr("Unknown Link")->Read( in, version );
 }
 
 string AShapeData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
+
+	out << "Name:  " << GetAttr("Name")->asString() << endl;
 
 	out << "Vertices:  " << uint(vertices.size());
 	if (verbose) {
@@ -725,6 +756,8 @@ string AShapeData::asString() const {
 		out << endl << "<<Data Not Shown>>";
 	}
 	out << endl;
+
+	out << "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl;
 
 	return out.str();
 }
@@ -1578,6 +1611,13 @@ string NiSkinData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
+
+	//If there is no parent, do nothing
+	if ( this->GetParent().is_null() == true ) {
+		out << "No parent - data cannot be calculated." << endl
+			<< ABlock::asString() << endl;
+		return out.str();
+	}
 	
 	Matrix33 rot;
 	fVector3 tr;
@@ -2332,8 +2372,10 @@ string NiFloatData::asString() const {
  **********************************************************/
 
 void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
-	GetAttr("Name")->Read( in, version );
-	GetAttr("Next Extra Data")->Read( in, version );
+	AExtraData::Read( in, version );
+	
+	//GetAttr("Name")->Read( in, version );
+	//GetAttr("Next Extra Data")->Read( in, version );
 	
 
 	//Up to version 4.2.2.0, read bytes remaining but don't bother to store it
@@ -2345,8 +2387,9 @@ void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 }
 
 void NiStringExtraData::Write( ofstream& out, unsigned int version ) const {
-	GetAttr("Name")->Write( out, version );
-	GetAttr("Next Extra Data")->Write( out, version );
+	//GetAttr("Name")->Write( out, version );
+	//GetAttr("Next Extra Data")->Write( out, version );
+	AExtraData::Write( out, version );
 
 	attr_ref string_data = GetAttr("String Data");
 
@@ -2364,11 +2407,11 @@ string NiStringExtraData::asString() const {
 	out << setprecision(1);
 
 	attr_ref name_attr = GetAttr("Name");
-	attr_ref next_data = GetAttr("Next Extra Data");
+	//attr_ref next_data = GetAttr("Next Extra Data");
 	attr_ref string_data = GetAttr("String Data");
 
 	out << "Name:  " << name_attr->asString() << endl
-		<< next_data->GetName() << ":  " << next_data->asLink() << endl
+		//<< next_data->GetName() << ":  " << next_data->asLink() << endl
 		<< "Bytes Remaining:  " << uint(string_data->asString().length()) + 4 << endl
 		<< string_data->GetName() << ":  " << string_data->asString() << endl;
 	
@@ -2869,8 +2912,10 @@ string NiPosData::asString() const {
  **********************************************************/
 
 void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
-	GetAttr("Name")->Read( file, version );
+	/*GetAttr("Name")->Read( file, version );
 	GetAttr("Next Extra Data")->Read( file, version );
+	*/
+	AExtraData::Read( file, version );
 	GetAttr("Unknown Int")->Read( file, version );
 
 	uint keyCount = ReadUInt( file );
@@ -2883,8 +2928,10 @@ void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
 
 void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) const {
 
-	GetAttr("Name")->Write( file, version );
+	/*GetAttr("Name")->Write( file, version );
 	GetAttr("Next Extra Data")->Write( file, version );
+	*/
+	AExtraData::Write( file, version );
 	GetAttr("Unknown Int")->Write( file, version );
 
 	WriteUInt( uint(_keys.size()), file );
@@ -2900,7 +2947,7 @@ string NiTextKeyExtraData::asString() const {
 	out << setprecision(1);
 
 	out << "Name:  " << GetAttr("Name")->asString() << endl
-		<< "Next Extra Data:  " << GetAttr("Next Extra Data")->asString() << endl
+		//<< "Next Extra Data:  " << GetAttr("Next Extra Data")->asString() << endl
 		<< "Unknown Int:  " << GetAttr("Unknown Int")->asString() << endl
 		<< "Key Count:  " << uint(_keys.size()) << endl;
 
@@ -2996,7 +3043,7 @@ string NiUVData::asString() const {
  **********************************************************/
  
 void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
-	ABlock::Read( in, version );
+	AExtraData::Read( in, version );
 
 	bytes = ReadUInt( in );
 	ushort verts = ReadUShort( in );
@@ -3008,7 +3055,7 @@ void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
 }
 
 void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) const {
-	ABlock::Write( out, version );
+	AExtraData::Write( out, version );
 
 	WriteUInt( bytes, out );
 	WriteUShort( ushort(weights.size()), out );
@@ -3023,7 +3070,7 @@ string NiVertWeightsExtraData::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << ABlock::asString();
+	out << AExtraData::asString();
 
 	out << "Bytes:  " << bytes << endl
 		<< "Verts:  " << uint(weights.size()) << endl;
