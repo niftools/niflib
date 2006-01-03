@@ -2415,8 +2415,9 @@ void NiMorphData::Write( ofstream& file, unsigned int version ) const {
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		WriteUInt( uint(morphs[i].keys.size()), file );
 
+		NifStream( morphs[i].keyType, file );
+
 		if (morphs[i].keys.size() > 0) {
-			NifStream( morphs[i].keyType, file );
 
 			for (uint j = 0; j < morphs[i].keys.size(); j++) {
 				NifStream( morphs[i].keys[j], file, morphs[i].keyType );
