@@ -49,7 +49,7 @@ map<string, blk_factory_func> global_block_map;
 unsigned int blocks_in_memory = 0;
 
 //Utility Functions
-void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref const & block );
+void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block );
 void BuildUpBindPositions( blk_ref const & block );
 blk_ref FindRoot( vector<blk_ref> const & blocks );
 void RegisterBlockFactories ();
@@ -124,7 +124,13 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 	in.getline( header_string, 256 );
 	uint version = ReadUInt( in );
 
-	//There is an unknownInt here from version 10.1.0.0 on
+	//There is an unknown Byte here from version 20.0.0.4 on
+	byte unknownByte;
+	if ( version >= VER_20_0_0_4 ) {
+		unknownByte = ReadByte( in );
+	}
+
+	//There is an Unknown Int here from version 10.1.0.0 on
 	uint unknownInt1;
 	if ( version >= VER_10_1_0_0 ) {
 		unknownInt1 = ReadUInt( in );
@@ -190,7 +196,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 	
 		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
 		if ( version >= 0x05000001 ) {
-			//From version 5.0.0.1 to version 10.0.1.0  there is a zero byte at the end of each block
+			//From version 5.0.0.1 to version 10.0.1.0  there is a zero byte at the begining of each block
 			
 			if ( version <= VER_10_1_0_0 ) {
 				uint checkValue = ReadUInt( in );
@@ -255,7 +261,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			//Read the block from the file
 			bk_intl->Read( in, version );
 
-			cout << blocks[i]->asString() << endl;
+			//cout << blocks[i]->asString() << endl;
 		}
 		else {
 			throw runtime_error("Failed to create block.");
@@ -332,7 +338,8 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	
 	//Reorder blocks into a list
 	vector<blk_ref> blk_list;
-	ReorderNifTree( blk_list, root_block );
+	vector<string> blk_types;
+	ReorderNifTree( blk_list, blk_types, root_block );
 
 	//Open output file
 	ofstream out( file_name.c_str(), ofstream::binary );
@@ -354,24 +361,58 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	out << header_string.str();
 	WriteByte( 10, out ); // Unknown Byte = 10
 	WriteUInt( version, out );
+
+	//There is an unknown Byte here from version 20.0.0.4 on
+	if ( version >= VER_20_0_0_4 ) {
+		WriteByte( 1, out );
+	}
+
+	//There is an Unknown Int here from version 10.1.0.0 on
+	if ( version >= VER_10_1_0_0 ) {
+		WriteUInt( 0, out );
+	}
+	
 	WriteUInt( uint(blk_list.size()), out ); //Number of blocks
+
+	//New header data exists from version 5.0.0.1 on
+	if ( version >= 0x05000001 ) {
+		WriteUShort( ushort(blk_types.size()), out );
+		
+		for ( uint i = 0; i < blk_types.size(); ++i ) {
+			WriteString( blk_types[i], out );
+			//cout << i << ":  " << blk_types[i] << endl;
+		}
+
+		for ( uint i = 0; i < blk_list.size(); ++i ) {
+			//Get internal interface
+			IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
+			WriteUShort( bk_intl->GetBlockTypeNum(), out );
+
+			//cout << i << ":  " << bk_intl->GetBlockTypeNum() << endl;
+		}
+
+		//Unknown Int 2
+		WriteUInt( 0, out );
+	}
 
 	//--WriteBlocks--//
 	for (uint i = 0; i < blk_list.size(); ++i) {
+
 		if (version < 0x05000001) {
 			//cout << i << ":  " << blk_list[i]->GetBlockType() << endl;
 			//Write Block Type
 			WriteString( blk_list[i]->GetBlockType() , out );
+		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
+			WriteUInt( 0, out );
 		}
 
 		//Get internal interface
 		IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
 
+
+
 		bk_intl->Write( out, version );
 
-		if (version >= 0x05000001) {
-			WriteUInt( 0, out );
-		}
 	}
 
 	//--Write Footer--//
@@ -382,18 +423,34 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	out.close();
 }
 
-void ReorderNifTree( vector<blk_ref> & blk_list, blk_ref const & block ) {
+void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block ) {
 	//Get internal interface
 	IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
 
 	bk_intl->SetBlockNum( int(blk_list.size()) );
 	blk_list.push_back(block);
 
+	//List Block Type
+	string blk_type = block->GetBlockType();
+
+	for ( uint i = 0; i < blk_types.size(); ++i ) {
+		if ( blk_type == blk_types[i] ) {
+			bk_intl->SetBlockTypeNum(i);
+			break;
+		}
+	}
+
+	if ( i == blk_types.size() ) {
+		//A match was not found, add this type to the array
+		blk_types.push_back( blk_type );
+		bk_intl->SetBlockTypeNum(i);
+	}
+
 	list<blk_ref> links = block->GetLinks();
 	list<blk_ref>::iterator it;
 	for (it = links.begin(); it != links.end(); ++it) {
 		if ( it->is_null() == false && (*it)->GetParent() == block ) {
-			ReorderNifTree( blk_list, *it );
+			ReorderNifTree( blk_list, blk_types, *it );
 		}
 	}
 	//for (int i = 0; i < block->LinkCount(); ++i) {

@@ -767,57 +767,83 @@ string AShapeData::asString() const {
  */
 void AShapeData::Write( ofstream& out, unsigned int version ) const {
 
+	GetAttr("Name")->Write( out, version );
+	
 	WriteUShort( ushort(vertices.size()), out );
 
-	if ( vertices.size() > 0 )
-		WriteBool( true, out, version );
-	else
-		WriteBool( false, out, version );
+	//There is an unknown short here from version 10.1.0.0 on
+	if ( version >= VER_10_1_0_0 ) {
+		WriteUShort( 0, out );
+	}
+
+	WriteBool( vertices.size() > 0, out, version );
 
 	for ( uint i = 0; i < vertices.size(); ++i ){
-		WriteFloat( vertices[i].x, out );
-		WriteFloat( vertices[i].y, out );
-		WriteFloat( vertices[i].z, out );
+		NifStream( vertices[i], out );
 	}
 
-	if ( normals.size() > 0 )
-		WriteBool( true, out, version );
-	else
-		WriteBool( false, out, version );
-
-	for ( uint i = 0; i < normals.size(); ++i) {
-		WriteFloat( normals[i].x, out );
-		WriteFloat( normals[i].y, out );
-		WriteFloat( normals[i].z, out );
+	/// numTexSets up here up from version 10.0.1.0 on
+	if ( version >= VER_10_0_1_0 ) {
+		WriteUShort( ushort(uv_sets.size()), out );
 	}
+
+	//There is an unknown byte here after version 10.2.0.0
+	if ( version >= VER_10_2_0_0 ) {
+		WriteByte( 0, out );
+	}
+
+	WriteBool( normals.size() > 0, out, version );
+
+	for ( uint i = 0; i < normals.size(); ++i ){
+		NifStream( normals[i], out );
+	}
+
+	////After version 10.2.0.0 there's several unknown vectors here
+	//if ( version >= VER_10_2_0_0 && unkByte != 0 ) {
+	//	for ( uint i = 0; i < normals.size(); ++i ){
+	//		ReadFloat( in );
+	//		ReadFloat( in );
+	//		ReadFloat( in );
+
+	//		ReadFloat( in );
+	//		ReadFloat( in );
+	//		ReadFloat( in );
+	//	}
+	//}
 
 	GetAttr("Center")->Write( out, version );
 	GetAttr("Radius")->Write( out, version );
 
-	if ( colors.size() > 0 )
-		WriteBool( true, out, version );
-	else
-		WriteBool( false, out, version );
+	WriteBool( colors.size() > 0, out, version );
 
 	for ( uint i = 0; i < colors.size(); ++i ){
-		WriteFloat( colors[i].r, out );
-		WriteFloat( colors[i].g, out );
-		WriteFloat( colors[i].b, out );
-		WriteFloat( colors[i].a, out );
+		NifStream( colors[i], out );
 	}
 
-	WriteUShort( ushort(uv_sets.size()), out );
-	if ( uv_sets.size() > 0 && uv_sets[0].size() > 0 ) // hasUVs
-		WriteBool( true, out, version );
-	else
-		WriteBool( false, out, version );
+	// numTexSets down here up to version 4.2.2.0
+	if ( version <= VER_4_2_2_0 ) {
+		WriteUShort( ushort(uv_sets.size()), out );
+	}
+	// hasUVs does not exist after version 4.0.0.2
+	bool hasUVs = true;
+	if ( version <= VER_4_0_0_2 ) {
+		WriteBool( uv_sets.size() > 0, out, version );
+	}
 
-	for ( uint i = 0; i < uv_sets.size(); ++i) {
-		for ( uint j = 0; j < uv_sets[i].size(); ++j) {
-			WriteFloat( uv_sets[i][j].u, out );
-			WriteFloat( uv_sets[i][j].v, out );
+	for ( uint i = 0; i < uv_sets.size(); ++i ){
+		for ( uint j = 0; j < uv_sets[i].size(); ++j){
+			NifStream(uv_sets[i][j].u, out );
+			NifStream(uv_sets[i][j].v, out );
 		}
 	}
+
+	//Unknown Short here from version 10.0.1.0 on
+	//Just read it and throw it away for now
+	if ( version >= VER_10_0_1_0) {
+		WriteUShort( 0, out );
+	}
+
+	GetAttr("Unknown Link")->Write( out, version );
 }
 
 void * AShapeData::QueryInterface( int id ) {
@@ -1240,10 +1266,10 @@ void NiTriStripsData::Read( ifstream& in, unsigned int version ){
 
 	//From version 10.1.0.0 on there is a bool to check whether or not there are any points
 	//We already know the answer to this from the counts above, don't we?
-	//Jus in case, clear all strips if this is false.
+	//Just in case, clear all strips if this is false.
 	if ( version >= VER_10_1_0_0 ) {
 		if ( ReadBool( in, version ) == false ) {
-			strips.clear();
+			strips.resize(0);
 		}
 	}
 
@@ -1260,7 +1286,7 @@ void NiTriStripsData::Write( ofstream& out, unsigned int version ) const {
 	AShapeData::Write( out, version );
 
 	//Write number of triangles and strips
-	short numTriangles = GetTriangleCount();
+	ushort numTriangles = GetTriangleCount();
 	WriteUShort( numTriangles, out );
 	WriteUShort( ushort(strips.size()), out );
 

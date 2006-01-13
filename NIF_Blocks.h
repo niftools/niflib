@@ -72,6 +72,8 @@ public:
 	virtual void AddParent( blk_ref parent ) = 0;
 	virtual void RemoveParent( IBlock * match ) = 0;
 	virtual void SetBlockNum( int ) = 0;
+	virtual void SetBlockTypeNum( int n ) = 0;
+	virtual int GetBlockTypeNum() = 0;
 	virtual void FixUpLinks( const vector<blk_ref> & blocks ) = 0;
 
 	//File I/O
@@ -121,6 +123,8 @@ public:
 	void RemoveParent( IBlock * match );
 	void SetBlockNum( int n ) { _block_num = n; }
 	void FixUpLinks( const vector<blk_ref> & blocks );
+	void SetBlockTypeNum( int n ) { _block_type_num = n; }
+	int GetBlockTypeNum() { return _block_type_num; }
 
 	void Read( ifstream& in, unsigned int version );
 	void Write( ofstream& out, unsigned int version ) const;
@@ -128,6 +132,7 @@ protected:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
 	int _block_num;
+	int _block_type_num;
 	unsigned int _ref_count;
 	vector<IBlock*> _parents;
 };
