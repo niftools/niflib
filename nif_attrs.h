@@ -866,8 +866,12 @@ public:
 			data.clampMode = TexClampMode( ReadUInt( in ) );
 			data.filterMode = TexFilterMode( ReadUInt( in ) );
 			data.textureSet = ReadUInt( in );
-			data.PS2_L = ReadUShort( in );
-			data.PS2_K = ReadUShort( in );
+
+			//PS2 values exist up to version 10.2.0.0
+			if ( version <= VER_10_2_0_0 ) {
+				data.PS2_L = ReadUShort( in );
+				data.PS2_K = ReadUShort( in );
+			}
 
 			//unknownShort exists up to version 4.1.0.12
 			if ( version <= VER_4_1_0_12) {
@@ -897,8 +901,12 @@ public:
 			WriteUInt( data.clampMode, out );
 			WriteUInt( data.filterMode, out );
 			WriteUInt( data.textureSet, out );
-			WriteUShort( data.PS2_L, out );
-			WriteUShort( data.PS2_K, out );
+
+			//PS2 values exist up to version 10.2.0.0
+			if ( version <= VER_10_2_0_0 ) {
+				WriteUShort( data.PS2_L, out );
+				WriteUShort( data.PS2_K, out );
+			}
 
 			//unknownShort exists up to version 4.1.0.12
 			if ( version <= VER_4_1_0_12 ) {
@@ -1121,8 +1129,21 @@ public:
 		data.useExternal = ( ReadByte( in ) != 0 );
 		if ( data.useExternal ) {
 			data.fileName = ReadString( in );
+
+			//Read unknown link if version >= 10.1.0.0
+			if ( version >= VER_10_1_0_0 ) {
+				LinkAttr::ReadAttr( in, version );
+			}
 		} else {
-			data.unknownByte = ReadByte( in );
+			//Unknown byte exists up to version 10.0.1.0
+			if ( version <= VER_10_0_1_0 ) {
+				data.unknownByte = ReadByte( in );
+			}
+
+			//Read file name after version 10.1.0.0
+			if ( version >= VER_10_1_0_0 ) {
+				data.fileName = ReadString( in );
+			}
 
 			//Read link for Pixel Data
 			LinkAttr::ReadAttr( in, version );
@@ -1132,8 +1153,22 @@ public:
 		WriteByte( byte(data.useExternal), out );
 		if ( data.useExternal ) {
 			WriteString( data.fileName, out );
+
+			//Write unknown link if version >= 10.1.0.0
+			if ( version >= VER_10_1_0_0 ) {
+				LinkAttr::WriteAttr( out, version );
+			}
 		} else {
-			WriteByte ( data.unknownByte, out );
+			//Unknown byte exists up to version 10.0.1.0
+			if ( version <= VER_10_0_1_0 ) {
+				WriteByte ( data.unknownByte, out );
+			}
+
+			//Write file name after version 10.1.0.0
+			if ( version >= VER_10_1_0_0 ) {
+				WriteString( data.fileName, out );
+			}
+
 			//Write link for Pixel Data
 			LinkAttr::WriteAttr( out, version );
 		}
@@ -1143,15 +1178,19 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << endl;
+		out << endl
+			<< "   Location:  ";
+
 		if ( data.useExternal ) {
-			out << "   Location:  External" << endl
-				<< "   File Name:  " << data.fileName;
+			out << "External";
 		} else {
-			out << "   Location:  Internal" << endl
-				<< "   Unknown Byte:  " << int(data.unknownByte) << endl
-				<< "   Pixel Data:  " << asLink();
+			out << "Internal";
 		}
+
+        out << endl
+			<< "   File Name:  " << data.fileName
+			<< "   Unknown Byte:  " << int(data.unknownByte) << endl
+			<< "   Pixel Data:  " << asLink();
 
 		return out.str();
 	}

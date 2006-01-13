@@ -1098,8 +1098,8 @@ struct TexDesc {
 	TexClampMode clampMode;  /*!< The texture wraping/clamping mode. */ 
 	TexFilterMode filterMode; /*!< The texture filtering mode. */ 
 	int textureSet; /*!< Texture set? Usually 0. */ 
-	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0. */ 
-	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5. */ 
+	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0.  Exists up to version 10.2.0.0 */ 
+	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5.  Exists up to version 10.2.0.0 */ 
 	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
 	//Unknown Block in version 10.1.0.0 and up
 	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
