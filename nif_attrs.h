@@ -1126,23 +1126,19 @@ public:
 	}
 	AttrType GetType() const { return attr_texsource; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
-		data.useExternal = ( ReadByte( in ) != 0 );
-		if ( data.useExternal ) {
-			data.fileName = ReadString( in );
+		data.useExternal = ( ReadByte(in) != 0);
 
-			//Read unknown link if version >= 10.1.0.0
-			if ( version >= VER_10_1_0_0 ) {
-				LinkAttr::ReadAttr( in, version );
-			}
+		//All data is always read after version 10.1.0.0
+		if ( version >= VER_10_1_0_0 ) {
+			data.fileName = ReadString( in );
+			LinkAttr::ReadAttr( in, version );
+
+		} else if ( data.useExternal ) {
+			data.fileName = ReadString( in );
 		} else {
 			//Unknown byte exists up to version 10.0.1.0
 			if ( version <= VER_10_0_1_0 ) {
-				data.unknownByte = ReadByte( in );
-			}
-
-			//Read file name after version 10.1.0.0
-			if ( version >= VER_10_1_0_0 ) {
-				data.fileName = ReadString( in );
+				data.unknownByte = ReadByte ( in );
 			}
 
 			//Read link for Pixel Data
@@ -1151,22 +1147,18 @@ public:
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
 		WriteByte( byte(data.useExternal), out );
-		if ( data.useExternal ) {
-			WriteString( data.fileName, out );
 
-			//Write unknown link if version >= 10.1.0.0
-			if ( version >= VER_10_1_0_0 ) {
-				LinkAttr::WriteAttr( out, version );
-			}
+		//All data is always written after version 10.1.0.0
+		if ( version >= VER_10_1_0_0 ) {
+			WriteString( data.fileName, out );
+			LinkAttr::WriteAttr( out, version );
+
+		} else if ( data.useExternal ) {
+			WriteString( data.fileName, out );
 		} else {
 			//Unknown byte exists up to version 10.0.1.0
 			if ( version <= VER_10_0_1_0 ) {
 				WriteByte ( data.unknownByte, out );
-			}
-
-			//Write file name after version 10.1.0.0
-			if ( version >= VER_10_1_0_0 ) {
-				WriteString( data.fileName, out );
 			}
 
 			//Write link for Pixel Data
@@ -1188,7 +1180,7 @@ public:
 		}
 
         out << endl
-			<< "   File Name:  " << data.fileName
+			<< "   File Name:  " << data.fileName << endl
 			<< "   Unknown Byte:  " << int(data.unknownByte) << endl
 			<< "   Pixel Data:  " << asLink();
 

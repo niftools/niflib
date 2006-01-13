@@ -567,7 +567,7 @@ class NiPixelData : public AData {
 public:
 	NiPixelData() {
 		data = NULL;
-		AddAttr( attr_int, "Unknown Int" );
+		/*AddAttr( attr_int, "Unknown Int" );
 		AddAttr( attr_int, "Red Mask" );
 		AddAttr( attr_int, "Blue Mask" );
 		AddAttr( attr_int, "Green Mask" );
@@ -581,7 +581,7 @@ public:
 		AddAttr( attr_byte, "Unknown Byte 6" );
 		AddAttr( attr_byte, "Unknown Byte 7" );
 		AddAttr( attr_byte, "Unknown Byte 8" );
-		AddAttr( attr_link, "Unknown Link" );
+		AddAttr( attr_link, "Unknown Link" );*/
 		AddAttr( attr_link, "Palette", VER_10_1_0_0);
 	}
 	~NiPixelData() { if (data != NULL) delete [] data; }
@@ -596,7 +596,9 @@ private:
 		uint width, height, offset;
 	};
 	
-	uint bytesPerPixel;
+	uint unkInt, redMask, blueMask, greenMask, alphaMask, bpp;
+	byte unk8Bytes[8];
+	uint unkUplink;
 	vector<MipMap> mipmaps;
 	uint dataSize;
 	byte * data;
@@ -685,6 +687,7 @@ protected:
 	vector<Vector3> vertices;
 	vector<Vector3> normals;
 	vector<Color4> colors;
+	vector<Vector3> unk_vects;
 	vector< vector<TexCoord> > uv_sets;
 };
 
@@ -706,6 +709,24 @@ protected:
 	bool hasSizes;
 	short numActive, numValid;
 	vector<float> sizes;
+};
+
+/**
+ * APSysData - New generic particle system data block.
+ */
+
+class APSysData : public AShapeData {
+public:
+	APSysData() {}
+	~APSysData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+protected:
+	vector<float> unkFloats1;
+	ushort unkShort;
+	vector<float> unkFloats2;
+	byte unkByte;
 };
 
 /**
@@ -731,7 +752,7 @@ protected:
 class NiParticleMeshesData : public ARotatingParticlesData {
 public:
 	NiParticleMeshesData() {
-		AddAttr( attr_link, "Unknown Link" );
+		AddAttr( attr_link, "Unknown Link 2" );
 	}
 	~NiParticleMeshesData() {}
 	void Read( ifstream& in, unsigned int version );
@@ -1500,6 +1521,7 @@ public:
 	NiSkinInstance(){
 		AddAttr( attr_link, "Data" );
 		AddAttr( attr_skeletonroot, "Skeleton Root" );
+		AddAttr( attr_int, "Unknown Int", VER_10_2_0_0 );
 		AddAttr( attr_bones, "Bones" );
 	}
 	~NiSkinInstance() {}
@@ -1548,7 +1570,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 	public:
 
 		NiSkinData() { 
-			AddAttr( attr_link, "Skin Partition" );
+			AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
 			SetIdentity33(rotation);
 			translation[0] = 0.0f;
 			translation[1] = 0.0f;
@@ -1608,6 +1630,42 @@ public:
 
 	string asString() const;
 	string GetBlockType() const { return "NiGeomMorpherController"; }
+};
+
+class NiBoolData : public AData, public IBoolData {
+public:
+	NiBoolData() {}
+	~NiBoolData() {}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiBoolData"; };
+
+	void * QueryInterface( int id ) {
+		if ( id == ID_BOOL_DATA ) {
+			return (void*)static_cast<IBoolData*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_BOOL_DATA ) {
+			return (void const *)static_cast<IBoolData const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//--IBoolData Functions--//
+	KeyType GetKeyType() const { return _type; }
+	void SetKeyType( KeyType t ) { _type = t; }
+	vector< Key<unsigned char> > GetKeys() const { return _keys; }
+	void SetKeys( vector< Key<unsigned char> > const & keys ) { _keys = keys; }
+
+private:
+	KeyType _type;
+	vector< Key<byte> > _keys;
 };
 
 class NiColorData : public AData, public IColorData {

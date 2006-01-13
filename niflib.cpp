@@ -723,6 +723,14 @@ ITriStripsData const * QueryTriStripsData ( blk_ref const & block ) {
 	return (ITriStripsData const *)block->QueryInterface( ID_TRI_STRIPS_DATA );
 }
 
+IBoolData * QueryBoolData ( blk_ref & block ) {
+	return (IBoolData*)block->QueryInterface( ID_BOOL_DATA );
+}
+
+IBoolData const * QueryBoolData ( blk_ref const & block ) {
+	return (IBoolData const *)block->QueryInterface( ID_BOOL_DATA );
+}
+
 IColorData * QueryColorData ( blk_ref & block ) {
 	return (IColorData*)block->QueryInterface( ID_COLOR_DATA );
 }

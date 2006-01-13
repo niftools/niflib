@@ -59,6 +59,7 @@ class IKeyframeData;
 class ITextKeyExtraData;
 class IMorphData;
 class ITriStripsData;
+class IBoolData;
 class IColorData;
 class IFloatData;
 class IPosData;
@@ -86,6 +87,7 @@ const int ID_TRI_STRIPS_DATA = 7; /*!< ID for ITriStripsData Interface */
 const int ID_COLOR_DATA = 8; /*!< ID for IColorData Interface */ 
 const int ID_FLOAT_DATA = 9; /*!< ID for IFloatData Interface */ 
 const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */ 
+const int ID_BOOL_DATA = 11; /*!< ID for IBoolData Interface */
 
 
 /*!
@@ -463,6 +465,27 @@ IMorphData const * QueryMorphData ( blk_ref const & block );
  */
 ITriStripsData * QueryTriStripsData ( blk_ref & block );
 ITriStripsData const * QueryTriStripsData ( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_BOOL_DATA ).  It queries the block for an IBoolData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IBoolData interface available.
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IBoolData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IBoolData * bool_data = QueryBoolData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * bool_data = QueryBoolData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
+IBoolData * QueryBoolData ( blk_ref & block );
+IBoolData const * QueryBoolData ( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_COLOR_DATA ).  It queries the block for an IColorData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IColorData interface available.
  * \param block The block to query the interface from.
@@ -1805,6 +1828,16 @@ public:
 	virtual vector< Key<string> > GetKeys() const = 0;
 	virtual void SetKeys( vector< Key<string> > const & keys ) = 0;
 
+};
+
+class IBoolData {
+public:
+	IBoolData() {}
+	virtual ~IBoolData () {}
+	virtual KeyType GetKeyType() const = 0;
+	virtual void SetKeyType( KeyType t ) = 0;
+	virtual vector< Key<unsigned char> > GetKeys() const = 0;
+	virtual void SetKeys( vector< Key<unsigned char> > const & keys ) = 0;
 };
 
 class IColorData {

@@ -763,9 +763,9 @@ IBlock * CreateNiBillboardNode() {
 //	return new NiBoneLODController;
 //}
 
-//IBlock * CreateNiBoolData() {
-//	return new NiBoolData;
-//}
+IBlock * CreateNiBoolData() {
+	return new NiBoolData;
+}
 
 IBlock * CreateNiBooleanExtraData() {
 	return new NiBooleanExtraData;
@@ -1172,7 +1172,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiAutoNormalParticlesData"] = CreateNiAutoNormalParticlesData;
 	global_block_map["NiBillboardNode"] = CreateNiBillboardNode;
 	//global_block_map["NiBoneLODController"] = CreateNiBoneLODController;
-	//global_block_map["NiBoolData"] = CreateNiBoolData;
+	global_block_map["NiBoolData"] = CreateNiBoolData;
 	global_block_map["NiBooleanExtraData"] = CreateNiBooleanExtraData;
 	global_block_map["NiBoolInterpolator"] = CreateNiBoolInterpolator;
 	global_block_map["NiBSAnimationNode"] = CreateNiBSAnimationNode;

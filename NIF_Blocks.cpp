@@ -124,6 +124,10 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 		attr = new Color3Attr( name, this, first_ver, last_ver );
 	} else if ( type == attr_parent ) {
 		attr = new ParentAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_unk292bytes ) {
+		attr = new Unk292BytesAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_bool ) {
+		attr = new BoolAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -593,9 +597,7 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 	if ( hasVertices != 0 ){
 		vertices.resize( vert_count );
 		for ( uint i = 0; i < vertices.size(); ++i ){
-			vertices[i].x = ReadFloat( in );
-			vertices[i].y = ReadFloat( in );
-			vertices[i].z = ReadFloat( in );
+			NifStream( vertices[i], in );
 		}
 	}
 
@@ -606,34 +608,27 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		numTexSets = ReadUShort( in );
 	}
 
-	//There is an unknown byte here after version 10.2.0.0
-	byte unkByte;
-	if ( version >= VER_10_2_0_0 ) {
-		unkByte = ReadByte( in );
-	}
+	////There is an unknown byte here after version 10.2.0.0
+	//bool hasUnknown;
+	//if ( version >= VER_10_2_0_0 ) {
+	//	hasUnknown = ReadBool( in, version );
+	//}
 
 	bool hasNormals = ReadBool( in, version );;
 	if ( hasNormals != 0 ){
 		normals.resize( vert_count );
 		for ( uint i = 0; i < normals.size(); ++i ){
-			normals[i].x = ReadFloat( in );
-			normals[i].y = ReadFloat( in );
-			normals[i].z = ReadFloat( in );
+			NifStream( normals[i], in );
 		}
 	}
 
-	//After version 10.2.0.0 there's several unknown vectors here
-	if ( version >= VER_10_2_0_0 && unkByte != 0 ) {
-		for ( uint i = 0; i < normals.size(); ++i ){
-			ReadFloat( in );
-			ReadFloat( in );
-			ReadFloat( in );
-
-			ReadFloat( in );
-			ReadFloat( in );
-			ReadFloat( in );
-		}
-	}
+	////After version 10.2.0.0 there's several unknown vectors here
+	//if ( version >= VER_10_2_0_0 && hasUnknown == true ) {
+	//	unk_vects.resize( vert_count * 2 );
+	//	for ( uint i = 0; i < unk_vects.size(); ++i ){
+	//		NifStream( unk_vects[i], in );
+	//	}
+	//}
 
 	GetAttr("Center")->Read( in, version );
 	GetAttr("Radius")->Read( in, version );
@@ -642,10 +637,7 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 	if ( hasVertexColors != 0 ){
 		colors.resize( vert_count );
 		for ( uint i = 0; i < colors.size(); ++i ){
-			colors[i].r = ReadFloat( in );
-			colors[i].g = ReadFloat( in );
-			colors[i].b = ReadFloat( in );
-			colors[i].a = ReadFloat( in );
+			NifStream( colors[i], in );
 		}
 	}
 	// numTexSets down here up to version 4.2.2.0
@@ -716,6 +708,22 @@ string AShapeData::asString() const {
 	}
 	out << endl;
 	
+	out << "Unknown Vectors:  " << uint(unk_vects.size());
+	if (verbose) {
+		out << "   ";
+		for ( uint i = 0; i < unk_vects.size(); ++i) {
+			if (i % 3 == 0)
+				out << endl << "   ";
+			else
+				out << "  ";
+
+			out << "(" << setw(5) << unk_vects[i].x << ", " << setw(5) << unk_vects[i].y << ", " << setw(5) << unk_vects[i].z << " )";
+		}
+	} else {
+		out << endl << "<<Data Not Shown>>";
+	}
+	out << endl;
+
 	attr_ref attr = GetAttr("Center");
 	out << attr->GetName() << ":  " << attr->asString() << endl;
 	attr = GetAttr("Radius");
@@ -789,7 +797,7 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 
 	//There is an unknown byte here after version 10.2.0.0
 	if ( version >= VER_10_2_0_0 ) {
-		WriteByte( 0, out );
+		WriteBool( unk_vects.size() > 0, out, version );
 	}
 
 	WriteBool( normals.size() > 0, out, version );
@@ -798,18 +806,11 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 		NifStream( normals[i], out );
 	}
 
-	////After version 10.2.0.0 there's several unknown vectors here
-	//if ( version >= VER_10_2_0_0 && unkByte != 0 ) {
-	//	for ( uint i = 0; i < normals.size(); ++i ){
-	//		ReadFloat( in );
-	//		ReadFloat( in );
-	//		ReadFloat( in );
-
-	//		ReadFloat( in );
-	//		ReadFloat( in );
-	//		ReadFloat( in );
-	//	}
-	//}
+	if ( version >= VER_10_2_0_0 ) {
+		for ( uint i = 0; i < unk_vects.size(); ++i ){
+			NifStream( unk_vects[i], out );
+		}
+	}
 
 	GetAttr("Center")->Write( out, version );
 	GetAttr("Radius")->Write( out, version );
@@ -1008,6 +1009,84 @@ string AParticlesData::asString() const {
 }
 
 /***********************************************************
+ * APSysData methods
+ **********************************************************/
+
+void APSysData::Read( ifstream& file, unsigned int version ) {
+	AShapeData::Read( file, version );
+
+	bool hasUnkFlts = ReadBool( file, version );
+	if ( hasUnkFlts ) {
+		unkFloats1.resize( vertices.size() );
+		for ( uint i = 0; i < unkFloats1.size(); ++i ) {
+			NifStream( unkFloats1[i], file );
+		}
+	}
+
+	NifStream( unkShort, file );
+
+	hasUnkFlts = ReadBool( file, version );
+	if ( hasUnkFlts ) {
+		unkFloats2.resize( vertices.size() );
+		for ( uint i = 0; i < unkFloats2.size(); ++i ) {
+			NifStream( unkFloats2[i], file );
+		}
+	}
+
+	NifStream( unkByte, file );
+}
+
+void APSysData::Write( ofstream& file, unsigned int version ) const {
+	AShapeData::Write( file, version );
+
+	WriteBool( unkFloats1.size() > 0, file, version );
+	for ( uint i = 0; i < unkFloats1.size(); ++i ) {
+		NifStream( unkFloats1[i], file );
+	}
+
+	NifStream( unkShort, file );
+
+	WriteBool( unkFloats2.size() > 0, file, version );
+	for ( uint i = 0; i < unkFloats2.size(); ++i ) {
+		NifStream( unkFloats2[i], file );
+	}
+
+
+	NifStream( unkByte, file );
+}
+
+string APSysData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
+	out << "Unknown Floats 1:  " << uint(unkFloats1.size()) << endl;
+	if (verbose) {
+		for ( uint i = 0; i < unkFloats1.size(); ++i ) {
+			out << i + 1 << ":  " << unkFloats1[i] << endl;
+		}
+	} else {
+		out << "<<Data Not Shown>>";
+	}
+
+	out << "Unknown Short:  " << unkShort << endl
+		<< "Unknown Floats 2:  " << uint(unkFloats2.size()) << endl;
+	if (verbose) {
+		for ( uint i = 0; i < unkFloats2.size(); ++i ) {
+			out << i + 1 << ":  " << unkFloats2[i] << endl;
+		}
+	} else {
+		out << "<<Data Not Shown>>";
+	}
+
+	out << "Unknown Byte:  " << int(unkByte) << endl;
+
+	return out.str();
+}
+
+/***********************************************************
  * ARotatingParticlesData methods
  **********************************************************/
 
@@ -1072,13 +1151,13 @@ string ARotatingParticlesData::asString() const {
 void NiParticleMeshesData::Read( ifstream& in, unsigned int version ) {
 	ARotatingParticlesData::Read( in, version );
 
-	GetAttr("Unknown Link")->Read( in, version );
+	GetAttr("Unknown Link 2")->Read( in, version );
 }
 
 void NiParticleMeshesData::Write( ofstream& out, unsigned int version ) const {
 	ARotatingParticlesData::Write( out, version );
 
-	GetAttr("Unknown Link")->Write( out, version );
+	GetAttr("Unknown Link 2")->Write( out, version );
 }
 
 string NiParticleMeshesData::asString() const {
@@ -1087,7 +1166,7 @@ string NiParticleMeshesData::asString() const {
 	out << setprecision(1);
 
 	out << ARotatingParticlesData::asString()
-		<< "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl;
+		<< "Unknown Link 2:  " << GetAttr("Unknown Link 2")->asString() << endl;
 
 	return out.str();
 }
@@ -2308,6 +2387,54 @@ string NiKeyframeData::asString() const {
 }
 
 /***********************************************************
+ * NiBoolData methods
+ **********************************************************/
+
+void NiBoolData::Read( ifstream& file, unsigned int version ) {
+	uint keyCount = ReadUInt( file );
+	NifStream( _type, file );
+
+	_keys.resize( keyCount );
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
+	}
+}
+
+void NiBoolData::Write( ofstream& file, unsigned int version ) const {
+	WriteUInt( uint(_keys.size()), file );
+	NifStream( _type, file );
+
+	for (uint i = 0; i < _keys.size(); i++) {
+		NifStream( _keys[i], file, _type );
+	}
+}
+
+string NiBoolData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Key Count:  " << uint(_keys.size()) << endl
+		<< "Key Type:  " << _type << endl;
+
+	if (verbose) {
+		vector< Key<byte> >::const_iterator it;
+		for ( it = _keys.begin(); it != _keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Is Visible:  ";
+			if ( it->data != 0 ) {
+				out << "True" << endl;
+			} else {
+				out << "False" << endl;
+			}
+		}
+	} else {
+		out << "<<Data Not Shown>>" << endl;
+	}
+
+	return out.str();
+}
+
+/***********************************************************
  * NiColorData methods
  **********************************************************/
 
@@ -2829,38 +2956,74 @@ string NiSkinPartition::asString() const {
  * NiPixelData methods
  **********************************************************/
 
-void NiPixelData::Read( ifstream& in, unsigned int version ) {
-	ABlock::Read( in, version );
+void NiPixelData::Read( ifstream& file, unsigned int version ) {
+	//ABlock::Read( in, version );
 
-	uint mipCount = ReadUInt( in );
-	bytesPerPixel = ReadUInt( in );
+	NifStream( unkInt, file );
+
+	NifStream( redMask, file );
+	NifStream( blueMask, file );
+	NifStream( greenMask, file );
+	NifStream( alphaMask, file );
+
+	NifStream( bpp, file );
+
+	for ( int i = 0; i < 8; ++i ) {
+		NifStream( unk8Bytes[i], file );
+	}
+	
+	NifStream( unkUplink, file );
+
+	GetAttr("Palette")->Read( file, version );
+
+	uint mipCount = ReadUInt( file );
+
+	//Read Bytes per pixel and discard
+	ReadUInt( file );
 
 	mipmaps.resize( mipCount );
 	for ( uint i = 0; i < mipCount; ++i ) {
-		mipmaps[i].width = ReadUInt( in );
-		mipmaps[i].height = ReadUInt( in );
-		mipmaps[i].offset = ReadUInt( in );
+		mipmaps[i].width = ReadUInt( file );
+		mipmaps[i].height = ReadUInt( file );
+		mipmaps[i].offset = ReadUInt( file );
 	}
 
-	dataSize = ReadUInt( in );
+	dataSize = ReadUInt( file );
 	data = new byte[dataSize];
-	in.read( (char *)data, dataSize);
+	file.read( (char *)data, dataSize);
 }
 
-void NiPixelData::Write( ofstream& out, unsigned int version ) const {
-	ABlock::Write( out, version );
+void NiPixelData::Write( ofstream& file, unsigned int version ) const {
+	//ABlock::Write( file, version );
 
-	WriteUInt( uint(mipmaps.size()), out );
-	WriteUInt( bytesPerPixel, out );
+	NifStream( unkInt, file );
+
+	NifStream( redMask, file );
+	NifStream( blueMask, file );
+	NifStream( greenMask, file );
+	NifStream( alphaMask, file );
+
+	NifStream( bpp, file );
+
+	for ( int i = 0; i < 8; ++i ) {
+		NifStream( unk8Bytes[i], file );
+	}
+	
+	NifStream( unkUplink, file );
+
+	GetAttr("Palette")->Write( file, version );
+
+	WriteUInt( uint(mipmaps.size()), file );
+	WriteUInt( bpp / 8, file );
 
 	for ( uint i = 0; i < mipmaps.size(); ++i ) {
-		WriteUInt( mipmaps[i].width, out );
-		WriteUInt( mipmaps[i].height, out );
-		WriteUInt( mipmaps[i].offset, out );
+		WriteUInt( mipmaps[i].width, file );
+		WriteUInt( mipmaps[i].height, file );
+		WriteUInt( mipmaps[i].offset, file );
 	}
 
-	WriteUInt( dataSize, out );
-	out.write( (char *)data, dataSize);
+	WriteUInt( dataSize, file );
+	file.write( (char *)data, dataSize);
 }
 
 string NiPixelData::asString() const {
@@ -2868,11 +3031,24 @@ string NiPixelData::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << ABlock::asString();
+	//out << ABlock::asString();
 
-	out << endl
+	out << "Unknown Int:  " << unkInt << endl
+		<< "Red Mask:  " << redMask << endl
+		<< "Blue Mask:  " << blueMask << endl
+		<< "Green Mask:  " << greenMask << endl
+		<< "Alpha Mask:  " << alphaMask << endl
+		<< "Bits Per Pixel:  " << bpp << endl
 		<< "Mipmap Count:  " << uint(mipmaps.size()) << endl
-		<< "Bytes Per Pixel:  " << bytesPerPixel << endl;
+		<< "Bytes Per Pixel:  " << bpp / 8 << endl
+		<< "Unknown 8 Bytes:" << endl;
+
+	for ( int i = 0; i < 8; ++i ) {
+		out << i + 1 << ":  " << unk8Bytes[i] << endl;
+	}
+
+	out << "Unknown Uplink:  " << blk_ref(unkUplink) << endl
+		<< "Palette:  "  << GetAttr("Palette")->asLink() << endl;
 
 	for ( uint i = 0; i < mipmaps.size(); ++i ) {
 		out << "Mipmap " << i + 1 << ":" << endl
@@ -3067,7 +3243,9 @@ string NiUVData::asString() const {
 void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
 	AExtraData::Read( in, version );
 
-	bytes = ReadUInt( in );
+	//Read byte count but throw it away
+	ReadUInt( in );
+
 	ushort verts = ReadUShort( in );
 
 	weights.resize( verts );
@@ -3079,6 +3257,7 @@ void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
 void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) const {
 	AExtraData::Write( out, version );
 
+	uint bytes = 2 + 4 * uint(weights.size());
 	WriteUInt( bytes, out );
 	WriteUShort( ushort(weights.size()), out );
 
