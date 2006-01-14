@@ -64,6 +64,7 @@ class IColorData;
 class IFloatData;
 class IPosData;
 class INode;
+class IControllerSequence;
 class blk_ref;
 class attr_ref;
 struct blk_link;
@@ -72,6 +73,7 @@ struct TextureSource;
 struct BoundingBox;
 struct ConditionalInt;
 struct SkinWeight;
+struct ControllerLink;
 
 //--Constants--//
 
@@ -88,6 +90,7 @@ const int ID_COLOR_DATA = 8; /*!< ID for IColorData Interface */
 const int ID_FLOAT_DATA = 9; /*!< ID for IFloatData Interface */ 
 const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */ 
 const int ID_BOOL_DATA = 11; /*!< ID for IBoolData Interface */
+const int ID_CONTROLLER_SEQUENCE = 12; /*!< ID for IControllerSequence Interface */
 
 
 /*!
@@ -381,6 +384,27 @@ ISkinData const * QuerySkinData( blk_ref const & block );
  */
 INode * QueryNode( blk_ref & block );
 INode const * QueryNode( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_CONTROLLER_SEQUENCE).  It queries the block for an IControllerSequence interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IControllerSequence interface available.
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IControllerSequence interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IControllerSequence * cont_seq = QueryControllerSequence(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * cont_seq = QueryControllerSequence(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
+IControllerSequence * QueryControllerSequence( blk_ref & block );
+IControllerSequence const * QueryControllerSequence( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_KEYFRAME_DATA ).  It queries the block for an IKeyframeData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IKeyframeData interface available.
  * \param block The block to query the interface from.
@@ -1885,6 +1909,17 @@ public:
 	virtual void SetMorphKeys( int n, vector< Key<float> > const & keys ) = 0;
 	virtual vector<Vector3> GetMorphVerts( int n) const = 0;
 	virtual void SetMorphVerts( int n, vector<Vector3> const & in ) = 0;
+};
+
+class IControllerSequence {
+public:
+	IControllerSequence() {}
+	virtual ~IControllerSequence () {}
+
+	virtual void SetFirstTargetName( string new_name ) = 0;
+	virtual void SetFirstController( blk_ref new_link ) = 0;
+	virtual void AddController( string new_name, blk_ref new_link ) = 0;
+	virtual void ClearControllers() = 0;
 };
 
 //class IPixelData {

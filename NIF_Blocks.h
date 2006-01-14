@@ -57,8 +57,9 @@ typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
 const int BlockInternal = -1;
 const int SkinInstInternal = -2;
 const int SkinDataInternal = -3;
-const int NodeInternal = -4;
-const int ChainLinkInternal = -5;
+//const int NodeInternal = -4;
+
+
 
 
 //void GetBuiltUpTransform(blk_ref block, Matrix & m/*, blk_ref stop*/);
@@ -68,13 +69,21 @@ public:
 	IBlockInternal() {}
 	virtual ~IBlockInternal() {}
 
-	//Cross Reference
-	virtual void AddParent( blk_ref parent ) = 0;
+	//Link Tracking
+	virtual void AddParent( IBlock * parent ) = 0;
 	virtual void RemoveParent( IBlock * match ) = 0;
 	virtual void SetBlockNum( int ) = 0;
 	virtual void SetBlockTypeNum( int n ) = 0;
 	virtual int GetBlockTypeNum() = 0;
-	virtual void FixUpLinks( const vector<blk_ref> & blocks ) = 0;
+	virtual void FixLinks( const vector<blk_ref> & blocks ) = 0;
+	virtual void AddChild( IBlock * new_child ) = 0;
+	virtual void RemoveChild( IBlock * old_child ) = 0;
+
+	//Cross Link Tracking
+	virtual void RemoveCrossLink( IBlock * block_to_remove ) = 0;
+
+	virtual void IncCrossRef( IBlock * block ) = 0;
+	virtual void DecCrossRef( IBlock * block ) = 0;
 
 	//File I/O
 	virtual void Read( ifstream& in, unsigned int version ) = 0;
@@ -119,12 +128,20 @@ public:
 	}
 
 	//--Internal Functions--//
-	void AddParent( blk_ref parent);
+	void AddParent( IBlock * new_parent);
 	void RemoveParent( IBlock * match );
 	void SetBlockNum( int n ) { _block_num = n; }
-	void FixUpLinks( const vector<blk_ref> & blocks );
+	void FixLinks( const vector<blk_ref> & blocks );
 	void SetBlockTypeNum( int n ) { _block_type_num = n; }
 	int GetBlockTypeNum() { return _block_type_num; }
+
+	void AddChild( IBlock * new_child );
+	void RemoveChild( IBlock * old_child );
+
+	void RemoveCrossLink( IBlock * block_to_remove ) {};
+
+	void IncCrossRef( IBlock * block );
+	void DecCrossRef( IBlock * block );
 
 	void Read( ifstream& in, unsigned int version );
 	void Write( ofstream& out, unsigned int version ) const;
@@ -135,6 +152,7 @@ protected:
 	int _block_type_num;
 	unsigned int _ref_count;
 	vector<IBlock*> _parents;
+	list<IBlock*> _cross_refs;
 };
 
 class AControllable : public ABlock {
@@ -145,13 +163,13 @@ public:
 	~AControllable() {}
 };
 
-class INodeInternal {
-public:
-	virtual void IncSkinRef( IBlock * skin_data ) = 0;
-	virtual void DecSkinRef( IBlock * skin_data ) = 0;
-};
+//class INodeInternal {
+//public:
+//	virtual void IncSkinRef( IBlock * skin_data ) = 0;
+//	virtual void DecSkinRef( IBlock * skin_data ) = 0;
+//};
 
-class ANode : public AControllable, public INode, public INodeInternal {
+class ANode : public AControllable, public INode/*, public INodeInternal*/ {
 public:
 	ANode();
 	void Init() { 
@@ -162,7 +180,7 @@ public:
 		GetAttr("Flags")->Set(8);
 	
 	};
-	~ANode();
+	~ANode() {};
 	void InitAttrs();
 	void * QueryInterface( int id );
 	void const * QueryInterface( int id ) const;
@@ -180,13 +198,13 @@ public:
 	Matrix44 GetLocalBindPos() const;
 	void SetWorldBindPos( Matrix44 const & m );
 
-	//INodeInternal Functions
-	void IncSkinRef( IBlock * skin_data );
-	void DecSkinRef( IBlock * skin_data );
+	//IBlockInternal Functions
+	void IncCrossRef( IBlock * block );
+	void DecCrossRef( IBlock * block );
 
 protected:
+	void ResetSkinnedFlag();
 	Matrix44 bindPosition;
-	list<IBlock*> skin_refs;
 };
 
 /**
@@ -605,6 +623,27 @@ private:
 };
 
 /**
+ * NiPSysEmitterCtlrData
+ */
+class NiPSysEmitterCtlrData : public AData {
+public:
+	NiPSysEmitterCtlrData() {
+		AddAttr( attr_int, "Unknown Int 1" );
+		AddAttr( attr_int, "Unknown Int 2" );
+		AddAttr( attr_int, "Unknown Int 3" );
+		AddAttr( attr_float, "Unknown Float 1" );
+		AddAttr( attr_int, "Unknown Int 4" );
+		AddAttr( attr_int, "Unknown Int 5" );
+		AddAttr( attr_byte, "Unknown Byte 1" );
+		AddAttr( attr_float, "Unknown Float 2" );
+		AddAttr( attr_byte, "Unknown Byte 2" );
+	}
+	~NiPSysEmitterCtlrData() {}
+
+	string GetBlockType() const { return "NiPSysEmitterCtlrData"; }
+};
+
+/**
  * NiMaterialProperty - material properties
  */
 class NiMaterialProperty : public AProperty{
@@ -727,6 +766,42 @@ protected:
 	ushort unkShort;
 	vector<float> unkFloats2;
 	byte unkByte;
+};
+
+/**
+ * NiMeshPSysData
+ */
+
+class NiMeshPSysData : public APSysData {
+public:
+	NiMeshPSysData() {}
+	~NiMeshPSysData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiMeshPSysData"; };
+protected:
+	vector<float> unkFloats;
+	uint unk2Ints[2];
+	byte unkByte;
+	uint unk3Ints[3];
+};
+
+/**
+ * NiPSysData
+ */
+
+class NiPSysData : public APSysData {
+public:
+	NiPSysData() {}
+	~NiPSysData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiPSysData"; };
+protected:
+	vector<float> unkFloats;
+	uint unkInt;
 };
 
 /**
@@ -1504,6 +1579,28 @@ private:
 	vector<SkinPartition> partitions;
 };
 
+/**
+ * NiTransformData
+ */
+
+class NiTransformData : public AData {
+public:
+	NiTransformData() {}
+	~NiTransformData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
+	string GetBlockType() const { return "NiTransformData"; }
+private:
+	uint hasKeys, unkInt;
+	KeyType key_type[3];
+	vector< Key<float> > unkFloatKeys[3];
+	uint unk2Ints[2];
+	vector<float> unkFloats[2];
+};
+
+
 
 /**
  * NiSkinInstance
@@ -1559,10 +1656,10 @@ private:
 
 class ISkinDataInternal {
 public:
-	virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
+	//virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
 	virtual void RepositionTriShape() = 0;
-	virtual void StraightenSkeleton() = 0;
-	virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
+	//virtual void StraightenSkeleton() = 0;
+	//virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
 };
 
 class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
@@ -1588,11 +1685,12 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		void * QueryInterface( int id );
 		void const * QueryInterface( int id ) const;
 
+		//IBlockInternal
+		void FixLinks( const vector<blk_ref> & blocks ); // This version of the function will copy the bones from the parent Skin Instance block and fix the links at the same time.
+		void RemoveCrossLink( IBlock * block_to_remove );
+
 		//ISkinDataInternal
-		void SetBones( vector<blk_ref> bone_blocks ); // not vector<blk_ref> const &, since we must cast the blk_ref's into (non-constant) IBlock * pointers
 		void RepositionTriShape();
-		void StraightenSkeleton();
-		void RemoveBoneByPtr( IBlock * bone );
 
         //ISkinData
 		vector<blk_ref> GetBones(); // cannot be const, since this changes the reference counts for the bone blocks!
@@ -1600,6 +1698,8 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		void AddBone( blk_ref const & bone, map<int, float> const & in );
 		void RemoveBone( blk_ref const & bone );
 	private:
+		void SetBones( vector<blk_ref> bone_blocks ); // not vector<blk_ref> const &, since we must cast the blk_ref's into (non-constant) IBlock * pointers
+		void StraightenSkeleton();
 		struct Bone {
 			Matrix33 rotation;
 			fVector3 translation;
@@ -1707,16 +1807,45 @@ private:
 /**
  * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and up).
  */
-class NiControllerSequence : public AData {
+class NiControllerSequence : public AData, public IControllerSequence {
 public:
 	NiControllerSequence() {
 		AddAttr( attr_string, "Name" );
 	}
 	~NiControllerSequence() {}
 
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
 	string GetBlockType() const { return "NiControllerSequence"; }
+
+	void FixLinks( const vector<blk_ref> & blocks );
+
+	void * QueryInterface( int id ) {
+		if ( id == ID_CONTROLLER_SEQUENCE ) {
+			return (void*)static_cast<IControllerSequence*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_CONTROLLER_SEQUENCE ) {
+			return (void const *)static_cast<IControllerSequence const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//IControllerSequence Functions
+	void SetFirstTargetName( string new_name );
+	void SetFirstController( blk_ref new_link );
+	void AddController( string new_name, blk_ref new_link );
+	void ClearControllers();
+
 private:
-	vector< pair< string, blk_ref> > controllers;
+	pair<string, blk_ref> _first_child;
+	vector< pair<string, blk_ref> > _children;
 };
 
 class NiFloatData : public AData, public IFloatData {
@@ -1801,6 +1930,8 @@ public:
 class NiIntegerExtraData : public AExtraData {
 public:
 	NiIntegerExtraData() {
+		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
+		AddAttr( attr_string, "Unknown String", VER_20_0_0_4 );
 		AddAttr( attr_int, "Integer Data" );
 	}
 	~NiIntegerExtraData() {}
@@ -1809,10 +1940,14 @@ public:
 
 		void Read( ifstream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
+		GetAttr("Unknown String")->Read( in, version );
+		GetAttr("Unknown Link")->Read( in, version );
 		GetAttr("Integer Data")->Read( in, version );
 	}
 	void Write( ofstream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
+		GetAttr("Unknown String")->Write( out, version );
+		GetAttr("Unknown Link")->Write( out, version );
 		GetAttr("Integer Data")->Write( out, version );
 	}
 
@@ -1822,7 +1957,9 @@ public:
 		out << setprecision(1);
 
 		out << AExtraData::asString()
-			<< "Boolean Data:  " << GetAttr("Integer Data")->asString() << endl;
+			<< "Unknown String:  " << GetAttr("Unknown String")->asString() << endl
+			<< "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl
+			<< "Integer Data:  " << GetAttr("Integer Data")->asString() << endl;
 
 		return out.str();
 	}

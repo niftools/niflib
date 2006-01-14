@@ -156,7 +156,7 @@ private:
 			//Get internal interface
 			IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
 			if ( bk_intl != NULL ) {
-				bk_intl->AddParent( blk_ref(_owner) );
+				bk_intl->AddParent( _owner );
 			}
 		}
 	}

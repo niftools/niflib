@@ -644,7 +644,7 @@ NiTextureTransformController::NiTextureTransformController() {
 	AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Data", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -669,7 +669,14 @@ NiTransformController::NiTransformController() {
 }
 
 NiTransformInterpolator::NiTransformInterpolator() {
-	AddAttr( attr_float, "Unknown Floats", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 8", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
 	Init();
 }
@@ -871,9 +878,9 @@ IBlock * CreateNiMeshParticleSystem() {
 	return new NiMeshParticleSystem;
 }
 
-//IBlock * CreateNiMeshPSysData() {
-//	return new NiMeshPSysData;
-//}
+IBlock * CreateNiMeshPSysData() {
+	return new NiMeshPSysData;
+}
 
 IBlock * CreateNiMorphData() {
 	return new NiMorphData;
@@ -983,17 +990,17 @@ IBlock * CreateNiPSysCylinderEmitter() {
 	return new NiPSysCylinderEmitter;
 }
 
-//IBlock * CreateNiPSysData() {
-//	return new NiPSysData;
-//}
+IBlock * CreateNiPSysData() {
+	return new NiPSysData;
+}
 
 IBlock * CreateNiPSysEmitterCtlr() {
 	return new NiPSysEmitterCtlr;
 }
 
-//IBlock * CreateNiPSysEmitterCtlrData() {
-//	return new NiPSysEmitterCtlrData;
-//}
+IBlock * CreateNiPSysEmitterCtlrData() {
+	return new NiPSysEmitterCtlrData;
+}
 
 IBlock * CreateNiPSysGravityModifier() {
 	return new NiPSysGravityModifier;
@@ -1099,9 +1106,9 @@ IBlock * CreateNiTransformController() {
 	return new NiTransformController;
 }
 
-//IBlock * CreateNiTransformData() {
-//	return new NiTransformData;
-//}
+IBlock * CreateNiTransformData() {
+	return new NiTransformData;
+}
 
 IBlock * CreateNiTransformInterpolator() {
 	return new NiTransformInterpolator;
@@ -1195,11 +1202,11 @@ void RegisterBlockFactories () {
 	global_block_map["NiLightColorController"] = CreateNiLightColorController;
 	global_block_map["NiLODNode"] = CreateNiLODNode;
 	global_block_map["NiLookAtController"] = CreateNiLookAtController;
-	global_block_map["NiLookAtInterpolator"] = CreateNiLookAtInterpolator;
+	//global_block_map["NiLookAtInterpolator"] = CreateNiLookAtInterpolator;
 	global_block_map["NiMaterialColorController"] = CreateNiMaterialColorController;
 	global_block_map["NiMaterialProperty"] = CreateNiMaterialProperty;
 	global_block_map["NiMeshParticleSystem"] = CreateNiMeshParticleSystem;
-	//global_block_map["NiMeshPSysData"] = CreateNiMeshPSysData;
+	global_block_map["NiMeshPSysData"] = CreateNiMeshPSysData;
 	global_block_map["NiMorphData"] = CreateNiMorphData;
 	//global_block_map["NiMultiTargetTransformController"] = CreateNiMultiTargetTransformController;
 	global_block_map["NiNode"] = CreateNiNode;
@@ -1227,9 +1234,9 @@ void RegisterBlockFactories () {
 	global_block_map["NiPSysColliderManager"] = CreateNiPSysColliderManager;
 	global_block_map["NiPSysColorModifier"] = CreateNiPSysColorModifier;
 	global_block_map["NiPSysCylinderEmitter"] = CreateNiPSysCylinderEmitter;
-	//global_block_map["NiPSysData"] = CreateNiPSysData;
+	global_block_map["NiPSysData"] = CreateNiPSysData;
 	global_block_map["NiPSysEmitterCtlr"] = CreateNiPSysEmitterCtlr;
-	//global_block_map["NiPSysEmitterCtlrData"] = CreateNiPSysEmitterCtlrData;
+	global_block_map["NiPSysEmitterCtlrData"] = CreateNiPSysEmitterCtlrData;
 	global_block_map["NiPSysGravityModifier"] = CreateNiPSysGravityModifier;
 	global_block_map["NiPSysGrowFadeModifier"] = CreateNiPSysGrowFadeModifier;
 	global_block_map["NiPSysMeshUpdateModifier"] = CreateNiPSysMeshUpdateModifier;
@@ -1256,7 +1263,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiTextureTransformController"] = CreateNiTextureTransformController;
 	global_block_map["NiTexturingProperty"] = CreateNiTexturingProperty;
 	global_block_map["NiTransformController"] = CreateNiTransformController;
-	//global_block_map["NiTransformData"] = CreateNiTransformData;
+	global_block_map["NiTransformData"] = CreateNiTransformData;
 	global_block_map["NiTransformInterpolator"] = CreateNiTransformInterpolator;
 	global_block_map["NiTriShape"] = CreateNiTriShape;
 	global_block_map["NiTriShapeData"] = CreateNiTriShapeData;

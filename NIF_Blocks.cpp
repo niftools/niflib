@@ -62,6 +62,15 @@ ABlock::~ABlock() {
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
 		delete _attr_vect[i].ptr();
 	}
+
+	// Inform all cross-linked blocks that have added their references that this block is dying
+	list<IBlock*>::iterator it;
+	for (it = _cross_refs.begin(); it != _cross_refs.end(); ++it) {
+		IBlockInternal * blk_int = (IBlockInternal*)(*it)->QueryInterface(BlockInternal);
+		if ( blk_int != NULL ) {
+			blk_int->RemoveCrossLink(this);
+		}
+	}
 }
 
 void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver, unsigned int last_ver ) {
@@ -222,6 +231,15 @@ void ABlock::SubtractRef() {
 	}
 }
 
+void ABlock::IncCrossRef( IBlock * block ) {
+	_cross_refs.push_back(block);
+}
+
+void ABlock::DecCrossRef( IBlock * block ) {
+	_cross_refs.remove(block);
+}
+
+
 list<blk_ref> ABlock::GetLinks() const {
 	list<blk_ref> links;
 
@@ -240,7 +258,7 @@ list<blk_ref> ABlock::GetLinks() const {
 	return links;
 }
 
-void ABlock::FixUpLinks( const vector<blk_ref> & blocks ) {
+void ABlock::FixLinks( const vector<blk_ref> & blocks ) {
 	//Search through all attributes for any links and fix their references based on the list
 	vector<attr_ref>::iterator it;
 	for ( it = _attr_vect.begin(); it != _attr_vect.end(); ++it ) {
@@ -263,10 +281,34 @@ void ABlock::FixUpLinks( const vector<blk_ref> & blocks ) {
 
 //-- Internal Functions --//
 
-void ABlock::AddParent( blk_ref parent) { 
+void ABlock::AddChild( IBlock * new_child ) {
+	//If the poiner is null, do nothing
+	if ( new_child == NULL )
+		return;
+
+	//Register this block as a parent of new_child
+	IBlockInternal * bk_intl = (IBlockInternal*)new_child->QueryInterface( BlockInternal );
+	if ( bk_intl != NULL ) {
+		bk_intl->AddParent( this );
+	}
+}
+void ABlock::RemoveChild( IBlock * old_child ) {
+	//If the poiner is null, do nothing
+	if ( old_child == NULL )
+		return;
+
+	//Add this block to first child as a parent
+	IBlockInternal * bk_intl = (IBlockInternal*)old_child->QueryInterface( BlockInternal );
+	if ( bk_intl != NULL ) {
+		bk_intl->RemoveParent( this );
+	}
+}
+
+
+void ABlock::AddParent( IBlock * new_parent) { 
 	//Don't add null parents
-	if (parent.get_block() != NULL)
-		_parents.push_back( parent.get_block() );
+	if ( new_parent != NULL )
+		_parents.push_back( new_parent );
 }
 
 void ABlock::RemoveParent( IBlock * match ) {
@@ -299,8 +341,6 @@ void * ANode::QueryInterface( int id ) {
 	// Contains INode Interface
 	if ( id == ID_NODE ) {
 		return (void*)static_cast<INode*>(this);
-	} else if (id == NodeInternal ) {
-		return (void*)static_cast<INodeInternal*>(this);
 	} else {
 		return ABlock::QueryInterface( id );
 	}
@@ -310,8 +350,6 @@ void const * ANode::QueryInterface( int id ) const {
 	// Contains INode Interface
 	if ( id == ID_NODE ) {
 		return (void const *)static_cast<INode const *>(this);
-	} else if (id == NodeInternal ) {
-		return (void const *)static_cast<INodeInternal const *>(this);
 	} else {
 		return ABlock::QueryInterface( id );
 	}
@@ -397,63 +435,47 @@ void ANode::SetWorldBindPos( Matrix44 const & m ) {
 	//}
 }
 
-void ANode::IncSkinRef( IBlock * skin_data ) {
-	size_t prev_size = skin_refs.size();
+void ANode::IncCrossRef( IBlock * block ) {
+	//Add block to list
+	ABlock::IncCrossRef( block );
 
-	skin_refs.push_back(skin_data);
-
-	// if the size of the reference list is now not zero, make sure the  'not skin influence flag' is not set
-	if ( skin_refs.size() > 0 && prev_size == 0 ) {
-		attr_ref flag_attr = GetAttr("Flags");
-		int flags = flag_attr->asInt();
-
-		//Make sure it's not already set
-		if ((flags & 8) == 0) {
-			//Already not set, return
-			return;
-		}
-		
-		//Currently set, flip the bit
-		flags ^= 8;
-
-		//Store result
-		flag_attr->Set(flags);
-	}
+	ResetSkinnedFlag();
 }
 
-void ANode::DecSkinRef( IBlock * skin_data ) {
-	size_t prev_size = skin_refs.size();
+void ANode::DecCrossRef( IBlock * block ) {
+	ABlock::DecCrossRef( block );
 
-	skin_refs.remove(skin_data);
-
-	//If the size of the reference list is now zero, set the 'not skin influence' flag
-	if ( skin_refs.size() == 0 && prev_size != 0 ) {
-		attr_ref flag_attr = GetAttr("Flags");
-		int flags = flag_attr->asInt();
-
-		//Make sure it's not already set
-		if ((flags & 8) != 0) {
-			//Already set, return
-			return;
-		}
-		
-		//Currently not set, flip the bit
-		flags ^= 8;
-
-		//Store result
-		flag_attr->Set(flags);
-	}
+	ResetSkinnedFlag();
 }
 
-ANode::~ANode() {
-	// Inform all NiSkinData blocks that have added their references that this block is dying
+void ANode::ResetSkinnedFlag() {
+	//Count the number of cross references that are NiSkinData
+	int count = 0;
 	list<IBlock*>::iterator it;
-	for (it = skin_refs.begin(); it != skin_refs.end(); ++it) {
-		ISkinDataInternal * data = (ISkinDataInternal*)(*it)->QueryInterface(SkinDataInternal);
-		if ( data != NULL ) {
-			data->RemoveBoneByPtr(this);
+	for (it = _cross_refs.begin(); it != _cross_refs.end(); ++it) {
+		if ( (*it)->QueryInterface( ID_SKIN_DATA ) != NULL ) {
+			++count;
 		}
 	}
+
+	//Get Flags attribute
+	attr_ref flag_attr = GetAttr("Flags");
+	int flags = flag_attr->asInt();
+
+	//If count == 0, then flag SHOULD be set
+	if ( count == 0 && ((flags & 8) == 0) ) {
+		//Flag is not set, flip the bit
+		flags ^= 8;
+	}
+
+	//If count > 0, then flag should NOT be set
+	if ( count >> 0 && ((flags & 8) != 0) ) {
+		//Flag is set, flip the bit
+		flags ^= 8;
+	}
+
+	//Store result
+	flag_attr->Set(flags);
 }
 
 /***********************************************************
@@ -562,6 +584,16 @@ string NiNode::asString() const {
 		out << "No" << endl;
 	else
 		out << "Yes" << endl;
+
+	//Create list of influenced skins
+	list<IBlock*> skin_refs;
+
+	list<IBlock*>::const_iterator it;
+	for (it = _cross_refs.begin(); it != _cross_refs.end(); ++it ) {
+		if ( (*it)->QueryInterface( ID_SKIN_DATA ) != NULL ) {
+			skin_refs.push_back(*it);
+		}
+	}
 
 	if (skin_refs.size() > 0) {
 		out << "Influenced Skins:" << endl;
@@ -1082,6 +1114,111 @@ string APSysData::asString() const {
 	}
 
 	out << "Unknown Byte:  " << int(unkByte) << endl;
+
+	return out.str();
+}
+
+/***********************************************************
+ * NiMeshPSysData methods
+ **********************************************************/
+
+void NiMeshPSysData::Read( ifstream& file, unsigned int version ) {
+	APSysData::Read( file, version );
+
+	unkFloats.resize( vertices.size() * 14 );
+	NifStream( unkFloats, file );
+
+	NifStream( unk2Ints[0], file );
+	NifStream( unk2Ints[1], file );
+
+	NifStream( unkByte, file );
+
+	NifStream( unk3Ints[0], file );
+	NifStream( unk3Ints[1], file );
+	NifStream( unk3Ints[2], file );
+}
+
+void NiMeshPSysData::Write( ofstream& file, unsigned int version ) const {
+	APSysData::Write( file, version );
+
+	NifStream( unkFloats, file );
+
+	NifStream( unk2Ints[0], file );
+	NifStream( unk2Ints[1], file );
+
+	NifStream( unkByte, file );
+
+	NifStream( unk3Ints[0], file );
+	NifStream( unk3Ints[1], file );
+	NifStream( unk3Ints[2], file );
+}
+
+string NiMeshPSysData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
+	out << "Unknown Floats:  " << uint(unkFloats.size()) << endl;
+
+	if (verbose) {
+		for (uint i = 0; i < unkFloats.size(); ++i ) {
+			out << "   " << i + 1 << unkFloats[i] << endl;
+		}
+	} else {
+		out << "   <<<Data Not Shown>>>";
+	}
+
+	out << "Unknown Int 1:  " << unk2Ints[0] << endl
+		<< "Unknown Int 2:  " << unk2Ints[1] << endl
+		<< "Unknown Byte:  " << unkByte << endl
+		<< "Unknown Int 3:  " << unk3Ints[0] << endl
+		<< "Unknown Int 4:  " << unk3Ints[1] << endl
+		<< "Unknown Int 5:  " << unk3Ints[2] << endl;
+
+	return out.str();
+}
+
+/***********************************************************
+ * NiPSysData methods
+ **********************************************************/
+
+void NiPSysData::Read( ifstream& file, unsigned int version ) {
+	APSysData::Read( file, version );
+
+	unkFloats.resize( vertices.size() * 10 );
+	NifStream( unkFloats, file );
+
+	NifStream( unkInt, file );
+}
+
+void NiPSysData::Write( ofstream& file, unsigned int version ) const {
+	APSysData::Write( file, version );
+
+	NifStream( unkFloats, file );
+
+	NifStream( unkInt, file );
+}
+
+string NiPSysData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << AShapeData::asString();
+
+	out << "Unknown Floats:  " << uint(unkFloats.size()) << endl;
+
+	if (verbose) {
+		for (uint i = 0; i < unkFloats.size(); ++i ) {
+			out << "   " << i + 1 << unkFloats[i] << endl;
+		}
+	} else {
+		out << "   <<<Data Not Shown>>>";
+	}
+
+	out << "Unknown Int:  " << unkInt << endl;
 
 	return out.str();
 }
@@ -1808,21 +1945,15 @@ void const * NiSkinData::QueryInterface( int id ) const {
 }
 
 void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
-	//Move bones from temproary vector to map, sorted by blk_ref
+	//--Move bones from temproary vector to map, sorted by blk_ref--//
 	for (uint i = 0; i < bones.size(); ++i) {
-		//Make sure bone is a node
-		INodeInternal * node_int = (INodeInternal*)bone_blocks[i]->QueryInterface(NodeInternal);
+		IBlockInternal * blk_int = (IBlockInternal*)bone_blocks[i]->QueryInterface(BlockInternal);
 
-		if (node_int == NULL)
-			throw runtime_error("Attempted to add a block as a bone that is not a node.");
-
-		//---------------Problem Area---------------//
 		//move the data
 		bone_map.insert( pair<IBlock *, Bone>(bone_blocks[i].get_block(), bones[i]) );
 
 		//Increment reference at bone node site
-		node_int->IncSkinRef(this);
-		//------------------------------------------//
+		blk_int->IncCrossRef(this);
 	}
 
 	//Clear temporary vector data
@@ -1977,6 +2108,28 @@ void NiSkinData::RepositionTriShape() {
 	}
 }
 
+void NiSkinData::FixLinks( const vector<blk_ref> & blocks ) {
+
+	ABlock::FixLinks( blocks );
+
+	//Fix indicies for bones as they are copied from NiSkinInstance block
+	blk_ref inst_blk = GetParent();
+	if ( inst_blk.is_null() == false ) {
+		ISkinInstInternal * inst_data = (ISkinInstInternal*)inst_blk->QueryInterface( SkinInstInternal );
+		if ( inst_data != NULL ) {
+			vector<int> bone_list = inst_data->GetBoneList();
+			vector<blk_ref> bone_blks( bone_list.size() );
+			for ( uint i = 0; i < bone_list.size(); ++i ) {
+				bone_blks[i] = blocks[ bone_list[i] ];
+			}
+			SetBones( bone_blks );
+		}
+	}
+
+	//Straigten up the skeleton to match with the "bind pose" for any skin instances that exist
+	StraightenSkeleton();
+}
+
 vector<blk_ref> NiSkinData::GetBones() {
 	//Put all the valid bones from the map into a vector to return
 	vector<blk_ref> bone_blks( bone_map.size() );
@@ -1998,24 +2151,21 @@ map<int, float> NiSkinData::GetWeights( blk_ref const & bone ) const {
 }
 
 void NiSkinData::AddBone( blk_ref const & bone, map<int, float> const & in ) {
-	//Make sure bone is a node
-	INodeInternal * node_int = (INodeInternal*)bone->QueryInterface(NodeInternal);
-
-	if (node_int == NULL)
-		throw runtime_error("Attempted to add a block as a bone that is not a node.");
+	
+	IBlockInternal * blk_int = (IBlockInternal*)bone->QueryInterface(BlockInternal);
 	
 	//Add bone to internal list
 	bone_map[bone.get_block()].weights = in;
 	
 	//Increment reference at bone node site
-	node_int->IncSkinRef(this);
+	blk_int->IncCrossRef(this);
 }
 
-void NiSkinData::RemoveBoneByPtr( IBlock * bone ) {
+void NiSkinData::RemoveCrossLink( IBlock * block_to_remove ) {
 	//Remove bone from internal list
-	bone_map.erase( bone );
+	bone_map.erase( block_to_remove );
 
-	//Do not decrement bone node locatoin because it is already dead
+	//Do not decrement bone node location because it is already dead
 }
 
 void NiSkinData::RemoveBone( blk_ref const & bone ) {
@@ -2023,16 +2173,16 @@ void NiSkinData::RemoveBone( blk_ref const & bone ) {
 	bone_map.erase( bone.get_block() );
 
 	//Decrement reference at bone node site
-	INodeInternal * node_int = (INodeInternal*)bone->QueryInterface(NodeInternal);
-	node_int->DecSkinRef(this);
+	IBlockInternal * blk_int = (IBlockInternal*)bone->QueryInterface(BlockInternal);
+	blk_int->DecCrossRef(this);
 }
 
 NiSkinData::~NiSkinData() {
 	//Inform all linked bone nodes that this NiSkinData block is dying
 	map<IBlock *, Bone>::iterator it;
 	for (it = bone_map.begin(); it != bone_map.end(); ++it) {
-		INodeInternal * node_int = (INodeInternal*)it->first->QueryInterface(NodeInternal);
-		node_int->DecSkinRef(this);
+		IBlockInternal * node_int = (IBlockInternal*)it->first->QueryInterface(BlockInternal);
+		node_int->DecCrossRef(this);
 	}
 }
 
@@ -2475,6 +2625,129 @@ string NiColorData::asString() const {
 	}
 
 	return out.str();
+}
+
+/***********************************************************
+ * NiControllerSequence methods
+ **********************************************************/
+
+void NiControllerSequence::Read( ifstream& file, unsigned int version ) {
+	GetAttr("Name")->Read( file, version );
+
+	//Read first ControllerLink
+	_first_child.first = ReadString( file );
+	_first_child.second.set_index( ReadUInt(file) );
+
+	//Read the ControllerLink array
+	uint count = ReadUInt( file );
+	_children.resize( count );
+
+	for (uint i = 1; i < _children.size(); ++i ) {
+		_children[i].first = ReadString( file );
+		_children[i].second.set_index( ReadUInt(file) );
+	}
+}
+
+void NiControllerSequence::Write( ofstream& file, unsigned int version ) const {
+	GetAttr("Name")->Write( file, version );
+
+	//Write first ControllerLink
+	WriteString( _first_child.first , file );
+	WriteUInt( _first_child.second.get_index(), file );
+
+	//Read the ControllerLink array
+	WriteUInt( uint(_children.size()), file );
+
+	for (uint i = 1; i < _children.size(); ++i ) {
+		WriteString( _children[i].first , file );
+		WriteUInt( _children[i].second.get_index(), file );
+	}
+}
+
+string NiControllerSequence::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Name:  " << GetAttr("Name")->asString() << endl
+		<< "First Target Name:  "  << _first_child.first << endl
+		<< "First Controller:  " << _first_child.second << endl
+		<< "Additional Controller Links:  " << uint(_children.size()) << endl;
+
+	for (uint i = 1; i < _children.size(); ++i ) {
+		out << "   Controller Link " << i + 1 << endl
+			<< "      Target Name:  " << _children[i].first << endl
+			<< "      Controller:  " << _children[i].second << endl;
+	}
+
+	return out.str();
+}
+
+void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
+	ABlock::FixLinks( blocks );
+
+	//Fix link for first child
+	_first_child.second = blocks[_first_child.second.get_index()];
+	
+	//Add this block to first child as a parent
+	AddChild( _first_child.second.get_block() );
+
+	for (uint i = 1; i < _children.size(); ++i ) {
+		//Fix link for this child
+		_children[i].second = blocks[_children[i].second.get_index()];
+
+		//Add this block to first child as a parent
+		AddChild( _children[i].second.get_block() );
+	}
+}
+
+void NiControllerSequence::SetFirstTargetName( string new_name ) {
+	_first_child.first = new_name;
+}
+
+void NiControllerSequence::SetFirstController( blk_ref new_link ) {
+	//Check for identical values
+	if ( new_link == _first_child.second )
+		return;
+	
+	//Remove old child
+	if ( _first_child.second.is_null() == false ) {
+		RemoveChild( _first_child.second.get_block() );
+	}
+
+	//Set new value
+	_first_child.second = new_link;
+
+	//Add new child
+	if ( _first_child.second.is_null() == false ) {
+		AddChild( _first_child.second.get_block() );
+	}
+}
+
+void NiControllerSequence::AddController( string new_name, blk_ref new_link ) {
+	//Make sure the link isn't null
+	if ( new_link.is_null() == true ) {
+		throw runtime_error("Attempted to add a null link to NiControllerSequence block.");
+	}
+	
+	_children.push_back( pair<string,blk_ref>(new_name, new_link) );
+
+	//Add new child
+	AddChild( new_link.get_block() );
+}
+
+void NiControllerSequence::ClearControllers() {
+
+	SetFirstTargetName( "" );
+	SetFirstController( blk_ref(-1) );
+
+	//Cycle through all controllers, removing them as parents from the blocks they refer to
+	for (uint i = 0; i < _children.size(); ++i ) {
+		RemoveChild( _children[i].second.get_block() );
+	}
+
+	//Clear list
+	_children.clear();
 }
 
 /***********************************************************
@@ -2946,6 +3219,105 @@ string NiSkinPartition::asString() const {
 			}
 		} else {
 			out << "   <<Data Not Shown>>" << endl;
+		}
+	}
+
+	return out.str();
+}
+
+/***********************************************************
+ * NiTransformData methods
+ **********************************************************/
+
+void NiTransformData::Read( ifstream& file, unsigned int version ) {
+	NifStream( hasKeys, file );
+	if ( hasKeys != 0 ) {
+		NifStream( unkInt, file );
+		for (int i = 0; i < 3; ++i ) {
+			int numKeys = ReadUInt( file );
+			NifStream( key_type[i], file );
+			unkFloatKeys[i].resize( numKeys );
+			for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
+				NifStream( unkFloatKeys[i][j], file, key_type[i] );
+			}
+		}
+	}
+
+	for (int i = 0; i < 2; ++i ) {
+		int numFloats = ReadUInt( file );
+		if ( numFloats != 0 ) {
+			NifStream( unk2Ints[i], file );
+			unkFloats[i].resize( numFloats * 4 );
+			for (uint j = 0; j < unkFloats[i].size(); ++j ) {
+				NifStream( unkFloats[i][j], file );
+			}
+		}
+	}
+}
+
+void NiTransformData::Write( ofstream& file, unsigned int version ) const {
+NifStream( hasKeys, file );
+	if ( hasKeys != 0 ) {
+		NifStream( unkInt, file );
+		for (int i = 0; i < 3; ++i ) {
+			WriteUInt( uint(unkFloatKeys[i].size()), file );
+			NifStream( key_type[i], file );
+			for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
+				NifStream( unkFloatKeys[i][j], file, key_type[i] );
+			}
+		}
+	}
+
+	for (int i = 0; i < 2; ++i ) {
+		WriteUInt( uint(unkFloats[i].size()) / 4, file );
+		if ( unkFloats[i].size() != 0 ) {
+			NifStream( unk2Ints[i], file );
+			for (uint j = 0; j < unkFloats[i].size(); ++j ) {
+				NifStream( unkFloats[i][j], file );
+			}
+		}
+	}
+}
+
+
+string NiTransformData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Has Keys:  " << hasKeys << endl;
+
+	if ( hasKeys != 0 ) {
+		out << "Unknown Int:  " << unkInt << endl;
+		for (int i = 0; i < 3; ++i ) {
+			out << "Key Group " << i + 1 << ":" << endl
+				<< "   Num Keys:  " << uint(unkFloatKeys[i].size()) << endl
+				<< "   Key Type:  " << key_type[i] << endl;
+
+			if (verbose) {
+				for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
+					out << "   " << j + 1 << ":  " << unkFloatKeys[i][j].data << endl;
+				}
+			} else {
+				out << "   <<Data Not Shown>>" << endl;
+			}
+			
+		}
+	}
+
+	for (int i = 0; i < 2; ++i ) {
+		out << "Unknown Float Group " << i + 1 << ":  " << uint(unkFloats[i].size()) << endl;
+		
+		if ( unkFloats[i].size() != 0 ) {
+			out << "   Unknown Int:  " << unk2Ints[i] << endl;
+
+			if (verbose) {
+				for (uint j = 0; j < unkFloats[i].size(); ++j ) {
+					out << "   " << j + 1 << ":  " << unkFloats[i][j] << endl;
+				}
+			} else {
+				out << "   <<Data Not Shown>>" << endl;
+			}
 		}
 	}
 

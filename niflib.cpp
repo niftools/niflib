@@ -288,31 +288,8 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 		//Get internal interface
 		IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
 
-		//Fix links
-		bk_intl->FixUpLinks( blocks );
-		
-		//--Skin Processing--//
-
-		ISkinDataInternal * skin_data;
-		skin_data = (ISkinDataInternal *)blocks[i]->QueryInterface( SkinDataInternal );
-		if ( skin_data != NULL ) {
-			//Fix indicies for bones as they are copied from NiSkinInstance blocks to  NiSkinData blocks
-			blk_ref inst_blk = blocks[i]->GetParent();
-			if ( inst_blk.is_null() == false ) {
-				ISkinInstInternal * inst_data = (ISkinInstInternal*)inst_blk->QueryInterface( SkinInstInternal );
-				if ( inst_data != NULL ) {
-					vector<int> bone_list = inst_data->GetBoneList();
-					vector<blk_ref> bone_blks( bone_list.size() );
-					for ( uint i = 0; i < bone_list.size(); ++i ) {
-						bone_blks[i] = blocks[ bone_list[i] ];
-					}
-					skin_data->SetBones( bone_blks );
-				}
-			}
-		
-			//Straigten up the skeleton to match with the "bind pose" for any skin instances that exist
-			skin_data->StraightenSkeleton();
-		}
+		//Fix links & other pre-processing
+		bk_intl->FixLinks( blocks );
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
@@ -690,6 +667,14 @@ INode * QueryNode( blk_ref & block ) {
 
 INode const * QueryNode( blk_ref const & block ) {
 	return (INode const *)block->QueryInterface( ID_NODE );
+}
+
+IControllerSequence * QueryControllerSequence( blk_ref & block ) {
+	return (IControllerSequence*)block->QueryInterface( ID_CONTROLLER_SEQUENCE );
+}
+
+IControllerSequence const * QueryControllerSequence( blk_ref const & block ) {
+	return (IControllerSequence const *)block->QueryInterface( ID_CONTROLLER_SEQUENCE );
 }
 
 IKeyframeData * QueryKeyframeData( blk_ref & block ) {

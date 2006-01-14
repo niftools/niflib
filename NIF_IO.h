@@ -216,7 +216,8 @@ void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
 
 	//If key type is not 1, 2, or 3, throw an exception
 	if ( type < 1 || type > 3 ) {
-		throw runtime_error("Invalid key type.");
+		type = LINEAR_KEY;
+		//throw runtime_error("Invalid key type.");
 	}
 
 	//Read data based on the type of key
@@ -285,7 +286,8 @@ void NifStream( Key<T> const & key, ofstream& file, KeyType type ) {
 
 	//If key type is not 1, 2, or 3, throw an exception
 	if ( type < 1 || type > 3 ) {
-		throw runtime_error("Invalid key type.");
+		type = LINEAR_KEY;
+		//throw runtime_error("Invalid key type.");
 	}
 
 	//Read data based on the type of key
@@ -331,7 +333,5 @@ public:
 private:
 	int _index;
 };
-
-
 
 #endif
