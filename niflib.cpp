@@ -433,7 +433,8 @@ void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk
 	//List Block Type
 	string blk_type = block->GetBlockType();
 
-	for ( uint i = 0; i < blk_types.size(); ++i ) {
+	uint i;
+	for ( i = 0; i < blk_types.size(); ++i ) {
 		if ( blk_type == blk_types[i] ) {
 			bk_intl->SetBlockTypeNum(i);
 			break;
