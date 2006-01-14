@@ -6,7 +6,7 @@ if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    cppflags = ''
+    cppflags = '-fPIC'
 elif sys.platform == 'win32':
     python_include = [sysconfig.get_python_inc()]
     python_libpath = [sysconfig.get_python_lib(1, 1) + '/../libs']
