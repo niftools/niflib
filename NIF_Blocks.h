@@ -992,12 +992,9 @@ public:
 	string asString() const;
 
 	void FixLinks( const vector<blk_ref> & blocks );
+	list<blk_ref> GetLinks() const;
 
 private:
-	//vector< vector<uint> > _tmp_node_groups;
-	//vector< vector< pair<uint,uint> > > _tmp_shape_groups;
-	//vector<uint> _tmp_shape_group2;
-
 	uint unkInt1, unkInt2;
 	vector< vector<blk_ref> > _node_groups;
 	vector< vector< pair<blk_ref,blk_ref> > > _shape_groups;
@@ -1858,6 +1855,7 @@ public:
 	string GetBlockType() const { return "NiControllerSequence"; }
 
 	void FixLinks( const vector<blk_ref> & blocks );
+	list<blk_ref> GetLinks() const;
 
 	void * QueryInterface( int id ) {
 		if ( id == ID_CONTROLLER_SEQUENCE ) {

@@ -765,6 +765,37 @@ void NiBoneLODController::FixLinks( const vector<blk_ref> & blocks ) {
 	}
 }
 
+list<blk_ref> NiBoneLODController::GetLinks() const {
+	list<blk_ref> links = ABlock::GetLinks();
+
+	//--Add Internal Links--//
+
+	//Node Groups
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			links.push_back( _node_groups[i][j] );
+		}
+	}
+
+	// Shape Groups
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			links.push_back( _shape_groups[i][j].first );
+			links.push_back( _shape_groups[i][j].second );
+		}
+	}
+
+	//Shape Group 2
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		links.push_back( _shape_group2[i] );
+	}
+
+	//Remove NULL links
+	links.remove( blk_ref(-1) );
+
+	return links;
+}
+
 NiBoneLODController::~NiBoneLODController() {
 	//Remove all parents that were set as this block is dying.
 
@@ -2893,6 +2924,23 @@ void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
 		//Add this block to first child as a parent
 		AddChild( _children[i].second.get_block() );
 	}
+}
+
+list<blk_ref> NiControllerSequence::GetLinks() const {
+	list<blk_ref> links = ABlock::GetLinks();
+
+	//add link for first child
+	links.push_back( _first_child.second );
+
+	//Add child links
+	for (uint i = 1; i < _children.size(); ++i ) {
+		links.push_back( _children[i].second );
+	}
+
+	//Remove NULL links
+	links.remove( blk_ref(-1) );
+
+	return links;
 }
 
 NiControllerSequence::~NiControllerSequence() {
