@@ -137,6 +137,8 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 		attr = new Unk292BytesAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_bool ) {
 		attr = new BoolAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_targetgroup ) {
+		attr = new TargetGroupAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -3902,6 +3904,40 @@ string NiVisData::asString() const {
 
 	return out.str();
 }
+
+/***********************************************************
+ * NiLookAtInterpolator methods
+ **********************************************************/
+
+void NiLookAtInterpolator::Read( ifstream& file, unsigned int version ) {
+	
+	GetAttr("Unknown Short")->Read( file, version );
+	
+	//Float Array
+	uint numFloats = ReadUInt( file );
+	unkFloats.resize( numFloats );
+	NifStream( unkFloats, file );
+	
+	GetAttr("Unknown Link")->Read( file, version );
+
+	//Byte Array
+	for (uint i = 0; i < 8; ++i ) {
+		NifStream( unkBytes[i], file );
+	}
+}
+
+void NiLookAtInterpolator::Write( ofstream& file, unsigned int version ) const {
+
+}
+
+string NiLookAtInterpolator::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	return out.str();
+}
+
 
 /***********************************************************
  * UnknownMixIn methods

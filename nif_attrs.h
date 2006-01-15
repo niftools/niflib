@@ -656,8 +656,44 @@ public:
 		//Remove all links that match this block
 		links.remove( lnk_ref( _owner, block ) );
 	}
-private:
+protected:
 	LinkSetList links;
+};
+
+class TargetGroupAttr : public LinkGroupAttr {
+public:
+	TargetGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkGroupAttr( name, owner, first_ver, last_ver ) {}
+	~TargetGroupAttr() {}
+
+	AttrType GetType() const { return attr_targetgroup; }
+
+	void ReadAttr( ifstream& in, unsigned int version ) {
+		int len = ReadUShort( in );
+
+		if ( len > 1000 ) {
+			throw runtime_error("Unlikley number of links found. (>1000)");
+		}
+
+		for (int i = 0; i < len; ++i ) {
+			int index = ReadUInt( in );
+			if (index != -1 )
+				AddLink( blk_ref( index ) );
+		}
+	}
+	void WriteAttr( ofstream& out, unsigned int version ) const {
+		//Write the number of links
+		WriteUShort( ushort(links.size()), out );
+		//cout << "Link Group Size:  " << uint(links.size()) << endl;
+
+		if ( links.size() > 1000 ) {
+			throw runtime_error("You probably shouldn't write more than 1000 links");
+		}
+
+		//Write the block indices
+		for (LinkSetConstIt it = links.begin(); it != links.end(); ++it ) {
+			WriteUInt( it->get_index(), out );
+		}
+	}
 };
 
 class BBoxAttr : public AAttr {

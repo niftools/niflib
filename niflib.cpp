@@ -256,21 +256,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 		bk_intl->SetBlockNum(i);
 		bk_intl->Read( in, version );
 
-		////Get internal interface
-		//IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
-
-		//if (bk_intl != NULL) {
-		//	//Set the Block number
-		//	bk_intl->SetBlockNum(i);
-
-		//	//Read the block from the file
-		//	bk_intl->Read( in, version );
-
-		//	//cout << blocks[i]->asString() << endl;
-		//}
-		//else {
-		//	throw runtime_error("Failed to create block.");
-		//}
+		//cout << endl << blocks[i]->asString() << endl;
 	}
 
 	//cout << endl;

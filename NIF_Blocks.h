@@ -1038,6 +1038,17 @@ public:
 };
 
 /**
+ * NiMultiTargetTransformController
+ */
+class NiMultiTargetTransformController : public AController {
+public:
+	NiMultiTargetTransformController();
+	void Init() {}
+	~NiMultiTargetTransformController() {}
+	string GetBlockType() const { return "NiMultiTargetTransformController"; }
+};
+
+/**
  * NiPSysEmitterCtlr
  */
 class NiPSysEmitterCtlr : public AController {
@@ -2315,10 +2326,24 @@ public:
  */
 class NiLookAtInterpolator : public AInterpolator {
 public:
-	NiLookAtInterpolator();
+	NiLookAtInterpolator() {
+		AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+
+		AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+		Init();
+	}
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
 	void Init() {}
 	~NiLookAtInterpolator() {}
 	string GetBlockType() const { return "NiLookAtInterpolator"; }
+private:
+	vector<float> unkFloats;
+	byte unkBytes[8];
+
 };
 
 /**
