@@ -54,7 +54,7 @@ typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
 //--Constants--//
 
 //Non-Public Interface IDs
-const int BlockInternal = -1;
+//const int BlockInternal = -1;
 const int SkinInstInternal = -2;
 const int SkinDataInternal = -3;
 //const int NodeInternal = -4;
@@ -90,7 +90,7 @@ public:
 	virtual void Write( ofstream& out, unsigned int version ) const = 0;	
 };
 
-class ABlock : public IBlock, public IBlockInternal {
+class ABlock : public IBlock/*, public IBlockInternal*/ {
 public:
 	ABlock();
 	~ABlock();
@@ -112,39 +112,39 @@ public:
 
 	//Interface
 	void * QueryInterface( int id ) {
-		if ( id == BlockInternal ) {
+		/*if ( id == BlockInternal ) {
 			return (void*)static_cast<IBlockInternal*>(this);;
-		} else {
+		} else {*/
 			return NULL;
-		}
+		/*}*/
 	}
 
 	void const * QueryInterface( int id ) const {
-		if ( id == BlockInternal ) {
+		/*if ( id == BlockInternal ) {
 			return (void const *)static_cast<IBlockInternal const *>(this);;
-		} else {
+		} else {*/
 			return NULL;
-		}
+		/*}*/
 	}
 
 	//--Internal Functions--//
 	void AddParent( IBlock * new_parent);
 	void RemoveParent( IBlock * match );
 	void SetBlockNum( int n ) { _block_num = n; }
-	void FixLinks( const vector<blk_ref> & blocks );
+	virtual void FixLinks( const vector<blk_ref> & blocks );
 	void SetBlockTypeNum( int n ) { _block_type_num = n; }
 	int GetBlockTypeNum() { return _block_type_num; }
 
 	void AddChild( IBlock * new_child );
 	void RemoveChild( IBlock * old_child );
 
-	void RemoveCrossLink( IBlock * block_to_remove ) {};
+	virtual void RemoveCrossLink( IBlock * block_to_remove ) {};
 
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	virtual void Read( ifstream& in, unsigned int version );
+	virtual void Write( ofstream& out, unsigned int version ) const;
 protected:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
@@ -979,6 +979,32 @@ public:
 };
 
 /**
+ * NiBoneLODController
+ */
+class NiBoneLODController : public AController {
+public:
+	NiBoneLODController() {}
+	~NiBoneLODController();
+	string GetBlockType() const { return "NiBoneLODController"; }
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
+	void FixLinks( const vector<blk_ref> & blocks );
+
+private:
+	//vector< vector<uint> > _tmp_node_groups;
+	//vector< vector< pair<uint,uint> > > _tmp_shape_groups;
+	//vector<uint> _tmp_shape_group2;
+
+	uint unkInt1, unkInt2;
+	vector< vector<blk_ref> > _node_groups;
+	vector< vector< pair<blk_ref,blk_ref> > > _shape_groups;
+	vector<blk_ref> _shape_group2;
+};
+
+/**
  * NiFlipController
  */
 class NiFlipController : public AController {
@@ -1657,7 +1683,7 @@ private:
 class ISkinDataInternal {
 public:
 	//virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
-	virtual void RepositionTriShape() = 0;
+	virtual void RepositionTriShape( blk_ref & tri_shape ) = 0;
 	//virtual void StraightenSkeleton() = 0;
 	//virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
 };
@@ -1690,7 +1716,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		void RemoveCrossLink( IBlock * block_to_remove );
 
 		//ISkinDataInternal
-		void RepositionTriShape();
+		void RepositionTriShape( blk_ref & tri_shape );
 
         //ISkinData
 		vector<blk_ref> GetBones(); // cannot be const, since this changes the reference counts for the bone blocks!
@@ -1812,7 +1838,7 @@ public:
 	NiControllerSequence() {
 		AddAttr( attr_string, "Name" );
 	}
-	~NiControllerSequence() {}
+	~NiControllerSequence();
 
 	void Read( ifstream& in, unsigned int version );
 	void Write( ofstream& out, unsigned int version ) const;

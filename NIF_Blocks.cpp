@@ -66,10 +66,10 @@ ABlock::~ABlock() {
 	// Inform all cross-linked blocks that have added their references that this block is dying
 	list<IBlock*>::iterator it;
 	for (it = _cross_refs.begin(); it != _cross_refs.end(); ++it) {
-		IBlockInternal * blk_int = (IBlockInternal*)(*it)->QueryInterface(BlockInternal);
-		if ( blk_int != NULL ) {
-			blk_int->RemoveCrossLink(this);
-		}
+		//IBlockInternal * blk_int = (IBlockInternal*)(*it)->QueryInterface(BlockInternal);
+		//if ( blk_int != NULL ) {
+			((ABlock*)(*it))->RemoveCrossLink(this);
+		//}
 	}
 }
 
@@ -287,10 +287,11 @@ void ABlock::AddChild( IBlock * new_child ) {
 		return;
 
 	//Register this block as a parent of new_child
-	IBlockInternal * bk_intl = (IBlockInternal*)new_child->QueryInterface( BlockInternal );
-	if ( bk_intl != NULL ) {
-		bk_intl->AddParent( this );
-	}
+	((ABlock*)new_child)->AddParent( this );
+	//IBlockInternal * bk_intl = (IBlockInternal*)new_child->QueryInterface( BlockInternal );
+	//if ( bk_intl != NULL ) {
+	//	bk_intl->AddParent( this );
+	//}
 }
 void ABlock::RemoveChild( IBlock * old_child ) {
 	//If the poiner is null, do nothing
@@ -298,10 +299,11 @@ void ABlock::RemoveChild( IBlock * old_child ) {
 		return;
 
 	//Add this block to first child as a parent
-	IBlockInternal * bk_intl = (IBlockInternal*)old_child->QueryInterface( BlockInternal );
-	if ( bk_intl != NULL ) {
-		bk_intl->RemoveParent( this );
-	}
+	((ABlock*)old_child)->RemoveParent( this );
+	//IBlockInternal * bk_intl = (IBlockInternal*)old_child->QueryInterface( BlockInternal );
+	//if ( bk_intl != NULL ) {
+	//	bk_intl->RemoveParent( this );
+	//}
 }
 
 
@@ -313,7 +315,7 @@ void ABlock::AddParent( IBlock * new_parent) {
 
 void ABlock::RemoveParent( IBlock * match ) {
 	//Remove just one copy of the parent if there is one, incase a temporary reference is floating around
-	vector<IBlock*>::iterator it = find<vector<IBlock*>::iterator, IBlock*>( _parents.begin(), _parents.end(), match);
+	vector<IBlock*>::iterator it = find< vector<IBlock*>::iterator, IBlock*>( _parents.begin(), _parents.end(), match);
 	if (it != _parents.end() ) {
 		_parents.erase( it );
 	}
@@ -608,6 +610,189 @@ string NiNode::asString() const {
 }
 
 /***********************************************************
+ * NiBoneLODController methods
+ **********************************************************/
+
+void NiBoneLODController::Read( ifstream& file, unsigned int version ){
+
+	AController::Read( file, version );
+
+	unkInt1 = ReadUInt( file );
+	
+	uint numNodeGroups = ReadUInt( file );
+
+	unkInt2 = ReadUInt( file );
+	
+	// Read Node Groups
+	_node_groups.resize( numNodeGroups );
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		uint groupSize = ReadUInt( file );
+		_node_groups[i].resize(groupSize);
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			_node_groups[i][j].set_index( ReadUInt(file) );
+		}
+	}
+
+	// Read Shape Groups
+	uint numShapeGroups = ReadUInt( file );
+	_shape_groups.resize( numShapeGroups );
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		uint groupSize = ReadUInt( file );
+		_shape_groups[i].resize( groupSize );
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			_shape_groups[i][j].first.set_index( ReadUInt(file) );
+			_shape_groups[i][j].second.set_index( ReadUInt(file) );
+		}
+	}
+
+	//Read Shape Group 2
+	uint numShapeGroup2 = ReadUInt( file );
+	_shape_group2.resize( numShapeGroup2 );
+
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		_shape_group2[i].set_index( ReadUInt(file) );
+	}
+	
+}
+
+void NiBoneLODController::Write( ofstream& file, unsigned int version ) const {
+	AController::Write( file, version );
+
+	WriteUInt( unkInt1, file );
+	
+	WriteUInt( uint(_node_groups.size()), file );
+
+	WriteUInt( unkInt2, file );
+	
+	//Node Groups
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		WriteUInt( uint(_node_groups[i].size()), file );
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			WriteUInt( _node_groups[i][j]->GetBlockNum(), file );
+		}
+	}
+
+	//Shape Groups
+	WriteUInt( uint(_shape_groups.size()), file );
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		WriteUInt( (uint)_shape_groups[i].size(), file );
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			WriteUInt( _shape_groups[i][j].first->GetBlockNum(), file );
+			WriteUInt( _shape_groups[i][j].second->GetBlockNum(), file );
+		}
+	}
+
+	//Shape Group 2
+	WriteUInt( (uint)_shape_group2.size(), file );
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		WriteUInt( _shape_group2[i]->GetBlockNum(), file );
+	}
+}
+
+string NiBoneLODController::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Unknown Int 1:  " << unkInt1 << endl
+		<< "Num Node Groups:  " << uint(_node_groups.size()) << endl
+		<< "Unknown Int 2:  " << unkInt2 << endl;
+
+	//Node Groups
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		out << "   " << i + 1 << ":  " << " Group Size:  " << uint(_node_groups[i].size()) << endl;
+
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			out << "      " << j + 1 << ":  " << _node_groups[i][j] << endl;
+		}
+	}
+
+	// Shape Groups
+	out << "Num Shape Groups:  " << uint(_shape_groups.size()) << endl;
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		out << "   " << i + 1 << ":  " << " Group Size:  " << uint(_shape_groups[i].size()) << endl;
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			out << "      " << j + 1 << ":  " << _shape_groups[i][j].first << endl
+				 << "      " << j + 1 << ":  " << _shape_groups[i][j].second << endl;
+		}
+	}
+
+	//Shape Group 2
+	out << "Num Shape Group 2:  " << uint(_shape_group2.size()) << endl;
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		out << "   " << i + 1 << ":  " <<  _shape_group2[i] << endl;
+	}
+
+	return out.str();
+}
+
+void NiBoneLODController::FixLinks( const vector<blk_ref> & blocks ) {
+	ABlock::FixLinks( blocks );
+
+	//Node Groups
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			//Fix link for this child
+			_node_groups[i][j] = blocks[ _node_groups[i][j].get_index() ];
+
+			//Add this block to child as a parent
+			AddChild( _node_groups[i][j].get_block() );
+		}
+	}
+
+	// Shape Groups
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			//Fix links for this child
+			_shape_groups[i][j].first = blocks[ _shape_groups[i][j].first.get_index() ];
+			_shape_groups[i][j].second = blocks[ _shape_groups[i][j].second.get_index() ];
+
+			//Add these blocks to child as a parent
+			AddChild( _shape_groups[i][j].first.get_block() );
+			AddChild( _shape_groups[i][j].second.get_block() );
+		}
+	}
+
+	//Shape Group 2
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		//Fix link for this child
+		_shape_group2[i] = blocks[ _shape_group2[i].get_index() ];
+
+		//Add this block to child as a parent
+		AddChild( _shape_group2[i].get_block() );
+	}
+}
+
+NiBoneLODController::~NiBoneLODController() {
+	//Remove all parents that were set as this block is dying.
+
+	//Node Groups
+	for (uint i = 0; i < _node_groups.size(); ++i ) {
+		for (uint j = 0; j < _node_groups[i].size(); ++j ) {
+			RemoveChild( _node_groups[i][j].get_block() );
+		}
+	}
+
+	// Shape Groups
+	for ( uint i = 0; i < _shape_groups.size(); ++i ) {
+		for ( uint j = 0; j < _shape_groups[i].size(); ++j ) {
+			//Add these blocks to child as a parent
+			/*((ABlock*)_shape_groups[i][j].first.get)->RemoveParent( this );
+			((ABlock*)_shape_groups[i][j].second)->RemoveParent( this );*/
+			RemoveChild( _shape_groups[i][j].first.get_block() );
+			RemoveChild( _shape_groups[i][j].second.get_block() );
+		}
+	}
+
+	//Shape Group 2
+	for ( uint i = 0; i < _shape_group2.size(); ++i ) {
+		//Add this block to child as a parent
+		RemoveChild( _shape_group2[i].get_block() );
+	}
+}
+
+
+/***********************************************************
  * AShapeData methods
  **********************************************************/
 
@@ -633,18 +818,13 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	/// numTexSets up here up from version 10.0.1.0 on
+	/// numTexSets up here up from version 10.0.1.0 on along with an unknown byte
 	short numTexSets;
-	
+	bool hasUnknown;
 	if ( version >= VER_10_0_1_0 ) {
-		numTexSets = ReadUShort( in );
+		numTexSets = ReadByte( in );
+		hasUnknown = ReadBool( in, version );
 	}
-
-	////There is an unknown byte here after version 10.2.0.0
-	//bool hasUnknown;
-	//if ( version >= VER_10_2_0_0 ) {
-	//	hasUnknown = ReadBool( in, version );
-	//}
 
 	bool hasNormals = ReadBool( in, version );;
 	if ( hasNormals != 0 ){
@@ -654,13 +834,13 @@ void AShapeData::Read( ifstream& in, unsigned int version ){
 		}
 	}
 
-	////After version 10.2.0.0 there's several unknown vectors here
-	//if ( version >= VER_10_2_0_0 && hasUnknown == true ) {
-	//	unk_vects.resize( vert_count * 2 );
-	//	for ( uint i = 0; i < unk_vects.size(); ++i ){
-	//		NifStream( unk_vects[i], in );
-	//	}
-	//}
+	//After version 10.2.0.0 there's several unknown vectors here
+	if ( version >= VER_10_2_0_0 && hasUnknown == true ) {
+		unk_vects.resize( vert_count * 2 );
+		for ( uint i = 0; i < unk_vects.size(); ++i ){
+			NifStream( unk_vects[i], in );
+		}
+	}
 
 	GetAttr("Center")->Read( in, version );
 	GetAttr("Radius")->Read( in, version );
@@ -822,13 +1002,9 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 		NifStream( vertices[i], out );
 	}
 
-	/// numTexSets up here up from version 10.0.1.0 on
+	/// numTexSets up here up from version 10.0.1.0 on along with an unkown byte
 	if ( version >= VER_10_0_1_0 ) {
-		WriteUShort( ushort(uv_sets.size()), out );
-	}
-
-	//There is an unknown byte here after version 10.2.0.0
-	if ( version >= VER_10_2_0_0 ) {
+		WriteByte( byte(uv_sets.size()), out );
 		WriteBool( unk_vects.size() > 0, out, version );
 	}
 
@@ -838,6 +1014,7 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 		NifStream( normals[i], out );
 	}
 
+	//Unkown vectors here from version 10.2.0.0 on
 	if ( version >= VER_10_2_0_0 ) {
 		for ( uint i = 0; i < unk_vects.size(); ++i ){
 			NifStream( unk_vects[i], out );
@@ -1690,7 +1867,7 @@ string NiCollisionData::asString() const {
 	//Parent is already written, so don't do anything with it
 
 	out << "Unknown Int 1:  " << unknownInt1 << endl
-		<< "Unknown Byte:  " << unknownByte << endl
+		<< "Unknown Byte:  " << int(unknownByte) << endl
 		<< "Collision Type:  " << collisionType << endl
 		<< "Collision Data:" << endl;
 
@@ -1864,7 +2041,12 @@ string NiSkinData::asString() const {
 	Matrix33 rot;
 	fVector3 tr;
 	float sc;
-	CalculateOverallOffset(rot, tr, sc);
+	try {
+		CalculateOverallOffset(rot, tr, sc);
+	} catch ( runtime_error & e ) {
+		out << e.what() << endl;
+		return out.str();
+	}
 
 	out << "Rotate:" << endl
 		<< "   |" << setw(6) << rot[0][0] << "," << setw(6) << rot[0][1] << "," << setw(6) << rot[0][2] << " |" << endl
@@ -1947,13 +2129,13 @@ void const * NiSkinData::QueryInterface( int id ) const {
 void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
 	//--Move bones from temproary vector to map, sorted by blk_ref--//
 	for (uint i = 0; i < bones.size(); ++i) {
-		IBlockInternal * blk_int = (IBlockInternal*)bone_blocks[i]->QueryInterface(BlockInternal);
+		//IBlockInternal * blk_int = (IBlockInternal*)bone_blocks[i]->QueryInterface(BlockInternal);
 
 		//move the data
 		bone_map.insert( pair<IBlock *, Bone>(bone_blocks[i].get_block(), bones[i]) );
 
 		//Increment reference at bone node site
-		blk_int->IncCrossRef(this);
+		((ABlock*)bone_blocks[i].get_block())->IncCrossRef(this);
 	}
 
 	//Clear temporary vector data
@@ -2029,9 +2211,9 @@ void NiSkinData::StraightenSkeleton() {
 	}
 }
 
-void NiSkinData::RepositionTriShape() {
+void NiSkinData::RepositionTriShape( blk_ref & tri_shape ) {
 	//Get block we're going to move
-	blk_ref tri_shape = GetParent()->GetParent();
+	//blk_ref tri_shape = GetParent()->GetParent();
 
 	//There must be at least one bone to do anything
 	if ( bone_map.size() > 0 ) {
@@ -2151,14 +2333,12 @@ map<int, float> NiSkinData::GetWeights( blk_ref const & bone ) const {
 }
 
 void NiSkinData::AddBone( blk_ref const & bone, map<int, float> const & in ) {
-	
-	IBlockInternal * blk_int = (IBlockInternal*)bone->QueryInterface(BlockInternal);
-	
+		
 	//Add bone to internal list
 	bone_map[bone.get_block()].weights = in;
 	
 	//Increment reference at bone node site
-	blk_int->IncCrossRef(this);
+	((ABlock*)bone.get_block())->IncCrossRef(this);
 }
 
 void NiSkinData::RemoveCrossLink( IBlock * block_to_remove ) {
@@ -2173,33 +2353,41 @@ void NiSkinData::RemoveBone( blk_ref const & bone ) {
 	bone_map.erase( bone.get_block() );
 
 	//Decrement reference at bone node site
-	IBlockInternal * blk_int = (IBlockInternal*)bone->QueryInterface(BlockInternal);
-	blk_int->DecCrossRef(this);
+	//IBlockInternal * blk_int = (IBlockInternal*)bone->QueryInterface(BlockInternal);
+	((ABlock*)bone.get_block())->DecCrossRef(this);
 }
 
 NiSkinData::~NiSkinData() {
 	//Inform all linked bone nodes that this NiSkinData block is dying
 	map<IBlock *, Bone>::iterator it;
 	for (it = bone_map.begin(); it != bone_map.end(); ++it) {
-		IBlockInternal * node_int = (IBlockInternal*)it->first->QueryInterface(BlockInternal);
-		node_int->DecCrossRef(this);
+		//IBlockInternal * node_int = (IBlockInternal*)it->first->QueryInterface(BlockInternal);
+		((ABlock*)it->first)->DecCrossRef(this);
 	}
 }
 
 INode * NiSkinData::GetNodeParent() const {
 	//--Get Node Parent Bind Pose--//
 
-	blk_ref par_block;
-	try {
-		par_block = GetParent()->GetParent();
+
+	blk_ref par_block = GetParent();
+	if ( par_block.is_null() == true ) {
+		//throw runtime_error("SkinData block does not have parent.");
+		return NULL;
 	}
-	catch (...) {
-		throw runtime_error("SkinData block does not have parent of parent.");
+
+	par_block = par_block->GetParent();
+	
+	if ( par_block.is_null() == true ) {
+		//throw runtime_error("SkinData block does not have parent of parent.");
+		return NULL;
 	}
 
 	INode * par_node = (INode*)par_block->QueryInterface(ID_NODE);	
-	if ( par_node == NULL )
-		throw runtime_error("SkinData block's parent of parent is not a node.");
+	if ( par_node == NULL ) {
+		//throw runtime_error("SkinData block's parent of parent is not a node.");
+		return NULL;
+	}
 
 	return par_node;
 }
@@ -2255,6 +2443,10 @@ void NiSkinData::CalculateBoneOffset( INode const * const par_node, IBlock const
 void NiSkinData::CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const {
 	// Node parent world transform
 	INode const * par = this->GetNodeParent();
+	if ( par == NULL ) {
+		throw runtime_error("Cannot calculate overall offset because this NiSkinData does not seem to be connected to a NiTriShape through a NiSkinInstance.");
+	}
+
 	Matrix44 par_mat = par->GetWorldTransform();
 	
 	// Skeleton root world transform
@@ -2698,6 +2890,17 @@ void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
 
 		//Add this block to first child as a parent
 		AddChild( _children[i].second.get_block() );
+	}
+}
+
+NiControllerSequence::~NiControllerSequence() {
+
+	//Add this block to first child as a parent
+	RemoveChild( _first_child.second.get_block() );
+
+	for (uint i = 1; i < _children.size(); ++i ) {
+		//Add this block to first child as a parent
+		RemoveChild( _children[i].second.get_block() );
 	}
 }
 

@@ -154,21 +154,23 @@ private:
 		//Add parent at new link site
 		if ( _block != NULL ) {
 			//Get internal interface
-			IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
-			if ( bk_intl != NULL ) {
-				bk_intl->AddParent( _owner );
-			}
+			((ABlock*)_block)->AddParent( _owner );
+			//IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
+			//if ( bk_intl != NULL ) {
+			//	bk_intl->AddParent( _owner );
+			//}
 		}
 	}
 	void KillLink() {
 		//cout << "- Reference " << this << endl;
 		//Remove cross-reference at previous location
 		if ( _block != NULL ) {
+			((ABlock*)_block)->RemoveParent( _owner );
 			//Get internal interface
-			IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
-			if ( bk_intl != NULL ) {
-				bk_intl->RemoveParent( _owner );
-			}
+			//IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
+			//if ( bk_intl != NULL ) {
+			//	bk_intl->RemoveParent( _owner );
+			//}
 		}
 	}
 	lnk_ref( const blk_ref & rh ); // Intentionally Undefined

@@ -251,21 +251,26 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			}
 		}
 
-		//Get internal interface
-		IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
+		ABlock * bk_intl = (ABlock*)blocks[i].get_block();
 
-		if (bk_intl != NULL) {
-			//Set the Block number
-			bk_intl->SetBlockNum(i);
+		bk_intl->SetBlockNum(i);
+		bk_intl->Read( in, version );
 
-			//Read the block from the file
-			bk_intl->Read( in, version );
+		////Get internal interface
+		//IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
 
-			//cout << blocks[i]->asString() << endl;
-		}
-		else {
-			throw runtime_error("Failed to create block.");
-		}
+		//if (bk_intl != NULL) {
+		//	//Set the Block number
+		//	bk_intl->SetBlockNum(i);
+
+		//	//Read the block from the file
+		//	bk_intl->Read( in, version );
+
+		//	//cout << blocks[i]->asString() << endl;
+		//}
+		//else {
+		//	throw runtime_error("Failed to create block.");
+		//}
 	}
 
 	//cout << endl;
@@ -285,11 +290,12 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 
 	//--Now that all blocks are read, go back and fix the indices--//
 	for (uint i = 0; i < blocks.size(); ++i) {
-		//Get internal interface
-		IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
+
+		////Get internal interface
+		//IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
 
 		//Fix links & other pre-processing
-		bk_intl->FixLinks( blocks );
+		((ABlock*)blocks[i].get_block())->FixLinks( blocks );
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
@@ -297,11 +303,31 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 
 	// Re-position any TriShapes with a SkinInstance
 	for (uint i = 0; i < blocks.size(); ++i) {
+		
+		attr_ref si_attr = blocks[i]->GetAttr("Skin Instance");
+		if ( si_attr.is_null() == true ) {
+			continue;
+		}
+
+		blk_ref si_blk = si_attr->asLink();
+
+		if ( si_blk.is_null() == true ) {
+			continue;
+		}
+
+		blk_ref sd_blk = si_blk->GetAttr("Data")->asLink();
+
+		if ( sd_blk.is_null() == true ) {
+			continue;
+		}
+
 		ISkinDataInternal * skin_data;
-		skin_data = (ISkinDataInternal *)blocks[i]->QueryInterface( SkinDataInternal );
+		skin_data = (ISkinDataInternal *)sd_blk->QueryInterface( SkinDataInternal );
 		if ( skin_data != NULL ) {
-			skin_data->RepositionTriShape();
+			skin_data->RepositionTriShape( blocks[i] );
 		}	
+
+		//cout << i + 1 << ":  " << blocks[i] << endl;
 	}
 
 	//Return completed block list
@@ -361,9 +387,9 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 		}
 
 		for ( uint i = 0; i < blk_list.size(); ++i ) {
-			//Get internal interface
-			IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
-			WriteUShort( bk_intl->GetBlockTypeNum(), out );
+			////Get internal interface
+			//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
+			WriteUShort( ((ABlock*)blk_list[i].get_block())->GetBlockTypeNum(), out );
 
 			//cout << i << ":  " << bk_intl->GetBlockTypeNum() << endl;
 		}
@@ -383,12 +409,10 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 			WriteUInt( 0, out );
 		}
 
-		//Get internal interface
-		IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
+		////Get internal interface
+		//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
 
-
-
-		bk_intl->Write( out, version );
+		((ABlock*)blk_list[i].get_block())->Write( out, version );
 
 	}
 
@@ -402,8 +426,9 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 
 void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block ) {
 	//Get internal interface
-	IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
+	//IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
 
+	ABlock * bk_intl = (ABlock*)block.get_block();
 	bk_intl->SetBlockNum( int(blk_list.size()) );
 	blk_list.push_back(block);
 
