@@ -63,6 +63,7 @@ class IBoolData;
 class IColorData;
 class IFloatData;
 class IPosData;
+class IPixelData;
 class INode;
 class IControllerSequence;
 class blk_ref;
@@ -91,7 +92,7 @@ const int ID_FLOAT_DATA = 9; /*!< ID for IFloatData Interface */
 const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */ 
 const int ID_BOOL_DATA = 11; /*!< ID for IBoolData Interface */
 const int ID_CONTROLLER_SEQUENCE = 12; /*!< ID for IControllerSequence Interface */
-
+const int ID_PIXEL_DATA = 13; /*!< ID for IPixelData Interface */
 
 /*!
  * This enum contains all the attribute types used by Niflib.
@@ -164,15 +165,23 @@ enum TexFilterMode {
 #define NULL 0
 #endif
 
-
 /*!
- *   This enum contains all the animation key types used by Niflib.
+ * This enum contains all the animation key types used by Niflib.
  */
 enum KeyType {
 	LINEAR_KEY = 1, /*!< Use linear interpolation. */ 
 	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored.*/ 
 	TBC_KEY = 3, /*!< Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored.*/ 
 	XYZ_ROTATION_KEY = 4 /*!< For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions. */ 
+};
+
+/*!
+ * Specifies the pixel format used by the NiPixelData block to store a texture.
+ */
+enum PixelFormat {
+	PX_FMT_RGBA8 = 0, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
+	PX_FMT_RGB8 = 1, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
+	PX_FMT_PAL8 = 2 /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete block. */
 };
 
 //--Main Functions--//
@@ -364,6 +373,27 @@ ITriShapeData const * QueryTriShapeData( blk_ref const & block );
  */
 ISkinData * QuerySkinData( blk_ref & block );
 ISkinData const * QuerySkinData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_PIXEL_DATA).  It queries the block for an IPixelData interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IPixelData interface available.
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IPixelData interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IPixelData * pixel_data = QueryPixelData(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * pixel_data = QueryPixelData(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
+IPixelData * QueryPixelData( blk_ref & block );
+IPixelData const * QueryPixelData( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_NODE).  It queries the block for an INode interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the INode interface available.
  * \param block The block to query the interface from.
@@ -1754,7 +1784,7 @@ public:
 	 * \param m The 4x4 world bind position matrix of this node
 	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
 	 */
-	virtual void SetWorldBindPos( Matrix44 const & m ) = 0;
+	virtual void SetWorldBindPos( const Matrix44 & m ) = 0;
 
 	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
 	 * \return The 4x4 local bind position matrix of this node.
@@ -1790,9 +1820,9 @@ public:
 	virtual ~ITriShapeData () {}
 	//Counts
 	virtual short GetTriangleCount() const = 0;
-	virtual void SetTriangleCount(int n) = 0;
+	virtual void SetTriangleCount( int n ) = 0;
 	//Match Detection
-	virtual void SetMatchDetectionMode(bool choice) = 0;
+	virtual void SetMatchDetectionMode( bool choice ) = 0;
 	virtual bool GetMatchDetectionMode() const = 0;
 	//Getters
 	virtual vector<Triangle> GetTriangles() const = 0;
@@ -1807,7 +1837,7 @@ public:
 	//Counts
 	virtual short GetTriangleCount() const = 0;
 	virtual short GetStripCount() const = 0;
-	virtual void SetStripCount(int n) = 0;
+	virtual void SetStripCount( int n ) = 0;
 	//Getter
 	virtual vector<short> GetStrip( int index ) const = 0;
 	virtual vector<Triangle> GetTriangles() const = 0;
@@ -1820,9 +1850,9 @@ public:
 	ISkinData() {}
 	virtual ~ISkinData () {}
 	virtual vector<blk_ref> GetBones() = 0; // Can't be const, since it changes the bone blk_ref reference 
-	virtual map<int, float> GetWeights( blk_ref const & bone ) const = 0;
-	virtual void AddBone( blk_ref const & bone, map<int, float> const & in ) = 0;
-	virtual void RemoveBone( blk_ref const & bone ) = 0;
+	virtual map<int, float> GetWeights( const blk_ref & bone ) const = 0;
+	virtual void AddBone( const blk_ref & bone, map<int, float> const & in ) = 0;
+	virtual void RemoveBone( const blk_ref & bone ) = 0;
 };
 
 class IKeyframeData {
@@ -1833,17 +1863,17 @@ public:
 	virtual KeyType GetRotateType() const = 0;
 	virtual void SetRotateType( KeyType t ) = 0;
 	virtual vector< Key<Quaternion> > GetRotateKeys() const = 0;
-	virtual void SetRotateKeys( vector< Key<Quaternion> > const & keys ) = 0;
+	virtual void SetRotateKeys( const vector< Key<Quaternion> > & keys ) = 0;
 	//Translate
 	virtual KeyType GetTranslateType() const = 0;
 	virtual void SetTranslateType( KeyType t ) = 0;
 	virtual vector< Key<Vector3> > GetTranslateKeys() const = 0;
-	virtual void SetTranslateKeys( vector< Key<Vector3> > const & keys ) = 0;
+	virtual void SetTranslateKeys( const vector< Key<Vector3> > & keys ) = 0;
 	//Scale
 	virtual KeyType GetScaleType() const = 0;
 	virtual void SetScaleType( KeyType t ) = 0;
 	virtual vector< Key<float> > GetScaleKeys() const = 0;
-	virtual void SetScaleKeys( vector< Key<float> > const & keys ) = 0;
+	virtual void SetScaleKeys( const vector< Key<float> > & keys ) = 0;
 };
 
 class ITextKeyExtraData {
@@ -1851,7 +1881,7 @@ public:
 	ITextKeyExtraData() {}
 	virtual ~ITextKeyExtraData () {}
 	virtual vector< Key<string> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<string> > const & keys ) = 0;
+	virtual void SetKeys( const vector< Key<string> > & keys ) = 0;
 
 };
 
@@ -1862,7 +1892,7 @@ public:
 	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<unsigned char> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<unsigned char> > const & keys ) = 0;
+	virtual void SetKeys( const vector< Key<unsigned char> > & keys ) = 0;
 };
 
 class IColorData {
@@ -1872,7 +1902,7 @@ public:
 	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<Color4> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<Color4> > const & keys ) = 0;
+	virtual void SetKeys( const vector< Key<Color4> > & keys ) = 0;
 };
 
 class IFloatData {
@@ -1882,7 +1912,7 @@ public:
 	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<float> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<float> > const & keys ) = 0;
+	virtual void SetKeys( const vector< Key<float> > & keys ) = 0;
 };
 
 class IPosData {
@@ -1892,7 +1922,7 @@ public:
 	virtual KeyType GetKeyType() const = 0;
 	virtual void SetKeyType( KeyType t ) = 0;
 	virtual vector< Key<Vector3> > GetKeys() const = 0;
-	virtual void SetKeys( vector< Key<Vector3> > const & keys ) = 0;
+	virtual void SetKeys( const vector< Key<Vector3> > & keys ) = 0;
 };
 
 
@@ -1907,9 +1937,9 @@ public:
 	virtual int GetMorphCount() const = 0;
 	virtual void SetMorphCount( int n ) = 0;
 	virtual vector< Key<float> > GetMorphKeys( int n ) const = 0;
-	virtual void SetMorphKeys( int n, vector< Key<float> > const & keys ) = 0;
+	virtual void SetMorphKeys( int n, const vector< Key<float> > & keys ) = 0;
 	virtual vector<Vector3> GetMorphVerts( int n) const = 0;
-	virtual void SetMorphVerts( int n, vector<Vector3> const & in ) = 0;
+	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
 };
 
 class IControllerSequence {
@@ -1923,28 +1953,20 @@ public:
 	virtual void ClearControllers() = 0;
 };
 
-//class IPixelData {
-//public:
-//	IPixelData() {}
-//	virtual ~IPixelData() {}
-//
-//	virtual int GetHeight() const = 0;
-//	virtual int GetWidth() const = 0;
-//	virtual int GetBytesPerPixel() const = 0;
-//	virtual unsigned int GetRedMask() const = 0;
-//	virtual unsigned int GetGreenMask() const = 0;
-//	virtual unsigned int GetBlueMask() const = 0;
-//	virtual unsigned int GetAlphaMask() const = 0;
-//
-//	virtual void Resize( int new_width, int new_height, int bytes_per_pixel = 4, unsigned int red_mask = 0xFF000000, unsigned int green_mask = 0x00FF0000, unsigned int blue_mask = 0x0000FF00, unsigned int alpha_mask = 0x000000FF ) = 0;
-//	
-//	virtual unsigned int GetTexDataSize() const = 0;
-//	virtual void GetTexData( unsigned char * dest ) const = 0;
-//	virtual void SetTexData( unsigned char * const src  ) = 0;
-//
-//	virtual vector<Color4> GetPixels() const = 0;
-//	virtual void SetPixels( vector<Color4> & const new_pixels ) = 0;
-//};
+class IPixelData {
+public:
+	IPixelData() {}
+	virtual ~IPixelData() {}
+
+	virtual int GetHeight() const = 0;
+	virtual int GetWidth() const = 0;
+	virtual PixelFormat GetPixelFormat() const = 0;
+
+	virtual void Reset( int new_width, int new_height, PixelFormat px_fmt ) = 0;
+	
+	virtual vector<Color4> GetPixels() const = 0;
+	virtual void SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps ) = 0;
+};
 
 //struct ComplexVertex {
 //	ComplexVertex() : has_color(false), has_normal(false), vertex_index(0), normal_index(0), color_index(0) {}

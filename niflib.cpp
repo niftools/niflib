@@ -672,6 +672,14 @@ ISkinData const * QuerySkinData( blk_ref const & block ) {
 	return (ISkinData const *)block->QueryInterface( ID_SKIN_DATA );
 }
 
+IPixelData * QueryPixelData( blk_ref & block ) {
+	return (IPixelData*)block->QueryInterface( ID_PIXEL_DATA );
+}
+
+IPixelData const * QueryPixelData( blk_ref const & block ) {
+	return (IPixelData const *)block->QueryInterface( ID_PIXEL_DATA );
+}
+
 INode * QueryNode( blk_ref & block ) {
 	return (INode*)block->QueryInterface( ID_NODE );
 }

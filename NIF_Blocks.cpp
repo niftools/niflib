@@ -3493,7 +3493,7 @@ string NiSkinPartition::asString() const {
 void NiPixelData::Read( ifstream& file, unsigned int version ) {
 	//ABlock::Read( in, version );
 
-	NifStream( pxFormat, file );
+	pxFormat = PixelFormat( ReadUInt(file) );
 
 	NifStream( redMask, file );
 	NifStream( blueMask, file );
@@ -3535,7 +3535,7 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 	//ABlock::Write( file, version );
 
-	NifStream( pxFormat, file );
+	WriteUInt( uint(pxFormat), file );
 
 	NifStream( redMask, file );
 	NifStream( blueMask, file );
@@ -3575,10 +3575,24 @@ string NiPixelData::asString() const {
 
 	//out << ABlock::asString();
 
-	out << "Pixel Format:  " << pxFormat << endl
-		<< "Red Mask:  " << redMask << endl
-		<< "Blue Mask:  " << blueMask << endl
+	out << "Pixel Format:  ";
+	switch (pxFormat) {
+		case PX_FMT_RGB8:
+			out << "0 - PX_FMT_RGB8" << endl;
+			break;
+		case PX_FMT_RGBA8:
+			out << "1 - PX_FMT_RGBA8" << endl;
+			break;
+		case PX_FMT_PAL8:
+			out << "2 - PX_FMT_PAL8" << endl;
+			break;
+		default:
+			out << uint(pxFormat) << " - ???" << endl;
+	}
+	
+	out << "Red Mask:  " << redMask << endl
 		<< "Green Mask:  " << greenMask << endl
+		<< "Blue Mask:  " << blueMask << endl
 		<< "Alpha Mask:  " << alphaMask << endl
 		<< "Bits Per Pixel:  " << bpp << endl
 		<< "Mipmap Count:  " << uint(mipmaps.size()) << endl
@@ -3603,6 +3617,138 @@ string NiPixelData::asString() const {
 	
 	return out.str();
 }
+
+int NiPixelData::GetHeight() const {
+	if ( mipmaps.size() == 0 ) {
+		return 0;
+	} else {
+		return mipmaps[0].height;
+	}
+}
+
+int NiPixelData::GetWidth() const {
+	if (mipmaps.size() == 0 ) {
+		return 0;
+	} else {
+		return mipmaps[0].width;
+	}
+}
+
+PixelFormat NiPixelData::GetPixelFormat() const {
+	return pxFormat;
+}
+
+void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
+	//Delete any data that was previously held
+	if ( data != NULL ) {
+		delete [] data;
+		dataSize = 0;
+		mipmaps.resize(1);
+	}
+
+	//Set up first mipmap
+	mipmaps[0].width = new_width;
+	mipmaps[0].height = new_height;
+	mipmaps[0].offset = 0;
+
+	//Set up pixel format fields
+	pxFormat = px_fmt;
+	switch(pxFormat) {
+		case PX_FMT_RGB8:
+			redMask   = 0x000000FF;
+			greenMask  = 0x0000FF00;
+			blueMask = 0x00FF0000;
+			alphaMask = 0x00000000;
+			bpp = 24;
+			unk8Bytes[0] = 96;
+			unk8Bytes[1] = 8;
+			unk8Bytes[2] = 130;
+			unk8Bytes[3] = 0;
+			unk8Bytes[4] = 0;
+			unk8Bytes[5] = 65;
+			unk8Bytes[6] = 0;
+			unk8Bytes[7] = 0;
+			break;
+		case PX_FMT_RGBA8 :
+			redMask   = 0x000000FF;
+			greenMask  = 0x0000FF00;
+			blueMask = 0x00FF0000;
+			alphaMask = 0xFF000000;
+			bpp = 32;
+			unk8Bytes[0] = 129;
+			unk8Bytes[1] = 8;
+			unk8Bytes[2] = 130;
+			unk8Bytes[3] = 32;
+			unk8Bytes[4] = 0;
+			unk8Bytes[5] = 65;
+			unk8Bytes[6] = 12;
+			unk8Bytes[7] = 0;
+			break;	
+		case PX_FMT_PAL8 :
+			redMask   = 0x00000000;
+			blueMask  = 0x00000000;
+			greenMask = 0x00000000;
+			alphaMask = 0x00000000;
+			bpp = 8;
+			unk8Bytes[0] = 34;
+			unk8Bytes[1] = 0;
+			unk8Bytes[2] = 0;
+			unk8Bytes[3] = 32;
+			unk8Bytes[4] = 0;
+			unk8Bytes[5] = 65;
+			unk8Bytes[6] = 12;
+			unk8Bytes[7] = 0;
+			break;	
+		//[4,0,0,0,0,0,0,0] if 0 (?) bits per pixel
+		default:
+			throw runtime_error("The pixel type you have requested is not currently supported.");
+	}
+}
+
+vector<Color4> NiPixelData::GetPixels() const {
+	vector<Color4> pixels;
+
+	if ( mipmaps.size() == 0 ) {
+		//Return empty vector
+		return pixels;
+	}
+
+	//Pack the pixel data from the first mipmap into a vector of
+	//Color4 based on the pixel format.
+	pixels.resize( mipmaps[0].width * mipmaps[0].height );
+	switch(pxFormat) {
+		case PX_FMT_RGB8:
+			for ( uint i = 0; i < pixels.size(); ++i ) {
+				pixels[i].a = 1.0f;
+				pixels[i].b = float(data[i * 3]) / 256.0f;
+				pixels[i].g = float(data[i * 3 + 1]) / 256.0f;
+				pixels[i].r = float(data[i * 3 + 2]) / 256.0f;
+			}
+			break;
+		case PX_FMT_RGBA8:
+			for ( uint i = 0; i < pixels.size(); ++i ) {
+				pixels[i].a = float(data[i * 3]) / 256.0f;
+				pixels[i].b = float(data[i * 3 + 1]) / 256.0f;
+				pixels[i].g = float(data[i * 3 + 2]) / 256.0f;
+				pixels[i].r = float(data[i * 3 + 3]) / 256.0f;
+			}
+			break;
+		default:
+			throw runtime_error("The GetPixels function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
+	}
+
+	return pixels;
+}
+
+void NiPixelData::SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps ) {
+	throw runtime_error("The SetPixels function is not yet implemented.");
+}
+
+//enum PixelFormat {
+//	PX_FMT_RGBA8 = 0, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
+//	PX_FMT_RGB8 = 1, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
+//	PX_FMT_PAL8 = 2 /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete block. */
+//};
 
 /***********************************************************
  * NiPosData methods

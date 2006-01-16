@@ -577,14 +577,14 @@ public:
 };
 
 
-
 /**
  * NiPixelData - Texture data for an included texture.
  */
-class NiPixelData : public AData {
+class NiPixelData : public AData, public IPixelData {
 public:
 	NiPixelData() {
 		data = NULL;
+		dataSize = 0;
 		AddAttr( attr_int, "Unknown Int" );
 		AddAttr( attr_link, "Palette" );
 
@@ -596,12 +596,23 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiPixelData"; }
 
+	//IPixelData Functions
+	int GetHeight() const;
+	int GetWidth() const;
+	PixelFormat GetPixelFormat() const;
+
+	void Reset( int new_width, int new_height, PixelFormat px_fmt );
+	
+	vector<Color4> GetPixels() const;
+	void SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps );
+
 private:
 	struct MipMap {
 		uint width, height, offset;
 	};
 	
-	uint pxFormat, redMask, blueMask, greenMask, alphaMask, bpp, unkInt;
+	PixelFormat pxFormat;
+	uint redMask, blueMask, greenMask, alphaMask, bpp, unkInt;
 	byte unk8Bytes[8];
 	vector<MipMap> mipmaps;
 	uint dataSize;
@@ -1528,7 +1539,7 @@ class AKeyframeData : public AData, public IKeyframeData {
 		KeyType GetRotateType() const { return rotationType; }
 		void SetRotateType( KeyType t ) { rotationType = t; }
 		vector< Key<Quaternion> > GetRotateKeys() const { return rotKeys; }
-		void SetRotateKeys( vector< Key<Quaternion> > const & keys ) { rotKeys = keys; }
+		void SetRotateKeys( const vector< Key<Quaternion> > & keys ) { rotKeys = keys; }
 		//Translate
 		KeyType GetTranslateType() const { return translationType; }
 		void SetTranslateType( KeyType t ) { translationType = t; }
