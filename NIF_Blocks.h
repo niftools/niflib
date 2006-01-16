@@ -585,22 +585,9 @@ class NiPixelData : public AData {
 public:
 	NiPixelData() {
 		data = NULL;
-		/*AddAttr( attr_int, "Unknown Int" );
-		AddAttr( attr_int, "Red Mask" );
-		AddAttr( attr_int, "Blue Mask" );
-		AddAttr( attr_int, "Green Mask" );
-		AddAttr( attr_int, "Alpha Mask" );
-		AddAttr( attr_int, "Bits Per Pixel" );
-		AddAttr( attr_byte, "Unknown Byte 1" );
-		AddAttr( attr_byte, "Unknown Byte 2" );
-		AddAttr( attr_byte, "Unknown Byte 3" );
-		AddAttr( attr_byte, "Unknown Byte 4" );
-		AddAttr( attr_byte, "Unknown Byte 5" );
-		AddAttr( attr_byte, "Unknown Byte 6" );
-		AddAttr( attr_byte, "Unknown Byte 7" );
-		AddAttr( attr_byte, "Unknown Byte 8" );
-		AddAttr( attr_link, "Unknown Link" );*/
-		AddAttr( attr_link, "Palette", VER_10_1_0_0);
+		AddAttr( attr_int, "Unknown Int" );
+		AddAttr( attr_link, "Palette" );
+
 	}
 	~NiPixelData() { if (data != NULL) delete [] data; }
 
@@ -614,9 +601,8 @@ private:
 		uint width, height, offset;
 	};
 	
-	uint unkInt, redMask, blueMask, greenMask, alphaMask, bpp;
+	uint pxFormat, redMask, blueMask, greenMask, alphaMask, bpp, unkInt;
 	byte unk8Bytes[8];
-	uint unkUplink;
 	vector<MipMap> mipmaps;
 	uint dataSize;
 	byte * data;
@@ -1508,20 +1494,20 @@ public:
 }; 
 
 /**
- * NiKeyframeData -
+ * AKeyframeData -
  */
 
-class NiKeyframeData : public AData, public IKeyframeData {
+class AKeyframeData : public AData, public IKeyframeData {
 
 	public:
 
-		NiKeyframeData() {}
-		~NiKeyframeData() {}
+		AKeyframeData() {}
+		~AKeyframeData() {}
 
 		void Read( ifstream& in, unsigned int version );
 		void Write( ofstream& out, unsigned int version ) const;
 		string asString() const;
-		string GetBlockType() const { return "NiKeyframeData"; }
+		string GetBlockType() const { return "AKeyframeData"; }
 		
 		void * QueryInterface( int id ) {
 			if ( id == ID_KEYFRAME_DATA ) {
@@ -1569,6 +1555,30 @@ class NiKeyframeData : public AData, public IKeyframeData {
 };
 
 /**
+ * NiKeyframeData
+ */
+
+class NiKeyframeData : public AKeyframeData {
+public:
+	NiKeyframeData() {}
+	~NiKeyframeData() {}
+
+	string GetBlockType() const { return "NiKeyframeData"; }
+};
+
+/**
+ * NiTransformData
+ */
+
+class NiTransformData : public AKeyframeData {
+public:
+	NiTransformData() {}
+	~NiTransformData() {}
+
+	string GetBlockType() const { return "NiTransformData"; }
+};
+
+/**
  * NiPalette
  */
 
@@ -1612,29 +1622,6 @@ private:
 	};
 	vector<SkinPartition> partitions;
 };
-
-/**
- * NiTransformData
- */
-
-class NiTransformData : public AData {
-public:
-	NiTransformData() {}
-	~NiTransformData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
-	string asString() const;
-
-	string GetBlockType() const { return "NiTransformData"; }
-private:
-	uint hasKeys, unkInt;
-	KeyType key_type[3];
-	vector< Key<float> > unkFloatKeys[3];
-	uint unk2Ints[2];
-	vector<float> unkFloats[2];
-};
-
-
 
 /**
  * NiSkinInstance

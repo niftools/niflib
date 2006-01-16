@@ -2560,10 +2560,10 @@ string NiGeomMorpherController::asString() const {
 }
 
 /***********************************************************
- * NiKeyframeData methods
+ * AKeyframeData methods
  **********************************************************/
 
-void NiKeyframeData::Read( ifstream& file, unsigned int version ) {
+void AKeyframeData::Read( ifstream& file, unsigned int version ) {
 
 	scaleType = rotationType = translationType = xyzTypes[0] = xyzTypes[1] = xyzTypes[2] = KeyType(0);
 
@@ -2580,16 +2580,20 @@ void NiKeyframeData::Read( ifstream& file, unsigned int version ) {
 			}
 		}
 		else {
-			//Read vestigial time and discard
-			ReadFloat( file );
+			//Before version 10.2.0.0, read vestigial time and discard
+			if ( version < VER_10_2_0_0 ) {
+				ReadFloat( file );
+			}
 
 			for (int i = 0; i < 3; i++) {
 				int subCount = ReadUInt( file );
-				NifStream( xyzTypes[i], file );
+				if ( subCount > 0 ) {
+					NifStream( xyzTypes[i], file );
 
-				xyzKeys[i].resize( subCount );
-				for (uint j = 0; j < xyzKeys[i].size(); j++) {
-					NifStream(xyzKeys[i][j], file, xyzTypes[i] );
+					xyzKeys[i].resize( subCount );
+					for (uint j = 0; j < xyzKeys[i].size(); j++) {
+						NifStream(xyzKeys[i][j], file, xyzTypes[i] );
+					}
 				}
 			}
 		}
@@ -2620,7 +2624,7 @@ void NiKeyframeData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiKeyframeData::Write( ofstream& file, unsigned int version ) const {
+void AKeyframeData::Write( ofstream& file, unsigned int version ) const {
 
 	//--Rotation--//
 	WriteUInt( uint(rotKeys.size()) , file );
@@ -2634,15 +2638,19 @@ void NiKeyframeData::Write( ofstream& file, unsigned int version ) const {
 			}
 		}
 		else {
-			//Write vestigial time
-			WriteFloat( 0.0, file );
+			//Before version 10.2.0.0, write vestigial time
+			if ( version < VER_10_2_0_0 ) {
+				WriteFloat( 0.0, file );
+			}
 
 			for (int i = 0; i < 3; i++) {
 				WriteUInt( uint(xyzKeys[i].size()) , file );
-				NifStream( xyzTypes[i], file );
+				if ( xyzKeys[i].size() > 0 ) {
+					NifStream( xyzTypes[i], file );
 
-				for (uint j = 0; j < xyzKeys[i].size(); j++) {
-					NifStream(xyzKeys[i][j], file, xyzTypes[i] );
+					for (uint j = 0; j < xyzKeys[i].size(); j++) {
+						NifStream(xyzKeys[i][j], file, xyzTypes[i] );
+					}
 				}
 			}
 		}
@@ -2671,7 +2679,7 @@ void NiKeyframeData::Write( ofstream& file, unsigned int version ) const {
 	}
 }
 
-string NiKeyframeData::asString() const {
+string AKeyframeData::asString() const {
 	stringstream out;
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
@@ -3479,112 +3487,13 @@ string NiSkinPartition::asString() const {
 }
 
 /***********************************************************
- * NiTransformData methods
- **********************************************************/
-
-void NiTransformData::Read( ifstream& file, unsigned int version ) {
-	NifStream( hasKeys, file );
-	if ( hasKeys != 0 ) {
-		NifStream( unkInt, file );
-		for (int i = 0; i < 3; ++i ) {
-			int numKeys = ReadUInt( file );
-			NifStream( key_type[i], file );
-			unkFloatKeys[i].resize( numKeys );
-			for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
-				NifStream( unkFloatKeys[i][j], file, key_type[i] );
-			}
-		}
-	}
-
-	for (int i = 0; i < 2; ++i ) {
-		int numFloats = ReadUInt( file );
-		if ( numFloats != 0 ) {
-			NifStream( unk2Ints[i], file );
-			unkFloats[i].resize( numFloats * 4 );
-			for (uint j = 0; j < unkFloats[i].size(); ++j ) {
-				NifStream( unkFloats[i][j], file );
-			}
-		}
-	}
-}
-
-void NiTransformData::Write( ofstream& file, unsigned int version ) const {
-NifStream( hasKeys, file );
-	if ( hasKeys != 0 ) {
-		NifStream( unkInt, file );
-		for (int i = 0; i < 3; ++i ) {
-			WriteUInt( uint(unkFloatKeys[i].size()), file );
-			NifStream( key_type[i], file );
-			for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
-				NifStream( unkFloatKeys[i][j], file, key_type[i] );
-			}
-		}
-	}
-
-	for (int i = 0; i < 2; ++i ) {
-		WriteUInt( uint(unkFloats[i].size()) / 4, file );
-		if ( unkFloats[i].size() != 0 ) {
-			NifStream( unk2Ints[i], file );
-			for (uint j = 0; j < unkFloats[i].size(); ++j ) {
-				NifStream( unkFloats[i][j], file );
-			}
-		}
-	}
-}
-
-
-string NiTransformData::asString() const {
-	stringstream out;
-	out.setf(ios::fixed, ios::floatfield);
-	out << setprecision(1);
-
-	out << "Has Keys:  " << hasKeys << endl;
-
-	if ( hasKeys != 0 ) {
-		out << "Unknown Int:  " << unkInt << endl;
-		for (int i = 0; i < 3; ++i ) {
-			out << "Key Group " << i + 1 << ":" << endl
-				<< "   Num Keys:  " << uint(unkFloatKeys[i].size()) << endl
-				<< "   Key Type:  " << key_type[i] << endl;
-
-			if (verbose) {
-				for ( uint j = 0; j < unkFloatKeys[i].size(); ++j ) {
-					out << "   " << j + 1 << ":  " << unkFloatKeys[i][j].data << endl;
-				}
-			} else {
-				out << "   <<Data Not Shown>>" << endl;
-			}
-			
-		}
-	}
-
-	for (int i = 0; i < 2; ++i ) {
-		out << "Unknown Float Group " << i + 1 << ":  " << uint(unkFloats[i].size()) << endl;
-		
-		if ( unkFloats[i].size() != 0 ) {
-			out << "   Unknown Int:  " << unk2Ints[i] << endl;
-
-			if (verbose) {
-				for (uint j = 0; j < unkFloats[i].size(); ++j ) {
-					out << "   " << j + 1 << ":  " << unkFloats[i][j] << endl;
-				}
-			} else {
-				out << "   <<Data Not Shown>>" << endl;
-			}
-		}
-	}
-
-	return out.str();
-}
-
-/***********************************************************
  * NiPixelData methods
  **********************************************************/
 
 void NiPixelData::Read( ifstream& file, unsigned int version ) {
 	//ABlock::Read( in, version );
 
-	NifStream( unkInt, file );
+	NifStream( pxFormat, file );
 
 	NifStream( redMask, file );
 	NifStream( blueMask, file );
@@ -3596,12 +3505,17 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 	for ( int i = 0; i < 8; ++i ) {
 		NifStream( unk8Bytes[i], file );
 	}
-	
-	NifStream( unkUplink, file );
+
+	//There is an unknown int here from version 10.1.0.0 on
+	if ( version >= VER_10_1_0_0 ) {
+		NifStream( unkInt, file );
+	}
 
 	GetAttr("Palette")->Read( file, version );
 
 	uint mipCount = ReadUInt( file );
+
+
 
 	//Read Bytes per pixel and discard
 	ReadUInt( file );
@@ -3621,7 +3535,7 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 	//ABlock::Write( file, version );
 
-	NifStream( unkInt, file );
+	NifStream( pxFormat, file );
 
 	NifStream( redMask, file );
 	NifStream( blueMask, file );
@@ -3634,7 +3548,10 @@ void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 		NifStream( unk8Bytes[i], file );
 	}
 	
-	NifStream( unkUplink, file );
+	//There is an unknown int here from version 10.1.0.0 on
+	if ( version >= VER_10_1_0_0 ) {
+		NifStream( unkInt, file );
+	}
 
 	GetAttr("Palette")->Write( file, version );
 
@@ -3658,7 +3575,7 @@ string NiPixelData::asString() const {
 
 	//out << ABlock::asString();
 
-	out << "Unknown Int:  " << unkInt << endl
+	out << "Pixel Format:  " << pxFormat << endl
 		<< "Red Mask:  " << redMask << endl
 		<< "Blue Mask:  " << blueMask << endl
 		<< "Green Mask:  " << greenMask << endl
@@ -3669,10 +3586,10 @@ string NiPixelData::asString() const {
 		<< "Unknown 8 Bytes:" << endl;
 
 	for ( int i = 0; i < 8; ++i ) {
-		out << i + 1 << ":  " << unk8Bytes[i] << endl;
+		out << i + 1 << ":  " << int(unk8Bytes[i]) << endl;
 	}
 
-	out << "Unknown Uplink:  " << blk_ref(unkUplink) << endl
+	out << "Unknown Int:  " << unkInt << endl
 		<< "Palette:  "  << GetAttr("Palette")->asLink() << endl;
 
 	for ( uint i = 0; i < mipmaps.size(); ++i ) {
