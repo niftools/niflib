@@ -63,6 +63,7 @@ class IBoolData;
 class IColorData;
 class IFloatData;
 class IPosData;
+class IPalette;
 class IPixelData;
 class INode;
 class IControllerSequence;
@@ -93,6 +94,7 @@ const int ID_POS_DATA = 10; /*!< ID for IPosData Interface */
 const int ID_BOOL_DATA = 11; /*!< ID for IBoolData Interface */
 const int ID_CONTROLLER_SEQUENCE = 12; /*!< ID for IControllerSequence Interface */
 const int ID_PIXEL_DATA = 13; /*!< ID for IPixelData Interface */
+const int ID_PALETTE = 14; /*!< ID for IPalette Interface */
 
 /*!
  * This enum contains all the attribute types used by Niflib.
@@ -179,8 +181,8 @@ enum KeyType {
  * Specifies the pixel format used by the NiPixelData block to store a texture.
  */
 enum PixelFormat {
-	PX_FMT_RGBA8 = 0, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
-	PX_FMT_RGB8 = 1, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
+	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
+	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
 	PX_FMT_PAL8 = 2 /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete block. */
 };
 
@@ -394,6 +396,27 @@ ISkinData const * QuerySkinData( blk_ref const & block );
  */
 IPixelData * QueryPixelData( blk_ref & block );
 IPixelData const * QueryPixelData( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_PALETTE).  It queries the block for an IPalette interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IPalette interface available.
+ * \param block The block to query the interface from.
+ * \return If the given block implements the IPalette interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * IPalette * palette = QueryPalette(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * palette = QueryPalette(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
+IPalette * QueryPalette( blk_ref & block );
+IPalette const * QueryPalette( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_NODE).  It queries the block for an INode interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the INode interface available.
  * \param block The block to query the interface from.
@@ -1953,6 +1976,15 @@ public:
 	virtual void ClearControllers() = 0;
 };
 
+class IPalette {
+public:
+	IPalette() {}
+	virtual ~IPalette() {}
+
+	virtual vector<Color4> GetPalette() const = 0;
+	virtual void SetPalette( const vector<Color4> & new_pal ) = 0;
+};
+
 class IPixelData {
 public:
 	IPixelData() {}
@@ -1964,8 +1996,8 @@ public:
 
 	virtual void Reset( int new_width, int new_height, PixelFormat px_fmt ) = 0;
 	
-	virtual vector<Color4> GetPixels() const = 0;
-	virtual void SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps ) = 0;
+	virtual vector<Color4> GetColors() const = 0;
+	virtual void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps ) = 0;
 };
 
 //struct ComplexVertex {

@@ -31,12 +31,16 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
+//#define IM_DEBUG
+
 #include "NIF_Blocks.h"
 #include "nif_attrs.h"
 #include "nif_math.h"
 #include <cmath>
 #include <sstream>
-
+#ifdef IM_DEBUG
+#include <imdebug.h>
+#endif
 extern bool verbose;
 extern unsigned int blocks_in_memory;
 
@@ -3216,30 +3220,29 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
  * NiPalette methods
  **********************************************************/
 
-void NiPalette::Read( ifstream& in, unsigned int version ) {
-	//Read 5 unknown bytes
-	for (int i = 0; i < 5; ++i) {
-		unknownBytes[i] = ReadByte( in );
-	}
+void NiPalette::Read( ifstream& file, unsigned int version ) {
+
+	NifStream( unkByte, file );
+	NifStream( numEntries, file );
+	
 
 	//Read Palette
 	for (int i = 0; i < 256; ++i) {
 		for (int j = 0; j < 4; ++j) {
-			palette[i][j] = ReadByte( in );
+			NifStream( palette[i][j], file );
 		}
 	}
 }
 
-void NiPalette::Write( ofstream& out, unsigned int version ) const {
-	//Write 5 unknown bytes
-	for (int i = 0; i < 5; ++i) {
-		WriteByte( unknownBytes[i], out );
-	}
+void NiPalette::Write( ofstream& file, unsigned int version ) const {
 
-	//Read Palette
+	NifStream( unkByte, file );
+	NifStream( numEntries, file );
+
+	//Write Palette
 	for (int i = 0; i < 256; ++i) {
 		for (int j = 0; j < 4; ++j) {
-			WriteByte( palette[i][j], out );
+			NifStream( palette[i][j], file );
 		}
 	}
 }
@@ -3250,22 +3253,52 @@ string NiPalette::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	//Print 5 unknown bytes
-	for (int i = 0; i < 5; ++i) {
-		out << "Unknown Byte " << i + 1 << ":  " << unknownBytes[i] << endl;
-	}
+	out << "Unknown Byte:  " << int(unkByte) << endl;
+	out << "Num Entries?:  " << numEntries << endl;
 
 	//Print Palette
-	out << "Palette:" << endl;
+
+	vector<Color4>col_pal = GetPalette();
+
+	out << "Palette: (256 colors)" << endl;
 	if (verbose) {
 		for (int i = 0; i < 256; ++i) {
-			out << i + 1 << ":  " << int(palette[i][0]) << ", " << int(palette[i][1]) << ", " << int(palette[i][2]) << ", " << int(palette[i][3]) << endl;
+			out << i + 1 << ":  " << setw(4) << int(palette[i][0]) << ", " << setw(4) << int(palette[i][1]) << ", " << setw(4) << int(palette[i][2]) << ", " << setw(4) << int(palette[i][3]) << "\t";
+			out << i + 1 << ":  " << setw(4) << col_pal[i].r << ", " << setw(4) << col_pal[i].g << ", " << setw(4) << col_pal[i].b << ", " << setw(4) << col_pal[i].a << endl;
 		}
 	} else {
 		out << "  <<Data Not Shown>>" << endl;
 	}
 
 	return out.str();
+}
+
+
+vector<Color4> NiPalette::GetPalette() const {
+	vector<Color4> color_pal(256);
+
+	for ( uint i = 0; i < 256; ++i ) {
+		
+		color_pal[i].r = float(palette[i][0]) / 255.0f;
+		color_pal[i].g = float(palette[i][1]) / 255.0f;
+		color_pal[i].b = float(palette[i][2]) / 255.0f;
+		color_pal[i].a = float(palette[i][3]) / 255.0f;
+	}
+
+	return color_pal;
+}
+
+void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
+	if ( new_pal.size() != 256 ) {
+		throw runtime_error( "Palette size must be 256" );
+	}
+
+	for ( uint i = 0; i < 256; ++i ) {
+		palette[i][0] = int( new_pal[i].r * 255.0f );
+		palette[i][1] = int( new_pal[i].g * 255.0f );
+		palette[i][2] = int( new_pal[i].b * 255.0f );
+		palette[i][3] = int( new_pal[i].a * 255.0f );
+	}
 }
 
 /***********************************************************
@@ -3611,6 +3644,35 @@ string NiPixelData::asString() const {
 			<< "   Width:  "  << mipmaps[i].width << endl
 			<< "   Height:  " << mipmaps[i].height << endl
 			<< "   Offset into Image Data Block:  " << mipmaps[i].offset << endl;
+	
+#ifdef IM_DEBUG
+		switch ( pxFormat ) {
+			case PX_FMT_RGB8:
+				imdebug("rgb w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &data[mipmaps[i].offset] );
+				break;
+			case PX_FMT_RGBA8:
+				imdebug("rgba w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &data[mipmaps[i].offset] );
+				break;
+			//case 4:
+			//	byte * img = new byte[ mipmaps[i].width * mipmaps[i].height ];
+			//	for ( uint j = 0; j < mipmaps[i].width * mipmaps[i].height / 2; ++j ) {
+			//		byte temp = data[mipmaps[i].offset + j];
+
+			//		img[j*2] = (temp & 0x0F) * 0x11;
+			//		img[j*2+1] = (temp & byte(0xF0) >> 4) * 0x11; 
+
+			//		//cout << "Pixel " << j*2 << ":  " << setbase(16) << int(img[j*2]) << endl;
+			//		//cout << "Pixel " << j*2+1 << ":  " << setbase(16) << int(img[j*2+1]) << endl;
+			//	};
+			//	imdebug("lum w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, img );
+
+			//	delete [] img;
+			//	break;
+		}
+
+		//cout << "Displaying NiPixelData Image.  Press Enter to continue." << endl;
+		//cin.get();
+#endif
 	}
 
 	out << "Mipmap Image Data:  "  << dataSize << " Bytes (Not Shown)" << endl;
@@ -3639,6 +3701,15 @@ PixelFormat NiPixelData::GetPixelFormat() const {
 }
 
 void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
+	//Ensure that texture dimentions are powers of two
+	if ( (new_height & (new_height-1)) != 0 ) {
+		throw ("Texture height must be a power of two.");
+	}
+
+	if ( (new_width & (new_width-1)) != 0 ) {
+		throw ("Texture height must be a power of two.");
+	}
+	
 	//Delete any data that was previously held
 	if ( data != NULL ) {
 		delete [] data;
@@ -3705,7 +3776,7 @@ void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
 	}
 }
 
-vector<Color4> NiPixelData::GetPixels() const {
+vector<Color4> NiPixelData::GetColors() const {
 	vector<Color4> pixels;
 
 	if ( mipmaps.size() == 0 ) {
@@ -3720,28 +3791,160 @@ vector<Color4> NiPixelData::GetPixels() const {
 		case PX_FMT_RGB8:
 			for ( uint i = 0; i < pixels.size(); ++i ) {
 				pixels[i].a = 1.0f;
-				pixels[i].b = float(data[i * 3]) / 256.0f;
-				pixels[i].g = float(data[i * 3 + 1]) / 256.0f;
-				pixels[i].r = float(data[i * 3 + 2]) / 256.0f;
+				pixels[i].b = float(data[i * 3]) / 255.0f;
+				pixels[i].g = float(data[i * 3 + 1]) / 255.0f;
+				pixels[i].r = float(data[i * 3 + 2]) / 255.0f;
 			}
 			break;
 		case PX_FMT_RGBA8:
 			for ( uint i = 0; i < pixels.size(); ++i ) {
-				pixels[i].a = float(data[i * 3]) / 256.0f;
-				pixels[i].b = float(data[i * 3 + 1]) / 256.0f;
-				pixels[i].g = float(data[i * 3 + 2]) / 256.0f;
-				pixels[i].r = float(data[i * 3 + 3]) / 256.0f;
+				pixels[i].a = float(data[i * 3]) / 255.0f;
+				pixels[i].b = float(data[i * 3 + 1]) / 255.0f;
+				pixels[i].g = float(data[i * 3 + 2]) / 255.0f;
+				pixels[i].r = float(data[i * 3 + 3]) / 255.0f;
 			}
 			break;
 		default:
-			throw runtime_error("The GetPixels function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
+			throw runtime_error("The GetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
 	}
 
 	return pixels;
 }
 
-void NiPixelData::SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps ) {
-	throw runtime_error("The SetPixels function is not yet implemented.");
+void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps ) {
+	//Ensure that compatible pixel format is being used
+	if ( pxFormat != PX_FMT_RGB8 && pxFormat != PX_FMT_RGBA8 ) {
+		throw runtime_error("The GetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
+	}
+
+	//Ensure that there is size information in the mipmaps
+	if ( mipmaps.size() == 0 ) {
+		throw runtime_error("The size informatoin has not been set.  Call the IPixelData::Reset() function first.");
+	}
+
+	//Ensure that the right number of pixels for the dimentions set have been passed
+	if ( new_pixels.size() != mipmaps[0].height * mipmaps[0].width ) {
+		throw runtime_error("You must pass one color for every pixel in the image.  There should be height * width colors.");
+	}
+
+	uint size = 0;
+
+	//Set up mipmaps
+	if ( generate_mipmaps == false ) {
+		mipmaps.resize(1);
+		size = (mipmaps[0].height * mipmaps[0].width * bpp) / 8;
+	} else {
+		//--Deal with multiple mipmaps--//
+
+		MipMap m;
+		m.height = mipmaps[0].height;
+		m.width = mipmaps[0].width;
+
+		size = (mipmaps[0].height * mipmaps[0].width * bpp) / 8;
+
+		while ( m.width != 1 && m.height != 1 ) {
+			m.width /= 2;
+			m.height /= 2;
+			m.offset = size;
+
+			size += (m.height * m.width * bpp) / 8;
+
+			mipmaps.push_back(m);
+		}
+
+
+	}
+
+	//Allocate space to store mipmaps
+	if ( data != NULL ) {
+		delete [] data;
+	}
+
+	data = new byte[size];
+
+	//Copy pixels to Color4 C array
+	Color4 * tmp_image = new Color4[new_pixels.size()];
+
+	for (uint i = 0; i < new_pixels.size(); ++i ) {
+		tmp_image[i] = new_pixels[i];
+	}
+
+	//vector<Color4> tmp_image = new_pixels;
+
+	//Pack pixel data
+	for (uint i = 0; i < mipmaps.size(); ++i ) {
+		if ( i > 0 ) {
+			//Allocate space to store re-sized image.
+			Color4 * resized = new Color4[ mipmaps[i].width * mipmaps[i].height ];
+
+			//Visit every other pixel in each row and column of the previous image
+			for ( uint w = 0; w < mipmaps[i - 1].width; w+=2 ) {
+				for ( uint h = 0; h < mipmaps[i - 1].height; h+=2 ) {
+					Color4 & av = resized[(h/2)*(w/2)+(w/2)];
+
+					//Start with the value of the current pixel
+					av = tmp_image[h * w + w];
+					float num_colors = 1.0f;
+
+					//Only process the pixel above if height is > 1
+					if ( h > 1 ) {
+						Color4 & px = tmp_image[(h+1) * w + w];
+						av.r += px.r;
+						av.g += px.g;
+						av.b += px.b;
+						av.a += px.a;
+						num_colors += 1.0f;
+					}
+
+					//Only process the pixel to the right if width > 1
+					if (w > 1 ) {
+						Color4 & px = tmp_image[h * w + (w+1)];
+						av.r += px.r;
+						av.g += px.g;
+						av.b += px.b;
+						av.a += px.a;
+						num_colors += 1.0f;
+					}
+
+					//Only process the pixel to the upper right if both width and height are > 1
+					if ( w > 1 && h >> 1 ) {
+						Color4 & px = tmp_image[(h+1) * w + (w+1)];
+						av.r += px.r;
+						av.g += px.g;
+						av.b += px.b;
+						av.a += px.a;
+						num_colors += 1.0f;
+					}
+
+					//Calculate average
+					av.r /= num_colors;
+					av.g /= num_colors;
+					av.b /= num_colors;
+					av.a /= num_colors;
+				}
+			}
+			//Resize is complete, set result to tmp_image
+
+			//delete old tmp_image data
+			delete [] tmp_image;
+
+			//Adjust pointer values
+			tmp_image = resized;
+			resized = NULL;
+		}
+
+		//Data is ready to be packed into the byes of this mipmap
+
+		//Start at offset
+		byte * map = &data[mipmaps[i].offset];
+
+		for ( uint i = 0; i < mipmaps[i].width * mipmaps[i].height; ++i ) {
+			map[i * 4] = int( tmp_image[i].r * 255.0f );
+			map[i * 4 + 1] = int( tmp_image[i].g * 255.0f );
+			map[i * 4 + 2] = int( tmp_image[i].b * 255.0f );
+			map[i * 4 + 3] = int( tmp_image[i].a * 255.0f );
+		}
+	}
 }
 
 //enum PixelFormat {

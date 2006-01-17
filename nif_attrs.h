@@ -1630,23 +1630,23 @@ public:
 	~Unk292BytesAttr() {}
 	AttrType GetType() const { return attr_unk292bytes; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
-		in.read( (char*)data, 292 );
+		in.read( (char*)data, 256 );
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
-		out.write( (char*)data, 292 );
+		out.write( (char*)data, 265 );
 	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << "Unknown Data (292 bytes):" << endl;
+		out << "Unknown Data (256 bytes):" << endl;
 	
 		//Display Data in Hex form
 		out << hex << setfill('0');
-		for (int j = 0; j < 292; j++) {
+		for (int j = 0; j < 256; j++) {
 			out << uppercase << setw(2) << uint(data[j]);
-			if (j % 16 == 15 || j == 292 - 1)
+			if (j % 16 == 15 || j == 256 - 1)
 				out << endl;
 			else if (j % 16 == 7)
 				out << "   ";
@@ -1656,6 +1656,18 @@ public:
 				out << " ";
 		}
 		out << dec << setfill(' ');
+
+		//Display data as a string
+		out << "As String:  ";
+		for (int j = 0; j < 256; j++ ) {
+			if ( data[j] == 0 ) {
+				out << endl;
+			} else if ( data[j] == 0xCD ) {
+				break;
+			} else {
+				out << data[j];
+			}
+		}
 
 		return out.str();
 	}

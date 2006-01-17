@@ -596,6 +596,21 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiPixelData"; }
 
+	void * QueryInterface( int id ) {
+		if ( id == ID_PIXEL_DATA ) {
+			return (void*)static_cast<IPixelData*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_PIXEL_DATA ) {
+			return (void const *)static_cast<IPixelData const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
 	//IPixelData Functions
 	int GetHeight() const;
 	int GetWidth() const;
@@ -603,8 +618,8 @@ public:
 
 	void Reset( int new_width, int new_height, PixelFormat px_fmt );
 	
-	vector<Color4> GetPixels() const;
-	void SetPixels( const vector<Color4> & new_pixels, bool generate_mipmaps );
+	vector<Color4> GetColors() const;
+	void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps );
 
 private:
 	struct MipMap {
@@ -1593,7 +1608,7 @@ public:
  * NiPalette
  */
 
-class NiPalette : public AData {
+class NiPalette : public AData, public IPalette {
 public:
 	NiPalette() {}
 	void Init() {}
@@ -1603,8 +1618,30 @@ public:
 	string asString() const;
 
 	string GetBlockType() const { return "NiPalette"; }
+
+	
+	void * QueryInterface( int id ) {
+		if ( id == ID_PALETTE ) {
+			return (void*)static_cast<IPalette*>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_PALETTE ) {
+			return (void const *)static_cast<IPalette const *>(this);;
+		} else {
+			return AData::QueryInterface( id );
+		}
+	}
+
+	//IPalette Functions
+	vector<Color4> GetPalette() const;
+	void SetPalette( const vector<Color4> & new_pal );
+
 private:
-	byte unknownBytes[5];
+	byte unkByte;
+	uint numEntries;
 	byte palette[256][4];
 };
 

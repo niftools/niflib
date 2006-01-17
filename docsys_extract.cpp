@@ -58,8 +58,17 @@ AController::AController() {
 }
 
 AFx::AFx() {
-	AddAttr( attr_byte, "Unknown1", 0, 0xFFFFFFFF );
-	AddAttr( attr_unk292bytes, "Unknown2", 0, 0xFFFFFFFF );
+	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 3", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 4", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 5", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 6", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 7", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 8", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 9", 0, 0xFFFFFFFF );
+	AddAttr( attr_unk292bytes, "Unknown 256 Bytes", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -174,8 +183,10 @@ FxButton::FxButton() {
 }
 
 FxRadioButton::FxRadioButton() {
-	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	AddAttr( attr_linkgroup, "Unknown4", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int  2", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
+	AddAttr( attr_linkgroup, "Unknown Links", 0, 0xFFFFFFFF );
 	Init();
 }
 

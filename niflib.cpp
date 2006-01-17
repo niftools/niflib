@@ -680,6 +680,14 @@ IPixelData const * QueryPixelData( blk_ref const & block ) {
 	return (IPixelData const *)block->QueryInterface( ID_PIXEL_DATA );
 }
 
+IPalette * QueryPalette( blk_ref & block ) {
+	return (IPalette*)block->QueryInterface( ID_PALETTE );
+}
+
+IPalette const * QueryPalette( blk_ref const & block ) {
+	return (IPalette const *)block->QueryInterface( ID_PALETTE );
+}
+
 INode * QueryNode( blk_ref & block ) {
 	return (INode*)block->QueryInterface( ID_NODE );
 }
