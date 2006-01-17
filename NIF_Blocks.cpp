@@ -3790,23 +3790,31 @@ vector<Color4> NiPixelData::GetColors() const {
 	switch(pxFormat) {
 		case PX_FMT_RGB8:
 			for ( uint i = 0; i < pixels.size(); ++i ) {
-				pixels[i].a = 1.0f;
-				pixels[i].b = float(data[i * 3]) / 255.0f;
+				pixels[i].r = float(data[i * 3]) / 255.0f;
 				pixels[i].g = float(data[i * 3 + 1]) / 255.0f;
-				pixels[i].r = float(data[i * 3 + 2]) / 255.0f;
+				pixels[i].b = float(data[i * 3 + 2]) / 255.0f;
+				pixels[i].a = 1.0f;
 			}
 			break;
 		case PX_FMT_RGBA8:
 			for ( uint i = 0; i < pixels.size(); ++i ) {
-				pixels[i].a = float(data[i * 3]) / 255.0f;
-				pixels[i].b = float(data[i * 3 + 1]) / 255.0f;
-				pixels[i].g = float(data[i * 3 + 2]) / 255.0f;
-				pixels[i].r = float(data[i * 3 + 3]) / 255.0f;
+				pixels[i].r = float(data[i * 4]) / 255.0f;
+				pixels[i].g = float(data[i * 4 + 1]) / 255.0f;
+				pixels[i].b = float(data[i * 4 + 2]) / 255.0f;
+				pixels[i].a = float(data[i * 4 + 3]) / 255.0f;
 			}
 			break;
 		default:
 			throw runtime_error("The GetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
 	}
+
+#ifdef IM_DEBUG
+
+	imdebug("rgba b=32f rs=2 w=%d h=%d %p", mipmaps[0].width, mipmaps[0].height, &pixels[0] );
+	//delete [] img;
+	cout << "Showing image returned by GetColors function." << endl;
+	cin.get();
+#endif
 
 	return pixels;
 }
@@ -3814,7 +3822,7 @@ vector<Color4> NiPixelData::GetColors() const {
 void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps ) {
 	//Ensure that compatible pixel format is being used
 	if ( pxFormat != PX_FMT_RGB8 && pxFormat != PX_FMT_RGBA8 ) {
-		throw runtime_error("The GetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
+		throw runtime_error("The SetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
 	}
 
 	//Ensure that there is size information in the mipmaps
@@ -3828,14 +3836,11 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 	}
 
 	uint size = 0;
+	mipmaps.resize(1);
+	size = (mipmaps[0].height * mipmaps[0].width * bpp) / 8;
 
-	//Set up mipmaps
-	if ( generate_mipmaps == false ) {
-		mipmaps.resize(1);
-		size = (mipmaps[0].height * mipmaps[0].width * bpp) / 8;
-	} else {
-		//--Deal with multiple mipmaps--//
-
+	//Deal with multiple mipmaps
+	if ( generate_mipmaps == true ) {
 		MipMap m;
 		m.height = mipmaps[0].height;
 		m.width = mipmaps[0].width;
@@ -3843,6 +3848,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		size = (mipmaps[0].height * mipmaps[0].width * bpp) / 8;
 
 		while ( m.width != 1 && m.height != 1 ) {
+			////cout << "Width:  " << m.width << "  Height:  " << m.height << "  Offset:  " << m.offset << endl;
 			m.width /= 2;
 			m.height /= 2;
 			m.offset = size;
@@ -3851,8 +3857,6 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 			mipmaps.push_back(m);
 		}
-
-
 	}
 
 	//Allocate space to store mipmaps
@@ -3860,7 +3864,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		delete [] data;
 	}
 
-	data = new byte[size];
+	data = new byte[size * bpp / 8];
 
 	//Copy pixels to Color4 C array
 	Color4 * tmp_image = new Color4[new_pixels.size()];
@@ -3869,26 +3873,27 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		tmp_image[i] = new_pixels[i];
 	}
 
-	//vector<Color4> tmp_image = new_pixels;
-
 	//Pack pixel data
 	for (uint i = 0; i < mipmaps.size(); ++i ) {
+		cout << "Width:  " << mipmaps[i].width << "  Height:  " << mipmaps[i].height << "  Offset:  " << mipmaps[i].offset << endl;
+
 		if ( i > 0 ) {
 			//Allocate space to store re-sized image.
 			Color4 * resized = new Color4[ mipmaps[i].width * mipmaps[i].height ];
 
 			//Visit every other pixel in each row and column of the previous image
-			for ( uint w = 0; w < mipmaps[i - 1].width; w+=2 ) {
-				for ( uint h = 0; h < mipmaps[i - 1].height; h+=2 ) {
-					Color4 & av = resized[(h/2)*(w/2)+(w/2)];
+			for ( uint w = 0; w < mipmaps[i-1].width; w+=2 ) {
+				for ( uint h = 0; h < mipmaps[i-1].height; h+=2 ) {
+					//cout << "w:  " << w << "  h:  " << h << endl;
+					Color4 & av = resized[(h/2) * mipmaps[i].width + (w/2)];
 
 					//Start with the value of the current pixel
-					av = tmp_image[h * w + w];
+					av = tmp_image[h * mipmaps[i-1].width + w];
 					float num_colors = 1.0f;
 
 					//Only process the pixel above if height is > 1
 					if ( h > 1 ) {
-						Color4 & px = tmp_image[(h+1) * w + w];
+						Color4 & px = tmp_image[(h+1) * mipmaps[i-1].width + w];
 						av.r += px.r;
 						av.g += px.g;
 						av.b += px.b;
@@ -3898,7 +3903,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 					//Only process the pixel to the right if width > 1
 					if (w > 1 ) {
-						Color4 & px = tmp_image[h * w + (w+1)];
+						Color4 & px = tmp_image[h * mipmaps[i-1].width + (w+1)];
 						av.r += px.r;
 						av.g += px.g;
 						av.b += px.b;
@@ -3908,7 +3913,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 					//Only process the pixel to the upper right if both width and height are > 1
 					if ( w > 1 && h >> 1 ) {
-						Color4 & px = tmp_image[(h+1) * w + (w+1)];
+						Color4 & px = tmp_image[(h+1) * mipmaps[i-1].width + (w+1)];
 						av.r += px.r;
 						av.g += px.g;
 						av.b += px.b;
@@ -3935,14 +3940,43 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 		//Data is ready to be packed into the byes of this mipmap
 
+		#ifdef IM_DEBUG
+			cout << "Showing mipmap size " << mipmaps[i].width << " x " << mipmaps[i].height << "." << endl;
+			imdebug("rgba b=32f w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &tmp_image[0] );
+			cin.get();
+		#endif
+
 		//Start at offset
 		byte * map = &data[mipmaps[i].offset];
 
-		for ( uint i = 0; i < mipmaps[i].width * mipmaps[i].height; ++i ) {
-			map[i * 4] = int( tmp_image[i].r * 255.0f );
-			map[i * 4 + 1] = int( tmp_image[i].g * 255.0f );
-			map[i * 4 + 2] = int( tmp_image[i].b * 255.0f );
-			map[i * 4 + 3] = int( tmp_image[i].a * 255.0f );
+		switch(pxFormat) {
+		case PX_FMT_RGB8:
+			for ( uint j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
+				map[j * 3] = int( tmp_image[j].r * 255.0f );
+				map[j * 3 + 1] = int( tmp_image[j].g * 255.0f );
+				map[j * 3 + 2] = int( tmp_image[j].b * 255.0f );
+			}
+
+			//#ifdef IM_DEBUG
+			//	cout << "Showing mipmap after being packed  - size " << mipmaps[i].width << " x " << mipmaps[i].height << "." << endl;
+			//	imdebug("rgb w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &map[0] );
+			//	cin.get();
+			//#endif
+			break;
+		case PX_FMT_RGBA8:
+			for ( uint j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
+				map[j * 4] = int( tmp_image[j].r * 255.0f );
+				map[j * 4 + 1] = int( tmp_image[j].g * 255.0f );
+				map[j * 4 + 2] = int( tmp_image[j].b * 255.0f );
+				map[j * 4 + 3] = int( tmp_image[j].a * 255.0f );
+			}
+
+			//#ifdef IM_DEBUG
+			//	cout << "Showing mipmap after being packed  - size " << mipmaps[i].width << " x " << mipmaps[i].height << "." << endl;
+			//	imdebug("rgba w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &map[0] );
+			//	cin.get();
+			//#endif
+			break;
 		}
 	}
 }
