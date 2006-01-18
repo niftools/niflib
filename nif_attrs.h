@@ -47,7 +47,7 @@ const char ATTRERR[] = "Attribute type Missmatch.";
 class AAttr : public IAttr {
 public:
 	AAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : _name(name), _owner(owner), _first_ver(first_ver), _last_ver(last_ver) {}
-	~AAttr() {}
+	~AAttr() {} //cout << "   Attribute \"" << _name << "\" deleted" << endl; }
 	string GetName() const { return _name; }
 	//Getters
 	int asInt() const { throw runtime_error(ATTRERR); }
@@ -1158,10 +1158,11 @@ public:
 
 class TexSourceAttr : public LinkAttr {
 public:
-	TexSourceAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {}
-	~TexSourceAttr() {
-		memset(&data, 0, sizeof(data) );
+	TexSourceAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
+		data.unknownByte = 0;
+		data.useExternal = false;
 	}
+	~TexSourceAttr() {}
 	AttrType GetType() const { return attr_texsource; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
 		data.useExternal = ( ReadByte(in) != 0);

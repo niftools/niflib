@@ -233,6 +233,7 @@ void ABlock::SubtractRef() {
 	//cout << GetBlockType() << " Reference decreased to: " << _ref_count << endl;
 
 	if ( _ref_count < 1 ) {
+		//cout << "Block #" << this->GetBlockNum() << " - " << this->GetBlockType() << ":  Deleting block now." << endl;
 		delete this;
 	}
 }
@@ -3703,19 +3704,22 @@ PixelFormat NiPixelData::GetPixelFormat() const {
 void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
 	//Ensure that texture dimentions are powers of two
 	if ( (new_height & (new_height-1)) != 0 ) {
-		throw ("Texture height must be a power of two.");
+		throw runtime_error("Texture height must be a power of two.  1, 2, 4, 8, 16, 32, 64, 256, 512, etc.");
 	}
 
 	if ( (new_width & (new_width-1)) != 0 ) {
-		throw ("Texture height must be a power of two.");
+		throw runtime_error("Texture width must be a power of two.  1, 2, 4, 8, 16, 32, 64, 256, 512, etc.");
 	}
 	
 	//Delete any data that was previously held
 	if ( data != NULL ) {
 		delete [] data;
-		dataSize = 0;
-		mipmaps.resize(1);
+		data = NULL;
 	}
+
+	dataSize = 0;
+	mipmaps.resize(1);
+
 
 	//Set up first mipmap
 	mipmaps[0].width = new_width;
