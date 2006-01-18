@@ -1062,7 +1062,14 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 	GetAttr("Center")->Write( out, version );
 	GetAttr("Radius")->Write( out, version );
 
-	WriteBool( colors.size() > 0, out, version );
+	if ( version <= VER_4_0_0_2 ) {
+		// NifTexture bug workaround:
+		if ( colors.size() > 0 )
+			WriteUInt( 0xffffffff, out );
+		else
+			WriteUInt( 0, out );		
+	} else
+		WriteBool( colors.size() > 0, out, version );
 
 	for ( uint i = 0; i < colors.size(); ++i ){
 		NifStream( colors[i], out );
@@ -1075,7 +1082,12 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 	// hasUVs does not exist after version 4.0.0.2
 	bool hasUVs = true;
 	if ( version <= VER_4_0_0_2 ) {
-		WriteBool( uv_sets.size() > 0, out, version );
+		//WriteBool( uv_sets.size() > 0, out, version );
+		// NifTexture bug workaround:
+		if (uv_sets.size() > 0)
+			WriteUInt( 0xffffffff, out );
+		else
+			WriteUInt( 0, out );
 	}
 
 	for ( uint i = 0; i < uv_sets.size(); ++i ){
@@ -1086,7 +1098,7 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 	}
 
 	//Unknown Short here from version 10.0.1.0 on
-	//Just read it and throw it away for now
+	//Just write a zero
 	if ( version >= VER_10_0_1_0) {
 		WriteUShort( 0, out );
 	}

@@ -301,7 +301,7 @@ void WriteBool( bool val, ofstream& out, unsigned int version ) {
 	if ( version < 0x04010001 ) {
 		//Bools are stored as integers before version 4.1.0.1
 		if (val)
-			WriteUInt( 0xFFFFFFFF, out ); // NifTexture workaround
+			WriteUInt( 1, out );
 		else
 			WriteUInt( 0, out );
 	} else {
