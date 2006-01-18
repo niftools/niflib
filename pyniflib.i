@@ -121,10 +121,10 @@ struct Key {
 %ignore attr_ref::operator=(const char * n);
 %ignore attr_ref::operator=(Matrix33 const & n);
 %ignore attr_ref::operator=(blk_ref const & n);
-%ignore attr_ref::operator=(TextureSource const & n);
+%ignore attr_ref::operator=(TexSource const & n);
 %ignore attr_ref::operator=(BoundingBox const & n);
 %ignore attr_ref::operator=(ConditionalInt const & n);
-%ignore attr_ref::operator=(Texture const & n);
+%ignore attr_ref::operator=(TexDesc const & n);
 
 %ignore blk_ref::operator=(const blk_ref & rh );
 
@@ -153,6 +153,10 @@ struct Key {
 %rename QueryColorData( blk_ref const & block ) QueryColorData_const;
 %rename QueryFloatData( blk_ref const & block ) QueryFloatData_const;
 %rename QueryPosData( blk_ref const & block ) QueryPosData_const;
+%rename QueryBoolData( blk_ref const & block ) QueryBoolData_const;
+%rename QueryPixelData( blk_ref const & block ) QueryPixelData_const;
+%rename QueryPalette( blk_ref const & block ) QueryPalette_const;
+%rename QueryControllerSequence( blk_ref const & block ) QueryControllerSequence_const;
 
 
 %include "niflib.h"
