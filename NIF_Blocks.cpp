@@ -3600,13 +3600,22 @@ void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 
 	GetAttr("Palette")->Write( file, version );
 
-	WriteUInt( uint(mipmaps.size()), file );
+	//If there is no data stored, then there are no mipmaps.
+	if ( dataSize > 0 ) {
+		WriteUInt( uint(mipmaps.size()), file );
+	} else {
+		WriteUInt( 0, file );
+	}
+
 	WriteUInt( bpp / 8, file );
 
-	for ( uint i = 0; i < mipmaps.size(); ++i ) {
-		WriteUInt( mipmaps[i].width, file );
-		WriteUInt( mipmaps[i].height, file );
-		WriteUInt( mipmaps[i].offset, file );
+	//If there is no data stored, then there are no mipmaps.
+	if ( dataSize > 0 ) {
+		for ( uint i = 0; i < mipmaps.size(); ++i ) {
+			WriteUInt( mipmaps[i].width, file );
+			WriteUInt( mipmaps[i].height, file );
+			WriteUInt( mipmaps[i].offset, file );
+		}
 	}
 
 	WriteUInt( dataSize, file );
@@ -3726,6 +3735,7 @@ void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
 	if ( data != NULL ) {
 		delete [] data;
 		data = NULL;
+		dataSize = 0;
 	}
 
 	dataSize = 0;
