@@ -3880,7 +3880,8 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		delete [] data;
 	}
 
-	data = new byte[size * bpp / 8];
+	dataSize = size * bpp / 8;
+	data = new byte[dataSize];
 
 	//Copy pixels to Color4 C array
 	Color4 * tmp_image = new Color4[new_pixels.size()];
