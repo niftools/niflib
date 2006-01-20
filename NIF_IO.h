@@ -319,7 +319,7 @@ public:
 	nifIndex(){}
 	~nifIndex() {};
 	uint GetIndex() const { return _index; }
-	uint SetIndex( int index ) {
+	void SetIndex( int index ) {
 		_index = index;
 	}
 	void Read( ifstream &in ) {

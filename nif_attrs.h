@@ -102,8 +102,8 @@ protected:
 class lnk_ref : public blk_ref {
 public:
 	lnk_ref ( IBlock * owner) : _owner(owner) { /*cout << "Constructor " <<  endl;*/ InitLink(); }
-	lnk_ref( IBlock * owner, int index ) : _owner(owner), blk_ref(index) { /*cout << "Constructor "  << endl;*/ InitLink(); }
-	lnk_ref( IBlock * owner, blk_ref block ) : _owner(owner), blk_ref(block) { /*cout << "Constructor " << endl;*/ InitLink(); }
+	lnk_ref( IBlock * owner, int index ) : blk_ref(index), _owner(owner) { /*cout << "Constructor "  << endl;*/ InitLink(); }
+	lnk_ref( IBlock * owner, blk_ref block ) : blk_ref(block), _owner(owner) { /*cout << "Constructor " << endl;*/ InitLink(); }
 
 	//Copy Constructors
 	lnk_ref( const lnk_ref & rh ) {
@@ -510,7 +510,7 @@ public:
 		}
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
-		ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
+		//ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
 			//Get Bone data from data block

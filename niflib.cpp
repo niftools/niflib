@@ -153,7 +153,8 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			blockTypeIndex[i] = ReadUShort( in );
 		}
 
-		uint unknownInt2 = ReadUInt( in );
+		//uint unknownInt2 =
+		ReadUInt( in );
 
 		////Output
 		//cout << endl << endl 
@@ -262,15 +263,16 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 	//cout << endl;
 
 	//--Read Footer--//
-	uint unknownInt = ReadUInt( in );
-	uint unknownInt2 = ReadUInt( in );
-
+	uint unknownCount = ReadUInt( in );
+	for (uint i=0; i < unknownCount; i++) ReadUInt( in ); // throw away
 	//Output
 	//cout << "====[ NiFooter ]====" << endl <<
-	//		"Unknown Int 1:  " << Hex(unknownInt) << endl <<
-	//		"Unknown Int 2: " << Hex(unknownInt2) << endl;
+	//	"Unknown Count:  " << Hex(unknownCount) << endl;
 
-
+	ReadByte( in ); // this should fail, and trigger the in.eof() flag
+	if ( ! in.eof() )
+		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
+		
 	//--Close File--//
 	in.close();
 

@@ -52,7 +52,7 @@ extern string current_file;
  * ABlock methods
  **********************************************************/
 
-ABlock::ABlock() : _ref_count(0), _block_num(-1) {
+ABlock::ABlock() : _block_num(-1), _ref_count(0) {
 		//Temporary to test reference counting
 		blocks_in_memory++;
 	}
@@ -1080,7 +1080,7 @@ void AShapeData::Write( ofstream& out, unsigned int version ) const {
 		WriteUShort( ushort(uv_sets.size()), out );
 	}
 	// hasUVs does not exist after version 4.0.0.2
-	bool hasUVs = true;
+	//bool hasUVs = true;
 	if ( version <= VER_4_0_0_2 ) {
 		//WriteBool( uv_sets.size() > 0, out, version );
 		// NifTexture bug workaround:
@@ -1546,7 +1546,7 @@ void NiTriShapeData::Read( ifstream& in, unsigned int version ){
 	AShapeData::Read( in, version );
 
 	short numTriangles = ReadUShort( in );
-	int numVertexIndices = ReadUInt( in );
+	ReadUInt( in ); // numTriangles * 3, we can throw this away
 	
 	//From version 10.1.0.0 on there is a bool to check whether or not there are any triangles
 	//We already know the answer to this from the numTriangles count, don't we?
@@ -2007,7 +2007,6 @@ void NiSkinData::Write( ofstream& out, unsigned int version ) const {
 	Bone bone; // temporary value
 
 	map<IBlock *, Bone >::const_iterator it;
-	int num = 0;
 	for( it = bone_map.begin(); it != bone_map.end(); ++it ) {
 		//Calculae offset for this bone (data is not stored)
 		CalculateBoneOffset( par_node, it->first, bone );	
@@ -3993,6 +3992,9 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 			//	imdebug("rgba w=%d h=%d %p", mipmaps[i].width, mipmaps[i].height, &map[0] );
 			//	cin.get();
 			//#endif
+			break;
+		case PX_FMT_PAL8:
+			throw runtime_error("The SetColors function only supports the PX_FMT_RGB8 and PX_FMT_RGBA8 pixel formats.");
 			break;
 		}
 	}
