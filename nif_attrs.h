@@ -891,7 +891,27 @@ public:
 class TexDescAttr : public LinkAttr {
 public:
 	TexDescAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
-		memset( &data, 0, sizeof(data) );
+		data.bmLumaOffset = 0.0f;
+		data.bmLumaScale = 0.0f;
+		data.bmMatrix.Set( 1.0f, 0.0f,
+			               0.0f, 1.0f );
+		data.clampMode = CLAMP_S_CLAMP_T;
+		data.filterMode = FILTER_NEAREST;
+		data.hasUnknownData = false;
+		data.isUsed = false;
+		data.PS2_K = 0;
+		data.PS2_L = 0;
+		data.textureSet = 0;
+		data.unknown5Floats[0] = 0.0f;
+		data.unknown5Floats[1] = 0.0f;
+		data.unknown5Floats[2] = 0.0f;
+		data.unknown5Floats[3] = 0.0f;
+		data.unknown5Floats[4] = 0.0f;
+		data.unknownFloat1 = 0.0f;
+		data.unknownFloat2 = 0.0f;
+		data.unknownInt = 0;
+		data.unknownShort = 0;
+		//memset( &data, 0, sizeof(data) );
 	}
 	~TexDescAttr() {}
 	AttrType GetType() const { return attr_texture; }
@@ -1626,7 +1646,10 @@ private:
 class Unk292BytesAttr : public AAttr {
 public:
 	Unk292BytesAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
-		memset( data, 0, 292 );
+		for ( int i = 0; i < 256; ++i ) {
+			data[i] = 0;
+		}
+		//memset( data, 0, 256 );
 	}
 	~Unk292BytesAttr() {}
 	AttrType GetType() const { return attr_unk292bytes; }
@@ -1673,7 +1696,7 @@ public:
 		return out.str();
 	}
 protected:
-	byte data[292];
+	byte data[256];
 };
 
 

@@ -3542,8 +3542,8 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 	pxFormat = PixelFormat( ReadUInt(file) );
 
 	NifStream( redMask, file );
-	NifStream( blueMask, file );
 	NifStream( greenMask, file );
+	NifStream( blueMask, file );
 	NifStream( alphaMask, file );
 
 	NifStream( bpp, file );
@@ -3584,8 +3584,8 @@ void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 	WriteUInt( uint(pxFormat), file );
 
 	NifStream( redMask, file );
-	NifStream( blueMask, file );
 	NifStream( greenMask, file );
+	NifStream( blueMask, file );
 	NifStream( alphaMask, file );
 
 	NifStream( bpp, file );
@@ -3742,10 +3742,10 @@ void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
 	pxFormat = px_fmt;
 	switch(pxFormat) {
 		case PX_FMT_RGB8:
-			redMask   = 0x000000FF;
+			redMask    = 0x000000FF;
 			greenMask  = 0x0000FF00;
-			blueMask = 0x00FF0000;
-			alphaMask = 0x00000000;
+			blueMask   = 0x00FF0000;
+			alphaMask  = 0x00000000;
 			bpp = 24;
 			unk8Bytes[0] = 96;
 			unk8Bytes[1] = 8;
@@ -3757,10 +3757,10 @@ void NiPixelData::Reset( int new_width, int new_height, PixelFormat px_fmt ) {
 			unk8Bytes[7] = 0;
 			break;
 		case PX_FMT_RGBA8 :
-			redMask   = 0x000000FF;
+			redMask    = 0x000000FF;
 			greenMask  = 0x0000FF00;
-			blueMask = 0x00FF0000;
-			alphaMask = 0xFF000000;
+			blueMask   = 0x00FF0000;
+			alphaMask  = 0xFF000000;
 			bpp = 32;
 			unk8Bytes[0] = 129;
 			unk8Bytes[1] = 8;
