@@ -891,10 +891,6 @@ public:
 class TexDescAttr : public LinkAttr {
 public:
 	TexDescAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
-		data.bmLumaOffset = 0.0f;
-		data.bmLumaScale = 0.0f;
-		data.bmMatrix.Set( 1.0f, 0.0f,
-			               0.0f, 1.0f );
 		data.clampMode = CLAMP_S_CLAMP_T;
 		data.filterMode = FILTER_NEAREST;
 		data.hasUnknownData = false;
@@ -1078,24 +1074,24 @@ public:
 	void ReadAttr( ifstream& in, unsigned int version ) {
 		TexDescAttr::ReadAttr( in, version );
 		if ( data.isUsed ) {
-			data.bmLumaScale = ReadFloat( in );
-			data.bmLumaOffset = ReadFloat( in );
-			data.bmMatrix[0][0] = ReadFloat( in );
-			data.bmMatrix[1][0] = ReadFloat( in );
-			data.bmMatrix[0][1] = ReadFloat( in );
-			data.bmMatrix[1][1] = ReadFloat( in );
+			//data.bmLumaScale = ReadFloat( in );
+			//data.bmLumaOffset = ReadFloat( in );
+			//data.bmMatrix[0][0] = ReadFloat( in );
+			//data.bmMatrix[1][0] = ReadFloat( in );
+			//data.bmMatrix[0][1] = ReadFloat( in );
+			//data.bmMatrix[1][1] = ReadFloat( in );
 		}
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
 		TexDescAttr::WriteAttr( out, version );
 
 		if ( data.isUsed ) {
-			WriteFloat( data.bmLumaScale, out );
-			WriteFloat( data.bmLumaOffset, out );
-			WriteFloat( data.bmMatrix[0][0], out );
-			WriteFloat( data.bmMatrix[1][0], out );
-			WriteFloat( data.bmMatrix[0][1], out );
-			WriteFloat( data.bmMatrix[1][1], out );
+			//WriteFloat( data.bmLumaScale, out );
+			//WriteFloat( data.bmLumaOffset, out );
+			//WriteFloat( data.bmMatrix[0][0], out );
+			//WriteFloat( data.bmMatrix[1][0], out );
+			//WriteFloat( data.bmMatrix[0][1], out );
+			//WriteFloat( data.bmMatrix[1][1], out );
 		}
 	}
 	string asString() const {
@@ -1106,13 +1102,13 @@ public:
 		out << TexDescAttr::asString();
 
 		if ( data.isUsed ) {
-			out << endl
-				<< "   BumpMap Info:" << endl
-				<< "      Luma Offset:  " << data.bmLumaOffset << endl
-				<< "      Luma Scale:  " << data.bmLumaScale << endl
-				<< "      Matrix:" << endl
-				<< "         |" << setw(6) << data.bmMatrix[0][0] << "," << setw(6) << data.bmMatrix[0][1] << " |" << endl
-				<< "         |" << setw(6) << data.bmMatrix[1][0] << "," << setw(6) << data.bmMatrix[1][1] << " |" << endl;
+			//out << endl
+			//	<< "   BumpMap Info:" << endl
+			//	<< "      Luma Offset:  " << data.bmLumaOffset << endl
+			//	<< "      Luma Scale:  " << data.bmLumaScale << endl
+			//	<< "      Matrix:" << endl
+			//	<< "         |" << setw(6) << data.bmMatrix[0][0] << "," << setw(6) << data.bmMatrix[0][1] << " |" << endl
+			//	<< "         |" << setw(6) << data.bmMatrix[1][0] << "," << setw(6) << data.bmMatrix[1][1] << " |" << endl;
 		}
 
 		return out.str();

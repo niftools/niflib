@@ -145,6 +145,26 @@ const unsigned int VER_10_1_0_0 = 0x0A010000; /*!< Nif Version 10.1.0.0 */
 const unsigned int VER_10_2_0_0 = 0x0A020000; /*!< Nif Version 10.2.0.0 */ 
 const unsigned int VER_20_0_0_4 = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
 
+/*! Lists the basic texture types availiable from the ITexturingProperty interface*/
+enum TexType {
+	BASE_MAP = 0, /*!< The basic texture used by most meshes. */ 
+	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */ 
+	DETAIL_MAP = 2, /*!< Combined with base map for added detail. */ 
+	GLOSS_MAP = 3, /*!< Allows the glossyness of an object to differ across its surface. */ 
+	GLOW_MAP = 4, /*!< Creates a glowing effect. */ 
+	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */ 
+	DECAL_0_MAP = 6 /*!< For placing images on the object like stickers. */ 
+};
+
+/*! Specifies the availiable texture apply modes.  Affects the way colors are composed together. */
+enum ApplyMode {
+   APPLY_REPLACE = 0, /*!< Replaces existing color */ 
+   APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */ 
+   APPLY_MODULATE = 2, /*!< Modulates existing color. */ 
+   APPLY_HILIGHT = 3, /*!< PS2 Only */
+   APPLY_HILIGHT2 = 4 /*!< PS2 Only */
+};
+
 /*! Specifies the availiable texture clamp modes.  That is, the behavior of pixels outside the range of the texture.*/
 enum TexClampMode {
 	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */ 
@@ -1190,30 +1210,6 @@ struct ConditionalInt {
 	int unknownInt; /*!< The integer value which may or may not be in use.  Its function is unknown. */ 
 };
 
-/*! Represents a texture description that specifies various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
-struct TexDesc {
-	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
-	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
-	
-	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
-	TexClampMode clampMode;  /*!< The texture wraping/clamping mode. */ 
-	TexFilterMode filterMode; /*!< The texture filtering mode. */ 
-	int textureSet; /*!< Texture set? Usually 0. */ 
-	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0.  Exists up to version 10.2.0.0 */ 
-	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5.  Exists up to version 10.2.0.0 */ 
-	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
-	//Unknown Block in version 10.1.0.0 and up
-	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
-	float unknown5Floats[5]; /*!< 5 unkown floating point values that exist from version 10.1.0.0 on. */ 
-	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
-	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
-	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
-	//Bitmap block - only exists if this texture is in the bitmap slot
-	float bmLumaOffset; /*!< The bitmap luma offset.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
-	float bmLumaScale; /*!< The bitmap luma scale.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
-	Matrix22 bmMatrix; /*!< The bitmap 2x2 matrix.  Unsure of function.  Only exists if this texture is in the bitmap slot. */ 
-};
-
 /*! Stores texture source data.  Specifies where to find the image data; in an external file, or within a NiPixelData block. */
 struct TexSource {
 	bool useExternal; /*!< Specifies whether to use an external file for the texture or not.  If true, an external file is used.  If false, the image data is stored within a NiPixelData block.  This block can be retrieved by using the asLink function on the same attribute. */ 
@@ -1551,12 +1547,6 @@ public:
 	virtual ConditionalInt asConditionalInt() const = 0;
 
 	/*!
-	 * Used to get a copy of the TexDesc structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
-	 * \return A copy of the TexDesc structure stored in this attribute.
-	 */
-	virtual TexDesc asTexDesc() const = 0;
-
-	/*!
 	 * Used to retrieve a list of all the blocks linked through this attribute to its owner block.  Raises an exception if the attribute does not store this type of value.
 	 * \return A list of all the blocks linked through this attribute to its owner block. The list will be empty if no blocks are linked through this attribute.
 	 */
@@ -1646,12 +1636,6 @@ public:
 	 * \param val This value will be copied into the attribute and stored.
 	 */
 	virtual void Set( ConditionalInt const & val ) = 0;
-
-	/*!
-	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
-	 * \param val This value will be copied into the attribute and stored.
-	 */
-	virtual void Set( TexDesc const & val ) = 0;
 
 	//--Link functions--//
 
@@ -2005,7 +1989,8 @@ public:
 //	~ComplexVertex();
 //	bool has_color, has_normal;
 //	int vertex_index, color_index, normal_index;
-//	vector<int> uv_indices;
+//	bool has_base_uv, has_glow_uv;
+//	int base_uv_index, glow_uv_index;
 //}
 //
 //struct ComplexFace {
@@ -2015,21 +2000,19 @@ public:
 //};
 //
 //class ComplexShape {
+//	void SetVertices( vector<Vector3> & vertices );
+//	void SetUVs( vector<TexCoord> & uvs );
+//	void SetColors( vector<Color4> & colors );
+//	void SetNormals( vector<Vector3> & normals );
+//	void SetBones( vector<blk_ref> & bones );
+//	void SetFaces( list< vector< ComplexVertex > > & faces );
 //
-//	void CombineTriShapes( list<blk_ref> & tri_shapes );
-////	void SetVertices( vector<Vector3> & vertices );
-////	void SetUVs( vector<TexCoord> & uvs );
-////	void SetColors( vector<Color4> & colors );
-////	void SetNormals( vector<Vector3> & normals );
-////	void SetBones( vector<blk_ref> & bones );
-////	void SetFaces( list< vector< ComplexVertex > > & faces );
-////
-////	vector<Vector3> GetVertices();
-////	vector<TexCoord> GetUVs();
-////	vector<Color4> GetColors();
-////	vector<Vector3> GetNormals();
-////	vector<blk_ref> GetBones();
-////	list< vector< ComplexVertex > > GetFaces();
+//	vector<Vector3> GetVertices();
+//	vector<TexCoord> GetUVs();
+//	vector<Color4> GetColors();
+//	vector<Vector3> GetNormals();
+//	vector<blk_ref> GetBones();
+//	list< vector< ComplexVertex > > GetFaces();
 //
 //private:
 //	vector<Vector3> _vertices;
@@ -2307,15 +2290,6 @@ public:
 		return *this;
 	}
 
-	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
-	 * \param n The new value to set the IAttr attribute to using its Set function.
-	 * \return a reference to this attr_ref object.
-	 */
-	attr_ref & operator=(TexDesc const & n) {
-		_attr->Set(n);
-		return *this;
-	}
-
 	//--Conversion fuctions--//
 
 	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
@@ -2362,11 +2336,6 @@ public:
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
 	 */
 	operator ConditionalInt() const;
-
-	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
-	 * \return the value stored in the attribute stored in this reference by calling its asType function.
-	 */
-	operator TexDesc() const;
 
 	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
@@ -2635,15 +2604,30 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, TexDesc const & value) {
-		attr_ref attr = _block->GetAttr(index);
-		if ( attr.is_null() == true )
-			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
-		attr->Set(value);
-	}
 protected:
 	int _index;
 	IBlock * _block;
+};
+
+/*! Represents a texture description that specifies various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
+struct TexDesc {
+	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
+	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
+	string asString() const;
+	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
+	blk_ref source; /*!< The NiTextureSource block which points to the texture data. > */
+	TexClampMode clampMode;  /*!< The texture wraping/clamping mode. */ 
+	TexFilterMode filterMode; /*!< The texture filtering mode. */ 
+	int textureSet; /*!< Texture set? Usually 0. */ 
+	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0.  Exists up to version 10.2.0.0 */ 
+	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5.  Exists up to version 10.2.0.0 */ 
+	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
+	//Unknown Block in version 10.1.0.0 and up
+	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
+	float unknown5Floats[5]; /*!< 5 unkown floating point values that exist from version 10.1.0.0 on. */ 
+	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
+	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
+	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
 };
 
 //--USER GUIDE DOCUMENTATION--//

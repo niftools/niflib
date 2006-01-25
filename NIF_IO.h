@@ -94,15 +94,6 @@ typedef ushort	nifFlags;
 #define NULL 0
 #endif
 
-/* Valid values for some texturingproperty attributes. */
-typedef enum {
-   APPLY_REPLACE = 0x00000000,
-   APPLY_DECAL = 1,
-   APPLY_MODULATE = 2,
-   APPLY_HILIGHT = 3,    // PS2 Only
-   APPLY_HILIGHT2 = 4    // PS2 Only
-} nifApplyMode;
-
 /* Valid values for some sourcetexture attributes. */
 typedef enum {
    PALETTISED = 0x00000000,
@@ -178,7 +169,8 @@ ostream & operator<<(ostream & lh, fVector2 const & rh);
 ostream & operator<<(ostream & lh, fVector3 const & rh);
 ostream & operator<<(ostream & lh, fVector4 const & rh);
 ostream & operator<<(ostream & lh, usVector3 const & rh);
-ostream & operator<<(ostream & lh, nifApplyMode const & rh);
+ostream & operator<<(ostream & lh, ApplyMode const & rh);
+
 
 ostream & operator<<(ostream & lh, nifPixelLayout const & rh);
 ostream & operator<<(ostream & lh, nifMipMapFormat const & rh);
@@ -209,6 +201,8 @@ void NifStream( Quaternion & val, ifstream& in );
 void NifStream( KeyType & val, ifstream& in );
 void NifStream( Color4 & val, ifstream& in );
 void NifStream( Triangle & val, ifstream& in );
+void NifStream( TexDesc & val, ifstream& in, uint version );
+
 
 template <class T> 
 void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
@@ -279,6 +273,7 @@ void NifStream( Quaternion const & val, ofstream& out );
 void NifStream( KeyType const & val, ofstream& out );
 void NifStream( Color4 const & val, ofstream& out );
 void NifStream( Triangle const & val, ofstream& out );
+void NifStream( TexDesc const & val, ofstream& out, uint version );
 
 template <class T> 
 void NifStream( Key<T> const & key, ofstream& file, KeyType type ) {
@@ -311,6 +306,20 @@ void NifStream( vector<T> const & val, ofstream& file ) {
 		NifStream( *it, file );
 	}
 }
+
+//string indent( int level );
+
+////As String
+//void NifString( uint const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( ushort const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( byte const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( float const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( string const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( Vector3 const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( Quaternion const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( KeyType const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( Color4 const & val, stringstream& out, string heading, int ind_lvl = 0 );
+//void NifString( Triangle const & val, stringstream& out, string heading, int ind_lvl = 0 );
 
 class NIF;
 

@@ -120,7 +120,7 @@ ostream & operator<<(ostream & lh, usVector3 const & rh) {
 	return lh << "(" << setw(4) << rh[0] << ", " << setw(4) << rh[1] << ", " << setw(4) << rh[2] << ")";
 }
 
-ostream & operator<<(ostream & lh, nifApplyMode const & rh) {
+ostream & operator<<(ostream & lh, ApplyMode const & rh) {
 	switch (int(rh)) {
 		case 0: return lh << "Replace (0)";
 		case 1: return lh << "Decal (1)";
@@ -398,6 +398,42 @@ void NifStream( Triangle & val, ifstream& in ) {
 	val.v3 = ReadUShort( in );
 };
 
+void NifStream( TexDesc & val, ifstream& in, uint version ) {
+	val.isUsed = ReadBool( in, version );
+	if ( val.isUsed ) {	
+		//Read in link for TexSource
+		val.source.set_index( ReadUInt( in ) );
+
+		val.clampMode = TexClampMode( ReadUInt( in ) );
+		val.filterMode = TexFilterMode( ReadUInt( in ) );
+		val.textureSet = ReadUInt( in );
+
+		//PS2 values exist up to version 10.2.0.0
+		if ( version <= VER_10_2_0_0 ) {
+			val.PS2_L = ReadUShort( in );
+			val.PS2_K = ReadUShort( in );
+		}
+
+		//unknownShort exists up to version 4.1.0.12
+		if ( version <= VER_4_1_0_12) {
+			val.unknownShort = ReadUShort( in );
+		}
+
+		//From version 10.1.0.0 and up, this unknown val block may exist
+		if ( version >= VER_10_1_0_0 ) {
+			val.hasUnknownData = ReadBool( in, version );
+			if ( val.hasUnknownData == true ) {
+				for (int i = 0; i < 5; ++i ) {
+					val.unknown5Floats[i] = ReadFloat( in );;
+				}
+				val.unknownInt = ReadUInt( in );
+				val.unknownFloat1 = ReadFloat( in );
+				val.unknownFloat2 = ReadFloat( in );
+			}
+		}
+	}
+}
+
 
 
 void NifStream( uint const & val, ofstream& out ) { WriteUInt( val, out ); }
@@ -428,3 +464,91 @@ void NifStream( Triangle const & val, ofstream& out ) {
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );
 };
+void NifStream( TexDesc const & val, ofstream& out, uint version ) {
+	WriteBool( val.isUsed, out, version );
+	if ( val.isUsed ) {
+		//Write link
+		WriteUInt( val.source.get_index(), out );
+
+		WriteUInt( val.clampMode, out );
+		WriteUInt( val.filterMode, out );
+		WriteUInt( val.textureSet, out );
+
+		//PS2 values exist up to version 10.2.0.0
+		if ( version <= VER_10_2_0_0 ) {
+			WriteUShort( val.PS2_L, out );
+			WriteUShort( val.PS2_K, out );
+		}
+
+		//unknownShort exists up to version 4.1.0.12
+		if ( version <= VER_4_1_0_12 ) {
+			WriteUShort( val.unknownShort, out );
+		}
+
+		//From version 10.1.0.0 and up, this unknown val block may exist
+		if ( version >= VER_10_1_0_0 ) {
+			WriteBool( val.hasUnknownData, out, version );
+			if ( val.hasUnknownData == true ) {
+				for (int i = 0; i < 5; ++i ) {
+					WriteFloat( val.unknown5Floats[i], out );;
+				}
+				WriteUInt( val.unknownInt, out );
+				WriteFloat( val.unknownFloat1, out );
+				WriteFloat( val.unknownFloat2, out );
+			}
+		}
+	}
+};
+
+//string indent( int level ) {
+//	string tmp;
+//	tmp.resize( level * 3 );
+//	for ( uint i = 0; i < level * 3; ++i ) {
+//		tmp[i] = ' ';
+//	}
+//	return tmp;
+//}
+
+
+////As String
+//void NifString( uint const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val << endl;
+//}
+//
+//void NifString( ushort const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val << endl;
+//}
+//
+//void NifString( byte const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val << endl;
+//}
+//
+//void NifString( float const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val << endl;
+//}
+//
+//void NifString( string const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val << endl;
+//}
+//
+//void NifString( Vector3 const & val, stringstream& out, string heading, int ind_lvl ) {
+//	out << indent(ind_lvl) << heading << val.x <<  << endl;
+//}
+//
+//void NifString( Quaternion const & val, stringstream& out, string heading, int ind_lvl ) {
+//
+//}
+//
+//void NifString( KeyType const & val, stringstream& out, string heading, int ind_lvl ) {
+//
+//}
+//
+//void NifString( Color4 const & val, stringstream& out, string heading, int ind_lvl ) {
+//
+//}
+//
+//void NifString( Triangle const & val, stringstream& out, string heading, int ind_lvl ) {
+//
+//}
+
+

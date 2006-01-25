@@ -617,6 +617,205 @@ string NiNode::asString() const {
 }
 
 /***********************************************************
+ * NiTexturingProperty methods
+ **********************************************************/
+
+void NiTexturingProperty::Read( ifstream& file, unsigned int version ){
+
+	AProperty::Read( file, version );
+
+	appl_mode = ApplyMode( ReadUInt(file) );
+
+	uint tex_count = ReadUInt( file );
+
+	textures.resize( tex_count );
+
+	for ( uint i = 0; i < textures.size(); ++i ) {
+		NifStream( textures[i], file, version );
+
+		if ( i == BUMP_MAP && textures[i].isUsed == true ) {
+			NifStream( bmLumaScale, file );
+			NifStream( bmLumaOffset, file );
+			NifStream( bmMatrix[0][0], file );
+			NifStream( bmMatrix[1][0], file );
+			NifStream( bmMatrix[0][1], file );
+			NifStream( bmMatrix[1][1], file );
+		}
+	}
+
+	//Extra Texture group exists from version 10.0.1.0 on
+	if ( version >= VER_10_0_1_0 ) {
+		uint extra_tex_count = ReadUInt( file );
+
+		extra_textures.resize( extra_tex_count );
+
+		for ( uint i = 0; i < extra_textures.size(); ++i ) {
+			NifStream( extra_textures[i].first, file, version );
+			NifStream( extra_textures[i].second, file );
+		}
+	}
+}
+
+void NiTexturingProperty::Write( ofstream& file, unsigned int version ) const {
+
+	AProperty::Write( file, version );
+
+	WriteUInt( uint(appl_mode), file );
+
+	WriteUInt( uint(textures.size()), file );
+
+	for ( uint i = 0; i < textures.size(); ++i ) {
+		NifStream( textures[i], file, version );
+
+		if ( i == BUMP_MAP && textures[i].isUsed == true ) {
+			NifStream( bmLumaScale, file );
+			NifStream( bmLumaOffset, file );
+			NifStream( bmMatrix[0][0], file );
+			NifStream( bmMatrix[1][0], file );
+			NifStream( bmMatrix[0][1], file );
+			NifStream( bmMatrix[1][1], file );
+		}
+	}
+
+	//Extra Texture group exists from version 10.0.1.0 on
+	if ( version >= VER_10_0_1_0 ) {
+		WriteUInt( uint(extra_textures.size()), file );
+
+		for ( uint i = 0; i < extra_textures.size(); ++i ) {
+			NifStream( extra_textures[i].first, file, version );
+			NifStream( extra_textures[i].second, file );
+		}
+	}
+}
+
+string NiTexturingProperty::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Apply Mode:  " << appl_mode << endl
+		<< "Main Textures:  " << uint(textures.size()) << endl;
+
+	for ( uint i = 0; i < textures.size(); ++i ) {
+		out << "   Texture " << i + 1 << ":  ";
+		switch (i) {
+			case BASE_MAP:
+				out << "Base Map";
+				break;
+			case DARK_MAP:
+				out << "Dark Map";
+				break;
+			case DETAIL_MAP:
+				out << "Detail Map";
+				break;
+			case GLOSS_MAP:
+				out << "Gloss Map";
+				break;
+			case GLOW_MAP:
+				out << "Glow Map";
+				break;
+			case BUMP_MAP:
+				out << "Bump Map";
+				break;
+			case DECAL_0_MAP:
+				out << "Decal 0 Map";
+				break;
+		};
+		out << endl;
+
+		out << textures[i].asString();
+	}
+
+	if ( textures.size() >= BUMP_MAP && textures[BUMP_MAP].isUsed == true ) {
+		out << "BumpMap Info:" << endl
+			<< "   Luma Offset:  " << bmLumaOffset << endl
+			<< "   Luma Scale:  " << bmLumaScale << endl
+			<< "   Matrix:" << endl
+			<< "      |" << setw(6) << bmMatrix[0][0] << "," << setw(6) << bmMatrix[0][1] << " |" << endl
+			<< "      |" << setw(6) << bmMatrix[1][0] << "," << setw(6) << bmMatrix[1][1] << " |" << endl;
+	}
+
+	for ( uint i = 0; i < extra_textures.size(); ++i ) {
+		out << "   Extra Texture " << i + 1 << ":  " << endl;
+		
+		out << extra_textures[i].first.asString()
+			<< "      Unknown Extra Int:  " << extra_textures[i].second << endl;
+	}
+
+	return out.str();
+}
+
+void NiTexturingProperty::FixLinks( const vector<blk_ref> & blocks ) {
+	ABlock::FixLinks( blocks );
+
+	//Main Textures
+	for (uint i = 0; i < textures.size(); ++i ) {
+		if ( textures[i].isUsed == true ) {
+			//Fix link for this child
+			textures[i].source = blocks[ textures[i].source.get_index() ];
+
+			//Add this block to child as a parent
+			AddChild( textures[i].source.get_block() );
+		}
+	}
+
+	//Extra Textures
+	for (uint i = 0; i < extra_textures.size(); ++i ) {
+		if ( extra_textures[i].first.isUsed == true ) {
+			//Fix link for this child
+			extra_textures[i].first.source = blocks[ extra_textures[i].first.source.get_index() ];
+
+			//Add this block to child as a parent
+			AddChild( extra_textures[i].first.source.get_block() );
+		}
+	}
+}
+
+list<blk_ref> NiTexturingProperty::GetLinks() const {
+	list<blk_ref> links = ABlock::GetLinks();
+
+	//--Add Internal Links--//
+
+	//Main Textures
+	for (uint i = 0; i < textures.size(); ++i ) {
+		if ( textures[i].isUsed == true ) {
+			links.push_back( textures[i].source );
+		}
+	}
+
+	//Extra Textures
+	for (uint i = 0; i < extra_textures.size(); ++i ) {
+		if ( extra_textures[i].first.isUsed == true ) {
+			links.push_back( extra_textures[i].first.source );
+		}
+	}
+
+	//Remove NULL links
+	links.remove( blk_ref(-1) );
+
+	return links;
+}
+
+NiTexturingProperty::~NiTexturingProperty() {
+	//Remove all parents that were set as this block is dying.
+
+	//Main Textures
+	for (uint i = 0; i < textures.size(); ++i ) {
+		if ( textures[i].isUsed == true ) {
+			RemoveChild( textures[i].source.get_block() );
+		}
+	}
+
+	//Extra Textures
+	for (uint i = 0; i < extra_textures.size(); ++i ) {
+		if ( extra_textures[i].first.isUsed == true ) {
+			RemoveChild( extra_textures[i].first.source.get_block() );
+		}
+	}
+}
+
+
+/***********************************************************
  * NiBoneLODController methods
  **********************************************************/
 
@@ -1824,10 +2023,13 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 		//The remaining triangles use the previous two indices as their first two indices.
 		for( uint i = 3; i < it->size(); ++i ) {
 			//Odd numbered triangles need to be reversed to keep the vertices in counter-clockwise order
-			if ( i % 2 == 0 )
+			if ( i % 2 == 0 ) {
+				//cout << (*it)[i - 2] << ", " << (*it)[i - 1] << ", " << (*it)[i] << endl;
 				triangles[n].Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
-			else
+			} else {
+				//cout << (*it)[i] << ", " << (*it)[i - 1] << ", " << (*it)[i - 2] << endl;
 				triangles[n].Set( (*it)[i], (*it)[i - 1], (*it)[i - 2] );
+			}
 
 			//Move to the next triangle
 			++n;
@@ -1854,7 +2056,41 @@ short NiTriStripsData::GetTriangleCount() const {
 	return numTriangles;
 }
 
+/***********************************************************
+ * NiBSplineData methods
+ **********************************************************/
+
+void NiBSplineData::Read( ifstream& file, unsigned int version ){
+	NifStream( unkInt, file );
 	
+	uint count = ReadUInt( file );
+	unkShorts.resize( count );
+	NifStream( unkShorts, file );
+}
+
+void NiBSplineData::Write( ofstream& file, unsigned int version ) const {
+
+	NifStream( unkInt, file );
+
+	WriteUInt( uint(unkShorts.size()), file );
+
+	NifStream( unkShorts, file );
+}
+
+string NiBSplineData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Unknown Int:  " << unkInt << endl
+		<< "Unknown Shorts?:  " << uint(unkShorts.size()) << endl;
+
+	for ( uint i = 0; i < unkShorts.size(); ++i ) {
+		out << "   " << i + 1 << ":  " << unkShorts[i] << endl;
+	}
+
+	return out.str();
+}
 
 /***********************************************************
  * NiCollisionData methods
@@ -3530,6 +3766,46 @@ string NiSkinPartition::asString() const {
 
 	return out.str();
 }
+
+/***********************************************************
+ * NiStringPalette methods
+ **********************************************************/
+
+void NiStringPalette::Read( ifstream& file, unsigned int version ) {
+
+	GetAttr("Palette")->Read( file, version );
+
+	//Read extra length and throw it away
+	ReadUInt( file );
+}
+
+void NiStringPalette::Write( ofstream& file, unsigned int version ) const {
+
+	attr_ref pal_attr = GetAttr("Palette");
+	pal_attr->Write( file, version );
+	string pal_str = pal_attr->asString();
+
+	//Write length of string again
+	WriteUInt( uint(pal_str.size()), file );
+}
+
+
+string NiStringPalette::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	string pal_str = GetAttr("Palette")->asString();
+
+	//Replace 0's with newlines
+	replace( pal_str.begin(), pal_str.end(), 0x00, 0x0A );
+
+	out << "String Palette:  " << endl
+		<< pal_str << endl;
+
+	return out.str();
+}
+
 
 /***********************************************************
  * NiPixelData methods

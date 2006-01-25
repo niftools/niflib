@@ -234,7 +234,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			}
 		}
 
-		//cout << endl << i << ":  " << blockName;
+		cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -257,7 +257,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 		bk_intl->SetBlockNum(i);
 		bk_intl->Read( in, version );
 
-		//cout << endl << blocks[i]->asString() << endl;
+		cout << endl << blocks[i]->asString() << endl;
 	}
 
 	//cout << endl;
@@ -646,7 +646,85 @@ attr_ref::operator blk_ref() const { return _attr->asLink(); }
 attr_ref::operator TexSource() const { return _attr->asTexSource(); }
 attr_ref::operator BoundingBox() const { return _attr->asBoundingBox(); }
 attr_ref::operator ConditionalInt() const { return _attr->asConditionalInt(); }
-attr_ref::operator TexDesc() const { return _attr->asTexDesc(); }
+
+string TexDesc::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	if ( isUsed ) {
+		out << "      Source:  " << source << endl
+			<< "      Clamp Mode:  ";
+		switch ( clampMode ) {
+			case CLAMP_S_CLAMP_T:
+				out << "Clamp S Clamp T";
+				break;
+			case CLAMP_S_WRAP_T:
+				out << "Clamp S Wrap T";
+				break;
+			case WRAP_S_CLAMP_T:
+				out << "Wrap S Clamp T";
+				break;
+			case WRAP_S_WRAP_T:
+				out << "Wrap S Wrap T";
+				break;
+			default:
+				out << "!Invalid Value! - " << clampMode;
+			break;
+		}
+		out << endl
+			<< "      Filter Mode:  ";
+		switch ( filterMode ) {
+			case FILTER_NEAREST:
+				out << "Nearest";
+				break;
+			case FILTER_BILERP:
+				out << "Biliner";
+				break;
+			case FILTER_TRILERP:
+				out << "Trilinear";
+				break;
+			case FILTER_NEAREST_MIPNEAREST:
+				out << "Nearest, Mip Nearest";
+				break;
+			case FILTER_NEAREST_MIPLERP:
+				out << "Nearest, Mip Linear";
+				break;
+			case FILTER_BILERP_MIPNEAREST:
+				out << "Bilinear, Mip Nearest";
+				break;
+			default:
+					out << "!Invalid Value! - " << clampMode;
+			break;
+		}
+		
+		out << endl
+			<< "      Texture Set:  " << textureSet << endl
+			<< "      PS2 L Setting:  " << PS2_L << endl
+			<< "      PS2 K Setting:  " << PS2_K << endl
+			<< "      Unknown Short:  " << unknownShort << endl
+			<< "      Unknown Data:   ";
+
+
+		//From version 10.1.0.0 and up, this unknown data block may exist
+		if ( hasUnknownData == true ) {
+			out << endl
+				<< "         Unknown 5 Floats:" << endl;
+			for (int i = 0; i < 5; ++i ) {
+				out << "            " << i + 1 << ":  " << unknown5Floats[i] << endl;
+			}
+			out << "         Unknown Int:  " << unknownInt << endl
+				<< "         Unknown Float 1:  " << unknownFloat1 << endl
+				<< "         Unknown Float 2:  " << unknownFloat2 << endl;
+		} else {
+			out << "None" << endl;
+		}
+	} else {
+		out << "      Not Being Used" << endl;
+	}
+
+	return out.str();
+}
 
 //--Query Functions--//
 

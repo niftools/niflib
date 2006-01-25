@@ -559,10 +559,26 @@ public:
  */
 class NiTexturingProperty : public AProperty {
 public:
-	NiTexturingProperty( );
+	NiTexturingProperty( ) { AddAttr( attr_flags, "Flags", 0, VER_10_0_1_0 ); }
 	void Init() {}
-	~NiTexturingProperty() {}
+	~NiTexturingProperty();
 	string GetBlockType() const { return "NiTexturingProperty"; }
+
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
+	void FixLinks( const vector<blk_ref> & blocks );
+	list<blk_ref> GetLinks() const;
+private:
+	ApplyMode appl_mode;
+	vector<TexDesc> textures; //the main textures, base, gloss, glow, etc.
+	vector< pair<TexDesc,uint> > extra_textures; //extra texture group
+
+	//Bitmap info - only used if a bitmap texture is present
+	float bmLumaOffset; // The bitmap luma offset.  Unsure of function.
+	float bmLumaScale; // The bitmap luma scale.  Unsure of function.  
+	Matrix22 bmMatrix; // The bitmap 2x2 matrix.  Unsure of function.
 };
 
 /**
@@ -925,6 +941,34 @@ private:
 };
 
 /**
+ * NiBSplineBasisData - Collision box.
+ */
+class NiBSplineBasisData : public AData {
+public:
+	NiBSplineBasisData() { AddAttr( attr_int, "Unknown Int" ); }
+	~NiBSplineBasisData() {}
+
+	string GetBlockType() const { return "NiBSplineBasisData"; }
+};
+
+/**
+ * NiBSplineData - Collision box.
+ */
+class NiBSplineData : public AData {
+public:
+	NiBSplineData() {}
+	~NiBSplineData() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
+	string GetBlockType() const { return "NiBSplineData"; }
+private:
+	uint unkInt;
+	vector<ushort> unkShorts;
+};
+
+/**
  * NiCollisionData - Collision box.
  */
 class NiCollisionData : public AData {
@@ -966,6 +1010,17 @@ public:
 	void Init() {}
 	~NiLightColorController() {}
 	string GetBlockType() const { return "NiLightColorController"; }
+};
+
+/**
+ * NiLightDimmerController
+ */
+class NiLightDimmerController : public AController {
+public:
+	NiLightDimmerController();
+	void Init() {}
+	~NiLightDimmerController() {}
+	string GetBlockType() const { return "NiLightDimmerController"; }
 };
 
 /**
@@ -1025,6 +1080,17 @@ public:
 };
 
 /**
+ * NiFloatExtraDataController
+ */
+class NiFloatExtraDataController : public AController {
+public:
+	NiFloatExtraDataController();
+	void Init() {}
+	~NiFloatExtraDataController() {}
+	string GetBlockType() const { return "NiFloatExtraDataController"; }
+};
+
+/**
  * NiVisController
  */
 class NiVisController : public AController {
@@ -1066,6 +1132,28 @@ public:
 	void Init() {}
 	~NiPSysEmitterCtlr() {}
 	string GetBlockType() const { return "NiPSysEmitterCtlr"; }
+};
+
+/**
+ * NiPSysEmitterDeclinationVarCtlr
+ */
+class NiPSysEmitterDeclinationVarCtlr : public AController {
+public:
+	NiPSysEmitterDeclinationVarCtlr();
+	void Init() {}
+	~NiPSysEmitterDeclinationVarCtlr() {}
+	string GetBlockType() const { return "NiPSysEmitterDeclinationVarCtlr"; }
+};
+
+/**
+ * NiPSysEmitterInitialRadiusCtlr
+ */
+class NiPSysEmitterInitialRadiusCtlr : public AController {
+public:
+	NiPSysEmitterInitialRadiusCtlr();
+	void Init() {}
+	~NiPSysEmitterInitialRadiusCtlr() {}
+	string GetBlockType() const { return "NiPSysEmitterInitialRadiusCtlr"; }
 };
 
 /**
@@ -1169,6 +1257,18 @@ public:
 	void Init() {}
 	~NiPointLight() {}
 	string GetBlockType() const { return "NiPointLight"; }
+};
+
+/**
+ * NiSpotLight
+ */
+
+class NiSpotLight : public ALight {
+public:
+	NiSpotLight();
+	void Init() {}
+	~NiSpotLight() {}
+	string GetBlockType() const { return "NiSpotLight"; }
 };
 
 /**
@@ -1520,6 +1620,18 @@ public:
 }; 
 
 /**
+ * NiPSysSphereEmitter
+ */
+
+class NiPSysSphereEmitter : public APSysModifier {
+public:
+	NiPSysSphereEmitter();
+	void Init() {}
+	~NiPSysSphereEmitter() {}
+	string GetBlockType() const { return "NiPSysSphereEmitter"; }
+}; 
+
+/**
  * AKeyframeData -
  */
 
@@ -1670,6 +1782,23 @@ private:
 	};
 	vector<SkinPartition> partitions;
 };
+
+/**
+ * NiStringPalette
+ */
+
+class NiStringPalette : public AData {
+public:
+	NiStringPalette() { AddAttr( attr_string, "Palette" ); }
+	void Init() {}
+	~NiStringPalette() {}
+	void Read( ifstream& in, unsigned int version );
+	void Write( ofstream& out, unsigned int version ) const;
+	string asString() const;
+
+	string GetBlockType() const { return "NiStringPalette"; }
+};
+
 
 /**
  * NiSkinInstance
@@ -1995,6 +2124,101 @@ public:
 		return out.str();
 	}
 	
+};
+
+class NiColorExtraData : public AExtraData {
+public:
+	NiColorExtraData() {}
+	~NiColorExtraData() {}
+	string GetBlockType() const { return "NiColorExtraData"; };
+
+	void Read( ifstream& file, unsigned int version ) {
+		AExtraData::Read( file, version );
+		NifStream( color, file );
+	}
+	void Write( ofstream& file, unsigned int version ) const {
+		AExtraData::Write( file, version );
+		NifStream( color, file );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Color Data:  (" << color.r << ", " << color.g << ", " << color.b << ", " << color.a << ")" << endl;
+
+		return out.str();
+	}
+private:
+	Color4 color;	
+};
+
+class NiFloatExtraData : public AExtraData {
+public:
+	NiFloatExtraData() {
+		AddAttr( attr_float, "Float Data" );
+	}
+	~NiFloatExtraData() {}
+	string GetBlockType() const { return "NiFloatExtraData"; };
+
+	void Read( ifstream& in, unsigned int version ) {
+		AExtraData::Read( in, version );
+		GetAttr("Float Data")->Read( in, version );
+	}
+	void Write( ofstream& out, unsigned int version ) const {
+		AExtraData::Write( out, version );
+		GetAttr("Float Data")->Write( out, version );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Float Data:  " << GetAttr("Float Data")->asString() << endl;
+
+		return out.str();
+	}
+	
+};
+
+class NiFloatsExtraData : public AExtraData {
+public:
+	NiFloatsExtraData() {}
+	~NiFloatsExtraData() {}
+	string GetBlockType() const { return "NiFloatsExtraData"; };
+
+	void Read( ifstream& file, unsigned int version ) {
+		AExtraData::Read( file, version );
+		uint count = ReadUInt( file );
+		float_data.resize( count );
+		NifStream( float_data, file );
+	}
+	void Write( ofstream& file, unsigned int version ) const {
+		AExtraData::Write( file, version );
+		WriteUInt( uint(float_data.size()), file );
+		NifStream( float_data, file );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Floats:  " << uint(float_data.size()) << endl;
+
+		for ( uint i = 0; i < float_data.size(); ++i ) {
+			out << "   " << i + i << ":  " << float_data[i] << endl;
+		}
+
+		return out.str();
+	}
+private:
+	vector<float> float_data;
 };
 
 class NiIntegerExtraData : public AExtraData {
@@ -2341,6 +2565,39 @@ public:
 	void Init() {}
 	~NiBoolInterpolator() {}
 	string GetBlockType() const { return "NiBoolInterpolator"; }
+};
+
+/**
+ * NiBSplineCompFloatInterpolator
+ */
+class NiBSplineCompFloatInterpolator : public AInterpolator {
+public:
+	NiBSplineCompFloatInterpolator();
+	void Init() {}
+	~NiBSplineCompFloatInterpolator() {}
+	string GetBlockType() const { return "NiBSplineCompFloatInterpolator"; }
+};
+
+/**
+ * NiBSplineCompPoint3Interpolator
+ */
+class NiBSplineCompPoint3Interpolator : public AInterpolator {
+public:
+	NiBSplineCompPoint3Interpolator();
+	void Init() {}
+	~NiBSplineCompPoint3Interpolator() {}
+	string GetBlockType() const { return "NiBSplineCompPoint3Interpolator"; }
+};
+
+/**
+ * NiBSplineCompTransformInterpolator
+ */
+class NiBSplineCompTransformInterpolator : public AInterpolator {
+public:
+	NiBSplineCompTransformInterpolator();
+	void Init() {}
+	~NiBSplineCompTransformInterpolator() {}
+	string GetBlockType() const { return "NiBSplineCompTransformInterpolator"; }
 };
 
 /**

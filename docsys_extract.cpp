@@ -58,17 +58,8 @@ AController::AController() {
 }
 
 AFx::AFx() {
-	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 2", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 3", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 4", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 5", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 6", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 7", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 8", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Unknown Link 9", 0, 0xFFFFFFFF );
-	AddAttr( attr_unk292bytes, "Unknown 256 Bytes", 0, 0xFFFFFFFF );
+	AddAttr( attr_byte, "Unknown1", 0, 0xFFFFFFFF );
+	AddAttr( attr_unk292bytes, "Unknown2", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -79,8 +70,8 @@ AInterpolator::AInterpolator() {
 ALight::ALight() {
 	AddAttr( attr_int, "Unknown Int 1", 0, 67108866 );
 	AddAttr( attr_int, "Unknown Int 2", 0, 67108866 );
-	AddAttr( attr_int, "Unknown3", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown4", 167903232, 0xFFFFFFFF );
+	AddAttr( attr_linkgroup, "Unknown3", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
@@ -122,10 +113,10 @@ AParticleNode::AParticleNode() {
 AParticleSystemController::AParticleSystemController() {
 	AddAttr( attr_float, "Speed", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Speed Random", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Emit Angle", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Emit Angle Random", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "pi", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Vertical Direction", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Vertical Angle", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Horizontal Direction", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Horizontal Angle", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
@@ -171,6 +162,9 @@ APSysModifier::APSysModifier() {
 AShape::AShape() {
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Skin Instance", 0, 0xFFFFFFFF );
+	AddAttr( attr_bool, "Has Shader", 167772416, 0xFFFFFFFF );
+	AddAttr( attr_string, "Shader Name", 167772416, 0xFFFFFFFF );
+	AddAttr( attr_link, "Shader Link", 167772416, 0xFFFFFFFF );
 	Init();
 }
 
@@ -218,17 +212,6 @@ NiBillboardNode::NiBillboardNode() {
 	Init();
 }
 
-//NiBoneLODController::NiBoneLODController() {
-//	AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Unknown2", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-//	AddAttr( attr_linkgroup, "Node Groups", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Num Shape Groups", 0, 0xFFFFFFFF );
-//	AddAttr( attr_skinshapegroup, "Shape Groups 1", 0, 0xFFFFFFFF );
-//	AddAttr( attr_linkgroup, "Shape Groups 2", 0, 0xFFFFFFFF );
-//	Init();
-//}
-
 NiBoolInterpolator::NiBoolInterpolator() {
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
@@ -244,6 +227,57 @@ NiBSPArrayController::NiBSPArrayController() {
 }
 
 NiBSParticleNode::NiBSParticleNode() {
+	Init();
+}
+
+NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() {
+	AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[6]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[7]", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiBSplineCompPoint3Interpolator::NiBSplineCompPoint3Interpolator() {
+	AddAttr( attr_int, "Unknown 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() {
+	AddAttr( attr_float, "Unknown1[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown1[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Basis Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[3]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[4]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[5]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[6]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[7]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[8]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[9]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[10]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[11]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[12]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[13]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[14]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[15]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown4[16]", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -284,6 +318,12 @@ NiFlipController::NiFlipController() {
 	Init();
 }
 
+NiFloatExtraDataController::NiFloatExtraDataController() {
+	AddAttr( attr_link, "Unknown Link", 335544324, 0xFFFFFFFF );
+	AddAttr( attr_string, "Unknown String", 335544324, 0xFFFFFFFF );
+	Init();
+}
+
 NiFloatInterpolator::NiFloatInterpolator() {
 	AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
@@ -321,6 +361,11 @@ NiLightColorController::NiLightColorController() {
 	Init();
 }
 
+NiLightDimmerController::NiLightDimmerController() {
+	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+	Init();
+}
+
 NiLODNode::NiLODNode() {
 	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
 	AddAttr( attr_vector3, "LOD Center", 0, 0xFFFFFFFF );
@@ -333,13 +378,6 @@ NiLookAtController::NiLookAtController() {
 	AddAttr( attr_link, "Look At Node", 0, 0xFFFFFFFF );
 	Init();
 }
-
-//NiLookAtInterpolator::NiLookAtInterpolator() {
-//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Num Floats", 0, 0xFFFFFFFF );
-//	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
-//	Init();
-//}
 
 NiMaterialColorController::NiMaterialColorController() {
 	AddAttr( attr_short, "Unknown", 167837696, 167837696 );
@@ -505,6 +543,7 @@ NiPSysBoxEmitter::NiPSysBoxEmitter() {
 	AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 4", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int 5", 335544324, 0xFFFFFFFF );
 	Init();
 }
 
@@ -539,6 +578,7 @@ NiPSysCylinderEmitter::NiPSysCylinderEmitter() {
 	AddAttr( attr_float, "Unknown Float 12", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 13", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 14", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int", 335544324, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 15", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 16", 0, 0xFFFFFFFF );
 	Init();
@@ -548,6 +588,18 @@ NiPSysEmitterCtlr::NiPSysEmitterCtlr() {
 	AddAttr( attr_link, "Interpolator", 167903232, 0xFFFFFFFF );
 	AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiPSysEmitterDeclinationVarCtlr::NiPSysEmitterDeclinationVarCtlr() {
+	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
+	AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiPSysEmitterInitialRadiusCtlr::NiPSysEmitterInitialRadiusCtlr() {
+	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
+	AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -595,9 +647,12 @@ NiPSysResetOnLoopCtlr::NiPSysResetOnLoopCtlr() {
 }
 
 NiPSysRotationModifier::NiPSysRotationModifier() {
-	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
-	AddAttr( attr_byte, "Unknown Byte 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int", 0, 167903232 );
+	AddAttr( attr_byte, "Unknown Byte 2", 0, 167903232 );
 	AddAttr( attr_vector3, "Unknown Vector", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int 2", 335544324, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown Short", 335544324, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "Unknown Vector 2", 335544324, 0xFFFFFFFF );
 	Init();
 }
 
@@ -610,6 +665,26 @@ NiPSysSpawnModifier::NiPSysSpawnModifier() {
 	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiPSysSphereEmitter::NiPSysSphereEmitter() {
+	AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[6]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[7]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[8]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[9]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[10]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[11]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[12]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[13]", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Link", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -655,6 +730,15 @@ NiSphericalCollider::NiSphericalCollider() {
 	Init();
 }
 
+NiSpotLight::NiSpotLight() {
+	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
+	Init();
+}
+
 NiStencilProperty::NiStencilProperty() {
 	AddAttr( attr_flags, "Flags", 0, 167772416 );
 	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
@@ -668,8 +752,15 @@ NiStencilProperty::NiStencilProperty() {
 	Init();
 }
 
+//NiStringPalette::NiStringPalette() {
+//	AddAttr( attr_string, "Palette", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Length", 0, 0xFFFFFFFF );
+//	Init();
+//}
+
 NiTextureEffect::NiTextureEffect() {
 	AddAttr( attr_condint, "Conditional Int", 0, 67108866 );
+	AddAttr( attr_byte, "Unknown Byte 2", 335544324, 0xFFFFFFFF );
 	AddAttr( attr_linkgroup, "Unknown Node List", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
@@ -693,8 +784,8 @@ NiTextureEffect::NiTextureEffect() {
 	AddAttr( attr_float, "Unknown Float 14", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 15", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 16", 0, 0xFFFFFFFF );
-	AddAttr( attr_short, "PS2 L", 0, 0xFFFFFFFF );
-	AddAttr( attr_short, "PS2 K", 0, 0xFFFFFFFF );
+	AddAttr( attr_short, "PS2 L", 0, 167903232 );
+	AddAttr( attr_short, "PS2 K", 0, 167903232 );
 	AddAttr( attr_short, "Unknown Short", 0, 67174412 );
 	Init();
 }
@@ -703,24 +794,25 @@ NiTextureTransformController::NiTextureTransformController() {
 	AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown4", 0, 0xFFFFFFFF );
 	Init();
 }
 
-NiTexturingProperty::NiTexturingProperty() {
-	AddAttr( attr_flags, "Flags", 0, 167772416 );
-	AddAttr( attr_applymode, "Apply Mode", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Texture Count?", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Base Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Dark Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Detail Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Gloss Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Glow Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_bumpmap, "Bump Map Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_texture, "Decal 0 Texture", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown1", 167772416, 0xFFFFFFFF );
-	Init();
-}
+//NiTexturingProperty::NiTexturingProperty() {
+//	AddAttr( attr_flags, "Flags", 0, 167772416 );
+//	AddAttr( attr_applymode, "Apply Mode", 0, 0xFFFFFFFF );
+//	AddAttr( attr_int, "Texture Count", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Base Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Dark Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Detail Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Gloss Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Glow Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_bumpmap, "Bump Map Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Decal 0 Texture", 0, 0xFFFFFFFF );
+//	AddAttr( attr_texture, "Unknown Texture", 335544324, 0xFFFFFFFF );
+//	AddAttr( attr_extratexturegroup, "Extra Textures", 167772416, 0xFFFFFFFF );
+//	Init();
+//}
 
 NiTransformController::NiTransformController() {
 	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
@@ -741,12 +833,10 @@ NiTransformInterpolator::NiTransformInterpolator() {
 }
 
 NiTriShape::NiTriShape() {
-	AddAttr( attr_byte, "Unknown Byte", 167772416, 0xFFFFFFFF );
 	Init();
 }
 
 NiTriStrips::NiTriStrips() {
-	AddAttr( attr_byte, "Unknown", 167772416, 0xFFFFFFFF );
 	Init();
 }
 
@@ -853,6 +943,26 @@ IBlock * CreateNiBSParticleNode() {
 	return new NiBSParticleNode;
 }
 
+IBlock * CreateNiBSplineBasisData() {
+	return new NiBSplineBasisData;
+}
+
+IBlock * CreateNiBSplineCompFloatInterpolator() {
+	return new NiBSplineCompFloatInterpolator;
+}
+
+IBlock * CreateNiBSplineCompPoint3Interpolator() {
+	return new NiBSplineCompPoint3Interpolator;
+}
+
+IBlock * CreateNiBSplineCompTransformInterpolator() {
+	return new NiBSplineCompTransformInterpolator;
+}
+
+IBlock * CreateNiBSplineData() {
+	return new NiBSplineData;
+}
+
 IBlock * CreateNiCamera() {
 	return new NiCamera;
 }
@@ -863,6 +973,10 @@ IBlock * CreateNiCollisionData() {
 
 IBlock * CreateNiColorData() {
 	return new NiColorData;
+}
+
+IBlock * CreateNiColorExtraData() {
+	return new NiColorExtraData;
 }
 
 IBlock * CreateNiControllerSequence() {
@@ -885,8 +999,20 @@ IBlock * CreateNiFloatData() {
 	return new NiFloatData;
 }
 
+IBlock * CreateNiFloatExtraData() {
+	return new NiFloatExtraData;
+}
+
+IBlock * CreateNiFloatExtraDataController() {
+	return new NiFloatExtraDataController;
+}
+
 IBlock * CreateNiFloatInterpolator() {
 	return new NiFloatInterpolator;
+}
+
+IBlock * CreateNiFloatsExtraData() {
+	return new NiFloatsExtraData;
 }
 
 IBlock * CreateNiGeomMorpherController() {
@@ -911,6 +1037,10 @@ IBlock * CreateNiKeyframeData() {
 
 IBlock * CreateNiLightColorController() {
 	return new NiLightColorController;
+}
+
+IBlock * CreateNiLightDimmerController() {
+	return new NiLightDimmerController;
 }
 
 IBlock * CreateNiLODNode() {
@@ -1061,6 +1191,14 @@ IBlock * CreateNiPSysEmitterCtlrData() {
 	return new NiPSysEmitterCtlrData;
 }
 
+IBlock * CreateNiPSysEmitterDeclinationVarCtlr() {
+	return new NiPSysEmitterDeclinationVarCtlr;
+}
+
+IBlock * CreateNiPSysEmitterInitialRadiusCtlr() {
+	return new NiPSysEmitterInitialRadiusCtlr;
+}
+
 IBlock * CreateNiPSysGravityModifier() {
 	return new NiPSysGravityModifier;
 }
@@ -1091,6 +1229,10 @@ IBlock * CreateNiPSysRotationModifier() {
 
 IBlock * CreateNiPSysSpawnModifier() {
 	return new NiPSysSpawnModifier;
+}
+
+IBlock * CreateNiPSysSphereEmitter() {
+	return new NiPSysSphereEmitter;
 }
 
 IBlock * CreateNiPSysUpdateCtlr() {
@@ -1137,12 +1279,20 @@ IBlock * CreateNiSphericalCollider() {
 	return new NiSphericalCollider;
 }
 
+IBlock * CreateNiSpotLight() {
+	return new NiSpotLight;
+}
+
 IBlock * CreateNiStencilProperty() {
 	return new NiStencilProperty;
 }
 
 IBlock * CreateNiStringExtraData() {
 	return new NiStringExtraData;
+}
+
+IBlock * CreateNiStringPalette() {
+	return new NiStringPalette;
 }
 
 IBlock * CreateNiTextKeyExtraData() {
@@ -1244,21 +1394,31 @@ void RegisterBlockFactories () {
 	global_block_map["NiBSAnimationNode"] = CreateNiBSAnimationNode;
 	global_block_map["NiBSPArrayController"] = CreateNiBSPArrayController;
 	global_block_map["NiBSParticleNode"] = CreateNiBSParticleNode;
+	global_block_map["NiBSplineBasisData"] = CreateNiBSplineBasisData;
+	global_block_map["NiBSplineCompFloatInterpolator"] = CreateNiBSplineCompFloatInterpolator;
+	global_block_map["NiBSplineCompPoint3Interpolator"] = CreateNiBSplineCompPoint3Interpolator;
+	global_block_map["NiBSplineCompTransformInterpolator"] = CreateNiBSplineCompTransformInterpolator;
+	global_block_map["NiBSplineData"] = CreateNiBSplineData;
 	global_block_map["NiCamera"] = CreateNiCamera;
 	global_block_map["NiCollisionData"] = CreateNiCollisionData;
 	global_block_map["NiColorData"] = CreateNiColorData;
+	global_block_map["NiColorExtraData"] = CreateNiColorExtraData;
 	global_block_map["NiControllerSequence"] = CreateNiControllerSequence;
 	global_block_map["NiDirectionalLight"] = CreateNiDirectionalLight;
 	global_block_map["NiDitherProperty"] = CreateNiDitherProperty;
 	global_block_map["NiFlipController"] = CreateNiFlipController;
 	global_block_map["NiFloatData"] = CreateNiFloatData;
+	global_block_map["NiFloatExtraData"] = CreateNiFloatExtraData;
+	global_block_map["NiFloatExtraDataController"] = CreateNiFloatExtraDataController;
 	global_block_map["NiFloatInterpolator"] = CreateNiFloatInterpolator;
+	global_block_map["NiFloatsExtraData"] = CreateNiFloatsExtraData;
 	global_block_map["NiGeomMorpherController"] = CreateNiGeomMorpherController;
 	global_block_map["NiGravity"] = CreateNiGravity;
 	global_block_map["NiIntegerExtraData"] = CreateNiIntegerExtraData;
 	global_block_map["NiKeyframeController"] = CreateNiKeyframeController;
 	global_block_map["NiKeyframeData"] = CreateNiKeyframeData;
 	global_block_map["NiLightColorController"] = CreateNiLightColorController;
+	global_block_map["NiLightDimmerController"] = CreateNiLightDimmerController;
 	global_block_map["NiLODNode"] = CreateNiLODNode;
 	global_block_map["NiLookAtController"] = CreateNiLookAtController;
 	global_block_map["NiLookAtInterpolator"] = CreateNiLookAtInterpolator;
@@ -1296,6 +1456,8 @@ void RegisterBlockFactories () {
 	global_block_map["NiPSysData"] = CreateNiPSysData;
 	global_block_map["NiPSysEmitterCtlr"] = CreateNiPSysEmitterCtlr;
 	global_block_map["NiPSysEmitterCtlrData"] = CreateNiPSysEmitterCtlrData;
+	global_block_map["NiPSysEmitterDeclinationVarCtlr"] = CreateNiPSysEmitterDeclinationVarCtlr;
+	global_block_map["NiPSysEmitterInitialRadiusCtlr"] = CreateNiPSysEmitterInitialRadiusCtlr;
 	global_block_map["NiPSysGravityModifier"] = CreateNiPSysGravityModifier;
 	global_block_map["NiPSysGrowFadeModifier"] = CreateNiPSysGrowFadeModifier;
 	global_block_map["NiPSysMeshUpdateModifier"] = CreateNiPSysMeshUpdateModifier;
@@ -1304,6 +1466,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiPSysResetOnLoopCtlr"] = CreateNiPSysResetOnLoopCtlr;
 	global_block_map["NiPSysRotationModifier"] = CreateNiPSysRotationModifier;
 	global_block_map["NiPSysSpawnModifier"] = CreateNiPSysSpawnModifier;
+	global_block_map["NiPSysSphereEmitter"] = CreateNiPSysSphereEmitter;
 	global_block_map["NiPSysUpdateCtlr"] = CreateNiPSysUpdateCtlr;
 	global_block_map["NiRotatingParticles"] = CreateNiRotatingParticles;
 	global_block_map["NiRotatingParticlesData"] = CreateNiRotatingParticlesData;
@@ -1315,8 +1478,10 @@ void RegisterBlockFactories () {
 	global_block_map["NiSourceTexture"] = CreateNiSourceTexture;
 	global_block_map["NiSpecularProperty"] = CreateNiSpecularProperty;
 	global_block_map["NiSphericalCollider"] = CreateNiSphericalCollider;
+	global_block_map["NiSpotLight"] = CreateNiSpotLight;
 	global_block_map["NiStencilProperty"] = CreateNiStencilProperty;
 	global_block_map["NiStringExtraData"] = CreateNiStringExtraData;
+	global_block_map["NiStringPalette"] = CreateNiStringPalette;
 	global_block_map["NiTextKeyExtraData"] = CreateNiTextKeyExtraData;
 	global_block_map["NiTextureEffect"] = CreateNiTextureEffect;
 	global_block_map["NiTextureTransformController"] = CreateNiTextureTransformController;
