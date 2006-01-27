@@ -888,97 +888,29 @@ public:
     //                 0 - lighting emmisive
     //  1 - lighting emmisive amb diff
 
-class TexDescAttr : public LinkAttr {
+class ShaderAttr : public LinkAttr {
 public:
-	TexDescAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
-		data.clampMode = CLAMP_S_CLAMP_T;
-		data.filterMode = FILTER_NEAREST;
-		data.hasUnknownData = false;
-		data.isUsed = false;
-		data.PS2_K = 0;
-		data.PS2_L = 0;
-		data.textureSet = 0;
-		data.unknown5Floats[0] = 0.0f;
-		data.unknown5Floats[1] = 0.0f;
-		data.unknown5Floats[2] = 0.0f;
-		data.unknown5Floats[3] = 0.0f;
-		data.unknown5Floats[4] = 0.0f;
-		data.unknownFloat1 = 0.0f;
-		data.unknownFloat2 = 0.0f;
-		data.unknownInt = 0;
-		data.unknownShort = 0;
-		//memset( &data, 0, sizeof(data) );
-	}
-	~TexDescAttr() {}
-	AttrType GetType() const { return attr_texture; }
+	ShaderAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver), isUsed(false) {}
+	~ShaderAttr() {}
+	AttrType GetType() const { return attr_shader; }
 	void ReadAttr( ifstream& in, unsigned int version ) {
-		data.isUsed = ReadBool( in, version );
-		if ( data.isUsed ) {	
-			//Read in link for TexSource
+		isUsed = ReadBool( in, version );
+		if ( isUsed ) {	
+			//Read in shader name
+			_shader_name = ReadString( in );
+
+			//Read in unknown link
 			LinkAttr::ReadAttr( in, version );
-
-			data.clampMode = TexClampMode( ReadUInt( in ) );
-			data.filterMode = TexFilterMode( ReadUInt( in ) );
-			data.textureSet = ReadUInt( in );
-
-			//PS2 values exist up to version 10.2.0.0
-			if ( version <= VER_10_2_0_0 ) {
-				data.PS2_L = ReadUShort( in );
-				data.PS2_K = ReadUShort( in );
-			}
-
-			//unknownShort exists up to version 4.1.0.12
-			if ( version <= VER_4_1_0_12) {
-				data.unknownShort = ReadUShort( in );
-			}
-
-			//From version 10.1.0.0 and up, this unknown data block may exist
-			if ( version >= VER_10_1_0_0 ) {
-				data.hasUnknownData = ReadBool( in, version );
-				if ( data.hasUnknownData == true ) {
-					for (int i = 0; i < 5; ++i ) {
-						data.unknown5Floats[i] = ReadFloat( in );;
-					}
-					data.unknownInt = ReadUInt( in );
-					data.unknownFloat1 = ReadFloat( in );
-					data.unknownFloat2 = ReadFloat( in );
-				}
-			}
 		}
 	}
 	void WriteAttr( ofstream& out, unsigned int version ) const {
-		WriteBool( data.isUsed, out, version );
-		if ( data.isUsed ) {
-			//Write link
+		WriteBool( isUsed, out, version );
+		if ( isUsed ) {	
+			//Write out shader name
+			WriteString( _shader_name, out );
+
+			//Write out unknown link
 			LinkAttr::WriteAttr( out, version );
-
-			WriteUInt( data.clampMode, out );
-			WriteUInt( data.filterMode, out );
-			WriteUInt( data.textureSet, out );
-
-			//PS2 values exist up to version 10.2.0.0
-			if ( version <= VER_10_2_0_0 ) {
-				WriteUShort( data.PS2_L, out );
-				WriteUShort( data.PS2_K, out );
-			}
-
-			//unknownShort exists up to version 4.1.0.12
-			if ( version <= VER_4_1_0_12 ) {
-				WriteUShort( data.unknownShort, out );
-			}
-
-			//From version 10.1.0.0 and up, this unknown data block may exist
-			if ( version >= VER_10_1_0_0 ) {
-				WriteBool( data.hasUnknownData, out, version );
-				if ( data.hasUnknownData == true ) {
-					for (int i = 0; i < 5; ++i ) {
-						WriteFloat( data.unknown5Floats[i], out );;
-					}
-					WriteUInt( data.unknownInt, out );
-					WriteFloat( data.unknownFloat1, out );
-					WriteFloat( data.unknownFloat2, out );
-				}
-			}
 		}
 	}
 	string asString() const {
@@ -986,191 +918,23 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		if ( data.isUsed ) {
-			out << endl
-				<< "   Source:  " << asLink() << endl
-				<< "   Clamp Mode:  ";
-			switch ( data.clampMode ) {
-				case CLAMP_S_CLAMP_T:
-					out << "Clamp S Clamp T";
-					break;
-				case CLAMP_S_WRAP_T:
-					out << "Clamp S Wrap T";
-					break;
-				case WRAP_S_CLAMP_T:
-					out << "Wrap S Clamp T";
-					break;
-				case WRAP_S_WRAP_T:
-					out << "Wrap S Wrap T";
-					break;
-				default:
-					out << "!Invalid Value! - " << data.clampMode;
-				break;
-			}
-			out << endl
-				<< "   Filter Mode:  ";
-			switch ( data.filterMode ) {
-				case FILTER_NEAREST:
-					out << "Nearest";
-					break;
-				case FILTER_BILERP:
-					out << "Biliner";
-					break;
-				case FILTER_TRILERP:
-					out << "Trilinear";
-					break;
-				case FILTER_NEAREST_MIPNEAREST:
-					out << "Nearest, Mip Nearest";
-					break;
-				case FILTER_NEAREST_MIPLERP:
-					out << "Nearest, Mip Linear";
-					break;
-				case FILTER_BILERP_MIPNEAREST:
-					out << "Bilinear, Mip Nearest";
-					break;
-				default:
-					out << "!Invalid Value! - " << data.clampMode;
-				break;
-			}
-			
-			out << endl
-				<< "   Texture Set:  " << data.textureSet << endl
-				<< "   PS2 L Setting:  " << data.PS2_L << endl
-				<< "   PS2 K Setting:  " << data.PS2_K << endl
-				<< "   Unknown Short:  " << data.unknownShort
-				<< "   Unknown Data:   ";
+		out << "Shader:  ";
 
-
-			//From version 10.1.0.0 and up, this unknown data block may exist
-			if ( data.hasUnknownData == true ) {
-				out << endl
-					<< "      Unknown 5 Floats:" << endl;
-				for (int i = 0; i < 5; ++i ) {
-					out << "         " << i + 1 << ":  " << data.unknown5Floats[i] << endl;
-				}
-				out << "      Unknown Int:  " << data.unknownInt << endl
-					<< "      Unknown Float 1:  " << data.unknownFloat1 << endl
-					<< "      Unknown Float 2:  " << data.unknownFloat2 << endl;
-			} else {
-				out << "None" << endl;
-			}
+		if ( isUsed ) {
+			out << endl
+				<< "   Shader Name:  " << _shader_name << endl
+				<< "   Unknown Link:  " << LinkAttr::asLink() << endl;
 		} else {
-			out << "None";
+			out << "None" << endl;
 		}
 
 		return out.str();
 	}
-	TexDesc asTexDesc() const { return data; }
-	void Set( TexDesc const & n ) { data = n; }
+
 protected:
-	TexDesc data;
+	bool isUsed;
+	string _shader_name;
 };
-
-class BumpMapAttr : public TexDescAttr {
-public:
-	BumpMapAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : TexDescAttr(name, owner, first_ver, last_ver) {}
-	~BumpMapAttr() {}
-	AttrType GetType() const { return attr_bumpmap; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
-		TexDescAttr::ReadAttr( in, version );
-		if ( data.isUsed ) {
-			//data.bmLumaScale = ReadFloat( in );
-			//data.bmLumaOffset = ReadFloat( in );
-			//data.bmMatrix[0][0] = ReadFloat( in );
-			//data.bmMatrix[1][0] = ReadFloat( in );
-			//data.bmMatrix[0][1] = ReadFloat( in );
-			//data.bmMatrix[1][1] = ReadFloat( in );
-		}
-	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
-		TexDescAttr::WriteAttr( out, version );
-
-		if ( data.isUsed ) {
-			//WriteFloat( data.bmLumaScale, out );
-			//WriteFloat( data.bmLumaOffset, out );
-			//WriteFloat( data.bmMatrix[0][0], out );
-			//WriteFloat( data.bmMatrix[1][0], out );
-			//WriteFloat( data.bmMatrix[0][1], out );
-			//WriteFloat( data.bmMatrix[1][1], out );
-		}
-	}
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		out << TexDescAttr::asString();
-
-		if ( data.isUsed ) {
-			//out << endl
-			//	<< "   BumpMap Info:" << endl
-			//	<< "      Luma Offset:  " << data.bmLumaOffset << endl
-			//	<< "      Luma Scale:  " << data.bmLumaScale << endl
-			//	<< "      Matrix:" << endl
-			//	<< "         |" << setw(6) << data.bmMatrix[0][0] << "," << setw(6) << data.bmMatrix[0][1] << " |" << endl
-			//	<< "         |" << setw(6) << data.bmMatrix[1][0] << "," << setw(6) << data.bmMatrix[1][1] << " |" << endl;
-		}
-
-		return out.str();
-	}
-};
-
-    //int isPresent
-    //if(isPresent != 0)
-    //    int source          - index of NiSourceTexture record
-    //    int clamp           - clamp mode:
-    //                          0 - clamp clamp
-    //                          1 - clamp wrap
-    //                          2 - wrap clamp
-    //                          3 - wrap wrap
-    //    int set(?)
-    //    int unknown
-
-    //    short ps2_L         = 0
-    //    short ps2_K         = -2 or -75
-    //    short unknown2      = 0 or 0x0101 (=257)
-
-class ApplyModeAttr : public IntAttr {
-public:
-	ApplyModeAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~ApplyModeAttr() {}
-	AttrType GetType() const { return attr_applymode; }
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "Replace";
-				break;
-			case 1:
-				out << "Decal";
-				break;
-			case 2:
-				out << "Modulate";
-				break;
-			case 3:
-				out << "Hilight";
-				break;
-			case 4:
-				out << "Hilight2";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}	
-};
-
-    //int apply         - apply mode:
-    //                    0 - replace
-    //                    1 - decal
-    //                    2 - modulate
-    //                    3 - hilight
-    //                    4 - hilight2
 
 class TexSourceAttr : public LinkAttr {
 public:

@@ -162,9 +162,7 @@ APSysModifier::APSysModifier() {
 AShape::AShape() {
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Skin Instance", 0, 0xFFFFFFFF );
-	AddAttr( attr_bool, "Has Shader", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_string, "Shader Name", 167772416, 0xFFFFFFFF );
-	AddAttr( attr_link, "Shader Link", 167772416, 0xFFFFFFFF );
+	AddAttr( attr_shader, "Shader", 167772416, 0xFFFFFFFF );
 	Init();
 }
 
@@ -376,6 +374,24 @@ NiLODNode::NiLODNode() {
 NiLookAtController::NiLookAtController() {
 	AddAttr( attr_short, "Unknown1", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_link, "Look At Node", 0, 0xFFFFFFFF );
+	Init();
+}
+
+NiLookAtInterpolator::NiLookAtInterpolator() {
+	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[6]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[7]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[8]", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 1", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Unknown Link 3", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -752,12 +768,6 @@ NiStencilProperty::NiStencilProperty() {
 	Init();
 }
 
-//NiStringPalette::NiStringPalette() {
-//	AddAttr( attr_string, "Palette", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Length", 0, 0xFFFFFFFF );
-//	Init();
-//}
-
 NiTextureEffect::NiTextureEffect() {
 	AddAttr( attr_condint, "Conditional Int", 0, 67108866 );
 	AddAttr( attr_byte, "Unknown Byte 2", 335544324, 0xFFFFFFFF );
@@ -797,22 +807,6 @@ NiTextureTransformController::NiTextureTransformController() {
 	AddAttr( attr_int, "Unknown4", 0, 0xFFFFFFFF );
 	Init();
 }
-
-//NiTexturingProperty::NiTexturingProperty() {
-//	AddAttr( attr_flags, "Flags", 0, 167772416 );
-//	AddAttr( attr_applymode, "Apply Mode", 0, 0xFFFFFFFF );
-//	AddAttr( attr_int, "Texture Count", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Base Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Dark Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Detail Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Gloss Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Glow Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_bumpmap, "Bump Map Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Decal 0 Texture", 0, 0xFFFFFFFF );
-//	AddAttr( attr_texture, "Unknown Texture", 335544324, 0xFFFFFFFF );
-//	AddAttr( attr_extratexturegroup, "Extra Textures", 167772416, 0xFFFFFFFF );
-//	Init();
-//}
 
 NiTransformController::NiTransformController() {
 	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );

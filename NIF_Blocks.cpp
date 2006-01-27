@@ -109,12 +109,6 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 		attr = new VertModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_lightmode ) {
 		attr = new LightModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_texture ) {
-		attr = new TexDescAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_bumpmap ) {
-		attr = new BumpMapAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_applymode ) {
-		attr = new ApplyModeAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_texsource ) {
 		attr = new TexSourceAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_pixellayout ) {
@@ -143,6 +137,8 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 		attr = new BoolAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_targetgroup ) {
 		attr = new TargetGroupAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_shader ) {
+		attr = new ShaderAttr( name, this, first_ver, last_ver );
 	} else {
 		cout << type << endl;
 		throw runtime_error("Unknown attribute type requested.");
@@ -651,7 +647,9 @@ void NiTexturingProperty::Read( ifstream& file, unsigned int version ){
 
 		for ( uint i = 0; i < extra_textures.size(); ++i ) {
 			NifStream( extra_textures[i].first, file, version );
-			NifStream( extra_textures[i].second, file );
+			if ( extra_textures[i].first.isUsed ) {
+				NifStream( extra_textures[i].second, file );
+			}
 		}
 	}
 }
@@ -683,7 +681,9 @@ void NiTexturingProperty::Write( ofstream& file, unsigned int version ) const {
 
 		for ( uint i = 0; i < extra_textures.size(); ++i ) {
 			NifStream( extra_textures[i].first, file, version );
-			NifStream( extra_textures[i].second, file );
+			if ( extra_textures[i].first.isUsed ) {
+				NifStream( extra_textures[i].second, file );
+			}
 		}
 	}
 }
@@ -1613,8 +1613,30 @@ string NiMeshPSysData::asString() const {
 void NiPSysData::Read( ifstream& file, unsigned int version ) {
 	APSysData::Read( file, version );
 
-	unkFloats.resize( vertices.size() * 10 );
-	NifStream( unkFloats, file );
+	//before version 20.0.0.4 there are unknown floats here
+	if ( version < VER_20_0_0_4	) {
+		unkFloats.resize( vertices.size() * 10 );
+		NifStream( unkFloats, file );
+	} else {
+		//From version 20.0.0.4 on there are a lot of unknown bytes
+		unkBool1 = ReadBool( file, version );
+		if ( unkBool1 ) {
+			//32 bytes per vertex
+			unkBytes1.resize( vertices.size() * 32 );
+		} else {
+			// 28 bytes per vertex
+			unkBytes1.resize( vertices.size() * 28 );
+		}
+		NifStream( unkBytes1, file );
+
+		NifStream( unkByte, file );
+
+		unkBool2 = ReadBool( file, version );
+		if ( unkBool2 ) {
+			unkBytes2.resize( vertices.size() * 4 );
+			NifStream( unkBytes2, file );
+		}
+	}
 
 	NifStream( unkInt, file );
 }
@@ -1622,7 +1644,22 @@ void NiPSysData::Read( ifstream& file, unsigned int version ) {
 void NiPSysData::Write( ofstream& file, unsigned int version ) const {
 	APSysData::Write( file, version );
 
-	NifStream( unkFloats, file );
+	//before version 20.0.0.4 there are unknown floats here
+	if ( version < VER_20_0_0_4	) {
+		NifStream( unkFloats, file );
+	} else {
+		//From version 20.0.0.4 on there are a lot of unknown bytes
+		WriteBool( unkBool1, file, version );
+		
+		NifStream( unkBytes1, file );
+		
+		NifStream( unkByte, file );
+
+		WriteBool( unkBool2, file, version);
+		if ( unkBool2 ) {
+			NifStream( unkBytes2, file );
+		}
+	}
 
 	NifStream( unkInt, file );
 }
@@ -1640,6 +1677,26 @@ string NiPSysData::asString() const {
 		for (uint i = 0; i < unkFloats.size(); ++i ) {
 			out << "   " << i + 1 << unkFloats[i] << endl;
 		}
+	} else {
+		out << "   <<<Data Not Shown>>>";
+	}
+
+	out << "Unknown Bool 1:  " << unkBool1 << endl
+		<< "Unknown Bytes 1:  " << uint(unkBytes1.size()) << endl;
+
+	if (verbose) {
+		out << HexString( &unkBytes1[0], uint(unkBytes1.size()) );
+	} else {
+		out << "   <<<Data Not Shown>>>";
+	}
+
+	out << "Unknown Byte:  " << unkByte << endl
+		<< "Unknown Bool 2:  " << unkBool2 << endl
+		<< "Unknown Bytes 2:  " << uint(unkBytes2.size()) << endl;
+
+
+	if (verbose) {
+		out << HexString( &unkBytes2[0], uint(unkBytes2.size()) );
 	} else {
 		out << "   <<<Data Not Shown>>>";
 	}
@@ -3816,20 +3873,26 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 
 	pxFormat = PixelFormat( ReadUInt(file) );
 
-	NifStream( redMask, file );
-	NifStream( greenMask, file );
-	NifStream( blueMask, file );
-	NifStream( alphaMask, file );
+	//This data only exists before version 20.0.0.4
+	if ( version < VER_20_0_0_4 ) {
+		NifStream( redMask, file );
+		NifStream( greenMask, file );
+		NifStream( blueMask, file );
+		NifStream( alphaMask, file );
 
-	NifStream( bpp, file );
+		NifStream( bpp, file );
 
-	for ( int i = 0; i < 8; ++i ) {
-		NifStream( unk8Bytes[i], file );
-	}
+		for ( int i = 0; i < 8; ++i ) {
+			NifStream( unk8Bytes[i], file );
+		}
 
-	//There is an unknown int here from version 10.1.0.0 on
-	if ( version >= VER_10_1_0_0 ) {
-		NifStream( unkInt, file );
+		//There is an unknown int here from version 10.1.0.0 to 10.2.0.0
+		if ( version >= VER_10_1_0_0 ) {
+			NifStream( unkInt, file );
+		}
+	} else {
+		//After version 20.0.0.4 there are 54 unknown bytes here
+		file.read( (char*)unk54Bytes, 54 );
 	}
 
 	GetAttr("Palette")->Read( file, version );
@@ -3850,6 +3913,12 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 
 	dataSize = ReadUInt( file );
 	data = new byte[dataSize];
+
+	//After version 20.0.0.4 there is an unknown int here
+	if ( version >= VER_20_0_0_4 ) {
+		NifStream( unkInt2, file );
+	}
+	
 	file.read( (char *)data, dataSize);
 }
 
@@ -3858,20 +3927,23 @@ void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 
 	WriteUInt( uint(pxFormat), file );
 
-	NifStream( redMask, file );
-	NifStream( greenMask, file );
-	NifStream( blueMask, file );
-	NifStream( alphaMask, file );
+	//This data only exists before version 20.0.0.4
+	if ( version < VER_20_0_0_4 ) {
+		NifStream( redMask, file );
+		NifStream( greenMask, file );
+		NifStream( blueMask, file );
+		NifStream( alphaMask, file );
 
-	NifStream( bpp, file );
+		NifStream( bpp, file );
 
-	for ( int i = 0; i < 8; ++i ) {
-		NifStream( unk8Bytes[i], file );
-	}
-	
-	//There is an unknown int here from version 10.1.0.0 on
-	if ( version >= VER_10_1_0_0 ) {
-		NifStream( unkInt, file );
+		for ( int i = 0; i < 8; ++i ) {
+			NifStream( unk8Bytes[i], file );
+		}
+		
+		//There is an unknown int here from version 10.1.0.0 to version 10.2.0.0
+		if ( version >= VER_10_1_0_0 ) {
+			NifStream( unkInt, file );
+		}
 	}
 
 	GetAttr("Palette")->Write( file, version );
@@ -3895,6 +3967,12 @@ void NiPixelData::Write( ofstream& file, unsigned int version ) const {
 	}
 
 	WriteUInt( dataSize, file );
+
+	//After version 20.0.0.4 there is an unknown int here
+	if ( version >= VER_20_0_0_4 ) {
+		NifStream( unkInt2, file );
+	}
+
 	file.write( (char *)data, dataSize);
 }
 
@@ -3934,7 +4012,15 @@ string NiPixelData::asString() const {
 	}
 
 	out << "Unknown Int:  " << unkInt << endl
-		<< "Palette:  "  << GetAttr("Palette")->asLink() << endl;
+		<< "Unknown 54 Bytes:" << endl;
+
+	if (verbose) {
+		out << HexString( unk54Bytes, 54 );
+	} else {
+		out << "   <<<Data Not Shown>>>";
+	}
+
+    out << "Palette:  "  << GetAttr("Palette")->asLink() << endl;
 
 	for ( uint i = 0; i < mipmaps.size(); ++i ) {
 		out << "Mipmap " << i + 1 << ":" << endl
@@ -3972,7 +4058,8 @@ string NiPixelData::asString() const {
 #endif
 	}
 
-	out << "Mipmap Image Data:  "  << dataSize << " Bytes (Not Shown)" << endl;
+	out << "Unknown Int 2:  " << unkInt2 << endl
+		<< "Mipmap Image Data:  "  << dataSize << " Bytes (Not Shown)" << endl;
 	
 	return out.str();
 }
@@ -4562,34 +4649,34 @@ string NiVisData::asString() const {
  * NiLookAtInterpolator methods
  **********************************************************/
 
-void NiLookAtInterpolator::Read( ifstream& file, unsigned int version ) {
-	
-	GetAttr("Unknown Short")->Read( file, version );
-	
-	//Float Array
-	uint numFloats = ReadUInt( file );
-	unkFloats.resize( numFloats );
-	NifStream( unkFloats, file );
-	
-	GetAttr("Unknown Link")->Read( file, version );
-
-	//Byte Array
-	for (uint i = 0; i < 8; ++i ) {
-		NifStream( unkBytes[i], file );
-	}
-}
-
-void NiLookAtInterpolator::Write( ofstream& file, unsigned int version ) const {
-
-}
-
-string NiLookAtInterpolator::asString() const {
-	stringstream out;
-	out.setf(ios::fixed, ios::floatfield);
-	out << setprecision(1);
-
-	return out.str();
-}
+//void NiLookAtInterpolator::Read( ifstream& file, unsigned int version ) {
+//	
+//	GetAttr("Unknown Short")->Read( file, version );
+//	
+//	//Float Array
+//	uint numFloats = ReadUInt( file );
+//	unkFloats.resize( numFloats );
+//	NifStream( unkFloats, file );
+//	
+//	GetAttr("Unknown Link")->Read( file, version );
+//
+//	//Byte Array
+//	for (uint i = 0; i < 8; ++i ) {
+//		NifStream( unkBytes[i], file );
+//	}
+//}
+//
+//void NiLookAtInterpolator::Write( ofstream& file, unsigned int version ) const {
+//
+//}
+//
+//string NiLookAtInterpolator::asString() const {
+//	stringstream out;
+//	out.setf(ios::fixed, ios::floatfield);
+//	out << setprecision(1);
+//
+//	return out.str();
+//}
 
 
 /***********************************************************

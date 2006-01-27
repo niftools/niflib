@@ -40,6 +40,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <sstream>
 #include "niflib.h"
 using namespace std;
 
@@ -320,6 +321,8 @@ void NifStream( vector<T> const & val, ofstream& file ) {
 //void NifString( KeyType const & val, stringstream& out, string heading, int ind_lvl = 0 );
 //void NifString( Color4 const & val, stringstream& out, string heading, int ind_lvl = 0 );
 //void NifString( Triangle const & val, stringstream& out, string heading, int ind_lvl = 0 );
+
+string HexString( const byte * src, uint len );
 
 class NIF;
 

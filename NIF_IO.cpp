@@ -500,6 +500,28 @@ void NifStream( TexDesc const & val, ofstream& out, uint version ) {
 	}
 };
 
+string HexString( const byte * src, uint len ) {
+	stringstream out;
+	
+	//Display Data in Hex form
+	out << hex << setfill('0');
+
+	for ( uint i = 0; i < len; ++i ) {
+		out << uppercase << setw(2) << uint(src[i]);
+		if (i % 16 == 15 || i == len - 1)
+			out << endl;
+		else if (i % 16 == 7)
+			out << "   ";
+		else if (i % 8 == 3)
+			out << "  ";
+		else
+			out << " ";
+	}
+
+	return out.str();
+
+}
+
 //string indent( int level ) {
 //	string tmp;
 //	tmp.resize( level * 3 );

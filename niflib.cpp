@@ -234,7 +234,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			}
 		}
 
-		cout << endl << i << ":  " << blockName;
+		//cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -257,7 +257,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 		bk_intl->SetBlockNum(i);
 		bk_intl->Read( in, version );
 
-		cout << endl << blocks[i]->asString() << endl;
+		//cout << endl << blocks[i]->asString() << endl;
 	}
 
 	//cout << endl;

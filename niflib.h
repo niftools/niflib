@@ -131,7 +131,8 @@ enum AttrType {
 	attr_color3, /*!< Color3 Attribute.  Holds a Float3 structure that corresponds to an RGB color. */ 
 	attr_parent, /*!< Parent Attribute.  Automatic. */
 	attr_targetgroup, /*!< A linkgroup that stores its count with a short instead of a long integer. */
-	attr_unk292bytes //Temporary
+	attr_unk292bytes, //Temporary
+	attr_shader /*!< A string and a link that describe the shader used on a particular mesh.  */
 };
 
 //NIF Versions

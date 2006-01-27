@@ -648,6 +648,8 @@ private:
 	vector<MipMap> mipmaps;
 	uint dataSize;
 	byte * data;
+	byte unk54Bytes[54];
+	uint unkInt2;
 };
 
 /**
@@ -830,6 +832,11 @@ public:
 protected:
 	vector<float> unkFloats;
 	uint unkInt;
+	bool unkBool1;
+	vector<byte> unkBytes1;
+	byte unkByte;
+	bool unkBool2;
+	vector<byte> unkBytes2;
 };
 
 /**
@@ -2224,8 +2231,6 @@ private:
 class NiIntegerExtraData : public AExtraData {
 public:
 	NiIntegerExtraData() {
-		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
-		AddAttr( attr_string, "Unknown String", VER_20_0_0_4 );
 		AddAttr( attr_int, "Integer Data" );
 	}
 	~NiIntegerExtraData() {}
@@ -2234,14 +2239,10 @@ public:
 
 		void Read( ifstream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
-		GetAttr("Unknown String")->Read( in, version );
-		GetAttr("Unknown Link")->Read( in, version );
 		GetAttr("Integer Data")->Read( in, version );
 	}
 	void Write( ofstream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
-		GetAttr("Unknown String")->Write( out, version );
-		GetAttr("Unknown Link")->Write( out, version );
 		GetAttr("Integer Data")->Write( out, version );
 	}
 
@@ -2251,8 +2252,6 @@ public:
 		out << setprecision(1);
 
 		out << AExtraData::asString()
-			<< "Unknown String:  " << GetAttr("Unknown String")->asString() << endl
-			<< "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl
 			<< "Integer Data:  " << GetAttr("Integer Data")->asString() << endl;
 
 		return out.str();
@@ -2616,16 +2615,16 @@ public:
  */
 class NiLookAtInterpolator : public AInterpolator {
 public:
-	NiLookAtInterpolator() {
-		AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+	NiLookAtInterpolator();
+	//	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
 
-		AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
-		Init();
-	}
+	//	AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
+	//	Init();
+	//}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
-	string asString() const;
+	//void Read( ifstream& in, unsigned int version );
+	//void Write( ofstream& out, unsigned int version ) const;
+	//string asString() const;
 
 	void Init() {}
 	~NiLookAtInterpolator() {}
