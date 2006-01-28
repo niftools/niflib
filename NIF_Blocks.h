@@ -557,7 +557,7 @@ public:
 /**
  * NiTexturingProperty -
  */
-class NiTexturingProperty : public AProperty {
+class NiTexturingProperty : public AProperty, public ITexturingProperty {
 public:
 	NiTexturingProperty( ) { AddAttr( attr_flags, "Flags", 0, VER_10_0_1_0 ); }
 	void Init() {}
@@ -570,6 +570,40 @@ public:
 
 	void FixLinks( const vector<blk_ref> & blocks );
 	list<blk_ref> GetLinks() const;
+
+	// ITexturingProperty functions
+	int GetTextureCount() const { return int(textures.size()); }
+	void SetTextureCount( int new_count );
+	int GetExtraTextureCount() const { return int(extra_textures.size()); }
+	void SetExtraTextureCount( int new_count );
+	ApplyMode GetApplyMode() const { return appl_mode; }
+	void SetApplyMode( ApplyMode new_val ) { appl_mode = new_val; }
+	TexDesc GetTexture( int n ) const { return textures[n]; }
+	void SetTexture( int n, TexDesc & new_val );
+	TexDesc GetExtraTexture( int n ) const { return extra_textures[n].first; }
+	void SetExtraTexture( int n, TexDesc & new_val );
+	float GetLumaOffset() const { return bmLumaOffset; }
+	void SetLumaOffset( float new_val ) { bmLumaOffset = new_val; }
+	float GetLumaScale() const { return bmLumaScale; }
+	void SetLumaScale( float new_val ) { bmLumaScale = new_val; }
+	Matrix22 GetBumpMapMatrix() const { return bmMatrix; }
+	void SetBumpMapMatrix( Matrix22 & new_val ) { bmMatrix = new_val; }
+
+	void * QueryInterface( int id ) {
+		if ( id == ID_TEXTURING_PROPERTY ) {
+			return (void*)static_cast<ITexturingProperty*>(this);;
+		} else {
+			return AProperty::QueryInterface( id );
+		}
+	}
+	void const * QueryInterface( int id ) const {
+		if ( id == ID_TEXTURING_PROPERTY ) {
+			return (void const *)static_cast<ITexturingProperty const *>(this);;
+		} else {
+			return AProperty::QueryInterface( id );
+		}
+	}
+
 private:
 	ApplyMode appl_mode;
 	vector<TexDesc> textures; //the main textures, base, gloss, glow, etc.

@@ -776,6 +776,14 @@ INode const * QueryNode( blk_ref const & block ) {
 	return (INode const *)block->QueryInterface( ID_NODE );
 }
 
+ITexturingProperty * QueryTexturingProperty( blk_ref & block ) {
+	return (ITexturingProperty*)block->QueryInterface( ID_TEXTURING_PROPERTY );
+}
+
+ITexturingProperty const * QueryTexturingProperty( blk_ref const & block ) {
+	return (ITexturingProperty const *)block->QueryInterface( ID_TEXTURING_PROPERTY );
+}
+
 IControllerSequence * QueryControllerSequence( blk_ref & block ) {
 	return (IControllerSequence*)block->QueryInterface( ID_CONTROLLER_SEQUENCE );
 }

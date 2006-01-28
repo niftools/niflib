@@ -65,6 +65,7 @@ class IFloatData;
 class IPosData;
 class IPalette;
 class IPixelData;
+class ITexturingProperty;
 class INode;
 class IControllerSequence;
 class blk_ref;
@@ -76,6 +77,7 @@ struct BoundingBox;
 struct ConditionalInt;
 struct SkinWeight;
 struct ControllerLink;
+struct TexDesc;
 
 //--Constants--//
 
@@ -95,6 +97,7 @@ const int ID_BOOL_DATA = 11; /*!< ID for IBoolData Interface */
 const int ID_CONTROLLER_SEQUENCE = 12; /*!< ID for IControllerSequence Interface */
 const int ID_PIXEL_DATA = 13; /*!< ID for IPixelData Interface */
 const int ID_PALETTE = 14; /*!< ID for IPalette Interface */
+const int ID_TEXTURING_PROPERTY = 15; /*!< ID for ITexturingProperty Interface */
 
 /*!
  * This enum contains all the attribute types used by Niflib.
@@ -459,6 +462,27 @@ IPalette const * QueryPalette( blk_ref const & block );
  */
 INode * QueryNode( blk_ref & block );
 INode const * QueryNode( blk_ref const & block );
+
+/*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_TEXTURING_PROPERTY).  It queries the block for an ITexturingProperty interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the ITexturingProperty interface available.
+ * \param block The block to query the interface from.
+ * \return If the given block implements the ITexturingProperty interface, a pointer to this interface is returned.  Otherwise the function returns zero – a null pointer.
+ * 
+ * <b>Example:</b> 
+ * \code
+ * blk_ref my_block = ReadNifTree("test_in.nif");
+ * ITexturingProperty * tex_prop = QueryTexturingProperty(my_block);
+ * \endcode
+ * 
+ * <b>In Python:</b>
+ * \code
+ * my_block = ReadNifTree("test_in.nif")
+ * tex_prop = QueryTexturingProperty(my_block);
+ * \endcode
+ * 
+ * \sa IBlock::QueryInterface
+ */
+ITexturingProperty * QueryTexturingProperty( blk_ref & block );
+ITexturingProperty const * QueryTexturingProperty( blk_ref const & block );
 
 /*!  A convenience function equivalent to calling IBlock::QueryInterface( ID_CONTROLLER_SEQUENCE).  It queries the block for an IControllerSequence interface, and returns a pointer to it if it is present.  Otherwise it returns zero.  In other words, it asks a block if it has the IControllerSequence interface available.
  * \param block The block to query the interface from.
@@ -1983,6 +2007,28 @@ public:
 	
 	virtual vector<Color4> GetColors() const = 0;
 	virtual void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps ) = 0;
+};
+
+class ITexturingProperty {
+public:
+	ITexturingProperty() {}
+	virtual ~ITexturingProperty () {}
+	virtual int GetTextureCount() const = 0;
+	virtual void SetTextureCount( int new_count ) = 0;
+	virtual int GetExtraTextureCount() const = 0;
+	virtual void SetExtraTextureCount( int new_count ) = 0;
+	virtual ApplyMode GetApplyMode() const = 0;
+	virtual void SetApplyMode( ApplyMode new_val ) = 0;
+	virtual TexDesc GetTexture( int n ) const = 0;
+	virtual void SetTexture( int n, TexDesc & new_val ) = 0;
+	virtual TexDesc GetExtraTexture( int n ) const = 0;
+	virtual void SetExtraTexture( int n, TexDesc & new_val ) = 0;
+	virtual float GetLumaOffset() const = 0;
+	virtual void SetLumaOffset( float new_val ) = 0;
+	virtual float GetLumaScale() const = 0;
+	virtual void SetLumaScale( float new_val ) = 0;
+	virtual Matrix22 GetBumpMapMatrix() const = 0;
+	virtual void SetBumpMapMatrix( Matrix22 & new_val ) = 0;
 };
 
 //struct ComplexVertex {

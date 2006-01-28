@@ -814,6 +814,86 @@ NiTexturingProperty::~NiTexturingProperty() {
 	}
 }
 
+void NiTexturingProperty::SetTextureCount( int new_count ) {
+
+	if ( new_count < int(textures.size()) ) {
+		//Remove active texture links that are about to be destroyed as children
+		for ( uint i = new_count; i < textures.size(); ++i ) {
+			RemoveChild( textures[i].source.get_block() );
+		}
+	}
+
+	//Resize array
+	textures.resize( new_count );
+}
+
+void NiTexturingProperty::SetExtraTextureCount( int new_count ) {
+	if ( new_count < int(extra_textures.size()) ) {
+		//Remove active texture links that are about to be destroyed as children
+		for ( uint i = new_count; i < extra_textures.size(); ++i ) {
+			RemoveChild( extra_textures[i].first.source.get_block() );
+		}
+	}
+
+	//Resize array
+	extra_textures.resize( new_count );
+}
+
+void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
+	//Make sure index is not out of range
+	if ( n < 0 || n > int(textures.size()) ) {
+		throw runtime_error("SetTexture - Index out of range.  Call SetTextureCount first.");
+	}
+
+	//If new texture isUsed is false, then nullify any links
+	if ( new_val.isUsed == false ) {
+		new_val.source = blk_ref(-1);
+	}
+
+	//If blk_ref is different, children need to be changed
+	if ( new_val.source != textures[n].source ) {
+		//the new reference is different, discard the old child...
+		if ( textures[n].source.is_null() == false ) {
+			RemoveChild( textures[n].source.get_block() );
+		}
+		
+		//and add the new one
+		if ( new_val.source.is_null() == false ) {
+			AddChild( new_val.source.get_block() );
+		}
+	}
+
+	//Finally copy the values
+	textures[n] = new_val;
+}
+
+void NiTexturingProperty::SetExtraTexture( int n, TexDesc & new_val ) {
+	//Make sure index is not out of range
+	if ( n < 0 || n > int(extra_textures.size()) ) {
+		throw runtime_error("SetTexture - Index out of range.  Call SetTextureCount first.");
+	}
+
+	//If new texture isUsed is false, then nullify any links
+	if ( new_val.isUsed == false ) {
+		new_val.source = blk_ref(-1);
+	}
+
+	//If blk_ref is different, children need to be changed
+	if ( new_val.source != extra_textures[n].first.source ) {
+		//the new reference is different, discard the old child...
+		if ( extra_textures[n].first.source.is_null() == false ) {
+			RemoveChild( extra_textures[n].first.source.get_block() );
+		}
+		
+		//and add the new one
+		if ( new_val.source.is_null() == false ) {
+			AddChild( new_val.source.get_block() );
+		}
+	}
+
+	//Finally copy the values
+	extra_textures[n].first = new_val;
+}
 
 /***********************************************************
  * NiBoneLODController methods
