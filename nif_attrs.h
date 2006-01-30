@@ -1233,7 +1233,15 @@ public:
 				flags = par->GetAttr("Flags")->asInt();
 
 				if ( (flags & 8) != 0 ) {
-					return par;
+					// extra check: skeleton root cannot be a bone (this fixes the BabelFish.nif problem)
+					int par_is_bone = false;
+					for ( vector<blk_ref>::const_iterator it = bones.begin(); it != bones.end(); ++it) {
+						if ( *it == par ) {
+							par_is_bone = true;
+							break;
+						};
+					}
+					if ( ! par_is_bone ) return par;
 				}
 			}
 
