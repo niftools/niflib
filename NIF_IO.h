@@ -37,7 +37,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 /* INCLUDES */
 #include <iostream>
-#include <fstream>
 #include <iomanip>
 #include <string>
 #include <sstream>
@@ -124,7 +123,7 @@ typedef enum {
 
 //--IO Functions--//
 
-int BlockSearch( ifstream& in );
+int BlockSearch( istream& in );
 
 class Str {
 public:
@@ -180,33 +179,33 @@ ostream & operator<<(ostream & lh, nifAlphaFormat const & rh);
 /**
  * Read utility functions
  */
-uint ReadUInt( ifstream& in );
-ushort ReadUShort( ifstream& in );
-byte ReadByte( ifstream& in );
-float ReadFloat( ifstream &in );
-string ReadString( ifstream &in );
-bool ReadBool( ifstream &in, unsigned int version );
-void ReadUSVector3( usVector3& vec, ifstream& in );
-void ReadFVector2( fVector2& fvec, ifstream& in );
-void ReadFVector3( fVector3& fvec, ifstream& in );
-void ReadFVector4( fVector4& fvec, ifstream& in );
+uint ReadUInt( istream& in );
+ushort ReadUShort( istream& in );
+byte ReadByte( istream& in );
+float ReadFloat( istream &in );
+string ReadString( istream &in );
+bool ReadBool( istream &in, unsigned int version );
+void ReadUSVector3( usVector3& vec, istream& in );
+void ReadFVector2( fVector2& fvec, istream& in );
+void ReadFVector3( fVector3& fvec, istream& in );
+void ReadFVector4( fVector4& fvec, istream& in );
 
 //Read
-void NifStream( uint & val, ifstream& in );
-void NifStream( ushort & val, ifstream& in );
-void NifStream( byte & val, ifstream& in );
-void NifStream( float & val, ifstream& in );
-void NifStream( string & val, ifstream& in );
-void NifStream( Vector3 & val, ifstream& in );
-void NifStream( Quaternion & val, ifstream& in );
-void NifStream( KeyType & val, ifstream& in );
-void NifStream( Color4 & val, ifstream& in );
-void NifStream( Triangle & val, ifstream& in );
-void NifStream( TexDesc & val, ifstream& in, uint version );
+void NifStream( uint & val, istream& in );
+void NifStream( ushort & val, istream& in );
+void NifStream( byte & val, istream& in );
+void NifStream( float & val, istream& in );
+void NifStream( string & val, istream& in );
+void NifStream( Vector3 & val, istream& in );
+void NifStream( Quaternion & val, istream& in );
+void NifStream( KeyType & val, istream& in );
+void NifStream( Color4 & val, istream& in );
+void NifStream( Triangle & val, istream& in );
+void NifStream( TexDesc & val, istream& in, uint version );
 
 
 template <class T> 
-void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
+void NifStream( Key<T> & key, istream& file, KeyType type ) {
 	key.time = ReadFloat( file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -230,7 +229,7 @@ void NifStream( Key<T> & key, ifstream& file, KeyType type ) {
 }
 
 template <class T>
-void NifStream( vector<T> & val, ifstream& file ) {
+void NifStream( vector<T> & val, istream& file ) {
 	typename vector<T>::iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file );
@@ -241,43 +240,43 @@ void NifStream( vector<T> & val, ifstream& file ) {
 /**
  * Write utility functions.
  */
-void WriteUInt( uint val, ofstream& out );
+void WriteUInt( uint val, ostream& out );
 
-void WriteUShort( ushort val, ofstream& out );
+void WriteUShort( ushort val, ostream& out );
 
-void WriteByte( byte val, ofstream& out );
+void WriteByte( byte val, ostream& out );
 
-void WriteUSVector3( usVector3 const & fvec, ofstream& out );
+void WriteUSVector3( usVector3 const & fvec, ostream& out );
 
-void WriteFloat( float val, ofstream& out );
+void WriteFloat( float val, ostream& out );
 
-void WriteString( string const & val, ofstream& out );
+void WriteString( string const & val, ostream& out );
 
-void WriteBool( bool val, ofstream& out, unsigned int version );
+void WriteBool( bool val, ostream& out, unsigned int version );
 
-void WriteFVector2( fVector2 const & fvec, ofstream& out );
+void WriteFVector2( fVector2 const & fvec, ostream& out );
 
-void WriteFVector3( fVector3 const & fvec, ofstream& out );
+void WriteFVector3( fVector3 const & fvec, ostream& out );
 
-void WriteFVector4( fVector4 const & fvec, ofstream& out );
+void WriteFVector4( fVector4 const & fvec, ostream& out );
 
-void WriteBlockName( const char* name, uint nameLength, ofstream& out );
+void WriteBlockName( const char* name, uint nameLength, ostream& out );
 
 //Write
-void NifStream( uint const & val, ofstream& out );
-void NifStream( ushort const & val, ofstream& out );
-void NifStream( byte const & val, ofstream& out );
-void NifStream( float const & val, ofstream& out );
-void NifStream( string const & val, ofstream& out );
-void NifStream( Vector3 const & val, ofstream& out );
-void NifStream( Quaternion const & val, ofstream& out );
-void NifStream( KeyType const & val, ofstream& out );
-void NifStream( Color4 const & val, ofstream& out );
-void NifStream( Triangle const & val, ofstream& out );
-void NifStream( TexDesc const & val, ofstream& out, uint version );
+void NifStream( uint const & val, ostream& out );
+void NifStream( ushort const & val, ostream& out );
+void NifStream( byte const & val, ostream& out );
+void NifStream( float const & val, ostream& out );
+void NifStream( string const & val, ostream& out );
+void NifStream( Vector3 const & val, ostream& out );
+void NifStream( Quaternion const & val, ostream& out );
+void NifStream( KeyType const & val, ostream& out );
+void NifStream( Color4 const & val, ostream& out );
+void NifStream( Triangle const & val, ostream& out );
+void NifStream( TexDesc const & val, ostream& out, uint version );
 
 template <class T> 
-void NifStream( Key<T> const & key, ofstream& file, KeyType type ) {
+void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -301,7 +300,7 @@ void NifStream( Key<T> const & key, ofstream& file, KeyType type ) {
 }
 
 template <class T>
-void NifStream( vector<T> const & val, ofstream& file ) {
+void NifStream( vector<T> const & val, ostream& file ) {
 	typename vector<T>::const_iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file );
@@ -334,10 +333,10 @@ public:
 	void SetIndex( int index ) {
 		_index = index;
 	}
-	void Read( ifstream &in ) {
+	void Read( istream &in ) {
 		_index = ReadUInt( in );
 	}
-	void Write( ofstream &out ) const {
+	void Write( ostream &out ) const {
 		WriteUInt( _index, out );
 	}
 	friend ostream & operator<<(ostream & lh, nifIndex const & rh);

@@ -79,20 +79,20 @@ public:
 	void RemoveLinks( blk_ref const & block ) { cout << "RemoveLinks" << endl; throw runtime_error(ATTRERR); }
 	blk_ref FindLink( string const & block_type ) const { cout << "FindLink" << endl; throw runtime_error(ATTRERR); }
 	//Read/WriteFunctions
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		if ( version >= _first_ver && version <= _last_ver ) {
 			this->ReadAttr( in, version );
 		}
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		if ( version >= _first_ver && version <= _last_ver ) {
 			this->WriteAttr( out, version );
 		}
 	}
 protected:
 	//Internal Read/Write Functions
-	virtual void ReadAttr( ifstream& in, unsigned int version ) = 0;
-	virtual void WriteAttr( ofstream& out, unsigned int version ) const = 0;
+	virtual void ReadAttr( istream& in, unsigned int version ) = 0;
+	virtual void WriteAttr( ostream& out, unsigned int version ) const = 0;
 
 	string _name;
 	IBlock * _owner;
@@ -181,8 +181,8 @@ public:
 	IntAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~IntAttr() {}
 	AttrType GetType() const { return attr_int; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUInt( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteUInt( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadUInt( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -203,8 +203,8 @@ public:
 	ShortAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~ShortAttr() {}
 	AttrType GetType() const { return attr_short; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUShort( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteUShort( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadUShort( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteUShort( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -225,8 +225,8 @@ public:
 	ByteAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~ByteAttr() {}
 	AttrType GetType() const { return attr_byte; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadByte( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteByte( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadByte( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteByte( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -247,8 +247,8 @@ public:
 	BoolAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~BoolAttr() {}
 	AttrType GetType() const { return attr_bool; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadBool( in, version ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteBool( data, out, version ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadBool( in, version ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteBool( data, out, version ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -269,8 +269,8 @@ public:
 	FloatAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0.0f) {}
 	~FloatAttr() {}
 	AttrType GetType() const { return attr_float; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadFloat( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteFloat( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadFloat( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteFloat( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -295,12 +295,12 @@ public:
 	}
 	~Float3Attr() {}
 	AttrType GetType() const { return attr_float3; }
-	void ReadAttr( ifstream& in, unsigned int version ) { 
+	void ReadAttr( istream& in, unsigned int version ) { 
 		data[0] = ReadFloat( in );
 		data[1] = ReadFloat( in );
 		data[2] = ReadFloat( in );
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteFloat( data[0], out );
 		WriteFloat( data[1], out );
 		WriteFloat( data[2], out );
@@ -339,8 +339,8 @@ public:
 	StringAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
 	~StringAttr() {}
 	AttrType GetType() const { return attr_string; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadString( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteString( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadString( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteString( data, out ); }
 	string asString() const { return data; }
 	void Set(string const & n) { data = n; }
 private:
@@ -352,7 +352,7 @@ public:
 	LinkAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), link( owner ) {}
 	~LinkAttr() {}
 	AttrType GetType() const { return attr_link; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		////Remove all links beloning to this attribute
 		//_owner->RemoveAttrLinks(this);
 
@@ -365,7 +365,7 @@ public:
 		//Set block index only
 		link.set_index( ReadUInt( in ) );
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteUInt( link.get_index(), out );
 	}
 	string asString() const {
@@ -402,8 +402,8 @@ public:
 	FlagsAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
 	~FlagsAttr() {}
 	AttrType GetType() const { return attr_flags; }
-	void ReadAttr( ifstream& in, unsigned int version ) { data = ReadUShort( in ); }
-	void WriteAttr( ofstream& out, unsigned int version ) const { WriteUShort( data, out ); }
+	void ReadAttr( istream& in, unsigned int version ) { data = ReadUShort( in ); }
+	void WriteAttr( ostream& out, unsigned int version ) const { WriteUShort( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
@@ -435,14 +435,14 @@ public:
 	}
 	~MatrixAttr() {}
 	AttrType GetType() const { return attr_matrix33; }
-	void ReadAttr( ifstream& in, unsigned int version ) { 
+	void ReadAttr( istream& in, unsigned int version ) { 
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				data[r][c] = ReadFloat( in );
 			}
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		for (int c = 0; c < 3; ++c) {
 			for (int r = 0; r < 3; ++r) {
 				WriteFloat( data[r][c], out );
@@ -501,7 +501,7 @@ public:
 	BoneAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~BoneAttr() {}
 	AttrType GetType() const { return attr_bones; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		if ( data != NULL ) {
 			data->ReadBoneList( in );
@@ -509,7 +509,7 @@ public:
 			throw runtime_error ("Attempted to use a bone list attribute on a block that doesn't support it.");
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		//ISkinInstInternal * data = (ISkinInstInternal*)_owner->QueryInterface( SkinInstInternal );
 		blk_ref data_blk = _owner->GetAttr("Data")->asLink();
 		if ( data_blk.is_null() == false )  {
@@ -566,7 +566,7 @@ public:
 	LinkGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
 	~LinkGroupAttr() {}
 	AttrType GetType() const { return attr_linkgroup; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		int len = ReadUInt( in );
 		//cout << "Link Group Size:  " << len << endl;
 
@@ -580,7 +580,7 @@ public:
 				AddLink( blk_ref( index ) );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		//Write the number of links
 		WriteUInt( uint(links.size()), out );
 		//cout << "Link Group Size:  " << uint(links.size()) << endl;
@@ -667,7 +667,7 @@ public:
 
 	AttrType GetType() const { return attr_targetgroup; }
 
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		int len = ReadUShort( in );
 
 		if ( len > 1000 ) {
@@ -680,7 +680,7 @@ public:
 				AddLink( blk_ref( index ) );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		//Write the number of links
 		WriteUShort( ushort(links.size()), out );
 		//cout << "Link Group Size:  " << uint(links.size()) << endl;
@@ -715,7 +715,7 @@ public:
 	}
 	~BBoxAttr() {}
 	AttrType GetType() const { return attr_bbox; }
-	void ReadAttr( ifstream& in, unsigned int version ) { 
+	void ReadAttr( istream& in, unsigned int version ) { 
 		data.isUsed = ReadBool( in, version );
 		if ( data.isUsed ){
 			data.unknownInt = ReadUInt( in );
@@ -732,7 +732,7 @@ public:
 			data.radius.z = ReadFloat( in );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteBool( data.isUsed, out, version );
 		if ( data.isUsed ){
 			WriteUInt( data.unknownInt, out );
@@ -786,13 +786,13 @@ public:
 	}
 	~CIntAttr() {}
 	AttrType GetType() const { return attr_condint; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		data.isUsed = ReadBool( in, version );
 		if (data.isUsed) {
 			data.unknownInt = ReadUInt( in );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteBool( data.isUsed, out, version );
 		if (data.isUsed) {
 			WriteUInt( data.unknownInt, out );
@@ -886,14 +886,14 @@ public:
 
     //int light      - lighting mode:
     //                 0 - lighting emmisive
-    //  1 - lighting emmisive amb diff
+    //                 1 - lighting emmisive amb diff
 
 class ShaderAttr : public LinkAttr {
 public:
 	ShaderAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver), isUsed(false) {}
 	~ShaderAttr() {}
 	AttrType GetType() const { return attr_shader; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		isUsed = ReadBool( in, version );
 		if ( isUsed ) {	
 			//Read in shader name
@@ -903,7 +903,7 @@ public:
 			LinkAttr::ReadAttr( in, version );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteBool( isUsed, out, version );
 		if ( isUsed ) {	
 			//Write out shader name
@@ -944,7 +944,7 @@ public:
 	}
 	~TexSourceAttr() {}
 	AttrType GetType() const { return attr_texsource; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		data.useExternal = ( ReadByte(in) != 0);
 
 		//All data is always read after version 10.1.0.0
@@ -964,7 +964,7 @@ public:
 			LinkAttr::ReadAttr( in, version );
 		}
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteByte( byte(data.useExternal), out );
 
 		//All data is always written after version 10.1.0.0
@@ -1137,10 +1137,10 @@ public:
 	ControllerTargetAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ControllerTargetAttr() {}
 	AttrType GetType() const { return attr_controllertarget; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		ReadUInt(in);
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		//WriteUInt( FindTarget()->GetBlockNum(), out );
 		WriteUInt( FindTarget().get_index(), out ); // we need get_index(), GetBlockNum() chokes on null block references
 	}
@@ -1187,10 +1187,10 @@ public:
 	SkeletonRootAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~SkeletonRootAttr() {}
 	AttrType GetType() const { return attr_skeletonroot; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		original_root = ReadUInt( in );  //Read data but do nothing with it
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteUInt( FindRoot().get_index(), out );
 	}
 	blk_ref FindRoot() const {
@@ -1307,10 +1307,10 @@ public:
 	ParentAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ParentAttr() {}
 	AttrType GetType() const { return attr_parent; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		ReadUInt(in);
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteUInt( _owner->GetParent()->GetBlockNum(), out );
 	}
 	string asString() const {
@@ -1332,7 +1332,7 @@ public:
 	~ParticleGroupAttr() {}
 	AttrType GetType() const { return attr_particlegroup; }
 
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		num_particles = ReadUShort( in );
 		num_valid = ReadUShort( in );
 
@@ -1348,7 +1348,7 @@ public:
 		}
 	}
 
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteUShort( num_particles, out );
 		WriteUShort( num_valid, out );
 
@@ -1405,7 +1405,7 @@ public:
 	~LODRangeGroupAttr() {}
 	AttrType GetType() const { return attr_lodrangegroup; }
 
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		int numRanges = ReadUInt( in );
 		ranges.resize( numRanges );
 		for ( uint i = 0; i < ranges.size(); ++i ) {
@@ -1414,7 +1414,7 @@ public:
 		}
 	}
 
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		WriteUInt( uint(ranges.size()), out );
 
 		for ( uint i = 0; i < ranges.size(); ++i ) {
@@ -1456,10 +1456,10 @@ public:
 	}
 	~Unk292BytesAttr() {}
 	AttrType GetType() const { return attr_unk292bytes; }
-	void ReadAttr( ifstream& in, unsigned int version ) {
+	void ReadAttr( istream& in, unsigned int version ) {
 		in.read( (char*)data, 256 );
 	}
-	void WriteAttr( ofstream& out, unsigned int version ) const {
+	void WriteAttr( ostream& out, unsigned int version ) const {
 		out.write( (char*)data, 265 );
 	}
 	string asString() const {

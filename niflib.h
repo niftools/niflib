@@ -232,6 +232,13 @@ enum PixelFormat {
 vector<blk_ref> ReadNifList( string const & file_name );
 
 /*!
+ * Reads the given input stream and returns a vector of block references
+ * \param stream The input stream to read NIF data from.
+ * \return A vector of block references that point to all the blocks read from the stream.
+ */
+vector<blk_ref> ReadNifList( istream & in );
+
+/*!
  * Reads the given file by file name and returns a reference to the root block.
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
  * \return A block reference that points to the root of tree of data blocks contained in the NIF file.
@@ -249,6 +256,13 @@ vector<blk_ref> ReadNifList( string const & file_name );
  * \sa ReadNifList, WriteNifTree
  */
 blk_ref ReadNifTree( string const & file_name );
+
+/*!
+ * Reads the given input stream and returns a reference to the root block.
+ * \param stream The input stream to read NIF data from.
+ * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
+ */
+blk_ref ReadNifTree( istream & in );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.  Automatically writes a kf file and an x/nif file if animation is present.
@@ -1499,8 +1513,8 @@ public:
 	 */
 	virtual string GetName() const = 0;
 
-	virtual void Read( ifstream& in, unsigned int version ) = 0;
-	virtual void Write( ofstream& out, unsigned int version ) const = 0;
+	virtual void Read( istream& in, unsigned int version ) = 0;
+	virtual void Write( ostream& out, unsigned int version ) const = 0;
 
 	//--Getters--//
 

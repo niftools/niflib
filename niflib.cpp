@@ -89,6 +89,13 @@ blk_ref ReadNifTree( string const & file_name ) {
 	return FindRoot( blocks );
 }
 
+//Reads the given input stream and returns a reference to the root block
+blk_ref ReadNifTree( istream & in ) {
+	//Read block list
+	vector<blk_ref> blocks = ReadNifList( in );
+	return FindRoot( blocks );
+}
+
 blk_ref FindRoot( vector<blk_ref> const & blocks ) {
 	//--Look for a NiNode that has no parents--//
 
@@ -118,6 +125,12 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 
 	//--Open File--//
 	ifstream in( file_name.c_str(), ifstream::binary );
+
+	return ReadNifList( in );
+}
+
+//Reads the given input stream and returns a vector of block references
+vector<blk_ref> ReadNifList( istream & in ) {
 
 	//--Read Header--//
 	char header_string[256];
@@ -158,7 +171,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 
 		////Output
 		//cout << endl << endl 
-		//	 << "====[ " << file_name << " | File Header ]====" << endl
+		//	 << "====[ " << "File Header ]====" << endl
 		//	 << "Header:  " << header_string << endl
 		//	 << "Version:  " << Hex(version) << endl
 		//	 << "Unknown Int 1:  " << unknownInt1 << endl
@@ -178,7 +191,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 	} else {
 		////Output
 		//cout << endl << endl 
-		//	<< "====[ " << file_name << " | File Header ]====" << endl
+		//	<< "====[ " << "File Header ]====" << endl
 		//	<< "Header:  " << header_string << endl
 		//	<< "Version:  " << Hex(version) << endl
 		//	<< "Number of Blocks: " << int(numBlocks) << endl;
@@ -204,7 +217,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
 					cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
-					cout << "====[ " << file_name << " | Block " << i << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+					cout << "====[ " << "Block " << i << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 					cout << blocks[i - 1]->asString();
 					throw runtime_error("Read failue - Bad block position");
 				}
@@ -217,7 +230,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			uint blockNameLength = ReadUInt( in );
 			if (blockNameLength > 30 || blockNameLength < 6) {
 				cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
-				cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
 				throw runtime_error("Read failue - Bad block position");
 			}
@@ -228,7 +241,7 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 			delete [] charBlockName;
 			if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
 				cout << "ERROR!  Bad block position.  Invalid Name:  " << blockName << "\a" << endl;
-				cout << "====[ " << file_name << " | Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
 				throw runtime_error("Read failue - Bad block position");
 			}
@@ -273,9 +286,6 @@ vector<blk_ref> ReadNifList( string const & file_name ) {
 	if ( ! in.eof() )
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
 		
-	//--Close File--//
-	in.close();
-
 	//--Now that all blocks are read, go back and fix the indices--//
 	for (uint i = 0; i < blocks.size(); ++i) {
 

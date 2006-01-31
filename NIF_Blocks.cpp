@@ -172,7 +172,7 @@ blk_ref ABlock::GetParent() const {
 		return blk_ref(-1);
 }
 
-void ABlock::Read( ifstream& in, unsigned int version ) {
+void ABlock::Read( istream& in, unsigned int version ) {
 
 	//Read Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -191,7 +191,7 @@ void ABlock::Read( ifstream& in, unsigned int version ) {
 	//}
 }
 
-void ABlock::Write( ofstream& out, unsigned int version ) const {
+void ABlock::Write( ostream& out, unsigned int version ) const {
 
 	//Write Attributes
 	for (unsigned int i = 0; i < _attr_vect.size(); ++i ) {
@@ -616,7 +616,7 @@ string NiNode::asString() const {
  * NiTexturingProperty methods
  **********************************************************/
 
-void NiTexturingProperty::Read( ifstream& file, unsigned int version ){
+void NiTexturingProperty::Read( istream& file, unsigned int version ){
 
 	AProperty::Read( file, version );
 
@@ -654,7 +654,7 @@ void NiTexturingProperty::Read( ifstream& file, unsigned int version ){
 	}
 }
 
-void NiTexturingProperty::Write( ofstream& file, unsigned int version ) const {
+void NiTexturingProperty::Write( ostream& file, unsigned int version ) const {
 
 	AProperty::Write( file, version );
 
@@ -899,7 +899,7 @@ void NiTexturingProperty::SetExtraTexture( int n, TexDesc & new_val ) {
  * NiBoneLODController methods
  **********************************************************/
 
-void NiBoneLODController::Read( ifstream& file, unsigned int version ){
+void NiBoneLODController::Read( istream& file, unsigned int version ){
 
 	AController::Read( file, version );
 
@@ -941,7 +941,7 @@ void NiBoneLODController::Read( ifstream& file, unsigned int version ){
 	
 }
 
-void NiBoneLODController::Write( ofstream& file, unsigned int version ) const {
+void NiBoneLODController::Write( ostream& file, unsigned int version ) const {
 	AController::Write( file, version );
 
 	WriteUInt( unkInt1, file );
@@ -1116,7 +1116,7 @@ NiBoneLODController::~NiBoneLODController() {
 /**
  * AShapeData::Read - Assumes block name has already been read from in
  */
-void AShapeData::Read( ifstream& in, unsigned int version ){
+void AShapeData::Read( istream& in, unsigned int version ){
 
 	GetAttr("Name")->Read( in, version );
 	
@@ -1302,7 +1302,7 @@ string AShapeData::asString() const {
 /**
  * AShapeData::Write
  */
-void AShapeData::Write( ofstream& out, unsigned int version ) const {
+void AShapeData::Write( ostream& out, unsigned int version ) const {
 
 	GetAttr("Name")->Write( out, version );
 	
@@ -1464,7 +1464,7 @@ void AShapeData::SetUVSet( int index, const vector<TexCoord> & in ) {
  * AParticlesData methods
  **********************************************************/
 
-void AParticlesData::Read( ifstream& in, unsigned int version ) {
+void AParticlesData::Read( istream& in, unsigned int version ) {
 	AShapeData::Read( in, version );
 
 	//numActive exists up to version 4.0.0.2
@@ -1491,7 +1491,7 @@ void AParticlesData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void AParticlesData::Write( ofstream& out, unsigned int version ) const {
+void AParticlesData::Write( ostream& out, unsigned int version ) const {
 	AShapeData::Write( out, version );
 
 	//numActive exists up to version 4.0.0.2
@@ -1550,7 +1550,7 @@ string AParticlesData::asString() const {
  * APSysData methods
  **********************************************************/
 
-void APSysData::Read( ifstream& file, unsigned int version ) {
+void APSysData::Read( istream& file, unsigned int version ) {
 	AShapeData::Read( file, version );
 
 	bool hasUnkFlts = ReadBool( file, version );
@@ -1574,7 +1574,7 @@ void APSysData::Read( ifstream& file, unsigned int version ) {
 	NifStream( unkByte, file );
 }
 
-void APSysData::Write( ofstream& file, unsigned int version ) const {
+void APSysData::Write( ostream& file, unsigned int version ) const {
 	AShapeData::Write( file, version );
 
 	WriteBool( unkFloats1.size() > 0, file, version );
@@ -1628,7 +1628,7 @@ string APSysData::asString() const {
  * NiMeshPSysData methods
  **********************************************************/
 
-void NiMeshPSysData::Read( ifstream& file, unsigned int version ) {
+void NiMeshPSysData::Read( istream& file, unsigned int version ) {
 	APSysData::Read( file, version );
 
 	unkFloats.resize( vertices.size() * 14 );
@@ -1644,7 +1644,7 @@ void NiMeshPSysData::Read( ifstream& file, unsigned int version ) {
 	NifStream( unk3Ints[2], file );
 }
 
-void NiMeshPSysData::Write( ofstream& file, unsigned int version ) const {
+void NiMeshPSysData::Write( ostream& file, unsigned int version ) const {
 	APSysData::Write( file, version );
 
 	NifStream( unkFloats, file );
@@ -1690,7 +1690,7 @@ string NiMeshPSysData::asString() const {
  * NiPSysData methods
  **********************************************************/
 
-void NiPSysData::Read( ifstream& file, unsigned int version ) {
+void NiPSysData::Read( istream& file, unsigned int version ) {
 	APSysData::Read( file, version );
 
 	//before version 20.0.0.4 there are unknown floats here
@@ -1721,7 +1721,7 @@ void NiPSysData::Read( ifstream& file, unsigned int version ) {
 	NifStream( unkInt, file );
 }
 
-void NiPSysData::Write( ofstream& file, unsigned int version ) const {
+void NiPSysData::Write( ostream& file, unsigned int version ) const {
 	APSysData::Write( file, version );
 
 	//before version 20.0.0.4 there are unknown floats here
@@ -1790,7 +1790,7 @@ string NiPSysData::asString() const {
  * ARotatingParticlesData methods
  **********************************************************/
 
-void ARotatingParticlesData::Read( ifstream& in, unsigned int version ) {
+void ARotatingParticlesData::Read( istream& in, unsigned int version ) {
 	AParticlesData::Read( in, version );
 
 	hasRotations = ReadBool( in, version );
@@ -1806,7 +1806,7 @@ void ARotatingParticlesData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void ARotatingParticlesData::Write( ofstream& out, unsigned int version ) const {
+void ARotatingParticlesData::Write( ostream& out, unsigned int version ) const {
 	AParticlesData::Write( out, version );
 
 	WriteBool( hasRotations, out, version );
@@ -1848,13 +1848,13 @@ string ARotatingParticlesData::asString() const {
  * NiParticleMeshesData methods
  **********************************************************/
 
-void NiParticleMeshesData::Read( ifstream& in, unsigned int version ) {
+void NiParticleMeshesData::Read( istream& in, unsigned int version ) {
 	ARotatingParticlesData::Read( in, version );
 
 	GetAttr("Unknown Link 2")->Read( in, version );
 }
 
-void NiParticleMeshesData::Write( ofstream& out, unsigned int version ) const {
+void NiParticleMeshesData::Write( ostream& out, unsigned int version ) const {
 	ARotatingParticlesData::Write( out, version );
 
 	GetAttr("Unknown Link 2")->Write( out, version );
@@ -1878,7 +1878,7 @@ string NiParticleMeshesData::asString() const {
 /**
  * NiTriShapeData::Read - Assumes block name has already been read from in
  */
-void NiTriShapeData::Read( ifstream& in, unsigned int version ){
+void NiTriShapeData::Read( istream& in, unsigned int version ){
 	AShapeData::Read( in, version );
 
 	short numTriangles = ReadUShort( in );
@@ -1946,7 +1946,7 @@ string NiTriShapeData::asString() const {
 /**
  * NiTriShapeData::Write - Writes block name to out, in addition to data.
  */
-void NiTriShapeData::Write( ofstream& out, unsigned int version ) const {
+void NiTriShapeData::Write( ostream& out, unsigned int version ) const {
 
 	AShapeData::Write( out, version );
 
@@ -2029,7 +2029,7 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
  * NiTriStripsData methods
  **********************************************************/
 
-void NiTriStripsData::Read( ifstream& in, unsigned int version ){
+void NiTriStripsData::Read( istream& in, unsigned int version ){
 	AShapeData::Read( in, version );
 
 	//Read number of Triangles but discard it
@@ -2060,7 +2060,7 @@ void NiTriStripsData::Read( ifstream& in, unsigned int version ){
 	}
 }
 
-void NiTriStripsData::Write( ofstream& out, unsigned int version ) const {
+void NiTriStripsData::Write( ostream& out, unsigned int version ) const {
 
 	AShapeData::Write( out, version );
 
@@ -2197,7 +2197,7 @@ short NiTriStripsData::GetTriangleCount() const {
  * NiBSplineData methods
  **********************************************************/
 
-void NiBSplineData::Read( ifstream& file, unsigned int version ){
+void NiBSplineData::Read( istream& file, unsigned int version ){
 	NifStream( unkInt, file );
 	
 	uint count = ReadUInt( file );
@@ -2205,7 +2205,7 @@ void NiBSplineData::Read( ifstream& file, unsigned int version ){
 	NifStream( unkShorts, file );
 }
 
-void NiBSplineData::Write( ofstream& file, unsigned int version ) const {
+void NiBSplineData::Write( ostream& file, unsigned int version ) const {
 
 	NifStream( unkInt, file );
 
@@ -2233,7 +2233,7 @@ string NiBSplineData::asString() const {
  * NiCollisionData methods
  **********************************************************/
 
-void NiCollisionData::Read( ifstream& in, unsigned int version ){
+void NiCollisionData::Read( istream& in, unsigned int version ){
 	//Read parent node but don't store it
 	ReadUInt( in );
 
@@ -2257,7 +2257,7 @@ void NiCollisionData::Read( ifstream& in, unsigned int version ){
 	} 
 }
 
-void NiCollisionData::Write( ofstream& out, unsigned int version ) const {
+void NiCollisionData::Write( ostream& out, unsigned int version ) const {
 
 	//Write Parent node number
 	WriteUInt( GetParent().get_index(), out );
@@ -2318,7 +2318,7 @@ string NiCollisionData::asString() const {
  * NiSkinData methods
  **********************************************************/
 
-void NiSkinData::Read( ifstream& in, unsigned int version ) {
+void NiSkinData::Read( istream& in, unsigned int version ) {
 	
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
@@ -2353,7 +2353,7 @@ void NiSkinData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiSkinData::Write( ofstream& out, unsigned int version ) const {
+void NiSkinData::Write( ostream& out, unsigned int version ) const {
 	//Calculate offset matrices prior to writing data
 
 	Matrix33 rot;
@@ -2952,7 +2952,7 @@ string NiGeomMorpherController::asString() const {
  * AKeyframeData methods
  **********************************************************/
 
-void AKeyframeData::Read( ifstream& file, unsigned int version ) {
+void AKeyframeData::Read( istream& file, unsigned int version ) {
 
 	scaleType = rotationType = translationType = xyzTypes[0] = xyzTypes[1] = xyzTypes[2] = KeyType(0);
 
@@ -3013,7 +3013,7 @@ void AKeyframeData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void AKeyframeData::Write( ofstream& file, unsigned int version ) const {
+void AKeyframeData::Write( ostream& file, unsigned int version ) const {
 
 	//--Rotation--//
 	WriteUInt( uint(rotKeys.size()) , file );
@@ -3162,7 +3162,7 @@ string AKeyframeData::asString() const {
  * NiBoolData methods
  **********************************************************/
 
-void NiBoolData::Read( ifstream& file, unsigned int version ) {
+void NiBoolData::Read( istream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
 	NifStream( _type, file );
 
@@ -3172,7 +3172,7 @@ void NiBoolData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiBoolData::Write( ofstream& file, unsigned int version ) const {
+void NiBoolData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -3210,7 +3210,7 @@ string NiBoolData::asString() const {
  * NiColorData methods
  **********************************************************/
 
-void NiColorData::Read( ifstream& file, unsigned int version ) {
+void NiColorData::Read( istream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
 	NifStream( _type, file );
 
@@ -3220,7 +3220,7 @@ void NiColorData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiColorData::Write( ofstream& file, unsigned int version ) const {
+void NiColorData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -3253,7 +3253,7 @@ string NiColorData::asString() const {
  * NiControllerSequence methods
  **********************************************************/
 
-void NiControllerSequence::Read( ifstream& file, unsigned int version ) {
+void NiControllerSequence::Read( istream& file, unsigned int version ) {
 	GetAttr("Name")->Read( file, version );
 
 	//Read first ControllerLink
@@ -3270,7 +3270,7 @@ void NiControllerSequence::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiControllerSequence::Write( ofstream& file, unsigned int version ) const {
+void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 	GetAttr("Name")->Write( file, version );
 
 	//Write first ControllerLink
@@ -3404,7 +3404,7 @@ void NiControllerSequence::ClearControllers() {
  * NiFloatData methods
  **********************************************************/
 
-void NiFloatData::Read( ifstream& file, unsigned int version ) {
+void NiFloatData::Read( istream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
 	NifStream( _type, file );
 
@@ -3414,7 +3414,7 @@ void NiFloatData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiFloatData::Write( ofstream& file, unsigned int version ) const {
+void NiFloatData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -3447,7 +3447,7 @@ string NiFloatData::asString() const {
  * NiStringExtraData methods
  **********************************************************/
 
-void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
+void NiStringExtraData::Read( istream& in, unsigned int version ) {
 	AExtraData::Read( in, version );
 	
 	//GetAttr("Name")->Read( in, version );
@@ -3462,7 +3462,7 @@ void NiStringExtraData::Read( ifstream& in, unsigned int version ) {
 	GetAttr("String Data")->Read( in, version );
 }
 
-void NiStringExtraData::Write( ofstream& out, unsigned int version ) const {
+void NiStringExtraData::Write( ostream& out, unsigned int version ) const {
 	//GetAttr("Name")->Write( out, version );
 	//GetAttr("Next Extra Data")->Write( out, version );
 	AExtraData::Write( out, version );
@@ -3498,7 +3498,7 @@ string NiStringExtraData::asString() const {
  * NiMorphData methods
  **********************************************************/
 
-void NiMorphData::Read( ifstream& file, unsigned int version ) {
+void NiMorphData::Read( istream& file, unsigned int version ) {
 
 	uint morphCount = ReadUInt( file );
 	NifStream( vertCount, file );
@@ -3524,7 +3524,7 @@ void NiMorphData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiMorphData::Write( ofstream& file, unsigned int version ) const {
+void NiMorphData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(morphs.size()), file );
 	NifStream( vertCount, file );
 
@@ -3605,7 +3605,7 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
  * NiPalette methods
  **********************************************************/
 
-void NiPalette::Read( ifstream& file, unsigned int version ) {
+void NiPalette::Read( istream& file, unsigned int version ) {
 
 	NifStream( unkByte, file );
 	NifStream( numEntries, file );
@@ -3619,7 +3619,7 @@ void NiPalette::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiPalette::Write( ofstream& file, unsigned int version ) const {
+void NiPalette::Write( ostream& file, unsigned int version ) const {
 
 	NifStream( unkByte, file );
 	NifStream( numEntries, file );
@@ -3690,7 +3690,7 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
  * NiSkinPartition methods
  **********************************************************/
 
-void NiSkinPartition::Read( ifstream& file, unsigned int version ) {
+void NiSkinPartition::Read( istream& file, unsigned int version ) {
 
 	uint numPartitions = ReadUInt( file );
 	partitions.resize( numPartitions );
@@ -3778,7 +3778,7 @@ void NiSkinPartition::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiSkinPartition::Write( ofstream& file, unsigned int version ) const {
+void NiSkinPartition::Write( ostream& file, unsigned int version ) const {
 
 	WriteUInt( uint(partitions.size()), file );
 
@@ -3908,7 +3908,7 @@ string NiSkinPartition::asString() const {
  * NiStringPalette methods
  **********************************************************/
 
-void NiStringPalette::Read( ifstream& file, unsigned int version ) {
+void NiStringPalette::Read( istream& file, unsigned int version ) {
 
 	GetAttr("Palette")->Read( file, version );
 
@@ -3916,7 +3916,7 @@ void NiStringPalette::Read( ifstream& file, unsigned int version ) {
 	ReadUInt( file );
 }
 
-void NiStringPalette::Write( ofstream& file, unsigned int version ) const {
+void NiStringPalette::Write( ostream& file, unsigned int version ) const {
 
 	attr_ref pal_attr = GetAttr("Palette");
 	pal_attr->Write( file, version );
@@ -3948,7 +3948,7 @@ string NiStringPalette::asString() const {
  * NiPixelData methods
  **********************************************************/
 
-void NiPixelData::Read( ifstream& file, unsigned int version ) {
+void NiPixelData::Read( istream& file, unsigned int version ) {
 	//ABlock::Read( in, version );
 
 	pxFormat = PixelFormat( ReadUInt(file) );
@@ -4002,7 +4002,7 @@ void NiPixelData::Read( ifstream& file, unsigned int version ) {
 	file.read( (char *)data, dataSize);
 }
 
-void NiPixelData::Write( ofstream& file, unsigned int version ) const {
+void NiPixelData::Write( ostream& file, unsigned int version ) const {
 	//ABlock::Write( file, version );
 
 	WriteUInt( uint(pxFormat), file );
@@ -4463,7 +4463,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
  * NiPosData methods
  **********************************************************/
 
-void NiPosData::Read( ifstream& file, unsigned int version ) {
+void NiPosData::Read( istream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
 	NifStream( _type, file );
 
@@ -4473,7 +4473,7 @@ void NiPosData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiPosData::Write( ofstream& file, unsigned int version ) const {
+void NiPosData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
 	NifStream( _type, file );
 
@@ -4506,7 +4506,7 @@ string NiPosData::asString() const {
  * NiTextKeyExtraData methods
  **********************************************************/
 
-void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
+void NiTextKeyExtraData::Read( istream& file, unsigned int version ) {
 	/*GetAttr("Name")->Read( file, version );
 	GetAttr("Next Extra Data")->Read( file, version );
 	*/
@@ -4521,7 +4521,7 @@ void NiTextKeyExtraData::Read( ifstream& file, unsigned int version ) {
 	}
 }
 
-void NiTextKeyExtraData::Write( ofstream& file, unsigned int version ) const {
+void NiTextKeyExtraData::Write( ostream& file, unsigned int version ) const {
 
 	/*GetAttr("Name")->Write( file, version );
 	GetAttr("Next Extra Data")->Write( file, version );
@@ -4562,7 +4562,7 @@ string NiTextKeyExtraData::asString() const {
  * NiUVData methods
  **********************************************************/
 
-void NiUVData::Read( ifstream& in, unsigned int version ) {	
+void NiUVData::Read( istream& in, unsigned int version ) {	
 	for (uint i = 0; i < 4; ++i) {
 		uint count = ReadUInt( in );
 
@@ -4583,7 +4583,7 @@ void NiUVData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiUVData::Write( ofstream& out, unsigned int version ) const {
+void NiUVData::Write( ostream& out, unsigned int version ) const {
 	for (uint i = 0; i < 4; ++i) {
 		WriteUInt( uint(groups[i].keys.size()), out );
 
@@ -4637,7 +4637,7 @@ string NiUVData::asString() const {
  * NiVertWeightsExtraData methods
  **********************************************************/
  
-void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
+void NiVertWeightsExtraData::Read( istream& in, unsigned int version ) {
 	AExtraData::Read( in, version );
 
 	//Read byte count but throw it away
@@ -4651,7 +4651,7 @@ void NiVertWeightsExtraData::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiVertWeightsExtraData::Write( ofstream& out, unsigned int version ) const {
+void NiVertWeightsExtraData::Write( ostream& out, unsigned int version ) const {
 	AExtraData::Write( out, version );
 
 	uint bytes = 2 + 4 * uint(weights.size());
@@ -4688,7 +4688,7 @@ string NiVertWeightsExtraData::asString() const {
  * NiVisData methods
  **********************************************************/
 
-void NiVisData ::Read( ifstream& in, unsigned int version ) {
+void NiVisData ::Read( istream& in, unsigned int version ) {
 	uint keyCount = ReadUInt( in );
 
 	keys.resize( keyCount );
@@ -4698,7 +4698,7 @@ void NiVisData ::Read( ifstream& in, unsigned int version ) {
 	}
 }
 
-void NiVisData ::Write( ofstream& out, unsigned int version ) const {
+void NiVisData ::Write( ostream& out, unsigned int version ) const {
 	WriteUInt( uint(keys.size()), out );
 
 	for (uint i = 0; i < keys.size(); ++i) {
@@ -4729,7 +4729,7 @@ string NiVisData::asString() const {
  * NiLookAtInterpolator methods
  **********************************************************/
 
-//void NiLookAtInterpolator::Read( ifstream& file, unsigned int version ) {
+//void NiLookAtInterpolator::Read( istream& file, unsigned int version ) {
 //	
 //	GetAttr("Unknown Short")->Read( file, version );
 //	
@@ -4746,7 +4746,7 @@ string NiVisData::asString() const {
 //	}
 //}
 //
-//void NiLookAtInterpolator::Write( ofstream& file, unsigned int version ) const {
+//void NiLookAtInterpolator::Write( ostream& file, unsigned int version ) const {
 //
 //}
 //
@@ -4763,7 +4763,7 @@ string NiVisData::asString() const {
  * UnknownMixIn methods
  **********************************************************/
 
-void UnknownMixIn::Read( ifstream &in, unsigned int version ) {
+void UnknownMixIn::Read( istream &in, unsigned int version ) {
 	len = BlockSearch(in);
 
 	//Create byte array and read in unknown block
@@ -4800,7 +4800,7 @@ string UnknownMixIn::asString() const {
 	return out.str();
 }
 
-void UnknownMixIn::Write( ofstream& out, unsigned int version ) const {
+void UnknownMixIn::Write( ostream& out, unsigned int version ) const {
 	out.write( (const char*)data, len );
 }
 

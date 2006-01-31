@@ -86,8 +86,8 @@ public:
 	virtual void DecCrossRef( IBlock * block ) = 0;
 
 	//File I/O
-	virtual void Read( ifstream& in, unsigned int version ) = 0;
-	virtual void Write( ofstream& out, unsigned int version ) const = 0;	
+	virtual void Read( istream& in, unsigned int version ) = 0;
+	virtual void Write( ostream& out, unsigned int version ) const = 0;	
 };
 
 class ABlock : public IBlock/*, public IBlockInternal*/ {
@@ -143,8 +143,8 @@ public:
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
 
-	virtual void Read( ifstream& in, unsigned int version );
-	virtual void Write( ofstream& out, unsigned int version ) const;
+	virtual void Read( istream& in, unsigned int version );
+	virtual void Write( ostream& out, unsigned int version ) const;
 protected:
 	map<string, attr_ref> _attr_map;
 	vector<attr_ref> _attr_vect;
@@ -184,7 +184,7 @@ public:
 	void InitAttrs();
 	void * QueryInterface( int id );
 	void const * QueryInterface( int id ) const;
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		Matrix44 transform;
 		transform = GetLocalTransform();
@@ -292,11 +292,11 @@ public:
 		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		GetAttr("Name")->Read( in, version );
 		GetAttr("Next Extra Data")->Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		GetAttr("Name")->Write( out, version );
 		GetAttr("Next Extra Data")->Write( out, version );
 	}
@@ -564,8 +564,8 @@ public:
 	~NiTexturingProperty();
 	string GetBlockType() const { return "NiTexturingProperty"; }
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	void FixLinks( const vector<blk_ref> & blocks );
@@ -641,8 +641,8 @@ public:
 	}
 	~NiPixelData() { if (data != NULL) delete [] data; }
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiPixelData"; }
 
@@ -763,8 +763,8 @@ public:
 		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
 	}
 	~AShapeData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	void * QueryInterface( int id );
@@ -805,8 +805,8 @@ public:
 		AddAttr( attr_short, "Unknown Short", VER_4_1_0_12 );
 	}
 	~AParticlesData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 protected:
 	bool hasSizes;
@@ -822,8 +822,8 @@ class APSysData : public AShapeData {
 public:
 	APSysData() {}
 	~APSysData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 protected:
 	vector<float> unkFloats1;
@@ -840,8 +840,8 @@ class NiMeshPSysData : public APSysData {
 public:
 	NiMeshPSysData() {}
 	~NiMeshPSysData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiMeshPSysData"; };
 protected:
@@ -859,8 +859,8 @@ class NiPSysData : public APSysData {
 public:
 	NiPSysData() {}
 	~NiPSysData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiPSysData"; };
 protected:
@@ -881,8 +881,8 @@ class ARotatingParticlesData : public AParticlesData {
 public:
 	ARotatingParticlesData() {}
 	~ARotatingParticlesData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 protected:
 	bool hasRotations;
@@ -899,8 +899,8 @@ public:
 		AddAttr( attr_link, "Unknown Link 2" );
 	}
 	~NiParticleMeshesData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiParticleMeshesData"; }
@@ -926,8 +926,8 @@ class NiTriShapeData : public AShapeData, public ITriShapeData {
 public:
 	NiTriShapeData() : match_group_mode(false) {}
 	~NiTriShapeData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiTriShapeData"; }
 	void * QueryInterface( int id );
@@ -957,8 +957,8 @@ class NiTriStripsData : public AShapeData, public ITriStripsData {
 public:
 	NiTriStripsData() {}
 	~NiTriStripsData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiTriStripsData"; }
@@ -999,8 +999,8 @@ class NiBSplineData : public AData {
 public:
 	NiBSplineData() {}
 	~NiBSplineData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiBSplineData"; }
@@ -1016,8 +1016,8 @@ class NiCollisionData : public AData {
 public:
 	NiCollisionData() {}
 	~NiCollisionData() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiCollisionData"; }
@@ -1095,8 +1095,8 @@ public:
 	~NiBoneLODController();
 	string GetBlockType() const { return "NiBoneLODController"; }
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	void FixLinks( const vector<blk_ref> & blocks );
@@ -1683,8 +1683,8 @@ class AKeyframeData : public AData, public IKeyframeData {
 		AKeyframeData() {}
 		~AKeyframeData() {}
 
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) const;
+		void Read( istream& in, unsigned int version );
+		void Write( ostream& out, unsigned int version ) const;
 		string asString() const;
 		string GetBlockType() const { return "AKeyframeData"; }
 		
@@ -1766,8 +1766,8 @@ public:
 	NiPalette() {}
 	void Init() {}
 	~NiPalette() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiPalette"; }
@@ -1807,8 +1807,8 @@ public:
 	NiSkinPartition() {}
 	void Init() {}
 	~NiSkinPartition() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiSkinPartition"; }
@@ -1833,8 +1833,8 @@ public:
 	NiStringPalette() { AddAttr( attr_string, "Palette" ); }
 	void Init() {}
 	~NiStringPalette() {}
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiStringPalette"; }
@@ -1849,7 +1849,7 @@ public:
 class ISkinInstInternal {
 public:
 	virtual vector<int> GetBoneList() const = 0;
-	virtual void ReadBoneList( ifstream& in ) = 0;
+	virtual void ReadBoneList( istream& in ) = 0;
 };
 
 class NiSkinInstance : public AData, public ISkinInstInternal {
@@ -1882,7 +1882,7 @@ public:
 
 	vector<int> GetBoneList() const { return bones; }
 
-	void ReadBoneList( ifstream& in ) {
+	void ReadBoneList( istream& in ) {
 		int len = ReadUInt( in );
 		bones.resize( len );
 		for (int i = 0; i < len; ++i ) {
@@ -1917,8 +1917,8 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		}
 		~NiSkinData();
 
-		void Read( ifstream& in, unsigned int version );
-		void Write( ofstream& out, unsigned int version ) const;
+		void Read( istream& in, unsigned int version );
+		void Write( ostream& out, unsigned int version ) const;
 		string asString() const;
 		string GetBlockType() const { return "NiSkinData"; }
 		void * QueryInterface( int id );
@@ -1976,8 +1976,8 @@ public:
 	NiBoolData() {}
 	~NiBoolData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiBoolData"; };
 
@@ -2012,8 +2012,8 @@ public:
 	NiColorData() {}
 	~NiColorData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiColorData"; };
 
@@ -2053,8 +2053,8 @@ public:
 	}
 	~NiControllerSequence();
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
 	string GetBlockType() const { return "NiControllerSequence"; }
@@ -2093,8 +2093,8 @@ public:
 	NiFloatData() {}
 	~NiFloatData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiFloatData"; };
 
@@ -2131,8 +2131,8 @@ public:
 	}
 	~NiStringExtraData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiStringExtraData"; }
 };
@@ -2145,11 +2145,11 @@ public:
 	~NiBooleanExtraData() {}
 	string GetBlockType() const { return "NiBooleanExtraData"; };
 
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
 		GetAttr("Boolean Data")->Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
 		GetAttr("Boolean Data")->Write( out, version );
 	}
@@ -2173,11 +2173,11 @@ public:
 	~NiColorExtraData() {}
 	string GetBlockType() const { return "NiColorExtraData"; };
 
-	void Read( ifstream& file, unsigned int version ) {
+	void Read( istream& file, unsigned int version ) {
 		AExtraData::Read( file, version );
 		NifStream( color, file );
 	}
-	void Write( ofstream& file, unsigned int version ) const {
+	void Write( ostream& file, unsigned int version ) const {
 		AExtraData::Write( file, version );
 		NifStream( color, file );
 	}
@@ -2204,11 +2204,11 @@ public:
 	~NiFloatExtraData() {}
 	string GetBlockType() const { return "NiFloatExtraData"; };
 
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
 		GetAttr("Float Data")->Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
 		GetAttr("Float Data")->Write( out, version );
 	}
@@ -2232,13 +2232,13 @@ public:
 	~NiFloatsExtraData() {}
 	string GetBlockType() const { return "NiFloatsExtraData"; };
 
-	void Read( ifstream& file, unsigned int version ) {
+	void Read( istream& file, unsigned int version ) {
 		AExtraData::Read( file, version );
 		uint count = ReadUInt( file );
 		float_data.resize( count );
 		NifStream( float_data, file );
 	}
-	void Write( ofstream& file, unsigned int version ) const {
+	void Write( ostream& file, unsigned int version ) const {
 		AExtraData::Write( file, version );
 		WriteUInt( uint(float_data.size()), file );
 		NifStream( float_data, file );
@@ -2271,11 +2271,11 @@ public:
 
 	string GetBlockType() const { return "NiIntegerExtraData"; };
 
-		void Read( ifstream& in, unsigned int version ) {
+		void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
 		GetAttr("Integer Data")->Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
 		GetAttr("Integer Data")->Write( out, version );
 	}
@@ -2299,8 +2299,8 @@ public:
 	}
 	~NiMorphData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiMorphData"; };
 
@@ -2349,8 +2349,8 @@ public:
 	NiPosData() {}
 	~NiPosData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiPosData"; }
 
@@ -2404,8 +2404,8 @@ public:
 	}
 	~NiTextKeyExtraData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiTextKeyExtraData"; }
 
@@ -2437,8 +2437,8 @@ public:
 	NiUVData() {}
 	~NiUVData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiUVData"; }
 
@@ -2455,8 +2455,8 @@ public:
 	NiVertWeightsExtraData() {}
 	~NiVertWeightsExtraData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiVertWeightsExtraData"; }
 
@@ -2470,8 +2470,8 @@ public:
 	NiVisData() {}
 	~NiVisData() {}
 
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiVisData"; }
 
@@ -2486,8 +2486,8 @@ public:
 		_block_type = block_type;
 	}
 	~UnknownMixIn() { if (data != NULL) delete [] data; }
-	void Read( ifstream& in, unsigned int version );
-	void Write( ofstream& out, unsigned int version ) const;
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return _block_type; }
 
@@ -2501,12 +2501,12 @@ class UnknownBlock : public ABlock, public UnknownMixIn {
 public:
 	UnknownBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownBlock() {}
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		//cout << endl << "Unknown Block Type found:  " << GetBlockType() << "\a" << endl;
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -2521,11 +2521,11 @@ class UnknownControllerBlock : public AController, public UnknownMixIn {
 public:
 	UnknownControllerBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownControllerBlock() {}
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -2546,11 +2546,11 @@ class UnknownPropertyBlock : public AProperty, public UnknownMixIn {
 public:
 	UnknownPropertyBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownPropertyBlock() {}
-	void Read( ifstream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		ABlock::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
-	void Write( ofstream& out, unsigned int version ) const {
+	void Write( ostream& out, unsigned int version ) const {
 		ABlock::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
@@ -2656,8 +2656,8 @@ public:
 	//	Init();
 	//}
 
-	//void Read( ifstream& in, unsigned int version );
-	//void Write( ofstream& out, unsigned int version ) const;
+	//void Read( istream& in, unsigned int version );
+	//void Write( ostream& out, unsigned int version ) const;
 	//string asString() const;
 
 	void Init() {}

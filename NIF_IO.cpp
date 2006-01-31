@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "NIF_IO.h"
 //#include "NIF.h"
-int BlockSearch( ifstream& in ) {
+int BlockSearch( istream& in ) {
 
 	//Get current file pos
 	int data_start = in.tellg();
@@ -165,55 +165,55 @@ ostream & operator<<(ostream & lh, nifAlphaFormat const & rh) {
 /**
  * Read utility functions
  */
-uint ReadUInt( ifstream& in ){
+uint ReadUInt( istream& in ){
 
 	uint tmp;
 	in.read( (char*)&tmp, 4 );
 	return tmp;
 }
 
-ushort ReadUShort( ifstream& in ){
+ushort ReadUShort( istream& in ){
 
 	ushort tmp;
 	in.read( (char*)&tmp, 2 );
 	return tmp;
 }
 
-byte ReadByte( ifstream& in ){
+byte ReadByte( istream& in ){
 
 	byte tmp;
 	in.read( (char*)&tmp, 1 );
 	return tmp;
 }
 
-void ReadUSVector3( usVector3& vec, ifstream& in ){
+void ReadUSVector3( usVector3& vec, istream& in ){
 
 	vec[0] = ReadUShort( in );
 	vec[1] = ReadUShort( in );
 	vec[2] = ReadUShort( in );
 }
 
-float ReadFloat( ifstream &in ){
+float ReadFloat( istream &in ){
 
 	float tmp;
 	in.read( reinterpret_cast<char*>(&tmp), sizeof(tmp) );
 	return tmp;
 }
 
-void ReadFVector2( fVector2& fvec, ifstream& in ){
+void ReadFVector2( fVector2& fvec, istream& in ){
 
 	fvec[0] = ReadFloat( in );
 	fvec[1] = ReadFloat( in );
 }
 
-void ReadFVector3( fVector3& fvec, ifstream& in ){
+void ReadFVector3( fVector3& fvec, istream& in ){
 
 	fvec[0] = ReadFloat( in );
 	fvec[1] = ReadFloat( in );
 	fvec[2] = ReadFloat( in );
 }
 
-void ReadFVector4( fVector4& fvec, ifstream& in ){
+void ReadFVector4( fVector4& fvec, istream& in ){
 
 	fvec[0] = ReadFloat( in );
 	fvec[1] = ReadFloat( in );
@@ -221,7 +221,7 @@ void ReadFVector4( fVector4& fvec, ifstream& in ){
 	fvec[3] = ReadFloat( in );
 }
 
-string ReadString( ifstream &in ) {
+string ReadString( istream &in ) {
 	uint len = ReadUInt( in );
 	char * str = new char[len + 1];
 	in.read( str, len );
@@ -231,7 +231,7 @@ string ReadString( ifstream &in ) {
 	return out;
 }
 
-bool ReadBool( ifstream &in, unsigned int version ) {
+bool ReadBool( istream &in, unsigned int version ) {
 	if ( version <= 0x04010001 ) {
 		//Bools are stored as integers before version 4.1.0.1
 		return (ReadUInt( in ) != 0);
@@ -244,47 +244,47 @@ bool ReadBool( ifstream &in, unsigned int version ) {
 /**
  * Write utility functions.
  */
-void WriteUInt( uint val, ofstream& out ){
+void WriteUInt( uint val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
 }
 
-void WriteUShort( ushort val, ofstream& out ){
+void WriteUShort( ushort val, ostream& out ){
 
 	out.write( (char*)&val, 2 );
 }
 
-void WriteByte( byte val, ofstream& out ){
+void WriteByte( byte val, ostream& out ){
 
 	out.write( (char*)&val, 1 );
 }
 
-void WriteUSVector3( usVector3 const & vec, ofstream& out ){
+void WriteUSVector3( usVector3 const & vec, ostream& out ){
 
 	WriteUShort( vec[0], out );
 	WriteUShort( vec[1], out );
 	WriteUShort( vec[2], out );
 }
 
-void WriteFloat( float val, ofstream& out ){
+void WriteFloat( float val, ostream& out ){
 
 	out.write( reinterpret_cast<char*>(&val), sizeof(val) );
 }
 
-void WriteFVector2( fVector2 const & fvec, ofstream& out ){
+void WriteFVector2( fVector2 const & fvec, ostream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
 }
 
-void WriteFVector3( fVector3 const & fvec, ofstream& out ){
+void WriteFVector3( fVector3 const & fvec, ostream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
 	WriteFloat( fvec[2], out );
 }
 
-void WriteFVector4( fVector4 const & fvec, ofstream& out ){
+void WriteFVector4( fVector4 const & fvec, ostream& out ){
 
 	WriteFloat( fvec[0], out );
 	WriteFloat( fvec[1], out );
@@ -292,12 +292,12 @@ void WriteFVector4( fVector4 const & fvec, ofstream& out ){
 	WriteFloat( fvec[3], out );
 }
 
-void WriteString( string const & val, ofstream& out ) {
+void WriteString( string const & val, ostream& out ) {
 	WriteUInt( uint(val.size()), out );
 	out.write( val.c_str(), std::streamsize(val.size()) );
 }
 
-void WriteBool( bool val, ofstream& out, unsigned int version ) {
+void WriteBool( bool val, ostream& out, unsigned int version ) {
 	if ( version < 0x04010001 ) {
 		//Bools are stored as integers before version 4.1.0.1
 		if (val)
@@ -313,7 +313,7 @@ void WriteBool( bool val, ofstream& out, unsigned int version ) {
 	}
 }
 
-void WriteBlockName( const char* name, uint nameLength, ofstream& out ){
+void WriteBlockName( const char* name, uint nameLength, ostream& out ){
 
 	WriteUInt( nameLength, out );
 	out.write( name, nameLength );
@@ -365,40 +365,40 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 
 //--Overloaded versions of Read/Write functions ReadData/WriteData
 
-void NifStream( uint & val, ifstream& in ) { val = ReadUInt( in ); };
-void NifStream( ushort & val, ifstream& in ) { val = ReadUShort( in ); };
-void NifStream( byte & val, ifstream& in ) { val = ReadByte( in ); };
-void NifStream( float & val, ifstream& in ) { val = ReadFloat( in ); };
-void NifStream( string & val, ifstream& in ) { val = ReadString( in ); };
-void NifStream( KeyType & val, ifstream& in ) { val = KeyType(ReadUInt( in )); };
+void NifStream( uint & val, istream& in ) { val = ReadUInt( in ); };
+void NifStream( ushort & val, istream& in ) { val = ReadUShort( in ); };
+void NifStream( byte & val, istream& in ) { val = ReadByte( in ); };
+void NifStream( float & val, istream& in ) { val = ReadFloat( in ); };
+void NifStream( string & val, istream& in ) { val = ReadString( in ); };
+void NifStream( KeyType & val, istream& in ) { val = KeyType(ReadUInt( in )); };
 
-void NifStream( Vector3 & val, ifstream& in ) {
+void NifStream( Vector3 & val, istream& in ) {
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Quaternion & val, ifstream& in ) {
+void NifStream( Quaternion & val, istream& in ) {
 	val.w = ReadFloat( in );
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Color4 & val, ifstream& in ) {
+void NifStream( Color4 & val, istream& in ) {
 	val.r = ReadFloat( in );
 	val.g = ReadFloat( in );
 	val.b = ReadFloat( in );
 	val.a = ReadFloat( in );
 };
 
-void NifStream( Triangle & val, ifstream& in ) {
+void NifStream( Triangle & val, istream& in ) {
 	val.v1 = ReadUShort( in );
 	val.v2 = ReadUShort( in );
 	val.v3 = ReadUShort( in );
 };
 
-void NifStream( TexDesc & val, ifstream& in, uint version ) {
+void NifStream( TexDesc & val, istream& in, uint version ) {
 	val.isUsed = ReadBool( in, version );
 	if ( val.isUsed ) {	
 		//Read in link for TexSource
@@ -436,35 +436,35 @@ void NifStream( TexDesc & val, ifstream& in, uint version ) {
 
 
 
-void NifStream( uint const & val, ofstream& out ) { WriteUInt( val, out ); }
-void NifStream( ushort const & val, ofstream& out ) { WriteUShort( val, out ); }
-void NifStream( byte const & val, ofstream& out ) { WriteByte( val, out ); }
-void NifStream( float const & val, ofstream& out ) { WriteFloat( val, out ); }
-void NifStream( string const & val, ofstream& out ) { WriteString( val, out ); }
-void NifStream( KeyType const & val, ofstream& out ) { WriteUInt( val, out ); }
-void NifStream( Vector3 const & val, ofstream& out ) {
+void NifStream( uint const & val, ostream& out ) { WriteUInt( val, out ); }
+void NifStream( ushort const & val, ostream& out ) { WriteUShort( val, out ); }
+void NifStream( byte const & val, ostream& out ) { WriteByte( val, out ); }
+void NifStream( float const & val, ostream& out ) { WriteFloat( val, out ); }
+void NifStream( string const & val, ostream& out ) { WriteString( val, out ); }
+void NifStream( KeyType const & val, ostream& out ) { WriteUInt( val, out ); }
+void NifStream( Vector3 const & val, ostream& out ) {
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Quaternion const & val, ofstream& out ) {
+void NifStream( Quaternion const & val, ostream& out ) {
 	WriteFloat( val.w, out );
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Color4 const & val, ofstream& out ) {
+void NifStream( Color4 const & val, ostream& out ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );
 	WriteFloat( val.a, out );
 };
-void NifStream( Triangle const & val, ofstream& out ) {
+void NifStream( Triangle const & val, ostream& out ) {
 	WriteUShort( val.v1, out );
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );
 };
-void NifStream( TexDesc const & val, ofstream& out, uint version ) {
+void NifStream( TexDesc const & val, ostream& out, uint version ) {
 	WriteBool( val.isUsed, out, version );
 	if ( val.isUsed ) {
 		//Write link
