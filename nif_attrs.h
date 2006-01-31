@@ -1213,7 +1213,41 @@ public:
 			return blk_ref(-1);
 		}
 
-		//Arbitrarily start at the first bone in the list
+		//Arbitrarily start at the first bone in the list, and get it's ancestors
+		/*NEW CODE BEGIN*/
+		// We want to get the closest common ancestor between the _owner and the bones
+		// So start with a list of ancestors of the first bone (this is just a random choice)
+		blk_ref block = bones[0];
+		blk_ref par = block->GetParent();
+		list<blk_ref> bone_pars;
+		while ( par.is_null() == false ) {
+			bone_pars.push_front(par);
+			par = par->GetParent();
+		};
+		// Now do the same with the owner.
+		block = _owner;
+		par = block->GetParent();
+		list<blk_ref> owner_pars;
+		while ( par.is_null() == false ) {
+			owner_pars.push_front(par);
+			par = par->GetParent();
+		};
+		// Now find closest common ancestor.
+		if ( owner_pars.empty() || bone_pars.empty() )
+			throw runtime_error("Skinning instance has no common parent with the bones it refers to (invalid NIF file?). Cannot set skeleton root.");
+		blk_ref skelroot;
+		list<blk_ref>::const_iterator bone_par_it = bone_pars.begin();
+		list<blk_ref>::const_iterator owner_par_it = owner_pars.begin();
+		while ( *bone_par_it == *owner_par_it ) {
+			skelroot = *bone_par_it;
+			bone_par_it++;
+			owner_par_it++;
+		};
+		if ( skelroot.is_null() )
+			throw runtime_error("Skinning instance has no common parent with the bones it refers to (invalid NIF file?). Cannot set skeleton root.");
+		return skelroot;
+		/*NEW CODE END*/
+		/*OLD CODE BEGIN
 		blk_ref block = bones[0];
 		blk_ref par;
 		int flags;
@@ -1248,6 +1282,7 @@ public:
 			//We didn't find the root this time, set block to par and try again
 			block = par;
 		}
+		OLD CODE END*/
 	}
 	string asString() const {
 		stringstream out;
