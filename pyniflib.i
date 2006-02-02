@@ -140,7 +140,7 @@ struct Key {
 %ignore attr_ref::operator TexDesc() const;
 %ignore attr_ref::operator std::list<blk_ref>() const;
 
-%ignore blk_ref::operator<<(ostream & lh, const blk_ref & rh);
+%ignore operator<<(ostream & lh, const blk_ref & rh);
 
 %rename QueryShapeData( blk_ref & block ) QueryShapeData_const;
 %rename QueryTriShapeData( blk_ref const & block ) QueryTriShapeData_const;
@@ -157,6 +157,6 @@ struct Key {
 %rename QueryPixelData( blk_ref const & block ) QueryPixelData_const;
 %rename QueryPalette( blk_ref const & block ) QueryPalette_const;
 %rename QueryControllerSequence( blk_ref const & block ) QueryControllerSequence_const;
-
+%rename QueryTexturingProperty( blk_ref const & block ) QueryTexturingProperty_const;
 
 %include "niflib.h"
