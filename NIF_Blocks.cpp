@@ -172,6 +172,13 @@ blk_ref ABlock::GetParent() const {
 		return blk_ref(-1);
 }
 
+list<blk_ref> ABlock::GetParents() const {
+	list<blk_ref> parents;
+	for (vector<IBlock *>::const_iterator it = _parents.begin(); it != _parents.end(); it++ )
+		parents.push_back(blk_ref(*it));
+	return parents;
+}
+
 void ABlock::Read( istream& in, unsigned int version ) {
 
 	//Read Attributes

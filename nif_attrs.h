@@ -1218,21 +1218,45 @@ public:
 		// We want to get the closest common ancestor between the _owner and the bones
 		// So start with a list of ancestors of the first bone (this is just a random choice)
 		blk_ref block = bones[0];
-		blk_ref par = block->GetParent();
+		list<blk_ref> pars = block->GetParents();
+		blk_ref nodepar = blk_ref();
+		for ( list<blk_ref>::const_iterator it = pars.begin(); it != pars.end(); it++ )
+			if ( (*it)->GetBlockType() == "NiNode" ) {
+				nodepar = *it;
+				break;
+			};
 		list<blk_ref> bone_pars;
-		while ( par.is_null() == false ) {
-			bone_pars.push_front(par);
-			par = par->GetParent();
+		while ( nodepar.is_null() == false ) {
+			bone_pars.push_front(nodepar);
+			pars = nodepar->GetParents();
+			nodepar = blk_ref();
+			for ( list<blk_ref>::const_iterator it = pars.begin(); it != pars.end(); it++ )
+				if ( (*it)->GetBlockType() == "NiNode" ) {
+					nodepar = *it;
+					break;
+				};
 		};
 		// Now do the same with the owner.
-		block = _owner;
-		par = block->GetParent();
+		block = _owner->GetParent(); // TriShape
+		pars = block->GetParents();
+		nodepar = blk_ref();
+		for ( list<blk_ref>::const_iterator it = pars.begin(); it != pars.end(); it++ )
+			if ( (*it)->GetBlockType() == "NiNode" ) {
+				nodepar = *it;
+				break;
+			};
 		list<blk_ref> owner_pars;
-		while ( par.is_null() == false ) {
-			owner_pars.push_front(par);
-			par = par->GetParent();
+		while ( nodepar.is_null() == false ) {
+			owner_pars.push_front(nodepar);
+			pars = nodepar->GetParents();
+			nodepar = blk_ref();
+			for ( list<blk_ref>::const_iterator it = pars.begin(); it != pars.end(); it++ )
+				if ( (*it)->GetBlockType() == "NiNode" ) {
+					nodepar = *it;
+					break;
+				};
 		};
-		// Now find closest common ancestor.
+		// Now find closest common NiNode ancestor.
 		if ( owner_pars.empty() || bone_pars.empty() )
 			throw runtime_error("Skinning instance has no common parent with the bones it refers to (invalid NIF file?). Cannot set skeleton root.");
 		blk_ref skelroot;
