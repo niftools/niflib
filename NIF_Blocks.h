@@ -1856,8 +1856,8 @@ class NiSkinInstance : public AData, public ISkinInstInternal {
 public:
 	NiSkinInstance(){
 		AddAttr( attr_link, "Data" );
+		AddAttr( attr_link, "Skin Partition", VER_10_2_0_0 );
 		AddAttr( attr_skeletonroot, "Skeleton Root" );
-		AddAttr( attr_int, "Unknown Int", VER_10_2_0_0 );
 		AddAttr( attr_bones, "Bones" );
 	}
 	~NiSkinInstance() {}
