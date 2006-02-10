@@ -166,10 +166,17 @@ vector<attr_ref> ABlock::GetAttrs() const {
 }
 
 blk_ref ABlock::GetParent() const {
-	if (_parents.size() > 0 )
+	if (_parents.size() > 0 ) {
+		//Give preferential treatment to the first node parent
+		for ( uint i = 0; i < _parents.size(); ++i ) {
+			if ( _parents[i]->QueryInterface( ID_NODE ) ) {
+				return _parents[i];
+			}
+		}
 		return blk_ref(_parents[0]);
-	else
+	} else {
 		return blk_ref(-1);
+	}
 }
 
 list<blk_ref> ABlock::GetParents() const {
