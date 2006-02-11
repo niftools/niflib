@@ -1311,26 +1311,6 @@ public:
 	virtual blk_ref GetParent() const = 0;
 
 	/*!
-	 * Used to retrieve all parents that are linked to this block.
-	 * \return A list of block references to the parents that are linked to this block.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * blk_ref my_block = ReadNifTree("test_in.nif");
-	 * list<blk_ref> parents = my_block->GetParents();
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * my_block = ReadNifTree("test_in.nif")
-	 * parents =  block.GetParents()
-	 * \endcode
-	 * 
-	 * \sa IAttr::Set(blk_ref const &), IAttr::AddLink, IAttr::AddLinks, IAttr::RemoveLinks, IAttr::ClearLinks
-	 */
-	virtual list<blk_ref> GetParents() const = 0;
-
-	/*!
 	 * Summarizes the information contained in this block in English.
 	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
 	 * 
