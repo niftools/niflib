@@ -2,6 +2,12 @@ import sys
 import os
 from distutils import sysconfig
 
+Help("""
+'scons' to build niflib library and niflib python wrapper
+'scons -c' to clean
+""")
+
+# detect platform
 if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
@@ -18,10 +24,20 @@ elif sys.platform == 'win32':
     python_lib = ['python24']
     cppflags = '/EHsc /O2 /ML /GS /Zi /TP'
 else:
-    print "platform %s not supported"%sys.platform
+    print "Error: Platform %s not supported."%sys.platform
+    Exit(1)
 
+# detect SWIG
+if not Environment().Tool('swig'):
+    print """
+Error: SWIG not found.
+Please install SWIG, as we need it to create the python wrapper.
+You can get it from http://www.swig.org/"""
+    if sys.platform == "win32": print "Also don't forget to add the SWIG directory to your %PATH%."
+    Exit(1)
+
+# build niflib and python wrapper
 env = Environment(ENV = os.environ)
-
 env.StaticLibrary('niflib', Split('niflib.cpp nif_math.cpp NIF_Blocks.cpp NIF_IO.cpp docsys_extract.cpp'), CPPPATH = '.', CPPFLAGS = cppflags)
 env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
 
