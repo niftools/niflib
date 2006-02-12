@@ -29,9 +29,10 @@ else:
 
 env = Environment(ENV = os.environ)
 
-# TODO: detect SWIG
-#if *** not swig ***:
-if False:
+# detect SWIG
+try:
+    env['SWIG']
+except KeyError:
     print """
 Error: SWIG not found.
 Please install SWIG, as we need it to create the python wrapper.
