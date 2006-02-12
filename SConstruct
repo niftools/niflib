@@ -27,8 +27,11 @@ else:
     print "Error: Platform %s not supported."%sys.platform
     Exit(1)
 
-# detect SWIG
-if not Environment().Tool('swig'):
+env = Environment(ENV = os.environ)
+
+# TODO: detect SWIG
+#if *** not swig ***:
+if False:
     print """
 Error: SWIG not found.
 Please install SWIG, as we need it to create the python wrapper.
@@ -37,7 +40,6 @@ You can get it from http://www.swig.org/"""
     Exit(1)
 
 # build niflib and python wrapper
-env = Environment(ENV = os.environ)
 env.StaticLibrary('niflib', Split('niflib.cpp nif_math.cpp NIF_Blocks.cpp NIF_IO.cpp docsys_extract.cpp'), CPPPATH = '.', CPPFLAGS = cppflags)
 env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
 
