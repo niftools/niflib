@@ -188,7 +188,7 @@ enum TexFilterMode {
 };
 
 #ifndef NULL
-#define NULL 0
+#define NULL 0  /*!< Definition used to detect null pointers. */ 
 #endif
 
 /*!
@@ -1145,6 +1145,7 @@ struct Matrix44 {
 		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
 
+	//undocumented
 	void AsFloatArr( float out[4][4] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2]; out[1][3] = rows[1][3];
@@ -1839,55 +1840,176 @@ public:
 	virtual Matrix44 GetLocalBindPos() const = 0;
 };
 
+/*! An advanced interface for blocks which contain mesh data.
+ * \sa ITriShapeData, ITriStripsData
+ */
 class IShapeData {
 public:
 	IShapeData() {}
 	virtual ~IShapeData() {}
 	//Counts
+
+	/*! Returns the number of verticies that make up this mesh.  This is also the number of normals, colors, and UV coordinates if these are used.
+	 * \return The number of vertices that make up this mesh.
+	 * \sa IShapeData::SetVertexCount
+	 */
 	virtual short GetVertexCount() const = 0;
+
+	/*! Returns the number of texture coordinate sets used by this mesh.  For each UV set, there is a pair of texture coordinates for every vertex in the mesh.  Each set corresponds to a texture entry in the NiTexturingPropery block.
+	 * \return The number of texture cooridnate sets used by this mesh.  Can be zero.
+	 * \sa IShapeData::SetUVSetCount, ITexturingProperty
+	 */
 	virtual short GetUVSetCount() const = 0;
+
+	/*! Changes the number of vertices used by this mesh.  If the mesh already contains data, it will be retained so long as the new number is higher than the old number.  Otherwise any verticies above the new number will be deleted.  This also resizes any normal, color, or UV data associated with these verticies.  Triangles and triangle strips that may be attached via other interfaces are not culled of references to newly invalid vertices, however.
+	 * \param n The new size of the vertex array.
+	 * \sa IShapeData::GetVertexCount
+	 */
 	virtual void SetVertexCount(int n) = 0;
+
+	/*! Changes the number of UV sets used by this mesh.  If he new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
+	 * \param n The new size of the uv set array.
+	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
+	 */
 	virtual void SetUVSetCount(int n) = 0;
+
 	//Getters
+
+	/*! Used to retrive the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the vertices used by this mesh.
+	 * \sa IShapeData::SetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual vector<Vector3> GetVertices() const = 0;
+
+	/*! Used to retrive the normals used by this mesh.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the normals used by this mesh, if any.
+	 * \sa IShapeData::SetNormals, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual vector<Vector3> GetNormals() const = 0;
+
+	/*! Used to retrive the vertex colors used by this mesh.  The size of the vector will either be zero if no vertex colors are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the vertex colors used by this mesh, if any.
+	 * \sa IShapeData::SetColors, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual vector<Color4> GetColors() const = 0;
+
+	/*! Used to retrive the texture coordinates from one of the texture sets used by this mesh.  The function will throw an exception if a texture set index that does not exist is specified.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \param index The index of the texture coordinate set to retrieve the texture coordinates from.  This index is zero based and must be a positive number smaller than that returned by the IShapeData::GetUVSetCount function.  If there are no texture coordinate sets, this function will throw an exception.
+	 * \return A vector cntaining the the texture coordinates used by the requested texture coordinate set.
+	 * \sa IShapeData::SetUVSet, IShapeData::GetUVSetCount, IShapeData::SetUVSetCount, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual vector<TexCoord> GetUVSet( int index ) const = 0;
+
 	//Setters
+
+	/*! Used to set the vertex data used by this mesh.  The size of the vector must be the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the vertices to replace those in the mesh with.  Note that there is no way to set vertices one at a time, they must be sent in one batch.
+	 * \sa IShapeData::GetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual void SetVertices( const vector<Vector3> & in ) = 0;
+
+	/*! Used to set the normal data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the normals to replace those in the mesh with.  Note that there is no way to set normals one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using normals.
+	 * \sa IShapeData::GetNormals, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual void SetNormals( const vector<Vector3> & in ) = 0;
+
+	/*! Used to set the vertex color data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the vertex colors to replace those in the mesh with.  Note that there is no way to set vertex colors one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using vertex colors.
+	 * \sa IShapeData::GetColors, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual void SetColors( const vector<Color4> & in ) = 0;
+
+	/*! Used to set the texture coordinate data from one of the texture sets used by this mesh.  The function will throw an exception if a texture set index that does not exist is specified.  The size of the vector must be the same as the vertex count retrieved with the IShapeData::GetVertexCount function, or the function will throw an exception.
+	 * \param index The index of the texture coordinate set to retrieve the texture coordinates from.  This index is zero based and must be a positive number smaller than that returned by the IShapeData::GetUVSetCount function.  If there are no texture coordinate sets, this function will throw an exception.
+	 * \param in A vector containing the the new texture coordinates to replace those in the requested texture coordinate set.
+	 * \sa IShapeData::GetUVSet, IShapeData::GetUVSetCount, IShapeData::SetUVSetCount, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	virtual void SetUVSet( int index, const vector<TexCoord> & in ) = 0;
 };
 
+/*! An advanced interface for blocks which contain mesh data which includes triangle faces.
+ * \sa IShapeData, ITriStripsData
+ */
 class ITriShapeData {
 public:
 	ITriShapeData() {}
 	virtual ~ITriShapeData () {}
-	//Counts
-	virtual short GetTriangleCount() const = 0;
-	virtual void SetTriangleCount( int n ) = 0;
+
 	//Match Detection
+
+	/*! Used to turn match detection mode on and off.  When match detection mode is on, a list of all the vertices that have identical positions are stored in the file.  This may improve performance but is not well understood.
+	 * \param choice True to enable match detection mode, false to disable it.
+	 * \sa ITriShapeData::GetMatchDetectionMode
+	 */
 	virtual void SetMatchDetectionMode( bool choice ) = 0;
+
+	/*! Used to query the current match detection mode.  When match detection mode is on, a list of all the vertices that have identical positions are stored in the file.  This may improve performance but is not well understood.
+	 * \return True if match detection mode is on, false otherwise.
+	 * \sa ITriShapeData::GetMatchDetectionMode
+	 */
 	virtual bool GetMatchDetectionMode() const = 0;
+	
 	//Getters
+
+	/*! Returns the triangle faces that make up this mesh.
+	 * \return A vector containing the triangle faces that make up this mesh.
+	 * \sa ITriShapeData::SetTriangles
+	 */
 	virtual vector<Triangle> GetTriangles() const = 0;
+
 	//Setters
+
+	/*! Replaces the triangle face data in this mesh with new data.
+	 * \param in A vector containing the new face data.  Maximum size is 65,535.
+	 * \sa ITriShapeData::GetTriangles
+	 */
 	virtual void SetTriangles( const vector<Triangle> & in ) = 0;
 };
 
+/*! An advanced interface for blocks which contain mesh data which includes triangle faces arranged into strips for better performance.  Apparently cannot be used for meshes whos triangles are used in collision tests.
+ * \sa IShapeData, ITriShapeData
+ */
 class ITriStripsData {
 public:
 	ITriStripsData() {}
 	virtual ~ITriStripsData () {}
+
 	//Counts
-	virtual short GetTriangleCount() const = 0;
+
+	/*! Used to get the number of triangle strips that this mesh is divided into.
+	 * \return The number of triangle strips used by this mesh.
+	 * \sa ITriStripData::SetStripCount
+	 */
 	virtual short GetStripCount() const = 0;
+
+	/*! Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
+	 * \param n The new size of the triangle strips array.
+	 * \sa ITriStripData::GetStripCount
+	 */
 	virtual void SetStripCount( int n ) = 0;
-	//Getter
-	virtual vector<short> GetStrip( int index ) const = 0;
+
+	//Getters
+
+	/*! This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
+	 * \return A vector containing all the triangle faces from all the triangle strips that make up this mesh.
+	 * \sa ITriShapeData::GetTriangles, ITriStripsData::GetStrip, ITriStripsData::SetStrip
+	 */
 	virtual vector<Triangle> GetTriangles() const = 0;
+
+	/*! Used to retrieve all the triangles from a specific triangle strip.
+	 * \param index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
+	 * \sa ITriStripsData::SetStrip, ITriStripsData::GetTriangles
+	 */
+	virtual vector<short> GetStrip( int index ) const = 0;
+	
 	//Setter
+
+	/*! Used to set the triangle face data in a specific triangle strip.
+	 * \param index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \sa ITriStripsData::GetStrip, ITriStripsData::GetTriangles
+	 */
 	virtual void SetStrip( int index, const vector<short> & in ) = 0;
 };
 

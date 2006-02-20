@@ -934,9 +934,7 @@ public:
 	void const * QueryInterface( int id ) const;
 
 	//--ITriShapeData--//
-	//Counts
-	short GetTriangleCount() const { return short(triangles.size()); }
-	void SetTriangleCount(int n);
+
 	//Match Detection
 	void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
 	bool GetMatchDetectionMode() const { return match_group_mode; }
@@ -970,7 +968,7 @@ public:
 	//Counts
 	short GetStripCount() const;
 	void SetStripCount(int n);
-	short GetTriangleCount() const;
+	
 	//Getters
 	vector<short> GetStrip( int index ) const;
 	vector<Triangle> GetTriangles() const;
@@ -978,6 +976,7 @@ public:
 	void SetStrip( int index, const vector<short> & in );
 
 private:
+	short GetTriangleCount() const;
 	vector< vector<short> > strips;
 };
 

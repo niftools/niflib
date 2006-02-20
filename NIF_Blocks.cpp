@@ -2014,21 +2014,13 @@ void const * NiTriShapeData::QueryInterface( int id ) const {
 	}
 }
 
-void NiTriShapeData::SetTriangleCount(int n) {
-	if ( n > 65535 || n < 0 )
-		throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
-
-	if ( n == 0 )
-		triangles.clear();
-	else
-		triangles.resize(n);
-}
-
 //--Setters--//
 
 void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
-	if (in.size() != triangles.size())
-		throw runtime_error("Vector size must equal Triangle Count.  Call SetTriangleCount() to resize.");
+	if ( in.size() > 65535 || in.size() < 0 ) {
+		throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
+	}
+
 	triangles = in;
 }
 
