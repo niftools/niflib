@@ -2547,7 +2547,7 @@ void const * NiSkinData::QueryInterface( int id ) const {
 	}
 }
 
-void NiSkinData::SetBones( vector<blk_ref> bone_blocks ) {
+void NiSkinData::SetBones( const vector<blk_ref> & bone_blocks ) {
 	//--Move bones from temproary vector to map, sorted by blk_ref--//
 	for (uint i = 0; i < bones.size(); ++i) {
 		//IBlockInternal * blk_int = (IBlockInternal*)bone_blocks[i]->QueryInterface(BlockInternal);
@@ -2733,7 +2733,7 @@ void NiSkinData::FixLinks( const vector<blk_ref> & blocks ) {
 	StraightenSkeleton();
 }
 
-vector<blk_ref> NiSkinData::GetBones() {
+vector<blk_ref> NiSkinData::GetBones() const {
 	//Put all the valid bones from the map into a vector to return
 	vector<blk_ref> bone_blks( bone_map.size() );
 

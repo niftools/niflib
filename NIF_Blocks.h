@@ -1931,12 +1931,12 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		void RepositionTriShape( blk_ref & tri_shape );
 
         //ISkinData
-		vector<blk_ref> GetBones(); // cannot be const, since this changes the reference counts for the bone blocks!
-		map<int, float> GetWeights( blk_ref const & bone ) const;
-		void AddBone( blk_ref const & bone, map<int, float> const & in );
-		void RemoveBone( blk_ref const & bone );
+		vector<blk_ref> GetBones() const;
+		map<int, float> GetWeights( const blk_ref & bone ) const;
+		void AddBone( const blk_ref & bone, map<int, float> const & in );
+		void RemoveBone( const blk_ref & bone );
 	private:
-		void SetBones( vector<blk_ref> bone_blocks ); // not vector<blk_ref> const &, since we must cast the blk_ref's into (non-constant) IBlock * pointers
+		void SetBones( const vector<blk_ref> & bone_blocks );
 		void StraightenSkeleton();
 		struct Bone {
 			Matrix33 rotation;
@@ -1948,7 +1948,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 
 		INode * GetNodeParent() const;
 		void CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const;
-		void CalculateBoneOffset( INode const * const par_node, IBlock const * const bone_block, Bone & result ) const;
+		void CalculateBoneOffset( const INode * const par_node, const IBlock * const bone_block, Bone & result ) const;
 		Matrix33 rotation;
 		fVector3 translation;
 		float  scale;

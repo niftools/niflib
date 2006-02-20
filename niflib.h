@@ -1841,7 +1841,7 @@ public:
 };
 
 /*! An advanced interface for blocks which contain mesh data.
- * \sa ITriShapeData, ITriStripsData
+ * \sa IBlock::QueryInterface, QueryShapeData, ITriShapeData, ITriStripsData
  */
 class IShapeData {
 public:
@@ -1929,7 +1929,7 @@ public:
 };
 
 /*! An advanced interface for blocks which contain mesh data which includes triangle faces.
- * \sa IShapeData, ITriStripsData
+ * \sa IBlock::QueryInterface, QueryTriShapeData, IShapeData, ITriStripsData
  */
 class ITriShapeData {
 public:
@@ -1968,7 +1968,7 @@ public:
 };
 
 /*! An advanced interface for blocks which contain mesh data which includes triangle faces arranged into strips for better performance.  Apparently cannot be used for meshes whos triangles are used in collision tests.
- * \sa IShapeData, ITriShapeData
+ * \sa IBlock::QueryInterface, QueryTriStripsData, IShapeData, ITriShapeData
  */
 class ITriStripsData {
 public:
@@ -2013,100 +2013,358 @@ public:
 	virtual void SetStrip( int index, const vector<short> & in ) = 0;
 };
 
+/*! An advanced interface for blocks which contain skin weight and bone data.
+ * \sa IBlock::QueryInterface, QuerySkinData, IShapeData, ITriShapeData
+ */
 class ISkinData {
 public:
 	ISkinData() {}
 	virtual ~ISkinData () {}
-	virtual vector<blk_ref> GetBones() = 0; // Can't be const, since it changes the bone blk_ref reference 
+
+	/*! Used to retrieve a list of all the bones that influence this skin
+	 * \return A vector containing references to all the node blocks which act as bone influences on this skin.
+	 * \sa ISkinData::AddBone, ISkinData::RemoveBone, ISkinData::GetWeights
+	 */
+	virtual vector<blk_ref> GetBones() const = 0;
+
+	/*! Used to retrieve the skin weights associated with a specific bone
+	 * \param bone A blk_ref pointing to one of the node blocks which acts as a bone influence on this skin that's related weights are to be retrieved.
+	 * \return A map of ints to floats.  The integers are the vertex number and the floats are the percentage influence (between 0.0 and 1.0) that the specified bone has on that vertex.  Not all vertices will be influenced by all bones.
+	 * \sa ISkinData::GetBones, ISkinData::AddBone, ISkinData::RemoveBone
+	 */
 	virtual map<int, float> GetWeights( const blk_ref & bone ) const = 0;
+
+	/*! Adds a new bone influence to this skin alone with all its weight information.  If a bone that already influences the skin is specified, the weight data will be overwritten.
+	 * \param bone A blk_ref pointing to a node blocks which is to be added as a bone influence on this skin.
+	 * \param in A map of ints to floats.  The integers are the vertex number and the floats are the percentage influence (between 0.0 and 1.0) that the specified bone has on that vertex.  Not all vertices need to be influenced by all bones.
+	 * \sa ISkinData::RemoveBone, ISkinData::GetBones, ISkinData::GetWeights
+	 */
 	virtual void AddBone( const blk_ref & bone, map<int, float> const & in ) = 0;
+
+	/*! Removes a bone influence and deletes associated vertex weight information.
+	 * \param bone A blk_ref pointing to a node blocks which is to be removed as a bone influence on this skin.
+	 * \sa ISkinData::AddBone, ISkinData::GetBones
+	 */
 	virtual void RemoveBone( const blk_ref & bone ) = 0;
 };
 
+/*! An advanced interface for blocks with keyframe data.
+ * \sa IBlock::QueryInterface, QueryKeyframeData
+ */
 class IKeyframeData {
 public:
 	IKeyframeData() {}
 	virtual ~IKeyframeData () {}
+
 	//Rotate
+
+	/*! Retrieves the type of rotation interpolation being used.
+	 * \return The rotation key type specifing the type of interpolation being used.
+	 * \sa IKeyframeData::SetRotateType
+	 */
 	virtual KeyType GetRotateType() const = 0;
+
+	/*! Sets the type of rotation interpolation being used.  Does not affect existing key data.
+	 * \param t The new rotation key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetRotateType
+	 */
 	virtual void SetRotateType( KeyType t ) = 0;
+
+	/*! Retrieves the rotation key data.
+	 * \return A vector containing Key<Quaternion> data which specify rotation over time.
+	 * \sa IKeyframeData::SetRotateKeys, Key
+	 */
 	virtual vector< Key<Quaternion> > GetRotateKeys() const = 0;
+
+	/*! Sets the rotation key data.
+	 * \param keys A vector containing new Key<Quaternion> data which will replace any existing data.
+	 * \sa IKeyframeData::GetRotateKeys, Key
+	 */
 	virtual void SetRotateKeys( const vector< Key<Quaternion> > & keys ) = 0;
+
 	//Translate
+
+	/*! Retrieves the type of translation interpolation being used.
+	 * \return The translation key type specifing the type of interpolation being used.
+	 * \sa IKeyframeData::SetTranslateType
+	 */
 	virtual KeyType GetTranslateType() const = 0;
+
+	/*! Sets the type of translation interpolation being used.  Does not affect existing key data.
+	 * \param t The new translation key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetTranslateType
+	 */
 	virtual void SetTranslateType( KeyType t ) = 0;
+
+	/*! Retrieves the translation key data.
+	 * \return A vector containing Key<Vector3> data which specify translation over time.
+	 * \sa IKeyframeData::SetTranslateKeys, Key
+	 */
 	virtual vector< Key<Vector3> > GetTranslateKeys() const = 0;
+
+	/*! Sets the translation key data.
+	 * \param keys A vector containing new Key<Vector3> data which will replace any existing data.
+	 * \sa IKeyframeData::GetTranslateKeys, Key
+	 */
 	virtual void SetTranslateKeys( const vector< Key<Vector3> > & keys ) = 0;
+
 	//Scale
+
+	/*! Retrieves the type of scale interpolation being used.
+	 * \return The scale key type specifing the type of interpolation being used.
+	 * \sa IKeyframeData::SetTranslateType
+	 */
 	virtual KeyType GetScaleType() const = 0;
+
+	/*! Sets the type of scale interpolation being used.  Does not affect existing key data.
+	 * \param t The new scale key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetScaleType
+	 */
 	virtual void SetScaleType( KeyType t ) = 0;
+
+	/*! Retrieves the scale key data.
+	 * \return A vector containing Key<float> data which specify scale over time.
+	 * \sa IKeyframeData::SetScaleKeys, Key
+	 */
 	virtual vector< Key<float> > GetScaleKeys() const = 0;
+
+	/*! Sets the scale key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data.
+	 * \sa IKeyframeData::GetScaleKeys, Key
+	 */
 	virtual void SetScaleKeys( const vector< Key<float> > & keys ) = 0;
 };
 
+/*! An advanced interface for NiTextKeyExtraData blocks.  These blocks hold a list of textual notes and at which time they take effect which are used for designating the start and stop of animations and the triggering of sounds.
+ * \sa IBlock::QueryInterface, QueryTextKeyExtraData
+ */
 class ITextKeyExtraData {
 public:
 	ITextKeyExtraData() {}
 	virtual ~ITextKeyExtraData () {}
+
+	/*! Retrieves the text note key data.
+	 * \return A vector containing Key<string> data which specify text note over time.
+	 * \sa IKeyframeData::SetKeys, Key
+	 */
 	virtual vector< Key<string> > GetKeys() const = 0;
+
+	/*! Sets the text note key data.
+	 * \param keys A vector containing new Key<string> data which will replace any existing data.
+	 * \sa IKeyframeData::GetKeys, Key
+	 */
 	virtual void SetKeys( const vector< Key<string> > & keys ) = 0;
 
 };
 
+/*! An advanced interface for NiBoolData blocks.  These blocks contain an array of bool keys.
+ * \sa IBlock::QueryInterface, QueryBoolData
+ */
 class IBoolData {
 public:
 	IBoolData() {}
 	virtual ~IBoolData () {}
+
+	/*! Retrieves the type of boolean interpolation being used.
+	 * \return The boolean key type specifing the type of interpolation being used.
+	 * \sa IBoolData::SetKeyType
+	 */
 	virtual KeyType GetKeyType() const = 0;
+
+	/*! Sets the type of boolean interpolation being used.  Does not affect existing key data.
+	 * \param t The new boolean key type specifing the type of interpolation to be used.
+	 * \sa IBoolData::GetKeyType
+	 */
 	virtual void SetKeyType( KeyType t ) = 0;
+
+	/*! Retrieves the boolean key data.
+	 * \return A vector containing Key<unsigned char> data which specify boolean values over time.
+	 * \sa IBoolData::SetKeys, Key
+	 */
 	virtual vector< Key<unsigned char> > GetKeys() const = 0;
+
+	/*! Sets the boolean key data.
+	 * \param keys A vector containing new Key<unsigned char> data which will replace any existing data.
+	 * \sa IBoolData::GetKeys, Key
+	 */
 	virtual void SetKeys( const vector< Key<unsigned char> > & keys ) = 0;
 };
 
+/*! An advanced interface for NiColorData blocks.  These blocks contain an array of color keys.
+ * \sa IBlock::QueryInterface, QueryColorData
+ */
 class IColorData {
 public:
 	IColorData() {}
 	virtual ~IColorData () {}
+
+	/*! Retrieves the type of color interpolation being used.
+	 * \return The color key type specifing the type of interpolation being used.
+	 * \sa IColorData::SetKeyType
+	 */
 	virtual KeyType GetKeyType() const = 0;
+
+	/*! Sets the type of color interpolation being used.  Does not affect existing key data.
+	 * \param t The new color key type specifing the type of interpolation to be used.
+	 * \sa IColorData::GetKeyType
+	 */
 	virtual void SetKeyType( KeyType t ) = 0;
+
+	/*! Retrieves the color key data.
+	 * \return A vector containing Key<Color4> data which specify color over time.
+	 * \sa IColorData::SetKeys, Key
+	 */
 	virtual vector< Key<Color4> > GetKeys() const = 0;
+
+	/*! Sets the color key data.
+	 * \param keys A vector containing new Key<Color4> data which will replace any existing data.
+	 * \sa IColorData::GetKeys, Key
+	 */
 	virtual void SetKeys( const vector< Key<Color4> > & keys ) = 0;
 };
 
+/*! An advanced interface for NiBoolData blocks.  These blocks contain an array of float keys.
+ * \sa IBlock::QueryInterface, QueryFloatData
+ */
 class IFloatData {
 public:
 	IFloatData() {}
 	virtual ~IFloatData () {}
+
+	/*! Retrieves the type of float interpolation being used.
+	 * \return The float key type specifing the type of interpolation being used.
+	 * \sa IFloatData::SetKeyType
+	 */
 	virtual KeyType GetKeyType() const = 0;
+
+	/*! Sets the type of float interpolation being used.  Does not affect existing key data.
+	 * \param t The new float key type specifing the type of interpolation to be used.
+	 * \sa IFloatData::GetKeyType
+	 */
 	virtual void SetKeyType( KeyType t ) = 0;
+
+	/*! Retrieves the float key data.
+	 * \return A vector containing Key<float> data which specify float values over time.
+	 * \sa IFloatData::SetKeys, Key
+	 */
 	virtual vector< Key<float> > GetKeys() const = 0;
+
+	/*! Sets the float key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data.
+	 * \sa IFloatData::GetKeys, Key
+	 */
 	virtual void SetKeys( const vector< Key<float> > & keys ) = 0;
 };
 
+/*! An advanced interface for NiPosData blocks.  These blocks contain an array of position keys.
+ * \sa IBlock::QueryInterface, QueryPosData
+ */
 class IPosData {
 public:
 	IPosData() {}
 	virtual ~IPosData () {}
+
+	/*! Retrieves the type of position interpolation being used.
+	 * \return The position key type specifing the type of interpolation being used.
+	 * \sa IPosData::SetKeyType
+	 */
 	virtual KeyType GetKeyType() const = 0;
+
+	/*! Sets the type of position interpolation being used.  Does not affect existing key data.
+	 * \param t The new position key type specifing the type of interpolation to be used.
+	 * \sa IPosData::GetKeyType
+	 */
 	virtual void SetKeyType( KeyType t ) = 0;
+
+	/*! Retrieves the position key data.
+	 * \return A vector containing Key<Vector3> data which specify position over time.
+	 * \sa IPosData::SetKeys, Key
+	 */
 	virtual vector< Key<Vector3> > GetKeys() const = 0;
+
+	/*! Sets the position key data.
+	 * \param keys A vector containing new Key<Vector3> data which will replace any existing data.
+	 * \sa IPosData::GetKeys, Key
+	 */
 	virtual void SetKeys( const vector< Key<Vector3> > & keys ) = 0;
 };
 
-
+/*! An advanced interface for blocks which contain morphing animation data.
+ * \sa IBlock::QueryInterface, QueryMorphData
+ */
 class IMorphData {
 public:
 	IMorphData() {}
 	virtual ~IMorphData () {}
-	virtual KeyType GetMorphKeyType( int n ) const = 0;
-	virtual void SetMorphKeyType( int n, KeyType t ) = 0;
+
+	//Counts
+
+	/*! Retrieves the number of verticies used in the morph targets.  This must be the same as the number ov verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.
+	 * \return The number of vertices used in the morph target meshes.
+	 * \sa IMorphData::SetVertexCount
+	 */
 	virtual int GetVertexCount() const = 0;
+
+	/*! Sets the number of verticies used in the morph targets.  This must be the same as the number ov verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
+	 * \param n The new size of the morph target's vertex arrays.
+	 * \sa IMorphData::GetVertexCount
+	 */
 	virtual void SetVertexCount( int n ) = 0;
+
+	/*! Retrieves the number of morph targets used by this morph controller data.
+	 * \return The number of morph targets used by this morph controller data.
+	 * \sa IMorphData::SetMorphCount
+	 */
 	virtual int GetMorphCount() const = 0;
+
+	/*! Resizes the morph target array used by this morph controller data.  If the new size is smaller, morph targets at the end of the array and all associated data will be lost.
+	 * \param n The new size of the morph target array.
+	 * \sa IMorphData::GetMorphCount
+	 */
 	virtual void SetMorphCount( int n ) = 0;
+
+	//Keys
+
+	/*! Retrieves the type of morph interpolation being used by a specific morph target.
+	 * \param n The index of the morph to get the interpolation key type from.  A zero-based positive value which must be less than that returned by IMoprhData::GetMorphCount.
+	 * \return The morph key type specifing the type of interpolation being used by the specified morph target.
+	 * \sa IMorphData::SetMorphKeyType
+	 */
+	virtual KeyType GetMorphKeyType( int n ) const = 0;
+
+	/*! Sets the type of morph interpolation being used by a specific morph target.  Does not affect existing key data.
+	 * \param n The index of the morph to get the interpolation key type from.  A zero-based positive value which must be less than that returned by IMoprhData::GetMorphCount.
+	 * \param t The new morph key type specifing the type of interpolation to be used by the specified morph target.
+	 * \sa IMorphData::GetMorphKeyType
+	 */
+	virtual void SetMorphKeyType( int n, KeyType t ) = 0;
+
+	/*! Retrieves the morph key data for a specified morph target.
+	 * \return A vector containing Key<float> data which specify the influence of this morph target over time.
+	 * \sa IMorphData::SetMorphKeys, Key
+	 */
 	virtual vector< Key<float> > GetMorphKeys( int n ) const = 0;
+
+	/*! Sets the morph key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data for this morph target.
+	 * \sa IMorphData::GetMorphKeys, Key
+	 */
 	virtual void SetMorphKeys( int n, const vector< Key<float> > & keys ) = 0;
+	
+	//Morph Targets
+
+	/*! Retrieves the vertex data from the specified morph target
+	 * \param n The index of the morph target to retrieve vertex data for.  This is a zero-based index whoes value that must be less than that returned by IMorphData::GetMorphCount.
+	 * \return A vector containing the vertices used by this morph target.  The size will be equal to the value returned by IMorphData::GetVertexCount.
+	 * \sa IMorphData::SetMorphVerts
+	 */
 	virtual vector<Vector3> GetMorphVerts( int n) const = 0;
+
+	/*! Sets the vertex data for a specified morph target
+	 * \param n The index of the morph target to set vertex data for.  This is a zero-based index whoes value that must be less than that returned by IMorphData::GetMorphCount.
+	 * \param in A vector containing the new vertices to be used by this morph target.  The size will be equal to the value returned by IMorphData::GetVertexCount.
+	 * \sa IMorphData::SetMorphVerts
+	 */
 	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
 };
 
@@ -2149,22 +2407,31 @@ class ITexturingProperty {
 public:
 	ITexturingProperty() {}
 	virtual ~ITexturingProperty () {}
+
+	//Counts
+
 	virtual int GetTextureCount() const = 0;
 	virtual void SetTextureCount( int new_count ) = 0;
 	virtual int GetExtraTextureCount() const = 0;
 	virtual void SetExtraTextureCount( int new_count ) = 0;
+	
+	//Textures
+
 	virtual ApplyMode GetApplyMode() const = 0;
 	virtual void SetApplyMode( ApplyMode new_val ) = 0;
 	virtual TexDesc GetTexture( int n ) const = 0;
 	virtual void SetTexture( int n, TexDesc & new_val ) = 0;
 	virtual TexDesc GetExtraTexture( int n ) const = 0;
 	virtual void SetExtraTexture( int n, TexDesc & new_val ) = 0;
+	
+	//Bump Map
+
+	virtual Matrix22 GetBumpMapMatrix() const = 0;
+	virtual void SetBumpMapMatrix( Matrix22 & new_val ) = 0;
 	virtual float GetLumaOffset() const = 0;
 	virtual void SetLumaOffset( float new_val ) = 0;
 	virtual float GetLumaScale() const = 0;
 	virtual void SetLumaScale( float new_val ) = 0;
-	virtual Matrix22 GetBumpMapMatrix() const = 0;
-	virtual void SetBumpMapMatrix( Matrix22 & new_val ) = 0;
 };
 
 //struct ComplexVertex {
