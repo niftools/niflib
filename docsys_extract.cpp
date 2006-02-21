@@ -69,7 +69,7 @@ AInterpolator::AInterpolator() {
 
 ALight::ALight() {
 	AddAttr( attr_byte, "Unknown4", 167903232, 0xFFFFFFFF );
-	AddAttr( attr_linkgroup, "Affected Nodes", 0, 0xFFFFFFFF );
+	AddAttr( attr_linkgroup, "Affected Nodes", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
@@ -808,7 +808,7 @@ NiTextureTransformController::NiTextureTransformController() {
 	AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown4", 0, 0xFFFFFFFF );
 	Init();
 }
 

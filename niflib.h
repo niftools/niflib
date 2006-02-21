@@ -2309,13 +2309,13 @@ public:
 
 	//Counts
 
-	/*! Retrieves the number of verticies used in the morph targets.  This must be the same as the number ov verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.
+	/*! Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.
 	 * \return The number of vertices used in the morph target meshes.
 	 * \sa IMorphData::SetVertexCount
 	 */
 	virtual int GetVertexCount() const = 0;
 
-	/*! Sets the number of verticies used in the morph targets.  This must be the same as the number ov verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
+	/*! Sets the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
 	 * \param n The new size of the morph target's vertex arrays.
 	 * \sa IMorphData::GetVertexCount
 	 */
@@ -2378,11 +2378,13 @@ public:
 	virtual void SetMorphVerts( int n, const vector<Vector3> & in ) = 0;
 };
 
+/*! An advanced interface for NiControllerSequence blocks which serve as the root of KF files in later Nif versions.
+ * \sa IBlock::QueryInterface, QueryControllerSequence
+ */
 class IControllerSequence {
 public:
 	IControllerSequence() {}
 	virtual ~IControllerSequence () {}
-
 	virtual void SetFirstTargetName( string new_name ) = 0;
 	virtual void SetFirstController( blk_ref new_link ) = 0;
 	virtual void AddController( string new_name, blk_ref new_link ) = 0;
@@ -2468,27 +2470,106 @@ public:
 
 	//Counts
 
+	/*! Retrieves the number of texture slots defined by this texturing propery.  Texture slots may or may not actually contain textures, but each slot has a different meaning so the way a texture is used is dependant upon which slot it is in.
+	 * \return The number of texture slots defined by this texturing property.
+	 * \sa ITexturingProperty::SetTextureCount
+	 */
 	virtual int GetTextureCount() const = 0;
+
+	/*! Sets the number of texture slots defined by this texturing propery.  Known valid values are 7 and 8.
+	 * \param n The new size of the texture slot array.
+	 * \sa ITexturingProperty::GetTextureCount
+	 */
 	virtual void SetTextureCount( int new_count ) = 0;
+
+	/*! Retrieves the number of extra texture slots defined by this texturing propery.  These only exist in later Nif versions and their function is unknown.
+	 * \return The number of extra texture slots defined by this texturing property.
+	 * \sa ITexturingProperty::SetExtraTextureCount
+	 */
 	virtual int GetExtraTextureCount() const = 0;
+
+	/*! Sets the number of extra texture slots defined by this texturing propery.  Often zero.
+	 * \param n The new size of the extra texture slot array.
+	 * \sa ITexturingProperty::GetExtraTextureCount
+	 */
 	virtual void SetExtraTextureCount( int new_count ) = 0;
 	
 	//Textures
 
+	/*! Retrieves the current apply mode for this texturing propery.  This enum value affects the way the textures will be drawn.
+	 * \return The current apply mode for this texturing property.
+	 * \sa ITexturingProperty::SetApplyMode
+	 */
 	virtual ApplyMode GetApplyMode() const = 0;
+
+	/*! Sets the current apply mode for this texturing propery.  This enum value affects the way the textures will be drawn.
+	 * \param new_val The new apply mode for this texturing property.
+	 * \sa ITexturingProperty::GetApplyMode
+	 */
 	virtual void SetApplyMode( ApplyMode new_val ) = 0;
+
+	/*! Retrieves the texture desription structure that describes a texture by slot number.  The TexType enum is provided to make it easy to select the texture slot with the specific qualities that you want.
+	 * \param n The slot number of the texture to get the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \sa ITexturingProperty::SetTexture, TexType
+	 */
 	virtual TexDesc GetTexture( int n ) const = 0;
+
+	/*! Sets a new description for the texture in the given slot number.  The TexType enum is provided to make it easy to select the texture slot with the specific qualities that you want.
+	 * \param n The slot number of the texture to set the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \param new_val Thew new texture descriptoin for the texture at the given slot number.
+	 * \sa ITexturingProperty::GetTexture, TexType
+	 */
 	virtual void SetTexture( int n, TexDesc & new_val ) = 0;
+
+	/*! Retrieves the texture desription structure that describes an extra texture by slot number.  These only exist in the later Nif versions and their function is unknown.
+	 * \param n The slot number of the extra texture to get the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetExtraTextureCount.
+	 * \sa ITexturingProperty::SetExtraTexture
+	 */
 	virtual TexDesc GetExtraTexture( int n ) const = 0;
+
+	/*! Sets a new description for the texture in the given slot number.  These only exist in the later Nif versions and their function is unknown.
+	 * \param n The slot number of the extra texture to set the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \param new_val Thew new texture descriptoin for the extra texture at the given slot number.
+	 * \sa ITexturingProperty::GetTexture, TexType
+	 */
 	virtual void SetExtraTexture( int n, TexDesc & new_val ) = 0;
 	
 	//Bump Map
 
+	/*! Retrieves the bump map matrix.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return the bump map matrix.
+	 * \sa ITexturingProperty::SetBumpMapMatrix
+	 */
 	virtual Matrix22 GetBumpMapMatrix() const = 0;
+
+	/*! Sets the bump map matrix.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map matrix.
+	 * \sa ITexturingProperty::GetBumpMapMatrix
+	 */
 	virtual void SetBumpMapMatrix( Matrix22 & new_val ) = 0;
+
+	/*! Retrieves the bump map luma offset.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return The bump map luma offset.
+	 * \sa ITexturingProperty::SetLumaOffset
+	 */
 	virtual float GetLumaOffset() const = 0;
+
+	/*! Sets the bump map luma offset.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map luma offset.
+	 * \sa ITexturingProperty::GetLumaOffset
+	 */
 	virtual void SetLumaOffset( float new_val ) = 0;
+
+	/*! Retrieves the bump map luma scale.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return The bump map luma scale.
+	 * \sa ITexturingProperty::SetLumaScale
+	 */
 	virtual float GetLumaScale() const = 0;
+
+	/*! Sets the bump map luma scale.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map luma scale.
+	 * \sa ITexturingProperty::GetLumaScale
+	 */
 	virtual void SetLumaScale( float new_val ) = 0;
 };
 

@@ -1134,7 +1134,7 @@ private:
 class NiRangeLODData : public AData {
 public:
 	NiRangeLODData() {}
-	~NiRangeLODData();
+	~NiRangeLODData() {}
 	string GetBlockType() const { return "NiRangeLODData"; }
 
 	void Read( istream& in, unsigned int version );
