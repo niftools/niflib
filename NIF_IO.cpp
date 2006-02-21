@@ -398,6 +398,11 @@ void NifStream( Triangle & val, istream& in ) {
 	val.v3 = ReadUShort( in );
 };
 
+void NifStream( LODRange & val, istream& in ) {
+	val.near = ReadFloat( in );
+	val.far = ReadFloat( in );
+};
+
 void NifStream( TexDesc & val, istream& in, uint version ) {
 	val.isUsed = ReadBool( in, version );
 	if ( val.isUsed ) {	
@@ -463,6 +468,10 @@ void NifStream( Triangle const & val, ostream& out ) {
 	WriteUShort( val.v1, out );
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );
+};
+void NifStream( LODRange const & val, ostream& out ) {
+	WriteFloat( val.near, out );
+	WriteFloat( val.far, out );
 };
 void NifStream( TexDesc const & val, ostream& out, uint version ) {
 	WriteBool( val.isUsed, out, version );

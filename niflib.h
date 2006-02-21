@@ -78,6 +78,7 @@ struct ConditionalInt;
 struct SkinWeight;
 struct ControllerLink;
 struct TexDesc;
+struct LODRange;
 
 //--Constants--//
 
@@ -129,7 +130,7 @@ enum AttrType {
 	attr_controllertarget, /*!< Controller Target Attribute.  Automatic. */ 
 	attr_skeletonroot, /*!< Skeleton Root Attribute.  Automatic. */ 
 	attr_particlegroup, /*!< Particle Group Attribute. */ 
-	attr_lodrangegroup, /*!< Level of Detail Range Group Attribute. */ 
+	attr_lodinfo, /*!< Level of Detail Range Group Attribute. */ 
 	attr_vector3, /*!< Vector3 Attribute.  Holds a Float3 structure that corresponds to a vector in 3D space. */ 
 	attr_color3, /*!< Color3 Attribute.  Holds a Float3 structure that corresponds to an RGB color. */ 
 	attr_parent, /*!< Parent Attribute.  Automatic. */
@@ -1263,6 +1264,15 @@ struct SkinWeight {
 	float vertexWeight; /*!< The amount a particular bone affects the movement of this vertex.  Should be a number between 0.0f and 1.0f. */
 };
 
+#undef near
+#undef far
+
+/*! Represents the range where a Level of Detail is visible. */
+struct LODRange {
+	float near; /*!< The closest distance that an LOD range is visible. */
+	float far; /*!< The farthest distance that an LOD range is visible. */
+};
+
 /*! Stores an animation key and the time in the animation that it takes affect. It is a template class so it can hold any kind of data as different blocks key different sorts of information to the animation timeline.*/
 template <class T> 
 struct Key {
@@ -2379,30 +2389,78 @@ public:
 	virtual void ClearControllers() = 0;
 };
 
+/*! An advanced interface for the IPalette block which contains a color palette for internally stored paletized textures.
+ * \sa IBlock::QueryInterface, QueryPalette
+ */
 class IPalette {
 public:
 	IPalette() {}
 	virtual ~IPalette() {}
 
+	/*! Retrieves the palette data from this palette block.
+	 * \return A vector containing the the colors stored in the palette.
+	 * \sa IPalette::SetPalette
+	 */
 	virtual vector<Color4> GetPalette() const = 0;
+
+	/*! Sets the palette data for this palette block.
+	 * \param new_apl A vector containing the the new colors to be stored in the palette.
+	 * \sa IPalette::GetPalette
+	 */
 	virtual void SetPalette( const vector<Color4> & new_pal ) = 0;
 };
 
+/*! An advanced interface for the IPixelData block which stores internal textures.
+ * \sa IBlock::QueryInterface, QueryPixelData
+ */
 class IPixelData {
 public:
 	IPixelData() {}
 	virtual ~IPixelData() {}
 
+	/*! Retrieves the height of the texture image stored in this block.
+	 * \return The height of the texture image stored in this block.
+	 * \sa IPixelData::GetWidth, IPixelData::GetPixelFormat
+	 */
 	virtual int GetHeight() const = 0;
+
+	/*! Retrieves the width of the texture image stored in this block.
+	 * \return The width of the texture image stored in this block.
+	 * \sa IPixelData::GetHeight, IPixelData::GetPixelFormat
+	 */
 	virtual int GetWidth() const = 0;
+
+	/*! Retrieves the pixel format of the texture image stored in this block.
+	 * \return The pixel format of the texture image stored in this block.
+	 * \sa IPixelData::GetWidth, IPixelData::GetHeight
+	 */
 	virtual PixelFormat GetPixelFormat() const = 0;
 
+	/*! Deletes all image data and sets a new size and format in preparation for new data to be provided.
+	 * \param new_width The width of the new texture image.
+	 * \param new_height The height of the new texture image.
+	 * \param px_fmt The pixel format of the new texture image.
+	 * \sa IPixelData::GetWidth, IPixelData::GetHeight
+	 */
 	virtual void Reset( int new_width, int new_height, PixelFormat px_fmt ) = 0;
 	
+	/*! Retrieves the the pixels of the texture image stored in this block.  This function does not work on palettized textures.
+	 * \return A vector containing the colors of each pixel in the texture image stored in this block, one row after another starting from the bottom of the image.  The width of the image must be used to interpret them correctly.
+	 * \sa IPixelData::SetColors, IPixelData::GetWidth
+	 */
 	virtual vector<Color4> GetColors() const = 0;
+
+	/*! Sets the the pixels of the texture image stored in this block and optionally generates mipmaps.  This function does not work for palettized textures.
+	 * \param new_pixels A vector containing the colors of each new pixel to be set in the texture image stored in this block, one row after another starting from the botom of the image.
+	 * \param generate_mipmaps If true, mipmaps will be generated for the new image and stored in the file.
+	 * \sa IPixelData::GetColors, IPixelData::GetWidth
+	 */
 	virtual void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps ) = 0;
 };
 
+/*! An advanced interface for the NiTexturingProperty block which references all textures attatched to meshes which include it in their property list.
+ * \sa IBlock::QueryInterface, QueryTexturingProperty, IShapeData
+ */
 class ITexturingProperty {
 public:
 	ITexturingProperty() {}
@@ -3247,7 +3305,7 @@ There are several types of attributes, more than the list above, and each type s
 <tr><td>attr_lightmode</td><td>int</td></tr>
 <tr><td>attr_link</td><td>blk_ref</td></tr>
 <tr><td>attr_linkgroup</td><td>vector<blk_ref></td></tr>
-<tr><td>attr_lodrangegroup</td><td>Coming Soon.</td></tr>
+<tr><td>attr_lodinfo</td><td>Coming Soon.</td></tr>
 <tr><td>attr_matrix33</td><td>Matrix33</td></tr>
 <tr><td>attr_mipmapformat</td><td>int</td></tr>
 <tr><td>attr_parent</td><td>Automatic.</td></tr>

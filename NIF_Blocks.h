@@ -325,6 +325,13 @@ public:
 	~ALight() {}
 };
 
+class APointLight   : public ALight {
+public:
+	APointLight();
+	void Init() {}
+	~APointLight() {}
+};
+
 /**
  * FxButton
  */
@@ -500,6 +507,19 @@ public:
 	~NiDitherProperty() {}
 
 	string GetBlockType() const { return "NiDitherProperty"; }
+};
+
+/**
+ * NiFogProperty
+ */
+class NiFogProperty : public AProperty {
+public:
+
+	NiFogProperty();
+	void Init() {}
+	~NiFogProperty() {}
+
+	string GetBlockType() const { return "NiFogProperty"; }
 };
 
 /**
@@ -1109,6 +1129,25 @@ private:
 };
 
 /**
+ * NiRangeLODData
+ */
+class NiRangeLODData : public AData {
+public:
+	NiRangeLODData() {}
+	~NiRangeLODData();
+	string GetBlockType() const { return "NiRangeLODData"; }
+
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
+	string asString() const;
+
+private:
+	Vector3 _center;
+	vector<LODRange> ranges;
+};
+
+
+/**
  * NiFlipController
  */
 class NiFlipController : public AController {
@@ -1291,7 +1330,7 @@ public:
  * NiPointLight
  */
 
-class NiPointLight : public ALight {
+class NiPointLight : public APointLight {
 public:
 	NiPointLight();
 	void Init() {}
@@ -1303,7 +1342,7 @@ public:
  * NiSpotLight
  */
 
-class NiSpotLight : public ALight {
+class NiSpotLight : public APointLight {
 public:
 	NiSpotLight();
 	void Init() {}
@@ -2261,6 +2300,42 @@ private:
 	vector<float> float_data;
 };
 
+class NiIntegersExtraData : public AExtraData {
+public:
+	NiIntegersExtraData() {}
+	~NiIntegersExtraData() {}
+	string GetBlockType() const { return "NiIntegersExtraData"; };
+
+	void Read( istream& file, unsigned int version ) {
+		AExtraData::Read( file, version );
+		uint count = ReadUInt( file );
+		int_data.resize( count );
+		NifStream( int_data, file );
+	}
+	void Write( ostream& file, unsigned int version ) const {
+		AExtraData::Write( file, version );
+		WriteUInt( uint(int_data.size()), file );
+		NifStream( int_data, file );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Ints:  " << uint(int_data.size()) << endl;
+
+		for ( uint i = 0; i < int_data.size(); ++i ) {
+			out << "   " << i + i << ":  " << int_data[i] << endl;
+		}
+
+		return out.str();
+	}
+private:
+	vector<uint> int_data;
+};
+
 class NiIntegerExtraData : public AExtraData {
 public:
 	NiIntegerExtraData() {
@@ -2270,7 +2345,7 @@ public:
 
 	string GetBlockType() const { return "NiIntegerExtraData"; };
 
-		void Read( istream& in, unsigned int version ) {
+	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
 		GetAttr("Integer Data")->Read( in, version );
 	}

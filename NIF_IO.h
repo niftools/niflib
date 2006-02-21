@@ -202,7 +202,7 @@ void NifStream( KeyType & val, istream& in );
 void NifStream( Color4 & val, istream& in );
 void NifStream( Triangle & val, istream& in );
 void NifStream( TexDesc & val, istream& in, uint version );
-
+void NifStream( LODRange & val, istream& in );
 
 template <class T> 
 void NifStream( Key<T> & key, istream& file, KeyType type ) {
@@ -274,6 +274,7 @@ void NifStream( KeyType const & val, ostream& out );
 void NifStream( Color4 const & val, ostream& out );
 void NifStream( Triangle const & val, ostream& out );
 void NifStream( TexDesc const & val, ostream& out, uint version );
+void NifStream( LODRange const & val, ostream& out );
 
 template <class T> 
 void NifStream( Key<T> const & key, ostream& file, KeyType type ) {

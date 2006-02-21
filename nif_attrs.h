@@ -1399,27 +1399,34 @@ private:
 
 
 
-class LODRangeGroupAttr : public AAttr {
+class LODInfoAttr : public LinkAttr {
 public:
-	LODRangeGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
-	~LODRangeGroupAttr() {}
-	AttrType GetType() const { return attr_lodrangegroup; }
+	LODInfoAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {}
+	~LODInfoAttr() {}
+	AttrType GetType() const { return attr_lodinfo; }
 
-	void ReadAttr( istream& in, unsigned int version ) {
-		int numRanges = ReadUInt( in );
-		ranges.resize( numRanges );
-		for ( uint i = 0; i < ranges.size(); ++i ) {
-			ranges[i].near = ReadFloat( in );
-			ranges[i].far = ReadFloat( in );		
+	void ReadAttr( istream& file, unsigned int version ) {
+		NifStream( _type, file );
+		if ( _type == 0 ) {
+			NifStream( _center, file );
+			int numRanges = ReadUInt( file );
+			ranges.resize( numRanges );
+			NifStream( ranges, file );
+		} else {
+			NifStream( _unk_short, file );
+			LinkAttr::ReadAttr( file, version );
 		}
 	}
 
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteUInt( uint(ranges.size()), out );
-
-		for ( uint i = 0; i < ranges.size(); ++i ) {
-			WriteFloat( ranges[i].near, out );
-			WriteFloat( ranges[i].far, out );		
+	void WriteAttr( ostream& file, unsigned int version ) const {
+		NifStream( _type, file );
+		if ( _type == 0 ) {
+			NifStream( _center, file );
+			WriteUInt( uint(ranges.size()), file );
+			NifStream( ranges, file );
+		} else {
+			NifStream( _unk_short, file );
+			LinkAttr::WriteAttr( file, version );
 		}
 	}
 
@@ -1428,21 +1435,29 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << uint(ranges.size()) << endl;
+		out << "   LOD Info Type:  " << _type << endl;
 
-		for ( uint i = 0; i < ranges.size(); ++i ) {
-			out << "   " << i + 1 << ")   Near:  " << ranges[i].near << "   Far:  " << ranges[i].far << endl;
+		if ( _type == 0 ) {
+			out << "   LOD Center:  (" << _center.x << ", " << _center.y << ", " << _center.z << ")" << endl;
+
+			out << uint(ranges.size()) << endl;
+
+			for ( uint i = 0; i < ranges.size(); ++i ) {
+				out << "   " << i + 1 << ")   Near:  " << ranges[i].near << "   Far:  " << ranges[i].far << endl;
+			}
+		} else {
+			out << "Unknown Short:  " << _unk_short << endl
+				<< "Range Group Link:  " << LinkAttr::asString() << endl;
 		}
 
 		return out.str();
 	}
 	
 private:
-	struct LODRange {
-		float near;
-		float far;
-	};
+	uint _type;
+	Vector3 _center;
 	vector<LODRange> ranges;
+	ushort _unk_short;
 };
 
 

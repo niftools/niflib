@@ -123,8 +123,8 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 		attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_particlegroup ) {
 		attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_lodrangegroup ) {
-		attr = new LODRangeGroupAttr( name, this, first_ver, last_ver );
+	} else if ( type == attr_lodinfo ) {
+		attr = new LODInfoAttr( name, this, first_ver, last_ver );
 	} else if ( type == attr_vector3 ) {
 		attr = new Vector3Attr( name, this, first_ver, last_ver );
 	} else if ( type == attr_color3 ) {
@@ -1115,6 +1115,38 @@ NiBoneLODController::~NiBoneLODController() {
 	}
 }
 
+/***********************************************************
+ * NiRangeLODData methods
+ **********************************************************/
+
+void NiRangeLODData::Read( istream& file, unsigned int version ){
+	NifStream( _center, file );
+	int numRanges = ReadUInt( file );
+	ranges.resize( numRanges );
+	NifStream( ranges, file );
+}
+
+void NiRangeLODData::Write( ostream& file, unsigned int version ) const {
+	NifStream( _center, file );
+	WriteUInt( uint(ranges.size()), file );
+	NifStream( ranges, file );
+}
+
+string NiRangeLODData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "   LOD Center:  (" << _center.x << ", " << _center.y << ", " << _center.z << ")" << endl;
+
+	out << uint(ranges.size()) << endl;
+
+	for ( uint i = 0; i < ranges.size(); ++i ) {
+		out << "   " << i + 1 << ")   Near:  " << ranges[i].near << "   Far:  " << ranges[i].far << endl;
+	}
+
+	return out.str();
+}
 
 /***********************************************************
  * AShapeData methods

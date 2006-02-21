@@ -68,10 +68,8 @@ AInterpolator::AInterpolator() {
 }
 
 ALight::ALight() {
-	AddAttr( attr_int, "Unknown Int 1", 0, 67108866 );
-	AddAttr( attr_int, "Unknown Int 2", 0, 67108866 );
 	AddAttr( attr_byte, "Unknown4", 167903232, 0xFFFFFFFF );
-	AddAttr( attr_linkgroup, "Unknown3", 167837696, 0xFFFFFFFF );
+	AddAttr( attr_linkgroup, "Affected Nodes", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
 	AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
@@ -147,6 +145,13 @@ AParticleSystemController::AParticleSystemController() {
 	Init();
 }
 
+APointLight::APointLight() {
+	AddAttr( attr_float, "Constant Attenuation", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Linear Attenuation", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Quadratic Attenuation", 0, 0xFFFFFFFF );
+	Init();
+}
+
 AProperty::AProperty() {
 	Init();
 }
@@ -193,7 +198,7 @@ NiAlphaController::NiAlphaController() {
 
 NiAlphaProperty::NiAlphaProperty() {
 	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
+	AddAttr( attr_byte, "Threshold", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -328,6 +333,15 @@ NiFloatInterpolator::NiFloatInterpolator() {
 	Init();
 }
 
+NiFogProperty::NiFogProperty() {
+	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
+	Init();
+}
+
 NiGeomMorpherController::NiGeomMorpherController() {
 	AddAttr( attr_short, "Unknown", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
@@ -337,14 +351,10 @@ NiGeomMorpherController::NiGeomMorpherController() {
 
 NiGravity::NiGravity() {
 	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 8", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Force", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Type", 0, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "Position", 0, 0xFFFFFFFF );
+	AddAttr( attr_vector3, "Direction", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -365,9 +375,7 @@ NiLightDimmerController::NiLightDimmerController() {
 }
 
 NiLODNode::NiLODNode() {
-	AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
-	AddAttr( attr_vector3, "LOD Center", 0, 0xFFFFFFFF );
-	AddAttr( attr_lodrangegroup, "LOD Levels", 0, 0xFFFFFFFF );
+	AddAttr( attr_lodinfo, "LOD Info", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -526,7 +534,6 @@ NiPoint3Interpolator::NiPoint3Interpolator() {
 }
 
 NiPointLight::NiPointLight() {
-	AddAttr( attr_color3, "Unknown Color", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -747,11 +754,8 @@ NiSphericalCollider::NiSphericalCollider() {
 }
 
 NiSpotLight::NiSpotLight() {
-	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Cutoff Angle", 0, 0xFFFFFFFF );
+	AddAttr( attr_float, "Exponent", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -804,7 +808,7 @@ NiTextureTransformController::NiTextureTransformController() {
 	AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
 	AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown4", 0, 0xFFFFFFFF );
+	AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
 	Init();
 }
 
@@ -1009,6 +1013,10 @@ IBlock * CreateNiFloatsExtraData() {
 	return new NiFloatsExtraData;
 }
 
+IBlock * CreateNiFogProperty() {
+	return new NiFogProperty;
+}
+
 IBlock * CreateNiGeomMorpherController() {
 	return new NiGeomMorpherController;
 }
@@ -1019,6 +1027,10 @@ IBlock * CreateNiGravity() {
 
 IBlock * CreateNiIntegerExtraData() {
 	return new NiIntegerExtraData;
+}
+
+IBlock * CreateNiIntegersExtraData() {
+	return new NiIntegersExtraData;
 }
 
 IBlock * CreateNiKeyframeController() {
@@ -1233,6 +1245,10 @@ IBlock * CreateNiPSysUpdateCtlr() {
 	return new NiPSysUpdateCtlr;
 }
 
+IBlock * CreateNiRangeLODData() {
+	return new NiRangeLODData;
+}
+
 IBlock * CreateNiRotatingParticles() {
 	return new NiRotatingParticles;
 }
@@ -1406,9 +1422,11 @@ void RegisterBlockFactories () {
 	global_block_map["NiFloatExtraDataController"] = CreateNiFloatExtraDataController;
 	global_block_map["NiFloatInterpolator"] = CreateNiFloatInterpolator;
 	global_block_map["NiFloatsExtraData"] = CreateNiFloatsExtraData;
+	global_block_map["NiFogProperty"] = CreateNiFogProperty;
 	global_block_map["NiGeomMorpherController"] = CreateNiGeomMorpherController;
 	global_block_map["NiGravity"] = CreateNiGravity;
 	global_block_map["NiIntegerExtraData"] = CreateNiIntegerExtraData;
+	global_block_map["NiIntegersExtraData"] = CreateNiIntegersExtraData;
 	global_block_map["NiKeyframeController"] = CreateNiKeyframeController;
 	global_block_map["NiKeyframeData"] = CreateNiKeyframeData;
 	global_block_map["NiLightColorController"] = CreateNiLightColorController;
@@ -1462,6 +1480,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiPSysSpawnModifier"] = CreateNiPSysSpawnModifier;
 	global_block_map["NiPSysSphereEmitter"] = CreateNiPSysSphereEmitter;
 	global_block_map["NiPSysUpdateCtlr"] = CreateNiPSysUpdateCtlr;
+	global_block_map["NiRangeLODData"] = CreateNiRangeLODData;
 	global_block_map["NiRotatingParticles"] = CreateNiRotatingParticles;
 	global_block_map["NiRotatingParticlesData"] = CreateNiRotatingParticlesData;
 	global_block_map["NiSequenceStreamHelper"] = CreateNiSequenceStreamHelper;
