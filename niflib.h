@@ -1863,7 +1863,7 @@ public:
 	 * \return The number of vertices that make up this mesh.
 	 * \sa IShapeData::SetVertexCount
 	 */
-	virtual short GetVertexCount() const = 0;
+	virtual int GetVertexCount() const = 0;
 
 	/*! Returns the number of texture coordinate sets used by this mesh.  For each UV set, there is a pair of texture coordinates for every vertex in the mesh.  Each set corresponds to a texture entry in the NiTexturingPropery block.
 	 * \return The number of texture cooridnate sets used by this mesh.  Can be zero.

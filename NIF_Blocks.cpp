@@ -1159,7 +1159,7 @@ void AShapeData::Read( istream& in, unsigned int version ){
 
 	GetAttr("Name")->Read( in, version );
 	
-	short vert_count = ReadUShort( in );
+	ushort vert_count = ReadUShort( in );
 
 	//There is an unknown short here from version 10.1.0.0 on
 	if ( version >= VER_10_1_0_0 ) {

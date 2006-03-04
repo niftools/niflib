@@ -792,7 +792,7 @@ public:
 
 	//--IShapeData--//
 	//Counts
-	short GetVertexCount() const { return short(vertices.size()); }
+	int GetVertexCount() const { return int(vertices.size()); }
 	short GetUVSetCount() const { return short(uv_sets.size()); }
 	void SetVertexCount(int n);
 	void SetUVSetCount(int n);
