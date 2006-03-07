@@ -68,6 +68,7 @@ AInterpolator::AInterpolator() {
 }
 
 ALight::ALight() {
+	AddAttr( attr_condint, "Affected Node List?", 0, 67108866 );
 	AddAttr( attr_byte, "Unknown4", 167903232, 0xFFFFFFFF );
 	AddAttr( attr_linkgroup, "Affected Nodes", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
@@ -768,14 +769,14 @@ NiStencilProperty::NiStencilProperty() {
 	AddAttr( attr_int, "Unknown Int 4", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 5", 0, 0xFFFFFFFF );
 	AddAttr( attr_int, "Unknown Int 6", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown Int 7", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Cull Mode", 0, 0xFFFFFFFF );
 	Init();
 }
 
 NiTextureEffect::NiTextureEffect() {
 	AddAttr( attr_condint, "Conditional Int", 0, 67108866 );
 	AddAttr( attr_byte, "Unknown Byte 2", 335544324, 0xFFFFFFFF );
-	AddAttr( attr_linkgroup, "Unknown Node List", 167837696, 0xFFFFFFFF );
+	AddAttr( attr_linkgroup, "Affected Node List", 167837696, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
@@ -863,7 +864,7 @@ NiWireframeProperty::NiWireframeProperty() {
 
 NiZBufferProperty::NiZBufferProperty() {
 	AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown Int", 67174412, 0xFFFFFFFF );
+	AddAttr( attr_int, "Function", 67174412, 0xFFFFFFFF );
 	Init();
 }
 
@@ -1257,6 +1258,10 @@ IBlock * CreateNiRotatingParticlesData() {
 	return new NiRotatingParticlesData;
 }
 
+IBlock * CreateNiScreenLODData() {
+	return new NiScreenLODData;
+}
+
 IBlock * CreateNiSequenceStreamHelper() {
 	return new NiSequenceStreamHelper;
 }
@@ -1483,6 +1488,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiRangeLODData"] = CreateNiRangeLODData;
 	global_block_map["NiRotatingParticles"] = CreateNiRotatingParticles;
 	global_block_map["NiRotatingParticlesData"] = CreateNiRotatingParticlesData;
+	global_block_map["NiScreenLODData"] = CreateNiScreenLODData;
 	global_block_map["NiSequenceStreamHelper"] = CreateNiSequenceStreamHelper;
 	global_block_map["NiShadeProperty"] = CreateNiShadeProperty;
 	global_block_map["NiSkinData"] = CreateNiSkinData;

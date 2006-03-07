@@ -1146,6 +1146,22 @@ private:
 	vector<LODRange> ranges;
 };
 
+class NiScreenLODData : public AData {
+public:
+	NiScreenLODData() {}
+	~NiScreenLODData() {}
+
+	string GetBlockType() const { return "NiScreenLODData"; }
+
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
+	string asString() const;
+
+	private:
+	float unk_floats[8];
+	vector<float> unk_float_list;
+};
+
 
 /**
  * NiFlipController

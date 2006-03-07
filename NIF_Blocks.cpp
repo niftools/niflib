@@ -1149,6 +1149,55 @@ string NiRangeLODData::asString() const {
 }
 
 /***********************************************************
+ * NiScreenLODData methods
+ **********************************************************/
+
+void NiScreenLODData::Read( istream& file, unsigned int version ){
+	//8 unknown floats
+	for ( uint i = 0; i < 8; ++i ) {
+		NifStream( unk_floats[i], file );
+	}
+
+	//float list
+	uint unk_count = ReadUInt( file );
+	unk_float_list.resize( unk_count );
+
+	NifStream( unk_float_list, file );
+}
+
+void NiScreenLODData::Write( ostream& file, unsigned int version ) const {
+	//8 unknown floats
+	for ( uint i = 0; i < 8; ++i ) {
+		NifStream( unk_floats[i], file );
+	}
+
+	//float list
+	WriteUInt( uint( unk_float_list.size()), file );
+
+	NifStream( unk_float_list, file );
+}
+
+string NiScreenLODData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	//8 unknown floats
+	out << "Unknown 8 Floats:  " << endl;
+	for ( uint i = 0; i < 8; ++i ) {
+		out << "   " << i + 1 << ":  " << unk_floats[i] << endl;
+	}
+
+	//float list
+	out << "Unknown Float List:  " << uint(unk_float_list.size());
+	for ( uint i = 0; i < unk_float_list.size(); ++i ) {
+		out << "   " << i + 1 << ":  " << unk_float_list[i] << endl;
+	}
+
+	return out.str();
+}
+
+/***********************************************************
  * AShapeData methods
  **********************************************************/
 
