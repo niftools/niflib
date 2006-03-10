@@ -53,6 +53,7 @@ public:
 	int asInt() const { throw runtime_error(ATTRERR); }
 	float asFloat() const { throw runtime_error(ATTRERR); }
 	Float3 asFloat3() const { throw runtime_error(ATTRERR); }
+	Float4 asFloat4() const { throw runtime_error(ATTRERR); }
 	Matrix33 asMatrix33() const { throw runtime_error(ATTRERR); }
 	blk_ref asLink() const { throw runtime_error(ATTRERR); }
 	TexSource asTexSource() const { throw runtime_error(ATTRERR); }
@@ -64,6 +65,7 @@ public:
 	void Set(int) { throw runtime_error(ATTRERR); }
 	void Set(float) { throw runtime_error(ATTRERR); }
 	void Set(Float3 const &) { throw runtime_error(ATTRERR); }
+	void Set(Float4 const &) { throw runtime_error(ATTRERR); }
 	void Set(string const &) { throw runtime_error(ATTRERR); }
 	void Set(Matrix33 const &) { throw runtime_error(ATTRERR); }
 	void Set(blk_ref const &) { throw runtime_error(ATTRERR); }
@@ -320,6 +322,43 @@ private:
 	Float3 data;
 };
 
+class Float4Attr : public AAttr {
+public:
+	Float4Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : AAttr(name, owner, first_ver, last_ver) {
+		data[0] = 0.0f;
+		data[1] = 0.0f;
+		data[2] = 0.0f;
+		data[3] = 0.0f;
+	}
+	~Float4Attr() {}
+	AttrType GetType() const { return attr_float4; }
+	void ReadAttr( istream& in, unsigned int version ) { 
+		data[0] = ReadFloat( in );
+		data[1] = ReadFloat( in );
+		data[2] = ReadFloat( in );
+		data[3] = ReadFloat( in );
+	}
+	void WriteAttr( ostream& out, unsigned int version ) const {
+		WriteFloat( data[0], out );
+		WriteFloat( data[1], out );
+		WriteFloat( data[2], out );
+		WriteFloat( data[3], out );
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << "(" << setw(5) << data[0] << ", " << setw(5) << data[1] << ", " << setw(5) << data[2] << ", " << setw(5) << data[3] << " )";
+		
+		return out.str();
+	}
+	Float4 asFloat4() const { return data; }
+	void Set(Float4 const & n) { data = n; }
+private:
+	Float4 data;
+};
+
 class Vector3Attr : public Float3Attr {
 public:
 	Vector3Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float3Attr(name, owner, first_ver, last_ver) {}
@@ -332,6 +371,20 @@ public:
 	Color3Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float3Attr(name, owner, first_ver, last_ver) {}
 	~Color3Attr() {}
 	AttrType GetType() const { return attr_color3; }
+};
+
+class Color4Attr : public Float4Attr {
+public:
+	Color4Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float4Attr(name, owner, first_ver, last_ver) {}
+	~Color4Attr() {}
+	AttrType GetType() const { return attr_color4; }
+};
+
+class QuaternionAttr : public Float4Attr {
+public:
+	QuaternionAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float4Attr(name, owner, first_ver, last_ver) {}
+	~QuaternionAttr() {}
+	AttrType GetType() const { return attr_quaternion; }
 };
 
 class StringAttr : public AAttr {
@@ -693,6 +746,33 @@ public:
 		for (LinkSetConstIt it = links.begin(); it != links.end(); ++it ) {
 			WriteUInt( it->get_index(), out );
 		}
+	}
+};
+
+class ModifierGroupAttr : public LinkGroupAttr {
+public:
+	ModifierGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkGroupAttr( name, owner, first_ver, last_ver ) {}
+	~ModifierGroupAttr() {}
+
+	AttrType GetType() const { return attr_modifiergroup; }
+
+	void ReadAttr( istream& in, unsigned int version ) {
+
+		//The only difference is that there is a boolean before this link group
+		bool has_links = ReadBool( in, version );
+
+		//if ( has_links) {
+			LinkGroupAttr::ReadAttr( in, version );
+		//}
+	}
+	void WriteAttr( ostream& out, unsigned int version ) const {
+		//The only difference is that there is a boolean before this link group
+		WriteBool( (links.size() > 0), out, version );
+
+		//if ( links.size() > 0 ) {
+			LinkGroupAttr::WriteAttr( out, version );
+		//}
+
 	}
 };
 

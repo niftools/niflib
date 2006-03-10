@@ -110,6 +110,7 @@ enum AttrType {
 	attr_byte, /*!< Byte Attribute.  Holds an 8-bit integer. */ 
 	attr_float, /*!< Float Attribute.  Holds a 32-bit floating point number. */ 
 	attr_float3, /*!< Float3 Attribute.  Holds a Float3 structure. */ 
+	attr_float4, /*!< Float4 Attribute.  Holds a Float4 structure. */ 
 	attr_string, /*!< String Attribute.  Holds a text string. */ 
 	attr_link, /*!< Link Attribute.  Links to one other Nif block lower in the Nif tree. */ 
 	attr_flags, /*!< Flags Attribute.  Holds a set of 16 bit flags whos function depends on the block that uses them. */ 
@@ -126,6 +127,7 @@ enum AttrType {
 	attr_texsource, /*!< Texture Source Attribute.  Holds a Texture Source structure. */ 
 	attr_pixellayout, /*!< Light Mode Attribute.  Holds an integer that corresponds to the light mode. */ 
 	attr_mipmapformat, /*!< Mipmap Format Attribute.  Holds an integer that corresponds to the mipmap format. */ 
+	attr_modifiergroup, /*!< A link group conditioned on a boolean value. */
 	attr_alphaformat, /*!< Alpha Format Attribute.  Holds an integer that corresponds to the alpha format. */ 
 	attr_controllertarget, /*!< Controller Target Attribute.  Automatic. */ 
 	attr_skeletonroot, /*!< Skeleton Root Attribute.  Automatic. */ 
@@ -133,6 +135,8 @@ enum AttrType {
 	attr_lodinfo, /*!< Level of Detail Range Group Attribute. */ 
 	attr_vector3, /*!< Vector3 Attribute.  Holds a Float3 structure that corresponds to a vector in 3D space. */ 
 	attr_color3, /*!< Color3 Attribute.  Holds a Float3 structure that corresponds to an RGB color. */ 
+	attr_color4, /*!< Color4 Attribute.  Holds a Float4 structure that corresponds to an RGBA color. */ 
+	attr_quaternion, /*!< Quaternion Attribute.  Holds a Float4 structure that corresponds to a Quaternion. */ 
 	attr_parent, /*!< Parent Attribute.  Automatic. */
 	attr_targetgroup, /*!< A linkgroup that stores its count with a short instead of a long integer. */
 	attr_unk292bytes, //Temporary
@@ -1561,6 +1565,12 @@ public:
 	virtual Float3 asFloat3() const = 0;
 
 	/*!
+	 * Used to get a copy of the Float4 structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
+	 * \return A copy of the Float4 structure stored in this attribute.
+	 */
+	virtual Float4 asFloat4() const = 0;
+
+	/*!
 	 * Used to get a copy of the text string stored in an attribute.  Raises an exception if the attribute does not store this type of value.
 	 * \return A copy of the text string stored in this attribute.
 	 */
@@ -1635,6 +1645,12 @@ public:
 	 * \param val This value will be copied into the attribute and stored.
 	 */
 	virtual void Set( Float3 const & val ) = 0;
+
+	/*!
+	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
+	 * \param val This value will be copied into the attribute and stored.
+	 */
+	virtual void Set( Float4 const & val ) = 0;
 
 	/*!
 	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
@@ -2820,6 +2836,15 @@ public:
 	 * \param n The new value to set the IAttr attribute to using its Set function.
 	 * \return a reference to this attr_ref object.
 	 */
+	attr_ref & operator=(Float4 const & n) {
+		_attr->Set(n);
+		return *this;
+	}
+
+	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
+	 * \param n The new value to set the IAttr attribute to using its Set function.
+	 * \return a reference to this attr_ref object.
+	 */
 	attr_ref & operator=(string const & n) {
 		_attr->Set(n);
 		return *this;
@@ -2895,6 +2920,11 @@ public:
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
 	 */
 	operator Float3() const { return _attr->asFloat3(); }
+
+	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
+	 * \return the value stored in the attribute stored in this reference by calling its asType function.
+	 */
+	operator Float4() const { return _attr->asFloat4(); }
 
 	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
@@ -3152,6 +3182,12 @@ public:
 		attr->Set(value);
 	}
 	void __setitem__(string index, Float3 value) {
+		attr_ref attr = _block->GetAttr(index);
+		if ( attr.is_null() == true )
+			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
+		attr->Set(value);
+	}
+	void __setitem__(string index, Float4 value) {
 		attr_ref attr = _block->GetAttr(index);
 		if ( attr.is_null() == true )
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");

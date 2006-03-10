@@ -228,18 +228,18 @@ public:
 	~AFx() {}
 };
 
-class AParticleNode : public ANode {
-public:
-	AParticleNode();
-	void Init() {}
-	~AParticleNode() {}
-};
-
 class AShape : public ANode {
 public:
 	AShape();
 	void Init() {}
 	~AShape() {}
+};
+
+class AParticleNode : public AShape {
+public:
+	AParticleNode();
+	void Init() {}
+	~AParticleNode() {}
 };
 
 class AProperty : public AControllable {
@@ -285,6 +285,20 @@ public:
 	~APSysModifier() {}
 };
 
+class APSysEmitter : public APSysModifier {
+public:
+	APSysEmitter();
+	void Init() {}
+	~APSysEmitter() {}
+};
+
+class APSysVolumeEmitter : public APSysEmitter {
+public:
+	APSysVolumeEmitter();
+	void Init() {}
+	~APSysVolumeEmitter() {}
+};
+
 class AExtraData : public AData {
 public:
 	AExtraData() {
@@ -318,7 +332,14 @@ public:
 	~AParticleSystemController() {}
 };
 
-class ALight   : public ANode {
+class ADynamicEffect   : public ANode {
+public:
+	ADynamicEffect();
+	void Init() {}
+	~ADynamicEffect() {}
+};
+
+class ALight   : public ADynamicEffect {
 public:
 	ALight();
 	void Init() {}
@@ -820,17 +841,15 @@ protected:
 
 class AParticlesData : public AShapeData {
 public:
-	AParticlesData() {
-		AddAttr( attr_float, "Active Radius" );
-		AddAttr( attr_short, "Unknown Short", VER_4_1_0_12 );
-	}
+	AParticlesData() {}
 	~AParticlesData() {}
 	void Read( istream& in, unsigned int version );
 	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 protected:
 	bool hasSizes;
-	short numActive, numValid;
+	ushort numActive, unkShort;
+	float size;
 	vector<float> sizes;
 };
 
@@ -1430,7 +1449,7 @@ public:
  * NiTextureEffect
  */
 
-class NiTextureEffect : public ANode {
+class NiTextureEffect : public ADynamicEffect {
 public:
 	NiTextureEffect();
 	void Init() {}
@@ -1598,7 +1617,7 @@ public:
  * NiPSysBoxEmitter
  */
 
-class NiPSysBoxEmitter : public APSysModifier {
+class NiPSysBoxEmitter : public APSysVolumeEmitter {
 public:
 	NiPSysBoxEmitter();
 	void Init() {}
@@ -1634,7 +1653,7 @@ public:
  * NiPSysCylinderEmitter
  */
 
-class NiPSysCylinderEmitter : public APSysModifier {
+class NiPSysCylinderEmitter : public APSysVolumeEmitter {
 public:
 	NiPSysCylinderEmitter();
 	void Init() {}
@@ -1718,7 +1737,7 @@ public:
  * NiPSysSphereEmitter
  */
 
-class NiPSysSphereEmitter : public APSysModifier {
+class NiPSysSphereEmitter : public APSysVolumeEmitter {
 public:
 	NiPSysSphereEmitter();
 	void Init() {}

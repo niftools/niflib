@@ -79,70 +79,111 @@ ABlock::~ABlock() {
 
 void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver, unsigned int last_ver ) {
 	IAttr * attr;
-	if ( type == attr_int ) {
-		attr = new IntAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_short ) {
-		attr = new ShortAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_byte ) {
-		attr = new ByteAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_float ) {
-		attr = new FloatAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_float3 ) {
-		attr = new Float3Attr( name, this, first_ver, last_ver );
-	} else if ( type == attr_string ) {
-		attr = new StringAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_link ) {
-		attr = new LinkAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_flags ) {
-		attr = new FlagsAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_matrix33 ) {
-		attr = new MatrixAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_linkgroup ) {
-		attr = new LinkGroupAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_bones ) {
-		attr = new BoneAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_bbox ) {
-		attr = new BBoxAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_condint ) {
-		attr = new CIntAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_vertmode ) {
-		attr = new VertModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_lightmode ) {
-		attr = new LightModeAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_texsource ) {
-		attr = new TexSourceAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_pixellayout ) {
-		attr = new PixelLayoutAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_mipmapformat ) {
-		attr = new MipMapFormatAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_alphaformat ) {
-		attr = new AlphaFormatAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_controllertarget ) {
-		attr = new ControllerTargetAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_skeletonroot ) {
-		attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_particlegroup ) {
-		attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_lodinfo ) {
-		attr = new LODInfoAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_vector3 ) {
-		attr = new Vector3Attr( name, this, first_ver, last_ver );
-	} else if ( type == attr_color3 ) {
-		attr = new Color3Attr( name, this, first_ver, last_ver );
-	} else if ( type == attr_parent ) {
-		attr = new ParentAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_unk292bytes ) {
-		attr = new Unk292BytesAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_bool ) {
-		attr = new BoolAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_targetgroup ) {
-		attr = new TargetGroupAttr( name, this, first_ver, last_ver );
-	} else if ( type == attr_shader ) {
-		attr = new ShaderAttr( name, this, first_ver, last_ver );
-	} else {
-		cout << type << endl;
-		throw runtime_error("Unknown attribute type requested.");
-	}
+
+	switch( type ) {
+		case attr_int:
+			attr = new IntAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_short:
+			attr = new ShortAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_byte:
+			attr = new ByteAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_float:
+			attr = new FloatAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_float3:
+			attr = new Float3Attr( name, this, first_ver, last_ver );
+			break;
+		case attr_string:
+			attr = new StringAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_link:
+			attr = new LinkAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_flags:
+			attr = new FlagsAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_matrix33:
+			attr = new MatrixAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_linkgroup:
+			attr = new LinkGroupAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_bones:
+			attr = new BoneAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_bbox:
+			attr = new BBoxAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_condint:
+			attr = new CIntAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_vertmode:
+			attr = new VertModeAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_lightmode:
+			attr = new LightModeAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_texsource:
+			attr = new TexSourceAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_pixellayout:
+			attr = new PixelLayoutAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_mipmapformat:
+			attr = new MipMapFormatAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_alphaformat:
+			attr = new AlphaFormatAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_controllertarget:
+			attr = new ControllerTargetAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_skeletonroot:
+			attr = new SkeletonRootAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_particlegroup:
+			attr = new ParticleGroupAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_lodinfo:
+			attr = new LODInfoAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_vector3:
+			attr = new Vector3Attr( name, this, first_ver, last_ver );
+			break;
+		case attr_color3:
+			attr = new Color3Attr( name, this, first_ver, last_ver );
+			break;
+		case attr_parent:
+			attr = new ParentAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_unk292bytes:
+			attr = new Unk292BytesAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_bool:
+			attr = new BoolAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_targetgroup:
+			attr = new TargetGroupAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_shader:
+			attr = new ShaderAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_modifiergroup:
+			attr = new ModifierGroupAttr( name, this, first_ver, last_ver );
+			break;
+		case attr_color4:	
+			attr = new Color4Attr( name, this, first_ver, last_ver );	
+			break;
+		case attr_quaternion:
+			attr = new QuaternionAttr( name, this, first_ver, last_ver );	
+			break;
+		default:
+			cout << type << endl;
+			throw runtime_error("Unknown attribute type requested.");
+	};
 
 	_attr_map[name] = attr_ref(attr);
 	_attr_vect.push_back(attr_ref(attr));
@@ -1552,57 +1593,66 @@ void AShapeData::SetUVSet( int index, const vector<TexCoord> & in ) {
  * AParticlesData methods
  **********************************************************/
 
-void AParticlesData::Read( istream& in, unsigned int version ) {
-	AShapeData::Read( in, version );
+void AParticlesData::Read( istream& file, unsigned int version ) {
+	AShapeData::Read( file, version );
+
+	//numParticles exists up to version 4.0.0.2
+	if ( version <= VER_4_0_0_2 ) {
+		//This is just the number of vertices over again, so discard the data
+		ReadUShort( file );
+	}
+
+	//Size exists up to version 10.0.1.0
+	if ( version <= VER_10_1_0_0 ) {
+		NifStream( size, file );
+	}
 
 	//numActive exists up to version 4.0.0.2
 	if ( version <= VER_4_0_0_2 ) {
-		numActive = ReadUShort( in );
+		NifStream( numActive, file );
 	}
 
-	GetAttr("Active Radius")->Read( in, version );
-
-	//numValid exists up to version 4.0.0.2
-	if ( version <= VER_4_0_0_2 ) {
-		numValid = ReadUShort( in );
+	//Unknown short exits from version 4.1.0.12 to 10.0.1.0
+	if ( version >= VER_4_1_0_12 && version <= VER_10_0_1_0 ) {
+		NifStream( unkShort, file );
 	}
 
-	GetAttr("Unknown Short")->Read( in, version );
-
-	hasSizes = ReadBool( in, version );
+	hasSizes = ReadBool( file, version );
 
 	if ( hasSizes ) {
 		sizes.resize( vertices.size() );
-		for ( uint i = 0; i < sizes.size(); ++i ) {
-			sizes[i] = ReadFloat( in );
-		}
+		NifStream( sizes, file );
 	}
 }
 
-void AParticlesData::Write( ostream& out, unsigned int version ) const {
-	AShapeData::Write( out, version );
+void AParticlesData::Write( ostream& file, unsigned int version ) const {
+	AShapeData::Write( file, version );
+
+	//numParticles exists up to version 4.0.0.2
+	if ( version <= VER_4_0_0_2 ) {
+		//This is just the number of vertices over again
+		NifStream( uint(vertices.size()), file );
+	}
+
+	//Size exists up to version 10.0.1.0
+	if ( version <= VER_10_1_0_0 ) {
+		NifStream( size, file );
+	}
 
 	//numActive exists up to version 4.0.0.2
 	if ( version <= VER_4_0_0_2 ) {
-		WriteUShort( numActive, out );
+		NifStream( numActive, file );
 	}
 
-	GetAttr("Active Radius")->Write( out, version );
-
-	//numValid exists up to version 4.0.0.2
-	if ( version <= VER_4_0_0_2 ) {
-		WriteUShort( numValid, out );
+	//Unknown short exits from version 4.1.0.12 to 10.0.1.0
+	if ( version >= VER_4_1_0_12 && version <= VER_10_0_1_0 ) {
+		NifStream( unkShort, file );
 	}
 
-	
-	GetAttr("Unknown Short")->Write( out, version );
-
-	WriteBool( hasSizes, out, version );
+	WriteBool( hasSizes, file, version );
 
 	if ( hasSizes ) {
-		for ( uint i = 0; i < sizes.size(); ++i ) {
-			WriteFloat( sizes[i], out );
-		}
+		NifStream( sizes, file );
 	}
 }
 
@@ -1613,10 +1663,10 @@ string AParticlesData::asString() const {
 
 	out << AShapeData::asString();
 
-	out << "Num Active:  " << numActive << endl
-		<< "Active Radius:  " << GetAttr("Active Radius")->asFloat() << endl
-		<< "Num Valid:  " << numValid << endl
-		<< "Unknown Short:  " << GetAttr("Unknown Short")->asInt() << endl
+	out << "Num Particles:  " << uint(vertices.size()) << endl
+		<< "Size:  " << size << endl
+		<< "Num Active:  " << numActive << endl
+		<< "Unknown Short:  " << unkShort << endl
 		<< "Sizes:  ";
 	
 	if ( hasSizes ) {
