@@ -924,7 +924,8 @@ public:
 	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 protected:
-	bool hasRotations;
+	ushort numActiveRot;
+	vector<float> unkFloats;
 	vector<Quaternion> rotations;
 };
 

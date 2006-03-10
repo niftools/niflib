@@ -1603,7 +1603,7 @@ void AParticlesData::Read( istream& file, unsigned int version ) {
 	}
 
 	//Size exists up to version 10.0.1.0
-	if ( version <= VER_10_1_0_0 ) {
+	if ( version <= VER_10_0_1_0 ) {
 		NifStream( size, file );
 	}
 
@@ -1928,35 +1928,43 @@ string NiPSysData::asString() const {
  * ARotatingParticlesData methods
  **********************************************************/
 
-void ARotatingParticlesData::Read( istream& in, unsigned int version ) {
-	AParticlesData::Read( in, version );
+void ARotatingParticlesData::Read( istream& file, unsigned int version ) {
+	AParticlesData::Read( file, version );
 
-	hasRotations = ReadBool( in, version );
+	//After version 10.1.0.0 there are several new entries
+	if ( version >= VER_10_1_0_0 ) {
+		NifStream( numActiveRot, file );
+
+		bool hasUnkFloats = ReadBool( file, version );
+
+		if ( hasUnkFloats ) {
+			unkFloats.resize( vertices.size() );
+			NifStream( unkFloats, file );
+		}
+	}
+
+	bool hasRotations = ReadBool( file, version );
 
 	if ( hasRotations ) {
 		rotations.resize( vertices.size() );
-		for ( uint i = 0; i < rotations.size(); ++i ) {
-			rotations[i].w = ReadFloat( in );
-			rotations[i].x = ReadFloat( in );
-			rotations[i].y = ReadFloat( in );
-			rotations[i].z = ReadFloat( in );
-		}
+		NifStream( rotations, file );
 	}
 }
 
-void ARotatingParticlesData::Write( ostream& out, unsigned int version ) const {
-	AParticlesData::Write( out, version );
+void ARotatingParticlesData::Write( ostream& file, unsigned int version ) const {
+	AParticlesData::Write( file, version );
 
-	WriteBool( hasRotations, out, version );
+	//After version 10.1.0.0 there are several new entries
+	if ( version >= VER_10_1_0_0 ) {
+		NifStream( numActiveRot, file );
 
-	if ( hasRotations ) {
-		for ( uint i = 0; i < rotations.size(); ++i ) {
-			WriteFloat( rotations[i].w, out );
-			WriteFloat( rotations[i].x, out );
-			WriteFloat( rotations[i].y, out );
-			WriteFloat( rotations[i].z, out );
-		}
+		WriteBool( (unkFloats.size() > 0), file, version );
+
+		NifStream( unkFloats, file );
 	}
+
+	WriteBool( (rotations.size() > 0), file, version );
+	NifStream( rotations, file );
 }
 
 string ARotatingParticlesData::asString() const {
@@ -1964,16 +1972,33 @@ string ARotatingParticlesData::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	out << AParticlesData::asString()
-		<< "Rotations:  ";
+	out << AParticlesData::asString() << endl
+		<< "Num Active Rot:  " << numActiveRot << endl
+		<< "Unknown Floats:  ";
 	
-	if ( hasRotations ) {
+	if ( unkFloats.size() > 0 ) {
 		if (verbose) {
+			out << endl;
+			for ( uint i = 0; i < unkFloats.size(); ++i) {
+				out << i << ":  " << unkFloats[i] << endl;
+			}
+		} else {
+			out << endl << "<<Data Not Shown>>" << endl;
+		}
+	} else {
+		out << "None" << endl;
+	}
+
+	out << "Rotations:  ";
+	
+	if ( rotations.size() > 0 ) {
+		if (verbose) {
+			out << endl;
 			for ( uint i = 0; i < rotations.size(); ++i) {
 				out << i << ":  [" << rotations[i].w << " (" << rotations[i].x << ", " << rotations[i].y << ", " << rotations[1].z << ")]" << endl;
 			}
 		} else {
-			out << endl << "<<Data Not Shown>>";
+			out << endl << "<<Data Not Shown>>" << endl;
 		}
 	} else {
 		out << "None" << endl;
