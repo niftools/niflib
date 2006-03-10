@@ -1256,6 +1256,10 @@ IBlock * CreateNiStringPalette() {
 	return new NiStringPalette;
 }
 
+IBlock * CreateNiStringsExtraData() {
+	return new NiStringsExtraData;
+}
+
 IBlock * CreateNiTextKeyExtraData() {
 	return new NiTextKeyExtraData;
 }
@@ -1447,6 +1451,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiStencilProperty"] = CreateNiStencilProperty;
 	global_block_map["NiStringExtraData"] = CreateNiStringExtraData;
 	global_block_map["NiStringPalette"] = CreateNiStringPalette;
+	global_block_map["NiStringsExtraData"] = CreateNiStringsExtraData;
 	global_block_map["NiTextKeyExtraData"] = CreateNiTextKeyExtraData;
 	global_block_map["NiTextureEffect"] = CreateNiTextureEffect;
 	global_block_map["NiTextureTransformController"] = CreateNiTextureTransformController;

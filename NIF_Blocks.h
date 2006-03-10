@@ -2197,6 +2197,42 @@ private:
 	vector<Key<float> > _keys;
 };
 
+class NiStringsExtraData : public AExtraData {
+public:
+	NiStringsExtraData() {}
+	~NiStringsExtraData() {}
+	string GetBlockType() const { return "NiStringsExtraData"; };
+
+	void Read( istream& file, unsigned int version ) {
+		AExtraData::Read( file, version );
+		uint count = ReadUInt( file );
+		string_data.resize( count );
+		NifStream( string_data, file );
+	}
+	void Write( ostream& file, unsigned int version ) const {
+		AExtraData::Write( file, version );
+		WriteUInt( uint(string_data.size()), file );
+		NifStream( string_data, file );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Strings:  " << uint(string_data.size()) << endl;
+
+		for ( uint i = 0; i < string_data.size(); ++i ) {
+			out << "   " << i << ":  " << string_data[i] << endl;
+		}
+
+		return out.str();
+	}
+private:
+	vector<string> string_data;
+};
+
 class NiStringExtraData : public AExtraData {
 public:
 	NiStringExtraData() {
@@ -2326,7 +2362,7 @@ public:
 			<< "Floats:  " << uint(float_data.size()) << endl;
 
 		for ( uint i = 0; i < float_data.size(); ++i ) {
-			out << "   " << i + i << ":  " << float_data[i] << endl;
+			out << "   " << i << ":  " << float_data[i] << endl;
 		}
 
 		return out.str();
@@ -2362,7 +2398,7 @@ public:
 			<< "Ints:  " << uint(int_data.size()) << endl;
 
 		for ( uint i = 0; i < int_data.size(); ++i ) {
-			out << "   " << i + i << ":  " << int_data[i] << endl;
+			out << "   " << i << ":  " << int_data[i] << endl;
 		}
 
 		return out.str();
