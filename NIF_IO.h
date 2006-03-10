@@ -228,6 +228,11 @@ void NifStream( Key<T> & key, istream& file, KeyType type ) {
 	}
 }
 
+//template<> void f<char>(char c)
+
+
+void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type );
+
 template <class T>
 void NifStream( vector<T> & val, istream& file ) {
 	typename vector<T>::iterator it;
@@ -299,6 +304,9 @@ void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
 		WriteFloat( key.continuity, file);
 	}
 }
+
+
+void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type );
 
 template <class T>
 void NifStream( vector<T> const & val, ostream& file ) {

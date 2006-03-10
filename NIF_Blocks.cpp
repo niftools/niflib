@@ -3095,7 +3095,7 @@ void AKeyframeData::Read( istream& file, unsigned int version ) {
 		if ( rotationType != 4 ) {
 			rotKeys.resize( numRotations );
 			for ( unsigned int i = 0; i < rotKeys.size(); ++i ) {
-				NifStream(rotKeys[i], file, rotationType );
+				StreamQuatKey(rotKeys[i], file, rotationType );
 			}
 		}
 		else {
@@ -3153,7 +3153,7 @@ void AKeyframeData::Write( ostream& file, unsigned int version ) const {
 
 		if ( rotationType != 4 ) {
 			for ( unsigned int i = 0; i < rotKeys.size(); ++i ) {
-				NifStream(rotKeys[i], file, rotationType );
+				StreamQuatKey(rotKeys[i], file, rotationType );
 			}
 		}
 		else {

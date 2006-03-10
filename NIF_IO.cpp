@@ -582,4 +582,41 @@ string HexString( const byte * src, uint len ) {
 //
 //}
 
+ void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type ) {
+	key.time = ReadFloat( file );
 
+	//If key type is not 1, 2, or 3, throw an exception
+	if ( type < 1 || type > 3 ) {
+		type = LINEAR_KEY;
+		//throw runtime_error("Invalid key type.");
+	}
+
+	//Read data based on the type of key
+	NifStream( key.data, file );
+	if ( type == TBC_KEY ) {
+		//Uses TBC interpolation
+		key.tension = ReadFloat( file );
+		key.bias = ReadFloat( file );
+		key.continuity = ReadFloat( file );
+	}
+}
+
+
+void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type ) {
+	WriteFloat( key.time, file );
+
+	//If key type is not 1, 2, or 3, throw an exception
+	if ( type < 1 || type > 3 ) {
+		type = LINEAR_KEY;
+		//throw runtime_error("Invalid key type.");
+	}
+
+	//Read data based on the type of key
+	NifStream( key.data, file );
+	if ( type == TBC_KEY ) {
+		//Uses TBC interpolation
+		WriteFloat( key.tension, file);
+		WriteFloat( key.bias, file);
+		WriteFloat( key.continuity, file);
+	}
+}
