@@ -1280,8 +1280,8 @@ void AShapeData::Read( istream& in, unsigned int version ){
 		}
 	}
 
-	//After version 10.2.0.0 there's several unknown vectors here
-	if ( version >= VER_10_2_0_0 && hasUnknown == true ) {
+	//After version 10.1.0.0 there's several unknown vectors here
+	if ( version >= VER_10_1_0_0 && hasUnknown == true ) {
 		unk_vects.resize( vert_count * 2 );
 		for ( uint i = 0; i < unk_vects.size(); ++i ){
 			NifStream( unk_vects[i], in );

@@ -385,7 +385,7 @@ NiKeyframeController::NiKeyframeController() {
 
 NiLightColorController::NiLightColorController() {
 	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
-	AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown Short", 167903232, 0xFFFFFFFF );
 	Init();
 }
 
