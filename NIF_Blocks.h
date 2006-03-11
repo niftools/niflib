@@ -138,7 +138,7 @@ public:
 	void AddChild( IBlock * new_child );
 	void RemoveChild( IBlock * old_child );
 
-	virtual void RemoveCrossLink( IBlock * block_to_remove ) {};
+	virtual void RemoveCrossLink( IBlock * block_to_remove );
 
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
@@ -877,7 +877,11 @@ protected:
 
 class NiMeshPSysData : public APSysData {
 public:
-	NiMeshPSysData() {}
+	NiMeshPSysData() {
+		AddAttr( attr_link, "Modifier" );
+		AddAttr( attr_linkgroup, "Unknown Link Group", VER_10_2_0_0 );
+		AddAttr( attr_link, "Unknown Link 2", VER_10_2_0_0 );
+	}
 	~NiMeshPSysData() {}
 	void Read( istream& in, unsigned int version );
 	void Write( ostream& out, unsigned int version ) const;
@@ -885,7 +889,7 @@ public:
 	string GetBlockType() const { return "NiMeshPSysData"; };
 protected:
 	vector<float> unkFloats;
-	uint unk2Ints[2];
+	uint unkInt;
 	byte unkByte;
 	uint unk3Ints[3];
 };

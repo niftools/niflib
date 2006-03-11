@@ -91,6 +91,8 @@ public:
 			this->WriteAttr( out, version );
 		}
 	}
+	//Function to remove CrossLinks without decrimenting them
+	virtual void RemoveCrossLinks( IBlock * block_to_remove ) {};
 protected:
 	//Internal Read/Write Functions
 	virtual void ReadAttr( istream& in, unsigned int version ) = 0;
@@ -450,6 +452,127 @@ private:
 	lnk_ref link;
 };
 
+class CrossRefAttr : public AAttr {
+public:
+	CrossRefAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), link(NULL), tmp_blk_num(-1) {}
+	~CrossRefAttr() {
+		//cout << endl << "~CrossRefAttr()";
+		//This attribute is dying, so decriment the link
+		UpdateLink(NULL);
+	}
+	AttrType GetType() const { 
+		//cout << endl << "CrossRefAttr::GetType()";
+		return attr_link;
+	}
+	void ReadAttr( istream& in, unsigned int version ) {
+		//cout << endl << "CrossRefAttr::ReadAttr()";
+		//Update any existing links to null
+		UpdateLink(NULL);
+
+		tmp_blk_num = ReadUInt( in );
+	}
+	void WriteAttr( ostream& out, unsigned int version ) const {
+		//cout << endl << "CrossRefAttr::WriteAttr()";
+		if ( link == NULL ) {
+			WriteUInt( -1, out );
+		} else {
+			WriteUInt( link->GetBlockNum(), out );
+		}
+	}
+	string asString() const {
+		//cout << endl << "CrossRefAttr::asString()";
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << GetBlkRef();
+
+		return out.str();
+	}
+	bool HasLinks() const { 
+		//cout << endl << "CrossRefAttr::HasLinks()";
+		return true;
+	}
+	list<blk_ref> asLinkList() const { 
+		//cout << endl << "CrossRefAttr::asLinkList()";
+		list<blk_ref> out;
+
+		out.push_back( GetBlkRef() );
+
+		return out; 
+	}
+	void ClearLinks() { 
+		//cout << endl << "CrossRefAttr::ClearLinks()";
+		UpdateLink( NULL );
+	}
+	void AddLinks( list<blk_ref> const & new_links ) {
+		//cout << endl << "CrossRefAttr::AddLinks()";
+		//Just take the first one
+		UpdateLink( (*(new_links.begin())).get_block() );
+	}
+
+	void UpdateLink( IBlock * new_ptr ) {
+		//cout << endl << "CrossRefAttr::UpdateLink()";
+		//cout << endl << "Setting tmp_blk_num to -1";
+		//The link cannot be temporary after being updated
+		tmp_blk_num = -1;
+
+		/*cout << endl << "Check if new pointer is same as old"
+			<< endl << "Old Value:  " << link
+			<< endl << "New Value:  " << new_ptr;*/
+		//Check if the new pointer is the same as the old pointer
+		if ( new_ptr == link )
+			return;
+
+		//cout << endl << "If different, decrement ref to old site if it exists.";
+		//The new pointer is different, so decrement the reference at the old site if it exists
+		if ( link != NULL ) {
+			//cout << endl << "Decrimenting Cross Reference at:  " << link;
+			((ABlock*)link)->DecCrossRef( _owner );
+		}
+
+		//Now set the pointer to the new location
+		link = new_ptr;
+
+		//If link is not null, we need to increment the cross reference count
+		if ( link != NULL ) {
+			//cout << endl << "Incrementing Cross Reference at:  " << link;
+			((ABlock*)link)->IncCrossRef( _owner );
+		}
+	}
+
+	blk_ref GetBlkRef() const {
+		//cout << endl << "CrossRefAttr::GetBlkRef()";
+		//If the link is not fixed, there will be a temporary block number
+		if ( tmp_blk_num != -1 ) {
+			return blk_ref(tmp_blk_num);
+		} else {
+			if ( link == NULL ) {
+				return blk_ref(-1);
+			} else {
+				return blk_ref(link);
+			}
+		}
+	}
+
+	blk_ref asLink() const { return GetBlkRef(); }
+	void Set( blk_ref const & n ) { 
+		//cout << endl << "CrossRefAttr::Set()";
+		UpdateLink( n.get_block() );
+	}
+	void RemoveCrossLinks( IBlock * block_to_remove ) {
+		//cout << endl << "CrossRefAttr::RemoveCrossLinks()";
+		if ( link == block_to_remove ) {
+			link = NULL;
+			//Do not decrement target location because it is already dead
+		}
+	}
+private:
+	int tmp_blk_num;
+	IBlock * link;
+};
+
+
 class FlagsAttr : public AAttr {
 public:
 	FlagsAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
@@ -713,14 +836,23 @@ protected:
 	LinkSetList links;
 };
 
-class TargetGroupAttr : public LinkGroupAttr {
+class TargetGroupAttr : public AAttr {
 public:
-	TargetGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkGroupAttr( name, owner, first_ver, last_ver ) {}
-	~TargetGroupAttr() {}
+	TargetGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
+		//cout << endl << "TargetGroupAttr()";
+	}
+	~TargetGroupAttr() {
+		//cout << endl << "~TargetGroupAttr()";
+		ClearLinks();
+	}
 
-	AttrType GetType() const { return attr_targetgroup; }
+	AttrType GetType() const { 
+		//cout << endl << "GetType()";
+		return attr_targetgroup;
+	}
 
 	void ReadAttr( istream& in, unsigned int version ) {
+		//cout << endl << "ReadAttr()";
 		int len = ReadUShort( in );
 
 		if ( len > 1000 ) {
@@ -728,12 +860,13 @@ public:
 		}
 
 		for (int i = 0; i < len; ++i ) {
-			int index = ReadUInt( in );
-			if (index != -1 )
-				AddLink( blk_ref( index ) );
+			CrossRefAttr * new_attr = new CrossRefAttr( "", _owner, 0, 0xFFFFFFFF );
+			new_attr->Read( in, version );
+			links.push_back( new_attr );
 		}
 	}
 	void WriteAttr( ostream& out, unsigned int version ) const {
+		//cout << endl << "WriteAttr()";
 		//Write the number of links
 		WriteUShort( ushort(links.size()), out );
 		//cout << "Link Group Size:  " << uint(links.size()) << endl;
@@ -743,10 +876,110 @@ public:
 		}
 
 		//Write the block indices
-		for (LinkSetConstIt it = links.begin(); it != links.end(); ++it ) {
-			WriteUInt( it->get_index(), out );
+		for ( uint i = 0; i < links.size(); ++i ) {
+			links[i]->Write( out, version );
 		}
 	}
+	string asString() const {
+		//cout << endl << "asString()";
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		for ( uint i = 0; i < links.size(); ++i ) {
+			out << endl << "   " << links[i]->asString();
+		}
+		if (links.size() == 0 ) {
+			out << "None";
+		}
+
+		return out.str();
+	}
+
+	bool HasLinks() const { 
+		//cout << endl << "HasLinks()";
+		return true;
+	}
+
+	list<blk_ref> asLinkList() const { 
+		//cout << endl << "asLinkList()";
+		list<blk_ref> out;
+
+		//cout << endl << "Link List size:  " << uint(links.size());
+		for ( uint i = 0; i < links.size(); ++i ) {
+			//cout << endl << "Link:  " << links[i]->asLink();
+			out.push_back( links[i]->asLink() );
+		}
+
+		//cout << endl << "Out List Size:  " << uint(out.size());
+
+		return out; 
+	}
+
+	void AddLink( blk_ref const & block ) {
+		//cout << endl << "AddLink()";
+		CrossRefAttr * new_attr = new CrossRefAttr( "", _owner, 0, 0xFFFFFFFF );
+		new_attr->Set( block );
+		links.push_back( new_attr );
+	}
+
+	void AddLinks( list<blk_ref> const & new_links ) {
+		//cout << endl << "AddLinks()";
+		//Add new list of links
+		list<blk_ref>::const_iterator it;
+		for (it = new_links.begin(); it != new_links.end(); ++it ) {
+			AddLink( *it );
+		}
+	}
+
+	blk_ref FindLink( string const & block_type ) const {
+		//cout << endl << "FindLink()";
+		//Find the first link with the requested block type
+		for ( uint i = 0; i < links.size(); ++i ) {
+			blk_ref found_block = links[i]->asLink();
+			if ( found_block->GetBlockType() == block_type ) {
+				return found_block;
+			}
+		}
+
+		//No block was found, so return a null one
+		return blk_ref(-1);
+	}
+
+	void ClearLinks() { 
+		//cout << endl << "ClearLinks()";
+
+		vector<CrossRefAttr*>::iterator it;
+		for ( it = links.begin(); it != links.end(); ++it ) {
+			delete *it;
+		}
+		links.clear();
+	}
+
+	void RemoveLinks( blk_ref const & block ) {
+		cout << endl << "RemoveLinks()";
+		//Remove all links that match this block
+		vector<CrossRefAttr*>::iterator it;
+		for ( it = links.begin(); it != links.end(); ++it ) {
+			if ( (*it)->asLink() == block ) {
+				delete *it;
+				links.erase( it );
+			}
+		}
+	}
+	void RemoveCrossLinks( IBlock * block_to_remove ) {
+		//cout << endl << "RemoveCrossLinks()";
+		vector<CrossRefAttr*>::iterator it;
+		for ( it = links.begin(); it != links.end(); ++it ) {
+			(*it)->RemoveCrossLinks( block_to_remove );
+			if ( (*it)->asLink().is_null() == true ) {
+				delete *it;
+				links.erase( it );
+			}
+		}
+	}
+private:
+	vector<CrossRefAttr*> links;
 };
 
 class ModifierGroupAttr : public LinkGroupAttr {
@@ -1244,6 +1477,56 @@ public:
 			if ( par->IsControllable() == true )
 				return par;
 
+			//We didn't find a controllable object this time, set block to par and try again
+			block = par;
+		}
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << FindTarget();
+
+		return out.str();
+	}
+	blk_ref asLink() const { return FindTarget(); }
+	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
+
+};
+
+class EmitterObjectAttr : public AAttr {
+public:
+	EmitterObjectAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	~EmitterObjectAttr() {}
+	AttrType GetType() const { return attr_emitterobject; }
+	void ReadAttr( istream& in, unsigned int version ) {
+		ReadUInt(in);
+	}
+	void WriteAttr( ostream& out, unsigned int version ) const {
+		//WriteUInt( FindTarget()->GetBlockNum(), out );
+		WriteUInt( FindTarget().get_index(), out ); // we need get_index(), GetBlockNum() chokes on null block references
+	}
+	blk_ref FindTarget() const {
+		//Find first ancestor that is a node
+		blk_ref block(_owner);
+		blk_ref par;
+		while ( true ) {
+			//Get parent
+			par = block->GetParent();
+
+			//If parent is null, we're done - there are no node ancestors so return a null reference
+			if (par.is_null() == true)
+				return blk_ref(-1);
+
+			// If parent is NiSequenceStreamHelper, return null reference (this is necessary to create consistent XKf files)
+			if ( par->GetBlockType() == "NiSequenceStreamHelper" )
+				return blk_ref(-1);
+
+			//If parent is a node, return it
+			if ( QueryNode( par ) != NULL )
+				return par;
+
 			//We didn't find a node this time, set block to par and try again
 			block = par;
 		}
@@ -1258,6 +1541,32 @@ public:
 		return out.str();
 	}
 	blk_ref asLink() const { return FindTarget(); }
+	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
+
+};
+
+class SelfLinkAttr : public AAttr {
+public:
+	SelfLinkAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	~SelfLinkAttr() {}
+	AttrType GetType() const { return attr_emitterobject; }
+	void ReadAttr( istream& in, unsigned int version ) {
+		ReadUInt(in);
+	}
+	void WriteAttr( ostream& out, unsigned int version ) const {
+		//WriteUInt( FindTarget()->GetBlockNum(), out );
+		WriteUInt( _owner->GetBlockNum(), out );
+	}
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << blk_ref(_owner) << endl;
+
+		return out.str();
+	}
+	blk_ref asLink() const { return blk_ref(_owner); }
 	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
 
 };

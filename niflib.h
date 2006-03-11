@@ -112,7 +112,8 @@ enum AttrType {
 	attr_float3, /*!< Float3 Attribute.  Holds a Float3 structure. */ 
 	attr_float4, /*!< Float4 Attribute.  Holds a Float4 structure. */ 
 	attr_string, /*!< String Attribute.  Holds a text string. */ 
-	attr_link, /*!< Link Attribute.  Links to one other Nif block lower in the Nif tree. */ 
+	attr_link, /*!< Link Attribute.  Links to one other Nif block lower in the Nif tree. */
+	attr_crossref, /*!< Cross Reference Attribute.  Links to one other Nif block higher in the Nif tree.  Will be automatically cleared if the block it links to is destroyed. */ 
 	attr_flags, /*!< Flags Attribute.  Holds a set of 16 bit flags whos function depends on the block that uses them. */ 
 	attr_matrix33, /*!< Matrix33 Attribute.  Holds a Matrix33 structure. */ 
 	attr_linkgroup, /*!< Link Group Attribute.  Links to several other Nif blocks lower in the Nif tree. */ 
@@ -129,6 +130,8 @@ enum AttrType {
 	attr_mipmapformat, /*!< Mipmap Format Attribute.  Holds an integer that corresponds to the mipmap format. */ 
 	attr_modifiergroup, /*!< A link group conditioned on a boolean value. */
 	attr_alphaformat, /*!< Alpha Format Attribute.  Holds an integer that corresponds to the alpha format. */ 
+	attr_selflink,  /*!< Self Link Attribute.  Automatic. */ 
+	attr_emitterobject,  /*!< Emitter Object Attribute.  Automatic. */ 
 	attr_controllertarget, /*!< Controller Target Attribute.  Automatic. */ 
 	attr_skeletonroot, /*!< Skeleton Root Attribute.  Automatic. */ 
 	attr_particlegroup, /*!< Particle Group Attribute. */ 

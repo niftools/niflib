@@ -67,6 +67,7 @@ ABlock::~ABlock() {
 		delete _attr_vect[i].ptr();
 	}
 
+	//cout << endl << "Removing cross reference to " << this << " from " << uint(_cross_refs.size()) << " blocks";
 	// Inform all cross-linked blocks that have added their references that this block is dying
 	list<IBlock*>::iterator it;
 	for (it = _cross_refs.begin(); it != _cross_refs.end(); ++it) {
@@ -179,6 +180,15 @@ void ABlock::AddAttr( AttrType type, string const & name, unsigned int first_ver
 			break;
 		case attr_quaternion:
 			attr = new QuaternionAttr( name, this, first_ver, last_ver );	
+			break;
+		case attr_emitterobject:
+			attr = new EmitterObjectAttr( name, this, first_ver, last_ver );	
+			break;
+		case attr_selflink:
+			attr = new SelfLinkAttr( name, this, first_ver, last_ver );	
+			break;
+		case attr_crossref:
+			attr = new CrossRefAttr( name, this, first_ver, last_ver );	
 			break;
 		default:
 			cout << type << endl;
@@ -355,6 +365,15 @@ void ABlock::RemoveChild( IBlock * old_child ) {
 	//if ( bk_intl != NULL ) {
 	//	bk_intl->RemoveParent( this );
 	//}
+}
+
+void ABlock::RemoveCrossLink( IBlock * block_to_remove ) {
+	//Ask all attributes to remove any cross links they might have to the specified block
+	//cout << endl << "ABlock::RemoveCrossLink()";
+	vector<attr_ref>::iterator it;
+	for ( it = _attr_vect.begin(); it != _attr_vect.end(); ++it ) {
+		((AAttr*)it->ptr())->RemoveCrossLinks( block_to_remove );
+	}
 }
 
 
@@ -1772,14 +1791,17 @@ void NiMeshPSysData::Read( istream& file, unsigned int version ) {
 	unkFloats.resize( vertices.size() * 14 );
 	NifStream( unkFloats, file );
 
-	NifStream( unk2Ints[0], file );
-	NifStream( unk2Ints[1], file );
+	NifStream( unkInt, file );
 
-	NifStream( unkByte, file );
+	GetAttr("Modifier")->Read( file, version );
 
-	NifStream( unk3Ints[0], file );
-	NifStream( unk3Ints[1], file );
-	NifStream( unk3Ints[2], file );
+	// From version 10.2.0.0 there are several new entries here
+	if ( version >= VER_10_2_0_0 ) {
+		NifStream( unkByte, file );
+
+		GetAttr("Unknown Link Group")->Read( file, version );
+		GetAttr("Unknown Link 2")->Read( file, version );
+	}
 }
 
 void NiMeshPSysData::Write( ostream& file, unsigned int version ) const {
@@ -1787,14 +1809,17 @@ void NiMeshPSysData::Write( ostream& file, unsigned int version ) const {
 
 	NifStream( unkFloats, file );
 
-	NifStream( unk2Ints[0], file );
-	NifStream( unk2Ints[1], file );
+	NifStream( unkInt, file );
 
-	NifStream( unkByte, file );
+	GetAttr("Modifier")->Write( file, version );
 
-	NifStream( unk3Ints[0], file );
-	NifStream( unk3Ints[1], file );
-	NifStream( unk3Ints[2], file );
+	// From version 10.2.0.0 there are several new entries here
+	if ( version >= VER_10_2_0_0 ) {
+		NifStream( unkByte, file );
+
+		GetAttr("Unknown Link Group")->Write( file, version );
+		GetAttr("Unknown Link 2")->Write( file, version );
+	}
 }
 
 string NiMeshPSysData::asString() const {
@@ -1814,12 +1839,11 @@ string NiMeshPSysData::asString() const {
 		out << "   <<<Data Not Shown>>>";
 	}
 
-	out << "Unknown Int 1:  " << unk2Ints[0] << endl
-		<< "Unknown Int 2:  " << unk2Ints[1] << endl
+	out << "Unknown Int:  " << unkInt << endl
+		<< "Modifier:  " << GetAttr("Modifier")->asString() << endl
 		<< "Unknown Byte:  " << unkByte << endl
-		<< "Unknown Int 3:  " << unk3Ints[0] << endl
-		<< "Unknown Int 4:  " << unk3Ints[1] << endl
-		<< "Unknown Int 5:  " << unk3Ints[2] << endl;
+		<< "Unknown Link Group:  " << GetAttr("Unknown Link Group")->asString() << endl
+		<< "Unknown Link 2:  " << GetAttr("Unknown Link 2")->asString() << endl;
 
 	return out.str();
 }

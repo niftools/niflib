@@ -182,7 +182,7 @@ APSysModifier::APSysModifier() {
 }
 
 APSysVolumeEmitter::APSysVolumeEmitter() {
-	AddAttr( attr_link, "Emitter Object", 335544324, 0xFFFFFFFF );
+	AddAttr( attr_emitterobject, "Emitter Object", 335544324, 0xFFFFFFFF );
 	Init();
 }
 
@@ -577,7 +577,7 @@ NiPSysColliderManager::NiPSysColliderManager() {
 	AddAttr( attr_bool, "Spawn on Collide", 0, 0xFFFFFFFF );
 	AddAttr( attr_bool, "Die on Collide", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Spawn Modifier", 0, 0xFFFFFFFF );
-	AddAttr( attr_link, "Manager", 0, 0xFFFFFFFF );
+	AddAttr( attr_selflink, "Manager", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Unknown Link?", 0, 0xFFFFFFFF );
 	AddAttr( attr_link, "Collider Object", 0, 0xFFFFFFFF );
 	Init();
@@ -614,7 +614,7 @@ NiPSysEmitterInitialRadiusCtlr::NiPSysEmitterInitialRadiusCtlr() {
 }
 
 NiPSysGravityModifier::NiPSysGravityModifier() {
-	AddAttr( attr_link, "Gravity Object", 0, 0xFFFFFFFF );
+	AddAttr( attr_crossref, "Gravity Object", 0, 0xFFFFFFFF );
 	AddAttr( attr_vector3, "Gravity Axis", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Decay", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Strength", 0, 0xFFFFFFFF );
