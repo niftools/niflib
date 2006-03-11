@@ -3338,6 +3338,83 @@ string AKeyframeData::asString() const {
 }
 
 /***********************************************************
+ * NiPSysEmitterCtlrData methods
+ **********************************************************/
+
+void NiPSysEmitterCtlrData::Read( istream& file, unsigned int version ) {
+
+	//--Float Keys--//
+	uint numKeys = ReadUInt( file );
+
+	if (numKeys > 0) {
+		NifStream( f_key_type, file );
+		float_keys.resize( numKeys );
+		for ( uint i = 0; i < float_keys.size(); ++i ) {
+			NifStream( float_keys[i], file, f_key_type );
+		}
+	}
+
+	//--Byte Keys--//
+	numKeys = ReadUInt( file );
+
+	byte_keys.resize( numKeys );
+	for ( uint i = 0; i < byte_keys.size(); ++i ) {
+		NifStream( byte_keys[i], file, LINEAR_KEY );
+	}	
+}
+
+void NiPSysEmitterCtlrData::Write( ostream& file, unsigned int version ) const {
+
+	//--Float Keys--//
+	WriteUInt( uint(float_keys.size()), file );
+
+	if (float_keys.size() > 0) {
+		NifStream( f_key_type, file );
+		for ( uint i = 0; i < float_keys.size(); ++i ) {
+			NifStream( float_keys[i], file, f_key_type );
+		}	
+	}
+
+	//--Byte Keys--//
+	WriteUInt( uint(byte_keys.size()), file );
+
+	for ( uint i = 0; i < byte_keys.size(); ++i ) {
+		NifStream( byte_keys[i], file, LINEAR_KEY );
+	}	
+}
+
+string NiPSysEmitterCtlrData::asString() const {
+	stringstream out;
+	out.setf(ios::fixed, ios::floatfield);
+	out << setprecision(1);
+
+	out << "Float Key Count:  " << uint(float_keys.size()) << endl
+		<< "Float Key Type:  " << f_key_type << endl;
+
+	if (verbose) {
+		vector< Key<float> >::const_iterator it;
+		for ( it = float_keys.begin(); it != float_keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Float Value:  " << it->data << endl;
+		}
+	} else {
+		out << "<<Data Not Shown>>" << endl;
+	}
+
+	out << "Byte Key Count:  " << uint(byte_keys.size()) << endl;
+
+	if (verbose) {
+		vector< Key<byte> >::const_iterator it;
+		for ( it = byte_keys.begin(); it != byte_keys.end(); ++it ) {
+			out << "Key Time:  " <<  it->time << "  Float Value:  " << it->data << endl;
+		}
+	} else {
+		out << "<<Data Not Shown>>" << endl;
+	}
+
+	return out.str();
+}
+
+/***********************************************************
  * NiBoolData methods
  **********************************************************/
 

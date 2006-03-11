@@ -863,6 +863,10 @@ IBlock * CreateNiBillboardNode() {
 	return new NiBillboardNode;
 }
 
+IBlock * CreateNiBinaryExtraData() {
+	return new NiBinaryExtraData;
+}
+
 IBlock * CreateNiBoneLODController() {
 	return new NiBoneLODController;
 }
@@ -1315,6 +1319,10 @@ IBlock * CreateNiUVData() {
 	return new NiUVData;
 }
 
+IBlock * CreateNiVectorExtraData() {
+	return new NiVectorExtraData;
+}
+
 IBlock * CreateNiVertexColorProperty() {
 	return new NiVertexColorProperty;
 }
@@ -1355,6 +1363,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiAutoNormalParticles"] = CreateNiAutoNormalParticles;
 	global_block_map["NiAutoNormalParticlesData"] = CreateNiAutoNormalParticlesData;
 	global_block_map["NiBillboardNode"] = CreateNiBillboardNode;
+	global_block_map["NiBinaryExtraData"] = CreateNiBinaryExtraData;
 	global_block_map["NiBoneLODController"] = CreateNiBoneLODController;
 	global_block_map["NiBoolData"] = CreateNiBoolData;
 	global_block_map["NiBooleanExtraData"] = CreateNiBooleanExtraData;
@@ -1468,6 +1477,7 @@ void RegisterBlockFactories () {
 	global_block_map["NiTriStripsData"] = CreateNiTriStripsData;
 	global_block_map["NiUVController"] = CreateNiUVController;
 	global_block_map["NiUVData"] = CreateNiUVData;
+	global_block_map["NiVectorExtraData"] = CreateNiVectorExtraData;
 	global_block_map["NiVertexColorProperty"] = CreateNiVertexColorProperty;
 	global_block_map["NiVertWeightsExtraData"] = CreateNiVertWeightsExtraData;
 	global_block_map["NiVisController"] = CreateNiVisController;

@@ -728,27 +728,6 @@ private:
 };
 
 /**
- * NiPSysEmitterCtlrData
- */
-class NiPSysEmitterCtlrData : public AData {
-public:
-	NiPSysEmitterCtlrData() {
-		AddAttr( attr_int, "Unknown Int 1" );
-		AddAttr( attr_int, "Unknown Int 2" );
-		AddAttr( attr_int, "Unknown Int 3" );
-		AddAttr( attr_float, "Unknown Float 1" );
-		AddAttr( attr_int, "Unknown Int 4" );
-		AddAttr( attr_int, "Unknown Int 5" );
-		AddAttr( attr_byte, "Unknown Byte 1" );
-		AddAttr( attr_float, "Unknown Float 2" );
-		AddAttr( attr_byte, "Unknown Byte 2" );
-	}
-	~NiPSysEmitterCtlrData() {}
-
-	string GetBlockType() const { return "NiPSysEmitterCtlrData"; }
-};
-
-/**
  * NiMaterialProperty - material properties
  */
 class NiMaterialProperty : public AProperty{
@@ -1751,6 +1730,24 @@ public:
 }; 
 
 /**
+ * NiPSysEmitterCtlrData
+ */
+class NiPSysEmitterCtlrData : public AData {
+public:
+	NiPSysEmitterCtlrData() {}
+	~NiPSysEmitterCtlrData() {}
+
+	string GetBlockType() const { return "NiPSysEmitterCtlrData"; }
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
+	string asString() const;
+private:
+	KeyType f_key_type;
+	vector< Key<float> > float_keys;
+	vector< Key<byte> > byte_keys;
+};
+
+/**
  * AKeyframeData -
  */
 
@@ -2275,6 +2272,79 @@ public:
 
 		out << AExtraData::asString()
 			<< "Boolean Data:  " << GetAttr("Boolean Data")->asString() << endl;
+
+		return out.str();
+	}
+	
+};
+
+class NiBinaryExtraData : public AExtraData {
+public:
+	NiBinaryExtraData() {}
+	~NiBinaryExtraData() {}
+	string GetBlockType() const { return "NiBinaryExtraData"; };
+
+	void Read( istream& in, unsigned int version ) {
+		AExtraData::Read( in, version );
+		
+		uint numBytes = ReadUInt( in );
+		binData.resize( numBytes );
+		NifStream( binData, in );
+
+	}
+	void Write( ostream& out, unsigned int version ) const {
+		AExtraData::Write( out, version );
+		
+		WriteUInt( uint(binData.size()), out );
+		NifStream( binData, out );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Binary Data (" << uint(binData.size()) << " bytes):" << endl;
+
+		for ( uint i = 0; i < binData.size(); ++i ) {
+			out << "   " << i << ":  " << binData[i] << endl;
+		}
+
+		return out.str();
+	}
+private:
+	vector<byte> binData;
+	
+};
+
+class NiVectorExtraData : public AExtraData {
+public:
+	NiVectorExtraData() {
+		AddAttr( attr_vector3, "Vector Data" );
+		AddAttr( attr_float, "Unknown Float" );
+	}
+	~NiVectorExtraData() {}
+	string GetBlockType() const { return "NiVectorExtraData"; };
+
+	void Read( istream& in, unsigned int version ) {
+		AExtraData::Read( in, version );
+		GetAttr("Vector Data")->Read( in, version );
+		GetAttr("Unknown Float")->Read( in, version );
+	}
+	void Write( ostream& out, unsigned int version ) const {
+		GetAttr("Vector Data")->Write( out, version );
+		GetAttr("Unknown Float")->Write( out, version );
+	}
+
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << AExtraData::asString()
+			<< "Vector Data:  " << GetAttr("Vector Data")->asString() << endl
+			<< "Unknown Float:  " << GetAttr("Unknown Float")->asString() << endl;
 
 		return out.str();
 	}
