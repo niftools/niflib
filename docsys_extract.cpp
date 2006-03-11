@@ -384,7 +384,9 @@ NiKeyframeController::NiKeyframeController() {
 }
 
 NiLightColorController::NiLightColorController() {
-	AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown Short", 167837696, 167837696 );
+	AddAttr( attr_link, "Data", 0, 167837696 );
+	AddAttr( attr_link, "Interpolator", 167903232, 0xFFFFFFFF );
 	AddAttr( attr_short, "Unknown Short", 167903232, 0xFFFFFFFF );
 	Init();
 }
@@ -523,6 +525,7 @@ NiPlanarCollider::NiPlanarCollider() {
 	AddAttr( attr_short, "Unknown Short", 167772416, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
+	AddAttr( attr_short, "Unknown Short 2", 67240448, 67240448 );
 	AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
 	AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );

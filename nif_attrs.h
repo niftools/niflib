@@ -761,17 +761,17 @@ public:
 		//The only difference is that there is a boolean before this link group
 		bool has_links = ReadBool( in, version );
 
-		if ( has_links || version >= VER_10_2_0_0 ) {
+		//if ( has_links || version >= VER_10_2_0_0 ) {
 			LinkGroupAttr::ReadAttr( in, version );
-		}
+		//}
 	}
 	void WriteAttr( ostream& out, unsigned int version ) const {
 		//The only difference is that there is a boolean before this link group
 		WriteBool( (links.size() > 0), out, version );
 
-		if ( links.size() > 0 || version >= VER_10_2_0_0) {
+		//if ( links.size() > 0 || version >= VER_10_2_0_0) {
 			LinkGroupAttr::WriteAttr( out, version );
-		}
+		//}
 
 	}
 };

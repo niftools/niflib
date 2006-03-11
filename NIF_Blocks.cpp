@@ -1265,7 +1265,7 @@ void AShapeData::Read( istream& in, unsigned int version ){
 	}
 
 	/// numTexSets up here up from version 10.0.1.0 on along with an unknown byte
-	short numTexSets;
+	ushort numTexSets;
 	bool hasUnknown;
 	if ( version >= VER_10_0_1_0 ) {
 		numTexSets = ReadByte( in );
@@ -2044,7 +2044,7 @@ string NiParticleMeshesData::asString() const {
 void NiTriShapeData::Read( istream& in, unsigned int version ){
 	AShapeData::Read( in, version );
 
-	short numTriangles = ReadUShort( in );
+	ushort numTriangles = ReadUShort( in );
 	ReadUInt( in ); // numTriangles * 3, we can throw this away
 	
 	//From version 10.1.0.0 on there is a bool to check whether or not there are any triangles
@@ -2063,10 +2063,10 @@ void NiTriShapeData::Read( istream& in, unsigned int version ){
 		triangles[i].v3 = ReadUShort( in );
 	}
 
-	short matchGroupCount = ReadUShort( in );
+	ushort matchGroupCount = ReadUShort( in );
 	match_group_mode = ( matchGroupCount != 0 );  // Only record whether or not file prefers to have match data generated
 
-	short sub_count;
+	ushort sub_count;
 	for ( int i = 0; i < matchGroupCount; ++i ){
 		sub_count = ReadUShort( in );
 		for (ushort j = 0; j < sub_count; ++j) {
@@ -2191,10 +2191,10 @@ void NiTriStripsData::Read( istream& in, unsigned int version ){
 	ReadUShort( in );
 
 	//Initialize vectors to number and size of strips
-	short numStrips = ReadUShort( in );
+	ushort numStrips = ReadUShort( in );
 	strips.resize( numStrips );
 	for ( uint i = 0; i < strips.size(); ++i ) {
-		short stripSize = ReadUShort( in );
+		ushort stripSize = ReadUShort( in );
 		strips[i].resize( stripSize );
 	}
 
@@ -4620,21 +4620,25 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 void NiPosData::Read( istream& file, unsigned int version ) {
 	uint keyCount = ReadUInt( file );
-	NifStream( _type, file );
+	if ( keyCount > 0 ) {
+		NifStream( _type, file );
 
-	_keys.resize( keyCount );
-	for (uint i = 0; i < _keys.size(); i++) {
-		NifStream( _keys[i], file, _type );
+		_keys.resize( keyCount );
+		for (uint i = 0; i < _keys.size(); i++) {
+			NifStream( _keys[i], file, _type );
+		}
 	}
 }
 
 void NiPosData::Write( ostream& file, unsigned int version ) const {
 	WriteUInt( uint(_keys.size()), file );
-	NifStream( _type, file );
+	if ( _keys.size() > 0 ) {
+		NifStream( _type, file );
 
-	for (uint i = 0; i < _keys.size(); i++) {
-		NifStream( _keys[i], file, _type );
-	}
+		for (uint i = 0; i < _keys.size(); i++) {
+			NifStream( _keys[i], file, _type );
+		}
+}
 }
 
 string NiPosData::asString() const {
