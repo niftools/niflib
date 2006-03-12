@@ -120,6 +120,35 @@ blk_ref FindRoot( vector<blk_ref> const & blocks ) {
 	return root;
 }
 
+unsigned int CheckNifHeader( string const & file_name ) {
+	//--Open File--//
+	ifstream in( file_name.c_str(), ifstream::binary );
+
+	//--Read Header--//
+	char header_string[64];
+	in.getline( header_string, 64 );
+	string headerstr(header_string);
+
+	// make sure this is a NIF file
+	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
+	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
+		return VER_INVALID;
+
+	// supported versions
+	if ( headerstr == "NetImmerse File Format, Version 4.0.0.2" ) return VER_4_0_0_2;
+	if ( headerstr == "NetImmerse File Format, Version 4.1.0.12" ) return VER_4_1_0_12;
+	if ( headerstr == "NetImmerse File Format, Version 4.2.0.2" ) return VER_4_2_0_2;
+	if ( headerstr == "NetImmerse File Format, Version 4.2.1.0" ) return VER_4_2_1_0;
+	if ( headerstr == "NetImmerse File Format, Version 4.2.2.0" ) return VER_4_2_2_0;
+	if ( headerstr == "NetImmerse File Format, Version 10.0.1.0" ) return VER_10_0_1_0;
+	if ( headerstr == "Gamebryo File Format, Version 10.1.0.0" ) return VER_10_1_0_0;
+	if ( headerstr == "Gamebryo File Format, Version 10.2.0.0" ) return VER_10_2_0_0;
+	if ( headerstr == "Gamebryo File Format, Version 20.0.0.4" ) return VER_20_0_0_4;
+
+	// anything else: unsupported
+	return VER_UNSUPPORTED;
+}
+
 //Reads the given file by file name and returns a vector of block references
 vector<blk_ref> ReadNifList( string const & file_name ) {
 
