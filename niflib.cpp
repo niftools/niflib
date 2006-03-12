@@ -135,6 +135,20 @@ vector<blk_ref> ReadNifList( istream & in ) {
 	//--Read Header--//
 	char header_string[256];
 	in.getline( header_string, 256 );
+	string headerstr(header_string);
+
+	// make sure this is a NIF file
+	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
+	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
+		throw runtime_error("Not a NIF file.");
+
+	// detect old versions
+	if ( ( headerstr == "NetImmerse File Format, Version 3.1" )
+	|| ( headerstr == "NetImmerse File Format, Version 3.03" )
+	|| ( headerstr == "NetImmerse File Format, Version 3.0" )
+	|| ( headerstr == "NetImmerse File Format, Version 2.3" ) )
+		throw runtime_error("Unsupported: " + headerstr);
+
 	uint version = ReadUInt( in );
 
 	//There is an unknown Byte here from version 20.0.0.4 on

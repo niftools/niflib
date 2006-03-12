@@ -454,10 +454,10 @@ private:
 
 class CrossRefAttr : public AAttr {
 public:
-	CrossRefAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), link(NULL), tmp_blk_num(-1) {}
+	CrossRefAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), tmp_blk_num(-1), link(NULL) {}
 	~CrossRefAttr() {
 		//cout << endl << "~CrossRefAttr()";
-		//This attribute is dying, so decriment the link
+		//This attribute is dying, so decrement the link
 		UpdateLink(NULL);
 	}
 	AttrType GetType() const { 
@@ -474,7 +474,7 @@ public:
 	void WriteAttr( ostream& out, unsigned int version ) const {
 		//cout << endl << "CrossRefAttr::WriteAttr()";
 		if ( link == NULL ) {
-			WriteUInt( -1, out );
+			WriteUInt( 0xFFFFFFFF, out );
 		} else {
 			WriteUInt( link->GetBlockNum(), out );
 		}
@@ -992,7 +992,8 @@ public:
 	void ReadAttr( istream& in, unsigned int version ) {
 
 		//The only difference is that there is a boolean before this link group
-		bool has_links = ReadBool( in, version );
+		//bool has_links =
+		ReadBool( in, version );
 
 		//if ( has_links || version >= VER_10_2_0_0 ) {
 			LinkGroupAttr::ReadAttr( in, version );
@@ -1613,6 +1614,12 @@ public:
 			bone_pars.push_front(par);
 			par = par->GetParent();
 		};
+		
+		// There is something odd going on with some of the DAoC files:
+		// all bones would refer to the scene root (see Atlantis/figures/fig03/lbody08_hig_m.nif).
+		// In this case the skeleton root also refers to the scene root; let's cover this case here.
+		if (bone_pars.empty()) return blk_ref(bones[0]);
+		
 		// Now do the same with the owner.
 		block = _owner;
 		par = block->GetParent();
@@ -1622,8 +1629,8 @@ public:
 			par = par->GetParent();
 		};
 		// Now find closest common ancestor.
-		if ( owner_pars.empty() || bone_pars.empty() )
-			throw runtime_error("Skinning instance has no common parent with the bones it refers to (invalid NIF file?). Cannot set skeleton root.");
+		if ( owner_pars.empty() )
+			throw runtime_error("Owner has no parents (invalid NIF file?). Cannot set skeleton root.");
 		blk_ref skelroot;
 		list<blk_ref>::const_iterator bone_par_it = bone_pars.begin();
 		list<blk_ref>::const_iterator owner_par_it = owner_pars.begin();
