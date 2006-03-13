@@ -774,6 +774,27 @@ struct Triangle {
 		this->v2 = v2;
 		this->v3 = v3;
 	}
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	 * \param n The index into the data array.  Should be 0, 1, or 2.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
+	short & operator[](int n) {
+		switch (n) {
+			case 0: return v1; break;
+			case 1: return v2; break;
+			case 2: return v3; break;
+			default: throw std::out_of_range("Index out of range for Triangle");
+		};
+	}
+	short operator[](int n) const {
+		switch (n) {
+			case 0: return v1; break;
+			case 1: return v2; break;
+			case 2: return v3; break;
+			default: throw std::out_of_range("Index out of range for Triangle");
+		};
+	}
 };
 
 /*!Represents a position or direction in 3D space*/
@@ -2423,11 +2444,10 @@ public:
 class IControllerSequence {
 public:
 	IControllerSequence() {}
-	virtual ~IControllerSequence () {}
-	virtual void SetFirstTargetName( string new_name ) = 0;
-	virtual void SetFirstController( blk_ref new_link ) = 0;
-	virtual void AddController( string new_name, blk_ref new_link ) = 0;
-	virtual void ClearControllers() = 0;
+	/*virtual ~IControllerSequence () {}
+	virtual void SetTextKey( string new_name, blk_ref new_link ) = 0;
+	virtual void AddKfChild( string new_name, string controller_type, blk_ref new_link ) = 0;
+	virtual void ClearKfChildren() = 0;*/
 };
 
 /*! An advanced interface for the IPalette block which contains a color palette for internally stored paletized textures.

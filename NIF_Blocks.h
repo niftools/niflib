@@ -778,8 +778,6 @@ class AShapeData : public AData, public IShapeData {
 public:
 	AShapeData() {
 		AddAttr( attr_string, "Name", VER_10_2_0_0 );
-		AddAttr( attr_float3, "Center" );
-		AddAttr( attr_float, "Radius" );
 		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
 	}
 	~AShapeData() {}
@@ -812,6 +810,7 @@ protected:
 	vector<Color4> colors;
 	vector<Vector3> unk_vects;
 	vector< vector<TexCoord> > uv_sets;
+	void CalcCentAndRad( Vector3 & center, float & radius ) const;
 };
 
 /**
@@ -2125,6 +2124,7 @@ class NiControllerSequence : public AData, public IControllerSequence {
 public:
 	NiControllerSequence() {
 		AddAttr( attr_string, "Name" );
+		AddAttr( attr_link, "String Palette", VER_10_2_0_0 );
 	}
 	~NiControllerSequence();
 
@@ -2153,14 +2153,26 @@ public:
 	}
 
 	//IControllerSequence Functions
-	void SetFirstTargetName( string new_name );
-	void SetFirstController( blk_ref new_link );
-	void AddController( string new_name, blk_ref new_link );
-	void ClearControllers();
-
+	/*void SetTextKey( string new_name, blk_ref new_link );
+	void AddKfChild( string new_name, string controller_type, blk_ref new_link );
+	void ClearKfChildren();*/
 private:
-	pair<string, blk_ref> _first_child;
-	vector< pair<string, blk_ref> > _children;
+
+	struct KfChild {
+		blk_ref block;
+		string name;
+		uint name_offset;
+		uint controller_offset;
+		blk_ref unk_link;
+		uint unk_int1, unk_int2, unk_int3;
+	};
+	string txt_key_name;
+	blk_ref txt_key_blk;
+	vector< KfChild > children;
+
+	uint unk_int1, unk_int2;
+	float unk_float1, unk_float2, unk_4_floats[4];
+	string unk_string;
 };
 
 class NiFloatData : public AData, public IFloatData {

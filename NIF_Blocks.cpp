@@ -1307,8 +1307,11 @@ void AShapeData::Read( istream& in, unsigned int version ){
 		}
 	}
 
-	GetAttr("Center")->Read( in, version );
-	GetAttr("Radius")->Read( in, version );
+	//Read center and radius but throw the values away
+	ReadFloat( in );
+	ReadFloat( in );
+	ReadFloat( in );
+	ReadFloat( in );
 
 	bool hasVertexColors = ReadBool( in, version );;
 	if ( hasVertexColors != 0 ){
@@ -1401,12 +1404,14 @@ string AShapeData::asString() const {
 	}
 	out << endl;
 
-	attr_ref attr = GetAttr("Center");
-	out << attr->GetName() << ":  " << attr->asString() << endl;
-	attr = GetAttr("Radius");
-	out << attr->GetName() << ":  " << attr->asString() << endl;
+	Vector3 center;
+	float radius;
+	CalcCentAndRad( center, radius );
 
-	out << "Vertex Colors:  " << uint(colors.size());
+
+	out << "Center:  (" << center.x << ", " << center.y << ", " << center.z << ")" << endl
+		<< "Radius:  " << radius << endl
+		<< "Vertex Colors:  " << uint(colors.size());
 	if (verbose) {
 		out << "   ";
 		for ( uint i = 0; i < colors.size(); ++i) {
@@ -1445,6 +1450,64 @@ string AShapeData::asString() const {
 	out << "Unknown Link:  " << GetAttr("Unknown Link")->asString() << endl;
 
 	return out.str();
+}
+
+void AShapeData::CalcCentAndRad( Vector3 & center, float & radius ) const {
+	//Check if there are no vertices
+	if ( vertices.size() == 0 ) {
+		center.Set(0.0f, 0.0f, 0.0f);
+		radius = 0.0f;
+		return;
+	}
+	
+	//Set lows and highs to first vertex
+	Vector3 lows = vertices[0];
+	Vector3 highs = vertices[0];
+
+	//Itterate through the rest of the vertices, adjusting the stored values
+	//if a vertex with lower or higher values is found
+	for (uint i = 1; i < vertices.size(); ++i ) {
+		if ( vertices[i].x > highs.x ) {
+			highs.x = vertices[i].x;
+		} else if ( vertices[i].x < lows.x ) {
+			lows.x = vertices[i].x;
+		}
+
+		if ( vertices[i].y > highs.y ) {
+			highs.y = vertices[i].y;
+		} else if ( vertices[i].y < lows.y ) {
+			lows.y = vertices[i].y;
+		}
+
+		if ( vertices[i].z > highs.z ) {
+			highs.z = vertices[i].z;
+		} else if ( vertices[i].z < lows.z ) {
+			lows.z = vertices[i].z;
+		}
+	}
+
+	//Now we know the extent of the shape, so the center will be the average of the lows and highs.
+	center.x = (highs.x + lows.x) / 2.0f;
+	center.x = (highs.y + lows.y) / 2.0f;
+	center.x = (highs.z + lows.z) / 2.0f;
+
+	//The radius will be the largest distance from the center;
+	radius = 0.0f;
+
+	if ( abs(center.x - highs.x) > radius )
+		radius = abs(center.x - highs.x);
+	if ( abs(center.y - highs.y) > radius )
+		radius = abs(center.y - highs.y);
+	if ( abs(center.z - highs.z) > radius )
+		radius = abs(center.z - highs.z);
+	
+	if ( abs(center.x - lows.x) > radius )
+		radius = abs(center.x - lows.x);
+	if ( abs(center.y - lows.y) > radius )
+		radius = abs(center.y - lows.y);
+	if ( abs(center.z - lows.z) > radius )
+		radius = abs(center.z - lows.z);
+
 }
 
 /**
@@ -1486,8 +1549,12 @@ void AShapeData::Write( ostream& out, unsigned int version ) const {
 		}
 	}
 
-	GetAttr("Center")->Write( out, version );
-	GetAttr("Radius")->Write( out, version );
+	Vector3 center;
+	float radius;
+	CalcCentAndRad( center, radius );
+	
+	NifStream( center, out );
+	NifStream( radius, out );
 
 	if ( version <= VER_4_0_0_2 ) {
 		// NifTexture bug workaround:
@@ -3512,33 +3579,109 @@ string NiColorData::asString() const {
 void NiControllerSequence::Read( istream& file, unsigned int version ) {
 	GetAttr("Name")->Read( file, version );
 
-	//Read first ControllerLink
-	_first_child.first = ReadString( file );
-	_first_child.second.set_index( ReadUInt(file) );
+	//Up to version 10.1.0.0 the text key block is up here and named
+	if ( version <= VER_10_1_0_0 ) {
+		NifStream( txt_key_name, file );
+		txt_key_blk.set_index( ReadUInt( file ) );
+	}
 
 	//Read the ControllerLink array
 	uint count = ReadUInt( file );
-	_children.resize( count );
+	children.resize( count );
 
-	for (uint i = 1; i < _children.size(); ++i ) {
-		_children[i].first = ReadString( file );
-		_children[i].second.set_index( ReadUInt(file) );
+	//After version 10.2.0.0 there is an unknown int here
+	if ( version >=	VER_10_2_0_0 ) {
+		NifStream( unk_int1, file );
+	}
+
+	for (uint i = 1; i < children.size(); ++i ) {
+		//Up to version 10.1.0.0 the name is stored here in a string
+		if ( version <= VER_10_1_0_0 ) {
+			NifStream( children[i].name, file );
+		}
+		children[i].block.set_index( ReadUInt(file) );
+		//From version 10.2.0.0 there is a lot more stuff here
+		if ( version >= VER_10_2_0_0 ) {
+			children[i].unk_link.set_index( ReadUInt(file) );
+			//Read and discard duplicate String Palette index
+			ReadUInt(file);
+			NifStream( children[i].name_offset, file );
+			NifStream( children[i].unk_int1, file );
+			NifStream( children[i].controller_offset, file );
+			NifStream( children[i].unk_int2, file );
+			NifStream( children[i].unk_int3, file );
+		}
+
+		//And from version 10.2.0.0 there is a lot more stuff down here as well
+		if (version >= VER_10_2_0_0 ) {
+			NifStream( unk_float1, file );
+			txt_key_blk.set_index( ReadUInt( file ) ); //Text key link is down here now and has no name
+			for (int i = 0; i < 4; ++i ) {
+				NifStream( unk_4_floats[i], file );
+			}
+			//This does not exist after version 10.2.0.0
+			if ( version < VER_20_0_0_4 ) {
+				NifStream( unk_float2, file );
+			}
+			NifStream( unk_int2, file );
+			NifStream( unk_string, file );
+
+			GetAttr("String Palette")->Read( file, version );
+		}
 	}
 }
 
 void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 	GetAttr("Name")->Write( file, version );
 
-	//Write first ControllerLink
-	WriteString( _first_child.first , file );
-	WriteUInt( _first_child.second.get_index(), file );
+	//Up to version 10.1.0.0 the text key block is up here and named
+	if ( version <= VER_10_1_0_0 ) {
+		NifStream( txt_key_name, file );
+		WriteUInt( uint(txt_key_blk.get_index()), file );
+	}
 
-	//Read the ControllerLink array
-	WriteUInt( uint(_children.size()), file );
+	//Write the ControllerLink array
+	WriteUInt( uint(children.size()), file );
 
-	for (uint i = 1; i < _children.size(); ++i ) {
-		WriteString( _children[i].first , file );
-		WriteUInt( _children[i].second.get_index(), file );
+	//After version 10.2.0.0 there is an unknown int here
+	if ( version >=	VER_10_2_0_0 ) {
+		NifStream( unk_int1, file );
+	}
+
+	for (uint i = 1; i < children.size(); ++i ) {
+		//Up to version 10.1.0.0 the name is stored here in a string
+		if ( version <= VER_10_1_0_0 ) {
+			NifStream( children[i].name, file );
+		}
+		WriteUInt( uint(children[i].block.get_index()), file );
+		//From version 10.2.0.0 there is a lot more stuff here
+		if ( version >= VER_10_2_0_0 ) {
+			WriteUInt( uint(children[i].unk_link.get_index()), file );
+			//Write duplicate palette index
+			GetAttr("String Palette")->Write( file, version );
+			NifStream( children[i].name_offset, file );
+			NifStream( children[i].unk_int1, file );
+			NifStream( children[i].controller_offset, file );
+			NifStream( children[i].unk_int2, file );
+			NifStream( children[i].unk_int3, file );
+		}
+
+		//And from version 10.2.0.0 there is a lot more stuff down here as well
+		if (version >= VER_10_2_0_0 ) {
+			NifStream( unk_float1, file );
+			WriteUInt( uint(txt_key_blk.get_index()), file ); //Text key link is down here now and has no name
+			for (int i = 0; i < 4; ++i ) {
+				NifStream( unk_4_floats[i], file );
+			}
+			//This does not exist after version 10.2.0.0
+			if ( version < VER_20_0_0_4 ) {
+				NifStream( unk_float2, file );
+			}
+			NifStream( unk_int2, file );
+			NifStream( unk_string, file );
+
+			GetAttr("String Palette")->Write( file, version );
+		}
 	}
 }
 
@@ -3548,46 +3691,59 @@ string NiControllerSequence::asString() const {
 	out << setprecision(1);
 
 	out << "Name:  " << GetAttr("Name")->asString() << endl
-		<< "First Target Name:  "  << _first_child.first << endl
-		<< "First Controller:  " << _first_child.second << endl
-		<< "Additional Controller Links:  " << uint(_children.size()) << endl;
+		<< "Text Key Name:  " << txt_key_name << endl
+		<< "Text Key Block:  " << txt_key_blk << endl
+		<< "Unknown Int 1:  " << unk_int1 << endl
+		<< "Kf Children:";
 
-	for (uint i = 1; i < _children.size(); ++i ) {
-		out << "   Controller Link " << i + 1 << endl
-			<< "      Target Name:  " << _children[i].first << endl
-			<< "      Controller:  " << _children[i].second << endl;
+	for (uint i = 1; i < children.size(); ++i ) {
+		out << "   Name:  "  << children[i].name << endl
+			<< "   Block:  " << children[i].block << endl
+			<< "   Unknown Link:  " << children[i].unk_link << endl
+			<< "   Name Offset:  " << children[i].name_offset << endl
+			<< "   Unknown Int 1:  " << children[i].unk_int1 << endl
+			<< "   Controller Offset:  " << children[i].controller_offset << endl
+			<< "   Unknown Int 2:  " << children[i].unk_int2 << endl
+			<< "   Unknown Int 2:  " << children[i].unk_int3 << endl;
 	}
+
+	out << "Unknown Float 1:  " << unk_float1 << endl
+		<< "Unknown 4 Floats:  " << unk_4_floats[0] << ", " << unk_4_floats[1] << ", " << unk_4_floats[2] << ", " << unk_4_floats[3] << endl
+		<< "Unknown Float 2:  " << unk_float2 << endl
+		<< "Unknown String:  " << unk_string << endl
+		<< "String Palette:  " << GetAttr("String Palette")->asString() << endl;
 
 	return out.str();
 }
 
 void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
-	ABlock::FixLinks( blocks );
-
-	//Fix link for first child
-	_first_child.second = blocks[_first_child.second.get_index()];
+	//Fix text key lnk
+	txt_key_blk = blocks[txt_key_blk.get_index()];
 	
-	//Add this block to first child as a parent
-	AddChild( _first_child.second.get_block() );
+	//Add this block as a child
+	AddChild( txt_key_blk.get_block() );
 
-	for (uint i = 1; i < _children.size(); ++i ) {
-		//Fix link for this child
-		_children[i].second = blocks[_children[i].second.get_index()];
+	for (uint i = 1; i < children.size(); ++i ) {
+		//Fix links for this child
+		children[i].block = blocks[children[i].block.get_index()];
+		children[i].unk_link = blocks[children[i].unk_link.get_index()];
 
-		//Add this block to first child as a parent
-		AddChild( _children[i].second.get_block() );
+		//Add these blocks as children
+		AddChild( children[i].block.get_block() );
+		AddChild( children[i].unk_link.get_block() );
 	}
 }
 
 list<blk_ref> NiControllerSequence::GetLinks() const {
 	list<blk_ref> links = ABlock::GetLinks();
 
-	//add link for first child
-	links.push_back( _first_child.second );
+	//add link for text key block
+	links.push_back( txt_key_blk );
 
 	//Add child links
-	for (uint i = 1; i < _children.size(); ++i ) {
-		links.push_back( _children[i].second );
+	for (uint i = 1; i < children.size(); ++i ) {
+		links.push_back( children[i].block );
+		links.push_back( children[i].unk_link );
 	}
 
 	//Remove NULL links
@@ -3598,63 +3754,64 @@ list<blk_ref> NiControllerSequence::GetLinks() const {
 
 NiControllerSequence::~NiControllerSequence() {
 
-	//Add this block to first child as a parent
-	RemoveChild( _first_child.second.get_block() );
+	//Remove text key child
+	RemoveChild( txt_key_blk.get_block() );
 
-	for (uint i = 1; i < _children.size(); ++i ) {
-		//Add this block to first child as a parent
-		RemoveChild( _children[i].second.get_block() );
+	for (uint i = 1; i < children.size(); ++i ) {
+		//Remove child blocks
+		RemoveChild( children[i].block.get_block() );
+		RemoveChild( children[i].unk_link.get_block() );
 	}
 }
 
-void NiControllerSequence::SetFirstTargetName( string new_name ) {
-	_first_child.first = new_name;
-}
-
-void NiControllerSequence::SetFirstController( blk_ref new_link ) {
-	//Check for identical values
-	if ( new_link == _first_child.second )
-		return;
-	
-	//Remove old child
-	if ( _first_child.second.is_null() == false ) {
-		RemoveChild( _first_child.second.get_block() );
-	}
-
-	//Set new value
-	_first_child.second = new_link;
-
-	//Add new child
-	if ( _first_child.second.is_null() == false ) {
-		AddChild( _first_child.second.get_block() );
-	}
-}
-
-void NiControllerSequence::AddController( string new_name, blk_ref new_link ) {
-	//Make sure the link isn't null
-	if ( new_link.is_null() == true ) {
-		throw runtime_error("Attempted to add a null link to NiControllerSequence block.");
-	}
-	
-	_children.push_back( pair<string,blk_ref>(new_name, new_link) );
-
-	//Add new child
-	AddChild( new_link.get_block() );
-}
-
-void NiControllerSequence::ClearControllers() {
-
-	SetFirstTargetName( "" );
-	SetFirstController( blk_ref(-1) );
-
-	//Cycle through all controllers, removing them as parents from the blocks they refer to
-	for (uint i = 0; i < _children.size(); ++i ) {
-		RemoveChild( _children[i].second.get_block() );
-	}
-
-	//Clear list
-	_children.clear();
-}
+//void NiControllerSequence::SetFirstTargetName( string new_name ) {
+//	_first_child.first = new_name;
+//}
+//
+//void NiControllerSequence::SetFirstController( blk_ref new_link ) {
+//	//Check for identical values
+//	if ( new_link == _first_child.second )
+//		return;
+//	
+//	//Remove old child
+//	if ( _first_child.second.is_null() == false ) {
+//		RemoveChild( _first_child.second.get_block() );
+//	}
+//
+//	//Set new value
+//	_first_child.second = new_link;
+//
+//	//Add new child
+//	if ( _first_child.second.is_null() == false ) {
+//		AddChild( _first_child.second.get_block() );
+//	}
+//}
+//
+//void NiControllerSequence::AddController( string new_name, blk_ref new_link ) {
+//	//Make sure the link isn't null
+//	if ( new_link.is_null() == true ) {
+//		throw runtime_error("Attempted to add a null link to NiControllerSequence block.");
+//	}
+//	
+//	_children.push_back( pair<string,blk_ref>(new_name, new_link) );
+//
+//	//Add new child
+//	AddChild( new_link.get_block() );
+//}
+//
+//void NiControllerSequence::ClearControllers() {
+//
+//	SetFirstTargetName( "" );
+//	SetFirstController( blk_ref(-1) );
+//
+//	//Cycle through all controllers, removing them as parents from the blocks they refer to
+//	for (uint i = 0; i < _children.size(); ++i ) {
+//		RemoveChild( _children[i].second.get_block() );
+//	}
+//
+//	//Clear list
+//	_children.clear();
+//}
 
 /***********************************************************
  * NiFloatData methods
