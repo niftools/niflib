@@ -2444,10 +2444,10 @@ public:
 class IControllerSequence {
 public:
 	IControllerSequence() {}
-	/*virtual ~IControllerSequence () {}
+	virtual ~IControllerSequence () {}
 	virtual void SetTextKey( string new_name, blk_ref new_link ) = 0;
-	virtual void AddKfChild( string new_name, string controller_type, blk_ref new_link ) = 0;
-	virtual void ClearKfChildren() = 0;*/
+	virtual void AddKfChild( string new_name, blk_ref new_link, string controller_type = "" ) = 0;
+	virtual void ClearKfChildren() = 0;
 };
 
 /*! An advanced interface for the IPalette block which contains a color palette for internally stored paletized textures.

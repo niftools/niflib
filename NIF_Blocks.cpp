@@ -3764,54 +3764,115 @@ NiControllerSequence::~NiControllerSequence() {
 	}
 }
 
-//void NiControllerSequence::SetFirstTargetName( string new_name ) {
-//	_first_child.first = new_name;
-//}
-//
-//void NiControllerSequence::SetFirstController( blk_ref new_link ) {
-//	//Check for identical values
-//	if ( new_link == _first_child.second )
-//		return;
-//	
-//	//Remove old child
-//	if ( _first_child.second.is_null() == false ) {
-//		RemoveChild( _first_child.second.get_block() );
-//	}
-//
-//	//Set new value
-//	_first_child.second = new_link;
-//
-//	//Add new child
-//	if ( _first_child.second.is_null() == false ) {
-//		AddChild( _first_child.second.get_block() );
-//	}
-//}
-//
-//void NiControllerSequence::AddController( string new_name, blk_ref new_link ) {
-//	//Make sure the link isn't null
-//	if ( new_link.is_null() == true ) {
-//		throw runtime_error("Attempted to add a null link to NiControllerSequence block.");
-//	}
-//	
-//	_children.push_back( pair<string,blk_ref>(new_name, new_link) );
-//
-//	//Add new child
-//	AddChild( new_link.get_block() );
-//}
-//
-//void NiControllerSequence::ClearControllers() {
-//
-//	SetFirstTargetName( "" );
-//	SetFirstController( blk_ref(-1) );
-//
-//	//Cycle through all controllers, removing them as parents from the blocks they refer to
-//	for (uint i = 0; i < _children.size(); ++i ) {
-//		RemoveChild( _children[i].second.get_block() );
-//	}
-//
-//	//Clear list
-//	_children.clear();
-//}
+void NiControllerSequence::SetTextKey( string new_name, blk_ref new_link ) {
+	//Set new name
+	txt_key_name = new_name;
+	
+	//Check for identical block values
+	if ( new_link == txt_key_blk )
+		return;
+	
+	//Remove old child
+	if ( txt_key_blk.is_null() == false ) {
+		RemoveChild( txt_key_blk.get_block() );
+	}
+
+	//Set new value
+	txt_key_blk = new_link;
+
+	//Add new child
+	if ( txt_key_blk.is_null() == false ) {
+		AddChild( txt_key_blk.get_block() );
+	}
+}
+
+void NiControllerSequence::AddKfChild( string new_name, blk_ref new_link, string controller_type = "" ) {
+	//Make sure the link isn't null
+	if ( new_link.is_null() == true ) {
+		throw runtime_error("Attempted to add a null link to NiControllerSequence block.");
+	}
+
+	KfChild kc;
+
+	kc.block = new_link;
+
+	//Check for a string palette
+	blk_ref str_pal = GetAttr("String Palette")->asLink();
+	if ( str_pal.is_null() == true ) {
+		//No string palette, store name internally
+		kc.name = new_name;
+	} else {
+		//String palette exists - store name and controller type there
+
+		//Make sure they didn't give us empty strings
+		if ( new_name.size() == 0 || controller_type.size() == 0 ) {
+			throw runtime_error( "You cannot use empty name or controller type strings when using a string palette.");
+		}
+
+		//Get palette
+		string pal = str_pal->GetAttr("Palette")->asString();
+
+		//--Search for copies of the text we want to add--//
+
+		//Search for the name string
+		int offset = (int)pal.find( new_name );
+		if ( offset == -1 ) {
+			//String not found, append it
+			kc.name_offset = (uint)pal.size();
+			pal.append( new_name + '\0' );
+		} else {
+			//String found, use existing offset
+			kc.name_offset = offset;
+		}
+
+		//Search for the controller type string
+		offset = (int)pal.find( controller_type );
+		if ( offset == -1 ) {
+			//String not found, append it
+			kc.controller_offset = (uint)pal.size();
+			pal.append( controller_type + '\0' );
+		} else {
+			//String found, use existing offset
+			kc.controller_offset = offset;
+		}
+
+		//Store the palette back to the string pal block
+		str_pal->GetAttr("Palette")->Set( pal );
+	}
+	
+	children.push_back( kc );
+
+	//Add new child
+	AddChild( kc.block.get_block() );
+	
+	//This should be impossible now, but don't want to forget it later
+	if ( kc.unk_link.is_null() != true ) {
+		AddChild( kc.unk_link.get_block() );
+	}
+}
+
+void NiControllerSequence::ClearKfChildren() {
+
+	//Cycle through all Kf Children, removing them as parents from the blocks they refer to
+	for (uint i = 0; i < children.size(); ++i ) {
+		if ( children[i].block.is_null() != true ) {
+			RemoveChild( children[i].block.get_block() );
+		}
+		if ( children[i].unk_link.is_null() != true ) {
+			RemoveChild( children[i].unk_link.get_block() );
+		}
+	}
+
+	//Clear list
+	children.clear();
+
+	//Check for a string palette
+	blk_ref str_pal = GetAttr("String Palette")->asLink();
+	if ( str_pal.is_null() == false ) {
+		//There's a string palette, so clear it out
+		str_pal->GetAttr("Palette")->Set( "" );
+	}
+}
 
 /***********************************************************
  * NiFloatData methods

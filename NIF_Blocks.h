@@ -2153,9 +2153,9 @@ public:
 	}
 
 	//IControllerSequence Functions
-	/*void SetTextKey( string new_name, blk_ref new_link );
-	void AddKfChild( string new_name, string controller_type, blk_ref new_link );
-	void ClearKfChildren();*/
+	void SetTextKey( string new_name, blk_ref new_link );
+	void AddKfChild( string new_name, blk_ref new_link, string controller_type);
+	void ClearKfChildren();
 private:
 
 	struct KfChild {
