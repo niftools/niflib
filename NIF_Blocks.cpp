@@ -1464,50 +1464,36 @@ void AShapeData::CalcCentAndRad( Vector3 & center, float & radius ) const {
 	Vector3 lows = vertices[0];
 	Vector3 highs = vertices[0];
 
-	//Itterate through the rest of the vertices, adjusting the stored values
+	//Iterate through the rest of the vertices, adjusting the stored values
 	//if a vertex with lower or higher values is found
-	for (uint i = 1; i < vertices.size(); ++i ) {
-		if ( vertices[i].x > highs.x ) {
-			highs.x = vertices[i].x;
-		} else if ( vertices[i].x < lows.x ) {
-			lows.x = vertices[i].x;
-		}
+	for (vector<Vector3>::const_iterator i = vertices.begin()+1; i != vertices.end(); ++i ) {
+		if ( i->x > highs.x ) highs.x = i->x;
+		else if ( i->x < lows.x ) lows.x = i->x;
 
-		if ( vertices[i].y > highs.y ) {
-			highs.y = vertices[i].y;
-		} else if ( vertices[i].y < lows.y ) {
-			lows.y = vertices[i].y;
-		}
+		if ( i->y > highs.y ) highs.y = i->y;
+		else if ( i->y < lows.y ) lows.y = i->y;
 
-		if ( vertices[i].z > highs.z ) {
-			highs.z = vertices[i].z;
-		} else if ( vertices[i].z < lows.z ) {
-			lows.z = vertices[i].z;
-		}
+		if ( i->z > highs.z ) highs.z = i->z;
+		else if ( i->z < lows.z ) lows.z = i->z;
 	}
 
 	//Now we know the extent of the shape, so the center will be the average of the lows and highs.
 	center.x = (highs.x + lows.x) / 2.0f;
-	center.x = (highs.y + lows.y) / 2.0f;
-	center.x = (highs.z + lows.z) / 2.0f;
+	center.y = (highs.y + lows.y) / 2.0f;
+	center.z = (highs.z + lows.z) / 2.0f;
 
-	//The radius will be the largest distance from the center;
-	radius = 0.0f;
-
-	if ( abs(center.x - highs.x) > radius )
-		radius = abs(center.x - highs.x);
-	if ( abs(center.y - highs.y) > radius )
-		radius = abs(center.y - highs.y);
-	if ( abs(center.z - highs.z) > radius )
-		radius = abs(center.z - highs.z);
-	
-	if ( abs(center.x - lows.x) > radius )
-		radius = abs(center.x - lows.x);
-	if ( abs(center.y - lows.y) > radius )
-		radius = abs(center.y - lows.y);
-	if ( abs(center.z - lows.z) > radius )
-		radius = abs(center.z - lows.z);
-
+	//The radius will be the largest distance from the center
+	Vector3 diff;
+	float dist2(0.0f), maxdist2(0.0f);
+	for (vector<Vector3>::const_iterator i = vertices.begin(); i != vertices.end(); ++i ) {
+		diff = center;
+		diff.x -= i->x;
+		diff.y -= i->y;
+		diff.z -= i->z;
+		dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+		if ( dist2 > maxdist2 ) maxdist2 = dist2;
+	};
+	radius = sqrt(maxdist2);
 }
 
 /**
