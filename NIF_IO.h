@@ -181,6 +181,7 @@ ostream & operator<<(ostream & lh, nifAlphaFormat const & rh);
  */
 uint ReadUInt( istream& in );
 ushort ReadUShort( istream& in );
+short ReadShort( istream& in );
 byte ReadByte( istream& in );
 float ReadFloat( istream &in );
 string ReadString( istream &in );
@@ -193,6 +194,7 @@ void ReadFVector4( fVector4& fvec, istream& in );
 //Read
 void NifStream( uint & val, istream& in );
 void NifStream( ushort & val, istream& in );
+void NifStream( short & val, istream& in );
 void NifStream( byte & val, istream& in );
 void NifStream( float & val, istream& in );
 void NifStream( string & val, istream& in );
@@ -249,6 +251,8 @@ void WriteUInt( uint val, ostream& out );
 
 void WriteUShort( ushort val, ostream& out );
 
+void WriteShort( short val, ostream& out );
+
 void WriteByte( byte val, ostream& out );
 
 void WriteUSVector3( usVector3 const & fvec, ostream& out );
@@ -270,6 +274,7 @@ void WriteBlockName( const char* name, uint nameLength, ostream& out );
 //Write
 void NifStream( uint const & val, ostream& out );
 void NifStream( ushort const & val, ostream& out );
+void NifStream( short const & val, ostream& out );
 void NifStream( byte const & val, ostream& out );
 void NifStream( float const & val, ostream& out );
 void NifStream( string const & val, ostream& out );

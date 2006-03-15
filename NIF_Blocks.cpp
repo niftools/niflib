@@ -3580,40 +3580,45 @@ void NiControllerSequence::Read( istream& file, unsigned int version ) {
 		NifStream( unk_int1, file );
 	}
 
-	for (uint i = 1; i < children.size(); ++i ) {
+	for (uint i = 0; i < children.size(); ++i ) {
 		//Up to version 10.1.0.0 the name is stored here in a string
 		if ( version <= VER_10_1_0_0 ) {
 			NifStream( children[i].name, file );
 		}
-		children[i].block.set_index( ReadUInt(file) );
+		children[i].block.set_index( ReadUInt(file)  );
 		//From version 10.2.0.0 there is a lot more stuff here
 		if ( version >= VER_10_2_0_0 ) {
 			children[i].unk_link.set_index( ReadUInt(file) );
 			//Read and discard duplicate String Palette index
 			ReadUInt(file);
+			//Read offsets
 			NifStream( children[i].name_offset, file );
-			NifStream( children[i].unk_int1, file );
+			NifStream( children[i].unk_offs1, file );
+			NifStream( children[i].unk_offs2, file );
+			NifStream( children[i].unk_offs3, file );
 			NifStream( children[i].controller_offset, file );
-			NifStream( children[i].unk_int2, file );
-			NifStream( children[i].unk_int3, file );
+			NifStream( children[i].unk_offs4, file );
+			NifStream( children[i].unk_offs5, file );
+			NifStream( children[i].unk_offs6, file );
+			NifStream( children[i].unk_offs7, file );
+			NifStream( children[i].unk_offs8, file );
 		}
-
-		//And from version 10.2.0.0 there is a lot more stuff down here as well
-		if (version >= VER_10_2_0_0 ) {
-			NifStream( unk_float1, file );
-			txt_key_blk.set_index( ReadUInt( file ) ); //Text key link is down here now and has no name
-			for (int i = 0; i < 4; ++i ) {
-				NifStream( unk_4_floats[i], file );
-			}
-			//This does not exist after version 10.2.0.0
-			if ( version < VER_20_0_0_4 ) {
-				NifStream( unk_float2, file );
-			}
-			NifStream( unk_int2, file );
-			NifStream( unk_string, file );
-
-			GetAttr("String Palette")->Read( file, version );
+	}
+	
+	//And from version 10.2.0.0 there is a lot more stuff down here as well
+	if (version >= VER_10_2_0_0 ) {
+		NifStream( unk_float1, file );
+		txt_key_blk.set_index( ReadUInt( file ) ); //Text key link is down here now and has no name
+		for (int i = 0; i < 4; ++i ) {
+			NifStream( unk_4_floats[i], file );
 		}
+		//This does not exist after version 10.2.0.0
+		if ( version < VER_20_0_0_4 ) {
+			NifStream( unk_float2, file );
+		}
+		NifStream( unk_int2, file );
+		NifStream( unk_string, file );
+		GetAttr("String Palette")->Read( file, version );
 	}
 }
 
@@ -3634,7 +3639,7 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 		NifStream( unk_int1, file );
 	}
 
-	for (uint i = 1; i < children.size(); ++i ) {
+	for (uint i = 0; i < children.size(); ++i ) {
 		//Up to version 10.1.0.0 the name is stored here in a string
 		if ( version <= VER_10_1_0_0 ) {
 			NifStream( children[i].name, file );
@@ -3646,10 +3651,15 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 			//Write duplicate palette index
 			GetAttr("String Palette")->Write( file, version );
 			NifStream( children[i].name_offset, file );
-			NifStream( children[i].unk_int1, file );
+			NifStream( children[i].unk_offs1, file );
+			NifStream( children[i].unk_offs2, file );
+			NifStream( children[i].unk_offs3, file );
 			NifStream( children[i].controller_offset, file );
-			NifStream( children[i].unk_int2, file );
-			NifStream( children[i].unk_int3, file );
+			NifStream( children[i].unk_offs4, file );
+			NifStream( children[i].unk_offs5, file );
+			NifStream( children[i].unk_offs6, file );
+			NifStream( children[i].unk_offs7, file );
+			NifStream( children[i].unk_offs8, file );
 		}
 
 		//And from version 10.2.0.0 there is a lot more stuff down here as well
@@ -3682,15 +3692,68 @@ string NiControllerSequence::asString() const {
 		<< "Unknown Int 1:  " << unk_int1 << endl
 		<< "Kf Children:";
 
-	for (uint i = 1; i < children.size(); ++i ) {
+	//Check for a string palette
+	string pal;
+	blk_ref str_pal = GetAttr("String Palette")->asLink();
+	if ( str_pal.is_null() != true )
+		pal = str_pal->GetAttr("Palette")->asString();
+
+	for (uint i = 0; i < children.size(); ++i ) {
 		out << "   Name:  "  << children[i].name << endl
 			<< "   Block:  " << children[i].block << endl
-			<< "   Unknown Link:  " << children[i].unk_link << endl
-			<< "   Name Offset:  " << children[i].name_offset << endl
-			<< "   Unknown Int 1:  " << children[i].unk_int1 << endl
-			<< "   Controller Offset:  " << children[i].controller_offset << endl
-			<< "   Unknown Int 2:  " << children[i].unk_int2 << endl
-			<< "   Unknown Int 2:  " << children[i].unk_int3 << endl;
+			<< "   Unknown Link:  " << children[i].unk_link << endl;
+		if ( str_pal.is_null() != true ) {
+			out << "   Name Offset:  " << children[i].name_offset;
+			if ( children[i].name_offset != -1 )
+				out <<" (" << pal.substr(children[i].name_offset) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 1:  " << children[i].unk_offs1;
+			if ( children[i].unk_offs1 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs1) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 2:  " << children[i].unk_offs2;
+			if ( children[i].unk_offs2 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs2) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 3:  " << children[i].unk_offs3;
+			if ( children[i].unk_offs3 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs3) << ")" << endl;
+			else
+				out << endl;
+			out << "   Controller Offset:  " << children[i].controller_offset;
+			if ( children[i].controller_offset != -1 )
+				out << " (" << pal.substr(children[i].controller_offset) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 4:  " << children[i].unk_offs4;
+			if ( children[i].unk_offs4 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs4) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 5:  " << children[i].unk_offs5;
+			if ( children[i].unk_offs5 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs5) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 6:  " << children[i].unk_offs6;
+			if ( children[i].unk_offs6 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs6) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 7:  " << children[i].unk_offs7;
+			if ( children[i].unk_offs7 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs7) << ")" << endl;
+			else
+				out << endl;
+			out << "   Unknown Offset 8:  " << children[i].unk_offs8;
+			if ( children[i].unk_offs8 != -1 )
+				out << " (" << pal.substr(children[i].unk_offs8) << ")" << endl;
+			else
+				out << endl;
+		}
 	}
 
 	out << "Unknown Float 1:  " << unk_float1 << endl
@@ -3703,20 +3766,26 @@ string NiControllerSequence::asString() const {
 }
 
 void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
+	ABlock::FixLinks( blocks );
+	
 	//Fix text key lnk
 	txt_key_blk = blocks[txt_key_blk.get_index()];
 	
 	//Add this block as a child
 	AddChild( txt_key_blk.get_block() );
 
-	for (uint i = 1; i < children.size(); ++i ) {
+	for (uint i = 0; i < children.size(); ++i ) {
 		//Fix links for this child
 		children[i].block = blocks[children[i].block.get_index()];
-		children[i].unk_link = blocks[children[i].unk_link.get_index()];
+		if ( children[i].unk_link.get_index() != -1 )
+			children[i].unk_link = blocks[children[i].unk_link.get_index()];
+		else
+			children[i].unk_link = blk_ref();
 
 		//Add these blocks as children
 		AddChild( children[i].block.get_block() );
-		AddChild( children[i].unk_link.get_block() );
+		if ( children[i].unk_link.get_index() != -1 )
+			AddChild( children[i].unk_link.get_block() );
 	}
 }
 
@@ -3727,7 +3796,7 @@ list<blk_ref> NiControllerSequence::GetLinks() const {
 	links.push_back( txt_key_blk );
 
 	//Add child links
-	for (uint i = 1; i < children.size(); ++i ) {
+	for (uint i = 0; i < children.size(); ++i ) {
 		links.push_back( children[i].block );
 		links.push_back( children[i].unk_link );
 	}
@@ -3743,7 +3812,7 @@ NiControllerSequence::~NiControllerSequence() {
 	//Remove text key child
 	RemoveChild( txt_key_blk.get_block() );
 
-	for (uint i = 1; i < children.size(); ++i ) {
+	for (uint i = 0; i < children.size(); ++i ) {
 		//Remove child blocks
 		RemoveChild( children[i].block.get_block() );
 		RemoveChild( children[i].unk_link.get_block() );

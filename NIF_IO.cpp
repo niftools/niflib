@@ -179,6 +179,13 @@ ushort ReadUShort( istream& in ){
 	return tmp;
 }
 
+short ReadShort( istream& in ){
+
+	short tmp;
+	in.read( (char*)&tmp, 2 );
+	return tmp;
+}
+
 byte ReadByte( istream& in ){
 
 	byte tmp;
@@ -250,6 +257,11 @@ void WriteUInt( uint val, ostream& out ){
 }
 
 void WriteUShort( ushort val, ostream& out ){
+
+	out.write( (char*)&val, 2 );
+}
+
+void WriteShort( short val, ostream& out ){
 
 	out.write( (char*)&val, 2 );
 }
@@ -367,6 +379,7 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 
 void NifStream( uint & val, istream& in ) { val = ReadUInt( in ); };
 void NifStream( ushort & val, istream& in ) { val = ReadUShort( in ); };
+void NifStream( short & val, istream& in ) { val = ReadShort( in ); };
 void NifStream( byte & val, istream& in ) { val = ReadByte( in ); };
 void NifStream( float & val, istream& in ) { val = ReadFloat( in ); };
 void NifStream( string & val, istream& in ) { val = ReadString( in ); };
@@ -443,6 +456,7 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 
 void NifStream( uint const & val, ostream& out ) { WriteUInt( val, out ); }
 void NifStream( ushort const & val, ostream& out ) { WriteUShort( val, out ); }
+void NifStream( short const & val, ostream& out ) { WriteShort( val, out ); }
 void NifStream( byte const & val, ostream& out ) { WriteByte( val, out ); }
 void NifStream( float const & val, ostream& out ) { WriteFloat( val, out ); }
 void NifStream( string const & val, ostream& out ) { WriteString( val, out ); }

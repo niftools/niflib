@@ -2161,10 +2161,10 @@ private:
 	struct KfChild {
 		blk_ref block;
 		string name;
-		uint name_offset;
-		uint controller_offset;
+		short name_offset;
+		short controller_offset;
 		blk_ref unk_link;
-		uint unk_int1, unk_int2, unk_int3;
+		short unk_offs1, unk_offs2, unk_offs3, unk_offs4, unk_offs5, unk_offs6, unk_offs7, unk_offs8;
 	};
 	string txt_key_name;
 	blk_ref txt_key_blk;
