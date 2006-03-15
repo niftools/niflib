@@ -2166,6 +2166,9 @@ private:
 		short controller_offset;
 		blk_ref unk_link;
 		short unk_offs1, unk_offs2, unk_offs3, unk_offs4, unk_offs5, unk_offs6, unk_offs7, unk_offs8;
+		KfChild() : block(), name(), name_offset(-1), controller_offset(-1), unk_link(),
+		unk_offs1(-1), unk_offs2(-1), unk_offs3(-1), unk_offs4(-1),
+		unk_offs5(-1), unk_offs6(-1), unk_offs7(-1), unk_offs8(-1) {};
 	};
 	string txt_key_name;
 	blk_ref txt_key_blk;
