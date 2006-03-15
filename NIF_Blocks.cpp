@@ -3708,7 +3708,6 @@ string NiControllerSequence::asString() const {
 		out << "   Name:  "  << children[i].name << endl
 			<< "   Block:  " << children[i].block << endl
 			<< "   Unknown Link:  " << children[i].unk_link << endl
-			<< "   Name Offset:  " << children[i].name_offset
 			<< "   Name Offset:  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
 			<< "   Unknown Offset 1:  " << children[i].unk_offs1 << " (" << GetSubStr( pal, children[i].unk_offs1) << ")" << endl
 			<< "   Unknown Offset 2:  " << children[i].unk_offs2 << " (" << GetSubStr( pal, children[i].unk_offs2) << ")" << endl
