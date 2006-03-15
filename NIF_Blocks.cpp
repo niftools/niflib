@@ -3697,6 +3697,12 @@ string NiControllerSequence::asString() const {
 		<< "Unknown Int 1:  " << unk_int1 << endl
 		<< "Kf Children:";
 
+	if ( children.size() == 0 ) {
+		out << "  None" << endl;
+	} else {
+		out << endl;
+	}
+
 	//Check for a string palette
 	string pal;
 	blk_ref str_pal = GetAttr("String Palette")->asLink();
@@ -4460,8 +4466,8 @@ string NiStringPalette::asString() const {
 	out << "String Palette:" << endl
 		<< "   0:  ";
 
-	for ( uint i = 0; i < pal.size(); ++i ) {
-		if ( pal[i] == '\0' ) {
+	for ( uint i = 0; i < pal.size() - 1; ++i ) {
+		if ( pal[i] == '\0') {
 			out << endl << "   " << i + 1 << ":  ";
 		} else {
 			out << pal[i];
