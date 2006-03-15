@@ -3705,19 +3705,20 @@ string NiControllerSequence::asString() const {
 	}
 
 	for (uint i = 0; i < children.size(); ++i ) {
-		out << "   Name:  "  << children[i].name << endl
-			<< "   Block:  " << children[i].block << endl
-			<< "   Unknown Link:  " << children[i].unk_link << endl
-			<< "   Name Offset:  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
-			<< "   Unknown Offset 1:  " << children[i].unk_offs1 << " (" << GetSubStr( pal, children[i].unk_offs1) << ")" << endl
-			<< "   Unknown Offset 2:  " << children[i].unk_offs2 << " (" << GetSubStr( pal, children[i].unk_offs2) << ")" << endl
-			<< "   Unknown Offset 3:  " << children[i].unk_offs3 << " (" << GetSubStr( pal, children[i].unk_offs3) << ")" << endl
-			<< "   Controller Offset:  " << children[i].controller_offset << " (" << GetSubStr( pal, children[i].controller_offset) << ")" << endl
-			<< "   Unknown Offset 4:  " << children[i].unk_offs4 << " (" << GetSubStr( pal, children[i].unk_offs4) << ")" << endl
-			<< "   Unknown Offset 5:  " << children[i].unk_offs5 << " (" << GetSubStr( pal, children[i].unk_offs5) << ")" << endl
-			<< "   Unknown Offset 6:  " << children[i].unk_offs6 << " (" << GetSubStr( pal, children[i].unk_offs6) << ")" << endl
-			<< "   Unknown Offset 7:  " << children[i].unk_offs7 << " (" << GetSubStr( pal, children[i].unk_offs7) << ")" << endl
-			<< "   Unknown Offset 8:  " << children[i].unk_offs8 << " (" << GetSubStr( pal, children[i].unk_offs8) << ")" << endl;
+		out << "   Kf Child " << i + 1 << ":" << endl
+			<< "      Name:  "  << children[i].name << endl
+			<< "      Block:  " << children[i].block << endl
+			<< "      Unknown Link:  " << children[i].unk_link << endl
+			<< "      Name Offset:  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
+			<< "      Unknown Offset 1:  " << children[i].unk_offs1 << " (" << GetSubStr( pal, children[i].unk_offs1) << ")" << endl
+			<< "      Unknown Offset 2:  " << children[i].unk_offs2 << " (" << GetSubStr( pal, children[i].unk_offs2) << ")" << endl
+			<< "      Unknown Offset 3:  " << children[i].unk_offs3 << " (" << GetSubStr( pal, children[i].unk_offs3) << ")" << endl
+			<< "      Controller Offset:  " << children[i].controller_offset << " (" << GetSubStr( pal, children[i].controller_offset) << ")" << endl
+			<< "      Unknown Offset 4:  " << children[i].unk_offs4 << " (" << GetSubStr( pal, children[i].unk_offs4) << ")" << endl
+			<< "      Unknown Offset 5:  " << children[i].unk_offs5 << " (" << GetSubStr( pal, children[i].unk_offs5) << ")" << endl
+			<< "      Unknown Offset 6:  " << children[i].unk_offs6 << " (" << GetSubStr( pal, children[i].unk_offs6) << ")" << endl
+			<< "      Unknown Offset 7:  " << children[i].unk_offs7 << " (" << GetSubStr( pal, children[i].unk_offs7) << ")" << endl
+			<< "      Unknown Offset 8:  " << children[i].unk_offs8 << " (" << GetSubStr( pal, children[i].unk_offs8) << ")" << endl;
 	}
 
 	out << "Unknown Float 1:  " << unk_float1 << endl
