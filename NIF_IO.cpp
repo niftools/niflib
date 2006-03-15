@@ -231,8 +231,10 @@ void ReadFVector4( fVector4& fvec, istream& in ){
 string ReadString( istream &in ) {
 	uint len = ReadUInt( in );
 	string out;
-	out.resize( len );
-	in.read( (char*)&out[0], len );
+	if ( len > 0 ) {
+		out.resize( len );
+		in.read( (char*)&out[0], len );
+	}
 	return out;
 }
 

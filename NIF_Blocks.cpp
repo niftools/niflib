@@ -4466,7 +4466,7 @@ string NiStringPalette::asString() const {
 	out << "String Palette:" << endl
 		<< "   0:  ";
 
-	for ( uint i = 0; i < pal.size() - 1; ++i ) {
+	if ( pal.size() > 0 ) for ( uint i = 0; i < pal.size() - 1; ++i ) {
 		if ( pal[i] == '\0') {
 			out << endl << "   " << i + 1 << ":  ";
 		} else {
