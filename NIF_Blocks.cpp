@@ -3598,15 +3598,15 @@ void NiControllerSequence::Read( istream& file, unsigned int version ) {
 			ReadUInt(file);
 			//Read offsets
 			NifStream( children[i].name_offset, file );
-			NifStream( children[i].unk_offs1, file );
-			NifStream( children[i].unk_offs2, file );
-			NifStream( children[i].unk_offs3, file );
+			NifStream( children[i].unk_short1, file );
+			NifStream( children[i].property_offset, file );
+			NifStream( children[i].unk_short2, file );
 			NifStream( children[i].controller_offset, file );
-			NifStream( children[i].unk_offs4, file );
-			NifStream( children[i].unk_offs5, file );
-			NifStream( children[i].unk_offs6, file );
-			NifStream( children[i].unk_offs7, file );
-			NifStream( children[i].unk_offs8, file );
+			NifStream( children[i].unk_short3, file );
+			NifStream( children[i].var1_offset, file );
+			NifStream( children[i].unk_short4, file );
+			NifStream( children[i].var2_offset, file );
+			NifStream( children[i].unk_short5, file );
 		}
 	}
 	
@@ -3656,15 +3656,15 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 			//Write duplicate palette index
 			GetAttr("String Palette")->Write( file, version );
 			NifStream( children[i].name_offset, file );
-			NifStream( children[i].unk_offs1, file );
-			NifStream( children[i].unk_offs2, file );
-			NifStream( children[i].unk_offs3, file );
+			NifStream( children[i].unk_short1, file );
+			NifStream( children[i].property_offset, file );
+			NifStream( children[i].unk_short2, file );
 			NifStream( children[i].controller_offset, file );
-			NifStream( children[i].unk_offs4, file );
-			NifStream( children[i].unk_offs5, file );
-			NifStream( children[i].unk_offs6, file );
-			NifStream( children[i].unk_offs7, file );
-			NifStream( children[i].unk_offs8, file );
+			NifStream( children[i].unk_short3, file );
+			NifStream( children[i].var1_offset, file );
+			NifStream( children[i].unk_short4, file );
+			NifStream( children[i].var2_offset, file );
+			NifStream( children[i].unk_short5, file );
 		}
 
 		//And from version 10.2.0.0 there is a lot more stuff down here as well
@@ -3715,16 +3715,16 @@ string NiControllerSequence::asString() const {
 			<< "      Name:  "  << children[i].name << endl
 			<< "      Block:  " << children[i].block << endl
 			<< "      Unknown Link:  " << children[i].unk_link << endl
-			<< "      Name Offset:  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
-			<< "      Unknown Offset 1:  " << children[i].unk_offs1 << " (" << GetSubStr( pal, children[i].unk_offs1) << ")" << endl
-			<< "      Unknown Offset 2:  " << children[i].unk_offs2 << " (" << GetSubStr( pal, children[i].unk_offs2) << ")" << endl
-			<< "      Unknown Offset 3:  " << children[i].unk_offs3 << " (" << GetSubStr( pal, children[i].unk_offs3) << ")" << endl
+			<< "      Name Offset      :  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
+			<< "      Unknown Short 1  :  " << children[i].unk_short1 << endl
+			<< "      Property Offset  :  " << children[i].property_offset << " (" << GetSubStr( pal, children[i].property_offset) << ")" << endl
+			<< "      Unknown Short 2  :  " << children[i].unk_short2 << endl
 			<< "      Controller Offset:  " << children[i].controller_offset << " (" << GetSubStr( pal, children[i].controller_offset) << ")" << endl
-			<< "      Unknown Offset 4:  " << children[i].unk_offs4 << " (" << GetSubStr( pal, children[i].unk_offs4) << ")" << endl
-			<< "      Unknown Offset 5:  " << children[i].unk_offs5 << " (" << GetSubStr( pal, children[i].unk_offs5) << ")" << endl
-			<< "      Unknown Offset 6:  " << children[i].unk_offs6 << " (" << GetSubStr( pal, children[i].unk_offs6) << ")" << endl
-			<< "      Unknown Offset 7:  " << children[i].unk_offs7 << " (" << GetSubStr( pal, children[i].unk_offs7) << ")" << endl
-			<< "      Unknown Offset 8:  " << children[i].unk_offs8 << " (" << GetSubStr( pal, children[i].unk_offs8) << ")" << endl;
+			<< "      Unknown Short 3  :  " << children[i].unk_short3 << endl
+			<< "      Variable 1 Offset:  " << children[i].var1_offset << " (" << GetSubStr( pal, children[i].var1_offset) << ")" << endl
+			<< "      Unknown Short 4  :  " << children[i].unk_short4 << endl
+			<< "      Variable 2 Offset:  " << children[i].var2_offset << " (" << GetSubStr( pal, children[i].var2_offset) << ")" << endl
+			<< "      Unknown Short 5  :  " << children[i].unk_short5 << endl;
 	}
 
 	out << "Unknown Float 1:  " << unk_float1 << endl

@@ -2162,13 +2162,16 @@ private:
 	struct KfChild {
 		blk_ref block;
 		string name;
-		short name_offset;
-		short controller_offset;
 		blk_ref unk_link;
-		short unk_offs1, unk_offs2, unk_offs3, unk_offs4, unk_offs5, unk_offs6, unk_offs7, unk_offs8;
-		KfChild() : block(), name(), name_offset(-1), controller_offset(-1), unk_link(),
-		unk_offs1(-1), unk_offs2(-1), unk_offs3(-1), unk_offs4(-1),
-		unk_offs5(-1), unk_offs6(-1), unk_offs7(-1), unk_offs8(-1) {};
+		short name_offset;
+		short property_offset;
+		short controller_offset;
+		short var1_offset;
+		short var2_offset;
+		short unk_short1, unk_short2, unk_short3, unk_short4, unk_short5;
+		KfChild() : block(), name(), unk_link(),
+		name_offset(-1), controller_offset(-1), property_offset(-1), var1_offset(-1), var2_offset(-1),
+		unk_short1(0), unk_short2(0), unk_short3(0), unk_short4(0), unk_short5(0) {};
 	};
 	string txt_key_name;
 	blk_ref txt_key_blk;
