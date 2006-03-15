@@ -230,11 +230,9 @@ void ReadFVector4( fVector4& fvec, istream& in ){
 
 string ReadString( istream &in ) {
 	uint len = ReadUInt( in );
-	char * str = new char[len + 1];
-	in.read( str, len );
-	str[len] = 0;
-	string out = str;
-	delete [] str;
+	string out;
+	out.resize( len );
+	in.read( (char*)&out[0], len );
 	return out;
 }
 

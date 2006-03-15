@@ -2454,9 +2454,14 @@ string NiBSplineData::asString() const {
 	out << "Unknown Int:  " << unkInt << endl
 		<< "Unknown Shorts?:  " << uint(unkShorts.size()) << endl;
 
-	for ( uint i = 0; i < unkShorts.size(); ++i ) {
-		out << "   " << i + 1 << ":  " << unkShorts[i] << endl;
+	if (verbose) {
+		for ( uint i = 0; i < unkShorts.size(); ++i ) {
+			out << "   " << i + 1 << ":  " << unkShorts[i] << endl;
+		}
+	} else {
+		out << "   <<<Data Not Shown>>>" << endl;
 	}
+	
 
 	return out.str();
 }
@@ -3695,65 +3700,25 @@ string NiControllerSequence::asString() const {
 	//Check for a string palette
 	string pal;
 	blk_ref str_pal = GetAttr("String Palette")->asLink();
-	if ( str_pal.is_null() != true )
+	if ( str_pal.is_fixed() == true && str_pal.is_null() == false ) {
 		pal = str_pal->GetAttr("Palette")->asString();
+	}
 
 	for (uint i = 0; i < children.size(); ++i ) {
 		out << "   Name:  "  << children[i].name << endl
 			<< "   Block:  " << children[i].block << endl
-			<< "   Unknown Link:  " << children[i].unk_link << endl;
-		if ( str_pal.is_null() != true ) {
-			out << "   Name Offset:  " << children[i].name_offset;
-			if ( children[i].name_offset != -1 )
-				out <<" (" << pal.substr(children[i].name_offset) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 1:  " << children[i].unk_offs1;
-			if ( children[i].unk_offs1 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs1) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 2:  " << children[i].unk_offs2;
-			if ( children[i].unk_offs2 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs2) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 3:  " << children[i].unk_offs3;
-			if ( children[i].unk_offs3 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs3) << ")" << endl;
-			else
-				out << endl;
-			out << "   Controller Offset:  " << children[i].controller_offset;
-			if ( children[i].controller_offset != -1 )
-				out << " (" << pal.substr(children[i].controller_offset) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 4:  " << children[i].unk_offs4;
-			if ( children[i].unk_offs4 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs4) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 5:  " << children[i].unk_offs5;
-			if ( children[i].unk_offs5 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs5) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 6:  " << children[i].unk_offs6;
-			if ( children[i].unk_offs6 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs6) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 7:  " << children[i].unk_offs7;
-			if ( children[i].unk_offs7 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs7) << ")" << endl;
-			else
-				out << endl;
-			out << "   Unknown Offset 8:  " << children[i].unk_offs8;
-			if ( children[i].unk_offs8 != -1 )
-				out << " (" << pal.substr(children[i].unk_offs8) << ")" << endl;
-			else
-				out << endl;
-		}
+			<< "   Unknown Link:  " << children[i].unk_link << endl
+			<< "   Name Offset:  " << children[i].name_offset
+			<< "   Name Offset:  " << children[i].name_offset <<" (" << GetSubStr( pal, children[i].name_offset) << ")" << endl
+			<< "   Unknown Offset 1:  " << children[i].unk_offs1 << " (" << GetSubStr( pal, children[i].unk_offs1) << ")" << endl
+			<< "   Unknown Offset 2:  " << children[i].unk_offs2 << " (" << GetSubStr( pal, children[i].unk_offs2) << ")" << endl
+			<< "   Unknown Offset 3:  " << children[i].unk_offs3 << " (" << GetSubStr( pal, children[i].unk_offs3) << ")" << endl
+			<< "   Controller Offset:  " << children[i].controller_offset << " (" << GetSubStr( pal, children[i].controller_offset) << ")" << endl
+			<< "   Unknown Offset 4:  " << children[i].unk_offs4 << " (" << GetSubStr( pal, children[i].unk_offs4) << ")" << endl
+			<< "   Unknown Offset 5:  " << children[i].unk_offs5 << " (" << GetSubStr( pal, children[i].unk_offs5) << ")" << endl
+			<< "   Unknown Offset 6:  " << children[i].unk_offs6 << " (" << GetSubStr( pal, children[i].unk_offs6) << ")" << endl
+			<< "   Unknown Offset 7:  " << children[i].unk_offs7 << " (" << GetSubStr( pal, children[i].unk_offs7) << ")" << endl
+			<< "   Unknown Offset 8:  " << children[i].unk_offs8 << " (" << GetSubStr( pal, children[i].unk_offs8) << ")" << endl;
 	}
 
 	out << "Unknown Float 1:  " << unk_float1 << endl
@@ -3765,27 +3730,50 @@ string NiControllerSequence::asString() const {
 	return out.str();
 }
 
+string NiControllerSequence::GetSubStr( const string & pal, short offset ) const {
+	string out;
+	
+	// -1 is a null offset
+	if ( offset == -1 ) {
+		return out;
+	}
+
+	for ( uint i = offset; i < pal.size(); ++i ) {
+		if ( pal[i] == '\0' ) {
+			break;
+		}
+		out.push_back( pal[i] );
+	}
+
+	return out;
+}
+
 void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
 	ABlock::FixLinks( blocks );
 	
 	//Fix text key lnk
-	txt_key_blk = blocks[txt_key_blk.get_index()];
+	if ( txt_key_blk.is_null() == false ) {
+		txt_key_blk = blocks[txt_key_blk.get_index()];
 	
-	//Add this block as a child
-	AddChild( txt_key_blk.get_block() );
+		//Add this block as a child
+		AddChild( txt_key_blk.get_block() );
+	}
 
 	for (uint i = 0; i < children.size(); ++i ) {
-		//Fix links for this child
-		children[i].block = blocks[children[i].block.get_index()];
-		if ( children[i].unk_link.get_index() != -1 )
-			children[i].unk_link = blocks[children[i].unk_link.get_index()];
-		else
-			children[i].unk_link = blk_ref();
+		if ( children[i].unk_link.is_null() == false ) {
+			//Fix links for this child
+			children[i].block = blocks[children[i].block.get_index()];
 
-		//Add these blocks as children
-		AddChild( children[i].block.get_block() );
-		if ( children[i].unk_link.get_index() != -1 )
+			//Add this block as a child
+			AddChild( children[i].block.get_block() );
+		}
+		
+		if ( children[i].unk_link.is_null() == false ) {
+			children[i].unk_link = blocks[children[i].unk_link.get_index()];
+
+			//Add this block as a child
 			AddChild( children[i].unk_link.get_block() );
+		}
 	}
 }
 
@@ -4461,13 +4449,25 @@ string NiStringPalette::asString() const {
 	out.setf(ios::fixed, ios::floatfield);
 	out << setprecision(1);
 
-	string pal_str = GetAttr("Palette")->asString();
+	string pal = GetAttr("Palette")->asString();
 
-	//Replace 0's with newlines
-	replace( pal_str.begin(), pal_str.end(), 0x00, 0x0A );
+	////Replace 0's with newlines
+	//replace( pal.begin(), pal.end(), 0x00, 0x0A );
 
-	out << "String Palette:  " << endl
-		<< pal_str << endl;
+	//out << "String Palette:  " << endl
+	//	<< pal << endl;
+
+	out << "String Palette:" << endl
+		<< "   0:  ";
+
+	for ( uint i = 0; i < pal.size(); ++i ) {
+		if ( pal[i] == '\0' ) {
+			out << endl << "   " << i + 1 << ":  ";
+		} else {
+			out << pal[i];
+		}
+	}
+	out << endl;
 
 	return out.str();
 }

@@ -247,9 +247,9 @@ vector<blk_ref> ReadNifList( istream & in ) {
 	for (uint i = 0; i < numBlocks; i++) {
 
 		//Check for EOF
-		if (in.eof() ) {
-			throw runtime_error("End of file reached prematurely.  This NIF may be corrupt or improperly supported.");
-		}
+		//if (in.eof() ) {
+		//	throw runtime_error("End of file reached prematurely.  This NIF may be corrupt or improperly supported.");
+		//}
 	
 		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
 		if ( version >= 0x05000001 ) {

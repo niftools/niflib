@@ -2157,6 +2157,7 @@ public:
 	void AddKfChild( string new_name, blk_ref new_link, string controller_type);
 	void ClearKfChildren();
 private:
+	string GetSubStr( const string & pal, short offset ) const;
 
 	struct KfChild {
 		blk_ref block;
