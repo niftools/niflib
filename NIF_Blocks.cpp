@@ -3766,7 +3766,7 @@ void NiControllerSequence::FixLinks( const vector<blk_ref> & blocks ) {
 	}
 
 	for (uint i = 0; i < children.size(); ++i ) {
-		if ( children[i].unk_link.is_null() == false ) {
+		if ( children[i].block.is_null() == false ) {
 			//Fix links for this child
 			children[i].block = blocks[children[i].block.get_index()];
 
