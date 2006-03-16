@@ -300,6 +300,39 @@ void ABlock::DecCrossRef( IBlock * block ) {
 	_cross_refs.remove(block);
 }
 
+blk_ref ABlock::Clone( unsigned int version ) {
+	//Create a string stream to temporarily hold the state-save of this block
+	stringstream tmp;
+
+	//Get a list of all the links in this block
+	list<blk_ref> link_list = GetLinks();
+
+	//Put the link into a vector and reset the block number of each of these blocks to correspond to its position in the vector
+	int i = 0;
+	vector<blk_ref> link_vec( link_list.size() );
+	list<blk_ref>::iterator it;
+	for ( it = link_list.begin(); it != link_list.end(); ++it ) {
+		((ABlock*)it->get_block())->SetBlockNum(i);
+		link_vec[i] = *it;
+		++i;
+	}
+
+	//Create a new block of the same type
+	blk_ref clone = CreateBlock( GetBlockType() );
+
+	//Write this block's data to the stream
+	Write( tmp, VER_20_0_0_4 );
+
+	//Read the data back from the stream
+	ABlock * clone_ab = (ABlock*)clone.get_block();
+	clone_ab->Read( tmp, VER_20_0_0_4 );
+
+	//Fix the links of the clone using the original link list
+	clone_ab->FixLinks( link_vec );	
+
+	//return new block
+	return clone;
+}
 
 list<blk_ref> ABlock::GetLinks() const {
 	list<blk_ref> links;

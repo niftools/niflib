@@ -1343,6 +1343,13 @@ public:
 	IBlock( ){}
 	virtual ~IBlock() {}
 
+	/*! Returns A new block that contains all the same data that this block does, but occupies a different part of memory.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
+	 * \param version The version number to use in the memory streaming operation.  Default is the highest version availiable.
+	 * \return A cloned copy of this block as a new block.
+	 * \sa CreateBlock
+	 */
+	virtual blk_ref Clone( unsigned int version = 0xFFFFFFFF ) = 0;
+
 	/*! Returns the last known block number.  Block numbers are set automatically when a Nif file is first read and again each time a tree is written.
 	 * \return The last known block number.  Will not update until the block is written to a file.
 	 * \sa WriteNifTree, blk_ref::get_index
@@ -2445,8 +2452,25 @@ class IControllerSequence {
 public:
 	IControllerSequence() {}
 	virtual ~IControllerSequence () {}
+
+	/*! Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
+	 * \param new_name The name of the NiTextKeyExtraData block to use.
+	 * \param new_link The block reference of the NiTextKeyExtraData block to use.
+	 * \sa ITextKeyExtraData
+	 */
 	virtual void SetTextKey( string new_name, blk_ref new_link ) = 0;
+
+	/*! Sets the name, block reference, and controller type to use as a new child to this Kf root node.  The controller type is unnecessary before version 10.2.0.0.  From that version on, these children must be interpolators.  Before that version they will be keyframe controllers.
+	 * \param new_name The name to re-link this Kf file child to when it is merged with a Nif file.
+	 * \param new_link The block reference of the new Kf file child.
+	 * \param controller_type The original controller type that this Kf file child was connected to.  Only applies to versions which use interpolators.
+	 * \sa IControllerSequence::ClearKfChildren
+	 */
 	virtual void AddKfChild( string new_name, blk_ref new_link, string controller_type = "" ) = 0;
+	
+	/*! Removes all Kf file children from this Kf file root block.
+	 * \sa IControllerSequence::AddKfChild
+	 */
 	virtual void ClearKfChildren() = 0;
 };
 

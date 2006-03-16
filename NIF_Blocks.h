@@ -94,6 +94,7 @@ class ABlock : public IBlock/*, public IBlockInternal*/ {
 public:
 	ABlock();
 	~ABlock();
+	blk_ref Clone( unsigned int version = 0xFFFFFFFF );
 	void AddAttr( AttrType type, string const & name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
 	attr_ref GetAttr(string const & attr_name) const;
 	vector<attr_ref> GetAttrs() const;
