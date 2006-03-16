@@ -307,7 +307,7 @@ blk_ref ABlock::Clone( unsigned int version ) {
 	cout << "Getting a list of all the links in this block" << endl;
 
 	//Get a list of all the links in this block
-	list<blk_ref> link_list = GetLinks();
+	list<blk_ref> link_list = this->GetLinks();
 
 	cout << "Putting the links into a vector & resetting block numbers" << endl;
 
