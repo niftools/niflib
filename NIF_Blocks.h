@@ -105,7 +105,7 @@ public:
 
 	//Links
 	blk_ref GetParent() const;
-	list<blk_ref> GetLinks() const;
+	virtual list<blk_ref> GetLinks() const;
 
 	//Reference Counting
 	void AddRef();

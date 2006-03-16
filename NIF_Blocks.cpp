@@ -304,8 +304,12 @@ blk_ref ABlock::Clone( unsigned int version ) {
 	//Create a string stream to temporarily hold the state-save of this block
 	stringstream tmp;
 
+	cout << "Getting a list of all the links in this block" << endl;
+
 	//Get a list of all the links in this block
 	list<blk_ref> link_list = GetLinks();
+
+	cout << "Putting the links into a vector & resetting block numbers" << endl;
 
 	//Put the link into a vector and reset the block number of each of these blocks to correspond to its position in the vector
 	int i = 0;
@@ -317,18 +321,28 @@ blk_ref ABlock::Clone( unsigned int version ) {
 		++i;
 	}
 
+	cout << "Creating new block of same type" << endl;
+
 	//Create a new block of the same type
 	blk_ref clone = CreateBlock( GetBlockType() );
 
+	cout << "Writing this block's data to the stream" << endl;
+
 	//Write this block's data to the stream
-	Write( tmp, VER_20_0_0_4 );
+	Write( tmp, version );
+
+	cout << "Reading the data back from the stream" << endl;
 
 	//Read the data back from the stream
 	ABlock * clone_ab = (ABlock*)clone.get_block();
-	clone_ab->Read( tmp, VER_20_0_0_4 );
+	clone_ab->Read( tmp, version );
+
+	cout << "Fixing links of clone" << endl;
 
 	//Fix the links of the clone using the original link list
 	clone_ab->FixLinks( link_vec );	
+
+	cout << "Done Cloning" << endl;
 
 	//return new block
 	return clone;
@@ -3646,7 +3660,10 @@ void NiControllerSequence::Read( istream& file, unsigned int version ) {
 	//And from version 10.2.0.0 there is a lot more stuff down here as well
 	if (version >= VER_10_2_0_0 ) {
 		NifStream( unk_float1, file );
-		txt_key_blk.set_index( ReadUInt( file ) ); //Text key link is down here now and has no name
+
+		//Text key link is down here now and has no name
+		txt_key_blk.set_index( ReadUInt( file ) ); 
+
 		for (int i = 0; i < 4; ++i ) {
 			NifStream( unk_4_floats[i], file );
 		}
@@ -3666,10 +3683,10 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 	//Up to version 10.1.0.0 the text key block is up here and named
 	if ( version <= VER_10_1_0_0 ) {
 		NifStream( txt_key_name, file );
-		WriteUInt( uint(txt_key_blk.get_index()), file );
+		WriteUInt( txt_key_blk.get_index(), file );
 	}
 
-	//Write the ControllerLink array
+	//Read the ControllerLink array
 	WriteUInt( uint(children.size()), file );
 
 	//After version 10.2.0.0 there is an unknown int here
@@ -3682,12 +3699,14 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 		if ( version <= VER_10_1_0_0 ) {
 			NifStream( children[i].name, file );
 		}
-		WriteUInt( uint(children[i].block.get_index()), file );
+		WriteUInt( children[i].block.get_index(), file );
 		//From version 10.2.0.0 there is a lot more stuff here
 		if ( version >= VER_10_2_0_0 ) {
-			WriteUInt( uint(children[i].unk_link.get_index()), file );
-			//Write duplicate palette index
+			WriteUInt( children[i].unk_link.get_index(), file );
+			//Write duplicate String Palette index
 			GetAttr("String Palette")->Write( file, version );
+
+			//Write offsets
 			NifStream( children[i].name_offset, file );
 			NifStream( children[i].unk_short1, file );
 			NifStream( children[i].property_offset, file );
@@ -3699,23 +3718,25 @@ void NiControllerSequence::Write( ostream& file, unsigned int version ) const {
 			NifStream( children[i].var2_offset, file );
 			NifStream( children[i].unk_short5, file );
 		}
+	}
+	
+	//And from version 10.2.0.0 there is a lot more stuff down here as well
+	if (version >= VER_10_2_0_0 ) {
+		NifStream( unk_float1, file );
 
-		//And from version 10.2.0.0 there is a lot more stuff down here as well
-		if (version >= VER_10_2_0_0 ) {
-			NifStream( unk_float1, file );
-			WriteUInt( uint(txt_key_blk.get_index()), file ); //Text key link is down here now and has no name
-			for (int i = 0; i < 4; ++i ) {
-				NifStream( unk_4_floats[i], file );
-			}
-			//This does not exist after version 10.2.0.0
-			if ( version < VER_20_0_0_4 ) {
-				NifStream( unk_float2, file );
-			}
-			NifStream( unk_int2, file );
-			NifStream( unk_string, file );
+		//Text key link is down here now and has no name
+		WriteUInt( txt_key_blk.get_index(), file );
 
-			GetAttr("String Palette")->Write( file, version );
+		for (int i = 0; i < 4; ++i ) {
+			NifStream( unk_4_floats[i], file );
 		}
+		//This does not exist after version 10.2.0.0
+		if ( version < VER_20_0_0_4 ) {
+			NifStream( unk_float2, file );
+		}
+		NifStream( unk_int2, file );
+		NifStream( unk_string, file );
+		GetAttr("String Palette")->Write( file, version );
 	}
 }
 
@@ -3820,16 +3841,19 @@ list<blk_ref> NiControllerSequence::GetLinks() const {
 	list<blk_ref> links = ABlock::GetLinks();
 
 	//add link for text key block
-	links.push_back( txt_key_blk );
+	if ( txt_key_blk.is_null() == false ) {
+		links.push_back( txt_key_blk );
+	}
 
 	//Add child links
 	for (uint i = 0; i < children.size(); ++i ) {
-		links.push_back( children[i].block );
-		links.push_back( children[i].unk_link );
+		if ( children[i].block.is_null() == false ) {
+			links.push_back( children[i].block );
+		}
+		if ( children[i].unk_link.is_null() == false ) {
+			links.push_back( children[i].unk_link );
+		}
 	}
-
-	//Remove NULL links
-	links.remove( blk_ref(-1) );
 
 	return links;
 }
