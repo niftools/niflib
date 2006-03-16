@@ -226,7 +226,7 @@ enum PixelFormat {
  * Reads the header of the given file by file name and returns the NIF version. Call this
  * function prior to calling ReadNifList or ReadNifTree, if you need to make sure that the NIF file is supported.
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
- * \return The NIF version of the file.
+ * \return The NIF version of the file, in hexadecimal format. If the file is not a NIF file, it returns VER_INVALID. If it is a NIF file, but its version is not supported by the library, it returns VER_UNSUPPORTED.
  * 
  * <b>Example:</b> 
  * \code
@@ -3382,7 +3382,7 @@ As long as there is a blk_ref somewhere pointing to a particular block, it will 
 
 \section rw_files Reading and Writing NIF Files
 
-There are two ways to read in a NIF file – as a list of blocks in the order they appear in the file and as the root block of a tree arranged correctly.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all blocks.  Un-supported blocks may not be included in the tree representation if no other blocks reference them.  So you’re going to want to call the \ref ReadNifTree function.
+To check whether NIF file has a valid header, and to make sure that its version is supported, call the \ref CheckNifHeader function. There are two ways to read in a NIF file – as a list of blocks in the order they appear in the file and as the root block of a tree arranged correctly.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all blocks.  Un-supported blocks may not be included in the tree representation if no other blocks reference them.  So you’re going to want to call the \ref ReadNifTree function.
 
 That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one block in memory – the root block of the tree.  You can pass this same block to the \ref WriteNifTree function to create a new NIF file from the representation in memory.  WARNING:  Some features of the NIF format are still un-supported by Niflib, therefore in some cases the exported NIF may either be different from the original, or completely unusable.  DO NOT OVERWRITE THE ORIGINAL NIF FILE.
 
