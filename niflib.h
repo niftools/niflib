@@ -3409,7 +3409,7 @@ struct Kfm {
 	 * unsigned int ver = kfm.Read( "test_in.kfm" );
 	 * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
 	 * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
-	 * else cout << "Describes keyframes for NIF file " << kfm.nif_file_name << "." << endl;
+	 * else cout << "Describes keyframes for NIF file " << kfm.nif_filename << "." << endl;
 	 *
 	 * \endcode
 	 * 
@@ -3422,11 +3422,43 @@ struct Kfm {
 	 * elif ( ver == VER_INVALID ):
 	 *     print "invalid"
 	 * else:
-	 *      print "Describes keyframes for NIF file %s."%kfm.nif_file_name
+	 *     print "Describes keyframes for NIF file %s."%kfm.nif_filename
 	 * \endcode
 	 */
 	unsigned int Read( string const & file_name ); // returns Kfm version
 	unsigned int Read( istream & in ); // returns Kfm version
+
+	/*!
+	 * Reads the NIF file and all KF files referred to in this KFM, and returns the root block of the resulting NIF tree.
+	 * \param path The file path; usually, this should be the directory where the KFM file was read from.
+	 * \return The root block of the NIF tree.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * Kfm kfm;
+	 * unsigned int ver = kfm.Read( "test_in.kfm" );
+	 * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
+	 * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
+	 * else {
+	 *   blk_ref root = kfm.MergeActions(".");
+	 *   cout << root << endl;
+	 * };
+	 *
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * kfm = Kfm()
+	 * ver = kfm.Read( "test_in.kfm" )
+	 * if ( ver == VER_UNSUPPORTED ):
+	 *     print "unsupported"
+	 * elif ( ver == VER_INVALID ):
+	 *     print "invalid"
+	 * else:
+	 *     print kfm.MergeActions(".")
+	 * \endcode
+	 */
+	blk_ref Kfm::MergeActions( string const & path );
 	//void Write( string const & file_name, unsigned int version );
 	//void Write( ostream & out, unsigned int version );
 };

@@ -1088,6 +1088,20 @@ unsigned int Kfm::Read( istream & in ) {
 		unk_int3 = ReadUInt(in);
 		for ( vector<KfmAction>::iterator it = actions.begin(); it != actions.end(); it++ ) it->Read(in, version);
 	};
+
+	// Retrieve action names
+	if ( version >= VER_KFM_2_0_0_0b ) {
+		string model_name = nif_filename.substr(0, nif_filename.length()-4); // strip .nif extension
+		for ( vector<KfmAction>::iterator it = actions.begin(); it != actions.end(); it++ ) {
+			string action_name = it->action_filename.substr(0, it->action_filename.length()-3); // strip .kf extension
+			if (action_name.find( model_name + "_" ) == 0)
+				action_name = action_name.substr(model_name.length() + 1, string::npos);
+			if (action_name.find( master + "_" ) == 0)
+				action_name = action_name.substr(master.length() + 1, string::npos);
+			it->action_name = action_name;
+		};
+	};
+
 	return version;
 };
 
@@ -1106,3 +1120,27 @@ void Kfm::Write( ostream & out, uint version ) {
 	};
 };
 */
+
+blk_ref Kfm::MergeActions( string const & path ) {
+	// Read NIF file
+	cout << path + '\\' + nif_filename << endl;
+	blk_ref nif = ReadNifTree( path + '\\' + nif_filename);
+	
+	// Read Kf files
+	vector<blk_ref> kf;
+	for ( vector<KfmAction>::iterator it = actions.begin(); it != actions.end(); it++ ) {
+		string action_filename = path + '\\' + it->action_filename;
+		// Check if the file exists.
+		// Probably we should check some other field in the Kfm file to determine this...
+		bool exists = false;
+		fstream fin;
+		fin.open(action_filename.c_str(), ios::in);
+		if( fin.is_open() ) exists = true;
+		fin.close();
+		// Import it, if it exists.
+		if (exists) kf.push_back( ReadNifTree(action_filename) );
+	};
+	
+	// TODO: merge everything into the nif file
+	return nif;
+}
