@@ -231,11 +231,25 @@ enum PixelFormat {
  * <b>Example:</b> 
  * \code
  * unsigned int ver = CheckNifHeader("test_in.nif");
+ * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
+ * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
+ * else {
+ *   vector<blk_ref> blocks = ReadNifList( "test_in.nif" );
+ *   cout << blocks[0] << endl;
+ * };
+ *
  * \endcode
  * 
  * <b>In Python:</b>
  * \code
  * ver = CheckNifHeader("test_in.nif")
+ * if ( ver == VER_UNSUPPORTED ):
+ *     print "unsupported"
+ * elif ( ver == VER_INVALID ):
+ *     print "invalid"
+ * else:
+ *      blocks = ReadNifList( "test_in.nif" )
+ *      print blocks[0]
  * \endcode
  */
 unsigned int CheckNifHeader( string const & file_name );
@@ -3329,6 +3343,92 @@ struct TexDesc {
 	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
 	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
 	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
+};
+
+//--KFM File Format--//
+
+//KFM Versions
+const unsigned int VER_KFM_1_0 = 0x01000000; /*!< Kfm Version 1.0 */ 
+const unsigned int VER_KFM_1_2_4b = 0x01020400; /*!< Kfm Version 1.2.4b */ 
+const unsigned int VER_KFM_2_0_0_0b = 0x02000000; /*!< Kfm Version 2.0.0.0b */ 
+
+//KFM Data Structure
+
+struct KfmEventString {
+	unsigned int unk_int;
+	string event;
+
+	KfmEventString() : unk_int(0), event() {};
+	void Read( istream & in, unsigned int version );
+	void Write( ostream & out, unsigned int version );
+};
+
+struct KfmEvent {
+	unsigned int id;
+	unsigned int type;
+	float unk_float;
+	vector<KfmEventString> event_strings;
+	unsigned int unk_int3;
+	
+	KfmEvent() : id(0), type(0), unk_float(0.5f), event_strings(), unk_int3(0) {};
+	void Read( istream & in, unsigned int version );
+	//void Write( ostream & out, unsigned int version );
+};
+
+struct KfmAction {
+	string action_name;
+	string action_filename;
+	unsigned int unk_int1;
+	vector<KfmEvent> events;
+	unsigned int unk_int2;
+
+	void Read( istream & in, unsigned int version );
+	//void Write( ostream & out, unsigned int version );
+};
+
+struct Kfm {
+	unsigned int version;
+	unsigned char unk_byte;
+	string nif_file_name;
+	string master;
+	unsigned int unk_int1;
+	unsigned int unk_int2;
+	float unk_float1;
+	float unk_float2;
+	unsigned int unk_int3;
+	vector<KfmAction> actions;
+	
+	/*!
+	 * Reads the given file and returns the KFM version.
+	 * \param file_name The input file name.
+	 * \return The KFM version of the file, in hexadecimal format. If the file is not a KFM file, it returns VER_INVALID. If it is a KFM file, but its version is not supported by the library, it returns VER_UNSUPPORTED.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * Kfm kfm;
+	 * unsigned int ver = kfm.Read( "test_in.kfm" );
+	 * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
+	 * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
+	 * else cout << "Describes keyframes for NIF file " << kfm.nif_file_name << "." << endl;
+	 *
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * kfm = Kfm()
+	 * ver = kfm.Read( "test_in.kfm" )
+	 * if ( ver == VER_UNSUPPORTED ):
+	 *     print "unsupported"
+	 * elif ( ver == VER_INVALID ):
+	 *     print "invalid"
+	 * else:
+	 *      print "Describes keyframes for NIF file %s."%kfm.nif_file_name
+	 * \endcode
+	 */
+	unsigned int Read( string const & file_name ); // returns Kfm version
+	unsigned int Read( istream & in ); // returns Kfm version
+	//void Write( string const & file_name, unsigned int version );
+	//void Write( ostream & out, unsigned int version );
 };
 
 //--USER GUIDE DOCUMENTATION--//
