@@ -314,6 +314,14 @@ blk_ref ReadNifTree( istream & in );
  */
 void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
+
+/*!
+ * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.
+ * \param root1 The root block of the first Nif tree to merge.
+ * \param root2 The root block of the second Nif tree to merge.
+ */
+void MergeNifTrees( blk_ref root1, blk_ref root2 );
+
 //// Returns list of all blocks in the tree rooted by root block.
 //list<blk_ref> GetNifTree( blk_ref const & root_block );
 

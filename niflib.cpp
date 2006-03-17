@@ -693,6 +693,101 @@ unsigned int BlocksInMemory() {
 	return blocks_in_memory;
 }
 
+void MapParentNodeNames( map<string,blk_ref> & name_map, blk_ref par ) {
+	//Check if this block is a scene graph node
+	if ( par->QueryInterface( ID_NODE ) == false ) {
+		throw runtime_error( "Only trees that have a node as the root can be merged." );
+	}
+
+	//Check if this is a parent node
+	attr_ref children = par->GetAttr("Children");
+	if ( children.is_null() == true ) {
+		//We are only interested in parent nodes
+		return;
+	}
+
+	//Add the par node to the map, and then call this function for each of its children
+	name_map[par->GetAttr("Name")->asString()] = par;
+
+	list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
+	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+		if ( it->is_null() == false ) {
+			MapParentNodeNames( name_map, *it );
+		};
+	};
+}
+
+//This function will merge two scene graphs by attatching new objects to the correct position
+//on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
+//existing nodes by changing their data or attatched properties
+void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_ref par ) {
+	//Check if this block is a scene graph node
+	if ( par->QueryInterface( ID_NODE ) == false ) {
+		throw runtime_error( "Only trees that have a node as the root can be merged." );
+	}
+	
+	//Check if this block's name exists in the block map
+	string name = par->GetAttr("Name")->asString();
+
+	if ( name_map.find(name) != name_map.end() ) {
+		//This block already exists in the original file, so continue on to its children
+
+		list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
+		for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+			if ( it->is_null() == false ) {
+				MergeSceneGraph( name_map, root, *it );
+			};
+		};
+		return;
+	}
+
+	//This block has a new name and either it has no parent or its parent has a name that is
+	// in the list.  Attatch it to the block with the same name as its parent
+	//all child blocks will follow along.
+	blk_ref par_par = par->GetParent();
+
+	if ( par_par.is_null() == true ) {
+		//This block has a new name and no parents.  That means it is the root block
+		//of a disimilar Nif file.
+		attr_ref par_children = par->GetAttr("Children");
+		
+		//Get the current root child list
+		attr_ref root_children = root->GetAttr("Children");
+			
+		if ( par_children.is_null() == true ) {
+			//This is not a ParentNode class, so simply add it as a new child of the
+			//target root node
+			root_children->AddLink( par );
+		} else {
+			//This is a ParentNode class, so merge its child list with that of the root
+			root_children->AddLinks( par->GetAttr("Children")->asLinkList() );
+		}
+	} else {
+		//This block has a new name and has a parent with a name that already exists.
+		//Attatch it to the block in the target tree that matches the name of its
+		//parent
+
+		//Get the block to attatch to
+		blk_ref attatch = name_map[par_par->GetAttr("Name")->asString()];
+
+		//Add this block as new child
+		attatch->GetAttr("Children")->AddLink( par );
+	}
+}
+
+void MergeNifTrees( blk_ref target, blk_ref right ) {
+	//For now assume that both are normal Nif trees just to verify that it works
+
+	//Create a list of names in the target
+	map<string,blk_ref> name_map;
+	MapParentNodeNames( name_map, target );
+
+	//Use the name map to merge the Scene Graphs
+	MergeSceneGraph( name_map, target, right );
+}
+
+
+
 //--Attribute Reference Functions--//
 
 attr_ref::operator blk_ref() const { return _attr->asLink(); }
