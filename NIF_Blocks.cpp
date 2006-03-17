@@ -300,6 +300,22 @@ void ABlock::DecCrossRef( IBlock * block ) {
 	_cross_refs.remove(block);
 }
 
+void ABlock::ReassignCrossRefs( const map<string,blk_ref> & name_map ) {
+	//This branch has been moved as part of a merge, so the cross references need to be moved to
+	//Point to the new blocks with the same names.  As far as I know, cross references always point
+	//To ParentNode blocks.
+
+	list<IBlock*>::iterator it;
+	for ( it = _cross_refs.begin(); it != _cross_refs.end(); ++it ) {
+		//Remove this cross reference from its current target
+		((ABlock*)*it)->DecCrossRef( this );
+
+		//Get name of old target
+
+
+	}
+}
+
 blk_ref ABlock::Clone( unsigned int version ) {
 	//Create a string stream to temporarily hold the state-save of this block
 	stringstream tmp;

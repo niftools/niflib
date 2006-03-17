@@ -322,6 +322,7 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
  */
 void MergeNifTrees( blk_ref root1, blk_ref root2 );
 
+
 //// Returns list of all blocks in the tree rooted by root block.
 //list<blk_ref> GetNifTree( blk_ref const & root_block );
 

@@ -767,6 +767,9 @@ void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_
 		//Attatch it to the block in the target tree that matches the name of its
 		//parent
 
+		//Remove this block from its old parent
+		par_par->GetAttr("Children")->RemoveLinks( par );
+
 		//Get the block to attatch to
 		blk_ref attatch = name_map[par_par->GetAttr("Name")->asString()];
 

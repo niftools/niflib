@@ -143,6 +143,7 @@ public:
 
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
+	void ReassignCrossRefs( const map<string,blk_ref> & name_map );
 
 	virtual void Read( istream& in, unsigned int version );
 	virtual void Write( ostream& out, unsigned int version ) const;
