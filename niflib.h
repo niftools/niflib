@@ -3389,7 +3389,7 @@ struct KfmAction {
 struct Kfm {
 	unsigned int version;
 	unsigned char unk_byte;
-	string nif_file_name;
+	string nif_filename;
 	string master;
 	unsigned int unk_int1;
 	unsigned int unk_int2;

@@ -1078,7 +1078,7 @@ unsigned int Kfm::Read( istream & in ) {
 	} else {
 		if (version >= VER_KFM_2_0_0_0b) unk_byte = ReadByte(in);
 		else unk_byte = 1;
-		nif_file_name = ReadString(in);
+		nif_filename = ReadString(in);
 		master = ReadString(in);
 		unk_int1 = ReadUInt(in);
 		unk_int2 = ReadUInt(in);
