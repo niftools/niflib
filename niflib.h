@@ -307,7 +307,7 @@ blk_ref ReadNifTree( string const & file_name );
 blk_ref ReadNifTree( istream & in );
 
 /*!
- * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.  Automatically writes a kf file and an x/nif file if animation is present.
+ * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
  * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
  * \param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
@@ -328,13 +328,29 @@ blk_ref ReadNifTree( istream & in );
  */
 void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
 
+/*!
+ * Writes a nif tree to an ostream starting at the given root block.
+ * \param stream The output stream to write the NIF data to.
+ * \param root_block The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
+ * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ */
+void WriteNifTree( ostream & stream, blk_ref const & root_block, unsigned int version );
 
 /*!
- * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.
- * \param root1 The root block of the first Nif tree to merge.
- * \param root2 The root block of the second Nif tree to merge.
+ * Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree. (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
+ * \param file_name The desired file name for the new NIF file.  This name serves as the basis for the names of any Kf files as well.  The path is relative to the working directory unless a full path is specified.
+ * \param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
+ * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-void MergeNifTrees( blk_ref root1, blk_ref root2 );
+void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version );
+
+/*!
+ * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
+ * \param target The root block of the first Nif tree to merge.
+ * \param right The root block of the second Nif tree to merge.
+ * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
+ */
+void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version = 0xFFFFFFFF );
 
 
 //// Returns list of all blocks in the tree rooted by root block.

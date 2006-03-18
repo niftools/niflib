@@ -143,7 +143,7 @@ public:
 
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
-	void ReassignCrossRefs( const map<string,blk_ref> & name_map );
+	virtual void ReassignCrossRefs( const map<string,blk_ref> & name_map ) {}
 
 	virtual void Read( istream& in, unsigned int version );
 	virtual void Write( ostream& out, unsigned int version ) const;
@@ -2012,6 +2012,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 		map<int, float> GetWeights( const blk_ref & bone ) const;
 		void AddBone( const blk_ref & bone, map<int, float> const & in );
 		void RemoveBone( const blk_ref & bone );
+		void ReassignCrossRefs( const map<string,blk_ref> & name_map );
 	private:
 		void SetBones( const vector<blk_ref> & bone_blocks );
 		void StraightenSkeleton();

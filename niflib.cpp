@@ -376,7 +376,18 @@ vector<blk_ref> ReadNifList( istream & in ) {
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsigned int version ) {
+void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version ) {
+	//Open output file
+	ofstream out( file_name.c_str(), ofstream::binary );
+
+	WriteNifTree( out, root_block, version );
+
+	//Close file
+	out.close();
+}
+
+// Writes a valid Nif File given an ostream, a pointer to the root block of a file tree
+void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -384,9 +395,6 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	vector<blk_ref> blk_list;
 	vector<string> blk_types;
 	ReorderNifTree( blk_list, blk_types, root_block );
-
-	//Open output file
-	ofstream out( file_name.c_str(), ofstream::binary );
 
 	//--Write Header--//
 	//Version 10.0.1.0 is the last known to use the name NetImmerse
@@ -460,9 +468,6 @@ void WriteRawNifTree( string const & file_name, blk_ref const & root_block, unsi
 	//--Write Footer--//
 	WriteUInt( 1, out ); // Unknown Int = 1 (usually)
 	WriteUInt( 0, out ); // Unknown Int = 0 (usually)
-
-	//Close file
-	out.close();
 }
 
 void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block ) {
@@ -598,9 +603,9 @@ list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) 
 
 // Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree.
 // (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
-void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version ) {
+void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version ) {
 	// Write the full Nif file.
-	WriteRawNifTree( file_name, root_block, version );
+	WriteNifTree( file_name, root_block, version );
 	
 	// Do we have animation groups (a NiTextKeyExtraData block)?
 	// If so, write out XNif and XKf files.
@@ -617,7 +622,7 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 		
 		// Now construct the XNif file...
 		// We are lazy. Copy the Nif file. (TODO: remove keyframe controllers & keyframe data)
-		WriteRawNifTree( xnif_name, root_block, version );
+		WriteNifTree( xnif_name, root_block, version );
 		
 		// Now the XKf file...
 		// Create xkf root header.
@@ -684,7 +689,7 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 		};
 		
 		// Now write it out...
-		WriteRawNifTree( xkf_name, xkf_root, version );		
+		WriteNifTree( xkf_name, xkf_root, version );		
 	};
 }
 
@@ -715,6 +720,22 @@ void MapParentNodeNames( map<string,blk_ref> & name_map, blk_ref par ) {
 			MapParentNodeNames( name_map, *it );
 		};
 	};
+}
+
+void ReassignTreeCrossRefs( map<string,blk_ref> & name_map, blk_ref par ) {
+	//Reassign any cross references on this block
+	((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
+
+	list<blk_ref> links = par->GetLinks();
+	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+		// if the link is not null, and if the child's first parent is root_block
+		// (this makes sure we only check every child once, even if it is shared by multiple parents),
+		// then look for a match in the tree starting from the child.
+		if ( it->is_null() == false && (*it)->GetParent() == par ) {
+			ReassignTreeCrossRefs( name_map, *it );
+		};
+	};
+	
 }
 
 //This function will merge two scene graphs by attatching new objects to the correct position
@@ -778,15 +799,25 @@ void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_
 	}
 }
 
-void MergeNifTrees( blk_ref target, blk_ref right ) {
+void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version ) {
 	//For now assume that both are normal Nif trees just to verify that it works
+
+	//Make a clone of the tree to add
+	stringstream tmp;
+	//WriteNifTree( tmp, right, version );
+	tmp.seekg( 0, ios_base::beg );
+	blk_ref new_tree = right;// ReadNifTree( tmp ); TODO: Figure out why this doesn't work
 
 	//Create a list of names in the target
 	map<string,blk_ref> name_map;
 	MapParentNodeNames( name_map, target );
 
+	//Reassign any cross references in the new tree to point to blocks in the
+	//target tree with the same names
+	ReassignTreeCrossRefs( name_map, new_tree );
+
 	//Use the name map to merge the Scene Graphs
-	MergeSceneGraph( name_map, target, right );
+	MergeSceneGraph( name_map, target, new_tree );
 }
 
 

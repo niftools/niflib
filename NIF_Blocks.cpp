@@ -300,22 +300,6 @@ void ABlock::DecCrossRef( IBlock * block ) {
 	_cross_refs.remove(block);
 }
 
-void ABlock::ReassignCrossRefs( const map<string,blk_ref> & name_map ) {
-	//This branch has been moved as part of a merge, so the cross references need to be moved to
-	//Point to the new blocks with the same names.  As far as I know, cross references always point
-	//To ParentNode blocks.
-
-	list<IBlock*>::iterator it;
-	for ( it = _cross_refs.begin(); it != _cross_refs.end(); ++it ) {
-		//Remove this cross reference from its current target
-		((ABlock*)*it)->DecCrossRef( this );
-
-		//Get name of old target
-
-
-	}
-}
-
 blk_ref ABlock::Clone( unsigned int version ) {
 	//Create a string stream to temporarily hold the state-save of this block
 	stringstream tmp;
@@ -3046,6 +3030,58 @@ vector<blk_ref> NiSkinData::GetBones() const {
 	}
 
 	return bone_blks;
+}
+
+void NiSkinData::ReassignCrossRefs( const map<string,blk_ref> & name_map ) {
+	//This branch has been moved as part of a merge, so the cross references need to be moved to
+	//Point to the new blocks with the same names.  As far as I know, cross references always point
+	//To ParentNode blocks.
+
+	vector< map<IBlock *, Bone>::iterator > erase_list;
+
+	map<IBlock *, Bone>::iterator it;
+	int count = 0;
+	for (it = bone_map.begin(); it != bone_map.end(); ++it ) {
+		//Get the name of the current target if there is one
+		attr_ref name_attr = it->first->GetAttr("Name");
+		if ( name_attr.is_null() == true ) {
+			//Somehow this crossref is pointing to a block with no name
+			//do nothing
+			continue;
+		}
+
+		string name = name_attr->asString();
+
+		//Check if this name exists in the new group of nodes
+		map<string,blk_ref>::const_iterator found_it = name_map.find( name );
+
+		if ( found_it == name_map.end() ) {
+			//There were no matches, so this cross reference will continue to
+			//point to the same place
+			continue;
+		}
+
+		//--Reassign this cross reference to the new node with the same name that was found--//
+
+		cout << "Found a cross reference to re-assign to new block with name:  " << name << endl;
+
+		//Remove this cross reference from its current target
+		((ABlock*)it->first)->DecCrossRef(this);
+
+		//Assign to block with matching name
+		bone_map[found_it->second.get_block()] = it->second;
+		erase_list.push_back( it );
+
+		//Add as a cross reference to new block
+		((ABlock*)found_it->second.get_block())->IncCrossRef(this);
+	}
+
+	//Erase all old map entires
+	for ( uint i = 0; i < erase_list.size(); ++i ) {
+		bone_map.erase( erase_list[i] );
+	}
+
+	cout << "Finished loop." << endl;
 }
 
 map<int, float> NiSkinData::GetWeights( blk_ref const & bone ) const {
