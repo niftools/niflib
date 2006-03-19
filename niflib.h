@@ -79,6 +79,7 @@ struct SkinWeight;
 struct ControllerLink;
 struct TexDesc;
 struct LODRange;
+struct Kfm;
 
 //--Constants--//
 
@@ -158,6 +159,12 @@ const unsigned int VER_10_2_0_0    = 0x0A020000; /*!< Nif Version 10.2.0.0 */
 const unsigned int VER_20_0_0_4    = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
 const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
 const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
+
+// Keyframe trees are game dependent, so here we define a few games.
+const int GAME_MW = 0; // keyframe files: NiSequenceStreamHelper header, .kf extension
+const int GAME_DAOC = 1; // keyframe files: NiNode header, .kfa extension
+const int GAME_ZOO2 = 2; // (keyframe files not supported)
+const int GAME_CIV4 = 3; // keyframe files: NiControllerSequence header, .kf extension
 
 /*! Lists the basic texture types availiable from the ITexturingProperty interface*/
 enum TexType {
@@ -337,12 +344,21 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 void WriteNifTree( ostream & stream, blk_ref const & root_block, unsigned int version );
 
 /*!
- * Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree. (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
- * \param file_name The desired file name for the new NIF file.  This name serves as the basis for the names of any Kf files as well.  The path is relative to the working directory unless a full path is specified.
- * \param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
- * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * Split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
+ * \param root_block The root block of the full tree.
+ * \param xnif_root The root block of the tree without animation.
+ * \param xkf_root The root block of the animation tree.
+ * \param game The game; determines what type of keyframe tree to write.
  */
-void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version );
+void SplitNifTree( blk_ref const & root_block, blk_ref & xnif_root, blk_ref & xkf_root, int game );
+
+/*!
+ * Split an animation tree into multiple animation trees (one per animation group) and a kfm block.
+ * \param root_block The root block of the full tree.
+ * \param kfm The root block of the tree without animation.
+ * \param kf Vector of root blocks of the new animation trees.
+ */
+void SplitKfTree( blk_ref const & root_block, Kfm & kfm, vector<blk_ref> & kf ); // I don't know whether we will be needing a game parameter here... so far we will only use this for CIV4.
 
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.

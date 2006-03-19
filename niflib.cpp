@@ -601,97 +601,93 @@ list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) 
 //	return result;
 //};
 
-// Writes valid XNif & XKf Files given a file name, and a pointer to the root block of the Nif file tree.
-// (XNif and XKf file blocks are automatically extracted from the Nif tree if there are animation groups.)
-void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version ) {
-	// Write the full Nif file.
-	WriteNifTree( file_name, root_block, version );
-	
+// Split off XNif & XKf Files given a pointer to the root block of the full Nif file tree.
+void SplitNifTree( blk_ref const & root_block, blk_ref & xnif_root, blk_ref & xkf_root, int game ) {
 	// Do we have animation groups (a NiTextKeyExtraData block)?
-	// If so, write out XNif and XKf files.
+	// If so, create XNif and XKf trees.
 	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
 	if ( txtkey_block.is_null() == false ) {
-		// Create file names for the XKf and XNif files.
-		uint file_name_slash = uint(file_name.rfind("\\") + 1);
-		string file_name_path = file_name.substr(0, file_name_slash);
-		string file_name_base = file_name.substr(file_name_slash, file_name.length());
-		uint file_name_dot = uint(file_name_base.rfind("."));
-		file_name_base = file_name_base.substr(0, file_name_dot);
-		string xkf_name = file_name_path + "x" + file_name_base + ".kf";
-		string xnif_name = file_name_path + "x" + file_name_base + ".nif";
-		
-		// Now construct the XNif file...
-		// We are lazy. Copy the Nif file. (TODO: remove keyframe controllers & keyframe data)
-		WriteNifTree( xnif_name, root_block, version );
-		
-		// Now the XKf file...
-		// Create xkf root header.
-		blk_ref xkf_root = CreateBlock("NiSequenceStreamHelper");
-		
-		// Add a copy of the NiTextKeyExtraData block to the XKf header.
-		blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
-		xkf_root["Extra Data"] = xkf_txtkey_block;
-		
-		ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
-		ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
-		ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
-		
-		// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
-		list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
-		for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ) {
-			if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
-				it = nodes.erase( it );
-			else
-				it++;
-		};
-		
-		blk_ref last_block = xkf_txtkey_block;
-		for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-			blk_ref nodextra = CreateBlock("NiStringExtraData");
-			nodextra["String Data"] = (*it)["Name"]->asString();
-			last_block["Next Extra Data"] = nodextra;
-			last_block = nodextra;
-		};
-		
-		// Add controllers & controller data.
-		last_block = xkf_root;
-		for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-			blk_ref controller = (*it)->GetAttr("Controller")->asLink();
-			blk_ref xkf_controller = CreateBlock("NiKeyframeController");
-			xkf_controller["Flags"] = controller["Flags"]->asInt();
-			xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
-			xkf_controller["Phase"] = controller["Phase"]->asFloat();
-			xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
-			xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
+		if ( game == GAME_MW ) {
+			// Construct the XNif file...
+			// We are lazy. (TODO: clone & remove keyframe controllers & keyframe data)
+			xnif_root = root_block;
 			
-			blk_ref xkf_data = CreateBlock("NiKeyframeData");
-			xkf_controller["Data"] = xkf_data;
-			IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
-			IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
-			ixkfdata->SetRotateType(ikfdata->GetRotateType());
-			ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
-			ixkfdata->SetScaleType(ikfdata->GetScaleType());
-			ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
-			ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
-			ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
-
-			if ( last_block == xkf_root ) {
-				if ( ! last_block["Controller"]->asLink().is_null() )
-					throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-				last_block["Controller"] = xkf_controller;
-			} else {
-				if ( ! last_block["Next Controller"]->asLink().is_null() )
-					throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-				last_block["Next Controller"] = xkf_controller;
+			// Now the XKf file...
+			// Create xkf root header.
+			xkf_root = CreateBlock("NiSequenceStreamHelper");
+			
+			// Add a copy of the NiTextKeyExtraData block to the XKf header.
+			blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
+			xkf_root["Extra Data"] = xkf_txtkey_block;
+			
+			ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
+			ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
+			ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
+			
+			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
+			list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
+			for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ) {
+				if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
+					it = nodes.erase( it );
+				else
+					it++;
 			};
-			last_block = xkf_controller;
-			// note: targets are automatically calculated, we don't need to reset them
-		};
-		
-		// Now write it out...
-		WriteNifTree( xkf_name, xkf_root, version );		
+			
+			blk_ref last_block = xkf_txtkey_block;
+			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+				blk_ref nodextra = CreateBlock("NiStringExtraData");
+				nodextra["String Data"] = (*it)["Name"]->asString();
+				last_block["Next Extra Data"] = nodextra;
+				last_block = nodextra;
+			};
+			
+			// Add controllers & controller data.
+			last_block = xkf_root;
+			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+				blk_ref controller = (*it)->GetAttr("Controller")->asLink();
+				blk_ref xkf_controller = CreateBlock("NiKeyframeController");
+				xkf_controller["Flags"] = controller["Flags"]->asInt();
+				xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
+				xkf_controller["Phase"] = controller["Phase"]->asFloat();
+				xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
+				xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
+				
+				blk_ref xkf_data = CreateBlock("NiKeyframeData");
+				xkf_controller["Data"] = xkf_data;
+				IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
+				IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
+				ixkfdata->SetRotateType(ikfdata->GetRotateType());
+				ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
+				ixkfdata->SetScaleType(ikfdata->GetScaleType());
+				ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
+				ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
+				ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
+	
+				if ( last_block == xkf_root ) {
+					if ( ! last_block["Controller"]->asLink().is_null() )
+						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+					last_block["Controller"] = xkf_controller;
+				} else {
+					if ( ! last_block["Next Controller"]->asLink().is_null() )
+						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+					last_block["Next Controller"] = xkf_controller;
+				};
+				last_block = xkf_controller;
+				// note: targets are automatically calculated, we don't need to reset them
+			};
+		} else // TODO other games
+			throw runtime_error("Not yet implemented.");
+	} else {
+		// no animation groups: nothing to do
+		xnif_root = blk_ref();
+		xkf_root = blk_ref();
 	};
 }
+
+// Split an animation tree into multiple animation trees (one per animation group) and a kfm block.
+void SplitKfTree( blk_ref const & root_block, Kfm & kfm, vector<blk_ref> & kf ) {
+	throw runtime_error("Not yet implemented.");
+};
 
 //Returns the total number of blocks in memory
 unsigned int BlocksInMemory() {
