@@ -79,7 +79,6 @@ struct SkinWeight;
 struct ControllerLink;
 struct TexDesc;
 struct LODRange;
-struct Kfm;
 
 //--Constants--//
 
@@ -161,10 +160,16 @@ const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
 const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
 
 // Keyframe trees are game dependent, so here we define a few games.
-const int GAME_MW = 0; // keyframe files: NiSequenceStreamHelper header, .kf extension
-const int GAME_DAOC = 1; // keyframe files: NiNode header, .kfa extension
-const int GAME_ZOO2 = 2; // (keyframe files not supported)
-const int GAME_CIV4 = 3; // keyframe files: NiControllerSequence header, .kf extension
+const unsigned int KF_MW = 0; // keyframe files: NiSequenceStreamHelper header, .kf extension
+const unsigned int KF_DAOC = 1; // keyframe files: NiNode header, .kfa extension
+const unsigned int KF_CIV4 = 2; // keyframe files: NiControllerSequence header, .kf extension
+
+// Export options.
+const unsigned int EXPORT_NIF = 0; // NIF
+const unsigned int EXPORT_NIF_KF = 1; // NIF + single KF + KFM
+const unsigned int EXPORT_NIF_KF_MULTI = 2; // NIF + multiple KF + KFM
+const unsigned int EXPORT_KF = 3; // single KF
+const unsigned int EXPORT_KF_MULTI = 4; // multiple KF
 
 /*! Lists the basic texture types availiable from the ITexturingProperty interface*/
 enum TexType {
@@ -344,21 +349,14 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 void WriteNifTree( ostream & stream, blk_ref const & root_block, unsigned int version );
 
 /*!
- * Split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
- * \param root_block The root block of the full tree.
- * \param xnif_root The root block of the tree without animation.
- * \param xkf_root The root block of the animation tree.
- * \param game The game; determines what type of keyframe tree to write.
+ * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
+ * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
+ * \param root_block The root block to start from when writing out the NIF file.
+ * \param version The version of the NIF format to use when writing a file.
+ * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
+ * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-void SplitNifTree( blk_ref const & root_block, blk_ref & xnif_root, blk_ref & xkf_root, int game );
-
-/*!
- * Split an animation tree into multiple animation trees (one per animation group) and a kfm block.
- * \param root_block The root block of the full tree.
- * \param kfm The root block of the tree without animation.
- * \param kf Vector of root blocks of the new animation trees.
- */
-void SplitKfTree( blk_ref const & root_block, Kfm & kfm, vector<blk_ref> & kf ); // I don't know whether we will be needing a game parameter here... so far we will only use this for CIV4.
+void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
@@ -3375,124 +3373,6 @@ struct TexDesc {
 	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
 	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
 	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
-};
-
-//--KFM File Format--//
-
-//KFM Versions
-const unsigned int VER_KFM_1_0 = 0x01000000; /*!< Kfm Version 1.0 */ 
-const unsigned int VER_KFM_1_2_4b = 0x01020400; /*!< Kfm Version 1.2.4b */ 
-const unsigned int VER_KFM_2_0_0_0b = 0x02000000; /*!< Kfm Version 2.0.0.0b */ 
-
-//KFM Data Structure
-
-struct KfmEventString {
-	unsigned int unk_int;
-	string event;
-
-	KfmEventString() : unk_int(0), event() {};
-	void Read( istream & in, unsigned int version );
-	void Write( ostream & out, unsigned int version );
-};
-
-struct KfmEvent {
-	unsigned int id;
-	unsigned int type;
-	float unk_float;
-	vector<KfmEventString> event_strings;
-	unsigned int unk_int3;
-	
-	KfmEvent() : id(0), type(0), unk_float(0.5f), event_strings(), unk_int3(0) {};
-	void Read( istream & in, unsigned int version );
-	//void Write( ostream & out, unsigned int version );
-};
-
-struct KfmAction {
-	string action_name;
-	string action_filename;
-	unsigned int unk_int1;
-	vector<KfmEvent> events;
-	unsigned int unk_int2;
-
-	void Read( istream & in, unsigned int version );
-	//void Write( ostream & out, unsigned int version );
-};
-
-struct Kfm {
-	unsigned int version;
-	unsigned char unk_byte;
-	string nif_filename;
-	string master;
-	unsigned int unk_int1;
-	unsigned int unk_int2;
-	float unk_float1;
-	float unk_float2;
-	unsigned int unk_int3;
-	vector<KfmAction> actions;
-	
-	/*!
-	 * Reads the given file and returns the KFM version.
-	 * \param file_name The input file name.
-	 * \return The KFM version of the file, in hexadecimal format. If the file is not a KFM file, it returns VER_INVALID. If it is a KFM file, but its version is not supported by the library, it returns VER_UNSUPPORTED.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * Kfm kfm;
-	 * unsigned int ver = kfm.Read( "test_in.kfm" );
-	 * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
-	 * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
-	 * else cout << "Describes keyframes for NIF file " << kfm.nif_filename << "." << endl;
-	 *
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * kfm = Kfm()
-	 * ver = kfm.Read( "test_in.kfm" )
-	 * if ( ver == VER_UNSUPPORTED ):
-	 *     print "unsupported"
-	 * elif ( ver == VER_INVALID ):
-	 *     print "invalid"
-	 * else:
-	 *     print "Describes keyframes for NIF file %s."%kfm.nif_filename
-	 * \endcode
-	 */
-	unsigned int Read( string const & file_name ); // returns Kfm version
-	unsigned int Read( istream & in ); // returns Kfm version
-
-	/*!
-	 * Reads the NIF file and all KF files referred to in this KFM, and returns the root block of the resulting NIF tree.
-	 * \param path The file path; usually, this should be the directory where the KFM file was read from.
-	 * \return The root block of the NIF tree.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * Kfm kfm;
-	 * unsigned int ver = kfm.Read( "test_in.kfm" );
-	 * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
-	 * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
-	 * else {
-	 *   blk_ref root = kfm.MergeActions(".");
-	 *   cout << root << endl;
-	 * };
-	 *
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * kfm = Kfm()
-	 * ver = kfm.Read( "test_in.kfm" )
-	 * if ( ver == VER_UNSUPPORTED ):
-	 *     print "unsupported"
-	 * elif ( ver == VER_INVALID ):
-	 *     print "invalid"
-	 * else:
-	 *     print kfm.MergeActions(".")
-	 * \endcode
-	 */
-	blk_ref Kfm::MergeActions( string const & path );
-	//void Write( string const & file_name, unsigned int version );
-	//void Write( ostream & out, unsigned int version );
 };
 
 //--USER GUIDE DOCUMENTATION--//

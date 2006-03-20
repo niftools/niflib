@@ -99,9 +99,6 @@ struct Key {
 %template(vector_Key_Color4) std::vector< Key<Color4> >;
 %template(Key_string) Key<std::string>;
 %template(vector_Key_string) std::vector< Key<std::string> >;
-%template(vector_KfmAction) std::vector<KfmAction>;
-%template(vector_KfmEvent) std::vector<KfmEvent>;
-%template(vector_KfmEventString) std::vector<KfmEventString>;
 
 %ignore Float2::operator[](int n);
 %ignore Float2::operator[](int n) const;
