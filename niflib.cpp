@@ -721,8 +721,10 @@ void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsig
 			blk_ref xkf_root;
 			Kfm kfm; // dummy
 			SplitNifTree( root_block, xnif_root, xkf_root, kfm, KF_MW );
-			WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version ); // simply export the NIF file!
-			WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version ); // simply export the NIF file!
+			if ( ! xnif_root.is_null() ) {
+				WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version );
+				WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version );
+			};
 		} else
 			throw runtime_error("Invalid export option.");
 	} else
