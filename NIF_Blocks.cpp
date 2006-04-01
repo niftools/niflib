@@ -495,7 +495,7 @@ Matrix44 ANode::GetLocalTransform() const {
 	s[3][0] = 0.0f;		s[3][1] = 0.0f;		s[3][2] = 0.0f;		s[3][3] = 1.0f;
 
 	//Multiply the two for the resulting local transform
-	return MultMatrix44(rt, s);
+	return MultMatrix44(s, rt);
 }
 
 Matrix44 ANode::GetWorldTransform() const {
