@@ -156,6 +156,7 @@ const unsigned int VER_10_0_1_0    = 0x0A000100; /*!< Nif Version 10.0.1.0 */
 const unsigned int VER_10_1_0_0    = 0x0A010000; /*!< Nif Version 10.1.0.0 */ 
 const unsigned int VER_10_2_0_0    = 0x0A020000; /*!< Nif Version 10.2.0.0 */ 
 const unsigned int VER_20_0_0_4    = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
+const unsigned int VER_20_0_0_5    = 0x14000005; /*!< Nif Version 20.0.0.4 */ 
 const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
 const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
 
