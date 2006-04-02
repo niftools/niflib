@@ -189,13 +189,24 @@ vector<blk_ref> ReadNifList( istream & in ) {
 	}
 
 	//There is an Unknown Int here from version 10.1.0.0 on
-	uint unknownInt1;
+	uint unknownInt1 = 0;
 	if ( version >= VER_10_1_0_0 ) {
 		unknownInt1 = ReadUInt( in );
 	}
 
 	uint numBlocks = ReadUInt( in );
 
+	if ( unknownInt1 != 0 ) {
+		uint len;
+		ReadUInt( in );
+		len = ReadByte( in );
+		for (int i = 0; i < len; i++) ReadByte( in );
+		len = ReadByte( in );
+		for (int i = 0; i < len; i++) ReadByte( in );
+		len = ReadByte( in );
+		for (int i = 0; i < len; i++) ReadByte( in );
+	}
+	
 	vector<string> blockTypes;
 	vector<short> blockTypeIndex;
 	//New header data exists from version 5.0.0.1 on
