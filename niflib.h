@@ -3358,7 +3358,10 @@ protected:
 /*! Represents a texture description that specifies various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
 struct TexDesc {
 	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
-	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),  PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101) {}
+	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),
+		PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101),
+		hasTextureTransform(false), translation(0.0, 0.0), tiling(0.0, 0.0),
+		w_rotation(0.0), transform_type(0), center_offset(0.0, 0.0) {}
 	string asString() const;
 	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
 	blk_ref source; /*!< The NiTextureSource block which points to the texture data. > */
@@ -3368,12 +3371,12 @@ struct TexDesc {
 	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0.  Exists up to version 10.2.0.0 */ 
 	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5.  Exists up to version 10.2.0.0 */ 
 	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
-	//Unknown Block in version 10.1.0.0 and up
-	bool hasUnknownData; /*!< If this is true, the unknown5Floats, unknownInt, unknownFloat1, and unknownFloat2 members are significant.  These properties only exist after version 10.1.0.0. */ 
-	float unknown5Floats[5]; /*!< 5 unkown floating point values that exist from version 10.1.0.0 on. */ 
-	int unknownInt; /*!< An unknown integer value that exists from version 10.1.0.0 on. */ 
-	float unknownFloat1; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
-	float unknownFloat2; /*!< An unknown floating point value that exists from version 10.1.0.0 on. */ 
+	bool hasTextureTransform; /*!< Determines whether or not the texture's coordinates are transformed. */ 
+	TexCoord translation; /*!< The amount to translate the texture coordinates in each direction?. */ 
+	TexCoord tiling; /*!< Number of times the texture is tiled in each direction? */ 
+	float w_rotation; /*!< Rotation of the texture image around the W axis? */ 
+	int transform_type; /*!< The texture transform type? Doesn't seem to do anything. */ 
+	TexCoord center_offset; /*!< The offset from the origin? */ 
 };
 
 //--USER GUIDE DOCUMENTATION--//

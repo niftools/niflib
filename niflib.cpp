@@ -936,19 +936,17 @@ string TexDesc::asString() const {
 			<< "      PS2 L Setting:  " << PS2_L << endl
 			<< "      PS2 K Setting:  " << PS2_K << endl
 			<< "      Unknown Short:  " << unknownShort << endl
-			<< "      Unknown Data:   ";
+			<< "      Texture Transform:   ";
 
 
 		//From version 10.1.0.0 and up, this unknown data block may exist
-		if ( hasUnknownData == true ) {
+		if ( hasTextureTransform == true ) {
 			out << endl
-				<< "         Unknown 5 Floats:" << endl;
-			for (int i = 0; i < 5; ++i ) {
-				out << "            " << i + 1 << ":  " << unknown5Floats[i] << endl;
-			}
-			out << "         Unknown Int:  " << unknownInt << endl
-				<< "         Unknown Float 1:  " << unknownFloat1 << endl
-				<< "         Unknown Float 2:  " << unknownFloat2 << endl;
+				<< "         Translation: " << translation.u << ", " << translation.v << endl
+				<< "         Tiling: " << tiling.u << ", " << tiling.v << endl
+				<< "         W-rotation: " << w_rotation << endl
+				<< "         Transform Type: " << transform_type << endl
+				<< "         Center Offset: " << center_offset.u << ", " << center_offset.v << endl;
 		} else {
 			out << "None" << endl;
 		}

@@ -439,14 +439,16 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 
 		//From version 10.1.0.0 and up, this unknown val block may exist
 		if ( version >= VER_10_1_0_0 ) {
-			val.hasUnknownData = ReadBool( in, version );
-			if ( val.hasUnknownData == true ) {
-				for (int i = 0; i < 5; ++i ) {
-					val.unknown5Floats[i] = ReadFloat( in );;
-				}
-				val.unknownInt = ReadUInt( in );
-				val.unknownFloat1 = ReadFloat( in );
-				val.unknownFloat2 = ReadFloat( in );
+			val.hasTextureTransform = ReadBool( in, version );
+			if ( val.hasTextureTransform == true ) {
+				val.translation.u = ReadFloat( in );
+				val.translation.v = ReadFloat( in );
+				val.tiling.u = ReadFloat( in );
+				val.tiling.v = ReadFloat( in );
+				val.w_rotation = ReadFloat( in );
+				val.transform_type = ReadUInt( in );
+				val.center_offset.u = ReadFloat( in );
+				val.center_offset.v = ReadFloat( in );
 			}
 		}
 	}
@@ -510,14 +512,16 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 
 		//From version 10.1.0.0 and up, this unknown val block may exist
 		if ( version >= VER_10_1_0_0 ) {
-			WriteBool( val.hasUnknownData, out, version );
-			if ( val.hasUnknownData == true ) {
-				for (int i = 0; i < 5; ++i ) {
-					WriteFloat( val.unknown5Floats[i], out );;
-				}
-				WriteUInt( val.unknownInt, out );
-				WriteFloat( val.unknownFloat1, out );
-				WriteFloat( val.unknownFloat2, out );
+			WriteBool( val.hasTextureTransform, out, version );
+			if ( val.hasTextureTransform == true ) {
+				WriteFloat( val.translation.u, out );
+				WriteFloat( val.translation.v, out );
+				WriteFloat( val.tiling.u, out );
+				WriteFloat( val.tiling.v, out );
+				WriteFloat( val.w_rotation, out );
+				WriteUInt( val.transform_type, out );
+				WriteFloat( val.center_offset.u, out );
+				WriteFloat( val.center_offset.v, out );
 			}
 		}
 	}
