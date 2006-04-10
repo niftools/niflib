@@ -337,8 +337,8 @@ NiDitherProperty::NiDitherProperty() {
 
 NiFlipController::NiFlipController() {
 	AddAttr( attr_int, "Texture Slot", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Delta", 0, 0xFFFFFFFF );
+	AddAttr( attr_int, "Unknown Int 2", 0, 0x0A010000 );
+	AddAttr( attr_float, "Delta", 0, 0x0A010000 );
 	AddAttr( attr_linkgroup, "Sources", 0, 0xFFFFFFFF );
 	Init();
 }
