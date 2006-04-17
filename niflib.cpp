@@ -830,9 +830,10 @@ void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_
 			//This is not a ParentNode class, so simply add it as a new child of the
 			//target root node
 			root_children->AddLink( par );
+			cout << "Added link to " << par << " in " << root << " block.";
 		} else {
 			//This is a ParentNode class, so merge its child list with that of the root
-			root_children->AddLinks( par->GetAttr("Children")->asLinkList() );
+			root_children->AddLinks( par_children->asLinkList() );
 		}
 	} else {
 		//This block has a new name and has a parent with a name that already exists.
@@ -847,6 +848,7 @@ void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_
 
 		//Add this block as new child
 		attatch->GetAttr("Children")->AddLink( par );
+		//cout << "Added link to " << par << " in " << attatch << " block.";
 	}
 }
 

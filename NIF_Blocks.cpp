@@ -3063,7 +3063,7 @@ void NiSkinData::ReassignCrossRefs( const map<string,blk_ref> & name_map ) {
 
 		//--Reassign this cross reference to the new node with the same name that was found--//
 
-		cout << "Found a cross reference to re-assign to new block with name:  " << name << endl;
+		//cout << "Found a cross reference to re-assign to new block with name:  " << name << endl;
 
 		//Remove this cross reference from its current target
 		((ABlock*)it->first)->DecCrossRef(this);
@@ -3081,7 +3081,7 @@ void NiSkinData::ReassignCrossRefs( const map<string,blk_ref> & name_map ) {
 		bone_map.erase( erase_list[i] );
 	}
 
-	cout << "Finished loop." << endl;
+	//cout << "Finished loop." << endl;
 }
 
 map<int, float> NiSkinData::GetWeights( blk_ref const & bone ) const {

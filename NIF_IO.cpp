@@ -120,48 +120,6 @@ ostream & operator<<(ostream & lh, usVector3 const & rh) {
 	return lh << "(" << setw(4) << rh[0] << ", " << setw(4) << rh[1] << ", " << setw(4) << rh[2] << ")";
 }
 
-ostream & operator<<(ostream & lh, ApplyMode const & rh) {
-	switch (int(rh)) {
-		case 0: return lh << "Replace (0)";
-		case 1: return lh << "Decal (1)";
-		case 2: return lh << "Modulate (2)";
-		case 3: return lh << "Hilight (3 - PS2 Only)";
-		case 4: return lh << "Hilight2 (4 - PS2 Only)";
-	}
-	return lh;
-}
-
-ostream & operator<<(ostream & lh, nifPixelLayout const & rh) {
-	switch (int(rh)) {
-		case 0: return lh << "Palettised (0)";
-		case 1: return lh << "16-bit High Color (1)";
-		case 2: return lh << "32-bit True Color (2)";
-		case 3: return lh << "Compressed (3)";
-		case 4: return lh << "Bump Map (4)";
-		case 5: return lh << "Default (5)";
-	}
-	return lh;
-}
-
-ostream & operator<<(ostream & lh, nifMipMapFormat const & rh) {
-	switch (int(rh)) {
-		case 0: return lh << "No (0)";
-		case 1: return lh << "Yes (1)";
-		case 2: return lh << "Default (2)";
-	}
-	return lh;
-}
-
-ostream & operator<<(ostream & lh, nifAlphaFormat const & rh) {
-	switch (int(rh)) {
-		case 0: return lh << "None (0)";
-		case 1: return lh << "Binary (1)";
-		case 2: return lh << "Smooth (2)";
-		case 3: return lh << "Default (3)";
-	}
-	return lh;
-}
-
 /**
  * Read utility functions
  */

@@ -94,29 +94,6 @@ typedef ushort	nifFlags;
 #define NULL 0
 #endif
 
-/* Valid values for some sourcetexture attributes. */
-typedef enum {
-   PALETTISED = 0x00000000,
-   HIGH_COLOR_16 = 1,
-   TRUE_COLOR_32 = 2,
-   COMPRESSED = 3,
-   BUMPMAP = 4,
-   PIX_DEFAULT = 5
-} nifPixelLayout;
-
-typedef enum {
-   MIPMAP_NO = 0x00000000,
-   MIPMAP_YES = 1,
-   MIPMAP_MIP_DEFAULT = 2,
-} nifMipMapFormat;
-
-typedef enum {
-   ALPHA_NONE = 0x00000000,
-   ALPHA_BINARY = 1,
-   ALPHA_SMOOTH = 2,
-   ALPHA_DEFAULT = 3
-} nifAlphaFormat;
-
 //--New Nodes--//
 
 
@@ -169,12 +146,6 @@ ostream & operator<<(ostream & lh, fVector2 const & rh);
 ostream & operator<<(ostream & lh, fVector3 const & rh);
 ostream & operator<<(ostream & lh, fVector4 const & rh);
 ostream & operator<<(ostream & lh, usVector3 const & rh);
-ostream & operator<<(ostream & lh, ApplyMode const & rh);
-
-
-ostream & operator<<(ostream & lh, nifPixelLayout const & rh);
-ostream & operator<<(ostream & lh, nifMipMapFormat const & rh);
-ostream & operator<<(ostream & lh, nifAlphaFormat const & rh);
 
 /**
  * Read utility functions

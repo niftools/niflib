@@ -210,6 +210,14 @@ enum TexFilterMode {
 	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */ 
 };
 
+/*! Specifies the availiable alpha formats.  That is, the type of alpha blending (transparency) that will be used on a particular texture.*/
+enum AlphaFormat {
+   ALPHA_NONE = 0, /*!< No alpha blending, the texture is fully opaque */ 
+   ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */ 
+   ALPHA_SMOOTH = 2, /*!< Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between. */ 
+   ALPHA_DEFAULT = 3 /*!< Use default setting. */ 
+};
+
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
 #endif
@@ -231,6 +239,27 @@ enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
 	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
 	PX_FMT_PAL8 = 2 /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete block. */
+};
+
+/*!
+ * Specifies the mip map format of a texture.
+ */
+enum MipMapFormat {
+	MIP_FMT_NO = 0, /*!< Texture does not use mip maps. */
+	MIP_FMT_YES = 1,/*!< Texture uses mip maps. */
+	MIP_FMT_DEFAULT = 2, /*!< Use default setting. */
+};
+
+/*!
+ * Specifies the pixel layout of a texture.  That is, the format of the image data.
+ */
+enum PixelLayout {
+	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
+	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
+	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
+	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
+	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
+	PIX_LAY_DEFAULT = 5 /*!< Use default setting. */
 };
 
 //--Main Functions--//
