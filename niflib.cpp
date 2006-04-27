@@ -200,11 +200,11 @@ vector<blk_ref> ReadNifList( istream & in ) {
 		uint len;
 		ReadUInt( in );
 		len = ReadByte( in );
-		for (int i = 0; i < len; i++) ReadByte( in );
+		for (uint i = 0; i < len; i++) ReadByte( in );
 		len = ReadByte( in );
-		for (int i = 0; i < len; i++) ReadByte( in );
+		for (uint i = 0; i < len; i++) ReadByte( in );
 		len = ReadByte( in );
-		for (int i = 0; i < len; i++) ReadByte( in );
+		for (uint i = 0; i < len; i++) ReadByte( in );
 	}
 	
 	vector<string> blockTypes;
