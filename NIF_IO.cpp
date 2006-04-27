@@ -123,6 +123,13 @@ ostream & operator<<(ostream & lh, usVector3 const & rh) {
 /**
  * Read utility functions
  */
+int ReadUInt( istream& in ){
+
+	int tmp;
+	in.read( (char*)&tmp, 4 );
+	return tmp;
+}
+
 uint ReadUInt( istream& in ){
 
 	uint tmp;
@@ -210,6 +217,11 @@ bool ReadBool( istream &in, unsigned int version ) {
  * Write utility functions.
  */
 void WriteUInt( uint val, ostream& out ){
+
+	out.write( (char*)&val, 4 );
+}
+
+void WriteInt( int val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
 }
@@ -335,6 +347,7 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 
 //--Overloaded versions of Read/Write functions ReadData/WriteData
 
+void NifStream( int & val, istream& in ) { val = ReadInt( in ); };
 void NifStream( uint & val, istream& in ) { val = ReadUInt( in ); };
 void NifStream( ushort & val, istream& in ) { val = ReadUShort( in ); };
 void NifStream( short & val, istream& in ) { val = ReadShort( in ); };
@@ -415,6 +428,7 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 
 
 void NifStream( uint const & val, ostream& out ) { WriteUInt( val, out ); }
+void NifStream( int const & val, ostream& out ) { WriteInt( val, out ); }
 void NifStream( ushort const & val, ostream& out ) { WriteUShort( val, out ); }
 void NifStream( short const & val, ostream& out ) { WriteShort( val, out ); }
 void NifStream( byte const & val, ostream& out ) { WriteByte( val, out ); }

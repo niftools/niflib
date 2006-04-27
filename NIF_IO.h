@@ -151,6 +151,7 @@ ostream & operator<<(ostream & lh, usVector3 const & rh);
  * Read utility functions
  */
 uint ReadUInt( istream& in );
+uint ReadInt( istream& in );
 ushort ReadUShort( istream& in );
 short ReadShort( istream& in );
 byte ReadByte( istream& in );
@@ -164,6 +165,7 @@ void ReadFVector4( fVector4& fvec, istream& in );
 
 //Read
 void NifStream( uint & val, istream& in );
+void NifStream( int & val, istream& in );
 void NifStream( ushort & val, istream& in );
 void NifStream( short & val, istream& in );
 void NifStream( byte & val, istream& in );
@@ -220,6 +222,8 @@ void NifStream( vector<T> & val, istream& file ) {
  */
 void WriteUInt( uint val, ostream& out );
 
+void WriteInt( uint val, ostream& out );
+
 void WriteUShort( ushort val, ostream& out );
 
 void WriteShort( short val, ostream& out );
@@ -244,6 +248,7 @@ void WriteBlockName( const char* name, uint nameLength, ostream& out );
 
 //Write
 void NifStream( uint const & val, ostream& out );
+void NifStream( int const & val, ostream& out );
 void NifStream( ushort const & val, ostream& out );
 void NifStream( short const & val, ostream& out );
 void NifStream( byte const & val, ostream& out );
