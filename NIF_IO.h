@@ -151,7 +151,6 @@ ostream & operator<<(ostream & lh, usVector3 const & rh);
  * Read utility functions
  */
 uint ReadUInt( istream& in );
-uint ReadInt( istream& in );
 ushort ReadUShort( istream& in );
 short ReadShort( istream& in );
 byte ReadByte( istream& in );
@@ -164,20 +163,19 @@ void ReadFVector3( fVector3& fvec, istream& in );
 void ReadFVector4( fVector4& fvec, istream& in );
 
 //Read
-void NifStream( uint & val, istream& in );
-void NifStream( int & val, istream& in );
-void NifStream( ushort & val, istream& in );
-void NifStream( short & val, istream& in );
-void NifStream( byte & val, istream& in );
-void NifStream( float & val, istream& in );
-void NifStream( string & val, istream& in );
-void NifStream( Vector3 & val, istream& in );
-void NifStream( Quaternion & val, istream& in );
-void NifStream( KeyType & val, istream& in );
-void NifStream( Color4 & val, istream& in );
-void NifStream( Triangle & val, istream& in );
-void NifStream( TexDesc & val, istream& in, uint version );
-void NifStream( LODRange & val, istream& in );
+void NifStream( uint & val, istream& in, uint version = 0 );
+void NifStream( ushort & val, istream& in, uint version = 0 );
+void NifStream( short & val, istream& in, uint version = 0 );
+void NifStream( byte & val, istream& in, uint version = 0 );
+void NifStream( float & val, istream& in, uint version = 0 );
+void NifStream( string & val, istream& in, uint version = 0 );
+void NifStream( Vector3 & val, istream& in, uint version = 0 );
+void NifStream( Quaternion & val, istream& in, uint version = 0 );
+void NifStream( KeyType & val, istream& in, uint version = 0 );
+void NifStream( Color4 & val, istream& in, uint version = 0 );
+void NifStream( Triangle & val, istream& in, uint version = 0 );
+void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
+void NifStream( LODRange & val, istream& in, uint version = 0 );
 
 template <class T> 
 void NifStream( Key<T> & key, istream& file, KeyType type ) {
@@ -222,8 +220,6 @@ void NifStream( vector<T> & val, istream& file ) {
  */
 void WriteUInt( uint val, ostream& out );
 
-void WriteInt( uint val, ostream& out );
-
 void WriteUShort( ushort val, ostream& out );
 
 void WriteShort( short val, ostream& out );
@@ -247,20 +243,19 @@ void WriteFVector4( fVector4 const & fvec, ostream& out );
 void WriteBlockName( const char* name, uint nameLength, ostream& out );
 
 //Write
-void NifStream( uint const & val, ostream& out );
-void NifStream( int const & val, ostream& out );
-void NifStream( ushort const & val, ostream& out );
-void NifStream( short const & val, ostream& out );
-void NifStream( byte const & val, ostream& out );
-void NifStream( float const & val, ostream& out );
-void NifStream( string const & val, ostream& out );
-void NifStream( Vector3 const & val, ostream& out );
-void NifStream( Quaternion const & val, ostream& out );
-void NifStream( KeyType const & val, ostream& out );
-void NifStream( Color4 const & val, ostream& out );
-void NifStream( Triangle const & val, ostream& out );
-void NifStream( TexDesc const & val, ostream& out, uint version );
-void NifStream( LODRange const & val, ostream& out );
+void NifStream( uint const & val, ostream& out, uint version = 0  );
+void NifStream( ushort const & val, ostream& out, uint version = 0  );
+void NifStream( short const & val, ostream& out, uint version = 0  );
+void NifStream( byte const & val, ostream& out, uint version = 0  );
+void NifStream( float const & val, ostream& out, uint version = 0  );
+void NifStream( string const & val, ostream& out, uint version = 0  );
+void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
+void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
+void NifStream( KeyType const & val, ostream& out, uint version = 0  );
+void NifStream( Color4 const & val, ostream& out, uint version = 0  );
+void NifStream( Triangle const & val, ostream& out, uint version = 0 );
+void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
+void NifStream( LODRange const & val, ostream& out, uint version = 0 );
 
 template <class T> 
 void NifStream( Key<T> const & key, ostream& file, KeyType type ) {

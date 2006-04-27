@@ -149,6 +149,9 @@
 			<File
 				RelativePath=".\niflib.cpp">
 			</File>
+			<File
+				RelativePath=".\xml_extract.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -168,6 +171,9 @@
 			</File>
 			<File
 				RelativePath=".\niflib.h">
+			</File>
+			<File
+				RelativePath=".\xml_extract.h">
 			</File>
 		</Filter>
 		<Filter

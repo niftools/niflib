@@ -123,13 +123,6 @@ ostream & operator<<(ostream & lh, usVector3 const & rh) {
 /**
  * Read utility functions
  */
-int ReadUInt( istream& in ){
-
-	int tmp;
-	in.read( (char*)&tmp, 4 );
-	return tmp;
-}
-
 uint ReadUInt( istream& in ){
 
 	uint tmp;
@@ -217,11 +210,6 @@ bool ReadBool( istream &in, unsigned int version ) {
  * Write utility functions.
  */
 void WriteUInt( uint val, ostream& out ){
-
-	out.write( (char*)&val, 4 );
-}
-
-void WriteInt( int val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
 }
@@ -347,42 +335,41 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 
 //--Overloaded versions of Read/Write functions ReadData/WriteData
 
-void NifStream( int & val, istream& in ) { val = ReadInt( in ); };
-void NifStream( uint & val, istream& in ) { val = ReadUInt( in ); };
-void NifStream( ushort & val, istream& in ) { val = ReadUShort( in ); };
-void NifStream( short & val, istream& in ) { val = ReadShort( in ); };
-void NifStream( byte & val, istream& in ) { val = ReadByte( in ); };
-void NifStream( float & val, istream& in ) { val = ReadFloat( in ); };
-void NifStream( string & val, istream& in ) { val = ReadString( in ); };
-void NifStream( KeyType & val, istream& in ) { val = KeyType(ReadUInt( in )); };
+void NifStream( uint & val, istream& in, uint version ) { val = ReadUInt( in ); };
+void NifStream( ushort & val, istream& in, uint version ) { val = ReadUShort( in ); };
+void NifStream( short & val, istream& in, uint version ) { val = ReadShort( in ); };
+void NifStream( byte & val, istream& in, uint version ) { val = ReadByte( in ); };
+void NifStream( float & val, istream& in, uint version ) { val = ReadFloat( in ); };
+void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
+void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadUInt( in )); };
 
-void NifStream( Vector3 & val, istream& in ) {
+void NifStream( Vector3 & val, istream& in, uint version ) {
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Quaternion & val, istream& in ) {
+void NifStream( Quaternion & val, istream& in, uint version ) {
 	val.w = ReadFloat( in );
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Color4 & val, istream& in ) {
+void NifStream( Color4 & val, istream& in, uint version ) {
 	val.r = ReadFloat( in );
 	val.g = ReadFloat( in );
 	val.b = ReadFloat( in );
 	val.a = ReadFloat( in );
 };
 
-void NifStream( Triangle & val, istream& in ) {
+void NifStream( Triangle & val, istream& in, uint version ) {
 	val.v1 = ReadUShort( in );
 	val.v2 = ReadUShort( in );
 	val.v3 = ReadUShort( in );
 };
 
-void NifStream( LODRange & val, istream& in ) {
+void NifStream( LODRange & val, istream& in, uint version ) {
 	val.near = ReadFloat( in );
 	val.far = ReadFloat( in );
 };
@@ -427,37 +414,36 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 
 
 
-void NifStream( uint const & val, ostream& out ) { WriteUInt( val, out ); }
-void NifStream( int const & val, ostream& out ) { WriteInt( val, out ); }
-void NifStream( ushort const & val, ostream& out ) { WriteUShort( val, out ); }
-void NifStream( short const & val, ostream& out ) { WriteShort( val, out ); }
-void NifStream( byte const & val, ostream& out ) { WriteByte( val, out ); }
-void NifStream( float const & val, ostream& out ) { WriteFloat( val, out ); }
-void NifStream( string const & val, ostream& out ) { WriteString( val, out ); }
-void NifStream( KeyType const & val, ostream& out ) { WriteUInt( val, out ); }
-void NifStream( Vector3 const & val, ostream& out ) {
+void NifStream( uint const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+void NifStream( ushort const & val, ostream& out, uint version ) { WriteUShort( val, out ); }
+void NifStream( short const & val, ostream& out, uint version ) { WriteShort( val, out ); }
+void NifStream( byte const & val, ostream& out, uint version ) { WriteByte( val, out ); }
+void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( val, out ); }
+void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
+void NifStream( KeyType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+void NifStream( Vector3 const & val, ostream& out, uint version ) {
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Quaternion const & val, ostream& out ) {
+void NifStream( Quaternion const & val, ostream& out, uint version ) {
 	WriteFloat( val.w, out );
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-void NifStream( Color4 const & val, ostream& out ) {
+void NifStream( Color4 const & val, ostream& out, uint version ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );
 	WriteFloat( val.a, out );
 };
-void NifStream( Triangle const & val, ostream& out ) {
+void NifStream( Triangle const & val, ostream& out, uint version ) {
 	WriteUShort( val.v1, out );
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );
 };
-void NifStream( LODRange const & val, ostream& out ) {
+void NifStream( LODRange const & val, ostream& out, uint version ) {
 	WriteFloat( val.near, out );
 	WriteFloat( val.far, out );
 };
