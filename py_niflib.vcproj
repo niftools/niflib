@@ -23,7 +23,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -32,7 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="niflib.lib"
+				AdditionalDependencies="niflib.lib"
 				OutputFile="..\bin\_niflib.dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
@@ -69,7 +69,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="0"
 				Detect64BitPortabilityProblems="TRUE"
@@ -185,7 +185,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running SWIG..."
-						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i"
+						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i
+"
 						AdditionalDependencies="niflib.h"
 						Outputs="py_wrap.cpp"/>
 				</FileConfiguration>
@@ -194,7 +195,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running SWIG..."
-						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i"
+						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i
+"
 						AdditionalDependencies="niflib.h"
 						Outputs="py_wrap.cpp"/>
 				</FileConfiguration>

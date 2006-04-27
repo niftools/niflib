@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -148,9 +148,12 @@
 			</File>
 			<File
 				RelativePath=".\niflib.cpp">
-			</File>
-			<File
-				RelativePath=".\xml_extract.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						RuntimeLibrary="3"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
