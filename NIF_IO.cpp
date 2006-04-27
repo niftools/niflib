@@ -123,6 +123,13 @@ ostream & operator<<(ostream & lh, usVector3 const & rh) {
 /**
  * Read utility functions
  */
+int ReadInt( istream& in ){
+
+	int tmp;
+	in.read( (char*)&tmp, 4 );
+	return tmp;
+}
+
 uint ReadUInt( istream& in ){
 
 	uint tmp;
@@ -209,6 +216,11 @@ bool ReadBool( istream &in, unsigned int version ) {
 /**
  * Write utility functions.
  */
+void WriteInt( int val, ostream& out ){
+
+	out.write( (char*)&val, 4 );
+}
+
 void WriteUInt( uint val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
@@ -335,10 +347,12 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 
 //--Overloaded versions of Read/Write functions ReadData/WriteData
 
+void NifStream( int & val, istream& in, uint version ) { val = ReadInt( in ); };
 void NifStream( uint & val, istream& in, uint version ) { val = ReadUInt( in ); };
 void NifStream( ushort & val, istream& in, uint version ) { val = ReadUShort( in ); };
 void NifStream( short & val, istream& in, uint version ) { val = ReadShort( in ); };
 void NifStream( byte & val, istream& in, uint version ) { val = ReadByte( in ); };
+void NifStream( bool & val, istream& in, uint version ) { val = ReadBool( in, version ); };
 void NifStream( float & val, istream& in, uint version ) { val = ReadFloat( in ); };
 void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
 void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadUInt( in )); };
@@ -412,12 +426,24 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 	}
 }
 
+void NifStream( IBlock * val, istream& in, uint version ) {
+	int n;
+	in.read( (char*)&n, 4 );
+	val = 0;	// TODO: do something with that n, something like this:
+	//if ( n == -1 )
+	//  val = 0;
+	//else
+	//  val = blk_ref(n);
+	// BUT: block n may not have been processed yet, so we can't return a pointer... ? they will have to be
+	// resolved when calling FixLinks()?
+};
 
-
+void NifStream( int const & val, ostream& out, uint version ) { WriteInt( val, out ); }
 void NifStream( uint const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 void NifStream( ushort const & val, ostream& out, uint version ) { WriteUShort( val, out ); }
 void NifStream( short const & val, ostream& out, uint version ) { WriteShort( val, out ); }
 void NifStream( byte const & val, ostream& out, uint version ) { WriteByte( val, out ); }
+void NifStream( bool const & val, ostream& out, uint version ) { WriteBool( val, out, version ); }
 void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( val, out ); }
 void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
 void NifStream( KeyType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
@@ -483,6 +509,9 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 			}
 		}
 	}
+};
+void NifStream( IBlock const * const val, ostream& out, uint version ) {
+	NifStream( val->GetBlockNum(), out, version );
 };
 
 string HexString( const byte * src, uint len ) {
