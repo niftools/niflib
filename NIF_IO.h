@@ -74,6 +74,11 @@ using namespace std;
 //	string _str; // string data
 //}
 
+// !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
+typedef blk_ref link_ref;
+typedef string HeaderString;
+// !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
+
 typedef unsigned char	byte;
 typedef unsigned short	ushort;
 typedef unsigned int	uint;
