@@ -44,7 +44,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 extern bool verbose;
 extern unsigned int blocks_in_memory;
 
+#ifdef WIN32
 #define endl "\r\n"
+#endif
 
 extern string current_file;
 
@@ -53,13 +55,10 @@ extern string current_file;
  **********************************************************/
 
 ABlock::ABlock() : _block_num(-1), _ref_count(0) {
-		//Temporary to test reference counting
 		blocks_in_memory++;
 	}
 
 ABlock::~ABlock() {
-	//Temporary to test reference counting
-	//cout << "A block has commited suicide." << endl;
 	blocks_in_memory--;
 
 	// Delete all attributes

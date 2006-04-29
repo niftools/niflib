@@ -3224,6 +3224,18 @@ public:
 		else
 			return false;
 	}
+
+	/*!
+	 * Makes this reference a null reference, decrimenting the reference count of the block it was pointing to, if any.
+	 */
+	void nullify() {
+		if ( _block != NULL ) {
+			//Decrement reference count
+			_block->SubtractRef();
+		}
+		_block = NULL;
+		_index = -1;
+	}
 	blk_ref( IBlock * block ) : _index(-1), _block(block) {
 
 		//Increment reference count

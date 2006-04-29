@@ -105,9 +105,9 @@ protected:
 
 class lnk_ref : public blk_ref {
 public:
-	lnk_ref ( IBlock * owner) : _owner(owner) { /*cout << "Constructor " <<  endl;*/ InitLink(); }
-	lnk_ref( IBlock * owner, int index ) : blk_ref(index), _owner(owner) { /*cout << "Constructor "  << endl;*/ InitLink(); }
-	lnk_ref( IBlock * owner, blk_ref block ) : blk_ref(block), _owner(owner) { /*cout << "Constructor " << endl;*/ InitLink(); }
+	lnk_ref ( IBlock * owner) : _owner(owner) { InitLink(); }
+	lnk_ref( IBlock * owner, int index ) : blk_ref(index), _owner(owner) { InitLink(); }
+	lnk_ref( IBlock * owner, blk_ref block ) : blk_ref(block), _owner(owner) { InitLink(); }
 
 	//Copy Constructors
 	lnk_ref( const lnk_ref & rh ) {
@@ -120,7 +120,7 @@ public:
 		InitLink();
 	}
 	//Destructor
-	~lnk_ref() { /*cout << "Destructor " << endl;*/ KillLink(); /*cin.get();*/}
+	~lnk_ref() { KillLink(); }
 	//Assignment Operator
 	lnk_ref & operator=(const blk_ref & rh ) { 
 		if ( blk_ref(*this)!= rh ) {
