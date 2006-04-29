@@ -102,24 +102,6 @@ int BlockSearch( istream& in ) {
 	return data_length;
 }
 
-//--IO Stream Functions--//
-
-ostream & operator<<(ostream & lh, fVector2 const & rh) {
-	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ")";
-}
-
-ostream & operator<<(ostream & lh, fVector3 const & rh) {
-	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ", " << setw(5) << rh[2] << ")";
-}
-
-ostream & operator<<(ostream & lh, fVector4 const & rh) {
-	return lh << "(" << setw(5) << rh[0] << ", " << setw(5) << rh[1] << ", " << setw(5) << rh[2] << ", " << setw(5) << rh[3] << ")";
-}
-
-ostream & operator<<(ostream & lh, usVector3 const & rh) {
-	return lh << "(" << setw(4) << rh[0] << ", " << setw(4) << rh[1] << ", " << setw(4) << rh[2] << ")";
-}
-
 /**
  * Read utility functions
  */
@@ -295,47 +277,6 @@ void WriteBool( bool val, ostream& out, unsigned int version ) {
 	}
 }
 
-void WriteBlockName( const char* name, uint nameLength, ostream& out ){
-
-	WriteUInt( nameLength, out );
-	out.write( name, nameLength );
-}
-
-ostream & operator<<(ostream & lh, Str const & rh) {
-	//Fix string
-	char * s = new char[rh._n + 1];
-	strncpy(s, rh._c, rh._n);
-	s[rh._n] = 0;
-	lh << s;
-	delete [] s;
-	return lh;
-}
-
-ostream & operator<<(ostream & lh, Hex const & rh) {
-	return lh << dec << rh._n << " (0x" << hex << uppercase << rh._n << ")" << dec;
-}
-
-ostream & operator<<(ostream & lh, Index const & rh) {
-	if (int(rh._n) != -1)
-		return lh << "Block " << rh._n;
-	else
-		return lh << "None";
-}
-
-ostream & operator<<(ostream & lh, Bin const & rh) {
-	uint x = rh._n;
-	for (uint i = 0; i < rh._w; i++) {
-		if((x & 0x80) !=0) {
-			lh << "1";
-		}
-		else {
-			lh << "0";
-		}
-		x <<= 1;
-	}
-	return lh;
-}
-
 //-- NifStream And ostream Functions --//
 // The NifStream functions allow each built-in type to be streamed to and from a file.
 // The ostream functions are for writing out a debug string.
@@ -376,52 +317,47 @@ void NifStream( string const & val, ostream& out, uint version ) { WriteString( 
 
 //--Structs--//
 
-//Vector3
-void NifStream( Vector3 & val, istream& in, uint version ) {
-	val.x = ReadFloat( in );
-	val.y = ReadFloat( in );
-	val.z = ReadFloat( in );
+//HeaderString
+void NifStream( HeaderString & val, istream& in, uint version ) {
+	char tmp[64];
+	in.getline( tmp, 64 );
+	val.header = tmp;
 };
 
-void NifStream( Vector3 const & val, ostream& out, uint version ) {
-	WriteFloat( val.x, out );
-	WriteFloat( val.y, out );
-	WriteFloat( val.z, out );
+void NifStream( HeaderString const & val, ostream& out, uint version ) {
+	stringstream header_string;
+	if ( version <= VER_10_0_1_0 ) {
+		header_string << "NetImmerse File Format, Version ";
+	} else {
+		header_string << "Gamebryo File Format, Version ";
+	}
+	char * byte_ver = (char*)&version;
+	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
+
+
+	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
+
+	out << header_string.str();
 };
 
-ostream & operator<<( ostream & out, Vector3 const & val ) {
-	return out << "(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << "}";
+ostream & operator<<( ostream & out, HeaderString const & val ) {
+	return out << val.header;
 }
 
-//Quaternion
-void NifStream( Quaternion & val, istream& in, uint version ) {
-	val.w = ReadFloat( in );
-	val.x = ReadFloat( in );
-	val.y = ReadFloat( in );
-	val.z = ReadFloat( in );
+//TexCoord
+void NifStream( TexCoord & val, istream& in, uint version ) {
+	val.u = ReadFloat( in );
+	val.v = ReadFloat( in );
 };
 
-void NifStream( Quaternion const & val, ostream& out, uint version ) {
-	WriteFloat( val.w, out );
-	WriteFloat( val.x, out );
-	WriteFloat( val.y, out );
-	WriteFloat( val.z, out );
+void NifStream( TexCoord const & val, ostream& out, uint version ) {
+	WriteFloat( val.u, out );
+	WriteFloat( val.v, out );
 };
 
-//Color4
-void NifStream( Color4 & val, istream& in, uint version ) {
-	val.r = ReadFloat( in );
-	val.g = ReadFloat( in );
-	val.b = ReadFloat( in );
-	val.a = ReadFloat( in );
-};
-
-void NifStream( Color4 const & val, ostream& out, uint version ) {
-	WriteFloat( val.r, out );
-	WriteFloat( val.g, out );
-	WriteFloat( val.b, out );
-	WriteFloat( val.a, out );
-};
+ostream & operator<<( ostream & out, TexCoord const & val ) {
+	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
+}
 
 //Triangle
 void NifStream( Triangle & val, istream& in, uint version ) {
@@ -440,6 +376,239 @@ ostream & operator<<( ostream & out, Triangle const & val ) {
 	return out << "{" << setw(6) << val.v1 << "," << setw(6) << val.v2 << "," << setw(6) << val.v3 << "}";
 }
 
+//Vector3
+void NifStream( Vector3 & val, istream& in, uint version ) {
+	val.x = ReadFloat( in );
+	val.y = ReadFloat( in );
+	val.z = ReadFloat( in );
+};
+
+void NifStream( Vector3 const & val, ostream& out, uint version ) {
+	WriteFloat( val.x, out );
+	WriteFloat( val.y, out );
+	WriteFloat( val.z, out );
+};
+
+ostream & operator<<( ostream & out, Vector3 const & val ) {
+	return out << "(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")";
+}
+
+//Float2
+void NifStream( Float2 & val, istream& in, uint version ) {
+	val.data[0] = ReadFloat( in );
+	val.data[1] = ReadFloat( in );
+};
+
+void NifStream( Float2 const & val, ostream& out, uint version ) {
+	WriteFloat( val.data[0], out );
+	WriteFloat( val.data[1], out );
+};
+
+ostream & operator<<( ostream & out, Float2 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "}";
+}
+
+//Matrix22
+void NifStream( Matrix22 & val, istream& in, uint version ) {
+	for (int c = 0; c < 2; ++c) {
+		for (int r = 0; r < 2; ++r) {
+			val[r][c] = ReadFloat( in );
+		}
+	}
+}
+
+void NifStream( Matrix22 const & val, ostream& out, uint version ) {
+	for (int c = 0; c < 2; ++c) {
+		for (int r = 0; r < 2; ++r) {
+			WriteFloat( val[r][c], out );
+		}
+	}
+}
+
+ostream & operator<<( ostream & out, Matrix22 const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << " |";
+	return out;
+}
+
+//Float3
+void NifStream( Float3 & val, istream& in, uint version ) {
+	val.data[0] = ReadFloat( in );
+	val.data[1] = ReadFloat( in );
+	val.data[2] = ReadFloat( in );
+};
+
+void NifStream( Float3 const & val, ostream& out, uint version ) {
+	WriteFloat( val.data[0], out );
+	WriteFloat( val.data[1], out );
+	WriteFloat( val.data[2], out );
+};
+
+ostream & operator<<( ostream & out, Float3 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "," << setw(6) << val.data[2] << "}";
+}
+
+//Matrix33
+void NifStream( Matrix33 & val, istream& in, uint version ) {
+	for (int c = 0; c < 3; ++c) {
+		for (int r = 0; r < 3; ++r) {
+			val[r][c] = ReadFloat( in );
+		}
+	}
+}
+
+void NifStream( Matrix33 const & val, ostream& out, uint version ) {
+	for (int c = 0; c < 3; ++c) {
+		for (int r = 0; r < 3; ++r) {
+			WriteFloat( val[r][c], out );
+		}
+	}
+}
+
+ostream & operator<<( ostream & out, Matrix33 const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << " |" << endl
+		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << " |";
+	return out;
+}
+
+//Float4
+void NifStream( Float4 & val, istream& in, uint version ) {
+	val.data[0] = ReadFloat( in );
+	val.data[1] = ReadFloat( in );
+	val.data[2] = ReadFloat( in );
+	val.data[3] = ReadFloat( in );
+};
+
+void NifStream( Float4 const & val, ostream& out, uint version ) {
+	WriteFloat( val.data[0], out );
+	WriteFloat( val.data[1], out );
+	WriteFloat( val.data[2], out );
+	WriteFloat( val.data[4], out );
+};
+
+ostream & operator<<( ostream & out, Float4 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "," << setw(6) << val.data[2] << "," << setw(6) << val.data[3] << "}";
+}
+
+//Matrix44
+void NifStream( Matrix44 & val, istream& in, uint version ) {
+	for (int c = 0; c < 4; ++c) {
+		for (int r = 0; r < 4; ++r) {
+			val[r][c] = ReadFloat( in );
+		}
+	}
+}
+
+void NifStream( Matrix44 const & val, ostream& out, uint version ) {
+	for (int c = 0; c < 4; ++c) {
+		for (int r = 0; r < 4; ++r) {
+			WriteFloat( val[r][c], out );
+		}
+	}
+}
+
+ostream & operator<<( ostream & out, Matrix44 const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << "," << setw(6) << val[0][3] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << "," << setw(6) << val[1][3] << " |" << endl
+		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << "," << setw(6) << val[2][3] << " |" << endl
+		<< "   |" << setw(6) << val[3][0] << "," << setw(6) << val[3][1] << "," << setw(6) << val[3][2] << "," << setw(6) << val[3][3] << " |";
+	return out;
+}
+
+//Color4
+void NifStream( Color4 & val, istream& in, uint version ) {
+	val.r = ReadFloat( in );
+	val.g = ReadFloat( in );
+	val.b = ReadFloat( in );
+	val.a = ReadFloat( in );
+};
+
+void NifStream( Color4 const & val, ostream& out, uint version ) {
+	WriteFloat( val.r, out );
+	WriteFloat( val.g, out );
+	WriteFloat( val.b, out );
+	WriteFloat( val.a, out );
+};
+
+ostream & operator<<( ostream & out, Color4 const & val ) {
+	return out << "R:" << setw(6) << val.r << " G:" << setw(6) << val.g << " B:" << setw(6) << val.b << " A:" << setw(6) << val.a << "}";
+}
+
+//Quaternion
+void NifStream( Quaternion & val, istream& in, uint version ) {
+	val.w = ReadFloat( in );
+	val.x = ReadFloat( in );
+	val.y = ReadFloat( in );
+	val.z = ReadFloat( in );
+};
+
+void NifStream( Quaternion const & val, ostream& out, uint version ) {
+	WriteFloat( val.w, out );
+	WriteFloat( val.x, out );
+	WriteFloat( val.y, out );
+	WriteFloat( val.z, out );
+};
+
+ostream & operator<<( ostream & out, Quaternion const & val ) {
+	return out << "[" << setw(6) << val.w << ",(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")]";
+}
+
+//BoundingBox
+void NifStream( BoundingBox & val, istream& in, uint version ) {
+	NifStream( val.isUsed, in, version );
+	if ( val.isUsed ){
+		NifStream( val.unknownInt, in, version );
+		NifStream( val.translation, in, version );
+		NifStream( val.rotation, in, version );
+		NifStream( val.radius, in, version );
+	}
+}
+
+void NifStream( BoundingBox const & val, ostream& out, uint version ) {
+	NifStream( val.isUsed, out, version );
+	if ( val.isUsed ){
+		NifStream( val.unknownInt, out, version );
+		NifStream( val.translation, out, version );
+		NifStream( val.rotation, out, version );
+		NifStream( val.radius, out, version );
+	}
+}
+
+ostream & operator<<( ostream & out, BoundingBox const & val ) {
+	if ( val.isUsed ) {
+		out << endl
+			<< "   Unknown Int:  " << val.unknownInt << endl
+			<< "   Position:  " << val.translation << endl
+			<< "   Rotation:  " << val.rotation << endl
+			<< "   Radius:  " << val.radius << endl;
+	} 
+	else {
+		out << "None";
+	}
+	return out;
+}
+
+//Not going to implement ConditionalInt.  Should not be needed anymore.
+
+//SkinWeight
+void NifStream( SkinWeight & val, istream& in, uint version ) {
+	NifStream( val.vertexNum, in, version );
+	NifStream( val.vertexWeight, in, version );
+}
+
+void NifStream( SkinWeight const & val, ostream& out, uint version ) {
+	NifStream( val.vertexNum, out, version );
+	NifStream( val.vertexWeight, out, version );
+}
+
+ostream & operator<<( ostream & out, SkinWeight const & val ) {
+	return out << val.vertexNum << ":" << val.vertexWeight << endl;
+}
+
 //LODRange
 void NifStream( LODRange & val, istream& in, uint version ) {
 	val.near = ReadFloat( in );
@@ -450,21 +619,9 @@ void NifStream( LODRange const & val, ostream& out, uint version ) {
 	WriteFloat( val.far, out );
 };
 
-//TexCoord
-void NifStream( TexCoord & val, istream& in, uint version ) {
-	val.u = ReadFloat( in );
-	val.v = ReadFloat( in );
-};
-
-void NifStream( TexCoord const & val, ostream& out, uint version ) {
-	WriteFloat( val.u, out );
-	WriteFloat( val.v, out );
-};
-
-ostream & operator<<( ostream & out, TexCoord const & val ) {
-	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
+ostream & operator<<( ostream & out, LODRange const & val ) {
+	return out << "Near: " << val.near << "  Far: " << val.far << endl;
 }
-
 
 //TexDesc
 void NifStream( TexDesc & val, istream& in, uint version ) {
@@ -572,80 +729,7 @@ ostream & operator<<( ostream & out, TexDesc const & val ) {
 	return out;
 }
 
-//Matrix22
-void NifStream( Matrix22 & val, istream& in, uint version ) {
-	for (int c = 0; c < 2; ++c) {
-		for (int r = 0; r < 2; ++r) {
-			val[r][c] = ReadFloat( in );
-		}
-	}
-}
 
-void NifStream( Matrix22 const & val, ostream& out, uint version ) {
-	for (int c = 0; c < 2; ++c) {
-		for (int r = 0; r < 2; ++r) {
-			WriteFloat( val[r][c], out );
-		}
-	}
-}
-
-ostream & operator<<( ostream & out, Matrix22 const & val ) {
-	out << endl
-		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << " |" << endl
-		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << " |";
-	return out;
-}
-
-//Matrix33
-void NifStream( Matrix33 & val, istream& in, uint version ) {
-	for (int c = 0; c < 3; ++c) {
-		for (int r = 0; r < 3; ++r) {
-			val[r][c] = ReadFloat( in );
-		}
-	}
-}
-
-void NifStream( Matrix33 const & val, ostream& out, uint version ) {
-	for (int c = 0; c < 3; ++c) {
-		for (int r = 0; r < 3; ++r) {
-			WriteFloat( val[r][c], out );
-		}
-	}
-}
-
-ostream & operator<<( ostream & out, Matrix33 const & val ) {
-	out << endl
-		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << " |" << endl
-		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << " |" << endl
-		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << " |";
-	return out;
-}
-
-//Matrix44
-void NifStream( Matrix44 & val, istream& in, uint version ) {
-	for (int c = 0; c < 4; ++c) {
-		for (int r = 0; r < 4; ++r) {
-			val[r][c] = ReadFloat( in );
-		}
-	}
-}
-
-void NifStream( Matrix44 const & val, ostream& out, uint version ) {
-	for (int c = 0; c < 4; ++c) {
-		for (int r = 0; r < 4; ++r) {
-			WriteFloat( val[r][c], out );
-		}
-	}
-}
-
-ostream & operator<<( ostream & out, Matrix44 const & val ) {
-	out << endl
-		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << "," << setw(6) << val[0][3] << " |" << endl
-		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << "," << setw(6) << val[1][3] << " |" << endl
-		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << "," << setw(6) << val[2][3] << " |" << endl
-		<< "   |" << setw(6) << val[3][0] << "," << setw(6) << val[3][1] << "," << setw(6) << val[3][2] << "," << setw(6) << val[3][3] << " |";
-	return out;
-}
 
 //--Enums--//
 

@@ -42,9 +42,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "niflib.h"
 using namespace std;
 
-// !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
-typedef string HeaderString;
-// !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
+struct HeaderString {
+	string header;
+};
 
 typedef unsigned char	byte;
 typedef unsigned short	ushort;
@@ -67,51 +67,6 @@ typedef float fVector4[4];
 //--IO Functions--//
 
 int BlockSearch( istream& in );
-
-class Str {
-public:
-	Str(const char * c, int n) { _c = c; _n = n; }
-	friend ostream & operator<<(ostream & lh, Str const & rh);
-private:
-	const char * _c;
-	uint _n;
-};
-
-class Hex {
-public:
-	Hex(uint const & n) { _n = n; }
-	Hex(ushort const & n) { _n = uint(n); }
-	Hex(byte const & n) { _n = uint(n); }
-	friend ostream & operator<<(ostream & lh, Hex const & rh);
-private:
-	uint _n;
-};
-
-class Index {
-public:
-	Index(uint const & n) { _n = n; }
-	Index(ushort const & n) { _n = uint(n); }
-	Index(byte const & n) { _n = uint(n); }
-	friend ostream & operator<<(ostream & lh, Index const & rh);
-private:
-	uint _n;
-};
-
-class Bin {
-public:
-	Bin(uint const &  n) { _n = n; _w = 32; }
-	Bin(ushort const & n) {_n = uint(n); _w = 16; }
-	Bin(byte const & n) { _n = uint(n); _w = 8; }
-	friend ostream & operator<<(ostream & lh, Bin const & rh);
-private:
-	uint _n;
-	uint _w;
-};
-
-ostream & operator<<(ostream & lh, fVector2 const & rh);
-ostream & operator<<(ostream & lh, fVector3 const & rh);
-ostream & operator<<(ostream & lh, fVector4 const & rh);
-ostream & operator<<(ostream & lh, usVector3 const & rh);
 
 /**
  * Read utility functions
@@ -144,7 +99,6 @@ void WriteBool( bool val, ostream& out, unsigned int version );
 void WriteFVector2( fVector2 const & fvec, ostream& out );
 void WriteFVector3( fVector3 const & fvec, ostream& out );
 void WriteFVector4( fVector4 const & fvec, ostream& out );
-void WriteBlockName( const char* name, uint nameLength, ostream& out );
 
 //-- NifStream And ostream Functions --//
 // The NifStream functions allow each built-in type to be streamed to and from a file.
@@ -186,52 +140,87 @@ void NifStream( string const & val, ostream& out, uint version = 0  );
 
 //--Structs--//
 
-//Vector3
-void NifStream( Vector3 & val, istream& in, uint version = 0 );
-void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Vector3 const & val );
-
-//Quaternion
-void NifStream( Quaternion & val, istream& in, uint version = 0 );
-void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
-
-//Color4
-void NifStream( Color4 & val, istream& in, uint version = 0 );
-void NifStream( Color4 const & val, ostream& out, uint version = 0  );
-
-//Triangle
-void NifStream( Triangle & val, istream& in, uint version = 0 );
-void NifStream( Triangle const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Triangle const & val );
+//HeaderString
+void NifStream( HeaderString & val, istream& in, uint version = 0 );
+void NifStream( HeaderString const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, HeaderString const & val );
 
 //TexCoord
 void NifStream( TexCoord & val, istream& in, uint version = 0 );
 void NifStream( TexCoord const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, TexCoord const & val );
 
-//TexDesc
-void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
-void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
+//Triangle
+void NifStream( Triangle & val, istream& in, uint version = 0 );
+void NifStream( Triangle const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Triangle const & val );
 
-//LODRange
-void NifStream( LODRange & val, istream& in, uint version = 0 );
-void NifStream( LODRange const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, TexDesc const & val );
+//Vector3
+void NifStream( Vector3 & val, istream& in, uint version = 0 );
+void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Vector3 const & val );
+
+//Float2
+void NifStream( Float2 & val, istream& in, uint version = 0 );
+void NifStream( Float2 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Float2 const & val );
 
 //Matrix22
 void NifStream( Matrix22 & val, istream& in, uint version = 0 );
 void NifStream( Matrix22 const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, Matrix22 const & val );
 
+//Float3
+void NifStream( Float3 & val, istream& in, uint version = 0 );
+void NifStream( Float3 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Float3 const & val );
+
 //Matrix33
 void NifStream( Matrix33 & val, istream& in, uint version = 0 );
 void NifStream( Matrix33 const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, Matrix33 const & val );
 
+//Float4
+void NifStream( Float4 & val, istream& in, uint version = 0 );
+void NifStream( Float4 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Float4 const & val );
+
 //Matrix44
 void NifStream( Matrix44 & val, istream& in, uint version = 0 );
 void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, Matrix44 const & val );
+
+//Color4
+void NifStream( Color4 & val, istream& in, uint version = 0 );
+void NifStream( Color4 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Color4 const & val );
+
+//Quaternion
+void NifStream( Quaternion & val, istream& in, uint version = 0 );
+void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Quaternion const & val );
+
+//BoundingBox
+void NifStream( BoundingBox & val, istream& in, uint version = 0 );
+void NifStream( BoundingBox const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, BoundingBox const & val );
+
+//Not going to implement ConditionalInt.  Should not be needed anymore.
+
+//SkinWeight
+void NifStream( SkinWeight & val, istream& in, uint version = 0 );
+void NifStream( SkinWeight const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, SkinWeight const & val );
+
+//LODRange
+void NifStream( LODRange & val, istream& in, uint version = 0 );
+void NifStream( LODRange const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, LODRange const & val );
+
+//TexDesc
+void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
+void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
+ostream & operator<<( ostream & out, TexDesc const & val );
 
 //--Enums--//
 
