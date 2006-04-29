@@ -4135,14 +4135,14 @@ void NiMorphData::Read( istream& file, unsigned int version ) {
 	uint morphCount = ReadUInt( file );
 	NifStream( vertCount, file );
 
-	GetAttr("Unknown Byte")->Read( file, version );
+	//GetAttr("Unknown Byte")->Read( file, version );
+	byte unk_byte = ReadByte( file );
 
 	morphs.resize(morphCount);
 	for ( uint i = 0; i < morphs.size() ; ++i ) {
 		uint numKeys = ReadUInt( file );
 
 		NifStream( morphs[i]._type, file );
-
 		
 		morphs[i].keys.resize( numKeys );
 		

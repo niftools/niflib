@@ -733,7 +733,7 @@ ostream & operator<<( ostream & out, TexDesc const & val ) {
 
 //--Enums--//
 
-//KeyType
+//TexType
 void NifStream( TexType & val, istream& in, uint version ) { val = TexType(ReadUInt( in )); };
 void NifStream( TexType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 ostream & operator<<( ostream & out, TexType const & val ) {
@@ -745,11 +745,11 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 		case GLOW_MAP: return out << "GLOW_MAP";
 		case BUMP_MAP: return out << "BUMP_MAP";
 		case DECAL_0_MAP: return out << "DECAL_0_MAP";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
-//KeyType
+//ApplyMode
 void NifStream( ApplyMode & val, istream& in, uint version ) { val = ApplyMode(ReadUInt( in )); };
 void NifStream( ApplyMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 ostream & operator<<( ostream & out, ApplyMode const & val ) {
@@ -759,11 +759,11 @@ ostream & operator<<( ostream & out, ApplyMode const & val ) {
 		case APPLY_MODULATE: return out << "APPLY_MODULATE";
 		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
 		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
-//KeyType
+//TexClampMode
 void NifStream( TexClampMode & val, istream& in, uint version ) { val = TexClampMode(ReadUInt( in )); };
 void NifStream( TexClampMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 ostream & operator<<( ostream & out, TexClampMode const & val ) {
@@ -772,7 +772,7 @@ ostream & operator<<( ostream & out, TexClampMode const & val ) {
 		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
 		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
 		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
@@ -787,11 +787,11 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
 		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
 		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
-//KeyType
+//AlphaFormat
 void NifStream( AlphaFormat & val, istream& in, uint version ) { val = AlphaFormat(ReadUInt( in )); };
 void NifStream( AlphaFormat const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 ostream & operator<<( ostream & out, AlphaFormat const & val ) {
@@ -800,7 +800,7 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 		case ALPHA_BINARY: return out << "ALPHA_BINARY";
 		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
 		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
@@ -813,11 +813,11 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 		case QUADRATIC_KEY: return out << "QUADRATIC_KEY";
 		case TBC_KEY: return out << "TBC_KEY";
 		case XYZ_ROTATION_KEY: return out << "XYZ_ROTATION_KEY";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
-//KeyType
+//PixelFormat
 void NifStream( PixelFormat & val, istream& in, uint version ) { val = PixelFormat(ReadUInt( in )); };
 void NifStream( PixelFormat const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
 ostream & operator<<( ostream & out, PixelFormat const & val ) {
@@ -825,7 +825,7 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
 		case PX_FMT_RGBA8: return out << "PX_FMT_RGBA8";
 		case PX_FMT_PAL8: return out << "PX_FMT_PAL8";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
@@ -837,7 +837,7 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 		case MIP_FMT_NO: return out << "MIP_FMT_NO";
 		case MIP_FMT_YES: return out << "MIP_FMT_YES";
 		case MIP_FMT_DEFAULT: return out << "MIP_FMT_DEFAULT";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
@@ -852,7 +852,7 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
 		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
 		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
-		default: return out << "Invalid Value! - " << val;
+		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
 
