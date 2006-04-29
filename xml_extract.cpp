@@ -53,7 +53,7 @@ void NifStream( Bones & val, istream & in, uint version ) {
 
 void NifStream( Bones const & val, ostream & out, uint version ) {
   uint num_bones;
-  num_bones = val.bones.size();
+  num_bones = uint(val.bones.size());
   NifStream( num_bones, out, version );
   NifStream( val.bones, out, version );
 };
@@ -61,6 +61,7 @@ void NifStream( Bones const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, Bones const & val ) {
   out << "           Num Bones:  -- calculated --" << endl;
   out << "               Bones:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( ByteArray & val, istream & in, uint version ) {
@@ -75,7 +76,7 @@ void NifStream( ByteArray & val, istream & in, uint version ) {
 
 void NifStream( ByteArray const & val, ostream & out, uint version ) {
   uint size;
-  size = val.data.size();
+  size = uint(val.data.size());
   NifStream( size, out, version );
   if ( version >= 0x14000004 ) {
     NifStream( val.unknown_int, out, version );
@@ -87,6 +88,7 @@ ostream & operator<<( ostream & out, ByteArray const & val ) {
   out << "                Size:  -- calculated --" << endl;
   out << "         Unknown Int:  " << val.unknown_int << endl;
   out << "                Data:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( condint & val, istream & in, uint version ) {
@@ -106,6 +108,7 @@ void NifStream( condint const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, condint const & val ) {
   out << "             Is Used:  " << val.is_used << endl;
   out << "         Unknown Int:  " << val.unknown_int << endl;
+  return out; //!!BUG!!
 };
 
 template <class T >
@@ -139,7 +142,7 @@ void NifStream( linkgroup & val, istream & in, uint version ) {
 
 void NifStream( linkgroup const & val, ostream & out, uint version ) {
   uint num_indices;
-  num_indices = val.indices.size();
+  num_indices = uint(val.indices.size());
   NifStream( num_indices, out, version );
   NifStream( val.indices, out, version );
 };
@@ -147,6 +150,7 @@ void NifStream( linkgroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, linkgroup const & val ) {
   out << "         Num Indices:  -- calculated --" << endl;
   out << "             Indices:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( Footer & val, istream & in, uint version ) {
@@ -159,6 +163,7 @@ void NifStream( Footer const & val, ostream & out, uint version ) {
 
 ostream & operator<<( ostream & out, Footer const & val ) {
   out << "               Roots:  " << val.roots << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( matchgroup & val, istream & in, uint version ) {
@@ -170,7 +175,7 @@ void NifStream( matchgroup & val, istream & in, uint version ) {
 
 void NifStream( matchgroup const & val, ostream & out, uint version ) {
   ushort num_vertices;
-  num_vertices = val.vertex_indices.size();
+  num_vertices = ushort(val.vertex_indices.size());
   NifStream( num_vertices, out, version );
   NifStream( val.vertex_indices, out, version );
 };
@@ -178,6 +183,7 @@ void NifStream( matchgroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, matchgroup const & val ) {
   out << "        Num Vertices:  -- calculated --" << endl;
   out << "      Vertex Indices:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( mipmap & val, istream & in, uint version ) {
@@ -196,6 +202,7 @@ ostream & operator<<( ostream & out, mipmap const & val ) {
   out << "               Width:  " << val.width << endl;
   out << "              Height:  " << val.height << endl;
   out << "              Offset:  " << val.offset << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( modifiergroup & val, istream & in, uint version ) {
@@ -211,6 +218,7 @@ void NifStream( modifiergroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, modifiergroup const & val ) {
   out << "       Has Modifiers:  " << val.has_modifiers << endl;
   out << "           Modifiers:  " << val.modifiers << endl;
+  return out; //!!BUG!!
 };
 
 template <class T >
@@ -296,6 +304,7 @@ ostream & operator<<( ostream & out, quaternionxyzw const & val ) {
   out << "                   y:  " << val.y << endl;
   out << "                   z:  " << val.z << endl;
   out << "                   w:  " << val.w << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( shortstring & val, istream & in, uint version ) {
@@ -307,7 +316,7 @@ void NifStream( shortstring & val, istream & in, uint version ) {
 
 void NifStream( shortstring const & val, ostream & out, uint version ) {
   byte length;
-  length = val.value.size();
+  length = byte(val.value.size());
   NifStream( length, out, version );
   NifStream( val.value, out, version );
 };
@@ -315,6 +324,7 @@ void NifStream( shortstring const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, shortstring const & val ) {
   out << "              Length:  -- calculated --" << endl;
   out << "               Value:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( skinshapegroup & val, istream & in, uint version ) {
@@ -326,7 +336,7 @@ void NifStream( skinshapegroup & val, istream & in, uint version ) {
 
 void NifStream( skinshapegroup const & val, ostream & out, uint version ) {
   uint num_link_pairs;
-  num_link_pairs = val.link_pairs.size();
+  num_link_pairs = uint(val.link_pairs.size());
   NifStream( num_link_pairs, out, version );
   NifStream( val.link_pairs, out, version );
 };
@@ -334,6 +344,7 @@ void NifStream( skinshapegroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, skinshapegroup const & val ) {
   out << "      Num Link Pairs:  -- calculated --" << endl;
   out << "          Link Pairs:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( skinweight & val, istream & in, uint version ) {
@@ -349,6 +360,7 @@ void NifStream( skinweight const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, skinweight const & val ) {
   out << "               Index:  " << val.index << endl;
   out << "              Weight:  " << val.weight << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( AVObject & val, istream & in, uint version ) {
@@ -364,6 +376,7 @@ void NifStream( AVObject const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, AVObject const & val ) {
   out << "                Name:  " << val.name << endl;
   out << "              Object:  " << val.object << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( ControllerLink & val, istream & in, uint version ) {
@@ -499,6 +512,7 @@ ostream & operator<<( ostream & out, ControllerLink const & val ) {
   out << "          Variable 2:  " << val.variable_2 << endl;
   out << "   Variable Offset 2:  " << val.variable_offset_2 << endl;
   out << "     Unknown Short 5:  " << val.unknown_short_5 << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( Header & val, istream & in, uint version ) {
@@ -541,8 +555,8 @@ void NifStream( Header & val, istream & in, uint version ) {
 void NifStream( Header const & val, ostream & out, uint version ) {
   uint num_blocks;
   ushort num_block_types;
-  num_blocks = val.block_type_index.size();
-  num_block_types = val.block_types.size();
+  num_blocks = uint(val.block_type_index.size());
+  num_block_types = ushort(val.block_types.size());
   NifStream( val.header_string, out, version );
   NifStream( val.version, out, version );
   if ( version >= 0x14000004 ) {
@@ -590,6 +604,7 @@ ostream & operator<<( ostream & out, Header const & val ) {
   out << "         Block Types:  -- data not shown --" << endl;
   out << "    Block Type Index:  -- data not shown --" << endl;
   out << "       Unknown Int 2:  " << val.unknown_int_2 << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( shader & val, istream & in, uint version ) {
@@ -612,6 +627,7 @@ ostream & operator<<( ostream & out, shader const & val ) {
   out << "          Has Shader:  " << val.has_shader << endl;
   out << "         Shader Name:  " << val.shader_name << endl;
   out << "        Unknown Link:  " << val.unknown_link << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( stringpalette & val, istream & in, uint version ) {
@@ -627,6 +643,7 @@ void NifStream( stringpalette const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, stringpalette const & val ) {
   out << "             Palette:  " << val.palette << endl;
   out << "              Length:  " << val.length << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( targetgroup & val, istream & in, uint version ) {
@@ -638,7 +655,7 @@ void NifStream( targetgroup & val, istream & in, uint version ) {
 
 void NifStream( targetgroup const & val, ostream & out, uint version ) {
   ushort num_indices;
-  num_indices = val.indices.size();
+  num_indices = ushort(val.indices.size());
   NifStream( num_indices, out, version );
   NifStream( val.indices, out, version );
 };
@@ -646,6 +663,7 @@ void NifStream( targetgroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, targetgroup const & val ) {
   out << "         Num Indices:  -- calculated --" << endl;
   out << "             Indices:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( tbc & val, istream & in, uint version ) {
@@ -664,33 +682,34 @@ ostream & operator<<( ostream & out, tbc const & val ) {
   out << "                   t:  " << val.t << endl;
   out << "                   b:  " << val.b << endl;
   out << "                   c:  " << val.c << endl;
+  return out; //!!BUG!!
 };
 
-template <class T >
-void NifStream( keyvec<T> & val, istream & in, uint version ) {
-  NifStream( val.time, in, version );
-  NifStream( val.value, in, version );
-  if ( (arg) == 2 ) {
-    NifStream( val.forward, in, version );
-    NifStream( val.backward, in, version );
-  };
-  if ( (arg) == 3 ) {
-    NifStream( val.tbc, in, version );
-  };
-};
+//template <class T > !!BUG!!
+//void NifStream( keyvec<T> & val, istream & in, uint version ) {
+//  NifStream( val.time, in, version );
+//  NifStream( val.value, in, version );
+//  if ( (arg) == 2 ) {
+//    NifStream( val.forward, in, version );
+//    NifStream( val.backward, in, version );
+//  };
+//  if ( (arg) == 3 ) {
+//    NifStream( val.tbc, in, version );
+//  };
+//};
 
-template <class T >
-void NifStream( keyvec<T> const & val, ostream & out, uint version ) {
-  NifStream( val.time, out, version );
-  NifStream( val.value, out, version );
-  if ( (arg) == 2 ) {
-    NifStream( val.forward, out, version );
-    NifStream( val.backward, out, version );
-  };
-  if ( (arg) == 3 ) {
-    NifStream( val.tbc, out, version );
-  };
-};
+//template <class T > !!BUG!!
+//void NifStream( keyvec<T> const & val, ostream & out, uint version ) {
+//  NifStream( val.time, out, version );
+//  NifStream( val.value, out, version );
+//  if ( (arg) == 2 ) {
+//    NifStream( val.forward, out, version );
+//    NifStream( val.backward, out, version );
+//  };
+//  if ( (arg) == 3 ) {
+//    NifStream( val.tbc, out, version );
+//  };
+//};
 
 template <class T >
 ostream & operator<<( ostream & out, keyvec<T> const & val ) {
@@ -806,7 +825,7 @@ void NifStream( keyvecarraytyp<T> & val, istream & in, uint version ) {
 template <class T >
 void NifStream( keyvecarraytyp<T> const & val, ostream & out, uint version ) {
   uint num_keys;
-  num_keys = val.keys.size();
+  num_keys = uint(val.keys.size());
   NifStream( num_keys, out, version );
   NifStream( val.key_type, out, version );
   NifStream( val.keys, out, version );
@@ -817,6 +836,7 @@ ostream & operator<<( ostream & out, keyvecarraytyp<T> const & val ) {
   out << "            Num Keys:  -- calculated --" << endl;
   out << "            Key Type:  " << val.key_type << endl;
   out << "                Keys:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 template <class T >
@@ -888,6 +908,7 @@ void NifStream( ns_keyrotsub const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, ns_keyrotsub const & val ) {
   out << "                Time:  " << val.time << endl;
   out << "            Sub Keys:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 template <class T >
@@ -983,6 +1004,7 @@ ostream & operator<<( ostream & out, BumpMap const & val ) {
   out << " Bump Map Luma Scale:  " << val.bump_map_luma_scale << endl;
   out << "Bump Map Luma Offset:  " << val.bump_map_luma_offset << endl;
   out << "              Matrix:  " << val.matrix << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( texture & val, istream & in, uint version ) {
@@ -1002,6 +1024,7 @@ void NifStream( texture const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, texture const & val ) {
   out << "             Is Used:  " << val.is_used << endl;
   out << "        Texture Data:  " << val.texture_data << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( texture2 & val, istream & in, uint version ) {
@@ -1024,6 +1047,7 @@ ostream & operator<<( ostream & out, texture2 const & val ) {
   out << "             Is Used:  " << val.is_used << endl;
   out << "        Texture Data:  " << val.texture_data << endl;
   out << "         Unknown Int:  " << val.unknown_int << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( ExtraTextureGroup & val, istream & in, uint version ) {
@@ -1035,7 +1059,7 @@ void NifStream( ExtraTextureGroup & val, istream & in, uint version ) {
 
 void NifStream( ExtraTextureGroup const & val, ostream & out, uint version ) {
   uint num_textures;
-  num_textures = val.textures.size();
+  num_textures = uint(val.textures.size());
   NifStream( num_textures, out, version );
   NifStream( val.textures, out, version );
 };
@@ -1043,6 +1067,7 @@ void NifStream( ExtraTextureGroup const & val, ostream & out, uint version ) {
 ostream & operator<<( ostream & out, ExtraTextureGroup const & val ) {
   out << "        Num Textures:  -- calculated --" << endl;
   out << "            Textures:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( skinpartitionblock & val, istream & in, uint version ) {
@@ -1098,11 +1123,11 @@ void NifStream( skinpartitionblock const & val, ostream & out, uint version ) {
   ushort num_bones;
   ushort num_weights_per_vertex;
   vector<ushort > strip_lengths;
-  num_vertices = val.vertex_map.size();
-  num_triangles = val.triangles.size();
-  num_bones = val.bones.size();
-  num_weights_per_vertex = val.vertex_weights.size();
-  strip_lengths = val.strips.size();
+  num_vertices = uint(val.vertex_map.size());
+  num_triangles = uint(val.triangles.size());
+  num_bones = ushort(val.bones.size());
+  num_weights_per_vertex = ushort(val.vertex_weights.size());
+  //strip_lengths = val.strips.size(); !!BUG!!
   NifStream( num_vertices, out, version );
   NifStream( num_triangles, out, version );
   NifStream( num_bones, out, version );
@@ -1154,6 +1179,7 @@ ostream & operator<<( ostream & out, skinpartitionblock const & val ) {
   out << "           Triangles:  -- data not shown --" << endl;
   out << "    Has Bone Indices:  " << val.has_bone_indices << endl;
   out << "        Bone Indices:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( unk292bytes & val, istream & in, uint version ) {
@@ -1167,6 +1193,7 @@ void NifStream( unk292bytes const & val, ostream & out, uint version ) {
 
 ostream & operator<<( ostream & out, unk292bytes const & val ) {
   out << "   Unknown 292 Bytes:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( FurniturePosition & val, istream & in, uint version ) {
@@ -1188,6 +1215,7 @@ ostream & operator<<( ostream & out, FurniturePosition const & val ) {
   out << "       Unknown Short:  " << val.unknown_short << endl;
   out << "     Position Ref 1?:  " << val.position_ref_1_ << endl;
   out << "     Position Ref 2?:  " << val.position_ref_2_ << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( hktriangle & val, istream & in, uint version ) {
@@ -1206,6 +1234,7 @@ ostream & operator<<( ostream & out, hktriangle const & val ) {
   out << "            Triangle:  " << val.triangle << endl;
   out << "       Unknown Short:  " << val.unknown_short << endl;
   out << "              Normal:  " << val.normal << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( lodinfo & val, istream & in, uint version ) {
@@ -1225,7 +1254,7 @@ void NifStream( lodinfo & val, istream & in, uint version ) {
 
 void NifStream( lodinfo const & val, ostream & out, uint version ) {
   uint num_lod_levels;
-  num_lod_levels = val.lod_levels.size();
+  num_lod_levels = uint(val.lod_levels.size());
   NifStream( val.lod_type, out, version );
   if ( val.lod_type == 0 ) {
     NifStream( val.lod_center, out, version );
@@ -1245,6 +1274,7 @@ ostream & operator<<( ostream & out, lodinfo const & val ) {
   out << "          LOD Levels:  -- data not shown --" << endl;
   out << "       Unknown Short:  " << val.unknown_short << endl;
   out << "          Range Data:  " << val.range_data << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( morphblock & val, istream & in, uint version ) {
@@ -1257,7 +1287,7 @@ void NifStream( morphblock & val, istream & in, uint version ) {
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
     NifStream( val.unknown_int, in, version );
   };
-  val.vectors.resize((arg));
+  //val.vectors.resize((arg)); !!BUG!!
   NifStream( val.vectors, in, version );
 };
 
@@ -1279,6 +1309,7 @@ ostream & operator<<( ostream & out, morphblock const & val ) {
   out << "              Frames:  " << val.frames << endl;
   out << "         Unknown Int:  " << val.unknown_int << endl;
   out << "             Vectors:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( particle & val, istream & in, uint version ) {
@@ -1309,6 +1340,7 @@ ostream & operator<<( ostream & out, particle const & val ) {
   out << "           Timestamp:  " << val.timestamp << endl;
   out << "       Unknown Short:  " << val.unknown_short << endl;
   out << "           Vertex ID:  " << val.vertex_id << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( particlegroup & val, istream & in, uint version ) {
@@ -1321,7 +1353,7 @@ void NifStream( particlegroup & val, istream & in, uint version ) {
 
 void NifStream( particlegroup const & val, ostream & out, uint version ) {
   ushort num_particles;
-  num_particles = val.particles.size();
+  num_particles = ushort(val.particles.size());
   NifStream( num_particles, out, version );
   NifStream( val.num_valid, out, version );
   NifStream( val.particles, out, version );
@@ -1331,6 +1363,7 @@ ostream & operator<<( ostream & out, particlegroup const & val ) {
   out << "       Num Particles:  -- calculated --" << endl;
   out << "           Num Valid:  " << val.num_valid << endl;
   out << "           Particles:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 
 void NifStream( skinblock & val, istream & in, uint version ) {
@@ -1347,7 +1380,7 @@ void NifStream( skinblock & val, istream & in, uint version ) {
 
 void NifStream( skinblock const & val, ostream & out, uint version ) {
   ushort num_vertices;
-  num_vertices = val.vertex_weights.size();
+  num_vertices = ushort(val.vertex_weights.size());
   NifStream( val.rotation, out, version );
   NifStream( val.translation, out, version );
   NifStream( val.scale, out, version );
@@ -1363,5 +1396,6 @@ ostream & operator<<( ostream & out, skinblock const & val ) {
   out << "    Unknown 4 Floats:  -- data not shown --" << endl;
   out << "        Num Vertices:  -- calculated --" << endl;
   out << "      Vertex Weights:  -- data not shown --" << endl;
+  return out; //!!BUG!!
 };
 

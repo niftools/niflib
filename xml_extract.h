@@ -59,7 +59,7 @@ using namespace std;
 //
 struct Bones {
   // Block indicies of the bones.
-  vector<IBlock * > bones;
+  vector<uint > bones;
   Bones() {};
 };
 
@@ -119,7 +119,7 @@ ostream & operator<<( ostream & out, keyarray<T> const & val );
 //
 struct linkgroup {
   // The list of block indices.
-  vector<link_ref > indices;
+  vector<uint > indices;
   linkgroup() {};
 };
 
@@ -268,7 +268,7 @@ ostream & operator<<( ostream & out, quaternionxyzw const & val );
 //
 struct shortstring {
   // The string itself, null terminated (the null terminator is taken into account in the length byte).
-  vector<char > value;
+  vector<byte > value;
   shortstring() {};
 };
 
@@ -282,7 +282,7 @@ ostream & operator<<( ostream & out, shortstring const & val );
 struct skinshapegroup {
   // First link is a NiTriShape block.
   // Second link is a NiSkinInstance block.
-  vector<vector<link_ref > > link_pairs;
+  vector<vector<uint > > link_pairs;
   skinshapegroup() {};
 };
 
@@ -312,7 +312,7 @@ struct AVObject {
   // Object name.
   string name;
   // Object reference.
-  IBlock * object;
+  uint object;
   AVObject() {};
 };
 
@@ -327,17 +327,17 @@ struct ControllerLink {
   // Name of a controllable block in another NIF file.
   string name;
   // Link to an interpolator.
-  link_ref interpolator;
+  uint interpolator;
   // Unknown link. Usually -1.
-  link_ref unknown_link_1;
+  uint unknown_link_1;
   // Unknown.
-  link_ref unknown_link_2;
+  uint unknown_link_2;
   // Unknown.
   ushort unknown_short_0;
   // Idle animations tend to have low values for this, and blocks that have high values tend to correspond with the important parts of the animation. WARNING: BREAKS CIV4 NIF FILES! Only observed in Oblivion NIF files so far.
   byte priority_;
   // Refers to the NiStringPalette which contains the name of the controlled block.
-  link_ref string_palette;
+  uint string_palette;
   // The name of the animated node.
   string node_name;
   // Offset in the string palette where the name of the controlled node (NiNode, NiTriShape, ...) starts.
@@ -379,7 +379,7 @@ ostream & operator<<( ostream & out, ControllerLink const & val );
 // The NIF file header.
 //
 struct Header {
-  // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version written out. Ends with a newline character (0x0A).
+  // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version written out. Ends with a newline byteacter (0x0A).
   HeaderString header_string;
   // The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C, 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000, 0x0A020000, 0x14000004, ...
   uint version;
@@ -422,7 +422,7 @@ struct shader {
   // The shader name.
   string shader_name;
   // Unknown link, usually -1.
-  link_ref unknown_link;
+  uint unknown_link;
   shader() {};
 };
 
@@ -450,7 +450,7 @@ ostream & operator<<( ostream & out, stringpalette const & val );
 //
 struct targetgroup {
   // The list of block indices.
-  vector<IBlock * > indices;
+  vector<uint > indices;
   targetgroup() {};
 };
 
@@ -576,7 +576,7 @@ struct keyvecarraytyp {
   uint key_type;
   // The keys.
   vector<keyvec<T > > keys;
-  keyvecarraytyp() : keys(keyvec(key_type)) {};
+  //keyvecarraytyp() : keys(keyvec(key_type)) {}; !!BUG!!
 };
 
 template <class T >
@@ -878,7 +878,7 @@ struct lodinfo {
   // Zero?
   ushort unknown_short;
   // Refers to NiRangeLODData block.
-  link_ref range_data;
+  uint range_data;
   lodinfo() {};
 };
 
@@ -976,9 +976,9 @@ ostream & operator<<( ostream & out, skinblock const & val );
 // - Controller block index. (The first in a chain)
 #define A_CONTROLLABLE_MEMBERS \
 string name; \
-link_ref extra_data; \
+uint extra_data; \
 linkgroup extra_data_list; \
-link_ref controller; \
+uint controller; \
 
 #define A_CONTROLLABLE_GETATTR \
 if ( attr_name == "Name" ) \
@@ -1033,7 +1033,7 @@ out << "          Controller:  " << controller << endl; \
 // - Controller stop time.
 // - Controller target (block index of the first controllable ancestor of this block).
 #define A_CONTROLLER_MEMBERS \
-link_ref next_controller; \
+uint next_controller; \
 flags flags; \
 float frequency; \
 float phase; \
@@ -1171,7 +1171,7 @@ out << setprecision(1); \
 // - The bodies affected by this constraint.
 // - Usually 1.
 #define ABHK_CONSTRAINT_MEMBERS \
-vector<IBlock * > bodies; \
+vector<uint > bodies; \
 uint unknown_int; \
 
 #define ABHK_CONSTRAINT_GETATTR \
@@ -1323,7 +1323,7 @@ out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 // - Unknown.
 // - Unknown.
 #define ABHK_RIGID_BODY_MEMBERS \
-link_ref shape; \
+uint shape; \
 uint flags; \
 vector<float > unknown_floats_1; \
 vector<ushort > unknown_shorts_1; \
@@ -1527,7 +1527,7 @@ out << AData::asString(); \
 // - Unknown.
 // - A transform matrix.
 #define ABHK_TRANSFORM_SHAPE_MEMBERS \
-link_ref sub_shape; \
+uint sub_shape; \
 uint unknown_int; \
 float unknown_float_1; \
 float unknown_float_2; \
@@ -1594,7 +1594,7 @@ out << "           Transform:  " << transform << endl; \
 #define A_COLLISION_OBJECT_MEMBERS \
 uint parent; \
 ushort unknown_short; \
-link_ref body; \
+uint body; \
 
 #define A_COLLISION_OBJECT_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -1639,7 +1639,7 @@ out << "                Body:  " << body << endl; \
 // - Block number of the next extra data block.
 #define A_EXTRA_DATA_MEMBERS \
 string name; \
-link_ref next_extra_data; \
+uint next_extra_data; \
 
 #define A_EXTRA_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -1812,7 +1812,7 @@ out << AData::asString(); \
 //
 // - Keyframe controller data index.
 #define A_KEYFRAME_CONTROLLER_MEMBERS \
-link_ref data; \
+uint data; \
 
 #define A_KEYFRAME_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -1900,7 +1900,7 @@ float scale; \
 Vector3 velocity; \
 linkgroup properties; \
 BoundingBox bounding_box; \
-link_ref collision_data; \
+uint collision_data; \
 
 #define A_NODE_GETATTR \
 attr_ref attr = AControllable::GetAttr( attr_name ); \
@@ -2162,7 +2162,7 @@ out << "            Unknown2:  " << unknown2 << endl; \
 // - Next particle modifier.
 // - Previous particle modifier.
 #define A_PARTICLE_MODIFIER_MEMBERS \
-link_ref next_modifier; \
+uint next_modifier; \
 uint previous_modifier; \
 
 #define A_PARTICLE_MODIFIER_GETATTR \
@@ -2253,16 +2253,16 @@ float lifetime; \
 float lifetime_random; \
 ushort emit_flags; \
 Vector3 start_random; \
-link_ref emitter; \
+uint emitter; \
 ushort unknown_short_2_; \
 float unknown_float_13_; \
 uint unknown_int_1_; \
 uint unknown_int_2_; \
 ushort unknown_short_3_; \
 particlegroup particles; \
-link_ref unknown_link; \
-link_ref particle_extra; \
-link_ref unknown_link_2; \
+uint unknown_link; \
+uint particle_extra; \
+uint unknown_link_2; \
 byte trailer; \
 
 #define A_PARTICLE_SYSTEM_CONTROLLER_GETATTR \
@@ -2718,8 +2718,8 @@ out << "      Emitter Object:  " << emitter_object << endl; \
 // - Skin instance index.
 // - Shader.
 #define A_SHAPE_MEMBERS \
-link_ref data; \
-link_ref skin_instance; \
+uint data; \
+uint skin_instance; \
 shader shader; \
 
 #define A_SHAPE_GETATTR \
@@ -2829,7 +2829,7 @@ bool has_uv; \
 vector<vector<TexCoord > > uv_sets; \
 vector<vector<TexCoord > > uv_sets_2; \
 ushort unknown_short_2; \
-link_ref unknown_link; \
+uint unknown_link; \
 
 #define A_SHAPE_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -3239,7 +3239,7 @@ out << "           Rotations:  -- data not shown --" << endl; \
 //
 // - Link to interpolator.
 #define A_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS \
-link_ref interpolator; \
+uint interpolator; \
 
 #define A_SINGLE_INTERPOLATOR_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -3843,8 +3843,8 @@ out << "        Unknown Ints:  -- data not shown --" << endl; \
 #define BHK_MALLEABLE_CONSTRAINT_MEMBERS \
 uint type; \
 uint unknown_int_2; \
-link_ref unknown_link_1; \
-link_ref unknown_link_2; \
+uint unknown_link_1; \
+uint unknown_link_2; \
 uint unknown_int_3; \
 vector<float > unknown_floats_1; \
 vector<vector<float > > unknown_floats; \
@@ -3930,7 +3930,7 @@ out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 // - Unknown.
 // - Unknown.
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
-link_ref shape; \
+uint shape; \
 uint unknown_int; \
 vector<byte > unknown_bytes_1; \
 float unknown_float; \
@@ -4145,7 +4145,7 @@ out << "      Unknown Ints 3:  -- data not shown --" << endl; \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 vector<vector<uint > > unknown_ints; \
 vector<float > unknown_floats; \
-link_ref data; \
+uint data; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
@@ -4317,7 +4317,7 @@ out << AbhkRigidBody::asString(); \
 // - Unknown. (1,0,0,0,0) x 3.
 // - Unknown.
 #define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS \
-link_ref shape; \
+uint shape; \
 uint unknown_int_1; \
 vector<float > unkown_floats; \
 vector<vector<float > > unknown_floats_2; \
@@ -4598,7 +4598,7 @@ out << "           Positions:  -- data not shown --" << endl; \
 //
 // - A link to more keyframe data.
 #define B_S_KEYFRAME_CONTROLLER_MEMBERS \
-link_ref data_2; \
+uint data_2; \
 
 #define B_S_KEYFRAME_CONTROLLER_GETATTR \
 attr_ref attr = AKeyframeController::GetAttr( attr_name ); \
@@ -4892,7 +4892,7 @@ out << "           Vertices?:  -- data not shown --" << endl; \
 //
 // - Alpha controller data index.
 #define NI_ALPHA_CONTROLLER_MEMBERS \
-link_ref data; \
+uint data; \
 
 #define NI_ALPHA_CONTROLLER_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
@@ -5395,7 +5395,7 @@ out << "        Boolean Data:  " << boolean_data << endl; \
 // - Refers to a NiBoolData block.
 #define NI_BOOL_INTERPOLATOR_MEMBERS \
 bool bool_value; \
-link_ref data; \
+uint data; \
 
 #define NI_BOOL_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -5436,7 +5436,7 @@ out << "                Data:  " << data << endl; \
 // - The bool data.
 #define NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS \
 byte bool; \
-link_ref data; \
+uint data; \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -5652,8 +5652,8 @@ out << "      Unknown Floats:  -- data not shown --" << endl; \
 // - Unknown.
 // - Unknown.
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
-link_ref data; \
-link_ref unknown_link; \
+uint data; \
+uint unknown_link; \
 vector<float > unknown_floats; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_GETATTR \
@@ -5699,8 +5699,8 @@ out << "      Unknown Floats:  -- data not shown --" << endl; \
 // - Refers to NiBSPlineBasisData.
 // - Unknown.
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
-link_ref data; \
-link_ref basis_data; \
+uint data; \
+uint basis_data; \
 vector<float > unknown4; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_GETATTR \
@@ -5818,7 +5818,7 @@ float viewport_right; \
 float viewport_top; \
 float viewport_bottom; \
 float lod_adjust; \
-link_ref unknown_link_; \
+uint unknown_link_; \
 uint unknown_int; \
 uint unknown_int_2; \
 
@@ -6104,7 +6104,7 @@ out << "                Data:  " << data << endl; \
 #define NI_CONTROLLER_MANAGER_MEMBERS \
 bool unknown_byte; \
 linkgroup controller_sequences; \
-link_ref object_palette; \
+uint object_palette; \
 
 #define NI_CONTROLLER_MANAGER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -6166,7 +6166,7 @@ ControllerLink text_keys; \
 uint unknown_int_1; \
 vector<ControllerLink > controlled_blocks; \
 float unknown_float_1; \
-link_ref text_keys_2; \
+uint text_keys_2; \
 uint unknown_int_0; \
 float unknown_float_3; \
 float unknown_float_4; \
@@ -6176,7 +6176,7 @@ float unknown_float_2; \
 byte unknown_byte; \
 uint unknown_int_3; \
 string unknown_string; \
-link_ref string_palette; \
+uint string_palette; \
 
 #define NI_CONTROLLER_SEQUENCE_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -6556,7 +6556,7 @@ out << "          Float Data:  " << float_data << endl; \
 // - Unknown.
 // - Unknown. Refers to some NiFloatExtraData name?
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS \
-link_ref unknown_link; \
+uint unknown_link; \
 string unknown_string; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_GETATTR \
@@ -6602,7 +6602,7 @@ out << "      Unknown String:  " << unknown_string << endl; \
 // - Float data?
 #define NI_FLOAT_INTERPOLATOR_MEMBERS \
 float float_value; \
-link_ref data; \
+uint data; \
 
 #define NI_FLOAT_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -6739,7 +6739,7 @@ out << "           Fog Color:  " << fog_color << endl; \
 #define NI_GEOM_MORPHER_CONTROLLER_MEMBERS \
 ushort unknown; \
 byte unknown_2; \
-link_ref data; \
+uint data; \
 byte unknown_byte; \
 linkgroup interpolators; \
 vector<uint > unknown_ints; \
@@ -7019,8 +7019,8 @@ out << AKeyframeData::asString(); \
 // - Link to NiPoint3Interpolator.
 #define NI_LIGHT_COLOR_CONTROLLER_MEMBERS \
 ushort unknown_short; \
-link_ref data; \
-link_ref interpolator; \
+uint data; \
+uint interpolator; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -7076,7 +7076,7 @@ out << "        Interpolator:  " << interpolator << endl; \
 //
 // - Unknown link. Interpolator?
 #define NI_LIGHT_DIMMER_CONTROLLER_MEMBERS \
-link_ref unknown_link; \
+uint unknown_link; \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -7144,7 +7144,7 @@ out << "            LOD Info:  " << lod_info << endl; \
 // - Link to the node to look at?
 #define NI_LOOK_AT_CONTROLLER_MEMBERS \
 ushort unknown1; \
-link_ref look_at_node; \
+uint look_at_node; \
 
 #define NI_LOOK_AT_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -7196,14 +7196,14 @@ out << "        Look At Node:  " << look_at_node << endl; \
 // - Refers to a NiFloatInterpolator.
 #define NI_LOOK_AT_INTERPOLATOR_MEMBERS \
 ushort unknown_short; \
-link_ref look_at; \
+uint look_at; \
 float unknown_float; \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-link_ref unknown_link_1; \
-link_ref unknown_link_2; \
-link_ref unknown_link_3; \
+uint unknown_link_1; \
+uint unknown_link_2; \
+uint unknown_link_3; \
 
 #define NI_LOOK_AT_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -7280,7 +7280,7 @@ out << "      Unknown Link 3:  " << unknown_link_3 << endl; \
 // - Unknown.
 #define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS \
 ushort unknown; \
-link_ref data; \
+uint data; \
 ushort unknown_short; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_GETATTR \
@@ -7467,7 +7467,7 @@ vector<vector<float > > unknown_floats_3; \
 vector<vector<float > > unknown_floats_4; \
 vector<vector<float > > unknown_floats_5; \
 uint unknown_int_1; \
-link_ref modifier; \
+uint modifier; \
 byte unknown_byte_2; \
 linkgroup unknown_link_group; \
 ushort unknown_short_4; \
@@ -7475,7 +7475,7 @@ uint unknown_int_2; \
 byte unknown_byte_12; \
 uint unknown_int_3; \
 uint unknown_int_4; \
-link_ref unknown_link_2; \
+uint unknown_link_2; \
 
 #define NI_MESH_P_SYS_DATA_GETATTR \
 attr_ref attr = APSysData::GetAttr( attr_name ); \
@@ -7867,7 +7867,7 @@ out << "    Unknown Float 10:  " << unknown_float_10 << endl; \
 //
 // - Color data index.
 #define NI_PARTICLE_COLOR_MODIFIER_MEMBERS \
-link_ref color_data; \
+uint color_data; \
 
 #define NI_PARTICLE_COLOR_MODIFIER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
@@ -7969,7 +7969,7 @@ out << AParticleNode::asString(); \
 //
 // - Refers to the mesh that makes up a particle?
 #define NI_PARTICLE_MESHES_DATA_MEMBERS \
-link_ref unknown_link_2; \
+uint unknown_link_2; \
 
 #define NI_PARTICLE_MESHES_DATA_GETATTR \
 attr_ref attr = ARotatingParticlesData::GetAttr( attr_name ); \
@@ -8225,8 +8225,8 @@ uint unknown_int_1; \
 uint unknown_int_2; \
 uint unknown_int_3; \
 ushort unknown_short; \
-link_ref pos_data; \
-link_ref float_data; \
+uint pos_data; \
+uint float_data; \
 
 #define NI_PATH_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -8301,8 +8301,8 @@ out << "          Float Data:  " << float_data << endl; \
 float unknown_float_1; \
 float unknown_float_2; \
 ushort unknown_short_2; \
-link_ref pos_data; \
-link_ref float_data; \
+uint pos_data; \
+uint float_data; \
 
 #define NI_PATH_INTERPOLATOR_GETATTR \
 attr_ref attr = ABlendInterpolator::GetAttr( attr_name ); \
@@ -8385,7 +8385,7 @@ uint bits_per_pixel; \
 vector<byte > unknown_8_bytes; \
 uint unknown_int; \
 vector<byte > unknown_54_bytes; \
-link_ref palette; \
+uint palette; \
 uint bytes_per_pixel; \
 vector<mipmap > mipmaps; \
 ByteArray pixel_data; \
@@ -8658,7 +8658,7 @@ out << "    Unknown Float 16:  " << unknown_float_16 << endl; \
 // - Reference to NiPosData.
 #define NI_POINT3_INTERPOLATOR_MEMBERS \
 Vector3 point_3_value; \
-link_ref data; \
+uint data; \
 
 #define NI_POINT3_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -8758,7 +8758,7 @@ out << "                Data:  " << data << endl; \
 // - Link to NiPSysSpawnModifier block?
 #define NI_P_SYS_AGE_DEATH_MODIFIER_MEMBERS \
 bool spawn_on_death; \
-link_ref spawn_modifier; \
+uint spawn_modifier; \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -8800,7 +8800,7 @@ out << "      Spawn Modifier:  " << spawn_modifier << endl; \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_BOMB_MODIFIER_MEMBERS \
-IBlock * unknown_link; \
+uint unknown_link; \
 vector<uint > unknown_ints_1; \
 vector<float > unknown_floats; \
 vector<uint > unknown_ints_2; \
@@ -8931,7 +8931,7 @@ out << "               Depth:  " << depth << endl; \
 //
 // - Link to NiPSysPlanarCollider.
 #define NI_P_SYS_COLLIDER_MANAGER_MEMBERS \
-link_ref collider; \
+uint collider; \
 
 #define NI_P_SYS_COLLIDER_MANAGER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -8965,7 +8965,7 @@ out << "            Collider:  " << collider << endl; \
 //
 // - Refers to NiColorData block.
 #define NI_P_SYS_COLOR_MODIFIER_MEMBERS \
-link_ref data; \
+uint data; \
 
 #define NI_P_SYS_COLOR_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -9179,7 +9179,7 @@ out << "      Unknown Floats:  -- data not shown --" << endl; \
 //
 // - Particle system controller data.
 #define NI_P_SYS_EMITTER_CTLR_MEMBERS \
-link_ref data; \
+uint data; \
 
 #define NI_P_SYS_EMITTER_CTLR_GETATTR \
 attr_ref attr = APSysCtlr::GetAttr( attr_name ); \
@@ -9391,7 +9391,7 @@ out << APSysCtlr::asString(); \
 // - Unknown.
 // - Unknown.  Can only get it to say FORCE_PLANAR or Unknown so far.  Usual value is 1.0.
 #define NI_P_SYS_GRAVITY_MODIFIER_MEMBERS \
-IBlock * gravity_object; \
+uint gravity_object; \
 Vector3 gravity_axis; \
 float decay; \
 float strength; \
@@ -9666,10 +9666,10 @@ out << APSysCtlr::asString(); \
 float bounce; \
 bool spawn_on_collide; \
 bool die_on_collide; \
-link_ref spawn_modifier; \
+uint spawn_modifier; \
 uint parent; \
-link_ref unknown_link_; \
-link_ref collider_object; \
+uint unknown_link_; \
+uint collider_object; \
 float width; \
 float height; \
 Vector3 x_axis; \
@@ -10252,7 +10252,7 @@ out << "               Flags:  " << flags << endl; \
 Matrix33 rotation; \
 Vector3 translation; \
 float scale; \
-link_ref skin_partition; \
+uint skin_partition; \
 byte unknown_byte; \
 vector<skinblock > bone_list; \
 
@@ -10328,8 +10328,8 @@ out << "           Bone List:  -- data not shown --" << endl; \
 // - Refers to a NiSkinPartition block, which partitions the mesh such that every vertex is only influenced by a limited number of bones.
 // - List of all armature bones.
 #define NI_SKIN_INSTANCE_MEMBERS \
-link_ref data; \
-link_ref skin_partition; \
+uint data; \
+uint skin_partition; \
 Bones bones; \
 
 #define NI_SKIN_INSTANCE_GETATTR \
@@ -10347,7 +10347,7 @@ return attr_ref(); \
 #define NI_SKIN_INSTANCE_CONSTRUCT
 
 #define NI_SKIN_INSTANCE_READ \
-IBlock * skeleton_root; \
+uint skeleton_root; \
 AData::Read( in, version ); \
 NifStream( data, in, version ); \
 if ( version >= 0x0A020000 ) { \
@@ -10356,7 +10356,7 @@ if ( version >= 0x0A020000 ) { \
 NifStream( bones, in, version ); \
 
 #define NI_SKIN_INSTANCE_WRITE \
-IBlock * skeleton_root; \
+uint skeleton_root; \
 AData::Write( out, version ); \
 skeleton_root = SkeletonRoot(); \
 NifStream( data, out, version ); \
@@ -10947,7 +10947,7 @@ uint texture_filtering; \
 uint texture_clamping; \
 uint texture_type; \
 uint coordinate_generation_type; \
-link_ref source_texture; \
+uint source_texture; \
 byte clipping_plane; \
 Vector3 unknown_vector; \
 float unknown_float; \
@@ -11068,7 +11068,7 @@ out << "       Unknown Short:  " << unknown_short << endl; \
 byte unknown2; \
 uint texture_slot; \
 uint operation; \
-link_ref data; \
+uint data; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
@@ -11292,7 +11292,7 @@ Vector3 translation; \
 Quaternion rotation; \
 float scale; \
 vector<byte > unknown_bytes; \
-link_ref data; \
+uint data; \
 
 #define NI_TRANSFORM_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -11561,7 +11561,7 @@ out << "              Points:  -- data not shown --" << endl; \
 // - Texture coordinate controller data index.
 #define NI_U_V_CONTROLLER_MEMBERS \
 ushort unknown_short; \
-link_ref data; \
+uint data; \
 
 #define NI_U_V_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -11773,7 +11773,7 @@ out << "              Weight:  -- data not shown --" << endl; \
 //
 // - Visibility controller data block index.
 #define NI_VIS_CONTROLLER_MEMBERS \
-link_ref data; \
+uint data; \
 
 #define NI_VIS_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \

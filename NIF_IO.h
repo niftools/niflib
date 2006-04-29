@@ -34,7 +34,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 #ifndef _NIF_IO_H
 #define _NIF_IO_H
 
-
 /* INCLUDES */
 #include <iostream>
 #include <iomanip>
@@ -43,39 +42,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "niflib.h"
 using namespace std;
 
-/* TYPE DEFINITIONS */
-//typedef enum {
-//   TYPE_UINT,
-//   TYPE_USHORT,
-//   TYPE_BYTE,
-//   TYPE_FLOAT,
-//   TYPE_FVEC2,
-//   TYPE_FVEC3,
-//   TYPE_FVEC4,
-//
-//} nifValueType;
-//
-//class I_NifProperty {
-//public:
-//	virtual void read(istream & in);
-//	virtual void write(ostream & out);
-//	string str();
-
-
-//class NifString {
-//public:
-//	friend ostream & operator<<(ostream & lh, NifString & rh) {
-//		out.write( (char*)&val, 4 );
-//	}
-//	friend istream & operator>>(istream & lh, NifString & rh) {
-//		return rh.read( (char*)&rh, 4 );
-//	}
-//private:
-//	string _str; // string data
-//}
-
 // !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
-typedef blk_ref link_ref;
 typedef string HeaderString;
 // !!!TEMPORARY TO SUPRESS COMPILER ERRORS!!!
 
@@ -88,12 +55,6 @@ typedef ushort usVector3[3];
 typedef float fVector2[2];
 typedef float fVector3[3];
 typedef float fVector4[4];
-
-typedef uint readResult;
-typedef uint writeResult;
-
-//typedef uint	nifIndex;
-typedef ushort	nifFlags;
 
 #ifndef NULL
 #define NULL 0
@@ -168,24 +129,111 @@ void ReadFVector2( fVector2& fvec, istream& in );
 void ReadFVector3( fVector3& fvec, istream& in );
 void ReadFVector4( fVector4& fvec, istream& in );
 
-//Read
-void NifStream( int & val, istream& in, uint version = 0 );
-void NifStream( uint & val, istream& in, uint version = 0 );
-void NifStream( ushort & val, istream& in, uint version = 0 );
-void NifStream( short & val, istream& in, uint version = 0 );
-void NifStream( byte & val, istream& in, uint version = 0 );
-void NifStream( bool & val, istream& in, uint version );  // version is significant
-void NifStream( float & val, istream& in, uint version = 0 );
-void NifStream( string & val, istream& in, uint version = 0 );
-void NifStream( Vector3 & val, istream& in, uint version = 0 );
-void NifStream( Quaternion & val, istream& in, uint version = 0 );
-void NifStream( KeyType & val, istream& in, uint version = 0 );
-void NifStream( Color4 & val, istream& in, uint version = 0 );
-void NifStream( Triangle & val, istream& in, uint version = 0 );
-void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
-void NifStream( LODRange & val, istream& in, uint version = 0 );
-void NifStream( IBlock * val, istream& in, uint version = 0 );
+/**
+ * Write utility functions.
+ */
+void WriteInt( int val, ostream& out );
+void WriteUInt( uint val, ostream& out );
+void WriteUShort( ushort val, ostream& out );
+void WriteShort( short val, ostream& out );
+void WriteByte( byte val, ostream& out );
+void WriteUSVector3( usVector3 const & fvec, ostream& out );
+void WriteFloat( float val, ostream& out );
+void WriteString( string const & val, ostream& out );
+void WriteBool( bool val, ostream& out, unsigned int version );
+void WriteFVector2( fVector2 const & fvec, ostream& out );
+void WriteFVector3( fVector3 const & fvec, ostream& out );
+void WriteFVector4( fVector4 const & fvec, ostream& out );
+void WriteBlockName( const char* name, uint nameLength, ostream& out );
 
+//-- NifStream And ostream Functions --//
+// The NifStream functions allow each built-in type to be streamed to and from a file.
+// The ostream functions are for writing out a debug string.
+
+//int
+void NifStream( int & val, istream& in, uint version = 0 );
+void NifStream( int const & val, ostream& out, uint version = 0  );
+
+//uint
+void NifStream( uint & val, istream& in, uint version = 0 );
+void NifStream( uint const & val, ostream& out, uint version = 0  );
+
+//ushort
+void NifStream( ushort & val, istream& in, uint version = 0 );
+void NifStream( ushort const & val, ostream& out, uint version = 0  );
+
+//short
+void NifStream( short & val, istream& in, uint version = 0 );
+void NifStream( short const & val, ostream& out, uint version = 0  );
+
+//byte
+void NifStream( byte & val, istream& in, uint version = 0 );
+void NifStream( byte const & val, ostream& out, uint version = 0  );
+
+//bool
+void NifStream( bool & val, istream& in, uint version );  // version is significant
+void NifStream( bool const & val, ostream& out, uint version ); // version is significant
+
+//float
+void NifStream( float & val, istream& in, uint version = 0 );
+void NifStream( float const & val, ostream& out, uint version = 0  );
+
+//string
+void NifStream( string & val, istream& in, uint version = 0 );
+void NifStream( string const & val, ostream& out, uint version = 0  );
+
+//Vector3
+void NifStream( Vector3 & val, istream& in, uint version = 0 );
+void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, Vector3 const & val );
+
+//Quaternion
+void NifStream( Quaternion & val, istream& in, uint version = 0 );
+void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
+
+//KeyType
+void NifStream( KeyType & val, istream& in, uint version = 0 );
+void NifStream( KeyType const & val, ostream& out, uint version = 0  );
+
+//Color4
+void NifStream( Color4 & val, istream& in, uint version = 0 );
+void NifStream( Color4 const & val, ostream& out, uint version = 0  );
+
+//Triangle
+void NifStream( Triangle & val, istream& in, uint version = 0 );
+void NifStream( Triangle const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Triangle const & val );
+
+//TexDesc
+void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
+void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
+
+//LODRange
+void NifStream( LODRange & val, istream& in, uint version = 0 );
+void NifStream( LODRange const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, TexDesc const & val );
+
+//Matrix22
+void NifStream( Matrix22 & val, istream& in, uint version = 0 );
+void NifStream( Matrix22 const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Matrix22 const & val );
+
+//Matrix33
+void NifStream( Matrix33 & val, istream& in, uint version = 0 );
+void NifStream( Matrix33 const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Matrix33 const & val );
+
+//Matrix44
+void NifStream( Matrix44 & val, istream& in, uint version = 0 );
+void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Matrix44 const & val );
+
+//!!!REMOVE THIS LATER!!!//
+void NifStream( IBlock * val, istream& in, uint version = 0 );
+void NifStream( IBlock const * const val, ostream& out, uint version = 0 );
+//!!!REMOVE THIS LATER!!!//
+
+//Key<T>
 template <class T> 
 void NifStream( Key<T> & key, istream& file, KeyType type ) {
 	key.time = ReadFloat( file );
@@ -209,55 +257,6 @@ void NifStream( Key<T> & key, istream& file, KeyType type ) {
 		key.continuity = ReadFloat( file );
 	}
 }
-
-//template<> void f<char>(char c)
-
-
-void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type );
-
-template <class T>
-void NifStream( vector<T> & val, istream& file, uint version = 0 ) {
-	typename vector<T>::iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file, version );
-	}
-}
-
-
-/**
- * Write utility functions.
- */
-void WriteInt( int val, ostream& out );
-void WriteUInt( uint val, ostream& out );
-void WriteUShort( ushort val, ostream& out );
-void WriteShort( short val, ostream& out );
-void WriteByte( byte val, ostream& out );
-void WriteUSVector3( usVector3 const & fvec, ostream& out );
-void WriteFloat( float val, ostream& out );
-void WriteString( string const & val, ostream& out );
-void WriteBool( bool val, ostream& out, unsigned int version );
-void WriteFVector2( fVector2 const & fvec, ostream& out );
-void WriteFVector3( fVector3 const & fvec, ostream& out );
-void WriteFVector4( fVector4 const & fvec, ostream& out );
-void WriteBlockName( const char* name, uint nameLength, ostream& out );
-
-//Write
-void NifStream( int const & val, ostream& out, uint version = 0  );
-void NifStream( uint const & val, ostream& out, uint version = 0  );
-void NifStream( ushort const & val, ostream& out, uint version = 0  );
-void NifStream( short const & val, ostream& out, uint version = 0  );
-void NifStream( byte const & val, ostream& out, uint version = 0  );
-void NifStream( bool const & val, ostream& out, uint version ); // version is significant
-void NifStream( float const & val, ostream& out, uint version = 0  );
-void NifStream( string const & val, ostream& out, uint version = 0  );
-void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
-void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
-void NifStream( KeyType const & val, ostream& out, uint version = 0  );
-void NifStream( Color4 const & val, ostream& out, uint version = 0  );
-void NifStream( Triangle const & val, ostream& out, uint version = 0 );
-void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
-void NifStream( LODRange const & val, ostream& out, uint version = 0 );
-void NifStream( IBlock const * const val, ostream& out, uint version = 0 );
 
 template <class T> 
 void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
@@ -283,8 +282,20 @@ void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
 	}
 }
 
-
+//Key<Quaternion>
+void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type );
 void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type );
+
+//vector<T>
+//This version of NifStream allows whole vectors of data to be streamed
+//Should probably be extended to work on all STL containers
+template <class T>
+void NifStream( vector<T> & val, istream& file, uint version = 0 ) {
+	typename vector<T>::iterator it;
+	for ( it = val.begin(); it != val.end(); ++it ) {
+		NifStream( *it, file, version );
+	}
+}
 
 template <class T>
 void NifStream( vector<T> const & val, ostream& file, uint version = 0 ) {
@@ -294,42 +305,8 @@ void NifStream( vector<T> const & val, ostream& file, uint version = 0 ) {
 	}
 }
 
-//string indent( int level );
-
-////As String
-//void NifString( uint const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( ushort const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( byte const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( float const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( string const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( Vector3 const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( Quaternion const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( KeyType const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( Color4 const & val, stringstream& out, string heading, int ind_lvl = 0 );
-//void NifString( Triangle const & val, stringstream& out, string heading, int ind_lvl = 0 );
-
+//The HexString function creates a formatted hex display of the given data for use in printing
+//a debug string for information that is not understood
 string HexString( const byte * src, uint len );
-
-class NIF;
-
-class nifIndex {
-public:
-	nifIndex(){}
-	~nifIndex() {};
-	uint GetIndex() const { return _index; }
-	void SetIndex( int index ) {
-		_index = index;
-	}
-	void Read( istream &in ) {
-		_index = ReadUInt( in );
-	}
-	void Write( ostream &out ) const {
-		WriteUInt( _index, out );
-	}
-	friend ostream & operator<<(ostream & lh, nifIndex const & rh);
-
-private:
-	int _index;
-};
 
 #endif
