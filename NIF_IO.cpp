@@ -340,10 +340,11 @@ ostream & operator<<(ostream & lh, Bin const & rh) {
 // The NifStream functions allow each built-in type to be streamed to and from a file.
 // The ostream functions are for writing out a debug string.
 
+//--Basic Types--//
+
 //int
 void NifStream( int & val, istream& in, uint version ) { val = ReadInt( in ); };
 void NifStream( int const & val, ostream& out, uint version ) { WriteInt( val, out ); }
-
 
 //uint
 void NifStream( uint & val, istream& in, uint version ) { val = ReadUInt( in ); };
@@ -373,9 +374,7 @@ void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( va
 void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
 void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
 
-//KeyType
-void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadUInt( in )); };
-void NifStream( KeyType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+//--Structs--//
 
 //Vector3
 void NifStream( Vector3 & val, istream& in, uint version ) {
@@ -451,14 +450,30 @@ void NifStream( LODRange const & val, ostream& out, uint version ) {
 	WriteFloat( val.far, out );
 };
 
+//TexCoord
+void NifStream( TexCoord & val, istream& in, uint version ) {
+	val.u = ReadFloat( in );
+	val.v = ReadFloat( in );
+};
+
+void NifStream( TexCoord const & val, ostream& out, uint version ) {
+	WriteFloat( val.u, out );
+	WriteFloat( val.v, out );
+};
+
+ostream & operator<<( ostream & out, TexCoord const & val ) {
+	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
+}
+
+
 //TexDesc
 void NifStream( TexDesc & val, istream& in, uint version ) {
-	val.isUsed = ReadBool( in, version );
+	NifStream( val.isUsed, in, version );
 	if ( val.isUsed ) {	
 		//Read in link for TexSource
 		val.source.set_index( ReadUInt( in ) );
 
-		val.clampMode = TexClampMode( ReadUInt( in ) );
+		NifStream( val.clampMode, in, version );
 		val.filterMode = TexFilterMode( ReadUInt( in ) );
 		val.textureSet = ReadUInt( in );
 
@@ -496,7 +511,7 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 		//Write link
 		WriteUInt( val.source.get_index(), out );
 
-		WriteUInt( val.clampMode, out );
+		NifStream( val.clampMode, out, version );
 		WriteUInt( val.filterMode, out );
 		WriteUInt( val.textureSet, out );
 
@@ -531,66 +546,22 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 ostream & operator<<( ostream & out, TexDesc const & val ) {
 	if ( val.isUsed ) {
 		out << "      Source:  " << val.source << endl
-			<< "      Clamp Mode:  ";
-		switch ( val.clampMode ) {
-			case CLAMP_S_CLAMP_T:
-				out << "Clamp S Clamp T";
-				break;
-			case CLAMP_S_WRAP_T:
-				out << "Clamp S Wrap T";
-				break;
-			case WRAP_S_CLAMP_T:
-				out << "Wrap S Clamp T";
-				break;
-			case WRAP_S_WRAP_T:
-				out << "Wrap S Wrap T";
-				break;
-			default:
-				out << "!Invalid Value! - " << val.clampMode;
-			break;
-		}
-		out << endl
-			<< "      Filter Mode:  ";
-		switch ( val.filterMode ) {
-			case FILTER_NEAREST:
-				out << "Nearest";
-				break;
-			case FILTER_BILERP:
-				out << "Biliner";
-				break;
-			case FILTER_TRILERP:
-				out << "Trilinear";
-				break;
-			case FILTER_NEAREST_MIPNEAREST:
-				out << "Nearest, Mip Nearest";
-				break;
-			case FILTER_NEAREST_MIPLERP:
-				out << "Nearest, Mip Linear";
-				break;
-			case FILTER_BILERP_MIPNEAREST:
-				out << "Bilinear, Mip Nearest";
-				break;
-			default:
-					out << "!Invalid Value! - " << val.filterMode;
-			break;
-		}
-		
-		out << endl
+			<< "      Clamp Mode:  "  << val.clampMode << endl
+			<< "      Filter Mode:  " << val.filterMode << endl
 			<< "      Texture Set:  " << val.textureSet << endl
 			<< "      PS2 L Setting:  " << val.PS2_L << endl
 			<< "      PS2 K Setting:  " << val.PS2_K << endl
 			<< "      Unknown Short:  " << val.unknownShort << endl
 			<< "      Texture Transform:   ";
 
-
 		//From version 10.1.0.0 and up, this unknown data block may exist
 		if ( val.hasTextureTransform == true ) {
 			out << endl
-				<< "         Translation: " << val.translation.u << ", " << val.translation.v << endl
-				<< "         Tiling: " << val.tiling.u << ", " << val.tiling.v << endl
+				<< "         Translation: " << val.translation << endl
+				<< "         Tiling: " << val.tiling << endl
 				<< "         W-rotation: " << val.w_rotation << endl
 				<< "         Transform Type: " << val.transform_type << endl
-				<< "         Center Offset: " << val.center_offset.u << ", " << val.center_offset.v << endl;
+				<< "         Center Offset: " << val.center_offset << endl;
 		} else {
 			out << "None" << endl;
 		}
@@ -676,6 +647,132 @@ ostream & operator<<( ostream & out, Matrix44 const & val ) {
 	return out;
 }
 
+//--Enums--//
+
+//KeyType
+void NifStream( TexType & val, istream& in, uint version ) { val = TexType(ReadUInt( in )); };
+void NifStream( TexType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, TexType const & val ) {
+	switch ( val ) {
+		case BASE_MAP: return out << "BASE_MAP";
+		case DARK_MAP: return out << "DARK_MAP";
+		case DETAIL_MAP: return out << "DETAIL_MAP";
+		case GLOSS_MAP: return out << "GLOSS_MAP";
+		case GLOW_MAP: return out << "GLOW_MAP";
+		case BUMP_MAP: return out << "BUMP_MAP";
+		case DECAL_0_MAP: return out << "DECAL_0_MAP";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//KeyType
+void NifStream( ApplyMode & val, istream& in, uint version ) { val = ApplyMode(ReadUInt( in )); };
+void NifStream( ApplyMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, ApplyMode const & val ) {
+	switch ( val ) {
+		case APPLY_REPLACE: return out << "APPLY_REPLACE";
+		case APPLY_DECAL: return out << "APPLY_DECAL";
+		case APPLY_MODULATE: return out << "APPLY_MODULATE";
+		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
+		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//KeyType
+void NifStream( TexClampMode & val, istream& in, uint version ) { val = TexClampMode(ReadUInt( in )); };
+void NifStream( TexClampMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, TexClampMode const & val ) {
+	switch ( val ) {
+		case CLAMP_S_CLAMP_T: return out << "CLAMP_S_CLAMP_T";
+		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
+		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
+		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//TexFilterMode
+void NifStream( TexFilterMode & val, istream& in, uint version ) { val = TexFilterMode(ReadUInt( in )); };
+void NifStream( TexFilterMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, TexFilterMode const & val ) {
+	switch ( val ) {
+		case FILTER_NEAREST: return out << "FILTER_NEAREST";
+		case FILTER_BILERP: return out << "FILTER_BILERP";
+		case FILTER_TRILERP: return out << "FILTER_TRILERP";
+		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
+		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
+		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//KeyType
+void NifStream( AlphaFormat & val, istream& in, uint version ) { val = AlphaFormat(ReadUInt( in )); };
+void NifStream( AlphaFormat const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, AlphaFormat const & val ) {
+	switch ( val ) {
+		case ALPHA_NONE: return out << "ALPHA_NONE";
+		case ALPHA_BINARY: return out << "ALPHA_BINARY";
+		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
+		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//KeyType
+void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadUInt( in )); };
+void NifStream( KeyType const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, KeyType const & val ) {
+	switch ( val ) {
+		case LINEAR_KEY: return out << "LINEAR_KEY";
+		case QUADRATIC_KEY: return out << "QUADRATIC_KEY";
+		case TBC_KEY: return out << "TBC_KEY";
+		case XYZ_ROTATION_KEY: return out << "XYZ_ROTATION_KEY";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//KeyType
+void NifStream( PixelFormat & val, istream& in, uint version ) { val = PixelFormat(ReadUInt( in )); };
+void NifStream( PixelFormat const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, PixelFormat const & val ) {
+	switch ( val ) {
+		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
+		case PX_FMT_RGBA8: return out << "PX_FMT_RGBA8";
+		case PX_FMT_PAL8: return out << "PX_FMT_PAL8";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//MipMapFormat
+void NifStream( MipMapFormat & val, istream& in, uint version ) { val = MipMapFormat(ReadUInt( in )); };
+void NifStream( MipMapFormat const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, MipMapFormat const & val ) {
+	switch ( val ) {
+		case MIP_FMT_NO: return out << "MIP_FMT_NO";
+		case MIP_FMT_YES: return out << "MIP_FMT_YES";
+		case MIP_FMT_DEFAULT: return out << "MIP_FMT_DEFAULT";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//PixelLayout
+void NifStream( PixelLayout & val, istream& in, uint version ) { val = PixelLayout(ReadUInt( in )); };
+void NifStream( PixelLayout const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, PixelLayout const & val ) {
+	switch ( val ) {
+		case PIX_LAY_PALETTISED: return out << "PIX_LAY_PALETTISED";
+		case PIX_LAY_HIGH_COLOR_16: return out << "PIX_LAY_HIGH_COLOR_16";
+		case PIX_LAY_TRUE_COLOR_32: return out << "PIX_LAY_TRUE_COLOR_32";
+		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
+		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
+		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
+		default: return out << "Invalid Value! - " << val;
+	};
+}
+
+//!!!REMOVE THIS LATER!!!//
 void NifStream( IBlock * val, istream& in, uint version ) {
 	int n;
 	in.read( (char*)&n, 4 );
@@ -691,6 +788,7 @@ void NifStream( IBlock * val, istream& in, uint version ) {
 void NifStream( IBlock const * const val, ostream& out, uint version ) {
 	NifStream( val->GetBlockNum(), out, version );
 };
+//!!!REMOVE THIS LATER!!!//
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood

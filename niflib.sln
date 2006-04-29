@@ -20,7 +20,6 @@ Global
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Debug.ActiveCfg = Debug|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Debug.Build.0 = Debug|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Release.ActiveCfg = Release|Win32
-		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

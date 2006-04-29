@@ -150,6 +150,8 @@ void WriteBlockName( const char* name, uint nameLength, ostream& out );
 // The NifStream functions allow each built-in type to be streamed to and from a file.
 // The ostream functions are for writing out a debug string.
 
+//--Basic Types--//
+
 //int
 void NifStream( int & val, istream& in, uint version = 0 );
 void NifStream( int const & val, ostream& out, uint version = 0  );
@@ -182,6 +184,8 @@ void NifStream( float const & val, ostream& out, uint version = 0  );
 void NifStream( string & val, istream& in, uint version = 0 );
 void NifStream( string const & val, ostream& out, uint version = 0  );
 
+//--Structs--//
+
 //Vector3
 void NifStream( Vector3 & val, istream& in, uint version = 0 );
 void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
@@ -191,10 +195,6 @@ ostream & operator<<( ostream & out, Vector3 const & val );
 void NifStream( Quaternion & val, istream& in, uint version = 0 );
 void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
 
-//KeyType
-void NifStream( KeyType & val, istream& in, uint version = 0 );
-void NifStream( KeyType const & val, ostream& out, uint version = 0  );
-
 //Color4
 void NifStream( Color4 & val, istream& in, uint version = 0 );
 void NifStream( Color4 const & val, ostream& out, uint version = 0  );
@@ -203,6 +203,11 @@ void NifStream( Color4 const & val, ostream& out, uint version = 0  );
 void NifStream( Triangle & val, istream& in, uint version = 0 );
 void NifStream( Triangle const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, Triangle const & val );
+
+//TexCoord
+void NifStream( TexCoord & val, istream& in, uint version = 0 );
+void NifStream( TexCoord const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, TexCoord const & val );
 
 //TexDesc
 void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
@@ -228,10 +233,59 @@ void NifStream( Matrix44 & val, istream& in, uint version = 0 );
 void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
 ostream & operator<<( ostream & out, Matrix44 const & val );
 
+//--Enums--//
+
+//TexType
+void NifStream( TexType & val, istream& in, uint version = 0 );
+void NifStream( TexType const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, TexType const & val );
+
+//ApplyMode
+void NifStream( ApplyMode & val, istream& in, uint version = 0 );
+void NifStream( ApplyMode const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, ApplyMode const & val );
+
+//TexClampMode
+void NifStream( TexClampMode & val, istream& in, uint version = 0 );
+void NifStream( TexClampMode const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, TexClampMode const & val );
+
+//TexFilterMode
+void NifStream( TexFilterMode & val, istream& in, uint version = 0 );
+void NifStream( TexFilterMode const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, TexFilterMode const & val );
+
+//AlphaFormat
+void NifStream( AlphaFormat & val, istream& in, uint version = 0 );
+void NifStream( AlphaFormat const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, AlphaFormat const & val );
+
+//KeyType
+void NifStream( KeyType & val, istream& in, uint version = 0 );
+void NifStream( KeyType const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, KeyType const & val );
+
+//PixelFormat
+void NifStream( PixelFormat & val, istream& in, uint version = 0 );
+void NifStream( PixelFormat const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, PixelFormat const & val );
+
+//MipMapFormat
+void NifStream( MipMapFormat & val, istream& in, uint version = 0 );
+void NifStream( MipMapFormat const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, MipMapFormat const & val );
+
+//PixelLayout
+void NifStream( PixelLayout & val, istream& in, uint version = 0 );
+void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, PixelLayout const & val );
+
 //!!!REMOVE THIS LATER!!!//
 void NifStream( IBlock * val, istream& in, uint version = 0 );
 void NifStream( IBlock const * const val, ostream& out, uint version = 0 );
 //!!!REMOVE THIS LATER!!!//
+
+//--Templates--//
 
 //Key<T>
 template <class T> 
