@@ -138,6 +138,18 @@ void NifStream( float const & val, ostream& out, uint version = 0  );
 void NifStream( string & val, istream& in, uint version = 0 );
 void NifStream( string const & val, ostream& out, uint version = 0  );
 
+//--Link Types--//
+
+//blk_ref
+//There is intentionally no function to read directly to blk_ref
+void NifStream( blk_ref const & val, ostream& out, uint version );
+ostream & operator<<( ostream & out, blk_ref const & val );
+
+//IBlock *
+//There is intentionally no function to read directly to IBlock *
+void NifStream( IBlock * const & val, ostream& out, uint version );
+ostream & operator<<( ostream & out, IBlock * const & val );
+
 //--Structs--//
 
 //HeaderString
@@ -268,11 +280,6 @@ ostream & operator<<( ostream & out, MipMapFormat const & val );
 void NifStream( PixelLayout & val, istream& in, uint version = 0 );
 void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelLayout const & val );
-
-//!!!REMOVE THIS LATER!!!//
-void NifStream( IBlock * val, istream& in, uint version = 0 );
-void NifStream( IBlock const * const val, ostream& out, uint version = 0 );
-//!!!REMOVE THIS LATER!!!//
 
 //--Templates--//
 

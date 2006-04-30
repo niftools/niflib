@@ -149,7 +149,7 @@ public:
 		index = new_index;
 	}
 
-	blk_ref GetLink() { return link; }
+	blk_ref GetLink() const { return link; }
 
 
 

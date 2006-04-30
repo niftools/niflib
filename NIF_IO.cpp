@@ -315,6 +315,32 @@ void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( va
 void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
 void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
 
+//--Link Types--//
+
+//There is intentionally no function to read directly to blk_ref
+
+void NifStream( blk_ref const & val, ostream& out, uint version ) {
+	if ( val.is_null() == false ) {
+		WriteInt( val->GetBlockNum(), out );
+	} else {
+		WriteInt(-1, out );
+	}
+}
+
+//There is intentionally no function to read directly to IBlock *
+
+void NifStream( IBlock * const & val, ostream& out, uint version ) {
+	if ( val != NULL ) {
+		WriteInt( val->GetBlockNum(), out );
+	} else {
+		WriteInt( -1, out );
+	}
+}
+
+ostream & operator<<( ostream & out, IBlock * const & val ) {
+	return out << blk_ref(val);
+}
+
 //--Structs--//
 
 //HeaderString
@@ -855,24 +881,6 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 		default: return out << "Invalid Value! - " << uint(val);
 	};
 }
-
-//!!!REMOVE THIS LATER!!!//
-void NifStream( IBlock * val, istream& in, uint version ) {
-	int n;
-	in.read( (char*)&n, 4 );
-	val = 0;	// TODO: do something with that n, something like this:
-	//if ( n == -1 )
-	//  val = 0;
-	//else
-	//  val = blk_ref(n);
-	// BUT: block n may not have been processed yet, so we can't return a pointer... ? they will have to be
-	// resolved when calling FixLinks()?
-};
-
-void NifStream( IBlock const * const val, ostream& out, uint version ) {
-	NifStream( val->GetBlockNum(), out, version );
-};
-//!!!REMOVE THIS LATER!!!//
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
