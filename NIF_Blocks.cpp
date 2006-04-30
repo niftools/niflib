@@ -451,6 +451,159 @@ void ABlock::RemoveParent( IBlock * match ) {
 	//}
 }
 
+//--Link Classes--//
+
+
+//Constructor
+//It is required for a LinkGroup to be aware of the block it is part of
+
+void Link::SetIndex( const int new_index ) {
+	//This function is for the initial file read.  It records the index of the block which
+	//will later be resolved to a link once all the blocks have been read
+
+	//If there is already a link, kill it
+	if ( link.is_null() == false ) {
+		KillLink();
+		link.nullify();
+	}
+
+	index = new_index;
+}
+
+void Link::SetLink( const blk_ref & new_link ) {
+	if ( link != new_link ) {
+		//Kill previous link
+		KillLink();
+		
+		//Set New Link
+		link = new_link;
+		InitLink();
+	}
+}
+
+void Link::Fix( const vector<blk_ref> & blocks ) {
+	//The purpouse of this function is to convert the block index to a link
+	//to the corresponding block.
+
+	//Ensure that there is an index to convert
+	if (index == -1 ) {
+		return;
+	}
+	
+	if ( index < int(blocks.size()) && index >= 0 ) {
+		link = blocks[index];
+		InitLink();
+	}
+}
+
+void Link::InitLink() {
+	//Add parent at new link site
+	IBlock * target = link.get_block();
+	if ( target != NULL ) {
+		//Get internal interface
+		((ABlock*)target)->AddParent( _owner );
+	}
+}
+void Link::KillLink() {
+	//Remove parent at previous location
+	IBlock * target = link.get_block();
+	if ( target != NULL ) {
+		((ABlock*)target)->RemoveParent( _owner );
+	}
+}
+
+void NifStream( Link & val, istream& in, uint version ) {
+	val.SetIndex( ReadInt( in ) );
+};
+
+void NifStream( Link const & val, ostream& out, uint version ) {
+	blk_ref ref = val.GetLink();
+	if ( ref.is_null() == false ) {
+		WriteInt( ref->GetBlockNum(), out );
+	} else {
+		WriteInt( -1, out );
+	}
+}
+
+ostream & operator<<( ostream & out, Link const & val ) {
+	return out << val.GetLink();
+}
+
+//--CrossRef Classes--//
+
+void CrossRef::SetIndex( const int new_index ) {
+	//This function is for the initial file read.  It records the index of the block which
+	//will later be resolved to a reference once all the blocks have been read
+
+	//If there is already a reference, kill it
+	if ( ref != NULL ) {
+		KillRef();
+		ref = NULL;
+	}
+
+	index = new_index;
+}
+
+void CrossRef::SetCrossRef( IBlock * new_ref ) {
+	if ( ref != new_ref ) {
+		//Kill previous link
+		KillRef();
+		
+		//Set New Link
+		ref = new_ref;
+		InitRef();
+	}
+}
+
+void CrossRef::Invalidate() {
+	//This function's purpouse is to inform this CrossRef that the block it is referencing has died
+	//Simply set it to NULL
+	ref = NULL;
+}
+
+void CrossRef::Fix( const vector<blk_ref> & blocks ) {
+	//The purpouse of this function is to convert the block index to a reference
+	//to the corresponding block.
+	
+	if (index < int(blocks.size()) && index >= 0 ) {
+		ref = blocks[index].get_block();
+		index = -1;
+		InitRef();
+	}
+}
+
+void CrossRef::InitRef() {
+	//Inform target block that it is being cross referenced
+	if ( ref != NULL ) {
+		//Get internal interface
+		((ABlock*)ref)->IncCrossRef( _owner );
+	}
+}
+void CrossRef::KillRef() {
+	//Inform target block that it is no longer being cross referenced
+	if ( ref != NULL ) {
+		((ABlock*)ref)->IncCrossRef( _owner );
+	}
+}
+
+
+void NifStream( CrossRef & val, istream& in, uint version ) {
+	val.SetIndex( ReadInt( in ) );
+};
+
+void NifStream( CrossRef const & val, ostream& out, uint version ) {
+	IBlock * ref = val.GetCrossRef();
+	if ( ref != NULL ) {
+		WriteInt( ref->GetBlockNum(), out );
+	} else {
+		WriteInt( -1, out );
+	}
+}
+
+ostream & operator<<( ostream & out, CrossRef const & val ) {
+	return out << blk_ref(val.GetCrossRef());
+}
+
 /***********************************************************
  * ANode methods
  **********************************************************/

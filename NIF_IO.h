@@ -138,18 +138,6 @@ void NifStream( float const & val, ostream& out, uint version = 0  );
 void NifStream( string & val, istream& in, uint version = 0 );
 void NifStream( string const & val, ostream& out, uint version = 0  );
 
-//--Link Types--//
-
-//blk_ref
-//There is intentionally no function to read directly to blk_ref
-void NifStream( blk_ref const & val, ostream& out, uint version );
-ostream & operator<<( ostream & out, blk_ref const & val );
-
-//IBlock *
-//There is intentionally no function to read directly to IBlock *
-void NifStream( IBlock * const & val, ostream& out, uint version );
-ostream & operator<<( ostream & out, IBlock * const & val );
-
 //--Structs--//
 
 //HeaderString

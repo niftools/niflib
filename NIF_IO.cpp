@@ -315,32 +315,6 @@ void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( va
 void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
 void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
 
-//--Link Types--//
-
-//There is intentionally no function to read directly to blk_ref
-
-void NifStream( blk_ref const & val, ostream& out, uint version ) {
-	if ( val.is_null() == false ) {
-		WriteInt( val->GetBlockNum(), out );
-	} else {
-		WriteInt(-1, out );
-	}
-}
-
-//There is intentionally no function to read directly to IBlock *
-
-void NifStream( IBlock * const & val, ostream& out, uint version ) {
-	if ( val != NULL ) {
-		WriteInt( val->GetBlockNum(), out );
-	} else {
-		WriteInt( -1, out );
-	}
-}
-
-ostream & operator<<( ostream & out, IBlock * const & val ) {
-	return out << blk_ref(val);
-}
-
 //--Structs--//
 
 //HeaderString

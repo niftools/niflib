@@ -132,186 +132,23 @@ public:
 	//Constructor
 	//It is required for a LinkGroup to be aware of the block it is part of
 	Link ( IBlock * owner) : _owner(owner), index(-1) {}
-
 	//Destructor
 	~Link() { KillLink(); }
-
-	void SetIndex( const int new_index ) {
-		//This function is for the initial file read.  It records the index of the block which
-		//will later be resolved to a link once all the blocks have been read
-
-		//If there is already a link, kill it
-		if ( link.is_null() == false ) {
-			KillLink();
-			link.nullify();
-		}
-
-		index = new_index;
-	}
-
+	void SetIndex( const int new_index );
 	blk_ref GetLink() const { return link; }
-
-
-
-	void SetLink( const blk_ref & new_link ) {
-		if ( link != new_link ) {
-			//Kill previous link
-			KillLink();
-			
-			//Set New Link
-			link = new_link;
-			InitLink();
-		}
-	}
-
-	void Fix( const vector<blk_ref> & blocks ) {
-		//The purpouse of this function is to convert the block index to a link
-		//to the corresponding block.
-
-		//Ensure that there is an index to convert
-		if (index == -1 ) {
-			return;
-		}
-		
-		if ( index < int(blocks.size()) && index >= 0 ) {
-			link = blocks[index];
-			InitLink();
-		}
-	}
+	void SetLink( const blk_ref & new_link );
+	void Fix( const vector<blk_ref> & blocks );
 private:
 	IBlock * _owner;
 	blk_ref link;
 	int index;
-	void InitLink() {
-		//Add parent at new link site
-		IBlock * target = link.get_block();
-		if ( target != NULL ) {
-			//Get internal interface
-			((ABlock*)target)->AddParent( _owner );
-		}
-	}
-	void KillLink() {
-		//Remove parent at previous location
-		IBlock * target = link.get_block();
-		if ( target != NULL ) {
-			((ABlock*)target)->RemoveParent( _owner );
-		}
-	}
+	void InitLink();
+	void KillLink();
 };
 
-class LinkGroup {
-public:
-	//Constructor
-	//It is required for a LinkGroup to be aware of the block it is part of
-	LinkGroup(IBlock * owner) : _owner(owner) {}
-
-	//Destructor
-	~LinkGroup() { 
-		//Remove all links
-		ClearLinks();
-	}
-
-	void SetIndices( const list<int> new_indices ) {
-		//This function is for the initial file read.  It records the indices of the blocks which
-		//will later be resolved to links once all the blocks have been read
-
-		//If there are already links, kill them
-		ClearLinks();
-
-		indices = new_indices;
-	}
-
-	list<blk_ref> GetLinks() const { 
-		return links;
-	}
-
-	void AddLink( blk_ref const & block ) {
-		InitLink( block );
-		links.push_back( block );
-	}
-
-	void AddLinks( list<blk_ref> const & new_links ) {
-		//Initiate all of the new links
-		list<blk_ref>::const_iterator it;
-		for (it = new_links.begin(); it != new_links.end(); ++it ) {
-			InitLink( *it );
-			links.push_back( *it );
-		}
-	}
-
-	blk_ref FindLink( string const & block_type ) const {
-		//Find the first link with the requested block type
-		for ( list<blk_ref>::const_iterator it = links.begin(); it != links.end(); ++it ) {
-			if ( (*it)->GetBlockType() == block_type )
-				return blk_ref(*it);
-		}
-
-		//No block was found, so return a null one
-		return blk_ref(-1);
-	}
-
-	void ClearLinks() { 
-		//Kill all the links
-		list<blk_ref>::iterator it;
-		for (it = links.begin(); it != links.end(); ++it ) {
-			KillLink( *it );
-		}
-
-		//Clear the list
-		links.clear();
-	}
-
-	void RemoveLinks( blk_ref const & block ) {
-		//Remove all links that match this block
-		//Kill the links first
-		list<blk_ref>::iterator it;
-		for (it = links.begin(); it != links.end(); ++it ) {
-			if ( *it == block ) {
-				KillLink( *it );
-			}
-		}
-		
-		//Now remove them from the list
-		links.remove( block );
-	}
-
-	void Fix( const vector<blk_ref> & blocks ) {
-		//The purpouse of this function is to convert the block indices to a links
-		//to the corresponding blocks.
-		
-		list<int>::iterator it;
-		for (it = indices.begin(); it != indices.end(); ++it ) {
-			if ( *it < int(blocks.size()) && *it >= 0 ) {
-				blk_ref new_link = blocks[*it];
-				InitLink( new_link );
-				links.push_back( new_link );
-			}
-		}
-
-		//Clear indices
-		indices.clear();
-	}
-
-private:
-	IBlock * _owner;
-	list<blk_ref> links;
-	list<int> indices;
-	void InitLink( const blk_ref & link ) {
-		//Add parent at new link site
-		IBlock * target = link.get_block();
-		if ( target != NULL ) {
-			//Get internal interface
-			((ABlock*)target)->AddParent( _owner );
-		}
-	}
-	void KillLink( const blk_ref & link ) {
-		//Remove parent at previous location
-		IBlock * target = link.get_block();
-		if ( target != NULL ) {
-			((ABlock*)target)->RemoveParent( _owner );
-		}
-	}
-};
+void NifStream( Link & val, istream& in, uint version = 0 );
+void NifStream( Link const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Link const & val );
 
 //--CrossRef Classes--//
 
@@ -320,191 +157,23 @@ public:
 	//Constructor
 	//It is required for a CrossRef to be aware of the block it is part of
 	CrossRef ( IBlock * owner) : _owner(owner), ref(NULL), index(-1) {}
-
 	//Destructor
 	~CrossRef() { KillRef(); }
-
-	void SetIndex( const int new_index ) {
-		//This function is for the initial file read.  It records the index of the block which
-		//will later be resolved to a reference once all the blocks have been read
-
-		//If there is already a reference, kill it
-		if ( ref != NULL ) {
-			KillRef();
-			ref = NULL;
-		}
-
-		index = new_index;
-	}
-
-	IBlock * GetCrossRef() { return ref; }
-
-	void SetCrossRef( IBlock * new_ref ) {
-		if ( ref != new_ref ) {
-			//Kill previous link
-			KillRef();
-			
-			//Set New Link
-			ref = new_ref;
-			InitRef();
-		}
-	}
-
-	void RemoveCrossLink( IBlock * block_to_remove ) {
-		//This function's purpouse is to inform this CrossRef that the block it is referencing has died
-		//Simply set it to NULL
-		ref = NULL;
-	}
-
-	void Fix( const vector<blk_ref> & blocks ) {
-		//The purpouse of this function is to convert the block index to a reference
-		//to the corresponding block.
-		
-		if (index < int(blocks.size()) && index >= 0 ) {
-			ref = blocks[index].get_block();
-			index = -1;
-			InitRef();
-		}
-	}
-
+	void SetIndex( const int new_index );
+	IBlock * GetCrossRef() const { return ref; }
+	void SetCrossRef( IBlock * new_ref );
+	void Invalidate();
+	void Fix( const vector<blk_ref> & blocks );
 private:
 	IBlock * _owner;
 	IBlock * ref;
 	int index;
-	void InitRef() {
-		//Inform target block that it is being cross referenced
-		if ( ref != NULL ) {
-			//Get internal interface
-			((ABlock*)ref)->IncCrossRef( _owner );
-		}
-	}
-	void KillRef() {
-		//Inform target block that it is no longer being cross referenced
-		if ( ref != NULL ) {
-			((ABlock*)ref)->IncCrossRef( _owner );
-		}
-	}
+	void InitRef();
+	void KillRef();
 };
-
-class CrossRefGroup {
-public:
-	//Constructor
-	//It is required for a LinkGroup to be aware of the block it is part of
-	CrossRefGroup(IBlock * owner) : _owner(owner) {}
-
-	//Destructor
-	~CrossRefGroup() { 
-		//Remove all links
-		ClearRefs();
-	}
-
-	void SetIndices( const list<int> new_indices ) {
-		//This function is for the initial file read.  It records the indices of the blocks which
-		//will later be resolved to links once all the blocks have been read
-
-		//If there are already links, kill them
-		ClearRefs();
-
-		indices = new_indices;
-	}
-
-	list<IBlock *> GetRefs() const { 
-		return refs;
-	}
-
-	void AddRef( IBlock * const & new_ref ) {
-		InitRef( new_ref );
-		refs.push_back( new_ref );
-	}
-
-	void AddRefs( list<IBlock *> const & new_refs ) {
-		//Initiate all of the new links
-		list<IBlock *>::const_iterator it;
-		for (it = new_refs.begin(); it != new_refs.end(); ++it ) {
-			InitRef( *it );
-			refs.push_back( *it );
-		}
-	}
-
-	IBlock * FindRef( string const & block_type ) const {
-		//Find the first reference with the requested block type
-		for ( list<IBlock *>::const_iterator it = refs.begin(); it != refs.end(); ++it ) {
-			if ( (*it)->GetBlockType() == block_type )
-				return *it;
-		}
-
-		//No block was found, so return NULL
-		return NULL;
-	}
-
-	void ClearRefs() { 
-		//Kill all the refs
-		list<IBlock *>::iterator it;
-		for (it = refs.begin(); it != refs.end(); ++it ) {
-			KillRef( *it );
-		}
-
-		//Clear the list
-		refs.clear();
-	}
-
-	void RemoveRefs( IBlock * const block ) {
-		//Remove all refs that match this block
-		//Kill the refs first
-		list<IBlock *>::iterator it;
-		for (it = refs.begin(); it != refs.end(); ++it ) {
-			if ( *it == block ) {
-				KillRef( *it );
-			}
-		}
-		
-		//Now remove them from the list
-		refs.remove( block );
-	}
-
-	void Fix( const vector<blk_ref> & blocks ) {
-		//The purpouse of this function is to convert the block indices to a links
-		//to the corresponding blocks.
-		
-		list<int>::iterator it;
-		for (it = indices.begin(); it != indices.end(); ++it ) {
-			if ( *it < int(blocks.size()) && *it >= 0 ) {
-				IBlock * new_ref = blocks[*it].get_block();
-				InitRef( new_ref );
-				refs.push_back( new_ref );
-			}
-		}
-
-		//Clear indices
-		indices.clear();
-	}
-
-	void RemoveCrossLink( IBlock * block_to_remove ) {
-		//This function's purpouse is to inform this CrossRefGroup that one of the blocks
-		//it is referencing has died
-
-		//Remove matching refs
-		RemoveRefs( block_to_remove );
-	}
-
-private:
-	IBlock * _owner;
-	list<IBlock *> refs;
-	list<int> indices;
-	void InitRef( IBlock * ref ) {
-		//Inform target block that it is being cross referenced
-		if ( ref != NULL ) {
-			//Get internal interface
-			((ABlock*)ref)->IncCrossRef( _owner );
-		}
-	}
-	void KillRef( IBlock * ref ) {
-		//Inform target block that it is no longer being cross referenced
-		if ( ref != NULL ) {
-			((ABlock*)ref)->IncCrossRef( _owner );
-		}
-	}
-};
+void NifStream( CrossRef & val, istream& in, uint version  = 0);
+void NifStream( CrossRef const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, CrossRef const & val );
 
 class AControllable : public ABlock {
 public:
