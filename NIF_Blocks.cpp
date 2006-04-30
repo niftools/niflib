@@ -555,10 +555,14 @@ void CrossRef::SetCrossRef( IBlock * new_ref ) {
 	}
 }
 
-void CrossRef::Invalidate() {
+void CrossRef::LostRef(  IBlock * match ) {
 	//This function's purpouse is to inform this CrossRef that the block it is referencing has died
-	//Simply set it to NULL
-	ref = NULL;
+	//It will be called on every CrossRef in this block, we must check to see if this is the one that
+	//the message is meant for
+	if ( ref == match ) {
+		//Simply set it to NULL  do not call KillRef because the reference is already dead
+		ref = NULL;
+	}
 }
 
 void CrossRef::Fix( const vector<blk_ref> & blocks ) {

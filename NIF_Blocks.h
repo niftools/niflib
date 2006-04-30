@@ -162,7 +162,7 @@ public:
 	void SetIndex( const int new_index );
 	IBlock * GetCrossRef() const { return ref; }
 	void SetCrossRef( IBlock * new_ref );
-	void Invalidate();
+	void LostRef( IBlock * match );
 	void Fix( const vector<blk_ref> & blocks );
 private:
 	IBlock * _owner;
