@@ -496,7 +496,18 @@ void Link::Fix( const vector<blk_ref> & blocks ) {
 	}
 }
 
+void Link::SetOwner( IBlock * owner ) {
+	if ( owner != NULL ) {
+		throw runtime_error("The owner for this Link is already set.");
+	}
+	_owner = owner;
+}
+
 void Link::InitLink() {
+	//Ensure that the owner is set
+	if ( _owner == NULL ) {
+		throw runtime_error("You must specify an owner before you can store a blk_ref in a Link.");
+	}
 	//Add parent at new link site
 	IBlock * target = link.get_block();
 	if ( target != NULL ) {
@@ -576,8 +587,19 @@ void CrossRef::Fix( const vector<blk_ref> & blocks ) {
 	}
 }
 
+void CrossRef::SetOwner( IBlock * owner ) {
+	if ( owner != NULL ) {
+		throw runtime_error("The owner for this Link is already set.");
+	}
+	_owner = owner;
+}
+
 void CrossRef::InitRef() {
 	//Inform target block that it is being cross referenced
+	//Ensure that the owner is set
+	if ( _owner == NULL ) {
+		throw runtime_error("You must specify an owner before you can store an IBlock * in a CrossRef.");
+	}
 	if ( ref != NULL ) {
 		//Get internal interface
 		((ABlock*)ref)->IncCrossRef( _owner );

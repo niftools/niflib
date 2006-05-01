@@ -129,8 +129,8 @@ protected:
 
 class Link {
 public:
-	//Constructor
-	//It is required for a LinkGroup to be aware of the block it is part of
+	//Constructors
+	Link () : _owner(NULL), index(-1) {}
 	Link ( IBlock * owner) : _owner(owner), index(-1) {}
 	//Destructor
 	~Link() { KillLink(); }
@@ -138,6 +138,7 @@ public:
 	blk_ref GetLink() const { return link; }
 	void SetLink( const blk_ref & new_link );
 	void Fix( const vector<blk_ref> & blocks );
+	void SetOwner( IBlock * owner );
 private:
 	IBlock * _owner;
 	blk_ref link;
@@ -154,8 +155,8 @@ ostream & operator<<( ostream & out, Link const & val );
 
 class CrossRef {
 public:
-	//Constructor
-	//It is required for a CrossRef to be aware of the block it is part of
+	//Constructors
+	CrossRef () : _owner(NULL), ref(NULL), index(-1) {}
 	CrossRef ( IBlock * owner) : _owner(owner), ref(NULL), index(-1) {}
 	//Destructor
 	~CrossRef() { KillRef(); }
@@ -164,6 +165,7 @@ public:
 	void SetCrossRef( IBlock * new_ref );
 	void LostRef( IBlock * match );
 	void Fix( const vector<blk_ref> & blocks );
+	void SetOwner( IBlock * owner );
 private:
 	IBlock * _owner;
 	IBlock * ref;
