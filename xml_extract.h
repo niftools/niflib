@@ -63,8 +63,20 @@ struct Bones {
   Bones() {};
 };
 
-void NifStream( Bones & val, istream & in, uint version );
-void NifStream( Bones const & val, ostream & out, uint version );
+void NifStream( Bones & val, istream & in, uint version ) {
+  uint num_bones;
+  NifStream( num_bones, in, version );
+  val.bones.resize(num_bones);
+  NifStream( val.bones, in, version );
+};
+
+void NifStream( Bones const & val, ostream & out, uint version ) {
+  uint num_bones;
+  num_bones = uint(val.bones.size());
+  NifStream( num_bones, out, version );
+  NifStream( val.bones, out, version );
+};
+
 ostream & operator<<( ostream & out, Bones const & val );
 
 // 
@@ -78,112 +90,202 @@ struct ByteArray {
   ByteArray() {};
 };
 
-void NifStream( ByteArray & val, istream & in, uint version );
-void NifStream( ByteArray const & val, ostream & out, uint version );
+void NifStream( ByteArray & val, istream & in, uint version ) {
+  uint size;
+  NifStream( size, in, version );
+  if ( version >= 0x14000004 ) {
+    NifStream( val.unknown_int, in, version );
+  };
+  val.data.resize(size);
+  NifStream( val.data, in, version );
+};
+
+void NifStream( ByteArray const & val, ostream & out, uint version ) {
+  uint size;
+  size = uint(val.data.size());
+  NifStream( size, out, version );
+  if ( version >= 0x14000004 ) {
+    NifStream( val.unknown_int, out, version );
+  };
+  NifStream( val.data, out, version );
+};
+
 ostream & operator<<( ostream & out, ByteArray const & val );
 
 // 
 // An integer value that may or may not be used.
 //
-struct condint {
+struct CondInt {
   // Non-Zero if the following Integer appears.  Otherwise, the integer does not appear.
   bool is_used;
   // An unknown integer.
   uint unknown_int;
-  condint() {};
+  CondInt() {};
 };
 
-void NifStream( condint & val, istream & in, uint version );
-void NifStream( condint const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, condint const & val );
+void NifStream( CondInt & val, istream & in, uint version ) {
+  NifStream( val.is_used, in, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.unknown_int, in, version );
+  };
+};
+
+void NifStream( CondInt const & val, ostream & out, uint version ) {
+  NifStream( val.is_used, out, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.unknown_int, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, CondInt const & val );
 
 // 
 // An array of (untyped) keys.
 //
 template <class T >
-struct keyarray {
+struct KeyArray {
   // The keys.
   vector<Key<T > > keys;
-  keyarray() {};
+  KeyArray() {};
 };
 
 template <class T >
-void NifStream( keyarray<T> & val, istream & in, uint version );
+void NifStream( KeyArray<T> & val, istream & in, uint version ) {
+  uint num_keys;
+  NifStream( num_keys, in, version );
+  val.keys.resize(num_keys);
+  NifStream( val.keys, in, version );
+};
+
 template <class T >
-void NifStream( keyarray<T> const & val, ostream & out, uint version );
+void NifStream( KeyArray<T> const & val, ostream & out, uint version ) {
+  uint num_keys;
+  num_keys = uint(val.keys.size());
+  NifStream( num_keys, out, version );
+  NifStream( val.keys, out, version );
+};
+
 template <class T >
-ostream & operator<<( ostream & out, keyarray<T> const & val );
+ostream & operator<<( ostream & out, KeyArray<T> const & val );
 
 // 
 // List of block indices.
 //
-struct linkgroup {
+struct LinkGroup {
   // The list of block indices.
   vector<uint > indices;
-  linkgroup() {};
+  LinkGroup() {};
 };
 
-void NifStream( linkgroup & val, istream & in, uint version );
-void NifStream( linkgroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, linkgroup const & val );
+void NifStream( LinkGroup & val, istream & in, uint version ) {
+  uint num_indices;
+  NifStream( num_indices, in, version );
+  val.indices.resize(num_indices);
+  NifStream( val.indices, in, version );
+};
+
+void NifStream( LinkGroup const & val, ostream & out, uint version ) {
+  uint num_indices;
+  num_indices = uint(val.indices.size());
+  NifStream( num_indices, out, version );
+  NifStream( val.indices, out, version );
+};
+
+ostream & operator<<( ostream & out, LinkGroup const & val );
 
 // 
 // The NIF file footer.
 //
 struct Footer {
   // List of root blocks. If there is a camera, for 1st person view, then this block is referred to as well in this list, even if it is not a root block (usually we want the camera to be attached to the Bip Head node).
-  linkgroup roots;
+  LinkGroup roots;
   Footer() {};
 };
 
-void NifStream( Footer & val, istream & in, uint version );
-void NifStream( Footer const & val, ostream & out, uint version );
+void NifStream( Footer & val, istream & in, uint version ) {
+  NifStream( val.roots, in, version );
+};
+
+void NifStream( Footer const & val, ostream & out, uint version ) {
+  NifStream( val.roots, out, version );
+};
+
 ostream & operator<<( ostream & out, Footer const & val );
 
 // 
 // Group of vertex indices of vertices that match.
 //
-struct matchgroup {
+struct MatchGroup {
   // The vertex indices.
   vector<ushort > vertex_indices;
-  matchgroup() {};
+  MatchGroup() {};
 };
 
-void NifStream( matchgroup & val, istream & in, uint version );
-void NifStream( matchgroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, matchgroup const & val );
+void NifStream( MatchGroup & val, istream & in, uint version ) {
+  ushort num_vertices;
+  NifStream( num_vertices, in, version );
+  val.vertex_indices.resize(num_vertices);
+  NifStream( val.vertex_indices, in, version );
+};
+
+void NifStream( MatchGroup const & val, ostream & out, uint version ) {
+  ushort num_vertices;
+  num_vertices = ushort(val.vertex_indices.size());
+  NifStream( num_vertices, out, version );
+  NifStream( val.vertex_indices, out, version );
+};
+
+ostream & operator<<( ostream & out, MatchGroup const & val );
 
 // 
 // Description of a MipMap within a NiPixelData block.
 //
-struct mipmap {
+struct MipMap {
   // Width of the mipmap image.
   uint width;
   // Height of the mipmap image.
   uint height;
   // Offset into the pixel data array where this mipmap starts.
   uint offset;
-  mipmap() {};
+  MipMap() {};
 };
 
-void NifStream( mipmap & val, istream & in, uint version );
-void NifStream( mipmap const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, mipmap const & val );
+void NifStream( MipMap & val, istream & in, uint version ) {
+  NifStream( val.width, in, version );
+  NifStream( val.height, in, version );
+  NifStream( val.offset, in, version );
+};
+
+void NifStream( MipMap const & val, ostream & out, uint version ) {
+  NifStream( val.width, out, version );
+  NifStream( val.height, out, version );
+  NifStream( val.offset, out, version );
+};
+
+ostream & operator<<( ostream & out, MipMap const & val );
 
 // 
 // A link group conditioned on a boolean value.
 //
-struct modifiergroup {
+struct ModifierGroup {
   // Determines whether or not the link group is present.
   bool has_modifiers;
   // The list of particle modifiers.
-  linkgroup modifiers;
-  modifiergroup() {};
+  LinkGroup modifiers;
+  ModifierGroup() {};
 };
 
-void NifStream( modifiergroup & val, istream & in, uint version );
-void NifStream( modifiergroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, modifiergroup const & val );
+void NifStream( ModifierGroup & val, istream & in, uint version ) {
+  NifStream( val.has_modifiers, in, version );
+  NifStream( val.modifiers, in, version );
+};
+
+void NifStream( ModifierGroup const & val, ostream & out, uint version ) {
+  NifStream( val.has_modifiers, out, version );
+  NifStream( val.modifiers, out, version );
+};
+
+ostream & operator<<( ostream & out, ModifierGroup const & val );
 
 // 
 // Linear key type (!!! for NifSkope optimizer only, use key, keyrot, or keyvec for regular use).
@@ -198,9 +300,17 @@ struct ns_keylin {
 };
 
 template <class T >
-void NifStream( ns_keylin<T> & val, istream & in, uint version );
+void NifStream( ns_keylin<T> & val, istream & in, uint version ) {
+  NifStream( val.time, in, version );
+  NifStream( val.value, in, version );
+};
+
 template <class T >
-void NifStream( ns_keylin<T> const & val, ostream & out, uint version );
+void NifStream( ns_keylin<T> const & val, ostream & out, uint version ) {
+  NifStream( val.time, out, version );
+  NifStream( val.value, out, version );
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keylin<T> const & val );
 
@@ -215,9 +325,21 @@ struct ns_keyarray {
 };
 
 template <class T >
-void NifStream( ns_keyarray<T> & val, istream & in, uint version );
+void NifStream( ns_keyarray<T> & val, istream & in, uint version ) {
+  uint num_keys;
+  NifStream( num_keys, in, version );
+  val.keys.resize(num_keys);
+  NifStream( val.keys, in, version );
+};
+
 template <class T >
-void NifStream( ns_keyarray<T> const & val, ostream & out, uint version );
+void NifStream( ns_keyarray<T> const & val, ostream & out, uint version ) {
+  uint num_keys;
+  num_keys = uint(val.keys.size());
+  NifStream( num_keys, out, version );
+  NifStream( val.keys, out, version );
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keyarray<T> const & val );
 
@@ -238,16 +360,28 @@ struct ns_keytan {
 };
 
 template <class T >
-void NifStream( ns_keytan<T> & val, istream & in, uint version );
+void NifStream( ns_keytan<T> & val, istream & in, uint version ) {
+  NifStream( val.time, in, version );
+  NifStream( val.value, in, version );
+  NifStream( val.forward, in, version );
+  NifStream( val.backward, in, version );
+};
+
 template <class T >
-void NifStream( ns_keytan<T> const & val, ostream & out, uint version );
+void NifStream( ns_keytan<T> const & val, ostream & out, uint version ) {
+  NifStream( val.time, out, version );
+  NifStream( val.value, out, version );
+  NifStream( val.forward, out, version );
+  NifStream( val.backward, out, version );
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keytan<T> const & val );
 
 // 
 // A quaternion as it appears in the havok blocks.
 //
-struct quaternionxyzw {
+struct QuaternionXYZW {
   // The x-coordinate.
   float x;
   // The y-coordinate.
@@ -256,54 +390,78 @@ struct quaternionxyzw {
   float z;
   // The w-coordinate.
   float w;
-  quaternionxyzw() {};
+  QuaternionXYZW() {};
 };
 
-void NifStream( quaternionxyzw & val, istream & in, uint version );
-void NifStream( quaternionxyzw const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, quaternionxyzw const & val );
+void NifStream( QuaternionXYZW & val, istream & in, uint version ) {
+  NifStream( val.x, in, version );
+  NifStream( val.y, in, version );
+  NifStream( val.z, in, version );
+  NifStream( val.w, in, version );
+};
+
+void NifStream( QuaternionXYZW const & val, ostream & out, uint version ) {
+  NifStream( val.x, out, version );
+  NifStream( val.y, out, version );
+  NifStream( val.z, out, version );
+  NifStream( val.w, out, version );
+};
+
+ostream & operator<<( ostream & out, QuaternionXYZW const & val );
 
 // 
-// Another string format, for short strings.
+// Another string format, for short strings.  Specific to Bethesda-specific header tags.
 //
-struct shortstring {
+struct ShortString {
   // The string itself, null terminated (the null terminator is taken into account in the length byte).
   vector<byte > value;
-  shortstring() {};
+  ShortString() {};
 };
 
-void NifStream( shortstring & val, istream & in, uint version );
-void NifStream( shortstring const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, shortstring const & val );
+void NifStream( ShortString & val, istream & in, uint version ) {
+  byte length;
+  NifStream( length, in, version );
+  val.value.resize(length);
+  NifStream( val.value, in, version );
+};
+
+void NifStream( ShortString const & val, ostream & out, uint version ) {
+  byte length;
+  length = byte(val.value.size());
+  NifStream( length, out, version );
+  NifStream( val.value, out, version );
+};
+
+ostream & operator<<( ostream & out, ShortString const & val );
 
 // 
 // Unknown.
 //
-struct skinshapegroup {
+struct SkinShapeGroup {
   // First link is a NiTriShape block.
   // Second link is a NiSkinInstance block.
   vector<vector<uint > > link_pairs;
-  skinshapegroup() {};
+  SkinShapeGroup() {};
 };
 
-void NifStream( skinshapegroup & val, istream & in, uint version );
-void NifStream( skinshapegroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, skinshapegroup const & val );
-
-// 
-// A weighted vertex.
-//
-struct skinweight {
-  // The vertex index, in the mesh.
-  ushort index;
-  // The vertex weight - between 0.0 and 1.0
-  float weight;
-  skinweight() {};
+void NifStream( SkinShapeGroup & val, istream & in, uint version ) {
+  uint num_link_pairs;
+  NifStream( num_link_pairs, in, version );
+  val.link_pairs.resize(num_link_pairs);
+  for (uint i = 0; i < num_link_pairs; i++) {
+    val.link_pairs[i].resize(2);
+  };
+  NifStream( val.link_pairs, in, version );
 };
 
-void NifStream( skinweight & val, istream & in, uint version );
-void NifStream( skinweight const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, skinweight const & val );
+void NifStream( SkinShapeGroup const & val, ostream & out, uint version ) {
+  uint num_link_pairs;
+  num_link_pairs = uint(val.link_pairs.size());
+  NifStream( num_link_pairs, out, version );
+  NifStream( val.link_pairs, out, version );
+};
+
+ostream & operator<<( ostream & out, SkinShapeGroup const & val );
 
 // 
 // Used in NiDefaultAVObjectPalette.
@@ -316,8 +474,16 @@ struct AVObject {
   AVObject() {};
 };
 
-void NifStream( AVObject & val, istream & in, uint version );
-void NifStream( AVObject const & val, ostream & out, uint version );
+void NifStream( AVObject & val, istream & in, uint version ) {
+  NifStream( val.name, in, version );
+  NifStream( val.object, in, version );
+};
+
+void NifStream( AVObject const & val, ostream & out, uint version ) {
+  NifStream( val.name, out, version );
+  NifStream( val.object, out, version );
+};
+
 ostream & operator<<( ostream & out, AVObject const & val );
 
 // 
@@ -371,15 +537,123 @@ struct ControllerLink {
   ControllerLink() {};
 };
 
-void NifStream( ControllerLink & val, istream & in, uint version );
-void NifStream( ControllerLink const & val, ostream & out, uint version );
+void NifStream( ControllerLink & val, istream & in, uint version ) {
+  if ( version <= 0x0A010000 ) {
+    NifStream( val.name, in, version );
+  };
+  NifStream( val.interpolator, in, version );
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.unknown_link_1, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.unknown_link_2, in, version );
+    NifStream( val.unknown_short_0, in, version );
+  };
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.priority_, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.string_palette, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.node_name, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.node_name_offset, in, version );
+    NifStream( val.unknown_short_1, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.property_type, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.property_type_offset, in, version );
+    NifStream( val.unknown_short_2, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.controller_type, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.controller_type_offset, in, version );
+    NifStream( val.unknown_short_3, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.variable_1, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.variable_offset_1, in, version );
+    NifStream( val.unknown_short_4, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.variable_2, in, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.variable_offset_2, in, version );
+    NifStream( val.unknown_short_5, in, version );
+  };
+};
+
+void NifStream( ControllerLink const & val, ostream & out, uint version ) {
+  if ( version <= 0x0A010000 ) {
+    NifStream( val.name, out, version );
+  };
+  NifStream( val.interpolator, out, version );
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.unknown_link_1, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.unknown_link_2, out, version );
+    NifStream( val.unknown_short_0, out, version );
+  };
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.priority_, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.string_palette, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.node_name, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.node_name_offset, out, version );
+    NifStream( val.unknown_short_1, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.property_type, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.property_type_offset, out, version );
+    NifStream( val.unknown_short_2, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.controller_type, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.controller_type_offset, out, version );
+    NifStream( val.unknown_short_3, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.variable_1, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.variable_offset_1, out, version );
+    NifStream( val.unknown_short_4, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.variable_2, out, version );
+  };
+  if ( version >= 0x0A020000 ) {
+    NifStream( val.variable_offset_2, out, version );
+    NifStream( val.unknown_short_5, out, version );
+  };
+};
+
 ostream & operator<<( ostream & out, ControllerLink const & val );
 
 // 
 // The NIF file header.
 //
 struct Header {
-  // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version written out. Ends with a newline byteacter (0x0A).
+  // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version written out. Ends with a newline character (0x0A).
   HeaderString header_string;
   // The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C, 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000, 0x0A020000, 0x14000004, ...
   uint version;
@@ -395,11 +669,11 @@ struct Header {
   // Unknown.
   uint unknown_int_3;
   // Could be the name of the creator of the NIF file?
-  shortstring creator_;
+  ShortString creator_;
   // Unknown. Can be something like 'TriStrip Process Script'.
-  shortstring export_type_;
+  ShortString export_type_;
   // Unknown. Possibly the selected option of the export script. Can be something like 'Default Export Script'.
-  shortstring export_script_;
+  ShortString export_script_;
   // List of all block types used in this NIF file.
   vector<string > block_types;
   // Maps file blocks on their corresponding type: first file block is of type block_types[block_type_index[0]], the second of block_types[block_type_index[1]], etc.
@@ -409,182 +683,187 @@ struct Header {
   Header() : version(0x04000002), endian_type(1) {};
 };
 
-void NifStream( Header & val, istream & in, uint version );
-void NifStream( Header const & val, ostream & out, uint version );
+void NifStream( Header & val, istream & in, uint version ) {
+  uint num_blocks;
+  ushort num_block_types;
+  NifStream( val.header_string, in, version );
+  NifStream( val.version, in, version );
+  if ( version >= 0x14000004 ) {
+    NifStream( val.endian_type, in, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.user_version, in, version );
+  };
+  NifStream( num_blocks, in, version );
+  if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
+    NifStream( val.unknown_int_1, in, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.user_version != 0 ) {
+      NifStream( val.unknown_int_3, in, version );
+    };
+  };
+  if ( version >= 0x0A000102 ) {
+    if ( val.user_version != 0 ) {
+      NifStream( val.creator_, in, version );
+      NifStream( val.export_type_, in, version );
+      NifStream( val.export_script_, in, version );
+    };
+  };
+  if ( version >= 0x0A000100 ) {
+    NifStream( num_block_types, in, version );
+    val.block_types.resize(num_block_types);
+    NifStream( val.block_types, in, version );
+    val.block_type_index.resize(num_blocks);
+    NifStream( val.block_type_index, in, version );
+    NifStream( val.unknown_int_2, in, version );
+  };
+};
+
+void NifStream( Header const & val, ostream & out, uint version ) {
+  uint num_blocks;
+  ushort num_block_types;
+  num_blocks = uint(val.block_type_index.size());
+  num_block_types = ushort(val.block_types.size());
+  NifStream( val.header_string, out, version );
+  NifStream( val.version, out, version );
+  if ( version >= 0x14000004 ) {
+    NifStream( val.endian_type, out, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.user_version, out, version );
+  };
+  NifStream( num_blocks, out, version );
+  if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
+    NifStream( val.unknown_int_1, out, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.user_version != 0 ) {
+      NifStream( val.unknown_int_3, out, version );
+    };
+  };
+  if ( version >= 0x0A000102 ) {
+    if ( val.user_version != 0 ) {
+      NifStream( val.creator_, out, version );
+      NifStream( val.export_type_, out, version );
+      NifStream( val.export_script_, out, version );
+    };
+  };
+  if ( version >= 0x0A000100 ) {
+    NifStream( num_block_types, out, version );
+    NifStream( val.block_types, out, version );
+    NifStream( val.block_type_index, out, version );
+    NifStream( val.unknown_int_2, out, version );
+  };
+};
+
 ostream & operator<<( ostream & out, Header const & val );
 
 // 
 // Describes a shader.
 //
-struct shader {
+struct Shader {
   // Do we have a shader?
   bool has_shader;
   // The shader name.
   string shader_name;
   // Unknown link, usually -1.
   uint unknown_link;
-  shader() {};
+  Shader() {};
 };
 
-void NifStream( shader & val, istream & in, uint version );
-void NifStream( shader const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, shader const & val );
+void NifStream( Shader & val, istream & in, uint version ) {
+  NifStream( val.has_shader, in, version );
+  if ( val.has_shader != 0 ) {
+    NifStream( val.shader_name, in, version );
+    NifStream( val.unknown_link, in, version );
+  };
+};
+
+void NifStream( Shader const & val, ostream & out, uint version ) {
+  NifStream( val.has_shader, out, version );
+  if ( val.has_shader != 0 ) {
+    NifStream( val.shader_name, out, version );
+    NifStream( val.unknown_link, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, Shader const & val );
 
 // 
 // A list of \\0 terminated strings.
 //
-struct stringpalette {
+struct StringPalette {
   // A bunch of 0x00 seperated strings.
   string palette;
   // Length of the palette string is repeated here.
   uint length;
-  stringpalette() {};
+  StringPalette() {};
 };
 
-void NifStream( stringpalette & val, istream & in, uint version );
-void NifStream( stringpalette const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, stringpalette const & val );
+void NifStream( StringPalette & val, istream & in, uint version ) {
+  NifStream( val.palette, in, version );
+  NifStream( val.length, in, version );
+};
+
+void NifStream( StringPalette const & val, ostream & out, uint version ) {
+  NifStream( val.palette, out, version );
+  NifStream( val.length, out, version );
+};
+
+ostream & operator<<( ostream & out, StringPalette const & val );
 
 // 
 // A list of node targets.
 //
-struct targetgroup {
+struct TargetGroup {
   // The list of block indices.
   vector<uint > indices;
-  targetgroup() {};
+  TargetGroup() {};
 };
 
-void NifStream( targetgroup & val, istream & in, uint version );
-void NifStream( targetgroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, targetgroup const & val );
+void NifStream( TargetGroup & val, istream & in, uint version ) {
+  ushort num_indices;
+  NifStream( num_indices, in, version );
+  val.indices.resize(num_indices);
+  NifStream( val.indices, in, version );
+};
+
+void NifStream( TargetGroup const & val, ostream & out, uint version ) {
+  ushort num_indices;
+  num_indices = ushort(val.indices.size());
+  NifStream( num_indices, out, version );
+  NifStream( val.indices, out, version );
+};
+
+ostream & operator<<( ostream & out, TargetGroup const & val );
 
 // 
 // Tension, bias, continuity.
 //
-struct tbc {
+struct TBC {
   // Tension.
   float t;
   // Bias.
   float b;
   // Continuity.
   float c;
-  tbc() {};
+  TBC() {};
 };
 
-void NifStream( tbc & val, istream & in, uint version );
-void NifStream( tbc const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, tbc const & val );
-
-// 
-// A generic key type used for vectors (float, vector3, color4, and also byte). Type 1 is normal linear interpolation, type 2 has forward and backward tangents, and type 3 has tension, bias and continuity arguments. Note that color4 and byte always seem to be of type 1.
-//
-template <class T >
-struct keyvec {
-  // Time of the key.
-  float time;
-  // The key value.
-  T value;
-  // Key forward tangent.
-  T forward;
-  // The key backward tangent.
-  T backward;
-  // The key's TBC.
-  tbc tbc;
-  keyvec() {};
+void NifStream( TBC & val, istream & in, uint version ) {
+  NifStream( val.t, in, version );
+  NifStream( val.b, in, version );
+  NifStream( val.c, in, version );
 };
 
-template <class T >
-void NifStream( keyvec<T> & val, istream & in, uint version );
-template <class T >
-void NifStream( keyvec<T> const & val, ostream & out, uint version );
-template <class T >
-ostream & operator<<( ostream & out, keyvec<T> const & val );
-
-// 
-// Array of vector keys (anything that can be interpolated, except rotations).
-//
-template <class T >
-struct keyvecarray {
-  // Number of keys in the array.
-  uint num_keys;
-  // The key type.
-  uint key_type;
-  // The keys.
-  vector<keyvec<T > > keys;
-  keyvecarray() : keys(keyvec(key_type)) {};
+void NifStream( TBC const & val, ostream & out, uint version ) {
+  NifStream( val.t, out, version );
+  NifStream( val.b, out, version );
+  NifStream( val.c, out, version );
 };
 
-template <class T >
-void NifStream( keyvecarray<T> & val, istream & in, uint version );
-template <class T >
-void NifStream( keyvecarray<T> const & val, ostream & out, uint version );
-template <class T >
-ostream & operator<<( ostream & out, keyvecarray<T> const & val );
-
-// 
-// A generic key type used for rotations (currently, only quaternion).
-//     
-//     Time the key applies.
-//
-template <class T >
-struct keyrot {
-  // Time the key applies.
-  float time;
-  // Value of the key.
-  T value;
-  // The TBC of the key.
-  tbc tbc;
-  // Rotation sub keys.
-  vector<keyvecarray<float > > sub_keys;
-  keyrot() {};
-};
-
-template <class T >
-void NifStream( keyrot<T> & val, istream & in, uint version );
-template <class T >
-void NifStream( keyrot<T> const & val, ostream & out, uint version );
-template <class T >
-ostream & operator<<( ostream & out, keyrot<T> const & val );
-
-// 
-// Rotation key array.
-//
-template <class T >
-struct keyrotarray {
-  // Number of keys.
-  uint num_keys;
-  // Key type (1, 2, 3, or 4).
-  uint key_type;
-  // The rotation keys.
-  vector<keyrot<T > > keys;
-  keyrotarray() : keys(keyrot(key_type)) {};
-};
-
-template <class T >
-void NifStream( keyrotarray<T> & val, istream & in, uint version );
-template <class T >
-void NifStream( keyrotarray<T> const & val, ostream & out, uint version );
-template <class T >
-ostream & operator<<( ostream & out, keyrotarray<T> const & val );
-
-// 
-// An array of keys. This one always has a Key Type.
-//
-template <class T >
-struct keyvecarraytyp {
-  // The key type.
-  uint key_type;
-  // The keys.
-  vector<keyvec<T > > keys;
-  //keyvecarraytyp() : keys(keyvec(key_type)) {}; !!BUG!!
-};
-
-template <class T >
-void NifStream( keyvecarraytyp<T> & val, istream & in, uint version );
-template <class T >
-void NifStream( keyvecarraytyp<T> const & val, ostream & out, uint version );
-template <class T >
-ostream & operator<<( ostream & out, keyvecarraytyp<T> const & val );
+ostream & operator<<( ostream & out, TBC const & val );
 
 // 
 // A TBC key (!!! for NifSkope only, use keyvec for regular purposes).
@@ -596,14 +875,24 @@ struct ns_keytbc {
   // The key value.
   T value;
   // Tension, bias, continuity.
-  tbc tbc;
+  TBC tbc;
   ns_keytbc() {};
 };
 
 template <class T >
-void NifStream( ns_keytbc<T> & val, istream & in, uint version );
+void NifStream( ns_keytbc<T> & val, istream & in, uint version ) {
+  NifStream( val.time, in, version );
+  NifStream( val.value, in, version );
+  NifStream( val.tbc, in, version );
+};
+
 template <class T >
-void NifStream( ns_keytbc<T> const & val, ostream & out, uint version );
+void NifStream( ns_keytbc<T> const & val, ostream & out, uint version ) {
+  NifStream( val.time, out, version );
+  NifStream( val.value, out, version );
+  NifStream( val.tbc, out, version );
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keytbc<T> const & val );
 
@@ -628,9 +917,49 @@ struct ns_keyvecarray {
 };
 
 template <class T >
-void NifStream( ns_keyvecarray<T> & val, istream & in, uint version );
+void NifStream( ns_keyvecarray<T> & val, istream & in, uint version ) {
+  NifStream( val.num_keys, in, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, in, version );
+  };
+  if ( val.key_type == 1 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 2 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 3 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 5 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+};
+
 template <class T >
-void NifStream( ns_keyvecarray<T> const & val, ostream & out, uint version );
+void NifStream( ns_keyvecarray<T> const & val, ostream & out, uint version ) {
+  NifStream( val.num_keys, out, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, out, version );
+  };
+  if ( val.key_type == 1 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 2 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 3 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 5 ) {
+    NifStream( val.keys, out, version );
+  };
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keyvecarray<T> const & val );
 
@@ -645,8 +974,21 @@ struct ns_keyrotsub {
   ns_keyrotsub() {};
 };
 
-void NifStream( ns_keyrotsub & val, istream & in, uint version );
-void NifStream( ns_keyrotsub const & val, ostream & out, uint version );
+void NifStream( ns_keyrotsub & val, istream & in, uint version ) {
+  if ( version <= 0x0A010000 ) {
+    NifStream( val.time, in, version );
+  };
+  val.sub_keys.resize(3);
+  NifStream( val.sub_keys, in, version );
+};
+
+void NifStream( ns_keyrotsub const & val, ostream & out, uint version ) {
+  if ( version <= 0x0A010000 ) {
+    NifStream( val.time, out, version );
+  };
+  NifStream( val.sub_keys, out, version );
+};
+
 ostream & operator<<( ostream & out, ns_keyrotsub const & val );
 
 // 
@@ -671,9 +1013,49 @@ struct ns_keyrotarray {
 };
 
 template <class T >
-void NifStream( ns_keyrotarray<T> & val, istream & in, uint version );
+void NifStream( ns_keyrotarray<T> & val, istream & in, uint version ) {
+  NifStream( val.num_keys, in, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, in, version );
+  };
+  if ( val.key_type == 1 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 2 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 3 ) {
+    val.keys.resize(val.num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 4 ) {
+    val.keys_sub.resize(val.num_keys);
+    NifStream( val.keys_sub, in, version );
+  };
+};
+
 template <class T >
-void NifStream( ns_keyrotarray<T> const & val, ostream & out, uint version );
+void NifStream( ns_keyrotarray<T> const & val, ostream & out, uint version ) {
+  NifStream( val.num_keys, out, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, out, version );
+  };
+  if ( val.key_type == 1 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 2 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 3 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 4 ) {
+    NifStream( val.keys_sub, out, version );
+  };
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keyrotarray<T> const & val );
 
@@ -695,9 +1077,41 @@ struct ns_keyvecarraytyp {
 };
 
 template <class T >
-void NifStream( ns_keyvecarraytyp<T> & val, istream & in, uint version );
+void NifStream( ns_keyvecarraytyp<T> & val, istream & in, uint version ) {
+  uint num_keys;
+  NifStream( num_keys, in, version );
+  NifStream( val.key_type, in, version );
+  if ( val.key_type == 1 ) {
+    val.keys.resize(num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 2 ) {
+    val.keys.resize(num_keys);
+    NifStream( val.keys, in, version );
+  };
+  if ( val.key_type == 3 ) {
+    val.keys.resize(num_keys);
+    NifStream( val.keys, in, version );
+  };
+};
+
 template <class T >
-void NifStream( ns_keyvecarraytyp<T> const & val, ostream & out, uint version );
+void NifStream( ns_keyvecarraytyp<T> const & val, ostream & out, uint version ) {
+  uint num_keys;
+  num_keys = uint(val.keys.size());
+  NifStream( num_keys, out, version );
+  NifStream( val.key_type, out, version );
+  if ( val.key_type == 1 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 2 ) {
+    NifStream( val.keys, out, version );
+  };
+  if ( val.key_type == 3 ) {
+    NifStream( val.keys, out, version );
+  };
+};
+
 template <class T >
 ostream & operator<<( ostream & out, ns_keyvecarraytyp<T> const & val );
 
@@ -718,53 +1132,109 @@ struct BumpMap {
   BumpMap() {};
 };
 
-void NifStream( BumpMap & val, istream & in, uint version );
-void NifStream( BumpMap const & val, ostream & out, uint version );
+void NifStream( BumpMap & val, istream & in, uint version ) {
+  NifStream( val.is_used, in, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture, in, version );
+    NifStream( val.bump_map_luma_scale, in, version );
+    NifStream( val.bump_map_luma_offset, in, version );
+    NifStream( val.matrix, in, version );
+  };
+};
+
+void NifStream( BumpMap const & val, ostream & out, uint version ) {
+  NifStream( val.is_used, out, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture, out, version );
+    NifStream( val.bump_map_luma_scale, out, version );
+    NifStream( val.bump_map_luma_offset, out, version );
+    NifStream( val.matrix, out, version );
+  };
+};
+
 ostream & operator<<( ostream & out, BumpMap const & val );
 
 // 
 // A texture that is not a bumpmap.
 //
-struct texture {
+struct Texture {
   // Determines whether this texture contains any information. If Non-Zero the following data is present, otherwise it is not.
   bool is_used;
   // The texture description.
   TexDesc texture_data;
-  texture() {};
+  Texture() {};
 };
 
-void NifStream( texture & val, istream & in, uint version );
-void NifStream( texture const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, texture const & val );
+void NifStream( Texture & val, istream & in, uint version ) {
+  NifStream( val.is_used, in, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture_data, in, version );
+  };
+};
+
+void NifStream( Texture const & val, ostream & out, uint version ) {
+  NifStream( val.is_used, out, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture_data, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, Texture const & val );
 
 // 
 // An extended version of texture.
 //
-struct texture2 {
+struct Texture2 {
   // Is it used?
   bool is_used;
   // The texture data.
   TexDesc texture_data;
   // Unknown.
   uint unknown_int;
-  texture2() {};
+  Texture2() {};
 };
 
-void NifStream( texture2 & val, istream & in, uint version );
-void NifStream( texture2 const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, texture2 const & val );
+void NifStream( Texture2 & val, istream & in, uint version ) {
+  NifStream( val.is_used, in, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture_data, in, version );
+    NifStream( val.unknown_int, in, version );
+  };
+};
+
+void NifStream( Texture2 const & val, ostream & out, uint version ) {
+  NifStream( val.is_used, out, version );
+  if ( val.is_used != 0 ) {
+    NifStream( val.texture_data, out, version );
+    NifStream( val.unknown_int, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, Texture2 const & val );
 
 // 
 // Group of extra textures.
 //
 struct ExtraTextureGroup {
   // The textures.
-  vector<texture2 > textures;
+  vector<Texture2 > textures;
   ExtraTextureGroup() {};
 };
 
-void NifStream( ExtraTextureGroup & val, istream & in, uint version );
-void NifStream( ExtraTextureGroup const & val, ostream & out, uint version );
+void NifStream( ExtraTextureGroup & val, istream & in, uint version ) {
+  uint num_textures;
+  NifStream( num_textures, in, version );
+  val.textures.resize(num_textures);
+  NifStream( val.textures, in, version );
+};
+
+void NifStream( ExtraTextureGroup const & val, ostream & out, uint version ) {
+  uint num_textures;
+  num_textures = uint(val.textures.size());
+  NifStream( num_textures, out, version );
+  NifStream( val.textures, out, version );
+};
+
 ostream & operator<<( ostream & out, ExtraTextureGroup const & val );
 
 // 
@@ -786,7 +1256,7 @@ ostream & operator<<( ostream & out, ExtraTextureGroup const & val );
 //     
 //     The strips.
 //
-struct skinpartitionblock {
+struct SkinPartition {
   // Number of strips in this submesh (zero if not stripped).
   ushort num_strips;
   // List of bones.
@@ -809,12 +1279,146 @@ struct skinpartitionblock {
   bool has_bone_indices;
   // Bone indices, they index into 'Bones'.
   vector<vector<byte > > bone_indices;
-  skinpartitionblock() {};
+  SkinPartition() {};
 };
 
-void NifStream( skinpartitionblock & val, istream & in, uint version );
-void NifStream( skinpartitionblock const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, skinpartitionblock const & val );
+void NifStream( SkinPartition & val, istream & in, uint version ) {
+  ushort num_vertices;
+  ushort num_triangles;
+  ushort num_bones;
+  ushort num_weights_per_vertex;
+  vector<ushort > strip_lengths;
+  NifStream( num_vertices, in, version );
+  NifStream( num_triangles, in, version );
+  NifStream( num_bones, in, version );
+  NifStream( val.num_strips, in, version );
+  NifStream( num_weights_per_vertex, in, version );
+  val.bones.resize(num_bones);
+  NifStream( val.bones, in, version );
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.has_vertex_map, in, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    val.vertex_map.resize(num_vertices);
+    NifStream( val.vertex_map, in, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_vertex_map != 0 ) {
+      val.vertex_map.resize(num_vertices);
+      NifStream( val.vertex_map, in, version );
+    };
+    NifStream( val.has_vertex_weights, in, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    val.vertex_weights.resize(num_vertices);
+    for (uint i = 0; i < num_vertices; i++) {
+      val.vertex_weights[i].resize(num_weights_per_vertex);
+    };
+    NifStream( val.vertex_weights, in, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_vertex_weights != 0 ) {
+      val.vertex_weights.resize(num_vertices);
+      for (uint i = 0; i < num_vertices; i++) {
+        val.vertex_weights[i].resize(num_weights_per_vertex);
+      };
+      NifStream( val.vertex_weights, in, version );
+    };
+  };
+  strip_lengths.resize(val.num_strips);
+  NifStream( strip_lengths, in, version );
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.has_strips, in, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    val.strips.resize(val.num_strips);
+    for (uint i = 0; i < val.num_strips; i++) {
+      val.strips[i].resize(strip_lengths[i]);
+    };
+    NifStream( val.strips, in, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_strips != 0 ) {
+      val.strips.resize(val.num_strips);
+      for (uint i = 0; i < val.num_strips; i++) {
+        val.strips[i].resize(strip_lengths[i]);
+      };
+      NifStream( val.strips, in, version );
+    };
+  };
+  if ( val.num_strips == 0 ) {
+    val.triangles.resize(num_triangles);
+    NifStream( val.triangles, in, version );
+  };
+  NifStream( val.has_bone_indices, in, version );
+  if ( val.has_bone_indices != 0 ) {
+    val.bone_indices.resize(num_vertices);
+    for (uint i = 0; i < num_vertices; i++) {
+      val.bone_indices[i].resize(num_weights_per_vertex);
+    };
+    NifStream( val.bone_indices, in, version );
+  };
+};
+
+void NifStream( SkinPartition const & val, ostream & out, uint version ) {
+  ushort num_vertices;
+  ushort num_triangles;
+  ushort num_bones;
+  ushort num_weights_per_vertex;
+  vector<ushort > strip_lengths;
+  num_vertices = ushort(val.vertex_map.size());
+  num_triangles = ushort(val.triangles.size());
+  num_bones = ushort(val.bones.size());
+  num_weights_per_vertex = ushort(val.vertex_weights.size());
+  strip_lengths.resize(val.strips.size()); for (uint i = 0; i < val.strips.size(); i++) strip_lengths[i] = ushort(val.strips[i].size());
+  NifStream( num_vertices, out, version );
+  NifStream( num_triangles, out, version );
+  NifStream( num_bones, out, version );
+  NifStream( val.num_strips, out, version );
+  NifStream( num_weights_per_vertex, out, version );
+  NifStream( val.bones, out, version );
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.has_vertex_map, out, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    NifStream( val.vertex_map, out, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_vertex_map != 0 ) {
+      NifStream( val.vertex_map, out, version );
+    };
+    NifStream( val.has_vertex_weights, out, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    NifStream( val.vertex_weights, out, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_vertex_weights != 0 ) {
+      NifStream( val.vertex_weights, out, version );
+    };
+  };
+  NifStream( strip_lengths, out, version );
+  if ( version >= 0x0A010000 ) {
+    NifStream( val.has_strips, out, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    NifStream( val.strips, out, version );
+  };
+  if ( version >= 0x0A010000 ) {
+    if ( val.has_strips != 0 ) {
+      NifStream( val.strips, out, version );
+    };
+  };
+  if ( val.num_strips == 0 ) {
+    NifStream( val.triangles, out, version );
+  };
+  NifStream( val.has_bone_indices, out, version );
+  if ( val.has_bone_indices != 0 ) {
+    NifStream( val.bone_indices, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, SkinPartition const & val );
 
 // 
 // Unknown.
@@ -825,8 +1429,18 @@ struct unk292bytes {
   unk292bytes() {};
 };
 
-void NifStream( unk292bytes & val, istream & in, uint version );
-void NifStream( unk292bytes const & val, ostream & out, uint version );
+void NifStream( unk292bytes & val, istream & in, uint version ) {
+  val.unknown_292_bytes.resize(73);
+  for (uint i = 0; i < 73; i++) {
+    val.unknown_292_bytes[i].resize(4);
+  };
+  NifStream( val.unknown_292_bytes, in, version );
+};
+
+void NifStream( unk292bytes const & val, ostream & out, uint version ) {
+  NifStream( val.unknown_292_bytes, out, version );
+};
+
 ostream & operator<<( ostream & out, unk292bytes const & val );
 
 // 
@@ -844,31 +1458,53 @@ struct FurniturePosition {
   FurniturePosition() {};
 };
 
-void NifStream( FurniturePosition & val, istream & in, uint version );
-void NifStream( FurniturePosition const & val, ostream & out, uint version );
+void NifStream( FurniturePosition & val, istream & in, uint version ) {
+  NifStream( val.unknown_vector, in, version );
+  NifStream( val.unknown_short, in, version );
+  NifStream( val.position_ref_1_, in, version );
+  NifStream( val.position_ref_2_, in, version );
+};
+
+void NifStream( FurniturePosition const & val, ostream & out, uint version ) {
+  NifStream( val.unknown_vector, out, version );
+  NifStream( val.unknown_short, out, version );
+  NifStream( val.position_ref_1_, out, version );
+  NifStream( val.position_ref_2_, out, version );
+};
+
 ostream & operator<<( ostream & out, FurniturePosition const & val );
 
 // 
 // A triangle with extra data used for physics.
 //
-struct hktriangle {
+struct hkTriangle {
   // The triangle.
   Triangle triangle;
   // Another short, doesn't look like a vertex index.
   ushort unknown_short;
   // This appears to be a normalized vector, so probably it is a normal or a tangent vector or something like that.
   Vector3 normal;
-  hktriangle() {};
+  hkTriangle() {};
 };
 
-void NifStream( hktriangle & val, istream & in, uint version );
-void NifStream( hktriangle const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, hktriangle const & val );
+void NifStream( hkTriangle & val, istream & in, uint version ) {
+  NifStream( val.triangle, in, version );
+  NifStream( val.unknown_short, in, version );
+  NifStream( val.normal, in, version );
+};
+
+void NifStream( hkTriangle const & val, ostream & out, uint version ) {
+  NifStream( val.triangle, out, version );
+  NifStream( val.unknown_short, out, version );
+  NifStream( val.normal, out, version );
+};
+
+ostream & operator<<( ostream & out, hkTriangle const & val );
 
 // 
 // Info about level of detail ranges.
 //
-struct lodinfo {
+struct LODInfo {
   // Type of LOD info (0=regular, 1=info is in a NiRangeLODData block).
   uint lod_type;
   // ?
@@ -879,36 +1515,45 @@ struct lodinfo {
   ushort unknown_short;
   // Refers to NiRangeLODData block.
   uint range_data;
-  lodinfo() {};
+  LODInfo() {};
 };
 
-void NifStream( lodinfo & val, istream & in, uint version );
-void NifStream( lodinfo const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, lodinfo const & val );
-
-// 
-// Geometry morphing data component.
-//
-struct morphblock {
-  // Name of the frame.
-  string frame_name;
-  // The morphing keyframes.
-  keyvecarraytyp<float > frames;
-  // Unknown.
-  uint unknown_int;
-  // Morph vectors.
-  vector<Vector3 > vectors;
-  morphblock() {};
+void NifStream( LODInfo & val, istream & in, uint version ) {
+  uint num_lod_levels;
+  NifStream( val.lod_type, in, version );
+  if ( val.lod_type == 0 ) {
+    NifStream( val.lod_center, in, version );
+    NifStream( num_lod_levels, in, version );
+    val.lod_levels.resize(num_lod_levels);
+    NifStream( val.lod_levels, in, version );
+  };
+  if ( val.lod_type == 1 ) {
+    NifStream( val.unknown_short, in, version );
+    NifStream( val.range_data, in, version );
+  };
 };
 
-void NifStream( morphblock & val, istream & in, uint version );
-void NifStream( morphblock const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, morphblock const & val );
+void NifStream( LODInfo const & val, ostream & out, uint version ) {
+  uint num_lod_levels;
+  num_lod_levels = uint(val.lod_levels.size());
+  NifStream( val.lod_type, out, version );
+  if ( val.lod_type == 0 ) {
+    NifStream( val.lod_center, out, version );
+    NifStream( num_lod_levels, out, version );
+    NifStream( val.lod_levels, out, version );
+  };
+  if ( val.lod_type == 1 ) {
+    NifStream( val.unknown_short, out, version );
+    NifStream( val.range_data, out, version );
+  };
+};
+
+ostream & operator<<( ostream & out, LODInfo const & val );
 
 // 
 // particle array entry
 //
-struct particle {
+struct Particle {
   // Particle velocity
   Vector3 velocity;
   // Unknown
@@ -923,33 +1568,65 @@ struct particle {
   ushort unknown_short;
   // Particle/vertex index matches array index
   ushort vertex_id;
-  particle() {};
+  Particle() {};
 };
 
-void NifStream( particle & val, istream & in, uint version );
-void NifStream( particle const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, particle const & val );
+void NifStream( Particle & val, istream & in, uint version ) {
+  NifStream( val.velocity, in, version );
+  NifStream( val.unknown_vector, in, version );
+  NifStream( val.lifetime, in, version );
+  NifStream( val.lifespan, in, version );
+  NifStream( val.timestamp, in, version );
+  NifStream( val.unknown_short, in, version );
+  NifStream( val.vertex_id, in, version );
+};
+
+void NifStream( Particle const & val, ostream & out, uint version ) {
+  NifStream( val.velocity, out, version );
+  NifStream( val.unknown_vector, out, version );
+  NifStream( val.lifetime, out, version );
+  NifStream( val.lifespan, out, version );
+  NifStream( val.timestamp, out, version );
+  NifStream( val.unknown_short, out, version );
+  NifStream( val.vertex_id, out, version );
+};
+
+ostream & operator<<( ostream & out, Particle const & val );
 
 // 
 // Data for several particles.
 //
-struct particlegroup {
+struct ParticleGroup {
   // Number of valid entries in the following array.
   // (number of active particles at the time the system was saved)
   ushort num_valid;
   // Individual particle modifiers?
-  vector<particle > particles;
-  particlegroup() {};
+  vector<Particle > particles;
+  ParticleGroup() {};
 };
 
-void NifStream( particlegroup & val, istream & in, uint version );
-void NifStream( particlegroup const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, particlegroup const & val );
+void NifStream( ParticleGroup & val, istream & in, uint version ) {
+  ushort num_particles;
+  NifStream( num_particles, in, version );
+  NifStream( val.num_valid, in, version );
+  val.particles.resize(num_particles);
+  NifStream( val.particles, in, version );
+};
+
+void NifStream( ParticleGroup const & val, ostream & out, uint version ) {
+  ushort num_particles;
+  num_particles = ushort(val.particles.size());
+  NifStream( num_particles, out, version );
+  NifStream( val.num_valid, out, version );
+  NifStream( val.particles, out, version );
+};
+
+ostream & operator<<( ostream & out, ParticleGroup const & val );
 
 // 
 // Skinning data component.
 //
-struct skinblock {
+struct SkinData {
   // Rotation offset of the skin from this bone in bind position.
   Matrix33 rotation;
   // Translation offset of the skin from this bone in bind position.
@@ -959,13 +1636,183 @@ struct skinblock {
   // This has been verified not to be a normalized quaternion.  They may or may not be related to each other so their specification as an array of 4 floats may be misleading.
   vector<float > unknown_4_floats;
   // The vertex weights.
-  vector<skinweight > vertex_weights;
-  skinblock() {};
+  vector<SkinWeight > vertex_weights;
+  SkinData() {};
 };
 
-void NifStream( skinblock & val, istream & in, uint version );
-void NifStream( skinblock const & val, ostream & out, uint version );
-ostream & operator<<( ostream & out, skinblock const & val );
+void NifStream( SkinData & val, istream & in, uint version ) {
+  ushort num_vertices;
+  NifStream( val.rotation, in, version );
+  NifStream( val.translation, in, version );
+  NifStream( val.scale, in, version );
+  val.unknown_4_floats.resize(4);
+  NifStream( val.unknown_4_floats, in, version );
+  NifStream( num_vertices, in, version );
+  val.vertex_weights.resize(num_vertices);
+  NifStream( val.vertex_weights, in, version );
+};
+
+void NifStream( SkinData const & val, ostream & out, uint version ) {
+  ushort num_vertices;
+  num_vertices = ushort(val.vertex_weights.size());
+  NifStream( val.rotation, out, version );
+  NifStream( val.translation, out, version );
+  NifStream( val.scale, out, version );
+  NifStream( val.unknown_4_floats, out, version );
+  NifStream( num_vertices, out, version );
+  NifStream( val.vertex_weights, out, version );
+};
+
+ostream & operator<<( ostream & out, SkinData const & val );
+
+// 
+// An array of keys. This one always has a Key Type.
+//
+template <class T >
+struct TypedVectorKeyArray {
+  // The key type.
+  uint key_type;
+  // The keys.
+  vector<Key<T > > keys;
+  TypedVectorKeyArray() {};
+};
+
+template <class T >
+void NifStream( TypedVectorKeyArray<T> & val, istream & in, uint version ) {
+  uint num_keys;
+  NifStream( num_keys, in, version );
+  NifStream( val.key_type, in, version );
+  val.keys.resize(num_keys);
+  NifStream( val.keys, in, version, val.key_type );
+};
+
+template <class T >
+void NifStream( TypedVectorKeyArray<T> const & val, ostream & out, uint version ) {
+  uint num_keys;
+  num_keys = uint(val.keys.size());
+  NifStream( num_keys, out, version );
+  NifStream( val.key_type, out, version );
+  NifStream( val.keys, out, version, val.key_type );
+};
+
+template <class T >
+ostream & operator<<( ostream & out, TypedVectorKeyArray<T> const & val );
+
+// 
+// Geometry morphing data component.
+//
+struct Morph {
+  // Name of the frame.
+  string frame_name;
+  // The morphing keyframes.
+  TypedVectorKeyArray<float > frames;
+  // Unknown.
+  uint unknown_int;
+  // Morph vectors.
+  vector<Vector3 > vectors;
+  Morph() {};
+};
+
+void NifStream( Morph & val, istream & in, uint version, uint attr_arg ) {
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.frame_name, in, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    NifStream( val.frames, in, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.unknown_int, in, version );
+  };
+  val.vectors.resize(attr_arg);
+  NifStream( val.vectors, in, version );
+};
+
+void NifStream( Morph const & val, ostream & out, uint version, uint attr_arg ) {
+  if ( version >= 0x0A01006A ) {
+    NifStream( val.frame_name, out, version );
+  };
+  if ( version <= 0x0A000102 ) {
+    NifStream( val.frames, out, version );
+  };
+  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
+    NifStream( val.unknown_int, out, version );
+  };
+  NifStream( val.vectors, out, version );
+};
+
+ostream & operator<<( ostream & out, Morph const & val );
+
+// 
+// Array of vector keys (anything that can be interpolated, except rotations).
+//
+template <class T >
+struct VectorKeyArray {
+  // Number of keys in the array.
+  uint num_keys;
+  // The key type.
+  uint key_type;
+  // The keys.
+  vector<Key<T > > keys;
+  VectorKeyArray() {};
+};
+
+template <class T >
+void NifStream( VectorKeyArray<T> & val, istream & in, uint version ) {
+  NifStream( val.num_keys, in, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, in, version );
+  };
+  val.keys.resize(val.num_keys);
+  NifStream( val.keys, in, version, val.key_type );
+};
+
+template <class T >
+void NifStream( VectorKeyArray<T> const & val, ostream & out, uint version ) {
+  NifStream( val.num_keys, out, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, out, version );
+  };
+  NifStream( val.keys, out, version, val.key_type );
+};
+
+template <class T >
+ostream & operator<<( ostream & out, VectorKeyArray<T> const & val );
+
+// 
+// Rotation key array.
+//
+template <class T >
+struct RotationKeyArray {
+  // Number of keys.
+  uint num_keys;
+  // Key type (1, 2, 3, or 4).
+  uint key_type;
+  // The rotation keys.
+  vector<Key<T > > keys;
+  RotationKeyArray() {};
+};
+
+template <class T >
+void NifStream( RotationKeyArray<T> & val, istream & in, uint version ) {
+  NifStream( val.num_keys, in, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, in, version );
+  };
+  val.keys.resize(val.num_keys);
+  NifStream( val.keys, in, version, val.key_type );
+};
+
+template <class T >
+void NifStream( RotationKeyArray<T> const & val, ostream & out, uint version ) {
+  NifStream( val.num_keys, out, version );
+  if ( val.num_keys != 0 ) {
+    NifStream( val.key_type, out, version );
+  };
+  NifStream( val.keys, out, version, val.key_type );
+};
+
+template <class T >
+ostream & operator<<( ostream & out, RotationKeyArray<T> const & val );
 
 // 
 // A block that can be controlled by a controller.
@@ -977,7 +1824,7 @@ ostream & operator<<( ostream & out, skinblock const & val );
 #define A_CONTROLLABLE_MEMBERS \
 string name; \
 uint extra_data; \
-linkgroup extra_data_list; \
+LinkGroup extra_data_list; \
 uint controller; \
 
 #define A_CONTROLLABLE_GETATTR \
@@ -1021,6 +1868,7 @@ out << "                Name:  " << name << endl; \
 out << "          Extra Data:  " << extra_data << endl; \
 out << "     Extra Data List:  " << extra_data_list << endl; \
 out << "          Controller:  " << controller << endl; \
+return out.str(); \
 
 // 
 // A generic time controller block.
@@ -1034,7 +1882,7 @@ out << "          Controller:  " << controller << endl; \
 // - Controller target (block index of the first controllable ancestor of this block).
 #define A_CONTROLLER_MEMBERS \
 uint next_controller; \
-flags flags; \
+Flags flags; \
 float frequency; \
 float phase; \
 float start_time; \
@@ -1091,6 +1939,7 @@ out << "               Phase:  " << phase << endl; \
 out << "          Start Time:  " << start_time << endl; \
 out << "           Stop Time:  " << stop_time << endl; \
 out << "              Target:  " << target << endl; \
+return out.str(); \
 
 // 
 // Level of detail controller for bones?
@@ -1101,7 +1950,7 @@ out << "              Target:  " << target << endl; \
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint unknown_int_1; \
 uint unknown_int_2; \
-vector<linkgroup > node_groups; \
+vector<LinkGroup > node_groups; \
 
 #define A_BONE_L_O_D_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -1128,7 +1977,7 @@ NifStream( node_groups, in, version ); \
 #define A_BONE_L_O_D_CONTROLLER_WRITE \
 uint num_node_groups; \
 AController::Write( out, version ); \
-num_node_groups = node_groups.size(); \
+num_node_groups = uint(node_groups.size()); \
 NifStream( unknown_int_1, out, version ); \
 NifStream( num_node_groups, out, version ); \
 NifStream( unknown_int_2, out, version ); \
@@ -1143,6 +1992,7 @@ out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
 out << "     Num Node Groups:  -- calculated --" << endl; \
 out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
 out << "         Node Groups:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A group of blocks that contain complex data.  Implemented using block-specific interfaces in Niflib.
@@ -1164,6 +2014,7 @@ return attr_ref(); \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
+return out.str(); \
 
 // 
 // Describes a physical constraint.
@@ -1196,7 +2047,7 @@ NifStream( unknown_int, in, version ); \
 #define ABHK_CONSTRAINT_WRITE \
 uint num_bodies; \
 AData::Write( out, version ); \
-num_bodies = bodies.size(); \
+num_bodies = uint(bodies.size()); \
 NifStream( num_bodies, out, version ); \
 NifStream( bodies, out, version ); \
 NifStream( unknown_int, out, version ); \
@@ -1209,6 +2060,7 @@ out << AData::asString(); \
 out << "          Num Bodies:  -- calculated --" << endl; \
 out << "              Bodies:  -- data not shown --" << endl; \
 out << "         Unknown Int:  " << unknown_int << endl; \
+return out.str(); \
 
 // 
 // Ragdoll constraint.
@@ -1255,6 +2107,7 @@ out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+return out.str(); \
 
 // 
 // Describes physical properties of an object?
@@ -1331,7 +2184,7 @@ uint flags_2; \
 vector<ushort > unknown_shorts_2; \
 Vector3 translation; \
 float unknown_float_00; \
-quaternionxyzw rotation; \
+QuaternionXYZW rotation; \
 vector<float > unknown_floats_2; \
 vector<float > transform_; \
 Vector3 center; \
@@ -1348,7 +2201,7 @@ vector<byte > unknown_bytes_5; \
 uint unknown_int_6; \
 uint unknown_int_7; \
 uint unknown_int_8; \
-linkgroup constraints; \
+LinkGroup constraints; \
 
 #define ABHK_RIGID_BODY_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -1429,6 +2282,7 @@ NifStream( unknown_int_6, in, version ); \
 NifStream( unknown_int_7, in, version ); \
 NifStream( unknown_int_8, in, version ); \
 NifStream( constraints, in, version ); \
+NifStream( unknown_int_6, in, version ); \
 
 #define ABHK_RIGID_BODY_WRITE \
 AData::Write( out, version ); \
@@ -1458,6 +2312,7 @@ NifStream( unknown_int_6, out, version ); \
 NifStream( unknown_int_7, out, version ); \
 NifStream( unknown_int_8, out, version ); \
 NifStream( constraints, out, version ); \
+NifStream( unknown_int_6, out, version ); \
 
 #define ABHK_RIGID_BODY_STRING \
 stringstream out; \
@@ -1490,6 +2345,7 @@ out << "       Unknown Int 6:  " << unknown_int_6 << endl; \
 out << "       Unknown Int 7:  " << unknown_int_7 << endl; \
 out << "       Unknown Int 8:  " << unknown_int_8 << endl; \
 out << "         Constraints:  " << constraints << endl; \
+return out.str(); \
 
 // 
 // Havok shape.
@@ -1516,6 +2372,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
+return out.str(); \
 
 // 
 // Shape modifier?
@@ -1584,6 +2441,7 @@ out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
 out << "           Transform:  " << transform << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -1631,6 +2489,7 @@ out << AData::asString(); \
 out << "              Parent:  " << parent << endl; \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "                Body:  " << body << endl; \
+return out.str(); \
 
 // 
 // A generic extra data block.
@@ -1679,6 +2538,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
 out << "     Next Extra Data:  " << next_extra_data << endl; \
+return out.str(); \
 
 // 
 // Interpolator blocks - function unknown.
@@ -1700,6 +2560,7 @@ return attr_ref(); \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
+return out.str(); \
 
 // 
 // An extended type of interpolater.
@@ -1740,6 +2601,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "         Unknown Int:  " << unknown_int << endl; \
+return out.str(); \
 
 // 
 // A B-spline (component?) interpolator.
@@ -1780,6 +2642,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "          Start Time:  " << start_time << endl; \
 out << "           Stop Time:  " << stop_time << endl; \
+return out.str(); \
 
 // 
 // Single items of data linked to particular key times.
@@ -1806,6 +2669,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
+return out.str(); \
 
 // 
 // A time controller block for animation key frames.
@@ -1839,6 +2703,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Keyframes for mesh animation.
@@ -1847,9 +2712,9 @@ out << "                Data:  " << data << endl; \
 // - Translation keys.
 // - Scale keys.
 #define A_KEYFRAME_DATA_MEMBERS \
-keyrotarray<Quaternion > rotations; \
-keyvecarray<Vector3 > translations; \
-keyvecarray<float > scales; \
+RotationKeyArray<Quaternion > rotations; \
+VectorKeyArray<Vector3 > translations; \
+VectorKeyArray<float > scales; \
 
 #define A_KEYFRAME_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -1880,6 +2745,7 @@ out << AData::asString(); \
 out << "           Rotations:  " << rotations << endl; \
 out << "        Translations:  " << translations << endl; \
 out << "              Scales:  " << scales << endl; \
+return out.str(); \
 
 // 
 // Generic node block.
@@ -1893,12 +2759,12 @@ out << "              Scales:  " << scales << endl; \
 // - The bounding box.
 // - Bounding box: refers to NiCollisionData
 #define A_NODE_MEMBERS \
-flags flags; \
+Flags flags; \
 Vector3 translation; \
 Matrix33 rotation; \
 float scale; \
 Vector3 velocity; \
-linkgroup properties; \
+LinkGroup properties; \
 BoundingBox bounding_box; \
 uint collision_data; \
 
@@ -1972,6 +2838,7 @@ out << "            Velocity:  " << velocity << endl; \
 out << "          Properties:  " << properties << endl; \
 out << "        Bounding Box:  " << bounding_box << endl; \
 out << "      Collision Data:  " << collision_data << endl; \
+return out.str(); \
 
 // 
 // A dynamic effect such as a light or environment map.
@@ -1980,9 +2847,9 @@ out << "      Collision Data:  " << collision_data << endl; \
 // - Turns effect on and off?  Switches list to list of unaffected nodes?
 // - The list of affected nodes?
 #define A_DYNAMIC_EFFECT_MEMBERS \
-condint affected_node_list_; \
+CondInt affected_node_list_; \
 bool switch_state; \
-linkgroup affected_nodes; \
+LinkGroup affected_nodes; \
 
 #define A_DYNAMIC_EFFECT_GETATTR \
 attr_ref attr = ANode::GetAttr( attr_name ); \
@@ -2027,6 +2894,7 @@ out << ANode::asString(); \
 out << " Affected Node List?:  " << affected_node_list_ << endl; \
 out << "        Switch State:  " << switch_state << endl; \
 out << "      Affected Nodes:  " << affected_nodes << endl; \
+return out.str(); \
 
 // 
 // Light source.
@@ -2081,6 +2949,7 @@ out << "              Dimmer:  " << dimmer << endl; \
 out << "       Ambient Color:  " << ambient_color << endl; \
 out << "       Diffuse Color:  " << diffuse_color << endl; \
 out << "      Specular Color:  " << specular_color << endl; \
+return out.str(); \
 
 // 
 // Generic node block for grouping.
@@ -2088,8 +2957,8 @@ out << "      Specular Color:  " << specular_color << endl; \
 // - List of child node block indices.
 // - List of node effects.
 #define A_PARENT_NODE_MEMBERS \
-linkgroup children; \
-linkgroup effects; \
+LinkGroup children; \
+LinkGroup effects; \
 
 #define A_PARENT_NODE_GETATTR \
 attr_ref attr = ANode::GetAttr( attr_name ); \
@@ -2117,6 +2986,7 @@ out << setprecision(1); \
 out << ANode::asString(); \
 out << "            Children:  " << children << endl; \
 out << "             Effects:  " << effects << endl; \
+return out.str(); \
 
 // 
 // Firaxis-specific UI widgets?
@@ -2155,6 +3025,7 @@ out << setprecision(1); \
 out << AParentNode::asString(); \
 out << "            Unknown1:  " << unknown1 << endl; \
 out << "            Unknown2:  " << unknown2 << endl; \
+return out.str(); \
 
 // 
 // A particle system modifier.
@@ -2190,6 +3061,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << "       Next Modifier:  " << next_modifier << endl; \
 out << "   Previous Modifier:  " << previous_modifier << endl; \
+return out.str(); \
 
 // 
 // A generic particle system time controller block.
@@ -2259,7 +3131,7 @@ float unknown_float_13_; \
 uint unknown_int_1_; \
 uint unknown_int_2_; \
 ushort unknown_short_3_; \
-particlegroup particles; \
+ParticleGroup particles; \
 uint unknown_link; \
 uint particle_extra; \
 uint unknown_link_2; \
@@ -2448,6 +3320,7 @@ out << "        Unknown Link:  " << unknown_link << endl; \
 out << "      Particle Extra:  " << particle_extra << endl; \
 out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
 out << "             Trailer:  " << trailer << endl; \
+return out.str(); \
 
 // 
 // A type of light.
@@ -2495,6 +3368,7 @@ out << ALight::asString(); \
 out << "Constant Attenuation:  " << constant_attenuation << endl; \
 out << "  Linear Attenuation:  " << linear_attenuation << endl; \
 out << "Quadratic Attenuation:  " << quadratic_attenuation << endl; \
+return out.str(); \
 
 // 
 // A generic property block.
@@ -2521,6 +3395,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AControllable::asString(); \
+return out.str(); \
 
 // 
 // Generic particle system modifier block.
@@ -2570,6 +3445,7 @@ out << "                Name:  " << name << endl; \
 out << "               Order:  " << order << endl; \
 out << "              Target:  " << target << endl; \
 out << "              Active:  " << active << endl; \
+return out.str(); \
 
 // 
 // A particle emitter modifier?
@@ -2673,6 +3549,7 @@ out << "      Initial Radius:  " << initial_radius << endl; \
 out << "    Radius Variation:  " << radius_variation << endl; \
 out << "           Life Span:  " << life_span << endl; \
 out << " Life Span Variation:  " << life_span_variation << endl; \
+return out.str(); \
 
 // 
 // An emitter that emits meshes?
@@ -2710,6 +3587,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysEmitter::asString(); \
 out << "      Emitter Object:  " << emitter_object << endl; \
+return out.str(); \
 
 // 
 // Describes a mesh, built from triangles.
@@ -2720,7 +3598,7 @@ out << "      Emitter Object:  " << emitter_object << endl; \
 #define A_SHAPE_MEMBERS \
 uint data; \
 uint skin_instance; \
-shader shader; \
+Shader shader; \
 
 #define A_SHAPE_GETATTR \
 attr_ref attr = ANode::GetAttr( attr_name ); \
@@ -2759,6 +3637,7 @@ out << ANode::asString(); \
 out << "                Data:  " << data << endl; \
 out << "       Skin Instance:  " << skin_instance << endl; \
 out << "              Shader:  " << shader << endl; \
+return out.str(); \
 
 // 
 // Generic particle system node.
@@ -2785,6 +3664,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShape::asString(); \
+return out.str(); \
 
 // 
 // Mesh data: vertices, vertex normals, etc.
@@ -2925,10 +3805,10 @@ Vector3 center; \
 float radius; \
 ushort num_uv_sets; \
 AData::Write( out, version ); \
-num_vertices = vertices.size(); \
+num_vertices = ushort(vertices.size()); \
 center = Center(); \
 radius = Radius(); \
-num_uv_sets = uv_sets.size(); \
+num_uv_sets = ushort(uv_sets.size()); \
 if ( version >= 0x0A020000 ) { \
   NifStream( name, out, version ); \
 }; \
@@ -3001,6 +3881,7 @@ out << "             UV Sets:  -- data not shown --" << endl; \
 out << "           UV Sets 2:  -- data not shown --" << endl; \
 out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
 out << "        Unknown Link:  " << unknown_link << endl; \
+return out.str(); \
 
 // 
 // Generic particle system data block.
@@ -3088,6 +3969,7 @@ out << "          Num Active:  " << num_active << endl; \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "           Has Sizes:  " << has_sizes << endl; \
 out << "               Sizes:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Particle system data.
@@ -3162,6 +4044,7 @@ out << "     Unknown Short 3:  " << unknown_short_3 << endl; \
 out << "Has Unknown Floats 2:  " << has_unknown_floats_2 << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
 out << "      Unknown Byte 1:  " << unknown_byte_1 << endl; \
+return out.str(); \
 
 // 
 // Generic rotating particles data block.
@@ -3233,6 +4116,7 @@ out << "  Has Unknown Floats:  " << has_unknown_floats << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "       Has Rotations:  " << has_rotations << endl; \
 out << "           Rotations:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A controller referring to an interpolator.
@@ -3270,6 +4154,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "        Interpolator:  " << interpolator << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -3303,6 +4188,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
 out << "      Unknown String:  " << unknown_string << endl; \
+return out.str(); \
 
 // 
 // Morrowind specific?
@@ -3330,6 +4216,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -3371,6 +4258,7 @@ out << setprecision(1); \
 out << ACollisionObject::asString(); \
 out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+return out.str(); \
 
 // 
 // Unknown. Is apparently only used in skeleton.nif files.
@@ -3405,6 +4293,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
+return out.str(); \
 
 // 
 // A box.
@@ -3488,6 +4377,7 @@ out << "     Unknown Short 3:  " << unknown_short_3 << endl; \
 out << "     Unknown Short 4:  " << unknown_short_4 << endl; \
 out << "      Unknown Vector:  " << unknown_vector << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+return out.str(); \
 
 // 
 // A capsule.
@@ -3585,6 +4475,7 @@ out << "    Unknown Vector 1:  " << unknown_vector_1 << endl; \
 out << "            Radius 1:  " << radius_1 << endl; \
 out << "    Unknown Vector 2:  " << unknown_vector_2 << endl; \
 out << "            Radius 2:  " << radius_2 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -3612,6 +4503,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ACollisionObject::asString(); \
+return out.str(); \
 
 // 
 // A convex transformed shape?
@@ -3639,6 +4531,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkTransformShape::asString(); \
+return out.str(); \
 
 // 
 // A convex shape built from vertices?
@@ -3683,8 +4576,8 @@ NifStream( unknown_vectors_2, in, version ); \
 uint num_1; \
 uint num_2; \
 AbhkShape::Write( out, version ); \
-num_1 = unknown_vectors_1.size(); \
-num_2 = unknown_vectors_2.size(); \
+num_1 = uint(unknown_vectors_1.size()); \
+num_2 = uint(unknown_vectors_2.size()); \
 NifStream( unknown_int, out, version ); \
 NifStream( unknown_floats_1, out, version ); \
 NifStream( num_1, out, version ); \
@@ -3703,6 +4596,7 @@ out << "               Num 1:  -- calculated --" << endl; \
 out << "   Unknown Vectors 1:  -- data not shown --" << endl; \
 out << "               Num 2:  -- calculated --" << endl; \
 out << "   Unknown Vectors 2:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A hinge constraint.
@@ -3736,6 +4630,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Hinge constraint.
@@ -3770,6 +4665,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkRagdollConstraint::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
+return out.str(); \
 
 // 
 // A list of shapes.
@@ -3779,7 +4675,7 @@ out << "         Unknown Int:  " << unknown_int << endl; \
 // - Unknown.
 // - Unknown.
 #define BHK_LIST_SHAPE_MEMBERS \
-linkgroup sub_shapes; \
+LinkGroup sub_shapes; \
 uint unknown_int; \
 vector<float > unknown_floats; \
 vector<uint > unknown_ints; \
@@ -3810,7 +4706,7 @@ NifStream( unknown_ints, in, version ); \
 #define BHK_LIST_SHAPE_WRITE \
 uint num_unknown_ints; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints = unknown_ints.size(); \
+num_unknown_ints = uint(unknown_ints.size()); \
 NifStream( sub_shapes, out, version ); \
 NifStream( unknown_int, out, version ); \
 NifStream( unknown_floats, out, version ); \
@@ -3827,6 +4723,7 @@ out << "         Unknown Int:  " << unknown_int << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "    Num Unknown Ints:  -- calculated --" << endl; \
 out << "        Unknown Ints:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A malleable constraint.
@@ -3919,6 +4816,7 @@ out << "    Unknown Floats 1:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -3970,7 +4868,7 @@ NifStream( unknown_floats, in, version ); \
 #define BHK_MOPP_BV_TREE_SHAPE_WRITE \
 uint num_unknown_bytes_2; \
 AbhkShape::Write( out, version ); \
-num_unknown_bytes_2 = unknown_bytes_2.size(); \
+num_unknown_bytes_2 = uint(unknown_bytes_2.size()); \
 NifStream( shape, out, version ); \
 NifStream( unknown_int, out, version ); \
 NifStream( unknown_bytes_1, out, version ); \
@@ -3991,6 +4889,7 @@ out << "       Unknown Float:  " << unknown_float << endl; \
 out << " Num Unknown Bytes 2:  -- calculated --" << endl; \
 out << "     Unknown Bytes 2:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4059,6 +4958,7 @@ out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
 out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A shape constructed from a bunch of strips.
@@ -4076,7 +4976,7 @@ vector<float > unknown_floats_1; \
 vector<uint > unknown_ints_1; \
 vector<float > unknown_floats_2; \
 uint unknown_int_2; \
-linkgroup strips; \
+LinkGroup strips; \
 vector<uint > unknown_ints_3; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_GETATTR \
@@ -4112,7 +5012,7 @@ NifStream( unknown_ints_3, in, version ); \
 #define BHK_NI_TRI_STRIPS_SHAPE_WRITE \
 uint num_unknown_ints_3; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints_3 = unknown_ints_3.size(); \
+num_unknown_ints_3 = uint(unknown_ints_3.size()); \
 NifStream( unknown_int, out, version ); \
 NifStream( unknown_floats_1, out, version ); \
 NifStream( unknown_ints_1, out, version ); \
@@ -4135,6 +5035,7 @@ out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
 out << "              Strips:  " << strips << endl; \
 out << "  Num Unknown Ints 3:  -- calculated --" << endl; \
 out << "      Unknown Ints 3:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A shape constructed from strips data.
@@ -4172,7 +5073,7 @@ NifStream( data, in, version ); \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_WRITE \
 ushort num_unknown_ints; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints = unknown_ints.size(); \
+num_unknown_ints = ushort(unknown_ints.size()); \
 NifStream( num_unknown_ints, out, version ); \
 NifStream( unknown_ints, out, version ); \
 NifStream( unknown_floats, out, version ); \
@@ -4187,6 +5088,7 @@ out << "    Num Unknown Ints:  -- calculated --" << endl; \
 out << "        Unknown Ints:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // A prismatic constraint.
@@ -4226,6 +5128,7 @@ out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Ragdoll constraint.
@@ -4253,6 +5156,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkRagdollConstraint::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4280,6 +5184,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkRigidBody::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4307,6 +5212,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkRigidBody::asString(); \
+return out.str(); \
 
 // 
 // Unknown shape.
@@ -4367,6 +5273,7 @@ out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
 out << "       Unkown Floats:  -- data not shown --" << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
 out << "       Unknown Float:  " << unknown_float << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4394,6 +5301,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ACollisionObject::asString(); \
+return out.str(); \
 
 // 
 // A sphere.
@@ -4435,6 +5343,7 @@ out << setprecision(1); \
 out << AbhkShape::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
 out << "              Radius:  " << radius << endl; \
+return out.str(); \
 
 // 
 // A spring constraint.
@@ -4475,6 +5384,7 @@ out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "       Unknown Float:  " << unknown_float << endl; \
+return out.str(); \
 
 // 
 // A transformed shape?
@@ -4502,6 +5412,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkTransformShape::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4542,6 +5453,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown. Marks furniture sitting positions?
@@ -4577,7 +5489,7 @@ NifStream( positions, in, version ); \
 #define B_S_FURNITURE_MARKER_WRITE \
 uint num_positions; \
 AData::Write( out, version ); \
-num_positions = positions.size(); \
+num_positions = uint(positions.size()); \
 if ( version <= 0x14000005 ) { \
   NifStream( name, out, version ); \
 }; \
@@ -4592,6 +5504,7 @@ out << AData::asString(); \
 out << "                Name:  " << name << endl; \
 out << "       Num Positions:  -- calculated --" << endl; \
 out << "           Positions:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // An extended keyframe controller.
@@ -4626,6 +5539,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyframeController::asString(); \
 out << "              Data 2:  " << data_2 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4660,6 +5574,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "       Unknown Float:  " << unknown_float << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4687,6 +5602,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysVolumeEmitter::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4709,7 +5625,7 @@ return attr_ref(); \
 
 #define B_S_X_FLAGS_PARENTS AData
 
-#define B_S_X_FLAGS_CONSTRUCT
+#define B_S_X_FLAGS_CONSTRUCT name(BSX)
 
 #define B_S_X_FLAGS_READ \
 AData::Read( in, version ); \
@@ -4728,6 +5644,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
 out << "               Flags:  " << flags << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4755,6 +5672,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AFx::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4767,7 +5685,7 @@ out << AFx::asString(); \
 uint unknown_int_1; \
 uint unknown_int__2; \
 uint unknown_int_3; \
-linkgroup unknown_links; \
+LinkGroup unknown_links; \
 
 #define FX_RADIO_BUTTON_GETATTR \
 attr_ref attr = AFx::GetAttr( attr_name ); \
@@ -4808,6 +5726,7 @@ out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
 out << "      Unknown Int  2:  " << unknown_int__2 << endl; \
 out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
 out << "       Unknown Links:  " << unknown_links << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -4835,6 +5754,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AFx::asString(); \
+return out.str(); \
 
 // 
 // NiTriStripsData for havok data?
@@ -4842,8 +5762,8 @@ out << AFx::asString(); \
 // - The physics triangles?
 // - The vertices?
 #define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS \
-vector<hktriangle > triangles_; \
-vector<Vector3 > vertices_; \
+vector<hkTriangle > triangles; \
+vector<Vector3 > vertices; \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
@@ -4860,22 +5780,22 @@ uint num_triangles; \
 uint num_vertices; \
 AbhkShape::Read( in, version ); \
 NifStream( num_triangles, in, version ); \
-triangles_.resize(num_triangles); \
-NifStream( triangles_, in, version ); \
+triangles.resize(num_triangles); \
+NifStream( triangles, in, version ); \
 NifStream( num_vertices, in, version ); \
-vertices_.resize(num_vertices); \
-NifStream( vertices_, in, version ); \
+vertices.resize(num_vertices); \
+NifStream( vertices, in, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_WRITE \
 uint num_triangles; \
 uint num_vertices; \
 AbhkShape::Write( out, version ); \
-num_triangles = triangles_.size(); \
-num_vertices = vertices_.size(); \
+num_triangles = uint(triangles.size()); \
+num_vertices = uint(vertices.size()); \
 NifStream( num_triangles, out, version ); \
-NifStream( triangles_, out, version ); \
+NifStream( triangles, out, version ); \
 NifStream( num_vertices, out, version ); \
-NifStream( vertices_, out, version ); \
+NifStream( vertices, out, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_STRING \
 stringstream out; \
@@ -4883,9 +5803,10 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
 out << "       Num Triangles:  -- calculated --" << endl; \
-out << "          Triangles?:  -- data not shown --" << endl; \
+out << "           Triangles:  -- data not shown --" << endl; \
 out << "        Num Vertices:  -- calculated --" << endl; \
-out << "           Vertices?:  -- data not shown --" << endl; \
+out << "            Vertices:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Time controller for transparency.
@@ -4924,6 +5845,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Transparency. Flags 0x00ED.
@@ -4959,7 +5881,7 @@ out << "                Data:  " << data << endl; \
 // 111 GL_NEVER
 // - Threshold for alpha testing (see: glAlphaFunc)
 #define NI_ALPHA_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 byte threshold; \
 
 #define NI_ALPHA_PROPERTY_GETATTR \
@@ -4993,6 +5915,7 @@ out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
 out << "           Threshold:  " << threshold << endl; \
+return out.str(); \
 
 // 
 // Ambient light source.
@@ -5020,6 +5943,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ALight::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5047,6 +5971,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
+return out.str(); \
 
 // 
 // Particle system data block (emits particles along vertex normals?).
@@ -5074,6 +5999,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticlesData::asString(); \
+return out.str(); \
 
 // 
 // These nodes will always be rotated to face the camera creating a billboard effect for any attached objects.
@@ -5116,6 +6042,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
 out << "      Billboard Mode:  " << billboard_mode << endl; \
+return out.str(); \
 
 // 
 // Binary extra data block. Used to store normals and binormals in Oblivion.
@@ -5148,6 +6075,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "         Binary Data:  " << binary_data << endl; \
+return out.str(); \
 
 // 
 // An interpolator for a bool.
@@ -5182,6 +6110,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABlendInterpolator::asString(); \
 out << "                Bool:  " << bool << endl; \
+return out.str(); \
 
 // 
 // An interpolator for a float.
@@ -5216,6 +6145,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABlendInterpolator::asString(); \
 out << "               Float:  " << float << endl; \
+return out.str(); \
 
 // 
 // Interpolates a point?
@@ -5250,6 +6180,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABlendInterpolator::asString(); \
 out << "               Point:  " << point << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5277,6 +6208,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABlendInterpolator::asString(); \
+return out.str(); \
 
 // 
 // A LOD controller for bones?
@@ -5284,8 +6216,8 @@ out << ABlendInterpolator::asString(); \
 // - List of shape groups.
 // - Group of NiTriShape indices.
 #define NI_BONE_L_O_D_CONTROLLER_MEMBERS \
-vector<skinshapegroup > shape_groups_1; \
-linkgroup shape_groups_2; \
+vector<SkinShapeGroup > shape_groups_1; \
+LinkGroup shape_groups_2; \
 
 #define NI_BONE_L_O_D_CONTROLLER_GETATTR \
 attr_ref attr = ABoneLODController::GetAttr( attr_name ); \
@@ -5308,7 +6240,7 @@ NifStream( shape_groups_2, in, version ); \
 #define NI_BONE_L_O_D_CONTROLLER_WRITE \
 uint num_shape_groups; \
 ABoneLODController::Write( out, version ); \
-num_shape_groups = shape_groups_1.size(); \
+num_shape_groups = uint(shape_groups_1.size()); \
 NifStream( num_shape_groups, out, version ); \
 NifStream( shape_groups_1, out, version ); \
 NifStream( shape_groups_2, out, version ); \
@@ -5321,13 +6253,14 @@ out << ABoneLODController::asString(); \
 out << "    Num Shape Groups:  -- calculated --" << endl; \
 out << "      Shape Groups 1:  -- data not shown --" << endl; \
 out << "      Shape Groups 2:  " << shape_groups_2 << endl; \
+return out.str(); \
 
 // 
 // Timed boolean data.
 //
 // - The boolean keys.
 #define NI_BOOL_DATA_MEMBERS \
-keyvecarray<byte > data; \
+VectorKeyArray<byte > data; \
 
 #define NI_BOOL_DATA_GETATTR \
 attr_ref attr = AKeyedData::GetAttr( attr_name ); \
@@ -5353,6 +6286,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyedData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Boolean extra data.
@@ -5387,6 +6321,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "        Boolean Data:  " << boolean_data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5428,6 +6363,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "          Bool Value:  " << bool_value << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5469,6 +6405,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "                Bool:  " << bool << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Node for animated objects without armature.
@@ -5496,6 +6433,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
+return out.str(); \
 
 // 
 // A simple LOD controller for bones.
@@ -5523,6 +6461,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABoneLODController::asString(); \
+return out.str(); \
 
 // 
 // A particle system controller, used by BS in conjunction with NiBSParticleNode.
@@ -5550,6 +6489,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleSystemController::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5577,6 +6517,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5611,6 +6552,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5644,6 +6586,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABSplineCompInterpolator::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5691,6 +6634,7 @@ out << ABSplineCompInterpolator::asString(); \
 out << "                Data:  " << data << endl; \
 out << "        Unknown Link:  " << unknown_link << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5738,6 +6682,7 @@ out << ABSplineCompInterpolator::asString(); \
 out << "                Data:  " << data << endl; \
 out << "          Basis Data:  " << basis_data << endl; \
 out << "            Unknown4:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -5771,7 +6716,7 @@ NifStream( unknown_data, in, version ); \
 #define NI_B_SPLINE_DATA_WRITE \
 uint count; \
 AData::Write( out, version ); \
-count = unknown_data.size(); \
+count = uint(unknown_data.size()); \
 NifStream( unknown_int, out, version ); \
 NifStream( count, out, version ); \
 NifStream( unknown_data, out, version ); \
@@ -5784,6 +6729,7 @@ out << AData::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
 out << "               Count:  -- calculated --" << endl; \
 out << "        Unknown Data:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Camera object.
@@ -5935,6 +6881,7 @@ out << "          LOD Adjust:  " << lod_adjust << endl; \
 out << "       Unknown Link?:  " << unknown_link_ << endl; \
 out << "         Unknown Int:  " << unknown_int << endl; \
 out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+return out.str(); \
 
 // 
 // Collision box.
@@ -6028,13 +6975,14 @@ out << "            Unknown5:  " << unknown5 << endl; \
 out << "            Unknown7:  " << unknown7 << endl; \
 out << "            Unknown6:  -- data not shown --" << endl; \
 out << "            Unknown8:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Color data for material color controller.
 //
 // - The color keys.
 #define NI_COLOR_DATA_MEMBERS \
-keyvecarray<Color4 > data; \
+VectorKeyArray<Color4 > data; \
 
 #define NI_COLOR_DATA_GETATTR \
 attr_ref attr = AKeyedData::GetAttr( attr_name ); \
@@ -6060,6 +7008,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyedData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -6094,6 +7043,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown. Root of all controllers?
@@ -6103,7 +7053,7 @@ out << "                Data:  " << data << endl; \
 // - Refers to a NiDefaultAVObjectPalette.
 #define NI_CONTROLLER_MANAGER_MEMBERS \
 bool unknown_byte; \
-linkgroup controller_sequences; \
+LinkGroup controller_sequences; \
 uint object_palette; \
 
 #define NI_CONTROLLER_MANAGER_GETATTR \
@@ -6140,6 +7090,7 @@ out << AController::asString(); \
 out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "Controller Sequences:  " << controller_sequences << endl; \
 out << "      Object Palette:  " << object_palette << endl; \
+return out.str(); \
 
 // 
 // Root node in .kf files (version 10.0.1.0 and up).
@@ -6259,7 +7210,7 @@ if ( version >= 0x0A020000 ) { \
 #define NI_CONTROLLER_SEQUENCE_WRITE \
 uint num_controlled_blocks; \
 AData::Write( out, version ); \
-num_controlled_blocks = controlled_blocks.size(); \
+num_controlled_blocks = uint(controlled_blocks.size()); \
 NifStream( name, out, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( text_keys, out, version ); \
@@ -6318,6 +7269,7 @@ out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
 out << "      Unknown String:  " << unknown_string << endl; \
 out << "      String Palette:  " << string_palette << endl; \
+return out.str(); \
 
 // 
 // Unknown. Refers to a list of objects. Used by NiControllerManager.
@@ -6351,7 +7303,7 @@ NifStream( objects, in, version ); \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE \
 uint num_objects; \
 AData::Write( out, version ); \
-num_objects = objects.size(); \
+num_objects = uint(objects.size()); \
 NifStream( unknown_int, out, version ); \
 NifStream( num_objects, out, version ); \
 NifStream( objects, out, version ); \
@@ -6364,6 +7316,7 @@ out << AData::asString(); \
 out << "         Unknown Int:  " << unknown_int << endl; \
 out << "         Num Objects:  -- calculated --" << endl; \
 out << "             Objects:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Directional light source.
@@ -6391,13 +7344,14 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ALight::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
 //
 // - 1's Bit: Enable dithering
 #define NI_DITHER_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 
 #define NI_DITHER_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -6425,6 +7379,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
+return out.str(); \
 
 // 
 // Texture flipping controller.
@@ -6438,7 +7393,7 @@ out << "               Flags:  " << flags << endl; \
 uint texture_slot; \
 uint unknown_int_2; \
 float delta; \
-linkgroup sources; \
+LinkGroup sources; \
 
 #define NI_FLIP_CONTROLLER_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
@@ -6483,13 +7438,14 @@ out << "        Texture Slot:  " << texture_slot << endl; \
 out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
 out << "               Delta:  " << delta << endl; \
 out << "             Sources:  " << sources << endl; \
+return out.str(); \
 
 // 
 // Possibly the 1D position along a 3D path.
 //
 // - The keys.
 #define NI_FLOAT_DATA_MEMBERS \
-keyvecarray<float > data; \
+VectorKeyArray<float > data; \
 
 #define NI_FLOAT_DATA_GETATTR \
 attr_ref attr = AKeyedData::GetAttr( attr_name ); \
@@ -6515,6 +7471,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyedData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Float extra data.
@@ -6549,6 +7506,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "          Float Data:  " << float_data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -6594,6 +7552,7 @@ out << setprecision(1); \
 out << AController::asString(); \
 out << "        Unknown Link:  " << unknown_link << endl; \
 out << "      Unknown String:  " << unknown_string << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -6635,6 +7594,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "         Float Value:  " << float_value << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -6663,7 +7623,7 @@ NifStream( data, in, version ); \
 #define NI_FLOATS_EXTRA_DATA_WRITE \
 uint num_floats; \
 AExtraData::Write( out, version ); \
-num_floats = data.size(); \
+num_floats = uint(data.size()); \
 NifStream( num_floats, out, version ); \
 NifStream( data, out, version ); \
 
@@ -6674,6 +7634,7 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "          Num Floats:  -- calculated --" << endl; \
 out << "                Data:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Describes... fog?
@@ -6686,7 +7647,7 @@ out << "                Data:  -- data not shown --" << endl; \
 // - The thickness of the fog?  Default is 1.0
 // - The color of the fog.
 #define NI_FOG_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 float fog_depth; \
 Color3 fog_color; \
 
@@ -6726,6 +7687,7 @@ out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
 out << "           Fog Depth:  " << fog_depth << endl; \
 out << "           Fog Color:  " << fog_color << endl; \
+return out.str(); \
 
 // 
 // Time controller for geometry morphing.
@@ -6741,7 +7703,7 @@ ushort unknown; \
 byte unknown_2; \
 uint data; \
 byte unknown_byte; \
-linkgroup interpolators; \
+LinkGroup interpolators; \
 vector<uint > unknown_ints; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_GETATTR \
@@ -6785,7 +7747,7 @@ if ( version >= 0x0A020000 ) { \
 #define NI_GEOM_MORPHER_CONTROLLER_WRITE \
 uint num_unknown_ints; \
 AController::Write( out, version ); \
-num_unknown_ints = unknown_ints.size(); \
+num_unknown_ints = uint(unknown_ints.size()); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown, out, version ); \
 }; \
@@ -6814,6 +7776,7 @@ out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "       Interpolators:  " << interpolators << endl; \
 out << "    Num Unknown Ints:  -- calculated --" << endl; \
 out << "        Unknown Ints:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A particle modifier; applies a gravitational field on the particles.
@@ -6878,6 +7841,7 @@ out << "               Force:  " << force << endl; \
 out << "                Type:  " << type << endl; \
 out << "            Position:  " << position << endl; \
 out << "           Direction:  " << direction << endl; \
+return out.str(); \
 
 // 
 // Extra integer data.
@@ -6912,6 +7876,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "        Integer Data:  " << integer_data << endl; \
+return out.str(); \
 
 // 
 // Integers data.
@@ -6940,7 +7905,7 @@ NifStream( data, in, version ); \
 #define NI_INTEGERS_EXTRA_DATA_WRITE \
 uint num_integers; \
 AExtraData::Write( out, version ); \
-num_integers = data.size(); \
+num_integers = uint(data.size()); \
 NifStream( num_integers, out, version ); \
 NifStream( data, out, version ); \
 
@@ -6951,6 +7916,7 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "        Num Integers:  -- calculated --" << endl; \
 out << "                Data:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Keyframe controller block.
@@ -6978,6 +7944,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyframeController::asString(); \
+return out.str(); \
 
 // 
 // Keyframe data for mesh transform.
@@ -7005,6 +7972,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyframeData::asString(); \
+return out.str(); \
 
 // 
 // Light color animation controller.
@@ -7048,6 +8016,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 if ( version >= 0x0A020000 ) { \
   NifStream( interpolator, in, version ); \
+  NifStream( unknown_short, in, version ); \
 }; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_WRITE \
@@ -7060,6 +8029,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 if ( version >= 0x0A020000 ) { \
   NifStream( interpolator, out, version ); \
+  NifStream( unknown_short, out, version ); \
 }; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_STRING \
@@ -7070,6 +8040,7 @@ out << AController::asString(); \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "                Data:  " << data << endl; \
 out << "        Interpolator:  " << interpolator << endl; \
+return out.str(); \
 
 // 
 // Unknown controller.
@@ -7104,13 +8075,14 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "        Unknown Link:  " << unknown_link << endl; \
+return out.str(); \
 
 // 
 // Level of detail selector. Links to different levels of detail of the same model, used to switch a geometry at a specified distance.
 //
 // - The ranges of distance where each level of detail applies.
 #define NI_L_O_D_NODE_MEMBERS \
-lodinfo lod_info; \
+LODInfo lod_info; \
 
 #define NI_L_O_D_NODE_GETATTR \
 attr_ref attr = AParentNode::GetAttr( attr_name ); \
@@ -7136,6 +8108,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
 out << "            LOD Info:  " << lod_info << endl; \
+return out.str(); \
 
 // 
 // Unknown. Start time is 3.4e+38 and stop time is -3.4e+38.
@@ -7181,6 +8154,7 @@ out << setprecision(1); \
 out << AController::asString(); \
 out << "            Unknown1:  " << unknown1 << endl; \
 out << "        Look At Node:  " << look_at_node << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -7271,6 +8245,7 @@ out << "               Scale:  " << scale << endl; \
 out << "      Unknown Link 1:  " << unknown_link_1 << endl; \
 out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
 out << "      Unknown Link 3:  " << unknown_link_3 << endl; \
+return out.str(); \
 
 // 
 // Time controller for material color.
@@ -7327,6 +8302,7 @@ out << AController::asString(); \
 out << "             Unknown:  " << unknown << endl; \
 out << "                Data:  " << data << endl; \
 out << "       Unknown Short:  " << unknown_short << endl; \
+return out.str(); \
 
 // 
 // Describes the material shading properties.
@@ -7339,7 +8315,7 @@ out << "       Unknown Short:  " << unknown_short << endl; \
 // - The material's glossiness.
 // - The material transparency (1=non-transparant). Refer to a NiAlphaProperty block in this material's parent NiTriShape block, when alpha is not 1.
 #define NI_MATERIAL_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 Color3 ambient_color; \
 Color3 diffuse_color; \
 Color3 specular_color; \
@@ -7407,13 +8383,14 @@ out << "      Specular Color:  " << specular_color << endl; \
 out << "      Emissive Color:  " << emissive_color << endl; \
 out << "          Glossiness:  " << glossiness << endl; \
 out << "               Alpha:  " << alpha << endl; \
+return out.str(); \
 
 // 
 // Particle system.
 //
 // - List of particle modifiers
 #define NI_MESH_PARTICLE_SYSTEM_MEMBERS \
-modifiergroup modifiers; \
+ModifierGroup modifiers; \
 
 #define NI_MESH_PARTICLE_SYSTEM_GETATTR \
 attr_ref attr = AParticleNode::GetAttr( attr_name ); \
@@ -7443,6 +8420,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
 out << "           Modifiers:  " << modifiers << endl; \
+return out.str(); \
 
 // 
 // Particle meshes data.
@@ -7469,7 +8447,7 @@ vector<vector<float > > unknown_floats_5; \
 uint unknown_int_1; \
 uint modifier; \
 byte unknown_byte_2; \
-linkgroup unknown_link_group; \
+LinkGroup unknown_link_group; \
 ushort unknown_short_4; \
 uint unknown_int_2; \
 byte unknown_byte_12; \
@@ -7591,6 +8569,7 @@ out << "     Unknown Byte 12:  " << unknown_byte_12 << endl; \
 out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
 out << "       Unknown Int 4:  " << unknown_int_4 << endl; \
 out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
+return out.str(); \
 
 // 
 // Geometry morphing data.
@@ -7601,7 +8580,7 @@ out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
 #define NI_MORPH_DATA_MEMBERS \
 uint num_vertices; \
 byte unknown_byte; \
-vector<morphblock > morphs; \
+vector<Morph > morphs; \
 
 #define NI_MORPH_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -7615,7 +8594,7 @@ return attr_ref(); \
 
 #define NI_MORPH_DATA_PARENTS AData
 
-#define NI_MORPH_DATA_CONSTRUCT morphs(morphblock(num_vertices))
+#define NI_MORPH_DATA_CONSTRUCT
 
 #define NI_MORPH_DATA_READ \
 uint num_morphs; \
@@ -7624,16 +8603,16 @@ NifStream( num_morphs, in, version ); \
 NifStream( num_vertices, in, version ); \
 NifStream( unknown_byte, in, version ); \
 morphs.resize(num_morphs); \
-NifStream( morphs, in, version ); \
+NifStream( morphs, in, version, num_vertices ); \
 
 #define NI_MORPH_DATA_WRITE \
 uint num_morphs; \
 AData::Write( out, version ); \
-num_morphs = morphs.size(); \
+num_morphs = uint(morphs.size()); \
 NifStream( num_morphs, out, version ); \
 NifStream( num_vertices, out, version ); \
 NifStream( unknown_byte, out, version ); \
-NifStream( morphs, out, version ); \
+NifStream( morphs, out, version, num_vertices ); \
 
 #define NI_MORPH_DATA_STRING \
 stringstream out; \
@@ -7644,13 +8623,14 @@ out << "          Num Morphs:  -- calculated --" << endl; \
 out << "        Num Vertices:  " << num_vertices << endl; \
 out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "              Morphs:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
 //
 // - List of NiNode targets.
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS \
-targetgroup targets; \
+TargetGroup targets; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -7676,6 +8656,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "             Targets:  " << targets << endl; \
+return out.str(); \
 
 // 
 // The standard node block.
@@ -7703,6 +8684,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
+return out.str(); \
 
 // 
 // A color palette.
@@ -7750,6 +8732,7 @@ out << AData::asString(); \
 out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "        Num Entries?:  " << num_entries_ << endl; \
 out << "             Palette:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A particle modifier.
@@ -7861,6 +8844,7 @@ out << "     Unknown Float 7:  " << unknown_float_7 << endl; \
 out << "     Unknown Float 8:  " << unknown_float_8 << endl; \
 out << "     Unknown Float 9:  " << unknown_float_9 << endl; \
 out << "    Unknown Float 10:  " << unknown_float_10 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -7895,6 +8879,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
 out << "          Color Data:  " << color_data << endl; \
+return out.str(); \
 
 // 
 // This particle system modifier controls the particle size. If it is present the particles start with size 0.0 . Then they grow to their original size and stay there until they fade to zero size again at the end of their lifetime cycle.
@@ -7936,6 +8921,7 @@ out << setprecision(1); \
 out << AParticleModifier::asString(); \
 out << "                Grow:  " << grow << endl; \
 out << "                Fade:  " << fade << endl; \
+return out.str(); \
 
 // 
 // Mesh particle node?
@@ -7963,6 +8949,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
+return out.str(); \
 
 // 
 // Particle meshes data.
@@ -7997,13 +8984,14 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ARotatingParticlesData::asString(); \
 out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
 //
 // - Links to nodes of particle meshes?
 #define NI_PARTICLE_MESH_MODIFIER_MEMBERS \
-linkgroup particle_meshes; \
+LinkGroup particle_meshes; \
 
 #define NI_PARTICLE_MESH_MODIFIER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
@@ -8029,6 +9017,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
 out << "     Particle Meshes:  " << particle_meshes << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -8091,6 +9080,7 @@ out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
 out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
 out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
+return out.str(); \
 
 // 
 // Particle system node.
@@ -8118,6 +9108,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
+return out.str(); \
 
 // 
 // Particle system data.
@@ -8145,13 +9136,14 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ARotatingParticlesData::asString(); \
+return out.str(); \
 
 // 
 // A particle system.
 //
 // - List of particle modifiers.
 #define NI_PARTICLE_SYSTEM_MEMBERS \
-modifiergroup modifiers; \
+ModifierGroup modifiers; \
 
 #define NI_PARTICLE_SYSTEM_GETATTR \
 attr_ref attr = AParticleNode::GetAttr( attr_name ); \
@@ -8181,6 +9173,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
 out << "           Modifiers:  " << modifiers << endl; \
+return out.str(); \
 
 // 
 // A particle system controller
@@ -8208,6 +9201,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleSystemController::asString(); \
+return out.str(); \
 
 // 
 // Time controller for a path.
@@ -8288,6 +9282,7 @@ out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "            Pos Data:  " << pos_data << endl; \
 out << "          Float Data:  " << float_data << endl; \
+return out.str(); \
 
 // 
 // Unknown interpolator.
@@ -8350,6 +9345,7 @@ out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
 out << "            Pos Data:  " << pos_data << endl; \
 out << "          Float Data:  " << float_data << endl; \
+return out.str(); \
 
 // 
 // A texture.
@@ -8387,7 +9383,7 @@ uint unknown_int; \
 vector<byte > unknown_54_bytes; \
 uint palette; \
 uint bytes_per_pixel; \
-vector<mipmap > mipmaps; \
+vector<MipMap > mipmaps; \
 ByteArray pixel_data; \
 
 #define NI_PIXEL_DATA_GETATTR \
@@ -8448,7 +9444,7 @@ NifStream( pixel_data, in, version ); \
 #define NI_PIXEL_DATA_WRITE \
 uint num_mipmaps; \
 AData::Write( out, version ); \
-num_mipmaps = mipmaps.size(); \
+num_mipmaps = uint(mipmaps.size()); \
 NifStream( pixel_format, out, version ); \
 if ( version <= 0x0A020000 ) { \
   NifStream( red_mask, out, version ); \
@@ -8489,6 +9485,7 @@ out << "         Num Mipmaps:  -- calculated --" << endl; \
 out << "     Bytes Per Pixel:  " << bytes_per_pixel << endl; \
 out << "             Mipmaps:  -- data not shown --" << endl; \
 out << "          Pixel Data:  " << pixel_data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -8650,6 +9647,7 @@ out << "    Unknown Float 13:  " << unknown_float_13 << endl; \
 out << "    Unknown Float 14:  " << unknown_float_14 << endl; \
 out << "    Unknown Float 15:  " << unknown_float_15 << endl; \
 out << "    Unknown Float 16:  " << unknown_float_16 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -8691,6 +9689,7 @@ out << setprecision(1); \
 out << AInterpolator::asString(); \
 out << "       Point 3 Value:  " << point_3_value << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // A point light.
@@ -8718,13 +9717,14 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APointLight::asString(); \
+return out.str(); \
 
 // 
 // Position data.
 //
 // - The position keys.
 #define NI_POS_DATA_MEMBERS \
-keyvecarray<Vector3 > data; \
+VectorKeyArray<Vector3 > data; \
 
 #define NI_POS_DATA_GETATTR \
 attr_ref attr = AKeyedData::GetAttr( attr_name ); \
@@ -8750,6 +9750,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyedData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown particle modifier.
@@ -8791,6 +9792,7 @@ out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "      Spawn on Death:  " << spawn_on_death << endl; \
 out << "      Spawn Modifier:  " << spawn_modifier << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -8843,6 +9845,7 @@ out << "        Unknown Link:  " << unknown_link << endl; \
 out << "      Unknown Ints 1:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "      Unknown Ints 2:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown particle system modifier.
@@ -8877,6 +9880,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "         Update Skip:  " << update_skip << endl; \
+return out.str(); \
 
 // 
 // Unknown particle modifier.
@@ -8925,6 +9929,7 @@ out << APSysVolumeEmitter::asString(); \
 out << "               Width:  " << width << endl; \
 out << "              Height:  " << height << endl; \
 out << "               Depth:  " << depth << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -8959,6 +9964,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "            Collider:  " << collider << endl; \
+return out.str(); \
 
 // 
 // Unknown particle modifier.
@@ -8993,6 +9999,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9034,6 +10041,7 @@ out << setprecision(1); \
 out << APSysVolumeEmitter::asString(); \
 out << "              Radius:  " << radius << endl; \
 out << "              Height:  " << height << endl; \
+return out.str(); \
 
 // 
 // Particle system data.
@@ -9133,6 +10141,7 @@ out << "      Unknown Byte 3:  " << unknown_byte_3 << endl; \
 out << "      Unknown Bool 2:  " << unknown_bool_2 << endl; \
 out << "     Unknown Bytes 2:  -- data not shown --" << endl; \
 out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9173,6 +10182,7 @@ out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "              Parent:  " << parent << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Particle system emitter controller.
@@ -9207,6 +10217,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Particle system emitter controller data.
@@ -9214,8 +10225,8 @@ out << "                Data:  " << data << endl; \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS \
-keyvecarray<float > float_keys_; \
-keyarray<byte > visibility_keys_; \
+VectorKeyArray<float > float_keys_; \
+KeyArray<byte > visibility_keys_; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -9244,6 +10255,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "         Float Keys?:  " << float_keys_ << endl; \
 out << "    Visibility Keys?:  " << visibility_keys_ << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9271,6 +10283,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9298,6 +10311,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9325,6 +10339,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9352,6 +10367,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9379,6 +10395,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown particle system modifier.
@@ -9455,6 +10472,7 @@ out << "            Strength:  " << strength << endl; \
 out << "          Turbulence:  " << turbulence << endl; \
 out << "    Turbulence Scale:  " << turbulence_scale << endl; \
 out << "          Force Type:  " << force_type << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9482,6 +10500,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown particle system modifier.
@@ -9537,6 +10556,7 @@ out << "           Grow Time:  " << grow_time << endl; \
 out << "     Grow Generation:  " << grow_generation << endl; \
 out << "           Fade Time:  " << fade_time << endl; \
 out << "     Fade Generation:  " << fade_generation << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9546,7 +10566,7 @@ out << "     Fade Generation:  " << fade_generation << endl; \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_MESH_EMITTER_MEMBERS \
-linkgroup unknown_link_group; \
+LinkGroup unknown_link_group; \
 vector<uint > unknown_ints_1; \
 float unknown_float; \
 vector<uint > unknown_ints_2; \
@@ -9588,13 +10608,14 @@ out << "  Unknown Link Group:  " << unknown_link_group << endl; \
 out << "      Unknown Ints 1:  -- data not shown --" << endl; \
 out << "       Unknown Float:  " << unknown_float << endl; \
 out << "      Unknown Ints 2:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
 //
 // - Not sure here... Group of target NiNodes?
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_MEMBERS \
-linkgroup meshes; \
+LinkGroup meshes; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -9620,6 +10641,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "              Meshes:  " << meshes << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9647,6 +10669,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysCtlr::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9751,6 +10774,7 @@ out << "               Width:  " << width << endl; \
 out << "              Height:  " << height << endl; \
 out << "              X Axis:  " << x_axis << endl; \
 out << "              Y Axis:  " << y_axis << endl; \
+return out.str(); \
 
 // 
 // Unknown particle system modifier.
@@ -9778,6 +10802,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -9805,6 +10830,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
+return out.str(); \
 
 // 
 // Unknown particle system modifier.
@@ -9885,6 +10911,7 @@ out << "Initial Rotation Angle Variation:  " << initial_rotation_angle_variation
 out << "Random Rot Speed Sign:  " << random_rot_speed_sign << endl; \
 out << " Random Initial Axis:  " << random_initial_axis << endl; \
 out << "        Initial Axis:  " << initial_axis << endl; \
+return out.str(); \
 
 // 
 // Unknown particle modifier.
@@ -9968,6 +10995,7 @@ out << "   Spawn Speed Chaos:  " << spawn_speed_chaos << endl; \
 out << "     Spawn Dir Chaos:  " << spawn_dir_chaos << endl; \
 out << "           Life Span:  " << life_span << endl; \
 out << " Life Span Variation:  " << life_span_variation << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -10002,6 +11030,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysVolumeEmitter::asString(); \
 out << "              Radius:  " << radius << endl; \
+return out.str(); \
 
 // 
 // Particle system controller, used for ???.
@@ -10029,6 +11058,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
+return out.str(); \
 
 // 
 // Describes levels of detail.
@@ -10062,7 +11092,7 @@ NifStream( lod_levels, in, version ); \
 #define NI_RANGE_L_O_D_DATA_WRITE \
 uint num_lod_levels; \
 AData::Write( out, version ); \
-num_lod_levels = lod_levels.size(); \
+num_lod_levels = uint(lod_levels.size()); \
 NifStream( lod_center, out, version ); \
 NifStream( num_lod_levels, out, version ); \
 NifStream( lod_levels, out, version ); \
@@ -10075,6 +11105,7 @@ out << AData::asString(); \
 out << "          LOD Center:  " << lod_center << endl; \
 out << "      Num LOD Levels:  -- calculated --" << endl; \
 out << "          LOD Levels:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -10102,6 +11133,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleNode::asString(); \
+return out.str(); \
 
 // 
 // Rotating particles data block.
@@ -10129,6 +11161,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ARotatingParticlesData::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -10161,7 +11194,7 @@ NifStream( unknown_floats_2, in, version ); \
 #define NI_SCREEN_L_O_D_DATA_WRITE \
 uint unknown_count; \
 AData::Write( out, version ); \
-unknown_count = unknown_floats_2.size(); \
+unknown_count = uint(unknown_floats_2.size()); \
 NifStream( unknown_floats, out, version ); \
 NifStream( unknown_count, out, version ); \
 NifStream( unknown_floats_2, out, version ); \
@@ -10174,6 +11207,7 @@ out << AData::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "       Unknown Count:  -- calculated --" << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Keyframe animation root node, in .kf files.
@@ -10201,6 +11235,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AControllable::asString(); \
+return out.str(); \
 
 // 
 // Determines whether flat shading or smooth shading is used on a shape.
@@ -10209,7 +11244,7 @@ out << AControllable::asString(); \
 // 
 // If 1's bit is not set, hard-edged flat shading will be used on this shape.
 #define NI_SHADE_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 
 #define NI_SHADE_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -10237,6 +11272,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
+return out.str(); \
 
 // 
 // Skinning data.
@@ -10254,7 +11290,7 @@ Vector3 translation; \
 float scale; \
 uint skin_partition; \
 byte unknown_byte; \
-vector<skinblock > bone_list; \
+vector<SkinData > bone_list; \
 
 #define NI_SKIN_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -10295,7 +11331,7 @@ NifStream( bone_list, in, version ); \
 #define NI_SKIN_DATA_WRITE \
 uint num_bones; \
 AData::Write( out, version ); \
-num_bones = bone_list.size(); \
+num_bones = uint(bone_list.size()); \
 NifStream( rotation, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( scale, out, version ); \
@@ -10320,6 +11356,7 @@ out << "           Num Bones:  -- calculated --" << endl; \
 out << "      Skin Partition:  " << skin_partition << endl; \
 out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "           Bone List:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Skinning instance.
@@ -10374,13 +11411,14 @@ out << "                Data:  " << data << endl; \
 out << "      Skin Partition:  " << skin_partition << endl; \
 out << "       Skeleton Root:  -- calculated --" << endl; \
 out << "               Bones:  " << bones << endl; \
+return out.str(); \
 
 // 
 // Skinning data, optimized for hardware skinning. The mesh is partitioned in submeshes such that each vertex of a submesh is influenced only by a limited and fixed number of bones.
 //
 // - Skin partition blocks.
 #define NI_SKIN_PARTITION_MEMBERS \
-vector<skinpartitionblock > skin_partition_blocks; \
+vector<SkinPartition > skin_partition_blocks; \
 
 #define NI_SKIN_PARTITION_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -10402,7 +11440,7 @@ NifStream( skin_partition_blocks, in, version ); \
 #define NI_SKIN_PARTITION_WRITE \
 uint num_skin_partition_blocks; \
 AData::Write( out, version ); \
-num_skin_partition_blocks = skin_partition_blocks.size(); \
+num_skin_partition_blocks = uint(skin_partition_blocks.size()); \
 NifStream( num_skin_partition_blocks, out, version ); \
 NifStream( skin_partition_blocks, out, version ); \
 
@@ -10413,6 +11451,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "Num Skin Partition Blocks:  -- calculated --" << endl; \
 out << "Skin Partition Blocks:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Describes texture source and properties.
@@ -10491,13 +11530,14 @@ out << "         Use Mipmaps:  " << use_mipmaps << endl; \
 out << "        Alpha Format:  " << alpha_format << endl; \
 out << "        Unknown Byte:  " << unknown_byte << endl; \
 out << "      Unknown Byte 2:  " << unknown_byte_2 << endl; \
+return out.str(); \
 
 // 
 // Gives specularity to a shape. Flags 0x0001.
 //
 // - 1's Bit = Enable specular lighting on this shape.
 #define NI_SPECULAR_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 
 #define NI_SPECULAR_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -10525,6 +11565,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -10594,6 +11635,7 @@ out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
 out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
 out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
 out << "     Unknown Float 5:  " << unknown_float_5 << endl; \
+return out.str(); \
 
 // 
 // A spot.
@@ -10635,6 +11677,7 @@ out << setprecision(1); \
 out << APointLight::asString(); \
 out << "        Cutoff Angle:  " << cutoff_angle << endl; \
 out << "            Exponent:  " << exponent << endl; \
+return out.str(); \
 
 // 
 // Allows control of stencil testing.
@@ -10674,7 +11717,7 @@ out << "            Exponent:  " << exponent << endl; \
 // 2: DRAW_CW (Backface culling)
 // 3: DRAW_BOTH (Double sided faces)
 #define NI_STENCIL_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 bool stencil_enabled; \
 uint stencil_function; \
 uint stencil_ref; \
@@ -10754,6 +11797,7 @@ out << "         Fail Action:  " << fail_action << endl; \
 out << "       Z Fail Action:  " << z_fail_action << endl; \
 out << "         Pass Action:  " << pass_action << endl; \
 out << "           Draw Mode:  " << draw_mode << endl; \
+return out.str(); \
 
 // 
 // Apparently commands for an optimizer instructing it to keep things it would normally discard.
@@ -10793,13 +11837,14 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "     Bytes Remaining:  -- calculated --" << endl; \
 out << "         String Data:  " << string_data << endl; \
+return out.str(); \
 
 // 
 // List of 0x00-seperated strings, which are names of controlled blocks and controller types. Used in .kf files in conjunction with NiControllerSequence.
 //
 // - A bunch of 0x00 seperated strings.
 #define NI_STRING_PALETTE_MEMBERS \
-stringpalette palette; \
+StringPalette palette; \
 
 #define NI_STRING_PALETTE_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -10825,6 +11870,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "             Palette:  " << palette << endl; \
+return out.str(); \
 
 // 
 // List of strings; for example, a list of all bone names.
@@ -10853,7 +11899,7 @@ NifStream( data, in, version ); \
 #define NI_STRINGS_EXTRA_DATA_WRITE \
 uint num_strings; \
 AExtraData::Write( out, version ); \
-num_strings = data.size(); \
+num_strings = uint(data.size()); \
 NifStream( num_strings, out, version ); \
 NifStream( data, out, version ); \
 
@@ -10864,6 +11910,7 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "         Num Strings:  -- calculated --" << endl; \
 out << "                Data:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Extra data, used to name different animation sequences.
@@ -10872,7 +11919,7 @@ out << "                Data:  -- data not shown --" << endl; \
 // - List of textual notes and at which time they take effect. Used for designating the start and stop of animations and the triggering of sounds.
 #define NI_TEXT_KEY_EXTRA_DATA_MEMBERS \
 uint unknown_int_1; \
-keyarray<string > text_keys; \
+KeyArray<string > text_keys; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
@@ -10907,6 +11954,7 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
 out << "           Text Keys:  " << text_keys << endl; \
+return out.str(); \
 
 // 
 // Enables environment mapping. Should be in both the children list and effects list of the NiTriShape block. For Morrowind: the bump map can be used to bump the environment map (note that the bump map is ignored if no NiTextureEffect block is present).
@@ -11049,6 +12097,7 @@ out << "       Unknown Float:  " << unknown_float << endl; \
 out << "               PS2 L:  " << ps2_l << endl; \
 out << "               PS2 K:  " << ps2_k << endl; \
 out << "       Unknown Short:  " << unknown_short << endl; \
+return out.str(); \
 
 // 
 // Texture transformation controller.
@@ -11115,6 +12164,7 @@ out << "            Unknown2:  " << unknown2 << endl; \
 out << "        Texture Slot:  " << texture_slot << endl; \
 out << "           Operation:  " << operation << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Describes an object's textures.
@@ -11132,17 +12182,17 @@ out << "                Data:  " << data << endl; \
 // - Another decal texture.  2 seems to be the limit.
 // - Shader textures.
 #define NI_TEXTURING_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 ApplyMode apply_mode; \
 uint texture_count; \
-texture base_texture; \
-texture dark_texture; \
-texture detail_texture; \
-texture gloss_texture; \
-texture glow_texture; \
+Texture base_texture; \
+Texture dark_texture; \
+Texture detail_texture; \
+Texture gloss_texture; \
+Texture glow_texture; \
 BumpMap bump_map_texture; \
-texture decal_0_texture; \
-texture decal_texture_1; \
+Texture decal_0_texture; \
+Texture decal_texture_1; \
 ExtraTextureGroup shader_textures; \
 
 #define NI_TEXTURING_PROPERTY_GETATTR \
@@ -11159,7 +12209,7 @@ return attr_ref(); \
 
 #define NI_TEXTURING_PROPERTY_PARENTS AProperty
 
-#define NI_TEXTURING_PROPERTY_CONSTRUCT
+#define NI_TEXTURING_PROPERTY_CONSTRUCT apply_mode(2), texture_count(7)
 
 #define NI_TEXTURING_PROPERTY_READ \
 AProperty::Read( in, version ); \
@@ -11224,6 +12274,7 @@ out << "    Bump Map Texture:  " << bump_map_texture << endl; \
 out << "     Decal 0 Texture:  " << decal_0_texture << endl; \
 out << "     Decal Texture 1:  " << decal_texture_1 << endl; \
 out << "     Shader Textures:  " << shader_textures << endl; \
+return out.str(); \
 
 // 
 // NiTransformController replaces the NiKeyframeController.
@@ -11251,6 +12302,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
+return out.str(); \
 
 // 
 // Mesh animation keyframe data.
@@ -11278,6 +12330,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyframeData::asString(); \
+return out.str(); \
 
 // 
 // Unknown.
@@ -11343,6 +12396,7 @@ out << "            Rotation:  " << rotation << endl; \
 out << "               Scale:  " << scale << endl; \
 out << "       Unknown Bytes:  -- data not shown --" << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // A shape node that refers to singular triangle data.
@@ -11370,6 +12424,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShape::asString(); \
+return out.str(); \
 
 // 
 // Holds mesh data using a list of singular triangles.
@@ -11389,7 +12444,7 @@ out << AShape::asString(); \
 uint num_triangle_points; \
 bool has_triangles; \
 vector<Triangle > triangles; \
-vector<matchgroup > match_groups; \
+vector<MatchGroup > match_groups; \
 
 #define NI_TRI_SHAPE_DATA_GETATTR \
 attr_ref attr = AShapeData::GetAttr( attr_name ); \
@@ -11418,6 +12473,12 @@ if ( version <= 0x0A000102 ) { \
   triangles.resize(num_triangles); \
   NifStream( triangles, in, version ); \
 }; \
+if ( version >= 0x0A010000 ) { \
+  if ( has_triangles != 0 ) { \
+    triangles.resize(num_triangles); \
+    NifStream( triangles, in, version ); \
+  }; \
+}; \
 NifStream( num_match_groups, in, version ); \
 match_groups.resize(num_match_groups); \
 NifStream( match_groups, in, version ); \
@@ -11426,8 +12487,8 @@ NifStream( match_groups, in, version ); \
 ushort num_triangles; \
 ushort num_match_groups; \
 AShapeData::Write( out, version ); \
-num_triangles = triangles.size(); \
-num_match_groups = match_groups.size(); \
+num_triangles = ushort(triangles.size()); \
+num_match_groups = ushort(match_groups.size()); \
 NifStream( num_triangles, out, version ); \
 NifStream( num_triangle_points, out, version ); \
 if ( version >= 0x0A010000 ) { \
@@ -11435,6 +12496,11 @@ if ( version >= 0x0A010000 ) { \
 }; \
 if ( version <= 0x0A000102 ) { \
   NifStream( triangles, out, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+  if ( has_triangles != 0 ) { \
+    NifStream( triangles, out, version ); \
+  }; \
 }; \
 NifStream( num_match_groups, out, version ); \
 NifStream( match_groups, out, version ); \
@@ -11450,6 +12516,7 @@ out << "       Has Triangles:  " << has_triangles << endl; \
 out << "           Triangles:  -- data not shown --" << endl; \
 out << "    Num Match Groups:  -- calculated --" << endl; \
 out << "        Match Groups:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // A shape node that refers to data organized into strips of triangles
@@ -11477,6 +12544,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShape::asString(); \
+return out.str(); \
 
 // 
 // Holds mesh data using strips of triangles.
@@ -11526,13 +12594,19 @@ if ( version <= 0x0A000102 ) { \
   points.resize(num_strips); \
   NifStream( points, in, version ); \
 }; \
+if ( version >= 0x0A010000 ) { \
+  if ( has_points != 0 ) { \
+    points.resize(num_strips); \
+    NifStream( points, in, version ); \
+  }; \
+}; \
 
 #define NI_TRI_STRIPS_DATA_WRITE \
 ushort num_strips; \
 vector<ushort > strip_lengths; \
 AShapeData::Write( out, version ); \
-num_strips = strip_lengths.size(); \
-strip_lengths = points.size(); \
+num_strips = ushort(strip_lengths.size()); \
+strip_lengths.resize(num_strips); for (uint i = 0; i < points.size(); i++) strip_lengths[i] = ushort(points[i].size()); \
 NifStream( num_triangles, out, version ); \
 NifStream( num_strips, out, version ); \
 NifStream( strip_lengths, out, version ); \
@@ -11541,6 +12615,11 @@ if ( version >= 0x0A010000 ) { \
 }; \
 if ( version <= 0x0A000102 ) { \
   NifStream( points, out, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+  if ( has_points != 0 ) { \
+    NifStream( points, out, version ); \
+  }; \
 }; \
 
 #define NI_TRI_STRIPS_DATA_STRING \
@@ -11553,6 +12632,7 @@ out << "          Num Strips:  -- calculated --" << endl; \
 out << "       Strip Lengths:  -- calculated --" << endl; \
 out << "          Has Points:  " << has_points << endl; \
 out << "              Points:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Time controller for texture coordinates.
@@ -11594,6 +12674,7 @@ out << setprecision(1); \
 out << AController::asString(); \
 out << "       Unknown Short:  " << unknown_short << endl; \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Texture coordinate data.
@@ -11601,7 +12682,7 @@ out << "                Data:  " << data << endl; \
 // - Four UV data groups.  Perhaps the first two control x and y.
 // The existence of the second two is a guess - there are always two zero values following the first two in all official files.
 #define NI_U_V_DATA_MEMBERS \
-vector<keyvecarray<float > > uv_groups; \
+vector<VectorKeyArray<float > > uv_groups; \
 
 #define NI_U_V_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -11628,6 +12709,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "           UV Groups:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Extra vector data.
@@ -11669,6 +12751,7 @@ out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "         Vector Data:  " << vector_data << endl; \
 out << "       Unknown Float:  " << unknown_float << endl; \
+return out.str(); \
 
 // 
 // Property of vertex colors. This block is referred to by the root block of the NIF file whenever some NiTriShapeData block has vertex colors with non-default settings; if not present, vertex colors have vertex_mode=2 and lighting_mode=1.
@@ -11680,7 +12763,7 @@ out << "       Unknown Float:  " << unknown_float << endl; \
 // - 0: LIGHTING_E (Emissive)
 // 1: LIGHTING_E_A_D (Emissive, ambient, diffuse)
 #define NI_VERTEX_COLOR_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 VertMode vertex_mode; \
 LightMode lighting_mode; \
 
@@ -11720,6 +12803,7 @@ out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
 out << "         Vertex Mode:  " << vertex_mode << endl; \
 out << "       Lighting Mode:  " << lighting_mode << endl; \
+return out.str(); \
 
 // 
 // Not used in skinning.
@@ -11754,7 +12838,7 @@ NifStream( weight, in, version ); \
 #define NI_VERT_WEIGHTS_EXTRA_DATA_WRITE \
 ushort num_vertices; \
 AExtraData::Write( out, version ); \
-num_vertices = weight.size(); \
+num_vertices = ushort(weight.size()); \
 NifStream( num_bytes, out, version ); \
 NifStream( num_vertices, out, version ); \
 NifStream( weight, out, version ); \
@@ -11767,6 +12851,7 @@ out << AExtraData::asString(); \
 out << "           Num Bytes:  " << num_bytes << endl; \
 out << "        Num Vertices:  -- calculated --" << endl; \
 out << "              Weight:  -- data not shown --" << endl; \
+return out.str(); \
 
 // 
 // Time controller for visibility.
@@ -11801,13 +12886,14 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Visibility data for a controller.
 //
 // - The visibility keys.
 #define NI_VIS_DATA_MEMBERS \
-keyarray<byte > data; \
+KeyArray<byte > data; \
 
 #define NI_VIS_DATA_GETATTR \
 attr_ref attr = AKeyedData::GetAttr( attr_name ); \
@@ -11833,6 +12919,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyedData::asString(); \
 out << "                Data:  " << data << endl; \
+return out.str(); \
 
 // 
 // Unknown.
@@ -11841,7 +12928,7 @@ out << "                Data:  " << data << endl; \
 // 0 - Wireframe Mode Disabled
 // 1 - Wireframe Mode Enabled
 #define NI_WIREFRAME_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 
 #define NI_WIREFRAME_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -11869,6 +12956,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
+return out.str(); \
 
 // 
 // This Property controlls the Z buffer (OpenGL: depth buffer).
@@ -11885,7 +12973,7 @@ out << "               Flags:  " << flags << endl; \
 // 6: TEST_GREATEREQUAL
 // 7: TEST_NEVER
 #define NI_Z_BUFFER_PROPERTY_MEMBERS \
-flags flags; \
+Flags flags; \
 uint function; \
 
 #define NI_Z_BUFFER_PROPERTY_GETATTR \
@@ -11900,7 +12988,7 @@ return attr_ref(); \
 
 #define NI_Z_BUFFER_PROPERTY_PARENTS AProperty
 
-#define NI_Z_BUFFER_PROPERTY_CONSTRUCT
+#define NI_Z_BUFFER_PROPERTY_CONSTRUCT flags(3), function(3)
 
 #define NI_Z_BUFFER_PROPERTY_READ \
 AProperty::Read( in, version ); \
@@ -11923,6 +13011,7 @@ out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
 out << "            Function:  " << function << endl; \
+return out.str(); \
 
 // 
 // Morrowind-specific node for collision mesh.
@@ -11950,6 +13039,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
+return out.str(); \
 
 
 #endif

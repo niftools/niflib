@@ -42,7 +42,7 @@ You can get it from http://www.swig.org/"""
     Exit(1)
 
 # build niflib and python wrapper
-niflib = env.StaticLibrary('niflib', Split('niflib.cpp nif_math.cpp NIF_Blocks.cpp NIF_IO.cpp docsys_extract.cpp kfm.cpp'), CPPPATH = '.', CPPFLAGS = cppflags)
+niflib = env.StaticLibrary('niflib', Split('niflib.cpp nif_math.cpp NIF_Blocks.cpp NIF_IO.cpp docsys_extract.cpp kfm.cpp xml_extract.cpp'), CPPPATH = '.', CPPFLAGS = cppflags)
 nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
 # makes sure niflib.lib is built before trying to build _niflib.dll
 env.Depends(nifshlib, niflib)

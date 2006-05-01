@@ -297,7 +297,12 @@ void NifStream( Key<T> & key, istream& file, KeyType type ) {
 }
 
 template <class T> 
-void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
+void NifStream( Key<T> & key, istream& file, uint version, uint type ) {
+	NifStream( key, file, (KeyType)type );
+};
+
+template <class T> 
+void NifStream( Key<T> const & key, ostream& file, KeyType type) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -320,6 +325,11 @@ void NifStream( Key<T> const & key, ostream& file, KeyType type ) {
 	}
 }
 
+template <class T> 
+void NifStream( Key<T> const & key, ostream& file, uint version, uint type ) {
+	NifStream( key, file, (KeyType)type );
+};
+
 //Key<Quaternion>
 void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type );
 void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type );
@@ -340,6 +350,22 @@ void NifStream( vector<T> const & val, ostream& file, uint version = 0 ) {
 	typename vector<T>::const_iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file, version );
+	}
+}
+
+template <class T>
+void NifStream( vector<Key<T> > & val, istream& file, uint version, uint attr_arg ) {
+	vector<Key<T> >::iterator it;
+	for ( it = val.begin(); it != val.end(); ++it ) {
+		NifStream( *it, file, version, attr_arg );
+	}
+}
+
+template <class T>
+void NifStream( vector<Key<T> > const & val, ostream& file, uint version, uint attr_arg ) {
+	vector<Key<T> >::const_iterator it;
+	for ( it = val.begin(); it != val.end(); ++it ) {
+		NifStream( *it, file, version, attr_arg );
 	}
 }
 
