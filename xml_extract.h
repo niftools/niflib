@@ -1672,7 +1672,7 @@ ostream & operator<<( ostream & out, SkinData const & val );
 template <class T >
 struct TypedVectorKeyArray {
   // The key type.
-  uint keyType;
+  KeyType keyType;
   // The keys.
   vector<Key<T > > keys;
   TypedVectorKeyArray() {};
@@ -1751,7 +1751,7 @@ struct VectorKeyArray {
   // Number of keys in the array.
   uint numKeys;
   // The key type.
-  uint keyType;
+  KeyType keyType;
   // The keys.
   vector<Key<T > > keys;
   VectorKeyArray() {};
@@ -1787,7 +1787,7 @@ struct RotationKeyArray {
   // Number of keys.
   uint numKeys;
   // Key type (1, 2, 3, or 4).
-  uint keyType;
+  KeyType keyType;
   // The rotation keys.
   vector<Key<T > > keys;
   RotationKeyArray() {};
