@@ -52,14 +52,14 @@ ostream & operator<<( ostream & out, Bones const & val ) {
 
 ostream & operator<<( ostream & out, ByteArray const & val ) {
   out << "                Size:  -- calculated --" << endl;
-  out << "         Unknown Int:  " << val.unknown_int << endl;
+  out << "         Unknown Int:  " << val.unknownInt << endl;
   out << "                Data:  -- data not shown --" << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, CondInt const & val ) {
-  out << "             Is Used:  " << val.is_used << endl;
-  out << "         Unknown Int:  " << val.unknown_int << endl;
+  out << "             Is Used:  " << val.isUsed << endl;
+  out << "         Unknown Int:  " << val.unknownInt << endl;
   return out;
 };
 
@@ -95,7 +95,7 @@ ostream & operator<<( ostream & out, MipMap const & val ) {
 };
 
 ostream & operator<<( ostream & out, ModifierGroup const & val ) {
-  out << "       Has Modifiers:  " << val.has_modifiers << endl;
+  out << "       Has Modifiers:  " << val.hasModifiers << endl;
   out << "           Modifiers:  " << val.modifiers << endl;
   return out;
 };
@@ -152,51 +152,51 @@ ostream & operator<<( ostream & out, AVObject const & val ) {
 ostream & operator<<( ostream & out, ControllerLink const & val ) {
   out << "                Name:  " << val.name << endl;
   out << "        Interpolator:  " << val.interpolator << endl;
-  out << "      Unknown Link 1:  " << val.unknown_link_1 << endl;
-  out << "      Unknown Link 2:  " << val.unknown_link_2 << endl;
-  out << "     Unknown Short 0:  " << val.unknown_short_0 << endl;
+  out << "      Unknown Link 1:  " << val.unknownLink1 << endl;
+  out << "      Unknown Link 2:  " << val.unknownLink2 << endl;
+  out << "     Unknown Short 0:  " << val.unknownShort0 << endl;
   out << "           Priority?:  " << val.priority_ << endl;
-  out << "      String Palette:  " << val.string_palette << endl;
-  out << "           Node Name:  " << val.node_name << endl;
-  out << "    Node Name Offset:  " << val.node_name_offset << endl;
-  out << "     Unknown Short 1:  " << val.unknown_short_1 << endl;
-  out << "       Property Type:  " << val.property_type << endl;
-  out << "Property Type Offset:  " << val.property_type_offset << endl;
-  out << "     Unknown Short 2:  " << val.unknown_short_2 << endl;
-  out << "     Controller Type:  " << val.controller_type << endl;
-  out << "Controller Type Offset:  " << val.controller_type_offset << endl;
-  out << "     Unknown Short 3:  " << val.unknown_short_3 << endl;
-  out << "          Variable 1:  " << val.variable_1 << endl;
-  out << "   Variable Offset 1:  " << val.variable_offset_1 << endl;
-  out << "     Unknown Short 4:  " << val.unknown_short_4 << endl;
-  out << "          Variable 2:  " << val.variable_2 << endl;
-  out << "   Variable Offset 2:  " << val.variable_offset_2 << endl;
-  out << "     Unknown Short 5:  " << val.unknown_short_5 << endl;
+  out << "      String Palette:  " << val.stringPalette << endl;
+  out << "           Node Name:  " << val.nodeName << endl;
+  out << "    Node Name Offset:  " << val.nodeNameOffset << endl;
+  out << "     Unknown Short 1:  " << val.unknownShort1 << endl;
+  out << "       Property Type:  " << val.propertyType << endl;
+  out << "Property Type Offset:  " << val.propertyTypeOffset << endl;
+  out << "     Unknown Short 2:  " << val.unknownShort2 << endl;
+  out << "     Controller Type:  " << val.controllerType << endl;
+  out << "Controller Type Offset:  " << val.controllerTypeOffset << endl;
+  out << "     Unknown Short 3:  " << val.unknownShort3 << endl;
+  out << "          Variable 1:  " << val.variable1 << endl;
+  out << "   Variable Offset 1:  " << val.variableOffset1 << endl;
+  out << "     Unknown Short 4:  " << val.unknownShort4 << endl;
+  out << "          Variable 2:  " << val.variable2 << endl;
+  out << "   Variable Offset 2:  " << val.variableOffset2 << endl;
+  out << "     Unknown Short 5:  " << val.unknownShort5 << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Header const & val ) {
-  out << "       Header String:  " << val.header_string << endl;
+  out << "       Header String:  " << val.headerString << endl;
   out << "             Version:  " << val.version << endl;
-  out << "         Endian Type:  " << val.endian_type << endl;
-  out << "        User Version:  " << val.user_version << endl;
+  out << "         Endian Type:  " << val.endianType << endl;
+  out << "        User Version:  " << val.userVersion << endl;
   out << "          Num Blocks:  -- calculated --" << endl;
-  out << "       Unknown Int 1:  " << val.unknown_int_1 << endl;
-  out << "       Unknown Int 3:  " << val.unknown_int_3 << endl;
+  out << "       Unknown Int 1:  " << val.unknownInt1 << endl;
+  out << "       Unknown Int 3:  " << val.unknownInt3 << endl;
   out << "            Creator?:  " << val.creator_ << endl;
-  out << "        Export Type?:  " << val.export_type_ << endl;
-  out << "      Export Script?:  " << val.export_script_ << endl;
+  out << "        Export Type?:  " << val.exportType_ << endl;
+  out << "      Export Script?:  " << val.exportScript_ << endl;
   out << "     Num Block Types:  -- calculated --" << endl;
   out << "         Block Types:  -- data not shown --" << endl;
   out << "    Block Type Index:  -- data not shown --" << endl;
-  out << "       Unknown Int 2:  " << val.unknown_int_2 << endl;
+  out << "       Unknown Int 2:  " << val.unknownInt2 << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Shader const & val ) {
-  out << "          Has Shader:  " << val.has_shader << endl;
-  out << "         Shader Name:  " << val.shader_name << endl;
-  out << "        Unknown Link:  " << val.unknown_link << endl;
+  out << "          Has Shader:  " << val.hasShader << endl;
+  out << "         Shader Name:  " << val.shaderName << endl;
+  out << "        Unknown Link:  " << val.unknownLink << endl;
   return out;
 };
 
@@ -229,8 +229,8 @@ ostream & operator<<( ostream & out, ns_keytbc<T> const & val ) {
 
 template <class T >
 ostream & operator<<( ostream & out, ns_keyvecarray<T> const & val ) {
-  out << "            Num Keys:  " << val.num_keys << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Num Keys:  " << val.numKeys << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   return out;
 };
@@ -243,8 +243,8 @@ ostream & operator<<( ostream & out, ns_keyrotsub const & val ) {
 
 template <class T >
 ostream & operator<<( ostream & out, ns_keyrotarray<T> const & val ) {
-  out << "            Num Keys:  " << val.num_keys << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Num Keys:  " << val.numKeys << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   out << "            Keys Sub:  -- data not shown --" << endl;
   return out;
@@ -253,30 +253,30 @@ ostream & operator<<( ostream & out, ns_keyrotarray<T> const & val ) {
 template <class T >
 ostream & operator<<( ostream & out, ns_keyvecarraytyp<T> const & val ) {
   out << "            Num Keys:  -- calculated --" << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, BumpMap const & val ) {
-  out << "             Is Used:  " << val.is_used << endl;
+  out << "             Is Used:  " << val.isUsed << endl;
   out << "             Texture:  " << val.texture << endl;
-  out << " Bump Map Luma Scale:  " << val.bump_map_luma_scale << endl;
-  out << "Bump Map Luma Offset:  " << val.bump_map_luma_offset << endl;
+  out << " Bump Map Luma Scale:  " << val.bumpMapLumaScale << endl;
+  out << "Bump Map Luma Offset:  " << val.bumpMapLumaOffset << endl;
   out << "              Matrix:  " << val.matrix << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Texture const & val ) {
-  out << "             Is Used:  " << val.is_used << endl;
-  out << "        Texture Data:  " << val.texture_data << endl;
+  out << "             Is Used:  " << val.isUsed << endl;
+  out << "        Texture Data:  " << val.textureData << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Texture2 const & val ) {
-  out << "             Is Used:  " << val.is_used << endl;
-  out << "        Texture Data:  " << val.texture_data << endl;
-  out << "         Unknown Int:  " << val.unknown_int << endl;
+  out << "             Is Used:  " << val.isUsed << endl;
+  out << "        Texture Data:  " << val.textureData << endl;
+  out << "         Unknown Int:  " << val.unknownInt << endl;
   return out;
 };
 
@@ -290,18 +290,18 @@ ostream & operator<<( ostream & out, SkinPartition const & val ) {
   out << "        Num Vertices:  -- calculated --" << endl;
   out << "       Num Triangles:  -- calculated --" << endl;
   out << "           Num Bones:  -- calculated --" << endl;
-  out << "          Num Strips:  " << val.num_strips << endl;
+  out << "          Num Strips:  " << val.numStrips << endl;
   out << "Num Weights Per Vertex:  -- calculated --" << endl;
   out << "               Bones:  -- data not shown --" << endl;
-  out << "      Has Vertex Map:  " << val.has_vertex_map << endl;
+  out << "      Has Vertex Map:  " << val.hasVertexMap << endl;
   out << "          Vertex Map:  -- data not shown --" << endl;
-  out << "  Has Vertex Weights:  " << val.has_vertex_weights << endl;
+  out << "  Has Vertex Weights:  " << val.hasVertexWeights << endl;
   out << "      Vertex Weights:  -- data not shown --" << endl;
   out << "       Strip Lengths:  -- calculated --" << endl;
-  out << "          Has Strips:  " << val.has_strips << endl;
+  out << "          Has Strips:  " << val.hasStrips << endl;
   out << "              Strips:  -- data not shown --" << endl;
   out << "           Triangles:  -- data not shown --" << endl;
-  out << "    Has Bone Indices:  " << val.has_bone_indices << endl;
+  out << "    Has Bone Indices:  " << val.hasBoneIndices << endl;
   out << "        Bone Indices:  -- data not shown --" << endl;
   return out;
 };
@@ -312,44 +312,44 @@ ostream & operator<<( ostream & out, unk292bytes const & val ) {
 };
 
 ostream & operator<<( ostream & out, FurniturePosition const & val ) {
-  out << "      Unknown Vector:  " << val.unknown_vector << endl;
-  out << "       Unknown Short:  " << val.unknown_short << endl;
-  out << "     Position Ref 1?:  " << val.position_ref_1_ << endl;
-  out << "     Position Ref 2?:  " << val.position_ref_2_ << endl;
+  out << "      Unknown Vector:  " << val.unknownVector << endl;
+  out << "       Unknown Short:  " << val.unknownShort << endl;
+  out << "     Position Ref 1?:  " << val.positionRef1_ << endl;
+  out << "     Position Ref 2?:  " << val.positionRef2_ << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, hkTriangle const & val ) {
   out << "            Triangle:  " << val.triangle << endl;
-  out << "       Unknown Short:  " << val.unknown_short << endl;
+  out << "       Unknown Short:  " << val.unknownShort << endl;
   out << "              Normal:  " << val.normal << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, LODInfo const & val ) {
-  out << "            LOD Type:  " << val.lod_type << endl;
-  out << "          LOD Center:  " << val.lod_center << endl;
+  out << "            LOD Type:  " << val.lodType << endl;
+  out << "          LOD Center:  " << val.lodCenter << endl;
   out << "      Num LOD Levels:  -- calculated --" << endl;
   out << "          LOD Levels:  -- data not shown --" << endl;
-  out << "       Unknown Short:  " << val.unknown_short << endl;
-  out << "          Range Data:  " << val.range_data << endl;
+  out << "       Unknown Short:  " << val.unknownShort << endl;
+  out << "          Range Data:  " << val.rangeData << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Particle const & val ) {
   out << "            Velocity:  " << val.velocity << endl;
-  out << "      Unknown Vector:  " << val.unknown_vector << endl;
+  out << "      Unknown Vector:  " << val.unknownVector << endl;
   out << "            Lifetime:  " << val.lifetime << endl;
   out << "            Lifespan:  " << val.lifespan << endl;
   out << "           Timestamp:  " << val.timestamp << endl;
-  out << "       Unknown Short:  " << val.unknown_short << endl;
-  out << "           Vertex ID:  " << val.vertex_id << endl;
+  out << "       Unknown Short:  " << val.unknownShort << endl;
+  out << "           Vertex ID:  " << val.vertexId << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, ParticleGroup const & val ) {
   out << "       Num Particles:  -- calculated --" << endl;
-  out << "           Num Valid:  " << val.num_valid << endl;
+  out << "           Num Valid:  " << val.numValid << endl;
   out << "           Particles:  -- data not shown --" << endl;
   return out;
 };
@@ -367,31 +367,31 @@ ostream & operator<<( ostream & out, SkinData const & val ) {
 template <class T >
 ostream & operator<<( ostream & out, TypedVectorKeyArray<T> const & val ) {
   out << "            Num Keys:  -- calculated --" << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   return out;
 };
 
 ostream & operator<<( ostream & out, Morph const & val ) {
-  out << "          Frame Name:  " << val.frame_name << endl;
+  out << "          Frame Name:  " << val.frameName << endl;
   out << "              Frames:  " << val.frames << endl;
-  out << "         Unknown Int:  " << val.unknown_int << endl;
+  out << "         Unknown Int:  " << val.unknownInt << endl;
   out << "             Vectors:  -- data not shown --" << endl;
   return out;
 };
 
 template <class T >
 ostream & operator<<( ostream & out, VectorKeyArray<T> const & val ) {
-  out << "            Num Keys:  " << val.num_keys << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Num Keys:  " << val.numKeys << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   return out;
 };
 
 template <class T >
 ostream & operator<<( ostream & out, RotationKeyArray<T> const & val ) {
-  out << "            Num Keys:  " << val.num_keys << endl;
-  out << "            Key Type:  " << val.key_type << endl;
+  out << "            Num Keys:  " << val.numKeys << endl;
+  out << "            Key Type:  " << val.keyType << endl;
   out << "                Keys:  -- data not shown --" << endl;
   return out;
 };

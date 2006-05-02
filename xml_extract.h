@@ -47,6 +47,7 @@
 
 #include "niflib.h"
 #include "NIF_IO.h"
+#include "NIF_Blocks.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -59,21 +60,21 @@ using namespace std;
 //
 struct Bones {
   // Block indicies of the bones.
-  vector<uint > bones;
+  vector<CrossRef > bones;
   Bones() {};
 };
 
 void NifStream( Bones & val, istream & in, uint version ) {
-  uint num_bones;
-  NifStream( num_bones, in, version );
-  val.bones.resize(num_bones);
+  uint numBones;
+  NifStream( numBones, in, version );
+  val.bones.resize(numBones);
   NifStream( val.bones, in, version );
 };
 
 void NifStream( Bones const & val, ostream & out, uint version ) {
-  uint num_bones;
-  num_bones = uint(val.bones.size());
-  NifStream( num_bones, out, version );
+  uint numBones;
+  numBones = uint(val.bones.size());
+  NifStream( numBones, out, version );
   NifStream( val.bones, out, version );
 };
 
@@ -84,7 +85,7 @@ ostream & operator<<( ostream & out, Bones const & val );
 //
 struct ByteArray {
   // Unknown.
-  uint unknown_int;
+  uint unknownInt;
   // The bytes which make up the array
   vector<byte > data;
   ByteArray() {};
@@ -94,7 +95,7 @@ void NifStream( ByteArray & val, istream & in, uint version ) {
   uint size;
   NifStream( size, in, version );
   if ( version >= 0x14000004 ) {
-    NifStream( val.unknown_int, in, version );
+    NifStream( val.unknownInt, in, version );
   };
   val.data.resize(size);
   NifStream( val.data, in, version );
@@ -105,7 +106,7 @@ void NifStream( ByteArray const & val, ostream & out, uint version ) {
   size = uint(val.data.size());
   NifStream( size, out, version );
   if ( version >= 0x14000004 ) {
-    NifStream( val.unknown_int, out, version );
+    NifStream( val.unknownInt, out, version );
   };
   NifStream( val.data, out, version );
 };
@@ -117,23 +118,23 @@ ostream & operator<<( ostream & out, ByteArray const & val );
 //
 struct CondInt {
   // Non-Zero if the following Integer appears.  Otherwise, the integer does not appear.
-  bool is_used;
+  bool isUsed;
   // An unknown integer.
-  uint unknown_int;
+  uint unknownInt;
   CondInt() {};
 };
 
 void NifStream( CondInt & val, istream & in, uint version ) {
-  NifStream( val.is_used, in, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.unknown_int, in, version );
+  NifStream( val.isUsed, in, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.unknownInt, in, version );
   };
 };
 
 void NifStream( CondInt const & val, ostream & out, uint version ) {
-  NifStream( val.is_used, out, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.unknown_int, out, version );
+  NifStream( val.isUsed, out, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.unknownInt, out, version );
   };
 };
 
@@ -151,17 +152,17 @@ struct KeyArray {
 
 template <class T >
 void NifStream( KeyArray<T> & val, istream & in, uint version ) {
-  uint num_keys;
-  NifStream( num_keys, in, version );
-  val.keys.resize(num_keys);
+  uint numKeys;
+  NifStream( numKeys, in, version );
+  val.keys.resize(numKeys);
   NifStream( val.keys, in, version );
 };
 
 template <class T >
 void NifStream( KeyArray<T> const & val, ostream & out, uint version ) {
-  uint num_keys;
-  num_keys = uint(val.keys.size());
-  NifStream( num_keys, out, version );
+  uint numKeys;
+  numKeys = uint(val.keys.size());
+  NifStream( numKeys, out, version );
   NifStream( val.keys, out, version );
 };
 
@@ -173,21 +174,21 @@ ostream & operator<<( ostream & out, KeyArray<T> const & val );
 //
 struct LinkGroup {
   // The list of block indices.
-  vector<uint > indices;
+  vector<Link > indices;
   LinkGroup() {};
 };
 
 void NifStream( LinkGroup & val, istream & in, uint version ) {
-  uint num_indices;
-  NifStream( num_indices, in, version );
-  val.indices.resize(num_indices);
+  uint numIndices;
+  NifStream( numIndices, in, version );
+  val.indices.resize(numIndices);
   NifStream( val.indices, in, version );
 };
 
 void NifStream( LinkGroup const & val, ostream & out, uint version ) {
-  uint num_indices;
-  num_indices = uint(val.indices.size());
-  NifStream( num_indices, out, version );
+  uint numIndices;
+  numIndices = uint(val.indices.size());
+  NifStream( numIndices, out, version );
   NifStream( val.indices, out, version );
 };
 
@@ -217,22 +218,22 @@ ostream & operator<<( ostream & out, Footer const & val );
 //
 struct MatchGroup {
   // The vertex indices.
-  vector<ushort > vertex_indices;
+  vector<ushort > vertexIndices;
   MatchGroup() {};
 };
 
 void NifStream( MatchGroup & val, istream & in, uint version ) {
-  ushort num_vertices;
-  NifStream( num_vertices, in, version );
-  val.vertex_indices.resize(num_vertices);
-  NifStream( val.vertex_indices, in, version );
+  ushort numVertices;
+  NifStream( numVertices, in, version );
+  val.vertexIndices.resize(numVertices);
+  NifStream( val.vertexIndices, in, version );
 };
 
 void NifStream( MatchGroup const & val, ostream & out, uint version ) {
-  ushort num_vertices;
-  num_vertices = ushort(val.vertex_indices.size());
-  NifStream( num_vertices, out, version );
-  NifStream( val.vertex_indices, out, version );
+  ushort numVertices;
+  numVertices = ushort(val.vertexIndices.size());
+  NifStream( numVertices, out, version );
+  NifStream( val.vertexIndices, out, version );
 };
 
 ostream & operator<<( ostream & out, MatchGroup const & val );
@@ -269,19 +270,19 @@ ostream & operator<<( ostream & out, MipMap const & val );
 //
 struct ModifierGroup {
   // Determines whether or not the link group is present.
-  bool has_modifiers;
+  bool hasModifiers;
   // The list of particle modifiers.
   LinkGroup modifiers;
   ModifierGroup() {};
 };
 
 void NifStream( ModifierGroup & val, istream & in, uint version ) {
-  NifStream( val.has_modifiers, in, version );
+  NifStream( val.hasModifiers, in, version );
   NifStream( val.modifiers, in, version );
 };
 
 void NifStream( ModifierGroup const & val, ostream & out, uint version ) {
-  NifStream( val.has_modifiers, out, version );
+  NifStream( val.hasModifiers, out, version );
   NifStream( val.modifiers, out, version );
 };
 
@@ -326,17 +327,17 @@ struct ns_keyarray {
 
 template <class T >
 void NifStream( ns_keyarray<T> & val, istream & in, uint version ) {
-  uint num_keys;
-  NifStream( num_keys, in, version );
-  val.keys.resize(num_keys);
+  uint numKeys;
+  NifStream( numKeys, in, version );
+  val.keys.resize(numKeys);
   NifStream( val.keys, in, version );
 };
 
 template <class T >
 void NifStream( ns_keyarray<T> const & val, ostream & out, uint version ) {
-  uint num_keys;
-  num_keys = uint(val.keys.size());
-  NifStream( num_keys, out, version );
+  uint numKeys;
+  numKeys = uint(val.keys.size());
+  NifStream( numKeys, out, version );
   NifStream( val.keys, out, version );
 };
 
@@ -440,25 +441,25 @@ ostream & operator<<( ostream & out, ShortString const & val );
 struct SkinShapeGroup {
   // First link is a NiTriShape block.
   // Second link is a NiSkinInstance block.
-  vector<vector<uint > > link_pairs;
+  vector<vector<Link > > linkPairs;
   SkinShapeGroup() {};
 };
 
 void NifStream( SkinShapeGroup & val, istream & in, uint version ) {
-  uint num_link_pairs;
-  NifStream( num_link_pairs, in, version );
-  val.link_pairs.resize(num_link_pairs);
-  for (uint i = 0; i < num_link_pairs; i++) {
-    val.link_pairs[i].resize(2);
+  uint numLinkPairs;
+  NifStream( numLinkPairs, in, version );
+  val.linkPairs.resize(numLinkPairs);
+  for (uint i = 0; i < numLinkPairs; i++) {
+    val.linkPairs[i].resize(2);
   };
-  NifStream( val.link_pairs, in, version );
+  NifStream( val.linkPairs, in, version );
 };
 
 void NifStream( SkinShapeGroup const & val, ostream & out, uint version ) {
-  uint num_link_pairs;
-  num_link_pairs = uint(val.link_pairs.size());
-  NifStream( num_link_pairs, out, version );
-  NifStream( val.link_pairs, out, version );
+  uint numLinkPairs;
+  numLinkPairs = uint(val.linkPairs.size());
+  NifStream( numLinkPairs, out, version );
+  NifStream( val.linkPairs, out, version );
 };
 
 ostream & operator<<( ostream & out, SkinShapeGroup const & val );
@@ -470,7 +471,7 @@ struct AVObject {
   // Object name.
   string name;
   // Object reference.
-  uint object;
+  CrossRef object;
   AVObject() {};
 };
 
@@ -493,47 +494,47 @@ struct ControllerLink {
   // Name of a controllable block in another NIF file.
   string name;
   // Link to an interpolator.
-  uint interpolator;
+  Link interpolator;
   // Unknown link. Usually -1.
-  uint unknown_link_1;
+  Link unknownLink1;
   // Unknown.
-  uint unknown_link_2;
+  Link unknownLink2;
   // Unknown.
-  ushort unknown_short_0;
+  ushort unknownShort0;
   // Idle animations tend to have low values for this, and blocks that have high values tend to correspond with the important parts of the animation. WARNING: BREAKS CIV4 NIF FILES! Only observed in Oblivion NIF files so far.
   byte priority_;
   // Refers to the NiStringPalette which contains the name of the controlled block.
-  uint string_palette;
+  Link stringPalette;
   // The name of the animated node.
-  string node_name;
+  string nodeName;
   // Offset in the string palette where the name of the controlled node (NiNode, NiTriShape, ...) starts.
-  ushort node_name_offset;
+  ushort nodeNameOffset;
   // Unknown, always 0.
-  ushort unknown_short_1;
+  ushort unknownShort1;
   // Name of the property (NiMaterialProperty, ...), if this controller controls a property.
-  string property_type;
+  string propertyType;
   // Offset in the string palette where the property (NiMaterialProperty, ...) starts, if this controller controls a property. Otherwise, -1.
-  ushort property_type_offset;
+  ushort propertyTypeOffset;
   // Unknown, usually 0, but sometimes also 0xFFFF.
-  ushort unknown_short_2;
+  ushort unknownShort2;
   // Probably the block type name of the controller in the NIF file that is child of the controlled block.
-  string controller_type;
+  string controllerType;
   // Apparently the offset in the string palette of some type of controller related to Interpolator (for example, a 'NiTransformInterpolator' will have here a 'NiTransformController', etc.). Sometimes the type of controller that links to the interpolator. Probably it refers to the controller in the NIF file that is child of the controlled block, via its type name.
-  ushort controller_type_offset;
+  ushort controllerTypeOffset;
   // Unknown, always 0.
-  ushort unknown_short_3;
+  ushort unknownShort3;
   // Some variable string (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.).
-  string variable_1;
+  string variable1;
   // Offset in the string palette where some variable string starts (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually, -1.
-  ushort variable_offset_1;
+  ushort variableOffset1;
   // Unknown, usually 0, but sometimes 0xFFFF.
-  ushort unknown_short_4;
+  ushort unknownShort4;
   // Another variable string, apparently used for particle system controllers.
-  string variable_2;
+  string variable2;
   // Offset in the string palette where some variable string starts (so far only 'EmitterActive' and 'BirthRate' have been observed in official files, used for particle system controllers). Usually, -1.
-  ushort variable_offset_2;
+  ushort variableOffset2;
   // Unknown, usually 0, but sometimes 0xFFFF.
-  ushort unknown_short_5;
+  ushort unknownShort5;
   ControllerLink() {};
 };
 
@@ -543,52 +544,52 @@ void NifStream( ControllerLink & val, istream & in, uint version ) {
   };
   NifStream( val.interpolator, in, version );
   if ( version >= 0x0A01006A ) {
-    NifStream( val.unknown_link_1, in, version );
+    NifStream( val.unknownLink1, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.unknown_link_2, in, version );
-    NifStream( val.unknown_short_0, in, version );
+    NifStream( val.unknownLink2, in, version );
+    NifStream( val.unknownShort0, in, version );
   };
   if ( version >= 0x0A01006A ) {
     NifStream( val.priority_, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.string_palette, in, version );
+    NifStream( val.stringPalette, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.node_name, in, version );
+    NifStream( val.nodeName, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.node_name_offset, in, version );
-    NifStream( val.unknown_short_1, in, version );
+    NifStream( val.nodeNameOffset, in, version );
+    NifStream( val.unknownShort1, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.property_type, in, version );
+    NifStream( val.propertyType, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.property_type_offset, in, version );
-    NifStream( val.unknown_short_2, in, version );
+    NifStream( val.propertyTypeOffset, in, version );
+    NifStream( val.unknownShort2, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.controller_type, in, version );
+    NifStream( val.controllerType, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.controller_type_offset, in, version );
-    NifStream( val.unknown_short_3, in, version );
+    NifStream( val.controllerTypeOffset, in, version );
+    NifStream( val.unknownShort3, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.variable_1, in, version );
+    NifStream( val.variable1, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.variable_offset_1, in, version );
-    NifStream( val.unknown_short_4, in, version );
+    NifStream( val.variableOffset1, in, version );
+    NifStream( val.unknownShort4, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.variable_2, in, version );
+    NifStream( val.variable2, in, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.variable_offset_2, in, version );
-    NifStream( val.unknown_short_5, in, version );
+    NifStream( val.variableOffset2, in, version );
+    NifStream( val.unknownShort5, in, version );
   };
 };
 
@@ -598,52 +599,52 @@ void NifStream( ControllerLink const & val, ostream & out, uint version ) {
   };
   NifStream( val.interpolator, out, version );
   if ( version >= 0x0A01006A ) {
-    NifStream( val.unknown_link_1, out, version );
+    NifStream( val.unknownLink1, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.unknown_link_2, out, version );
-    NifStream( val.unknown_short_0, out, version );
+    NifStream( val.unknownLink2, out, version );
+    NifStream( val.unknownShort0, out, version );
   };
   if ( version >= 0x0A01006A ) {
     NifStream( val.priority_, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.string_palette, out, version );
+    NifStream( val.stringPalette, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.node_name, out, version );
+    NifStream( val.nodeName, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.node_name_offset, out, version );
-    NifStream( val.unknown_short_1, out, version );
+    NifStream( val.nodeNameOffset, out, version );
+    NifStream( val.unknownShort1, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.property_type, out, version );
+    NifStream( val.propertyType, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.property_type_offset, out, version );
-    NifStream( val.unknown_short_2, out, version );
+    NifStream( val.propertyTypeOffset, out, version );
+    NifStream( val.unknownShort2, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.controller_type, out, version );
+    NifStream( val.controllerType, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.controller_type_offset, out, version );
-    NifStream( val.unknown_short_3, out, version );
+    NifStream( val.controllerTypeOffset, out, version );
+    NifStream( val.unknownShort3, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.variable_1, out, version );
+    NifStream( val.variable1, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.variable_offset_1, out, version );
-    NifStream( val.unknown_short_4, out, version );
+    NifStream( val.variableOffset1, out, version );
+    NifStream( val.unknownShort4, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.variable_2, out, version );
+    NifStream( val.variable2, out, version );
   };
   if ( version >= 0x0A020000 ) {
-    NifStream( val.variable_offset_2, out, version );
-    NifStream( val.unknown_short_5, out, version );
+    NifStream( val.variableOffset2, out, version );
+    NifStream( val.unknownShort5, out, version );
   };
 };
 
@@ -654,106 +655,106 @@ ostream & operator<<( ostream & out, ControllerLink const & val );
 //
 struct Header {
   // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version written out. Ends with a newline character (0x0A).
-  HeaderString header_string;
+  HeaderString headerString;
   // The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C, 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000, 0x0A020000, 0x14000004, ...
   uint version;
   // Determines the endian-ness of the data.
   // 
   // 1 = little endian (default)
   // 0 = big endian
-  byte endian_type;
+  byte endianType;
   // An extra version number, for companies that decide to modify the file format.
-  uint user_version;
+  uint userVersion;
   // Unknown.
-  uint unknown_int_1;
+  uint unknownInt1;
   // Unknown.
-  uint unknown_int_3;
+  uint unknownInt3;
   // Could be the name of the creator of the NIF file?
   ShortString creator_;
   // Unknown. Can be something like 'TriStrip Process Script'.
-  ShortString export_type_;
+  ShortString exportType_;
   // Unknown. Possibly the selected option of the export script. Can be something like 'Default Export Script'.
-  ShortString export_script_;
+  ShortString exportScript_;
   // List of all block types used in this NIF file.
-  vector<string > block_types;
+  vector<string > blockTypes;
   // Maps file blocks on their corresponding type: first file block is of type block_types[block_type_index[0]], the second of block_types[block_type_index[1]], etc.
-  vector<ushort > block_type_index;
+  vector<ushort > blockTypeIndex;
   // Unknown.
-  uint unknown_int_2;
-  Header() : version(0x04000002), endian_type(1) {};
+  uint unknownInt2;
+  Header() : version(0x04000002), endianType(1) {};
 };
 
 void NifStream( Header & val, istream & in, uint version ) {
-  uint num_blocks;
-  ushort num_block_types;
-  NifStream( val.header_string, in, version );
+  uint numBlocks;
+  ushort numBlockTypes;
+  NifStream( val.headerString, in, version );
   NifStream( val.version, in, version );
   if ( version >= 0x14000004 ) {
-    NifStream( val.endian_type, in, version );
+    NifStream( val.endianType, in, version );
   };
   if ( version >= 0x0A010000 ) {
-    NifStream( val.user_version, in, version );
+    NifStream( val.userVersion, in, version );
   };
-  NifStream( num_blocks, in, version );
+  NifStream( numBlocks, in, version );
   if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-    NifStream( val.unknown_int_1, in, version );
+    NifStream( val.unknownInt1, in, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.user_version != 0 ) {
-      NifStream( val.unknown_int_3, in, version );
+    if ( val.userVersion != 0 ) {
+      NifStream( val.unknownInt3, in, version );
     };
   };
   if ( version >= 0x0A000102 ) {
-    if ( val.user_version != 0 ) {
+    if ( val.userVersion != 0 ) {
       NifStream( val.creator_, in, version );
-      NifStream( val.export_type_, in, version );
-      NifStream( val.export_script_, in, version );
+      NifStream( val.exportType_, in, version );
+      NifStream( val.exportScript_, in, version );
     };
   };
   if ( version >= 0x0A000100 ) {
-    NifStream( num_block_types, in, version );
-    val.block_types.resize(num_block_types);
-    NifStream( val.block_types, in, version );
-    val.block_type_index.resize(num_blocks);
-    NifStream( val.block_type_index, in, version );
-    NifStream( val.unknown_int_2, in, version );
+    NifStream( numBlockTypes, in, version );
+    val.blockTypes.resize(numBlockTypes);
+    NifStream( val.blockTypes, in, version );
+    val.blockTypeIndex.resize(numBlocks);
+    NifStream( val.blockTypeIndex, in, version );
+    NifStream( val.unknownInt2, in, version );
   };
 };
 
 void NifStream( Header const & val, ostream & out, uint version ) {
-  uint num_blocks;
-  ushort num_block_types;
-  num_blocks = uint(val.block_type_index.size());
-  num_block_types = ushort(val.block_types.size());
-  NifStream( val.header_string, out, version );
+  uint numBlocks;
+  ushort numBlockTypes;
+  numBlocks = uint(val.blockTypeIndex.size());
+  numBlockTypes = ushort(val.blockTypes.size());
+  NifStream( val.headerString, out, version );
   NifStream( val.version, out, version );
   if ( version >= 0x14000004 ) {
-    NifStream( val.endian_type, out, version );
+    NifStream( val.endianType, out, version );
   };
   if ( version >= 0x0A010000 ) {
-    NifStream( val.user_version, out, version );
+    NifStream( val.userVersion, out, version );
   };
-  NifStream( num_blocks, out, version );
+  NifStream( numBlocks, out, version );
   if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-    NifStream( val.unknown_int_1, out, version );
+    NifStream( val.unknownInt1, out, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.user_version != 0 ) {
-      NifStream( val.unknown_int_3, out, version );
+    if ( val.userVersion != 0 ) {
+      NifStream( val.unknownInt3, out, version );
     };
   };
   if ( version >= 0x0A000102 ) {
-    if ( val.user_version != 0 ) {
+    if ( val.userVersion != 0 ) {
       NifStream( val.creator_, out, version );
-      NifStream( val.export_type_, out, version );
-      NifStream( val.export_script_, out, version );
+      NifStream( val.exportType_, out, version );
+      NifStream( val.exportScript_, out, version );
     };
   };
   if ( version >= 0x0A000100 ) {
-    NifStream( num_block_types, out, version );
-    NifStream( val.block_types, out, version );
-    NifStream( val.block_type_index, out, version );
-    NifStream( val.unknown_int_2, out, version );
+    NifStream( numBlockTypes, out, version );
+    NifStream( val.blockTypes, out, version );
+    NifStream( val.blockTypeIndex, out, version );
+    NifStream( val.unknownInt2, out, version );
   };
 };
 
@@ -764,27 +765,27 @@ ostream & operator<<( ostream & out, Header const & val );
 //
 struct Shader {
   // Do we have a shader?
-  bool has_shader;
+  bool hasShader;
   // The shader name.
-  string shader_name;
+  string shaderName;
   // Unknown link, usually -1.
-  uint unknown_link;
+  Link unknownLink;
   Shader() {};
 };
 
 void NifStream( Shader & val, istream & in, uint version ) {
-  NifStream( val.has_shader, in, version );
-  if ( val.has_shader != 0 ) {
-    NifStream( val.shader_name, in, version );
-    NifStream( val.unknown_link, in, version );
+  NifStream( val.hasShader, in, version );
+  if ( val.hasShader != 0 ) {
+    NifStream( val.shaderName, in, version );
+    NifStream( val.unknownLink, in, version );
   };
 };
 
 void NifStream( Shader const & val, ostream & out, uint version ) {
-  NifStream( val.has_shader, out, version );
-  if ( val.has_shader != 0 ) {
-    NifStream( val.shader_name, out, version );
-    NifStream( val.unknown_link, out, version );
+  NifStream( val.hasShader, out, version );
+  if ( val.hasShader != 0 ) {
+    NifStream( val.shaderName, out, version );
+    NifStream( val.unknownLink, out, version );
   };
 };
 
@@ -818,21 +819,21 @@ ostream & operator<<( ostream & out, StringPalette const & val );
 //
 struct TargetGroup {
   // The list of block indices.
-  vector<uint > indices;
+  vector<CrossRef > indices;
   TargetGroup() {};
 };
 
 void NifStream( TargetGroup & val, istream & in, uint version ) {
-  ushort num_indices;
-  NifStream( num_indices, in, version );
-  val.indices.resize(num_indices);
+  ushort numIndices;
+  NifStream( numIndices, in, version );
+  val.indices.resize(numIndices);
   NifStream( val.indices, in, version );
 };
 
 void NifStream( TargetGroup const & val, ostream & out, uint version ) {
-  ushort num_indices;
-  num_indices = ushort(val.indices.size());
-  NifStream( num_indices, out, version );
+  ushort numIndices;
+  numIndices = ushort(val.indices.size());
+  NifStream( numIndices, out, version );
   NifStream( val.indices, out, version );
 };
 
@@ -908,9 +909,9 @@ ostream & operator<<( ostream & out, ns_keytbc<T> const & val );
 template <class T >
 struct ns_keyvecarray {
   // Number of keys.
-  uint num_keys;
+  uint numKeys;
   // The key type (1, 2, or 3).
-  uint key_type;
+  uint keyType;
   // Linearly interpolated keys.
   vector<ns_keylin<T > > keys;
   ns_keyvecarray() {};
@@ -918,44 +919,44 @@ struct ns_keyvecarray {
 
 template <class T >
 void NifStream( ns_keyvecarray<T> & val, istream & in, uint version ) {
-  NifStream( val.num_keys, in, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, in, version );
+  NifStream( val.numKeys, in, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, in, version );
   };
-  if ( val.key_type == 1 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 1 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 2 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 2 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 3 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 3 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 5 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 5 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
 };
 
 template <class T >
 void NifStream( ns_keyvecarray<T> const & val, ostream & out, uint version ) {
-  NifStream( val.num_keys, out, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, out, version );
+  NifStream( val.numKeys, out, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, out, version );
   };
-  if ( val.key_type == 1 ) {
+  if ( val.keyType == 1 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 2 ) {
+  if ( val.keyType == 2 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 3 ) {
+  if ( val.keyType == 3 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 5 ) {
+  if ( val.keyType == 5 ) {
     NifStream( val.keys, out, version );
   };
 };
@@ -970,7 +971,7 @@ struct ns_keyrotsub {
   // Time.
   float time;
   // The sub keys, one for every axis.
-  vector<ns_keyvecarray<float > > sub_keys;
+  vector<ns_keyvecarray<float > > subKeys;
   ns_keyrotsub() {};
 };
 
@@ -978,15 +979,15 @@ void NifStream( ns_keyrotsub & val, istream & in, uint version ) {
   if ( version <= 0x0A010000 ) {
     NifStream( val.time, in, version );
   };
-  val.sub_keys.resize(3);
-  NifStream( val.sub_keys, in, version );
+  val.subKeys.resize(3);
+  NifStream( val.subKeys, in, version );
 };
 
 void NifStream( ns_keyrotsub const & val, ostream & out, uint version ) {
   if ( version <= 0x0A010000 ) {
     NifStream( val.time, out, version );
   };
-  NifStream( val.sub_keys, out, version );
+  NifStream( val.subKeys, out, version );
 };
 
 ostream & operator<<( ostream & out, ns_keyrotsub const & val );
@@ -1002,57 +1003,57 @@ ostream & operator<<( ostream & out, ns_keyrotsub const & val );
 template <class T >
 struct ns_keyrotarray {
   // Number of rotation keys.
-  uint num_keys;
+  uint numKeys;
   // The key type (1, 2, 3, or 4).
-  uint key_type;
+  uint keyType;
   // Linear keys.
   vector<ns_keylin<T > > keys;
   // Special rotation keys (3 float arrays, one for each axis).
-  vector<ns_keyrotsub > keys_sub;
+  vector<ns_keyrotsub > keysSub;
   ns_keyrotarray() {};
 };
 
 template <class T >
 void NifStream( ns_keyrotarray<T> & val, istream & in, uint version ) {
-  NifStream( val.num_keys, in, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, in, version );
+  NifStream( val.numKeys, in, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, in, version );
   };
-  if ( val.key_type == 1 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 1 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 2 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 2 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 3 ) {
-    val.keys.resize(val.num_keys);
+  if ( val.keyType == 3 ) {
+    val.keys.resize(val.numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 4 ) {
-    val.keys_sub.resize(val.num_keys);
-    NifStream( val.keys_sub, in, version );
+  if ( val.keyType == 4 ) {
+    val.keysSub.resize(val.numKeys);
+    NifStream( val.keysSub, in, version );
   };
 };
 
 template <class T >
 void NifStream( ns_keyrotarray<T> const & val, ostream & out, uint version ) {
-  NifStream( val.num_keys, out, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, out, version );
+  NifStream( val.numKeys, out, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, out, version );
   };
-  if ( val.key_type == 1 ) {
+  if ( val.keyType == 1 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 2 ) {
+  if ( val.keyType == 2 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 3 ) {
+  if ( val.keyType == 3 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 4 ) {
-    NifStream( val.keys_sub, out, version );
+  if ( val.keyType == 4 ) {
+    NifStream( val.keysSub, out, version );
   };
 };
 
@@ -1070,7 +1071,7 @@ ostream & operator<<( ostream & out, ns_keyrotarray<T> const & val );
 template <class T >
 struct ns_keyvecarraytyp {
   // The key type (1, 2, 3)
-  uint key_type;
+  uint keyType;
   // Linearly interpolated keys.
   vector<ns_keylin<T > > keys;
   ns_keyvecarraytyp() {};
@@ -1078,36 +1079,36 @@ struct ns_keyvecarraytyp {
 
 template <class T >
 void NifStream( ns_keyvecarraytyp<T> & val, istream & in, uint version ) {
-  uint num_keys;
-  NifStream( num_keys, in, version );
-  NifStream( val.key_type, in, version );
-  if ( val.key_type == 1 ) {
-    val.keys.resize(num_keys);
+  uint numKeys;
+  NifStream( numKeys, in, version );
+  NifStream( val.keyType, in, version );
+  if ( val.keyType == 1 ) {
+    val.keys.resize(numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 2 ) {
-    val.keys.resize(num_keys);
+  if ( val.keyType == 2 ) {
+    val.keys.resize(numKeys);
     NifStream( val.keys, in, version );
   };
-  if ( val.key_type == 3 ) {
-    val.keys.resize(num_keys);
+  if ( val.keyType == 3 ) {
+    val.keys.resize(numKeys);
     NifStream( val.keys, in, version );
   };
 };
 
 template <class T >
 void NifStream( ns_keyvecarraytyp<T> const & val, ostream & out, uint version ) {
-  uint num_keys;
-  num_keys = uint(val.keys.size());
-  NifStream( num_keys, out, version );
-  NifStream( val.key_type, out, version );
-  if ( val.key_type == 1 ) {
+  uint numKeys;
+  numKeys = uint(val.keys.size());
+  NifStream( numKeys, out, version );
+  NifStream( val.keyType, out, version );
+  if ( val.keyType == 1 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 2 ) {
+  if ( val.keyType == 2 ) {
     NifStream( val.keys, out, version );
   };
-  if ( val.key_type == 3 ) {
+  if ( val.keyType == 3 ) {
     NifStream( val.keys, out, version );
   };
 };
@@ -1120,34 +1121,34 @@ ostream & operator<<( ostream & out, ns_keyvecarraytyp<T> const & val );
 //
 struct BumpMap {
   // Determines whether this bumpmap contains any information. If Non-Zero the following data is present, otherwise it is not.
-  bool is_used;
+  bool isUsed;
   // The bump map texture description.
   TexDesc texture;
   // ?
-  float bump_map_luma_scale;
+  float bumpMapLumaScale;
   // ?
-  float bump_map_luma_offset;
+  float bumpMapLumaOffset;
   // ?
   Matrix22 matrix;
   BumpMap() {};
 };
 
 void NifStream( BumpMap & val, istream & in, uint version ) {
-  NifStream( val.is_used, in, version );
-  if ( val.is_used != 0 ) {
+  NifStream( val.isUsed, in, version );
+  if ( val.isUsed != 0 ) {
     NifStream( val.texture, in, version );
-    NifStream( val.bump_map_luma_scale, in, version );
-    NifStream( val.bump_map_luma_offset, in, version );
+    NifStream( val.bumpMapLumaScale, in, version );
+    NifStream( val.bumpMapLumaOffset, in, version );
     NifStream( val.matrix, in, version );
   };
 };
 
 void NifStream( BumpMap const & val, ostream & out, uint version ) {
-  NifStream( val.is_used, out, version );
-  if ( val.is_used != 0 ) {
+  NifStream( val.isUsed, out, version );
+  if ( val.isUsed != 0 ) {
     NifStream( val.texture, out, version );
-    NifStream( val.bump_map_luma_scale, out, version );
-    NifStream( val.bump_map_luma_offset, out, version );
+    NifStream( val.bumpMapLumaScale, out, version );
+    NifStream( val.bumpMapLumaOffset, out, version );
     NifStream( val.matrix, out, version );
   };
 };
@@ -1159,23 +1160,23 @@ ostream & operator<<( ostream & out, BumpMap const & val );
 //
 struct Texture {
   // Determines whether this texture contains any information. If Non-Zero the following data is present, otherwise it is not.
-  bool is_used;
+  bool isUsed;
   // The texture description.
-  TexDesc texture_data;
+  TexDesc textureData;
   Texture() {};
 };
 
 void NifStream( Texture & val, istream & in, uint version ) {
-  NifStream( val.is_used, in, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.texture_data, in, version );
+  NifStream( val.isUsed, in, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.textureData, in, version );
   };
 };
 
 void NifStream( Texture const & val, ostream & out, uint version ) {
-  NifStream( val.is_used, out, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.texture_data, out, version );
+  NifStream( val.isUsed, out, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.textureData, out, version );
   };
 };
 
@@ -1186,27 +1187,27 @@ ostream & operator<<( ostream & out, Texture const & val );
 //
 struct Texture2 {
   // Is it used?
-  bool is_used;
+  bool isUsed;
   // The texture data.
-  TexDesc texture_data;
+  TexDesc textureData;
   // Unknown.
-  uint unknown_int;
+  uint unknownInt;
   Texture2() {};
 };
 
 void NifStream( Texture2 & val, istream & in, uint version ) {
-  NifStream( val.is_used, in, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.texture_data, in, version );
-    NifStream( val.unknown_int, in, version );
+  NifStream( val.isUsed, in, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.textureData, in, version );
+    NifStream( val.unknownInt, in, version );
   };
 };
 
 void NifStream( Texture2 const & val, ostream & out, uint version ) {
-  NifStream( val.is_used, out, version );
-  if ( val.is_used != 0 ) {
-    NifStream( val.texture_data, out, version );
-    NifStream( val.unknown_int, out, version );
+  NifStream( val.isUsed, out, version );
+  if ( val.isUsed != 0 ) {
+    NifStream( val.textureData, out, version );
+    NifStream( val.unknownInt, out, version );
   };
 };
 
@@ -1222,16 +1223,16 @@ struct ExtraTextureGroup {
 };
 
 void NifStream( ExtraTextureGroup & val, istream & in, uint version ) {
-  uint num_textures;
-  NifStream( num_textures, in, version );
-  val.textures.resize(num_textures);
+  uint numTextures;
+  NifStream( numTextures, in, version );
+  val.textures.resize(numTextures);
   NifStream( val.textures, in, version );
 };
 
 void NifStream( ExtraTextureGroup const & val, ostream & out, uint version ) {
-  uint num_textures;
-  num_textures = uint(val.textures.size());
-  NifStream( num_textures, out, version );
+  uint numTextures;
+  numTextures = uint(val.textures.size());
+  NifStream( numTextures, out, version );
   NifStream( val.textures, out, version );
 };
 
@@ -1258,163 +1259,163 @@ ostream & operator<<( ostream & out, ExtraTextureGroup const & val );
 //
 struct SkinPartition {
   // Number of strips in this submesh (zero if not stripped).
-  ushort num_strips;
+  ushort numStrips;
   // List of bones.
   vector<ushort > bones;
   // Do we have a vertex map?
-  bool has_vertex_map;
+  bool hasVertexMap;
   // Maps the weight/influence lists in this submesh to the vertices in the shape being skinned.
-  vector<ushort > vertex_map;
+  vector<ushort > vertexMap;
   // Do we have vertex weights?
-  bool has_vertex_weights;
+  bool hasVertexWeights;
   // The vertex weights.
-  vector<vector<float > > vertex_weights;
+  vector<vector<float > > vertexWeights;
   // Do we have strip data?
-  bool has_strips;
+  bool hasStrips;
   // The strips.
   vector<vector<ushort > > strips;
   // The triangles.
   vector<Triangle > triangles;
   // Do we have bone indices?
-  bool has_bone_indices;
+  bool hasBoneIndices;
   // Bone indices, they index into 'Bones'.
-  vector<vector<byte > > bone_indices;
+  vector<vector<byte > > boneIndices;
   SkinPartition() {};
 };
 
 void NifStream( SkinPartition & val, istream & in, uint version ) {
-  ushort num_vertices;
-  ushort num_triangles;
-  ushort num_bones;
-  ushort num_weights_per_vertex;
-  vector<ushort > strip_lengths;
-  NifStream( num_vertices, in, version );
-  NifStream( num_triangles, in, version );
-  NifStream( num_bones, in, version );
-  NifStream( val.num_strips, in, version );
-  NifStream( num_weights_per_vertex, in, version );
-  val.bones.resize(num_bones);
+  ushort numVertices;
+  ushort numTriangles;
+  ushort numBones;
+  ushort numWeightsPerVertex;
+  vector<ushort > stripLengths;
+  NifStream( numVertices, in, version );
+  NifStream( numTriangles, in, version );
+  NifStream( numBones, in, version );
+  NifStream( val.numStrips, in, version );
+  NifStream( numWeightsPerVertex, in, version );
+  val.bones.resize(numBones);
   NifStream( val.bones, in, version );
   if ( version >= 0x0A010000 ) {
-    NifStream( val.has_vertex_map, in, version );
+    NifStream( val.hasVertexMap, in, version );
   };
   if ( version <= 0x0A000102 ) {
-    val.vertex_map.resize(num_vertices);
-    NifStream( val.vertex_map, in, version );
+    val.vertexMap.resize(numVertices);
+    NifStream( val.vertexMap, in, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_vertex_map != 0 ) {
-      val.vertex_map.resize(num_vertices);
-      NifStream( val.vertex_map, in, version );
+    if ( val.hasVertexMap != 0 ) {
+      val.vertexMap.resize(numVertices);
+      NifStream( val.vertexMap, in, version );
     };
-    NifStream( val.has_vertex_weights, in, version );
+    NifStream( val.hasVertexWeights, in, version );
   };
   if ( version <= 0x0A000102 ) {
-    val.vertex_weights.resize(num_vertices);
-    for (uint i = 0; i < num_vertices; i++) {
-      val.vertex_weights[i].resize(num_weights_per_vertex);
+    val.vertexWeights.resize(numVertices);
+    for (uint i = 0; i < numVertices; i++) {
+      val.vertexWeights[i].resize(numWeightsPerVertex);
     };
-    NifStream( val.vertex_weights, in, version );
+    NifStream( val.vertexWeights, in, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_vertex_weights != 0 ) {
-      val.vertex_weights.resize(num_vertices);
-      for (uint i = 0; i < num_vertices; i++) {
-        val.vertex_weights[i].resize(num_weights_per_vertex);
+    if ( val.hasVertexWeights != 0 ) {
+      val.vertexWeights.resize(numVertices);
+      for (uint i = 0; i < numVertices; i++) {
+        val.vertexWeights[i].resize(numWeightsPerVertex);
       };
-      NifStream( val.vertex_weights, in, version );
+      NifStream( val.vertexWeights, in, version );
     };
   };
-  strip_lengths.resize(val.num_strips);
-  NifStream( strip_lengths, in, version );
+  stripLengths.resize(val.numStrips);
+  NifStream( stripLengths, in, version );
   if ( version >= 0x0A010000 ) {
-    NifStream( val.has_strips, in, version );
+    NifStream( val.hasStrips, in, version );
   };
   if ( version <= 0x0A000102 ) {
-    val.strips.resize(val.num_strips);
-    for (uint i = 0; i < val.num_strips; i++) {
-      val.strips[i].resize(strip_lengths[i]);
+    val.strips.resize(val.numStrips);
+    for (uint i = 0; i < val.numStrips; i++) {
+      val.strips[i].resize(stripLengths[i]);
     };
     NifStream( val.strips, in, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_strips != 0 ) {
-      val.strips.resize(val.num_strips);
-      for (uint i = 0; i < val.num_strips; i++) {
-        val.strips[i].resize(strip_lengths[i]);
+    if ( val.hasStrips != 0 ) {
+      val.strips.resize(val.numStrips);
+      for (uint i = 0; i < val.numStrips; i++) {
+        val.strips[i].resize(stripLengths[i]);
       };
       NifStream( val.strips, in, version );
     };
   };
-  if ( val.num_strips == 0 ) {
-    val.triangles.resize(num_triangles);
+  if ( val.numStrips == 0 ) {
+    val.triangles.resize(numTriangles);
     NifStream( val.triangles, in, version );
   };
-  NifStream( val.has_bone_indices, in, version );
-  if ( val.has_bone_indices != 0 ) {
-    val.bone_indices.resize(num_vertices);
-    for (uint i = 0; i < num_vertices; i++) {
-      val.bone_indices[i].resize(num_weights_per_vertex);
+  NifStream( val.hasBoneIndices, in, version );
+  if ( val.hasBoneIndices != 0 ) {
+    val.boneIndices.resize(numVertices);
+    for (uint i = 0; i < numVertices; i++) {
+      val.boneIndices[i].resize(numWeightsPerVertex);
     };
-    NifStream( val.bone_indices, in, version );
+    NifStream( val.boneIndices, in, version );
   };
 };
 
 void NifStream( SkinPartition const & val, ostream & out, uint version ) {
-  ushort num_vertices;
-  ushort num_triangles;
-  ushort num_bones;
-  ushort num_weights_per_vertex;
-  vector<ushort > strip_lengths;
-  num_vertices = ushort(val.vertex_map.size());
-  num_triangles = ushort(val.triangles.size());
-  num_bones = ushort(val.bones.size());
-  num_weights_per_vertex = ushort(val.vertex_weights.size());
-  strip_lengths.resize(val.strips.size()); for (uint i = 0; i < val.strips.size(); i++) strip_lengths[i] = ushort(val.strips[i].size());
-  NifStream( num_vertices, out, version );
-  NifStream( num_triangles, out, version );
-  NifStream( num_bones, out, version );
-  NifStream( val.num_strips, out, version );
-  NifStream( num_weights_per_vertex, out, version );
+  ushort numVertices;
+  ushort numTriangles;
+  ushort numBones;
+  ushort numWeightsPerVertex;
+  vector<ushort > stripLengths;
+  numVertices = ushort(val.vertexMap.size());
+  numTriangles = ushort(val.triangles.size());
+  numBones = ushort(val.bones.size());
+  numWeightsPerVertex = ushort(val.vertexWeights.size());
+  stripLengths.resize(val.strips.size()); for (uint i = 0; i < val.strips.size(); i++) stripLengths[i] = ushort(val.strips[i].size());
+  NifStream( numVertices, out, version );
+  NifStream( numTriangles, out, version );
+  NifStream( numBones, out, version );
+  NifStream( val.numStrips, out, version );
+  NifStream( numWeightsPerVertex, out, version );
   NifStream( val.bones, out, version );
   if ( version >= 0x0A010000 ) {
-    NifStream( val.has_vertex_map, out, version );
+    NifStream( val.hasVertexMap, out, version );
   };
   if ( version <= 0x0A000102 ) {
-    NifStream( val.vertex_map, out, version );
+    NifStream( val.vertexMap, out, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_vertex_map != 0 ) {
-      NifStream( val.vertex_map, out, version );
+    if ( val.hasVertexMap != 0 ) {
+      NifStream( val.vertexMap, out, version );
     };
-    NifStream( val.has_vertex_weights, out, version );
+    NifStream( val.hasVertexWeights, out, version );
   };
   if ( version <= 0x0A000102 ) {
-    NifStream( val.vertex_weights, out, version );
+    NifStream( val.vertexWeights, out, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_vertex_weights != 0 ) {
-      NifStream( val.vertex_weights, out, version );
+    if ( val.hasVertexWeights != 0 ) {
+      NifStream( val.vertexWeights, out, version );
     };
   };
-  NifStream( strip_lengths, out, version );
+  NifStream( stripLengths, out, version );
   if ( version >= 0x0A010000 ) {
-    NifStream( val.has_strips, out, version );
+    NifStream( val.hasStrips, out, version );
   };
   if ( version <= 0x0A000102 ) {
     NifStream( val.strips, out, version );
   };
   if ( version >= 0x0A010000 ) {
-    if ( val.has_strips != 0 ) {
+    if ( val.hasStrips != 0 ) {
       NifStream( val.strips, out, version );
     };
   };
-  if ( val.num_strips == 0 ) {
+  if ( val.numStrips == 0 ) {
     NifStream( val.triangles, out, version );
   };
-  NifStream( val.has_bone_indices, out, version );
-  if ( val.has_bone_indices != 0 ) {
-    NifStream( val.bone_indices, out, version );
+  NifStream( val.hasBoneIndices, out, version );
+  if ( val.hasBoneIndices != 0 ) {
+    NifStream( val.boneIndices, out, version );
   };
 };
 
@@ -1425,20 +1426,20 @@ ostream & operator<<( ostream & out, SkinPartition const & val );
 //
 struct unk292bytes {
   // Unknown.
-  vector<vector<byte > > unknown_292_bytes;
+  vector<vector<byte > > unknown292Bytes;
   unk292bytes() {};
 };
 
 void NifStream( unk292bytes & val, istream & in, uint version ) {
-  val.unknown_292_bytes.resize(73);
+  val.unknown292Bytes.resize(73);
   for (uint i = 0; i < 73; i++) {
-    val.unknown_292_bytes[i].resize(4);
+    val.unknown292Bytes[i].resize(4);
   };
-  NifStream( val.unknown_292_bytes, in, version );
+  NifStream( val.unknown292Bytes, in, version );
 };
 
 void NifStream( unk292bytes const & val, ostream & out, uint version ) {
-  NifStream( val.unknown_292_bytes, out, version );
+  NifStream( val.unknown292Bytes, out, version );
 };
 
 ostream & operator<<( ostream & out, unk292bytes const & val );
@@ -1448,28 +1449,28 @@ ostream & operator<<( ostream & out, unk292bytes const & val );
 //
 struct FurniturePosition {
   // Unknown. Position?
-  Vector3 unknown_vector;
+  Vector3 unknownVector;
   // Unknown.
-  ushort unknown_short;
+  ushort unknownShort;
   // This might refer to a furnituremarkerxx.nif file.
-  byte position_ref_1_;
+  byte positionRef1_;
   // This might also refer to a furnituremarkerxx.nif file.
-  byte position_ref_2_;
+  byte positionRef2_;
   FurniturePosition() {};
 };
 
 void NifStream( FurniturePosition & val, istream & in, uint version ) {
-  NifStream( val.unknown_vector, in, version );
-  NifStream( val.unknown_short, in, version );
-  NifStream( val.position_ref_1_, in, version );
-  NifStream( val.position_ref_2_, in, version );
+  NifStream( val.unknownVector, in, version );
+  NifStream( val.unknownShort, in, version );
+  NifStream( val.positionRef1_, in, version );
+  NifStream( val.positionRef2_, in, version );
 };
 
 void NifStream( FurniturePosition const & val, ostream & out, uint version ) {
-  NifStream( val.unknown_vector, out, version );
-  NifStream( val.unknown_short, out, version );
-  NifStream( val.position_ref_1_, out, version );
-  NifStream( val.position_ref_2_, out, version );
+  NifStream( val.unknownVector, out, version );
+  NifStream( val.unknownShort, out, version );
+  NifStream( val.positionRef1_, out, version );
+  NifStream( val.positionRef2_, out, version );
 };
 
 ostream & operator<<( ostream & out, FurniturePosition const & val );
@@ -1481,7 +1482,7 @@ struct hkTriangle {
   // The triangle.
   Triangle triangle;
   // Another short, doesn't look like a vertex index.
-  ushort unknown_short;
+  ushort unknownShort;
   // This appears to be a normalized vector, so probably it is a normal or a tangent vector or something like that.
   Vector3 normal;
   hkTriangle() {};
@@ -1489,13 +1490,13 @@ struct hkTriangle {
 
 void NifStream( hkTriangle & val, istream & in, uint version ) {
   NifStream( val.triangle, in, version );
-  NifStream( val.unknown_short, in, version );
+  NifStream( val.unknownShort, in, version );
   NifStream( val.normal, in, version );
 };
 
 void NifStream( hkTriangle const & val, ostream & out, uint version ) {
   NifStream( val.triangle, out, version );
-  NifStream( val.unknown_short, out, version );
+  NifStream( val.unknownShort, out, version );
   NifStream( val.normal, out, version );
 };
 
@@ -1506,45 +1507,45 @@ ostream & operator<<( ostream & out, hkTriangle const & val );
 //
 struct LODInfo {
   // Type of LOD info (0=regular, 1=info is in a NiRangeLODData block).
-  uint lod_type;
+  uint lodType;
   // ?
-  Vector3 lod_center;
+  Vector3 lodCenter;
   // The ranges of distance that each level of detail applies in.
-  vector<LODRange > lod_levels;
+  vector<LODRange > lodLevels;
   // Zero?
-  ushort unknown_short;
+  ushort unknownShort;
   // Refers to NiRangeLODData block.
-  uint range_data;
+  Link rangeData;
   LODInfo() {};
 };
 
 void NifStream( LODInfo & val, istream & in, uint version ) {
-  uint num_lod_levels;
-  NifStream( val.lod_type, in, version );
-  if ( val.lod_type == 0 ) {
-    NifStream( val.lod_center, in, version );
-    NifStream( num_lod_levels, in, version );
-    val.lod_levels.resize(num_lod_levels);
-    NifStream( val.lod_levels, in, version );
+  uint numLodLevels;
+  NifStream( val.lodType, in, version );
+  if ( val.lodType == 0 ) {
+    NifStream( val.lodCenter, in, version );
+    NifStream( numLodLevels, in, version );
+    val.lodLevels.resize(numLodLevels);
+    NifStream( val.lodLevels, in, version );
   };
-  if ( val.lod_type == 1 ) {
-    NifStream( val.unknown_short, in, version );
-    NifStream( val.range_data, in, version );
+  if ( val.lodType == 1 ) {
+    NifStream( val.unknownShort, in, version );
+    NifStream( val.rangeData, in, version );
   };
 };
 
 void NifStream( LODInfo const & val, ostream & out, uint version ) {
-  uint num_lod_levels;
-  num_lod_levels = uint(val.lod_levels.size());
-  NifStream( val.lod_type, out, version );
-  if ( val.lod_type == 0 ) {
-    NifStream( val.lod_center, out, version );
-    NifStream( num_lod_levels, out, version );
-    NifStream( val.lod_levels, out, version );
+  uint numLodLevels;
+  numLodLevels = uint(val.lodLevels.size());
+  NifStream( val.lodType, out, version );
+  if ( val.lodType == 0 ) {
+    NifStream( val.lodCenter, out, version );
+    NifStream( numLodLevels, out, version );
+    NifStream( val.lodLevels, out, version );
   };
-  if ( val.lod_type == 1 ) {
-    NifStream( val.unknown_short, out, version );
-    NifStream( val.range_data, out, version );
+  if ( val.lodType == 1 ) {
+    NifStream( val.unknownShort, out, version );
+    NifStream( val.rangeData, out, version );
   };
 };
 
@@ -1557,7 +1558,7 @@ struct Particle {
   // Particle velocity
   Vector3 velocity;
   // Unknown
-  Vector3 unknown_vector;
+  Vector3 unknownVector;
   // The particle's age.
   float lifetime;
   // Maximum age of the particle.
@@ -1565,30 +1566,30 @@ struct Particle {
   // Timestamp of the last update.
   float timestamp;
   // Unknown short (=0)
-  ushort unknown_short;
+  ushort unknownShort;
   // Particle/vertex index matches array index
-  ushort vertex_id;
+  ushort vertexId;
   Particle() {};
 };
 
 void NifStream( Particle & val, istream & in, uint version ) {
   NifStream( val.velocity, in, version );
-  NifStream( val.unknown_vector, in, version );
+  NifStream( val.unknownVector, in, version );
   NifStream( val.lifetime, in, version );
   NifStream( val.lifespan, in, version );
   NifStream( val.timestamp, in, version );
-  NifStream( val.unknown_short, in, version );
-  NifStream( val.vertex_id, in, version );
+  NifStream( val.unknownShort, in, version );
+  NifStream( val.vertexId, in, version );
 };
 
 void NifStream( Particle const & val, ostream & out, uint version ) {
   NifStream( val.velocity, out, version );
-  NifStream( val.unknown_vector, out, version );
+  NifStream( val.unknownVector, out, version );
   NifStream( val.lifetime, out, version );
   NifStream( val.lifespan, out, version );
   NifStream( val.timestamp, out, version );
-  NifStream( val.unknown_short, out, version );
-  NifStream( val.vertex_id, out, version );
+  NifStream( val.unknownShort, out, version );
+  NifStream( val.vertexId, out, version );
 };
 
 ostream & operator<<( ostream & out, Particle const & val );
@@ -1599,25 +1600,25 @@ ostream & operator<<( ostream & out, Particle const & val );
 struct ParticleGroup {
   // Number of valid entries in the following array.
   // (number of active particles at the time the system was saved)
-  ushort num_valid;
+  ushort numValid;
   // Individual particle modifiers?
   vector<Particle > particles;
   ParticleGroup() {};
 };
 
 void NifStream( ParticleGroup & val, istream & in, uint version ) {
-  ushort num_particles;
-  NifStream( num_particles, in, version );
-  NifStream( val.num_valid, in, version );
-  val.particles.resize(num_particles);
+  ushort numParticles;
+  NifStream( numParticles, in, version );
+  NifStream( val.numValid, in, version );
+  val.particles.resize(numParticles);
   NifStream( val.particles, in, version );
 };
 
 void NifStream( ParticleGroup const & val, ostream & out, uint version ) {
-  ushort num_particles;
-  num_particles = ushort(val.particles.size());
-  NifStream( num_particles, out, version );
-  NifStream( val.num_valid, out, version );
+  ushort numParticles;
+  numParticles = ushort(val.particles.size());
+  NifStream( numParticles, out, version );
+  NifStream( val.numValid, out, version );
   NifStream( val.particles, out, version );
 };
 
@@ -1634,33 +1635,33 @@ struct SkinData {
   // Scale offset of the skin from this bone in bind position. (Assumption - this is always 1.0 so far)
   float scale;
   // This has been verified not to be a normalized quaternion.  They may or may not be related to each other so their specification as an array of 4 floats may be misleading.
-  vector<float > unknown_4_floats;
+  vector<float > unknown4Floats;
   // The vertex weights.
-  vector<SkinWeight > vertex_weights;
+  vector<SkinWeight > vertexWeights;
   SkinData() {};
 };
 
 void NifStream( SkinData & val, istream & in, uint version ) {
-  ushort num_vertices;
+  ushort numVertices;
   NifStream( val.rotation, in, version );
   NifStream( val.translation, in, version );
   NifStream( val.scale, in, version );
-  val.unknown_4_floats.resize(4);
-  NifStream( val.unknown_4_floats, in, version );
-  NifStream( num_vertices, in, version );
-  val.vertex_weights.resize(num_vertices);
-  NifStream( val.vertex_weights, in, version );
+  val.unknown4Floats.resize(4);
+  NifStream( val.unknown4Floats, in, version );
+  NifStream( numVertices, in, version );
+  val.vertexWeights.resize(numVertices);
+  NifStream( val.vertexWeights, in, version );
 };
 
 void NifStream( SkinData const & val, ostream & out, uint version ) {
-  ushort num_vertices;
-  num_vertices = ushort(val.vertex_weights.size());
+  ushort numVertices;
+  numVertices = ushort(val.vertexWeights.size());
   NifStream( val.rotation, out, version );
   NifStream( val.translation, out, version );
   NifStream( val.scale, out, version );
-  NifStream( val.unknown_4_floats, out, version );
-  NifStream( num_vertices, out, version );
-  NifStream( val.vertex_weights, out, version );
+  NifStream( val.unknown4Floats, out, version );
+  NifStream( numVertices, out, version );
+  NifStream( val.vertexWeights, out, version );
 };
 
 ostream & operator<<( ostream & out, SkinData const & val );
@@ -1671,7 +1672,7 @@ ostream & operator<<( ostream & out, SkinData const & val );
 template <class T >
 struct TypedVectorKeyArray {
   // The key type.
-  uint key_type;
+  uint keyType;
   // The keys.
   vector<Key<T > > keys;
   TypedVectorKeyArray() {};
@@ -1679,20 +1680,20 @@ struct TypedVectorKeyArray {
 
 template <class T >
 void NifStream( TypedVectorKeyArray<T> & val, istream & in, uint version ) {
-  uint num_keys;
-  NifStream( num_keys, in, version );
-  NifStream( val.key_type, in, version );
-  val.keys.resize(num_keys);
-  NifStream( val.keys, in, version, val.key_type );
+  uint numKeys;
+  NifStream( numKeys, in, version );
+  NifStream( val.keyType, in, version );
+  val.keys.resize(numKeys);
+  NifStream( val.keys, in, version, val.keyType );
 };
 
 template <class T >
 void NifStream( TypedVectorKeyArray<T> const & val, ostream & out, uint version ) {
-  uint num_keys;
-  num_keys = uint(val.keys.size());
-  NifStream( num_keys, out, version );
-  NifStream( val.key_type, out, version );
-  NifStream( val.keys, out, version, val.key_type );
+  uint numKeys;
+  numKeys = uint(val.keys.size());
+  NifStream( numKeys, out, version );
+  NifStream( val.keyType, out, version );
+  NifStream( val.keys, out, version, val.keyType );
 };
 
 template <class T >
@@ -1703,11 +1704,11 @@ ostream & operator<<( ostream & out, TypedVectorKeyArray<T> const & val );
 //
 struct Morph {
   // Name of the frame.
-  string frame_name;
+  string frameName;
   // The morphing keyframes.
   TypedVectorKeyArray<float > frames;
   // Unknown.
-  uint unknown_int;
+  uint unknownInt;
   // Morph vectors.
   vector<Vector3 > vectors;
   Morph() {};
@@ -1715,13 +1716,13 @@ struct Morph {
 
 void NifStream( Morph & val, istream & in, uint version, uint attr_arg ) {
   if ( version >= 0x0A01006A ) {
-    NifStream( val.frame_name, in, version );
+    NifStream( val.frameName, in, version );
   };
   if ( version <= 0x0A000102 ) {
     NifStream( val.frames, in, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.unknown_int, in, version );
+    NifStream( val.unknownInt, in, version );
   };
   val.vectors.resize(attr_arg);
   NifStream( val.vectors, in, version );
@@ -1729,13 +1730,13 @@ void NifStream( Morph & val, istream & in, uint version, uint attr_arg ) {
 
 void NifStream( Morph const & val, ostream & out, uint version, uint attr_arg ) {
   if ( version >= 0x0A01006A ) {
-    NifStream( val.frame_name, out, version );
+    NifStream( val.frameName, out, version );
   };
   if ( version <= 0x0A000102 ) {
     NifStream( val.frames, out, version );
   };
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-    NifStream( val.unknown_int, out, version );
+    NifStream( val.unknownInt, out, version );
   };
   NifStream( val.vectors, out, version );
 };
@@ -1748,9 +1749,9 @@ ostream & operator<<( ostream & out, Morph const & val );
 template <class T >
 struct VectorKeyArray {
   // Number of keys in the array.
-  uint num_keys;
+  uint numKeys;
   // The key type.
-  uint key_type;
+  uint keyType;
   // The keys.
   vector<Key<T > > keys;
   VectorKeyArray() {};
@@ -1758,21 +1759,21 @@ struct VectorKeyArray {
 
 template <class T >
 void NifStream( VectorKeyArray<T> & val, istream & in, uint version ) {
-  NifStream( val.num_keys, in, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, in, version );
+  NifStream( val.numKeys, in, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, in, version );
   };
-  val.keys.resize(val.num_keys);
-  NifStream( val.keys, in, version, val.key_type );
+  val.keys.resize(val.numKeys);
+  NifStream( val.keys, in, version, val.keyType );
 };
 
 template <class T >
 void NifStream( VectorKeyArray<T> const & val, ostream & out, uint version ) {
-  NifStream( val.num_keys, out, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, out, version );
+  NifStream( val.numKeys, out, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, out, version );
   };
-  NifStream( val.keys, out, version, val.key_type );
+  NifStream( val.keys, out, version, val.keyType );
 };
 
 template <class T >
@@ -1784,9 +1785,9 @@ ostream & operator<<( ostream & out, VectorKeyArray<T> const & val );
 template <class T >
 struct RotationKeyArray {
   // Number of keys.
-  uint num_keys;
+  uint numKeys;
   // Key type (1, 2, 3, or 4).
-  uint key_type;
+  uint keyType;
   // The rotation keys.
   vector<Key<T > > keys;
   RotationKeyArray() {};
@@ -1794,21 +1795,21 @@ struct RotationKeyArray {
 
 template <class T >
 void NifStream( RotationKeyArray<T> & val, istream & in, uint version ) {
-  NifStream( val.num_keys, in, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, in, version );
+  NifStream( val.numKeys, in, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, in, version );
   };
-  val.keys.resize(val.num_keys);
-  NifStream( val.keys, in, version, val.key_type );
+  val.keys.resize(val.numKeys);
+  NifStream( val.keys, in, version, val.keyType );
 };
 
 template <class T >
 void NifStream( RotationKeyArray<T> const & val, ostream & out, uint version ) {
-  NifStream( val.num_keys, out, version );
-  if ( val.num_keys != 0 ) {
-    NifStream( val.key_type, out, version );
+  NifStream( val.numKeys, out, version );
+  if ( val.numKeys != 0 ) {
+    NifStream( val.keyType, out, version );
   };
-  NifStream( val.keys, out, version, val.key_type );
+  NifStream( val.keys, out, version, val.keyType );
 };
 
 template <class T >
@@ -1823,15 +1824,15 @@ ostream & operator<<( ostream & out, RotationKeyArray<T> const & val );
 // - Controller block index. (The first in a chain)
 #define A_CONTROLLABLE_MEMBERS \
 string name; \
-uint extra_data; \
-LinkGroup extra_data_list; \
-uint controller; \
+Link extraData; \
+LinkGroup extraDataList; \
+Link controller; \
 
 #define A_CONTROLLABLE_GETATTR \
 if ( attr_name == "Name" ) \
   return attr_ref(name); \
 if ( attr_name == "Extra Data" ) \
-  return attr_ref(extra_data); \
+  return attr_ref(extraData); \
 if ( attr_name == "Controller" ) \
   return attr_ref(controller); \
 return attr_ref(); \
@@ -1843,20 +1844,20 @@ return attr_ref(); \
 #define A_CONTROLLABLE_READ \
 NifStream( name, in, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( extra_data, in, version ); \
+  NifStream( extraData, in, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( extra_data_list, in, version ); \
+  NifStream( extraDataList, in, version ); \
 }; \
 NifStream( controller, in, version ); \
 
 #define A_CONTROLLABLE_WRITE \
 NifStream( name, out, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( extra_data, out, version ); \
+  NifStream( extraData, out, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( extra_data_list, out, version ); \
+  NifStream( extraDataList, out, version ); \
 }; \
 NifStream( controller, out, version ); \
 
@@ -1865,8 +1866,8 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << "                Name:  " << name << endl; \
-out << "          Extra Data:  " << extra_data << endl; \
-out << "     Extra Data List:  " << extra_data_list << endl; \
+out << "          Extra Data:  " << extraData << endl; \
+out << "     Extra Data List:  " << extraDataList << endl; \
 out << "          Controller:  " << controller << endl; \
 return out.str(); \
 
@@ -1881,17 +1882,17 @@ return out.str(); \
 // - Controller stop time.
 // - Controller target (block index of the first controllable ancestor of this block).
 #define A_CONTROLLER_MEMBERS \
-uint next_controller; \
+Link nextController; \
 Flags flags; \
 float frequency; \
 float phase; \
-float start_time; \
-float stop_time; \
+float startTime; \
+float stopTime; \
 uint target; \
 
 #define A_CONTROLLER_GETATTR \
 if ( attr_name == "Next Controller" ) \
-  return attr_ref(next_controller); \
+  return attr_ref(nextController); \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Frequency" ) \
@@ -1899,9 +1900,9 @@ if ( attr_name == "Frequency" ) \
 if ( attr_name == "Phase" ) \
   return attr_ref(phase); \
 if ( attr_name == "Start Time" ) \
-  return attr_ref(start_time); \
+  return attr_ref(startTime); \
 if ( attr_name == "Stop Time" ) \
-  return attr_ref(stop_time); \
+  return attr_ref(stopTime); \
 if ( attr_name == "Target" ) \
   return attr_ref(target); \
 return attr_ref(); \
@@ -1911,33 +1912,33 @@ return attr_ref(); \
 #define A_CONTROLLER_CONSTRUCT
 
 #define A_CONTROLLER_READ \
-NifStream( next_controller, in, version ); \
+NifStream( nextController, in, version ); \
 NifStream( flags, in, version ); \
 NifStream( frequency, in, version ); \
 NifStream( phase, in, version ); \
-NifStream( start_time, in, version ); \
-NifStream( stop_time, in, version ); \
+NifStream( startTime, in, version ); \
+NifStream( stopTime, in, version ); \
 NifStream( target, in, version ); \
 
 #define A_CONTROLLER_WRITE \
-NifStream( next_controller, out, version ); \
+NifStream( nextController, out, version ); \
 NifStream( flags, out, version ); \
 NifStream( frequency, out, version ); \
 NifStream( phase, out, version ); \
-NifStream( start_time, out, version ); \
-NifStream( stop_time, out, version ); \
+NifStream( startTime, out, version ); \
+NifStream( stopTime, out, version ); \
 NifStream( target, out, version ); \
 
 #define A_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
-out << "     Next Controller:  " << next_controller << endl; \
+out << "     Next Controller:  " << nextController << endl; \
 out << "               Flags:  " << flags << endl; \
 out << "           Frequency:  " << frequency << endl; \
 out << "               Phase:  " << phase << endl; \
-out << "          Start Time:  " << start_time << endl; \
-out << "           Stop Time:  " << stop_time << endl; \
+out << "          Start Time:  " << startTime << endl; \
+out << "           Stop Time:  " << stopTime << endl; \
 out << "              Target:  " << target << endl; \
 return out.str(); \
 
@@ -1948,17 +1949,17 @@ return out.str(); \
 // - Unknown.
 // - A list of node groups (each group a sequence of bones?).
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
-uint unknown_int_1; \
-uint unknown_int_2; \
-vector<LinkGroup > node_groups; \
+uint unknownInt1; \
+uint unknownInt2; \
+vector<LinkGroup > nodeGroups; \
 
 #define A_BONE_L_O_D_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 return attr_ref(); \
 
 #define A_BONE_L_O_D_CONTROLLER_PARENTS AController
@@ -1966,31 +1967,31 @@ return attr_ref(); \
 #define A_BONE_L_O_D_CONTROLLER_CONSTRUCT
 
 #define A_BONE_L_O_D_CONTROLLER_READ \
-uint num_node_groups; \
+uint numNodeGroups; \
 AController::Read( in, version ); \
-NifStream( unknown_int_1, in, version ); \
-NifStream( num_node_groups, in, version ); \
-NifStream( unknown_int_2, in, version ); \
-node_groups.resize(num_node_groups); \
-NifStream( node_groups, in, version ); \
+NifStream( unknownInt1, in, version ); \
+NifStream( numNodeGroups, in, version ); \
+NifStream( unknownInt2, in, version ); \
+nodeGroups.resize(numNodeGroups); \
+NifStream( nodeGroups, in, version ); \
 
 #define A_BONE_L_O_D_CONTROLLER_WRITE \
-uint num_node_groups; \
+uint numNodeGroups; \
 AController::Write( out, version ); \
-num_node_groups = uint(node_groups.size()); \
-NifStream( unknown_int_1, out, version ); \
-NifStream( num_node_groups, out, version ); \
-NifStream( unknown_int_2, out, version ); \
-NifStream( node_groups, out, version ); \
+numNodeGroups = uint(nodeGroups.size()); \
+NifStream( unknownInt1, out, version ); \
+NifStream( numNodeGroups, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( nodeGroups, out, version ); \
 
 #define A_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 out << "     Num Node Groups:  -- calculated --" << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
 out << "         Node Groups:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -2022,14 +2023,14 @@ return out.str(); \
 // - The bodies affected by this constraint.
 // - Usually 1.
 #define ABHK_CONSTRAINT_MEMBERS \
-vector<uint > bodies; \
-uint unknown_int; \
+vector<CrossRef > bodies; \
+uint unknownInt; \
 
 #define ABHK_CONSTRAINT_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 return attr_ref(); \
 
 #define ABHK_CONSTRAINT_PARENTS AData
@@ -2037,20 +2038,20 @@ return attr_ref(); \
 #define ABHK_CONSTRAINT_CONSTRUCT
 
 #define ABHK_CONSTRAINT_READ \
-uint num_bodies; \
+uint numBodies; \
 AData::Read( in, version ); \
-NifStream( num_bodies, in, version ); \
-bodies.resize(num_bodies); \
+NifStream( numBodies, in, version ); \
+bodies.resize(numBodies); \
 NifStream( bodies, in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 
 #define ABHK_CONSTRAINT_WRITE \
-uint num_bodies; \
+uint numBodies; \
 AData::Write( out, version ); \
-num_bodies = uint(bodies.size()); \
-NifStream( num_bodies, out, version ); \
+numBodies = uint(bodies.size()); \
+NifStream( numBodies, out, version ); \
 NifStream( bodies, out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownInt, out, version ); \
 
 #define ABHK_CONSTRAINT_STRING \
 stringstream out; \
@@ -2059,7 +2060,7 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "          Num Bodies:  -- calculated --" << endl; \
 out << "              Bodies:  -- data not shown --" << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 // 
@@ -2069,17 +2070,17 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define ABHK_RAGDOLL_CONSTRAINT_MEMBERS \
-vector<vector<float > > unknown_floats; \
-float unknown_float_1; \
-float unknown_float_2; \
+vector<vector<float > > unknownFloats; \
+float unknownFloat1; \
+float unknownFloat2; \
 
 #define ABHK_RAGDOLL_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkConstraint::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 return attr_ref(); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_PARENTS AbhkConstraint
@@ -2088,16 +2089,16 @@ return attr_ref(); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_READ \
 AbhkConstraint::Read( in, version ); \
-unknown_floats.resize(7); \
-NifStream( unknown_floats, in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
+unknownFloats.resize(7); \
+NifStream( unknownFloats, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_STRING \
 stringstream out; \
@@ -2105,8 +2106,8 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 // 
@@ -2176,31 +2177,31 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define ABHK_RIGID_BODY_MEMBERS \
-uint shape; \
+Link shape; \
 uint flags; \
-vector<float > unknown_floats_1; \
-vector<ushort > unknown_shorts_1; \
-uint flags_2; \
-vector<ushort > unknown_shorts_2; \
+vector<float > unknownFloats1; \
+vector<ushort > unknownShorts1; \
+uint flags2; \
+vector<ushort > unknownShorts2; \
 Vector3 translation; \
-float unknown_float_00; \
+float unknownFloat00; \
 QuaternionXYZW rotation; \
-vector<float > unknown_floats_2; \
+vector<float > unknownFloats2; \
 vector<float > transform_; \
 Vector3 center; \
-float unknown_float_01; \
+float unknownFloat01; \
 float mass; \
-float unknown_float_0; \
-float unknown_float_1; \
+float unknownFloat0; \
+float unknownFloat1; \
 float friction; \
 float elasticity; \
-float unknown_float_2; \
-float unknown_float_3; \
-float unknown_float_4; \
-vector<byte > unknown_bytes_5; \
-uint unknown_int_6; \
-uint unknown_int_7; \
-uint unknown_int_8; \
+float unknownFloat2; \
+float unknownFloat3; \
+float unknownFloat4; \
+vector<byte > unknownBytes5; \
+uint unknownInt6; \
+uint unknownInt7; \
+uint unknownInt8; \
 LinkGroup constraints; \
 
 #define ABHK_RIGID_BODY_GETATTR \
@@ -2211,37 +2212,37 @@ if ( attr_name == "Shape" ) \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Flags 2" ) \
-  return attr_ref(flags_2); \
+  return attr_ref(flags2); \
 if ( attr_name == "Translation" ) \
   return attr_ref(translation); \
 if ( attr_name == "Unknown Float 00" ) \
-  return attr_ref(unknown_float_00); \
+  return attr_ref(unknownFloat00); \
 if ( attr_name == "Center" ) \
   return attr_ref(center); \
 if ( attr_name == "Unknown Float 01" ) \
-  return attr_ref(unknown_float_01); \
+  return attr_ref(unknownFloat01); \
 if ( attr_name == "Mass" ) \
   return attr_ref(mass); \
 if ( attr_name == "Unknown Float 0" ) \
-  return attr_ref(unknown_float_0); \
+  return attr_ref(unknownFloat0); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Friction" ) \
   return attr_ref(friction); \
 if ( attr_name == "Elasticity" ) \
   return attr_ref(elasticity); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 if ( attr_name == "Unknown Int 6" ) \
-  return attr_ref(unknown_int_6); \
+  return attr_ref(unknownInt6); \
 if ( attr_name == "Unknown Int 7" ) \
-  return attr_ref(unknown_int_7); \
+  return attr_ref(unknownInt7); \
 if ( attr_name == "Unknown Int 8" ) \
-  return attr_ref(unknown_int_8); \
+  return attr_ref(unknownInt8); \
 return attr_ref(); \
 
 #define ABHK_RIGID_BODY_PARENTS AData
@@ -2252,67 +2253,67 @@ return attr_ref(); \
 AData::Read( in, version ); \
 NifStream( shape, in, version ); \
 NifStream( flags, in, version ); \
-unknown_floats_1.resize(5); \
-NifStream( unknown_floats_1, in, version ); \
-unknown_shorts_1.resize(4); \
-NifStream( unknown_shorts_1, in, version ); \
-NifStream( flags_2, in, version ); \
-unknown_shorts_2.resize(6); \
-NifStream( unknown_shorts_2, in, version ); \
+unknownFloats1.resize(5); \
+NifStream( unknownFloats1, in, version ); \
+unknownShorts1.resize(4); \
+NifStream( unknownShorts1, in, version ); \
+NifStream( flags2, in, version ); \
+unknownShorts2.resize(6); \
+NifStream( unknownShorts2, in, version ); \
 NifStream( translation, in, version ); \
-NifStream( unknown_float_00, in, version ); \
+NifStream( unknownFloat00, in, version ); \
 NifStream( rotation, in, version ); \
-unknown_floats_2.resize(8); \
-NifStream( unknown_floats_2, in, version ); \
+unknownFloats2.resize(8); \
+NifStream( unknownFloats2, in, version ); \
 transform_.resize(12); \
 NifStream( transform_, in, version ); \
 NifStream( center, in, version ); \
-NifStream( unknown_float_01, in, version ); \
+NifStream( unknownFloat01, in, version ); \
 NifStream( mass, in, version ); \
-NifStream( unknown_float_0, in, version ); \
-NifStream( unknown_float_1, in, version ); \
+NifStream( unknownFloat0, in, version ); \
+NifStream( unknownFloat1, in, version ); \
 NifStream( friction, in, version ); \
 NifStream( elasticity, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_float_4, in, version ); \
-unknown_bytes_5.resize(4); \
-NifStream( unknown_bytes_5, in, version ); \
-NifStream( unknown_int_6, in, version ); \
-NifStream( unknown_int_7, in, version ); \
-NifStream( unknown_int_8, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownFloat4, in, version ); \
+unknownBytes5.resize(4); \
+NifStream( unknownBytes5, in, version ); \
+NifStream( unknownInt6, in, version ); \
+NifStream( unknownInt7, in, version ); \
+NifStream( unknownInt8, in, version ); \
 NifStream( constraints, in, version ); \
-NifStream( unknown_int_6, in, version ); \
+NifStream( unknownInt6, in, version ); \
 
 #define ABHK_RIGID_BODY_WRITE \
 AData::Write( out, version ); \
 NifStream( shape, out, version ); \
 NifStream( flags, out, version ); \
-NifStream( unknown_floats_1, out, version ); \
-NifStream( unknown_shorts_1, out, version ); \
-NifStream( flags_2, out, version ); \
-NifStream( unknown_shorts_2, out, version ); \
+NifStream( unknownFloats1, out, version ); \
+NifStream( unknownShorts1, out, version ); \
+NifStream( flags2, out, version ); \
+NifStream( unknownShorts2, out, version ); \
 NifStream( translation, out, version ); \
-NifStream( unknown_float_00, out, version ); \
+NifStream( unknownFloat00, out, version ); \
 NifStream( rotation, out, version ); \
-NifStream( unknown_floats_2, out, version ); \
+NifStream( unknownFloats2, out, version ); \
 NifStream( transform_, out, version ); \
 NifStream( center, out, version ); \
-NifStream( unknown_float_01, out, version ); \
+NifStream( unknownFloat01, out, version ); \
 NifStream( mass, out, version ); \
-NifStream( unknown_float_0, out, version ); \
-NifStream( unknown_float_1, out, version ); \
+NifStream( unknownFloat0, out, version ); \
+NifStream( unknownFloat1, out, version ); \
 NifStream( friction, out, version ); \
 NifStream( elasticity, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_float_4, out, version ); \
-NifStream( unknown_bytes_5, out, version ); \
-NifStream( unknown_int_6, out, version ); \
-NifStream( unknown_int_7, out, version ); \
-NifStream( unknown_int_8, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownFloat4, out, version ); \
+NifStream( unknownBytes5, out, version ); \
+NifStream( unknownInt6, out, version ); \
+NifStream( unknownInt7, out, version ); \
+NifStream( unknownInt8, out, version ); \
 NifStream( constraints, out, version ); \
-NifStream( unknown_int_6, out, version ); \
+NifStream( unknownInt6, out, version ); \
 
 #define ABHK_RIGID_BODY_STRING \
 stringstream out; \
@@ -2323,27 +2324,27 @@ out << "               Shape:  " << shape << endl; \
 out << "               Flags:  " << flags << endl; \
 out << "    Unknown Floats 1:  -- data not shown --" << endl; \
 out << "    Unknown Shorts 1:  -- data not shown --" << endl; \
-out << "             Flags 2:  " << flags_2 << endl; \
+out << "             Flags 2:  " << flags2 << endl; \
 out << "    Unknown Shorts 2:  -- data not shown --" << endl; \
 out << "         Translation:  " << translation << endl; \
-out << "    Unknown Float 00:  " << unknown_float_00 << endl; \
+out << "    Unknown Float 00:  " << unknownFloat00 << endl; \
 out << "            Rotation:  " << rotation << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
 out << "          Transform?:  -- data not shown --" << endl; \
 out << "              Center:  " << center << endl; \
-out << "    Unknown Float 01:  " << unknown_float_01 << endl; \
+out << "    Unknown Float 01:  " << unknownFloat01 << endl; \
 out << "                Mass:  " << mass << endl; \
-out << "     Unknown Float 0:  " << unknown_float_0 << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
+out << "     Unknown Float 0:  " << unknownFloat0 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
 out << "            Friction:  " << friction << endl; \
 out << "          Elasticity:  " << elasticity << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
 out << "     Unknown Bytes 5:  -- data not shown --" << endl; \
-out << "       Unknown Int 6:  " << unknown_int_6 << endl; \
-out << "       Unknown Int 7:  " << unknown_int_7 << endl; \
-out << "       Unknown Int 8:  " << unknown_int_8 << endl; \
+out << "       Unknown Int 6:  " << unknownInt6 << endl; \
+out << "       Unknown Int 7:  " << unknownInt7 << endl; \
+out << "       Unknown Int 8:  " << unknownInt8 << endl; \
 out << "         Constraints:  " << constraints << endl; \
 return out.str(); \
 
@@ -2384,26 +2385,26 @@ return out.str(); \
 // - Unknown.
 // - A transform matrix.
 #define ABHK_TRANSFORM_SHAPE_MEMBERS \
-uint sub_shape; \
-uint unknown_int; \
-float unknown_float_1; \
-float unknown_float_2; \
-float unknown_float_3; \
+Link subShape; \
+uint unknownInt; \
+float unknownFloat1; \
+float unknownFloat2; \
+float unknownFloat3; \
 Matrix44 transform; \
 
 #define ABHK_TRANSFORM_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Sub Shape" ) \
-  return attr_ref(sub_shape); \
+  return attr_ref(subShape); \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Transform" ) \
   return attr_ref(transform); \
 return attr_ref(); \
@@ -2414,20 +2415,20 @@ return attr_ref(); \
 
 #define ABHK_TRANSFORM_SHAPE_READ \
 AbhkShape::Read( in, version ); \
-NifStream( sub_shape, in, version ); \
-NifStream( unknown_int, in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
+NifStream( subShape, in, version ); \
+NifStream( unknownInt, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
 NifStream( transform, in, version ); \
 
 #define ABHK_TRANSFORM_SHAPE_WRITE \
 AbhkShape::Write( out, version ); \
-NifStream( sub_shape, out, version ); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
+NifStream( subShape, out, version ); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
 NifStream( transform, out, version ); \
 
 #define ABHK_TRANSFORM_SHAPE_STRING \
@@ -2435,11 +2436,11 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "           Sub Shape:  " << sub_shape << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
+out << "           Sub Shape:  " << subShape << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
 out << "           Transform:  " << transform << endl; \
 return out.str(); \
 
@@ -2451,8 +2452,8 @@ return out.str(); \
 // - Unknown. Links to the collision object data?
 #define A_COLLISION_OBJECT_MEMBERS \
 uint parent; \
-ushort unknown_short; \
-uint body; \
+ushort unknownShort; \
+Link body; \
 
 #define A_COLLISION_OBJECT_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -2460,7 +2461,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Parent" ) \
   return attr_ref(parent); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Body" ) \
   return attr_ref(body); \
 return attr_ref(); \
@@ -2472,13 +2473,13 @@ return attr_ref(); \
 #define A_COLLISION_OBJECT_READ \
 AData::Read( in, version ); \
 NifStream( parent, in, version ); \
-NifStream( unknown_short, in, version ); \
+NifStream( unknownShort, in, version ); \
 NifStream( body, in, version ); \
 
 #define A_COLLISION_OBJECT_WRITE \
 AData::Write( out, version ); \
 NifStream( parent, out, version ); \
-NifStream( unknown_short, out, version ); \
+NifStream( unknownShort, out, version ); \
 NifStream( body, out, version ); \
 
 #define A_COLLISION_OBJECT_STRING \
@@ -2487,7 +2488,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "              Parent:  " << parent << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
 out << "                Body:  " << body << endl; \
 return out.str(); \
 
@@ -2498,7 +2499,7 @@ return out.str(); \
 // - Block number of the next extra data block.
 #define A_EXTRA_DATA_MEMBERS \
 string name; \
-uint next_extra_data; \
+Link nextExtraData; \
 
 #define A_EXTRA_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -2506,7 +2507,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Name" ) \
   return attr_ref(name); \
 if ( attr_name == "Next Extra Data" ) \
-  return attr_ref(next_extra_data); \
+  return attr_ref(nextExtraData); \
 return attr_ref(); \
 
 #define A_EXTRA_DATA_PARENTS AData
@@ -2519,7 +2520,7 @@ if ( version >= 0x0A000100 ) { \
   NifStream( name, in, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  NifStream( next_extra_data, in, version ); \
+  NifStream( nextExtraData, in, version ); \
 }; \
 
 #define A_EXTRA_DATA_WRITE \
@@ -2528,7 +2529,7 @@ if ( version >= 0x0A000100 ) { \
   NifStream( name, out, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  NifStream( next_extra_data, out, version ); \
+  NifStream( nextExtraData, out, version ); \
 }; \
 
 #define A_EXTRA_DATA_STRING \
@@ -2537,7 +2538,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
-out << "     Next Extra Data:  " << next_extra_data << endl; \
+out << "     Next Extra Data:  " << nextExtraData << endl; \
 return out.str(); \
 
 // 
@@ -2568,16 +2569,16 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define A_BLEND_INTERPOLATOR_MEMBERS \
-ushort unknown_short; \
-uint unknown_int; \
+ushort unknownShort; \
+uint unknownInt; \
 
 #define A_BLEND_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 return attr_ref(); \
 
 #define A_BLEND_INTERPOLATOR_PARENTS AInterpolator
@@ -2586,21 +2587,21 @@ return attr_ref(); \
 
 #define A_BLEND_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( unknown_short, in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownShort, in, version ); \
+NifStream( unknownInt, in, version ); \
 
 #define A_BLEND_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( unknown_short, out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownShort, out, version ); \
+NifStream( unknownInt, out, version ); \
 
 #define A_BLEND_INTERPOLATOR_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 // 
@@ -2609,16 +2610,16 @@ return out.str(); \
 // - Animation start time.
 // - Animation stop time.
 #define A_B_SPLINE_COMP_INTERPOLATOR_MEMBERS \
-float start_time; \
-float stop_time; \
+float startTime; \
+float stopTime; \
 
 #define A_B_SPLINE_COMP_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Start Time" ) \
-  return attr_ref(start_time); \
+  return attr_ref(startTime); \
 if ( attr_name == "Stop Time" ) \
-  return attr_ref(stop_time); \
+  return attr_ref(stopTime); \
 return attr_ref(); \
 
 #define A_B_SPLINE_COMP_INTERPOLATOR_PARENTS AInterpolator
@@ -2627,21 +2628,21 @@ return attr_ref(); \
 
 #define A_B_SPLINE_COMP_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( start_time, in, version ); \
-NifStream( stop_time, in, version ); \
+NifStream( startTime, in, version ); \
+NifStream( stopTime, in, version ); \
 
 #define A_B_SPLINE_COMP_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( start_time, out, version ); \
-NifStream( stop_time, out, version ); \
+NifStream( startTime, out, version ); \
+NifStream( stopTime, out, version ); \
 
 #define A_B_SPLINE_COMP_INTERPOLATOR_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "          Start Time:  " << start_time << endl; \
-out << "           Stop Time:  " << stop_time << endl; \
+out << "          Start Time:  " << startTime << endl; \
+out << "           Stop Time:  " << stopTime << endl; \
 return out.str(); \
 
 // 
@@ -2676,7 +2677,7 @@ return out.str(); \
 //
 // - Keyframe controller data index.
 #define A_KEYFRAME_CONTROLLER_MEMBERS \
-uint data; \
+Link data; \
 
 #define A_KEYFRAME_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -2765,8 +2766,8 @@ Matrix33 rotation; \
 float scale; \
 Vector3 velocity; \
 LinkGroup properties; \
-BoundingBox bounding_box; \
-uint collision_data; \
+BoundingBox boundingBox; \
+Link collisionData; \
 
 #define A_NODE_GETATTR \
 attr_ref attr = AControllable::GetAttr( attr_name ); \
@@ -2782,9 +2783,9 @@ if ( attr_name == "Scale" ) \
 if ( attr_name == "Velocity" ) \
   return attr_ref(velocity); \
 if ( attr_name == "Bounding Box" ) \
-  return attr_ref(bounding_box); \
+  return attr_ref(boundingBox); \
 if ( attr_name == "Collision Data" ) \
-  return attr_ref(collision_data); \
+  return attr_ref(collisionData); \
 return attr_ref(); \
 
 #define A_NODE_PARENTS AControllable
@@ -2802,10 +2803,10 @@ if ( version <= 0x04020200 ) { \
 }; \
 NifStream( properties, in, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( bounding_box, in, version ); \
+  NifStream( boundingBox, in, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( collision_data, in, version ); \
+  NifStream( collisionData, in, version ); \
 }; \
 
 #define A_NODE_WRITE \
@@ -2819,10 +2820,10 @@ if ( version <= 0x04020200 ) { \
 }; \
 NifStream( properties, out, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( bounding_box, out, version ); \
+  NifStream( boundingBox, out, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( collision_data, out, version ); \
+  NifStream( collisionData, out, version ); \
 }; \
 
 #define A_NODE_STRING \
@@ -2836,8 +2837,8 @@ out << "            Rotation:  " << rotation << endl; \
 out << "               Scale:  " << scale << endl; \
 out << "            Velocity:  " << velocity << endl; \
 out << "          Properties:  " << properties << endl; \
-out << "        Bounding Box:  " << bounding_box << endl; \
-out << "      Collision Data:  " << collision_data << endl; \
+out << "        Bounding Box:  " << boundingBox << endl; \
+out << "      Collision Data:  " << collisionData << endl; \
 return out.str(); \
 
 // 
@@ -2847,15 +2848,15 @@ return out.str(); \
 // - Turns effect on and off?  Switches list to list of unaffected nodes?
 // - The list of affected nodes?
 #define A_DYNAMIC_EFFECT_MEMBERS \
-CondInt affected_node_list_; \
-bool switch_state; \
-LinkGroup affected_nodes; \
+CondInt affectedNodeList_; \
+bool switchState; \
+LinkGroup affectedNodes; \
 
 #define A_DYNAMIC_EFFECT_GETATTR \
 attr_ref attr = ANode::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Switch State" ) \
-  return attr_ref(switch_state); \
+  return attr_ref(switchState); \
 return attr_ref(); \
 
 #define A_DYNAMIC_EFFECT_PARENTS ANode
@@ -2865,25 +2866,25 @@ return attr_ref(); \
 #define A_DYNAMIC_EFFECT_READ \
 ANode::Read( in, version ); \
 if ( version <= 0x04000002 ) { \
-  NifStream( affected_node_list_, in, version ); \
+  NifStream( affectedNodeList_, in, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( switch_state, in, version ); \
+  NifStream( switchState, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  NifStream( affected_nodes, in, version ); \
+  NifStream( affectedNodes, in, version ); \
 }; \
 
 #define A_DYNAMIC_EFFECT_WRITE \
 ANode::Write( out, version ); \
 if ( version <= 0x04000002 ) { \
-  NifStream( affected_node_list_, out, version ); \
+  NifStream( affectedNodeList_, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( switch_state, out, version ); \
+  NifStream( switchState, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  NifStream( affected_nodes, out, version ); \
+  NifStream( affectedNodes, out, version ); \
 }; \
 
 #define A_DYNAMIC_EFFECT_STRING \
@@ -2891,9 +2892,9 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ANode::asString(); \
-out << " Affected Node List?:  " << affected_node_list_ << endl; \
-out << "        Switch State:  " << switch_state << endl; \
-out << "      Affected Nodes:  " << affected_nodes << endl; \
+out << " Affected Node List?:  " << affectedNodeList_ << endl; \
+out << "        Switch State:  " << switchState << endl; \
+out << "      Affected Nodes:  " << affectedNodes << endl; \
 return out.str(); \
 
 // 
@@ -2905,9 +2906,9 @@ return out.str(); \
 // - Specular color.
 #define A_LIGHT_MEMBERS \
 float dimmer; \
-Color3 ambient_color; \
-Color3 diffuse_color; \
-Color3 specular_color; \
+Color3 ambientColor; \
+Color3 diffuseColor; \
+Color3 specularColor; \
 
 #define A_LIGHT_GETATTR \
 attr_ref attr = ADynamicEffect::GetAttr( attr_name ); \
@@ -2915,11 +2916,11 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Dimmer" ) \
   return attr_ref(dimmer); \
 if ( attr_name == "Ambient Color" ) \
-  return attr_ref(ambient_color); \
+  return attr_ref(ambientColor); \
 if ( attr_name == "Diffuse Color" ) \
-  return attr_ref(diffuse_color); \
+  return attr_ref(diffuseColor); \
 if ( attr_name == "Specular Color" ) \
-  return attr_ref(specular_color); \
+  return attr_ref(specularColor); \
 return attr_ref(); \
 
 #define A_LIGHT_PARENTS ADynamicEffect
@@ -2929,16 +2930,16 @@ return attr_ref(); \
 #define A_LIGHT_READ \
 ADynamicEffect::Read( in, version ); \
 NifStream( dimmer, in, version ); \
-NifStream( ambient_color, in, version ); \
-NifStream( diffuse_color, in, version ); \
-NifStream( specular_color, in, version ); \
+NifStream( ambientColor, in, version ); \
+NifStream( diffuseColor, in, version ); \
+NifStream( specularColor, in, version ); \
 
 #define A_LIGHT_WRITE \
 ADynamicEffect::Write( out, version ); \
 NifStream( dimmer, out, version ); \
-NifStream( ambient_color, out, version ); \
-NifStream( diffuse_color, out, version ); \
-NifStream( specular_color, out, version ); \
+NifStream( ambientColor, out, version ); \
+NifStream( diffuseColor, out, version ); \
+NifStream( specularColor, out, version ); \
 
 #define A_LIGHT_STRING \
 stringstream out; \
@@ -2946,9 +2947,9 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ADynamicEffect::asString(); \
 out << "              Dimmer:  " << dimmer << endl; \
-out << "       Ambient Color:  " << ambient_color << endl; \
-out << "       Diffuse Color:  " << diffuse_color << endl; \
-out << "      Specular Color:  " << specular_color << endl; \
+out << "       Ambient Color:  " << ambientColor << endl; \
+out << "       Diffuse Color:  " << diffuseColor << endl; \
+out << "      Specular Color:  " << specularColor << endl; \
 return out.str(); \
 
 // 
@@ -3033,14 +3034,14 @@ return out.str(); \
 // - Next particle modifier.
 // - Previous particle modifier.
 #define A_PARTICLE_MODIFIER_MEMBERS \
-uint next_modifier; \
-uint previous_modifier; \
+Link nextModifier; \
+uint previousModifier; \
 
 #define A_PARTICLE_MODIFIER_GETATTR \
 if ( attr_name == "Next Modifier" ) \
-  return attr_ref(next_modifier); \
+  return attr_ref(nextModifier); \
 if ( attr_name == "Previous Modifier" ) \
-  return attr_ref(previous_modifier); \
+  return attr_ref(previousModifier); \
 return attr_ref(); \
 
 #define A_PARTICLE_MODIFIER_PARENTS ABlock
@@ -3048,19 +3049,19 @@ return attr_ref(); \
 #define A_PARTICLE_MODIFIER_CONSTRUCT
 
 #define A_PARTICLE_MODIFIER_READ \
-NifStream( next_modifier, in, version ); \
-NifStream( previous_modifier, in, version ); \
+NifStream( nextModifier, in, version ); \
+NifStream( previousModifier, in, version ); \
 
 #define A_PARTICLE_MODIFIER_WRITE \
-NifStream( next_modifier, out, version ); \
-NifStream( previous_modifier, out, version ); \
+NifStream( nextModifier, out, version ); \
+NifStream( previousModifier, out, version ); \
 
 #define A_PARTICLE_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
-out << "       Next Modifier:  " << next_modifier << endl; \
-out << "   Previous Modifier:  " << previous_modifier << endl; \
+out << "       Next Modifier:  " << nextModifier << endl; \
+out << "   Previous Modifier:  " << previousModifier << endl; \
 return out.str(); \
 
 // 
@@ -3104,37 +3105,37 @@ return out.str(); \
 // - Trailing null byte
 #define A_PARTICLE_SYSTEM_CONTROLLER_MEMBERS \
 float speed; \
-float speed_random; \
-float vertical_direction; \
-float vertical_angle; \
-float horizontal_direction; \
-float horizontal_angle; \
-float unknown_float_5; \
-float unknown_float_6; \
-float unknown_float_7; \
-float unknown_float_8; \
-float unknown_float_9; \
-float unknown_float_10; \
-float unknown_float_11; \
+float speedRandom; \
+float verticalDirection; \
+float verticalAngle; \
+float horizontalDirection; \
+float horizontalAngle; \
+float unknownFloat5; \
+float unknownFloat6; \
+float unknownFloat7; \
+float unknownFloat8; \
+float unknownFloat9; \
+float unknownFloat10; \
+float unknownFloat11; \
 float size; \
-float emit_start_time; \
-float emit_stop_time; \
-byte unknown_byte; \
-float emit_rate; \
+float emitStartTime; \
+float emitStopTime; \
+byte unknownByte; \
+float emitRate; \
 float lifetime; \
-float lifetime_random; \
-ushort emit_flags; \
-Vector3 start_random; \
-uint emitter; \
-ushort unknown_short_2_; \
-float unknown_float_13_; \
-uint unknown_int_1_; \
-uint unknown_int_2_; \
-ushort unknown_short_3_; \
+float lifetimeRandom; \
+ushort emitFlags; \
+Vector3 startRandom; \
+Link emitter; \
+ushort unknownShort2_; \
+float unknownFloat13_; \
+uint unknownInt1_; \
+uint unknownInt2_; \
+ushort unknownShort3_; \
 ParticleGroup particles; \
-uint unknown_link; \
-uint particle_extra; \
-uint unknown_link_2; \
+Link unknownLink; \
+Link particleExtra; \
+Link unknownLink2; \
 byte trailer; \
 
 #define A_PARTICLE_SYSTEM_CONTROLLER_GETATTR \
@@ -3143,65 +3144,65 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Speed" ) \
   return attr_ref(speed); \
 if ( attr_name == "Speed Random" ) \
-  return attr_ref(speed_random); \
+  return attr_ref(speedRandom); \
 if ( attr_name == "Vertical Direction" ) \
-  return attr_ref(vertical_direction); \
+  return attr_ref(verticalDirection); \
 if ( attr_name == "Vertical Angle" ) \
-  return attr_ref(vertical_angle); \
+  return attr_ref(verticalAngle); \
 if ( attr_name == "Horizontal Direction" ) \
-  return attr_ref(horizontal_direction); \
+  return attr_ref(horizontalDirection); \
 if ( attr_name == "Horizontal Angle" ) \
-  return attr_ref(horizontal_angle); \
+  return attr_ref(horizontalAngle); \
 if ( attr_name == "Unknown Float 5" ) \
-  return attr_ref(unknown_float_5); \
+  return attr_ref(unknownFloat5); \
 if ( attr_name == "Unknown Float 6" ) \
-  return attr_ref(unknown_float_6); \
+  return attr_ref(unknownFloat6); \
 if ( attr_name == "Unknown Float 7" ) \
-  return attr_ref(unknown_float_7); \
+  return attr_ref(unknownFloat7); \
 if ( attr_name == "Unknown Float 8" ) \
-  return attr_ref(unknown_float_8); \
+  return attr_ref(unknownFloat8); \
 if ( attr_name == "Unknown Float 9" ) \
-  return attr_ref(unknown_float_9); \
+  return attr_ref(unknownFloat9); \
 if ( attr_name == "Unknown Float 10" ) \
-  return attr_ref(unknown_float_10); \
+  return attr_ref(unknownFloat10); \
 if ( attr_name == "Unknown Float 11" ) \
-  return attr_ref(unknown_float_11); \
+  return attr_ref(unknownFloat11); \
 if ( attr_name == "Size" ) \
   return attr_ref(size); \
 if ( attr_name == "Emit Start Time" ) \
-  return attr_ref(emit_start_time); \
+  return attr_ref(emitStartTime); \
 if ( attr_name == "Emit Stop Time" ) \
-  return attr_ref(emit_stop_time); \
+  return attr_ref(emitStopTime); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Emit Rate" ) \
-  return attr_ref(emit_rate); \
+  return attr_ref(emitRate); \
 if ( attr_name == "Lifetime" ) \
   return attr_ref(lifetime); \
 if ( attr_name == "Lifetime Random" ) \
-  return attr_ref(lifetime_random); \
+  return attr_ref(lifetimeRandom); \
 if ( attr_name == "Emit Flags" ) \
-  return attr_ref(emit_flags); \
+  return attr_ref(emitFlags); \
 if ( attr_name == "Start Random" ) \
-  return attr_ref(start_random); \
+  return attr_ref(startRandom); \
 if ( attr_name == "Emitter" ) \
   return attr_ref(emitter); \
 if ( attr_name == "Unknown Short 2?" ) \
-  return attr_ref(unknown_short_2_); \
+  return attr_ref(unknownShort2_); \
 if ( attr_name == "Unknown Float 13?" ) \
-  return attr_ref(unknown_float_13_); \
+  return attr_ref(unknownFloat13_); \
 if ( attr_name == "Unknown Int 1?" ) \
-  return attr_ref(unknown_int_1_); \
+  return attr_ref(unknownInt1_); \
 if ( attr_name == "Unknown Int 2?" ) \
-  return attr_ref(unknown_int_2_); \
+  return attr_ref(unknownInt2_); \
 if ( attr_name == "Unknown Short 3?" ) \
-  return attr_ref(unknown_short_3_); \
+  return attr_ref(unknownShort3_); \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 if ( attr_name == "Particle Extra" ) \
-  return attr_ref(particle_extra); \
+  return attr_ref(particleExtra); \
 if ( attr_name == "Unknown Link 2" ) \
-  return attr_ref(unknown_link_2); \
+  return attr_ref(unknownLink2); \
 if ( attr_name == "Trailer" ) \
   return attr_ref(trailer); \
 return attr_ref(); \
@@ -3213,73 +3214,73 @@ return attr_ref(); \
 #define A_PARTICLE_SYSTEM_CONTROLLER_READ \
 AController::Read( in, version ); \
 NifStream( speed, in, version ); \
-NifStream( speed_random, in, version ); \
-NifStream( vertical_direction, in, version ); \
-NifStream( vertical_angle, in, version ); \
-NifStream( horizontal_direction, in, version ); \
-NifStream( horizontal_angle, in, version ); \
-NifStream( unknown_float_5, in, version ); \
-NifStream( unknown_float_6, in, version ); \
-NifStream( unknown_float_7, in, version ); \
-NifStream( unknown_float_8, in, version ); \
-NifStream( unknown_float_9, in, version ); \
-NifStream( unknown_float_10, in, version ); \
-NifStream( unknown_float_11, in, version ); \
+NifStream( speedRandom, in, version ); \
+NifStream( verticalDirection, in, version ); \
+NifStream( verticalAngle, in, version ); \
+NifStream( horizontalDirection, in, version ); \
+NifStream( horizontalAngle, in, version ); \
+NifStream( unknownFloat5, in, version ); \
+NifStream( unknownFloat6, in, version ); \
+NifStream( unknownFloat7, in, version ); \
+NifStream( unknownFloat8, in, version ); \
+NifStream( unknownFloat9, in, version ); \
+NifStream( unknownFloat10, in, version ); \
+NifStream( unknownFloat11, in, version ); \
 NifStream( size, in, version ); \
-NifStream( emit_start_time, in, version ); \
-NifStream( emit_stop_time, in, version ); \
-NifStream( unknown_byte, in, version ); \
-NifStream( emit_rate, in, version ); \
+NifStream( emitStartTime, in, version ); \
+NifStream( emitStopTime, in, version ); \
+NifStream( unknownByte, in, version ); \
+NifStream( emitRate, in, version ); \
 NifStream( lifetime, in, version ); \
-NifStream( lifetime_random, in, version ); \
-NifStream( emit_flags, in, version ); \
-NifStream( start_random, in, version ); \
+NifStream( lifetimeRandom, in, version ); \
+NifStream( emitFlags, in, version ); \
+NifStream( startRandom, in, version ); \
 NifStream( emitter, in, version ); \
-NifStream( unknown_short_2_, in, version ); \
-NifStream( unknown_float_13_, in, version ); \
-NifStream( unknown_int_1_, in, version ); \
-NifStream( unknown_int_2_, in, version ); \
-NifStream( unknown_short_3_, in, version ); \
+NifStream( unknownShort2_, in, version ); \
+NifStream( unknownFloat13_, in, version ); \
+NifStream( unknownInt1_, in, version ); \
+NifStream( unknownInt2_, in, version ); \
+NifStream( unknownShort3_, in, version ); \
 NifStream( particles, in, version ); \
-NifStream( unknown_link, in, version ); \
-NifStream( particle_extra, in, version ); \
-NifStream( unknown_link_2, in, version ); \
+NifStream( unknownLink, in, version ); \
+NifStream( particleExtra, in, version ); \
+NifStream( unknownLink2, in, version ); \
 NifStream( trailer, in, version ); \
 
 #define A_PARTICLE_SYSTEM_CONTROLLER_WRITE \
 AController::Write( out, version ); \
 NifStream( speed, out, version ); \
-NifStream( speed_random, out, version ); \
-NifStream( vertical_direction, out, version ); \
-NifStream( vertical_angle, out, version ); \
-NifStream( horizontal_direction, out, version ); \
-NifStream( horizontal_angle, out, version ); \
-NifStream( unknown_float_5, out, version ); \
-NifStream( unknown_float_6, out, version ); \
-NifStream( unknown_float_7, out, version ); \
-NifStream( unknown_float_8, out, version ); \
-NifStream( unknown_float_9, out, version ); \
-NifStream( unknown_float_10, out, version ); \
-NifStream( unknown_float_11, out, version ); \
+NifStream( speedRandom, out, version ); \
+NifStream( verticalDirection, out, version ); \
+NifStream( verticalAngle, out, version ); \
+NifStream( horizontalDirection, out, version ); \
+NifStream( horizontalAngle, out, version ); \
+NifStream( unknownFloat5, out, version ); \
+NifStream( unknownFloat6, out, version ); \
+NifStream( unknownFloat7, out, version ); \
+NifStream( unknownFloat8, out, version ); \
+NifStream( unknownFloat9, out, version ); \
+NifStream( unknownFloat10, out, version ); \
+NifStream( unknownFloat11, out, version ); \
 NifStream( size, out, version ); \
-NifStream( emit_start_time, out, version ); \
-NifStream( emit_stop_time, out, version ); \
-NifStream( unknown_byte, out, version ); \
-NifStream( emit_rate, out, version ); \
+NifStream( emitStartTime, out, version ); \
+NifStream( emitStopTime, out, version ); \
+NifStream( unknownByte, out, version ); \
+NifStream( emitRate, out, version ); \
 NifStream( lifetime, out, version ); \
-NifStream( lifetime_random, out, version ); \
-NifStream( emit_flags, out, version ); \
-NifStream( start_random, out, version ); \
+NifStream( lifetimeRandom, out, version ); \
+NifStream( emitFlags, out, version ); \
+NifStream( startRandom, out, version ); \
 NifStream( emitter, out, version ); \
-NifStream( unknown_short_2_, out, version ); \
-NifStream( unknown_float_13_, out, version ); \
-NifStream( unknown_int_1_, out, version ); \
-NifStream( unknown_int_2_, out, version ); \
-NifStream( unknown_short_3_, out, version ); \
+NifStream( unknownShort2_, out, version ); \
+NifStream( unknownFloat13_, out, version ); \
+NifStream( unknownInt1_, out, version ); \
+NifStream( unknownInt2_, out, version ); \
+NifStream( unknownShort3_, out, version ); \
 NifStream( particles, out, version ); \
-NifStream( unknown_link, out, version ); \
-NifStream( particle_extra, out, version ); \
-NifStream( unknown_link_2, out, version ); \
+NifStream( unknownLink, out, version ); \
+NifStream( particleExtra, out, version ); \
+NifStream( unknownLink2, out, version ); \
 NifStream( trailer, out, version ); \
 
 #define A_PARTICLE_SYSTEM_CONTROLLER_STRING \
@@ -3288,37 +3289,37 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "               Speed:  " << speed << endl; \
-out << "        Speed Random:  " << speed_random << endl; \
-out << "  Vertical Direction:  " << vertical_direction << endl; \
-out << "      Vertical Angle:  " << vertical_angle << endl; \
-out << "Horizontal Direction:  " << horizontal_direction << endl; \
-out << "    Horizontal Angle:  " << horizontal_angle << endl; \
-out << "     Unknown Float 5:  " << unknown_float_5 << endl; \
-out << "     Unknown Float 6:  " << unknown_float_6 << endl; \
-out << "     Unknown Float 7:  " << unknown_float_7 << endl; \
-out << "     Unknown Float 8:  " << unknown_float_8 << endl; \
-out << "     Unknown Float 9:  " << unknown_float_9 << endl; \
-out << "    Unknown Float 10:  " << unknown_float_10 << endl; \
-out << "    Unknown Float 11:  " << unknown_float_11 << endl; \
+out << "        Speed Random:  " << speedRandom << endl; \
+out << "  Vertical Direction:  " << verticalDirection << endl; \
+out << "      Vertical Angle:  " << verticalAngle << endl; \
+out << "Horizontal Direction:  " << horizontalDirection << endl; \
+out << "    Horizontal Angle:  " << horizontalAngle << endl; \
+out << "     Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "     Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "     Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "     Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "     Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "    Unknown Float 10:  " << unknownFloat10 << endl; \
+out << "    Unknown Float 11:  " << unknownFloat11 << endl; \
 out << "                Size:  " << size << endl; \
-out << "     Emit Start Time:  " << emit_start_time << endl; \
-out << "      Emit Stop Time:  " << emit_stop_time << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "           Emit Rate:  " << emit_rate << endl; \
+out << "     Emit Start Time:  " << emitStartTime << endl; \
+out << "      Emit Stop Time:  " << emitStopTime << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "           Emit Rate:  " << emitRate << endl; \
 out << "            Lifetime:  " << lifetime << endl; \
-out << "     Lifetime Random:  " << lifetime_random << endl; \
-out << "          Emit Flags:  " << emit_flags << endl; \
-out << "        Start Random:  " << start_random << endl; \
+out << "     Lifetime Random:  " << lifetimeRandom << endl; \
+out << "          Emit Flags:  " << emitFlags << endl; \
+out << "        Start Random:  " << startRandom << endl; \
 out << "             Emitter:  " << emitter << endl; \
-out << "    Unknown Short 2?:  " << unknown_short_2_ << endl; \
-out << "   Unknown Float 13?:  " << unknown_float_13_ << endl; \
-out << "      Unknown Int 1?:  " << unknown_int_1_ << endl; \
-out << "      Unknown Int 2?:  " << unknown_int_2_ << endl; \
-out << "    Unknown Short 3?:  " << unknown_short_3_ << endl; \
+out << "    Unknown Short 2?:  " << unknownShort2_ << endl; \
+out << "   Unknown Float 13?:  " << unknownFloat13_ << endl; \
+out << "      Unknown Int 1?:  " << unknownInt1_ << endl; \
+out << "      Unknown Int 2?:  " << unknownInt2_ << endl; \
+out << "    Unknown Short 3?:  " << unknownShort3_ << endl; \
 out << "           Particles:  " << particles << endl; \
-out << "        Unknown Link:  " << unknown_link << endl; \
-out << "      Particle Extra:  " << particle_extra << endl; \
-out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
+out << "      Particle Extra:  " << particleExtra << endl; \
+out << "      Unknown Link 2:  " << unknownLink2 << endl; \
 out << "             Trailer:  " << trailer << endl; \
 return out.str(); \
 
@@ -3329,19 +3330,19 @@ return out.str(); \
 // - Linear Attenuation
 // - Quadratic Attenuation (see glLight)
 #define A_POINT_LIGHT_MEMBERS \
-float constant_attenuation; \
-float linear_attenuation; \
-float quadratic_attenuation; \
+float constantAttenuation; \
+float linearAttenuation; \
+float quadraticAttenuation; \
 
 #define A_POINT_LIGHT_GETATTR \
 attr_ref attr = ALight::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Constant Attenuation" ) \
-  return attr_ref(constant_attenuation); \
+  return attr_ref(constantAttenuation); \
 if ( attr_name == "Linear Attenuation" ) \
-  return attr_ref(linear_attenuation); \
+  return attr_ref(linearAttenuation); \
 if ( attr_name == "Quadratic Attenuation" ) \
-  return attr_ref(quadratic_attenuation); \
+  return attr_ref(quadraticAttenuation); \
 return attr_ref(); \
 
 #define A_POINT_LIGHT_PARENTS ALight
@@ -3350,24 +3351,24 @@ return attr_ref(); \
 
 #define A_POINT_LIGHT_READ \
 ALight::Read( in, version ); \
-NifStream( constant_attenuation, in, version ); \
-NifStream( linear_attenuation, in, version ); \
-NifStream( quadratic_attenuation, in, version ); \
+NifStream( constantAttenuation, in, version ); \
+NifStream( linearAttenuation, in, version ); \
+NifStream( quadraticAttenuation, in, version ); \
 
 #define A_POINT_LIGHT_WRITE \
 ALight::Write( out, version ); \
-NifStream( constant_attenuation, out, version ); \
-NifStream( linear_attenuation, out, version ); \
-NifStream( quadratic_attenuation, out, version ); \
+NifStream( constantAttenuation, out, version ); \
+NifStream( linearAttenuation, out, version ); \
+NifStream( quadraticAttenuation, out, version ); \
 
 #define A_POINT_LIGHT_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ALight::asString(); \
-out << "Constant Attenuation:  " << constant_attenuation << endl; \
-out << "  Linear Attenuation:  " << linear_attenuation << endl; \
-out << "Quadratic Attenuation:  " << quadratic_attenuation << endl; \
+out << "Constant Attenuation:  " << constantAttenuation << endl; \
+out << "  Linear Attenuation:  " << linearAttenuation << endl; \
+out << "Quadratic Attenuation:  " << quadraticAttenuation << endl; \
 return out.str(); \
 
 // 
@@ -3463,16 +3464,16 @@ return out.str(); \
 // - Unknown.
 #define A_P_SYS_EMITTER_MEMBERS \
 float speed; \
-float speed_variation; \
+float speedVariation; \
 float declination; \
-float declination_variation; \
-float planar_angle; \
-float planar_angle_variation; \
-Color4 initial_color; \
-float initial_radius; \
-float radius_variation; \
-float life_span; \
-float life_span_variation; \
+float declinationVariation; \
+float planarAngle; \
+float planarAngleVariation; \
+Color4 initialColor; \
+float initialRadius; \
+float radiusVariation; \
+float lifeSpan; \
+float lifeSpanVariation; \
 
 #define A_P_SYS_EMITTER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -3480,25 +3481,25 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Speed" ) \
   return attr_ref(speed); \
 if ( attr_name == "Speed Variation" ) \
-  return attr_ref(speed_variation); \
+  return attr_ref(speedVariation); \
 if ( attr_name == "Declination" ) \
   return attr_ref(declination); \
 if ( attr_name == "Declination Variation" ) \
-  return attr_ref(declination_variation); \
+  return attr_ref(declinationVariation); \
 if ( attr_name == "Planar Angle" ) \
-  return attr_ref(planar_angle); \
+  return attr_ref(planarAngle); \
 if ( attr_name == "Planar Angle Variation" ) \
-  return attr_ref(planar_angle_variation); \
+  return attr_ref(planarAngleVariation); \
 if ( attr_name == "Initial Color" ) \
-  return attr_ref(initial_color); \
+  return attr_ref(initialColor); \
 if ( attr_name == "Initial Radius" ) \
-  return attr_ref(initial_radius); \
+  return attr_ref(initialRadius); \
 if ( attr_name == "Radius Variation" ) \
-  return attr_ref(radius_variation); \
+  return attr_ref(radiusVariation); \
 if ( attr_name == "Life Span" ) \
-  return attr_ref(life_span); \
+  return attr_ref(lifeSpan); \
 if ( attr_name == "Life Span Variation" ) \
-  return attr_ref(life_span_variation); \
+  return attr_ref(lifeSpanVariation); \
 return attr_ref(); \
 
 #define A_P_SYS_EMITTER_PARENTS APSysModifier
@@ -3508,30 +3509,30 @@ return attr_ref(); \
 #define A_P_SYS_EMITTER_READ \
 APSysModifier::Read( in, version ); \
 NifStream( speed, in, version ); \
-NifStream( speed_variation, in, version ); \
+NifStream( speedVariation, in, version ); \
 NifStream( declination, in, version ); \
-NifStream( declination_variation, in, version ); \
-NifStream( planar_angle, in, version ); \
-NifStream( planar_angle_variation, in, version ); \
-NifStream( initial_color, in, version ); \
-NifStream( initial_radius, in, version ); \
-NifStream( radius_variation, in, version ); \
-NifStream( life_span, in, version ); \
-NifStream( life_span_variation, in, version ); \
+NifStream( declinationVariation, in, version ); \
+NifStream( planarAngle, in, version ); \
+NifStream( planarAngleVariation, in, version ); \
+NifStream( initialColor, in, version ); \
+NifStream( initialRadius, in, version ); \
+NifStream( radiusVariation, in, version ); \
+NifStream( lifeSpan, in, version ); \
+NifStream( lifeSpanVariation, in, version ); \
 
 #define A_P_SYS_EMITTER_WRITE \
 APSysModifier::Write( out, version ); \
 NifStream( speed, out, version ); \
-NifStream( speed_variation, out, version ); \
+NifStream( speedVariation, out, version ); \
 NifStream( declination, out, version ); \
-NifStream( declination_variation, out, version ); \
-NifStream( planar_angle, out, version ); \
-NifStream( planar_angle_variation, out, version ); \
-NifStream( initial_color, out, version ); \
-NifStream( initial_radius, out, version ); \
-NifStream( radius_variation, out, version ); \
-NifStream( life_span, out, version ); \
-NifStream( life_span_variation, out, version ); \
+NifStream( declinationVariation, out, version ); \
+NifStream( planarAngle, out, version ); \
+NifStream( planarAngleVariation, out, version ); \
+NifStream( initialColor, out, version ); \
+NifStream( initialRadius, out, version ); \
+NifStream( radiusVariation, out, version ); \
+NifStream( lifeSpan, out, version ); \
+NifStream( lifeSpanVariation, out, version ); \
 
 #define A_P_SYS_EMITTER_STRING \
 stringstream out; \
@@ -3539,16 +3540,16 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
 out << "               Speed:  " << speed << endl; \
-out << "     Speed Variation:  " << speed_variation << endl; \
+out << "     Speed Variation:  " << speedVariation << endl; \
 out << "         Declination:  " << declination << endl; \
-out << "Declination Variation:  " << declination_variation << endl; \
-out << "        Planar Angle:  " << planar_angle << endl; \
-out << "Planar Angle Variation:  " << planar_angle_variation << endl; \
-out << "       Initial Color:  " << initial_color << endl; \
-out << "      Initial Radius:  " << initial_radius << endl; \
-out << "    Radius Variation:  " << radius_variation << endl; \
-out << "           Life Span:  " << life_span << endl; \
-out << " Life Span Variation:  " << life_span_variation << endl; \
+out << "Declination Variation:  " << declinationVariation << endl; \
+out << "        Planar Angle:  " << planarAngle << endl; \
+out << "Planar Angle Variation:  " << planarAngleVariation << endl; \
+out << "       Initial Color:  " << initialColor << endl; \
+out << "      Initial Radius:  " << initialRadius << endl; \
+out << "    Radius Variation:  " << radiusVariation << endl; \
+out << "           Life Span:  " << lifeSpan << endl; \
+out << " Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 // 
@@ -3556,13 +3557,13 @@ return out.str(); \
 //
 // - Node parent of this modifier?
 #define A_P_SYS_VOLUME_EMITTER_MEMBERS \
-uint emitter_object; \
+uint emitterObject; \
 
 #define A_P_SYS_VOLUME_EMITTER_GETATTR \
 attr_ref attr = APSysEmitter::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Emitter Object" ) \
-  return attr_ref(emitter_object); \
+  return attr_ref(emitterObject); \
 return attr_ref(); \
 
 #define A_P_SYS_VOLUME_EMITTER_PARENTS APSysEmitter
@@ -3572,13 +3573,13 @@ return attr_ref(); \
 #define A_P_SYS_VOLUME_EMITTER_READ \
 APSysEmitter::Read( in, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( emitter_object, in, version ); \
+  NifStream( emitterObject, in, version ); \
 }; \
 
 #define A_P_SYS_VOLUME_EMITTER_WRITE \
 APSysEmitter::Write( out, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( emitter_object, out, version ); \
+  NifStream( emitterObject, out, version ); \
 }; \
 
 #define A_P_SYS_VOLUME_EMITTER_STRING \
@@ -3586,7 +3587,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysEmitter::asString(); \
-out << "      Emitter Object:  " << emitter_object << endl; \
+out << "      Emitter Object:  " << emitterObject << endl; \
 return out.str(); \
 
 // 
@@ -3596,8 +3597,8 @@ return out.str(); \
 // - Skin instance index.
 // - Shader.
 #define A_SHAPE_MEMBERS \
-uint data; \
-uint skin_instance; \
+Link data; \
+Link skinInstance; \
 Shader shader; \
 
 #define A_SHAPE_GETATTR \
@@ -3606,7 +3607,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Skin Instance" ) \
-  return attr_ref(skin_instance); \
+  return attr_ref(skinInstance); \
 return attr_ref(); \
 
 #define A_SHAPE_PARENTS ANode
@@ -3616,7 +3617,7 @@ return attr_ref(); \
 #define A_SHAPE_READ \
 ANode::Read( in, version ); \
 NifStream( data, in, version ); \
-NifStream( skin_instance, in, version ); \
+NifStream( skinInstance, in, version ); \
 if ( version >= 0x0A000100 ) { \
   NifStream( shader, in, version ); \
 }; \
@@ -3624,7 +3625,7 @@ if ( version >= 0x0A000100 ) { \
 #define A_SHAPE_WRITE \
 ANode::Write( out, version ); \
 NifStream( data, out, version ); \
-NifStream( skin_instance, out, version ); \
+NifStream( skinInstance, out, version ); \
 if ( version >= 0x0A000100 ) { \
   NifStream( shader, out, version ); \
 }; \
@@ -3635,7 +3636,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ANode::asString(); \
 out << "                Data:  " << data << endl; \
-out << "       Skin Instance:  " << skin_instance << endl; \
+out << "       Skin Instance:  " << skinInstance << endl; \
 out << "              Shader:  " << shader << endl; \
 return out.str(); \
 
@@ -3694,22 +3695,22 @@ return out.str(); \
 // - Unknown.
 #define A_SHAPE_DATA_MEMBERS \
 string name; \
-ushort unknown_short_1; \
-bool has_vertices; \
+ushort unknownShort1; \
+bool hasVertices; \
 vector<Vector3 > vertices; \
-byte num_uv_sets_2; \
-byte unknown_byte; \
-bool has_normals; \
+byte numUvSets2; \
+byte unknownByte; \
+bool hasNormals; \
 vector<Vector3 > normals; \
-vector<vector<Vector3 > > unknown_vectors_1; \
-vector<vector<Vector3 > > unknown_vectors_2; \
-bool has_vertex_colors; \
-vector<Color4 > vertex_colors; \
-bool has_uv; \
-vector<vector<TexCoord > > uv_sets; \
-vector<vector<TexCoord > > uv_sets_2; \
-ushort unknown_short_2; \
-uint unknown_link; \
+vector<vector<Vector3 > > unknownVectors1; \
+vector<vector<Vector3 > > unknownVectors2; \
+bool hasVertexColors; \
+vector<Color4 > vertexColors; \
+bool hasUv; \
+vector<vector<TexCoord > > uvSets; \
+vector<vector<TexCoord > > uvSets2; \
+ushort unknownShort2; \
+Link unknownLink; \
 
 #define A_SHAPE_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -3717,23 +3718,23 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Name" ) \
   return attr_ref(name); \
 if ( attr_name == "Unknown Short 1" ) \
-  return attr_ref(unknown_short_1); \
+  return attr_ref(unknownShort1); \
 if ( attr_name == "Has Vertices" ) \
-  return attr_ref(has_vertices); \
+  return attr_ref(hasVertices); \
 if ( attr_name == "Num UV Sets 2" ) \
-  return attr_ref(num_uv_sets_2); \
+  return attr_ref(numUvSets2); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Has Normals" ) \
-  return attr_ref(has_normals); \
+  return attr_ref(hasNormals); \
 if ( attr_name == "Has Vertex Colors" ) \
-  return attr_ref(has_vertex_colors); \
+  return attr_ref(hasVertexColors); \
 if ( attr_name == "Has UV" ) \
-  return attr_ref(has_uv); \
+  return attr_ref(hasUv); \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 return attr_ref(); \
 
 #define A_SHAPE_DATA_PARENTS AData
@@ -3741,118 +3742,118 @@ return attr_ref(); \
 #define A_SHAPE_DATA_CONSTRUCT
 
 #define A_SHAPE_DATA_READ \
-ushort num_vertices; \
+ushort numVertices; \
 Vector3 center; \
 float radius; \
-ushort num_uv_sets; \
+ushort numUvSets; \
 AData::Read( in, version ); \
 if ( version >= 0x0A020000 ) { \
   NifStream( name, in, version ); \
 }; \
-NifStream( num_vertices, in, version ); \
+NifStream( numVertices, in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short_1, in, version ); \
+  NifStream( unknownShort1, in, version ); \
 }; \
-NifStream( has_vertices, in, version ); \
-if ( has_vertices != 0 ) { \
-  vertices.resize(num_vertices); \
+NifStream( hasVertices, in, version ); \
+if ( hasVertices != 0 ) { \
+  vertices.resize(numVertices); \
   NifStream( vertices, in, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( num_uv_sets_2, in, version ); \
-  NifStream( unknown_byte, in, version ); \
+  NifStream( numUvSets2, in, version ); \
+  NifStream( unknownByte, in, version ); \
 }; \
-NifStream( has_normals, in, version ); \
-if ( has_normals != 0 ) { \
-  normals.resize(num_vertices); \
+NifStream( hasNormals, in, version ); \
+if ( hasNormals != 0 ) { \
+  normals.resize(numVertices); \
   NifStream( normals, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( unknown_byte & 16 ) { \
-    unknown_vectors_1.resize(has_normals); \
-    NifStream( unknown_vectors_1, in, version ); \
-    unknown_vectors_2.resize(has_normals); \
-    NifStream( unknown_vectors_2, in, version ); \
+  if ( unknownByte & 16 ) { \
+    unknownVectors1.resize(hasNormals); \
+    NifStream( unknownVectors1, in, version ); \
+    unknownVectors2.resize(hasNormals); \
+    NifStream( unknownVectors2, in, version ); \
   }; \
 }; \
-NifStream( has_vertex_colors, in, version ); \
-if ( has_vertex_colors != 0 ) { \
-  vertex_colors.resize(num_vertices); \
-  NifStream( vertex_colors, in, version ); \
+NifStream( hasVertexColors, in, version ); \
+if ( hasVertexColors != 0 ) { \
+  vertexColors.resize(numVertices); \
+  NifStream( vertexColors, in, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  NifStream( num_uv_sets, in, version ); \
+  NifStream( numUvSets, in, version ); \
 }; \
 if ( version <= 0x04000002 ) { \
-  NifStream( has_uv, in, version ); \
+  NifStream( hasUv, in, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  uv_sets.resize(num_uv_sets); \
-  NifStream( uv_sets, in, version ); \
+  uvSets.resize(numUvSets); \
+  NifStream( uvSets, in, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  uv_sets_2.resize(num_uv_sets_2 & 63); \
-  NifStream( uv_sets_2, in, version ); \
-  NifStream( unknown_short_2, in, version ); \
+  uvSets2.resize(numUvSets2 & 63); \
+  NifStream( uvSets2, in, version ); \
+  NifStream( unknownShort2, in, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_link, in, version ); \
+  NifStream( unknownLink, in, version ); \
 }; \
 
 #define A_SHAPE_DATA_WRITE \
-ushort num_vertices; \
+ushort numVertices; \
 Vector3 center; \
 float radius; \
-ushort num_uv_sets; \
+ushort numUvSets; \
 AData::Write( out, version ); \
-num_vertices = ushort(vertices.size()); \
+numVertices = ushort(vertices.size()); \
 center = Center(); \
 radius = Radius(); \
-num_uv_sets = ushort(uv_sets.size()); \
+numUvSets = ushort(uvSets.size()); \
 if ( version >= 0x0A020000 ) { \
   NifStream( name, out, version ); \
 }; \
-NifStream( num_vertices, out, version ); \
+NifStream( numVertices, out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short_1, out, version ); \
+  NifStream( unknownShort1, out, version ); \
 }; \
-NifStream( has_vertices, out, version ); \
-if ( has_vertices != 0 ) { \
+NifStream( hasVertices, out, version ); \
+if ( hasVertices != 0 ) { \
   NifStream( vertices, out, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( num_uv_sets_2, out, version ); \
-  NifStream( unknown_byte, out, version ); \
+  NifStream( numUvSets2, out, version ); \
+  NifStream( unknownByte, out, version ); \
 }; \
-NifStream( has_normals, out, version ); \
-if ( has_normals != 0 ) { \
+NifStream( hasNormals, out, version ); \
+if ( hasNormals != 0 ) { \
   NifStream( normals, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( unknown_byte & 16 ) { \
-    NifStream( unknown_vectors_1, out, version ); \
-    NifStream( unknown_vectors_2, out, version ); \
+  if ( unknownByte & 16 ) { \
+    NifStream( unknownVectors1, out, version ); \
+    NifStream( unknownVectors2, out, version ); \
   }; \
 }; \
-NifStream( has_vertex_colors, out, version ); \
-if ( has_vertex_colors != 0 ) { \
-  NifStream( vertex_colors, out, version ); \
+NifStream( hasVertexColors, out, version ); \
+if ( hasVertexColors != 0 ) { \
+  NifStream( vertexColors, out, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  NifStream( num_uv_sets, out, version ); \
+  NifStream( numUvSets, out, version ); \
 }; \
 if ( version <= 0x04000002 ) { \
-  NifStream( has_uv, out, version ); \
+  NifStream( hasUv, out, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-  NifStream( uv_sets, out, version ); \
+  NifStream( uvSets, out, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( uv_sets_2, out, version ); \
-  NifStream( unknown_short_2, out, version ); \
+  NifStream( uvSets2, out, version ); \
+  NifStream( unknownShort2, out, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_link, out, version ); \
+  NifStream( unknownLink, out, version ); \
 }; \
 
 #define A_SHAPE_DATA_STRING \
@@ -3862,25 +3863,25 @@ out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
 out << "        Num Vertices:  -- calculated --" << endl; \
-out << "     Unknown Short 1:  " << unknown_short_1 << endl; \
-out << "        Has Vertices:  " << has_vertices << endl; \
+out << "     Unknown Short 1:  " << unknownShort1 << endl; \
+out << "        Has Vertices:  " << hasVertices << endl; \
 out << "            Vertices:  -- data not shown --" << endl; \
-out << "       Num UV Sets 2:  " << num_uv_sets_2 << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "         Has Normals:  " << has_normals << endl; \
+out << "       Num UV Sets 2:  " << numUvSets2 << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "         Has Normals:  " << hasNormals << endl; \
 out << "             Normals:  -- data not shown --" << endl; \
 out << "   Unknown Vectors 1:  -- data not shown --" << endl; \
 out << "   Unknown Vectors 2:  -- data not shown --" << endl; \
 out << "              Center:  -- calculated --" << endl; \
 out << "              Radius:  -- calculated --" << endl; \
-out << "   Has Vertex Colors:  " << has_vertex_colors << endl; \
+out << "   Has Vertex Colors:  " << hasVertexColors << endl; \
 out << "       Vertex Colors:  -- data not shown --" << endl; \
 out << "         Num UV Sets:  -- calculated --" << endl; \
-out << "              Has UV:  " << has_uv << endl; \
+out << "              Has UV:  " << hasUv << endl; \
 out << "             UV Sets:  -- data not shown --" << endl; \
 out << "           UV Sets 2:  -- data not shown --" << endl; \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "        Unknown Link:  " << unknown_link << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 // 
@@ -3893,26 +3894,26 @@ return out.str(); \
 // - Is the particle size array present?
 // - The individual particel sizes.
 #define A_PARTICLES_DATA_MEMBERS \
-ushort num_particles; \
+ushort numParticles; \
 float size; \
-ushort num_active; \
-ushort unknown_short; \
-bool has_sizes; \
+ushort numActive; \
+ushort unknownShort; \
+bool hasSizes; \
 vector<float > sizes; \
 
 #define A_PARTICLES_DATA_GETATTR \
 attr_ref attr = AShapeData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Particles" ) \
-  return attr_ref(num_particles); \
+  return attr_ref(numParticles); \
 if ( attr_name == "Size" ) \
   return attr_ref(size); \
 if ( attr_name == "Num Active" ) \
-  return attr_ref(num_active); \
+  return attr_ref(numActive); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Has Sizes" ) \
-  return attr_ref(has_sizes); \
+  return attr_ref(hasSizes); \
 return attr_ref(); \
 
 #define A_PARTICLES_DATA_PARENTS AShapeData
@@ -3922,39 +3923,39 @@ return attr_ref(); \
 #define A_PARTICLES_DATA_READ \
 AShapeData::Read( in, version ); \
 if ( version <= 0x04000002 ) { \
-  NifStream( num_particles, in, version ); \
+  NifStream( numParticles, in, version ); \
 }; \
 if ( version <= 0x0A000100 ) { \
   NifStream( size, in, version ); \
 }; \
 if ( version <= 0x04000002 ) { \
-  NifStream( num_active, in, version ); \
+  NifStream( numActive, in, version ); \
 }; \
 if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
-NifStream( has_sizes, in, version ); \
-if ( has_sizes != 0 ) { \
-  sizes.resize(num_vertices); \
+NifStream( hasSizes, in, version ); \
+if ( hasSizes != 0 ) { \
+  sizes.resize(numVertices); \
   NifStream( sizes, in, version ); \
 }; \
 
 #define A_PARTICLES_DATA_WRITE \
 AShapeData::Write( out, version ); \
 if ( version <= 0x04000002 ) { \
-  NifStream( num_particles, out, version ); \
+  NifStream( numParticles, out, version ); \
 }; \
 if ( version <= 0x0A000100 ) { \
   NifStream( size, out, version ); \
 }; \
 if ( version <= 0x04000002 ) { \
-  NifStream( num_active, out, version ); \
+  NifStream( numActive, out, version ); \
 }; \
 if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
-NifStream( has_sizes, out, version ); \
-if ( has_sizes != 0 ) { \
+NifStream( hasSizes, out, version ); \
+if ( hasSizes != 0 ) { \
   NifStream( sizes, out, version ); \
 }; \
 
@@ -3963,11 +3964,11 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShapeData::asString(); \
-out << "       Num Particles:  " << num_particles << endl; \
+out << "       Num Particles:  " << numParticles << endl; \
 out << "                Size:  " << size << endl; \
-out << "          Num Active:  " << num_active << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "           Has Sizes:  " << has_sizes << endl; \
+out << "          Num Active:  " << numActive << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "           Has Sizes:  " << hasSizes << endl; \
 out << "               Sizes:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -3981,24 +3982,24 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define A_P_SYS_DATA_MEMBERS \
-bool has_unknown_floats_1; \
-vector<float > unknown_floats_1; \
-ushort unknown_short_3; \
-bool has_unknown_floats_2; \
-vector<float > unknown_floats_2; \
-byte unknown_byte_1; \
+bool hasUnknownFloats1; \
+vector<float > unknownFloats1; \
+ushort unknownShort3; \
+bool hasUnknownFloats2; \
+vector<float > unknownFloats2; \
+byte unknownByte1; \
 
 #define A_P_SYS_DATA_GETATTR \
 attr_ref attr = AShapeData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Has Unknown Floats 1" ) \
-  return attr_ref(has_unknown_floats_1); \
+  return attr_ref(hasUnknownFloats1); \
 if ( attr_name == "Unknown Short 3" ) \
-  return attr_ref(unknown_short_3); \
+  return attr_ref(unknownShort3); \
 if ( attr_name == "Has Unknown Floats 2" ) \
-  return attr_ref(has_unknown_floats_2); \
+  return attr_ref(hasUnknownFloats2); \
 if ( attr_name == "Unknown Byte 1" ) \
-  return attr_ref(unknown_byte_1); \
+  return attr_ref(unknownByte1); \
 return attr_ref(); \
 
 #define A_P_SYS_DATA_PARENTS AShapeData
@@ -4007,43 +4008,43 @@ return attr_ref(); \
 
 #define A_P_SYS_DATA_READ \
 AShapeData::Read( in, version ); \
-NifStream( has_unknown_floats_1, in, version ); \
-if ( has_unknown_floats_1 != 0 ) { \
-  unknown_floats_1.resize(num_vertices); \
-  NifStream( unknown_floats_1, in, version ); \
+NifStream( hasUnknownFloats1, in, version ); \
+if ( hasUnknownFloats1 != 0 ) { \
+  unknownFloats1.resize(numVertices); \
+  NifStream( unknownFloats1, in, version ); \
 }; \
-NifStream( unknown_short_3, in, version ); \
-NifStream( has_unknown_floats_2, in, version ); \
-if ( has_unknown_floats_2 != 0 ) { \
-  unknown_floats_2.resize(num_vertices); \
-  NifStream( unknown_floats_2, in, version ); \
+NifStream( unknownShort3, in, version ); \
+NifStream( hasUnknownFloats2, in, version ); \
+if ( hasUnknownFloats2 != 0 ) { \
+  unknownFloats2.resize(numVertices); \
+  NifStream( unknownFloats2, in, version ); \
 }; \
-NifStream( unknown_byte_1, in, version ); \
+NifStream( unknownByte1, in, version ); \
 
 #define A_P_SYS_DATA_WRITE \
 AShapeData::Write( out, version ); \
-NifStream( has_unknown_floats_1, out, version ); \
-if ( has_unknown_floats_1 != 0 ) { \
-  NifStream( unknown_floats_1, out, version ); \
+NifStream( hasUnknownFloats1, out, version ); \
+if ( hasUnknownFloats1 != 0 ) { \
+  NifStream( unknownFloats1, out, version ); \
 }; \
-NifStream( unknown_short_3, out, version ); \
-NifStream( has_unknown_floats_2, out, version ); \
-if ( has_unknown_floats_2 != 0 ) { \
-  NifStream( unknown_floats_2, out, version ); \
+NifStream( unknownShort3, out, version ); \
+NifStream( hasUnknownFloats2, out, version ); \
+if ( hasUnknownFloats2 != 0 ) { \
+  NifStream( unknownFloats2, out, version ); \
 }; \
-NifStream( unknown_byte_1, out, version ); \
+NifStream( unknownByte1, out, version ); \
 
 #define A_P_SYS_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShapeData::asString(); \
-out << "Has Unknown Floats 1:  " << has_unknown_floats_1 << endl; \
+out << "Has Unknown Floats 1:  " << hasUnknownFloats1 << endl; \
 out << "    Unknown Floats 1:  -- data not shown --" << endl; \
-out << "     Unknown Short 3:  " << unknown_short_3 << endl; \
-out << "Has Unknown Floats 2:  " << has_unknown_floats_2 << endl; \
+out << "     Unknown Short 3:  " << unknownShort3 << endl; \
+out << "Has Unknown Floats 2:  " << hasUnknownFloats2 << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
-out << "      Unknown Byte 1:  " << unknown_byte_1 << endl; \
+out << "      Unknown Byte 1:  " << unknownByte1 << endl; \
 return out.str(); \
 
 // 
@@ -4055,21 +4056,21 @@ return out.str(); \
 // - Is the particle rotation array present?
 // - The individual particle rotations.
 #define A_ROTATING_PARTICLES_DATA_MEMBERS \
-ushort num_active; \
-bool has_unknown_floats; \
-vector<float > unknown_floats; \
-bool has_rotations; \
+ushort numActive; \
+bool hasUnknownFloats; \
+vector<float > unknownFloats; \
+bool hasRotations; \
 vector<Quaternion > rotations; \
 
 #define A_ROTATING_PARTICLES_DATA_GETATTR \
 attr_ref attr = AParticlesData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Active" ) \
-  return attr_ref(num_active); \
+  return attr_ref(numActive); \
 if ( attr_name == "Has Unknown Floats" ) \
-  return attr_ref(has_unknown_floats); \
+  return attr_ref(hasUnknownFloats); \
 if ( attr_name == "Has Rotations" ) \
-  return attr_ref(has_rotations); \
+  return attr_ref(hasRotations); \
 return attr_ref(); \
 
 #define A_ROTATING_PARTICLES_DATA_PARENTS AParticlesData
@@ -4079,30 +4080,30 @@ return attr_ref(); \
 #define A_ROTATING_PARTICLES_DATA_READ \
 AParticlesData::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( num_active, in, version ); \
-  NifStream( has_unknown_floats, in, version ); \
-  if ( has_unknown_floats != 0 ) { \
-    unknown_floats.resize(num_vertices); \
-    NifStream( unknown_floats, in, version ); \
+  NifStream( numActive, in, version ); \
+  NifStream( hasUnknownFloats, in, version ); \
+  if ( hasUnknownFloats != 0 ) { \
+    unknownFloats.resize(numVertices); \
+    NifStream( unknownFloats, in, version ); \
   }; \
 }; \
-NifStream( has_rotations, in, version ); \
-if ( has_rotations != 0 ) { \
-  rotations.resize(num_vertices); \
+NifStream( hasRotations, in, version ); \
+if ( hasRotations != 0 ) { \
+  rotations.resize(numVertices); \
   NifStream( rotations, in, version ); \
 }; \
 
 #define A_ROTATING_PARTICLES_DATA_WRITE \
 AParticlesData::Write( out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( num_active, out, version ); \
-  NifStream( has_unknown_floats, out, version ); \
-  if ( has_unknown_floats != 0 ) { \
-    NifStream( unknown_floats, out, version ); \
+  NifStream( numActive, out, version ); \
+  NifStream( hasUnknownFloats, out, version ); \
+  if ( hasUnknownFloats != 0 ) { \
+    NifStream( unknownFloats, out, version ); \
   }; \
 }; \
-NifStream( has_rotations, out, version ); \
-if ( has_rotations != 0 ) { \
+NifStream( hasRotations, out, version ); \
+if ( hasRotations != 0 ) { \
   NifStream( rotations, out, version ); \
 }; \
 
@@ -4111,10 +4112,10 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticlesData::asString(); \
-out << "          Num Active:  " << num_active << endl; \
-out << "  Has Unknown Floats:  " << has_unknown_floats << endl; \
+out << "          Num Active:  " << numActive << endl; \
+out << "  Has Unknown Floats:  " << hasUnknownFloats << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
-out << "       Has Rotations:  " << has_rotations << endl; \
+out << "       Has Rotations:  " << hasRotations << endl; \
 out << "           Rotations:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -4123,7 +4124,7 @@ return out.str(); \
 //
 // - Link to interpolator.
 #define A_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS \
-uint interpolator; \
+Link interpolator; \
 
 #define A_SINGLE_INTERPOLATOR_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -4161,13 +4162,13 @@ return out.str(); \
 //
 // - Unknown. Seems to refer to some block by its name?
 #define A_P_SYS_CTLR_MEMBERS \
-string unknown_string; \
+string unknownString; \
 
 #define A_P_SYS_CTLR_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown String" ) \
-  return attr_ref(unknown_string); \
+  return attr_ref(unknownString); \
 return attr_ref(); \
 
 #define A_P_SYS_CTLR_PARENTS ASingleInterpolatorController
@@ -4176,18 +4177,18 @@ return attr_ref(); \
 
 #define A_P_SYS_CTLR_READ \
 ASingleInterpolatorController::Read( in, version ); \
-NifStream( unknown_string, in, version ); \
+NifStream( unknownString, in, version ); \
 
 #define A_P_SYS_CTLR_WRITE \
 ASingleInterpolatorController::Write( out, version ); \
-NifStream( unknown_string, out, version ); \
+NifStream( unknownString, out, version ); \
 
 #define A_P_SYS_CTLR_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
-out << "      Unknown String:  " << unknown_string << endl; \
+out << "      Unknown String:  " << unknownString << endl; \
 return out.str(); \
 
 // 
@@ -4224,16 +4225,16 @@ return out.str(); \
 // - Blending parameter?
 // - Another blending parameter?
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS \
-float unknown_float_1; \
-float unknown_float_2; \
+float unknownFloat1; \
+float unknownFloat2; \
 
 #define BHK_BLEND_COLLISION_OBJECT_GETATTR \
 attr_ref attr = ACollisionObject::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4243,21 +4244,21 @@ return attr_ref(); \
 
 #define BHK_BLEND_COLLISION_OBJECT_READ \
 ACollisionObject::Read( in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
 
 #define BHK_BLEND_COLLISION_OBJECT_WRITE \
 ACollisionObject::Write( out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
 
 #define BHK_BLEND_COLLISION_OBJECT_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ACollisionObject::asString(); \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 // 
@@ -4265,13 +4266,13 @@ return out.str(); \
 //
 // - Seems to be always zero.
 #define BHK_BLEND_CONTROLLER_MEMBERS \
-uint unknown_int; \
+uint unknownInt; \
 
 #define BHK_BLEND_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4281,18 +4282,18 @@ return attr_ref(); \
 
 #define BHK_BLEND_CONTROLLER_READ \
 AController::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 
 #define BHK_BLEND_CONTROLLER_WRITE \
 AController::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownInt, out, version ); \
 
 #define BHK_BLEND_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 // 
@@ -4307,34 +4308,34 @@ return out.str(); \
 // - Looks like this could be the box size.
 // - Unknown.
 #define BHK_BOX_SHAPE_MEMBERS \
-uint unknown_int; \
-float unknown_float_1; \
-ushort unknown_short_1; \
-ushort unknown_short_2; \
-ushort unknown_short_3; \
-ushort unknown_short_4; \
-Vector3 unknown_vector; \
-float unknown_float_2; \
+uint unknownInt; \
+float unknownFloat1; \
+ushort unknownShort1; \
+ushort unknownShort2; \
+ushort unknownShort3; \
+ushort unknownShort4; \
+Vector3 unknownVector; \
+float unknownFloat2; \
 
 #define BHK_BOX_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Short 1" ) \
-  return attr_ref(unknown_short_1); \
+  return attr_ref(unknownShort1); \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Unknown Short 3" ) \
-  return attr_ref(unknown_short_3); \
+  return attr_ref(unknownShort3); \
 if ( attr_name == "Unknown Short 4" ) \
-  return attr_ref(unknown_short_4); \
+  return attr_ref(unknownShort4); \
 if ( attr_name == "Unknown Vector" ) \
-  return attr_ref(unknown_vector); \
+  return attr_ref(unknownVector); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4344,39 +4345,39 @@ return attr_ref(); \
 
 #define BHK_BOX_SHAPE_READ \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_short_1, in, version ); \
-NifStream( unknown_short_2, in, version ); \
-NifStream( unknown_short_3, in, version ); \
-NifStream( unknown_short_4, in, version ); \
-NifStream( unknown_vector, in, version ); \
-NifStream( unknown_float_2, in, version ); \
+NifStream( unknownInt, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownShort1, in, version ); \
+NifStream( unknownShort2, in, version ); \
+NifStream( unknownShort3, in, version ); \
+NifStream( unknownShort4, in, version ); \
+NifStream( unknownVector, in, version ); \
+NifStream( unknownFloat2, in, version ); \
 
 #define BHK_BOX_SHAPE_WRITE \
 AbhkShape::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_short_1, out, version ); \
-NifStream( unknown_short_2, out, version ); \
-NifStream( unknown_short_3, out, version ); \
-NifStream( unknown_short_4, out, version ); \
-NifStream( unknown_vector, out, version ); \
-NifStream( unknown_float_2, out, version ); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownShort1, out, version ); \
+NifStream( unknownShort2, out, version ); \
+NifStream( unknownShort3, out, version ); \
+NifStream( unknownShort4, out, version ); \
+NifStream( unknownVector, out, version ); \
+NifStream( unknownFloat2, out, version ); \
 
 #define BHK_BOX_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Short 1:  " << unknown_short_1 << endl; \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "     Unknown Short 3:  " << unknown_short_3 << endl; \
-out << "     Unknown Short 4:  " << unknown_short_4 << endl; \
-out << "      Unknown Vector:  " << unknown_vector << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Short 1:  " << unknownShort1 << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "     Unknown Short 3:  " << unknownShort3 << endl; \
+out << "     Unknown Short 4:  " << unknownShort4 << endl; \
+out << "      Unknown Vector:  " << unknownVector << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 // 
@@ -4393,40 +4394,40 @@ return out.str(); \
 // - Unknown.
 // - Unknown. Matches Radius.
 #define BHK_CAPSULE_SHAPE_MEMBERS \
-uint unknown_int_1; \
+uint unknownInt1; \
 float radius; \
-ushort unknown_short_1; \
-ushort unknown_short_2; \
-ushort unknown_short_3; \
-ushort unknown_short_4; \
-Vector3 unknown_vector_1; \
-float radius_1; \
-Vector3 unknown_vector_2; \
-float radius_2; \
+ushort unknownShort1; \
+ushort unknownShort2; \
+ushort unknownShort3; \
+ushort unknownShort4; \
+Vector3 unknownVector1; \
+float radius1; \
+Vector3 unknownVector2; \
+float radius2; \
 
 #define BHK_CAPSULE_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Radius" ) \
   return attr_ref(radius); \
 if ( attr_name == "Unknown Short 1" ) \
-  return attr_ref(unknown_short_1); \
+  return attr_ref(unknownShort1); \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Unknown Short 3" ) \
-  return attr_ref(unknown_short_3); \
+  return attr_ref(unknownShort3); \
 if ( attr_name == "Unknown Short 4" ) \
-  return attr_ref(unknown_short_4); \
+  return attr_ref(unknownShort4); \
 if ( attr_name == "Unknown Vector 1" ) \
-  return attr_ref(unknown_vector_1); \
+  return attr_ref(unknownVector1); \
 if ( attr_name == "Radius 1" ) \
-  return attr_ref(radius_1); \
+  return attr_ref(radius1); \
 if ( attr_name == "Unknown Vector 2" ) \
-  return attr_ref(unknown_vector_2); \
+  return attr_ref(unknownVector2); \
 if ( attr_name == "Radius 2" ) \
-  return attr_ref(radius_2); \
+  return attr_ref(radius2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4436,45 +4437,45 @@ return attr_ref(); \
 
 #define BHK_CAPSULE_SHAPE_READ \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int_1, in, version ); \
+NifStream( unknownInt1, in, version ); \
 NifStream( radius, in, version ); \
-NifStream( unknown_short_1, in, version ); \
-NifStream( unknown_short_2, in, version ); \
-NifStream( unknown_short_3, in, version ); \
-NifStream( unknown_short_4, in, version ); \
-NifStream( unknown_vector_1, in, version ); \
-NifStream( radius_1, in, version ); \
-NifStream( unknown_vector_2, in, version ); \
-NifStream( radius_2, in, version ); \
+NifStream( unknownShort1, in, version ); \
+NifStream( unknownShort2, in, version ); \
+NifStream( unknownShort3, in, version ); \
+NifStream( unknownShort4, in, version ); \
+NifStream( unknownVector1, in, version ); \
+NifStream( radius1, in, version ); \
+NifStream( unknownVector2, in, version ); \
+NifStream( radius2, in, version ); \
 
 #define BHK_CAPSULE_SHAPE_WRITE \
 AbhkShape::Write( out, version ); \
-NifStream( unknown_int_1, out, version ); \
+NifStream( unknownInt1, out, version ); \
 NifStream( radius, out, version ); \
-NifStream( unknown_short_1, out, version ); \
-NifStream( unknown_short_2, out, version ); \
-NifStream( unknown_short_3, out, version ); \
-NifStream( unknown_short_4, out, version ); \
-NifStream( unknown_vector_1, out, version ); \
-NifStream( radius_1, out, version ); \
-NifStream( unknown_vector_2, out, version ); \
-NifStream( radius_2, out, version ); \
+NifStream( unknownShort1, out, version ); \
+NifStream( unknownShort2, out, version ); \
+NifStream( unknownShort3, out, version ); \
+NifStream( unknownShort4, out, version ); \
+NifStream( unknownVector1, out, version ); \
+NifStream( radius1, out, version ); \
+NifStream( unknownVector2, out, version ); \
+NifStream( radius2, out, version ); \
 
 #define BHK_CAPSULE_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 out << "              Radius:  " << radius << endl; \
-out << "     Unknown Short 1:  " << unknown_short_1 << endl; \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "     Unknown Short 3:  " << unknown_short_3 << endl; \
-out << "     Unknown Short 4:  " << unknown_short_4 << endl; \
-out << "    Unknown Vector 1:  " << unknown_vector_1 << endl; \
-out << "            Radius 1:  " << radius_1 << endl; \
-out << "    Unknown Vector 2:  " << unknown_vector_2 << endl; \
-out << "            Radius 2:  " << radius_2 << endl; \
+out << "     Unknown Short 1:  " << unknownShort1 << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "     Unknown Short 3:  " << unknownShort3 << endl; \
+out << "     Unknown Short 4:  " << unknownShort4 << endl; \
+out << "    Unknown Vector 1:  " << unknownVector1 << endl; \
+out << "            Radius 1:  " << radius1 << endl; \
+out << "    Unknown Vector 2:  " << unknownVector2 << endl; \
+out << "            Radius 2:  " << radius2 << endl; \
 return out.str(); \
 
 // 
@@ -4541,16 +4542,16 @@ return out.str(); \
 // - Unknown. Vertices?
 // - Unknown. More vertices?
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
-uint unknown_int; \
-vector<float > unknown_floats_1; \
-vector<Float4 > unknown_vectors_1; \
-vector<Float4 > unknown_vectors_2; \
+uint unknownInt; \
+vector<float > unknownFloats1; \
+vector<Float4 > unknownVectors1; \
+vector<Float4 > unknownVectors2; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4559,38 +4560,38 @@ return attr_ref(); \
 #define BHK_CONVEX_VERTICES_SHAPE_CONSTRUCT
 
 #define BHK_CONVEX_VERTICES_SHAPE_READ \
-uint num_1; \
-uint num_2; \
+uint num1; \
+uint num2; \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
-unknown_floats_1.resize(7); \
-NifStream( unknown_floats_1, in, version ); \
-NifStream( num_1, in, version ); \
-unknown_vectors_1.resize(num_1); \
-NifStream( unknown_vectors_1, in, version ); \
-NifStream( num_2, in, version ); \
-unknown_vectors_2.resize(num_2); \
-NifStream( unknown_vectors_2, in, version ); \
+NifStream( unknownInt, in, version ); \
+unknownFloats1.resize(7); \
+NifStream( unknownFloats1, in, version ); \
+NifStream( num1, in, version ); \
+unknownVectors1.resize(num1); \
+NifStream( unknownVectors1, in, version ); \
+NifStream( num2, in, version ); \
+unknownVectors2.resize(num2); \
+NifStream( unknownVectors2, in, version ); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_WRITE \
-uint num_1; \
-uint num_2; \
+uint num1; \
+uint num2; \
 AbhkShape::Write( out, version ); \
-num_1 = uint(unknown_vectors_1.size()); \
-num_2 = uint(unknown_vectors_2.size()); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_floats_1, out, version ); \
-NifStream( num_1, out, version ); \
-NifStream( unknown_vectors_1, out, version ); \
-NifStream( num_2, out, version ); \
-NifStream( unknown_vectors_2, out, version ); \
+num1 = uint(unknownVectors1.size()); \
+num2 = uint(unknownVectors2.size()); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloats1, out, version ); \
+NifStream( num1, out, version ); \
+NifStream( unknownVectors1, out, version ); \
+NifStream( num2, out, version ); \
+NifStream( unknownVectors2, out, version ); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "    Unknown Floats 1:  -- data not shown --" << endl; \
 out << "               Num 1:  -- calculated --" << endl; \
 out << "   Unknown Vectors 1:  -- data not shown --" << endl; \
@@ -4603,7 +4604,7 @@ return out.str(); \
 //
 // - Unknown.
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
-vector<vector<float > > unknown_floats; \
+vector<vector<float > > unknownFloats; \
 
 #define BHK_HINGE_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkConstraint::GetAttr( attr_name ); \
@@ -4617,12 +4618,12 @@ return attr_ref(); \
 
 #define BHK_HINGE_CONSTRAINT_READ \
 AbhkConstraint::Read( in, version ); \
-unknown_floats.resize(5); \
-NifStream( unknown_floats, in, version ); \
+unknownFloats.resize(5); \
+NifStream( unknownFloats, in, version ); \
 
 #define BHK_HINGE_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define BHK_HINGE_CONSTRAINT_STRING \
 stringstream out; \
@@ -4637,13 +4638,13 @@ return out.str(); \
 //
 // - Could also be a float. Zero usually.
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
-uint unknown_int; \
+uint unknownInt; \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkRagdollConstraint::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4653,18 +4654,18 @@ return attr_ref(); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_READ \
 AbhkRagdollConstraint::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_WRITE \
 AbhkRagdollConstraint::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownInt, out, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkRagdollConstraint::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 // 
@@ -4675,16 +4676,16 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define BHK_LIST_SHAPE_MEMBERS \
-LinkGroup sub_shapes; \
-uint unknown_int; \
-vector<float > unknown_floats; \
-vector<uint > unknown_ints; \
+LinkGroup subShapes; \
+uint unknownInt; \
+vector<float > unknownFloats; \
+vector<uint > unknownInts; \
 
 #define BHK_LIST_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4693,33 +4694,33 @@ return attr_ref(); \
 #define BHK_LIST_SHAPE_CONSTRUCT
 
 #define BHK_LIST_SHAPE_READ \
-uint num_unknown_ints; \
+uint numUnknownInts; \
 AbhkShape::Read( in, version ); \
-NifStream( sub_shapes, in, version ); \
-NifStream( unknown_int, in, version ); \
-unknown_floats.resize(6); \
-NifStream( unknown_floats, in, version ); \
-NifStream( num_unknown_ints, in, version ); \
-unknown_ints.resize(num_unknown_ints); \
-NifStream( unknown_ints, in, version ); \
+NifStream( subShapes, in, version ); \
+NifStream( unknownInt, in, version ); \
+unknownFloats.resize(6); \
+NifStream( unknownFloats, in, version ); \
+NifStream( numUnknownInts, in, version ); \
+unknownInts.resize(numUnknownInts); \
+NifStream( unknownInts, in, version ); \
 
 #define BHK_LIST_SHAPE_WRITE \
-uint num_unknown_ints; \
+uint numUnknownInts; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints = uint(unknown_ints.size()); \
-NifStream( sub_shapes, out, version ); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( num_unknown_ints, out, version ); \
-NifStream( unknown_ints, out, version ); \
+numUnknownInts = uint(unknownInts.size()); \
+NifStream( subShapes, out, version ); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( numUnknownInts, out, version ); \
+NifStream( unknownInts, out, version ); \
 
 #define BHK_LIST_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "          Sub Shapes:  " << sub_shapes << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "          Sub Shapes:  " << subShapes << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "    Num Unknown Ints:  -- calculated --" << endl; \
 out << "        Unknown Ints:  -- data not shown --" << endl; \
@@ -4739,14 +4740,14 @@ return out.str(); \
 // - Unknown.
 #define BHK_MALLEABLE_CONSTRAINT_MEMBERS \
 uint type; \
-uint unknown_int_2; \
-uint unknown_link_1; \
-uint unknown_link_2; \
-uint unknown_int_3; \
-vector<float > unknown_floats_1; \
-vector<vector<float > > unknown_floats; \
-float unknown_float_1; \
-float unknown_float_2; \
+uint unknownInt2; \
+Link unknownLink1; \
+Link unknownLink2; \
+uint unknownInt3; \
+vector<float > unknownFloats1; \
+vector<vector<float > > unknownFloats; \
+float unknownFloat1; \
+float unknownFloat2; \
 
 #define BHK_MALLEABLE_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkConstraint::GetAttr( attr_name ); \
@@ -4754,17 +4755,17 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Type" ) \
   return attr_ref(type); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Unknown Link 1" ) \
-  return attr_ref(unknown_link_1); \
+  return attr_ref(unknownLink1); \
 if ( attr_name == "Unknown Link 2" ) \
-  return attr_ref(unknown_link_2); \
+  return attr_ref(unknownLink2); \
 if ( attr_name == "Unknown Int 3" ) \
-  return attr_ref(unknown_int_3); \
+  return attr_ref(unknownInt3); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4775,31 +4776,31 @@ return attr_ref(); \
 #define BHK_MALLEABLE_CONSTRAINT_READ \
 AbhkConstraint::Read( in, version ); \
 NifStream( type, in, version ); \
-NifStream( unknown_int_2, in, version ); \
-NifStream( unknown_link_1, in, version ); \
-NifStream( unknown_link_2, in, version ); \
-NifStream( unknown_int_3, in, version ); \
-unknown_floats_1.resize(3); \
-NifStream( unknown_floats_1, in, version ); \
-unknown_floats.resize(7); \
-NifStream( unknown_floats, in, version ); \
-NifStream( unknown_float_1, in, version ); \
+NifStream( unknownInt2, in, version ); \
+NifStream( unknownLink1, in, version ); \
+NifStream( unknownLink2, in, version ); \
+NifStream( unknownInt3, in, version ); \
+unknownFloats1.resize(3); \
+NifStream( unknownFloats1, in, version ); \
+unknownFloats.resize(7); \
+NifStream( unknownFloats, in, version ); \
+NifStream( unknownFloat1, in, version ); \
 if ( type == 2 ) { \
-  NifStream( unknown_float_2, in, version ); \
+  NifStream( unknownFloat2, in, version ); \
 }; \
 
 #define BHK_MALLEABLE_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, version ); \
 NifStream( type, out, version ); \
-NifStream( unknown_int_2, out, version ); \
-NifStream( unknown_link_1, out, version ); \
-NifStream( unknown_link_2, out, version ); \
-NifStream( unknown_int_3, out, version ); \
-NifStream( unknown_floats_1, out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_float_1, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( unknownLink1, out, version ); \
+NifStream( unknownLink2, out, version ); \
+NifStream( unknownInt3, out, version ); \
+NifStream( unknownFloats1, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownFloat1, out, version ); \
 if ( type == 2 ) { \
-  NifStream( unknown_float_2, out, version ); \
+  NifStream( unknownFloat2, out, version ); \
 }; \
 
 #define BHK_MALLEABLE_CONSTRAINT_STRING \
@@ -4808,14 +4809,14 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "                Type:  " << type << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
-out << "      Unknown Link 1:  " << unknown_link_1 << endl; \
-out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
-out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
+out << "      Unknown Link 1:  " << unknownLink1 << endl; \
+out << "      Unknown Link 2:  " << unknownLink2 << endl; \
+out << "       Unknown Int 3:  " << unknownInt3 << endl; \
 out << "    Unknown Floats 1:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 // 
@@ -4828,12 +4829,12 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
-uint shape; \
-uint unknown_int; \
-vector<byte > unknown_bytes_1; \
-float unknown_float; \
-vector<byte > unknown_bytes_2; \
-vector<float > unknown_floats; \
+Link shape; \
+uint unknownInt; \
+vector<byte > unknownBytes1; \
+float unknownFloat; \
+vector<byte > unknownBytes2; \
+vector<float > unknownFloats; \
 
 #define BHK_MOPP_BV_TREE_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
@@ -4841,9 +4842,9 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Shape" ) \
   return attr_ref(shape); \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4852,30 +4853,30 @@ return attr_ref(); \
 #define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT
 
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
-uint num_unknown_bytes_2; \
+uint numUnknownBytes2; \
 AbhkShape::Read( in, version ); \
 NifStream( shape, in, version ); \
-NifStream( unknown_int, in, version ); \
-unknown_bytes_1.resize(8); \
-NifStream( unknown_bytes_1, in, version ); \
-NifStream( unknown_float, in, version ); \
-NifStream( num_unknown_bytes_2, in, version ); \
-unknown_bytes_2.resize(num_unknown_bytes_2); \
-NifStream( unknown_bytes_2, in, version ); \
-unknown_floats.resize(4); \
-NifStream( unknown_floats, in, version ); \
+NifStream( unknownInt, in, version ); \
+unknownBytes1.resize(8); \
+NifStream( unknownBytes1, in, version ); \
+NifStream( unknownFloat, in, version ); \
+NifStream( numUnknownBytes2, in, version ); \
+unknownBytes2.resize(numUnknownBytes2); \
+NifStream( unknownBytes2, in, version ); \
+unknownFloats.resize(4); \
+NifStream( unknownFloats, in, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_WRITE \
-uint num_unknown_bytes_2; \
+uint numUnknownBytes2; \
 AbhkShape::Write( out, version ); \
-num_unknown_bytes_2 = uint(unknown_bytes_2.size()); \
+numUnknownBytes2 = uint(unknownBytes2.size()); \
 NifStream( shape, out, version ); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_bytes_1, out, version ); \
-NifStream( unknown_float, out, version ); \
-NifStream( num_unknown_bytes_2, out, version ); \
-NifStream( unknown_bytes_2, out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownBytes1, out, version ); \
+NifStream( unknownFloat, out, version ); \
+NifStream( numUnknownBytes2, out, version ); \
+NifStream( unknownBytes2, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_STRING \
 stringstream out; \
@@ -4883,9 +4884,9 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
 out << "               Shape:  " << shape << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "     Unknown Bytes 1:  -- data not shown --" << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 out << " Num Unknown Bytes 2:  -- calculated --" << endl; \
 out << "     Unknown Bytes 2:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
@@ -4901,26 +4902,26 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define BHK_MULTI_SPHERE_SHAPE_MEMBERS \
-uint unknown_int; \
-float unknown_float_1; \
-float unknown_float_2; \
-float unknown_float_3; \
-uint unknown_int_2; \
-vector<float > unknown_floats; \
+uint unknownInt; \
+float unknownFloat1; \
+float unknownFloat2; \
+float unknownFloat3; \
+uint unknownInt2; \
+vector<float > unknownFloats; \
 
 #define BHK_MULTI_SPHERE_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4930,33 +4931,33 @@ return attr_ref(); \
 
 #define BHK_MULTI_SPHERE_SHAPE_READ \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_int_2, in, version ); \
-unknown_floats.resize(8); \
-NifStream( unknown_floats, in, version ); \
+NifStream( unknownInt, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownInt2, in, version ); \
+unknownFloats.resize(8); \
+NifStream( unknownFloats, in, version ); \
 
 #define BHK_MULTI_SPHERE_SHAPE_WRITE \
 AbhkShape::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_int_2, out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define BHK_MULTI_SPHERE_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -4971,21 +4972,21 @@ return out.str(); \
 // - Refers to a bunch of NiTriStripsData blocks that make up this shape.
 // - Unknown.
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
-uint unknown_int; \
-vector<float > unknown_floats_1; \
-vector<uint > unknown_ints_1; \
-vector<float > unknown_floats_2; \
-uint unknown_int_2; \
+uint unknownInt; \
+vector<float > unknownFloats1; \
+vector<uint > unknownInts1; \
+vector<float > unknownFloats2; \
+uint unknownInt2; \
 LinkGroup strips; \
-vector<uint > unknown_ints_3; \
+vector<uint > unknownInts3; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -4994,44 +4995,44 @@ return attr_ref(); \
 #define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT
 
 #define BHK_NI_TRI_STRIPS_SHAPE_READ \
-uint num_unknown_ints_3; \
+uint numUnknownInts3; \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
-unknown_floats_1.resize(2); \
-NifStream( unknown_floats_1, in, version ); \
-unknown_ints_1.resize(5); \
-NifStream( unknown_ints_1, in, version ); \
-unknown_floats_2.resize(3); \
-NifStream( unknown_floats_2, in, version ); \
-NifStream( unknown_int_2, in, version ); \
+NifStream( unknownInt, in, version ); \
+unknownFloats1.resize(2); \
+NifStream( unknownFloats1, in, version ); \
+unknownInts1.resize(5); \
+NifStream( unknownInts1, in, version ); \
+unknownFloats2.resize(3); \
+NifStream( unknownFloats2, in, version ); \
+NifStream( unknownInt2, in, version ); \
 NifStream( strips, in, version ); \
-NifStream( num_unknown_ints_3, in, version ); \
-unknown_ints_3.resize(num_unknown_ints_3); \
-NifStream( unknown_ints_3, in, version ); \
+NifStream( numUnknownInts3, in, version ); \
+unknownInts3.resize(numUnknownInts3); \
+NifStream( unknownInts3, in, version ); \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_WRITE \
-uint num_unknown_ints_3; \
+uint numUnknownInts3; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints_3 = uint(unknown_ints_3.size()); \
-NifStream( unknown_int, out, version ); \
-NifStream( unknown_floats_1, out, version ); \
-NifStream( unknown_ints_1, out, version ); \
-NifStream( unknown_floats_2, out, version ); \
-NifStream( unknown_int_2, out, version ); \
+numUnknownInts3 = uint(unknownInts3.size()); \
+NifStream( unknownInt, out, version ); \
+NifStream( unknownFloats1, out, version ); \
+NifStream( unknownInts1, out, version ); \
+NifStream( unknownFloats2, out, version ); \
+NifStream( unknownInt2, out, version ); \
 NifStream( strips, out, version ); \
-NifStream( num_unknown_ints_3, out, version ); \
-NifStream( unknown_ints_3, out, version ); \
+NifStream( numUnknownInts3, out, version ); \
+NifStream( unknownInts3, out, version ); \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "    Unknown Floats 1:  -- data not shown --" << endl; \
 out << "      Unknown Ints 1:  -- data not shown --" << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
 out << "              Strips:  " << strips << endl; \
 out << "  Num Unknown Ints 3:  -- calculated --" << endl; \
 out << "      Unknown Ints 3:  -- data not shown --" << endl; \
@@ -5044,9 +5045,9 @@ return out.str(); \
 // - Unknown.
 // - A link to the shape's NiTriStripsData.
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
-vector<vector<uint > > unknown_ints; \
-vector<float > unknown_floats; \
-uint data; \
+vector<vector<uint > > unknownInts; \
+vector<float > unknownFloats; \
+Link data; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
@@ -5061,22 +5062,22 @@ return attr_ref(); \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_READ \
-ushort num_unknown_ints; \
+ushort numUnknownInts; \
 AbhkShape::Read( in, version ); \
-NifStream( num_unknown_ints, in, version ); \
-unknown_ints.resize(num_unknown_ints); \
-NifStream( unknown_ints, in, version ); \
-unknown_floats.resize(13); \
-NifStream( unknown_floats, in, version ); \
+NifStream( numUnknownInts, in, version ); \
+unknownInts.resize(numUnknownInts); \
+NifStream( unknownInts, in, version ); \
+unknownFloats.resize(13); \
+NifStream( unknownFloats, in, version ); \
 NifStream( data, in, version ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_WRITE \
-ushort num_unknown_ints; \
+ushort numUnknownInts; \
 AbhkShape::Write( out, version ); \
-num_unknown_ints = ushort(unknown_ints.size()); \
-NifStream( num_unknown_ints, out, version ); \
-NifStream( unknown_ints, out, version ); \
-NifStream( unknown_floats, out, version ); \
+numUnknownInts = ushort(unknownInts.size()); \
+NifStream( numUnknownInts, out, version ); \
+NifStream( unknownInts, out, version ); \
+NifStream( unknownFloats, out, version ); \
 NifStream( data, out, version ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_STRING \
@@ -5096,8 +5097,8 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
-vector<vector<float > > unknown_floats; \
-vector<float > unknown_floats_2; \
+vector<vector<float > > unknownFloats; \
+vector<float > unknownFloats2; \
 
 #define BHK_PRISMATIC_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkConstraint::GetAttr( attr_name ); \
@@ -5111,15 +5112,15 @@ return attr_ref(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_READ \
 AbhkConstraint::Read( in, version ); \
-unknown_floats.resize(8); \
-NifStream( unknown_floats, in, version ); \
-unknown_floats_2.resize(3); \
-NifStream( unknown_floats_2, in, version ); \
+unknownFloats.resize(8); \
+NifStream( unknownFloats, in, version ); \
+unknownFloats2.resize(3); \
+NifStream( unknownFloats2, in, version ); \
 
 #define BHK_PRISMATIC_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_floats_2, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownFloats2, out, version ); \
 
 #define BHK_PRISMATIC_CONSTRAINT_STRING \
 stringstream out; \
@@ -5223,11 +5224,11 @@ return out.str(); \
 // - Unknown. (1,0,0,0,0) x 3.
 // - Unknown.
 #define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS \
-uint shape; \
-uint unknown_int_1; \
-vector<float > unkown_floats; \
-vector<vector<float > > unknown_floats_2; \
-float unknown_float; \
+Link shape; \
+uint unknownInt1; \
+vector<float > unkownFloats; \
+vector<vector<float > > unknownFloats2; \
+float unknownFloat; \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
@@ -5235,9 +5236,9 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Shape" ) \
   return attr_ref(shape); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -5248,20 +5249,20 @@ return attr_ref(); \
 #define BHK_SIMPLE_SHAPE_PHANTOM_READ \
 AbhkShape::Read( in, version ); \
 NifStream( shape, in, version ); \
-NifStream( unknown_int_1, in, version ); \
-unkown_floats.resize(7); \
-NifStream( unkown_floats, in, version ); \
-unknown_floats_2.resize(3); \
-NifStream( unknown_floats_2, in, version ); \
-NifStream( unknown_float, in, version ); \
+NifStream( unknownInt1, in, version ); \
+unkownFloats.resize(7); \
+NifStream( unkownFloats, in, version ); \
+unknownFloats2.resize(3); \
+NifStream( unknownFloats2, in, version ); \
+NifStream( unknownFloat, in, version ); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_WRITE \
 AbhkShape::Write( out, version ); \
 NifStream( shape, out, version ); \
-NifStream( unknown_int_1, out, version ); \
-NifStream( unkown_floats, out, version ); \
-NifStream( unknown_floats_2, out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( unknownInt1, out, version ); \
+NifStream( unkownFloats, out, version ); \
+NifStream( unknownFloats2, out, version ); \
+NifStream( unknownFloat, out, version ); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_STRING \
 stringstream out; \
@@ -5269,10 +5270,10 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
 out << "               Shape:  " << shape << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 out << "       Unkown Floats:  -- data not shown --" << endl; \
 out << "    Unknown Floats 2:  -- data not shown --" << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 // 
@@ -5309,14 +5310,14 @@ return out.str(); \
 // - Unknown.
 // - This denotes the radius of the sphere.
 #define BHK_SPHERE_SHAPE_MEMBERS \
-uint unknown_int; \
+uint unknownInt; \
 float radius; \
 
 #define BHK_SPHERE_SHAPE_GETATTR \
 attr_ref attr = AbhkShape::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Radius" ) \
   return attr_ref(radius); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -5328,12 +5329,12 @@ return attr_ref(); \
 
 #define BHK_SPHERE_SHAPE_READ \
 AbhkShape::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 NifStream( radius, in, version ); \
 
 #define BHK_SPHERE_SHAPE_WRITE \
 AbhkShape::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownInt, out, version ); \
 NifStream( radius, out, version ); \
 
 #define BHK_SPHERE_SHAPE_STRING \
@@ -5341,7 +5342,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkShape::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "              Radius:  " << radius << endl; \
 return out.str(); \
 
@@ -5351,14 +5352,14 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS \
-vector<vector<float > > unknown_floats; \
-float unknown_float; \
+vector<vector<float > > unknownFloats; \
+float unknownFloat; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_GETATTR \
 attr_ref attr = AbhkConstraint::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -5368,14 +5369,14 @@ return attr_ref(); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_READ \
 AbhkConstraint::Read( in, version ); \
-unknown_floats.resize(2); \
-NifStream( unknown_floats, in, version ); \
-NifStream( unknown_float, in, version ); \
+unknownFloats.resize(2); \
+NifStream( unknownFloats, in, version ); \
+NifStream( unknownFloat, in, version ); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownFloat, out, version ); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_STRING \
 stringstream out; \
@@ -5383,7 +5384,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AbhkConstraint::asString(); \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 // 
@@ -5421,7 +5422,7 @@ return out.str(); \
 // - Unknown.
 #define B_S_BOUND_MEMBERS \
 string name; \
-vector<float > unknown_floats; \
+vector<float > unknownFloats; \
 
 #define B_S_BOUND_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -5438,13 +5439,13 @@ return attr_ref(); \
 #define B_S_BOUND_READ \
 AData::Read( in, version ); \
 NifStream( name, in, version ); \
-unknown_floats.resize(6); \
-NifStream( unknown_floats, in, version ); \
+unknownFloats.resize(6); \
+NifStream( unknownFloats, in, version ); \
 
 #define B_S_BOUND_WRITE \
 AData::Write( out, version ); \
 NifStream( name, out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define B_S_BOUND_STRING \
 stringstream out; \
@@ -5477,23 +5478,23 @@ return attr_ref(); \
 #define B_S_FURNITURE_MARKER_CONSTRUCT
 
 #define B_S_FURNITURE_MARKER_READ \
-uint num_positions; \
+uint numPositions; \
 AData::Read( in, version ); \
 if ( version <= 0x14000005 ) { \
   NifStream( name, in, version ); \
 }; \
-NifStream( num_positions, in, version ); \
-positions.resize(num_positions); \
+NifStream( numPositions, in, version ); \
+positions.resize(numPositions); \
 NifStream( positions, in, version ); \
 
 #define B_S_FURNITURE_MARKER_WRITE \
-uint num_positions; \
+uint numPositions; \
 AData::Write( out, version ); \
-num_positions = uint(positions.size()); \
+numPositions = uint(positions.size()); \
 if ( version <= 0x14000005 ) { \
   NifStream( name, out, version ); \
 }; \
-NifStream( num_positions, out, version ); \
+NifStream( numPositions, out, version ); \
 NifStream( positions, out, version ); \
 
 #define B_S_FURNITURE_MARKER_STRING \
@@ -5511,13 +5512,13 @@ return out.str(); \
 //
 // - A link to more keyframe data.
 #define B_S_KEYFRAME_CONTROLLER_MEMBERS \
-uint data_2; \
+Link data2; \
 
 #define B_S_KEYFRAME_CONTROLLER_GETATTR \
 attr_ref attr = AKeyframeController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Data 2" ) \
-  return attr_ref(data_2); \
+  return attr_ref(data2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -5527,18 +5528,18 @@ return attr_ref(); \
 
 #define B_S_KEYFRAME_CONTROLLER_READ \
 AKeyframeController::Read( in, version ); \
-NifStream( data_2, in, version ); \
+NifStream( data2, in, version ); \
 
 #define B_S_KEYFRAME_CONTROLLER_WRITE \
 AKeyframeController::Write( out, version ); \
-NifStream( data_2, out, version ); \
+NifStream( data2, out, version ); \
 
 #define B_S_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AKeyframeController::asString(); \
-out << "              Data 2:  " << data_2 << endl; \
+out << "              Data 2:  " << data2 << endl; \
 return out.str(); \
 
 // 
@@ -5546,13 +5547,13 @@ return out.str(); \
 //
 // - Unknown.
 #define B_S_PARENT_VELOCITY_MODIFIER_MEMBERS \
-float unknown_float; \
+float unknownFloat; \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -5562,18 +5563,18 @@ return attr_ref(); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( unknown_float, in, version ); \
+NifStream( unknownFloat, in, version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( unknownFloat, out, version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 // 
@@ -5682,20 +5683,20 @@ return out.str(); \
 // - Unknown.
 // - Unknown links; options of the radio button?
 #define FX_RADIO_BUTTON_MEMBERS \
-uint unknown_int_1; \
-uint unknown_int__2; \
-uint unknown_int_3; \
-LinkGroup unknown_links; \
+uint unknownInt1; \
+uint unknownInt2; \
+uint unknownInt3; \
+LinkGroup unknownLinks; \
 
 #define FX_RADIO_BUTTON_GETATTR \
 attr_ref attr = AFx::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Int  2" ) \
-  return attr_ref(unknown_int__2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Unknown Int 3" ) \
-  return attr_ref(unknown_int_3); \
+  return attr_ref(unknownInt3); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -5705,27 +5706,27 @@ return attr_ref(); \
 
 #define FX_RADIO_BUTTON_READ \
 AFx::Read( in, version ); \
-NifStream( unknown_int_1, in, version ); \
-NifStream( unknown_int__2, in, version ); \
-NifStream( unknown_int_3, in, version ); \
-NifStream( unknown_links, in, version ); \
+NifStream( unknownInt1, in, version ); \
+NifStream( unknownInt2, in, version ); \
+NifStream( unknownInt3, in, version ); \
+NifStream( unknownLinks, in, version ); \
 
 #define FX_RADIO_BUTTON_WRITE \
 AFx::Write( out, version ); \
-NifStream( unknown_int_1, out, version ); \
-NifStream( unknown_int__2, out, version ); \
-NifStream( unknown_int_3, out, version ); \
-NifStream( unknown_links, out, version ); \
+NifStream( unknownInt1, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( unknownInt3, out, version ); \
+NifStream( unknownLinks, out, version ); \
 
 #define FX_RADIO_BUTTON_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AFx::asString(); \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
-out << "      Unknown Int  2:  " << unknown_int__2 << endl; \
-out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
-out << "       Unknown Links:  " << unknown_links << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
+out << "      Unknown Int  2:  " << unknownInt2 << endl; \
+out << "       Unknown Int 3:  " << unknownInt3 << endl; \
+out << "       Unknown Links:  " << unknownLinks << endl; \
 return out.str(); \
 
 // 
@@ -5776,25 +5777,25 @@ return attr_ref(); \
 #define HK_PACKED_NI_TRI_STRIPS_DATA_CONSTRUCT
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_READ \
-uint num_triangles; \
-uint num_vertices; \
+uint numTriangles; \
+uint numVertices; \
 AbhkShape::Read( in, version ); \
-NifStream( num_triangles, in, version ); \
-triangles.resize(num_triangles); \
+NifStream( numTriangles, in, version ); \
+triangles.resize(numTriangles); \
 NifStream( triangles, in, version ); \
-NifStream( num_vertices, in, version ); \
-vertices.resize(num_vertices); \
+NifStream( numVertices, in, version ); \
+vertices.resize(numVertices); \
 NifStream( vertices, in, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_WRITE \
-uint num_triangles; \
-uint num_vertices; \
+uint numTriangles; \
+uint numVertices; \
 AbhkShape::Write( out, version ); \
-num_triangles = uint(triangles.size()); \
-num_vertices = uint(vertices.size()); \
-NifStream( num_triangles, out, version ); \
+numTriangles = uint(triangles.size()); \
+numVertices = uint(vertices.size()); \
+NifStream( numTriangles, out, version ); \
 NifStream( triangles, out, version ); \
-NifStream( num_vertices, out, version ); \
+NifStream( numVertices, out, version ); \
 NifStream( vertices, out, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_STRING \
@@ -5813,7 +5814,7 @@ return out.str(); \
 //
 // - Alpha controller data index.
 #define NI_ALPHA_CONTROLLER_MEMBERS \
-uint data; \
+Link data; \
 
 #define NI_ALPHA_CONTROLLER_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
@@ -6010,13 +6011,13 @@ return out.str(); \
 // 3: ALWAYS_FACE_CENTER
 // 4: RIGID_FACE_CENTER
 #define NI_BILLBOARD_NODE_MEMBERS \
-ushort billboard_mode; \
+ushort billboardMode; \
 
 #define NI_BILLBOARD_NODE_GETATTR \
 attr_ref attr = AParentNode::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Billboard Mode" ) \
-  return attr_ref(billboard_mode); \
+  return attr_ref(billboardMode); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6027,13 +6028,13 @@ return attr_ref(); \
 #define NI_BILLBOARD_NODE_READ \
 AParentNode::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( billboard_mode, in, version ); \
+  NifStream( billboardMode, in, version ); \
 }; \
 
 #define NI_BILLBOARD_NODE_WRITE \
 AParentNode::Write( out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( billboard_mode, out, version ); \
+  NifStream( billboardMode, out, version ); \
 }; \
 
 #define NI_BILLBOARD_NODE_STRING \
@@ -6041,7 +6042,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
-out << "      Billboard Mode:  " << billboard_mode << endl; \
+out << "      Billboard Mode:  " << billboardMode << endl; \
 return out.str(); \
 
 // 
@@ -6049,7 +6050,7 @@ return out.str(); \
 //
 // - The binary data.
 #define NI_BINARY_EXTRA_DATA_MEMBERS \
-ByteArray binary_data; \
+ByteArray binaryData; \
 
 #define NI_BINARY_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
@@ -6063,18 +6064,18 @@ return attr_ref(); \
 
 #define NI_BINARY_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
-NifStream( binary_data, in, version ); \
+NifStream( binaryData, in, version ); \
 
 #define NI_BINARY_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
-NifStream( binary_data, out, version ); \
+NifStream( binaryData, out, version ); \
 
 #define NI_BINARY_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "         Binary Data:  " << binary_data << endl; \
+out << "         Binary Data:  " << binaryData << endl; \
 return out.str(); \
 
 // 
@@ -6216,8 +6217,8 @@ return out.str(); \
 // - List of shape groups.
 // - Group of NiTriShape indices.
 #define NI_BONE_L_O_D_CONTROLLER_MEMBERS \
-vector<SkinShapeGroup > shape_groups_1; \
-LinkGroup shape_groups_2; \
+vector<SkinShapeGroup > shapeGroups1; \
+LinkGroup shapeGroups2; \
 
 #define NI_BONE_L_O_D_CONTROLLER_GETATTR \
 attr_ref attr = ABoneLODController::GetAttr( attr_name ); \
@@ -6230,20 +6231,20 @@ return attr_ref(); \
 #define NI_BONE_L_O_D_CONTROLLER_CONSTRUCT
 
 #define NI_BONE_L_O_D_CONTROLLER_READ \
-uint num_shape_groups; \
+uint numShapeGroups; \
 ABoneLODController::Read( in, version ); \
-NifStream( num_shape_groups, in, version ); \
-shape_groups_1.resize(num_shape_groups); \
-NifStream( shape_groups_1, in, version ); \
-NifStream( shape_groups_2, in, version ); \
+NifStream( numShapeGroups, in, version ); \
+shapeGroups1.resize(numShapeGroups); \
+NifStream( shapeGroups1, in, version ); \
+NifStream( shapeGroups2, in, version ); \
 
 #define NI_BONE_L_O_D_CONTROLLER_WRITE \
-uint num_shape_groups; \
+uint numShapeGroups; \
 ABoneLODController::Write( out, version ); \
-num_shape_groups = uint(shape_groups_1.size()); \
-NifStream( num_shape_groups, out, version ); \
-NifStream( shape_groups_1, out, version ); \
-NifStream( shape_groups_2, out, version ); \
+numShapeGroups = uint(shapeGroups1.size()); \
+NifStream( numShapeGroups, out, version ); \
+NifStream( shapeGroups1, out, version ); \
+NifStream( shapeGroups2, out, version ); \
 
 #define NI_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
@@ -6252,7 +6253,7 @@ out << setprecision(1); \
 out << ABoneLODController::asString(); \
 out << "    Num Shape Groups:  -- calculated --" << endl; \
 out << "      Shape Groups 1:  -- data not shown --" << endl; \
-out << "      Shape Groups 2:  " << shape_groups_2 << endl; \
+out << "      Shape Groups 2:  " << shapeGroups2 << endl; \
 return out.str(); \
 
 // 
@@ -6293,13 +6294,13 @@ return out.str(); \
 //
 // - The boolean extra data value.
 #define NI_BOOLEAN_EXTRA_DATA_MEMBERS \
-byte boolean_data; \
+byte booleanData; \
 
 #define NI_BOOLEAN_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Boolean Data" ) \
-  return attr_ref(boolean_data); \
+  return attr_ref(booleanData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6309,18 +6310,18 @@ return attr_ref(); \
 
 #define NI_BOOLEAN_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
-NifStream( boolean_data, in, version ); \
+NifStream( booleanData, in, version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
-NifStream( boolean_data, out, version ); \
+NifStream( booleanData, out, version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "        Boolean Data:  " << boolean_data << endl; \
+out << "        Boolean Data:  " << booleanData << endl; \
 return out.str(); \
 
 // 
@@ -6329,14 +6330,14 @@ return out.str(); \
 // - Value when posed?  At time 0?
 // - Refers to a NiBoolData block.
 #define NI_BOOL_INTERPOLATOR_MEMBERS \
-bool bool_value; \
-uint data; \
+bool boolValue; \
+Link data; \
 
 #define NI_BOOL_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Bool Value" ) \
-  return attr_ref(bool_value); \
+  return attr_ref(boolValue); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -6348,12 +6349,12 @@ return attr_ref(); \
 
 #define NI_BOOL_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( bool_value, in, version ); \
+NifStream( boolValue, in, version ); \
 NifStream( data, in, version ); \
 
 #define NI_BOOL_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( bool_value, out, version ); \
+NifStream( boolValue, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_BOOL_INTERPOLATOR_STRING \
@@ -6361,7 +6362,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "          Bool Value:  " << bool_value << endl; \
+out << "          Bool Value:  " << boolValue << endl; \
 out << "                Data:  " << data << endl; \
 return out.str(); \
 
@@ -6372,7 +6373,7 @@ return out.str(); \
 // - The bool data.
 #define NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS \
 byte bool; \
-uint data; \
+Link data; \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -6524,13 +6525,13 @@ return out.str(); \
 //
 // - Unknown.
 #define NI_B_SPLINE_BASIS_DATA_MEMBERS \
-uint unknown_int; \
+uint unknownInt; \
 
 #define NI_B_SPLINE_BASIS_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6540,18 +6541,18 @@ return attr_ref(); \
 
 #define NI_B_SPLINE_BASIS_DATA_READ \
 AData::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_WRITE \
 AData::Write( out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( unknownInt, out, version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 // 
@@ -6559,7 +6560,7 @@ return out.str(); \
 //
 // - Unknown.
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS \
-vector<float > unknown_floats; \
+vector<float > unknownFloats; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_GETATTR \
 attr_ref attr = ABSplineCompInterpolator::GetAttr( attr_name ); \
@@ -6573,12 +6574,12 @@ return attr_ref(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_READ \
 ABSplineCompInterpolator::Read( in, version ); \
-unknown_floats.resize(6); \
-NifStream( unknown_floats, in, version ); \
+unknownFloats.resize(6); \
+NifStream( unknownFloats, in, version ); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_WRITE \
 ABSplineCompInterpolator::Write( out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
@@ -6595,9 +6596,9 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
-uint data; \
-uint unknown_link; \
-vector<float > unknown_floats; \
+Link data; \
+Link unknownLink; \
+vector<float > unknownFloats; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_GETATTR \
 attr_ref attr = ABSplineCompInterpolator::GetAttr( attr_name ); \
@@ -6605,7 +6606,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6616,15 +6617,15 @@ return attr_ref(); \
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ \
 ABSplineCompInterpolator::Read( in, version ); \
 NifStream( data, in, version ); \
-NifStream( unknown_link, in, version ); \
-unknown_floats.resize(6); \
-NifStream( unknown_floats, in, version ); \
+NifStream( unknownLink, in, version ); \
+unknownFloats.resize(6); \
+NifStream( unknownFloats, in, version ); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_WRITE \
 ABSplineCompInterpolator::Write( out, version ); \
 NifStream( data, out, version ); \
-NifStream( unknown_link, out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownLink, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
@@ -6632,7 +6633,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABSplineCompInterpolator::asString(); \
 out << "                Data:  " << data << endl; \
-out << "        Unknown Link:  " << unknown_link << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -6643,8 +6644,8 @@ return out.str(); \
 // - Refers to NiBSPlineBasisData.
 // - Unknown.
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
-uint data; \
-uint basis_data; \
+Link data; \
+Link basisData; \
 vector<float > unknown4; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_GETATTR \
@@ -6653,7 +6654,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Basis Data" ) \
-  return attr_ref(basis_data); \
+  return attr_ref(basisData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6664,14 +6665,14 @@ return attr_ref(); \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 ABSplineCompInterpolator::Read( in, version ); \
 NifStream( data, in, version ); \
-NifStream( basis_data, in, version ); \
+NifStream( basisData, in, version ); \
 unknown4.resize(17); \
 NifStream( unknown4, in, version ); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_WRITE \
 ABSplineCompInterpolator::Write( out, version ); \
 NifStream( data, out, version ); \
-NifStream( basis_data, out, version ); \
+NifStream( basisData, out, version ); \
 NifStream( unknown4, out, version ); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_STRING \
@@ -6680,7 +6681,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABSplineCompInterpolator::asString(); \
 out << "                Data:  " << data << endl; \
-out << "          Basis Data:  " << basis_data << endl; \
+out << "          Basis Data:  " << basisData << endl; \
 out << "            Unknown4:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -6690,14 +6691,14 @@ return out.str(); \
 // - Unknown. Zero?
 // - Unknown data. Could be shorts or bytes or...
 #define NI_B_SPLINE_DATA_MEMBERS \
-uint unknown_int; \
-vector<vector<byte > > unknown_data; \
+uint unknownInt; \
+vector<vector<byte > > unknownData; \
 
 #define NI_B_SPLINE_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6708,25 +6709,25 @@ return attr_ref(); \
 #define NI_B_SPLINE_DATA_READ \
 uint count; \
 AData::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( unknownInt, in, version ); \
 NifStream( count, in, version ); \
-unknown_data.resize(count); \
-NifStream( unknown_data, in, version ); \
+unknownData.resize(count); \
+NifStream( unknownData, in, version ); \
 
 #define NI_B_SPLINE_DATA_WRITE \
 uint count; \
 AData::Write( out, version ); \
-count = uint(unknown_data.size()); \
-NifStream( unknown_int, out, version ); \
+count = uint(unknownData.size()); \
+NifStream( unknownInt, out, version ); \
 NifStream( count, out, version ); \
-NifStream( unknown_data, out, version ); \
+NifStream( unknownData, out, version ); \
 
 #define NI_B_SPLINE_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "               Count:  -- calculated --" << endl; \
 out << "        Unknown Data:  -- data not shown --" << endl; \
 return out.str(); \
@@ -6751,58 +6752,58 @@ return out.str(); \
 // - Unknown.  Changing value crashes viewer.
 // - Unknown.  Changing value crashes viewer.
 #define NI_CAMERA_MEMBERS \
-ushort unknown_short; \
-float frustum_left; \
-float frustum_right; \
-float frustum_top; \
-float frustum_bottom; \
-float frustum_near; \
-float frustum_far; \
-bool use_orthographic_projection; \
-float viewport_left; \
-float viewport_right; \
-float viewport_top; \
-float viewport_bottom; \
-float lod_adjust; \
-uint unknown_link_; \
-uint unknown_int; \
-uint unknown_int_2; \
+ushort unknownShort; \
+float frustumLeft; \
+float frustumRight; \
+float frustumTop; \
+float frustumBottom; \
+float frustumNear; \
+float frustumFar; \
+bool useOrthographicProjection; \
+float viewportLeft; \
+float viewportRight; \
+float viewportTop; \
+float viewportBottom; \
+float lodAdjust; \
+Link unknownLink_; \
+uint unknownInt; \
+uint unknownInt2; \
 
 #define NI_CAMERA_GETATTR \
 attr_ref attr = ANode::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Frustum Left" ) \
-  return attr_ref(frustum_left); \
+  return attr_ref(frustumLeft); \
 if ( attr_name == "Frustum Right" ) \
-  return attr_ref(frustum_right); \
+  return attr_ref(frustumRight); \
 if ( attr_name == "Frustum Top" ) \
-  return attr_ref(frustum_top); \
+  return attr_ref(frustumTop); \
 if ( attr_name == "Frustum Bottom" ) \
-  return attr_ref(frustum_bottom); \
+  return attr_ref(frustumBottom); \
 if ( attr_name == "Frustum Near" ) \
-  return attr_ref(frustum_near); \
+  return attr_ref(frustumNear); \
 if ( attr_name == "Frustum Far" ) \
-  return attr_ref(frustum_far); \
+  return attr_ref(frustumFar); \
 if ( attr_name == "Use Orthographic Projection" ) \
-  return attr_ref(use_orthographic_projection); \
+  return attr_ref(useOrthographicProjection); \
 if ( attr_name == "Viewport Left" ) \
-  return attr_ref(viewport_left); \
+  return attr_ref(viewportLeft); \
 if ( attr_name == "Viewport Right" ) \
-  return attr_ref(viewport_right); \
+  return attr_ref(viewportRight); \
 if ( attr_name == "Viewport Top" ) \
-  return attr_ref(viewport_top); \
+  return attr_ref(viewportTop); \
 if ( attr_name == "Viewport Bottom" ) \
-  return attr_ref(viewport_bottom); \
+  return attr_ref(viewportBottom); \
 if ( attr_name == "LOD Adjust" ) \
-  return attr_ref(lod_adjust); \
+  return attr_ref(lodAdjust); \
 if ( attr_name == "Unknown Link?" ) \
-  return attr_ref(unknown_link_); \
+  return attr_ref(unknownLink_); \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -6813,51 +6814,51 @@ return attr_ref(); \
 #define NI_CAMERA_READ \
 ANode::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
-NifStream( frustum_left, in, version ); \
-NifStream( frustum_right, in, version ); \
-NifStream( frustum_top, in, version ); \
-NifStream( frustum_bottom, in, version ); \
-NifStream( frustum_near, in, version ); \
-NifStream( frustum_far, in, version ); \
+NifStream( frustumLeft, in, version ); \
+NifStream( frustumRight, in, version ); \
+NifStream( frustumTop, in, version ); \
+NifStream( frustumBottom, in, version ); \
+NifStream( frustumNear, in, version ); \
+NifStream( frustumFar, in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( use_orthographic_projection, in, version ); \
+  NifStream( useOrthographicProjection, in, version ); \
 }; \
-NifStream( viewport_left, in, version ); \
-NifStream( viewport_right, in, version ); \
-NifStream( viewport_top, in, version ); \
-NifStream( viewport_bottom, in, version ); \
-NifStream( lod_adjust, in, version ); \
-NifStream( unknown_link_, in, version ); \
-NifStream( unknown_int, in, version ); \
+NifStream( viewportLeft, in, version ); \
+NifStream( viewportRight, in, version ); \
+NifStream( viewportTop, in, version ); \
+NifStream( viewportBottom, in, version ); \
+NifStream( lodAdjust, in, version ); \
+NifStream( unknownLink_, in, version ); \
+NifStream( unknownInt, in, version ); \
 if ( version >= 0x04020100 ) { \
-  NifStream( unknown_int_2, in, version ); \
+  NifStream( unknownInt2, in, version ); \
 }; \
 
 #define NI_CAMERA_WRITE \
 ANode::Write( out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
-NifStream( frustum_left, out, version ); \
-NifStream( frustum_right, out, version ); \
-NifStream( frustum_top, out, version ); \
-NifStream( frustum_bottom, out, version ); \
-NifStream( frustum_near, out, version ); \
-NifStream( frustum_far, out, version ); \
+NifStream( frustumLeft, out, version ); \
+NifStream( frustumRight, out, version ); \
+NifStream( frustumTop, out, version ); \
+NifStream( frustumBottom, out, version ); \
+NifStream( frustumNear, out, version ); \
+NifStream( frustumFar, out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( use_orthographic_projection, out, version ); \
+  NifStream( useOrthographicProjection, out, version ); \
 }; \
-NifStream( viewport_left, out, version ); \
-NifStream( viewport_right, out, version ); \
-NifStream( viewport_top, out, version ); \
-NifStream( viewport_bottom, out, version ); \
-NifStream( lod_adjust, out, version ); \
-NifStream( unknown_link_, out, version ); \
-NifStream( unknown_int, out, version ); \
+NifStream( viewportLeft, out, version ); \
+NifStream( viewportRight, out, version ); \
+NifStream( viewportTop, out, version ); \
+NifStream( viewportBottom, out, version ); \
+NifStream( lodAdjust, out, version ); \
+NifStream( unknownLink_, out, version ); \
+NifStream( unknownInt, out, version ); \
 if ( version >= 0x04020100 ) { \
-  NifStream( unknown_int_2, out, version ); \
+  NifStream( unknownInt2, out, version ); \
 }; \
 
 #define NI_CAMERA_STRING \
@@ -6865,22 +6866,22 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ANode::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "        Frustum Left:  " << frustum_left << endl; \
-out << "       Frustum Right:  " << frustum_right << endl; \
-out << "         Frustum Top:  " << frustum_top << endl; \
-out << "      Frustum Bottom:  " << frustum_bottom << endl; \
-out << "        Frustum Near:  " << frustum_near << endl; \
-out << "         Frustum Far:  " << frustum_far << endl; \
-out << "Use Orthographic Projection:  " << use_orthographic_projection << endl; \
-out << "       Viewport Left:  " << viewport_left << endl; \
-out << "      Viewport Right:  " << viewport_right << endl; \
-out << "        Viewport Top:  " << viewport_top << endl; \
-out << "     Viewport Bottom:  " << viewport_bottom << endl; \
-out << "          LOD Adjust:  " << lod_adjust << endl; \
-out << "       Unknown Link?:  " << unknown_link_ << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "        Frustum Left:  " << frustumLeft << endl; \
+out << "       Frustum Right:  " << frustumRight << endl; \
+out << "         Frustum Top:  " << frustumTop << endl; \
+out << "      Frustum Bottom:  " << frustumBottom << endl; \
+out << "        Frustum Near:  " << frustumNear << endl; \
+out << "         Frustum Far:  " << frustumFar << endl; \
+out << "Use Orthographic Projection:  " << useOrthographicProjection << endl; \
+out << "       Viewport Left:  " << viewportLeft << endl; \
+out << "      Viewport Right:  " << viewportRight << endl; \
+out << "        Viewport Top:  " << viewportTop << endl; \
+out << "     Viewport Bottom:  " << viewportBottom << endl; \
+out << "          LOD Adjust:  " << lodAdjust << endl; \
+out << "       Unknown Link?:  " << unknownLink_ << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
 return out.str(); \
 
 // 
@@ -6895,10 +6896,10 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_COLLISION_DATA_MEMBERS \
-uint target_node; \
+uint targetNode; \
 uint unknown2; \
 byte unknown3; \
-uint collision_type; \
+uint collisionType; \
 uint unknown5; \
 Vector3 unknown7; \
 vector<float > unknown6; \
@@ -6908,13 +6909,13 @@ vector<float > unknown8; \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Target Node" ) \
-  return attr_ref(target_node); \
+  return attr_ref(targetNode); \
 if ( attr_name == "Unknown2" ) \
   return attr_ref(unknown2); \
 if ( attr_name == "Unknown3" ) \
   return attr_ref(unknown3); \
 if ( attr_name == "Collision Type" ) \
-  return attr_ref(collision_type); \
+  return attr_ref(collisionType); \
 if ( attr_name == "Unknown5" ) \
   return attr_ref(unknown5); \
 if ( attr_name == "Unknown7" ) \
@@ -6928,37 +6929,37 @@ return attr_ref(); \
 
 #define NI_COLLISION_DATA_READ \
 AData::Read( in, version ); \
-NifStream( target_node, in, version ); \
+NifStream( targetNode, in, version ); \
 NifStream( unknown2, in, version ); \
 NifStream( unknown3, in, version ); \
-NifStream( collision_type, in, version ); \
-if ( collision_type == 0 ) { \
+NifStream( collisionType, in, version ); \
+if ( collisionType == 0 ) { \
   NifStream( unknown5, in, version ); \
   NifStream( unknown7, in, version ); \
 }; \
-if ( collision_type == 2 ) { \
+if ( collisionType == 2 ) { \
   unknown6.resize(8); \
   NifStream( unknown6, in, version ); \
 }; \
-if ( collision_type == 1 ) { \
+if ( collisionType == 1 ) { \
   unknown8.resize(15); \
   NifStream( unknown8, in, version ); \
 }; \
 
 #define NI_COLLISION_DATA_WRITE \
 AData::Write( out, version ); \
-NifStream( target_node, out, version ); \
+NifStream( targetNode, out, version ); \
 NifStream( unknown2, out, version ); \
 NifStream( unknown3, out, version ); \
-NifStream( collision_type, out, version ); \
-if ( collision_type == 0 ) { \
+NifStream( collisionType, out, version ); \
+if ( collisionType == 0 ) { \
   NifStream( unknown5, out, version ); \
   NifStream( unknown7, out, version ); \
 }; \
-if ( collision_type == 2 ) { \
+if ( collisionType == 2 ) { \
   NifStream( unknown6, out, version ); \
 }; \
-if ( collision_type == 1 ) { \
+if ( collisionType == 1 ) { \
   NifStream( unknown8, out, version ); \
 }; \
 
@@ -6967,10 +6968,10 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "         Target Node:  " << target_node << endl; \
+out << "         Target Node:  " << targetNode << endl; \
 out << "            Unknown2:  " << unknown2 << endl; \
 out << "            Unknown3:  " << unknown3 << endl; \
-out << "      Collision Type:  " << collision_type << endl; \
+out << "      Collision Type:  " << collisionType << endl; \
 out << "            Unknown5:  " << unknown5 << endl; \
 out << "            Unknown7:  " << unknown7 << endl; \
 out << "            Unknown6:  -- data not shown --" << endl; \
@@ -7052,17 +7053,17 @@ return out.str(); \
 // - Refers to a list of NiControllerSequence blocks.
 // - Refers to a NiDefaultAVObjectPalette.
 #define NI_CONTROLLER_MANAGER_MEMBERS \
-bool unknown_byte; \
-LinkGroup controller_sequences; \
-uint object_palette; \
+bool unknownByte; \
+LinkGroup controllerSequences; \
+Link objectPalette; \
 
 #define NI_CONTROLLER_MANAGER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Object Palette" ) \
-  return attr_ref(object_palette); \
+  return attr_ref(objectPalette); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7072,24 +7073,24 @@ return attr_ref(); \
 
 #define NI_CONTROLLER_MANAGER_READ \
 AController::Read( in, version ); \
-NifStream( unknown_byte, in, version ); \
-NifStream( controller_sequences, in, version ); \
-NifStream( object_palette, in, version ); \
+NifStream( unknownByte, in, version ); \
+NifStream( controllerSequences, in, version ); \
+NifStream( objectPalette, in, version ); \
 
 #define NI_CONTROLLER_MANAGER_WRITE \
 AController::Write( out, version ); \
-NifStream( unknown_byte, out, version ); \
-NifStream( controller_sequences, out, version ); \
-NifStream( object_palette, out, version ); \
+NifStream( unknownByte, out, version ); \
+NifStream( controllerSequences, out, version ); \
+NifStream( objectPalette, out, version ); \
 
 #define NI_CONTROLLER_MANAGER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "Controller Sequences:  " << controller_sequences << endl; \
-out << "      Object Palette:  " << object_palette << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "Controller Sequences:  " << controllerSequences << endl; \
+out << "      Object Palette:  " << objectPalette << endl; \
 return out.str(); \
 
 // 
@@ -7113,21 +7114,21 @@ return out.str(); \
 // - Refers to NiStringPalette.
 #define NI_CONTROLLER_SEQUENCE_MEMBERS \
 string name; \
-ControllerLink text_keys; \
-uint unknown_int_1; \
-vector<ControllerLink > controlled_blocks; \
-float unknown_float_1; \
-uint text_keys_2; \
-uint unknown_int_0; \
-float unknown_float_3; \
-float unknown_float_4; \
-float start_time; \
-float stop_time; \
-float unknown_float_2; \
-byte unknown_byte; \
-uint unknown_int_3; \
-string unknown_string; \
-uint string_palette; \
+ControllerLink textKeys; \
+uint unknownInt1; \
+vector<ControllerLink > controlledBlocks; \
+float unknownFloat1; \
+Link textKeys2; \
+uint unknownInt0; \
+float unknownFloat3; \
+float unknownFloat4; \
+float startTime; \
+float stopTime; \
+float unknownFloat2; \
+byte unknownByte; \
+uint unknownInt3; \
+string unknownString; \
+Link stringPalette; \
 
 #define NI_CONTROLLER_SEQUENCE_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -7135,31 +7136,31 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Name" ) \
   return attr_ref(name); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Text Keys 2" ) \
-  return attr_ref(text_keys_2); \
+  return attr_ref(textKeys2); \
 if ( attr_name == "Unknown Int 0" ) \
-  return attr_ref(unknown_int_0); \
+  return attr_ref(unknownInt0); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 if ( attr_name == "Start Time" ) \
-  return attr_ref(start_time); \
+  return attr_ref(startTime); \
 if ( attr_name == "Stop Time" ) \
-  return attr_ref(stop_time); \
+  return attr_ref(stopTime); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Unknown Int 3" ) \
-  return attr_ref(unknown_int_3); \
+  return attr_ref(unknownInt3); \
 if ( attr_name == "Unknown String" ) \
-  return attr_ref(unknown_string); \
+  return attr_ref(unknownString); \
 if ( attr_name == "String Palette" ) \
-  return attr_ref(string_palette); \
+  return attr_ref(stringPalette); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7168,83 +7169,83 @@ return attr_ref(); \
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT
 
 #define NI_CONTROLLER_SEQUENCE_READ \
-uint num_controlled_blocks; \
+uint numControlledBlocks; \
 AData::Read( in, version ); \
 NifStream( name, in, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( text_keys, in, version ); \
+  NifStream( textKeys, in, version ); \
 }; \
-NifStream( num_controlled_blocks, in, version ); \
+NifStream( numControlledBlocks, in, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_int_1, in, version ); \
+  NifStream( unknownInt1, in, version ); \
 }; \
-controlled_blocks.resize(num_controlled_blocks); \
-NifStream( controlled_blocks, in, version ); \
+controlledBlocks.resize(numControlledBlocks); \
+NifStream( controlledBlocks, in, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_float_1, in, version ); \
-  NifStream( text_keys_2, in, version ); \
+  NifStream( unknownFloat1, in, version ); \
+  NifStream( textKeys2, in, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_int_0, in, version ); \
+  NifStream( unknownInt0, in, version ); \
 }; \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_float_3, in, version ); \
-  NifStream( unknown_float_4, in, version ); \
-  NifStream( start_time, in, version ); \
-  NifStream( stop_time, in, version ); \
+  NifStream( unknownFloat3, in, version ); \
+  NifStream( unknownFloat4, in, version ); \
+  NifStream( startTime, in, version ); \
+  NifStream( stopTime, in, version ); \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x0A020000 ) ) { \
-  NifStream( unknown_float_2, in, version ); \
+  NifStream( unknownFloat2, in, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_byte, in, version ); \
+  NifStream( unknownByte, in, version ); \
 }; \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_int_3, in, version ); \
-  NifStream( unknown_string, in, version ); \
+  NifStream( unknownInt3, in, version ); \
+  NifStream( unknownString, in, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( string_palette, in, version ); \
+  NifStream( stringPalette, in, version ); \
 }; \
 
 #define NI_CONTROLLER_SEQUENCE_WRITE \
-uint num_controlled_blocks; \
+uint numControlledBlocks; \
 AData::Write( out, version ); \
-num_controlled_blocks = uint(controlled_blocks.size()); \
+numControlledBlocks = uint(controlledBlocks.size()); \
 NifStream( name, out, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( text_keys, out, version ); \
+  NifStream( textKeys, out, version ); \
 }; \
-NifStream( num_controlled_blocks, out, version ); \
+NifStream( numControlledBlocks, out, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_int_1, out, version ); \
+  NifStream( unknownInt1, out, version ); \
 }; \
-NifStream( controlled_blocks, out, version ); \
+NifStream( controlledBlocks, out, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_float_1, out, version ); \
-  NifStream( text_keys_2, out, version ); \
+  NifStream( unknownFloat1, out, version ); \
+  NifStream( textKeys2, out, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_int_0, out, version ); \
+  NifStream( unknownInt0, out, version ); \
 }; \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_float_3, out, version ); \
-  NifStream( unknown_float_4, out, version ); \
-  NifStream( start_time, out, version ); \
-  NifStream( stop_time, out, version ); \
+  NifStream( unknownFloat3, out, version ); \
+  NifStream( unknownFloat4, out, version ); \
+  NifStream( startTime, out, version ); \
+  NifStream( stopTime, out, version ); \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x0A020000 ) ) { \
-  NifStream( unknown_float_2, out, version ); \
+  NifStream( unknownFloat2, out, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_byte, out, version ); \
+  NifStream( unknownByte, out, version ); \
 }; \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_int_3, out, version ); \
-  NifStream( unknown_string, out, version ); \
+  NifStream( unknownInt3, out, version ); \
+  NifStream( unknownString, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( string_palette, out, version ); \
+  NifStream( stringPalette, out, version ); \
 }; \
 
 #define NI_CONTROLLER_SEQUENCE_STRING \
@@ -7253,22 +7254,22 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "                Name:  " << name << endl; \
-out << "           Text Keys:  " << text_keys << endl; \
+out << "           Text Keys:  " << textKeys << endl; \
 out << "Num Controlled Blocks:  -- calculated --" << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 out << "   Controlled Blocks:  -- data not shown --" << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "         Text Keys 2:  " << text_keys_2 << endl; \
-out << "       Unknown Int 0:  " << unknown_int_0 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
-out << "          Start Time:  " << start_time << endl; \
-out << "           Stop Time:  " << stop_time << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
-out << "      Unknown String:  " << unknown_string << endl; \
-out << "      String Palette:  " << string_palette << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "         Text Keys 2:  " << textKeys2 << endl; \
+out << "       Unknown Int 0:  " << unknownInt0 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "          Start Time:  " << startTime << endl; \
+out << "           Stop Time:  " << stopTime << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "       Unknown Int 3:  " << unknownInt3 << endl; \
+out << "      Unknown String:  " << unknownString << endl; \
+out << "      String Palette:  " << stringPalette << endl; \
 return out.str(); \
 
 // 
@@ -7277,14 +7278,14 @@ return out.str(); \
 // - Unknown.
 // - The objects.
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS \
-uint unknown_int; \
+uint unknownInt; \
 vector<AVObject > objects; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7293,19 +7294,19 @@ return attr_ref(); \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_CONSTRUCT
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_READ \
-uint num_objects; \
+uint numObjects; \
 AData::Read( in, version ); \
-NifStream( unknown_int, in, version ); \
-NifStream( num_objects, in, version ); \
-objects.resize(num_objects); \
+NifStream( unknownInt, in, version ); \
+NifStream( numObjects, in, version ); \
+objects.resize(numObjects); \
 NifStream( objects, in, version ); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE \
-uint num_objects; \
+uint numObjects; \
 AData::Write( out, version ); \
-num_objects = uint(objects.size()); \
-NifStream( unknown_int, out, version ); \
-NifStream( num_objects, out, version ); \
+numObjects = uint(objects.size()); \
+NifStream( unknownInt, out, version ); \
+NifStream( numObjects, out, version ); \
 NifStream( objects, out, version ); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_STRING \
@@ -7313,7 +7314,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "         Num Objects:  -- calculated --" << endl; \
 out << "             Objects:  -- data not shown --" << endl; \
 return out.str(); \
@@ -7390,8 +7391,8 @@ return out.str(); \
 // delta = (start_time - stop_time) / sources.num_indices
 // - The texture source indices.
 #define NI_FLIP_CONTROLLER_MEMBERS \
-uint texture_slot; \
-uint unknown_int_2; \
+uint textureSlot; \
+uint unknownInt2; \
 float delta; \
 LinkGroup sources; \
 
@@ -7399,9 +7400,9 @@ LinkGroup sources; \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Texture Slot" ) \
-  return attr_ref(texture_slot); \
+  return attr_ref(textureSlot); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Delta" ) \
   return attr_ref(delta); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -7413,18 +7414,18 @@ return attr_ref(); \
 
 #define NI_FLIP_CONTROLLER_READ \
 ASingleInterpolatorController::Read( in, version ); \
-NifStream( texture_slot, in, version ); \
+NifStream( textureSlot, in, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( unknown_int_2, in, version ); \
+  NifStream( unknownInt2, in, version ); \
   NifStream( delta, in, version ); \
 }; \
 NifStream( sources, in, version ); \
 
 #define NI_FLIP_CONTROLLER_WRITE \
 ASingleInterpolatorController::Write( out, version ); \
-NifStream( texture_slot, out, version ); \
+NifStream( textureSlot, out, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( unknown_int_2, out, version ); \
+  NifStream( unknownInt2, out, version ); \
   NifStream( delta, out, version ); \
 }; \
 NifStream( sources, out, version ); \
@@ -7434,8 +7435,8 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
-out << "        Texture Slot:  " << texture_slot << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
+out << "        Texture Slot:  " << textureSlot << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
 out << "               Delta:  " << delta << endl; \
 out << "             Sources:  " << sources << endl; \
 return out.str(); \
@@ -7478,13 +7479,13 @@ return out.str(); \
 //
 // - The float data.
 #define NI_FLOAT_EXTRA_DATA_MEMBERS \
-float float_data; \
+float floatData; \
 
 #define NI_FLOAT_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Float Data" ) \
-  return attr_ref(float_data); \
+  return attr_ref(floatData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7494,18 +7495,18 @@ return attr_ref(); \
 
 #define NI_FLOAT_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
-NifStream( float_data, in, version ); \
+NifStream( floatData, in, version ); \
 
 #define NI_FLOAT_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
-NifStream( float_data, out, version ); \
+NifStream( floatData, out, version ); \
 
 #define NI_FLOAT_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "          Float Data:  " << float_data << endl; \
+out << "          Float Data:  " << floatData << endl; \
 return out.str(); \
 
 // 
@@ -7514,16 +7515,16 @@ return out.str(); \
 // - Unknown.
 // - Unknown. Refers to some NiFloatExtraData name?
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS \
-uint unknown_link; \
-string unknown_string; \
+Link unknownLink; \
+string unknownString; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 if ( attr_name == "Unknown String" ) \
-  return attr_ref(unknown_string); \
+  return attr_ref(unknownString); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7534,15 +7535,15 @@ return attr_ref(); \
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_READ \
 AController::Read( in, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_link, in, version ); \
-  NifStream( unknown_string, in, version ); \
+  NifStream( unknownLink, in, version ); \
+  NifStream( unknownString, in, version ); \
 }; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_WRITE \
 AController::Write( out, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_link, out, version ); \
-  NifStream( unknown_string, out, version ); \
+  NifStream( unknownLink, out, version ); \
+  NifStream( unknownString, out, version ); \
 }; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING \
@@ -7550,8 +7551,8 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "        Unknown Link:  " << unknown_link << endl; \
-out << "      Unknown String:  " << unknown_string << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
+out << "      Unknown String:  " << unknownString << endl; \
 return out.str(); \
 
 // 
@@ -7560,14 +7561,14 @@ return out.str(); \
 // - Value when posed?  At time 0?
 // - Float data?
 #define NI_FLOAT_INTERPOLATOR_MEMBERS \
-float float_value; \
-uint data; \
+float floatValue; \
+Link data; \
 
 #define NI_FLOAT_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Float Value" ) \
-  return attr_ref(float_value); \
+  return attr_ref(floatValue); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -7579,12 +7580,12 @@ return attr_ref(); \
 
 #define NI_FLOAT_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( float_value, in, version ); \
+NifStream( floatValue, in, version ); \
 NifStream( data, in, version ); \
 
 #define NI_FLOAT_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( float_value, out, version ); \
+NifStream( floatValue, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_FLOAT_INTERPOLATOR_STRING \
@@ -7592,7 +7593,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "         Float Value:  " << float_value << endl; \
+out << "         Float Value:  " << floatValue << endl; \
 out << "                Data:  " << data << endl; \
 return out.str(); \
 
@@ -7614,17 +7615,17 @@ return attr_ref(); \
 #define NI_FLOATS_EXTRA_DATA_CONSTRUCT
 
 #define NI_FLOATS_EXTRA_DATA_READ \
-uint num_floats; \
+uint numFloats; \
 AExtraData::Read( in, version ); \
-NifStream( num_floats, in, version ); \
-data.resize(num_floats); \
+NifStream( numFloats, in, version ); \
+data.resize(numFloats); \
 NifStream( data, in, version ); \
 
 #define NI_FLOATS_EXTRA_DATA_WRITE \
-uint num_floats; \
+uint numFloats; \
 AExtraData::Write( out, version ); \
-num_floats = uint(data.size()); \
-NifStream( num_floats, out, version ); \
+numFloats = uint(data.size()); \
+NifStream( numFloats, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_FLOATS_EXTRA_DATA_STRING \
@@ -7648,8 +7649,8 @@ return out.str(); \
 // - The color of the fog.
 #define NI_FOG_PROPERTY_MEMBERS \
 Flags flags; \
-float fog_depth; \
-Color3 fog_color; \
+float fogDepth; \
+Color3 fogColor; \
 
 #define NI_FOG_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -7657,9 +7658,9 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Fog Depth" ) \
-  return attr_ref(fog_depth); \
+  return attr_ref(fogDepth); \
 if ( attr_name == "Fog Color" ) \
-  return attr_ref(fog_color); \
+  return attr_ref(fogColor); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7670,14 +7671,14 @@ return attr_ref(); \
 #define NI_FOG_PROPERTY_READ \
 AProperty::Read( in, version ); \
 NifStream( flags, in, version ); \
-NifStream( fog_depth, in, version ); \
-NifStream( fog_color, in, version ); \
+NifStream( fogDepth, in, version ); \
+NifStream( fogColor, in, version ); \
 
 #define NI_FOG_PROPERTY_WRITE \
 AProperty::Write( out, version ); \
 NifStream( flags, out, version ); \
-NifStream( fog_depth, out, version ); \
-NifStream( fog_color, out, version ); \
+NifStream( fogDepth, out, version ); \
+NifStream( fogColor, out, version ); \
 
 #define NI_FOG_PROPERTY_STRING \
 stringstream out; \
@@ -7685,8 +7686,8 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
-out << "           Fog Depth:  " << fog_depth << endl; \
-out << "           Fog Color:  " << fog_color << endl; \
+out << "           Fog Depth:  " << fogDepth << endl; \
+out << "           Fog Color:  " << fogColor << endl; \
 return out.str(); \
 
 // 
@@ -7700,11 +7701,11 @@ return out.str(); \
 // - Unknown.
 #define NI_GEOM_MORPHER_CONTROLLER_MEMBERS \
 ushort unknown; \
-byte unknown_2; \
-uint data; \
-byte unknown_byte; \
+byte unknown2; \
+Link data; \
+byte unknownByte; \
 LinkGroup interpolators; \
-vector<uint > unknown_ints; \
+vector<uint > unknownInts; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -7712,11 +7713,11 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown" ) \
   return attr_ref(unknown); \
 if ( attr_name == "Unknown 2" ) \
-  return attr_ref(unknown_2); \
+  return attr_ref(unknown2); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7725,43 +7726,43 @@ return attr_ref(); \
 #define NI_GEOM_MORPHER_CONTROLLER_CONSTRUCT
 
 #define NI_GEOM_MORPHER_CONTROLLER_READ \
-uint num_unknown_ints; \
+uint numUnknownInts; \
 AController::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown, in, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_2, in, version ); \
+  NifStream( unknown2, in, version ); \
 }; \
 NifStream( data, in, version ); \
-NifStream( unknown_byte, in, version ); \
+NifStream( unknownByte, in, version ); \
 if ( version >= 0x0A01006A ) { \
   NifStream( interpolators, in, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( num_unknown_ints, in, version ); \
-  unknown_ints.resize(num_unknown_ints); \
-  NifStream( unknown_ints, in, version ); \
+  NifStream( numUnknownInts, in, version ); \
+  unknownInts.resize(numUnknownInts); \
+  NifStream( unknownInts, in, version ); \
 }; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_WRITE \
-uint num_unknown_ints; \
+uint numUnknownInts; \
 AController::Write( out, version ); \
-num_unknown_ints = uint(unknown_ints.size()); \
+numUnknownInts = uint(unknownInts.size()); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown, out, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_2, out, version ); \
+  NifStream( unknown2, out, version ); \
 }; \
 NifStream( data, out, version ); \
-NifStream( unknown_byte, out, version ); \
+NifStream( unknownByte, out, version ); \
 if ( version >= 0x0A01006A ) { \
   NifStream( interpolators, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( num_unknown_ints, out, version ); \
-  NifStream( unknown_ints, out, version ); \
+  NifStream( numUnknownInts, out, version ); \
+  NifStream( unknownInts, out, version ); \
 }; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_STRING \
@@ -7770,9 +7771,9 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "             Unknown:  " << unknown << endl; \
-out << "           Unknown 2:  " << unknown_2 << endl; \
+out << "           Unknown 2:  " << unknown2 << endl; \
 out << "                Data:  " << data << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
 out << "       Interpolators:  " << interpolators << endl; \
 out << "    Num Unknown Ints:  -- calculated --" << endl; \
 out << "        Unknown Ints:  -- data not shown --" << endl; \
@@ -7789,7 +7790,7 @@ return out.str(); \
 // - The position of the mass point relative to the particle system.
 // - The direction of the applied acceleration.
 #define NI_GRAVITY_MEMBERS \
-float unknown_float_1; \
+float unknownFloat1; \
 float force; \
 uint type; \
 Vector3 position; \
@@ -7799,7 +7800,7 @@ Vector3 direction; \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Force" ) \
   return attr_ref(force); \
 if ( attr_name == "Type" ) \
@@ -7817,7 +7818,7 @@ return attr_ref(); \
 
 #define NI_GRAVITY_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( unknown_float_1, in, version ); \
+NifStream( unknownFloat1, in, version ); \
 NifStream( force, in, version ); \
 NifStream( type, in, version ); \
 NifStream( position, in, version ); \
@@ -7825,7 +7826,7 @@ NifStream( direction, in, version ); \
 
 #define NI_GRAVITY_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( unknown_float_1, out, version ); \
+NifStream( unknownFloat1, out, version ); \
 NifStream( force, out, version ); \
 NifStream( type, out, version ); \
 NifStream( position, out, version ); \
@@ -7836,7 +7837,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
 out << "               Force:  " << force << endl; \
 out << "                Type:  " << type << endl; \
 out << "            Position:  " << position << endl; \
@@ -7848,13 +7849,13 @@ return out.str(); \
 //
 // - The value of the extra data.
 #define NI_INTEGER_EXTRA_DATA_MEMBERS \
-uint integer_data; \
+uint integerData; \
 
 #define NI_INTEGER_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Integer Data" ) \
-  return attr_ref(integer_data); \
+  return attr_ref(integerData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -7864,18 +7865,18 @@ return attr_ref(); \
 
 #define NI_INTEGER_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
-NifStream( integer_data, in, version ); \
+NifStream( integerData, in, version ); \
 
 #define NI_INTEGER_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
-NifStream( integer_data, out, version ); \
+NifStream( integerData, out, version ); \
 
 #define NI_INTEGER_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "        Integer Data:  " << integer_data << endl; \
+out << "        Integer Data:  " << integerData << endl; \
 return out.str(); \
 
 // 
@@ -7896,17 +7897,17 @@ return attr_ref(); \
 #define NI_INTEGERS_EXTRA_DATA_CONSTRUCT
 
 #define NI_INTEGERS_EXTRA_DATA_READ \
-uint num_integers; \
+uint numIntegers; \
 AExtraData::Read( in, version ); \
-NifStream( num_integers, in, version ); \
-data.resize(num_integers); \
+NifStream( numIntegers, in, version ); \
+data.resize(numIntegers); \
 NifStream( data, in, version ); \
 
 #define NI_INTEGERS_EXTRA_DATA_WRITE \
-uint num_integers; \
+uint numIntegers; \
 AExtraData::Write( out, version ); \
-num_integers = uint(data.size()); \
-NifStream( num_integers, out, version ); \
+numIntegers = uint(data.size()); \
+NifStream( numIntegers, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_INTEGERS_EXTRA_DATA_STRING \
@@ -7986,15 +7987,15 @@ return out.str(); \
 // - Link to NiPosData
 // - Link to NiPoint3Interpolator.
 #define NI_LIGHT_COLOR_CONTROLLER_MEMBERS \
-ushort unknown_short; \
-uint data; \
-uint interpolator; \
+ushort unknownShort; \
+Link data; \
+Link interpolator; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Interpolator" ) \
@@ -8009,27 +8010,27 @@ return attr_ref(); \
 #define NI_LIGHT_COLOR_CONTROLLER_READ \
 AController::Read( in, version ); \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
 if ( version <= 0x0A010000 ) { \
   NifStream( data, in, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
   NifStream( interpolator, in, version ); \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_WRITE \
 AController::Write( out, version ); \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
 if ( version <= 0x0A010000 ) { \
   NifStream( data, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
   NifStream( interpolator, out, version ); \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_STRING \
@@ -8037,7 +8038,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
 out << "                Data:  " << data << endl; \
 out << "        Interpolator:  " << interpolator << endl; \
 return out.str(); \
@@ -8047,13 +8048,13 @@ return out.str(); \
 //
 // - Unknown link. Interpolator?
 #define NI_LIGHT_DIMMER_CONTROLLER_MEMBERS \
-uint unknown_link; \
+Link unknownLink; \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8063,18 +8064,18 @@ return attr_ref(); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_READ \
 AController::Read( in, version ); \
-NifStream( unknown_link, in, version ); \
+NifStream( unknownLink, in, version ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_WRITE \
 AController::Write( out, version ); \
-NifStream( unknown_link, out, version ); \
+NifStream( unknownLink, out, version ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "        Unknown Link:  " << unknown_link << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 // 
@@ -8082,7 +8083,7 @@ return out.str(); \
 //
 // - The ranges of distance where each level of detail applies.
 #define NI_L_O_D_NODE_MEMBERS \
-LODInfo lod_info; \
+LODInfo lodInfo; \
 
 #define NI_L_O_D_NODE_GETATTR \
 attr_ref attr = AParentNode::GetAttr( attr_name ); \
@@ -8096,18 +8097,18 @@ return attr_ref(); \
 
 #define NI_L_O_D_NODE_READ \
 AParentNode::Read( in, version ); \
-NifStream( lod_info, in, version ); \
+NifStream( lodInfo, in, version ); \
 
 #define NI_L_O_D_NODE_WRITE \
 AParentNode::Write( out, version ); \
-NifStream( lod_info, out, version ); \
+NifStream( lodInfo, out, version ); \
 
 #define NI_L_O_D_NODE_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParentNode::asString(); \
-out << "            LOD Info:  " << lod_info << endl; \
+out << "            LOD Info:  " << lodInfo << endl; \
 return out.str(); \
 
 // 
@@ -8117,7 +8118,7 @@ return out.str(); \
 // - Link to the node to look at?
 #define NI_LOOK_AT_CONTROLLER_MEMBERS \
 ushort unknown1; \
-uint look_at_node; \
+Link lookAtNode; \
 
 #define NI_LOOK_AT_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -8125,7 +8126,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown1" ) \
   return attr_ref(unknown1); \
 if ( attr_name == "Look At Node" ) \
-  return attr_ref(look_at_node); \
+  return attr_ref(lookAtNode); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8138,14 +8139,14 @@ AController::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown1, in, version ); \
 }; \
-NifStream( look_at_node, in, version ); \
+NifStream( lookAtNode, in, version ); \
 
 #define NI_LOOK_AT_CONTROLLER_WRITE \
 AController::Write( out, version ); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown1, out, version ); \
 }; \
-NifStream( look_at_node, out, version ); \
+NifStream( lookAtNode, out, version ); \
 
 #define NI_LOOK_AT_CONTROLLER_STRING \
 stringstream out; \
@@ -8153,7 +8154,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
 out << "            Unknown1:  " << unknown1 << endl; \
-out << "        Look At Node:  " << look_at_node << endl; \
+out << "        Look At Node:  " << lookAtNode << endl; \
 return out.str(); \
 
 // 
@@ -8169,25 +8170,25 @@ return out.str(); \
 // - Refers to a NiFloatInterpolator.
 // - Refers to a NiFloatInterpolator.
 #define NI_LOOK_AT_INTERPOLATOR_MEMBERS \
-ushort unknown_short; \
-uint look_at; \
-float unknown_float; \
+ushort unknownShort; \
+Link lookAt; \
+float unknownFloat; \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-uint unknown_link_1; \
-uint unknown_link_2; \
-uint unknown_link_3; \
+Link unknownLink1; \
+Link unknownLink2; \
+Link unknownLink3; \
 
 #define NI_LOOK_AT_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Look At" ) \
-  return attr_ref(look_at); \
+  return attr_ref(lookAt); \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 if ( attr_name == "Translation" ) \
   return attr_ref(translation); \
 if ( attr_name == "Rotation" ) \
@@ -8195,11 +8196,11 @@ if ( attr_name == "Rotation" ) \
 if ( attr_name == "Scale" ) \
   return attr_ref(scale); \
 if ( attr_name == "Unknown Link 1" ) \
-  return attr_ref(unknown_link_1); \
+  return attr_ref(unknownLink1); \
 if ( attr_name == "Unknown Link 2" ) \
-  return attr_ref(unknown_link_2); \
+  return attr_ref(unknownLink2); \
 if ( attr_name == "Unknown Link 3" ) \
-  return attr_ref(unknown_link_3); \
+  return attr_ref(unknownLink3); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8209,42 +8210,42 @@ return attr_ref(); \
 
 #define NI_LOOK_AT_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( unknown_short, in, version ); \
-NifStream( look_at, in, version ); \
-NifStream( unknown_float, in, version ); \
+NifStream( unknownShort, in, version ); \
+NifStream( lookAt, in, version ); \
+NifStream( unknownFloat, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( rotation, in, version ); \
 NifStream( scale, in, version ); \
-NifStream( unknown_link_1, in, version ); \
-NifStream( unknown_link_2, in, version ); \
-NifStream( unknown_link_3, in, version ); \
+NifStream( unknownLink1, in, version ); \
+NifStream( unknownLink2, in, version ); \
+NifStream( unknownLink3, in, version ); \
 
 #define NI_LOOK_AT_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( unknown_short, out, version ); \
-NifStream( look_at, out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( unknownShort, out, version ); \
+NifStream( lookAt, out, version ); \
+NifStream( unknownFloat, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
 NifStream( scale, out, version ); \
-NifStream( unknown_link_1, out, version ); \
-NifStream( unknown_link_2, out, version ); \
-NifStream( unknown_link_3, out, version ); \
+NifStream( unknownLink1, out, version ); \
+NifStream( unknownLink2, out, version ); \
+NifStream( unknownLink3, out, version ); \
 
 #define NI_LOOK_AT_INTERPOLATOR_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "             Look At:  " << look_at << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "             Look At:  " << lookAt << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 out << "         Translation:  " << translation << endl; \
 out << "            Rotation:  " << rotation << endl; \
 out << "               Scale:  " << scale << endl; \
-out << "      Unknown Link 1:  " << unknown_link_1 << endl; \
-out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
-out << "      Unknown Link 3:  " << unknown_link_3 << endl; \
+out << "      Unknown Link 1:  " << unknownLink1 << endl; \
+out << "      Unknown Link 2:  " << unknownLink2 << endl; \
+out << "      Unknown Link 3:  " << unknownLink3 << endl; \
 return out.str(); \
 
 // 
@@ -8255,8 +8256,8 @@ return out.str(); \
 // - Unknown.
 #define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS \
 ushort unknown; \
-uint data; \
-ushort unknown_short; \
+Link data; \
+ushort unknownShort; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
@@ -8266,7 +8267,7 @@ if ( attr_name == "Unknown" ) \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8281,7 +8282,7 @@ if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
 }; \
 NifStream( data, in, version ); \
 if ( version >= 0x0A020000 ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_WRITE \
@@ -8291,7 +8292,7 @@ if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
 }; \
 NifStream( data, out, version ); \
 if ( version >= 0x0A020000 ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_STRING \
@@ -8301,7 +8302,7 @@ out << setprecision(1); \
 out << AController::asString(); \
 out << "             Unknown:  " << unknown << endl; \
 out << "                Data:  " << data << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
 return out.str(); \
 
 // 
@@ -8316,10 +8317,10 @@ return out.str(); \
 // - The material transparency (1=non-transparant). Refer to a NiAlphaProperty block in this material's parent NiTriShape block, when alpha is not 1.
 #define NI_MATERIAL_PROPERTY_MEMBERS \
 Flags flags; \
-Color3 ambient_color; \
-Color3 diffuse_color; \
-Color3 specular_color; \
-Color3 emissive_color; \
+Color3 ambientColor; \
+Color3 diffuseColor; \
+Color3 specularColor; \
+Color3 emissiveColor; \
 float glossiness; \
 float alpha; \
 
@@ -8329,13 +8330,13 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Ambient Color" ) \
-  return attr_ref(ambient_color); \
+  return attr_ref(ambientColor); \
 if ( attr_name == "Diffuse Color" ) \
-  return attr_ref(diffuse_color); \
+  return attr_ref(diffuseColor); \
 if ( attr_name == "Specular Color" ) \
-  return attr_ref(specular_color); \
+  return attr_ref(specularColor); \
 if ( attr_name == "Emissive Color" ) \
-  return attr_ref(emissive_color); \
+  return attr_ref(emissiveColor); \
 if ( attr_name == "Glossiness" ) \
   return attr_ref(glossiness); \
 if ( attr_name == "Alpha" ) \
@@ -8352,10 +8353,10 @@ AProperty::Read( in, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, in, version ); \
 }; \
-NifStream( ambient_color, in, version ); \
-NifStream( diffuse_color, in, version ); \
-NifStream( specular_color, in, version ); \
-NifStream( emissive_color, in, version ); \
+NifStream( ambientColor, in, version ); \
+NifStream( diffuseColor, in, version ); \
+NifStream( specularColor, in, version ); \
+NifStream( emissiveColor, in, version ); \
 NifStream( glossiness, in, version ); \
 NifStream( alpha, in, version ); \
 
@@ -8364,10 +8365,10 @@ AProperty::Write( out, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, out, version ); \
 }; \
-NifStream( ambient_color, out, version ); \
-NifStream( diffuse_color, out, version ); \
-NifStream( specular_color, out, version ); \
-NifStream( emissive_color, out, version ); \
+NifStream( ambientColor, out, version ); \
+NifStream( diffuseColor, out, version ); \
+NifStream( specularColor, out, version ); \
+NifStream( emissiveColor, out, version ); \
 NifStream( glossiness, out, version ); \
 NifStream( alpha, out, version ); \
 
@@ -8377,10 +8378,10 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
-out << "       Ambient Color:  " << ambient_color << endl; \
-out << "       Diffuse Color:  " << diffuse_color << endl; \
-out << "      Specular Color:  " << specular_color << endl; \
-out << "      Emissive Color:  " << emissive_color << endl; \
+out << "       Ambient Color:  " << ambientColor << endl; \
+out << "       Diffuse Color:  " << diffuseColor << endl; \
+out << "      Specular Color:  " << specularColor << endl; \
+out << "      Emissive Color:  " << emissiveColor << endl; \
 out << "          Glossiness:  " << glossiness << endl; \
 out << "               Alpha:  " << alpha << endl; \
 return out.str(); \
@@ -8440,44 +8441,44 @@ return out.str(); \
 // - Unknown.
 // - Links to a NiNode; but this NiNode doesn't seem to be a mesh?
 #define NI_MESH_P_SYS_DATA_MEMBERS \
-byte unknown_byte_11; \
-vector<vector<float > > unknown_floats_3; \
-vector<vector<float > > unknown_floats_4; \
-vector<vector<float > > unknown_floats_5; \
-uint unknown_int_1; \
-uint modifier; \
-byte unknown_byte_2; \
-LinkGroup unknown_link_group; \
-ushort unknown_short_4; \
-uint unknown_int_2; \
-byte unknown_byte_12; \
-uint unknown_int_3; \
-uint unknown_int_4; \
-uint unknown_link_2; \
+byte unknownByte11; \
+vector<vector<float > > unknownFloats3; \
+vector<vector<float > > unknownFloats4; \
+vector<vector<float > > unknownFloats5; \
+uint unknownInt1; \
+Link modifier; \
+byte unknownByte2; \
+LinkGroup unknownLinkGroup; \
+ushort unknownShort4; \
+uint unknownInt2; \
+byte unknownByte12; \
+uint unknownInt3; \
+uint unknownInt4; \
+Link unknownLink2; \
 
 #define NI_MESH_P_SYS_DATA_GETATTR \
 attr_ref attr = APSysData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Byte 11" ) \
-  return attr_ref(unknown_byte_11); \
+  return attr_ref(unknownByte11); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Modifier" ) \
   return attr_ref(modifier); \
 if ( attr_name == "Unknown Byte 2" ) \
-  return attr_ref(unknown_byte_2); \
+  return attr_ref(unknownByte2); \
 if ( attr_name == "Unknown Short 4" ) \
-  return attr_ref(unknown_short_4); \
+  return attr_ref(unknownShort4); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Unknown Byte 12" ) \
-  return attr_ref(unknown_byte_12); \
+  return attr_ref(unknownByte12); \
 if ( attr_name == "Unknown Int 3" ) \
-  return attr_ref(unknown_int_3); \
+  return attr_ref(unknownInt3); \
 if ( attr_name == "Unknown Int 4" ) \
-  return attr_ref(unknown_int_4); \
+  return attr_ref(unknownInt4); \
 if ( attr_name == "Unknown Link 2" ) \
-  return attr_ref(unknown_link_2); \
+  return attr_ref(unknownLink2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8488,66 +8489,66 @@ return attr_ref(); \
 #define NI_MESH_P_SYS_DATA_READ \
 APSysData::Read( in, version ); \
 if ( version >= 0x14000005 ) { \
-  NifStream( unknown_byte_11, in, version ); \
+  NifStream( unknownByte11, in, version ); \
 }; \
 if ( version <= 0x14000004 ) { \
-  unknown_floats_3.resize(num_vertices); \
-  NifStream( unknown_floats_3, in, version ); \
-  unknown_floats_4.resize(num_vertices); \
-  NifStream( unknown_floats_4, in, version ); \
+  unknownFloats3.resize(numVertices); \
+  NifStream( unknownFloats3, in, version ); \
+  unknownFloats4.resize(numVertices); \
+  NifStream( unknownFloats4, in, version ); \
 }; \
 if ( version >= 0x14000005 ) { \
-  unknown_floats_5.resize(num_vertices); \
-  NifStream( unknown_floats_5, in, version ); \
+  unknownFloats5.resize(numVertices); \
+  NifStream( unknownFloats5, in, version ); \
 }; \
-NifStream( unknown_int_1, in, version ); \
+NifStream( unknownInt1, in, version ); \
 if ( version <= 0x14000004 ) { \
   NifStream( modifier, in, version ); \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
-  NifStream( unknown_byte_2, in, version ); \
-  NifStream( unknown_link_group, in, version ); \
+  NifStream( unknownByte2, in, version ); \
+  NifStream( unknownLinkGroup, in, version ); \
 }; \
 if ( version >= 0x14000005 ) { \
-  NifStream( unknown_short_4, in, version ); \
-  NifStream( unknown_int_2, in, version ); \
-  NifStream( unknown_byte_12, in, version ); \
-  NifStream( unknown_int_3, in, version ); \
-  NifStream( unknown_int_4, in, version ); \
+  NifStream( unknownShort4, in, version ); \
+  NifStream( unknownInt2, in, version ); \
+  NifStream( unknownByte12, in, version ); \
+  NifStream( unknownInt3, in, version ); \
+  NifStream( unknownInt4, in, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( unknown_link_2, in, version ); \
+  NifStream( unknownLink2, in, version ); \
 }; \
 
 #define NI_MESH_P_SYS_DATA_WRITE \
 APSysData::Write( out, version ); \
 if ( version >= 0x14000005 ) { \
-  NifStream( unknown_byte_11, out, version ); \
+  NifStream( unknownByte11, out, version ); \
 }; \
 if ( version <= 0x14000004 ) { \
-  NifStream( unknown_floats_3, out, version ); \
-  NifStream( unknown_floats_4, out, version ); \
+  NifStream( unknownFloats3, out, version ); \
+  NifStream( unknownFloats4, out, version ); \
 }; \
 if ( version >= 0x14000005 ) { \
-  NifStream( unknown_floats_5, out, version ); \
+  NifStream( unknownFloats5, out, version ); \
 }; \
-NifStream( unknown_int_1, out, version ); \
+NifStream( unknownInt1, out, version ); \
 if ( version <= 0x14000004 ) { \
   NifStream( modifier, out, version ); \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
-  NifStream( unknown_byte_2, out, version ); \
-  NifStream( unknown_link_group, out, version ); \
+  NifStream( unknownByte2, out, version ); \
+  NifStream( unknownLinkGroup, out, version ); \
 }; \
 if ( version >= 0x14000005 ) { \
-  NifStream( unknown_short_4, out, version ); \
-  NifStream( unknown_int_2, out, version ); \
-  NifStream( unknown_byte_12, out, version ); \
-  NifStream( unknown_int_3, out, version ); \
-  NifStream( unknown_int_4, out, version ); \
+  NifStream( unknownShort4, out, version ); \
+  NifStream( unknownInt2, out, version ); \
+  NifStream( unknownByte12, out, version ); \
+  NifStream( unknownInt3, out, version ); \
+  NifStream( unknownInt4, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  NifStream( unknown_link_2, out, version ); \
+  NifStream( unknownLink2, out, version ); \
 }; \
 
 #define NI_MESH_P_SYS_DATA_STRING \
@@ -8555,20 +8556,20 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysData::asString(); \
-out << "     Unknown Byte 11:  " << unknown_byte_11 << endl; \
+out << "     Unknown Byte 11:  " << unknownByte11 << endl; \
 out << "    Unknown Floats 3:  -- data not shown --" << endl; \
 out << "    Unknown Floats 4:  -- data not shown --" << endl; \
 out << "    Unknown Floats 5:  -- data not shown --" << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 out << "            Modifier:  " << modifier << endl; \
-out << "      Unknown Byte 2:  " << unknown_byte_2 << endl; \
-out << "  Unknown Link Group:  " << unknown_link_group << endl; \
-out << "     Unknown Short 4:  " << unknown_short_4 << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
-out << "     Unknown Byte 12:  " << unknown_byte_12 << endl; \
-out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
-out << "       Unknown Int 4:  " << unknown_int_4 << endl; \
-out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
+out << "      Unknown Byte 2:  " << unknownByte2 << endl; \
+out << "  Unknown Link Group:  " << unknownLinkGroup << endl; \
+out << "     Unknown Short 4:  " << unknownShort4 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
+out << "     Unknown Byte 12:  " << unknownByte12 << endl; \
+out << "       Unknown Int 3:  " << unknownInt3 << endl; \
+out << "       Unknown Int 4:  " << unknownInt4 << endl; \
+out << "      Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 // 
@@ -8578,17 +8579,17 @@ return out.str(); \
 // - This byte is always 1 in all official files.
 // - The geometry morphing blocks.
 #define NI_MORPH_DATA_MEMBERS \
-uint num_vertices; \
-byte unknown_byte; \
+uint numVertices; \
+byte unknownByte; \
 vector<Morph > morphs; \
 
 #define NI_MORPH_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Vertices" ) \
-  return attr_ref(num_vertices); \
+  return attr_ref(numVertices); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8597,22 +8598,22 @@ return attr_ref(); \
 #define NI_MORPH_DATA_CONSTRUCT
 
 #define NI_MORPH_DATA_READ \
-uint num_morphs; \
+uint numMorphs; \
 AData::Read( in, version ); \
-NifStream( num_morphs, in, version ); \
-NifStream( num_vertices, in, version ); \
-NifStream( unknown_byte, in, version ); \
-morphs.resize(num_morphs); \
-NifStream( morphs, in, version, num_vertices ); \
+NifStream( numMorphs, in, version ); \
+NifStream( numVertices, in, version ); \
+NifStream( unknownByte, in, version ); \
+morphs.resize(numMorphs); \
+NifStream( morphs, in, version, numVertices ); \
 
 #define NI_MORPH_DATA_WRITE \
-uint num_morphs; \
+uint numMorphs; \
 AData::Write( out, version ); \
-num_morphs = uint(morphs.size()); \
-NifStream( num_morphs, out, version ); \
-NifStream( num_vertices, out, version ); \
-NifStream( unknown_byte, out, version ); \
-NifStream( morphs, out, version, num_vertices ); \
+numMorphs = uint(morphs.size()); \
+NifStream( numMorphs, out, version ); \
+NifStream( numVertices, out, version ); \
+NifStream( unknownByte, out, version ); \
+NifStream( morphs, out, version, numVertices ); \
 
 #define NI_MORPH_DATA_STRING \
 stringstream out; \
@@ -8620,8 +8621,8 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "          Num Morphs:  -- calculated --" << endl; \
-out << "        Num Vertices:  " << num_vertices << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
+out << "        Num Vertices:  " << numVertices << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
 out << "              Morphs:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -8693,17 +8694,17 @@ return out.str(); \
 // - The number of palette entries?  Always = 256.
 // - The color palette.
 #define NI_PALETTE_MEMBERS \
-byte unknown_byte; \
-uint num_entries_; \
+byte unknownByte; \
+uint numEntries_; \
 vector<vector<byte > > palette; \
 
 #define NI_PALETTE_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Num Entries?" ) \
-  return attr_ref(num_entries_); \
+  return attr_ref(numEntries_); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8713,15 +8714,15 @@ return attr_ref(); \
 
 #define NI_PALETTE_READ \
 AData::Read( in, version ); \
-NifStream( unknown_byte, in, version ); \
-NifStream( num_entries_, in, version ); \
+NifStream( unknownByte, in, version ); \
+NifStream( numEntries_, in, version ); \
 palette.resize(256); \
 NifStream( palette, in, version ); \
 
 #define NI_PALETTE_WRITE \
 AData::Write( out, version ); \
-NifStream( unknown_byte, out, version ); \
-NifStream( num_entries_, out, version ); \
+NifStream( unknownByte, out, version ); \
+NifStream( numEntries_, out, version ); \
 NifStream( palette, out, version ); \
 
 #define NI_PALETTE_STRING \
@@ -8729,8 +8730,8 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "        Num Entries?:  " << num_entries_ << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "        Num Entries?:  " << numEntries_ << endl; \
 out << "             Palette:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -8750,46 +8751,46 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_PARTICLE_BOMB_MEMBERS \
-float unknown_float_1; \
-float unknown_float_2; \
-float unknown_float_3; \
-float unknown_float_4; \
-uint unknown_int_1; \
-uint unknown_int_2; \
-float unknown_float_5; \
-float unknown_float_6; \
-float unknown_float_7; \
-float unknown_float_8; \
-float unknown_float_9; \
-float unknown_float_10; \
+float unknownFloat1; \
+float unknownFloat2; \
+float unknownFloat3; \
+float unknownFloat4; \
+uint unknownInt1; \
+uint unknownInt2; \
+float unknownFloat5; \
+float unknownFloat6; \
+float unknownFloat7; \
+float unknownFloat8; \
+float unknownFloat9; \
+float unknownFloat10; \
 
 #define NI_PARTICLE_BOMB_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Unknown Float 5" ) \
-  return attr_ref(unknown_float_5); \
+  return attr_ref(unknownFloat5); \
 if ( attr_name == "Unknown Float 6" ) \
-  return attr_ref(unknown_float_6); \
+  return attr_ref(unknownFloat6); \
 if ( attr_name == "Unknown Float 7" ) \
-  return attr_ref(unknown_float_7); \
+  return attr_ref(unknownFloat7); \
 if ( attr_name == "Unknown Float 8" ) \
-  return attr_ref(unknown_float_8); \
+  return attr_ref(unknownFloat8); \
 if ( attr_name == "Unknown Float 9" ) \
-  return attr_ref(unknown_float_9); \
+  return attr_ref(unknownFloat9); \
 if ( attr_name == "Unknown Float 10" ) \
-  return attr_ref(unknown_float_10); \
+  return attr_ref(unknownFloat10); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8799,51 +8800,51 @@ return attr_ref(); \
 
 #define NI_PARTICLE_BOMB_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_float_4, in, version ); \
-NifStream( unknown_int_1, in, version ); \
-NifStream( unknown_int_2, in, version ); \
-NifStream( unknown_float_5, in, version ); \
-NifStream( unknown_float_6, in, version ); \
-NifStream( unknown_float_7, in, version ); \
-NifStream( unknown_float_8, in, version ); \
-NifStream( unknown_float_9, in, version ); \
-NifStream( unknown_float_10, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownFloat4, in, version ); \
+NifStream( unknownInt1, in, version ); \
+NifStream( unknownInt2, in, version ); \
+NifStream( unknownFloat5, in, version ); \
+NifStream( unknownFloat6, in, version ); \
+NifStream( unknownFloat7, in, version ); \
+NifStream( unknownFloat8, in, version ); \
+NifStream( unknownFloat9, in, version ); \
+NifStream( unknownFloat10, in, version ); \
 
 #define NI_PARTICLE_BOMB_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_float_4, out, version ); \
-NifStream( unknown_int_1, out, version ); \
-NifStream( unknown_int_2, out, version ); \
-NifStream( unknown_float_5, out, version ); \
-NifStream( unknown_float_6, out, version ); \
-NifStream( unknown_float_7, out, version ); \
-NifStream( unknown_float_8, out, version ); \
-NifStream( unknown_float_9, out, version ); \
-NifStream( unknown_float_10, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownFloat4, out, version ); \
+NifStream( unknownInt1, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( unknownFloat5, out, version ); \
+NifStream( unknownFloat6, out, version ); \
+NifStream( unknownFloat7, out, version ); \
+NifStream( unknownFloat8, out, version ); \
+NifStream( unknownFloat9, out, version ); \
+NifStream( unknownFloat10, out, version ); \
 
 #define NI_PARTICLE_BOMB_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
-out << "     Unknown Float 5:  " << unknown_float_5 << endl; \
-out << "     Unknown Float 6:  " << unknown_float_6 << endl; \
-out << "     Unknown Float 7:  " << unknown_float_7 << endl; \
-out << "     Unknown Float 8:  " << unknown_float_8 << endl; \
-out << "     Unknown Float 9:  " << unknown_float_9 << endl; \
-out << "    Unknown Float 10:  " << unknown_float_10 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
+out << "     Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "     Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "     Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "     Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "     Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "    Unknown Float 10:  " << unknownFloat10 << endl; \
 return out.str(); \
 
 // 
@@ -8851,13 +8852,13 @@ return out.str(); \
 //
 // - Color data index.
 #define NI_PARTICLE_COLOR_MODIFIER_MEMBERS \
-uint color_data; \
+Link colorData; \
 
 #define NI_PARTICLE_COLOR_MODIFIER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Color Data" ) \
-  return attr_ref(color_data); \
+  return attr_ref(colorData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8867,18 +8868,18 @@ return attr_ref(); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( color_data, in, version ); \
+NifStream( colorData, in, version ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( color_data, out, version ); \
+NifStream( colorData, out, version ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "          Color Data:  " << color_data << endl; \
+out << "          Color Data:  " << colorData << endl; \
 return out.str(); \
 
 // 
@@ -8956,13 +8957,13 @@ return out.str(); \
 //
 // - Refers to the mesh that makes up a particle?
 #define NI_PARTICLE_MESHES_DATA_MEMBERS \
-uint unknown_link_2; \
+Link unknownLink2; \
 
 #define NI_PARTICLE_MESHES_DATA_GETATTR \
 attr_ref attr = ARotatingParticlesData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Link 2" ) \
-  return attr_ref(unknown_link_2); \
+  return attr_ref(unknownLink2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -8972,18 +8973,18 @@ return attr_ref(); \
 
 #define NI_PARTICLE_MESHES_DATA_READ \
 ARotatingParticlesData::Read( in, version ); \
-NifStream( unknown_link_2, in, version ); \
+NifStream( unknownLink2, in, version ); \
 
 #define NI_PARTICLE_MESHES_DATA_WRITE \
 ARotatingParticlesData::Write( out, version ); \
-NifStream( unknown_link_2, out, version ); \
+NifStream( unknownLink2, out, version ); \
 
 #define NI_PARTICLE_MESHES_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ARotatingParticlesData::asString(); \
-out << "      Unknown Link 2:  " << unknown_link_2 << endl; \
+out << "      Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 // 
@@ -8991,7 +8992,7 @@ return out.str(); \
 //
 // - Links to nodes of particle meshes?
 #define NI_PARTICLE_MESH_MODIFIER_MEMBERS \
-LinkGroup particle_meshes; \
+LinkGroup particleMeshes; \
 
 #define NI_PARTICLE_MESH_MODIFIER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
@@ -9005,18 +9006,18 @@ return attr_ref(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( particle_meshes, in, version ); \
+NifStream( particleMeshes, in, version ); \
 
 #define NI_PARTICLE_MESH_MODIFIER_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( particle_meshes, out, version ); \
+NifStream( particleMeshes, out, version ); \
 
 #define NI_PARTICLE_MESH_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "     Particle Meshes:  " << particle_meshes << endl; \
+out << "     Particle Meshes:  " << particleMeshes << endl; \
 return out.str(); \
 
 // 
@@ -9028,25 +9029,25 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_PARTICLE_ROTATION_MEMBERS \
-byte unknown_byte; \
-float unknown_float_1; \
-float unknown_float_2; \
-float unknown_float_3; \
-float unknown_float_4; \
+byte unknownByte; \
+float unknownFloat1; \
+float unknownFloat2; \
+float unknownFloat3; \
+float unknownFloat4; \
 
 #define NI_PARTICLE_ROTATION_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9056,30 +9057,30 @@ return attr_ref(); \
 
 #define NI_PARTICLE_ROTATION_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( unknown_byte, in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_float_4, in, version ); \
+NifStream( unknownByte, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownFloat4, in, version ); \
 
 #define NI_PARTICLE_ROTATION_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( unknown_byte, out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_float_4, out, version ); \
+NifStream( unknownByte, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownFloat4, out, version ); \
 
 #define NI_PARTICLE_ROTATION_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
 return out.str(); \
 
 // 
@@ -9214,31 +9215,31 @@ return out.str(); \
 // - Path controller data index (position data). ?
 // - Path controller data index (float data). ?
 #define NI_PATH_CONTROLLER_MEMBERS \
-ushort unknown_short_2; \
-uint unknown_int_1; \
-uint unknown_int_2; \
-uint unknown_int_3; \
-ushort unknown_short; \
-uint pos_data; \
-uint float_data; \
+ushort unknownShort2; \
+uint unknownInt1; \
+uint unknownInt2; \
+uint unknownInt3; \
+ushort unknownShort; \
+Link posData; \
+Link floatData; \
 
 #define NI_PATH_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 if ( attr_name == "Unknown Int 2" ) \
-  return attr_ref(unknown_int_2); \
+  return attr_ref(unknownInt2); \
 if ( attr_name == "Unknown Int 3" ) \
-  return attr_ref(unknown_int_3); \
+  return attr_ref(unknownInt3); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Pos Data" ) \
-  return attr_ref(pos_data); \
+  return attr_ref(posData); \
 if ( attr_name == "Float Data" ) \
-  return attr_ref(float_data); \
+  return attr_ref(floatData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9249,39 +9250,39 @@ return attr_ref(); \
 #define NI_PATH_CONTROLLER_READ \
 AController::Read( in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short_2, in, version ); \
+  NifStream( unknownShort2, in, version ); \
 }; \
-NifStream( unknown_int_1, in, version ); \
-NifStream( unknown_int_2, in, version ); \
-NifStream( unknown_int_3, in, version ); \
-NifStream( unknown_short, in, version ); \
-NifStream( pos_data, in, version ); \
-NifStream( float_data, in, version ); \
+NifStream( unknownInt1, in, version ); \
+NifStream( unknownInt2, in, version ); \
+NifStream( unknownInt3, in, version ); \
+NifStream( unknownShort, in, version ); \
+NifStream( posData, in, version ); \
+NifStream( floatData, in, version ); \
 
 #define NI_PATH_CONTROLLER_WRITE \
 AController::Write( out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( unknown_short_2, out, version ); \
+  NifStream( unknownShort2, out, version ); \
 }; \
-NifStream( unknown_int_1, out, version ); \
-NifStream( unknown_int_2, out, version ); \
-NifStream( unknown_int_3, out, version ); \
-NifStream( unknown_short, out, version ); \
-NifStream( pos_data, out, version ); \
-NifStream( float_data, out, version ); \
+NifStream( unknownInt1, out, version ); \
+NifStream( unknownInt2, out, version ); \
+NifStream( unknownInt3, out, version ); \
+NifStream( unknownShort, out, version ); \
+NifStream( posData, out, version ); \
+NifStream( floatData, out, version ); \
 
 #define NI_PATH_CONTROLLER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
-out << "       Unknown Int 2:  " << unknown_int_2 << endl; \
-out << "       Unknown Int 3:  " << unknown_int_3 << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "            Pos Data:  " << pos_data << endl; \
-out << "          Float Data:  " << float_data << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
+out << "       Unknown Int 2:  " << unknownInt2 << endl; \
+out << "       Unknown Int 3:  " << unknownInt3 << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "            Pos Data:  " << posData << endl; \
+out << "          Float Data:  " << floatData << endl; \
 return out.str(); \
 
 // 
@@ -9293,25 +9294,25 @@ return out.str(); \
 // - Links to NiPosData.
 // - Links to NiFloatData.
 #define NI_PATH_INTERPOLATOR_MEMBERS \
-float unknown_float_1; \
-float unknown_float_2; \
-ushort unknown_short_2; \
-uint pos_data; \
-uint float_data; \
+float unknownFloat1; \
+float unknownFloat2; \
+ushort unknownShort2; \
+Link posData; \
+Link floatData; \
 
 #define NI_PATH_INTERPOLATOR_GETATTR \
 attr_ref attr = ABlendInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Pos Data" ) \
-  return attr_ref(pos_data); \
+  return attr_ref(posData); \
 if ( attr_name == "Float Data" ) \
-  return attr_ref(float_data); \
+  return attr_ref(floatData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9321,30 +9322,30 @@ return attr_ref(); \
 
 #define NI_PATH_INTERPOLATOR_READ \
 ABlendInterpolator::Read( in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_short_2, in, version ); \
-NifStream( pos_data, in, version ); \
-NifStream( float_data, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownShort2, in, version ); \
+NifStream( posData, in, version ); \
+NifStream( floatData, in, version ); \
 
 #define NI_PATH_INTERPOLATOR_WRITE \
 ABlendInterpolator::Write( out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_short_2, out, version ); \
-NifStream( pos_data, out, version ); \
-NifStream( float_data, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownShort2, out, version ); \
+NifStream( posData, out, version ); \
+NifStream( floatData, out, version ); \
 
 #define NI_PATH_INTERPOLATOR_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ABlendInterpolator::asString(); \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "            Pos Data:  " << pos_data << endl; \
-out << "          Float Data:  " << float_data << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "            Pos Data:  " << posData << endl; \
+out << "          Float Data:  " << floatData << endl; \
 return out.str(); \
 
 // 
@@ -9372,41 +9373,41 @@ return out.str(); \
 // - Mipmap descriptions (width, height, offset).
 // - Raw pixel data holding the mipmaps.  Mipmap zero is the full-size texture and they get smaller by half as the number increases.
 #define NI_PIXEL_DATA_MEMBERS \
-uint pixel_format; \
-uint red_mask; \
-uint green_mask; \
-uint blue_mask; \
-uint alpha_mask; \
-uint bits_per_pixel; \
-vector<byte > unknown_8_bytes; \
-uint unknown_int; \
-vector<byte > unknown_54_bytes; \
-uint palette; \
-uint bytes_per_pixel; \
+uint pixelFormat; \
+uint redMask; \
+uint greenMask; \
+uint blueMask; \
+uint alphaMask; \
+uint bitsPerPixel; \
+vector<byte > unknown8Bytes; \
+uint unknownInt; \
+vector<byte > unknown54Bytes; \
+Link palette; \
+uint bytesPerPixel; \
 vector<MipMap > mipmaps; \
-ByteArray pixel_data; \
+ByteArray pixelData; \
 
 #define NI_PIXEL_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Pixel Format" ) \
-  return attr_ref(pixel_format); \
+  return attr_ref(pixelFormat); \
 if ( attr_name == "Red Mask" ) \
-  return attr_ref(red_mask); \
+  return attr_ref(redMask); \
 if ( attr_name == "Green Mask" ) \
-  return attr_ref(green_mask); \
+  return attr_ref(greenMask); \
 if ( attr_name == "Blue Mask" ) \
-  return attr_ref(blue_mask); \
+  return attr_ref(blueMask); \
 if ( attr_name == "Alpha Mask" ) \
-  return attr_ref(alpha_mask); \
+  return attr_ref(alphaMask); \
 if ( attr_name == "Bits Per Pixel" ) \
-  return attr_ref(bits_per_pixel); \
+  return attr_ref(bitsPerPixel); \
 if ( attr_name == "Unknown Int" ) \
-  return attr_ref(unknown_int); \
+  return attr_ref(unknownInt); \
 if ( attr_name == "Palette" ) \
   return attr_ref(palette); \
 if ( attr_name == "Bytes Per Pixel" ) \
-  return attr_ref(bytes_per_pixel); \
+  return attr_ref(bytesPerPixel); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9415,76 +9416,76 @@ return attr_ref(); \
 #define NI_PIXEL_DATA_CONSTRUCT
 
 #define NI_PIXEL_DATA_READ \
-uint num_mipmaps; \
+uint numMipmaps; \
 AData::Read( in, version ); \
-NifStream( pixel_format, in, version ); \
+NifStream( pixelFormat, in, version ); \
 if ( version <= 0x0A020000 ) { \
-  NifStream( red_mask, in, version ); \
-  NifStream( green_mask, in, version ); \
-  NifStream( blue_mask, in, version ); \
-  NifStream( alpha_mask, in, version ); \
-  NifStream( bits_per_pixel, in, version ); \
-  unknown_8_bytes.resize(8); \
-  NifStream( unknown_8_bytes, in, version ); \
+  NifStream( redMask, in, version ); \
+  NifStream( greenMask, in, version ); \
+  NifStream( blueMask, in, version ); \
+  NifStream( alphaMask, in, version ); \
+  NifStream( bitsPerPixel, in, version ); \
+  unknown8Bytes.resize(8); \
+  NifStream( unknown8Bytes, in, version ); \
 }; \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A020000 ) ) { \
-  NifStream( unknown_int, in, version ); \
+  NifStream( unknownInt, in, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  unknown_54_bytes.resize(54); \
-  NifStream( unknown_54_bytes, in, version ); \
+  unknown54Bytes.resize(54); \
+  NifStream( unknown54Bytes, in, version ); \
 }; \
 NifStream( palette, in, version ); \
-NifStream( num_mipmaps, in, version ); \
-NifStream( bytes_per_pixel, in, version ); \
-mipmaps.resize(num_mipmaps); \
+NifStream( numMipmaps, in, version ); \
+NifStream( bytesPerPixel, in, version ); \
+mipmaps.resize(numMipmaps); \
 NifStream( mipmaps, in, version ); \
-NifStream( pixel_data, in, version ); \
+NifStream( pixelData, in, version ); \
 
 #define NI_PIXEL_DATA_WRITE \
-uint num_mipmaps; \
+uint numMipmaps; \
 AData::Write( out, version ); \
-num_mipmaps = uint(mipmaps.size()); \
-NifStream( pixel_format, out, version ); \
+numMipmaps = uint(mipmaps.size()); \
+NifStream( pixelFormat, out, version ); \
 if ( version <= 0x0A020000 ) { \
-  NifStream( red_mask, out, version ); \
-  NifStream( green_mask, out, version ); \
-  NifStream( blue_mask, out, version ); \
-  NifStream( alpha_mask, out, version ); \
-  NifStream( bits_per_pixel, out, version ); \
-  NifStream( unknown_8_bytes, out, version ); \
+  NifStream( redMask, out, version ); \
+  NifStream( greenMask, out, version ); \
+  NifStream( blueMask, out, version ); \
+  NifStream( alphaMask, out, version ); \
+  NifStream( bitsPerPixel, out, version ); \
+  NifStream( unknown8Bytes, out, version ); \
 }; \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A020000 ) ) { \
-  NifStream( unknown_int, out, version ); \
+  NifStream( unknownInt, out, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_54_bytes, out, version ); \
+  NifStream( unknown54Bytes, out, version ); \
 }; \
 NifStream( palette, out, version ); \
-NifStream( num_mipmaps, out, version ); \
-NifStream( bytes_per_pixel, out, version ); \
+NifStream( numMipmaps, out, version ); \
+NifStream( bytesPerPixel, out, version ); \
 NifStream( mipmaps, out, version ); \
-NifStream( pixel_data, out, version ); \
+NifStream( pixelData, out, version ); \
 
 #define NI_PIXEL_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "        Pixel Format:  " << pixel_format << endl; \
-out << "            Red Mask:  " << red_mask << endl; \
-out << "          Green Mask:  " << green_mask << endl; \
-out << "           Blue Mask:  " << blue_mask << endl; \
-out << "          Alpha Mask:  " << alpha_mask << endl; \
-out << "      Bits Per Pixel:  " << bits_per_pixel << endl; \
+out << "        Pixel Format:  " << pixelFormat << endl; \
+out << "            Red Mask:  " << redMask << endl; \
+out << "          Green Mask:  " << greenMask << endl; \
+out << "           Blue Mask:  " << blueMask << endl; \
+out << "          Alpha Mask:  " << alphaMask << endl; \
+out << "      Bits Per Pixel:  " << bitsPerPixel << endl; \
 out << "     Unknown 8 Bytes:  -- data not shown --" << endl; \
-out << "         Unknown Int:  " << unknown_int << endl; \
+out << "         Unknown Int:  " << unknownInt << endl; \
 out << "    Unknown 54 Bytes:  -- data not shown --" << endl; \
 out << "             Palette:  " << palette << endl; \
 out << "         Num Mipmaps:  -- calculated --" << endl; \
-out << "     Bytes Per Pixel:  " << bytes_per_pixel << endl; \
+out << "     Bytes Per Pixel:  " << bytesPerPixel << endl; \
 out << "             Mipmaps:  -- data not shown --" << endl; \
-out << "          Pixel Data:  " << pixel_data << endl; \
+out << "          Pixel Data:  " << pixelData << endl; \
 return out.str(); \
 
 // 
@@ -9509,64 +9510,64 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_PLANAR_COLLIDER_MEMBERS \
-ushort unknown_short; \
-float unknown_float_1; \
-float unknown_float_2; \
-ushort unknown_short_2; \
-float unknown_float_3; \
-float unknown_float_4; \
-float unknown_float_5; \
-float unknown_float_6; \
-float unknown_float_7; \
-float unknown_float_8; \
-float unknown_float_9; \
-float unknown_float_10; \
-float unknown_float_11; \
-float unknown_float_12; \
-float unknown_float_13; \
-float unknown_float_14; \
-float unknown_float_15; \
-float unknown_float_16; \
+ushort unknownShort; \
+float unknownFloat1; \
+float unknownFloat2; \
+ushort unknownShort2; \
+float unknownFloat3; \
+float unknownFloat4; \
+float unknownFloat5; \
+float unknownFloat6; \
+float unknownFloat7; \
+float unknownFloat8; \
+float unknownFloat9; \
+float unknownFloat10; \
+float unknownFloat11; \
+float unknownFloat12; \
+float unknownFloat13; \
+float unknownFloat14; \
+float unknownFloat15; \
+float unknownFloat16; \
 
 #define NI_PLANAR_COLLIDER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Short 2" ) \
-  return attr_ref(unknown_short_2); \
+  return attr_ref(unknownShort2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 if ( attr_name == "Unknown Float 5" ) \
-  return attr_ref(unknown_float_5); \
+  return attr_ref(unknownFloat5); \
 if ( attr_name == "Unknown Float 6" ) \
-  return attr_ref(unknown_float_6); \
+  return attr_ref(unknownFloat6); \
 if ( attr_name == "Unknown Float 7" ) \
-  return attr_ref(unknown_float_7); \
+  return attr_ref(unknownFloat7); \
 if ( attr_name == "Unknown Float 8" ) \
-  return attr_ref(unknown_float_8); \
+  return attr_ref(unknownFloat8); \
 if ( attr_name == "Unknown Float 9" ) \
-  return attr_ref(unknown_float_9); \
+  return attr_ref(unknownFloat9); \
 if ( attr_name == "Unknown Float 10" ) \
-  return attr_ref(unknown_float_10); \
+  return attr_ref(unknownFloat10); \
 if ( attr_name == "Unknown Float 11" ) \
-  return attr_ref(unknown_float_11); \
+  return attr_ref(unknownFloat11); \
 if ( attr_name == "Unknown Float 12" ) \
-  return attr_ref(unknown_float_12); \
+  return attr_ref(unknownFloat12); \
 if ( attr_name == "Unknown Float 13" ) \
-  return attr_ref(unknown_float_13); \
+  return attr_ref(unknownFloat13); \
 if ( attr_name == "Unknown Float 14" ) \
-  return attr_ref(unknown_float_14); \
+  return attr_ref(unknownFloat14); \
 if ( attr_name == "Unknown Float 15" ) \
-  return attr_ref(unknown_float_15); \
+  return attr_ref(unknownFloat15); \
 if ( attr_name == "Unknown Float 16" ) \
-  return attr_ref(unknown_float_16); \
+  return attr_ref(unknownFloat16); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9577,76 +9578,76 @@ return attr_ref(); \
 #define NI_PLANAR_COLLIDER_READ \
 AParticleModifier::Read( in, version ); \
 if ( version >= 0x0A000100 ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_float_2, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
 if ( ( version >= 0x04020200 ) && ( version <= 0x04020200 ) ) { \
-  NifStream( unknown_short_2, in, version ); \
+  NifStream( unknownShort2, in, version ); \
 }; \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_float_4, in, version ); \
-NifStream( unknown_float_5, in, version ); \
-NifStream( unknown_float_6, in, version ); \
-NifStream( unknown_float_7, in, version ); \
-NifStream( unknown_float_8, in, version ); \
-NifStream( unknown_float_9, in, version ); \
-NifStream( unknown_float_10, in, version ); \
-NifStream( unknown_float_11, in, version ); \
-NifStream( unknown_float_12, in, version ); \
-NifStream( unknown_float_13, in, version ); \
-NifStream( unknown_float_14, in, version ); \
-NifStream( unknown_float_15, in, version ); \
-NifStream( unknown_float_16, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownFloat4, in, version ); \
+NifStream( unknownFloat5, in, version ); \
+NifStream( unknownFloat6, in, version ); \
+NifStream( unknownFloat7, in, version ); \
+NifStream( unknownFloat8, in, version ); \
+NifStream( unknownFloat9, in, version ); \
+NifStream( unknownFloat10, in, version ); \
+NifStream( unknownFloat11, in, version ); \
+NifStream( unknownFloat12, in, version ); \
+NifStream( unknownFloat13, in, version ); \
+NifStream( unknownFloat14, in, version ); \
+NifStream( unknownFloat15, in, version ); \
+NifStream( unknownFloat16, in, version ); \
 
 #define NI_PLANAR_COLLIDER_WRITE \
 AParticleModifier::Write( out, version ); \
 if ( version >= 0x0A000100 ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_float_2, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
 if ( ( version >= 0x04020200 ) && ( version <= 0x04020200 ) ) { \
-  NifStream( unknown_short_2, out, version ); \
+  NifStream( unknownShort2, out, version ); \
 }; \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_float_4, out, version ); \
-NifStream( unknown_float_5, out, version ); \
-NifStream( unknown_float_6, out, version ); \
-NifStream( unknown_float_7, out, version ); \
-NifStream( unknown_float_8, out, version ); \
-NifStream( unknown_float_9, out, version ); \
-NifStream( unknown_float_10, out, version ); \
-NifStream( unknown_float_11, out, version ); \
-NifStream( unknown_float_12, out, version ); \
-NifStream( unknown_float_13, out, version ); \
-NifStream( unknown_float_14, out, version ); \
-NifStream( unknown_float_15, out, version ); \
-NifStream( unknown_float_16, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownFloat4, out, version ); \
+NifStream( unknownFloat5, out, version ); \
+NifStream( unknownFloat6, out, version ); \
+NifStream( unknownFloat7, out, version ); \
+NifStream( unknownFloat8, out, version ); \
+NifStream( unknownFloat9, out, version ); \
+NifStream( unknownFloat10, out, version ); \
+NifStream( unknownFloat11, out, version ); \
+NifStream( unknownFloat12, out, version ); \
+NifStream( unknownFloat13, out, version ); \
+NifStream( unknownFloat14, out, version ); \
+NifStream( unknownFloat15, out, version ); \
+NifStream( unknownFloat16, out, version ); \
 
 #define NI_PLANAR_COLLIDER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Short 2:  " << unknown_short_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
-out << "     Unknown Float 5:  " << unknown_float_5 << endl; \
-out << "     Unknown Float 6:  " << unknown_float_6 << endl; \
-out << "     Unknown Float 7:  " << unknown_float_7 << endl; \
-out << "     Unknown Float 8:  " << unknown_float_8 << endl; \
-out << "     Unknown Float 9:  " << unknown_float_9 << endl; \
-out << "    Unknown Float 10:  " << unknown_float_10 << endl; \
-out << "    Unknown Float 11:  " << unknown_float_11 << endl; \
-out << "    Unknown Float 12:  " << unknown_float_12 << endl; \
-out << "    Unknown Float 13:  " << unknown_float_13 << endl; \
-out << "    Unknown Float 14:  " << unknown_float_14 << endl; \
-out << "    Unknown Float 15:  " << unknown_float_15 << endl; \
-out << "    Unknown Float 16:  " << unknown_float_16 << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Short 2:  " << unknownShort2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "     Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "     Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "     Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "     Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "     Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "    Unknown Float 10:  " << unknownFloat10 << endl; \
+out << "    Unknown Float 11:  " << unknownFloat11 << endl; \
+out << "    Unknown Float 12:  " << unknownFloat12 << endl; \
+out << "    Unknown Float 13:  " << unknownFloat13 << endl; \
+out << "    Unknown Float 14:  " << unknownFloat14 << endl; \
+out << "    Unknown Float 15:  " << unknownFloat15 << endl; \
+out << "    Unknown Float 16:  " << unknownFloat16 << endl; \
 return out.str(); \
 
 // 
@@ -9655,14 +9656,14 @@ return out.str(); \
 // - Value when posed?  Value at time 0?
 // - Reference to NiPosData.
 #define NI_POINT3_INTERPOLATOR_MEMBERS \
-Vector3 point_3_value; \
-uint data; \
+Vector3 point3Value; \
+Link data; \
 
 #define NI_POINT3_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Point 3 Value" ) \
-  return attr_ref(point_3_value); \
+  return attr_ref(point3Value); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -9674,12 +9675,12 @@ return attr_ref(); \
 
 #define NI_POINT3_INTERPOLATOR_READ \
 AInterpolator::Read( in, version ); \
-NifStream( point_3_value, in, version ); \
+NifStream( point3Value, in, version ); \
 NifStream( data, in, version ); \
 
 #define NI_POINT3_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, version ); \
-NifStream( point_3_value, out, version ); \
+NifStream( point3Value, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_POINT3_INTERPOLATOR_STRING \
@@ -9687,7 +9688,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AInterpolator::asString(); \
-out << "       Point 3 Value:  " << point_3_value << endl; \
+out << "       Point 3 Value:  " << point3Value << endl; \
 out << "                Data:  " << data << endl; \
 return out.str(); \
 
@@ -9758,16 +9759,16 @@ return out.str(); \
 // - Unknown.
 // - Link to NiPSysSpawnModifier block?
 #define NI_P_SYS_AGE_DEATH_MODIFIER_MEMBERS \
-bool spawn_on_death; \
-uint spawn_modifier; \
+bool spawnOnDeath; \
+Link spawnModifier; \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Spawn on Death" ) \
-  return attr_ref(spawn_on_death); \
+  return attr_ref(spawnOnDeath); \
 if ( attr_name == "Spawn Modifier" ) \
-  return attr_ref(spawn_modifier); \
+  return attr_ref(spawnModifier); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9777,21 +9778,21 @@ return attr_ref(); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( spawn_on_death, in, version ); \
-NifStream( spawn_modifier, in, version ); \
+NifStream( spawnOnDeath, in, version ); \
+NifStream( spawnModifier, in, version ); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( spawn_on_death, out, version ); \
-NifStream( spawn_modifier, out, version ); \
+NifStream( spawnOnDeath, out, version ); \
+NifStream( spawnModifier, out, version ); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "      Spawn on Death:  " << spawn_on_death << endl; \
-out << "      Spawn Modifier:  " << spawn_modifier << endl; \
+out << "      Spawn on Death:  " << spawnOnDeath << endl; \
+out << "      Spawn Modifier:  " << spawnModifier << endl; \
 return out.str(); \
 
 // 
@@ -9802,16 +9803,16 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_BOMB_MODIFIER_MEMBERS \
-uint unknown_link; \
-vector<uint > unknown_ints_1; \
-vector<float > unknown_floats; \
-vector<uint > unknown_ints_2; \
+CrossRef unknownLink; \
+vector<uint > unknownInts1; \
+vector<float > unknownFloats; \
+vector<uint > unknownInts2; \
 
 #define NI_P_SYS_BOMB_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Link" ) \
-  return attr_ref(unknown_link); \
+  return attr_ref(unknownLink); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9821,27 +9822,27 @@ return attr_ref(); \
 
 #define NI_P_SYS_BOMB_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( unknown_link, in, version ); \
-unknown_ints_1.resize(2); \
-NifStream( unknown_ints_1, in, version ); \
-unknown_floats.resize(3); \
-NifStream( unknown_floats, in, version ); \
-unknown_ints_2.resize(2); \
-NifStream( unknown_ints_2, in, version ); \
+NifStream( unknownLink, in, version ); \
+unknownInts1.resize(2); \
+NifStream( unknownInts1, in, version ); \
+unknownFloats.resize(3); \
+NifStream( unknownFloats, in, version ); \
+unknownInts2.resize(2); \
+NifStream( unknownInts2, in, version ); \
 
 #define NI_P_SYS_BOMB_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( unknown_link, out, version ); \
-NifStream( unknown_ints_1, out, version ); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_ints_2, out, version ); \
+NifStream( unknownLink, out, version ); \
+NifStream( unknownInts1, out, version ); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownInts2, out, version ); \
 
 #define NI_P_SYS_BOMB_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "        Unknown Link:  " << unknown_link << endl; \
+out << "        Unknown Link:  " << unknownLink << endl; \
 out << "      Unknown Ints 1:  -- data not shown --" << endl; \
 out << "      Unknown Floats:  -- data not shown --" << endl; \
 out << "      Unknown Ints 2:  -- data not shown --" << endl; \
@@ -9852,13 +9853,13 @@ return out.str(); \
 //
 // - Unknown.
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_MEMBERS \
-ushort update_skip; \
+ushort updateSkip; \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Update Skip" ) \
-  return attr_ref(update_skip); \
+  return attr_ref(updateSkip); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -9868,18 +9869,18 @@ return attr_ref(); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( update_skip, in, version ); \
+NifStream( updateSkip, in, version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( update_skip, out, version ); \
+NifStream( updateSkip, out, version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "         Update Skip:  " << update_skip << endl; \
+out << "         Update Skip:  " << updateSkip << endl; \
 return out.str(); \
 
 // 
@@ -9936,7 +9937,7 @@ return out.str(); \
 //
 // - Link to NiPSysPlanarCollider.
 #define NI_P_SYS_COLLIDER_MANAGER_MEMBERS \
-uint collider; \
+Link collider; \
 
 #define NI_P_SYS_COLLIDER_MANAGER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -9971,7 +9972,7 @@ return out.str(); \
 //
 // - Refers to NiColorData block.
 #define NI_P_SYS_COLOR_MODIFIER_MEMBERS \
-uint data; \
+Link data; \
 
 #define NI_P_SYS_COLOR_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -10055,26 +10056,26 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_DATA_MEMBERS \
-vector<vector<float > > unknown_floats_4; \
-bool unknown_bool_1; \
-vector<vector<byte > > unknown_bytes; \
-vector<vector<byte > > unknown_bytes_alt; \
-byte unknown_byte_3; \
-bool unknown_bool_2; \
-vector<vector<byte > > unknown_bytes_2; \
-uint unknown_int_1; \
+vector<vector<float > > unknownFloats4; \
+bool unknownBool1; \
+vector<vector<byte > > unknownBytes; \
+vector<vector<byte > > unknownBytesAlt; \
+byte unknownByte3; \
+bool unknownBool2; \
+vector<vector<byte > > unknownBytes2; \
+uint unknownInt1; \
 
 #define NI_P_SYS_DATA_GETATTR \
 attr_ref attr = APSysData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Bool 1" ) \
-  return attr_ref(unknown_bool_1); \
+  return attr_ref(unknownBool1); \
 if ( attr_name == "Unknown Byte 3" ) \
-  return attr_ref(unknown_byte_3); \
+  return attr_ref(unknownByte3); \
 if ( attr_name == "Unknown Bool 2" ) \
-  return attr_ref(unknown_bool_2); \
+  return attr_ref(unknownBool2); \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10085,48 +10086,48 @@ return attr_ref(); \
 #define NI_P_SYS_DATA_READ \
 APSysData::Read( in, version ); \
 if ( version <= 0x0A020000 ) { \
-  unknown_floats_4.resize(num_vertices); \
-  NifStream( unknown_floats_4, in, version ); \
+  unknownFloats4.resize(numVertices); \
+  NifStream( unknownFloats4, in, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_bool_1, in, version ); \
-  if ( unknown_bool_1 != 0 ) { \
-    unknown_bytes.resize(num_vertices); \
-    NifStream( unknown_bytes, in, version ); \
+  NifStream( unknownBool1, in, version ); \
+  if ( unknownBool1 != 0 ) { \
+    unknownBytes.resize(numVertices); \
+    NifStream( unknownBytes, in, version ); \
   }; \
-  if ( unknown_bool_1 == 0 ) { \
-    unknown_bytes_alt.resize(num_vertices); \
-    NifStream( unknown_bytes_alt, in, version ); \
+  if ( unknownBool1 == 0 ) { \
+    unknownBytesAlt.resize(numVertices); \
+    NifStream( unknownBytesAlt, in, version ); \
   }; \
-  NifStream( unknown_byte_3, in, version ); \
-  NifStream( unknown_bool_2, in, version ); \
-  if ( unknown_bool_2 != 0 ) { \
-    unknown_bytes_2.resize(num_vertices); \
-    NifStream( unknown_bytes_2, in, version ); \
+  NifStream( unknownByte3, in, version ); \
+  NifStream( unknownBool2, in, version ); \
+  if ( unknownBool2 != 0 ) { \
+    unknownBytes2.resize(numVertices); \
+    NifStream( unknownBytes2, in, version ); \
   }; \
 }; \
-NifStream( unknown_int_1, in, version ); \
+NifStream( unknownInt1, in, version ); \
 
 #define NI_P_SYS_DATA_WRITE \
 APSysData::Write( out, version ); \
 if ( version <= 0x0A020000 ) { \
-  NifStream( unknown_floats_4, out, version ); \
+  NifStream( unknownFloats4, out, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  NifStream( unknown_bool_1, out, version ); \
-  if ( unknown_bool_1 != 0 ) { \
-    NifStream( unknown_bytes, out, version ); \
+  NifStream( unknownBool1, out, version ); \
+  if ( unknownBool1 != 0 ) { \
+    NifStream( unknownBytes, out, version ); \
   }; \
-  if ( unknown_bool_1 == 0 ) { \
-    NifStream( unknown_bytes_alt, out, version ); \
+  if ( unknownBool1 == 0 ) { \
+    NifStream( unknownBytesAlt, out, version ); \
   }; \
-  NifStream( unknown_byte_3, out, version ); \
-  NifStream( unknown_bool_2, out, version ); \
-  if ( unknown_bool_2 != 0 ) { \
-    NifStream( unknown_bytes_2, out, version ); \
+  NifStream( unknownByte3, out, version ); \
+  NifStream( unknownBool2, out, version ); \
+  if ( unknownBool2 != 0 ) { \
+    NifStream( unknownBytes2, out, version ); \
   }; \
 }; \
-NifStream( unknown_int_1, out, version ); \
+NifStream( unknownInt1, out, version ); \
 
 #define NI_P_SYS_DATA_STRING \
 stringstream out; \
@@ -10134,13 +10135,13 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysData::asString(); \
 out << "    Unknown Floats 4:  -- data not shown --" << endl; \
-out << "      Unknown Bool 1:  " << unknown_bool_1 << endl; \
+out << "      Unknown Bool 1:  " << unknownBool1 << endl; \
 out << "       Unknown Bytes:  -- data not shown --" << endl; \
 out << "   Unknown Bytes Alt:  -- data not shown --" << endl; \
-out << "      Unknown Byte 3:  " << unknown_byte_3 << endl; \
-out << "      Unknown Bool 2:  " << unknown_bool_2 << endl; \
+out << "      Unknown Byte 3:  " << unknownByte3 << endl; \
+out << "      Unknown Bool 2:  " << unknownBool2 << endl; \
 out << "     Unknown Bytes 2:  -- data not shown --" << endl; \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
 return out.str(); \
 
 // 
@@ -10150,7 +10151,7 @@ return out.str(); \
 // - Unknown floats.
 #define NI_P_SYS_DRAG_MODIFIER_MEMBERS \
 uint parent; \
-vector<float > unknown_floats; \
+vector<float > unknownFloats; \
 
 #define NI_P_SYS_DRAG_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
@@ -10167,13 +10168,13 @@ return attr_ref(); \
 #define NI_P_SYS_DRAG_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
 NifStream( parent, in, version ); \
-unknown_floats.resize(6); \
-NifStream( unknown_floats, in, version ); \
+unknownFloats.resize(6); \
+NifStream( unknownFloats, in, version ); \
 
 #define NI_P_SYS_DRAG_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
 NifStream( parent, out, version ); \
-NifStream( unknown_floats, out, version ); \
+NifStream( unknownFloats, out, version ); \
 
 #define NI_P_SYS_DRAG_MODIFIER_STRING \
 stringstream out; \
@@ -10189,7 +10190,7 @@ return out.str(); \
 //
 // - Particle system controller data.
 #define NI_P_SYS_EMITTER_CTLR_MEMBERS \
-uint data; \
+Link data; \
 
 #define NI_P_SYS_EMITTER_CTLR_GETATTR \
 attr_ref attr = APSysCtlr::GetAttr( attr_name ); \
@@ -10225,8 +10226,8 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS \
-VectorKeyArray<float > float_keys_; \
-KeyArray<byte > visibility_keys_; \
+VectorKeyArray<float > floatKeys_; \
+KeyArray<byte > visibilityKeys_; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -10240,21 +10241,21 @@ return attr_ref(); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_READ \
 AData::Read( in, version ); \
-NifStream( float_keys_, in, version ); \
-NifStream( visibility_keys_, in, version ); \
+NifStream( floatKeys_, in, version ); \
+NifStream( visibilityKeys_, in, version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_WRITE \
 AData::Write( out, version ); \
-NifStream( float_keys_, out, version ); \
-NifStream( visibility_keys_, out, version ); \
+NifStream( floatKeys_, out, version ); \
+NifStream( visibilityKeys_, out, version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "         Float Keys?:  " << float_keys_ << endl; \
-out << "    Visibility Keys?:  " << visibility_keys_ << endl; \
+out << "         Float Keys?:  " << floatKeys_ << endl; \
+out << "    Visibility Keys?:  " << visibilityKeys_ << endl; \
 return out.str(); \
 
 // 
@@ -10408,21 +10409,21 @@ return out.str(); \
 // - Unknown.
 // - Unknown.  Can only get it to say FORCE_PLANAR or Unknown so far.  Usual value is 1.0.
 #define NI_P_SYS_GRAVITY_MODIFIER_MEMBERS \
-uint gravity_object; \
-Vector3 gravity_axis; \
+CrossRef gravityObject; \
+Vector3 gravityAxis; \
 float decay; \
 float strength; \
 float turbulence; \
-float turbulence_scale; \
-float force_type; \
+float turbulenceScale; \
+float forceType; \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Gravity Object" ) \
-  return attr_ref(gravity_object); \
+  return attr_ref(gravityObject); \
 if ( attr_name == "Gravity Axis" ) \
-  return attr_ref(gravity_axis); \
+  return attr_ref(gravityAxis); \
 if ( attr_name == "Decay" ) \
   return attr_ref(decay); \
 if ( attr_name == "Strength" ) \
@@ -10430,9 +10431,9 @@ if ( attr_name == "Strength" ) \
 if ( attr_name == "Turbulence" ) \
   return attr_ref(turbulence); \
 if ( attr_name == "Turbulence Scale" ) \
-  return attr_ref(turbulence_scale); \
+  return attr_ref(turbulenceScale); \
 if ( attr_name == "Force Type" ) \
-  return attr_ref(force_type); \
+  return attr_ref(forceType); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10442,36 +10443,36 @@ return attr_ref(); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( gravity_object, in, version ); \
-NifStream( gravity_axis, in, version ); \
+NifStream( gravityObject, in, version ); \
+NifStream( gravityAxis, in, version ); \
 NifStream( decay, in, version ); \
 NifStream( strength, in, version ); \
 NifStream( turbulence, in, version ); \
-NifStream( turbulence_scale, in, version ); \
-NifStream( force_type, in, version ); \
+NifStream( turbulenceScale, in, version ); \
+NifStream( forceType, in, version ); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( gravity_object, out, version ); \
-NifStream( gravity_axis, out, version ); \
+NifStream( gravityObject, out, version ); \
+NifStream( gravityAxis, out, version ); \
 NifStream( decay, out, version ); \
 NifStream( strength, out, version ); \
 NifStream( turbulence, out, version ); \
-NifStream( turbulence_scale, out, version ); \
-NifStream( force_type, out, version ); \
+NifStream( turbulenceScale, out, version ); \
+NifStream( forceType, out, version ); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "      Gravity Object:  " << gravity_object << endl; \
-out << "        Gravity Axis:  " << gravity_axis << endl; \
+out << "      Gravity Object:  " << gravityObject << endl; \
+out << "        Gravity Axis:  " << gravityAxis << endl; \
 out << "               Decay:  " << decay << endl; \
 out << "            Strength:  " << strength << endl; \
 out << "          Turbulence:  " << turbulence << endl; \
-out << "    Turbulence Scale:  " << turbulence_scale << endl; \
-out << "          Force Type:  " << force_type << endl; \
+out << "    Turbulence Scale:  " << turbulenceScale << endl; \
+out << "          Force Type:  " << forceType << endl; \
 return out.str(); \
 
 // 
@@ -10510,22 +10511,22 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_GROW_FADE_MODIFIER_MEMBERS \
-float grow_time; \
-ushort grow_generation; \
-float fade_time; \
-ushort fade_generation; \
+float growTime; \
+ushort growGeneration; \
+float fadeTime; \
+ushort fadeGeneration; \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Grow Time" ) \
-  return attr_ref(grow_time); \
+  return attr_ref(growTime); \
 if ( attr_name == "Grow Generation" ) \
-  return attr_ref(grow_generation); \
+  return attr_ref(growGeneration); \
 if ( attr_name == "Fade Time" ) \
-  return attr_ref(fade_time); \
+  return attr_ref(fadeTime); \
 if ( attr_name == "Fade Generation" ) \
-  return attr_ref(fade_generation); \
+  return attr_ref(fadeGeneration); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10535,27 +10536,27 @@ return attr_ref(); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( grow_time, in, version ); \
-NifStream( grow_generation, in, version ); \
-NifStream( fade_time, in, version ); \
-NifStream( fade_generation, in, version ); \
+NifStream( growTime, in, version ); \
+NifStream( growGeneration, in, version ); \
+NifStream( fadeTime, in, version ); \
+NifStream( fadeGeneration, in, version ); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( grow_time, out, version ); \
-NifStream( grow_generation, out, version ); \
-NifStream( fade_time, out, version ); \
-NifStream( fade_generation, out, version ); \
+NifStream( growTime, out, version ); \
+NifStream( growGeneration, out, version ); \
+NifStream( fadeTime, out, version ); \
+NifStream( fadeGeneration, out, version ); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "           Grow Time:  " << grow_time << endl; \
-out << "     Grow Generation:  " << grow_generation << endl; \
-out << "           Fade Time:  " << fade_time << endl; \
-out << "     Fade Generation:  " << fade_generation << endl; \
+out << "           Grow Time:  " << growTime << endl; \
+out << "     Grow Generation:  " << growGeneration << endl; \
+out << "           Fade Time:  " << fadeTime << endl; \
+out << "     Fade Generation:  " << fadeGeneration << endl; \
 return out.str(); \
 
 // 
@@ -10566,16 +10567,16 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_MESH_EMITTER_MEMBERS \
-LinkGroup unknown_link_group; \
-vector<uint > unknown_ints_1; \
-float unknown_float; \
-vector<uint > unknown_ints_2; \
+LinkGroup unknownLinkGroup; \
+vector<uint > unknownInts1; \
+float unknownFloat; \
+vector<uint > unknownInts2; \
 
 #define NI_P_SYS_MESH_EMITTER_GETATTR \
 attr_ref attr = APSysEmitter::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10585,28 +10586,28 @@ return attr_ref(); \
 
 #define NI_P_SYS_MESH_EMITTER_READ \
 APSysEmitter::Read( in, version ); \
-NifStream( unknown_link_group, in, version ); \
-unknown_ints_1.resize(2); \
-NifStream( unknown_ints_1, in, version ); \
-NifStream( unknown_float, in, version ); \
-unknown_ints_2.resize(2); \
-NifStream( unknown_ints_2, in, version ); \
+NifStream( unknownLinkGroup, in, version ); \
+unknownInts1.resize(2); \
+NifStream( unknownInts1, in, version ); \
+NifStream( unknownFloat, in, version ); \
+unknownInts2.resize(2); \
+NifStream( unknownInts2, in, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_WRITE \
 APSysEmitter::Write( out, version ); \
-NifStream( unknown_link_group, out, version ); \
-NifStream( unknown_ints_1, out, version ); \
-NifStream( unknown_float, out, version ); \
-NifStream( unknown_ints_2, out, version ); \
+NifStream( unknownLinkGroup, out, version ); \
+NifStream( unknownInts1, out, version ); \
+NifStream( unknownFloat, out, version ); \
+NifStream( unknownInts2, out, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysEmitter::asString(); \
-out << "  Unknown Link Group:  " << unknown_link_group << endl; \
+out << "  Unknown Link Group:  " << unknownLinkGroup << endl; \
 out << "      Unknown Ints 1:  -- data not shown --" << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 out << "      Unknown Ints 2:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -10687,16 +10688,16 @@ return out.str(); \
 // - Unknown.
 #define NI_P_SYS_PLANAR_COLLIDER_MEMBERS \
 float bounce; \
-bool spawn_on_collide; \
-bool die_on_collide; \
-uint spawn_modifier; \
+bool spawnOnCollide; \
+bool dieOnCollide; \
+Link spawnModifier; \
 uint parent; \
-uint unknown_link_; \
-uint collider_object; \
+Link unknownLink_; \
+Link colliderObject; \
 float width; \
 float height; \
-Vector3 x_axis; \
-Vector3 y_axis; \
+Vector3 xAxis; \
+Vector3 yAxis; \
 
 #define NI_P_SYS_PLANAR_COLLIDER_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -10704,25 +10705,25 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Bounce" ) \
   return attr_ref(bounce); \
 if ( attr_name == "Spawn on Collide" ) \
-  return attr_ref(spawn_on_collide); \
+  return attr_ref(spawnOnCollide); \
 if ( attr_name == "Die on Collide" ) \
-  return attr_ref(die_on_collide); \
+  return attr_ref(dieOnCollide); \
 if ( attr_name == "Spawn Modifier" ) \
-  return attr_ref(spawn_modifier); \
+  return attr_ref(spawnModifier); \
 if ( attr_name == "Parent" ) \
   return attr_ref(parent); \
 if ( attr_name == "Unknown Link?" ) \
-  return attr_ref(unknown_link_); \
+  return attr_ref(unknownLink_); \
 if ( attr_name == "Collider Object" ) \
-  return attr_ref(collider_object); \
+  return attr_ref(colliderObject); \
 if ( attr_name == "Width" ) \
   return attr_ref(width); \
 if ( attr_name == "Height" ) \
   return attr_ref(height); \
 if ( attr_name == "X Axis" ) \
-  return attr_ref(x_axis); \
+  return attr_ref(xAxis); \
 if ( attr_name == "Y Axis" ) \
-  return attr_ref(y_axis); \
+  return attr_ref(yAxis); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10733,30 +10734,30 @@ return attr_ref(); \
 #define NI_P_SYS_PLANAR_COLLIDER_READ \
 AData::Read( in, version ); \
 NifStream( bounce, in, version ); \
-NifStream( spawn_on_collide, in, version ); \
-NifStream( die_on_collide, in, version ); \
-NifStream( spawn_modifier, in, version ); \
+NifStream( spawnOnCollide, in, version ); \
+NifStream( dieOnCollide, in, version ); \
+NifStream( spawnModifier, in, version ); \
 NifStream( parent, in, version ); \
-NifStream( unknown_link_, in, version ); \
-NifStream( collider_object, in, version ); \
+NifStream( unknownLink_, in, version ); \
+NifStream( colliderObject, in, version ); \
 NifStream( width, in, version ); \
 NifStream( height, in, version ); \
-NifStream( x_axis, in, version ); \
-NifStream( y_axis, in, version ); \
+NifStream( xAxis, in, version ); \
+NifStream( yAxis, in, version ); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_WRITE \
 AData::Write( out, version ); \
 NifStream( bounce, out, version ); \
-NifStream( spawn_on_collide, out, version ); \
-NifStream( die_on_collide, out, version ); \
-NifStream( spawn_modifier, out, version ); \
+NifStream( spawnOnCollide, out, version ); \
+NifStream( dieOnCollide, out, version ); \
+NifStream( spawnModifier, out, version ); \
 NifStream( parent, out, version ); \
-NifStream( unknown_link_, out, version ); \
-NifStream( collider_object, out, version ); \
+NifStream( unknownLink_, out, version ); \
+NifStream( colliderObject, out, version ); \
 NifStream( width, out, version ); \
 NifStream( height, out, version ); \
-NifStream( x_axis, out, version ); \
-NifStream( y_axis, out, version ); \
+NifStream( xAxis, out, version ); \
+NifStream( yAxis, out, version ); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_STRING \
 stringstream out; \
@@ -10764,16 +10765,16 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "              Bounce:  " << bounce << endl; \
-out << "    Spawn on Collide:  " << spawn_on_collide << endl; \
-out << "      Die on Collide:  " << die_on_collide << endl; \
-out << "      Spawn Modifier:  " << spawn_modifier << endl; \
+out << "    Spawn on Collide:  " << spawnOnCollide << endl; \
+out << "      Die on Collide:  " << dieOnCollide << endl; \
+out << "      Spawn Modifier:  " << spawnModifier << endl; \
 out << "              Parent:  " << parent << endl; \
-out << "       Unknown Link?:  " << unknown_link_ << endl; \
-out << "     Collider Object:  " << collider_object << endl; \
+out << "       Unknown Link?:  " << unknownLink_ << endl; \
+out << "     Collider Object:  " << colliderObject << endl; \
 out << "               Width:  " << width << endl; \
 out << "              Height:  " << height << endl; \
-out << "              X Axis:  " << x_axis << endl; \
-out << "              Y Axis:  " << y_axis << endl; \
+out << "              X Axis:  " << xAxis << endl; \
+out << "              Y Axis:  " << yAxis << endl; \
 return out.str(); \
 
 // 
@@ -10843,31 +10844,31 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_ROTATION_MODIFIER_MEMBERS \
-float initial_rotation_speed; \
-float initial_rotation_speed_variation; \
-float initial_rotation_angle; \
-float initial_rotation_angle_variation; \
-bool random_rot_speed_sign; \
-bool random_initial_axis; \
-Vector3 initial_axis; \
+float initialRotationSpeed; \
+float initialRotationSpeedVariation; \
+float initialRotationAngle; \
+float initialRotationAngleVariation; \
+bool randomRotSpeedSign; \
+bool randomInitialAxis; \
+Vector3 initialAxis; \
 
 #define NI_P_SYS_ROTATION_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Initial Rotation Speed" ) \
-  return attr_ref(initial_rotation_speed); \
+  return attr_ref(initialRotationSpeed); \
 if ( attr_name == "Initial Rotation Speed Variation" ) \
-  return attr_ref(initial_rotation_speed_variation); \
+  return attr_ref(initialRotationSpeedVariation); \
 if ( attr_name == "Initial Rotation Angle" ) \
-  return attr_ref(initial_rotation_angle); \
+  return attr_ref(initialRotationAngle); \
 if ( attr_name == "Initial Rotation Angle Variation" ) \
-  return attr_ref(initial_rotation_angle_variation); \
+  return attr_ref(initialRotationAngleVariation); \
 if ( attr_name == "Random Rot Speed Sign" ) \
-  return attr_ref(random_rot_speed_sign); \
+  return attr_ref(randomRotSpeedSign); \
 if ( attr_name == "Random Initial Axis" ) \
-  return attr_ref(random_initial_axis); \
+  return attr_ref(randomInitialAxis); \
 if ( attr_name == "Initial Axis" ) \
-  return attr_ref(initial_axis); \
+  return attr_ref(initialAxis); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10877,40 +10878,40 @@ return attr_ref(); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( initial_rotation_speed, in, version ); \
+NifStream( initialRotationSpeed, in, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( initial_rotation_speed_variation, in, version ); \
-  NifStream( initial_rotation_angle, in, version ); \
-  NifStream( initial_rotation_angle_variation, in, version ); \
-  NifStream( random_rot_speed_sign, in, version ); \
+  NifStream( initialRotationSpeedVariation, in, version ); \
+  NifStream( initialRotationAngle, in, version ); \
+  NifStream( initialRotationAngleVariation, in, version ); \
+  NifStream( randomRotSpeedSign, in, version ); \
 }; \
-NifStream( random_initial_axis, in, version ); \
-NifStream( initial_axis, in, version ); \
+NifStream( randomInitialAxis, in, version ); \
+NifStream( initialAxis, in, version ); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( initial_rotation_speed, out, version ); \
+NifStream( initialRotationSpeed, out, version ); \
 if ( version >= 0x14000004 ) { \
-  NifStream( initial_rotation_speed_variation, out, version ); \
-  NifStream( initial_rotation_angle, out, version ); \
-  NifStream( initial_rotation_angle_variation, out, version ); \
-  NifStream( random_rot_speed_sign, out, version ); \
+  NifStream( initialRotationSpeedVariation, out, version ); \
+  NifStream( initialRotationAngle, out, version ); \
+  NifStream( initialRotationAngleVariation, out, version ); \
+  NifStream( randomRotSpeedSign, out, version ); \
 }; \
-NifStream( random_initial_axis, out, version ); \
-NifStream( initial_axis, out, version ); \
+NifStream( randomInitialAxis, out, version ); \
+NifStream( initialAxis, out, version ); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "Initial Rotation Speed:  " << initial_rotation_speed << endl; \
-out << "Initial Rotation Speed Variation:  " << initial_rotation_speed_variation << endl; \
-out << "Initial Rotation Angle:  " << initial_rotation_angle << endl; \
-out << "Initial Rotation Angle Variation:  " << initial_rotation_angle_variation << endl; \
-out << "Random Rot Speed Sign:  " << random_rot_speed_sign << endl; \
-out << " Random Initial Axis:  " << random_initial_axis << endl; \
-out << "        Initial Axis:  " << initial_axis << endl; \
+out << "Initial Rotation Speed:  " << initialRotationSpeed << endl; \
+out << "Initial Rotation Speed Variation:  " << initialRotationSpeedVariation << endl; \
+out << "Initial Rotation Angle:  " << initialRotationAngle << endl; \
+out << "Initial Rotation Angle Variation:  " << initialRotationAngleVariation << endl; \
+out << "Random Rot Speed Sign:  " << randomRotSpeedSign << endl; \
+out << " Random Initial Axis:  " << randomInitialAxis << endl; \
+out << "        Initial Axis:  " << initialAxis << endl; \
 return out.str(); \
 
 // 
@@ -10925,34 +10926,34 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_P_SYS_SPAWN_MODIFIER_MEMBERS \
-ushort num_spawn_generations; \
-float percentage_spawned; \
-ushort min_num_to_spawn; \
-ushort max_num_to_spawn; \
-float spawn_speed_chaos; \
-float spawn_dir_chaos; \
-float life_span; \
-float life_span_variation; \
+ushort numSpawnGenerations; \
+float percentageSpawned; \
+ushort minNumToSpawn; \
+ushort maxNumToSpawn; \
+float spawnSpeedChaos; \
+float spawnDirChaos; \
+float lifeSpan; \
+float lifeSpanVariation; \
 
 #define NI_P_SYS_SPAWN_MODIFIER_GETATTR \
 attr_ref attr = APSysModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Spawn Generations" ) \
-  return attr_ref(num_spawn_generations); \
+  return attr_ref(numSpawnGenerations); \
 if ( attr_name == "Percentage Spawned" ) \
-  return attr_ref(percentage_spawned); \
+  return attr_ref(percentageSpawned); \
 if ( attr_name == "Min Num to Spawn" ) \
-  return attr_ref(min_num_to_spawn); \
+  return attr_ref(minNumToSpawn); \
 if ( attr_name == "Max Num to Spawn" ) \
-  return attr_ref(max_num_to_spawn); \
+  return attr_ref(maxNumToSpawn); \
 if ( attr_name == "Spawn Speed Chaos" ) \
-  return attr_ref(spawn_speed_chaos); \
+  return attr_ref(spawnSpeedChaos); \
 if ( attr_name == "Spawn Dir Chaos" ) \
-  return attr_ref(spawn_dir_chaos); \
+  return attr_ref(spawnDirChaos); \
 if ( attr_name == "Life Span" ) \
-  return attr_ref(life_span); \
+  return attr_ref(lifeSpan); \
 if ( attr_name == "Life Span Variation" ) \
-  return attr_ref(life_span_variation); \
+  return attr_ref(lifeSpanVariation); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -10962,39 +10963,39 @@ return attr_ref(); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_READ \
 APSysModifier::Read( in, version ); \
-NifStream( num_spawn_generations, in, version ); \
-NifStream( percentage_spawned, in, version ); \
-NifStream( min_num_to_spawn, in, version ); \
-NifStream( max_num_to_spawn, in, version ); \
-NifStream( spawn_speed_chaos, in, version ); \
-NifStream( spawn_dir_chaos, in, version ); \
-NifStream( life_span, in, version ); \
-NifStream( life_span_variation, in, version ); \
+NifStream( numSpawnGenerations, in, version ); \
+NifStream( percentageSpawned, in, version ); \
+NifStream( minNumToSpawn, in, version ); \
+NifStream( maxNumToSpawn, in, version ); \
+NifStream( spawnSpeedChaos, in, version ); \
+NifStream( spawnDirChaos, in, version ); \
+NifStream( lifeSpan, in, version ); \
+NifStream( lifeSpanVariation, in, version ); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_WRITE \
 APSysModifier::Write( out, version ); \
-NifStream( num_spawn_generations, out, version ); \
-NifStream( percentage_spawned, out, version ); \
-NifStream( min_num_to_spawn, out, version ); \
-NifStream( max_num_to_spawn, out, version ); \
-NifStream( spawn_speed_chaos, out, version ); \
-NifStream( spawn_dir_chaos, out, version ); \
-NifStream( life_span, out, version ); \
-NifStream( life_span_variation, out, version ); \
+NifStream( numSpawnGenerations, out, version ); \
+NifStream( percentageSpawned, out, version ); \
+NifStream( minNumToSpawn, out, version ); \
+NifStream( maxNumToSpawn, out, version ); \
+NifStream( spawnSpeedChaos, out, version ); \
+NifStream( spawnDirChaos, out, version ); \
+NifStream( lifeSpan, out, version ); \
+NifStream( lifeSpanVariation, out, version ); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APSysModifier::asString(); \
-out << "Num Spawn Generations:  " << num_spawn_generations << endl; \
-out << "  Percentage Spawned:  " << percentage_spawned << endl; \
-out << "    Min Num to Spawn:  " << min_num_to_spawn << endl; \
-out << "    Max Num to Spawn:  " << max_num_to_spawn << endl; \
-out << "   Spawn Speed Chaos:  " << spawn_speed_chaos << endl; \
-out << "     Spawn Dir Chaos:  " << spawn_dir_chaos << endl; \
-out << "           Life Span:  " << life_span << endl; \
-out << " Life Span Variation:  " << life_span_variation << endl; \
+out << "Num Spawn Generations:  " << numSpawnGenerations << endl; \
+out << "  Percentage Spawned:  " << percentageSpawned << endl; \
+out << "    Min Num to Spawn:  " << minNumToSpawn << endl; \
+out << "    Max Num to Spawn:  " << maxNumToSpawn << endl; \
+out << "   Spawn Speed Chaos:  " << spawnSpeedChaos << endl; \
+out << "     Spawn Dir Chaos:  " << spawnDirChaos << endl; \
+out << "           Life Span:  " << lifeSpan << endl; \
+out << " Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 // 
@@ -11066,14 +11067,14 @@ return out.str(); \
 // - ?
 // - The ranges of distance that each level of detail applies in.
 #define NI_RANGE_L_O_D_DATA_MEMBERS \
-Vector3 lod_center; \
-vector<LODRange > lod_levels; \
+Vector3 lodCenter; \
+vector<LODRange > lodLevels; \
 
 #define NI_RANGE_L_O_D_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "LOD Center" ) \
-  return attr_ref(lod_center); \
+  return attr_ref(lodCenter); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11082,27 +11083,27 @@ return attr_ref(); \
 #define NI_RANGE_L_O_D_DATA_CONSTRUCT
 
 #define NI_RANGE_L_O_D_DATA_READ \
-uint num_lod_levels; \
+uint numLodLevels; \
 AData::Read( in, version ); \
-NifStream( lod_center, in, version ); \
-NifStream( num_lod_levels, in, version ); \
-lod_levels.resize(num_lod_levels); \
-NifStream( lod_levels, in, version ); \
+NifStream( lodCenter, in, version ); \
+NifStream( numLodLevels, in, version ); \
+lodLevels.resize(numLodLevels); \
+NifStream( lodLevels, in, version ); \
 
 #define NI_RANGE_L_O_D_DATA_WRITE \
-uint num_lod_levels; \
+uint numLodLevels; \
 AData::Write( out, version ); \
-num_lod_levels = uint(lod_levels.size()); \
-NifStream( lod_center, out, version ); \
-NifStream( num_lod_levels, out, version ); \
-NifStream( lod_levels, out, version ); \
+numLodLevels = uint(lodLevels.size()); \
+NifStream( lodCenter, out, version ); \
+NifStream( numLodLevels, out, version ); \
+NifStream( lodLevels, out, version ); \
 
 #define NI_RANGE_L_O_D_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
-out << "          LOD Center:  " << lod_center << endl; \
+out << "          LOD Center:  " << lodCenter << endl; \
 out << "      Num LOD Levels:  -- calculated --" << endl; \
 out << "          LOD Levels:  -- data not shown --" << endl; \
 return out.str(); \
@@ -11169,8 +11170,8 @@ return out.str(); \
 // - Unknown floats.
 // - Unknown.
 #define NI_SCREEN_L_O_D_DATA_MEMBERS \
-vector<float > unknown_floats; \
-vector<float > unknown_floats_2; \
+vector<float > unknownFloats; \
+vector<float > unknownFloats2; \
 
 #define NI_SCREEN_L_O_D_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -11183,21 +11184,21 @@ return attr_ref(); \
 #define NI_SCREEN_L_O_D_DATA_CONSTRUCT
 
 #define NI_SCREEN_L_O_D_DATA_READ \
-uint unknown_count; \
+uint unknownCount; \
 AData::Read( in, version ); \
-unknown_floats.resize(8); \
-NifStream( unknown_floats, in, version ); \
-NifStream( unknown_count, in, version ); \
-unknown_floats_2.resize(unknown_count); \
-NifStream( unknown_floats_2, in, version ); \
+unknownFloats.resize(8); \
+NifStream( unknownFloats, in, version ); \
+NifStream( unknownCount, in, version ); \
+unknownFloats2.resize(unknownCount); \
+NifStream( unknownFloats2, in, version ); \
 
 #define NI_SCREEN_L_O_D_DATA_WRITE \
-uint unknown_count; \
+uint unknownCount; \
 AData::Write( out, version ); \
-unknown_count = uint(unknown_floats_2.size()); \
-NifStream( unknown_floats, out, version ); \
-NifStream( unknown_count, out, version ); \
-NifStream( unknown_floats_2, out, version ); \
+unknownCount = uint(unknownFloats2.size()); \
+NifStream( unknownFloats, out, version ); \
+NifStream( unknownCount, out, version ); \
+NifStream( unknownFloats2, out, version ); \
 
 #define NI_SCREEN_L_O_D_DATA_STRING \
 stringstream out; \
@@ -11288,9 +11289,9 @@ return out.str(); \
 Matrix33 rotation; \
 Vector3 translation; \
 float scale; \
-uint skin_partition; \
-byte unknown_byte; \
-vector<SkinData > bone_list; \
+Link skinPartition; \
+byte unknownByte; \
+vector<SkinData > boneList; \
 
 #define NI_SKIN_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -11302,9 +11303,9 @@ if ( attr_name == "Translation" ) \
 if ( attr_name == "Scale" ) \
   return attr_ref(scale); \
 if ( attr_name == "Skin Partition" ) \
-  return attr_ref(skin_partition); \
+  return attr_ref(skinPartition); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11313,36 +11314,36 @@ return attr_ref(); \
 #define NI_SKIN_DATA_CONSTRUCT
 
 #define NI_SKIN_DATA_READ \
-uint num_bones; \
+uint numBones; \
 AData::Read( in, version ); \
 NifStream( rotation, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( scale, in, version ); \
-NifStream( num_bones, in, version ); \
+NifStream( numBones, in, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( skin_partition, in, version ); \
+  NifStream( skinPartition, in, version ); \
 }; \
 if ( version >= 0x04020100 ) { \
-  NifStream( unknown_byte, in, version ); \
+  NifStream( unknownByte, in, version ); \
 }; \
-bone_list.resize(num_bones); \
-NifStream( bone_list, in, version ); \
+boneList.resize(numBones); \
+NifStream( boneList, in, version ); \
 
 #define NI_SKIN_DATA_WRITE \
-uint num_bones; \
+uint numBones; \
 AData::Write( out, version ); \
-num_bones = uint(bone_list.size()); \
+numBones = uint(boneList.size()); \
 NifStream( rotation, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( scale, out, version ); \
-NifStream( num_bones, out, version ); \
+NifStream( numBones, out, version ); \
 if ( version <= 0x0A010000 ) { \
-  NifStream( skin_partition, out, version ); \
+  NifStream( skinPartition, out, version ); \
 }; \
 if ( version >= 0x04020100 ) { \
-  NifStream( unknown_byte, out, version ); \
+  NifStream( unknownByte, out, version ); \
 }; \
-NifStream( bone_list, out, version ); \
+NifStream( boneList, out, version ); \
 
 #define NI_SKIN_DATA_STRING \
 stringstream out; \
@@ -11353,8 +11354,8 @@ out << "            Rotation:  " << rotation << endl; \
 out << "         Translation:  " << translation << endl; \
 out << "               Scale:  " << scale << endl; \
 out << "           Num Bones:  -- calculated --" << endl; \
-out << "      Skin Partition:  " << skin_partition << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
+out << "      Skin Partition:  " << skinPartition << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
 out << "           Bone List:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -11365,8 +11366,8 @@ return out.str(); \
 // - Refers to a NiSkinPartition block, which partitions the mesh such that every vertex is only influenced by a limited number of bones.
 // - List of all armature bones.
 #define NI_SKIN_INSTANCE_MEMBERS \
-uint data; \
-uint skin_partition; \
+Link data; \
+Link skinPartition; \
 Bones bones; \
 
 #define NI_SKIN_INSTANCE_GETATTR \
@@ -11375,7 +11376,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 if ( attr_name == "Skin Partition" ) \
-  return attr_ref(skin_partition); \
+  return attr_ref(skinPartition); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11384,21 +11385,21 @@ return attr_ref(); \
 #define NI_SKIN_INSTANCE_CONSTRUCT
 
 #define NI_SKIN_INSTANCE_READ \
-uint skeleton_root; \
+CrossRef skeletonRoot; \
 AData::Read( in, version ); \
 NifStream( data, in, version ); \
 if ( version >= 0x0A020000 ) { \
-  NifStream( skin_partition, in, version ); \
+  NifStream( skinPartition, in, version ); \
 }; \
 NifStream( bones, in, version ); \
 
 #define NI_SKIN_INSTANCE_WRITE \
-uint skeleton_root; \
+CrossRef skeletonRoot; \
 AData::Write( out, version ); \
-skeleton_root = SkeletonRoot(); \
+skeletonRoot = SkeletonRoot(); \
 NifStream( data, out, version ); \
 if ( version >= 0x0A020000 ) { \
-  NifStream( skin_partition, out, version ); \
+  NifStream( skinPartition, out, version ); \
 }; \
 NifStream( bones, out, version ); \
 
@@ -11408,7 +11409,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AData::asString(); \
 out << "                Data:  " << data << endl; \
-out << "      Skin Partition:  " << skin_partition << endl; \
+out << "      Skin Partition:  " << skinPartition << endl; \
 out << "       Skeleton Root:  -- calculated --" << endl; \
 out << "               Bones:  " << bones << endl; \
 return out.str(); \
@@ -11418,7 +11419,7 @@ return out.str(); \
 //
 // - Skin partition blocks.
 #define NI_SKIN_PARTITION_MEMBERS \
-vector<SkinPartition > skin_partition_blocks; \
+vector<SkinPartition > skinPartitionBlocks; \
 
 #define NI_SKIN_PARTITION_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -11431,18 +11432,18 @@ return attr_ref(); \
 #define NI_SKIN_PARTITION_CONSTRUCT
 
 #define NI_SKIN_PARTITION_READ \
-uint num_skin_partition_blocks; \
+uint numSkinPartitionBlocks; \
 AData::Read( in, version ); \
-NifStream( num_skin_partition_blocks, in, version ); \
-skin_partition_blocks.resize(num_skin_partition_blocks); \
-NifStream( skin_partition_blocks, in, version ); \
+NifStream( numSkinPartitionBlocks, in, version ); \
+skinPartitionBlocks.resize(numSkinPartitionBlocks); \
+NifStream( skinPartitionBlocks, in, version ); \
 
 #define NI_SKIN_PARTITION_WRITE \
-uint num_skin_partition_blocks; \
+uint numSkinPartitionBlocks; \
 AData::Write( out, version ); \
-num_skin_partition_blocks = uint(skin_partition_blocks.size()); \
-NifStream( num_skin_partition_blocks, out, version ); \
-NifStream( skin_partition_blocks, out, version ); \
+numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
+NifStream( numSkinPartitionBlocks, out, version ); \
+NifStream( skinPartitionBlocks, out, version ); \
 
 #define NI_SKIN_PARTITION_STRING \
 stringstream out; \
@@ -11468,28 +11469,28 @@ return out.str(); \
 // - Unknown, usually 1.
 // - Unknown.
 #define NI_SOURCE_TEXTURE_MEMBERS \
-TexSource texture_source; \
-PixelLayout pixel_layout; \
-MipMapFormat use_mipmaps; \
-AlphaFormat alpha_format; \
-byte unknown_byte; \
-byte unknown_byte_2; \
+TexSource textureSource; \
+PixelLayout pixelLayout; \
+MipMapFormat useMipmaps; \
+AlphaFormat alphaFormat; \
+byte unknownByte; \
+byte unknownByte2; \
 
 #define NI_SOURCE_TEXTURE_GETATTR \
 attr_ref attr = AControllable::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Texture Source" ) \
-  return attr_ref(texture_source); \
+  return attr_ref(textureSource); \
 if ( attr_name == "Pixel Layout" ) \
-  return attr_ref(pixel_layout); \
+  return attr_ref(pixelLayout); \
 if ( attr_name == "Use Mipmaps" ) \
-  return attr_ref(use_mipmaps); \
+  return attr_ref(useMipmaps); \
 if ( attr_name == "Alpha Format" ) \
-  return attr_ref(alpha_format); \
+  return attr_ref(alphaFormat); \
 if ( attr_name == "Unknown Byte" ) \
-  return attr_ref(unknown_byte); \
+  return attr_ref(unknownByte); \
 if ( attr_name == "Unknown Byte 2" ) \
-  return attr_ref(unknown_byte_2); \
+  return attr_ref(unknownByte2); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11499,24 +11500,24 @@ return attr_ref(); \
 
 #define NI_SOURCE_TEXTURE_READ \
 AControllable::Read( in, version ); \
-NifStream( texture_source, in, version ); \
-NifStream( pixel_layout, in, version ); \
-NifStream( use_mipmaps, in, version ); \
-NifStream( alpha_format, in, version ); \
-NifStream( unknown_byte, in, version ); \
+NifStream( textureSource, in, version ); \
+NifStream( pixelLayout, in, version ); \
+NifStream( useMipmaps, in, version ); \
+NifStream( alphaFormat, in, version ); \
+NifStream( unknownByte, in, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_byte_2, in, version ); \
+  NifStream( unknownByte2, in, version ); \
 }; \
 
 #define NI_SOURCE_TEXTURE_WRITE \
 AControllable::Write( out, version ); \
-NifStream( texture_source, out, version ); \
-NifStream( pixel_layout, out, version ); \
-NifStream( use_mipmaps, out, version ); \
-NifStream( alpha_format, out, version ); \
-NifStream( unknown_byte, out, version ); \
+NifStream( textureSource, out, version ); \
+NifStream( pixelLayout, out, version ); \
+NifStream( useMipmaps, out, version ); \
+NifStream( alphaFormat, out, version ); \
+NifStream( unknownByte, out, version ); \
 if ( version >= 0x0A01006A ) { \
-  NifStream( unknown_byte_2, out, version ); \
+  NifStream( unknownByte2, out, version ); \
 }; \
 
 #define NI_SOURCE_TEXTURE_STRING \
@@ -11524,12 +11525,12 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AControllable::asString(); \
-out << "      Texture Source:  " << texture_source << endl; \
-out << "        Pixel Layout:  " << pixel_layout << endl; \
-out << "         Use Mipmaps:  " << use_mipmaps << endl; \
-out << "        Alpha Format:  " << alpha_format << endl; \
-out << "        Unknown Byte:  " << unknown_byte << endl; \
-out << "      Unknown Byte 2:  " << unknown_byte_2 << endl; \
+out << "      Texture Source:  " << textureSource << endl; \
+out << "        Pixel Layout:  " << pixelLayout << endl; \
+out << "         Use Mipmaps:  " << useMipmaps << endl; \
+out << "        Alpha Format:  " << alphaFormat << endl; \
+out << "        Unknown Byte:  " << unknownByte << endl; \
+out << "      Unknown Byte 2:  " << unknownByte2 << endl; \
 return out.str(); \
 
 // 
@@ -11577,28 +11578,28 @@ return out.str(); \
 // - Unknown.
 // - Unknown.
 #define NI_SPHERICAL_COLLIDER_MEMBERS \
-float unknown_float_1; \
-ushort unknown_short; \
-float unknown_float_2; \
-float unknown_float_3; \
-float unknown_float_4; \
-float unknown_float_5; \
+float unknownFloat1; \
+ushort unknownShort; \
+float unknownFloat2; \
+float unknownFloat3; \
+float unknownFloat4; \
+float unknownFloat5; \
 
 #define NI_SPHERICAL_COLLIDER_GETATTR \
 attr_ref attr = AParticleModifier::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Float 1" ) \
-  return attr_ref(unknown_float_1); \
+  return attr_ref(unknownFloat1); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Unknown Float 2" ) \
-  return attr_ref(unknown_float_2); \
+  return attr_ref(unknownFloat2); \
 if ( attr_name == "Unknown Float 3" ) \
-  return attr_ref(unknown_float_3); \
+  return attr_ref(unknownFloat3); \
 if ( attr_name == "Unknown Float 4" ) \
-  return attr_ref(unknown_float_4); \
+  return attr_ref(unknownFloat4); \
 if ( attr_name == "Unknown Float 5" ) \
-  return attr_ref(unknown_float_5); \
+  return attr_ref(unknownFloat5); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11608,33 +11609,33 @@ return attr_ref(); \
 
 #define NI_SPHERICAL_COLLIDER_READ \
 AParticleModifier::Read( in, version ); \
-NifStream( unknown_float_1, in, version ); \
-NifStream( unknown_short, in, version ); \
-NifStream( unknown_float_2, in, version ); \
-NifStream( unknown_float_3, in, version ); \
-NifStream( unknown_float_4, in, version ); \
-NifStream( unknown_float_5, in, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownShort, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( unknownFloat4, in, version ); \
+NifStream( unknownFloat5, in, version ); \
 
 #define NI_SPHERICAL_COLLIDER_WRITE \
 AParticleModifier::Write( out, version ); \
-NifStream( unknown_float_1, out, version ); \
-NifStream( unknown_short, out, version ); \
-NifStream( unknown_float_2, out, version ); \
-NifStream( unknown_float_3, out, version ); \
-NifStream( unknown_float_4, out, version ); \
-NifStream( unknown_float_5, out, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownShort, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( unknownFloat4, out, version ); \
+NifStream( unknownFloat5, out, version ); \
 
 #define NI_SPHERICAL_COLLIDER_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AParticleModifier::asString(); \
-out << "     Unknown Float 1:  " << unknown_float_1 << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
-out << "     Unknown Float 2:  " << unknown_float_2 << endl; \
-out << "     Unknown Float 3:  " << unknown_float_3 << endl; \
-out << "     Unknown Float 4:  " << unknown_float_4 << endl; \
-out << "     Unknown Float 5:  " << unknown_float_5 << endl; \
+out << "     Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
+out << "     Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "     Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "     Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "     Unknown Float 5:  " << unknownFloat5 << endl; \
 return out.str(); \
 
 // 
@@ -11643,14 +11644,14 @@ return out.str(); \
 // - The opening angle of the spot.
 // - Describes the distribution of light. (see: glLight)
 #define NI_SPOT_LIGHT_MEMBERS \
-float cutoff_angle; \
+float cutoffAngle; \
 float exponent; \
 
 #define NI_SPOT_LIGHT_GETATTR \
 attr_ref attr = APointLight::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Cutoff Angle" ) \
-  return attr_ref(cutoff_angle); \
+  return attr_ref(cutoffAngle); \
 if ( attr_name == "Exponent" ) \
   return attr_ref(exponent); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -11662,12 +11663,12 @@ return attr_ref(); \
 
 #define NI_SPOT_LIGHT_READ \
 APointLight::Read( in, version ); \
-NifStream( cutoff_angle, in, version ); \
+NifStream( cutoffAngle, in, version ); \
 NifStream( exponent, in, version ); \
 
 #define NI_SPOT_LIGHT_WRITE \
 APointLight::Write( out, version ); \
-NifStream( cutoff_angle, out, version ); \
+NifStream( cutoffAngle, out, version ); \
 NifStream( exponent, out, version ); \
 
 #define NI_SPOT_LIGHT_STRING \
@@ -11675,7 +11676,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << APointLight::asString(); \
-out << "        Cutoff Angle:  " << cutoff_angle << endl; \
+out << "        Cutoff Angle:  " << cutoffAngle << endl; \
 out << "            Exponent:  " << exponent << endl; \
 return out.str(); \
 
@@ -11718,14 +11719,14 @@ return out.str(); \
 // 3: DRAW_BOTH (Double sided faces)
 #define NI_STENCIL_PROPERTY_MEMBERS \
 Flags flags; \
-bool stencil_enabled; \
-uint stencil_function; \
-uint stencil_ref; \
-uint stencil_mask; \
-uint fail_action; \
-uint z_fail_action; \
-uint pass_action; \
-uint draw_mode; \
+bool stencilEnabled; \
+uint stencilFunction; \
+uint stencilRef; \
+uint stencilMask; \
+uint failAction; \
+uint zFailAction; \
+uint passAction; \
+uint drawMode; \
 
 #define NI_STENCIL_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -11733,21 +11734,21 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Stencil Enabled" ) \
-  return attr_ref(stencil_enabled); \
+  return attr_ref(stencilEnabled); \
 if ( attr_name == "Stencil Function" ) \
-  return attr_ref(stencil_function); \
+  return attr_ref(stencilFunction); \
 if ( attr_name == "Stencil Ref" ) \
-  return attr_ref(stencil_ref); \
+  return attr_ref(stencilRef); \
 if ( attr_name == "Stencil Mask" ) \
-  return attr_ref(stencil_mask); \
+  return attr_ref(stencilMask); \
 if ( attr_name == "Fail Action" ) \
-  return attr_ref(fail_action); \
+  return attr_ref(failAction); \
 if ( attr_name == "Z Fail Action" ) \
-  return attr_ref(z_fail_action); \
+  return attr_ref(zFailAction); \
 if ( attr_name == "Pass Action" ) \
-  return attr_ref(pass_action); \
+  return attr_ref(passAction); \
 if ( attr_name == "Draw Mode" ) \
-  return attr_ref(draw_mode); \
+  return attr_ref(drawMode); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11760,28 +11761,28 @@ AProperty::Read( in, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, in, version ); \
 }; \
-NifStream( stencil_enabled, in, version ); \
-NifStream( stencil_function, in, version ); \
-NifStream( stencil_ref, in, version ); \
-NifStream( stencil_mask, in, version ); \
-NifStream( fail_action, in, version ); \
-NifStream( z_fail_action, in, version ); \
-NifStream( pass_action, in, version ); \
-NifStream( draw_mode, in, version ); \
+NifStream( stencilEnabled, in, version ); \
+NifStream( stencilFunction, in, version ); \
+NifStream( stencilRef, in, version ); \
+NifStream( stencilMask, in, version ); \
+NifStream( failAction, in, version ); \
+NifStream( zFailAction, in, version ); \
+NifStream( passAction, in, version ); \
+NifStream( drawMode, in, version ); \
 
 #define NI_STENCIL_PROPERTY_WRITE \
 AProperty::Write( out, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, out, version ); \
 }; \
-NifStream( stencil_enabled, out, version ); \
-NifStream( stencil_function, out, version ); \
-NifStream( stencil_ref, out, version ); \
-NifStream( stencil_mask, out, version ); \
-NifStream( fail_action, out, version ); \
-NifStream( z_fail_action, out, version ); \
-NifStream( pass_action, out, version ); \
-NifStream( draw_mode, out, version ); \
+NifStream( stencilEnabled, out, version ); \
+NifStream( stencilFunction, out, version ); \
+NifStream( stencilRef, out, version ); \
+NifStream( stencilMask, out, version ); \
+NifStream( failAction, out, version ); \
+NifStream( zFailAction, out, version ); \
+NifStream( passAction, out, version ); \
+NifStream( drawMode, out, version ); \
 
 #define NI_STENCIL_PROPERTY_STRING \
 stringstream out; \
@@ -11789,14 +11790,14 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
-out << "     Stencil Enabled:  " << stencil_enabled << endl; \
-out << "    Stencil Function:  " << stencil_function << endl; \
-out << "         Stencil Ref:  " << stencil_ref << endl; \
-out << "        Stencil Mask:  " << stencil_mask << endl; \
-out << "         Fail Action:  " << fail_action << endl; \
-out << "       Z Fail Action:  " << z_fail_action << endl; \
-out << "         Pass Action:  " << pass_action << endl; \
-out << "           Draw Mode:  " << draw_mode << endl; \
+out << "     Stencil Enabled:  " << stencilEnabled << endl; \
+out << "    Stencil Function:  " << stencilFunction << endl; \
+out << "         Stencil Ref:  " << stencilRef << endl; \
+out << "        Stencil Mask:  " << stencilMask << endl; \
+out << "         Fail Action:  " << failAction << endl; \
+out << "       Z Fail Action:  " << zFailAction << endl; \
+out << "         Pass Action:  " << passAction << endl; \
+out << "           Draw Mode:  " << drawMode << endl; \
 return out.str(); \
 
 // 
@@ -11805,13 +11806,13 @@ return out.str(); \
 //
 // - The string.
 #define NI_STRING_EXTRA_DATA_MEMBERS \
-string string_data; \
+string stringData; \
 
 #define NI_STRING_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "String Data" ) \
-  return attr_ref(string_data); \
+  return attr_ref(stringData); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11820,15 +11821,15 @@ return attr_ref(); \
 #define NI_STRING_EXTRA_DATA_CONSTRUCT
 
 #define NI_STRING_EXTRA_DATA_READ \
-uint bytes_remaining; \
+uint bytesRemaining; \
 AExtraData::Read( in, version ); \
-NifStream( string_data, in, version ); \
+NifStream( stringData, in, version ); \
 
 #define NI_STRING_EXTRA_DATA_WRITE \
-uint bytes_remaining; \
+uint bytesRemaining; \
 AExtraData::Write( out, version ); \
-bytes_remaining = BytesRemaining(); \
-NifStream( string_data, out, version ); \
+bytesRemaining = BytesRemaining(); \
+NifStream( stringData, out, version ); \
 
 #define NI_STRING_EXTRA_DATA_STRING \
 stringstream out; \
@@ -11836,7 +11837,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
 out << "     Bytes Remaining:  -- calculated --" << endl; \
-out << "         String Data:  " << string_data << endl; \
+out << "         String Data:  " << stringData << endl; \
 return out.str(); \
 
 // 
@@ -11890,17 +11891,17 @@ return attr_ref(); \
 #define NI_STRINGS_EXTRA_DATA_CONSTRUCT
 
 #define NI_STRINGS_EXTRA_DATA_READ \
-uint num_strings; \
+uint numStrings; \
 AExtraData::Read( in, version ); \
-NifStream( num_strings, in, version ); \
-data.resize(num_strings); \
+NifStream( numStrings, in, version ); \
+data.resize(numStrings); \
 NifStream( data, in, version ); \
 
 #define NI_STRINGS_EXTRA_DATA_WRITE \
-uint num_strings; \
+uint numStrings; \
 AExtraData::Write( out, version ); \
-num_strings = uint(data.size()); \
-NifStream( num_strings, out, version ); \
+numStrings = uint(data.size()); \
+NifStream( numStrings, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_STRINGS_EXTRA_DATA_STRING \
@@ -11918,14 +11919,14 @@ return out.str(); \
 // - Unknown.  Always equals zero in all official files.
 // - List of textual notes and at which time they take effect. Used for designating the start and stop of animations and the triggering of sounds.
 #define NI_TEXT_KEY_EXTRA_DATA_MEMBERS \
-uint unknown_int_1; \
-KeyArray<string > text_keys; \
+uint unknownInt1; \
+KeyArray<string > textKeys; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Int 1" ) \
-  return attr_ref(unknown_int_1); \
+  return attr_ref(unknownInt1); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -11936,24 +11937,24 @@ return attr_ref(); \
 #define NI_TEXT_KEY_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( unknown_int_1, in, version ); \
+  NifStream( unknownInt1, in, version ); \
 }; \
-NifStream( text_keys, in, version ); \
+NifStream( textKeys, in, version ); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
 if ( version <= 0x04020200 ) { \
-  NifStream( unknown_int_1, out, version ); \
+  NifStream( unknownInt1, out, version ); \
 }; \
-NifStream( text_keys, out, version ); \
+NifStream( textKeys, out, version ); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "       Unknown Int 1:  " << unknown_int_1 << endl; \
-out << "           Text Keys:  " << text_keys << endl; \
+out << "       Unknown Int 1:  " << unknownInt1 << endl; \
+out << "           Text Keys:  " << textKeys << endl; \
 return out.str(); \
 
 // 
@@ -11989,49 +11990,49 @@ return out.str(); \
 // - 0xFFB5?
 // - Unknown: 0.
 #define NI_TEXTURE_EFFECT_MEMBERS \
-Matrix33 model_projection_matrix; \
-Vector3 model_projection_transform; \
-uint texture_filtering; \
-uint texture_clamping; \
-uint texture_type; \
-uint coordinate_generation_type; \
-uint source_texture; \
-byte clipping_plane; \
-Vector3 unknown_vector; \
-float unknown_float; \
-ushort ps2_l; \
-ushort ps2_k; \
-ushort unknown_short; \
+Matrix33 modelProjectionMatrix; \
+Vector3 modelProjectionTransform; \
+uint textureFiltering; \
+uint textureClamping; \
+uint textureType; \
+uint coordinateGenerationType; \
+Link sourceTexture; \
+byte clippingPlane; \
+Vector3 unknownVector; \
+float unknownFloat; \
+ushort ps2L; \
+ushort ps2K; \
+ushort unknownShort; \
 
 #define NI_TEXTURE_EFFECT_GETATTR \
 attr_ref attr = ADynamicEffect::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Model Projection Matrix" ) \
-  return attr_ref(model_projection_matrix); \
+  return attr_ref(modelProjectionMatrix); \
 if ( attr_name == "Model Projection Transform" ) \
-  return attr_ref(model_projection_transform); \
+  return attr_ref(modelProjectionTransform); \
 if ( attr_name == "Texture Filtering" ) \
-  return attr_ref(texture_filtering); \
+  return attr_ref(textureFiltering); \
 if ( attr_name == "Texture Clamping" ) \
-  return attr_ref(texture_clamping); \
+  return attr_ref(textureClamping); \
 if ( attr_name == "Texture Type" ) \
-  return attr_ref(texture_type); \
+  return attr_ref(textureType); \
 if ( attr_name == "Coordinate Generation Type" ) \
-  return attr_ref(coordinate_generation_type); \
+  return attr_ref(coordinateGenerationType); \
 if ( attr_name == "Source Texture" ) \
-  return attr_ref(source_texture); \
+  return attr_ref(sourceTexture); \
 if ( attr_name == "Clipping Plane" ) \
-  return attr_ref(clipping_plane); \
+  return attr_ref(clippingPlane); \
 if ( attr_name == "Unknown Vector" ) \
-  return attr_ref(unknown_vector); \
+  return attr_ref(unknownVector); \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 if ( attr_name == "PS2 L" ) \
-  return attr_ref(ps2_l); \
+  return attr_ref(ps2L); \
 if ( attr_name == "PS2 K" ) \
-  return attr_ref(ps2_k); \
+  return attr_ref(ps2K); \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12041,42 +12042,42 @@ return attr_ref(); \
 
 #define NI_TEXTURE_EFFECT_READ \
 ADynamicEffect::Read( in, version ); \
-NifStream( model_projection_matrix, in, version ); \
-NifStream( model_projection_transform, in, version ); \
-NifStream( texture_filtering, in, version ); \
-NifStream( texture_clamping, in, version ); \
-NifStream( texture_type, in, version ); \
-NifStream( coordinate_generation_type, in, version ); \
-NifStream( source_texture, in, version ); \
-NifStream( clipping_plane, in, version ); \
-NifStream( unknown_vector, in, version ); \
-NifStream( unknown_float, in, version ); \
+NifStream( modelProjectionMatrix, in, version ); \
+NifStream( modelProjectionTransform, in, version ); \
+NifStream( textureFiltering, in, version ); \
+NifStream( textureClamping, in, version ); \
+NifStream( textureType, in, version ); \
+NifStream( coordinateGenerationType, in, version ); \
+NifStream( sourceTexture, in, version ); \
+NifStream( clippingPlane, in, version ); \
+NifStream( unknownVector, in, version ); \
+NifStream( unknownFloat, in, version ); \
 if ( version <= 0x0A020000 ) { \
-  NifStream( ps2_l, in, version ); \
-  NifStream( ps2_k, in, version ); \
+  NifStream( ps2L, in, version ); \
+  NifStream( ps2K, in, version ); \
 }; \
 if ( version <= 0x0401000C ) { \
-  NifStream( unknown_short, in, version ); \
+  NifStream( unknownShort, in, version ); \
 }; \
 
 #define NI_TEXTURE_EFFECT_WRITE \
 ADynamicEffect::Write( out, version ); \
-NifStream( model_projection_matrix, out, version ); \
-NifStream( model_projection_transform, out, version ); \
-NifStream( texture_filtering, out, version ); \
-NifStream( texture_clamping, out, version ); \
-NifStream( texture_type, out, version ); \
-NifStream( coordinate_generation_type, out, version ); \
-NifStream( source_texture, out, version ); \
-NifStream( clipping_plane, out, version ); \
-NifStream( unknown_vector, out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( modelProjectionMatrix, out, version ); \
+NifStream( modelProjectionTransform, out, version ); \
+NifStream( textureFiltering, out, version ); \
+NifStream( textureClamping, out, version ); \
+NifStream( textureType, out, version ); \
+NifStream( coordinateGenerationType, out, version ); \
+NifStream( sourceTexture, out, version ); \
+NifStream( clippingPlane, out, version ); \
+NifStream( unknownVector, out, version ); \
+NifStream( unknownFloat, out, version ); \
 if ( version <= 0x0A020000 ) { \
-  NifStream( ps2_l, out, version ); \
-  NifStream( ps2_k, out, version ); \
+  NifStream( ps2L, out, version ); \
+  NifStream( ps2K, out, version ); \
 }; \
 if ( version <= 0x0401000C ) { \
-  NifStream( unknown_short, out, version ); \
+  NifStream( unknownShort, out, version ); \
 }; \
 
 #define NI_TEXTURE_EFFECT_STRING \
@@ -12084,19 +12085,19 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ADynamicEffect::asString(); \
-out << "Model Projection Matrix:  " << model_projection_matrix << endl; \
-out << "Model Projection Transform:  " << model_projection_transform << endl; \
-out << "   Texture Filtering:  " << texture_filtering << endl; \
-out << "    Texture Clamping:  " << texture_clamping << endl; \
-out << "        Texture Type:  " << texture_type << endl; \
-out << "Coordinate Generation Type:  " << coordinate_generation_type << endl; \
-out << "      Source Texture:  " << source_texture << endl; \
-out << "      Clipping Plane:  " << clipping_plane << endl; \
-out << "      Unknown Vector:  " << unknown_vector << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
-out << "               PS2 L:  " << ps2_l << endl; \
-out << "               PS2 K:  " << ps2_k << endl; \
-out << "       Unknown Short:  " << unknown_short << endl; \
+out << "Model Projection Matrix:  " << modelProjectionMatrix << endl; \
+out << "Model Projection Transform:  " << modelProjectionTransform << endl; \
+out << "   Texture Filtering:  " << textureFiltering << endl; \
+out << "    Texture Clamping:  " << textureClamping << endl; \
+out << "        Texture Type:  " << textureType << endl; \
+out << "Coordinate Generation Type:  " << coordinateGenerationType << endl; \
+out << "      Source Texture:  " << sourceTexture << endl; \
+out << "      Clipping Plane:  " << clippingPlane << endl; \
+out << "      Unknown Vector:  " << unknownVector << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
+out << "               PS2 L:  " << ps2L << endl; \
+out << "               PS2 K:  " << ps2K << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
 return out.str(); \
 
 // 
@@ -12115,9 +12116,9 @@ return out.str(); \
 // - Link to NiFloatData.
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS \
 byte unknown2; \
-uint texture_slot; \
+uint textureSlot; \
 uint operation; \
-uint data; \
+Link data; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_GETATTR \
 attr_ref attr = ASingleInterpolatorController::GetAttr( attr_name ); \
@@ -12125,7 +12126,7 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown2" ) \
   return attr_ref(unknown2); \
 if ( attr_name == "Texture Slot" ) \
-  return attr_ref(texture_slot); \
+  return attr_ref(textureSlot); \
 if ( attr_name == "Operation" ) \
   return attr_ref(operation); \
 if ( attr_name == "Data" ) \
@@ -12140,7 +12141,7 @@ return attr_ref(); \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 ASingleInterpolatorController::Read( in, version ); \
 NifStream( unknown2, in, version ); \
-NifStream( texture_slot, in, version ); \
+NifStream( textureSlot, in, version ); \
 NifStream( operation, in, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( data, in, version ); \
@@ -12149,7 +12150,7 @@ if ( version <= 0x0A010000 ) { \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE \
 ASingleInterpolatorController::Write( out, version ); \
 NifStream( unknown2, out, version ); \
-NifStream( texture_slot, out, version ); \
+NifStream( textureSlot, out, version ); \
 NifStream( operation, out, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( data, out, version ); \
@@ -12161,7 +12162,7 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << ASingleInterpolatorController::asString(); \
 out << "            Unknown2:  " << unknown2 << endl; \
-out << "        Texture Slot:  " << texture_slot << endl; \
+out << "        Texture Slot:  " << textureSlot << endl; \
 out << "           Operation:  " << operation << endl; \
 out << "                Data:  " << data << endl; \
 return out.str(); \
@@ -12183,17 +12184,17 @@ return out.str(); \
 // - Shader textures.
 #define NI_TEXTURING_PROPERTY_MEMBERS \
 Flags flags; \
-ApplyMode apply_mode; \
-uint texture_count; \
-Texture base_texture; \
-Texture dark_texture; \
-Texture detail_texture; \
-Texture gloss_texture; \
-Texture glow_texture; \
-BumpMap bump_map_texture; \
-Texture decal_0_texture; \
-Texture decal_texture_1; \
-ExtraTextureGroup shader_textures; \
+ApplyMode applyMode; \
+uint textureCount; \
+Texture baseTexture; \
+Texture darkTexture; \
+Texture detailTexture; \
+Texture glossTexture; \
+Texture glowTexture; \
+BumpMap bumpMapTexture; \
+Texture decal0Texture; \
+Texture decalTexture1; \
+ExtraTextureGroup shaderTextures; \
 
 #define NI_TEXTURING_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -12201,37 +12202,37 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Apply Mode" ) \
-  return attr_ref(apply_mode); \
+  return attr_ref(applyMode); \
 if ( attr_name == "Texture Count" ) \
-  return attr_ref(texture_count); \
+  return attr_ref(textureCount); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
 #define NI_TEXTURING_PROPERTY_PARENTS AProperty
 
-#define NI_TEXTURING_PROPERTY_CONSTRUCT apply_mode(2), texture_count(7)
+#define NI_TEXTURING_PROPERTY_CONSTRUCT applyMode(2), textureCount(7)
 
 #define NI_TEXTURING_PROPERTY_READ \
 AProperty::Read( in, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, in, version ); \
 }; \
-NifStream( apply_mode, in, version ); \
-NifStream( texture_count, in, version ); \
-NifStream( base_texture, in, version ); \
-NifStream( dark_texture, in, version ); \
-NifStream( detail_texture, in, version ); \
-NifStream( gloss_texture, in, version ); \
-NifStream( glow_texture, in, version ); \
-NifStream( bump_map_texture, in, version ); \
-NifStream( decal_0_texture, in, version ); \
+NifStream( applyMode, in, version ); \
+NifStream( textureCount, in, version ); \
+NifStream( baseTexture, in, version ); \
+NifStream( darkTexture, in, version ); \
+NifStream( detailTexture, in, version ); \
+NifStream( glossTexture, in, version ); \
+NifStream( glowTexture, in, version ); \
+NifStream( bumpMapTexture, in, version ); \
+NifStream( decal0Texture, in, version ); \
 if ( version >= 0x14000004 ) { \
-  if ( texture_count == 8 ) { \
-    NifStream( decal_texture_1, in, version ); \
+  if ( textureCount == 8 ) { \
+    NifStream( decalTexture1, in, version ); \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( shader_textures, in, version ); \
+  NifStream( shaderTextures, in, version ); \
 }; \
 
 #define NI_TEXTURING_PROPERTY_WRITE \
@@ -12239,22 +12240,22 @@ AProperty::Write( out, version ); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, out, version ); \
 }; \
-NifStream( apply_mode, out, version ); \
-NifStream( texture_count, out, version ); \
-NifStream( base_texture, out, version ); \
-NifStream( dark_texture, out, version ); \
-NifStream( detail_texture, out, version ); \
-NifStream( gloss_texture, out, version ); \
-NifStream( glow_texture, out, version ); \
-NifStream( bump_map_texture, out, version ); \
-NifStream( decal_0_texture, out, version ); \
+NifStream( applyMode, out, version ); \
+NifStream( textureCount, out, version ); \
+NifStream( baseTexture, out, version ); \
+NifStream( darkTexture, out, version ); \
+NifStream( detailTexture, out, version ); \
+NifStream( glossTexture, out, version ); \
+NifStream( glowTexture, out, version ); \
+NifStream( bumpMapTexture, out, version ); \
+NifStream( decal0Texture, out, version ); \
 if ( version >= 0x14000004 ) { \
-  if ( texture_count == 8 ) { \
-    NifStream( decal_texture_1, out, version ); \
+  if ( textureCount == 8 ) { \
+    NifStream( decalTexture1, out, version ); \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  NifStream( shader_textures, out, version ); \
+  NifStream( shaderTextures, out, version ); \
 }; \
 
 #define NI_TEXTURING_PROPERTY_STRING \
@@ -12263,17 +12264,17 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
-out << "          Apply Mode:  " << apply_mode << endl; \
-out << "       Texture Count:  " << texture_count << endl; \
-out << "        Base Texture:  " << base_texture << endl; \
-out << "        Dark Texture:  " << dark_texture << endl; \
-out << "      Detail Texture:  " << detail_texture << endl; \
-out << "       Gloss Texture:  " << gloss_texture << endl; \
-out << "        Glow Texture:  " << glow_texture << endl; \
-out << "    Bump Map Texture:  " << bump_map_texture << endl; \
-out << "     Decal 0 Texture:  " << decal_0_texture << endl; \
-out << "     Decal Texture 1:  " << decal_texture_1 << endl; \
-out << "     Shader Textures:  " << shader_textures << endl; \
+out << "          Apply Mode:  " << applyMode << endl; \
+out << "       Texture Count:  " << textureCount << endl; \
+out << "        Base Texture:  " << baseTexture << endl; \
+out << "        Dark Texture:  " << darkTexture << endl; \
+out << "      Detail Texture:  " << detailTexture << endl; \
+out << "       Gloss Texture:  " << glossTexture << endl; \
+out << "        Glow Texture:  " << glowTexture << endl; \
+out << "    Bump Map Texture:  " << bumpMapTexture << endl; \
+out << "     Decal 0 Texture:  " << decal0Texture << endl; \
+out << "     Decal Texture 1:  " << decalTexture1 << endl; \
+out << "     Shader Textures:  " << shaderTextures << endl; \
 return out.str(); \
 
 // 
@@ -12344,8 +12345,8 @@ return out.str(); \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-vector<byte > unknown_bytes; \
-uint data; \
+vector<byte > unknownBytes; \
+Link data; \
 
 #define NI_TRANSFORM_INTERPOLATOR_GETATTR \
 attr_ref attr = AInterpolator::GetAttr( attr_name ); \
@@ -12371,8 +12372,8 @@ NifStream( translation, in, version ); \
 NifStream( rotation, in, version ); \
 NifStream( scale, in, version ); \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  unknown_bytes.resize(3); \
-  NifStream( unknown_bytes, in, version ); \
+  unknownBytes.resize(3); \
+  NifStream( unknownBytes, in, version ); \
 }; \
 NifStream( data, in, version ); \
 
@@ -12382,7 +12383,7 @@ NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
 NifStream( scale, out, version ); \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  NifStream( unknown_bytes, out, version ); \
+  NifStream( unknownBytes, out, version ); \
 }; \
 NifStream( data, out, version ); \
 
@@ -12441,18 +12442,18 @@ return out.str(); \
 // - Triangle data.
 // - The matching vertex groups.
 #define NI_TRI_SHAPE_DATA_MEMBERS \
-uint num_triangle_points; \
-bool has_triangles; \
+uint numTrianglePoints; \
+bool hasTriangles; \
 vector<Triangle > triangles; \
-vector<MatchGroup > match_groups; \
+vector<MatchGroup > matchGroups; \
 
 #define NI_TRI_SHAPE_DATA_GETATTR \
 attr_ref attr = AShapeData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Triangle Points" ) \
-  return attr_ref(num_triangle_points); \
+  return attr_ref(numTrianglePoints); \
 if ( attr_name == "Has Triangles" ) \
-  return attr_ref(has_triangles); \
+  return attr_ref(hasTriangles); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12461,49 +12462,49 @@ return attr_ref(); \
 #define NI_TRI_SHAPE_DATA_CONSTRUCT
 
 #define NI_TRI_SHAPE_DATA_READ \
-ushort num_triangles; \
-ushort num_match_groups; \
+ushort numTriangles; \
+ushort numMatchGroups; \
 AShapeData::Read( in, version ); \
-NifStream( num_triangles, in, version ); \
-NifStream( num_triangle_points, in, version ); \
+NifStream( numTriangles, in, version ); \
+NifStream( numTrianglePoints, in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( has_triangles, in, version ); \
+  NifStream( hasTriangles, in, version ); \
 }; \
 if ( version <= 0x0A000102 ) { \
-  triangles.resize(num_triangles); \
+  triangles.resize(numTriangles); \
   NifStream( triangles, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( has_triangles != 0 ) { \
-    triangles.resize(num_triangles); \
+  if ( hasTriangles != 0 ) { \
+    triangles.resize(numTriangles); \
     NifStream( triangles, in, version ); \
   }; \
 }; \
-NifStream( num_match_groups, in, version ); \
-match_groups.resize(num_match_groups); \
-NifStream( match_groups, in, version ); \
+NifStream( numMatchGroups, in, version ); \
+matchGroups.resize(numMatchGroups); \
+NifStream( matchGroups, in, version ); \
 
 #define NI_TRI_SHAPE_DATA_WRITE \
-ushort num_triangles; \
-ushort num_match_groups; \
+ushort numTriangles; \
+ushort numMatchGroups; \
 AShapeData::Write( out, version ); \
-num_triangles = ushort(triangles.size()); \
-num_match_groups = ushort(match_groups.size()); \
-NifStream( num_triangles, out, version ); \
-NifStream( num_triangle_points, out, version ); \
+numTriangles = ushort(triangles.size()); \
+numMatchGroups = ushort(matchGroups.size()); \
+NifStream( numTriangles, out, version ); \
+NifStream( numTrianglePoints, out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( has_triangles, out, version ); \
+  NifStream( hasTriangles, out, version ); \
 }; \
 if ( version <= 0x0A000102 ) { \
   NifStream( triangles, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( has_triangles != 0 ) { \
+  if ( hasTriangles != 0 ) { \
     NifStream( triangles, out, version ); \
   }; \
 }; \
-NifStream( num_match_groups, out, version ); \
-NifStream( match_groups, out, version ); \
+NifStream( numMatchGroups, out, version ); \
+NifStream( matchGroups, out, version ); \
 
 #define NI_TRI_SHAPE_DATA_STRING \
 stringstream out; \
@@ -12511,8 +12512,8 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShapeData::asString(); \
 out << "       Num Triangles:  -- calculated --" << endl; \
-out << " Num Triangle Points:  " << num_triangle_points << endl; \
-out << "       Has Triangles:  " << has_triangles << endl; \
+out << " Num Triangle Points:  " << numTrianglePoints << endl; \
+out << "       Has Triangles:  " << hasTriangles << endl; \
 out << "           Triangles:  -- data not shown --" << endl; \
 out << "    Num Match Groups:  -- calculated --" << endl; \
 out << "        Match Groups:  -- data not shown --" << endl; \
@@ -12561,17 +12562,17 @@ return out.str(); \
 // - Do we have strip point data?
 // - The points in the Triangle strips.  Size is the sum of all entries in Strip Lengths.
 #define NI_TRI_STRIPS_DATA_MEMBERS \
-ushort num_triangles; \
-bool has_points; \
+ushort numTriangles; \
+bool hasPoints; \
 vector<vector<ushort > > points; \
 
 #define NI_TRI_STRIPS_DATA_GETATTR \
 attr_ref attr = AShapeData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Triangles" ) \
-  return attr_ref(num_triangles); \
+  return attr_ref(numTriangles); \
 if ( attr_name == "Has Points" ) \
-  return attr_ref(has_points); \
+  return attr_ref(hasPoints); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12580,44 +12581,44 @@ return attr_ref(); \
 #define NI_TRI_STRIPS_DATA_CONSTRUCT
 
 #define NI_TRI_STRIPS_DATA_READ \
-ushort num_strips; \
-vector<ushort > strip_lengths; \
+ushort numStrips; \
+vector<ushort > stripLengths; \
 AShapeData::Read( in, version ); \
-NifStream( num_triangles, in, version ); \
-NifStream( num_strips, in, version ); \
-strip_lengths.resize(num_strips); \
-NifStream( strip_lengths, in, version ); \
+NifStream( numTriangles, in, version ); \
+NifStream( numStrips, in, version ); \
+stripLengths.resize(numStrips); \
+NifStream( stripLengths, in, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( has_points, in, version ); \
+  NifStream( hasPoints, in, version ); \
 }; \
 if ( version <= 0x0A000102 ) { \
-  points.resize(num_strips); \
+  points.resize(numStrips); \
   NifStream( points, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( has_points != 0 ) { \
-    points.resize(num_strips); \
+  if ( hasPoints != 0 ) { \
+    points.resize(numStrips); \
     NifStream( points, in, version ); \
   }; \
 }; \
 
 #define NI_TRI_STRIPS_DATA_WRITE \
-ushort num_strips; \
-vector<ushort > strip_lengths; \
+ushort numStrips; \
+vector<ushort > stripLengths; \
 AShapeData::Write( out, version ); \
-num_strips = ushort(strip_lengths.size()); \
-strip_lengths.resize(num_strips); for (uint i = 0; i < points.size(); i++) strip_lengths[i] = ushort(points[i].size()); \
-NifStream( num_triangles, out, version ); \
-NifStream( num_strips, out, version ); \
-NifStream( strip_lengths, out, version ); \
+numStrips = ushort(stripLengths.size()); \
+stripLengths.resize(numStrips); for (uint i = 0; i < points.size(); i++) stripLengths[i] = ushort(points[i].size()); \
+NifStream( numTriangles, out, version ); \
+NifStream( numStrips, out, version ); \
+NifStream( stripLengths, out, version ); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( has_points, out, version ); \
+  NifStream( hasPoints, out, version ); \
 }; \
 if ( version <= 0x0A000102 ) { \
   NifStream( points, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( has_points != 0 ) { \
+  if ( hasPoints != 0 ) { \
     NifStream( points, out, version ); \
   }; \
 }; \
@@ -12627,10 +12628,10 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AShapeData::asString(); \
-out << "       Num Triangles:  " << num_triangles << endl; \
+out << "       Num Triangles:  " << numTriangles << endl; \
 out << "          Num Strips:  -- calculated --" << endl; \
 out << "       Strip Lengths:  -- calculated --" << endl; \
-out << "          Has Points:  " << has_points << endl; \
+out << "          Has Points:  " << hasPoints << endl; \
 out << "              Points:  -- data not shown --" << endl; \
 return out.str(); \
 
@@ -12640,14 +12641,14 @@ return out.str(); \
 // - Always 0?
 // - Texture coordinate controller data index.
 #define NI_U_V_CONTROLLER_MEMBERS \
-ushort unknown_short; \
-uint data; \
+ushort unknownShort; \
+Link data; \
 
 #define NI_U_V_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Unknown Short" ) \
-  return attr_ref(unknown_short); \
+  return attr_ref(unknownShort); \
 if ( attr_name == "Data" ) \
   return attr_ref(data); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
@@ -12659,12 +12660,12 @@ return attr_ref(); \
 
 #define NI_U_V_CONTROLLER_READ \
 AController::Read( in, version ); \
-NifStream( unknown_short, in, version ); \
+NifStream( unknownShort, in, version ); \
 NifStream( data, in, version ); \
 
 #define NI_U_V_CONTROLLER_WRITE \
 AController::Write( out, version ); \
-NifStream( unknown_short, out, version ); \
+NifStream( unknownShort, out, version ); \
 NifStream( data, out, version ); \
 
 #define NI_U_V_CONTROLLER_STRING \
@@ -12672,7 +12673,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AController::asString(); \
-out << "       Unknown Short:  " << unknown_short << endl; \
+out << "       Unknown Short:  " << unknownShort << endl; \
 out << "                Data:  " << data << endl; \
 return out.str(); \
 
@@ -12682,7 +12683,7 @@ return out.str(); \
 // - Four UV data groups.  Perhaps the first two control x and y.
 // The existence of the second two is a guess - there are always two zero values following the first two in all official files.
 #define NI_U_V_DATA_MEMBERS \
-vector<VectorKeyArray<float > > uv_groups; \
+vector<VectorKeyArray<float > > uvGroups; \
 
 #define NI_U_V_DATA_GETATTR \
 attr_ref attr = AData::GetAttr( attr_name ); \
@@ -12696,12 +12697,12 @@ return attr_ref(); \
 
 #define NI_U_V_DATA_READ \
 AData::Read( in, version ); \
-uv_groups.resize(4); \
-NifStream( uv_groups, in, version ); \
+uvGroups.resize(4); \
+NifStream( uvGroups, in, version ); \
 
 #define NI_U_V_DATA_WRITE \
 AData::Write( out, version ); \
-NifStream( uv_groups, out, version ); \
+NifStream( uvGroups, out, version ); \
 
 #define NI_U_V_DATA_STRING \
 stringstream out; \
@@ -12717,16 +12718,16 @@ return out.str(); \
 // - The vector data.
 // - Not sure whether this comes before or after the vector data.
 #define NI_VECTOR_EXTRA_DATA_MEMBERS \
-Vector3 vector_data; \
-float unknown_float; \
+Vector3 vectorData; \
+float unknownFloat; \
 
 #define NI_VECTOR_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Vector Data" ) \
-  return attr_ref(vector_data); \
+  return attr_ref(vectorData); \
 if ( attr_name == "Unknown Float" ) \
-  return attr_ref(unknown_float); \
+  return attr_ref(unknownFloat); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12736,21 +12737,21 @@ return attr_ref(); \
 
 #define NI_VECTOR_EXTRA_DATA_READ \
 AExtraData::Read( in, version ); \
-NifStream( vector_data, in, version ); \
-NifStream( unknown_float, in, version ); \
+NifStream( vectorData, in, version ); \
+NifStream( unknownFloat, in, version ); \
 
 #define NI_VECTOR_EXTRA_DATA_WRITE \
 AExtraData::Write( out, version ); \
-NifStream( vector_data, out, version ); \
-NifStream( unknown_float, out, version ); \
+NifStream( vectorData, out, version ); \
+NifStream( unknownFloat, out, version ); \
 
 #define NI_VECTOR_EXTRA_DATA_STRING \
 stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "         Vector Data:  " << vector_data << endl; \
-out << "       Unknown Float:  " << unknown_float << endl; \
+out << "         Vector Data:  " << vectorData << endl; \
+out << "       Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 // 
@@ -12764,8 +12765,8 @@ return out.str(); \
 // 1: LIGHTING_E_A_D (Emissive, ambient, diffuse)
 #define NI_VERTEX_COLOR_PROPERTY_MEMBERS \
 Flags flags; \
-VertMode vertex_mode; \
-LightMode lighting_mode; \
+VertMode vertexMode; \
+LightMode lightingMode; \
 
 #define NI_VERTEX_COLOR_PROPERTY_GETATTR \
 attr_ref attr = AProperty::GetAttr( attr_name ); \
@@ -12773,9 +12774,9 @@ if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Flags" ) \
   return attr_ref(flags); \
 if ( attr_name == "Vertex Mode" ) \
-  return attr_ref(vertex_mode); \
+  return attr_ref(vertexMode); \
 if ( attr_name == "Lighting Mode" ) \
-  return attr_ref(lighting_mode); \
+  return attr_ref(lightingMode); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12786,14 +12787,14 @@ return attr_ref(); \
 #define NI_VERTEX_COLOR_PROPERTY_READ \
 AProperty::Read( in, version ); \
 NifStream( flags, in, version ); \
-NifStream( vertex_mode, in, version ); \
-NifStream( lighting_mode, in, version ); \
+NifStream( vertexMode, in, version ); \
+NifStream( lightingMode, in, version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_WRITE \
 AProperty::Write( out, version ); \
 NifStream( flags, out, version ); \
-NifStream( vertex_mode, out, version ); \
-NifStream( lighting_mode, out, version ); \
+NifStream( vertexMode, out, version ); \
+NifStream( lightingMode, out, version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_STRING \
 stringstream out; \
@@ -12801,8 +12802,8 @@ out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AProperty::asString(); \
 out << "               Flags:  " << flags << endl; \
-out << "         Vertex Mode:  " << vertex_mode << endl; \
-out << "       Lighting Mode:  " << lighting_mode << endl; \
+out << "         Vertex Mode:  " << vertexMode << endl; \
+out << "       Lighting Mode:  " << lightingMode << endl; \
 return out.str(); \
 
 // 
@@ -12812,14 +12813,14 @@ return out.str(); \
 // - Number of bytes in this data block.
 // - The vertex weights.
 #define NI_VERT_WEIGHTS_EXTRA_DATA_MEMBERS \
-uint num_bytes; \
+uint numBytes; \
 vector<float > weight; \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_GETATTR \
 attr_ref attr = AExtraData::GetAttr( attr_name ); \
 if ( attr.is_null() == false ) return attr; \
 if ( attr_name == "Num Bytes" ) \
-  return attr_ref(num_bytes); \
+  return attr_ref(numBytes); \
 throw runtime_error("The attribute you requested does not exist in this block, or can't be accessed."); \
 return attr_ref(); \
 
@@ -12828,19 +12829,19 @@ return attr_ref(); \
 #define NI_VERT_WEIGHTS_EXTRA_DATA_CONSTRUCT
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_READ \
-ushort num_vertices; \
+ushort numVertices; \
 AExtraData::Read( in, version ); \
-NifStream( num_bytes, in, version ); \
-NifStream( num_vertices, in, version ); \
-weight.resize(num_vertices); \
+NifStream( numBytes, in, version ); \
+NifStream( numVertices, in, version ); \
+weight.resize(numVertices); \
 NifStream( weight, in, version ); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_WRITE \
-ushort num_vertices; \
+ushort numVertices; \
 AExtraData::Write( out, version ); \
-num_vertices = ushort(weight.size()); \
-NifStream( num_bytes, out, version ); \
-NifStream( num_vertices, out, version ); \
+numVertices = ushort(weight.size()); \
+NifStream( numBytes, out, version ); \
+NifStream( numVertices, out, version ); \
 NifStream( weight, out, version ); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_STRING \
@@ -12848,7 +12849,7 @@ stringstream out; \
 out.setf(ios::fixed, ios::floatfield); \
 out << setprecision(1); \
 out << AExtraData::asString(); \
-out << "           Num Bytes:  " << num_bytes << endl; \
+out << "           Num Bytes:  " << numBytes << endl; \
 out << "        Num Vertices:  -- calculated --" << endl; \
 out << "              Weight:  -- data not shown --" << endl; \
 return out.str(); \
@@ -12858,7 +12859,7 @@ return out.str(); \
 //
 // - Visibility controller data block index.
 #define NI_VIS_CONTROLLER_MEMBERS \
-uint data; \
+Link data; \
 
 #define NI_VIS_CONTROLLER_GETATTR \
 attr_ref attr = AController::GetAttr( attr_name ); \
