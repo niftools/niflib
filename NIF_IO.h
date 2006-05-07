@@ -39,16 +39,8 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <iomanip>
 #include <string>
 #include <sstream>
-#include "niflib.h"
+#include "niflib_internal.h"
 using namespace std;
-
-struct HeaderString {
-	string header;
-};
-
-typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
 
 typedef ushort usVector3[3];
 
@@ -221,6 +213,16 @@ ostream & operator<<( ostream & out, LODRange const & val );
 void NifStream( TexDesc & val, istream& in, uint version );  // version is significant
 void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
 ostream & operator<<( ostream & out, TexDesc const & val );
+
+//Link
+void NifStream( Link & val, istream& in, uint version = 0 );
+void NifStream( Link const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, Link const & val );
+
+//CrossRef
+void NifStream( CrossRef & val, istream& in, uint version  = 0);
+void NifStream( CrossRef const & val, ostream& out, uint version = 0 );
+ostream & operator<<( ostream & out, CrossRef const & val );
 
 //--Enums--//
 

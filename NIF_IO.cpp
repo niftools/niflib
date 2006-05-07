@@ -653,10 +653,10 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 				val.translation.v = ReadFloat( in );
 				val.tiling.u = ReadFloat( in );
 				val.tiling.v = ReadFloat( in );
-				val.w_rotation = ReadFloat( in );
-				val.transform_type = ReadUInt( in );
-				val.center_offset.u = ReadFloat( in );
-				val.center_offset.v = ReadFloat( in );
+				val.wRotation = ReadFloat( in );
+				val.transformType = ReadUInt( in );
+				val.centerOffset.u = ReadFloat( in );
+				val.centerOffset.v = ReadFloat( in );
 			}
 		}
 	}
@@ -691,10 +691,10 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 				WriteFloat( val.translation.v, out );
 				WriteFloat( val.tiling.u, out );
 				WriteFloat( val.tiling.v, out );
-				WriteFloat( val.w_rotation, out );
-				WriteUInt( val.transform_type, out );
-				WriteFloat( val.center_offset.u, out );
-				WriteFloat( val.center_offset.v, out );
+				WriteFloat( val.wRotation, out );
+				WriteUInt( val.transformType, out );
+				WriteFloat( val.centerOffset.u, out );
+				WriteFloat( val.centerOffset.v, out );
 			}
 		}
 	}
@@ -716,9 +716,9 @@ ostream & operator<<( ostream & out, TexDesc const & val ) {
 			out << endl
 				<< "         Translation: " << val.translation << endl
 				<< "         Tiling: " << val.tiling << endl
-				<< "         W-rotation: " << val.w_rotation << endl
-				<< "         Transform Type: " << val.transform_type << endl
-				<< "         Center Offset: " << val.center_offset << endl;
+				<< "         W-rotation: " << val.wRotation << endl
+				<< "         Transform Type: " << val.transformType << endl
+				<< "         Center Offset: " << val.centerOffset << endl;
 		} else {
 			out << "None" << endl;
 		}
@@ -727,6 +727,42 @@ ostream & operator<<( ostream & out, TexDesc const & val ) {
 	}
 
 	return out;
+}
+
+//CrossRef
+void NifStream( CrossRef & val, istream& in, uint version ) {
+	val.SetIndex( ReadInt( in ) );
+};
+
+void NifStream( CrossRef const & val, ostream& out, uint version ) {
+	IBlock * ref = val.GetCrossRef();
+	if ( ref != NULL ) {
+		WriteInt( ref->GetBlockNum(), out );
+	} else {
+		WriteInt( -1, out );
+	}
+}
+
+ostream & operator<<( ostream & out, CrossRef const & val ) {
+	return out << blk_ref(val.GetCrossRef());
+}
+
+//Link
+void NifStream( Link & val, istream& in, uint version ) {
+	val.SetIndex( ReadInt( in ) );
+};
+
+void NifStream( Link const & val, ostream& out, uint version ) {
+	blk_ref ref = val.GetLink();
+	if ( ref.is_null() == false ) {
+		WriteInt( ref->GetBlockNum(), out );
+	} else {
+		WriteInt( -1, out );
+	}
+}
+
+ostream & operator<<( ostream & out, Link const & val ) {
+	return out << val.GetLink();
 }
 
 

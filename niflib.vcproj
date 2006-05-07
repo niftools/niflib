@@ -156,6 +156,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\niflib_internal.cpp">
+			</File>
+			<File
 				RelativePath=".\xml_extract.cpp">
 			</File>
 		</Filter>

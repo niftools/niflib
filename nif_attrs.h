@@ -36,399 +36,291 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include <sstream>
 #include <list>
-#include "niflib.h"
-#include "NIF_Blocks.h"
-#include "NIF_IO.h"
+#include "niflib_internal.h"
 
 #define endl "\r\n"
 
-const char ATTRERR[] = "Attribute type Missmatch.";
-
-class AAttr : public IAttr {
-public:
-	AAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : _name(name), _owner(owner), _first_ver(first_ver), _last_ver(last_ver) {}
-	~AAttr() {} //cout << "   Attribute \"" << _name << "\" deleted" << endl; }
-	string GetName() const { return _name; }
-	//Getters
-	int asInt() const { throw runtime_error(ATTRERR); }
-	float asFloat() const { throw runtime_error(ATTRERR); }
-	Float3 asFloat3() const { throw runtime_error(ATTRERR); }
-	Float4 asFloat4() const { throw runtime_error(ATTRERR); }
-	Matrix33 asMatrix33() const { throw runtime_error(ATTRERR); }
-	blk_ref asLink() const { throw runtime_error(ATTRERR); }
-	TexSource asTexSource() const { throw runtime_error(ATTRERR); }
-	BoundingBox asBoundingBox() const { throw runtime_error(ATTRERR); }
-	ConditionalInt asConditionalInt() const { throw runtime_error(ATTRERR); }
-	TexDesc asTexDesc() const { throw runtime_error(ATTRERR); }
-	list<blk_ref> asLinkList() const { throw runtime_error(ATTRERR); }
-	//Setters
-	void Set(int) { throw runtime_error(ATTRERR); }
-	void Set(float) { throw runtime_error(ATTRERR); }
-	void Set(Float3 const &) { throw runtime_error(ATTRERR); }
-	void Set(Float4 const &) { throw runtime_error(ATTRERR); }
-	void Set(string const &) { throw runtime_error(ATTRERR); }
-	void Set(Matrix33 const &) { throw runtime_error(ATTRERR); }
-	void Set(blk_ref const &) { throw runtime_error(ATTRERR); }
-	void Set(TexSource const &) { throw runtime_error(ATTRERR); }
-	void Set(BoundingBox const &) { throw runtime_error(ATTRERR); }
-	void Set(ConditionalInt const &) { throw runtime_error(ATTRERR); }
-	void Set(TexDesc const &) { throw runtime_error(ATTRERR); }
-	//Link functions
-	bool HasLinks() const { return false; }
-	void AddLink( blk_ref const & block ) { cout << "AddLink" << endl; throw runtime_error(ATTRERR); }
-	void AddLinks( list<blk_ref> const & new_links ) { cout << "AddLinkS" << endl; throw runtime_error(ATTRERR); }
-	void ClearLinks() { cout << "ClearLinks" << endl; throw runtime_error(ATTRERR); }
-	void RemoveLinks( blk_ref const & block ) { cout << "RemoveLinks" << endl; throw runtime_error(ATTRERR); }
-	blk_ref FindLink( string const & block_type ) const { cout << "FindLink" << endl; throw runtime_error(ATTRERR); }
-	//Read/WriteFunctions
-	void Read( istream& in, unsigned int version ) {
-		if ( version >= _first_ver && version <= _last_ver ) {
-			this->ReadAttr( in, version );
-		}
-	}
-	void Write( ostream& out, unsigned int version ) const {
-		if ( version >= _first_ver && version <= _last_ver ) {
-			this->WriteAttr( out, version );
-		}
-	}
-	//Function to remove CrossLinks without decrimenting them
-	virtual void RemoveCrossLinks( IBlock * block_to_remove ) {};
-protected:
-	//Internal Read/Write Functions
-	virtual void ReadAttr( istream& in, unsigned int version ) = 0;
-	virtual void WriteAttr( ostream& out, unsigned int version ) const = 0;
-
-	string _name;
-	IBlock * _owner;
-	unsigned int _first_ver, _last_ver;
-};
-
-class lnk_ref : public blk_ref {
-public:
-	lnk_ref ( IBlock * owner) : _owner(owner) { InitLink(); }
-	lnk_ref( IBlock * owner, int index ) : blk_ref(index), _owner(owner) { InitLink(); }
-	lnk_ref( IBlock * owner, blk_ref block ) : blk_ref(block), _owner(owner) { InitLink(); }
-
-	//Copy Constructors
-	lnk_ref( const lnk_ref & rh ) {
-		/*cout << "Copy constructor " << endl;*/
-		//Kill previous link
-		KillLink();
-		_owner = rh._owner;
-		blk_ref::operator=(rh);
-		//Set New Link
-		InitLink();
-	}
-	//Destructor
-	~lnk_ref() { KillLink(); }
-	//Assignment Operator
-	lnk_ref & operator=(const blk_ref & rh ) { 
-		if ( blk_ref(*this)!= rh ) {
-			//Kill previous link
-			KillLink();
-			blk_ref::operator=(rh);
-			//Set New Link
-			InitLink();
-		}
-
-		return *this;
-	}
-	void set_block( IBlock * block ) {
-		/*cout << "set_block " << endl;*/
-		//Use assignment operator code
-		operator=( blk_ref(block) );
-	}
-	void set_index( int index ) { 
-		/*cout << "set_index " << endl;*/
-		//Use assigntment operator code
-		operator=( blk_ref(index) );
-	}
-	IBlock * owner() const {
-		if ( _owner == NULL ) {
-			throw runtime_error("Link reference owner is NULL.");
-		} else {
-			return _owner;
-		}
-	}
-
-private:
-	IBlock * _owner;
-	void InitLink() {
-		//cout << "+ Reference " << this << endl;
-		//Add parent at new link site
-		if ( _block != NULL ) {
-			//Get internal interface
-			((ABlock*)_block)->AddParent( _owner );
-			//IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
-			//if ( bk_intl != NULL ) {
-			//	bk_intl->AddParent( _owner );
-			//}
-		}
-	}
-	void KillLink() {
-		//cout << "- Reference " << this << endl;
-		//Remove cross-reference at previous location
-		if ( _block != NULL ) {
-			((ABlock*)_block)->RemoveParent( _owner );
-			//Get internal interface
-			//IBlockInternal * bk_intl = (IBlockInternal*)_block->QueryInterface( BlockInternal );
-			//if ( bk_intl != NULL ) {
-			//	bk_intl->RemoveParent( _owner );
-			//}
-		}
-	}
-	lnk_ref( const blk_ref & rh ); // Intentionally Undefined
-};
-
 class IntAttr : public AAttr {
 public:
-	IntAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
+	IntAttr( string const & name, IBlock * owner, int * data ) : AAttr( name, owner ), _data(data) {}
 	~IntAttr() {}
 	AttrType GetType() const { return attr_int; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadUInt( in ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteUInt( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << data;
+		out << *_data;
 
 		return out.str();
 	}
-	int asInt() const { return data; }
-	void Set(int n ) { data = n; }
+	int asInt() const { return *_data; }
+	void Set(int n ) { *_data = n; }
 protected:
-	int data;
+	int * _data;
+};
+
+class UIntAttr : public AAttr {
+public:
+	UIntAttr( string const & name, IBlock * owner, uint * data ) : AAttr( name, owner ), _data(data) {}
+	~UIntAttr() {}
+	AttrType GetType() const { return attr_int; }
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << *_data;
+
+		return out.str();
+	}
+	int asInt() const { return int(*_data); }
+	void Set(int n ) { *_data = uint(n); }
+protected:
+	uint * _data;
 };
 
 class ShortAttr : public AAttr {
 public:
-	ShortAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
+	ShortAttr( string const & name, IBlock * owner, short * data ) : AAttr( name, owner ), _data(data) {}
 	~ShortAttr() {}
 	AttrType GetType() const { return attr_short; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadUShort( in ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteUShort( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << data;
+		out << *_data;
 
 		return out.str();
 	}
-	int asInt() const { return int(data); }
-	void Set(int n ) { data = short(n); }
-private:
-	short data;
+	int asInt() const { return int(*_data); }
+	void Set(int n ) { *_data = short(n); }
+protected:
+	short * _data;
+};
+
+class UShortAttr : public AAttr {
+public:
+	UShortAttr( string const & name, IBlock * owner, ushort * data ) : AAttr( name, owner ), _data(data) {}
+	~UShortAttr() {}
+	AttrType GetType() const { return attr_short; }
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << *_data;
+
+		return out.str();
+	}
+	int asInt() const { return int(*_data); }
+	void Set(int n ) { *_data = ushort(n); }
+protected:
+	ushort * _data;
 };
 
 class ByteAttr : public AAttr {
 public:
-	ByteAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
+	ByteAttr( string const & name, IBlock * owner, byte * data ) : AAttr( name, owner ), _data(data) {}
 	~ByteAttr() {}
 	AttrType GetType() const { return attr_byte; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadByte( in ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteByte( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << int(data);
+		out << int(*_data);
 
 		return out.str();
 	}
-	int asInt() const { return int(data); }
-	void Set(int n ) { data = char(n); }
-private:
-	char data;
-};
-
-class BoolAttr : public AAttr {
-public:
-	BoolAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
-	~BoolAttr() {}
-	AttrType GetType() const { return attr_bool; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadBool( in, version ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteBool( data, out, version ); }
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		out << int(data);
-
-		return out.str();
-	}
-	int asInt() const { return int(data); }
-	void Set(int n ) { data = (n != 0); }
-private:
-	bool data;
+	int asInt() const { return int(*_data); }
+	void Set(int n ) { *_data = byte(n); }
+protected:
+	byte * _data;
 };
 
 class FloatAttr : public AAttr {
 public:
-	FloatAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0.0f) {}
+	FloatAttr( string const & name, IBlock * owner, float * data ) : AAttr( name, owner ), _data(data) {}
 	~FloatAttr() {}
 	AttrType GetType() const { return attr_float; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadFloat( in ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteFloat( data, out ); }
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << data;
+		out << *_data;
 
 		return out.str();
 	}
-	float asFloat() const { return data; }
-	void Set(float n ) { data = n; }
-private:
-	float data;
+	float asFloat() const { return *_data; }
+	void Set(float n ) { *_data = n; }
+protected:
+	float * _data;
 };
 
 class Float3Attr : public AAttr {
 public:
-	Float3Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : AAttr(name, owner, first_ver, last_ver) {
-		data[0] = 0.0f;
-		data[1] = 0.0f;
-		data[2] = 0.0f;
-	}
+	Float3Attr( string const & name, IBlock * owner, Float3 * data ) : AAttr( name, owner ), _data(data) {}
 	~Float3Attr() {}
 	AttrType GetType() const { return attr_float3; }
-	void ReadAttr( istream& in, unsigned int version ) { 
-		data[0] = ReadFloat( in );
-		data[1] = ReadFloat( in );
-		data[2] = ReadFloat( in );
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteFloat( data[0], out );
-		WriteFloat( data[1], out );
-		WriteFloat( data[2], out );
-	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << "(" << setw(5) << data[0] << ", " << setw(5) << data[1] << ", " << setw(5) << data[2] << " )";
-		
+		out << *_data;
+
 		return out.str();
 	}
-	Float3 asFloat3() const { return data; }
-	void Set(Float3 const & n) { data = n; }
-private:
-	Float3 data;
+	Float3 asFloat3() const { return *_data; }
+	void Set(Float3 const & n ) { *_data = n; }
+protected:
+	Float3 * _data;
 };
 
 class Float4Attr : public AAttr {
 public:
-	Float4Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : AAttr(name, owner, first_ver, last_ver) {
-		data[0] = 0.0f;
-		data[1] = 0.0f;
-		data[2] = 0.0f;
-		data[3] = 0.0f;
-	}
+	Float4Attr( string const & name, IBlock * owner, Float4 * data ) : AAttr( name, owner ), _data(data) {}
 	~Float4Attr() {}
 	AttrType GetType() const { return attr_float4; }
-	void ReadAttr( istream& in, unsigned int version ) { 
-		data[0] = ReadFloat( in );
-		data[1] = ReadFloat( in );
-		data[2] = ReadFloat( in );
-		data[3] = ReadFloat( in );
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteFloat( data[0], out );
-		WriteFloat( data[1], out );
-		WriteFloat( data[2], out );
-		WriteFloat( data[3], out );
-	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << "(" << setw(5) << data[0] << ", " << setw(5) << data[1] << ", " << setw(5) << data[2] << ", " << setw(5) << data[3] << " )";
-		
+		out << *_data;
+
 		return out.str();
 	}
-	Float4 asFloat4() const { return data; }
-	void Set(Float4 const & n) { data = n; }
-private:
-	Float4 data;
+	Float4 asFloat4() const { return *_data; }
+	void Set(Float4 const & n ) { *_data = n; }
+protected:
+	Float4 * _data;
 };
 
-class Vector3Attr : public Float3Attr {
+class Vector3Attr : public AAttr {
 public:
-	Vector3Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float3Attr(name, owner, first_ver, last_ver) {}
+	Vector3Attr( string const & name, IBlock * owner, Vector3 * data ) : AAttr( name, owner ), _data(data) {}
 	~Vector3Attr() {}
 	AttrType GetType() const { return attr_vector3; }
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << *_data;
+
+		return out.str();
+	}
+	Float3 asFloat3() const { return Float3(_data->x, _data->y, _data->z); }
+	void Set(Float3 const & n ) { 
+		_data->x = n.data[0];
+		_data->y = n.data[1];
+		_data->z = n.data[2];
+	}
+protected:
+	Vector3 * _data;
 };
 
-class Color3Attr : public Float3Attr {
-public:
-	Color3Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float3Attr(name, owner, first_ver, last_ver) {}
-	~Color3Attr() {}
-	AttrType GetType() const { return attr_color3; }
-};
+//class Color3Attr : public AAttr {
+//public:
+//	Color3Attr( string const & name, IBlock * owner, Color3 * data ) : AAttr( name, owner ), _data(data) {}
+//	~Color3Attr() {}
+//	AttrType GetType() const { return attr_color3; }
+//	string asString() const {
+//		stringstream out;
+//		out.setf(ios::fixed, ios::floatfield);
+//		out << setprecision(1);
+//
+//		out << *data;
+//
+//		return out.str();
+//	}
+//	Float3 asFloat3() const { return Float3(_data->r, _data->g, _data->b); }
+//	void Set(Float3 const & n ) { 
+//		_data->r = n.data[0];
+//		_data->g = n.data[1];
+//		_data->b = n.data[2];
+//	}
+//protected:
+//	Color3 * _data;
+//};
 
-class Color4Attr : public Float4Attr {
-public:
-	Color4Attr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float4Attr(name, owner, first_ver, last_ver) {}
-	~Color4Attr() {}
-	AttrType GetType() const { return attr_color4; }
-};
+//class Color4Attr : public AAttr {
+//public:
+//	Color4Attr( string const & name, IBlock * owner, Color4 * data ) : AAttr( name, owner ), _data(data) {}
+//	~Color4Attr() {}
+//	AttrType GetType() const { return attr_color4; }
+//	string asString() const {
+//		stringstream out;
+//		out.setf(ios::fixed, ios::floatfield);
+//		out << setprecision(1);
+//
+//		out << *data;
+//
+//		return out.str();
+//	}
+//	Float3 asFloat4() const { return Float3(_data->r, _data->g, _data->b, _data->a); }
+//	void Set(Float4 const & n ) { 
+//		_data->r = n.data[0];
+//		_data->g = n.data[1];
+//		_data->b = n.data[2];
+//		_data->a = n.data[2];
+//	}
+//protected:
+//	Color4 * _data;
+//};
 
-class QuaternionAttr : public Float4Attr {
+class QuaternionAttr : public AAttr {
 public:
-	QuaternionAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver) : Float4Attr(name, owner, first_ver, last_ver) {}
+	QuaternionAttr( string const & name, IBlock * owner, Quaternion * data ) : AAttr( name, owner ), _data(data) {}
 	~QuaternionAttr() {}
 	AttrType GetType() const { return attr_quaternion; }
+	string asString() const {
+		stringstream out;
+		out.setf(ios::fixed, ios::floatfield);
+		out << setprecision(1);
+
+		out << *_data;
+
+		return out.str();
+	}
+	Float4 asFloat4() const { return Float4(_data->w, _data->x, _data->y, _data->z); }
+	void Set(Float4 const & n ) { 
+		_data->w = n.data[0];
+		_data->x = n.data[1];
+		_data->y = n.data[2];
+		_data->z = n.data[2];
+	}
+protected:
+	Quaternion * _data;
 };
 
 class StringAttr : public AAttr {
 public:
-	StringAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
+	StringAttr( string const & name, IBlock * owner, string * data ) : AAttr( name, owner ), _data(data) {}
 	~StringAttr() {}
 	AttrType GetType() const { return attr_string; }
-	void ReadAttr( istream& in, unsigned int version ) { data = ReadString( in ); }
-	void WriteAttr( ostream& out, unsigned int version ) const { WriteString( data, out ); }
-	string asString() const { return data; }
-	void Set(string const & n) { data = n; }
+	string asString() const { return *_data; }
+	void Set(string const & n) { *_data = n; }
 private:
-	string data;
+	string * _data;
 };
 
 class LinkAttr : public AAttr {
 public:
-	LinkAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), link( owner ) {}
+	LinkAttr( string const & name, IBlock * owner, Link * data ) : AAttr( name, owner ), _data(data) {}
 	~LinkAttr() {}
 	AttrType GetType() const { return attr_link; }
-	void ReadAttr( istream& in, unsigned int version ) {
-		////Remove all links beloning to this attribute
-		//_owner->RemoveAttrLinks(this);
-
-		////Add a new link with read in link
-		//blk_link l;
-		//l.attr = this;
-		//l.block = ReadUInt( in );
-		//_owner->AddLink(l);
-
-		//Set block index only
-		link.set_index( ReadUInt( in ) );
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteUInt( link.get_index(), out );
-	}
+	
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << link;
+		out << *_data;
 
 		return out.str();
 	}
@@ -436,48 +328,28 @@ public:
 	list<blk_ref> asLinkList() const { 
 		list<blk_ref> out;
 
-		out.push_back( blk_ref(link) );
+		out.push_back( _data->GetLink() );
 
 		return out; 
 	}
-	void ClearLinks() { link = blk_ref(-1); }
+	void ClearLinks() { _data->Nullify(); }
 	void AddLinks( list<blk_ref> const & new_links ) {
 		//Just take the first one
-		link = *(new_links.begin());
+		_data->SetLink( *(new_links.begin()) );
 	}
 
-	blk_ref asLink() const { return blk_ref(link); }
-	void Set( blk_ref const & n ) { link = n; }
+	blk_ref asLink() const { return _data->GetLink(); }
+	void Set( blk_ref const & n ) { _data->SetLink(n); }
 private:
-	lnk_ref link;
+	Link * _data;
 };
 
 class CrossRefAttr : public AAttr {
 public:
-	CrossRefAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), tmp_blk_num(-1), link(NULL) {}
-	~CrossRefAttr() {
-		//cout << endl << "~CrossRefAttr()";
-		//This attribute is dying, so decrement the link
-		UpdateLink(NULL);
-	}
-	AttrType GetType() const { 
-		//cout << endl << "CrossRefAttr::GetType()";
+	CrossRefAttr( string const & name, IBlock * owner, CrossRef * data ) : AAttr( name, owner ), _data(data) {}
+	~CrossRefAttr() {}
+	AttrType GetType() const {
 		return attr_link;
-	}
-	void ReadAttr( istream& in, unsigned int version ) {
-		//cout << endl << "CrossRefAttr::ReadAttr()";
-		//Update any existing links to null
-		UpdateLink(NULL);
-
-		tmp_blk_num = ReadUInt( in );
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		//cout << endl << "CrossRefAttr::WriteAttr()";
-		if ( link == NULL ) {
-			WriteUInt( 0xFFFFFFFF, out );
-		} else {
-			WriteUInt( link->GetBlockNum(), out );
-		}
 	}
 	string asString() const {
 		//cout << endl << "CrossRefAttr::asString()";
@@ -485,7 +357,7 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << GetBlkRef();
+		out << *_data;
 
 		return out.str();
 	}
@@ -497,85 +369,32 @@ public:
 		//cout << endl << "CrossRefAttr::asLinkList()";
 		list<blk_ref> out;
 
-		out.push_back( GetBlkRef() );
+		out.push_back( blk_ref(_data->GetCrossRef()) );
 
 		return out; 
 	}
 	void ClearLinks() { 
 		//cout << endl << "CrossRefAttr::ClearLinks()";
-		UpdateLink( NULL );
+		_data->Nullify();
 	}
 	void AddLinks( list<blk_ref> const & new_links ) {
 		//cout << endl << "CrossRefAttr::AddLinks()";
 		//Just take the first one
-		UpdateLink( (*(new_links.begin())).get_block() );
+		_data->SetCrossRef( new_links.begin()->get_block() );
 	}
 
-	void UpdateLink( IBlock * new_ptr ) {
-		//cout << endl << "CrossRefAttr::UpdateLink()";
-		//cout << endl << "Setting tmp_blk_num to -1";
-		//The link cannot be temporary after being updated
-		tmp_blk_num = -1;
-
-		/*cout << endl << "Check if new pointer is same as old"
-			<< endl << "Old Value:  " << link
-			<< endl << "New Value:  " << new_ptr;*/
-		//Check if the new pointer is the same as the old pointer
-		if ( new_ptr == link )
-			return;
-
-		//cout << endl << "If different, decrement ref to old site if it exists.";
-		//The new pointer is different, so decrement the reference at the old site if it exists
-		if ( link != NULL ) {
-			//cout << endl << "Decrimenting Cross Reference at:  " << link;
-			((ABlock*)link)->DecCrossRef( _owner );
-		}
-
-		//Now set the pointer to the new location
-		link = new_ptr;
-
-		//If link is not null, we need to increment the cross reference count
-		if ( link != NULL ) {
-			//cout << endl << "Incrementing Cross Reference at:  " << link;
-			((ABlock*)link)->IncCrossRef( _owner );
-		}
-	}
-
-	blk_ref GetBlkRef() const {
-		//cout << endl << "CrossRefAttr::GetBlkRef()";
-		//If the link is not fixed, there will be a temporary block number
-		if ( tmp_blk_num != -1 ) {
-			return blk_ref(tmp_blk_num);
-		} else {
-			if ( link == NULL ) {
-				return blk_ref(-1);
-			} else {
-				return blk_ref(link);
-			}
-		}
-	}
-
-	blk_ref asLink() const { return GetBlkRef(); }
+	blk_ref asLink() const { return blk_ref(_data->GetCrossRef()); }
 	void Set( blk_ref const & n ) { 
-		//cout << endl << "CrossRefAttr::Set()";
-		UpdateLink( n.get_block() );
-	}
-	void RemoveCrossLinks( IBlock * block_to_remove ) {
-		//cout << endl << "CrossRefAttr::RemoveCrossLinks()";
-		if ( link == block_to_remove ) {
-			link = NULL;
-			//Do not decrement target location because it is already dead
-		}
+		_data->SetCrossRef( n.get_block() );
 	}
 private:
-	int tmp_blk_num;
-	IBlock * link;
+	CrossRef * _data;
 };
 
 
 class FlagsAttr : public AAttr {
 public:
-	FlagsAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ), data(0) {}
+	FlagsAttr( string const & name, IBlock * owner ) : AAttr( name, owner ), data(0) {}
 	~FlagsAttr() {}
 	AttrType GetType() const { return attr_flags; }
 	void ReadAttr( istream& in, unsigned int version ) { data = ReadUShort( in ); }
@@ -602,79 +421,34 @@ private:
 	short data;
 };
 
-class MatrixAttr : public AAttr {
+class Matrix33Attr : public AAttr {
 public:
-	MatrixAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
-		data[0][0] = 1.0f;	data[0][1] = 0.0f;	data[0][2] = 0.0f;
-		data[1][0] = 0.0f;	data[1][1] = 1.0f;	data[1][2] = 0.0f;
-		data[2][0] = 0.0f;	data[2][1] = 0.0f;	data[2][2] = 1.0f;
-	}
-	~MatrixAttr() {}
+	Matrix33Attr( string const & name, IBlock * owner, Matrix33 * data ) : AAttr( name, owner ), _data(data) {}
+	~Matrix33Attr() {}
 	AttrType GetType() const { return attr_matrix33; }
-	void ReadAttr( istream& in, unsigned int version ) { 
-		for (int c = 0; c < 3; ++c) {
-			for (int r = 0; r < 3; ++r) {
-				data[r][c] = ReadFloat( in );
-			}
-		}
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		for (int c = 0; c < 3; ++c) {
-			for (int r = 0; r < 3; ++r) {
-				WriteFloat( data[r][c], out );
-			}
-		}
-	}
+	
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << endl
-			<< "   |" << setw(6) << data[0][0] << "," << setw(6) << data[0][1] << "," << setw(6) << data[0][2] << " |" << endl
-			<< "   |" << setw(6) << data[1][0] << "," << setw(6) << data[1][1] << "," << setw(6) << data[1][2] << " |" << endl
-			<< "   |" << setw(6) << data[2][0] << "," << setw(6) << data[2][1] << "," << setw(6) << data[2][2] << " |";
-		
+		out << *_data << endl;
+
 		return out.str();
 	}
 	Matrix33 asMatrix33() const {
-		return data;
-		//for (int c = 0; c < 3; ++c) {
-		//	for (int r = 0; r < 3; ++r) {
-		//		out[r][c] = data[r][c];
-		//	}
-		//}
+		return *_data;
 	}
 	void Set( Matrix33 const & n ) {
-		for (int c = 0; c < 3; ++c) {
-			for (int r = 0; r < 3; ++r) {
-				data[r][c] = n[r][c];
-			}
-		}
+		*_data = n;
 	}
-
-	//vector<float> asFloatList() const {
-	//	vector<float> list(9);
-	//	list[0] = data[0][0];	list[1] = data[0][1];	list[2] = data[0][2];
-	//	list[0] = data[1][0];	list[1] = data[1][1];	list[2] = data[1][2];
-	//	list[0] = data[2][0];	list[1] = data[2][1];	list[2] = data[2][2];
-	//	return list;
-	//}
-	//void Set(vector<float> n ) {
-	//	if ( n.size() != 9)
-	//		throw runtime_error("List size must equal 9");
-
-	//	data[0][0] = n[0];	data[0][1] = n[1];	data[0][2] = n[2];
-	//	data[1][0] = n[0];	data[1][1] = n[1];	data[1][2] = n[2];
-	//	data[2][0] = n[0];	data[2][1] = n[1];	data[2][2] = n[2];
-	//}
 private:
-	Matrix33 data;
+	Matrix33 * _data;
 };
-
+/*
 class BoneAttr : public AAttr {
 public:
-	BoneAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	BoneAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~BoneAttr() {}
 	AttrType GetType() const { return attr_bones; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -732,53 +506,22 @@ public:
 		return out.str();
 	}
 };
-
-typedef list<lnk_ref> LinkSetList;
-typedef LinkSetList::iterator LinkSetIt;
-typedef LinkSetList::const_iterator LinkSetConstIt;
+*/
 
 class LinkGroupAttr : public AAttr {
 public:
-	LinkGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {}
+	LinkGroupAttr( string const & name, IBlock * owner, vector<Link> * data ) : AAttr( name, owner ), _data(data) {}
 	~LinkGroupAttr() {}
 	AttrType GetType() const { return attr_linkgroup; }
-	void ReadAttr( istream& in, unsigned int version ) {
-		int len = ReadUInt( in );
-		//cout << "Link Group Size:  " << len << endl;
-
-		if ( len > 1000 ) {
-			throw runtime_error("Unlikley number of links found. (>1000)");
-		}
-
-		for (int i = 0; i < len; ++i ) {
-			int index = ReadUInt( in );
-			if (index != -1 )
-				AddLink( blk_ref( index ) );
-		}
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		//Write the number of links
-		WriteUInt( uint(links.size()), out );
-		//cout << "Link Group Size:  " << uint(links.size()) << endl;
-
-		if ( links.size() > 1000 ) {
-			throw runtime_error("You probably shouldn't write more than 1000 links");
-		}
-
-		//Write the block indices
-		for (LinkSetConstIt it = links.begin(); it != links.end(); ++it ) {
-			WriteUInt( it->get_index(), out );
-		}
-	}
+	
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
-
-		for (LinkSetList::const_iterator it = links.begin(); it != links.end(); ++it ) {
-			out << endl << "   " << *it;
+		for (vector<Link>::const_iterator it = _data->begin(); it != _data->end(); ++it ) {
+			out << endl << "   " << it->GetLink();
 		}
-		if (links.size() == 0 ) {
+		if (_data->size() == 0 ) {
 			out << "None";
 		}
 
@@ -790,24 +533,26 @@ public:
 	list<blk_ref> asLinkList() const { 
 		list<blk_ref> out;
 
-		for (LinkSetList::const_iterator it = links.begin(); it != links.end(); ++it ) {
-			out.push_back( blk_ref(*it) );
+		for (vector<Link>::iterator it = _data->begin(); it != _data->end(); ++it ) {
+			out.push_back( it->GetLink() );
 		}
 
 		return out; 
 	}
 
 	void AddLink( blk_ref const & block ) {
-		links.push_back( lnk_ref(_owner, block) );
+		Link new_link(_owner);
+		new_link.SetLink( block );
+		_data->push_back( new_link);
 	}
 
 	void AddLinks( list<blk_ref> const & new_links ) {
 		//Add new list of links
-		list<blk_ref>::const_iterator it;
-		for (it = new_links.begin(); it != new_links.end(); ++it ) {
-			lnk_ref l(_owner, *it );
+		for (list<blk_ref>::const_iterator it = new_links.begin(); it != new_links.end(); ++it ) {
+			Link new_link(_owner);
+			new_link.SetLink( *it );
 			try {
-				links.push_back( l );
+				_data->push_back( new_link );
 			}
 			catch( exception & e ) {
 				cout << "Error:  " << e.what() << endl;
@@ -817,28 +562,33 @@ public:
 
 	blk_ref FindLink( string const & block_type ) const {
 		//Find the first link with the requested block type
-		for (LinkSetList::const_iterator it = links.begin(); it != links.end(); ++it ) {
-			if ( (*it)->GetBlockType() == block_type )
-				return blk_ref(*it);
+		for (vector<Link>::const_iterator it = _data->begin(); it != _data->end(); ++it ) {
+			if ( it->GetLink()->GetBlockType() == block_type )
+				return it->GetLink();
 		}
 
 		//No block was found, so return a null one
 		return blk_ref(-1);
 	}
 
-	void ClearLinks() { links.clear(); }
+	void ClearLinks() { _data->clear(); }
 
 	void RemoveLinks( blk_ref const & block ) {
 		//Remove all links that match this block
-		links.remove( lnk_ref( _owner, block ) );
+		for (vector<Link>::iterator it = _data->begin(); it != _data->end(); ++it ) {
+			if ( it->GetLink() == block ) {
+				_data->erase( it );
+				return;
+			}
+		}
 	}
 protected:
-	LinkSetList links;
+	vector<Link> * _data;
 };
-
+/*
 class TargetGroupAttr : public AAttr {
 public:
-	TargetGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
+	TargetGroupAttr( string const & name, IBlock * owner ) : AAttr( name, owner ) {
 		//cout << endl << "TargetGroupAttr()";
 	}
 	~TargetGroupAttr() {
@@ -984,7 +734,7 @@ private:
 
 class ModifierGroupAttr : public LinkGroupAttr {
 public:
-	ModifierGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkGroupAttr( name, owner, first_ver, last_ver ) {}
+	ModifierGroupAttr( string const & name, IBlock * owner ) : LinkGroupAttr( name, owner, first_ver, last_ver ) {}
 	~ModifierGroupAttr() {}
 
 	AttrType GetType() const { return attr_modifiergroup; }
@@ -1009,202 +759,32 @@ public:
 
 	}
 };
-
-class BBoxAttr : public AAttr {
+*/
+class BoundingBoxAttr : public AAttr {
 public:
-	BBoxAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
-		data.isUsed = false;
-		
-		data.unknownInt = 0;
-
-		data.translation.x = 0.0f;	data.translation.y = 0.0f;	data.translation.z = 0.0f;
-
-		data.rotation[0][0] = 1.0f;	data.rotation[0][1] = 0.0f;	data.rotation[0][2] = 0.0f;
-		data.rotation[1][0] = 0.0f;	data.rotation[1][1] = 1.0f;	data.rotation[1][2] = 0.0f;
-		data.rotation[2][0] = 0.0f;	data.rotation[2][1] = 0.0f;	data.rotation[2][2] = 1.0f;
-
-		data.radius.x = 0.0f;
-		data.radius.y = 0.0f;
-		data.radius.z = 0.0f;
-	}
-	~BBoxAttr() {}
+	BoundingBoxAttr( string const & name, IBlock * owner, BoundingBox * data ) : AAttr( name, owner ), _data(data) {}
+	~BoundingBoxAttr() {}
 	AttrType GetType() const { return attr_bbox; }
-	void ReadAttr( istream& in, unsigned int version ) { 
-		data.isUsed = ReadBool( in, version );
-		if ( data.isUsed ){
-			data.unknownInt = ReadUInt( in );
-			data.translation.x = ReadFloat( in );
-			data.translation.y = ReadFloat( in );
-			data.translation.z = ReadFloat( in );
-			for (int c = 0; c < 3; ++c) {
-				for (int r = 0; r < 3; ++r) {
-					data.rotation[r][c] = ReadFloat( in );
-				}
-			}
-			data.radius.x = ReadFloat( in );
-			data.radius.y = ReadFloat( in );
-			data.radius.z = ReadFloat( in );
-		}
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteBool( data.isUsed, out, version );
-		if ( data.isUsed ){
-			WriteUInt( data.unknownInt, out );
-			WriteFloat( data.translation.x, out );
-			WriteFloat( data.translation.y, out );
-			WriteFloat( data.translation.z, out );
-			for (int c = 0; c < 3; ++c) {
-				for (int r = 0; r < 3; ++r) {
-					WriteFloat(data.rotation[r][c], out );
-				}
-			}
-			WriteFloat( data.radius.x, out );
-			WriteFloat( data.radius.y, out );
-			WriteFloat( data.radius.z, out );
-		}
-	}
 	string asString() const {
 		stringstream out;
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		if ( data.isUsed ) {
-			out << endl
-				<< "   Position:  " << "(" << setw(5) << data.translation.x << ", " << setw(5) << data.translation.y << ", " << setw(5) << data.translation.z << " )" << endl
-				<< "   Rotation:"  << endl
-				<< "      |" << setw(5) << data.rotation[0][0] << ", " << setw(5) << data.rotation[0][1] << ", " << setw(5) << data.rotation[0][2] << " |" << endl
-				<< "      |" << setw(5) << data.rotation[1][0] << ", " << setw(5) << data.rotation[1][1] << ", " << setw(5) << data.rotation[1][2] << " |" << endl
-				<< "      |" << setw(5) << data.rotation[2][0] << ", " << setw(5) << data.rotation[2][1] << ", " << setw(5) << data.rotation[2][2] << " |" << endl
-				<< "   X Radius:  " << data.radius.x << endl
-				<< "   Y Radius:  " << data.radius.y << endl
-				<< "   Z Radius:  " << data.radius.z;
-		} 
-		else {
-			out << "None";
-		}
+		out << *_data;
 
 		return out.str();
 	}
-	BoundingBox asBoundingBox() const { return data; }
-	void Set(BoundingBox const & n ) { data = n; }
+	BoundingBox asBoundingBox() const { return *_data; }
+	void Set(BoundingBox const & n ) { *_data = n; }
 
 private:
-	BoundingBox data;
+	BoundingBox * _data;
 };
 
-class CIntAttr : public AAttr {
-public:
-	CIntAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
-		data.isUsed = false;
-		data.unknownInt = 0;
-	}
-	~CIntAttr() {}
-	AttrType GetType() const { return attr_condint; }
-	void ReadAttr( istream& in, unsigned int version ) {
-		data.isUsed = ReadBool( in, version );
-		if (data.isUsed) {
-			data.unknownInt = ReadUInt( in );
-		}
-	}
-	void WriteAttr( ostream& out, unsigned int version ) const {
-		WriteBool( data.isUsed, out, version );
-		if (data.isUsed) {
-			WriteUInt( data.unknownInt, out );
-		}
-	}
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		if (data.isUsed) {
-			out << data.unknownInt;
-		}
-		else {
-			out << "None";
-		}
-
-		return out.str();
-	}
-	ConditionalInt asConditionalInt() const { return data; }
-	void Set(ConditionalInt const & n ) {
-		data.isUsed = n.isUsed;
-		data.unknownInt = n.unknownInt;
-	}
-private:
-	ConditionalInt data;
-};
-
-class VertModeAttr : public IntAttr {
-public:
-	VertModeAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~VertModeAttr() {}
-	AttrType GetType() const { return attr_vertmode; }
-
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "Source Ingore";
-				break;
-			case 1:
-				out << "Source Emmisive";
-				break;
-			case 2:
-				out << "Source Amb Diff";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}
-};
-
-class LightModeAttr : public IntAttr {
-public:
-	LightModeAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~LightModeAttr() {}
-	AttrType GetType() const { return attr_lightmode; }
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "Emmisive";
-				break;
-			case 1:
-				out << "Emmisive Amb Diff";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}
-};
-
-
-
-    //int vertex     - vertex mode:
-    //                 0 - source ignore
-    //                 1 - source emmisive
-    //                 2 - source amb diff
-
-    //int light      - lighting mode:
-    //                 0 - lighting emmisive
-    //                 1 - lighting emmisive amb diff
-
+/*
 class ShaderAttr : public LinkAttr {
 public:
-	ShaderAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver), isUsed(false) {}
+	ShaderAttr( string const & name, IBlock * owner ) : LinkAttr(name, owner, first_ver, last_ver), isUsed(false) {}
 	~ShaderAttr() {}
 	AttrType GetType() const { return attr_shader; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1249,10 +829,11 @@ protected:
 	bool isUsed;
 	string _shader_name;
 };
+*/
 
-class TexSourceAttr : public LinkAttr {
+/*class TexSourceAttr : public LinkAttr {
 public:
-	TexSourceAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {
+	TexSourceAttr( string const & name, IBlock * owner ) : LinkAttr(name, owner ) {
 		data.unknownByte = 0;
 		data.useExternal = false;
 	}
@@ -1327,128 +908,11 @@ public:
 	}
 private:
 	TexSource data;
-};
+};*/
 
-class PixelLayoutAttr : public IntAttr {
+/*class ControllerTargetAttr : public AAttr {
 public:
-	PixelLayoutAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~PixelLayoutAttr() {}
-	AttrType GetType() const { return attr_pixellayout; }
-
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "Palettised";
-				break;
-			case 1:
-				out << "16-bit High Color";
-				break;
-			case 2:
-				out << "32-bit True Color";
-				break;
-			case 3:
-				out << "Compressed";
-				break;
-			case 4:
-				out << "Bump Map";
-				break;
-			case 5:
-				out << "Default";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}
-};
-
-//typedef enum {
-//   PALETTISED = 0,
-//   HIGH_COLOR_16 = 1,
-//   TRUE_COLOR_32 = 2,
-//   COMPRESSED = 3,
-//   BUMPMAP = 4,
-//   PIX_DEFAULT = 5
-//} SMB_PixelLayout;
-
-class MipMapFormatAttr : public IntAttr {
-public:
-	MipMapFormatAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~MipMapFormatAttr() {}
-	AttrType GetType() const { return attr_mipmapformat; }
-
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "No";
-				break;
-			case 1:
-				out << "Yes";
-				break;
-			case 2:
-				out << "Default";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}
-};
-
-//typedef enum {
-//   MIPMAP_NO = 0,
-//   MIPMAP_YES = 1,
-//   MIPMAP_MIP_DEFAULT = 2,
-//} SMB_MipMapFormat;
-
-class AlphaFormatAttr : public IntAttr {
-public:
-	AlphaFormatAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : IntAttr( name, owner, first_ver, last_ver ) {}
-	~AlphaFormatAttr() {}
-	AttrType GetType() const { return attr_alphaformat; }
-
-	string asString() const {
-		stringstream out;
-		out.setf(ios::fixed, ios::floatfield);
-		out << setprecision(1);
-
-		switch ( data ) {
-			case 0:
-				out << "None";
-				break;
-			case 1:
-				out << "Binary";
-				break;
-			case 2:
-				out << "Smooth";
-				break;
-			case 3:
-				out << "Default";
-				break;
-			default:
-				out << "!Invalid Value! - " << data;
-				break;
-		}
-
-		return out.str();
-	}
-};
-
-class ControllerTargetAttr : public AAttr {
-public:
-	ControllerTargetAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	ControllerTargetAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ControllerTargetAttr() {}
 	AttrType GetType() const { return attr_controllertarget; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1494,11 +958,11 @@ public:
 	blk_ref asLink() const { return FindTarget(); }
 	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
 
-};
+};*/
 
-class EmitterObjectAttr : public AAttr {
+/*class EmitterObjectAttr : public AAttr {
 public:
-	EmitterObjectAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	EmitterObjectAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~EmitterObjectAttr() {}
 	AttrType GetType() const { return attr_emitterobject; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1544,11 +1008,11 @@ public:
 	blk_ref asLink() const { return FindTarget(); }
 	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
 
-};
+};*/
 
-class SelfLinkAttr : public AAttr {
+/*class SelfLinkAttr : public AAttr {
 public:
-	SelfLinkAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	SelfLinkAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~SelfLinkAttr() {}
 	AttrType GetType() const { return attr_emitterobject; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1574,7 +1038,7 @@ public:
 
 class SkeletonRootAttr : public AAttr {
 public:
-	SkeletonRootAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	SkeletonRootAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~SkeletonRootAttr() {}
 	AttrType GetType() const { return attr_skeletonroot; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1604,7 +1068,6 @@ public:
 		}
 
 		//Arbitrarily start at the first bone in the list, and get it's ancestors
-		/*NEW CODE BEGIN*/
 		// We want to get the closest common ancestor between the _owner and the bones
 		// So start with a list of ancestors of the first bone (this is just a random choice)
 		blk_ref block = bones[0];
@@ -1678,7 +1141,7 @@ public:
 			//We didn't find the root this time, set block to par and try again
 			block = par;
 		}
-		OLD CODE END*/
+		//OLD CODE END
 	}
 	string asString() const {
 		stringstream out;
@@ -1700,7 +1163,7 @@ private:
 
 class ParentAttr : public AAttr {
 public:
-	ParentAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	ParentAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ParentAttr() {}
 	AttrType GetType() const { return attr_parent; }
 	void ReadAttr( istream& in, unsigned int version ) {
@@ -1724,7 +1187,7 @@ public:
 
 class ParticleGroupAttr : public AAttr {
 public:
-	ParticleGroupAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr(name, owner, first_ver, last_ver) {}
+	ParticleGroupAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~ParticleGroupAttr() {}
 	AttrType GetType() const { return attr_particlegroup; }
 
@@ -1797,7 +1260,7 @@ private:
 
 class LODInfoAttr : public LinkAttr {
 public:
-	LODInfoAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : LinkAttr(name, owner, first_ver, last_ver) {}
+	LODInfoAttr( string const & name, IBlock * owner ) : LinkAttr(name, owner, first_ver, last_ver) {}
 	~LODInfoAttr() {}
 	AttrType GetType() const { return attr_lodinfo; }
 
@@ -1859,7 +1322,7 @@ private:
 
 class Unk292BytesAttr : public AAttr {
 public:
-	Unk292BytesAttr( string const & name, IBlock * owner, unsigned int first_ver, unsigned int last_ver ) : AAttr( name, owner, first_ver, last_ver ) {
+	Unk292BytesAttr( string const & name, IBlock * owner ) : AAttr( name, owner ) {
 		for ( int i = 0; i < 256; ++i ) {
 			data[i] = 0;
 		}
@@ -1911,7 +1374,7 @@ public:
 	}
 protected:
 	byte data[256];
-};
+};*/
 
 
 #endif

@@ -74,7 +74,6 @@ struct blk_link;
 struct Texture;
 struct TextureSource;
 struct BoundingBox;
-struct ConditionalInt;
 struct SkinWeight;
 struct ControllerLink;
 struct TexDesc;
@@ -119,7 +118,6 @@ enum AttrType {
 	attr_linkgroup, /*!< Link Group Attribute.  Links to several other Nif blocks lower in the Nif tree. */ 
 	attr_bones, /*!< Bones Attribute.  Automatic. */ 
 	attr_bbox, /*!< Bounding Box Attribute.  Holds a BoundingBox structure. */ 
-	attr_condint, /*!< Conditional Integer Attribute.  Holds a ConditionalInt structure. */ 
 	attr_vertmode, /*!< Vertex Mode Attribute.  Holds an integer that corresponds to the vertex mode. */ 
 	attr_lightmode, /*!< Light Mode Attribute.  Holds an integer that corresponds to the light mode. */ 
 	attr_texture, /*!< Texture Attribute.  Holds a Texture structure but ignores the bump map information. */ 
@@ -1376,12 +1374,6 @@ struct BoundingBox {
 	Vector3 radius; /*!< A vector containing the radius of this box in the direction of each axis, X, Y, and Z. */
 };
 
-/*! Holds an integer that may or may not be used. */
-struct ConditionalInt {
-	bool isUsed; /*!< Determines whether the integer contained within this structure is used or not.  If this value is true, the integer is significant.  If false, it is ignored. */ 
-	int unknownInt; /*!< The integer value which may or may not be in use.  Its function is unknown. */ 
-};
-
 /*! Stores texture source data.  Specifies where to find the image data; in an external file, or within a NiPixelData block. */
 struct TexSource {
 	bool useExternal; /*!< Specifies whether to use an external file for the texture or not.  If true, an external file is used.  If false, the image data is stored within a NiPixelData block.  This block can be retrieved by using the asLink function on the same attribute. */ 
@@ -1662,9 +1654,6 @@ public:
 	 */
 	virtual string GetName() const = 0;
 
-	virtual void Read( istream& in, unsigned int version ) = 0;
-	virtual void Write( ostream& out, unsigned int version ) const = 0;
-
 	//--Getters--//
 
 	/*!
@@ -1733,12 +1722,6 @@ public:
 	 * \return A copy of the BoundingBox structure stored in this attribute.
 	 */
 	virtual BoundingBox asBoundingBox() const = 0;
-
-	/*!
-	 * Used to get a copy of the ConditionalInt structure stored in an attribute.  Raises an exception if the attribute does not store this type of value.
-	 * \return A copy of the ConditionalInt structure stored in this attribute.
-	 */
-	virtual ConditionalInt asConditionalInt() const = 0;
 
 	/*!
 	 * Used to retrieve a list of all the blocks linked through this attribute to its owner block.  Raises an exception if the attribute does not store this type of value.
@@ -1830,12 +1813,6 @@ public:
 	 * \param val This value will be copied into the attribute and stored.
 	 */
 	virtual void Set( BoundingBox const & val ) = 0;
-
-	/*!
-	 * Used to change the value stored in an attribute.  Raises an exception if the attribute does not store the type of value that the Set function is called on.
-	 * \param val This value will be copied into the attribute and stored.
-	 */
-	virtual void Set( ConditionalInt const & val ) = 0;
 
 	//--Link functions--//
 
@@ -3045,15 +3022,6 @@ public:
 		return *this;
 	}
 
-	/*! The assignment operators are shorthand for using the IAttr::Set function.  They allow you to set the value contained by the attribute pointed to by this reference by using the = operator instead of calling their Set function through the -> operator.
-	 * \param n The new value to set the IAttr attribute to using its Set function.
-	 * \return a reference to this attr_ref object.
-	 */
-	attr_ref & operator=(ConditionalInt const & n) {
-		_attr->Set(n);
-		return *this;
-	}
-
 	//--Conversion fuctions--//
 
 	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
@@ -3100,11 +3068,6 @@ public:
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
 	 */
 	operator BoundingBox() const;
-
-	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
-	 * \return the value stored in the attribute stored in this reference by calling its asType function.
-	 */
-	operator ConditionalInt() const;
 
 	/*! The type operators are shorthand for using the IAttr::AsType functions.  They allow you to retrieve the value contained by the attribute pointed to by this reference by using the = operator instead of calling their asType function through the -> operator.
 	 * \return the value stored in the attribute stored in this reference by calling its asType function.
@@ -3385,12 +3348,6 @@ public:
 			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
 		attr->Set(value);
 	}
-	void __setitem__(string index, ConditionalInt const & value) {
-		attr_ref attr = _block->GetAttr(index);
-		if ( attr.is_null() == true )
-			throw std::out_of_range("Tried to set an attribute via [] that does not exist in this block.");
-		attr->Set(value);
-	}
 protected:
 	int _index;
 	IBlock * _block;
@@ -3402,7 +3359,7 @@ struct TexDesc {
 	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),
 		PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101),
 		hasTextureTransform(false), translation(0.0, 0.0), tiling(0.0, 0.0),
-		w_rotation(0.0), transform_type(0), center_offset(0.0, 0.0) {}
+		wRotation(0.0), transformType(0), centerOffset(0.0, 0.0) {}
 	string asString() const;
 	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
 	blk_ref source; /*!< The NiTextureSource block which points to the texture data. > */
@@ -3415,9 +3372,9 @@ struct TexDesc {
 	bool hasTextureTransform; /*!< Determines whether or not the texture's coordinates are transformed. */ 
 	TexCoord translation; /*!< The amount to translate the texture coordinates in each direction?. */ 
 	TexCoord tiling; /*!< Number of times the texture is tiled in each direction? */ 
-	float w_rotation; /*!< Rotation of the texture image around the W axis? */ 
-	int transform_type; /*!< The texture transform type? Doesn't seem to do anything. */ 
-	TexCoord center_offset; /*!< The offset from the origin? */ 
+	float wRotation; /*!< Rotation of the texture image around the W axis? */ 
+	int transformType; /*!< The texture transform type? Doesn't seem to do anything. */ 
+	TexCoord centerOffset; /*!< The offset from the origin? */ 
 };
 
 //--USER GUIDE DOCUMENTATION--//
@@ -3554,7 +3511,6 @@ Float3<br>
 Matrix33<br>
 TexSource<br>
 BoundingBox<br>
-ConditionalInt<br>
 TexDesc<br>
 </td></tr></table>
 
@@ -3578,7 +3534,6 @@ There are several types of attributes, more than the list above, and each type s
 <tr><td>attr_bumpmap</td><td>TexDesc & blk_ref</td></tr>
 <tr><td>attr_byte</td><td>int</td></tr>
 <tr><td>attr_color3</td><td>Float3</td></tr>
-<tr><td>attr_condint</td><td>ConditionalInt</td></tr>
 <tr><td>attr_controllertarget</td><td>Automatic.</td></tr>
 <tr><td>attr_flags</td><td>int</td></tr>
 <tr><td>attr_float</td><td>float</td></tr>

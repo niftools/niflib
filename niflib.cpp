@@ -33,7 +33,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "niflib.h"
 #include "NIF_Blocks.h"
-#include "nif_attrs.h"
+//#include "nif_attrs.h"
 #include "kfm.h"
 #include <exception>
 #include <stdexcept>
@@ -880,7 +880,6 @@ void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version ) {
 attr_ref::operator blk_ref() const { return _attr->asLink(); }
 attr_ref::operator TexSource() const { return _attr->asTexSource(); }
 attr_ref::operator BoundingBox() const { return _attr->asBoundingBox(); }
-attr_ref::operator ConditionalInt() const { return _attr->asConditionalInt(); }
 
 string TexDesc::asString() const {
 	stringstream out;
@@ -946,9 +945,9 @@ string TexDesc::asString() const {
 			out << endl
 				<< "         Translation: " << translation.u << ", " << translation.v << endl
 				<< "         Tiling: " << tiling.u << ", " << tiling.v << endl
-				<< "         W-rotation: " << w_rotation << endl
-				<< "         Transform Type: " << transform_type << endl
-				<< "         Center Offset: " << center_offset.u << ", " << center_offset.v << endl;
+				<< "         W-rotation: " << wRotation << endl
+				<< "         Transform Type: " << transformType << endl
+				<< "         Center Offset: " << centerOffset.u << ", " << centerOffset.v << endl;
 		} else {
 			out << "None" << endl;
 		}

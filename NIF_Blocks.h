@@ -35,7 +35,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #define _NIF_BLOCKS_H
 
 /* INCLUDES */
-#include "niflib.h"
+#include "niflib_internal.h"
 #include "nif_math.h"
 #include "NIF_IO.h"
 
@@ -57,125 +57,6 @@ typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
 
 const int SkinInstInternal = -2;
 const int SkinDataInternal = -3;
-
-class ABlock : public IBlock {
-public:
-	ABlock();
-	~ABlock();
-	blk_ref Clone( unsigned int version = 0xFFFFFFFF );
-	void AddAttr( AttrType type, string const & name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
-	attr_ref GetAttr(string const & attr_name) const;
-	vector<attr_ref> GetAttrs() const;
-	int GetBlockNum() const { return _block_num; }
-	bool IsControllable() const { return false; }
-	bool IsController() const { return false; }
-	string asString() const;
-
-	//Links
-	blk_ref GetParent() const;
-	list<blk_ref> GetLinks() const;
-
-	//Reference Counting
-	void AddRef();
-	void SubtractRef();
-
-	//Interface
-	void * QueryInterface( int id ) {
-		/*if ( id == BlockInternal ) {
-			return (void*)static_cast<IBlockInternal*>(this);;
-		} else {*/
-			return NULL;
-		/*}*/
-	}
-
-	void const * QueryInterface( int id ) const {
-		/*if ( id == BlockInternal ) {
-			return (void const *)static_cast<IBlockInternal const *>(this);;
-		} else {*/
-			return NULL;
-		/*}*/
-	}
-
-	//--Internal Functions--//
-	void AddParent( IBlock * new_parent);
-	void RemoveParent( IBlock * match );
-	void SetBlockNum( int n ) { _block_num = n; }
-	virtual void FixLinks( const vector<blk_ref> & blocks );
-	void SetBlockTypeNum( int n ) { _block_type_num = n; }
-	int GetBlockTypeNum() { return _block_type_num; }
-
-	void AddChild( IBlock * new_child );
-	void RemoveChild( IBlock * old_child );
-
-	virtual void RemoveCrossLink( IBlock * block_to_remove );
-
-	void IncCrossRef( IBlock * block );
-	void DecCrossRef( IBlock * block );
-	virtual void ReassignCrossRefs( const map<string,blk_ref> & name_map ) {}
-
-	virtual void Read( istream& in, unsigned int version );
-	virtual void Write( ostream& out, unsigned int version ) const;
-protected:
-	map<string, attr_ref> _attr_map;
-	vector<attr_ref> _attr_vect;
-	int _block_num;
-	int _block_type_num;
-	unsigned int _ref_count;
-	vector<IBlock*> _parents;
-	list<IBlock*> _cross_refs;
-};
-
-//--Link Classes--//
-
-class Link {
-public:
-	//Constructors
-	Link () : _owner(NULL), index(-1) {}
-	Link ( IBlock * owner) : _owner(owner), index(-1) {}
-	//Destructor
-	~Link() { KillLink(); }
-	void SetIndex( const int new_index );
-	blk_ref GetLink() const { return link; }
-	void SetLink( const blk_ref & new_link );
-	void Fix( const vector<blk_ref> & blocks );
-	void SetOwner( IBlock * owner );
-private:
-	IBlock * _owner;
-	blk_ref link;
-	int index;
-	void InitLink();
-	void KillLink();
-};
-
-void NifStream( Link & val, istream& in, uint version = 0 );
-void NifStream( Link const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Link const & val );
-
-//--CrossRef Classes--//
-
-class CrossRef {
-public:
-	//Constructors
-	CrossRef () : _owner(NULL), ref(NULL), index(-1) {}
-	CrossRef ( IBlock * owner) : _owner(owner), ref(NULL), index(-1) {}
-	//Destructor
-	~CrossRef() { KillRef(); }
-	void SetIndex( const int new_index );
-	IBlock * GetCrossRef() const { return ref; }
-	void SetCrossRef( IBlock * new_ref );
-	void LostRef( IBlock * match );
-	void Fix( const vector<blk_ref> & blocks );
-	void SetOwner( IBlock * owner );
-private:
-	IBlock * _owner;
-	IBlock * ref;
-	int index;
-	void InitRef();
-	void KillRef();
-};
-void NifStream( CrossRef & val, istream& in, uint version  = 0);
-void NifStream( CrossRef const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, CrossRef const & val );
 
 class AControllable : public ABlock {
 public:
@@ -318,17 +199,17 @@ public:
 class AExtraData : public AData {
 public:
 	AExtraData() {
-		AddAttr( attr_string, "Name", VER_10_0_1_0 );
-		AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
+		//AddAttr( attr_string, "Name", VER_10_0_1_0 );
+		//AddAttr( attr_link, "Next Extra Data", 0, VER_4_2_2_0 );
 	}
 	~AExtraData() {};
 	void Read( istream& in, unsigned int version ) {
-		GetAttr("Name")->Read( in, version );
-		GetAttr("Next Extra Data")->Read( in, version );
+		//GetAttr("Name")->Read( in, version );
+		//GetAttr("Next Extra Data")->Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
-		GetAttr("Name")->Write( out, version );
-		GetAttr("Next Extra Data")->Write( out, version );
+		//GetAttr("Name")->Write( out, version );
+		//GetAttr("Next Extra Data")->Write( out, version );
 	}
 	string asString() const {
 		stringstream out;
@@ -616,7 +497,8 @@ public:
  */
 class NiTexturingProperty : public AProperty, public ITexturingProperty {
 public:
-	NiTexturingProperty( ) { AddAttr( attr_flags, "Flags", 0, VER_10_0_1_0 ); }
+	NiTexturingProperty( ) { //AddAttr( attr_flags, "Flags", 0, VER_10_0_1_0 ); 
+	}
 	void Init() {}
 	~NiTexturingProperty();
 	string GetBlockType() const { return "NiTexturingProperty"; }
@@ -692,8 +574,8 @@ public:
 	NiPixelData() {
 		data = NULL;
 		dataSize = 0;
-		AddAttr( attr_int, "Unknown Int" );
-		AddAttr( attr_link, "Palette" );
+		//AddAttr( attr_int, "Unknown Int" );
+		//AddAttr( attr_link, "Palette" );
 
 	}
 	~NiPixelData() { if (data != NULL) delete [] data; }
@@ -793,8 +675,8 @@ public:
 class AShapeData : public AData, public IShapeData {
 public:
 	AShapeData() {
-		AddAttr( attr_string, "Name", VER_10_2_0_0 );
-		AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
+		//AddAttr( attr_string, "Name", VER_10_2_0_0 );
+		//AddAttr( attr_link, "Unknown Link", VER_20_0_0_4 );
 	}
 	~AShapeData() {}
 	void Read( istream& in, unsigned int version );
@@ -872,9 +754,9 @@ protected:
 class NiMeshPSysData : public APSysData {
 public:
 	NiMeshPSysData() {
-		AddAttr( attr_link, "Modifier" );
-		AddAttr( attr_linkgroup, "Unknown Link Group", VER_10_2_0_0 );
-		AddAttr( attr_link, "Unknown Link 2", VER_10_2_0_0 );
+		//AddAttr( attr_link, "Modifier" );
+		//AddAttr( attr_linkgroup, "Unknown Link Group", VER_10_2_0_0 );
+		//AddAttr( attr_link, "Unknown Link 2", VER_10_2_0_0 );
 	}
 	~NiMeshPSysData() {}
 	void Read( istream& in, unsigned int version );
@@ -934,7 +816,7 @@ protected:
 class NiParticleMeshesData : public ARotatingParticlesData {
 public:
 	NiParticleMeshesData() {
-		AddAttr( attr_link, "Unknown Link 2" );
+		//AddAttr( attr_link, "Unknown Link 2" );
 	}
 	~NiParticleMeshesData() {}
 	void Read( istream& in, unsigned int version );
@@ -1023,7 +905,9 @@ private:
  */
 class NiBSplineBasisData : public AData {
 public:
-	NiBSplineBasisData() { AddAttr( attr_int, "Unknown Int" ); }
+	NiBSplineBasisData() { 
+		//AddAttr( attr_int, "Unknown Int" );
+	}
 	~NiBSplineBasisData() {}
 
 	string GetBlockType() const { return "NiBSplineBasisData"; }
@@ -1920,7 +1804,9 @@ private:
 
 class NiStringPalette : public AData {
 public:
-	NiStringPalette() { AddAttr( attr_string, "Palette" ); }
+	NiStringPalette() { 
+		//AddAttr( attr_string, "Palette" ); 
+	}
 	void Init() {}
 	~NiStringPalette() {}
 	void Read( istream& in, unsigned int version );
@@ -1945,10 +1831,10 @@ public:
 class NiSkinInstance : public AData, public ISkinInstInternal {
 public:
 	NiSkinInstance(){
-		AddAttr( attr_link, "Data" );
-		AddAttr( attr_link, "Skin Partition", VER_10_2_0_0 );
-		AddAttr( attr_skeletonroot, "Skeleton Root" );
-		AddAttr( attr_bones, "Bones" );
+		//AddAttr( attr_link, "Data" );
+		//AddAttr( attr_link, "Skin Partition", VER_10_2_0_0 );
+		//AddAttr( attr_skeletonroot, "Skeleton Root" );
+		//AddAttr( attr_bones, "Bones" );
 	}
 	~NiSkinInstance() {}
 	string GetBlockType() const { return "NiSkinInstance"; }
@@ -1996,7 +1882,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 	public:
 
 		NiSkinData() { 
-			AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
+			//AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
 			SetIdentity33(rotation);
 			translation[0] = 0.0f;
 			translation[1] = 0.0f;
@@ -2140,8 +2026,8 @@ private:
 class NiControllerSequence : public AData, public IControllerSequence {
 public:
 	NiControllerSequence() {
-		AddAttr( attr_string, "Name" );
-		AddAttr( attr_link, "String Palette", VER_10_2_0_0 );
+		//AddAttr( attr_string, "Name" );
+		//AddAttr( attr_link, "String Palette", VER_10_2_0_0 );
 	}
 	~NiControllerSequence();
 
@@ -2274,7 +2160,7 @@ private:
 class NiStringExtraData : public AExtraData {
 public:
 	NiStringExtraData() {
-		AddAttr( attr_string, "String Data" );
+		//AddAttr( attr_string, "String Data" );
 	}
 	~NiStringExtraData() {}
 
@@ -2287,18 +2173,18 @@ public:
 class NiBooleanExtraData : public AExtraData {
 public:
 	NiBooleanExtraData() {
-		AddAttr( attr_byte, "Boolean Data" );
+		//AddAttr( attr_byte, "Boolean Data" );
 	}
 	~NiBooleanExtraData() {}
 	string GetBlockType() const { return "NiBooleanExtraData"; };
 
 	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
-		GetAttr("Boolean Data")->Read( in, version );
+		//GetAttr("Boolean Data")->Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
-		GetAttr("Boolean Data")->Write( out, version );
+		//GetAttr("Boolean Data")->Write( out, version );
 	}
 
 	string asString() const {
@@ -2357,20 +2243,20 @@ private:
 class NiVectorExtraData : public AExtraData {
 public:
 	NiVectorExtraData() {
-		AddAttr( attr_vector3, "Vector Data" );
-		AddAttr( attr_float, "Unknown Float" );
+		//AddAttr( attr_vector3, "Vector Data" );
+		//AddAttr( attr_float, "Unknown Float" );
 	}
 	~NiVectorExtraData() {}
 	string GetBlockType() const { return "NiVectorExtraData"; };
 
 	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
-		GetAttr("Vector Data")->Read( in, version );
-		GetAttr("Unknown Float")->Read( in, version );
+		//GetAttr("Vector Data")->Read( in, version );
+		//GetAttr("Unknown Float")->Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
-		GetAttr("Vector Data")->Write( out, version );
-		GetAttr("Unknown Float")->Write( out, version );
+		//GetAttr("Vector Data")->Write( out, version );
+		//GetAttr("Unknown Float")->Write( out, version );
 	}
 
 	string asString() const {
@@ -2419,18 +2305,18 @@ private:
 class NiFloatExtraData : public AExtraData {
 public:
 	NiFloatExtraData() {
-		AddAttr( attr_float, "Float Data" );
+		//AddAttr( attr_float, "Float Data" );
 	}
 	~NiFloatExtraData() {}
 	string GetBlockType() const { return "NiFloatExtraData"; };
 
 	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
-		GetAttr("Float Data")->Read( in, version );
+		//GetAttr("Float Data")->Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
-		GetAttr("Float Data")->Write( out, version );
+		//GetAttr("Float Data")->Write( out, version );
 	}
 
 	string asString() const {
@@ -2521,7 +2407,7 @@ private:
 class NiIntegerExtraData : public AExtraData {
 public:
 	NiIntegerExtraData() {
-		AddAttr( attr_int, "Integer Data" );
+		//AddAttr( attr_int, "Integer Data" );
 	}
 	~NiIntegerExtraData() {}
 
@@ -2529,11 +2415,11 @@ public:
 
 	void Read( istream& in, unsigned int version ) {
 		AExtraData::Read( in, version );
-		GetAttr("Integer Data")->Read( in, version );
+		//GetAttr("Integer Data")->Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
 		AExtraData::Write( out, version );
-		GetAttr("Integer Data")->Write( out, version );
+		//GetAttr("Integer Data")->Write( out, version );
 	}
 
 	string asString() const {
@@ -2551,7 +2437,7 @@ public:
 class NiMorphData : public AData, public IMorphData {
 public:
 	NiMorphData() {
-		AddAttr( attr_byte, "Unknown Byte" );
+		//AddAttr( attr_byte, "Unknown Byte" );
 	}
 	~NiMorphData() {}
 
@@ -2656,7 +2542,7 @@ public:
 class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
 public:
 	NiTextKeyExtraData() {
-		AddAttr( attr_int, "Unknown Int", 0, VER_4_2_2_0 );
+		//AddAttr( attr_int, "Unknown Int", 0, VER_4_2_2_0 );
 	}
 	~NiTextKeyExtraData() {}
 
