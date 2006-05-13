@@ -102,7 +102,7 @@ NiObjectRef FindRoot( vector<blk_ref> const & blocks ) {
 	//Find the first NiObjectNET derived object
 	NiObjectNETRef root;
 	for (uint i = 0; i < blocks.size(); ++i) {
-		root = DynamicCast<NiObjectNETRef>(blocks[i]);
+		root = DynamicCast<NiObjectNET>(blocks[i]);
 		if ( root != NULL ) {
 			break;
 		}
@@ -117,7 +117,7 @@ NiObjectRef FindRoot( vector<blk_ref> const & blocks ) {
 		root = root->GetParent();
 	}
 
-	return StaticCast<NiObjectRef>(root);
+	return StaticCast<NiObject>(root);
 }
 
 unsigned int CheckNifHeader( string const & file_name ) {
@@ -529,67 +529,62 @@ void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk
 //	
 //}
 
-void BuildUpBindPositions( blk_ref const & block ) {
-
-	//Return if this is not a NiAVObject derived object
-	NiAVObjectRef av = DynamicCast<NiAVObjectRef>(block);
-	if (av == NULL)
-		return;
+void BuildUpBindPositions( const NiAVObjectRef av ) {
 
 	//Get parent if there is one
-	blk_ref par = block->GetParent();
-	if (par.is_null() == false) {
-		INode * par_node = (INode*)par->QueryInterface(ID_NODE);
-		if (par_node != NULL) {
-			//There is a node parent
-			//Post-multipy the block's bind matrix with the parent's bind matrix
-			Matrix44 par_mat = par_node->GetWorldBindPos();
-			Matrix44 blk_mat = av->GetWorldBindPos();
-			Matrix44 result = blk_mat * par_mat;
+	NiAVObjectRef par = DynamicCast<NiAVObject>(av->GetParent());
+	if ( par != NULL ) {
+		//There is an AV Object parent
 
-			//Store result back to block bind position
-			av->SetWorldBindPos( result );
-		}
+		//Post-multipy the block's bind matrix with the parent's bind matrix
+		Matrix44 result = av->GetWorldBindPos() * par->GetWorldBindPos();
+
+		//Store result back to block bind position
+		av->SetWorldBindPos( result );
 	}
 
-	//Call this function for all child nodes if any
-	attr_ref child_attr = block["Children"];
-	if ( child_attr.is_null() == false ) {
-		list<blk_ref> children = child_attr->asLinkList();
-		list<blk_ref>::iterator it;
-		for (it = children.begin(); it != children.end(); ++it) {
-			BuildUpBindPositions( *it );
-		}
-	}
+	////Call this function for all child nodes if any
+	//attr_ref child_attr = block["Children"];
+	//if ( child_attr.is_null() == false ) {
+	//	list<blk_ref> children = child_attr->asLinkList();
+	//	list<blk_ref>::iterator it;
+	//	for (it = children.begin(); it != children.end(); ++it) {
+	//		BuildUpBindPositions( *it );
+	//	}
+	//}
 }
 
-// Searches for the first block in the hierarchy of type block_name.
-blk_ref SearchNifTree( blk_ref const & root_block, string const & block_name ) {
-	if ( root_block->GetBlockType() == block_name ) return root_block;
-	list<blk_ref> links = root_block->GetLinks();
-	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
-		// if the link is not null, and if the child's first parent is root_block
-		// (this makes sure we only check every child once, even if it is shared by multiple parents),
-		// then look for a match in the tree starting from the child.
-		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
-			blk_ref result = SearchNifTree( *it, block_name );
-			if ( result.is_null() == false ) return result;
-		};
-	};
-	return blk_ref(); // return null block
+// Searches for the first object in the hierarchy of type block_type.
+NiObjectRef SearchNifTree( const NiObjectRef & root_block, const Type & block_type ) {
+	if ( root_block->IsSameType( block_type ) ) {
+		return root_block;
+	}
+	//list<blk_ref> links = root_block->GetLinks();
+	//for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+	//	// if the link is not null, and if the child's first parent is root_block
+	//	// (this makes sure we only check every child once, even if it is shared by multiple parents),
+	//	// then look for a match in the tree starting from the child.
+	//	if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
+	//		blk_ref result = SearchNifTree( *it, block_type );
+	//		if ( result.is_null() == false ) return result;
+	//	};
+	//};
+	return NULL; // return null reference
 };
 
 // Returns all blocks in the tree of type block_name.
-list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) {
+list<blk_ref> SearchAllNifTree( blk_ref const & root_block, Type & block_type ) {
 	list<blk_ref> result;
-	if ( root_block->GetBlockType() == block_name ) result.push_back( root_block );
-	list<blk_ref> links = root_block->GetLinks();
+	if ( root_block->IsSameType(block_type) ) {
+		//result.push_back( root_block );
+	}
+	/*list<blk_ref> links = root_block->GetLinks();
 	for (list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
 		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
-			list<blk_ref> childresult = SearchAllNifTree( *it, block_name );
+			list<blk_ref> childresult = SearchAllNifTree( *it, block_type );
 			result.merge( childresult );
 		};
-	};
+	};*/
 	return result;
 };
 
@@ -614,87 +609,87 @@ list<blk_ref> SearchAllNifTree( blk_ref const & root_block, string block_name ) 
  * \param kfm The KFM structure (if required by style).
  * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
  */
-void SplitNifTree( blk_ref const & root_block, blk_ref & xnif_root, blk_ref & xkf_root, Kfm & kfm, int kf_type ) {
-	// Do we have animation groups (a NiTextKeyExtraData block)?
-	// If so, create XNif and XKf trees.
-	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
-	if ( txtkey_block.is_null() == false ) {
-		if ( kf_type == KF_MW ) {
-			// Construct the XNif file...
-			// We are lazy. (TODO: clone & remove keyframe controllers & keyframe data)
-			xnif_root = root_block;
-			
-			// Now the XKf file...
-			// Create xkf root header.
-			xkf_root = CreateBlock("NiSequenceStreamHelper");
-			
-			// Add a copy of the NiTextKeyExtraData block to the XKf header.
-			blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
-			xkf_root["Extra Data"] = xkf_txtkey_block;
-			
-			ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
-			ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
-			ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
-			
-			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
-			list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
-			for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ) {
-				if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
-					it = nodes.erase( it );
-				else
-					it++;
-			};
-			
-			blk_ref last_block = xkf_txtkey_block;
-			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-				blk_ref nodextra = CreateBlock("NiStringExtraData");
-				nodextra["String Data"] = (*it)["Name"]->asString();
-				last_block["Next Extra Data"] = nodextra;
-				last_block = nodextra;
-			};
-			
-			// Add controllers & controller data.
-			last_block = xkf_root;
-			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-				blk_ref controller = (*it)->GetAttr("Controller")->asLink();
-				blk_ref xkf_controller = CreateBlock("NiKeyframeController");
-				xkf_controller["Flags"] = controller["Flags"]->asInt();
-				xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
-				xkf_controller["Phase"] = controller["Phase"]->asFloat();
-				xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
-				xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
-				
-				blk_ref xkf_data = CreateBlock("NiKeyframeData");
-				xkf_controller["Data"] = xkf_data;
-				IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
-				IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
-				ixkfdata->SetRotateType(ikfdata->GetRotateType());
-				ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
-				ixkfdata->SetScaleType(ikfdata->GetScaleType());
-				ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
-				ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
-				ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
-	
-				if ( last_block == xkf_root ) {
-					if ( ! last_block["Controller"]->asLink().is_null() )
-						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-					last_block["Controller"] = xkf_controller;
-				} else {
-					if ( ! last_block["Next Controller"]->asLink().is_null() )
-						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-					last_block["Next Controller"] = xkf_controller;
-				};
-				last_block = xkf_controller;
-				// note: targets are automatically calculated, we don't need to reset them
-			};
-		} else // TODO other games
-			throw runtime_error("Not yet implemented.");
-	} else {
-		// no animation groups: nothing to do
-		xnif_root = blk_ref();
-		xkf_root = blk_ref();
-	};
-}
+//void SplitNifTree( blk_ref const & root_block, blk_ref & xnif_root, blk_ref & xkf_root, Kfm & kfm, int kf_type ) {
+//	// Do we have animation groups (a NiTextKeyExtraData block)?
+//	// If so, create XNif and XKf trees.
+//	blk_ref txtkey_block = SearchNifTree( root_block, "NiTextKeyExtraData" );
+//	if ( txtkey_block.is_null() == false ) {
+//		if ( kf_type == KF_MW ) {
+//			// Construct the XNif file...
+//			// We are lazy. (TODO: clone & remove keyframe controllers & keyframe data)
+//			xnif_root = root_block;
+//			
+//			// Now the XKf file...
+//			// Create xkf root header.
+//			xkf_root = CreateBlock("NiSequenceStreamHelper");
+//			
+//			// Add a copy of the NiTextKeyExtraData block to the XKf header.
+//			blk_ref xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
+//			xkf_root["Extra Data"] = xkf_txtkey_block;
+//			
+//			ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
+//			ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
+//			ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());
+//			
+//			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
+//			list<blk_ref> nodes = SearchAllNifTree( root_block, "NiNode" );
+//			for ( list<blk_ref>::iterator it = nodes.begin(); it != nodes.end(); ) {
+//				if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
+//					it = nodes.erase( it );
+//				else
+//					it++;
+//			};
+//			
+//			blk_ref last_block = xkf_txtkey_block;
+//			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+//				blk_ref nodextra = CreateBlock("NiStringExtraData");
+//				nodextra["String Data"] = (*it)["Name"]->asString();
+//				last_block["Next Extra Data"] = nodextra;
+//				last_block = nodextra;
+//			};
+//			
+//			// Add controllers & controller data.
+//			last_block = xkf_root;
+//			for ( list<blk_ref>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
+//				blk_ref controller = (*it)->GetAttr("Controller")->asLink();
+//				blk_ref xkf_controller = CreateBlock("NiKeyframeController");
+//				xkf_controller["Flags"] = controller["Flags"]->asInt();
+//				xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
+//				xkf_controller["Phase"] = controller["Phase"]->asFloat();
+//				xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
+//				xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
+//				
+//				blk_ref xkf_data = CreateBlock("NiKeyframeData");
+//				xkf_controller["Data"] = xkf_data;
+//				IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
+//				IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
+//				ixkfdata->SetRotateType(ikfdata->GetRotateType());
+//				ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
+//				ixkfdata->SetScaleType(ikfdata->GetScaleType());
+//				ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
+//				ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
+//				ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
+//	
+//				if ( last_block == xkf_root ) {
+//					if ( ! last_block["Controller"]->asLink().is_null() )
+//						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+//					last_block["Controller"] = xkf_controller;
+//				} else {
+//					if ( ! last_block["Next Controller"]->asLink().is_null() )
+//						throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
+//					last_block["Next Controller"] = xkf_controller;
+//				};
+//				last_block = xkf_controller;
+//				// note: targets are automatically calculated, we don't need to reset them
+//			};
+//		} else // TODO other games
+//			throw runtime_error("Not yet implemented.");
+//	} else {
+//		// no animation groups: nothing to do
+//		xnif_root = blk_ref();
+//		xkf_root = blk_ref();
+//	};
+//}
 
 /*!
  * Helper function to split an animation tree into multiple animation trees (one per animation group) and a kfm block.
@@ -706,33 +701,33 @@ void SplitKfTree( blk_ref const & root_block, vector<blk_ref> & kf ) {
 };
 
 void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version, unsigned int export_files, unsigned int kf_type ) {
-	// Get base filename.
-	uint file_name_slash = uint(file_name.rfind("\\") + 1);
-	string file_name_path = file_name.substr(0, file_name_slash);
-	string file_name_base = file_name.substr(file_name_slash, file_name.length());
-	uint file_name_dot = uint(file_name_base.rfind("."));
-	file_name_base = file_name_base.substr(0, file_name_dot);
-	
-	// Deal with the simple case first
-	if ( export_files == EXPORT_NIF )
-		WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
-	// Now consider all other cases
-	else if ( kf_type == KF_MW ) {
-		if ( export_files == EXPORT_NIF_KF ) {
-			// for Morrowind we must also write the full NIF file
-			WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
-			blk_ref xnif_root;
-			blk_ref xkf_root;
-			Kfm kfm; // dummy
-			SplitNifTree( root_block, xnif_root, xkf_root, kfm, KF_MW );
-			if ( ! xnif_root.is_null() ) {
-				WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version );
-				WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version );
-			};
-		} else
-			throw runtime_error("Invalid export option.");
-	} else
-		throw runtime_error("Not yet implemented.");
+	//// Get base filename.
+	//uint file_name_slash = uint(file_name.rfind("\\") + 1);
+	//string file_name_path = file_name.substr(0, file_name_slash);
+	//string file_name_base = file_name.substr(file_name_slash, file_name.length());
+	//uint file_name_dot = uint(file_name_base.rfind("."));
+	//file_name_base = file_name_base.substr(0, file_name_dot);
+	//
+	//// Deal with the simple case first
+	//if ( export_files == EXPORT_NIF )
+	//	WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
+	//// Now consider all other cases
+	//else if ( kf_type == KF_MW ) {
+	//	if ( export_files == EXPORT_NIF_KF ) {
+	//		// for Morrowind we must also write the full NIF file
+	//		WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
+	//		blk_ref xnif_root;
+	//		blk_ref xkf_root;
+	//		Kfm kfm; // dummy
+	//		SplitNifTree( root_block, xnif_root, xkf_root, kfm, KF_MW );
+	//		if ( ! xnif_root.is_null() ) {
+	//			WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version );
+	//			WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version );
+	//		};
+	//	} else
+	//		throw runtime_error("Invalid export option.");
+	//} else
+	//	throw runtime_error("Not yet implemented.");
 };
 
 
@@ -742,42 +737,42 @@ unsigned int BlocksInMemory() {
 }
 
 void MapParentNodeNames( map<string,blk_ref> & name_map, blk_ref par ) {
-	//Check if this block is a scene graph node
-	if ( par->QueryInterface( ID_NODE ) == false ) {
-		throw runtime_error( "Only trees that have a node as the root can be merged." );
-	}
+	////Check if this block is a scene graph node
+	//if ( par->QueryInterface( ID_NODE ) == false ) {
+	//	throw runtime_error( "Only trees that have a node as the root can be merged." );
+	//}
 
-	//Check if this is a parent node
-	attr_ref children = par->GetAttr("Children");
-	if ( children.is_null() == true ) {
-		//We are only interested in parent nodes
-		return;
-	}
+	////Check if this is a parent node
+	//attr_ref children = par->GetAttr("Children");
+	//if ( children.is_null() == true ) {
+	//	//We are only interested in parent nodes
+	//	return;
+	//}
 
-	//Add the par node to the map, and then call this function for each of its children
-	name_map[par->GetAttr("Name")->asString()] = par;
+	////Add the par node to the map, and then call this function for each of its children
+	//name_map[par->GetAttr("Name")->asString()] = par;
 
-	list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
-	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
-		if ( it->is_null() == false ) {
-			MapParentNodeNames( name_map, *it );
-		};
-	};
+	//list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
+	//for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+	//	if ( it->is_null() == false ) {
+	//		MapParentNodeNames( name_map, *it );
+	//	};
+	//};
 }
 
 void ReassignTreeCrossRefs( map<string,blk_ref> & name_map, blk_ref par ) {
-	//Reassign any cross references on this block
-	((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
+	////Reassign any cross references on this block
+	//((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
 
-	list<blk_ref> links = par->GetLinks();
-	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
-		// if the link is not null, and if the child's first parent is root_block
-		// (this makes sure we only check every child once, even if it is shared by multiple parents),
-		// then look for a match in the tree starting from the child.
-		if ( it->is_null() == false && (*it)->GetParent() == par ) {
-			ReassignTreeCrossRefs( name_map, *it );
-		};
-	};
+	//list<blk_ref> links = par->GetLinks();
+	//for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+	//	// if the link is not null, and if the child's first parent is root_block
+	//	// (this makes sure we only check every child once, even if it is shared by multiple parents),
+	//	// then look for a match in the tree starting from the child.
+	//	if ( it->is_null() == false && (*it)->GetParent() == par ) {
+	//		ReassignTreeCrossRefs( name_map, *it );
+	//	};
+	//};
 	
 }
 
@@ -785,297 +780,82 @@ void ReassignTreeCrossRefs( map<string,blk_ref> & name_map, blk_ref par ) {
 //on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
 //existing nodes by changing their data or attatched properties
 void MergeSceneGraph( map<string,blk_ref> & name_map, const blk_ref & root, blk_ref par ) {
-	//Check if this block is a scene graph node
-	if ( par->QueryInterface( ID_NODE ) == false ) {
-		throw runtime_error( "Only trees that have a node as the root can be merged." );
-	}
-	
-	//Check if this block's name exists in the block map
-	string name = par->GetAttr("Name")->asString();
+	////Check if this block is a scene graph node
+	//if ( par->QueryInterface( ID_NODE ) == false ) {
+	//	throw runtime_error( "Only trees that have a node as the root can be merged." );
+	//}
+	//
+	////Check if this block's name exists in the block map
+	//string name = par->GetAttr("Name")->asString();
 
-	if ( name_map.find(name) != name_map.end() ) {
-		//This block already exists in the original file, so continue on to its children
+	//if ( name_map.find(name) != name_map.end() ) {
+	//	//This block already exists in the original file, so continue on to its children
 
-		list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
-		for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
-			if ( it->is_null() == false ) {
-				MergeSceneGraph( name_map, root, *it );
-			};
-		};
-		return;
-	}
+	//	list<blk_ref> links = par->GetAttr("Children")->asLinkList();;
+	//	for (list <blk_ref>::iterator it = links.begin(); it != links.end(); ++it) {
+	//		if ( it->is_null() == false ) {
+	//			MergeSceneGraph( name_map, root, *it );
+	//		};
+	//	};
+	//	return;
+	//}
 
-	//This block has a new name and either it has no parent or its parent has a name that is
-	// in the list.  Attatch it to the block with the same name as its parent
-	//all child blocks will follow along.
-	blk_ref par_par = par->GetParent();
+	////This block has a new name and either it has no parent or its parent has a name that is
+	//// in the list.  Attatch it to the block with the same name as its parent
+	////all child blocks will follow along.
+	//blk_ref par_par = par->GetParent();
 
-	if ( par_par.is_null() == true ) {
-		//This block has a new name and no parents.  That means it is the root block
-		//of a disimilar Nif file.
-		attr_ref par_children = par->GetAttr("Children");
-		
-		//Get the current root child list
-		attr_ref root_children = root->GetAttr("Children");
-			
-		if ( par_children.is_null() == true ) {
-			//This is not a ParentNode class, so simply add it as a new child of the
-			//target root node
-			root_children->AddLink( par );
-			cout << "Added link to " << par << " in " << root << " block.";
-		} else {
-			//This is a ParentNode class, so merge its child list with that of the root
-			root_children->AddLinks( par_children->asLinkList() );
-		}
-	} else {
-		//This block has a new name and has a parent with a name that already exists.
-		//Attatch it to the block in the target tree that matches the name of its
-		//parent
+	//if ( par_par.is_null() == true ) {
+	//	//This block has a new name and no parents.  That means it is the root block
+	//	//of a disimilar Nif file.
+	//	attr_ref par_children = par->GetAttr("Children");
+	//	
+	//	//Get the current root child list
+	//	attr_ref root_children = root->GetAttr("Children");
+	//		
+	//	if ( par_children.is_null() == true ) {
+	//		//This is not a ParentNode class, so simply add it as a new child of the
+	//		//target root node
+	//		root_children->AddLink( par );
+	//		cout << "Added link to " << par << " in " << root << " block.";
+	//	} else {
+	//		//This is a ParentNode class, so merge its child list with that of the root
+	//		root_children->AddLinks( par_children->asLinkList() );
+	//	}
+	//} else {
+	//	//This block has a new name and has a parent with a name that already exists.
+	//	//Attatch it to the block in the target tree that matches the name of its
+	//	//parent
 
-		//Remove this block from its old parent
-		par_par->GetAttr("Children")->RemoveLinks( par );
+	//	//Remove this block from its old parent
+	//	par_par->GetAttr("Children")->RemoveLinks( par );
 
-		//Get the block to attatch to
-		blk_ref attatch = name_map[par_par->GetAttr("Name")->asString()];
+	//	//Get the block to attatch to
+	//	blk_ref attatch = name_map[par_par->GetAttr("Name")->asString()];
 
-		//Add this block as new child
-		attatch->GetAttr("Children")->AddLink( par );
-		//cout << "Added link to " << par << " in " << attatch << " block.";
-	}
+	//	//Add this block as new child
+	//	attatch->GetAttr("Children")->AddLink( par );
+	//	//cout << "Added link to " << par << " in " << attatch << " block.";
+	//}
 }
 
 void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version ) {
-	//For now assume that both are normal Nif trees just to verify that it works
+	////For now assume that both are normal Nif trees just to verify that it works
 
-	//Make a clone of the tree to add
-	stringstream tmp;
-	//WriteNifTree( tmp, right, version );
-	tmp.seekg( 0, ios_base::beg );
-	blk_ref new_tree = right;// ReadNifTree( tmp ); TODO: Figure out why this doesn't work
+	////Make a clone of the tree to add
+	//stringstream tmp;
+	////WriteNifTree( tmp, right, version );
+	//tmp.seekg( 0, ios_base::beg );
+	//blk_ref new_tree = right;// ReadNifTree( tmp ); TODO: Figure out why this doesn't work
 
-	//Create a list of names in the target
-	map<string,blk_ref> name_map;
-	MapParentNodeNames( name_map, target );
+	////Create a list of names in the target
+	//map<string,blk_ref> name_map;
+	//MapParentNodeNames( name_map, target );
 
-	//Reassign any cross references in the new tree to point to blocks in the
-	//target tree with the same names
-	ReassignTreeCrossRefs( name_map, new_tree );
+	////Reassign any cross references in the new tree to point to blocks in the
+	////target tree with the same names
+	//ReassignTreeCrossRefs( name_map, new_tree );
 
-	//Use the name map to merge the Scene Graphs
-	MergeSceneGraph( name_map, target, new_tree );
-}
-
-
-
-//--Attribute Reference Functions--//
-
-attr_ref::operator blk_ref() const { return _attr->asLink(); }
-attr_ref::operator TexSource() const { return _attr->asTexSource(); }
-attr_ref::operator BoundingBox() const { return _attr->asBoundingBox(); }
-
-string TexDesc::asString() const {
-	stringstream out;
-	out.setf(ios::fixed, ios::floatfield);
-	out << setprecision(1);
-
-	if ( isUsed ) {
-		out << "      Source:  " << source << endl
-			<< "      Clamp Mode:  ";
-		switch ( clampMode ) {
-			case CLAMP_S_CLAMP_T:
-				out << "Clamp S Clamp T";
-				break;
-			case CLAMP_S_WRAP_T:
-				out << "Clamp S Wrap T";
-				break;
-			case WRAP_S_CLAMP_T:
-				out << "Wrap S Clamp T";
-				break;
-			case WRAP_S_WRAP_T:
-				out << "Wrap S Wrap T";
-				break;
-			default:
-				out << "!Invalid Value! - " << clampMode;
-			break;
-		}
-		out << endl
-			<< "      Filter Mode:  ";
-		switch ( filterMode ) {
-			case FILTER_NEAREST:
-				out << "Nearest";
-				break;
-			case FILTER_BILERP:
-				out << "Biliner";
-				break;
-			case FILTER_TRILERP:
-				out << "Trilinear";
-				break;
-			case FILTER_NEAREST_MIPNEAREST:
-				out << "Nearest, Mip Nearest";
-				break;
-			case FILTER_NEAREST_MIPLERP:
-				out << "Nearest, Mip Linear";
-				break;
-			case FILTER_BILERP_MIPNEAREST:
-				out << "Bilinear, Mip Nearest";
-				break;
-			default:
-					out << "!Invalid Value! - " << clampMode;
-			break;
-		}
-		
-		out << endl
-			<< "      Texture Set:  " << textureSet << endl
-			<< "      PS2 L Setting:  " << PS2_L << endl
-			<< "      PS2 K Setting:  " << PS2_K << endl
-			<< "      Unknown Short:  " << unknownShort << endl
-			<< "      Texture Transform:   ";
-
-
-		//From version 10.1.0.0 and up, this unknown data block may exist
-		if ( hasTextureTransform == true ) {
-			out << endl
-				<< "         Translation: " << translation.u << ", " << translation.v << endl
-				<< "         Tiling: " << tiling.u << ", " << tiling.v << endl
-				<< "         W-rotation: " << wRotation << endl
-				<< "         Transform Type: " << transformType << endl
-				<< "         Center Offset: " << centerOffset.u << ", " << centerOffset.v << endl;
-		} else {
-			out << "None" << endl;
-		}
-	} else {
-		out << "      Not Being Used" << endl;
-	}
-
-	return out.str();
-}
-
-//--Query Functions--//
-
-IShapeData * QueryShapeData( blk_ref & block ) {
-	return (IShapeData*)block->QueryInterface( ID_SHAPE_DATA );
-}
-
-IShapeData const * QueryShapeData( blk_ref const & block ) {
-	return (IShapeData const *)block->QueryInterface( ID_SHAPE_DATA );
-}
-
-ITriShapeData * QueryTriShapeData( blk_ref & block ) {
-	return (ITriShapeData*)block->QueryInterface( ID_TRI_SHAPE_DATA );
-}
-
-ITriShapeData const * QueryTriShapeData( blk_ref const & block ) {
-	return (ITriShapeData const *)block->QueryInterface( ID_TRI_SHAPE_DATA );
-}
-
-ISkinData * QuerySkinData( blk_ref & block ) {
-	return (ISkinData*)block->QueryInterface( ID_SKIN_DATA );
-}
-
-ISkinData const * QuerySkinData( blk_ref const & block ) {
-	return (ISkinData const *)block->QueryInterface( ID_SKIN_DATA );
-}
-
-IPixelData * QueryPixelData( blk_ref & block ) {
-	return (IPixelData*)block->QueryInterface( ID_PIXEL_DATA );
-}
-
-IPixelData const * QueryPixelData( blk_ref const & block ) {
-	return (IPixelData const *)block->QueryInterface( ID_PIXEL_DATA );
-}
-
-IPalette * QueryPalette( blk_ref & block ) {
-	return (IPalette*)block->QueryInterface( ID_PALETTE );
-}
-
-IPalette const * QueryPalette( blk_ref const & block ) {
-	return (IPalette const *)block->QueryInterface( ID_PALETTE );
-}
-
-INode * QueryNode( blk_ref & block ) {
-	return (INode*)block->QueryInterface( ID_NODE );
-}
-
-INode const * QueryNode( blk_ref const & block ) {
-	return (INode const *)block->QueryInterface( ID_NODE );
-}
-
-ITexturingProperty * QueryTexturingProperty( blk_ref & block ) {
-	return (ITexturingProperty*)block->QueryInterface( ID_TEXTURING_PROPERTY );
-}
-
-ITexturingProperty const * QueryTexturingProperty( blk_ref const & block ) {
-	return (ITexturingProperty const *)block->QueryInterface( ID_TEXTURING_PROPERTY );
-}
-
-IControllerSequence * QueryControllerSequence( blk_ref & block ) {
-	return (IControllerSequence*)block->QueryInterface( ID_CONTROLLER_SEQUENCE );
-}
-
-IControllerSequence const * QueryControllerSequence( blk_ref const & block ) {
-	return (IControllerSequence const *)block->QueryInterface( ID_CONTROLLER_SEQUENCE );
-}
-
-IKeyframeData * QueryKeyframeData( blk_ref & block ) {
-	return (IKeyframeData*)block->QueryInterface( ID_KEYFRAME_DATA );
-}
-
-IKeyframeData const * QueryKeyframeData( blk_ref const & block ) {
-	return (IKeyframeData const *)block->QueryInterface( ID_KEYFRAME_DATA );
-}
-
-ITextKeyExtraData * QueryTextKeyExtraData ( blk_ref & block ) {
-	return (ITextKeyExtraData*)block->QueryInterface( ID_TEXT_KEY_EXTRA_DATA );
-}
-
-ITextKeyExtraData const * QueryTextKeyExtraData ( blk_ref const & block ) {
-	return (ITextKeyExtraData const *)block->QueryInterface( ID_TEXT_KEY_EXTRA_DATA );
-}
-
-IMorphData * QueryMorphData ( blk_ref & block ) {
-	return (IMorphData*)block->QueryInterface( ID_MORPH_DATA );
-}
-
-IMorphData const * QueryMorphData ( blk_ref const & block ) {
-	return (IMorphData const *)block->QueryInterface( ID_MORPH_DATA );
-}
-
-ITriStripsData * QueryTriStripsData ( blk_ref & block ) {
-	return (ITriStripsData*)block->QueryInterface( ID_TRI_STRIPS_DATA );
-}
-
-ITriStripsData const * QueryTriStripsData ( blk_ref const & block ) {
-	return (ITriStripsData const *)block->QueryInterface( ID_TRI_STRIPS_DATA );
-}
-
-IBoolData * QueryBoolData ( blk_ref & block ) {
-	return (IBoolData*)block->QueryInterface( ID_BOOL_DATA );
-}
-
-IBoolData const * QueryBoolData ( blk_ref const & block ) {
-	return (IBoolData const *)block->QueryInterface( ID_BOOL_DATA );
-}
-
-IColorData * QueryColorData ( blk_ref & block ) {
-	return (IColorData*)block->QueryInterface( ID_COLOR_DATA );
-}
-
-IColorData const * QueryColorData ( blk_ref const & block ) {
-	return (IColorData const *)block->QueryInterface( ID_COLOR_DATA );
-}
-
-IFloatData * QueryFloatData ( blk_ref & block ) {
-	return (IFloatData *)block->QueryInterface( ID_FLOAT_DATA );
-}
-
-IFloatData const * QueryFloatData ( blk_ref const & block ) {
-	return (IFloatData const *)block->QueryInterface( ID_FLOAT_DATA );
-}
-
-IPosData * QueryPosData ( blk_ref & block ) {
-	return (IPosData*)block->QueryInterface( ID_POS_DATA );
-}
-
-IPosData const * QueryPosData ( blk_ref const & block ) {
-	return (IPosData const *)block->QueryInterface( ID_POS_DATA );
+	////Use the name map to merge the Scene Graphs
+	//MergeSceneGraph( name_map, target, new_tree );
 }

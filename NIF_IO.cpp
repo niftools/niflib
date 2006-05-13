@@ -572,7 +572,7 @@ void NifStream( TexDesc & val, istream& in, uint version ) {
 	NifStream( val.isUsed, in, version );
 	if ( val.isUsed ) {	
 		//Read in link for TexSource
-		val.source.set_index( ReadUInt( in ) );
+		//val.source.set_index( ReadUInt( in ) );
 
 		NifStream( val.clampMode, in, version );
 		val.filterMode = TexFilterMode( ReadUInt( in ) );
@@ -610,7 +610,7 @@ void NifStream( TexDesc const & val, ostream& out, uint version ) {
 	WriteBool( val.isUsed, out, version );
 	if ( val.isUsed ) {
 		//Write link
-		WriteUInt( val.source.get_index(), out );
+		//WriteUInt( val.source.get_index(), out );
 
 		NifStream( val.clampMode, out, version );
 		WriteUInt( val.filterMode, out );
@@ -673,41 +673,41 @@ ostream & operator<<( ostream & out, TexDesc const & val ) {
 	return out;
 }
 
-//CrossRef
-void NifStream( CrossRef & val, istream& in, uint version ) {
-	val.SetIndex( ReadInt( in ) );
-};
-
-void NifStream( CrossRef const & val, ostream& out, uint version ) {
-	IBlock * ref = val.GetCrossRef();
-	if ( ref != NULL ) {
-		WriteInt( ref->GetBlockNum(), out );
-	} else {
-		WriteInt( -1, out );
-	}
-}
-
-ostream & operator<<( ostream & out, CrossRef const & val ) {
-	return out << blk_ref(val.GetCrossRef());
-}
-
-//Link
-void NifStream( Link & val, istream& in, uint version ) {
-	val.SetIndex( ReadInt( in ) );
-};
-
-void NifStream( Link const & val, ostream& out, uint version ) {
-	blk_ref ref = val.GetLink();
-	if ( ref.is_null() == false ) {
-		WriteInt( ref->GetBlockNum(), out );
-	} else {
-		WriteInt( -1, out );
-	}
-}
-
-ostream & operator<<( ostream & out, Link const & val ) {
-	return out << val.GetLink();
-}
+////CrossRef
+//void NifStream( CrossRef & val, istream& in, uint version ) {
+//	val.SetIndex( ReadInt( in ) );
+//};
+//
+//void NifStream( CrossRef const & val, ostream& out, uint version ) {
+//	IBlock * ref = val.GetCrossRef();
+//	if ( ref != NULL ) {
+//		WriteInt( ref->GetBlockNum(), out );
+//	} else {
+//		WriteInt( -1, out );
+//	}
+//}
+//
+//ostream & operator<<( ostream & out, CrossRef const & val ) {
+//	return out << blk_ref(val.GetCrossRef());
+//}
+//
+////Link
+//void NifStream( Link & val, istream& in, uint version ) {
+//	val.SetIndex( ReadInt( in ) );
+//};
+//
+//void NifStream( Link const & val, ostream& out, uint version ) {
+//	blk_ref ref = val.GetLink();
+//	if ( ref.is_null() == false ) {
+//		WriteInt( ref->GetBlockNum(), out );
+//	} else {
+//		WriteInt( -1, out );
+//	}
+//}
+//
+//ostream & operator<<( ostream & out, Link const & val ) {
+//	return out << val.GetLink();
+//}
 
 
 

@@ -40,6 +40,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <string>
 #include <sstream>
 #include "nif_objects.h"
+#include "niflib.h"
 using namespace std;
 
 typedef ushort usVector3[3];

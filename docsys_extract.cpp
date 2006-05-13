@@ -31,7 +31,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-#include "NIF_Blocks.h"
+//#include "NIF_Blocks.h"
 
 typedef IBlock * (*blk_factory_func)();
 extern map<string, blk_factory_func> global_block_map;
