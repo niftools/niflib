@@ -39,7 +39,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <iomanip>
 #include <string>
 #include <sstream>
-#include "niflib_internal.h"
+#include "nif_objects.h"
 using namespace std;
 
 typedef ushort usVector3[3];
@@ -203,15 +203,15 @@ void NifStream( TexDesc & val, istream& in, uint version );  // version is signi
 void NifStream( TexDesc const & val, ostream& out, uint version ); // version is significant
 ostream & operator<<( ostream & out, TexDesc const & val );
 
-//Link
-void NifStream( Link & val, istream& in, uint version = 0 );
-void NifStream( Link const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Link const & val );
-
-//CrossRef
-void NifStream( CrossRef & val, istream& in, uint version  = 0);
-void NifStream( CrossRef const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, CrossRef const & val );
+////Link
+//void NifStream( Link & val, istream& in, uint version = 0 );
+//void NifStream( Link const & val, ostream& out, uint version = 0 );
+//ostream & operator<<( ostream & out, Link const & val );
+//
+////CrossRef
+//void NifStream( CrossRef & val, istream& in, uint version  = 0);
+//void NifStream( CrossRef const & val, ostream& out, uint version = 0 );
+//ostream & operator<<( ostream & out, CrossRef const & val );
 
 //--Enums--//
 

@@ -35,7 +35,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #define _NIF_BLOCKS_H
 
 /* INCLUDES */
-#include "niflib_internal.h"
+#include "nif_objects.h"
 #include "nif_math.h"
 #include "NIF_IO.h"
 
@@ -46,19 +46,19 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <sstream>
 
 //--Types--//
-typedef	pair<attr_ref, blk_ref> LinkPair;
-typedef multimap<attr_ref, blk_ref> LinkMap;
-typedef LinkMap::iterator LinkMapIt;
-typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
+//typedef	pair<attr_ref, blk_ref> LinkPair;
+//typedef multimap<attr_ref, blk_ref> LinkMap;
+//typedef LinkMap::iterator LinkMapIt;
+//typedef pair<LinkMapIt,LinkMapIt> LinkMapRange;
 
 //--Constants--//
 
 //Non-Public Interface IDs
 
-const int SkinInstInternal = -2;
-const int SkinDataInternal = -3;
+//const int SkinInstInternal = -2;
+//const int SkinDataInternal = -3;
 
-class AControllable : public ABlock {
+class AControllable : public NiObject {
 public:
 	static const Type TYPE;
 	AControllable();
@@ -67,9 +67,9 @@ public:
 	~AControllable() {}
 };
 
-const Type AControllable::TYPE("AControllable", &ABlock::TYPE);
+const Type AControllable::TYPE("AControllable", &NiObject::TYPE);
 
-class ANode : public AControllable, public INode {
+class ANode : public AControllable {
 public:
 	static const Type TYPE;
 	ANode();
@@ -78,28 +78,52 @@ public:
 		bindPosition = Matrix44::IDENTITY;
 
 		//Start the flags at "Not a skin influence"
-		GetAttr("Flags")->Set(8);
+		//GetAttr("Flags")->Set(8);
 	
 	};
 	~ANode() {};
 	void InitAttrs();
-	void * QueryInterface( int id );
-	void const * QueryInterface( int id ) const;
 	void Read( istream& in, unsigned int version ) {
-		ABlock::Read( in, version );
+		NiObject::Read( in, version );
 		Matrix44 transform;
 		transform = GetLocalTransform();
 		SetWorldBindPos( transform );
 	}
 
-	//INode Functions
+	/*! 
+	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
+	 * \return A 4x4 transformation matrix built from the node's transform attributes.
+	 * \sa INode::GetWorldTransform
+	 */
 	Matrix44 GetLocalTransform() const;
+
+	/*! 
+	 * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
+	 * \return The 4x4 world transform matrix of this node.
+	 * \sa INode::GetLocalTransform
+	 */
 	Matrix44 GetWorldTransform() const;
+
+	/*!
+	 * This function returns the bind position world matrix.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 world bind position matrix of this node.
+	 * \sa INode::GetLocalBindPos, INode::SetWorldBindPos
+	 */
 	Matrix44 GetWorldBindPos() const;
+
+	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 local bind position matrix of this node.
+	 * \sa INode::SetWorldBindPos, INode::GetWorldBindPos
+	 */
 	Matrix44 GetLocalBindPos() const;
+
+	/*!
+	 * This function sets the bind position of this object relative to the origin.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.  This function must be called on every object in a skin and bones system (the bones and the skinned shapes) in order for skinning information to be written to a Nif file.
+	 * \param m The 4x4 world bind position matrix of this node
+	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
+	 */
 	void SetWorldBindPos( Matrix44 const & m );
 
-	//IBlockInternal Functions
 	void IncCrossRef( IBlock * block );
 	void DecCrossRef( IBlock * block );
 
@@ -150,7 +174,7 @@ public:
 	~AProperty() {}
 };
 
-class AController : public ABlock {
+class AController : public NiObject {
 public:
 	AController();
 	void Init() {}
@@ -158,28 +182,28 @@ public:
 	~AController() {}
 };
 
-class AData : public ABlock {
+class AData : public NiObject {
 public:
 	AData() {}
 	void Init() {}
 	~AData() {}
 };
 
-class AInterpolator : public ABlock {
+class AInterpolator : public NiObject {
 public:
 	AInterpolator();
 	void Init() {}
 	~AInterpolator() {}
 };
 
-class AParticleModifier : public ABlock {
+class AParticleModifier : public NiObject {
 public:
 	AParticleModifier();
 	void Init() {}
 	~AParticleModifier() {}
 };
 
-class APSysModifier : public ABlock {
+class APSysModifier : public NiObject {
 public:
 	APSysModifier();
 	void Init() {}
@@ -497,9 +521,9 @@ public:
 };
 
 /**
- * NiTexturingProperty -
+ * NiTexturingProperty - references all textures attatched to meshes which include it in their property list.
  */
-class NiTexturingProperty : public AProperty, public ITexturingProperty {
+class NiTexturingProperty : public AProperty {
 public:
 	NiTexturingProperty( ) { //AddAttr( attr_flags, "Flags", 0, VER_10_0_1_0 ); 
 	}
@@ -514,38 +538,103 @@ public:
 	void FixLinks( const vector<blk_ref> & blocks );
 	list<blk_ref> GetLinks() const;
 
-	// ITexturingProperty functions
+	/*! Retrieves the number of texture slots defined by this texturing propery.  Texture slots may or may not actually contain textures, but each slot has a different meaning so the way a texture is used is dependant upon which slot it is in.
+	 * \return The number of texture slots defined by this texturing property.
+	 * \sa ITexturingProperty::SetTextureCount
+	 */
 	int GetTextureCount() const { return int(textures.size()); }
-	void SetTextureCount( int new_count );
-	int GetExtraTextureCount() const { return int(extra_textures.size()); }
-	void SetExtraTextureCount( int new_count );
-	ApplyMode GetApplyMode() const { return appl_mode; }
-	void SetApplyMode( ApplyMode new_val ) { appl_mode = new_val; }
-	TexDesc GetTexture( int n ) const { return textures[n]; }
-	void SetTexture( int n, TexDesc & new_val );
-	TexDesc GetExtraTexture( int n ) const { return extra_textures[n].first; }
-	void SetExtraTexture( int n, TexDesc & new_val );
-	float GetLumaOffset() const { return bmLumaOffset; }
-	void SetLumaOffset( float new_val ) { bmLumaOffset = new_val; }
-	float GetLumaScale() const { return bmLumaScale; }
-	void SetLumaScale( float new_val ) { bmLumaScale = new_val; }
-	Matrix22 GetBumpMapMatrix() const { return bmMatrix; }
-	void SetBumpMapMatrix( Matrix22 & new_val ) { bmMatrix = new_val; }
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_TEXTURING_PROPERTY ) {
-			return (void*)static_cast<ITexturingProperty*>(this);;
-		} else {
-			return AProperty::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_TEXTURING_PROPERTY ) {
-			return (void const *)static_cast<ITexturingProperty const *>(this);;
-		} else {
-			return AProperty::QueryInterface( id );
-		}
-	}
+	/*! Sets the number of texture slots defined by this texturing propery.  Known valid values are 7 and 8.
+	 * \param n The new size of the texture slot array.
+	 * \sa ITexturingProperty::GetTextureCount
+	 */
+	void SetTextureCount( int new_count );
+
+	/*! Retrieves the number of extra texture slots defined by this texturing propery.  These only exist in later Nif versions and their function is unknown.
+	 * \return The number of extra texture slots defined by this texturing property.
+	 * \sa ITexturingProperty::SetExtraTextureCount
+	 */
+	int GetExtraTextureCount() const { return int(extra_textures.size()); }
+
+	/*! Sets the number of extra texture slots defined by this texturing propery.  Often zero.
+	 * \param n The new size of the extra texture slot array.
+	 * \sa ITexturingProperty::GetExtraTextureCount
+	 */
+	void SetExtraTextureCount( int new_count );
+
+	/*! Retrieves the current apply mode for this texturing propery.  This enum value affects the way the textures will be drawn.
+	 * \return The current apply mode for this texturing property.
+	 * \sa ITexturingProperty::SetApplyMode
+	 */
+	ApplyMode GetApplyMode() const { return appl_mode; }
+
+	/*! Sets the current apply mode for this texturing propery.  This enum value affects the way the textures will be drawn.
+	 * \param new_val The new apply mode for this texturing property.
+	 * \sa ITexturingProperty::GetApplyMode
+	 */
+	void SetApplyMode( ApplyMode new_val ) { appl_mode = new_val; }
+
+	/*! Retrieves the texture desription structure that describes a texture by slot number.  The TexType enum is provided to make it easy to select the texture slot with the specific qualities that you want.
+	 * \param n The slot number of the texture to get the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \sa ITexturingProperty::SetTexture, TexType
+	 */
+	TexDesc GetTexture( int n ) const { return textures[n]; }
+
+	/*! Sets a new description for the texture in the given slot number.  The TexType enum is provided to make it easy to select the texture slot with the specific qualities that you want.
+	 * \param n The slot number of the texture to set the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \param new_val Thew new texture descriptoin for the texture at the given slot number.
+	 * \sa ITexturingProperty::GetTexture, TexType
+	 */
+	void SetTexture( int n, TexDesc & new_val );
+
+	/*! Retrieves the texture desription structure that describes an extra texture by slot number.  These only exist in the later Nif versions and their function is unknown.
+	 * \param n The slot number of the extra texture to get the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetExtraTextureCount.
+	 * \sa ITexturingProperty::SetExtraTexture
+	 */
+	TexDesc GetExtraTexture( int n ) const { return extra_textures[n].first; }
+
+	/*! Sets a new description for the texture in the given slot number.  These only exist in the later Nif versions and their function is unknown.
+	 * \param n The slot number of the extra texture to set the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
+	 * \param new_val Thew new texture descriptoin for the extra texture at the given slot number.
+	 * \sa ITexturingProperty::GetTexture, TexType
+	 */
+	void SetExtraTexture( int n, TexDesc & new_val );
+
+	/*! Retrieves the bump map luma offset.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return The bump map luma offset.
+	 * \sa ITexturingProperty::SetLumaOffset
+	 */
+	float GetLumaOffset() const { return bmLumaOffset; }
+
+	/*! Sets the bump map luma offset.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map luma offset.
+	 * \sa ITexturingProperty::GetLumaOffset
+	 */
+	void SetLumaOffset( float new_val ) { bmLumaOffset = new_val; }
+
+	/*! Retrieves the bump map luma scale.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return The bump map luma scale.
+	 * \sa ITexturingProperty::SetLumaScale
+	 */
+	float GetLumaScale() const { return bmLumaScale; }
+
+	/*! Sets the bump map luma scale.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map luma scale.
+	 * \sa ITexturingProperty::GetLumaScale
+	 */
+	void SetLumaScale( float new_val ) { bmLumaScale = new_val; }
+
+	/*! Retrieves the bump map matrix.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \return the bump map matrix.
+	 * \sa ITexturingProperty::SetBumpMapMatrix
+	 */
+	Matrix22 GetBumpMapMatrix() const { return bmMatrix; }
+
+	/*! Sets the bump map matrix.  This is only relevant if a texture is defined in the BUMP_MAP texture slot.  The function of this is unknown.
+	 * \param new_val The new bump map matrix.
+	 * \sa ITexturingProperty::GetBumpMapMatrix
+	 */
+	void SetBumpMapMatrix( Matrix22 & new_val ) { bmMatrix = new_val; }
 
 private:
 	ApplyMode appl_mode;
@@ -573,7 +662,7 @@ public:
 /**
  * NiPixelData - Texture data for an included texture.
  */
-class NiPixelData : public AData, public IPixelData {
+class NiPixelData : public AData {
 public:
 	NiPixelData() {
 		data = NULL;
@@ -589,29 +678,43 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiPixelData"; }
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_PIXEL_DATA ) {
-			return (void*)static_cast<IPixelData*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_PIXEL_DATA ) {
-			return (void const *)static_cast<IPixelData const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//IPixelData Functions
+	/*! Retrieves the height of the texture image stored in this block.
+	 * \return The height of the texture image stored in this block.
+	 * \sa IPixelData::GetWidth, IPixelData::GetPixelFormat
+	 */
 	int GetHeight() const;
+
+	/*! Retrieves the width of the texture image stored in this block.
+	 * \return The width of the texture image stored in this block.
+	 * \sa IPixelData::GetHeight, IPixelData::GetPixelFormat
+	 */
 	int GetWidth() const;
+
+    /*! Retrieves the pixel format of the texture image stored in this block.
+	 * \return The pixel format of the texture image stored in this block.
+	 * \sa IPixelData::GetWidth, IPixelData::GetHeight
+	 */
 	PixelFormat GetPixelFormat() const;
 
+    /*! Deletes all image data and sets a new size and format in preparation for new data to be provided.
+	 * \param new_width The width of the new texture image.
+	 * \param new_height The height of the new texture image.
+	 * \param px_fmt The pixel format of the new texture image.
+	 * \sa IPixelData::GetWidth, IPixelData::GetHeight
+	 */
 	void Reset( int new_width, int new_height, PixelFormat px_fmt );
 	
+	/*! Retrieves the the pixels of the texture image stored in this block.  This function does not work on palettized textures.
+	 * \return A vector containing the colors of each pixel in the texture image stored in this block, one row after another starting from the bottom of the image.  The width of the image must be used to interpret them correctly.
+	 * \sa IPixelData::SetColors, IPixelData::GetWidth
+	 */
 	vector<Color4> GetColors() const;
+
+	/*! Sets the the pixels of the texture image stored in this block and optionally generates mipmaps.  This function does not work for palettized textures.
+	 * \param new_pixels A vector containing the colors of each new pixel to be set in the texture image stored in this block, one row after another starting from the botom of the image.
+	 * \param generate_mipmaps If true, mipmaps will be generated for the new image and stored in the file.
+	 * \sa IPixelData::GetColors, IPixelData::GetWidth
+	 */
 	void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps );
 
 private:
@@ -676,7 +779,7 @@ public:
 /**
  * AShapeData - Mesh data: vertices, vertex normals, etc.
  */
-class AShapeData : public AData, public IShapeData {
+class AShapeData : public AData {
 public:
 	AShapeData() {
 		//AddAttr( attr_string, "Name", VER_10_2_0_0 );
@@ -687,25 +790,86 @@ public:
 	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 
-	void * QueryInterface( int id );
-	void const * QueryInterface( int id ) const;
+	//--Counts--//
 
-	//--IShapeData--//
-	//Counts
+	/*! Returns the number of verticies that make up this mesh.  This is also the number of normals, colors, and UV coordinates if these are used.
+	 * \return The number of vertices that make up this mesh.
+	 * \sa IShapeData::SetVertexCount
+	 */
 	int GetVertexCount() const { return int(vertices.size()); }
+
+	/*! Returns the number of texture coordinate sets used by this mesh.  For each UV set, there is a pair of texture coordinates for every vertex in the mesh.  Each set corresponds to a texture entry in the NiTexturingPropery block.
+	 * \return The number of texture cooridnate sets used by this mesh.  Can be zero.
+	 * \sa IShapeData::SetUVSetCount, ITexturingProperty
+	 */
 	short GetUVSetCount() const { return short(uv_sets.size()); }
+
+	/*! Changes the number of vertices used by this mesh.  If the mesh already contains data, it will be retained so long as the new number is higher than the old number.  Otherwise any verticies above the new number will be deleted.  This also resizes any normal, color, or UV data associated with these verticies.  Triangles and triangle strips that may be attached via other interfaces are not culled of references to newly invalid vertices, however.
+	 * \param n The new size of the vertex array.
+	 * \sa IShapeData::GetVertexCount
+	 */
 	void SetVertexCount(int n);
+
+	/*! Changes the number of UV sets used by this mesh.  If he new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
+	 * \param n The new size of the uv set array.
+	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
+	 */
 	void SetUVSetCount(int n);
-	//Getters
+
+	//--Getters--//
+
+	/*! Used to retrive the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the vertices used by this mesh.
+	 * \sa IShapeData::SetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	vector<Vector3> GetVertices() const { return vertices; }
+
+	/*! Used to retrive the normals used by this mesh.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the normals used by this mesh, if any.
+	 * \sa IShapeData::SetNormals, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	vector<Vector3> GetNormals() const { return normals; }
+
+	/*! Used to retrive the vertex colors used by this mesh.  The size of the vector will either be zero if no vertex colors are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \return A vector cntaining the vertex colors used by this mesh, if any.
+	 * \sa IShapeData::SetColors, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	vector<Color4> GetColors() const { return colors; }
+
+	/*! Used to retrive the texture coordinates from one of the texture sets used by this mesh.  The function will throw an exception if a texture set index that does not exist is specified.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	 * \param index The index of the texture coordinate set to retrieve the texture coordinates from.  This index is zero based and must be a positive number smaller than that returned by the IShapeData::GetUVSetCount function.  If there are no texture coordinate sets, this function will throw an exception.
+	 * \return A vector cntaining the the texture coordinates used by the requested texture coordinate set.
+	 * \sa IShapeData::SetUVSet, IShapeData::GetUVSetCount, IShapeData::SetUVSetCount, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	vector<TexCoord> GetUVSet( int index ) const { return uv_sets[index]; }
-	//Setters
+	
+//--Setters--//
+
+	/*! Used to set the vertex data used by this mesh.  The size of the vector must be the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the vertices to replace those in the mesh with.  Note that there is no way to set vertices one at a time, they must be sent in one batch.
+	 * \sa IShapeData::GetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	void SetVertices( const vector<Vector3> & in );
+
+	/*! Used to set the normal data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the normals to replace those in the mesh with.  Note that there is no way to set normals one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using normals.
+	 * \sa IShapeData::GetNormals, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	void SetNormals( const vector<Vector3> & in );
+
+	/*! Used to set the vertex color data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	 * \param in A vector containing the vertex colors to replace those in the mesh with.  Note that there is no way to set vertex colors one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using vertex colors.
+	 * \sa IShapeData::GetColors, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	void SetColors( const vector<Color4> & in );
+
+	/*! Used to set the texture coordinate data from one of the texture sets used by this mesh.  The function will throw an exception if a texture set index that does not exist is specified.  The size of the vector must be the same as the vertex count retrieved with the IShapeData::GetVertexCount function, or the function will throw an exception.
+	 * \param index The index of the texture coordinate set to retrieve the texture coordinates from.  This index is zero based and must be a positive number smaller than that returned by the IShapeData::GetUVSetCount function.  If there are no texture coordinate sets, this function will throw an exception.
+	 * \param in A vector containing the the new texture coordinates to replace those in the requested texture coordinate set.
+	 * \sa IShapeData::GetUVSet, IShapeData::GetUVSetCount, IShapeData::SetUVSetCount, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 */
 	void SetUVSet( int index, const vector<TexCoord> & in );
+
 protected:
 	vector<Vector3> vertices;
 	vector<Vector3> normals;
@@ -846,7 +1010,7 @@ public:
 /**
  * NiTriShapeData - Holds mesh data using a list of singular triangles.
  */
-class NiTriShapeData : public AShapeData, public ITriShapeData {
+class NiTriShapeData : public AShapeData {
 public:
 	NiTriShapeData() : match_group_mode(false) {}
 	~NiTriShapeData() {}
@@ -854,17 +1018,37 @@ public:
 	void Write( ostream& out, unsigned int version ) const;
 	string asString() const;
 	string GetBlockType() const { return "NiTriShapeData"; }
-	void * QueryInterface( int id );
-	void const * QueryInterface( int id ) const;
 
 	//--ITriShapeData--//
 
-	//Match Detection
+	//--Match Detection--//
+
+	/*! Used to turn match detection mode on and off.  When match detection mode is on, a list of all the vertices that have identical positions are stored in the file.  This may improve performance but is not well understood.
+	 * \param choice True to enable match detection mode, false to disable it.
+	 * \sa ITriShapeData::GetMatchDetectionMode
+	 */
 	void SetMatchDetectionMode(bool choice) { match_group_mode = choice; }
+
+	/*! Used to query the current match detection mode.  When match detection mode is on, a list of all the vertices that have identical positions are stored in the file.  This may improve performance but is not well understood.
+	 * \return True if match detection mode is on, false otherwise.
+	 * \sa ITriShapeData::GetMatchDetectionMode
+	 */
 	bool GetMatchDetectionMode() const { return match_group_mode; }
-	//Getters
+
+	//--Getters--//
+
+	/*! Returns the triangle faces that make up this mesh.
+	 * \return A vector containing the triangle faces that make up this mesh.
+	 * \sa ITriShapeData::SetTriangles
+	 */
 	vector<Triangle> GetTriangles() const { return triangles; }
-	//Setters
+
+	//--Setters--//
+
+	/*! Replaces the triangle face data in this mesh with new data.
+	 * \param in A vector containing the new face data.  Maximum size is 65,535.
+	 * \sa ITriShapeData::GetTriangles
+	 */
 	void SetTriangles( const vector<Triangle> & in );
 
 private:
@@ -875,7 +1059,7 @@ private:
 /**
  * NiTriStripsData - Holds mesh data using strips of triangles.
  */
-class NiTriStripsData : public AShapeData, public ITriStripsData {
+class NiTriStripsData : public AShapeData {
 public:
 	NiTriStripsData() {}
 	~NiTriStripsData() {}
@@ -885,18 +1069,41 @@ public:
 
 	string GetBlockType() const { return "NiTriStripsData"; }
 
-	void * QueryInterface( int id );
-	void const * QueryInterface( int id ) const;
+	//--Counts--//
 
-	//--ITriStripsData--//
-	//Counts
+	/*! Used to get the number of triangle strips that this mesh is divided into.
+	 * \return The number of triangle strips used by this mesh.
+	 * \sa ITriStripData::SetStripCount
+	 */
 	short GetStripCount() const;
+
+	/*! Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
+	 * \param n The new size of the triangle strips array.
+	 * \sa ITriStripData::GetStripCount
+	 */
 	void SetStripCount(int n);
 	
-	//Getters
+	//--Getters--//
+
+	/*! Used to retrieve all the triangles from a specific triangle strip.
+	 * \param index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
+	 * \sa ITriStripsData::SetStrip, ITriStripsData::GetTriangles
+	 */
 	vector<short> GetStrip( int index ) const;
+
+	/*! This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
+	 * \return A vector containing all the triangle faces from all the triangle strips that make up this mesh.
+	 * \sa ITriShapeData::GetTriangles, ITriStripsData::GetStrip, ITriStripsData::SetStrip
+	 */
 	vector<Triangle> GetTriangles() const;
-	//Setter
+
+	//--Setter--/
+
+	/*! Used to set the triangle face data in a specific triangle strip.
+	 * \param index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \sa ITriStripsData::GetStrip, ITriStripsData::GetTriangles
+	 */
 	void SetStrip( int index, const vector<short> & in );
 
 private:
@@ -1468,7 +1675,7 @@ public:
  * NiPSysPlanarCollider
  */
 
-class NiPSysPlanarCollider : public ABlock {
+class NiPSysPlanarCollider : public NiObject {
 public:
 	NiPSysPlanarCollider();
 	void Init() {}
@@ -1654,61 +1861,108 @@ private:
  * AKeyframeData -
  */
 
-class AKeyframeData : public AData, public IKeyframeData {
+class AKeyframeData : public AData {
 
-	public:
+public:
 
-		AKeyframeData() {}
-		~AKeyframeData() {}
+	AKeyframeData() {}
+	~AKeyframeData() {}
 
-		void Read( istream& in, unsigned int version );
-		void Write( ostream& out, unsigned int version ) const;
-		string asString() const;
-		string GetBlockType() const { return "AKeyframeData"; }
-		
-		void * QueryInterface( int id ) {
-			if ( id == ID_KEYFRAME_DATA ) {
-				return (void*)static_cast<IKeyframeData*>(this);;
-			} else {
-				return ABlock::QueryInterface( id );
-			}
-		}
-		void const * QueryInterface( int id ) const {
-			if ( id == ID_KEYFRAME_DATA ) {
-				return (void const *)static_cast<IKeyframeData const *>(this);;
-			} else {
-				return ABlock::QueryInterface( id );
-			}
-		}
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "AKeyframeData"; }
 
-		//--IKeyframeData Functions--//
-		KeyType GetRotateType() const { return rotationType; }
-		void SetRotateType( KeyType t ) { rotationType = t; }
-		vector< Key<Quaternion> > GetRotateKeys() const { return rotKeys; }
-		void SetRotateKeys( const vector< Key<Quaternion> > & keys ) { rotKeys = keys; }
-		//Translate
-		KeyType GetTranslateType() const { return translationType; }
-		void SetTranslateType( KeyType t ) { translationType = t; }
-		vector< Key<Vector3> > GetTranslateKeys() const { return transKeys; }
-		void SetTranslateKeys( vector< Key<Vector3> > const & keys ) { transKeys = keys; }
-		//Scale
-		KeyType GetScaleType() const { return scaleType; }
-		void SetScaleType( KeyType t ) { scaleType = t; }
-		vector< Key<float> > GetScaleKeys() const { return scaleKeys; }
-		void SetScaleKeys( vector< Key<float> > const & keys ) { scaleKeys = keys; }
+	//--Rotate--//
 
-	private:
-		KeyType rotationType;
-		vector< Key<Quaternion> > rotKeys;
+	/*! Retrieves the type of rotation interpolation being used.
+		* \return The rotation key type specifing the type of interpolation being used.
+		* \sa IKeyframeData::SetRotateType
+		*/
+	KeyType GetRotateType() const { return rotationType; }
 
-		KeyType translationType;
-		vector< Key<Vector3> >	transKeys;
+	/*! Sets the type of rotation interpolation being used.  Does not affect existing key data.
+	 * \param t The new rotation key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetRotateType
+	 */
+	void SetRotateType( KeyType t ) { rotationType = t; }
 
-		KeyType scaleType;
-		vector< Key<float> > scaleKeys;
+	/*! Retrieves the rotation key data.
+	 * \return A vector containing Key<Quaternion> data which specify rotation over time.
+	 * \sa IKeyframeData::SetRotateKeys, Key
+	 */
+	vector< Key<Quaternion> > GetRotateKeys() const { return rotKeys; }
 
-		KeyType xyzTypes[3];
-		vector< Key<float> > xyzKeys[3];
+	/*! Sets the rotation key data.
+	 * \param keys A vector containing new Key<Quaternion> data which will replace any existing data.
+	 * \sa IKeyframeData::GetRotateKeys, Key
+	 */
+	void SetRotateKeys( const vector< Key<Quaternion> > & keys ) { rotKeys = keys; }
+
+	//--Translate--//
+
+	/*! Retrieves the type of translation interpolation being used.
+	 * \return The translation key type specifing the type of interpolation being used.
+	 * \sa IKeyframeData::SetTranslateType
+	 */
+	KeyType GetTranslateType() const { return translationType; }
+
+	/*! Sets the type of translation interpolation being used.  Does not affect existing key data.
+	 * \param t The new translation key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetTranslateType
+	 */
+	void SetTranslateType( KeyType t ) { translationType = t; }
+
+	/*! Retrieves the translation key data.
+	 * \return A vector containing Key<Vector3> data which specify translation over time.
+	 * \sa IKeyframeData::SetTranslateKeys, Key
+	 */
+	vector< Key<Vector3> > GetTranslateKeys() const { return transKeys; }
+
+	/*! Sets the translation key data.
+	 * \param keys A vector containing new Key<Vector3> data which will replace any existing data.
+	 * \sa IKeyframeData::GetTranslateKeys, Key
+	 */
+	void SetTranslateKeys( vector< Key<Vector3> > const & keys ) { transKeys = keys; }
+
+	//--Scale--//
+
+	/*! Retrieves the type of scale interpolation being used.
+	 * \return The scale key type specifing the type of interpolation being used.
+	 * \sa IKeyframeData::SetTranslateType
+	 */
+	KeyType GetScaleType() const { return scaleType; }
+
+	/*! Sets the type of scale interpolation being used.  Does not affect existing key data.
+	 * \param t The new scale key type specifing the type of interpolation to be used.
+	 * \sa IKeyframeData::GetScaleType
+	 */
+	void SetScaleType( KeyType t ) { scaleType = t; }
+
+	/*! Retrieves the scale key data.
+	 * \return A vector containing Key<float> data which specify scale over time.
+	 * \sa IKeyframeData::SetScaleKeys, Key
+	 */
+	vector< Key<float> > GetScaleKeys() const { return scaleKeys; }
+
+	/*! Sets the scale key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data.
+	 * \sa IKeyframeData::GetScaleKeys, Key
+	 */
+	void SetScaleKeys( vector< Key<float> > const & keys ) { scaleKeys = keys; }
+
+private:
+	KeyType rotationType;
+	vector< Key<Quaternion> > rotKeys;
+
+	KeyType translationType;
+	vector< Key<Vector3> >	transKeys;
+
+	KeyType scaleType;
+	vector< Key<float> > scaleKeys;
+
+	KeyType xyzTypes[3];
+	vector< Key<float> > xyzKeys[3];
 };
 
 /**
@@ -1736,10 +1990,9 @@ public:
 };
 
 /**
- * NiPalette
+ * NiPalette object.  Contains a color palette for internally stored paletized textures.
  */
-
-class NiPalette : public AData, public IPalette {
+class NiPalette : public AData {
 public:
 	NiPalette() {}
 	void Init() {}
@@ -1750,24 +2003,16 @@ public:
 
 	string GetBlockType() const { return "NiPalette"; }
 
-	
-	void * QueryInterface( int id ) {
-		if ( id == ID_PALETTE ) {
-			return (void*)static_cast<IPalette*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_PALETTE ) {
-			return (void const *)static_cast<IPalette const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//IPalette Functions
+	/*! Retrieves the palette data from this palette block.
+	 * \return A vector containing the the colors stored in the palette.
+	 * \sa IPalette::SetPalette
+	 */
 	vector<Color4> GetPalette() const;
+
+	/*! Sets the palette data for this palette block.
+	 * \param new_apl A vector containing the the new colors to be stored in the palette.
+	 * \sa IPalette::GetPalette
+	 */
 	void SetPalette( const vector<Color4> & new_pal );
 
 private:
@@ -1832,7 +2077,7 @@ public:
 	virtual void ReadBoneList( istream& in ) = 0;
 };
 
-class NiSkinInstance : public AData, public ISkinInstInternal {
+class NiSkinInstance : public AData {
 public:
 	NiSkinInstance(){
 		//AddAttr( attr_link, "Data" );
@@ -1842,21 +2087,6 @@ public:
 	}
 	~NiSkinInstance() {}
 	string GetBlockType() const { return "NiSkinInstance"; }
-
-	void * QueryInterface( int id ) {
-		if ( id == SkinInstInternal ) {
-			return (void*)static_cast<ISkinInstInternal*>(this);;
-		} else {
-			return ABlock::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == SkinInstInternal ) {
-			return (void const *)static_cast<ISkinInstInternal const *>(this);;
-		} else {
-			return ABlock::QueryInterface( id );
-		}
-	}
 
 	//ISkinInstInternal
 
@@ -1873,71 +2103,82 @@ private:
 	vector<int> bones;
 };
 
-class ISkinDataInternal {
+class NiSkinData : public AData {
+
 public:
-	//virtual void SetBones( vector<blk_ref> bone_blocks ) = 0;
-	virtual void RepositionTriShape( blk_ref & tri_shape ) = 0;
-	//virtual void StraightenSkeleton() = 0;
-	//virtual void RemoveBoneByPtr( IBlock * bone ) = 0;
-};
 
-class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
+	NiSkinData() { 
+		//AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
+		rotation = Matrix33::IDENTITY;
+		translation[0] = 0.0f;
+		translation[1] = 0.0f;
+		translation[2] = 0.0f;
+		scale = 1.0f;
+		unknownInt = -1;
+		unknownByte = 1;
+	}
+	~NiSkinData();
 
-	public:
+	void Read( istream& in, unsigned int version );
+	void Write( ostream& out, unsigned int version ) const;
+	string asString() const;
+	string GetBlockType() const { return "NiSkinData"; }
 
-		NiSkinData() { 
-			//AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
-			rotation = Matrix33::IDENTITY;
-			translation[0] = 0.0f;
-			translation[1] = 0.0f;
-			translation[2] = 0.0f;
-			scale = 1.0f;
-			unknownInt = -1;
-			unknownByte = 1;
-		}
-		~NiSkinData();
+	//IBlockInternal
+	void FixLinks( const vector<blk_ref> & blocks ); // This version of the function will copy the bones from the parent Skin Instance block and fix the links at the same time.
+	void RemoveCrossLink( IBlock * block_to_remove );
 
-		void Read( istream& in, unsigned int version );
-		void Write( ostream& out, unsigned int version ) const;
-		string asString() const;
-		string GetBlockType() const { return "NiSkinData"; }
-		void * QueryInterface( int id );
-		void const * QueryInterface( int id ) const;
+	//ISkinDataInternal
+	void RepositionTriShape( blk_ref & tri_shape );
 
-		//IBlockInternal
-		void FixLinks( const vector<blk_ref> & blocks ); // This version of the function will copy the bones from the parent Skin Instance block and fix the links at the same time.
-		void RemoveCrossLink( IBlock * block_to_remove );
+	/*! Used to retrieve a list of all the bones that influence this skin
+		* \return A vector containing references to all the node blocks which act as bone influences on this skin.
+		* \sa ISkinData::AddBone, ISkinData::RemoveBone, ISkinData::GetWeights
+		*/
+	vector<blk_ref> GetBones() const;
 
-		//ISkinDataInternal
-		void RepositionTriShape( blk_ref & tri_shape );
+	/*! Used to retrieve the skin weights associated with a specific bone
+		* \param bone A blk_ref pointing to one of the node blocks which acts as a bone influence on this skin that's related weights are to be retrieved.
+		* \return A map of ints to floats.  The integers are the vertex number and the floats are the percentage influence (between 0.0 and 1.0) that the specified bone has on that vertex.  Not all vertices will be influenced by all bones.
+		* \sa ISkinData::GetBones, ISkinData::AddBone, ISkinData::RemoveBone
+		*/
+	map<int, float> GetWeights( const blk_ref & bone ) const;
 
-        //ISkinData
-		vector<blk_ref> GetBones() const;
-		map<int, float> GetWeights( const blk_ref & bone ) const;
-		void AddBone( const blk_ref & bone, map<int, float> const & in );
-		void RemoveBone( const blk_ref & bone );
-		void ReassignCrossRefs( const map<string,blk_ref> & name_map );
-	private:
-		void SetBones( const vector<blk_ref> & bone_blocks );
-		void StraightenSkeleton();
-		struct Bone {
-			Matrix33 rotation;
-			fVector3 translation;
-			float scale;
-			fVector4 unknown4Floats;
-			map<int, float> weights;
-		};
+	/*! Adds a new bone influence to this skin alone with all its weight information.  If a bone that already influences the skin is specified, the weight data will be overwritten.
+	 * \param bone A blk_ref pointing to a node blocks which is to be added as a bone influence on this skin.
+	 * \param in A map of ints to floats.  The integers are the vertex number and the floats are the percentage influence (between 0.0 and 1.0) that the specified bone has on that vertex.  Not all vertices need to be influenced by all bones.
+	 * \sa ISkinData::RemoveBone, ISkinData::GetBones, ISkinData::GetWeights
+	 */
+	void AddBone( const blk_ref & bone, map<int, float> const & in );
 
-		INode * GetNodeParent() const;
-		void CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const;
-		void CalculateBoneOffset( const INode * const par_node, const IBlock * const bone_block, Bone & result ) const;
+	/*! Removes a bone influence and deletes associated vertex weight information.
+	 * \param bone A blk_ref pointing to a node blocks which is to be removed as a bone influence on this skin.
+	 * \sa ISkinData::AddBone, ISkinData::GetBones
+	 */
+	void RemoveBone( const blk_ref & bone );
+
+	void ReassignCrossRefs( const map<string,blk_ref> & name_map );
+private:
+	void SetBones( const vector<blk_ref> & bone_blocks );
+	void StraightenSkeleton();
+	struct Bone {
 		Matrix33 rotation;
 		fVector3 translation;
-		float  scale;
-		int unknownInt;
-		byte unknownByte;
-		map<IBlock *, Bone > bone_map;
-		vector<Bone> bones;
+		float scale;
+		fVector4 unknown4Floats;
+		map<int, float> weights;
+	};
+
+	INode * GetNodeParent() const;
+	void CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & sc ) const;
+	void CalculateBoneOffset( const INode * const par_node, const IBlock * const bone_block, Bone & result ) const;
+	Matrix33 rotation;
+	fVector3 translation;
+	float  scale;
+	int unknownInt;
+	byte unknownByte;
+	map<IBlock *, Bone > bone_map;
+	vector<Bone> bones;
 };
 
 //-- New Nodes--//
@@ -1952,7 +2193,8 @@ public:
 	string GetBlockType() const { return "NiGeomMorpherController"; }
 };
 
-class NiBoolData : public AData, public IBoolData {
+/*! Contain an array of bool keys. */
+class NiBoolData : public AData {
 public:
 	NiBoolData() {}
 	~NiBoolData() {}
@@ -1962,25 +2204,28 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiBoolData"; };
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_BOOL_DATA ) {
-			return (void*)static_cast<IBoolData*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_BOOL_DATA ) {
-			return (void const *)static_cast<IBoolData const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//--IBoolData Functions--//
+	/*! Retrieves the type of boolean interpolation being used.
+	 * \return The boolean key type specifing the type of interpolation being used.
+	 * \sa IBoolData::SetKeyType
+	 */
 	KeyType GetKeyType() const { return _type; }
+
+	/*! Sets the type of boolean interpolation being used.  Does not affect existing key data.
+	 * \param t The new boolean key type specifing the type of interpolation to be used.
+	 * \sa IBoolData::GetKeyType
+	 */
 	void SetKeyType( KeyType t ) { _type = t; }
+
+	/*! Retrieves the boolean key data.
+	 * \return A vector containing Key<unsigned char> data which specify boolean values over time.
+	 * \sa IBoolData::SetKeys, Key
+	 */
 	vector< Key<unsigned char> > GetKeys() const { return _keys; }
+
+	/*! Sets the boolean key data.
+	 * \param keys A vector containing new Key<unsigned char> data which will replace any existing data.
+	 * \sa IBoolData::GetKeys, Key
+	 */
 	void SetKeys( vector< Key<unsigned char> > const & keys ) { _keys = keys; }
 
 private:
@@ -1988,7 +2233,8 @@ private:
 	vector< Key<byte> > _keys;
 };
 
-class NiColorData : public AData, public IColorData {
+/*! Contains an array of color keys. */
+class NiColorData : public AData {
 public:
 	NiColorData() {}
 	~NiColorData() {}
@@ -1998,25 +2244,28 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiColorData"; };
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_COLOR_DATA ) {
-			return (void*)static_cast<IColorData*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_COLOR_DATA ) {
-			return (void const *)static_cast<IColorData const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//--IColorData Functions--//
+	/*! Retrieves the type of color interpolation being used.
+	 * \return The color key type specifing the type of interpolation being used.
+	 * \sa IColorData::SetKeyType
+	 */
 	KeyType GetKeyType() const { return _type; }
+
+	/*! Sets the type of color interpolation being used.  Does not affect existing key data.
+	 * \param t The new color key type specifing the type of interpolation to be used.
+	 * \sa IColorData::GetKeyType
+	 */
 	void SetKeyType( KeyType t ) { _type = t; }
+
+	/*! Retrieves the color key data.
+	 * \return A vector containing Key<Color4> data which specify color over time.
+	 * \sa IColorData::SetKeys, Key
+	 */
 	vector< Key<Color4> > GetKeys() const { return _keys; }
+
+	/*! Sets the color key data.
+	 * \param keys A vector containing new Key<Color4> data which will replace any existing data.
+	 * \sa IColorData::GetKeys, Key
+	 */
 	void SetKeys( vector< Key<Color4> > const & keys ) { _keys = keys; }
 
 private:
@@ -2027,7 +2276,7 @@ private:
 /**
  * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and up).
  */
-class NiControllerSequence : public AData, public IControllerSequence {
+class NiControllerSequence : public AData {
 public:
 	NiControllerSequence() {
 		//AddAttr( attr_string, "Name" );
@@ -2044,24 +2293,24 @@ public:
 	void FixLinks( const vector<blk_ref> & blocks );
 	list<blk_ref> GetLinks() const;
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_CONTROLLER_SEQUENCE ) {
-			return (void*)static_cast<IControllerSequence*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_CONTROLLER_SEQUENCE ) {
-			return (void const *)static_cast<IControllerSequence const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//IControllerSequence Functions
+	/*! Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
+	 * \param new_name The name of the NiTextKeyExtraData block to use.
+	 * \param new_link The block reference of the NiTextKeyExtraData block to use.
+	 * \sa ITextKeyExtraData
+	 */
 	void SetTextKey( string new_name, blk_ref new_link );
+
+	/*! Sets the name, block reference, and controller type to use as a new child to this Kf root node.  The controller type is unnecessary before version 10.2.0.0.  From that version on, these children must be interpolators.  Before that version they will be keyframe controllers.
+	 * \param new_name The name to re-link this Kf file child to when it is merged with a Nif file.
+	 * \param new_link The block reference of the new Kf file child.
+	 * \param controller_type The original controller type that this Kf file child was connected to.  Only applies to versions which use interpolators.
+	 * \sa IControllerSequence::ClearKfChildren
+	 */
 	void AddKfChild( string new_name, blk_ref new_link, string controller_type);
+
+	/*! Removes all Kf file children from this Kf file root block.
+	 * \sa IControllerSequence::AddKfChild
+	 */
 	void ClearKfChildren();
 private:
 	string GetSubStr( const string & pal, short offset ) const;
@@ -2089,7 +2338,8 @@ private:
 	string unk_string;
 };
 
-class NiFloatData : public AData, public IFloatData {
+/* Contains an array of float keys. */
+class NiFloatData : public AData {
 public:
 	NiFloatData() {}
 	~NiFloatData() {}
@@ -2099,25 +2349,28 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiFloatData"; };
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_FLOAT_DATA ) {
-			return (void*)static_cast<IFloatData*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_FLOAT_DATA ) {
-			return (void const *)static_cast<IFloatData const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//--IFloatData Functions--//
+	/*! Retrieves the type of float interpolation being used.
+	 * \return The float key type specifing the type of interpolation being used.
+	 * \sa IFloatData::SetKeyType
+	 */
 	KeyType GetKeyType() const { return _type; }
+
+	/*! Sets the type of float interpolation being used.  Does not affect existing key data.
+	 * \param t The new float key type specifing the type of interpolation to be used.
+	 * \sa IFloatData::GetKeyType
+	 */
 	void SetKeyType( KeyType t ) { _type = t; }
+
+	/*! Retrieves the float key data.
+	 * \return A vector containing Key<float> data which specify float values over time.
+	 * \sa IFloatData::SetKeys, Key
+	 */
 	vector< Key<float> > GetKeys() const { return _keys; }
+
+	/*! Sets the float key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data.
+	 * \sa IFloatData::GetKeys, Key
+	 */
 	void SetKeys( vector< Key<float> > const & keys ) { _keys = keys; }
 
 private:
@@ -2438,7 +2691,8 @@ public:
 	}
 };
 
-class NiMorphData : public AData, public IMorphData {
+/*! Contains morphing animation data. */
+class NiMorphData : public AData {
 public:
 	NiMorphData() {
 		//AddAttr( attr_byte, "Unknown Byte" );
@@ -2450,31 +2704,68 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiMorphData"; };
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_MORPH_DATA ) {
-			return (void*)static_cast<IMorphData*>(this);;
-		} else {
-			return ABlock::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_MORPH_DATA ) {
-			return (void const *)static_cast<IMorphData const *>(this);;
-		} else {
-			return ABlock::QueryInterface( id );
-		}
-	}
-
-	//--IMorphData Functions --//
-	KeyType GetMorphKeyType( int n ) const { return morphs[n]._type; }
-	void SetMorphKeyType( int n, KeyType t ) { morphs[n]._type = t; }
+	/*! Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.
+	 * \return The number of vertices used in the morph target meshes.
+	 * \sa IMorphData::SetVertexCount
+	 */
 	int GetVertexCount() const { return vertCount; }
+
+	/*! Sets the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
+	 * \param n The new size of the morph target's vertex arrays.
+	 * \sa IMorphData::GetVertexCount
+	 */
 	void SetVertexCount( int n );
+
+	/*! Retrieves the number of morph targets used by this morph controller data.
+	 * \return The number of morph targets used by this morph controller data.
+	 * \sa IMorphData::SetMorphCount
+	 */
 	int GetMorphCount() const { return int(morphs.size()); }
+
+	/*! Resizes the morph target array used by this morph controller data.  If the new size is smaller, morph targets at the end of the array and all associated data will be lost.
+	 * \param n The new size of the morph target array.
+	 * \sa IMorphData::GetMorphCount
+	 */
 	void SetMorphCount( int n ) { morphs.resize( n ); }
+
+	/*! Retrieves the type of morph interpolation being used by a specific morph target.
+	 * \param n The index of the morph to get the interpolation key type from.  A zero-based positive value which must be less than that returned by IMoprhData::GetMorphCount.
+	 * \return The morph key type specifing the type of interpolation being used by the specified morph target.
+	 * \sa IMorphData::SetMorphKeyType
+	 */
+	KeyType GetMorphKeyType( int n ) const { return morphs[n]._type; }
+	
+	/*! Sets the type of morph interpolation being used by a specific morph target.  Does not affect existing key data.
+	 * \param n The index of the morph to get the interpolation key type from.  A zero-based positive value which must be less than that returned by IMoprhData::GetMorphCount.
+	 * \param t The new morph key type specifing the type of interpolation to be used by the specified morph target.
+	 * \sa IMorphData::GetMorphKeyType
+	 */
+	void SetMorphKeyType( int n, KeyType t ) { morphs[n]._type = t; }
+
+	/*! Retrieves the morph key data for a specified morph target.
+	 * \return A vector containing Key<float> data which specify the influence of this morph target over time.
+	 * \sa IMorphData::SetMorphKeys, Key
+	 */
 	vector< Key<float> > GetMorphKeys( int n ) const { return morphs[n].keys; }
+
+	/*! Sets the morph key data.
+	 * \param keys A vector containing new Key<float> data which will replace any existing data for this morph target.
+	 * \sa IMorphData::GetMorphKeys, Key
+	 */
 	void SetMorphKeys( int n, vector< Key<float> > const & keys ) { morphs[n].keys = keys; }
+
+	/*! Retrieves the vertex data from the specified morph target
+	 * \param n The index of the morph target to retrieve vertex data for.  This is a zero-based index whoes value that must be less than that returned by IMorphData::GetMorphCount.
+	 * \return A vector containing the vertices used by this morph target.  The size will be equal to the value returned by IMorphData::GetVertexCount.
+	 * \sa IMorphData::SetMorphVerts
+	 */
 	vector<Vector3> GetMorphVerts( int n) const { return morphs[n].morph; }
+
+	/*! Sets the vertex data for a specified morph target
+	 * \param n The index of the morph target to set vertex data for.  This is a zero-based index whoes value that must be less than that returned by IMorphData::GetMorphCount.
+	 * \param in A vector containing the new vertices to be used by this morph target.  The size will be equal to the value returned by IMorphData::GetVertexCount.
+	 * \sa IMorphData::SetMorphVerts
+	 */
 	void SetMorphVerts( int n, const vector<Vector3> & in );
 
 private:
@@ -2490,7 +2781,8 @@ private:
 	vector<Morph> morphs;
 };
 
-class NiPosData : public AData, public IPosData {
+/*! Contains an array of position keys. */
+class NiPosData : public AData {
 public:
 	NiPosData() {}
 	~NiPosData() {}
@@ -2500,25 +2792,28 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiPosData"; }
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_POS_DATA ) {
-			return (void*)static_cast<IPosData*>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_POS_DATA ) {
-			return (void const *)static_cast<IPosData const *>(this);;
-		} else {
-			return AData::QueryInterface( id );
-		}
-	}
-
-	//--IPosData Functions--//
+	/*! Retrieves the type of position interpolation being used.
+	 * \return The position key type specifing the type of interpolation being used.
+	 * \sa IPosData::SetKeyType
+	 */
 	KeyType GetKeyType() const { return _type; }
+
+	/*! Sets the type of position interpolation being used.  Does not affect existing key data.
+	 * \param t The new position key type specifing the type of interpolation to be used.
+	 * \sa IPosData::GetKeyType
+	 */
 	void SetKeyType( KeyType t ) { _type = t; }
+
+	/*! Retrieves the position key data.
+	 * \return A vector containing Key<Vector3> data which specify position over time.
+	 * \sa IPosData::SetKeys, Key
+	 */
 	vector< Key<Vector3> > GetKeys() const { return _keys; }
+
+	/*! Sets the position key data.
+	 * \param keys A vector containing new Key<Vector3> data which will replace any existing data.
+	 * \sa IPosData::GetKeys, Key
+	 */
 	void SetKeys( vector< Key<Vector3> > const & keys ) { _keys = keys; }
 
 private:
@@ -2542,8 +2837,8 @@ public:
 	string GetBlockType() const { return "NiParticlesData"; }
 };
 
-
-class NiTextKeyExtraData : public AExtraData, public ITextKeyExtraData {
+/*! Holds a list of textual notes and at which time they take effect which are used for designating the start and stop of animations and the triggering of sounds. */
+class NiTextKeyExtraData : public AExtraData {
 public:
 	NiTextKeyExtraData() {
 		//AddAttr( attr_int, "Unknown Int", 0, VER_4_2_2_0 );
@@ -2555,23 +2850,18 @@ public:
 	string asString() const;
 	string GetBlockType() const { return "NiTextKeyExtraData"; }
 
-	void * QueryInterface( int id ) {
-		if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
-			return (void*)static_cast<ITextKeyExtraData*>(this);;
-		} else {
-			return AExtraData::QueryInterface( id );
-		}
-	}
-	void const * QueryInterface( int id ) const {
-		if ( id == ID_TEXT_KEY_EXTRA_DATA ) {
-			return (void const *)static_cast<ITextKeyExtraData const *>(this);;
-		} else {
-			return AExtraData::QueryInterface( id );
-		}
-	}
-
 	//--ITextKeyExtraData Functions--//
+	
+	/*! Retrieves the text note key data.
+	 * \return A vector containing Key<string> data which specify text note over time.
+	 * \sa IKeyframeData::SetKeys, Key
+	 */
 	virtual vector< Key<string> > GetKeys() const { return _keys; }
+
+	/*! Sets the text note key data.
+	 * \param keys A vector containing new Key<string> data which will replace any existing data.
+	 * \sa IKeyframeData::GetKeys, Key
+	 */
 	virtual void SetKeys( vector< Key<string> > const & keys ) { _keys = keys; }
 
 private:
@@ -2643,21 +2933,21 @@ private:
 	byte * data;
 };
 
-class UnknownBlock : public ABlock, public UnknownMixIn {
+class UnknownBlock : public NiObject, public UnknownMixIn {
 public:
 	UnknownBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownBlock() {}
 	void Read( istream& in, unsigned int version ) {
 		//cout << endl << "Unknown Block Type found:  " << GetBlockType() << "\a" << endl;
-		ABlock::Read( in, version );
+		NiObject::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
-		ABlock::Write( out, version );
+		NiObject::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
 	void asString( ostream & out ) {
-		out << ABlock::asString();
+		out << NiObject::asString();
 		out << UnknownMixIn::asString();
 	}
 	string GetBlockType() const { return UnknownMixIn::GetBlockType(); }
@@ -2668,11 +2958,11 @@ public:
 	UnknownControllerBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownControllerBlock() {}
 	void Read( istream& in, unsigned int version ) {
-		ABlock::Read( in, version );
+		NiObject::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
-		ABlock::Write( out, version );
+		NiObject::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
 	string asString() {
@@ -2680,7 +2970,7 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << ABlock::asString();
+		out << NiObject::asString();
 		out << UnknownMixIn::asString();
 
 		return out.str();
@@ -2693,11 +2983,11 @@ public:
 	UnknownPropertyBlock( string block_type ) : UnknownMixIn(block_type) {}
 	~UnknownPropertyBlock() {}
 	void Read( istream& in, unsigned int version ) {
-		ABlock::Read( in, version );
+		NiObject::Read( in, version );
 		UnknownMixIn::Read( in, version );
 	}
 	void Write( ostream& out, unsigned int version ) const {
-		ABlock::Write( out, version );
+		NiObject::Write( out, version );
 		UnknownMixIn::Write( out, version );
 	}
 	string asString() {
@@ -2705,7 +2995,7 @@ public:
 		out.setf(ios::fixed, ios::floatfield);
 		out << setprecision(1);
 
-		out << ABlock::asString();
+		out << NiObject::asString();
 		out << UnknownMixIn::asString();
 
 		return out.str();

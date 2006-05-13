@@ -53,24 +53,6 @@ extern string current_file;
  * ANode methods
  **********************************************************/
 
-void * ANode::QueryInterface( int id ) {
-	// Contains INode Interface
-	if ( id == ID_NODE ) {
-		return (void*)static_cast<INode*>(this);
-	} else {
-		return ABlock::QueryInterface( id );
-	}
-}
-
-void const * ANode::QueryInterface( int id ) const {
-	// Contains INode Interface
-	if ( id == ID_NODE ) {
-		return (void const *)static_cast<INode const *>(this);
-	} else {
-		return ABlock::QueryInterface( id );
-	}
-}
-
 Matrix44 ANode::GetLocalTransform() const {
 	//Get transform data from atributes
 	Matrix33 rot = GetAttr("Rotation")->asMatrix33();
@@ -1215,24 +1197,6 @@ void AShapeData::Write( ostream& out, unsigned int version ) const {
 	//GetAttr("Unknown Link")->Write( out, version );
 }
 
-void * AShapeData::QueryInterface( int id ) {
-	// Contains ShapeData Interface
-	if ( id == ID_SHAPE_DATA ) {
-		return (void*)static_cast<IShapeData*>(this);
-	} else {
-		return AData::QueryInterface( id );
-	}
-}
-
-void const * AShapeData::QueryInterface( int id ) const {
-	// Contains ShapeData Interface
-	if ( id == ID_SHAPE_DATA ) {
-		return (void const *)static_cast<IShapeData const *>(this);
-	} else {
-		return AData::QueryInterface( id );
-	}
-}
-
 void AShapeData::SetVertexCount(int n) {
 	if ( n > 65535 || n < 0 )
 		throw runtime_error("Invalid Vertex Count: must be between 0 and 65535.");
@@ -1858,24 +1822,6 @@ void NiTriShapeData::Write( ostream& out, unsigned int version ) const {
 	}
 }
 
-void * NiTriShapeData::QueryInterface( int id ) {
-	// Contains TriShapeData Interface
-	if ( id == ID_TRI_SHAPE_DATA ) {
-		return (void*)static_cast<ITriShapeData*>(this);
-	} else {
-		return AShapeData::QueryInterface( id );
-	}
-}
-
-void const * NiTriShapeData::QueryInterface( int id ) const {
-	// Contains TriShapeData Interface
-	if ( id == ID_TRI_SHAPE_DATA ) {
-		return (void const *)static_cast<ITriShapeData const *>(this);
-	} else {
-		return AShapeData::QueryInterface( id );
-	}
-}
-
 //--Setters--//
 
 void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
@@ -1970,24 +1916,6 @@ string NiTriStripsData::asString() const {
 	}
 
 	return out.str();
-}
-
-void * NiTriStripsData::QueryInterface( int id ) {
-	// Contains TriShapeData Interface
-	if ( id == ID_TRI_STRIPS_DATA ) {
-		return (void*)static_cast<ITriStripsData*>(this);
-	} else {
-		return AShapeData::QueryInterface( id );
-	}
-}
-
-void const * NiTriStripsData::QueryInterface( int id ) const {
-	// Contains TriShapeData Interface
-	if ( id == ID_TRI_STRIPS_DATA ) {
-		return (void const *)static_cast<ITriStripsData const *>(this);
-	} else {
-		return AShapeData::QueryInterface( id );
-	}
 }
 
 short NiTriStripsData::GetStripCount() const {
@@ -2390,28 +2318,6 @@ string NiSkinData::asString() const {
 	//out << setprecision(1);
 
 	return out.str();
-}
-
-void * NiSkinData::QueryInterface( int id ) {
-	// Contains ISkinData Interface
-	if ( id == ID_SKIN_DATA ) {
-		return (void*)static_cast<ISkinData*>(this);
-	} else if ( id == SkinDataInternal ) {
-		return (void*)static_cast<ISkinDataInternal*>(this);
-	} else {
-		return ABlock::QueryInterface( id );
-	}
-}
-
-void const * NiSkinData::QueryInterface( int id ) const {
-	// Contains ISkinData Interface
-	if ( id == ID_SKIN_DATA ) {
-		return (void const *)static_cast<ISkinData const *>(this);
-	} else if ( id == SkinDataInternal ) {
-		return (void const *)static_cast<ISkinDataInternal const *>(this);
-	} else {
-		return ABlock::QueryInterface( id );
-	}
 }
 
 void NiSkinData::SetBones( const vector<blk_ref> & bone_blocks ) {

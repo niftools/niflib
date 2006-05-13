@@ -47,7 +47,7 @@
 
 #include "niflib.h"
 #include "NIF_IO.h"
-#include "NIF_Blocks.h"
+#include "nif_objects.h"
 #include <iostream>
 #include <fstream>
 #include <vector>

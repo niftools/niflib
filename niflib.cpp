@@ -32,8 +32,6 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
 #include "niflib.h"
-#include "NIF_Blocks.h"
-//#include "nif_attrs.h"
 #include "kfm.h"
 #include <exception>
 #include <stdexcept>

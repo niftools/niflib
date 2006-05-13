@@ -138,13 +138,13 @@
 				RelativePath=".\docsys_extract.cpp">
 			</File>
 			<File
-				RelativePath=".\NIF_Blocks.cpp">
-			</File>
-			<File
 				RelativePath=".\NIF_IO.cpp">
 			</File>
 			<File
 				RelativePath=".\nif_math.cpp">
+			</File>
+			<File
+				RelativePath=".\nif_objects.cpp">
 			</File>
 			<File
 				RelativePath=".\niflib.cpp">
@@ -155,23 +155,11 @@
 						RuntimeLibrary="3"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\niflib_internal.cpp">
-			</File>
-			<File
-				RelativePath=".\xml_extract.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\nif_attrs.h">
-			</File>
-			<File
-				RelativePath=".\NIF_Blocks.h">
-			</File>
 			<File
 				RelativePath=".\NIF_IO.h">
 			</File>
@@ -179,10 +167,10 @@
 				RelativePath=".\nif_math.h">
 			</File>
 			<File
-				RelativePath=".\niflib.h">
+				RelativePath=".\nif_objects.h">
 			</File>
 			<File
-				RelativePath=".\xml_extract.h">
+				RelativePath=".\niflib.h">
 			</File>
 		</Filter>
 		<Filter
