@@ -75,7 +75,7 @@ public:
 	ANode();
 	void Init() { 
 		//Start the bind pose at an identity matrix
-		SetIdentity44(bindPosition);
+		bindPosition = Matrix44::IDENTITY;
 
 		//Start the flags at "Not a skin influence"
 		GetAttr("Flags")->Set(8);
@@ -1887,7 +1887,7 @@ class NiSkinData : public AData, public ISkinData, public ISkinDataInternal {
 
 		NiSkinData() { 
 			//AddAttr( attr_link, "Skin Partition", 0, VER_10_1_0_0 );
-			SetIdentity33(rotation);
+			rotation = Matrix33::IDENTITY;
 			translation[0] = 0.0f;
 			translation[1] = 0.0f;
 			translation[2] = 0.0f;

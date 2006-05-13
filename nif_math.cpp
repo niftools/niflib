@@ -34,137 +34,19 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "nif_math.h"
 #include <iomanip>
 
-void PrintMatrix33( Matrix33 const & m, ostream & out ) {
-	out << endl
-		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
-		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
-		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" <<endl;
-}
+//Constants
 
-void PrintMatrix44( Matrix44 const & m, ostream & out ) {
-	out << endl
-		<< "      |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << setw(8) << m[0][3] << " |" << endl
-		<< "      |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << setw(8) << m[1][3] << " |" << endl
-		<< "      |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << setw(8) << m[2][3] << " |" << endl
-		<< "      |" << setw(8) << m[3][0] << "," << setw(8) << m[3][1] << "," << setw(8) << m[3][2] << setw(8) << m[3][3] << " |" << endl;
-}
+const Matrix44 Matrix44::IDENTITY( 1.0f, 0.0f, 0.0f, 0.0f,
+								   0.0f, 1.0f, 0.0f, 0.0f,
+								   0.0f, 0.0f, 1.0f, 0.0f,
+								   0.0f, 0.0f, 0.0f, 1.0f );
 
-Vector3 MultVector3( Vector3 const & a, Vector3 const & b ) {
-	Vector3 answer;
-	answer.x = a.y * b.z - a.z * b.y;
-	answer.y = a.z * b.x - a.x * b.z;
-	answer.z = a.x * b.y - a.y * b.x;
+const Matrix33 Matrix33::IDENTITY( 1.0f, 0.0f, 0.0f,
+								   0.0f, 1.0f, 0.0f,
+								   0.0f, 0.0f, 1.0f );
 
-	return answer;
-}
-
-void SetIdentity33( Matrix33 & m ) {
-	m[0][0] = 1.0f;	m[0][1] = 0.0f;	m[0][2] = 0.0f;
-	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;
-	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;
-}
-
-void SetIdentity44( Matrix44 & m ) {
-	m[0][0] = 1.0f;	m[0][1] = 0.0f;	m[0][2] = 0.0f;	m[0][3] = 0.0f;
-	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;	m[1][3] = 0.0f;
-	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;	m[2][3] = 0.0f;
-	m[3][0] = 0.0f;	m[3][1] = 0.0f;	m[3][2] = 0.0f;	m[3][3] = 1.0f;
-}
-
-Matrix33 MultMatrix33( Matrix33 const & a, Matrix33 const & b ) {
-	Matrix33 result;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			float t = 0.0f;
-			for (int k = 0; k < 4; k++) {
-				t += a[i][k] * b[k][j];
-			}
-			result[i][j] = t;
-		}
-	}
-	return result;
-}
-
-Matrix44 MultMatrix44( Matrix44 const & a, Matrix44 const & b ) {
-	Matrix44 result;
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			float t = 0.0f;
-			for (int k = 0; k < 4; k++) {
-				t += a[i][k] * b[k][j];
-			}
-			result[i][j] = t;
-		}
-	}
-	return result;
-}
-
-float DetMatrix33( Matrix33 const & m ) {
-	return  m[0][0]*(m[1][1]*m[2][2]-m[1][2]*m[2][1])
-		  - m[0][1]*(m[1][0]*m[2][2]-m[1][2]*m[2][0])
-		  + m[0][2]*(m[1][0]*m[2][1]-m[1][1]*m[2][0]);
-}
-
-float DetMatrix44( Matrix44 const & m ) {
-	Matrix33 sub1(
-		m[1][1], m[1][2], m[1][3],
-		m[2][1], m[2][2], m[2][3],
-		m[3][1], m[3][2], m[3][3]
-	);
-
-	Matrix33 sub2(
-		m[1][0], m[1][2], m[1][3],
-		m[2][0], m[2][2], m[2][3],
-		m[3][0], m[3][2], m[3][3]
-	);
-
-	Matrix33 sub3(
-		m[1][0], m[1][1], m[1][3],
-		m[2][0], m[2][1], m[2][3],
-		m[3][0], m[3][1], m[3][3] 
-	);
-
-	Matrix33 sub4(
-		m[1][0], m[1][1], m[1][2],
-		m[2][0], m[2][1], m[2][2],
-		m[3][0], m[3][1], m[3][2]
-	);
-
-	return  m[0][0] * DetMatrix33( sub1 )
-	      - m[0][1] * DetMatrix33( sub2 )
-	      + m[0][2] * DetMatrix33( sub3 )
-	      - m[0][3] * DetMatrix33( sub4 );
-}
-
-float AdjMatrix44(Matrix44 const & m, int skip_r, int skip_c) {
-	Matrix33 sub;
-	int i = 0, j = 0;
-	for (int r = 0; r < 4; r++) {
-		if (r == skip_c)
-			continue;
-		for (int c = 0; c < 4; c++) {
-			if (c == skip_r)
-				continue;
-			sub[i][j] = m[r][c];
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-
-	return pow(-1.0f, float(skip_r + skip_c)) * DetMatrix33( sub );
-}
-
-Matrix44 InverseMatrix44( Matrix44 const & m ) {
-	Matrix44 result;
-	float det = DetMatrix44(m);
-	for (int r = 0; r < 4; r++) {
-		for (int c = 0; c < 4; c++) {
-			result[r][c] = AdjMatrix44(m, r, c) / det;
-		}
-	}
-	return result;
-}
+const Matrix22 Matrix22::IDENTITY( 1.0f, 0.0f,
+								   0.0f, 1.0f );
 
 /*
  * Vector3 Methods
@@ -269,8 +151,20 @@ Vector3 Vector3::CrossProduct( const Vector3 & rh) const {
 //}
 
 /*
+ * Matrix22 Methods
+ */
+
+Matrix22::Matrix22() {
+	*this = Matrix22::IDENTITY;
+}
+
+/*
  * Matrix33 Methods
  */
+
+Matrix33::Matrix33() {
+	*this = Matrix33::IDENTITY;
+}
 
 Quaternion Matrix33::AsQuaternion() {
 	Quaternion quat;
@@ -318,12 +212,145 @@ Quaternion Matrix33::AsQuaternion() {
 	return quat;
 }
 
+float Matrix33::Determinant() const {
+	return  (*this)[0][0] * ( (*this)[1][1] * (*this)[2][2] - (*this)[1][2] * (*this)[2][1] )
+		  - (*this)[0][1] * ( (*this)[1][0] * (*this)[2][2] - (*this)[1][2] * (*this)[2][0] )
+		  + (*this)[0][2] * ( (*this)[1][0] * (*this)[2][1] - (*this)[1][1] * (*this)[2][0] );
+}
+
+
+
 /*
  * Matrix44 Methods
  */
 
 Matrix44::Matrix44() {
-	*this = IDENTITY44;
+	*this = Matrix44::IDENTITY;
+}
+
+Matrix44::Matrix44( const Vector3 & t, const Matrix33 & r, float scale ) {
+	//Set up a matrix with rotate and translate information
+	Matrix44 rt;
+	rt[0][0] = r[0][0];	rt[0][1] = r[0][1];	rt[0][2] = r[0][2];	rt[0][3] = 0.0f;
+	rt[1][0] = r[1][0];	rt[1][1] = r[1][1];	rt[1][2] = r[1][2];	rt[1][3] = 0.0f;
+	rt[2][0] = r[2][0];	rt[2][1] = r[2][1];	rt[2][2] = r[2][2];	rt[2][3] = 0.0f;
+	rt[3][0] = t.x;     rt[3][1] = t.y;     rt[3][2] = t.z;     rt[3][3] = 1.0f;
+
+	//Set up another matrix with the scale information
+	Matrix44 s;
+	s[0][0] = scale;	s[0][1] = 0.0f;		s[0][2] = 0.0f;		s[0][3] = 0.0f;
+	s[1][0] = 0.0f;		s[1][1] = scale;	s[1][2] = 0.0f;		s[1][3] = 0.0f;
+	s[2][0] = 0.0f;		s[2][1] = 0.0f;		s[2][2] = scale;	s[2][3] = 0.0f;
+	s[3][0] = 0.0f;		s[3][1] = 0.0f;		s[3][2] = 0.0f;		s[3][3] = 1.0f;
+
+	//Multiply the two for the combined transform
+	*this = s * rt;
+}
+
+Matrix44 Matrix44::operator*( const Matrix44 & rh ) const {
+	return Matrix44(*this) *= rh;
+}
+Matrix44 & Matrix44::operator*=( const Matrix44 & rh ) {
+	Matrix44 r;
+	Matrix44 & lh = *this;
+	float t;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			t = 0.0f;
+			for (int k = 0; k < 4; k++) {
+				t += lh[i][k] * rh[k][j];
+			}
+			r[i][j] = t;
+		}
+	}
+
+	*this = r;
+	return *this;
+}
+
+Matrix44 Matrix44::operator*( float rh ) const {
+	return Matrix44(*this) *= rh;
+}
+
+Matrix44 & Matrix44::operator*=( float rh ) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*this)[i][j] *= rh;
+		}
+	}
+	return *this;
+}
+
+Matrix44 Matrix44::operator+( const Matrix44 & rh ) const {
+	return Matrix44(*this) += rh;
+} 
+
+Matrix44 & Matrix44::operator+=( const Matrix44 & rh ) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*this)[i][j] += rh[i][j];
+		}
+	}
+	return *this;
+}
+
+Matrix44 & Matrix44::operator=( const Matrix44 & rh ) {
+	memcpy(rows, rh.rows, sizeof(Float4) * 4);
+	return *this;
+}
+
+bool Matrix44::operator==( const Matrix44 & rh ) const {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			if ( (*this)[i][j] != rh[i][j] )
+				return false;
+		}
+	}
+	return true;
+}
+
+Matrix44 Matrix44::Transpose() const {
+	const Matrix44 & t = *this;
+	return Matrix44( t[0][0], t[0][1], t[0][2], t[0][3],
+					 t[1][0], t[1][1], t[1][2], t[1][3],
+					 t[2][0], t[2][1], t[2][2], t[2][3],
+					 t[3][0], t[3][1], t[3][2], t[3][3] );
+}
+
+Matrix33 Matrix44::Submatrix( int skip_r, int skip_c ) const {
+	Matrix33 sub;
+	int i = 0, j = 0;
+	for (int r = 0; r < 4; r++) {
+		if (r == skip_c)
+			continue;
+		for (int c = 0; c < 4; c++) {
+			if (c == skip_r)
+				continue;
+			sub[i][j] = (*this)[r][c];
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return sub;
+}
+
+float Matrix44::Adjunct( int skip_r, int skip_c ) const {
+	Matrix33 sub = Submatrix( skip_r, skip_c );
+	return pow(-1.0f, float(skip_r + skip_c)) * sub.Determinant();
+}
+
+Matrix44 Matrix44::Inverse() const {
+	Matrix44 result;
+
+	float det = Determinant();
+	for (int r = 0; r < 4; r++) {
+		for (int c = 0; c < 4; c++) {
+			result[r][c] = Adjunct(r, c) / det;
+		}
+	}
+
+	return result;
 }
 
 /*

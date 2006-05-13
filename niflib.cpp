@@ -553,7 +553,7 @@ void BuildUpBindPositions( blk_ref const & block ) {
 			//Post-multipy the block's bind matrix with the parent's bind matrix
 			Matrix44 par_mat = par_node->GetWorldBindPos();
 			Matrix44 blk_mat = blk_node->GetWorldBindPos();
-			Matrix44 result = MultMatrix44( blk_mat, par_mat);
+			Matrix44 result = blk_mat * par_mat;
 
 			//Store result back to block bind position
 			blk_node->SetWorldBindPos( result );

@@ -318,6 +318,9 @@ struct Float2 {
 
 /*! Stores a 2 by 2 matrix used for bump maps. */
 struct Matrix22 {
+	/*! The 2x2 identity matrix */
+	static const Matrix22 IDENTITY;
+
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
@@ -332,7 +335,7 @@ struct Matrix22 {
 	}
 
 	/*! Default Constructor */
-	Matrix22() {}
+	Matrix22();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param m11 The value to set at row 1, column 1.
@@ -427,6 +430,9 @@ struct Float3 {
 
 /*! Stores a 3 by 3 matrix used for rotation. */
 struct Matrix33 {
+	/*! The 3x3 identity matrix */
+	static const Matrix33 IDENTITY;
+
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
@@ -440,8 +446,8 @@ struct Matrix33 {
 		return rows[n];
 	}
 
-	/*! Default constructor. */
-	Matrix33() {}
+	/*! Default constructor.   Initializes matrix to identity.  */
+	Matrix33();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param m11 The value to set at row 1, column 1.
@@ -485,8 +491,17 @@ struct Matrix33 {
 		rows[2][0] = m31; rows[2][1] = m32; rows[2][2] = m33;
 	}
 
+	/*! Returns a quaternion representation of the rotation stored in this matrix. 
+	 * \return A quaternion with an equivalent rotation to the one stored in this matrix.
+	 */
 	Quaternion AsQuaternion();
 
+	/*! Calculates the determinant of this matrix.
+	 * \return The determinant of this matrix.
+	 */
+	float Determinant() const;
+
+	//Undocumented
 	void AsFloatArr( float out[3][3] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2];
@@ -560,6 +575,9 @@ struct Float4 {
 
 /*! Stores a 4 by 4 matrix used for combined transformations. */
 struct Matrix44 {
+	/*! The 4x4 identity matrix */
+	static const Matrix44 IDENTITY;
+	
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
@@ -611,6 +629,14 @@ struct Matrix44 {
 		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
 
+	/*! This constructor allows a 4x4 transform matrix to be initalized from a
+	 * translate vector, a 3x3 rotation matrix, and a scale factor.
+	 * \param translate The translation vector that specifies the new x, y, and z coordinates.
+	 * \param rotate The 3x3 rotation matrix.
+	 * \param scale The scale factor.
+	 */
+	Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
+
 	/*! This function can be used to set all values in this matrix at the same time.
 	 * \param m11 The value to set at row 1, column 1.
 	 * \param m12 The value to set at row 1, column 2.
@@ -641,6 +667,96 @@ struct Matrix44 {
 		rows[3][0] = m41; rows[3][1] = m42; rows[3][2] = m43; rows[3][3] = m44;
 	}
 
+	/* Multiplies this matrix by another.
+	 * \param rh The matrix to multiply this one with.
+	 * \return The result of the multiplication.
+	 */
+	Matrix44 operator*( const Matrix44 & rh ) const;
+
+	/* Multiplies this matrix by another and sets the result to itself.
+	 * \param rh The matrix to multiply this one with.
+	 * \return This matrix is returned.
+	 */
+	Matrix44 & operator*=( const Matrix44 & rh );
+
+	/* Multiplies this matrix by a scalar value.
+	 * \param rh The scalar value to multiply each component of this matrix by.
+	 * \return The result of the multiplication.
+	 */
+	Matrix44 operator*( float rh ) const;
+
+	/* Multiplies this matrix by a scalar value and sets the resutl to itself.
+	 * \param rh The scalar value to multiply each component of this matrix by.
+	 * \return This matrix is returned.
+	 */
+	Matrix44 & operator*=( float rh );
+
+	/* Multiplies this matrix by a vector with x, y, and z components.
+	 * \param rh The vector to multiply this matrix with.
+	 * \return The result of the multiplication.
+	 */
+	Vector3 operator*( const Vector3 & rh ) const;
+
+	/* Adds this matrix to another.
+	 * \param rh The matrix to be added to this one.
+	 * \return The result of the addition.
+	 */
+	Matrix44 operator+( const Matrix44 & rh ) const;
+
+	/* Adds this matrix to another and sets the result to itself.
+	 * \param rh The matrix to be added to this one.
+	 * \return This matrix is returned.
+	 */
+	Matrix44 & operator+=( const Matrix44 & rh );
+
+	/* Sets the values of this matrix to those of the given matrix.
+	 * \param rh The matrix to copy values from.
+	 * \return This matrix is returned.
+	 */
+	Matrix44 & operator=( const Matrix44 & rh );
+
+	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
+	 * \param rh The matrix to compare this one with.
+	 * \return true if the matricies are equal, false otherwise.
+	 */
+	bool operator==( const Matrix44 & rh ) const;
+
+	/* Allows the contents of the matrix to be printed to an ostream.
+	 * \param lh The ostream to insert the text into.
+	 * \param rh The matrix to insert into the stream.
+	 * \return The given ostream is returned.
+	 */
+	friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
+
+	/*! Calculates the transpose of this matrix.
+	 * \return The transpose of this matrix.
+	 */
+	Matrix44 Transpose() const;
+
+	/*! Calculates the determinant of this matrix.
+	 * \return The determinant of this matrix.
+	 */
+	float Determinant() const;
+
+	/*! Calculates the inverse of this matrix.
+	 * \retun The inverse of this matrix.
+	 */
+	Matrix44 Inverse() const;
+
+	/*! Returns a 3x3 submatrix of this matrix created by skipping the indicated row and column.
+	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
+	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
+	 * \return The 3x3 submatrix obtained by skipping the indicated row and column.
+	 */
+	Matrix33 Submatrix( int skip_r, int skip_c ) const;
+
+	/*! Calculates the adjunct of this matrix created by skipping the indicated row and column.
+	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
+	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
+	 * \return The adjunct obtained by skipping the indicated row and column.
+	 */
+	float Adjunct( int skip_r, int skip_c ) const;
+
 	//undocumented
 	void AsFloatArr( float out[4][4] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
@@ -656,12 +772,6 @@ struct Matrix44 {
         return rows[n];
     }
 };
-
-/*! The 4x4 identity matrix */
-const Matrix44 IDENTITY44( 1.0f, 0.0f, 0.0f, 0.0f,
-						   0.0f, 1.0f, 0.0f, 0.0f,
-						   0.0f, 0.0f, 1.0f, 0.0f,
-						   0.0f, 0.0f, 0.0f, 1.0f );
 
 /*! Stores a color along with alpha translucency */
 struct Color4 {
@@ -758,21 +868,8 @@ ostream & operator<<( ostream & out, Matrix22 const & val );
 ostream & operator<<( ostream & out, Float3 const & val );
 ostream & operator<<( ostream & out, Matrix33 const & val );
 ostream & operator<<( ostream & out, Float4 const & val );
-ostream & operator<<( ostream & out, Matrix44 const & val );
 ostream & operator<<( ostream & out, Color4 const & val );
 ostream & operator<<( ostream & out, Quaternion const & val );
 
-
-
-Matrix33 MultMatrix33( Matrix33 const & a, Matrix33 const & b );
-Matrix44 MultMatrix44( Matrix44 const & a, Matrix44 const & b );
-float DetMatrix33( Matrix33 const & m );
-float DetMatrix44( Matrix44 const & m );
-float AdjMatrix44( Matrix44 const & m, int r, int c );
-Matrix44 InverseMatrix44( Matrix44 const & m );
-void SetIdentity33( Matrix33 & m );
-void SetIdentity44( Matrix44 & m );
-void PrintMatrix33( Matrix33 const & m, ostream & out );
-void PrintMatrix44( Matrix44 const & m, ostream & out );
 
 #endif

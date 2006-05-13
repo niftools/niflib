@@ -73,26 +73,11 @@ void const * ANode::QueryInterface( int id ) const {
 
 Matrix44 ANode::GetLocalTransform() const {
 	//Get transform data from atributes
-	Matrix33 f = GetAttr("Rotation")->asMatrix33();
+	Matrix33 rot = GetAttr("Rotation")->asMatrix33();
 	Float3 tran = GetAttr("Translation")->asFloat3();
 	float scale = GetAttr("Scale")->asFloat();
 
-	//Set up a matrix with rotate and translate information
-	Matrix44 rt;
-	rt[0][0] = f[0][0];	rt[0][1] = f[0][1];	rt[0][2] = f[0][2];	rt[0][3] = 0.0f;
-	rt[1][0] = f[1][0];	rt[1][1] = f[1][1];	rt[1][2] = f[1][2];	rt[1][3] = 0.0f;
-	rt[2][0] = f[2][0];	rt[2][1] = f[2][1];	rt[2][2] = f[2][2];	rt[2][3] = 0.0f;
-	rt[3][0] = tran[0];	rt[3][1] = tran[1];	rt[3][2] = tran[2];	rt[3][3] = 1.0f;
-
-	//Set up another matrix with the scale information
-	Matrix44 s;
-	s[0][0] = scale;	s[0][1] = 0.0f;		s[0][2] = 0.0f;		s[0][3] = 0.0f;
-	s[1][0] = 0.0f;		s[1][1] = scale;	s[1][2] = 0.0f;		s[1][3] = 0.0f;
-	s[2][0] = 0.0f;		s[2][1] = 0.0f;		s[2][2] = scale;	s[2][3] = 0.0f;
-	s[3][0] = 0.0f;		s[3][1] = 0.0f;		s[3][2] = 0.0f;		s[3][3] = 1.0f;
-
-	//Multiply the two for the resulting local transform
-	return MultMatrix44(s, rt);
+	return Matrix44( Vector3( tran[0], tran[1], tran[2] ), rot, scale );
 }
 
 Matrix44 ANode::GetWorldTransform() const {
@@ -107,7 +92,7 @@ Matrix44 ANode::GetWorldTransform() const {
 		Matrix44 par_world = node->GetWorldTransform();
 
 		//Multipy local matrix and parent world matrix for result
-		return MultMatrix44( par_world, local);
+		return par_world * local;
 	}
 	else {
 		//No parent transform, simply return local transform
@@ -132,9 +117,9 @@ Matrix44 ANode::GetLocalBindPos() const {
 		//There is a node parent
 		//multiply its inverse with this block's bind position to get the local bind position
 		Matrix44 par_mat = node->GetWorldBindPos();
-		Matrix44 par_inv = InverseMatrix44( par_mat);
+		Matrix44 par_inv = par_mat.Inverse();
 		
-		return MultMatrix44( bindPosition, par_inv);
+		return bindPosition * par_inv;
 	}
 	else {
 		//No parent transform, simply return local transform
@@ -2492,8 +2477,8 @@ void NiSkinData::StraightenSkeleton() {
 				);
 
 				//Do calculation to get correct bone postion in relation to parent
-				Matrix44 inverse_co = InverseMatrix44(child_offset);
-				Matrix44 child_pos = MultMatrix44( inverse_co, parent_offset);
+				Matrix44 inverse_co = child_offset.Inverse();
+				Matrix44 child_pos = inverse_co * parent_offset;
 
 				//Store result in block's Bind Position Matrix
 				INode * node = (INode*)it2->first->QueryInterface(ID_NODE);
@@ -2566,7 +2551,7 @@ void NiSkinData::RepositionTriShape( blk_ref & tri_shape ) {
 
 		Matrix44 bone_mat = bone_node->GetWorldBindPos();
 
-		Matrix44 result_mat = MultMatrix44( offset_mat, bone_mat);
+		Matrix44 result_mat = offset_mat * bone_mat;
 
 		//GetBuiltUpTransform( bone_blk, end_mat );
 
@@ -2760,8 +2745,8 @@ void NiSkinData::CalculateBoneOffset( INode const * const par_node, IBlock const
 	bone_mat = bone_node->GetWorldBindPos();
 
 	//Inverse bone matrix & multiply with parent node matrix
-	inv_mat = InverseMatrix44(bone_mat);
-	res_mat = MultMatrix44(par_mat, inv_mat);
+	inv_mat = bone_mat.Inverse();
+	res_mat = par_mat * inv_mat;
 
 	//--Extract Scale from first 3 rows--//
 	float scale[3];
@@ -2812,8 +2797,8 @@ void NiSkinData::CalculateOverallOffset( Matrix33 & rot, fVector3 & tr, float & 
 	Matrix44 skel_mat = iskel->GetWorldTransform();
 	
 	// Inverse parent node transform & multiply with skeleton matrix
-	Matrix44 inv_mat = InverseMatrix44(par_mat);
-	Matrix44 res_mat = MultMatrix44(inv_mat, skel_mat);
+	Matrix44 inv_mat = par_mat.Inverse();
+	Matrix44 res_mat = inv_mat * skel_mat;
 
 	//--Extract Scale from first 3 rows--//
 	float scale[3];
