@@ -273,7 +273,7 @@ blk_ref ReadNifTree( istream & in );
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
  * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
- * \param root_block The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
+ * \param root The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  * 
  * <b>Example:</b> 
@@ -290,25 +290,25 @@ blk_ref ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigned int version = VER_4_0_0_2 );
+void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2 );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
  * \param stream The output stream to write the NIF data to.
- * \param root_block The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
+ * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-void WriteNifTree( ostream & stream, blk_ref const & root_block, unsigned int version );
+void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
  * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
- * \param root_block The root block to start from when writing out the NIF file.
+ * \param root The root block to start from when writing out the NIF file.
  * \param version The version of the NIF format to use when writing a file.
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-void WriteFileGroup( string const & file_name, blk_ref const & root_block, unsigned int version, unsigned int export_files, unsigned int kf_type );
+void WriteFileGroup( string const & file_name, blk_ref const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.

@@ -49,7 +49,7 @@ map<string, blk_factory_func> global_block_map;
 unsigned int blocks_in_memory = 0;
 
 //Utility Functions
-void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block );
+void EnumerateNifTree( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
 void BuildUpBindPositions( blk_ref const & block );
 blk_ref FindRoot( vector<blk_ref> const & blocks );
 void RegisterBlockFactories ();
@@ -254,7 +254,8 @@ vector<blk_ref> ReadNifList( istream & in ) {
 
 
 	//--Read Blocks--//
-	vector<blk_ref> blocks( numBlocks );
+	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
+	list<uint> link_stack; //List to add link values to as they're read in from the file
 	string blockName;
 	for (uint i = 0; i < numBlocks; i++) {
 
@@ -321,7 +322,7 @@ vector<blk_ref> ReadNifList( istream & in ) {
 		}
 
 		//blocks[i]->SetBlockNum(i);
-		blocks[i]->Read( in, version );
+		blocks[i]->Read( in, link_stack, version );
 
 		//cout << endl << blocks[i]->asString() << endl;
 	}
@@ -339,19 +340,17 @@ vector<blk_ref> ReadNifList( istream & in ) {
 	if ( ! in.eof() )
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
 		
-	//--Now that all blocks are read, go back and fix the indices--//
+	//--Now that all blocks are read, go back and fix the links--//
 	for (uint i = 0; i < blocks.size(); ++i) {
 
-		////Get internal interface
-		//IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
-
 		//Fix links & other pre-processing
-		//blocks[i]->FixLinks( blocks );
+		blocks[i]->FixLinks( blocks, link_stack, version );
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
 	BuildUpBindPositions( FindRoot(blocks) );
 
+	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance
 	//for (uint i = 0; i < blocks.size(); ++i) {
 	//	
@@ -397,14 +396,26 @@ void WriteNifTree( string const & file_name, blk_ref const & root_block, unsigne
 }
 
 // Writes a valid Nif File given an ostream, a pointer to the root block of a file tree
-void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int version ) {
+void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
-	//Reorder blocks into a list
-	vector<blk_ref> blk_list;
-	vector<string> blk_types;
-	ReorderNifTree( blk_list, blk_types, root_block );
+	//Enumerate all objects in tree
+	map<Type,uint> type_map;
+	map<NiObjectRef, uint> link_map;
+
+	EnumerateNifTree( root, type_map, link_map );
+
+	//Build vectors for reverse look-up
+	vector<NiObjectRef> objects(link_map.size());
+	for ( map<NiObjectRef, uint>::iterator it = link_map.begin(); it != link_map.end(); ++it ) {
+		objects[it->second] = it->first;
+	}
+
+	vector<const Type*> types(type_map.size());
+	for ( map<Type, uint>::iterator it = type_map.begin(); it != type_map.end(); ++it ) {
+		types[it->second] = &(it->first);
+	}
 
 	//--Write Header--//
 	//Version 10.0.1.0 is the last known to use the name NetImmerse
@@ -434,45 +445,40 @@ void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int versi
 		WriteUInt( 0, out );
 	}
 	
-	WriteUInt( uint(blk_list.size()), out ); //Number of blocks
+	WriteUInt( uint(objects.size()), out ); //Number of objects
 
 	//New header data exists from version 5.0.0.1 on
 	if ( version >= 0x05000001 ) {
-		WriteUShort( ushort(blk_types.size()), out );
+		WriteUShort( ushort(type_map.size()), out );
 		
-		for ( uint i = 0; i < blk_types.size(); ++i ) {
-			WriteString( blk_types[i], out );
-			//cout << i << ":  " << blk_types[i] << endl;
+		//Write Type Names
+		for ( uint i = 0; i < types.size(); ++i ) {
+			WriteString( types[i]->GetTypeName(), out );
+
 		}
 
-		for ( uint i = 0; i < blk_list.size(); ++i ) {
-			////Get internal interface
-			//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
-			//WriteUShort( ((ABlock*)blk_list[i].get_block())->GetBlockTypeNum(), out );
+		//Write type number of each block
+		for ( uint i = 0; i < objects.size(); ++i ) {
+			WriteUShort( type_map[objects[i]->GetType()], out );
 
-			//cout << i << ":  " << bk_intl->GetBlockTypeNum() << endl;
 		}
 
 		//Unknown Int 2
 		WriteUInt( 0, out );
 	}
 
-	//--WriteBlocks--//
-	for (uint i = 0; i < blk_list.size(); ++i) {
+	//--Write Objects--//
+	for (uint i = 0; i < objects.size(); ++i) {
 
 		if (version < 0x05000001) {
 			//cout << i << ":  " << blk_list[i]->GetBlockType() << endl;
 			//Write Block Type
-			WriteString( blk_list[i]->GetType().GetTypeName() , out );
+			WriteString( objects[i]->GetType().GetTypeName() , out );
 		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
 			WriteUInt( 0, out );
 		}
 
-		////Get internal interface
-		//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
-
-		blk_list[i]->Write( out, version );
-
+		objects[i]->Write( out, link_map, version );
 	}
 
 	//--Write Footer--//
@@ -480,39 +486,28 @@ void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int versi
 	WriteUInt( 0, out ); // Unknown Int = 0 (usually)
 }
 
-void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk_ref const & block ) {
-	//Get internal interface
-	//IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
+void EnumerateNifTree( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map ) {
+	//Ensure that this object has not already been visited
+	if ( link_map.find( root ) != link_map.end() ) {
+		//This object has already been visited.  Return.
+		return;
+	}
 
-	/*ABlock * bk_intl = (ABlock*)block.get_block();
-	bk_intl->SetBlockNum( int(blk_list.size()) );*/
-	blk_list.push_back(block);
+	//Add object to link map
+	link_map[root] = uint(link_map.size());
 
-	//List Block Type
-	string blk_type = block->GetType().GetTypeName();
-
-	//uint i;
-	//for ( i = 0; i < blk_types.size(); ++i ) {
-	//	if ( blk_type == blk_types[i] ) {
-	//		bk_intl->SetBlockTypeNum(i);
-	//		break;
-	//	}
-	//}
-
-	//if ( i == blk_types.size() ) {
-	//	//A match was not found, add this type to the array
-	//	blk_types.push_back( blk_type );
-	//	bk_intl->SetBlockTypeNum(i);
-	//}
-
-	//list<blk_ref> links = block->GetLinks();
-	//list<blk_ref>::iterator it;
-	//for (it = links.begin(); it != links.end(); ++it) {
-	//	if ( it->is_null() == false && (*it)->GetParent() == block ) {
-	//		ReorderNifTree( blk_list, blk_types, *it );
-	//	}
-	//}
-
+	//Add this object type to the map if it isn't there already
+	if ( type_map.find( root->GetType() ) == type_map.end() ) {
+		//The type has not yet been registered, so register it
+		type_map[root->GetType()] = uint(type_map.size());
+	}
+	
+	//Call this function on all links of this object
+	
+	list<NiObjectRef> links = root->GetLinks();
+	for ( list<blk_ref>::iterator it = links.begin(); it != links.end(); ++it ) {
+		EnumerateNifTree( *it, type_map, link_map );
+	}
 }
 
 //int ResetBlockNums( int start_num, blk_ref block ) {

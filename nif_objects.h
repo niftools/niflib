@@ -65,6 +65,7 @@ public:
 
 	bool IsSameType ( const Type & compare_to ) const;
 	bool IsDerivedType ( const Type & compare_to ) const;
+	bool operator<( const Type & compare_to ) const { return (this < &compare_to); }
 private:
 	string name;
 	const Type * base_type;
@@ -85,6 +86,8 @@ public:
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
 
+	bool operator<(const Ref & ref) const { return (_object < ref._object); }
+
 	bool operator==(T * object) const;
 	bool operator!=(T * object) const;
 	bool operator==(const Ref & ref) const;
@@ -95,14 +98,14 @@ protected:
 	T* _object;
 };
 
+/**
+ * NiObject - Base Object class from which all other objects derive
+ */
+
 class NiObject;
 typedef Ref<NiObject> NiObjectRef;
 typedef Ref<NiObject> blk_ref; //Temporary to make old code compile
 typedef NiObject IBlock;
-
-/**
- * Base Object class from which all other objects derive
- */
 
 class NiObject {
 public:
@@ -137,10 +140,9 @@ public:
 	bool IsDerivedType( const NiObject * objct ) const;
 
 	//Streaming Functions
-	virtual void Read( istream& in, unsigned int version ) {};
-	virtual void Write( ostream& out, unsigned int version ) const {};
-	//TODO Register objects in list
-	//TODO Link up objects from previously created list
+	virtual void Read( istream& in, list<uint> link_stack, unsigned int version ) {}
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {}
+	virtual void FixLinks( const vector<blk_ref> & blocks, list<uint> link_stack, unsigned int version ) {}
 
 	//Reference Counting
 	void AddRef(); //Should not be called directly
@@ -173,6 +175,24 @@ public:
 	 * \sa IAttr::asString, SetVerboseMode
 	 */
 	virtual string asString() const;
+
+	/*!
+	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
+	 * \return A list of references to blocks that this attribute links its owner block to.
+	 * 
+	 * <b>Example:</b> 
+	 * \code
+	 * blk_ref my_block = ReadNifTree("test_in.nif");
+	 * list<blk_ref> attr_list = my_block->GetLinks();
+	 * \endcode
+	 * 
+	 * <b>In Python:</b>
+	 * \code
+	 * my_block = ReadNifTree("test_in.nif")
+	 * attr_list = my_block.GetLinks()
+	 * \endcode
+	 */
+	virtual list<NiObjectRef> GetLinks();
 	
 	// Python Operator Overloads
 	string __str__() const {
