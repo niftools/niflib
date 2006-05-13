@@ -32,6 +32,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
 #include "nif_math.h"
+#include <iomanip>
 
 void PrintMatrix33( Matrix33 const & m, ostream & out ) {
 	out << endl
@@ -68,52 +69,6 @@ void SetIdentity44( Matrix44 & m ) {
 	m[1][0] = 0.0f;	m[1][1] = 1.0f;	m[1][2] = 0.0f;	m[1][3] = 0.0f;
 	m[2][0] = 0.0f;	m[2][1] = 0.0f;	m[2][2] = 1.0f;	m[2][3] = 0.0f;
 	m[3][0] = 0.0f;	m[3][1] = 0.0f;	m[3][2] = 0.0f;	m[3][3] = 1.0f;
-}
-
-//Vector3 MatrixToEuler( Matrix33 & m ) {}
-
-Quaternion MatrixToQuat( Matrix33 const & m ) {
-	Quaternion quat;
-	float tr, s, q[4];
-	int i, j, k;
-
-	int nxt[3] = {1, 2, 0};
-
-	// compute the trace of the matrix
-	tr = m[0][0] + m[1][1] + m[2][2];
-
-	// check if the trace is positive or negative
-	if (tr > 0.0) {
-		s = sqrt (tr + 1.0f);
-		quat.w = s / 2.0f;
-		s = 0.5f / s;
-		quat.x = (m[1][2] - m[2][1]) * s;
-		quat.y = (m[2][0] - m[0][2]) * s;
-		quat.z = (m[0][1] - m[1][0]) * s;
-	}
-	else {
-		// trace is negative
-		i = 0;
-		if ( m[1][1] > m[0][0])
-			i = 1;
-		if ( m[2][2] > m[i][i] )
-			i = 2;
-		j = nxt[i];
-		k = nxt[j];
-
-		s = sqrt( ( m[i][i] - (m[j][j] + m[k][k]) ) + 1.0f );
-		q[i] = s * 0.5f;
-		if (s != 0.0f) s = 0.5f / s;
-		q[3] = (m[j][k] - m[k][j]) * s;
-		q[j] = (m[i][j] + m[j][i]) * s;
-		q[k] = (m[i][k] + m[k][i]) * s;
-		quat.x = q[0];
-		quat.y= q[1];
-		quat.z = q[2];
-		quat.w = q[3];
-	}
-
-	return quat;
 }
 
 Matrix33 MultMatrix33( Matrix33 const & a, Matrix33 const & b ) {
@@ -211,13 +166,196 @@ Matrix44 InverseMatrix44( Matrix44 const & m ) {
 	return result;
 }
 
-void QuatToMatrix( Quaternion const & quat, ostream & out ) {
-	Matrix33 m;
+/*
+ * Vector3 Methods
+ */
 
-	float w = quat.w;
-	float x = quat.x;
-	float y = quat.y;
-	float z = quat.z;
+float Vector3::Magnitude() const {
+	return sqrt( x * x + y * y + z * z );
+}
+
+Vector3 Vector3::Normalized() const {
+	Vector3 v(*this);
+	float m = Magnitude();
+	return Vector3(
+		x / m, //x
+		y / m, //y
+		z / m //z
+	);
+}
+
+Vector3 Vector3::operator+( const Vector3 & rh) const {
+	Vector3 v(*this);
+	v += rh;
+	return v;
+}
+
+Vector3 & Vector3::operator+=( const Vector3 & rh ) {
+	x += rh.x;
+	y += rh.y;
+	z += rh.z;
+
+	return *this;
+}
+
+Vector3 Vector3::operator-( const Vector3 & rh) const {
+	Vector3 v(*this);
+	v -= rh;
+	return v;
+}
+
+Vector3 & Vector3::operator-=( const Vector3 & rh ) {
+	x -= rh.x;
+	y -= rh.y;
+	z -= rh.z;
+
+	return *this;
+}
+
+Vector3 Vector3::operator*( const float & rh) const {
+	Vector3 v(*this);
+	v *= rh;
+	return v;
+}
+
+Vector3 & Vector3::operator*=( const float & rh) {
+	x *= rh;
+	y *= rh;
+	z *= rh;
+
+	return *this;
+}
+
+Vector3 Vector3::operator/( const float & rh ) const {
+	Vector3 v(*this);
+	v /= rh;
+	return v;
+}
+
+Vector3 & Vector3::operator/=( const float & rh ) {
+	x /= rh;
+	y /= rh;
+	z /= rh;
+
+	return *this;
+}
+
+bool Vector3::operator==( const Vector3 & rh) const {
+	if (rh.x == x && rh.y == y && rh.z == z)
+		return true;
+	else
+		return false;
+}
+
+float Vector3::DotProduct( const Vector3 & rh) const {
+	return x * rh.x + y * rh.y + z * rh.z;
+}
+
+Vector3 Vector3::CrossProduct( const Vector3 & rh) const {
+	return Vector3(
+		y * rh.z - z * rh.y, //x
+		z * rh.x - x * rh.z, //y
+		x * rh.y - y * rh.x //z
+	);
+}
+
+//Vector3 Vector3::operator*( const Matrix44 & rh) const {
+//	return rh * (*this);
+//}
+//
+//Vector & Vector3::operator*=( const Matrix44 & rh) {
+//	*this = rh * (*this);
+//	return *this;
+//}
+
+/*
+ * Matrix33 Methods
+ */
+
+Quaternion Matrix33::AsQuaternion() {
+	Quaternion quat;
+	float tr, s, q[4];
+	int i, j, k;
+
+	int nxt[3] = {1, 2, 0};
+
+	Matrix33 & m = *this;
+
+	// compute the trace of the matrix
+	tr = m[0][0] + m[1][1] + m[2][2];
+
+	// check if the trace is positive or negative
+	if (tr > 0.0) {
+		s = sqrt (tr + 1.0f);
+		quat.w = s / 2.0f;
+		s = 0.5f / s;
+		quat.x = (m[1][2] - m[2][1]) * s;
+		quat.y = (m[2][0] - m[0][2]) * s;
+		quat.z = (m[0][1] - m[1][0]) * s;
+	}
+	else {
+		// trace is negative
+		i = 0;
+		if ( m[1][1] > m[0][0])
+			i = 1;
+		if ( m[2][2] > m[i][i] )
+			i = 2;
+		j = nxt[i];
+		k = nxt[j];
+
+		s = sqrt( ( m[i][i] - (m[j][j] + m[k][k]) ) + 1.0f );
+		q[i] = s * 0.5f;
+		if (s != 0.0f) s = 0.5f / s;
+		q[3] = (m[j][k] - m[k][j]) * s;
+		q[j] = (m[i][j] + m[j][i]) * s;
+		q[k] = (m[i][k] + m[k][i]) * s;
+		quat.x = q[0];
+		quat.y= q[1];
+		quat.z = q[2];
+		quat.w = q[3];
+	}
+
+	return quat;
+}
+
+/*
+ * Matrix44 Methods
+ */
+
+Matrix44::Matrix44() {
+	*this = IDENTITY44;
+}
+
+/*
+ * Quaternion Methods
+ */
+
+Float3 Quaternion::AsEulerYawPitchRoll() {
+	float yaw, pitch, roll;
+
+	if ( x*y + z*w == 0.5 ) {
+		//North Pole
+		yaw = 2 * atan2(x,w);
+		pitch = asin(2*x*y + 2*z*w);
+		roll = 0.0f;
+	}
+	else if ( x*y + z*w == -0.5 ) {
+		//South Pole
+		yaw =  -2 * atan2(x,w);
+		pitch = asin(2*x*y + 2*z*w);
+		roll = 0.0f;
+	}
+	else {
+		yaw = atan2(2*y*w-2*x*z , 1 - 2*y*y - 2*z*z);
+		pitch = asin(2*x*y + 2*z*w);
+		roll = atan2(2*x*w-2*y*z , 1 - 2*x*x - 2*z*z);
+	}
+
+	return Float3( yaw, pitch, roll );
+}
+
+Matrix33 Quaternion::AsMatrix() {
+	Matrix33 m;
 
 	float w2 = w * w;
 	float x2 = x * x;
@@ -236,65 +374,76 @@ void QuatToMatrix( Quaternion const & quat, ostream & out ) {
 	m[2][1] = 2.0f*y*z + 2.0f*w*x;
 	m[2][2] = w2 - x2 - y2 + z2;
 
-	out << endl
-		<< "         |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
-		<< "         |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
-		<< "         |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" << endl;
+	return m;
 
-	float pi = 3.141592653589793f;
-	out << "      Euler Angles:" << endl
-		<< "         X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
-		<< "         Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
-		<< "         Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
+	//out << endl
+	//	<< "         |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
+	//	<< "         |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
+	//	<< "         |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" << endl;
+
+	//float pi = 3.141592653589793f;
+	//out << "      Euler Angles:" << endl
+	//	<< "         X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
+	//	<< "         Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
+	//	<< "         Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
 }
 
-void QuatToEuler( Quaternion const & quat, ostream & out ) {
-	float w = quat.w;
-	float x = quat.x;
-	float y = quat.y;
-	float z = quat.z;
+/*
+ * ostream functions for printing with cout
+ */
 
-//heading = atan2(2*qy*qw-2*qx*qz , 1 - 2*qy2 - 2*qz2)
-//attitude = asin(2*qx*qy + 2*qz*qw)
-//bank = atan2(2*qx*qw-2*qy*qz , 1 - 2*qx2 - 2*qz2)
-//
-//except when qx*qy + qz*qw = 0.5 (north pole)
-//which gives:
-//heading = 2 * atan2(x,w)
-//bank = 0
-//and when qx*qy + qz*qw = -0.5 (south pole)
-//which gives:
-//heading = -2 * atan2(x,w)
-//bank = 0 
+ostream & operator<<( ostream & out, TexCoord const & val ) {
+	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
+}
 
-	float h, a, b;
-	float pi = 3.141592653589793f;
+ostream & operator<<( ostream & out, Triangle const & val ) {
+	return out << "{" << setw(6) << val.v1 << "," << setw(6) << val.v2 << "," << setw(6) << val.v3 << "}";
+}
 
-	if ( x*y + z*w == 0.5 ) {
-		//North Pole
-		h = 2 * atan2(x,w);
-		a = asin(2*x*y + 2*z*w);
-		b = 0.0f;
-	}
-	else if ( x*y + z*w == -0.5 ) {
-		//South Pole
-		h =  -2 * atan2(x,w);
-		a = asin(2*x*y + 2*z*w);
-		b = 0.0f;
-	}
-	else {
-		h = atan2(2*y*w-2*x*z , 1 - 2*y*y - 2*z*z);
-		a = asin(2*x*y + 2*z*w);
-		b = atan2(2*x*w-2*y*z , 1 - 2*x*x - 2*z*z);
-	}
+ostream & operator<<( ostream & out, Vector3 const & val ) {
+	return out << "(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")";
+}
 
-	h = h / pi * 180;
-	a = a / pi * 180;
-	b = b / pi * 180;
+ostream & operator<<( ostream & out, Float2 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "}";
+}
 
+ostream & operator<<( ostream & out, Matrix22 const & val ) {
 	out << endl
-		<< "         Heading:  " << h << endl
-		<< "         Attitude:  " << a << endl
-		<< "         Bank:  " << b << endl;
-	
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << " |";
+	return out;
+}
+
+ostream & operator<<( ostream & out, Float3 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "," << setw(6) << val.data[2] << "}";
+}
+
+ostream & operator<<( ostream & out, Matrix33 const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << " |" << endl
+		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << " |";
+	return out;
+}
+
+ostream & operator<<( ostream & out, Float4 const & val ) {
+	return out << "{" << setw(6) << val.data[0] << "," << setw(6) << val.data[1] << "," << setw(6) << val.data[2] << "," << setw(6) << val.data[3] << "}";
+}
+
+ostream & operator<<( ostream & out, Matrix44 const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << "," << setw(6) << val[0][3] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << "," << setw(6) << val[1][3] << " |" << endl
+		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << "," << setw(6) << val[2][3] << " |" << endl
+		<< "   |" << setw(6) << val[3][0] << "," << setw(6) << val[3][1] << "," << setw(6) << val[3][2] << "," << setw(6) << val[3][3] << " |";
+	return out;
+}
+
+ostream & operator<<( ostream & out, Color4 const & val ) {
+	return out << "R:" << setw(6) << val.r << " G:" << setw(6) << val.g << " B:" << setw(6) << val.b << " A:" << setw(6) << val.a << "}";
+}
+
+ostream & operator<<( ostream & out, Quaternion const & val ) {
+	return out << "[" << setw(6) << val.w << ",(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")]";
 }

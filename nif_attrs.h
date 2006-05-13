@@ -40,6 +40,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #define endl "\r\n"
 
+
 class IntAttr : public AAttr {
 public:
 	IntAttr( string const & name, IBlock * owner, int * data ) : AAttr( name, owner ), _data(data) {}

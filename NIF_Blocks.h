@@ -60,14 +60,18 @@ const int SkinDataInternal = -3;
 
 class AControllable : public ABlock {
 public:
+	static const Type TYPE;
 	AControllable();
 	void Init() {}
 	bool IsControllable() const { return true; }
 	~AControllable() {}
 };
 
+const Type AControllable::TYPE("AControllable", &ABlock::TYPE);
+
 class ANode : public AControllable, public INode {
 public:
+	static const Type TYPE;
 	ANode();
 	void Init() { 
 		//Start the bind pose at an identity matrix

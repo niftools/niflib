@@ -34,6 +34,60 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "niflib_internal.h"
 
 extern unsigned int blocks_in_memory;
+const Type ABlock::TYPE("ABlock", NULL );
+
+/*
+ * Type Methods
+ */
+
+bool Type::IsSameType( const Type & compare_to ) const {
+	return &compare_to == this;
+}
+
+bool Type::IsDerivedType( const Type & compare_to ) const {
+
+	const Type * search = this;
+	while ( search != NULL ) {
+		if ( search == &compare_to ) {
+			return true;
+		}
+		search = search->base_type;
+	}
+	return false;
+}
+
+/*
+ * NiObject Methods
+ */
+
+bool NiObject::IsSameType( const Type & compare_to) const {
+	return GetType().IsSameType( compare_to );
+}
+
+bool NiObject::IsSameType( const NiObject * object ) const {
+	return GetType().IsSameType( object->GetType() );
+}
+
+bool NiObject::IsDerivedType( const Type & compare_to) const {
+	return GetType().IsDerivedType( compare_to );
+}
+
+bool NiObject::IsDerivedType( const NiObject * object ) const {
+	return GetType().IsDerivedType( object->GetType() );
+}
+
+void NiObject::AddRef() {
+	++_ref_count;
+}
+
+void NiObject::SubtractRef() {
+	--_ref_count;
+
+	if ( _ref_count < 1 ) {
+		delete this;
+	}
+}
+
 
 /***********************************************************
  * ABlock methods

@@ -84,12 +84,119 @@ protected:
 	IBlock * _owner;
 };
 
+/**
+ * Run Time Type Inforamtion Class
+ */
+class Type {
+public:
+	Type (const string & type_name, const Type * base_type );
+	~Type();
+
+	string GetTypeName() const;
+
+	bool IsSameType ( const Type & compare_to ) const;
+	bool IsDerivedType ( const Type & compare_to ) const;
+private:
+	string name;
+	const Type * base_type;
+};
+
+/**
+ * Smart Pointer Template
+ */
+template <class T> class Ref {
+public:
+	Ref( T * object = NULL );
+	Ref(const Ref & ref_to_copy );
+
+	operator T*() const;
+	T& operator*() const;
+	T* operator->() const;
+
+	Ref & operator=( T * object );
+	Ref & operator=( const Ref & ref );
+
+	bool operator==(T * object) const;
+	bool operator!=(T * object) const;
+	bool operator==(const Ref & ref) const;
+	bool operator!=(const Ref & ref) const;
+
+protected:
+	//The shared object
+	T* _object;
+};
+
+
+
+/**
+ * Base Object class from which all other objects derive
+ */
+
+class NiObject {
+public:
+	NiObject();
+	~NiObject();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual const Type & GetType() const { return TYPE; };
+	bool IsSameType( const Type & compare_to ) const;
+	bool IsSameType( const NiObject * object ) const;
+	bool IsDerivedType (const Type & compare_to ) const;
+	bool IsDerivedType( const NiObject * objct ) const;
+
+	//Streaming Functions
+	virtual void Read( istream& in, unsigned int version ) {};
+	virtual void Write( ostream& out, unsigned int version ) const {};
+	//TODO Register objects in list
+	//TODO Link up objects from previously created list
+
+	//Reference Counting
+	void AddRef(); //Should not be called directly
+	void SubtractRef(); //Should not be called directly
+	unsigned int GetNumRefs() { return _ref_count; }
+	
+private:
+	unsigned int _ref_count;
+};
+
+/*
+ * Casting Templates
+ */
+
+template <class T> T* StaticCast( NiObject * object ) {
+	return (T*)object;
+}
+
+template <class T> const T* SaticCast (const NiObject * object) {
+	return (const T*)object;
+}
+
+template <class T> T* DynamicCast( NiObject * object ) {
+	if ( object->IsDerivedType(T::TYPE) ) {
+		return (T*)object;
+	} else {
+		return NULL;
+	}
+}
+
+template <class T> const T* DynamicCast( const NiObject * object ) {
+	if ( object->IsDerivedType(T::TYPE) ) {
+		return (const T*)object;
+	} else {
+		return NULL;
+	}
+}
+
+
+const Type NiObject::TYPE("NiObject", NULL );
+
 //Internal Abstract Block Class
 
 class ABlock : public IBlock {
 public:
 	ABlock();
 	~ABlock();
+	static const Type TYPE;
 	blk_ref Clone( unsigned int version = 0xFFFFFFFF );
 	//void AddAttr( AttrType type, string const & name, unsigned int first_ver = 0, unsigned int last_ver = 0xFFFFFFFF );
 	attr_ref GetAttr(string const & attr_name) const;

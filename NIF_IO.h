@@ -140,57 +140,46 @@ ostream & operator<<( ostream & out, HeaderString const & val );
 //TexCoord
 void NifStream( TexCoord & val, istream& in, uint version = 0 );
 void NifStream( TexCoord const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, TexCoord const & val );
 
 //Triangle
 void NifStream( Triangle & val, istream& in, uint version = 0 );
 void NifStream( Triangle const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Triangle const & val );
 
 //Vector3
 void NifStream( Vector3 & val, istream& in, uint version = 0 );
 void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Vector3 const & val );
 
 //Float2
 void NifStream( Float2 & val, istream& in, uint version = 0 );
 void NifStream( Float2 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Float2 const & val );
 
 //Matrix22
 void NifStream( Matrix22 & val, istream& in, uint version = 0 );
 void NifStream( Matrix22 const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Matrix22 const & val );
 
 //Float3
 void NifStream( Float3 & val, istream& in, uint version = 0 );
 void NifStream( Float3 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Float3 const & val );
 
 //Matrix33
 void NifStream( Matrix33 & val, istream& in, uint version = 0 );
 void NifStream( Matrix33 const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Matrix33 const & val );
 
 //Float4
 void NifStream( Float4 & val, istream& in, uint version = 0 );
 void NifStream( Float4 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Float4 const & val );
 
 //Matrix44
 void NifStream( Matrix44 & val, istream& in, uint version = 0 );
 void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, Matrix44 const & val );
 
 //Color4
 void NifStream( Color4 & val, istream& in, uint version = 0 );
 void NifStream( Color4 const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Color4 const & val );
 
 //Quaternion
 void NifStream( Quaternion & val, istream& in, uint version = 0 );
 void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, Quaternion const & val );
 
 //BoundingBox
 void NifStream( BoundingBox & val, istream& in, uint version = 0 );
