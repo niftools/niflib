@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "niflib.h"
 #include "kfm.h"
+#include "NIF_IO.h"
 #include <exception>
 #include <stdexcept>
 using namespace std;
@@ -74,7 +75,7 @@ blk_ref CreateBlock( string block_type ) {
 		block = it->second();
 	} else {
 		//An unknown type has been encountered
-		return blk_ref(-1); //Return null block_ref
+		return NULL; //Return null block_ref
 		//block = new UnknownBlock( block_type );
 	}
 	
@@ -95,28 +96,28 @@ blk_ref ReadNifTree( istream & in ) {
 	return FindRoot( blocks );
 }
 
-blk_ref FindRoot( vector<blk_ref> const & blocks ) {
+NiObjectRef FindRoot( vector<blk_ref> const & blocks ) {
 	//--Look for a NiNode that has no parents--//
 
-	//Find the first Node
-	blk_ref root;
+	//Find the first NiObjectNET derived object
+	NiObjectNETRef root;
 	for (uint i = 0; i < blocks.size(); ++i) {
-		if ( blocks[i]->QueryInterface(ID_NODE) || blocks[i]->GetBlockType() == "NiPixelData" ) {
-			root = blocks[i];
+		root = DynamicCast<NiObjectNETRef>(blocks[i]);
+		if ( root != NULL ) {
 			break;
 		}
 	}
 
 	//Make sure a node was found, if not return first node
-	if ( root.is_null() )
+	if ( root == NULL )
 		return blocks[0];
 
 	//Move up the chain to the root node
-	while ( root->GetParent().is_null() != true ) {
+	while ( root->GetParent() != NULL ) {
 		root = root->GetParent();
 	}
 
-	return root;
+	return StaticCast<NiObjectRef>(root);
 }
 
 unsigned int CheckNifHeader( string const & file_name ) {
@@ -271,7 +272,7 @@ vector<blk_ref> ReadNifList( istream & in ) {
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
 					cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
-					cout << "====[ " << "Block " << i << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+					cout << "====[ " << "Block " << i << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 					cout << blocks[i - 1]->asString();
 					throw runtime_error("Read failue - Bad block position");
 				}
@@ -284,7 +285,7 @@ vector<blk_ref> ReadNifList( istream & in ) {
 			uint blockNameLength = ReadUInt( in );
 			if (blockNameLength > 30 || blockNameLength < 6) {
 				cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
-				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
 				throw runtime_error("Read failue - Bad block position");
 			}
@@ -295,7 +296,7 @@ vector<blk_ref> ReadNifList( istream & in ) {
 			delete [] charBlockName;
 			if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
 				cout << "ERROR!  Bad block position.  Invalid Name:  " << blockName << "\a" << endl;
-				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetBlockType() << " ]====" << endl;
+				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
 				throw runtime_error("Read failue - Bad block position");
 			}
@@ -307,22 +308,20 @@ vector<blk_ref> ReadNifList( istream & in ) {
 		blocks[i] = CreateBlock(blockName);
 
 		//Check for an unknown block type
-		if ( blocks[i].is_null() == true ) {
+		if ( blocks[i] == NULL ) {
 			//For version 5.0.0.1 and up, throw an exception - there's nothing we can do
-			if ( version >= 0x05000001 ) {
+			//if ( version >= 0x05000001 ) {
 				stringstream str;
 				str << "Unknown block type encountered during file read:  " << blockName;
 				throw runtime_error( str.str() );
-			} else {
+			//} else {
 				//We can skip over this block in older versions
-				blocks[i] = new UnknownBlock(blockName);
-			}
+				//blocks[i] = new UnknownBlock(blockName);
+			//}
 		}
 
-		ABlock * bk_intl = (ABlock*)blocks[i].get_block();
-
-		bk_intl->SetBlockNum(i);
-		bk_intl->Read( in, version );
+		//blocks[i]->SetBlockNum(i);
+		blocks[i]->Read( in, version );
 
 		//cout << endl << blocks[i]->asString() << endl;
 	}
@@ -347,40 +346,40 @@ vector<blk_ref> ReadNifList( istream & in ) {
 		//IBlockInternal * bk_intl = (IBlockInternal*)blocks[i]->QueryInterface( BlockInternal );
 
 		//Fix links & other pre-processing
-		((ABlock*)blocks[i].get_block())->FixLinks( blocks );
+		//blocks[i]->FixLinks( blocks );
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
 	BuildUpBindPositions( FindRoot(blocks) );
 
-	// Re-position any TriShapes with a SkinInstance
-	for (uint i = 0; i < blocks.size(); ++i) {
-		
-		attr_ref si_attr = blocks[i]->GetAttr("Skin Instance");
-		if ( si_attr.is_null() == true ) {
-			continue;
-		}
+	//// Re-position any TriShapes with a SkinInstance
+	//for (uint i = 0; i < blocks.size(); ++i) {
+	//	
+	//	attr_ref si_attr = blocks[i]->GetAttr("Skin Instance");
+	//	if ( si_attr.is_null() == true ) {
+	//		continue;
+	//	}
 
-		blk_ref si_blk = si_attr->asLink();
+	//	blk_ref si_blk = si_attr->asLink();
 
-		if ( si_blk.is_null() == true ) {
-			continue;
-		}
+	//	if ( si_blk.is_null() == true ) {
+	//		continue;
+	//	}
 
-		blk_ref sd_blk = si_blk->GetAttr("Data")->asLink();
+	//	blk_ref sd_blk = si_blk->GetAttr("Data")->asLink();
 
-		if ( sd_blk.is_null() == true ) {
-			continue;
-		}
+	//	if ( sd_blk.is_null() == true ) {
+	//		continue;
+	//	}
 
-		ISkinDataInternal * skin_data;
-		skin_data = (ISkinDataInternal *)sd_blk->QueryInterface( SkinDataInternal );
-		if ( skin_data != NULL ) {
-			skin_data->RepositionTriShape( blocks[i] );
-		}	
+	//	ISkinDataInternal * skin_data;
+	//	skin_data = (ISkinDataInternal *)sd_blk->QueryInterface( SkinDataInternal );
+	//	if ( skin_data != NULL ) {
+	//		skin_data->RepositionTriShape( blocks[i] );
+	//	}	
 
-		//cout << i + 1 << ":  " << blocks[i] << endl;
-	}
+	//	//cout << i + 1 << ":  " << blocks[i] << endl;
+	//}
 
 	//Return completed block list
 	return blocks;
@@ -449,7 +448,7 @@ void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int versi
 		for ( uint i = 0; i < blk_list.size(); ++i ) {
 			////Get internal interface
 			//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
-			WriteUShort( ((ABlock*)blk_list[i].get_block())->GetBlockTypeNum(), out );
+			//WriteUShort( ((ABlock*)blk_list[i].get_block())->GetBlockTypeNum(), out );
 
 			//cout << i << ":  " << bk_intl->GetBlockTypeNum() << endl;
 		}
@@ -464,7 +463,7 @@ void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int versi
 		if (version < 0x05000001) {
 			//cout << i << ":  " << blk_list[i]->GetBlockType() << endl;
 			//Write Block Type
-			WriteString( blk_list[i]->GetBlockType() , out );
+			WriteString( blk_list[i]->GetType().GetTypeName() , out );
 		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
 			WriteUInt( 0, out );
 		}
@@ -472,7 +471,7 @@ void WriteNifTree( ostream & out, blk_ref const & root_block, unsigned int versi
 		////Get internal interface
 		//IBlockInternal * bk_intl = (IBlockInternal*)blk_list[i]->QueryInterface( BlockInternal );
 
-		((ABlock*)blk_list[i].get_block())->Write( out, version );
+		blk_list[i]->Write( out, version );
 
 	}
 
@@ -485,40 +484,35 @@ void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk
 	//Get internal interface
 	//IBlockInternal * bk_intl = (IBlockInternal*)block->QueryInterface( BlockInternal );
 
-	ABlock * bk_intl = (ABlock*)block.get_block();
-	bk_intl->SetBlockNum( int(blk_list.size()) );
+	/*ABlock * bk_intl = (ABlock*)block.get_block();
+	bk_intl->SetBlockNum( int(blk_list.size()) );*/
 	blk_list.push_back(block);
 
 	//List Block Type
-	string blk_type = block->GetBlockType();
+	string blk_type = block->GetType().GetTypeName();
 
-	uint i;
-	for ( i = 0; i < blk_types.size(); ++i ) {
-		if ( blk_type == blk_types[i] ) {
-			bk_intl->SetBlockTypeNum(i);
-			break;
-		}
-	}
-
-	if ( i == blk_types.size() ) {
-		//A match was not found, add this type to the array
-		blk_types.push_back( blk_type );
-		bk_intl->SetBlockTypeNum(i);
-	}
-
-	list<blk_ref> links = block->GetLinks();
-	list<blk_ref>::iterator it;
-	for (it = links.begin(); it != links.end(); ++it) {
-		if ( it->is_null() == false && (*it)->GetParent() == block ) {
-			ReorderNifTree( blk_list, blk_types, *it );
-		}
-	}
-	//for (int i = 0; i < block->LinkCount(); ++i) {
-	//	blk_link l = block->GetLink(i);
-	//	if ( l.block.get_block() != NULL && l.block->GetParent() == block ) {
-	//		ReorderNifTree( list, l.block );
+	//uint i;
+	//for ( i = 0; i < blk_types.size(); ++i ) {
+	//	if ( blk_type == blk_types[i] ) {
+	//		bk_intl->SetBlockTypeNum(i);
+	//		break;
 	//	}
 	//}
+
+	//if ( i == blk_types.size() ) {
+	//	//A match was not found, add this type to the array
+	//	blk_types.push_back( blk_type );
+	//	bk_intl->SetBlockTypeNum(i);
+	//}
+
+	//list<blk_ref> links = block->GetLinks();
+	//list<blk_ref>::iterator it;
+	//for (it = links.begin(); it != links.end(); ++it) {
+	//	if ( it->is_null() == false && (*it)->GetParent() == block ) {
+	//		ReorderNifTree( blk_list, blk_types, *it );
+	//	}
+	//}
+
 }
 
 //int ResetBlockNums( int start_num, blk_ref block ) {
@@ -537,9 +531,9 @@ void ReorderNifTree( vector<blk_ref> & blk_list, vector<string> & blk_types, blk
 
 void BuildUpBindPositions( blk_ref const & block ) {
 
-	//Return if this is not a node
-	INode * blk_node = (INode*)block->QueryInterface(ID_NODE);
-	if (blk_node == NULL)
+	//Return if this is not a NiAVObject derived object
+	NiAVObjectRef av = DynamicCast<NiAVObjectRef>(block);
+	if (av == NULL)
 		return;
 
 	//Get parent if there is one
@@ -550,11 +544,11 @@ void BuildUpBindPositions( blk_ref const & block ) {
 			//There is a node parent
 			//Post-multipy the block's bind matrix with the parent's bind matrix
 			Matrix44 par_mat = par_node->GetWorldBindPos();
-			Matrix44 blk_mat = blk_node->GetWorldBindPos();
+			Matrix44 blk_mat = av->GetWorldBindPos();
 			Matrix44 result = blk_mat * par_mat;
 
 			//Store result back to block bind position
-			blk_node->SetWorldBindPos( result );
+			av->SetWorldBindPos( result );
 		}
 	}
 

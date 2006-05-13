@@ -76,11 +76,7 @@ const unsigned int VER_20_0_0_5    = 0x14000005; /*!< Nif Version 20.0.0.4 */
 const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
 const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
 
-//--Typedefs--//
 
-typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
 
 /*! Keyframe trees are game dependent, so here we define a few games. */
 enum NifGame {

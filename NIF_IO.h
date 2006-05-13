@@ -132,10 +132,10 @@ void NifStream( string const & val, ostream& out, uint version = 0  );
 
 //--Structs--//
 
-//HeaderString
-void NifStream( HeaderString & val, istream& in, uint version = 0 );
-void NifStream( HeaderString const & val, ostream& out, uint version = 0 );
-ostream & operator<<( ostream & out, HeaderString const & val );
+////HeaderString
+//void NifStream( HeaderString & val, istream& in, uint version = 0 );
+//void NifStream( HeaderString const & val, ostream& out, uint version = 0 );
+//ostream & operator<<( ostream & out, HeaderString const & val );
 
 //TexCoord
 void NifStream( TexCoord & val, istream& in, uint version = 0 );

@@ -43,6 +43,14 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include <vector>
 
+//--Typedefs--//
+
+typedef unsigned char	byte;
+typedef unsigned short	ushort;
+typedef unsigned int	uint;
+
+#include "nif_math.h"
+
 using namespace std;
 
 /**
@@ -187,15 +195,15 @@ private:
  * Casting Templates
  */
 
-template <class T> T* StaticCast( NiObject * object ) {
+template <class T> T StaticCast( NiObject * object ) {
 	return (T*)object;
 }
 
-template <class T> const T* SaticCast (const NiObject * object) {
+template <class T> const T SaticCast (const NiObject * object) {
 	return (const T*)object;
 }
 
-template <class T> T* DynamicCast( NiObject * object ) {
+template <class T> T DynamicCast( NiObject * object ) {
 	if ( object->IsDerivedType(T::TYPE) ) {
 		return (T*)object;
 	} else {
@@ -203,7 +211,7 @@ template <class T> T* DynamicCast( NiObject * object ) {
 	}
 }
 
-template <class T> const T* DynamicCast( const NiObject * object ) {
+template <class T> const T DynamicCast( const NiObject * object ) {
 	if ( object->IsDerivedType(T::TYPE) ) {
 		return (const T*)object;
 	} else {
@@ -211,8 +219,123 @@ template <class T> const T* DynamicCast( const NiObject * object ) {
 	}
 }
 
-
 const Type NiObject::TYPE("NiObject", NULL );
+
+/*
+ * NiObjectNET - An object that has a name and can be parented to other objects.  Can have extra data and controllers attatched.
+ */
+
+class NiObjectNET;
+
+typedef Ref<NiObjectNET> NiObjectNETRef;
+
+class NiObjectNET : public NiObject {
+public:
+	NiObjectNET() {}
+	~NiObjectNET() {}
+	//Run-Time Type Information
+	static const Type TYPE;
+
+	string name;
+
+	void SetParent( NiObjectNETRef new_parent ) {
+		parent = new_parent;
+	}
+	NiObjectNETRef GetParent() { return parent; }
+
+private:
+	NiObjectNET * parent;
+	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
+	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
+};
+
+const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
+
+/*
+ * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.
+ */
+
+class NiAVObject;
+
+typedef Ref<NiAVObject> NiAVObjectRef;
+
+class NiAVObject : public NiObjectNET {
+public:
+	NiAVObject() {}
+	~NiAVObject() {}
+	//Run-Time Type Information
+	static const Type TYPE;
+
+	short flags;
+	Vector3 localTranslate;
+	Matrix33 localRotate;
+	float localScale;
+	Vector3 localVelocity;
+	//TODO: list of NiProperty pointers.  Need functions to add/remove.
+	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
+
+	/*! 
+	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
+	 * \return A 4x4 transformation matrix built from the node's transform attributes.
+	 * \sa INode::GetWorldTransform
+	 */
+	Matrix44 GetLocalTransform() const;
+
+	/*! 
+	 * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
+	 * \return The 4x4 world transform matrix of this node.
+	 * \sa INode::GetLocalTransform
+	 */
+	Matrix44 GetWorldTransform() const;
+
+	/*!
+	 * This function returns the bind position world matrix.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 world bind position matrix of this node.
+	 * \sa INode::GetLocalBindPos, INode::SetWorldBindPos
+	 */
+	Matrix44 GetWorldBindPos() const;
+
+	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
+	 * \return The 4x4 local bind position matrix of this node.
+	 * \sa INode::SetWorldBindPos, INode::GetWorldBindPos
+	 */
+	Matrix44 GetLocalBindPos() const;
+
+	/*!
+	 * This function sets the bind position of this object relative to the origin.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.  This function must be called on every object in a skin and bones system (the bones and the skinned shapes) in order for skinning information to be written to a Nif file.
+	 * \param m The 4x4 world bind position matrix of this node
+	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
+	 */
+	void SetWorldBindPos( Matrix44 const & m );
+
+protected:
+	void ResetSkinnedFlag();
+	Matrix44 bindPosition;
+
+};
+
+const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
+
+/*
+ * NiNode - A basic scene graph node.  Can have children.
+ */
+
+class NiNode;
+
+typedef Ref<NiNode> NiNodeRef;
+
+class NiNode : public NiAVObject {
+public:
+	NiNode() {}
+	~NiNode() {}
+	//Run-Time Type Information
+	static const Type TYPE;
+
+	//TODO:  Add functions to get and set children and store a list of NiObjectNET references
+};
+
+const Type NiNode::TYPE("NiNode", &NiAVObject::TYPE );
+
 
 ////--Link Classes--//
 //
