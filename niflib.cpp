@@ -49,7 +49,7 @@ map<string, blk_factory_func> global_block_map;
 unsigned int blocks_in_memory = 0;
 
 //Utility Functions
-void EnumerateNifTree( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
+void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
 void BuildUpBindPositions( NiObjectRef const & block );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
@@ -405,7 +405,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	map<Type,uint> type_map;
 	map<NiObjectRef, uint> link_map;
 
-	EnumerateNifTree( root, type_map, link_map );
+	EnumerateObjects( root, type_map, link_map );
 
 	//Build vectors for reverse look-up
 	vector<NiObjectRef> objects(link_map.size());
@@ -486,7 +486,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	WriteUInt( 0, out ); // Unknown Int = 0 (usually)
 }
 
-void EnumerateNifTree( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map ) {
+void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map ) {
 	//Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
@@ -506,7 +506,7 @@ void EnumerateNifTree( NiObjectRef const & root, map<Type,uint> & type_map, map<
 	
 	list<NiObjectRef> links = root->GetLinks();
 	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-		EnumerateNifTree( *it, type_map, link_map );
+		EnumerateObjects( *it, type_map, link_map );
 	}
 }
 
