@@ -101,9 +101,9 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
 	//--Look for a NiNode that has no parents--//
 
 	//Find the first NiObjectNET derived object
-	NiObjectNETRef root;
+	NiAVObjectRef root;
 	for (uint i = 0; i < blocks.size(); ++i) {
-		root = DynamicCast<NiObjectNET>(blocks[i]);
+		root = DynamicCast<NiAVObject>(blocks[i]);
 		if ( root != NULL ) {
 			break;
 		}

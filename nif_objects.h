@@ -242,7 +242,7 @@ template <class T> const Ref<T> DynamicCast( const NiObject * object ) {
 const Type NiObject::TYPE("NiObject", NULL );
 
 /*
- * NiObjectNET - An object that has a name and can be parented to other objects.  Can have extra data and controllers attatched.
+ * NiObjectNET - An object that has a name.  Can have extra data and controllers attatched.
  */
 
 class NiObjectNET;
@@ -257,14 +257,7 @@ public:
 	static const Type TYPE;
 
 	string name;
-
-	void SetParent( NiObjectNETRef new_parent ) {
-		parent = new_parent;
-	}
-	NiObjectNETRef GetParent() { return parent; }
-
 private:
-	NiObjectNET * parent;
 	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 };
@@ -328,7 +321,13 @@ public:
 	 */
 	void SetWorldBindPos( Matrix44 const & m );
 
+	void SetParent( NiAVObjectRef new_parent ) {
+		parent = new_parent;
+	}
+	NiAVObjectRef GetParent() { return parent; }
+
 protected:
+	NiAVObject * parent;
 	void ResetSkinnedFlag();
 	Matrix44 bindPosition;
 
