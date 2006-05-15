@@ -58,7 +58,7 @@ using namespace std;
 // hierarchy so ints are used to represent the indices.
 struct Bones {
   // Block indicies of the bones.
-  vector<NiNode* > bones;
+  vector<NiNode * > bones;
 };
 
 //  An array of bytes.
@@ -98,7 +98,7 @@ struct Footer {
   // this block is referred to as well in this list, even if it is not a
   // root block (usually we want the camera to be attached to the Bip Head
   // node).
-  vector< Ref<NiAVObject > > roots;
+  LinkGroup<NiAVObject > roots;
 };
 
 //  The distance range where a specific level of detail applies.
@@ -130,7 +130,7 @@ struct ModifierGroup {
   // Determines whether or not the link group is present.
   bool hasModifiers;
   // The list of particle modifiers.
-  //vector< Ref<AParticleModifier > > modifiers;
+  LinkGroup<AParticleModifier > modifiers;
 };
 
 //  Linear key type (!!! for NifSkope optimizer only, use key, keyrot, or
@@ -188,9 +188,9 @@ struct ShortString {
 //  Reference to shape and skin instance.
 struct SkinShape {
   // The shape.
-  //Ref<NiTriShape > shape;
+  Ref<NiTriShape > shape;
   // Skinning instance for the shape?
-  //Ref<NiSkinInstance > skinInstance;
+  Ref<NiSkinInstance > skinInstance;
 };
 
 //  Unknown.
@@ -224,7 +224,7 @@ struct ControllerLink {
   // Name of a controllable block in another NIF file.
   string name;
   // Link to an interpolator.
-  //Ref<AInterpolator > interpolator;
+  Ref<AInterpolator > interpolator;
   // Unknown link. Usually -1.
   Ref<NiObject > unknownLink1;
   // Unknown.
@@ -238,7 +238,7 @@ struct ControllerLink {
   byte priority_;
   // Refers to the NiStringPalette which contains the name of the
   // controlled block.
-  //Ref<NiStringPalette > stringPalette;
+  Ref<NiStringPalette > stringPalette;
   // The name of the animated node.
   string nodeName;
   // Offset in the string palette where the name of the controlled node
@@ -345,7 +345,7 @@ struct StringPalette {
 //  A list of node targets.
 struct TargetGroup {
   // The list of block indices.
-  vector<NiAVObject*> indices;
+  vector<NiAVObject * > indices;
 };
 
 //  Tension, bias, continuity.
@@ -416,7 +416,7 @@ struct ns_keyvecarraytyp {
 //  Texture description.
 struct TexDesc {
   // NiSourceTexture block index.
-  //Ref<NiSourceTexture > source;
+  Ref<NiSourceTexture > source;
   // 0=clamp S clamp T, 1=clamp S wrap T, 2=wrap S clamp T, 3=wrap S wrap T
   TexClampMode clampMode;
   // 0=nearest, 1=bilinear, 2=trilinear, 3=..., 4=..., 5=...
@@ -477,7 +477,7 @@ struct TexSource {
   // NiPixelData block.
   string originalFileName_;
   // Pixel data block index.
-  //Ref<NiPixelData > pixelData;
+  Ref<NiPixelData > pixelData;
 };
 
 //  A texture that is not a bumpmap.
@@ -589,7 +589,7 @@ struct LODInfo {
   // Zero?
   ushort unknownShort;
   // Refers to NiRangeLODData block.
-  //Ref<NiRangeLODData > rangeData;
+  Ref<NiRangeLODData > rangeData;
 };
 
 //  particle array entry
@@ -1099,7 +1099,7 @@ return out.str(); \
 bhkRefObject::FixLinks( objects, link_stack, version ); \
 
 #define ABHK_CONSTRAINT_MEMBERS \
-vector<bhkRigidBody > > bodies; \
+vector<bhkRigidBody * > bodies; \
 uint priority; \
 
 #define ABHK_CONSTRAINT_PARENTS bhkSerializable \
@@ -1379,12 +1379,12 @@ byte qualityType; \
 uint unknownInt6; \
 uint unknownInt7; \
 uint unknownInt8; \
-vector< Ref<AbhkConstraint > constraints; \
+LinkGroup<AbhkConstraint > constraints; \
 
 #define ABHK_RIGID_BODY_PARENTS bhkEntity \
 
 #define ABHK_RIGID_BODY_CONSTRUCT \
- : maxAngularVelocity(31.415926535) \
+ : maxAngularVelocity(31.415926535f) \
 
 #define ABHK_RIGID_BODY_READ \
 uint block_num; \
@@ -1677,7 +1677,7 @@ if ( version <= 0x04020200 ) { \
 #define NI_OBJECT_N_E_T_MEMBERS \
 string name; \
 Ref<NiExtraData > extraData; \
-vector< Ref<NiExtraData > extraDataList; \
+LinkGroup<NiExtraData > extraDataList; \
 Ref<NiTimeController > controller; \
 
 #define NI_OBJECT_N_E_T_PARENTS NiObject \
@@ -1753,14 +1753,14 @@ Vector3 translation; \
 Matrix33 rotation; \
 float scale; \
 Vector3 velocity; \
-vector< Ref<NiProperty > properties; \
+LinkGroup<NiProperty > properties; \
 BoundingBox boundingBox; \
 Ref<NiCollisionData > collisionData; \
 
 #define NI_A_V_OBJECT_PARENTS NiObjectNET \
 
 #define NI_A_V_OBJECT_CONSTRUCT \
- : scale(1.0) \
+ : scale(1.0f) \
 
 #define NI_A_V_OBJECT_READ \
 uint block_num; \
@@ -1863,7 +1863,7 @@ if ( version >= 0x0A000100 ) { \
 #define NI_DYNAMIC_EFFECT_MEMBERS \
 CondInt affectedNodeList_; \
 bool switchState; \
-vector< Ref<NiAVObject > affectedNodes; \
+LinkGroup<NiAVObject > affectedNodes; \
 
 #define NI_DYNAMIC_EFFECT_PARENTS NiAVObject \
 
@@ -2086,7 +2086,7 @@ link_stack.pop_front(); \
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint unknownInt1; \
 uint unknownInt2; \
-vector<vector< Ref<NiAVObject > > nodeGroups; \
+vector<LinkGroup<NiAVObject > > nodeGroups; \
 
 #define A_BONE_L_O_D_CONTROLLER_PARENTS NiTimeController \
 
@@ -3307,7 +3307,7 @@ return out.str(); \
 AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
 
 #define BHK_LIST_SHAPE_MEMBERS \
-vector< Ref<bhkSphereRepShape > subShapes; \
+LinkGroup<bhkSphereRepShape > subShapes; \
 uint material; \
 vector<float > unknownFloats; \
 vector<uint > unknownInts; \
@@ -3607,7 +3607,7 @@ vector<float > unknownFloats1; \
 vector<uint > unknownInts1; \
 vector<float > unknownFloats2; \
 uint unknownInt2; \
-vector< Ref<NiTriStripsData > strips; \
+LinkGroup<NiTriStripsData > strips; \
 vector<uint > unknownInts3; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_PARENTS bhkSphereRepShape \
@@ -4569,7 +4569,7 @@ ABlendInterpolator::FixLinks( objects, link_stack, version ); \
 
 #define NI_BONE_L_O_D_CONTROLLER_MEMBERS \
 vector<SkinShapeGroup > shapeGroups1; \
-vector< Ref<NiTriShape > shapeGroups2; \
+LinkGroup<NiTriShape > shapeGroups2; \
 
 #define NI_BONE_L_O_D_CONTROLLER_PARENTS ABoneLODController \
 
@@ -5310,7 +5310,7 @@ NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define NI_CONTROLLER_MANAGER_MEMBERS \
 bool cumulative; \
-vector< Ref<NiControllerSequence > controllerSequences; \
+LinkGroup<NiControllerSequence > controllerSequences; \
 Ref<NiDefaultAVObjectPalette > objectPalette; \
 
 #define NI_CONTROLLER_MANAGER_PARENTS NiTimeController \
@@ -5382,7 +5382,7 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_PARENTS NiObject \
 
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT \
- : weight(1.0) \
+ : weight(1.0f) \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 uint block_num; \
@@ -5815,7 +5815,7 @@ NiProperty::FixLinks( objects, link_stack, version ); \
 uint textureSlot; \
 uint unknownInt2; \
 float delta; \
-vector< Ref<NiSourceTexture > sources; \
+LinkGroup<NiSourceTexture > sources; \
 
 #define NI_FLIP_CONTROLLER_PARENTS ASingleInterpolatorController \
 
@@ -6973,8 +6973,8 @@ for (uint i0 = 0; i0 < targets_numIndices; i0++) { \
 }; \
 
 #define NI_NODE_MEMBERS \
-vector< Ref<NiAVObject > children; \
-vector< Ref<NiDynamicEffect > effects; \
+LinkGroup<NiAVObject > children; \
+LinkGroup<NiDynamicEffect > effects; \
 
 #define NI_NODE_PARENTS NiAVObject \
 
@@ -7128,7 +7128,7 @@ AFx::FixLinks( objects, link_stack, version ); \
 uint unknownInt1; \
 uint unknownInt2; \
 uint unknownInt3; \
-vector< Ref<NiObject > unknownLinks; \
+LinkGroup<NiObject > unknownLinks; \
 
 #define FX_RADIO_BUTTON_PARENTS AFx \
 
@@ -8949,7 +8949,7 @@ float turbulenceScale; \
 #define NI_P_SYS_GRAVITY_MODIFIER_PARENTS APSysModifier \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_CONSTRUCT \
- : turbulenceScale(1.0) \
+ : turbulenceScale(1.0f) \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 APSysModifier::Read( in, link_stack, version ); \
@@ -10135,6 +10135,7 @@ byte unknownByte2; \
 #define NI_SOURCE_TEXTURE_PARENTS NiObjectNET \
 
 #define NI_SOURCE_TEXTURE_CONSTRUCT \
+ : unknownByte(1), unknownByte2(1) \
 
 #define NI_SOURCE_TEXTURE_READ \
 uint block_num; \
@@ -12067,66 +12068,7 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define NI_VIS_CONTROLLER_MEMBERS \
 Ref<NiVisData > data; \
 
-#define NI_VIS_CONTROLLER_PARENTS NiTimeController \
-
-#define NI_VIS_CONTROLLER_CONSTRUCT \
-
-#define NI_VIS_CONTROLLER_READ \
-uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
-NifStream( block_num, in, version ); \
-link_stack.push_back( block_num ); \
-
-#define NI_VIS_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
-NifStream( link_map[data], out, version ); \
-
-#define NI_VIS_CONTROLLER_STRING \
-stringstream out; \
-out << NiTimeController::asString(); \
-out << "Data:  " << data << endl; \
-return out.str(); \
-
-#define NI_VIS_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
-data = blocks[link_stack.front()]; \
-link_stack.pop_front(); \
-
-#define NI_VIS_DATA_MEMBERS \
-KeyArray<byte > data; \
-
-#define NI_VIS_DATA_PARENTS AKeyedData \
-
-#define NI_VIS_DATA_CONSTRUCT \
-
-#define NI_VIS_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
-uint data_numKeys; \
-NifStream( data_numKeys, in, version ); \
-data.keys.resize(data_numKeys); \
-for (uint i0 = 0; i0 < data_numKeys; i0++) { \
-  NifStream( data.keys[i0], in, version ); \
-}; \
-
-#define NI_VIS_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
-uint data_numKeys; \
-data_numKeys = uint(data.numKeys.size()); \
-NifStream( data_numKeys, out, version ); \
-for (uint i0 = 0; i0 < data_numKeys; i0++) { \
-  NifStream( data.keys[i0], out, version ); \
-}; \
-
-#define NI_VIS_DATA_STRING \
-stringstream out; \
-out << AKeyedData::asString(); \
-out << "Num Keys:  " << data_numKeys << endl; \
-for (uint i0 = 0; i0 < data_numKeys; i0++) { \
-  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
-}; \
-return out.str(); \
-
-#define NI_VIS_DATA_FIXLINKS \
+#define NI_VIS_CONTROLLER_PARENTS NiTimeContro                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NI_VIS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < data_numKeys; i0++) { \
 }; \
@@ -12210,4 +12152,4 @@ return out.str(); \
 #define ROOT_COLLISION_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 
-#endif
+#endif \
