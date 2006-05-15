@@ -54,629 +54,1081 @@
 
 using namespace std;
 
-//  This is a list of bone influences.  It points to blocks higher in the
-// hierarchy so ints are used to represent the indices.
+/*!
+ * This is a list of bone influences.  It points to blocks higher in the
+ * hierarchy so ints are used to represent the indices.
+ */
 struct Bones {
-  // Block indicies of the bones.
+  /*!
+   * Block indicies of the bones.
+   */
   vector<NiNode * > bones;
 };
 
-//  An array of bytes.
+/*!
+ * An array of bytes.
+ */
 struct ByteArray {
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt;
-  // The bytes which make up the array
+  /*!
+   * The bytes which make up the array
+   */
   vector<byte > data;
 };
 
-//  An integer value that may or may not be used.
+/*!
+ * An integer value that may or may not be used.
+ */
 struct CondInt {
-  // Non-Zero if the following Integer appears.  Otherwise, the integer
-  // does not appear.
+  /*!
+   * Non-Zero if the following Integer appears.  Otherwise, the integer
+   * does not appear.
+   */
   bool isUsed;
-  // An unknown integer.
+  /*!
+   * An unknown integer.
+   */
   uint unknownInt;
 };
 
-//  An array of (untyped) keys.
+/*!
+ * An array of (untyped) keys.
+ */
 template <class T >
 struct KeyArray {
-  // The keys.
+  /*!
+   * The keys.
+   */
   vector<Key<T > > keys;
 };
 
-//  List of block indices.
+/*!
+ * List of block indices.
+ */
 template <class T >
 struct LinkGroup {
-  // The list of block indices.
+  /*!
+   * The list of block indices.
+   */
   vector<Ref<T > > indices;
 };
 
-//  The NIF file footer.
+/*!
+ * The NIF file footer.
+ */
 struct Footer {
-  // List of root blocks. If there is a camera, for 1st person view, then
-  // this block is referred to as well in this list, even if it is not a
-  // root block (usually we want the camera to be attached to the Bip Head
-  // node).
+  /*!
+   * List of root blocks. If there is a camera, for 1st person view, then
+   * this block is referred to as well in this list, even if it is not a
+   * root block (usually we want the camera to be attached to the Bip Head
+   * node).
+   */
   LinkGroup<NiAVObject > roots;
 };
 
-//  The distance range where a specific level of detail applies.
+/*!
+ * The distance range where a specific level of detail applies.
+ */
 struct LODRange {
-  // Begining of range.
+  /*!
+   * Begining of range.
+   */
   float near;
-  // End of Range.
+  /*!
+   * End of Range.
+   */
   float far;
 };
 
-//  Group of vertex indices of vertices that match.
+/*!
+ * Group of vertex indices of vertices that match.
+ */
 struct MatchGroup {
-  // The vertex indices.
+  /*!
+   * The vertex indices.
+   */
   vector<ushort > vertexIndices;
 };
 
-//  Description of a MipMap within a NiPixelData block.
+/*!
+ * Description of a MipMap within a NiPixelData block.
+ */
 struct MipMap {
-  // Width of the mipmap image.
+  /*!
+   * Width of the mipmap image.
+   */
   uint width;
-  // Height of the mipmap image.
+  /*!
+   * Height of the mipmap image.
+   */
   uint height;
-  // Offset into the pixel data array where this mipmap starts.
+  /*!
+   * Offset into the pixel data array where this mipmap starts.
+   */
   uint offset;
 };
 
-//  A link group conditioned on a boolean value.
+/*!
+ * A link group conditioned on a boolean value.
+ */
 struct ModifierGroup {
-  // Determines whether or not the link group is present.
+  /*!
+   * Determines whether or not the link group is present.
+   */
   bool hasModifiers;
-  // The list of particle modifiers.
+  /*!
+   * The list of particle modifiers.
+   */
   LinkGroup<AParticleModifier > modifiers;
 };
 
-//  Linear key type (!!! for NifSkope optimizer only, use key, keyrot, or
-// keyvec for regular use).
+/*!
+ * Linear key type (!!! for NifSkope optimizer only, use key, keyrot, or
+ * keyvec for regular use).
+ */
 template <class T >
 struct ns_keylin {
-  // Key time.
+  /*!
+   * Key time.
+   */
   float time;
-  // The key value.
+  /*!
+   * The key value.
+   */
   T value;
 };
 
-//  Array of keys, not interpolated (!!! for NifSkope only, use keyarray
-// for regular use).
+/*!
+ * Array of keys, not interpolated (!!! for NifSkope only, use keyarray
+ * for regular use).
+ */
 template <class T >
 struct ns_keyarray {
-  // The keys.
+  /*!
+   * The keys.
+   */
   vector<ns_keylin<T > > keys;
 };
 
-//  Key with tangents (!!! for NifSkope only, use keyvec instead for
-// regular purposes).
+/*!
+ * Key with tangents (!!! for NifSkope only, use keyvec instead for
+ * regular purposes).
+ */
 template <class T >
 struct ns_keytan {
-  // The key time.
+  /*!
+   * The key time.
+   */
   float time;
-  // The key value.
+  /*!
+   * The key value.
+   */
   T value;
-  // Forward tangent.
+  /*!
+   * Forward tangent.
+   */
   T forward;
-  // Backward tangent.
+  /*!
+   * Backward tangent.
+   */
   T backward;
 };
 
-//  A quaternion as it appears in the havok blocks.
+/*!
+ * A quaternion as it appears in the havok blocks.
+ */
 struct QuaternionXYZW {
-  // The x-coordinate.
+  /*!
+   * The x-coordinate.
+   */
   float x;
-  // The y-coordinate.
+  /*!
+   * The y-coordinate.
+   */
   float y;
-  // The z-coordinate.
+  /*!
+   * The z-coordinate.
+   */
   float z;
-  // The w-coordinate.
+  /*!
+   * The w-coordinate.
+   */
   float w;
 };
 
-//  Another string format, for short strings.  Specific to Bethesda-
-// specific header tags.
+/*!
+ * Another string format, for short strings.  Specific to Bethesda-
+ * specific header tags.
+ */
 struct ShortString {
-  // The string itself, null terminated (the null terminator is taken into
-  // account in the length byte).
+  /*!
+   * The string itself, null terminated (the null terminator is taken into
+   * account in the length byte).
+   */
   vector<byte > value;
 };
 
-//  Reference to shape and skin instance.
+/*!
+ * Reference to shape and skin instance.
+ */
 struct SkinShape {
-  // The shape.
+  /*!
+   * The shape.
+   */
   Ref<NiTriShape > shape;
-  // Skinning instance for the shape?
+  /*!
+   * Skinning instance for the shape?
+   */
   Ref<NiSkinInstance > skinInstance;
 };
 
-//  Unknown.
+/*!
+ * Unknown.
+ */
 struct SkinShapeGroup {
-  // First link is a NiTriShape block. Second link is a NiSkinInstance
-  // block.
+  /*!
+   * First link is a NiTriShape block. Second link is a NiSkinInstance
+   * block.
+   */
   vector<SkinShape > linkPairs;
 };
 
-//  A weighted vertex.
+/*!
+ * A weighted vertex.
+ */
 struct SkinWeight {
-  // The vertex index, in the mesh.
+  /*!
+   * The vertex index, in the mesh.
+   */
   ushort index;
-  // The vertex weight - between 0.0 and 1.0
+  /*!
+   * The vertex weight - between 0.0 and 1.0
+   */
   float weight;
 };
 
-//  Used in NiDefaultAVObjectPalette.
+/*!
+ * Used in NiDefaultAVObjectPalette.
+ */
 struct AVObject {
-  // Object name.
+  /*!
+   * Object name.
+   */
   string name;
-  // Object reference.
+  /*!
+   * Object reference.
+   */
   NiAVObject * object;
 };
 
-//  In a .kf file, this links to a controllable block, via its name (or
-// for version 10.2.0.0 and up, a link and offset to a NiStringPalette
-// that contains the name), and a sequence of interpolators that apply to
-// this controllable block, via links.
+/*!
+ * In a .kf file, this links to a controllable block, via its name (or
+ * for version 10.2.0.0 and up, a link and offset to a NiStringPalette
+ * that contains the name), and a sequence of interpolators that apply to
+ * this controllable block, via links.
+ */
 struct ControllerLink {
-  // Name of a controllable block in another NIF file.
+  /*!
+   * Name of a controllable block in another NIF file.
+   */
   string name;
-  // Link to an interpolator.
+  /*!
+   * Link to an interpolator.
+   */
   Ref<AInterpolator > interpolator;
-  // Unknown link. Usually -1.
+  /*!
+   * Unknown link. Usually -1.
+   */
   Ref<NiObject > unknownLink1;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   Ref<NiObject > unknownLink2;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   ushort unknownShort0;
-  // Idle animations tend to have low values for this, and blocks that have
-  // high values tend to correspond with the important parts of the
-  // animation. WARNING: BREAKS CIV4 NIF FILES! Only observed in Oblivion
-  // NIF files so far.
+  /*!
+   * Idle animations tend to have low values for this, and blocks that have
+   * high values tend to correspond with the important parts of the
+   * animation. WARNING: BREAKS CIV4 NIF FILES! Only observed in Oblivion
+   * NIF files so far.
+   */
   byte priority_;
-  // Refers to the NiStringPalette which contains the name of the
-  // controlled block.
+  /*!
+   * Refers to the NiStringPalette which contains the name of the
+   * controlled block.
+   */
   Ref<NiStringPalette > stringPalette;
-  // The name of the animated node.
+  /*!
+   * The name of the animated node.
+   */
   string nodeName;
-  // Offset in the string palette where the name of the controlled node
-  // (NiNode, NiTriShape, ...) starts.
+  /*!
+   * Offset in the string palette where the name of the controlled node
+   * (NiNode, NiTriShape, ...) starts.
+   */
   ushort nodeNameOffset;
-  // Unknown, always 0.
+  /*!
+   * Unknown, always 0.
+   */
   ushort unknownShort1;
-  // Name of the property (NiMaterialProperty, ...), if this controller
-  // controls a property.
+  /*!
+   * Name of the property (NiMaterialProperty, ...), if this controller
+   * controls a property.
+   */
   string propertyType;
-  // Offset in the string palette where the property (NiMaterialProperty,
-  // ...) starts, if this controller controls a property. Otherwise, -1.
+  /*!
+   * Offset in the string palette where the property (NiMaterialProperty,
+   * ...) starts, if this controller controls a property. Otherwise, -1.
+   */
   ushort propertyTypeOffset;
-  // Unknown, usually 0, but sometimes also 0xFFFF.
+  /*!
+   * Unknown, usually 0, but sometimes also 0xFFFF.
+   */
   ushort unknownShort2;
-  // Probably the block type name of the controller in the NIF file that is
-  // child of the controlled block.
+  /*!
+   * Probably the block type name of the controller in the NIF file that is
+   * child of the controlled block.
+   */
   string controllerType;
-  // Apparently the offset in the string palette of some type of controller
-  // related to Interpolator (for example, a 'NiTransformInterpolator' will
-  // have here a 'NiTransformController', etc.). Sometimes the type of
-  // controller that links to the interpolator. Probably it refers to the
-  // controller in the NIF file that is child of the controlled block, via
-  // its type name.
+  /*!
+   * Apparently the offset in the string palette of some type of controller
+   * related to Interpolator (for example, a 'NiTransformInterpolator' will
+   * have here a 'NiTransformController', etc.). Sometimes the type of
+   * controller that links to the interpolator. Probably it refers to the
+   * controller in the NIF file that is child of the controlled block, via
+   * its type name.
+   */
   ushort controllerTypeOffset;
-  // Unknown, always 0.
+  /*!
+   * Unknown, always 0.
+   */
   ushort unknownShort3;
-  // Some variable string (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U',
-  // 'tongue_out', etc.).
+  /*!
+   * Some variable string (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U',
+   * 'tongue_out', etc.).
+   */
   string variable1;
-  // Offset in the string palette where some variable string starts (such
-  // as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually,
-  // -1.
+  /*!
+   * Offset in the string palette where some variable string starts (such
+   * as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually,
+   * -1.
+   */
   ushort variableOffset1;
-  // Unknown, usually 0, but sometimes 0xFFFF.
+  /*!
+   * Unknown, usually 0, but sometimes 0xFFFF.
+   */
   ushort unknownShort4;
-  // Another variable string, apparently used for particle system
-  // controllers.
+  /*!
+   * Another variable string, apparently used for particle system
+   * controllers.
+   */
   string variable2;
-  // Offset in the string palette where some variable string starts (so far
-  // only 'EmitterActive' and 'BirthRate' have been observed in official
-  // files, used for particle system controllers). Usually, -1.
+  /*!
+   * Offset in the string palette where some variable string starts (so far
+   * only 'EmitterActive' and 'BirthRate' have been observed in official
+   * files, used for particle system controllers). Usually, -1.
+   */
   ushort variableOffset2;
-  // Unknown, usually 0, but sometimes 0xFFFF.
+  /*!
+   * Unknown, usually 0, but sometimes 0xFFFF.
+   */
   ushort unknownShort5;
 };
 
-//  The NIF file header.
+/*!
+ * The NIF file header.
+ */
 struct Header {
-  // 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo
-  // File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version
-  // written out. Ends with a newline character (0x0A).
+  /*!
+   * 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo
+   * File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version
+   * written out. Ends with a newline character (0x0A).
+   */
   HeaderString headerString;
-  // The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C,
-  // 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000,
-  // 0x0A020000, 0x14000004, ...
+  /*!
+   * The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C,
+   * 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000,
+   * 0x0A020000, 0x14000004, ...
+   */
   uint version;
-  // Determines the endian-ness of the data.  1 = little endian (default) 0
-  // = big endian
+  /*!
+   * Determines the endian-ness of the data.  1 = little endian (default) 0
+   * = big endian
+   */
   byte endianType;
-  // An extra version number, for companies that decide to modify the file
-  // format.
+  /*!
+   * An extra version number, for companies that decide to modify the file
+   * format.
+   */
   uint userVersion;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt1;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt3;
-  // Could be the name of the creator of the NIF file?
+  /*!
+   * Could be the name of the creator of the NIF file?
+   */
   ShortString creator_;
-  // Unknown. Can be something like 'TriStrip Process Script'.
+  /*!
+   * Unknown. Can be something like 'TriStrip Process Script'.
+   */
   ShortString exportType_;
-  // Unknown. Possibly the selected option of the export script. Can be
-  // something like 'Default Export Script'.
+  /*!
+   * Unknown. Possibly the selected option of the export script. Can be
+   * something like 'Default Export Script'.
+   */
   ShortString exportScript_;
-  // List of all block types used in this NIF file.
+  /*!
+   * List of all block types used in this NIF file.
+   */
   vector<string > blockTypes;
-  // Maps file blocks on their corresponding type: first file block is of
-  // type block_types[block_type_index[0]], the second of
-  // block_types[block_type_index[1]], etc.
+  /*!
+   * Maps file blocks on their corresponding type: first file block is of
+   * type block_types[block_type_index[0]], the second of
+   * block_types[block_type_index[1]], etc.
+   */
   vector<ushort > blockTypeIndex;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt2;
   Header() : version(0x04000002), endianType(1) {};
 };
 
-//  Describes a shader.
+/*!
+ * Describes a shader.
+ */
 struct Shader {
-  // Do we have a shader?
+  /*!
+   * Do we have a shader?
+   */
   bool hasShader;
-  // The shader name.
+  /*!
+   * The shader name.
+   */
   string shaderName;
-  // Unknown link, usually -1.
+  /*!
+   * Unknown link, usually -1.
+   */
   Ref<NiObject > unknownLink;
 };
 
-//  A list of \\0 terminated strings.
+/*!
+ * A list of \\0 terminated strings.
+ */
 struct StringPalette {
-  // A bunch of 0x00 seperated strings.
+  /*!
+   * A bunch of 0x00 seperated strings.
+   */
   string palette;
-  // Length of the palette string is repeated here.
+  /*!
+   * Length of the palette string is repeated here.
+   */
   uint length;
 };
 
-//  A list of node targets.
+/*!
+ * A list of node targets.
+ */
 struct TargetGroup {
-  // The list of block indices.
+  /*!
+   * The list of block indices.
+   */
   vector<NiAVObject * > indices;
 };
 
-//  Tension, bias, continuity.
+/*!
+ * Tension, bias, continuity.
+ */
 struct TBC {
-  // Tension.
+  /*!
+   * Tension.
+   */
   float t;
-  // Bias.
+  /*!
+   * Bias.
+   */
   float b;
-  // Continuity.
+  /*!
+   * Continuity.
+   */
   float c;
 };
 
-//  A TBC key (!!! for NifSkope only, use keyvec for regular purposes).
+/*!
+ * A TBC key (!!! for NifSkope only, use keyvec for regular purposes).
+ */
 template <class T >
 struct ns_keytbc {
-  // The key time.
+  /*!
+   * The key time.
+   */
   float time;
-  // The key value.
+  /*!
+   * The key value.
+   */
   T value;
-  // Tension, bias, continuity.
+  /*!
+   * Tension, bias, continuity.
+   */
   TBC tbc;
 };
 
-//  Array of interpolable keys (!!! for NifSkope only, use keyvecarray
-// for regular use).
+/*!
+ * Array of interpolable keys (!!! for NifSkope only, use keyvecarray for
+ * regular use).
+ */
 template <class T >
 struct ns_keyvecarray {
-  // Number of keys.
+  /*!
+   * Number of keys.
+   */
   uint numKeys;
-  // The key type (1, 2, or 3).
+  /*!
+   * The key type (1, 2, or 3).
+   */
   uint keyType;
-  // Linearly interpolated keys.
+  /*!
+   * Linearly interpolated keys.
+   */
   vector<ns_keylin<T > > keys;
 };
 
-//  Rotation subkey (!!! Nifskope only).
+/*!
+ * Rotation subkey (!!! Nifskope only).
+ */
 struct ns_keyrotsub {
-  // Time.
+  /*!
+   * Time.
+   */
   float time;
-  // The sub keys, one for every axis.
+  /*!
+   * The sub keys, one for every axis.
+   */
   vector<ns_keyvecarray<float > > subKeys;
 };
 
-//  Array of rotation keys (!!! for NifSkope only, use keyrotarray for
-// regular use).
+/*!
+ * Array of rotation keys (!!! for NifSkope only, use keyrotarray for
+ * regular use).
+ */
 template <class T >
 struct ns_keyrotarray {
-  // Number of rotation keys.
+  /*!
+   * Number of rotation keys.
+   */
   uint numKeys;
-  // The key type (1, 2, 3, or 4).
+  /*!
+   * The key type (1, 2, 3, or 4).
+   */
   uint keyType;
-  // Linear keys.
+  /*!
+   * Linear keys.
+   */
   vector<ns_keylin<T > > keys;
-  // Special rotation keys (3 float arrays, one for each axis).
+  /*!
+   * Special rotation keys (3 float arrays, one for each axis).
+   */
   vector<ns_keyrotsub > keysSub;
 };
 
-//  Array of interpolable keys (!!! for NifSkope only, use keyvecarraytyp
-// for regular use)
+/*!
+ * Array of interpolable keys (!!! for NifSkope only, use keyvecarraytyp
+ * for regular use)
+ */
 template <class T >
 struct ns_keyvecarraytyp {
-  // The key type (1, 2, 3)
+  /*!
+   * The key type (1, 2, 3)
+   */
   uint keyType;
-  // Linearly interpolated keys.
+  /*!
+   * Linearly interpolated keys.
+   */
   vector<ns_keylin<T > > keys;
 };
 
-//  Texture description.
+/*!
+ * Texture description.
+ */
 struct TexDesc {
-  // NiSourceTexture block index.
+  /*!
+   * NiSourceTexture block index.
+   */
   Ref<NiSourceTexture > source;
-  // 0=clamp S clamp T, 1=clamp S wrap T, 2=wrap S clamp T, 3=wrap S wrap T
+  /*!
+   * 0=clamp S clamp T, 1=clamp S wrap T, 2=wrap S clamp T, 3=wrap S wrap T
+   */
   TexClampMode clampMode;
-  // 0=nearest, 1=bilinear, 2=trilinear, 3=..., 4=..., 5=...
+  /*!
+   * 0=nearest, 1=bilinear, 2=trilinear, 3=..., 4=..., 5=...
+   */
   TexFilterMode filterMode;
-  // Texture set? Usually 0.
+  /*!
+   * Texture set? Usually 0.
+   */
   uint textureSet;
-  // 0?
+  /*!
+   * 0?
+   */
   ushort ps2L;
-  // 0xFFB5?
+  /*!
+   * 0xFFB5?
+   */
   ushort ps2K;
-  // Unknown, 0 or 0x0101?
+  /*!
+   * Unknown, 0 or 0x0101?
+   */
   ushort unknown1;
-  // Determines whether or not the texture's coordinates are transformed.
+  /*!
+   * Determines whether or not the texture's coordinates are transformed.
+   */
   bool hasTextureTransform;
-  // The amount to translate the texture coordinates in each direction?
+  /*!
+   * The amount to translate the texture coordinates in each direction?
+   */
   TexCoord translation;
-  // The number of times the texture is tiled in each direction?
+  /*!
+   * The number of times the texture is tiled in each direction?
+   */
   TexCoord tiling;
-  // 2D Rotation of texture image around third W axis after U and V.
+  /*!
+   * 2D Rotation of texture image around third W axis after U and V.
+   */
   float wRotation;
-  // The texture transform type?  Doesn't seem to do anything.
+  /*!
+   * The texture transform type?  Doesn't seem to do anything.
+   */
   uint transformType_;
-  // The offset from the origin?
+  /*!
+   * The offset from the origin?
+   */
   TexCoord centerOffset;
   TexDesc() : clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0), ps2L(0), ps2K(0xFFB5), hasTextureTransform(false), wRotation(0.0f), transformType_(0) {};
 };
 
-//  A texture that happens to be a bump map.  Contains extra data.
+/*!
+ * A texture that happens to be a bump map.  Contains extra data.
+ */
 struct BumpMap {
-  // Determines whether this bumpmap contains any information. If Non-Zero
-  // the following data is present, otherwise it is not.
+  /*!
+   * Determines whether this bumpmap contains any information. If Non-Zero
+   * the following data is present, otherwise it is not.
+   */
   bool isUsed;
-  // The bump map texture description.
+  /*!
+   * The bump map texture description.
+   */
   TexDesc texture;
-  // ?
+  /*!
+   * ?
+   */
   float bumpMapLumaScale;
-  // ?
+  /*!
+   * ?
+   */
   float bumpMapLumaOffset;
-  // ?
+  /*!
+   * ?
+   */
   Matrix22 matrix;
 };
 
-//  A texture source.
+/*!
+ * A texture source.
+ */
 struct TexSource {
-  // Is the texture external?
+  /*!
+   * Is the texture external?
+   */
   byte useExternal;
-  // The external texture file name.  Note: all original morrowind nifs use
-  // name.ext only for addressing the textures, but most mods use something
-  // like textures/[subdir/]name.ext. This is due to a feature in Morrowind
-  // resource manager: it loads name.ext, textures/name.ext and
-  // textures/subdir/name.ext but NOT subdir/name.ext.
+  /*!
+   * The external texture file name.  Note: all original morrowind nifs use
+   * name.ext only for addressing the textures, but most mods use something
+   * like textures/[subdir/]name.ext. This is due to a feature in Morrowind
+   * resource manager: it loads name.ext, textures/name.ext and
+   * textures/subdir/name.ext but NOT subdir/name.ext.
+   */
   string fileName;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   Ref<NiObject > unknownLink;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   byte unknownByte;
-  // The original source filename of the image embedded by the referred
-  // NiPixelData block.
+  /*!
+   * The original source filename of the image embedded by the referred
+   * NiPixelData block.
+   */
   string originalFileName_;
-  // Pixel data block index.
+  /*!
+   * Pixel data block index.
+   */
   Ref<NiPixelData > pixelData;
 };
 
-//  A texture that is not a bumpmap.
+/*!
+ * A texture that is not a bumpmap.
+ */
 struct Texture {
-  // Determines whether this texture contains any information. If Non-Zero
-  // the following data is present, otherwise it is not.
+  /*!
+   * Determines whether this texture contains any information. If Non-Zero
+   * the following data is present, otherwise it is not.
+   */
   bool isUsed;
-  // The texture description.
+  /*!
+   * The texture description.
+   */
   TexDesc textureData;
 };
 
-//  An extended version of texture.
+/*!
+ * An extended version of texture.
+ */
 struct Texture2 {
-  // Is it used?
+  /*!
+   * Is it used?
+   */
   bool isUsed;
-  // The texture data.
+  /*!
+   * The texture data.
+   */
   TexDesc textureData;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt;
 };
 
-//  Group of extra textures.
+/*!
+ * Group of extra textures.
+ */
 struct ExtraTextureGroup {
-  // The textures.
+  /*!
+   * The textures.
+   */
   vector<Texture2 > textures;
 };
 
-//  Skinning data for a submesh, optimized for hardware skinning. Part of
-// NiSkinPartition.
+/*!
+ * Skinning data for a submesh, optimized for hardware skinning. Part of
+ * NiSkinPartition.
+ */
 struct SkinPartition {
-  // Number of strips in this submesh (zero if not stripped).
+  /*!
+   * Number of strips in this submesh (zero if not stripped).
+   */
   ushort numStrips;
-  // List of bones.
+  /*!
+   * List of bones.
+   */
   vector<ushort > bones;
-  // Do we have a vertex map?
+  /*!
+   * Do we have a vertex map?
+   */
   bool hasVertexMap;
-  // Maps the weight/influence lists in this submesh to the vertices in the
-  // shape being skinned.
+  /*!
+   * Maps the weight/influence lists in this submesh to the vertices in the
+   * shape being skinned.
+   */
   vector<ushort > vertexMap;
-  // Do we have vertex weights?
+  /*!
+   * Do we have vertex weights?
+   */
   bool hasVertexWeights;
-  // The vertex weights.
+  /*!
+   * The vertex weights.
+   */
   vector<vector<float > > vertexWeights;
-  // Do we have strip data?
+  /*!
+   * Do we have strip data?
+   */
   bool hasStrips;
-  // The strips.
+  /*!
+   * The strips.
+   */
   vector<vector<ushort > > strips;
-  // The triangles.
+  /*!
+   * The triangles.
+   */
   vector<Triangle > triangles;
-  // Do we have bone indices?
+  /*!
+   * Do we have bone indices?
+   */
   bool hasBoneIndices;
-  // Bone indices, they index into 'Bones'.
+  /*!
+   * Bone indices, they index into 'Bones'.
+   */
   vector<vector<byte > > boneIndices;
 };
 
-//  Unknown.
+/*!
+ * Unknown.
+ */
 struct unk292bytes {
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   vector<vector<byte > > unknown292Bytes;
 };
 
-//  Bounding box.
+/*!
+ * Bounding box.
+ */
 struct BoundingBox {
-  // This value determines whether this bounding box contains information.
-  // If it is non-zero, the following information is present. At version
-  // 4.0.0.1 and above, it becomes a byte instead of an int.
+  /*!
+   * This value determines whether this bounding box contains information.
+   * If it is non-zero, the following information is present. At version
+   * 4.0.0.1 and above, it becomes a byte instead of an int.
+   */
   bool isUsed;
-  // Usually 1.
+  /*!
+   * Usually 1.
+   */
   uint unknownInt;
-  // Translation vector.
+  /*!
+   * Translation vector.
+   */
   Vector3 translation;
-  // Rotation matrix.
+  /*!
+   * Rotation matrix.
+   */
   Matrix33 rotation;
-  // Radius, per direction.
+  /*!
+   * Radius, per direction.
+   */
   Vector3 radius;
 };
 
-//  Describes a furniture position?
+/*!
+ * Describes a furniture position?
+ */
 struct FurniturePosition {
-  // Unknown. Position?
+  /*!
+   * Unknown. Position?
+   */
   Vector3 unknownVector;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   ushort unknownShort;
-  // This might refer to a furnituremarkerxx.nif file.
+  /*!
+   * This might refer to a furnituremarkerxx.nif file.
+   */
   byte positionRef1_;
-  // This might also refer to a furnituremarkerxx.nif file.
+  /*!
+   * This might also refer to a furnituremarkerxx.nif file.
+   */
   byte positionRef2_;
 };
 
-//  A triangle with extra data used for physics.
+/*!
+ * A triangle with extra data used for physics.
+ */
 struct hkTriangle {
-  // The triangle.
+  /*!
+   * The triangle.
+   */
   Triangle triangle;
-  // Another short, doesn't look like a vertex index.
+  /*!
+   * Another short, doesn't look like a vertex index.
+   */
   ushort unknownShort;
-  // This appears to be a normalized vector, so probably it is a normal or
-  // a tangent vector or something like that.
+  /*!
+   * This appears to be a normalized vector, so probably it is a normal or
+   * a tangent vector or something like that.
+   */
   Vector3 normal;
 };
 
-//  Info about level of detail ranges.
+/*!
+ * Info about level of detail ranges.
+ */
 struct LODInfo {
-  // Type of LOD info (0=regular, 1=info is in a NiRangeLODData block).
+  /*!
+   * Type of LOD info (0=regular, 1=info is in a NiRangeLODData block).
+   */
   uint lodType;
-  // ?
+  /*!
+   * ?
+   */
   Vector3 lodCenter;
-  // The ranges of distance that each level of detail applies in.
+  /*!
+   * The ranges of distance that each level of detail applies in.
+   */
   vector<LODRange > lodLevels;
-  // Zero?
+  /*!
+   * Zero?
+   */
   ushort unknownShort;
-  // Refers to NiRangeLODData block.
+  /*!
+   * Refers to NiRangeLODData block.
+   */
   Ref<NiRangeLODData > rangeData;
 };
 
-//  particle array entry
+/*!
+ * particle array entry
+ */
 struct Particle {
-  // Particle velocity
+  /*!
+   * Particle velocity
+   */
   Vector3 velocity;
-  // Unknown
+  /*!
+   * Unknown
+   */
   Vector3 unknownVector;
-  // The particle's age.
+  /*!
+   * The particle's age.
+   */
   float lifetime;
-  // Maximum age of the particle.
+  /*!
+   * Maximum age of the particle.
+   */
   float lifespan;
-  // Timestamp of the last update.
+  /*!
+   * Timestamp of the last update.
+   */
   float timestamp;
-  // Unknown short (=0)
+  /*!
+   * Unknown short (=0)
+   */
   ushort unknownShort;
-  // Particle/vertex index matches array index
+  /*!
+   * Particle/vertex index matches array index
+   */
   ushort vertexId;
 };
 
-//  Data for several particles.
+/*!
+ * Data for several particles.
+ */
 struct ParticleGroup {
-  // Number of valid entries in the following array. (number of active
-  // particles at the time the system was saved)
+  /*!
+   * Number of valid entries in the following array. (number of active
+   * particles at the time the system was saved)
+   */
   ushort numValid;
-  // Individual particle modifiers?
+  /*!
+   * Individual particle modifiers?
+   */
   vector<Particle > particles;
 };
 
-//  Skinning data component.
+/*!
+ * Skinning data component.
+ */
 struct SkinData {
-  // Rotation offset of the skin from this bone in bind position.
+  /*!
+   * Rotation offset of the skin from this bone in bind position.
+   */
   Matrix33 rotation;
-  // Translation offset of the skin from this bone in bind position.
+  /*!
+   * Translation offset of the skin from this bone in bind position.
+   */
   Vector3 translation;
-  // Scale offset of the skin from this bone in bind position. (Assumption
-  // - this is always 1.0 so far)
+  /*!
+   * Scale offset of the skin from this bone in bind position. (Assumption
+   * - this is always 1.0 so far)
+   */
   float scale;
-  // This has been verified not to be a normalized quaternion.  They may or
-  // may not be related to each other so their specification as an array of
-  // 4 floats may be misleading.
+  /*!
+   * This has been verified not to be a normalized quaternion.  They may or
+   * may not be related to each other so their specification as an array of
+   * 4 floats may be misleading.
+   */
   vector<float > unknown4Floats;
-  // The vertex weights.
+  /*!
+   * The vertex weights.
+   */
   vector<SkinWeight > vertexWeights;
 };
 
-//  An array of keys. This one always has a Key Type.
+/*!
+ * An array of keys. This one always has a Key Type.
+ */
 template <class T >
 struct TypedVectorKeyArray {
-  // The key type.
+  /*!
+   * The key type.
+   */
   KeyType keyType;
-  // The keys.
+  /*!
+   * The keys.
+   */
   vector<Key<T > > keys;
 };
 
-//  Geometry morphing data component.
+/*!
+ * Geometry morphing data component.
+ */
 struct Morph {
-  // Name of the frame.
+  /*!
+   * Name of the frame.
+   */
   string frameName;
-  // The morphing keyframes.
+  /*!
+   * The morphing keyframes.
+   */
   TypedVectorKeyArray<float > frames;
-  // Unknown.
+  /*!
+   * Unknown.
+   */
   uint unknownInt;
-  // Morph vectors.
+  /*!
+   * Morph vectors.
+   */
   vector<Vector3 > vectors;
 };
 
-//  Array of vector keys (anything that can be interpolated, except
-// rotations).
+/*!
+ * Array of vector keys (anything that can be interpolated, except
+ * rotations).
+ */
 template <class T >
 struct VectorKeyArray {
-  // Number of keys in the array.
+  /*!
+   * Number of keys in the array.
+   */
   uint numKeys;
-  // The key type.
+  /*!
+   * The key type.
+   */
   KeyType keyType;
-  // The keys.
+  /*!
+   * The keys.
+   */
   vector<Key<T > > keys;
 };
 
-//  Rotation key array.
+/*!
+ * Rotation key array.
+ */
 template <class T >
 struct RotationKeyArray {
-  // Number of keys.
+  /*!
+   * Number of keys.
+   */
   uint numKeys;
-  // Key type (1, 2, 3, or 4).
+  /*!
+   * Key type (1, 2, 3, or 4).
+   */
   KeyType keyType;
-  // The rotation keys.
+  /*!
+   * The rotation keys.
+   */
   vector<Key<T > > keys;
 };
 
@@ -12068,7 +12520,70 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define NI_VIS_CONTROLLER_MEMBERS \
 Ref<NiVisData > data; \
 
-#define NI_VIS_CONTROLLER_PARENTS NiTimeContro                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                NI_VIS_DATA_FIXLINKS \
+#define NI_VIS_CONTROLLER_PARENTS NiTimeController \
+
+#define NI_VIS_CONTROLLER_CONSTRUCT \
+
+#define NI_VIS_CONTROLLER_READ \
+uint block_num; \
+NiTimeController::Read( in, link_stack, version ); \
+NifStream( block_num, in, version ); \
+link_stack.push_back( block_num ); \
+
+#define NI_VIS_CONTROLLER_WRITE \
+NiTimeController::Write( out, link_map, version ); \
+NifStream( link_map[data], out, version ); \
+
+#define NI_VIS_CONTROLLER_STRING \
+stringstream out; \
+out << NiTimeController::asString(); \
+out << "Data:  " << data << endl; \
+return out.str(); \
+
+#define NI_VIS_CONTROLLER_FIXLINKS \
+NiTimeController::FixLinks( objects, link_stack, version ); \
+data = blocks[link_stack.front()]; \
+link_stack.pop_front(); \
+
+#define NI_VIS_DATA_MEMBERS \
+KeyArray<byte > data; \
+
+#define NI_VIS_DATA_PARENTS AKeyedData \
+
+#define NI_VIS_DATA_CONSTRUCT \
+
+#define NI_VIS_DATA_READ \
+AKeyedData::Read( in, link_stack, version ); \
+uint data_numKeys; \
+NifStream( data_numKeys, in, version ); \
+data.keys.resize(data_numKeys); \
+for (uint i0 = 0; i0 < data_numKeys; i0++) { \
+  NifStream( data.keys[i0], in, version ); \
+}; \
+
+#define NI_VIS_DATA_WRITE \
+AKeyedData::Write( out, link_map, version ); \
+uint data_numKeys; \
+data_numKeys = uint(data.numKeys.size()); \
+NifStream( data_numKeys, out, version ); \
+for (uint i0 = 0; i0 < data_numKeys; i0++) { \
+  NifStream( data.keys[i0], out, version ); \
+}; \
+
+#define NI_VIS_DATA_STRING \
+stringstream out; \
+out << AKeyedData::asString(); \
+out << "Num Keys:  " << data_numKeys << endl; \
+for (uint i0 = 0; i0 < data_numKeys; i0++) { \
+  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
+}; \
+return out.str(); \
+
+#define << endl; \
+}; \
+return out.str(); \
+
+#define NI_VIS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < data_numKeys; i0++) { \
 }; \
