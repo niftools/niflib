@@ -32,7 +32,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
 #include "NIF_IO.h"
-//#include "NIF.h"
+
 int BlockSearch( istream& in ) {
 
 	//Get current file pos
@@ -139,40 +139,11 @@ byte ReadByte( istream& in ){
 	in.read( (char*)&tmp, 1 );
 	return tmp;
 }
-
-void ReadUSVector3( usVector3& vec, istream& in ){
-
-	vec[0] = ReadUShort( in );
-	vec[1] = ReadUShort( in );
-	vec[2] = ReadUShort( in );
-}
-
 float ReadFloat( istream &in ){
 
 	float tmp;
 	in.read( reinterpret_cast<char*>(&tmp), sizeof(tmp) );
 	return tmp;
-}
-
-void ReadFVector2( fVector2& fvec, istream& in ){
-
-	fvec[0] = ReadFloat( in );
-	fvec[1] = ReadFloat( in );
-}
-
-void ReadFVector3( fVector3& fvec, istream& in ){
-
-	fvec[0] = ReadFloat( in );
-	fvec[1] = ReadFloat( in );
-	fvec[2] = ReadFloat( in );
-}
-
-void ReadFVector4( fVector4& fvec, istream& in ){
-
-	fvec[0] = ReadFloat( in );
-	fvec[1] = ReadFloat( in );
-	fvec[2] = ReadFloat( in );
-	fvec[3] = ReadFloat( in );
 }
 
 string ReadString( istream &in ) {
@@ -223,37 +194,8 @@ void WriteByte( byte val, ostream& out ){
 	out.write( (char*)&val, 1 );
 }
 
-void WriteUSVector3( usVector3 const & vec, ostream& out ){
-
-	WriteUShort( vec[0], out );
-	WriteUShort( vec[1], out );
-	WriteUShort( vec[2], out );
-}
-
 void WriteFloat( float val, ostream& out ){
-
 	out.write( reinterpret_cast<char*>(&val), sizeof(val) );
-}
-
-void WriteFVector2( fVector2 const & fvec, ostream& out ){
-
-	WriteFloat( fvec[0], out );
-	WriteFloat( fvec[1], out );
-}
-
-void WriteFVector3( fVector3 const & fvec, ostream& out ){
-
-	WriteFloat( fvec[0], out );
-	WriteFloat( fvec[1], out );
-	WriteFloat( fvec[2], out );
-}
-
-void WriteFVector4( fVector4 const & fvec, ostream& out ){
-
-	WriteFloat( fvec[0], out );
-	WriteFloat( fvec[1], out );
-	WriteFloat( fvec[2], out );
-	WriteFloat( fvec[3], out );
 }
 
 void WriteString( string const & val, ostream& out ) {
@@ -500,216 +442,6 @@ void NifStream( Quaternion const & val, ostream& out, uint version ) {
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
-
-//BoundingBox
-void NifStream( BoundingBox & val, istream& in, uint version ) {
-	NifStream( val.isUsed, in, version );
-	if ( val.isUsed ){
-		NifStream( val.unknownInt, in, version );
-		NifStream( val.translation, in, version );
-		NifStream( val.rotation, in, version );
-		NifStream( val.radius, in, version );
-	}
-}
-
-void NifStream( BoundingBox const & val, ostream& out, uint version ) {
-	NifStream( val.isUsed, out, version );
-	if ( val.isUsed ){
-		NifStream( val.unknownInt, out, version );
-		NifStream( val.translation, out, version );
-		NifStream( val.rotation, out, version );
-		NifStream( val.radius, out, version );
-	}
-}
-
-ostream & operator<<( ostream & out, BoundingBox const & val ) {
-	if ( val.isUsed ) {
-		out << endl
-			<< "   Unknown Int:  " << val.unknownInt << endl
-			<< "   Position:  " << val.translation << endl
-			<< "   Rotation:  " << val.rotation << endl
-			<< "   Radius:  " << val.radius << endl;
-	} 
-	else {
-		out << "None";
-	}
-	return out;
-}
-
-//Not going to implement ConditionalInt.  Should not be needed anymore.
-
-//SkinWeight
-void NifStream( SkinWeight & val, istream& in, uint version ) {
-	NifStream( val.vertexNum, in, version );
-	NifStream( val.vertexWeight, in, version );
-}
-
-void NifStream( SkinWeight const & val, ostream& out, uint version ) {
-	NifStream( val.vertexNum, out, version );
-	NifStream( val.vertexWeight, out, version );
-}
-
-ostream & operator<<( ostream & out, SkinWeight const & val ) {
-	return out << val.vertexNum << ":" << val.vertexWeight << endl;
-}
-
-//LODRange
-void NifStream( LODRange & val, istream& in, uint version ) {
-	val.near = ReadFloat( in );
-	val.far = ReadFloat( in );
-};
-void NifStream( LODRange const & val, ostream& out, uint version ) {
-	WriteFloat( val.near, out );
-	WriteFloat( val.far, out );
-};
-
-ostream & operator<<( ostream & out, LODRange const & val ) {
-	return out << "Near: " << val.near << "  Far: " << val.far << endl;
-}
-
-//TexDesc
-void NifStream( TexDesc & val, istream& in, uint version ) {
-	NifStream( val.isUsed, in, version );
-	if ( val.isUsed ) {	
-		//Read in link for TexSource
-		//val.source.set_index( ReadUInt( in ) );
-
-		NifStream( val.clampMode, in, version );
-		val.filterMode = TexFilterMode( ReadUInt( in ) );
-		val.textureSet = ReadUInt( in );
-
-		//PS2 values exist up to version 10.2.0.0
-		if ( version <= VER_10_2_0_0 ) {
-			val.PS2_L = ReadUShort( in );
-			val.PS2_K = ReadUShort( in );
-		}
-
-		//unknownShort exists up to version 4.1.0.12
-		if ( version <= VER_4_1_0_12) {
-			val.unknownShort = ReadUShort( in );
-		}
-
-		//From version 10.1.0.0 and up, this unknown val block may exist
-		if ( version >= VER_10_1_0_0 ) {
-			val.hasTextureTransform = ReadBool( in, version );
-			if ( val.hasTextureTransform == true ) {
-				val.translation.u = ReadFloat( in );
-				val.translation.v = ReadFloat( in );
-				val.tiling.u = ReadFloat( in );
-				val.tiling.v = ReadFloat( in );
-				val.wRotation = ReadFloat( in );
-				val.transformType = ReadUInt( in );
-				val.centerOffset.u = ReadFloat( in );
-				val.centerOffset.v = ReadFloat( in );
-			}
-		}
-	}
-}
-
-void NifStream( TexDesc const & val, ostream& out, uint version ) {
-	WriteBool( val.isUsed, out, version );
-	if ( val.isUsed ) {
-		//Write link
-		//WriteUInt( val.source.get_index(), out );
-
-		NifStream( val.clampMode, out, version );
-		WriteUInt( val.filterMode, out );
-		WriteUInt( val.textureSet, out );
-
-		//PS2 values exist up to version 10.2.0.0
-		if ( version <= VER_10_2_0_0 ) {
-			WriteUShort( val.PS2_L, out );
-			WriteUShort( val.PS2_K, out );
-		}
-
-		//unknownShort exists up to version 4.1.0.12
-		if ( version <= VER_4_1_0_12 ) {
-			WriteUShort( val.unknownShort, out );
-		}
-
-		//From version 10.1.0.0 and up, this unknown val block may exist
-		if ( version >= VER_10_1_0_0 ) {
-			WriteBool( val.hasTextureTransform, out, version );
-			if ( val.hasTextureTransform == true ) {
-				WriteFloat( val.translation.u, out );
-				WriteFloat( val.translation.v, out );
-				WriteFloat( val.tiling.u, out );
-				WriteFloat( val.tiling.v, out );
-				WriteFloat( val.wRotation, out );
-				WriteUInt( val.transformType, out );
-				WriteFloat( val.centerOffset.u, out );
-				WriteFloat( val.centerOffset.v, out );
-			}
-		}
-	}
-};
-
-ostream & operator<<( ostream & out, TexDesc const & val ) {
-	if ( val.isUsed ) {
-		out << "      Source:  " << val.source << endl
-			<< "      Clamp Mode:  "  << val.clampMode << endl
-			<< "      Filter Mode:  " << val.filterMode << endl
-			<< "      Texture Set:  " << val.textureSet << endl
-			<< "      PS2 L Setting:  " << val.PS2_L << endl
-			<< "      PS2 K Setting:  " << val.PS2_K << endl
-			<< "      Unknown Short:  " << val.unknownShort << endl
-			<< "      Texture Transform:   ";
-
-		//From version 10.1.0.0 and up, this unknown data block may exist
-		if ( val.hasTextureTransform == true ) {
-			out << endl
-				<< "         Translation: " << val.translation << endl
-				<< "         Tiling: " << val.tiling << endl
-				<< "         W-rotation: " << val.wRotation << endl
-				<< "         Transform Type: " << val.transformType << endl
-				<< "         Center Offset: " << val.centerOffset << endl;
-		} else {
-			out << "None" << endl;
-		}
-	} else {
-		out << "      Not Being Used" << endl;
-	}
-
-	return out;
-}
-
-////CrossRef
-//void NifStream( CrossRef & val, istream& in, uint version ) {
-//	val.SetIndex( ReadInt( in ) );
-//};
-//
-//void NifStream( CrossRef const & val, ostream& out, uint version ) {
-//	IBlock * ref = val.GetCrossRef();
-//	if ( ref != NULL ) {
-//		WriteInt( ref->GetBlockNum(), out );
-//	} else {
-//		WriteInt( -1, out );
-//	}
-//}
-//
-//ostream & operator<<( ostream & out, CrossRef const & val ) {
-//	return out << blk_ref(val.GetCrossRef());
-//}
-//
-////Link
-//void NifStream( Link & val, istream& in, uint version ) {
-//	val.SetIndex( ReadInt( in ) );
-//};
-//
-//void NifStream( Link const & val, ostream& out, uint version ) {
-//	blk_ref ref = val.GetLink();
-//	if ( ref.is_null() == false ) {
-//		WriteInt( ref->GetBlockNum(), out );
-//	} else {
-//		WriteInt( -1, out );
-//	}
-//}
-//
-//ostream & operator<<( ostream & out, Link const & val ) {
-//	return out << val.GetLink();
-//}
-
-
 
 //--Enums--//
 

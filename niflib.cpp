@@ -32,8 +32,6 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
 #include "niflib.h"
-#include "kfm.h"
-#include "NIF_IO.h"
 #include <exception>
 #include <stdexcept>
 using namespace std;
@@ -845,3 +843,4 @@ void MergeNifTrees( NiAVObjectRef target, NiAVObjectRef right, unsigned int vers
 	//Use the name map to merge the Scene Graphs
 	MergeSceneGraph( name_map, target, new_tree );
 }
+

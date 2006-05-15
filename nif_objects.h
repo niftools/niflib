@@ -42,14 +42,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <list>
 #include <map>
 #include <vector>
-
-//--Typedefs--//
-
-typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
-
-#include "nif_math.h"
+#include "NIF_IO.h"
 
 using namespace std;
 
@@ -239,8 +232,6 @@ template <class T> const Ref<T> DynamicCast( const NiObject * object ) {
 	}
 }
 
-const Type NiObject::TYPE("NiObject", NULL );
-
 /*
  * NiObjectNET - An object that has a name.  Can have extra data and controllers attatched.
  */
@@ -261,8 +252,6 @@ private:
 	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 };
-
-const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
 
 /*
  * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.
@@ -333,8 +322,6 @@ protected:
 
 };
 
-const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
-
 /*
  * NiNode - A basic scene graph node.  Can have children.
  */
@@ -352,8 +339,6 @@ public:
 
 	//TODO:  Add functions to get and set children and store a list of NiObjectNET references
 };
-
-const Type NiNode::TYPE("NiNode", &NiAVObject::TYPE );
 
 
 ////--Link Classes--//
@@ -408,10 +393,5 @@ const Type NiNode::TYPE("NiNode", &NiAVObject::TYPE );
 //	void InitRef();
 //	void KillRef();
 //};
-
-
-struct HeaderString {
-	string header;
-};
 
 #endif

@@ -48,141 +48,16 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <list>
 #include <map>
 #include "nif_math.h"
+#include "NIF_IO.h"
 #include "nif_objects.h"
+#include "xml_extract.h"
+#include "kfm.h"
+
 using namespace std;
-
-//--Forward Declarations of Classes & Structs--//
-struct Texture;
-struct TextureSource;
-struct BoundingBox;
-struct SkinWeight;
-struct ControllerLink;
-struct TexDesc;
-struct LODRange;
-
-//--Constants--//
-
-//NIF Versions
-const unsigned int VER_4_0_0_2     = 0x04000002; /*!< Nif Version 4.0.0.2 */ 
-const unsigned int VER_4_1_0_12    = 0x0401000C; /*!< Nif Version 4.1.0.12 */ 
-const unsigned int VER_4_2_0_2     = 0x04020002; /*!< Nif Version 4.2.0.2 */ 
-const unsigned int VER_4_2_1_0     = 0x04020100; /*!< Nif Version 4.2.1.0 */ 
-const unsigned int VER_4_2_2_0     = 0x04020200; /*!< Nif Version 4.2.2.0 */ 
-const unsigned int VER_10_0_1_0    = 0x0A000100; /*!< Nif Version 10.0.1.0 */ 
-const unsigned int VER_10_1_0_0    = 0x0A010000; /*!< Nif Version 10.1.0.0 */ 
-const unsigned int VER_10_2_0_0    = 0x0A020000; /*!< Nif Version 10.2.0.0 */ 
-const unsigned int VER_20_0_0_4    = 0x14000004; /*!< Nif Version 20.0.0.4 */ 
-const unsigned int VER_20_0_0_5    = 0x14000005; /*!< Nif Version 20.0.0.4 */ 
-const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
-const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
-
-
-
-/*! Keyframe trees are game dependent, so here we define a few games. */
-enum NifGame {
-	KF_MW = 0, /*!< keyframe files: NiSequenceStreamHelper header, .kf extension */
-	KF_DAOC = 1, /*!< keyframe files: NiNode header, .kfa extension */
-	KF_CIV4 = 2 /*!< keyframe files: NiControllerSequence header, .kf extension */
-};
-
-/*! Export options. */
-enum ExportOptions { 
-	EXPORT_NIF = 0, /*!< NIF */
-	EXPORT_NIF_KF = 1, /*!< NIF + single KF + KFM */
-	EXPORT_NIF_KF_MULTI = 2, /*!< NIF + multiple KF + KFM */
-	EXPORT_KF = 3, /*!< single KF */
-	EXPORT_KF_MULTI = 4 /*!< multiple KF */
-};
-
-/*! Lists the basic texture types availiable from the ITexturingProperty interface*/
-enum TexType {
-	BASE_MAP = 0, /*!< The basic texture used by most meshes. */ 
-	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */ 
-	DETAIL_MAP = 2, /*!< Combined with base map for added detail. */ 
-	GLOSS_MAP = 3, /*!< Allows the glossyness of an object to differ across its surface. */ 
-	GLOW_MAP = 4, /*!< Creates a glowing effect. */ 
-	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */ 
-	DECAL_0_MAP = 6 /*!< For placing images on the object like stickers. */ 
-};
-
-/*! Specifies the availiable texture apply modes.  Affects the way colors are composed together. */
-enum ApplyMode {
-   APPLY_REPLACE = 0, /*!< Replaces existing color */ 
-   APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */ 
-   APPLY_MODULATE = 2, /*!< Modulates existing color. */ 
-   APPLY_HILIGHT = 3, /*!< PS2 Only */
-   APPLY_HILIGHT2 = 4 /*!< PS2 Only */
-};
-
-/*! Specifies the availiable texture clamp modes.  That is, the behavior of pixels outside the range of the texture.*/
-enum TexClampMode {
-	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */ 
-	CLAMP_S_WRAP_T = 1, /*!< Clamp in the S direction but wrap in the T direction. */ 
-	WRAP_S_CLAMP_T = 2, /*!< Wrap in the S direction but clamp in the T direction. */ 
-	WRAP_S_WRAP_T = 3 /*!< Wrap in both directions. */ 
-};
-
-/*! Specifies the availiable texture filter modes.  That is, the way pixels within a texture are blended together when textures are displayed on the screen at a size other than their original dimentions.*/
-enum TexFilterMode {
-	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */ 
-	FILTER_BILERP = 1, /*!< Uses bilinear filtering. */ 
-	FILTER_TRILERP = 2, /*!< Uses trilinear filtering. */ 
-	FILTER_NEAREST_MIPNEAREST = 3, /*!< Uses the nearest pixel from the mipmap that is closest to the display size. */ 
-	FILTER_NEAREST_MIPLERP = 4, /*!< Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result. */ 
-	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */ 
-};
-
-/*! Specifies the availiable alpha formats.  That is, the type of alpha blending (transparency) that will be used on a particular texture.*/
-enum AlphaFormat {
-   ALPHA_NONE = 0, /*!< No alpha blending, the texture is fully opaque */ 
-   ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */ 
-   ALPHA_SMOOTH = 2, /*!< Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between. */ 
-   ALPHA_DEFAULT = 3 /*!< Use default setting. */ 
-};
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
 #endif
-
-/*!
- * This enum contains all the animation key types used by Niflib.
- */
-enum KeyType {
-	LINEAR_KEY = 1, /*!< Use linear interpolation. */ 
-	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored.*/ 
-	TBC_KEY = 3, /*!< Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored.*/ 
-	XYZ_ROTATION_KEY = 4 /*!< For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions. */ 
-};
-
-/*!
- * Specifies the pixel format used by the NiPixelData block to store a texture.
- */
-enum PixelFormat {
-	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
-	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
-	PX_FMT_PAL8 = 2 /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete block. */
-};
-
-/*!
- * Specifies the mip map format of a texture.
- */
-enum MipMapFormat {
-	MIP_FMT_NO = 0, /*!< Texture does not use mip maps. */
-	MIP_FMT_YES = 1,/*!< Texture uses mip maps. */
-	MIP_FMT_DEFAULT = 2, /*!< Use default setting. */
-};
-
-/*!
- * Specifies the pixel layout of a texture.  That is, the format of the image data.
- */
-enum PixelLayout {
-	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
-	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
-	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
-	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
-	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
-	PIX_LAY_DEFAULT = 5 /*!< Use default setting. */
-};
 
 //--Main Functions--//
 
@@ -365,51 +240,6 @@ blk_ref CreateBlock( string block_type );
 
 
 
-//--Simple Structures--//
-
-/*! Represents a bounding box - the smallest rectangular shape that a particular node can fit inside. */
-struct BoundingBox {
-	bool isUsed; /*!< Determines whether this bounding box is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
-	int unknownInt; /*!< An integer whos function is still unknown. */
-	Vector3 translation; /*!< The translation vector (position relative to the origin) of this bounding box. */
-	Matrix33 rotation; /*!< The rotation of this bounding box expressed as a 3x3 matrix. */
-	Vector3 radius; /*!< A vector containing the radius of this box in the direction of each axis, X, Y, and Z. */
-};
-
-/*! Stores texture source data.  Specifies where to find the image data; in an external file, or within a NiPixelData block. */
-struct TexSource {
-	bool useExternal; /*!< Specifies whether to use an external file for the texture or not.  If true, an external file is used.  If false, the image data is stored within a NiPixelData block.  This block can be retrieved by using the asLink function on the same attribute. */ 
-	unsigned char unknownByte; /*!< A byte whos function is unknown. */
-	string fileName; /*!< The filename of the texture, if stored externally.  Can be an image file such as a TGA, BMP, or DDS file, or another NIF file which stores the image data within a NiPixelData block. */ 
-};
-
-/*! Stores one skin weight of a vertex by number. */
-struct SkinWeight {
-	unsigned short vertexNum; /*!< The vertex number that this weight is for. */
-	float vertexWeight; /*!< The amount a particular bone affects the movement of this vertex.  Should be a number between 0.0f and 1.0f. */
-};
-
-#undef near
-#undef far
-
-/*! Represents the range where a Level of Detail is visible. */
-struct LODRange {
-	float near; /*!< The closest distance that an LOD range is visible. */
-	float far; /*!< The farthest distance that an LOD range is visible. */
-};
-
-/*! Stores an animation key and the time in the animation that it takes affect. It is a template class so it can hold any kind of data as different blocks key different sorts of information to the animation timeline.*/
-template <class T> 
-struct Key {
-	float time; /*!< The time on the animation timeline that this keyframe takes affect. */ 
-	T data; /*!< The data being keyed to the timeline. */ 
-	T forward_tangent; /*!< A piece of data of the same type as is being keyed to the time line used as the forward tangent in quadratic interpolation.  Ignored if key type is set as something else. */ 
-	T backward_tangent; /*!< A piece of data of the same type as is being keyed to the time line used as the backward tangent in quadratic interpolation.  Ignored if key type is set as something else. */ 
-	float tension; /*!< The amount of tension to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
-	float bias; /*!< The amount of bias to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
-	float continuity; /*!< The amount of continuity to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
-};
-
 //struct ComplexVertex {
 //	ComplexVertex() : has_color(false), has_normal(false), vertex_index(0), normal_index(0), color_index(0) {}
 //	~ComplexVertex();
@@ -533,30 +363,6 @@ struct Key {
 //
 //	}
 //}
-
-/*! Represents a texture description that specifies various properties of the texture that it refers to. The NiTextureSource block that this description refers to can be retrieved by calling asLink on the same attribute. */
-struct TexDesc {
-	/*! Default constructor.  Sets isUsed to false, clampMode to WRAP_S_WRAP_T, filterMode to FILTER_TRILERP, testureSet to 0, PS2_L to zero, PS2_K to 0xFFB5, and unknownShort to 0x0101.*/
-	TexDesc() : isUsed(false), clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0),
-		PS2_L(0), PS2_K(0xFFB5), unknownShort(0x0101),
-		hasTextureTransform(false), translation(0.0, 0.0), tiling(0.0, 0.0),
-		wRotation(0.0), transformType(0), centerOffset(0.0, 0.0) {}
-	string asString() const;
-	bool isUsed; /*!< Determines whether this texture description is used or not.  If this value is true, the other members of this structure are significant.  If false, they are ignored. */ 
-	blk_ref source; /*!< The NiTextureSource block which points to the texture data. > */
-	TexClampMode clampMode;  /*!< The texture wraping/clamping mode. */ 
-	TexFilterMode filterMode; /*!< The texture filtering mode. */ 
-	int textureSet; /*!< Texture set? Usually 0. */ 
-	unsigned short PS2_L; /*!< Something to do with Play Station 2 texture filtering.  Usually 0.  Exists up to version 10.2.0.0 */ 
-	unsigned short PS2_K; /*!< Something to do with Play Station 2 texture filtering.  Usually 0xFFB5.  Exists up to version 10.2.0.0 */ 
-	short unknownShort;  /*!< An unknown short value. Exists up to version 4.1.0.12 */
-	bool hasTextureTransform; /*!< Determines whether or not the texture's coordinates are transformed. */ 
-	TexCoord translation; /*!< The amount to translate the texture coordinates in each direction?. */ 
-	TexCoord tiling; /*!< Number of times the texture is tiled in each direction? */ 
-	float wRotation; /*!< Rotation of the texture image around the W axis? */ 
-	int transformType; /*!< The texture transform type? Doesn't seem to do anything. */ 
-	TexCoord centerOffset; /*!< The offset from the origin? */ 
-};
 
 //--USER GUIDE DOCUMENTATION--//
 

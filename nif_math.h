@@ -36,11 +36,11 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include <cmath>
 #include <iostream>
-//#include "NIF_IO.h"
+
 using namespace std;
 
 #ifndef PI
-#define PI 3.14159265358979323846f
+#define PI 3.14159265358979323846f  //Probably more accurate than a float can be, but it will just be rounded off anyway
 #endif
 
 //Forward declarations

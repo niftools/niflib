@@ -33,6 +33,13 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include "nif_objects.h"
 
+//--Type constants--//
+
+//Can't be in the h file or they'll be included multiple times =/
+const Type NiObject::TYPE("NiObject", NULL );
+const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
+const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
+const Type NiNode::TYPE("NiNode", &NiAVObject::TYPE );
 
 extern unsigned int blocks_in_memory;
 
