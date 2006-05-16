@@ -814,7 +814,7 @@ void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiAVObjectRef 
 		//par_par->GetAttr("Children")->RemoveLinks( par );
 
 		//Get the block to attatch to
-		NiObjectRef attatch = name_map[par_par->name];
+		NiObjectRef attatch = DynamicCast<NiObject>(name_map[par_par->name]);
 
 		//TODO:  Implement children
 		////Add this block as new child

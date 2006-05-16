@@ -440,7 +440,7 @@ void NifStream( vector<T> const & val, ostream& file, uint version = 0 ) {
 
 template <class T>
 void NifStream( vector<Key<T> > & val, istream& file, uint version, uint attr_arg ) {
-	vector<Key<T> >::iterator it;
+	typename vector<Key<T> >::iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file, version, attr_arg );
 	}
@@ -448,7 +448,7 @@ void NifStream( vector<Key<T> > & val, istream& file, uint version, uint attr_ar
 
 template <class T>
 void NifStream( vector<Key<T> > const & val, ostream& file, uint version, uint attr_arg ) {
-	vector<Key<T> >::const_iterator it;
+	typename vector<Key<T> >::const_iterator it;
 	for ( it = val.begin(); it != val.end(); ++it ) {
 		NifStream( *it, file, version, attr_arg );
 	}

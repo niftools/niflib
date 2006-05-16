@@ -36,6 +36,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 #include <cmath>
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
