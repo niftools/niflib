@@ -54,6 +54,228 @@
 
 using namespace std;
 
+class NiObject;
+class AInterpolator;
+class ABlendInterpolator;
+class ABSplineCompInterpolator;
+class AKeyedData;
+class AKeyframeData;
+class AParticleModifier;
+class APSysModifier;
+class APSysEmitter;
+class APSysVolumeEmitter;
+class bhkRefObject;
+class bhkSerializable;
+class AbhkConstraint;
+class AbhkRagdollConstraint;
+class bhkShape;
+class AbhkShapeCollection;
+class bhkSphereRepShape;
+class bhkConvexShape;
+class bhkWorldObject;
+class bhkEntity;
+class AbhkRigidBody;
+class NiCollisionObject;
+class NiExtraData;
+class NiObjectNET;
+class NiAVObject;
+class NiDynamicEffect;
+class NiLight;
+class APointLight;
+class NiProperty;
+class NiTimeController;
+class ABoneLODController;
+class AKeyframeController;
+class AParticleSystemController;
+class ASingleInterpolatorController;
+class APSysCtlr;
+class NiTriBasedGeom;
+class TriBasedGeomData;
+class AParticlesData;
+class APSysData;
+class ARotatingParticlesData;
+class bhkBlendCollisionObject;
+class bhkBlendController;
+class bhkBoxShape;
+class bhkCapsuleShape;
+class bhkCollisionObject;
+class bhkConvexVerticesShape;
+class bhkHingeConstraint;
+class bhkLimitedHingeConstraint;
+class bhkListShape;
+class bhkMalleableConstraint;
+class bhkMoppBvTreeShape;
+class bhkMultiSphereShape;
+class bhkNiTriStripsShape;
+class bhkPackedNiTriStripsShape;
+class bhkPrismaticConstraint;
+class bhkRagdollConstraint;
+class bhkRigidBody;
+class bhkRigidBodyT;
+class bhkSimpleShapePhantom;
+class bhkSPCollisionObject;
+class bhkSphereShape;
+class bhkStiffSpringConstraint;
+class bhkTransformShape;
+class bhkConvexTransformShape;
+class BSBound;
+class BSFurnitureMarker;
+class BSKeyframeController;
+class BSParentVelocityModifier;
+class BSPSysArrayEmitter;
+class BSXFlags;
+class hkPackedNiTriStripsData;
+class NiAlphaController;
+class NiAlphaProperty;
+class NiAmbientLight;
+class NiAutoNormalParticlesData;
+class NiBinaryExtraData;
+class NiBlendBoolInterpolator;
+class NiBlendFloatInterpolator;
+class NiBlendPoint3Interpolator;
+class NiBlendTransformInterpolator;
+class NiBoneLODController;
+class NiBoolData;
+class NiBooleanExtraData;
+class NiBoolInterpolator;
+class NiBoolTimelineInterpolator;
+class NiBSBoneLODController;
+class NiBSPArrayController;
+class NiBSplineBasisData;
+class NiBSplineCompFloatInterpolator;
+class NiBSplineCompPoint3Interpolator;
+class NiBSplineCompTransformInterpolator;
+class NiBSplineData;
+class NiCamera;
+class NiCollisionData;
+class NiColorData;
+class NiColorExtraData;
+class NiControllerManager;
+class NiControllerSequence;
+class NiDefaultAVObjectPalette;
+class NiDirectionalLight;
+class NiDitherProperty;
+class NiFlipController;
+class NiFloatData;
+class NiFloatExtraData;
+class NiFloatExtraDataController;
+class NiFloatInterpolator;
+class NiFloatsExtraData;
+class NiFogProperty;
+class NiGeomMorpherController;
+class NiGravity;
+class NiIntegerExtraData;
+class NiIntegersExtraData;
+class NiKeyframeController;
+class NiKeyframeData;
+class NiLightColorController;
+class NiLightDimmerController;
+class NiLookAtController;
+class NiLookAtInterpolator;
+class NiMaterialColorController;
+class NiMaterialProperty;
+class NiMeshPSysData;
+class NiMorphData;
+class NiMultiTargetTransformController;
+class NiNode;
+class AFx;
+class AvoidNode;
+class FxButton;
+class FxRadioButton;
+class FxWidget;
+class NiBillboardNode;
+class NiBSAnimationNode;
+class NiBSParticleNode;
+class NiLODNode;
+class NiPalette;
+class NiParticleBomb;
+class NiParticleColorModifier;
+class NiParticleGrowFade;
+class NiParticleMeshesData;
+class NiParticleMeshModifier;
+class NiParticleRotation;
+class NiParticles;
+class NiAutoNormalParticles;
+class NiMeshParticleSystem;
+class NiParticleMeshes;
+class NiParticlesData;
+class NiParticleSystem;
+class NiParticleSystemController;
+class NiPathController;
+class NiPathInterpolator;
+class NiPixelData;
+class NiPlanarCollider;
+class NiPoint3Interpolator;
+class NiPointLight;
+class NiPosData;
+class NiPSysAgeDeathModifier;
+class NiPSysBombModifier;
+class NiPSysBoundUpdateModifier;
+class NiPSysBoxEmitter;
+class NiPSysColliderManager;
+class NiPSysColorModifier;
+class NiPSysCylinderEmitter;
+class NiPSysData;
+class NiPSysDragModifier;
+class NiPSysEmitterCtlr;
+class NiPSysEmitterCtlrData;
+class NiPSysEmitterDeclinationCtlr;
+class NiPSysEmitterDeclinationVarCtlr;
+class NiPSysEmitterInitialRadiusCtlr;
+class NiPSysEmitterLifeSpanCtlr;
+class NiPSysEmitterSpeedCtlr;
+class NiPSysGravityModifier;
+class NiPSysGravityStrengthCtlr;
+class NiPSysGrowFadeModifier;
+class NiPSysMeshEmitter;
+class NiPSysMeshUpdateModifier;
+class NiPSysModifierActiveCtlr;
+class NiPSysPlanarCollider;
+class NiPSysPositionModifier;
+class NiPSysResetOnLoopCtlr;
+class NiPSysRotationModifier;
+class NiPSysSpawnModifier;
+class NiPSysSphereEmitter;
+class NiPSysUpdateCtlr;
+class NiRangeLODData;
+class NiRotatingParticles;
+class NiRotatingParticlesData;
+class NiScreenLODData;
+class NiSequenceStreamHelper;
+class NiShadeProperty;
+class NiSkinData;
+class NiSkinInstance;
+class NiSkinPartition;
+class NiSourceTexture;
+class NiSpecularProperty;
+class NiSphericalCollider;
+class NiSpotLight;
+class NiStencilProperty;
+class NiStringExtraData;
+class NiStringPalette;
+class NiStringsExtraData;
+class NiTextKeyExtraData;
+class NiTextureEffect;
+class NiTextureTransformController;
+class NiTexturingProperty;
+class NiTransformController;
+class NiTransformData;
+class NiTransformInterpolator;
+class NiTriShape;
+class NiTriShapeData;
+class NiTriStrips;
+class NiTriStripsData;
+class NiUVController;
+class NiUVData;
+class NiVectorExtraData;
+class NiVertexColorProperty;
+class NiVertWeightsExtraData;
+class NiVisController;
+class NiVisData;
+class NiWireframeProperty;
+class NiZBufferProperty;
+class RootCollisionNode;
+
 /*!
  * This is a list of bone influences.  It points to blocks higher in the
  * hierarchy so ints are used to represent the indices.
@@ -2009,42 +2231,6 @@ for (uint i0 = 0; i0 < constraints_numIndices; i0++) { \
   link_stack.pop_front(); \
 }; \
 
-#define ABHK_TRANSFORM_SHAPE_MEMBERS \
-float unknownFloat1; \
-float unknownFloat2; \
-float unknownFloat3; \
-Matrix44 transform; \
-
-#define ABHK_TRANSFORM_SHAPE_PARENTS bhkEntity \
-
-#define ABHK_TRANSFORM_SHAPE_CONSTRUCT \
-
-#define ABHK_TRANSFORM_SHAPE_READ \
-bhkEntity::Read( in, link_stack, version ); \
-NifStream( unknownFloat1, in, version ); \
-NifStream( unknownFloat2, in, version ); \
-NifStream( unknownFloat3, in, version ); \
-NifStream( transform, in, version ); \
-
-#define ABHK_TRANSFORM_SHAPE_WRITE \
-bhkEntity::Write( out, link_map, version ); \
-NifStream( unknownFloat1, out, version ); \
-NifStream( unknownFloat2, out, version ); \
-NifStream( unknownFloat3, out, version ); \
-NifStream( transform, out, version ); \
-
-#define ABHK_TRANSFORM_SHAPE_STRING \
-stringstream out; \
-out << bhkEntity::asString(); \
-out << "Unknown Float 1:  " << unknownFloat1 << endl; \
-out << "Unknown Float 2:  " << unknownFloat2 << endl; \
-out << "Unknown Float 3:  " << unknownFloat3 << endl; \
-out << "Transform:  " << transform << endl; \
-return out.str(); \
-
-#define ABHK_TRANSFORM_SHAPE_FIXLINKS \
-bhkEntity::FixLinks( objects, link_stack, version ); \
-
 #define NI_COLLISION_OBJECT_MEMBERS \
 ushort unknownShort; \
 Ref<NiObject > body; \
@@ -3600,26 +3786,6 @@ return out.str(); \
 #define BHK_COLLISION_OBJECT_FIXLINKS \
 NiCollisionObject::FixLinks( objects, link_stack, version ); \
 
-#define BHK_CONVEX_TRANSFORM_SHAPE_MEMBERS \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_PARENTS AbhkTransformShape \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_CONSTRUCT \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_READ \
-AbhkTransformShape::Read( in, link_stack, version ); \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_WRITE \
-AbhkTransformShape::Write( out, link_map, version ); \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_STRING \
-stringstream out; \
-out << AbhkTransformShape::asString(); \
-return out.str(); \
-
-#define BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS \
-AbhkTransformShape::FixLinks( objects, link_stack, version ); \
-
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
 vector<float > unknownFloats1; \
 vector<Float4 > unknownVectors1; \
@@ -4497,24 +4663,60 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 }; \
 
 #define BHK_TRANSFORM_SHAPE_MEMBERS \
+float unknownFloat1; \
+float unknownFloat2; \
+float unknownFloat3; \
+Matrix44 transform; \
 
-#define BHK_TRANSFORM_SHAPE_PARENTS AbhkTransformShape \
+#define BHK_TRANSFORM_SHAPE_PARENTS bhkEntity \
 
 #define BHK_TRANSFORM_SHAPE_CONSTRUCT \
 
 #define BHK_TRANSFORM_SHAPE_READ \
-AbhkTransformShape::Read( in, link_stack, version ); \
+bhkEntity::Read( in, link_stack, version ); \
+NifStream( unknownFloat1, in, version ); \
+NifStream( unknownFloat2, in, version ); \
+NifStream( unknownFloat3, in, version ); \
+NifStream( transform, in, version ); \
 
 #define BHK_TRANSFORM_SHAPE_WRITE \
-AbhkTransformShape::Write( out, link_map, version ); \
+bhkEntity::Write( out, link_map, version ); \
+NifStream( unknownFloat1, out, version ); \
+NifStream( unknownFloat2, out, version ); \
+NifStream( unknownFloat3, out, version ); \
+NifStream( transform, out, version ); \
 
 #define BHK_TRANSFORM_SHAPE_STRING \
 stringstream out; \
-out << AbhkTransformShape::asString(); \
+out << bhkEntity::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Transform:  " << transform << endl; \
 return out.str(); \
 
 #define BHK_TRANSFORM_SHAPE_FIXLINKS \
-AbhkTransformShape::FixLinks( objects, link_stack, version ); \
+bhkEntity::FixLinks( objects, link_stack, version ); \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_MEMBERS \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_PARENTS bhkTransformShape \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_CONSTRUCT \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_READ \
+bhkTransformShape::Read( in, link_stack, version ); \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_WRITE \
+bhkTransformShape::Write( out, link_map, version ); \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_STRING \
+stringstream out; \
+out << bhkTransformShape::asString(); \
+return out.str(); \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS \
+bhkTransformShape::FixLinks( objects, link_stack, version ); \
 
 #define B_S_BOUND_MEMBERS \
 string name; \
@@ -12579,10 +12781,6 @@ for (uint i0 = 0; i0 < data_numKeys; i0++) { \
 }; \
 return out.str(); \
 
-#define << endl; \
-}; \
-return out.str(); \
-
 #define NI_VIS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < data_numKeys; i0++) { \
@@ -12667,4 +12865,4 @@ return out.str(); \
 #define ROOT_COLLISION_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 
-#endif \
+#endif
