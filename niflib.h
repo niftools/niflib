@@ -49,7 +49,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include "nif_math.h"
 #include "NIF_IO.h"
-#include "nif_objects.h"
+#include "NiObject.h"
 #include "xml_extract.h"
 #include "kfm.h"
 
@@ -199,25 +199,6 @@ void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version = 0xFFFF
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
-
-
-/*!
- * Sets whether data/hex areas are shown by asString functions
- * \param val A boolean value that specifies whether verbose mode should be turned on.  True = Verbose, False = Brief.
- * 
- * <b>Example:</b> 
- * \code
- * SetVerboseMode(true);
- * \endcode
- * 
- * <b>In Python:</b>
- * \code
- * SetVerboseMode(True)
- * \endcode
- * 
- * \sa IBlock::asString, IAttr::asString
- */
-void SetVerboseMode( bool val );
 
 /*!
  * Creates a new block of the given type and returns a reference to it

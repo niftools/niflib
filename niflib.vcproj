@@ -141,9 +141,6 @@
 				RelativePath=".\nif_math.cpp">
 			</File>
 			<File
-				RelativePath=".\nif_objects.cpp">
-			</File>
-			<File
 				RelativePath=".\niflib.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -151,6 +148,9 @@
 						Name="VCCLCompilerTool"
 						RuntimeLibrary="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\NiObject.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -164,10 +164,10 @@
 				RelativePath=".\nif_math.h">
 			</File>
 			<File
-				RelativePath=".\nif_objects.h">
+				RelativePath=".\niflib.h">
 			</File>
 			<File
-				RelativePath=".\niflib.h">
+				RelativePath=".\NiObject.h">
 			</File>
 		</Filter>
 		<Filter

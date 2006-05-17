@@ -41,7 +41,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 #ifdef IM_DEBUG
 #include <imdebug.h>
 #endif
-extern bool verbose;
 
 #ifdef WIN32
 #define endl "\r\n"

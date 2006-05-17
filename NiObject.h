@@ -151,6 +151,7 @@ public:
 
 	/*!
 	 * Summarizes the information contained in this block in English.
+	 * \verbose Determines whether or not detailed information about large areas of data will be printed out.
 	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
 	 * 
 	 * <b>Example:</b> 
@@ -167,7 +168,7 @@ public:
 	 * 
 	 * \sa IAttr::asString, SetVerboseMode
 	 */
-	virtual string asString() const;
+	virtual string asString( bool verbose = false ) const;
 
 	/*!
 	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
@@ -198,9 +199,11 @@ public:
 	void DecCrossRef( NiObject* block );
 	virtual void ReassignCrossRefs( const map<string,NiObjectRef> & name_map ) {}
 	
+	static unsigned int NumObjectsInMemory() { return objectsInMemory; }
 private:
 	unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
+	static unsigned int objectsInMemory;
 };
 
 
@@ -252,6 +255,8 @@ private:
 	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 };
+
+#include "xml_extract.h"
 
 /*
  * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.

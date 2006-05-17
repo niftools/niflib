@@ -36,15 +36,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <stdexcept>
 using namespace std;
 
-bool verbose = false;
-
 //Stores the mapping between block names and factory function pointers to create them
 typedef IBlock * (*blk_factory_func)();
 bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
-
-//Temporary Global to test reference counting
-unsigned int blocks_in_memory = 0;
 
 //Utility Functions
 void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
@@ -54,8 +49,6 @@ void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
 
 //--Function Bodies--//
-void SetVerboseMode( bool val ) { verbose = val; }
-
 NiObjectRef CreateBlock( string block_type ) {
 	
 	//Initialize the global block list if it hasn't been done yet
@@ -720,7 +713,7 @@ void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, u
 
 //Returns the total number of blocks in memory
 unsigned int BlocksInMemory() {
-	return blocks_in_memory;
+	return NiObject::NumObjectsInMemory();
 }
 
 void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiAVObjectRef par ) {
