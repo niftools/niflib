@@ -32,6 +32,8 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
 #include "niflib.h"
+#include "obj/NiAVObject.h"
+#include "obj/NiNode.h"
 #include <exception>
 #include <stdexcept>
 using namespace std;

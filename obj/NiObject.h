@@ -31,8 +31,8 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-#ifndef _INTERNAL_H_
-#define _INTERNAL_H_
+#ifndef _NIOBJECT_H_
+#define _NIOBJECT_H_
 
 #include <iostream>
 #include <fstream>
@@ -43,6 +43,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include <vector>
 #include "NIF_IO.h"
+#include "Ref.h"
 
 using namespace std;
 
@@ -62,33 +63,6 @@ public:
 private:
 	string name;
 	const Type * base_type;
-};
-
-/**
- * Smart Pointer Template
- */
-template <class T> class Ref {
-public:
-	Ref( T * object = NULL );
-	Ref(const Ref & ref_to_copy );
-
-	operator T*() const;
-	T& operator*() const;
-	T* operator->() const;
-
-	Ref & operator=( T * object );
-	Ref & operator=( const Ref & ref );
-
-	bool operator<(const Ref & ref) const { return (_object < ref._object); }
-
-	bool operator==(T * object) const;
-	bool operator!=(T * object) const;
-	bool operator==(const Ref & ref) const;
-	bool operator!=(const Ref & ref) const;
-
-protected:
-	//The shared object
-	T* _object;
 };
 
 /**
@@ -234,169 +208,5 @@ template <class T> const Ref<T> DynamicCast( const NiObject * object ) {
 		return NULL;
 	}
 }
-
-/*
- * NiObjectNET - An object that has a name.  Can have extra data and controllers attatched.
- */
-
-class NiObjectNET;
-
-typedef Ref<NiObjectNET> NiObjectNETRef;
-
-class NiObjectNET : public NiObject {
-public:
-	NiObjectNET() {}
-	~NiObjectNET() {}
-	//Run-Time Type Information
-	static const Type TYPE;
-
-	string name;
-private:
-	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
-	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
-};
-
-#include "xml_extract.h"
-
-/*
- * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.
- */
-
-class NiAVObject;
-
-typedef Ref<NiAVObject> NiAVObjectRef;
-
-class NiAVObject : public NiObjectNET {
-public:
-	NiAVObject() {}
-	~NiAVObject() {}
-	//Run-Time Type Information
-	static const Type TYPE;
-
-	short flags;
-	Vector3 localTranslate;
-	Matrix33 localRotate;
-	float localScale;
-	Vector3 localVelocity;
-	//TODO: list of NiProperty pointers.  Need functions to add/remove.
-	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
-
-	/*! 
-	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
-	 * \return A 4x4 transformation matrix built from the node's transform attributes.
-	 * \sa INode::GetWorldTransform
-	 */
-	Matrix44 GetLocalTransform() const;
-
-	/*! 
-	 * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
-	 * \return The 4x4 world transform matrix of this node.
-	 * \sa INode::GetLocalTransform
-	 */
-	Matrix44 GetWorldTransform() const;
-
-	/*!
-	 * This function returns the bind position world matrix.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
-	 * \return The 4x4 world bind position matrix of this node.
-	 * \sa INode::GetLocalBindPos, INode::SetWorldBindPos
-	 */
-	Matrix44 GetWorldBindPos() const;
-
-	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
-	 * \return The 4x4 local bind position matrix of this node.
-	 * \sa INode::SetWorldBindPos, INode::GetWorldBindPos
-	 */
-	Matrix44 GetLocalBindPos() const;
-
-	/*!
-	 * This function sets the bind position of this object relative to the origin.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.  This function must be called on every object in a skin and bones system (the bones and the skinned shapes) in order for skinning information to be written to a Nif file.
-	 * \param m The 4x4 world bind position matrix of this node
-	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
-	 */
-	void SetWorldBindPos( Matrix44 const & m );
-
-	void SetParent( NiAVObjectRef new_parent ) {
-		parent = new_parent;
-	}
-	NiAVObjectRef GetParent() { return parent; }
-
-protected:
-	NiAVObject * parent;
-	void ResetSkinnedFlag();
-	Matrix44 bindPosition;
-
-};
-
-/*
- * NiNode - A basic scene graph node.  Can have children.
- */
-
-class NiNode;
-
-typedef Ref<NiNode> NiNodeRef;
-
-class NiNode : public NiAVObject {
-public:
-	NiNode() {}
-	~NiNode() {}
-	//Run-Time Type Information
-	static const Type TYPE;
-
-	//TODO:  Add functions to get and set children and store a list of NiObjectNET references
-};
-
-
-////--Link Classes--//
-//
-//class Link {
-//public:
-//	//Constructors
-//	Link () : _owner(NULL), index(-1) {}
-//	Link ( NiObject * owner) : _owner(owner), index(-1) {}
-//	//Destructor
-//	~Link() { KillLink(); }
-//	void SetIndex( const int new_index );
-//	void Nullify() {
-//		KillLink();
-//		link.nullify();
-//	};
-//	blk_ref GetLink() const { return link; }
-//	void SetLink( const blk_ref & new_link );
-//	void Fix( const vector<blk_ref> & blocks );
-//	void SetOwner( IBlock * owner );
-//private:
-//	IBlock * _owner;
-//	blk_ref link;
-//	int index;
-//	void InitLink();
-//	void KillLink();
-//};
-//
-////--CrossRef Classes--//
-//
-//class CrossRef {
-//public:
-//	//Constructors
-//	CrossRef () : _owner(NULL), ref(NULL), index(-1) {}
-//	CrossRef ( NiObject * owner) : _owner(owner), ref(NULL), index(-1) {}
-//	//Destructor
-//	~CrossRef() { KillRef(); }
-//	void SetIndex( const int new_index );
-//	void Nullify() {
-//		KillRef();
-//		ref = NULL;
-//	}
-//	IBlock * GetCrossRef() const { return ref; }
-//	void SetCrossRef( NiObject * new_ref );
-//	void LostRef( NiObject * match );
-//	void Fix( const vector<blk_ref> & blocks );
-//	void SetOwner( NiObject * owner );
-//private:
-//	IBlock * _owner;
-//	IBlock * ref;
-//	int index;
-//	void InitRef();
-//	void KillRef();
-//};
 
 #endif

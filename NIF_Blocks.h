@@ -36,7 +36,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 /* INCLUDES */
 #include "NiObject.h"
-#include "nif_math.h"
+#include "obj\NiObject.h"
 #include "NIF_IO.h"
 
 #include <vector>

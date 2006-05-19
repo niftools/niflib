@@ -149,9 +149,22 @@
 						RuntimeLibrary="3"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\NiObject.cpp">
-			</File>
+			<Filter
+				Name="obj"
+				Filter="">
+				<File
+					RelativePath=".\obj\NiAVObject.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiNode.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiObject.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiObjectNET.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -166,9 +179,25 @@
 			<File
 				RelativePath=".\niflib.h">
 			</File>
-			<File
-				RelativePath=".\NiObject.h">
-			</File>
+			<Filter
+				Name="obj"
+				Filter="">
+				<File
+					RelativePath=".\obj\NiAVObject.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiNode.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiObject.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiObjectNET.h">
+				</File>
+				<File
+					RelativePath=".\obj\Ref.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

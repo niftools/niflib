@@ -46,7 +46,7 @@
 #define _XML_EXTRACT_H_
 
 #include "NIF_IO.h"
-#include "NiObject.h"
+#include "obj\NiObject.h"
 #include <iostream>
 #include <fstream>
 #include <vector>

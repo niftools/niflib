@@ -49,7 +49,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include "nif_math.h"
 #include "NIF_IO.h"
-#include "NiObject.h"
+#include "obj\NiObject.h"
 #include "xml_extract.h"
 #include "kfm.h"
 
