@@ -44,6 +44,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <vector>
 #include "NIF_IO.h"
 #include "Ref.h"
+#include "xml_extract.h"
 
 using namespace std;
 

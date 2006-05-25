@@ -4,7 +4,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIOBJECTNET_H_
 #define _NIOBJECTNET_H_
 
-#include "xml_extract.h"
 #include "NiObject.h"
 
 /*

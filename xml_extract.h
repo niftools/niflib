@@ -46,7 +46,7 @@
 #define _XML_EXTRACT_H_
 
 #include "NIF_IO.h"
-#include "obj\NiObject.h"
+#include "obj\Ref.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -1275,7 +1275,7 @@ NiObject::FixLinks( objects, link_stack, version ); \
 Ref<AParticleModifier > nextModifier; \
 AParticleModifier * previousModifier; \
 
-#define A_PARTICLE_MODIFIER_PARENTS NiObject \
+#define A_PARTICLE_MODIFIER_PARENTS NiObject
 
 #define A_PARTICLE_MODIFIER_CONSTRUCT \
 
@@ -1289,8 +1289,8 @@ link_stack.push_back( block_num ); \
 
 #define A_PARTICLE_MODIFIER_WRITE \
 NiObject::Write( out, link_map, version ); \
-NifStream( link_map[nextModifier], out, version ); \
-NifStream( link_map[previousModifier], out, version ); \
+NifStream( link_map[StaticCast<NiObject>(nextModifier)], out, version ); \
+NifStream( link_map[StaticCast<NiObject>(previousModifier)], out, version ); \
 
 #define A_PARTICLE_MODIFIER_STRING \
 stringstream out; \
@@ -1301,9 +1301,9 @@ return out.str(); \
 
 #define A_PARTICLE_MODIFIER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-nextModifier = blocks[link_stack.front()]; \
+nextModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
-previousModifier = blocks[link_stack.front()]; \
+previousModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define A_P_SYS_MODIFIER_MEMBERS \
