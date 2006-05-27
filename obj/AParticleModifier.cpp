@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AParticleModifier.h"
 
 //Definition of TYPE constant
-const Type AParticleModifier::TYPE("AParticleModifier", &A_PARTICLE_MODIFIER_PARENTS::TYPE );
+const Type AParticleModifier::TYPE("AParticleModifier", &A_PARTICLE_MODIFIER_PARENT::TYPE );
 
 AParticleModifier::AParticleModifier() A_PARTICLE_MODIFIER_CONSTRUCT {}
 

@@ -104,6 +104,9 @@ struct HeaderString {
 	string header;
 };
 
+//TODO:  This is temporary to make it compile.  Should eventually be adjusted to display 1's and 0's insted of as an int.
+typedef ushort Flags;
+
 /*! Lists the basic texture types availiable from the ITexturingProperty interface*/
 enum TexType {
 	BASE_MAP = 0, /*!< The basic texture used by most meshes. */ 
@@ -358,7 +361,7 @@ ostream & operator<<( ostream & out, PixelLayout const & val );
 
 //Key<T>
 template <class T> 
-void NifStream( Key<T> & key, istream& file, KeyType type ) {
+void NifStream( Key<T> & key, istream& file, uint version, KeyType type ) {
 	key.time = ReadFloat( file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -387,7 +390,7 @@ void NifStream( Key<T> & key, istream& file, uint version, uint type ) {
 };
 
 template <class T> 
-void NifStream( Key<T> const & key, ostream& file, KeyType type) {
+void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -416,8 +419,8 @@ void NifStream( Key<T> const & key, ostream& file, uint version, uint type ) {
 };
 
 //Key<Quaternion>
-void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type );
-void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type );
+void StreamQuatKey( Key<Quaternion> & key, istream& file, uint version, KeyType type );
+void StreamQuatKey( Key<Quaternion> const & key, ostream& file, uint version, KeyType type );
 
 //vector<T>
 //This version of NifStream allows whole vectors of data to be streamed

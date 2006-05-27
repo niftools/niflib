@@ -1,0 +1,28 @@
+/* Copyright (c) 2006, NIF File Format Library and Tools
+All rights reserved.  Please see niflib.h for licence. */
+
+#include "NiTextKeyExtraData.h"
+
+//Definition of TYPE constant
+const Type NiTextKeyExtraData::TYPE("NiTextKeyExtraData", &NI_TEXT_KEY_EXTRA_DATA_PARENT::TYPE );
+
+NiTextKeyExtraData::NiTextKeyExtraData() NI_TEXT_KEY_EXTRA_DATA_CONSTRUCT {}
+
+NiTextKeyExtraData::~NiTextKeyExtraData() {}
+
+void NiTextKeyExtraData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+	NI_TEXT_KEY_EXTRA_DATA_READ
+}
+
+void NiTextKeyExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+	NI_TEXT_KEY_EXTRA_DATA_WRITE
+}
+
+string NiTextKeyExtraData::asString( bool verbose ) const {
+	NI_TEXT_KEY_EXTRA_DATA_STRING
+}
+
+void NiTextKeyExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+	NI_TEXT_KEY_EXTRA_DATA_FIXLINKS
+}
+
