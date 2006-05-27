@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPixelData.h"
+#include "NiPalette.h"
 
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NI_PIXEL_DATA_PARENT::TYPE );

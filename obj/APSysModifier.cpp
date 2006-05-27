@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "APSysModifier.h"
+#include "NiParticleSystem.h"
 
 //Definition of TYPE constant
 const Type APSysModifier::TYPE("APSysModifier", &A_P_SYS_MODIFIER_PARENT::TYPE );

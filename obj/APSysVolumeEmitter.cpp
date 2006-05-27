@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "APSysVolumeEmitter.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type APSysVolumeEmitter::TYPE("APSysVolumeEmitter", &A_P_SYS_VOLUME_EMITTER_PARENT::TYPE );

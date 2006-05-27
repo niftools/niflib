@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkListShape.h"
+#include "bhkSphereRepShape.h"
 
 //Definition of TYPE constant
 const Type bhkListShape::TYPE("bhkListShape", &BHK_LIST_SHAPE_PARENT::TYPE );

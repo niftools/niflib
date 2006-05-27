@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiLookAtController.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type NiLookAtController::TYPE("NiLookAtController", &NI_LOOK_AT_CONTROLLER_PARENT::TYPE );

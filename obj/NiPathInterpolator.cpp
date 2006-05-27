@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPathInterpolator.h"
+#include "NiPosData.h"
+#include "NiFloatData.h"
 
 //Definition of TYPE constant
 const Type NiPathInterpolator::TYPE("NiPathInterpolator", &NI_PATH_INTERPOLATOR_PARENT::TYPE );

@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBoneLODController.h"
+#include "NiTriShape.h"
+#include "NiSkinInstance.h"
 
 //Definition of TYPE constant
 const Type NiBoneLODController::TYPE("NiBoneLODController", &NI_BONE_L_O_D_CONTROLLER_PARENT::TYPE );

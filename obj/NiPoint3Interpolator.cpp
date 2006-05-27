@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPoint3Interpolator.h"
+#include "NiPosData.h"
 
 //Definition of TYPE constant
 const Type NiPoint3Interpolator::TYPE("NiPoint3Interpolator", &NI_POINT3_INTERPOLATOR_PARENT::TYPE );

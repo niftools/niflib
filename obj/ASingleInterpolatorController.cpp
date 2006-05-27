@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "ASingleInterpolatorController.h"
+#include "AInterpolator.h"
 
 //Definition of TYPE constant
 const Type ASingleInterpolatorController::TYPE("ASingleInterpolatorController", &A_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TYPE );
