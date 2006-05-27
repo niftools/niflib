@@ -27,3 +27,12 @@ string NiObjectNET::asString( bool verbose ) const {
 void NiObjectNET::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
 	NI_OBJECT_N_E_T_FIXLINKS
 }
+
+string NiObjectNET::GetName() {
+	return name;
+}
+
+void NiObjectNET::SetName( string & new_name ) {
+	name = new_name;
+}
+

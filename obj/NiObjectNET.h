@@ -24,6 +24,9 @@ public:
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version );
+	
+	string GetName();
+	void SetName( string & new_name );
 	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 private:

@@ -729,7 +729,7 @@ void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiAVObjectRef par
 	//}
 
 	//Add the par node to the map, and then call this function for each of its children
-	name_map[par->name] = par;
+	name_map[par->GetName()] = par;
 
 	//TODO: Implement functions to get and set children
 	list<NiAVObjectRef> links;// = par->GetAttr("Children")->asLinkList();;
@@ -761,7 +761,7 @@ void ReassignTreeCrossRefs( map<string,NiAVObjectRef> & name_map, NiAVObjectRef 
 //existing nodes by changing their data or attatched properties
 void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiAVObjectRef & root, NiAVObjectRef par ) {
 	//Check if this block's name exists in the block map
-	string name = par->name;
+	string name = par->GetName();
 
 	if ( name_map.find(name) != name_map.end() ) {
 		//This block already exists in the original file, so continue on to its children
@@ -809,7 +809,7 @@ void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiAVObjectRef 
 		//par_par->GetAttr("Children")->RemoveLinks( par );
 
 		//Get the block to attatch to
-		NiObjectRef attatch = DynamicCast<NiObject>(name_map[par_par->name]);
+		NiObjectRef attatch = DynamicCast<NiObject>(name_map[par_par->GetName()]);
 
 		//TODO:  Implement children
 		////Add this block as new child
