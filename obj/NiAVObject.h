@@ -5,28 +5,26 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIAVOBJECT_H_
 
 #include "xml_extract.h"
-#include "NiObjectNET.h"
+#include NI_A_V_OBJECT_INCLUDE
 
 /*
  * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.
  */
 
 class NiAVObject;
-
 typedef Ref<NiAVObject> NiAVObjectRef;
 
-class NiAVObject : public NiObjectNET {
+class NiAVObject : public NI_A_V_OBJECT_PARENT {
 public:
-	NiAVObject() {}
-	~NiAVObject() {}
+	NiAVObject();
+	~NiAVObject();
 	//Run-Time Type Information
 	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version );
 
-	short flags;
-	Vector3 localTranslate;
-	Matrix33 localRotate;
-	float localScale;
-	Vector3 localVelocity;
 	//TODO: list of NiProperty pointers.  Need functions to add/remove.
 	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
 
@@ -69,11 +67,12 @@ public:
 	}
 	NiAVObjectRef GetParent() { return parent; }
 
-protected:
+private:
+	NI_A_V_OBJECT_MEMBERS
+
 	NiAVObject * parent;
 	void ResetSkinnedFlag();
 	Matrix44 bindPosition;
-
 };
 
 #endif
