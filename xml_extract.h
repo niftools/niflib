@@ -82,7 +82,7 @@ class NiLight;
 class NiProperty;
 class NiTimeController;
 class ABoneLODController;
-class ASingleInterpolatorController;
+class NiSingleInterpolatorController;
 class APSysCtlr;
 class NiTriBasedGeom;
 class TriBasedGeomData;
@@ -544,11 +544,7 @@ struct ControllerLink {
    * Offset in the string palette where the name of the controlled node
    * (NiNode, NiTriShape, ...) starts.
    */
-  ushort nodeNameOffset;
-  /*!
-   * Unknown, always 0.
-   */
-  ushort unknownShort1;
+  uint nodeNameOffset;
   /*!
    * Name of the property (NiMaterialProperty, ...), if this controller
    * controls a property.
@@ -558,11 +554,7 @@ struct ControllerLink {
    * Offset in the string palette where the property (NiMaterialProperty,
    * ...) starts, if this controller controls a property. Otherwise, -1.
    */
-  ushort propertyTypeOffset;
-  /*!
-   * Unknown, usually 0, but sometimes also 0xFFFF.
-   */
-  ushort unknownShort2;
+  uint propertyTypeOffset;
   /*!
    * Probably the block type name of the controller in the NIF file that is
    * child of the controlled block.
@@ -576,11 +568,7 @@ struct ControllerLink {
    * controller in the NIF file that is child of the controlled block, via
    * its type name.
    */
-  ushort controllerTypeOffset;
-  /*!
-   * Unknown, always 0.
-   */
-  ushort unknownShort3;
+  uint controllerTypeOffset;
   /*!
    * Some variable string (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U',
    * 'tongue_out', etc.).
@@ -591,11 +579,7 @@ struct ControllerLink {
    * as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually,
    * -1.
    */
-  ushort variableOffset1;
-  /*!
-   * Unknown, usually 0, but sometimes 0xFFFF.
-   */
-  ushort unknownShort4;
+  uint variableOffset1;
   /*!
    * Another variable string, apparently used for particle system
    * controllers.
@@ -606,11 +590,7 @@ struct ControllerLink {
    * only 'EmitterActive' and 'BirthRate' have been observed in official
    * files, used for particle system controllers). Usually, -1.
    */
-  ushort variableOffset2;
-  /*!
-   * Unknown, usually 0, but sometimes 0xFFFF.
-   */
-  ushort unknownShort5;
+  uint variableOffset2;
 };
 
 /*!
@@ -1331,6 +1311,7 @@ bool active; \
 #define A_P_SYS_MODIFIER_CONSTRUCT \
 
 #define A_P_SYS_MODIFIER_READ \
+uint block_num; \
 NiObject::Read( in, link_stack, version ); \
 NifStream( name, in, version ); \
 NifStream( order, in, version ); \
@@ -1435,6 +1416,7 @@ NiNode * emitterObject; \
 #define A_P_SYS_VOLUME_EMITTER_CONSTRUCT \
 
 #define A_P_SYS_VOLUME_EMITTER_READ \
+uint block_num; \
 APSysEmitter::Read( in, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( block_num, in, version ); \
@@ -1516,6 +1498,7 @@ uint priority; \
  : priority(1) \
 
 #define ABHK_CONSTRAINT_READ \
+uint block_num; \
 bhkSerializable::Read( in, link_stack, version ); \
 uint numBodies; \
 NifStream( numBodies, in, version ); \
@@ -1717,28 +1700,28 @@ bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 
 #define BHK_WORLD_OBJECT_MEMBERS \
 
-#define BHK_WORLD_OBJECT_INCLUDE "bhkSerializable.h" \
+#define BHK_WORLD_OBJECT_INCLUDE "bhkShape.h" \
 
-#define BHK_WORLD_OBJECT_PARENT bhkSerializable \
+#define BHK_WORLD_OBJECT_PARENT bhkShape \
 
 #define BHK_WORLD_OBJECT_CONSTRUCT \
 
 #define BHK_WORLD_OBJECT_READ \
-bhkSerializable::Read( in, link_stack, version ); \
+bhkShape::Read( in, link_stack, version ); \
 
 #define BHK_WORLD_OBJECT_WRITE \
-bhkSerializable::Write( out, link_map, version ); \
+bhkShape::Write( out, link_map, version ); \
 
 #define BHK_WORLD_OBJECT_STRING \
 stringstream out; \
-out << bhkSerializable::asString(); \
+out << bhkShape::asString(); \
 return out.str(); \
 
 #define BHK_WORLD_OBJECT_FIXLINKS \
-bhkSerializable::FixLinks( objects, link_stack, version ); \
+bhkShape::FixLinks( objects, link_stack, version ); \
 
 #define BHK_ENTITY_MEMBERS \
-Ref<bhkSphereRepShape > shape; \
+Ref<bhkShape > shape; \
 uint layer; \
 
 #define BHK_ENTITY_INCLUDE "bhkWorldObject.h" \
@@ -1768,7 +1751,7 @@ return out.str(); \
 
 #define BHK_ENTITY_FIXLINKS \
 bhkWorldObject::FixLinks( objects, link_stack, version ); \
-shape = DynamicCast<bhkSphereRepShape>(objects[link_stack.front()]); \
+shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_COLLISION_OBJECT_MEMBERS \
@@ -1932,7 +1915,7 @@ controller = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_A_V_OBJECT_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 Vector3 translation; \
 Matrix33 rotation; \
 float scale; \
@@ -1941,6 +1924,7 @@ vector<Ref<NiProperty > > properties; \
 bool hasBoundingBox; \
 BoundingBox boundingBox; \
 Ref<NiCollisionData > collisionData; \
+Ref<NiCollisionObject > collisionObject; \
 
 #define NI_A_V_OBJECT_INCLUDE "NiObjectNET.h" \
 
@@ -1975,7 +1959,11 @@ if ( version <= 0x04020200 ) { \
     NifStream( boundingBox.radius, in, version ); \
   }; \
 }; \
-if ( version >= 0x0A000100 ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
+  NifStream( block_num, in, version ); \
+  link_stack.push_back( block_num ); \
+}; \
+if ( version >= 0x14000005 ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
@@ -2004,8 +1992,11 @@ if ( version <= 0x04020200 ) { \
     NifStream( boundingBox.radius, out, version ); \
   }; \
 }; \
-if ( version >= 0x0A000100 ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
   NifStream( link_map[StaticCast<NiObject>(collisionData)], out, version ); \
+}; \
+if ( version >= 0x14000005 ) { \
+  NifStream( link_map[StaticCast<NiObject>(collisionObject)], out, version ); \
 }; \
 
 #define NI_A_V_OBJECT_STRING \
@@ -2028,6 +2019,7 @@ if ( hasBoundingBox != 0 ) { \
   out << "  Radius:  " << boundingBox.radius << endl; \
 }; \
 out << "Collision Data:  " << collisionData << endl; \
+out << "Collision Object:  " << collisionObject << endl; \
 return out.str(); \
 
 #define NI_A_V_OBJECT_FIXLINKS \
@@ -2042,8 +2034,12 @@ if ( version <= 0x04020200 ) { \
   if ( hasBoundingBox != 0 ) { \
   }; \
 }; \
-if ( version >= 0x0A000100 ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
   collisionData = DynamicCast<NiCollisionData>(objects[link_stack.front()]); \
+  link_stack.pop_front(); \
+}; \
+if ( version >= 0x14000005 ) { \
+  collisionObject = DynamicCast<NiCollisionObject>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 
@@ -2192,12 +2188,12 @@ NiObjectNET::FixLinks( objects, link_stack, version ); \
 
 #define NI_TIME_CONTROLLER_MEMBERS \
 Ref<NiTimeController > nextController; \
-Flags flags; \
+unsigned short flags; \
 float frequency; \
 float phase; \
 float startTime; \
 float stopTime; \
-NiAVObject * target; \
+NiObject * target; \
 
 #define NI_TIME_CONTROLLER_INCLUDE "NiObject.h" \
 
@@ -2244,7 +2240,7 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 nextController = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
-target = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
+target = DynamicCast<NiObject>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
@@ -2315,16 +2311,16 @@ for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
   }; \
 }; \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS \
 Ref<AInterpolator > interpolator; \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_INCLUDE "NiTimeController.h" \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_INCLUDE "NiTimeController.h" \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_PARENT NiTimeController \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT NiTimeController \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_CONSTRUCT \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_CONSTRUCT \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_READ \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
 if ( version >= 0x0A020000 ) { \
@@ -2332,19 +2328,19 @@ if ( version >= 0x0A020000 ) { \
   link_stack.push_back( block_num ); \
 }; \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_WRITE \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
 if ( version >= 0x0A020000 ) { \
   NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
 }; \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_STRING \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
 out << "Interpolator:  " << interpolator << endl; \
 return out.str(); \
 
-#define A_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A020000 ) { \
   interpolator = DynamicCast<AInterpolator>(objects[link_stack.front()]); \
@@ -2354,28 +2350,28 @@ if ( version >= 0x0A020000 ) { \
 #define A_P_SYS_CTLR_MEMBERS \
 string modifierName; \
 
-#define A_P_SYS_CTLR_INCLUDE "ASingleInterpolatorController.h" \
+#define A_P_SYS_CTLR_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define A_P_SYS_CTLR_PARENT ASingleInterpolatorController \
+#define A_P_SYS_CTLR_PARENT NiSingleInterpolatorController \
 
 #define A_P_SYS_CTLR_CONSTRUCT \
 
 #define A_P_SYS_CTLR_READ \
-ASingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
 NifStream( modifierName, in, version ); \
 
 #define A_P_SYS_CTLR_WRITE \
-ASingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
 NifStream( modifierName, out, version ); \
 
 #define A_P_SYS_CTLR_STRING \
 stringstream out; \
-out << ASingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Modifier Name:  " << modifierName << endl; \
 return out.str(); \
 
 #define A_P_SYS_CTLR_FIXLINKS \
-ASingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 
 #define NI_TRI_BASED_GEOM_MEMBERS \
 Ref<TriBasedGeomData > data; \
@@ -3071,7 +3067,7 @@ return out.str(); \
 AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
 
 #define BHK_LIST_SHAPE_MEMBERS \
-vector<Ref<bhkSphereRepShape > > subShapes; \
+vector<Ref<bhkShape > > subShapes; \
 uint material; \
 vector<float > unknownFloats; \
 vector<uint > unknownInts; \
@@ -3143,7 +3139,7 @@ return out.str(); \
 #define BHK_LIST_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
-  subShapes[i0] = DynamicCast<bhkSphereRepShape>(objects[link_stack.front()]); \
+  subShapes[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 for (uint i0 = 0; i0 < 6; i0++) { \
@@ -3479,7 +3475,7 @@ for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 vector<vector<uint > > unknownInts; \
 vector<float > unknownFloats; \
-Ref<NiTriStripsData > data; \
+Ref<hkPackedNiTriStripsData > data; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_INCLUDE "AbhkShapeCollection.h" \
 
@@ -3545,7 +3541,7 @@ for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
 }; \
 for (uint i0 = 0; i0 < 13; i0++) { \
 }; \
-data = DynamicCast<NiTriStripsData>(objects[link_stack.front()]); \
+data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
@@ -4080,60 +4076,52 @@ return out.str(); \
 bhkTransformShape::FixLinks( objects, link_stack, version ); \
 
 #define B_S_BOUND_MEMBERS \
-string name; \
 vector<float > unknownFloats; \
 
-#define B_S_BOUND_INCLUDE "NiObject.h" \
+#define B_S_BOUND_INCLUDE "NiExtraData.h" \
 
-#define B_S_BOUND_PARENT NiObject \
+#define B_S_BOUND_PARENT NiExtraData \
 
 #define B_S_BOUND_CONSTRUCT \
 
 #define B_S_BOUND_READ \
-NiObject::Read( in, link_stack, version ); \
-NifStream( name, in, version ); \
+NiExtraData::Read( in, link_stack, version ); \
 unknownFloats.resize(6); \
 for (uint i0 = 0; i0 < 6; i0++) { \
   NifStream( unknownFloats[i0], in, version ); \
 }; \
 
 #define B_S_BOUND_WRITE \
-NiObject::Write( out, link_map, version ); \
-NifStream( name, out, version ); \
+NiExtraData::Write( out, link_map, version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
   NifStream( unknownFloats[i0], out, version ); \
 }; \
 
 #define B_S_BOUND_STRING \
 stringstream out; \
-out << NiObject::asString(); \
-out << "Name:  " << name << endl; \
+out << NiExtraData::asString(); \
 for (uint i0 = 0; i0 < 6; i0++) { \
   out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
 
 #define B_S_BOUND_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 }; \
 
 #define B_S_FURNITURE_MARKER_MEMBERS \
-string name; \
 vector<FurniturePosition > positions; \
 
-#define B_S_FURNITURE_MARKER_INCLUDE "NiObject.h" \
+#define B_S_FURNITURE_MARKER_INCLUDE "NiExtraData.h" \
 
-#define B_S_FURNITURE_MARKER_PARENT NiObject \
+#define B_S_FURNITURE_MARKER_PARENT NiExtraData \
 
 #define B_S_FURNITURE_MARKER_CONSTRUCT \
 
 #define B_S_FURNITURE_MARKER_READ \
-NiObject::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version ); \
 uint numPositions; \
-if ( version <= 0x14000005 ) { \
-  NifStream( name, in, version ); \
-}; \
 NifStream( numPositions, in, version ); \
 positions.resize(numPositions); \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
@@ -4144,12 +4132,9 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 }; \
 
 #define B_S_FURNITURE_MARKER_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version ); \
 uint numPositions; \
 numPositions = uint(positions.size()); \
-if ( version <= 0x14000005 ) { \
-  NifStream( name, out, version ); \
-}; \
 NifStream( numPositions, out, version ); \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
   NifStream( positions[i0].unknownVector, out, version ); \
@@ -4160,8 +4145,7 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 
 #define B_S_FURNITURE_MARKER_STRING \
 stringstream out; \
-out << NiObject::asString(); \
-out << "Name:  " << name << endl; \
+out << NiExtraData::asString(); \
 out << "Num Positions:  " << numPositions << endl; \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
   out << "  Unknown Vector:  " << positions[i0].unknownVector << endl; \
@@ -4172,9 +4156,7 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 return out.str(); \
 
 #define B_S_FURNITURE_MARKER_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
-if ( version <= 0x14000005 ) { \
-}; \
+NiExtraData::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
 }; \
 
@@ -4227,35 +4209,30 @@ return out.str(); \
 APSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
 
 #define B_S_X_FLAGS_MEMBERS \
-string name; \
 uint flags; \
 
-#define B_S_X_FLAGS_INCLUDE "NiObject.h" \
+#define B_S_X_FLAGS_INCLUDE "NiExtraData.h" \
 
-#define B_S_X_FLAGS_PARENT NiObject \
+#define B_S_X_FLAGS_PARENT NiExtraData \
 
 #define B_S_X_FLAGS_CONSTRUCT \
- : name("BSX") \
 
 #define B_S_X_FLAGS_READ \
-NiObject::Read( in, link_stack, version ); \
-NifStream( name, in, version ); \
+NiExtraData::Read( in, link_stack, version ); \
 NifStream( flags, in, version ); \
 
 #define B_S_X_FLAGS_WRITE \
-NiObject::Write( out, link_map, version ); \
-NifStream( name, out, version ); \
+NiExtraData::Write( out, link_map, version ); \
 NifStream( flags, out, version ); \
 
 #define B_S_X_FLAGS_STRING \
 stringstream out; \
-out << NiObject::asString(); \
-out << "Name:  " << name << endl; \
+out << NiExtraData::asString(); \
 out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define B_S_X_FLAGS_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS \
 vector<hkTriangle > triangles; \
@@ -4326,41 +4303,41 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define NI_ALPHA_CONTROLLER_MEMBERS \
 Ref<NiFloatData > data; \
 
-#define NI_ALPHA_CONTROLLER_INCLUDE "ASingleInterpolatorController.h" \
+#define NI_ALPHA_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_ALPHA_CONTROLLER_PARENT ASingleInterpolatorController \
+#define NI_ALPHA_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_ALPHA_CONTROLLER_CONSTRUCT \
 
 #define NI_ALPHA_CONTROLLER_READ \
 uint block_num; \
-ASingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
 
 #define NI_ALPHA_CONTROLLER_WRITE \
-ASingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 }; \
 
 #define NI_ALPHA_CONTROLLER_STRING \
 stringstream out; \
-out << ASingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_ALPHA_CONTROLLER_FIXLINKS \
-ASingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
   data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 
 #define NI_ALPHA_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 byte threshold; \
 
 #define NI_ALPHA_PROPERTY_INCLUDE "NiProperty.h" \
@@ -5243,6 +5220,7 @@ vector<float > unknown8; \
 #define NI_COLLISION_DATA_CONSTRUCT \
 
 #define NI_COLLISION_DATA_READ \
+uint block_num; \
 NiObject::Read( in, link_stack, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
@@ -5513,35 +5491,30 @@ if ( version <= 0x0A010000 ) { \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( textKeys.nodeNameOffset, in, version ); \
-    NifStream( textKeys.unknownShort1, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( textKeys.propertyType, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( textKeys.propertyTypeOffset, in, version ); \
-    NifStream( textKeys.unknownShort2, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( textKeys.controllerType, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( textKeys.controllerTypeOffset, in, version ); \
-    NifStream( textKeys.unknownShort3, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( textKeys.variable1, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( textKeys.variableOffset1, in, version ); \
-    NifStream( textKeys.unknownShort4, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( textKeys.variable2, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( textKeys.variableOffset2, in, version ); \
-    NifStream( textKeys.unknownShort5, in, version ); \
   }; \
 }; \
 NifStream( numControlledBlocks, in, version ); \
@@ -5576,35 +5549,30 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( controlledBlocks[i0].nodeNameOffset, in, version ); \
-    NifStream( controlledBlocks[i0].unknownShort1, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( controlledBlocks[i0].propertyType, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( controlledBlocks[i0].propertyTypeOffset, in, version ); \
-    NifStream( controlledBlocks[i0].unknownShort2, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( controlledBlocks[i0].controllerType, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( controlledBlocks[i0].controllerTypeOffset, in, version ); \
-    NifStream( controlledBlocks[i0].unknownShort3, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( controlledBlocks[i0].variable1, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( controlledBlocks[i0].variableOffset1, in, version ); \
-    NifStream( controlledBlocks[i0].unknownShort4, in, version ); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( controlledBlocks[i0].variable2, in, version ); \
   }; \
   if ( version >= 0x0A020000 ) { \
     NifStream( controlledBlocks[i0].variableOffset2, in, version ); \
-    NifStream( controlledBlocks[i0].unknownShort5, in, version ); \
   }; \
 }; \
 if ( version >= 0x0A01006A ) { \
@@ -5656,19 +5624,14 @@ out << "Priority?:  " << textKeys.priority_ << endl; \
 out << "String Palette:  " << textKeys.stringPalette << endl; \
 out << "Node Name:  " << textKeys.nodeName << endl; \
 out << "Node Name Offset:  " << textKeys.nodeNameOffset << endl; \
-out << "Unknown Short 1:  " << textKeys.unknownShort1 << endl; \
 out << "Property Type:  " << textKeys.propertyType << endl; \
 out << "Property Type Offset:  " << textKeys.propertyTypeOffset << endl; \
-out << "Unknown Short 2:  " << textKeys.unknownShort2 << endl; \
 out << "Controller Type:  " << textKeys.controllerType << endl; \
 out << "Controller Type Offset:  " << textKeys.controllerTypeOffset << endl; \
-out << "Unknown Short 3:  " << textKeys.unknownShort3 << endl; \
 out << "Variable 1:  " << textKeys.variable1 << endl; \
 out << "Variable Offset 1:  " << textKeys.variableOffset1 << endl; \
-out << "Unknown Short 4:  " << textKeys.unknownShort4 << endl; \
 out << "Variable 2:  " << textKeys.variable2 << endl; \
 out << "Variable Offset 2:  " << textKeys.variableOffset2 << endl; \
-out << "Unknown Short 5:  " << textKeys.unknownShort5 << endl; \
 out << "Num Controlled Blocks:  " << numControlledBlocks << endl; \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
@@ -5681,19 +5644,14 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
   out << "  String Palette:  " << controlledBlocks[i0].stringPalette << endl; \
   out << "  Node Name:  " << controlledBlocks[i0].nodeName << endl; \
   out << "  Node Name Offset:  " << controlledBlocks[i0].nodeNameOffset << endl; \
-  out << "  Unknown Short 1:  " << controlledBlocks[i0].unknownShort1 << endl; \
   out << "  Property Type:  " << controlledBlocks[i0].propertyType << endl; \
   out << "  Property Type Offset:  " << controlledBlocks[i0].propertyTypeOffset << endl; \
-  out << "  Unknown Short 2:  " << controlledBlocks[i0].unknownShort2 << endl; \
   out << "  Controller Type:  " << controlledBlocks[i0].controllerType << endl; \
   out << "  Controller Type Offset:  " << controlledBlocks[i0].controllerTypeOffset << endl; \
-  out << "  Unknown Short 3:  " << controlledBlocks[i0].unknownShort3 << endl; \
   out << "  Variable 1:  " << controlledBlocks[i0].variable1 << endl; \
   out << "  Variable Offset 1:  " << controlledBlocks[i0].variableOffset1 << endl; \
-  out << "  Unknown Short 4:  " << controlledBlocks[i0].unknownShort4 << endl; \
   out << "  Variable 2:  " << controlledBlocks[i0].variable2 << endl; \
   out << "  Variable Offset 2:  " << controlledBlocks[i0].variableOffset2 << endl; \
-  out << "  Unknown Short 5:  " << controlledBlocks[i0].unknownShort5 << endl; \
 }; \
 out << "Weight:  " << weight << endl; \
 out << "Text Keys 2:  " << textKeys2 << endl; \
@@ -5825,6 +5783,7 @@ vector<AVObject > objects; \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_CONSTRUCT \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_READ \
+uint block_num; \
 NiObject::Read( in, link_stack, version ); \
 uint numObjects; \
 NifStream( unknownInt, in, version ); \
@@ -5888,7 +5847,7 @@ return out.str(); \
 NiLight::FixLinks( objects, link_stack, version ); \
 
 #define NI_DITHER_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 
 #define NI_DITHER_PROPERTY_INCLUDE "NiProperty.h" \
 
@@ -5919,15 +5878,15 @@ uint unknownInt2; \
 float delta; \
 vector<Ref<NiSourceTexture > > sources; \
 
-#define NI_FLIP_CONTROLLER_INCLUDE "ASingleInterpolatorController.h" \
+#define NI_FLIP_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_FLIP_CONTROLLER_PARENT ASingleInterpolatorController \
+#define NI_FLIP_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_FLIP_CONTROLLER_CONSTRUCT \
 
 #define NI_FLIP_CONTROLLER_READ \
 uint block_num; \
-ASingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
 uint numSources; \
 NifStream( textureSlot, in, version ); \
 if ( version <= 0x0A010000 ) { \
@@ -5942,7 +5901,7 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 }; \
 
 #define NI_FLIP_CONTROLLER_WRITE \
-ASingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
 uint numSources; \
 numSources = uint(sources.size()); \
 NifStream( textureSlot, out, version ); \
@@ -5957,7 +5916,7 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 
 #define NI_FLIP_CONTROLLER_STRING \
 stringstream out; \
-out << ASingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Texture Slot:  " << textureSlot << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Delta:  " << delta << endl; \
@@ -5968,7 +5927,7 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 return out.str(); \
 
 #define NI_FLIP_CONTROLLER_FIXLINKS \
-ASingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 }; \
 for (uint i0 = 0; i0 < numSources; i0++) { \
@@ -6167,7 +6126,7 @@ for (uint i0 = 0; i0 < numFloats; i0++) { \
 }; \
 
 #define NI_FOG_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 float fogDepth; \
 Color3 fogColor; \
 
@@ -6855,55 +6814,51 @@ link_stack.pop_front(); \
 #define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS \
 ushort unknown; \
 Ref<NiColorData > data; \
-ushort unknownShort; \
 
-#define NI_MATERIAL_COLOR_CONTROLLER_INCLUDE "NiTimeController.h" \
+#define NI_MATERIAL_COLOR_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_MATERIAL_COLOR_CONTROLLER_PARENT NiTimeController \
+#define NI_MATERIAL_COLOR_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_CONSTRUCT \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
-if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
+if ( version >= 0x0A010000 ) { \
   NifStream( unknown, in, version ); \
 }; \
-NifStream( block_num, in, version ); \
-link_stack.push_back( block_num ); \
-if ( version >= 0x0A020000 ) { \
-  NifStream( unknownShort, in, version ); \
+if ( version <= 0x0A010000 ) { \
+  NifStream( block_num, in, version ); \
+  link_stack.push_back( block_num ); \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
-if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
+if ( version >= 0x0A010000 ) { \
   NifStream( unknown, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
-if ( version >= 0x0A020000 ) { \
-  NifStream( unknownShort, out, version ); \
+if ( version <= 0x0A010000 ) { \
+  NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_STRING \
 stringstream out; \
-out << NiTimeController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Unknown:  " << unknown << endl; \
 out << "Data:  " << data << endl; \
-out << "Unknown Short:  " << unknownShort << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
-if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+if ( version >= 0x0A010000 ) { \
 }; \
-data = DynamicCast<NiColorData>(objects[link_stack.front()]); \
-link_stack.pop_front(); \
-if ( version >= 0x0A020000 ) { \
+if ( version <= 0x0A010000 ) { \
+  data = DynamicCast<NiColorData>(objects[link_stack.front()]); \
+  link_stack.pop_front(); \
 }; \
 
 #define NI_MATERIAL_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 Color3 ambientColor; \
 Color3 diffuseColor; \
 Color3 specularColor; \
@@ -7183,11 +7138,13 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
   if ( version >= 0x0A01006A ) { \
     NifStream( morphs[i0].frameName, in, version ); \
   }; \
-  NifStream( morphs_numMorphKeys, in, version ); \
-  NifStream( morphs[i0].morphInterpolation, in, version ); \
-  morphs[i0].morphKeys.resize(morphs_numMorphKeys); \
-  for (uint i1 = 0; i1 < morphs_numMorphKeys; i1++) { \
-    NifStream( morphs[i0].morphKeys[i1], in, version ); \
+  if ( version <= 0x0A000102 ) { \
+    NifStream( morphs_numMorphKeys, in, version ); \
+    NifStream( morphs[i0].morphInterpolation, in, version ); \
+    morphs[i0].morphKeys.resize(morphs_numMorphKeys); \
+    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
+      NifStream( morphs[i0].morphKeys[i2], in, version ); \
+    }; \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( morphs[i0].unknownInt, in, version ); \
@@ -7211,10 +7168,12 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
   if ( version >= 0x0A01006A ) { \
     NifStream( morphs[i0].frameName, out, version ); \
   }; \
-  NifStream( morphs_numMorphKeys, out, version ); \
-  NifStream( morphs[i0].morphInterpolation, out, version ); \
-  for (uint i1 = 0; i1 < morphs_numMorphKeys; i1++) { \
-    NifStream( morphs[i0].morphKeys[i1], out, version ); \
+  if ( version <= 0x0A000102 ) { \
+    NifStream( morphs_numMorphKeys, out, version ); \
+    NifStream( morphs[i0].morphInterpolation, out, version ); \
+    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
+      NifStream( morphs[i0].morphKeys[i2], out, version ); \
+    }; \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( morphs[i0].unknownInt, out, version ); \
@@ -7249,7 +7208,9 @@ NiObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numMorphs; i0++) { \
   if ( version >= 0x0A01006A ) { \
   }; \
-  for (uint i1 = 0; i1 < morphs_numMorphKeys; i1++) { \
+  if ( version <= 0x0A000102 ) { \
+    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
+    }; \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
   }; \
@@ -7267,6 +7228,7 @@ vector<NiNode * > extraTargets; \
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_CONSTRUCT \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_READ \
+uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
 ushort numExtraTargets; \
 NifStream( numExtraTargets, in, version ); \
@@ -8102,9 +8064,8 @@ unknownLink2 = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_PARTICLE_SYSTEM_MEMBERS \
-bool hasModifiers; \
-uint numModifiers; \
-vector<Ref<AParticleModifier > > modifiers; \
+bool unknownBool; \
+vector<Ref<APSysModifier > > modifiers; \
 
 #define NI_PARTICLE_SYSTEM_INCLUDE "NiParticles.h" \
 
@@ -8115,50 +8076,45 @@ vector<Ref<AParticleModifier > > modifiers; \
 #define NI_PARTICLE_SYSTEM_READ \
 uint block_num; \
 NiParticles::Read( in, link_stack, version ); \
+uint numModifiers; \
 if ( version >= 0x0A010000 ) { \
-  NifStream( hasModifiers, in, version ); \
-  if ( hasModifiers != 0 ) { \
-    NifStream( numModifiers, in, version ); \
-    modifiers.resize(hasModifiers); \
-    for (uint i2 = 0; i2 < hasModifiers; i2++) { \
-      NifStream( block_num, in, version ); \
-      link_stack.push_back( block_num ); \
-    }; \
+  NifStream( unknownBool, in, version ); \
+  NifStream( numModifiers, in, version ); \
+  modifiers.resize(numModifiers); \
+  for (uint i1 = 0; i1 < numModifiers; i1++) { \
+    NifStream( block_num, in, version ); \
+    link_stack.push_back( block_num ); \
   }; \
 }; \
 
 #define NI_PARTICLE_SYSTEM_WRITE \
 NiParticles::Write( out, link_map, version ); \
+uint numModifiers; \
+numModifiers = uint(modifiers.size()); \
 if ( version >= 0x0A010000 ) { \
-  NifStream( hasModifiers, out, version ); \
-  if ( hasModifiers != 0 ) { \
-    NifStream( numModifiers, out, version ); \
-    for (uint i2 = 0; i2 < hasModifiers; i2++) { \
-      NifStream( link_map[StaticCast<NiObject>(modifiers[i2])], out, version ); \
-    }; \
+  NifStream( unknownBool, out, version ); \
+  NifStream( numModifiers, out, version ); \
+  for (uint i1 = 0; i1 < numModifiers; i1++) { \
+    NifStream( link_map[StaticCast<NiObject>(modifiers[i1])], out, version ); \
   }; \
 }; \
 
 #define NI_PARTICLE_SYSTEM_STRING \
 stringstream out; \
 out << NiParticles::asString(); \
-out << "Has Modifiers:  " << hasModifiers << endl; \
-if ( hasModifiers != 0 ) { \
-  out << "  Num Modifiers:  " << numModifiers << endl; \
-  for (uint i1 = 0; i1 < hasModifiers; i1++) { \
-    out << "    Modifiers[" << i1 << "]:  " << modifiers[i1] << endl; \
-  }; \
+out << "Unknown Bool:  " << unknownBool << endl; \
+out << "Num Modifiers:  " << numModifiers << endl; \
+for (uint i0 = 0; i0 < numModifiers; i0++) { \
+  out << "  Modifiers[" << i0 << "]:  " << modifiers[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_FIXLINKS \
 NiParticles::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
-  if ( hasModifiers != 0 ) { \
-    for (uint i2 = 0; i2 < hasModifiers; i2++) { \
-      modifiers[i2] = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
-      link_stack.pop_front(); \
-    }; \
+  for (uint i1 = 0; i1 < numModifiers; i1++) { \
+    modifiers[i1] = DynamicCast<APSysModifier>(objects[link_stack.front()]); \
+    link_stack.pop_front(); \
   }; \
 }; \
 
@@ -8951,6 +8907,7 @@ vector<uint > unknownInts2; \
 #define NI_P_SYS_BOMB_MODIFIER_CONSTRUCT \
 
 #define NI_P_SYS_BOMB_MODIFIER_READ \
+uint block_num; \
 APSysModifier::Read( in, link_stack, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
@@ -9336,6 +9293,7 @@ float rangeFalloff; \
 #define NI_P_SYS_DRAG_MODIFIER_CONSTRUCT \
 
 #define NI_P_SYS_DRAG_MODIFIER_READ \
+uint block_num; \
 APSysModifier::Read( in, link_stack, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
@@ -9368,7 +9326,7 @@ parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_P_SYS_EMITTER_CTLR_MEMBERS \
-Ref<NiPSysData > data; \
+Ref<AInterpolator > visibilityInterpolator; \
 
 #define NI_P_SYS_EMITTER_CTLR_INCLUDE "APSysCtlr.h" \
 
@@ -9384,17 +9342,17 @@ link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_EMITTER_CTLR_WRITE \
 APSysCtlr::Write( out, link_map, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
 stringstream out; \
 out << APSysCtlr::asString(); \
-out << "Data:  " << data << endl; \
+out << "Visibility Interpolator:  " << visibilityInterpolator << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
-data = DynamicCast<NiPSysData>(objects[link_stack.front()]); \
+visibilityInterpolator = DynamicCast<AInterpolator>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS \
@@ -9592,6 +9550,7 @@ float turbulenceScale; \
  : turbulenceScale(1.0f) \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
+uint block_num; \
 APSysModifier::Read( in, link_stack, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
@@ -10263,7 +10222,7 @@ return out.str(); \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
 
 #define NI_SHADE_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 
 #define NI_SHADE_PROPERTY_INCLUDE "NiProperty.h" \
 
@@ -10807,11 +10766,15 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
 }; \
 
 #define NI_SOURCE_TEXTURE_MEMBERS \
-TexSource textureSource; \
+byte useExternal; \
+string fileName; \
+Ref<NiObject > unknownLink; \
+byte unknownByte; \
+string originalFileName_; \
+Ref<NiPixelData > pixelData; \
 PixelLayout pixelLayout; \
 MipMapFormat useMipmaps; \
 AlphaFormat alphaFormat; \
-byte unknownByte; \
 byte unknownByte2; \
 
 #define NI_SOURCE_TEXTURE_INCLUDE "NiObjectNET.h" \
@@ -10819,32 +10782,32 @@ byte unknownByte2; \
 #define NI_SOURCE_TEXTURE_PARENT NiObjectNET \
 
 #define NI_SOURCE_TEXTURE_CONSTRUCT \
- : unknownByte(1), unknownByte2(1) \
+ : useExternal(1), pixelLayout(5), useMipmaps(2), alphaFormat(3), unknownByte2(1) \
 
 #define NI_SOURCE_TEXTURE_READ \
 uint block_num; \
 NiObjectNET::Read( in, link_stack, version ); \
-NifStream( textureSource.useExternal, in, version ); \
-if ( textureSource.useExternal == 1 ) { \
-  NifStream( textureSource.fileName, in, version ); \
+NifStream( useExternal, in, version ); \
+if ( useExternal == 1 ) { \
+  NifStream( fileName, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 1 ) { \
+  if ( useExternal == 1 ) { \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( textureSource.useExternal == 0 ) { \
-    NifStream( textureSource.unknownByte, in, version ); \
+  if ( useExternal == 0 ) { \
+    NifStream( unknownByte, in, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 0 ) { \
-    NifStream( textureSource.originalFileName_, in, version ); \
+  if ( useExternal == 0 ) { \
+    NifStream( originalFileName_, in, version ); \
   }; \
 }; \
-if ( textureSource.useExternal == 0 ) { \
+if ( useExternal == 0 ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
@@ -10858,27 +10821,27 @@ if ( version >= 0x0A01006A ) { \
 
 #define NI_SOURCE_TEXTURE_WRITE \
 NiObjectNET::Write( out, link_map, version ); \
-NifStream( textureSource.useExternal, out, version ); \
-if ( textureSource.useExternal == 1 ) { \
-  NifStream( textureSource.fileName, out, version ); \
+NifStream( useExternal, out, version ); \
+if ( useExternal == 1 ) { \
+  NifStream( fileName, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 1 ) { \
-    NifStream( link_map[StaticCast<NiObject>(textureSource.unknownLink)], out, version ); \
+  if ( useExternal == 1 ) { \
+    NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( textureSource.useExternal == 0 ) { \
-    NifStream( textureSource.unknownByte, out, version ); \
+  if ( useExternal == 0 ) { \
+    NifStream( unknownByte, out, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 0 ) { \
-    NifStream( textureSource.originalFileName_, out, version ); \
+  if ( useExternal == 0 ) { \
+    NifStream( originalFileName_, out, version ); \
   }; \
 }; \
-if ( textureSource.useExternal == 0 ) { \
-  NifStream( link_map[StaticCast<NiObject>(textureSource.pixelData)], out, version ); \
+if ( useExternal == 0 ) { \
+  NifStream( link_map[StaticCast<NiObject>(pixelData)], out, version ); \
 }; \
 NifStream( pixelLayout, out, version ); \
 NifStream( useMipmaps, out, version ); \
@@ -10891,15 +10854,15 @@ if ( version >= 0x0A01006A ) { \
 #define NI_SOURCE_TEXTURE_STRING \
 stringstream out; \
 out << NiObjectNET::asString(); \
-out << "Use External:  " << textureSource.useExternal << endl; \
-if ( textureSource.useExternal == 1 ) { \
-  out << "  File Name:  " << textureSource.fileName << endl; \
-  out << "  Unknown Link:  " << textureSource.unknownLink << endl; \
+out << "Use External:  " << useExternal << endl; \
+if ( useExternal == 1 ) { \
+  out << "  File Name:  " << fileName << endl; \
+  out << "  Unknown Link:  " << unknownLink << endl; \
 }; \
-if ( textureSource.useExternal == 0 ) { \
-  out << "  Unknown Byte:  " << textureSource.unknownByte << endl; \
-  out << "  Original File Name?:  " << textureSource.originalFileName_ << endl; \
-  out << "  Pixel Data:  " << textureSource.pixelData << endl; \
+if ( useExternal == 0 ) { \
+  out << "  Unknown Byte:  " << unknownByte << endl; \
+  out << "  Original File Name?:  " << originalFileName_ << endl; \
+  out << "  Pixel Data:  " << pixelData << endl; \
 }; \
 out << "Pixel Layout:  " << pixelLayout << endl; \
 out << "Use Mipmaps:  " << useMipmaps << endl; \
@@ -10910,31 +10873,31 @@ return out.str(); \
 
 #define NI_SOURCE_TEXTURE_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
-if ( textureSource.useExternal == 1 ) { \
+if ( useExternal == 1 ) { \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 1 ) { \
-    textureSource.unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
+  if ( useExternal == 1 ) { \
+    unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
     link_stack.pop_front(); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( textureSource.useExternal == 0 ) { \
+  if ( useExternal == 0 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( textureSource.useExternal == 0 ) { \
+  if ( useExternal == 0 ) { \
   }; \
 }; \
-if ( textureSource.useExternal == 0 ) { \
-  textureSource.pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
+if ( useExternal == 0 ) { \
+  pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A01006A ) { \
 }; \
 
 #define NI_SPECULAR_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 
 #define NI_SPECULAR_PROPERTY_INCLUDE "NiProperty.h" \
 
@@ -11036,7 +10999,7 @@ return out.str(); \
 NiPointLight::FixLinks( objects, link_stack, version ); \
 
 #define NI_STENCIL_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 bool stencilEnabled; \
 uint stencilFunction; \
 uint stencilRef; \
@@ -11051,6 +11014,7 @@ uint drawMode; \
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
+ : stencilMask(4294967295) \
 
 #define NI_STENCIL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -11349,15 +11313,15 @@ uint textureSlot; \
 uint operation; \
 Ref<NiFloatData > data; \
 
-#define NI_TEXTURE_TRANSFORM_CONTROLLER_INCLUDE "ASingleInterpolatorController.h" \
+#define NI_TEXTURE_TRANSFORM_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT ASingleInterpolatorController \
+#define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
-ASingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
 NifStream( unknown2, in, version ); \
 NifStream( textureSlot, in, version ); \
 NifStream( operation, in, version ); \
@@ -11367,7 +11331,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE \
-ASingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
 NifStream( unknown2, out, version ); \
 NifStream( textureSlot, out, version ); \
 NifStream( operation, out, version ); \
@@ -11377,7 +11341,7 @@ if ( version <= 0x0A010000 ) { \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
-out << ASingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Unknown2:  " << unknown2 << endl; \
 out << "Texture Slot:  " << textureSlot << endl; \
 out << "Operation:  " << operation << endl; \
@@ -11385,14 +11349,14 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS \
-ASingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
   data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 
 #define NI_TEXTURING_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 ApplyMode applyMode; \
 uint textureCount; \
 bool hasBaseTexture; \
@@ -11414,8 +11378,7 @@ bool hasDecal0Texture; \
 TexDesc decal0Texture; \
 bool hasDecal1Texture; \
 TexDesc decal1Texture; \
-uint numShaderTextures; \
-ShaderTexDesc shaderTextures; \
+vector<ShaderTexDesc > shaderTextures; \
 
 #define NI_TEXTURING_PROPERTY_INCLUDE "NiProperty.h" \
 
@@ -11427,6 +11390,7 @@ ShaderTexDesc shaderTextures; \
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
 NiProperty::Read( in, link_stack, version ); \
+uint numShaderTextures; \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, in, version ); \
 }; \
@@ -11641,36 +11605,41 @@ if ( version >= 0x14000004 ) { \
 }; \
 if ( version >= 0x0A000100 ) { \
   NifStream( numShaderTextures, in, version ); \
-  NifStream( shaderTextures.isUsed, in, version ); \
-  if ( shaderTextures.isUsed != 0 ) { \
-    NifStream( block_num, in, version ); \
-    link_stack.push_back( block_num ); \
-    NifStream( shaderTextures.textureData.clampMode, in, version ); \
-    NifStream( shaderTextures.textureData.filterMode, in, version ); \
-    NifStream( shaderTextures.textureData.textureSet, in, version ); \
-    if ( version <= 0x0A020000 ) { \
-      NifStream( shaderTextures.textureData.ps2L, in, version ); \
-      NifStream( shaderTextures.textureData.ps2K, in, version ); \
-    }; \
-    if ( version <= 0x0401000C ) { \
-      NifStream( shaderTextures.textureData.unknown1, in, version ); \
-    }; \
-    if ( version >= 0x0A010000 ) { \
-      NifStream( shaderTextures.textureData.hasTextureTransform, in, version ); \
-      if ( shaderTextures.textureData.hasTextureTransform != 0 ) { \
-        NifStream( shaderTextures.textureData.translation, in, version ); \
-        NifStream( shaderTextures.textureData.tiling, in, version ); \
-        NifStream( shaderTextures.textureData.wRotation, in, version ); \
-        NifStream( shaderTextures.textureData.transformType_, in, version ); \
-        NifStream( shaderTextures.textureData.centerOffset, in, version ); \
+  shaderTextures.resize(numShaderTextures); \
+  for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
+    NifStream( shaderTextures[i1].isUsed, in, version ); \
+    if ( shaderTextures[i1].isUsed != 0 ) { \
+      NifStream( block_num, in, version ); \
+      link_stack.push_back( block_num ); \
+      NifStream( shaderTextures[i1].textureData.clampMode, in, version ); \
+      NifStream( shaderTextures[i1].textureData.filterMode, in, version ); \
+      NifStream( shaderTextures[i1].textureData.textureSet, in, version ); \
+      if ( version <= 0x0A020000 ) { \
+        NifStream( shaderTextures[i1].textureData.ps2L, in, version ); \
+        NifStream( shaderTextures[i1].textureData.ps2K, in, version ); \
       }; \
+      if ( version <= 0x0401000C ) { \
+        NifStream( shaderTextures[i1].textureData.unknown1, in, version ); \
+      }; \
+      if ( version >= 0x0A010000 ) { \
+        NifStream( shaderTextures[i1].textureData.hasTextureTransform, in, version ); \
+        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+          NifStream( shaderTextures[i1].textureData.translation, in, version ); \
+          NifStream( shaderTextures[i1].textureData.tiling, in, version ); \
+          NifStream( shaderTextures[i1].textureData.wRotation, in, version ); \
+          NifStream( shaderTextures[i1].textureData.transformType_, in, version ); \
+          NifStream( shaderTextures[i1].textureData.centerOffset, in, version ); \
+        }; \
+      }; \
+      NifStream( shaderTextures[i1].unknownInt, in, version ); \
     }; \
-    NifStream( shaderTextures.unknownInt, in, version ); \
   }; \
 }; \
 
 #define NI_TEXTURING_PROPERTY_WRITE \
 NiProperty::Write( out, link_map, version ); \
+uint numShaderTextures; \
+numShaderTextures = uint(shaderTextures.size()); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, out, version ); \
 }; \
@@ -11877,30 +11846,32 @@ if ( version >= 0x14000004 ) { \
 }; \
 if ( version >= 0x0A000100 ) { \
   NifStream( numShaderTextures, out, version ); \
-  NifStream( shaderTextures.isUsed, out, version ); \
-  if ( shaderTextures.isUsed != 0 ) { \
-    NifStream( link_map[StaticCast<NiObject>(shaderTextures.textureData.source)], out, version ); \
-    NifStream( shaderTextures.textureData.clampMode, out, version ); \
-    NifStream( shaderTextures.textureData.filterMode, out, version ); \
-    NifStream( shaderTextures.textureData.textureSet, out, version ); \
-    if ( version <= 0x0A020000 ) { \
-      NifStream( shaderTextures.textureData.ps2L, out, version ); \
-      NifStream( shaderTextures.textureData.ps2K, out, version ); \
-    }; \
-    if ( version <= 0x0401000C ) { \
-      NifStream( shaderTextures.textureData.unknown1, out, version ); \
-    }; \
-    if ( version >= 0x0A010000 ) { \
-      NifStream( shaderTextures.textureData.hasTextureTransform, out, version ); \
-      if ( shaderTextures.textureData.hasTextureTransform != 0 ) { \
-        NifStream( shaderTextures.textureData.translation, out, version ); \
-        NifStream( shaderTextures.textureData.tiling, out, version ); \
-        NifStream( shaderTextures.textureData.wRotation, out, version ); \
-        NifStream( shaderTextures.textureData.transformType_, out, version ); \
-        NifStream( shaderTextures.textureData.centerOffset, out, version ); \
+  for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
+    NifStream( shaderTextures[i1].isUsed, out, version ); \
+    if ( shaderTextures[i1].isUsed != 0 ) { \
+      NifStream( link_map[StaticCast<NiObject>(shaderTextures[i1].textureData.source)], out, version ); \
+      NifStream( shaderTextures[i1].textureData.clampMode, out, version ); \
+      NifStream( shaderTextures[i1].textureData.filterMode, out, version ); \
+      NifStream( shaderTextures[i1].textureData.textureSet, out, version ); \
+      if ( version <= 0x0A020000 ) { \
+        NifStream( shaderTextures[i1].textureData.ps2L, out, version ); \
+        NifStream( shaderTextures[i1].textureData.ps2K, out, version ); \
       }; \
+      if ( version <= 0x0401000C ) { \
+        NifStream( shaderTextures[i1].textureData.unknown1, out, version ); \
+      }; \
+      if ( version >= 0x0A010000 ) { \
+        NifStream( shaderTextures[i1].textureData.hasTextureTransform, out, version ); \
+        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+          NifStream( shaderTextures[i1].textureData.translation, out, version ); \
+          NifStream( shaderTextures[i1].textureData.tiling, out, version ); \
+          NifStream( shaderTextures[i1].textureData.wRotation, out, version ); \
+          NifStream( shaderTextures[i1].textureData.transformType_, out, version ); \
+          NifStream( shaderTextures[i1].textureData.centerOffset, out, version ); \
+        }; \
+      }; \
+      NifStream( shaderTextures[i1].unknownInt, out, version ); \
     }; \
-    NifStream( shaderTextures.unknownInt, out, version ); \
   }; \
 }; \
 
@@ -12060,24 +12031,26 @@ if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
   }; \
 }; \
 out << "Num Shader Textures:  " << numShaderTextures << endl; \
-out << "Is Used:  " << shaderTextures.isUsed << endl; \
-if ( shaderTextures.isUsed != 0 ) { \
-  out << "  Source:  " << shaderTextures.textureData.source << endl; \
-  out << "  Clamp Mode:  " << shaderTextures.textureData.clampMode << endl; \
-  out << "  Filter Mode:  " << shaderTextures.textureData.filterMode << endl; \
-  out << "  Texture Set:  " << shaderTextures.textureData.textureSet << endl; \
-  out << "  PS2 L:  " << shaderTextures.textureData.ps2L << endl; \
-  out << "  PS2 K:  " << shaderTextures.textureData.ps2K << endl; \
-  out << "  Unknown1:  " << shaderTextures.textureData.unknown1 << endl; \
-  out << "  Has Texture Transform:  " << shaderTextures.textureData.hasTextureTransform << endl; \
-  if ( shaderTextures.textureData.hasTextureTransform != 0 ) { \
-    out << "    Translation:  " << shaderTextures.textureData.translation << endl; \
-    out << "    Tiling:  " << shaderTextures.textureData.tiling << endl; \
-    out << "    W Rotation:  " << shaderTextures.textureData.wRotation << endl; \
-    out << "    Transform Type?:  " << shaderTextures.textureData.transformType_ << endl; \
-    out << "    Center Offset:  " << shaderTextures.textureData.centerOffset << endl; \
+for (uint i0 = 0; i0 < numShaderTextures; i0++) { \
+  out << "  Is Used:  " << shaderTextures[i0].isUsed << endl; \
+  if ( shaderTextures[i0].isUsed != 0 ) { \
+    out << "    Source:  " << shaderTextures[i0].textureData.source << endl; \
+    out << "    Clamp Mode:  " << shaderTextures[i0].textureData.clampMode << endl; \
+    out << "    Filter Mode:  " << shaderTextures[i0].textureData.filterMode << endl; \
+    out << "    Texture Set:  " << shaderTextures[i0].textureData.textureSet << endl; \
+    out << "    PS2 L:  " << shaderTextures[i0].textureData.ps2L << endl; \
+    out << "    PS2 K:  " << shaderTextures[i0].textureData.ps2K << endl; \
+    out << "    Unknown1:  " << shaderTextures[i0].textureData.unknown1 << endl; \
+    out << "    Has Texture Transform:  " << shaderTextures[i0].textureData.hasTextureTransform << endl; \
+    if ( shaderTextures[i0].textureData.hasTextureTransform != 0 ) { \
+      out << "      Translation:  " << shaderTextures[i0].textureData.translation << endl; \
+      out << "      Tiling:  " << shaderTextures[i0].textureData.tiling << endl; \
+      out << "      W Rotation:  " << shaderTextures[i0].textureData.wRotation << endl; \
+      out << "      Transform Type?:  " << shaderTextures[i0].textureData.transformType_ << endl; \
+      out << "      Center Offset:  " << shaderTextures[i0].textureData.centerOffset << endl; \
+    }; \
+    out << "    Unknown Int:  " << shaderTextures[i0].unknownInt << endl; \
   }; \
-  out << "  Unknown Int:  " << shaderTextures.unknownInt << endl; \
 }; \
 return out.str(); \
 
@@ -12186,15 +12159,17 @@ if ( version >= 0x14000004 ) { \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  if ( shaderTextures.isUsed != 0 ) { \
-    shaderTextures.textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-    link_stack.pop_front(); \
-    if ( version <= 0x0A020000 ) { \
-    }; \
-    if ( version <= 0x0401000C ) { \
-    }; \
-    if ( version >= 0x0A010000 ) { \
-      if ( shaderTextures.textureData.hasTextureTransform != 0 ) { \
+  for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
+    if ( shaderTextures[i1].isUsed != 0 ) { \
+      shaderTextures[i1].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
+      link_stack.pop_front(); \
+      if ( version <= 0x0A020000 ) { \
+      }; \
+      if ( version <= 0x0401000C ) { \
+      }; \
+      if ( version >= 0x0A010000 ) { \
+        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+        }; \
       }; \
     }; \
   }; \
@@ -12202,25 +12177,25 @@ if ( version >= 0x0A000100 ) { \
 
 #define NI_TRANSFORM_CONTROLLER_MEMBERS \
 
-#define NI_TRANSFORM_CONTROLLER_INCLUDE "ASingleInterpolatorController.h" \
+#define NI_TRANSFORM_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_TRANSFORM_CONTROLLER_PARENT ASingleInterpolatorController \
+#define NI_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_TRANSFORM_CONTROLLER_CONSTRUCT \
 
 #define NI_TRANSFORM_CONTROLLER_READ \
-ASingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
 
 #define NI_TRANSFORM_CONTROLLER_WRITE \
-ASingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
 
 #define NI_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
-out << ASingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 return out.str(); \
 
 #define NI_TRANSFORM_CONTROLLER_FIXLINKS \
-ASingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 
 #define NI_TRANSFORM_DATA_MEMBERS \
 
@@ -12717,7 +12692,7 @@ return out.str(); \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 VertMode vertexMode; \
 LightMode lightingMode; \
 
@@ -12798,32 +12773,38 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define NI_VIS_CONTROLLER_MEMBERS \
 Ref<NiVisData > data; \
 
-#define NI_VIS_CONTROLLER_INCLUDE "NiTimeController.h" \
+#define NI_VIS_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
 
-#define NI_VIS_CONTROLLER_PARENT NiTimeController \
+#define NI_VIS_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_VIS_CONTROLLER_CONSTRUCT \
 
 #define NI_VIS_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
-NifStream( block_num, in, version ); \
-link_stack.push_back( block_num ); \
+NiSingleInterpolatorController::Read( in, link_stack, version ); \
+if ( version <= 0x0A010000 ) { \
+  NifStream( block_num, in, version ); \
+  link_stack.push_back( block_num ); \
+}; \
 
 #define NI_VIS_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version ); \
+if ( version <= 0x0A010000 ) { \
+  NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+}; \
 
 #define NI_VIS_CONTROLLER_STRING \
 stringstream out; \
-out << NiTimeController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_VIS_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
-data = DynamicCast<NiVisData>(objects[link_stack.front()]); \
-link_stack.pop_front(); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+if ( version <= 0x0A010000 ) { \
+  data = DynamicCast<NiVisData>(objects[link_stack.front()]); \
+  link_stack.pop_front(); \
+}; \
 
 #define NI_VIS_DATA_MEMBERS \
 vector<Key<byte > > visKeys; \
@@ -12867,7 +12848,7 @@ for (uint i0 = 0; i0 < numVisKeys; i0++) { \
 }; \
 
 #define NI_WIREFRAME_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 
 #define NI_WIREFRAME_PROPERTY_INCLUDE "NiProperty.h" \
 
@@ -12893,7 +12874,7 @@ return out.str(); \
 NiProperty::FixLinks( objects, link_stack, version ); \
 
 #define NI_Z_BUFFER_PROPERTY_MEMBERS \
-Flags flags; \
+unsigned short flags; \
 uint function; \
 
 #define NI_Z_BUFFER_PROPERTY_INCLUDE "NiProperty.h" \
