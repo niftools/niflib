@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _APARTICLEMODIFIER_H_
 #define _APARTICLEMODIFIER_H_
 
+#include "xml_extract.h"
 #include A_PARTICLE_MODIFIER_INCLUDE
 
 /*
