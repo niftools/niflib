@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T> class Ref {
 public:
-	Ref( T * object = NULL ) {}
+	Ref( T * object = NULL );
 	Ref(const Ref & ref_to_copy );
 
 	operator T*() const;
