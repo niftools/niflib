@@ -163,6 +163,23 @@ enum PixelLayout {
 	PIX_LAY_DEFAULT = 5 /*!< Use default setting. */
 };
 
+/*!
+ * Specifies what type of light is active on the shape.
+ */
+enum VertMode {
+	VERT_MODE_SRC_IGNORE = 0, /*!< Source Ignore. */
+	VERT_MODE_SRC_EMISSIVE = 1, /*!< Source Emissive. */
+	VERT_MODE_SRC_AMB_DIF = 2, /*!< Source Ambient/Diffuse. */
+};
+
+/*!
+ * Specifies the light mode.
+ */
+enum LightMode {
+	LIGHT_MODE_EMISSIVE = 0, /*!< Emissive. */
+	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. */
+};
+
 //--IO Functions--//
 
 int BlockSearch( istream& in );
@@ -326,6 +343,16 @@ ostream & operator<<( ostream & out, MipMapFormat const & val );
 void NifStream( PixelLayout & val, istream& in, uint version = 0 );
 void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelLayout const & val );
+
+//VertMode
+void NifStream( VertMode & val, istream& in, uint version = 0 );
+void NifStream( VertMode const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, VertMode const & val );
+
+//LightMode
+void NifStream( LightMode & val, istream& in, uint version = 0 );
+void NifStream( LightMode const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, LightMode const & val );
 
 //--Templates--//
 

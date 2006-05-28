@@ -538,6 +538,29 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 	};
 }
 
+//VertMode
+void NifStream( VertMode & val, istream& in, uint version ) { val = VertMode(ReadUInt( in )); };
+void NifStream( VertMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, VertMode const & val ) {
+	switch ( val ) {
+		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
+		case VERT_MODE_SRC_EMISSIVE: return out << "VERT_MODE_SRC_EMISSIVE";
+		case VERT_MODE_SRC_AMB_DIF: return out << "VERT_MODE_SRC_AMB_DIF";
+		default: return out << "Invalid Value! - " << uint(val);
+	};
+}
+
+//LightMode
+void NifStream( LightMode & val, istream& in, uint version ) { val = LightMode(ReadUInt( in )); };
+void NifStream( LightMode const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+ostream & operator<<( ostream & out, LightMode const & val ) {
+	switch ( val ) {
+		case LIGHT_MODE_EMISSIVE: return out << "LIGHT_MODE_EMISSIVE";
+		case LIGHT_MODE_EMI_AMB_DIF: return out << "LIGHT_MODE_EMI_AMB_DIF";
+		default: return out << "Invalid Value! - " << uint(val);
+	};
+}
+
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
 string HexString( const byte * src, uint len ) {
