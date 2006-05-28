@@ -325,6 +325,10 @@ struct LODRange {
  */
 struct MatchGroup {
   /*!
+   * Number of vertices in this group.
+   */
+  ushort numVertices;
+  /*!
    * The vertex indices.
    */
   vector<ushort > vertexIndices;
@@ -939,6 +943,10 @@ struct TexSource {
  */
 struct SkinPartition {
   /*!
+   * Number of vertices in this submesh.
+   */
+  ushort numVertices;
+  /*!
    * Number of strips in this submesh (zero if not stripped).
    */
   ushort numStrips;
@@ -1133,6 +1141,10 @@ struct SkinData {
    * 4 floats may be misleading.
    */
   vector<float > unknown4Floats;
+  /*!
+   * Number of weighted vertices.
+   */
+  ushort numVertices;
   /*!
    * The vertex weights.
    */
@@ -2473,6 +2485,7 @@ if ( version >= 0x0A000100 ) { \
 
 #define TRI_BASED_GEOM_DATA_MEMBERS \
 string name; \
+ushort numVertices; \
 ushort unknownShort1; \
 bool hasVertices; \
 vector<Vector3 > vertices; \
@@ -2499,7 +2512,6 @@ Ref<NiObject > unknownLink; \
 #define TRI_BASED_GEOM_DATA_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-ushort numVertices; \
 Vector3 center; \
 float radius; \
 ushort numUvSets; \
@@ -2583,8 +2595,6 @@ if ( version >= 0x14000004 ) { \
 
 #define TRI_BASED_GEOM_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-ushort numVertices; \
-numVertices = ushort(vertices.size()); \
 Vector3 center; \
 center = Center(); \
 float radius; \
@@ -2660,8 +2670,6 @@ if ( version >= 0x14000004 ) { \
 #define TRI_BASED_GEOM_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-ushort numVertices; \
-numVertices = ushort(vertices.size()); \
 Vector3 center; \
 center = Center(); \
 float radius; \
@@ -2719,8 +2727,6 @@ return out.str(); \
 
 #define TRI_BASED_GEOM_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-ushort numVertices; \
-numVertices = ushort(vertices.size()); \
 Vector3 center; \
 center = Center(); \
 float radius; \
@@ -4394,6 +4400,7 @@ NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS \
 vector<hkTriangle > triangles; \
+uint numVertices; \
 vector<Vector3 > vertices; \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_INCLUDE "AbhkShapeCollection.h" \
@@ -4405,7 +4412,6 @@ vector<Vector3 > vertices; \
 #define HK_PACKED_NI_TRI_STRIPS_DATA_READ \
 AbhkShapeCollection::Read( in, link_stack, version ); \
 uint numTriangles; \
-uint numVertices; \
 NifStream( numTriangles, in, version ); \
 triangles.resize(numTriangles); \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
@@ -4423,8 +4429,6 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 AbhkShapeCollection::Write( out, link_map, version ); \
 uint numTriangles; \
 numTriangles = uint(triangles.size()); \
-uint numVertices; \
-numVertices = uint(vertices.size()); \
 NifStream( numTriangles, out, version ); \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
   NifStream( triangles[i0].triangle, out, version ); \
@@ -4441,8 +4445,6 @@ stringstream out; \
 out << AbhkShapeCollection::asString(); \
 uint numTriangles; \
 numTriangles = uint(triangles.size()); \
-uint numVertices; \
-numVertices = uint(vertices.size()); \
 out << "Num Triangles:  " << numTriangles << endl; \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
   out << "  Triangle:  " << triangles[i0].triangle << endl; \
@@ -4459,8 +4461,6 @@ return out.str(); \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 uint numTriangles; \
 numTriangles = uint(triangles.size()); \
-uint numVertices; \
-numVertices = uint(vertices.size()); \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
 }; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
@@ -10698,7 +10698,6 @@ if ( version >= 0x04020100 ) { \
 }; \
 boneList.resize(numBones); \
 for (uint i0 = 0; i0 < numBones; i0++) { \
-  ushort boneList_numVertices; \
   NifStream( boneList[i0].rotation, in, version ); \
   NifStream( boneList[i0].translation, in, version ); \
   NifStream( boneList[i0].scale, in, version ); \
@@ -10706,9 +10705,9 @@ for (uint i0 = 0; i0 < numBones; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
     NifStream( boneList[i0].unknown4Floats[i1], in, version ); \
   }; \
-  NifStream( boneList_numVertices, in, version ); \
-  boneList[i0].vertexWeights.resize(boneList_numVertices); \
-  for (uint i1 = 0; i1 < boneList_numVertices; i1++) { \
+  NifStream( boneList[i0].numVertices, in, version ); \
+  boneList[i0].vertexWeights.resize(boneList[i0].numVertices); \
+  for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
     NifStream( boneList[i0].vertexWeights[i1].index, in, version ); \
     NifStream( boneList[i0].vertexWeights[i1].weight, in, version ); \
   }; \
@@ -10729,16 +10728,14 @@ if ( version >= 0x04020100 ) { \
   NifStream( unknownByte, out, version ); \
 }; \
 for (uint i0 = 0; i0 < numBones; i0++) { \
-  ushort boneList_numVertices; \
-  boneList_numVertices = ushort(boneList[i0].vertexWeights.size()); \
   NifStream( boneList[i0].rotation, out, version ); \
   NifStream( boneList[i0].translation, out, version ); \
   NifStream( boneList[i0].scale, out, version ); \
   for (uint i1 = 0; i1 < 4; i1++) { \
     NifStream( boneList[i0].unknown4Floats[i1], out, version ); \
   }; \
-  NifStream( boneList_numVertices, out, version ); \
-  for (uint i1 = 0; i1 < boneList_numVertices; i1++) { \
+  NifStream( boneList[i0].numVertices, out, version ); \
+  for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
     NifStream( boneList[i0].vertexWeights[i1].index, out, version ); \
     NifStream( boneList[i0].vertexWeights[i1].weight, out, version ); \
   }; \
@@ -10756,16 +10753,14 @@ out << "Num Bones:  " << numBones << endl; \
 out << "Skin Partition:  " << skinPartition << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 for (uint i0 = 0; i0 < numBones; i0++) { \
-  ushort boneList_numVertices; \
-  boneList_numVertices = ushort(boneList[i0].vertexWeights.size()); \
   out << "  Rotation:  " << boneList[i0].rotation << endl; \
   out << "  Translation:  " << boneList[i0].translation << endl; \
   out << "  Scale:  " << boneList[i0].scale << endl; \
   for (uint i1 = 0; i1 < 4; i1++) { \
     out << "    Unknown 4 Floats[" << i1 << "]:  " << boneList[i0].unknown4Floats[i1] << endl; \
   }; \
-  out << "  Num Vertices:  " << boneList_numVertices << endl; \
-  for (uint i1 = 0; i1 < boneList_numVertices; i1++) { \
+  out << "  Num Vertices:  " << boneList[i0].numVertices << endl; \
+  for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
     out << "    Index:  " << boneList[i0].vertexWeights[i1].index << endl; \
     out << "    Weight:  " << boneList[i0].vertexWeights[i1].weight << endl; \
   }; \
@@ -10783,11 +10778,9 @@ if ( version <= 0x0A010000 ) { \
 if ( version >= 0x04020100 ) { \
 }; \
 for (uint i0 = 0; i0 < numBones; i0++) { \
-  ushort boneList_numVertices; \
-  boneList_numVertices = ushort(boneList[i0].vertexWeights.size()); \
   for (uint i1 = 0; i1 < 4; i1++) { \
   }; \
-  for (uint i1 = 0; i1 < boneList_numVertices; i1++) { \
+  for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
   }; \
 }; \
 
@@ -10888,12 +10881,11 @@ uint numSkinPartitionBlocks; \
 NifStream( numSkinPartitionBlocks, in, version ); \
 skinPartitionBlocks.resize(numSkinPartitionBlocks); \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  ushort skinPartitionBlocks_numVertices; \
   ushort skinPartitionBlocks_numTriangles; \
   ushort skinPartitionBlocks_numBones; \
   ushort skinPartitionBlocks_numWeightsPerVertex; \
   vector<ushort > skinPartitionBlocks_stripLengths; \
-  NifStream( skinPartitionBlocks_numVertices, in, version ); \
+  NifStream( skinPartitionBlocks[i0].numVertices, in, version ); \
   NifStream( skinPartitionBlocks_numTriangles, in, version ); \
   NifStream( skinPartitionBlocks_numBones, in, version ); \
   NifStream( skinPartitionBlocks[i0].numStrips, in, version ); \
@@ -10906,25 +10898,25 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     NifStream( skinPartitionBlocks[i0].hasVertexMap, in, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    skinPartitionBlocks[i0].vertexMap.resize(skinPartitionBlocks_numVertices); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    skinPartitionBlocks[i0].vertexMap.resize(skinPartitionBlocks[i0].numVertices); \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       NifStream( skinPartitionBlocks[i0].vertexMap[i2], in, version ); \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
-      skinPartitionBlocks[i0].vertexMap.resize(skinPartitionBlocks_numVertices); \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      skinPartitionBlocks[i0].vertexMap.resize(skinPartitionBlocks[i0].numVertices); \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexMap[i3], in, version ); \
       }; \
     }; \
     NifStream( skinPartitionBlocks[i0].hasVertexWeights, in, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks_numVertices); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) \
+    skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks[i0].numVertices); \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) \
       skinPartitionBlocks[i0].vertexWeights[i2].resize(skinPartitionBlocks_numWeightsPerVertex); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexWeights[i2][i3], in, version ); \
       }; \
@@ -10932,10 +10924,10 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
-      skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks_numVertices); \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) \
+      skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks[i0].numVertices); \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) \
         skinPartitionBlocks[i0].vertexWeights[i3].resize(skinPartitionBlocks_numWeightsPerVertex); \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
           NifStream( skinPartitionBlocks[i0].vertexWeights[i3][i4], in, version ); \
         }; \
@@ -10979,10 +10971,10 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   NifStream( skinPartitionBlocks[i0].hasBoneIndices, in, version ); \
   if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
-    skinPartitionBlocks[i0].boneIndices.resize(skinPartitionBlocks_numVertices); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) \
+    skinPartitionBlocks[i0].boneIndices.resize(skinPartitionBlocks[i0].numVertices); \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) \
       skinPartitionBlocks[i0].boneIndices[i2].resize(skinPartitionBlocks_numWeightsPerVertex); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].boneIndices[i2][i3], in, version ); \
       }; \
@@ -10996,8 +10988,6 @@ uint numSkinPartitionBlocks; \
 numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
 NifStream( numSkinPartitionBlocks, out, version ); \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  ushort skinPartitionBlocks_numVertices; \
-  skinPartitionBlocks_numVertices = ushort(skinPartitionBlocks[i0].vertexMap.size()); \
   ushort skinPartitionBlocks_numTriangles; \
   skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
   ushort skinPartitionBlocks_numBones; \
@@ -11008,7 +10998,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
   for (uint i1 = 0; i < skinPartitionBlocks[i0].strips.size(); i++) \
     skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
-  NifStream( skinPartitionBlocks_numVertices, out, version ); \
+  NifStream( skinPartitionBlocks[i0].numVertices, out, version ); \
   NifStream( skinPartitionBlocks_numTriangles, out, version ); \
   NifStream( skinPartitionBlocks_numBones, out, version ); \
   NifStream( skinPartitionBlocks[i0].numStrips, out, version ); \
@@ -11020,20 +11010,20 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     NifStream( skinPartitionBlocks[i0].hasVertexMap, out, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       NifStream( skinPartitionBlocks[i0].vertexMap[i2], out, version ); \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexMap[i3], out, version ); \
       }; \
     }; \
     NifStream( skinPartitionBlocks[i0].hasVertexWeights, out, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexWeights[i2][i3], out, version ); \
       }; \
@@ -11041,7 +11031,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
           NifStream( skinPartitionBlocks[i0].vertexWeights[i3][i4], out, version ); \
         }; \
@@ -11077,7 +11067,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   NifStream( skinPartitionBlocks[i0].hasBoneIndices, out, version ); \
   if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].boneIndices[i2][i3], out, version ); \
       }; \
@@ -11092,8 +11082,6 @@ uint numSkinPartitionBlocks; \
 numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
 out << "Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl; \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  ushort skinPartitionBlocks_numVertices; \
-  skinPartitionBlocks_numVertices = ushort(skinPartitionBlocks[i0].vertexMap.size()); \
   ushort skinPartitionBlocks_numTriangles; \
   skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
   ushort skinPartitionBlocks_numBones; \
@@ -11104,7 +11092,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
   for (uint i1 = 0; i < skinPartitionBlocks[i0].strips.size(); i++) \
     skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
-  out << "  Num Vertices:  " << skinPartitionBlocks_numVertices << endl; \
+  out << "  Num Vertices:  " << skinPartitionBlocks[i0].numVertices << endl; \
   out << "  Num Triangles:  " << skinPartitionBlocks_numTriangles << endl; \
   out << "  Num Bones:  " << skinPartitionBlocks_numBones << endl; \
   out << "  Num Strips:  " << skinPartitionBlocks[i0].numStrips << endl; \
@@ -11113,22 +11101,22 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     out << "    Bones[" << i1 << "]:  " << skinPartitionBlocks[i0].bones[i1] << endl; \
   }; \
   out << "  Has Vertex Map:  " << skinPartitionBlocks[i0].hasVertexMap << endl; \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numVertices; i1++) { \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
     out << "    Vertex Map[" << i1 << "]:  " << skinPartitionBlocks[i0].vertexMap[i1] << endl; \
   }; \
   if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       out << "      Vertex Map[" << i2 << "]:  " << skinPartitionBlocks[i0].vertexMap[i2] << endl; \
     }; \
   }; \
   out << "  Has Vertex Weights:  " << skinPartitionBlocks[i0].hasVertexWeights << endl; \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numVertices; i1++) { \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks_numWeightsPerVertex; i2++) { \
       out << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
     }; \
   }; \
   if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         out << "        Vertex Weights[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i2][i3] << endl; \
       }; \
@@ -11157,7 +11145,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   out << "  Has Bone Indices:  " << skinPartitionBlocks[i0].hasBoneIndices << endl; \
   if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         out << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
       }; \
@@ -11171,8 +11159,6 @@ NiObject::FixLinks( objects, link_stack, version ); \
 uint numSkinPartitionBlocks; \
 numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  ushort skinPartitionBlocks_numVertices; \
-  skinPartitionBlocks_numVertices = ushort(skinPartitionBlocks[i0].vertexMap.size()); \
   ushort skinPartitionBlocks_numTriangles; \
   skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
   ushort skinPartitionBlocks_numBones; \
@@ -11188,24 +11174,24 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version >= 0x0A010000 ) { \
   }; \
   if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
       }; \
     }; \
   }; \
   if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
       }; \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numVertices; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
         }; \
       }; \
@@ -11234,7 +11220,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numVertices; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
       }; \
     }; \
@@ -12837,10 +12823,9 @@ if ( version >= 0x0A010000 ) { \
 NifStream( numMatchGroups, in, version ); \
 matchGroups.resize(numMatchGroups); \
 for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  ushort matchGroups_numVertices; \
-  NifStream( matchGroups_numVertices, in, version ); \
-  matchGroups[i0].vertexIndices.resize(matchGroups_numVertices); \
-  for (uint i1 = 0; i1 < matchGroups_numVertices; i1++) { \
+  NifStream( matchGroups[i0].numVertices, in, version ); \
+  matchGroups[i0].vertexIndices.resize(matchGroups[i0].numVertices); \
+  for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
     NifStream( matchGroups[i0].vertexIndices[i1], in, version ); \
   }; \
 }; \
@@ -12870,10 +12855,8 @@ if ( version >= 0x0A010000 ) { \
 }; \
 NifStream( numMatchGroups, out, version ); \
 for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  ushort matchGroups_numVertices; \
-  matchGroups_numVertices = ushort(matchGroups[i0].vertexIndices.size()); \
-  NifStream( matchGroups_numVertices, out, version ); \
-  for (uint i1 = 0; i1 < matchGroups_numVertices; i1++) { \
+  NifStream( matchGroups[i0].numVertices, out, version ); \
+  for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
     NifStream( matchGroups[i0].vertexIndices[i1], out, version ); \
   }; \
 }; \
@@ -12898,10 +12881,8 @@ if ( hasTriangles != 0 ) { \
 }; \
 out << "Num Match Groups:  " << numMatchGroups << endl; \
 for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  ushort matchGroups_numVertices; \
-  matchGroups_numVertices = ushort(matchGroups[i0].vertexIndices.size()); \
-  out << "  Num Vertices:  " << matchGroups_numVertices << endl; \
-  for (uint i1 = 0; i1 < matchGroups_numVertices; i1++) { \
+  out << "  Num Vertices:  " << matchGroups[i0].numVertices << endl; \
+  for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
     out << "    Vertex Indices[" << i1 << "]:  " << matchGroups[i0].vertexIndices[i1] << endl; \
   }; \
 }; \
@@ -12926,9 +12907,7 @@ if ( version >= 0x0A010000 ) { \
   }; \
 }; \
 for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  ushort matchGroups_numVertices; \
-  matchGroups_numVertices = ushort(matchGroups[i0].vertexIndices.size()); \
-  for (uint i1 = 0; i1 < matchGroups_numVertices; i1++) { \
+  for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
   }; \
 }; \
 
@@ -13248,6 +13227,7 @@ NiProperty::FixLinks( objects, link_stack, version ); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_MEMBERS \
 uint numBytes; \
+ushort numVertices; \
 vector<float > weight; \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -13258,7 +13238,6 @@ vector<float > weight; \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-ushort numVertices; \
 NifStream( numBytes, in, version ); \
 NifStream( numVertices, in, version ); \
 weight.resize(numVertices); \
@@ -13268,8 +13247,6 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-ushort numVertices; \
-numVertices = ushort(weight.size()); \
 NifStream( numBytes, out, version ); \
 NifStream( numVertices, out, version ); \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
@@ -13279,8 +13256,6 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define NI_VERT_WEIGHTS_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-ushort numVertices; \
-numVertices = ushort(weight.size()); \
 out << "Num Bytes:  " << numBytes << endl; \
 out << "Num Vertices:  " << numVertices << endl; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
@@ -13290,8 +13265,6 @@ return out.str(); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-ushort numVertices; \
-numVertices = ushort(weight.size()); \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
 }; \
 
