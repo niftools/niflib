@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysEmitterCtlr.h"
 #include "NiPSysData.h"
+#include "AInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiPSysEmitterCtlr::TYPE("NiPSysEmitterCtlr", &NI_P_SYS_EMITTER_CTLR_PARENT::TYPE );

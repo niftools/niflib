@@ -2,6 +2,9 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSkinInstance.h"
+#include "NiSkinData.h"
+#include "NiSkinPartition.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TYPE );

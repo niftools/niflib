@@ -2,6 +2,10 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiControllerSequence.h"
+#include "AInterpolator.h"
+#include "NiStringPalette.h"
+#include "NiTextKeyExtraData.h"
+#include "NiControllerManager.h"
 
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TYPE );

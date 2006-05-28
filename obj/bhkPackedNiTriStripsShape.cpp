@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkPackedNiTriStripsShape.h"
 #include "NiTriStripsData.h"
+#include "hkPackedNiTriStripsData.h"
 
 //Definition of TYPE constant
 const Type bhkPackedNiTriStripsShape::TYPE("bhkPackedNiTriStripsShape", &BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT::TYPE );
