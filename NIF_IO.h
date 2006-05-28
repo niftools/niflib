@@ -382,9 +382,9 @@ void NifStream( Key<T> & key, istream& file, uint version, KeyType type ) {
 }
 
 template <class T> 
-void NifStream( Key<T> & key, istream& file, uint version, uint type ) {
-	NifStream( key, file, (KeyType)type );
-};
+void NifStream( Key<T> & key, istream & file, uint version, int type ) {
+	NifStream( key, file, version, (KeyType)type );
+}
 
 template <class T> 
 void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) {
@@ -410,6 +410,11 @@ void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) 
 	}
 }
 
+template <class T> 
+void NifStream( Key<T> const & key, ostream & file, uint version, int type ) {
+	NifStream( key, file, version, (KeyType)type );
+}
+
 ostream & operator<<( ostream & out, PixelLayout const & val );
 template <class T> 
 ostream & operator<<( ostream & out, Key<T> const & val ) {
@@ -421,49 +426,9 @@ ostream & operator<<( ostream & out, Key<T> const & val ) {
 			   << "Continuity:  " << val.continuity << endl;
 }
 
-template <class T> 
-void NifStream( Key<T> const & key, ostream& file, uint version, uint type ) {
-	NifStream( key, file, (KeyType)type );
-};
-
 //Key<Quaternion>
 void StreamQuatKey( Key<Quaternion> & key, istream& file, uint version, KeyType type );
 void StreamQuatKey( Key<Quaternion> const & key, ostream& file, uint version, KeyType type );
-
-//vector<T>
-//This version of NifStream allows whole vectors of data to be streamed
-//Should probably be extended to work on all STL containers
-template <class T>
-void NifStream( vector<T> & val, istream& file, uint version = 0 ) {
-	typename vector<T>::iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file, version );
-	}
-}
-
-template <class T>
-void NifStream( vector<T> const & val, ostream& file, uint version = 0 ) {
-	typename vector<T>::const_iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file, version );
-	}
-}
-
-template <class T>
-void NifStream( vector<Key<T> > & val, istream& file, uint version, uint attr_arg ) {
-	typename vector<Key<T> >::iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file, version, attr_arg );
-	}
-}
-
-template <class T>
-void NifStream( vector<Key<T> > const & val, ostream& file, uint version, uint attr_arg ) {
-	typename vector<Key<T> >::const_iterator it;
-	for ( it = val.begin(); it != val.end(); ++it ) {
-		NifStream( *it, file, version, attr_arg );
-	}
-}
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
