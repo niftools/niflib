@@ -10903,9 +10903,9 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version <= 0x0A000102 ) { \
     skinPartitionBlocks[i0].strips.resize(skinPartitionBlocks[i0].numStrips); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) \
-      skinPartitionBlocks[i0].strips[i2].resize(skinPartitionBlocks_stripLengths); \
+      skinPartitionBlocks[i0].strips[i2].resize(skinPartitionBlocks_stripLengths[i2]); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
         NifStream( skinPartitionBlocks[i0].strips[i2][i3], in, version ); \
       }; \
     }; \
@@ -10914,9 +10914,9 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       skinPartitionBlocks[i0].strips.resize(skinPartitionBlocks[i0].numStrips); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) \
-        skinPartitionBlocks[i0].strips[i3].resize(skinPartitionBlocks_stripLengths); \
+        skinPartitionBlocks[i0].strips[i3].resize(skinPartitionBlocks_stripLengths[i3]); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
           NifStream( skinPartitionBlocks[i0].strips[i3][i4], in, version ); \
         }; \
       }; \
@@ -10955,7 +10955,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
   vector<ushort > skinPartitionBlocks_stripLengths; \
   skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i < skinPartitionBlocks[i0].strips.size(); i++) \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
     skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
   NifStream( skinPartitionBlocks[i0].numVertices, out, version ); \
   NifStream( skinPartitionBlocks_numTriangles, out, version ); \
@@ -11005,7 +11005,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   if ( version <= 0x0A000102 ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
         NifStream( skinPartitionBlocks[i0].strips[i2][i3], out, version ); \
       }; \
     }; \
@@ -11013,7 +11013,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version >= 0x0A010000 ) { \
     if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
           NifStream( skinPartitionBlocks[i0].strips[i3][i4], out, version ); \
         }; \
       }; \
@@ -11049,7 +11049,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
   vector<ushort > skinPartitionBlocks_stripLengths; \
   skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i < skinPartitionBlocks[i0].strips.size(); i++) \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
     skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
   out << "  Num Vertices:  " << skinPartitionBlocks[i0].numVertices << endl; \
   out << "  Num Triangles:  " << skinPartitionBlocks_numTriangles << endl; \
@@ -11086,13 +11086,13 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   out << "  Has Strips:  " << skinPartitionBlocks[i0].hasStrips << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_stripLengths; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks_stripLengths[i1]; i2++) { \
       out << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
         out << "        Strips[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].strips[i2][i3] << endl; \
       }; \
     }; \
@@ -11126,7 +11126,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
   vector<ushort > skinPartitionBlocks_stripLengths; \
   skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i < skinPartitionBlocks[i0].strips.size(); i++) \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
     skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
   for (uint i1 = 0; i1 < skinPartitionBlocks_numBones; i1++) { \
   }; \
@@ -11162,14 +11162,14 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   if ( version <= 0x0A000102 ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
       }; \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
     if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
         }; \
       }; \
     }; \
@@ -12919,9 +12919,9 @@ if ( version >= 0x0A010000 ) { \
 if ( version <= 0x0A000102 ) { \
   points.resize(numStrips); \
   for (uint i1 = 0; i1 < numStrips; i1++) \
-    points[i1].resize(stripLengths); \
+    points[i1].resize(stripLengths[i1]); \
   for (uint i1 = 0; i1 < numStrips; i1++) { \
-    for (uint i2 = 0; i2 < stripLengths; i2++) { \
+    for (uint i2 = 0; i2 < stripLengths[i1]; i2++) { \
       NifStream( points[i1][i2], in, version ); \
     }; \
   }; \
@@ -12930,9 +12930,9 @@ if ( version >= 0x0A010000 ) { \
   if ( (hasPoints != 0) ) { \
     points.resize(numStrips); \
     for (uint i2 = 0; i2 < numStrips; i2++) \
-      points[i2].resize(stripLengths); \
+      points[i2].resize(stripLengths[i2]); \
     for (uint i2 = 0; i2 < numStrips; i2++) { \
-      for (uint i3 = 0; i3 < stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < stripLengths[i2]; i3++) { \
         NifStream( points[i2][i3], in, version ); \
       }; \
     }; \
@@ -12945,7 +12945,7 @@ ushort numStrips; \
 numStrips = ushort(stripLengths.size()); \
 vector<ushort > stripLengths; \
 stripLengths.resize(points.size()); \
-for (uint i0 = 0; i < points.size(); i++) \
+for (uint i0 = 0; i0 < points.size(); i0++) \
   stripLengths[i0] = ushort(points[i0].size()); \
 NifStream( numTriangles, out, version ); \
 NifStream( numStrips, out, version ); \
@@ -12957,7 +12957,7 @@ if ( version >= 0x0A010000 ) { \
 }; \
 if ( version <= 0x0A000102 ) { \
   for (uint i1 = 0; i1 < numStrips; i1++) { \
-    for (uint i2 = 0; i2 < stripLengths; i2++) { \
+    for (uint i2 = 0; i2 < stripLengths[i1]; i2++) { \
       NifStream( points[i1][i2], out, version ); \
     }; \
   }; \
@@ -12965,7 +12965,7 @@ if ( version <= 0x0A000102 ) { \
 if ( version >= 0x0A010000 ) { \
   if ( (hasPoints != 0) ) { \
     for (uint i2 = 0; i2 < numStrips; i2++) { \
-      for (uint i3 = 0; i3 < stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < stripLengths[i2]; i3++) { \
         NifStream( points[i2][i3], out, version ); \
       }; \
     }; \
@@ -12979,7 +12979,7 @@ ushort numStrips; \
 numStrips = ushort(stripLengths.size()); \
 vector<ushort > stripLengths; \
 stripLengths.resize(points.size()); \
-for (uint i0 = 0; i < points.size(); i++) \
+for (uint i0 = 0; i0 < points.size(); i0++) \
   stripLengths[i0] = ushort(points[i0].size()); \
 out << "Num Triangles:  " << numTriangles << endl; \
 out << "Num Strips:  " << numStrips << endl; \
@@ -12988,13 +12988,13 @@ for (uint i0 = 0; i0 < numStrips; i0++) { \
 }; \
 out << "Has Points:  " << hasPoints << endl; \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
-  for (uint i1 = 0; i1 < stripLengths; i1++) { \
+  for (uint i1 = 0; i1 < stripLengths[i0]; i1++) { \
     out << "    Points[" << i0 << "][" << i1 << "]:  " << points[i0][i1] << endl; \
   }; \
 }; \
 if ( (hasPoints != 0) ) { \
   for (uint i1 = 0; i1 < numStrips; i1++) { \
-    for (uint i2 = 0; i2 < stripLengths; i2++) { \
+    for (uint i2 = 0; i2 < stripLengths[i1]; i2++) { \
       out << "      Points[" << i1 << "][" << i2 << "]:  " << points[i1][i2] << endl; \
     }; \
   }; \
@@ -13007,7 +13007,7 @@ ushort numStrips; \
 numStrips = ushort(stripLengths.size()); \
 vector<ushort > stripLengths; \
 stripLengths.resize(points.size()); \
-for (uint i0 = 0; i < points.size(); i++) \
+for (uint i0 = 0; i0 < points.size(); i0++) \
   stripLengths[i0] = ushort(points[i0].size()); \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
 }; \
@@ -13015,14 +13015,14 @@ if ( version >= 0x0A010000 ) { \
 }; \
 if ( version <= 0x0A000102 ) { \
   for (uint i1 = 0; i1 < numStrips; i1++) { \
-    for (uint i2 = 0; i2 < stripLengths; i2++) { \
+    for (uint i2 = 0; i2 < stripLengths[i1]; i2++) { \
     }; \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
   if ( (hasPoints != 0) ) { \
     for (uint i2 = 0; i2 < numStrips; i2++) { \
-      for (uint i3 = 0; i3 < stripLengths; i3++) { \
+      for (uint i3 = 0; i3 < stripLengths[i2]; i3++) { \
       }; \
     }; \
   }; \
