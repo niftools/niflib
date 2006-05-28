@@ -1939,7 +1939,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
 }; \
 if ( version <= 0x04020200 ) { \
   NifStream( hasBoundingBox, in, version ); \
-  if ( hasBoundingBox != 0 ) { \
+  if ( (hasBoundingBox != 0) ) { \
     NifStream( boundingBox.unknownInt, in, version ); \
     NifStream( boundingBox.translation, in, version ); \
     NifStream( boundingBox.rotation, in, version ); \
@@ -1972,7 +1972,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
 }; \
 if ( version <= 0x04020200 ) { \
   NifStream( hasBoundingBox, out, version ); \
-  if ( hasBoundingBox != 0 ) { \
+  if ( (hasBoundingBox != 0) ) { \
     NifStream( boundingBox.unknownInt, out, version ); \
     NifStream( boundingBox.translation, out, version ); \
     NifStream( boundingBox.rotation, out, version ); \
@@ -2001,7 +2001,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
   out << "  Properties[" << i0 << "]:  " << properties[i0] << endl; \
 }; \
 out << "Has Bounding Box:  " << hasBoundingBox << endl; \
-if ( hasBoundingBox != 0 ) { \
+if ( (hasBoundingBox != 0) ) { \
   out << "  Unknown Int:  " << boundingBox.unknownInt << endl; \
   out << "  Translation:  " << boundingBox.translation << endl; \
   out << "  Rotation:  " << boundingBox.rotation << endl; \
@@ -2022,7 +2022,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
   link_stack.pop_front(); \
 }; \
 if ( version <= 0x04020200 ) { \
-  if ( hasBoundingBox != 0 ) { \
+  if ( (hasBoundingBox != 0) ) { \
   }; \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
@@ -2052,7 +2052,7 @@ NiAVObject::Read( in, link_stack, version ); \
 uint numAffectedNodes; \
 if ( version <= 0x04000002 ) { \
   NifStream( hasAffectedNodeList_, in, version ); \
-  if ( hasAffectedNodeList_ != 0 ) { \
+  if ( (hasAffectedNodeList_ != 0) ) { \
     NifStream( affectedNodeList_, in, version ); \
   }; \
 }; \
@@ -2074,7 +2074,7 @@ uint numAffectedNodes; \
 numAffectedNodes = uint(affectedNodes.size()); \
 if ( version <= 0x04000002 ) { \
   NifStream( hasAffectedNodeList_, out, version ); \
-  if ( hasAffectedNodeList_ != 0 ) { \
+  if ( (hasAffectedNodeList_ != 0) ) { \
     NifStream( affectedNodeList_, out, version ); \
   }; \
 }; \
@@ -2094,7 +2094,7 @@ out << NiAVObject::asString(); \
 uint numAffectedNodes; \
 numAffectedNodes = uint(affectedNodes.size()); \
 out << "Has Affected Node List?:  " << hasAffectedNodeList_ << endl; \
-if ( hasAffectedNodeList_ != 0 ) { \
+if ( (hasAffectedNodeList_ != 0) ) { \
   out << "  Affected Node List?:  " << affectedNodeList_ << endl; \
 }; \
 out << "Switch State:  " << switchState << endl; \
@@ -2109,7 +2109,7 @@ NiAVObject::FixLinks( objects, link_stack, version ); \
 uint numAffectedNodes; \
 numAffectedNodes = uint(affectedNodes.size()); \
 if ( version <= 0x04000002 ) { \
-  if ( hasAffectedNodeList_ != 0 ) { \
+  if ( (hasAffectedNodeList_ != 0) ) { \
   }; \
 }; \
 if ( version >= 0x0A020000 ) { \
@@ -2398,7 +2398,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 if ( version >= 0x0A000100 ) { \
   NifStream( hasShader, in, version ); \
-  if ( hasShader != 0 ) { \
+  if ( (hasShader != 0) ) { \
     NifStream( shaderName, in, version ); \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
@@ -2411,7 +2411,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version ); \
 if ( version >= 0x0A000100 ) { \
   NifStream( hasShader, out, version ); \
-  if ( hasShader != 0 ) { \
+  if ( (hasShader != 0) ) { \
     NifStream( shaderName, out, version ); \
     NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
   }; \
@@ -2423,7 +2423,7 @@ out << NiAVObject::asString(); \
 out << "Data:  " << data << endl; \
 out << "Skin Instance:  " << skinInstance << endl; \
 out << "Has Shader:  " << hasShader << endl; \
-if ( hasShader != 0 ) { \
+if ( (hasShader != 0) ) { \
   out << "  Shader Name:  " << shaderName << endl; \
   out << "  Unknown Link:  " << unknownLink << endl; \
 }; \
@@ -2436,7 +2436,7 @@ link_stack.pop_front(); \
 skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 if ( version >= 0x0A000100 ) { \
-  if ( hasShader != 0 ) { \
+  if ( (hasShader != 0) ) { \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
     link_stack.pop_front(); \
   }; \
@@ -2482,7 +2482,7 @@ if ( version >= 0x0A010000 ) { \
   NifStream( unknownShort1, in, version ); \
 }; \
 NifStream( hasVertices, in, version ); \
-if ( hasVertices != 0 ) { \
+if ( (hasVertices != 0) ) { \
   vertices.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( vertices[i1], in, version ); \
@@ -2493,14 +2493,14 @@ if ( version >= 0x0A000100 ) { \
   NifStream( unknownByte, in, version ); \
 }; \
 NifStream( hasNormals, in, version ); \
-if ( hasNormals != 0 ) { \
+if ( (hasNormals != 0) ) { \
   normals.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( normals[i1], in, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( (hasNormals != 0) && (unknownByte & 16) ) { \
+  if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
     unknownVectors1.resize(numVertices); \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( unknownVectors1[i2], in, version ); \
@@ -2514,7 +2514,7 @@ if ( version >= 0x0A010000 ) { \
 NifStream( center, in, version ); \
 NifStream( radius, in, version ); \
 NifStream( hasVertexColors, in, version ); \
-if ( hasVertexColors != 0 ) { \
+if ( (hasVertexColors != 0) ) { \
   vertexColors.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( vertexColors[i1], in, version ); \
@@ -2537,10 +2537,10 @@ if ( version <= 0x04020200 ) { \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  uvSets2.resize(numUvSets2 & 63); \
-  for (uint i1 = 0; i1 < numUvSets2 & 63; i1++) \
+  uvSets2.resize((numUvSets2 & 63)); \
+  for (uint i1 = 0; i1 < (numUvSets2 & 63); i1++) \
     uvSets2[i1].resize(numVertices); \
-  for (uint i1 = 0; i1 < numUvSets2 & 63; i1++) { \
+  for (uint i1 = 0; i1 < (numUvSets2 & 63); i1++) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( uvSets2[i1][i2], in, version ); \
     }; \
@@ -2568,7 +2568,7 @@ if ( version >= 0x0A010000 ) { \
   NifStream( unknownShort1, out, version ); \
 }; \
 NifStream( hasVertices, out, version ); \
-if ( hasVertices != 0 ) { \
+if ( (hasVertices != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( vertices[i1], out, version ); \
   }; \
@@ -2578,13 +2578,13 @@ if ( version >= 0x0A000100 ) { \
   NifStream( unknownByte, out, version ); \
 }; \
 NifStream( hasNormals, out, version ); \
-if ( hasNormals != 0 ) { \
+if ( (hasNormals != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( normals[i1], out, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( (hasNormals != 0) && (unknownByte & 16) ) { \
+  if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( unknownVectors1[i2], out, version ); \
     }; \
@@ -2596,7 +2596,7 @@ if ( version >= 0x0A010000 ) { \
 NifStream( center, out, version ); \
 NifStream( radius, out, version ); \
 NifStream( hasVertexColors, out, version ); \
-if ( hasVertexColors != 0 ) { \
+if ( (hasVertexColors != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( vertexColors[i1], out, version ); \
   }; \
@@ -2615,7 +2615,7 @@ if ( version <= 0x04020200 ) { \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  for (uint i1 = 0; i1 < numUvSets2 & 63; i1++) { \
+  for (uint i1 = 0; i1 < (numUvSets2 & 63); i1++) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( uvSets2[i1][i2], out, version ); \
     }; \
@@ -2639,7 +2639,7 @@ out << "Name:  " << name << endl; \
 out << "Num Vertices:  " << numVertices << endl; \
 out << "Unknown Short 1:  " << unknownShort1 << endl; \
 out << "Has Vertices:  " << hasVertices << endl; \
-if ( hasVertices != 0 ) { \
+if ( (hasVertices != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl; \
   }; \
@@ -2647,12 +2647,12 @@ if ( hasVertices != 0 ) { \
 out << "Num UV Sets 2:  " << numUvSets2 << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 out << "Has Normals:  " << hasNormals << endl; \
-if ( hasNormals != 0 ) { \
+if ( (hasNormals != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Normals[" << i1 << "]:  " << normals[i1] << endl; \
   }; \
 }; \
-if ( (hasNormals != 0) && (unknownByte & 16) ) { \
+if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl; \
   }; \
@@ -2663,7 +2663,7 @@ if ( (hasNormals != 0) && (unknownByte & 16) ) { \
 out << "Center:  " << center << endl; \
 out << "Radius:  " << radius << endl; \
 out << "Has Vertex Colors:  " << hasVertexColors << endl; \
-if ( hasVertexColors != 0 ) { \
+if ( (hasVertexColors != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Vertex Colors[" << i1 << "]:  " << vertexColors[i1] << endl; \
   }; \
@@ -2675,7 +2675,7 @@ for (uint i0 = 0; i0 < numUvSets; i0++) { \
     out << "    UV Sets[" << i0 << "][" << i1 << "]:  " << uvSets[i0][i1] << endl; \
   }; \
 }; \
-for (uint i0 = 0; i0 < numUvSets2 & 63; i0++) { \
+for (uint i0 = 0; i0 < (numUvSets2 & 63); i0++) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    UV Sets 2[" << i0 << "][" << i1 << "]:  " << uvSets2[i0][i1] << endl; \
   }; \
@@ -2696,25 +2696,25 @@ if ( version >= 0x0A020000 ) { \
 }; \
 if ( version >= 0x0A010000 ) { \
 }; \
-if ( hasVertices != 0 ) { \
+if ( (hasVertices != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
 }; \
-if ( hasNormals != 0 ) { \
+if ( (hasNormals != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( (hasNormals != 0) && (unknownByte & 16) ) { \
+  if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
     }; \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
     }; \
   }; \
 }; \
-if ( hasVertexColors != 0 ) { \
+if ( (hasVertexColors != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
@@ -2729,7 +2729,7 @@ if ( version <= 0x04020200 ) { \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
-  for (uint i1 = 0; i1 < numUvSets2 & 63; i1++) { \
+  for (uint i1 = 0; i1 < (numUvSets2 & 63); i1++) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
     }; \
   }; \
@@ -2756,7 +2756,7 @@ byte unknownByte1; \
 #define A_P_SYS_DATA_READ \
 TriBasedGeomData::Read( in, link_stack, version ); \
 NifStream( hasUnknownFloats1, in, version ); \
-if ( hasUnknownFloats1 != 0 ) { \
+if ( (hasUnknownFloats1 != 0) ) { \
   unknownFloats1.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( unknownFloats1[i1], in, version ); \
@@ -2764,7 +2764,7 @@ if ( hasUnknownFloats1 != 0 ) { \
 }; \
 NifStream( unknownShort3, in, version ); \
 NifStream( hasUnknownFloats2, in, version ); \
-if ( hasUnknownFloats2 != 0 ) { \
+if ( (hasUnknownFloats2 != 0) ) { \
   unknownFloats2.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( unknownFloats2[i1], in, version ); \
@@ -2775,14 +2775,14 @@ NifStream( unknownByte1, in, version ); \
 #define A_P_SYS_DATA_WRITE \
 TriBasedGeomData::Write( out, link_map, version ); \
 NifStream( hasUnknownFloats1, out, version ); \
-if ( hasUnknownFloats1 != 0 ) { \
+if ( (hasUnknownFloats1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( unknownFloats1[i1], out, version ); \
   }; \
 }; \
 NifStream( unknownShort3, out, version ); \
 NifStream( hasUnknownFloats2, out, version ); \
-if ( hasUnknownFloats2 != 0 ) { \
+if ( (hasUnknownFloats2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( unknownFloats2[i1], out, version ); \
   }; \
@@ -2793,14 +2793,14 @@ NifStream( unknownByte1, out, version ); \
 stringstream out; \
 out << TriBasedGeomData::asString(); \
 out << "Has Unknown Floats 1:  " << hasUnknownFloats1 << endl; \
-if ( hasUnknownFloats1 != 0 ) { \
+if ( (hasUnknownFloats1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl; \
   }; \
 }; \
 out << "Unknown Short 3:  " << unknownShort3 << endl; \
 out << "Has Unknown Floats 2:  " << hasUnknownFloats2 << endl; \
-if ( hasUnknownFloats2 != 0 ) { \
+if ( (hasUnknownFloats2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl; \
   }; \
@@ -2810,11 +2810,11 @@ return out.str(); \
 
 #define A_P_SYS_DATA_FIXLINKS \
 TriBasedGeomData::FixLinks( objects, link_stack, version ); \
-if ( hasUnknownFloats1 != 0 ) { \
+if ( (hasUnknownFloats1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
-if ( hasUnknownFloats2 != 0 ) { \
+if ( (hasUnknownFloats2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
@@ -3286,7 +3286,7 @@ for (uint i0 = 0; i0 < 7; i0++) { \
   }; \
 }; \
 NifStream( unknownFloat1, in, version ); \
-if ( type == 2 ) { \
+if ( (type == 2) ) { \
   NifStream( unknownFloat2, in, version ); \
 }; \
 
@@ -3306,7 +3306,7 @@ for (uint i0 = 0; i0 < 7; i0++) { \
   }; \
 }; \
 NifStream( unknownFloat1, out, version ); \
-if ( type == 2 ) { \
+if ( (type == 2) ) { \
   NifStream( unknownFloat2, out, version ); \
 }; \
 
@@ -3327,7 +3327,7 @@ for (uint i0 = 0; i0 < 7; i0++) { \
   }; \
 }; \
 out << "Unknown Float 1:  " << unknownFloat1 << endl; \
-if ( type == 2 ) { \
+if ( (type == 2) ) { \
   out << "  Unknown Float 2:  " << unknownFloat2 << endl; \
 }; \
 return out.str(); \
@@ -3344,7 +3344,7 @@ for (uint i0 = 0; i0 < 7; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
   }; \
 }; \
-if ( type == 2 ) { \
+if ( (type == 2) ) { \
 }; \
 
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
@@ -4543,7 +4543,7 @@ if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
   NifStream( unknownShort, in, version ); \
 }; \
 NifStream( hasSizes, in, version ); \
-if ( hasSizes != 0 ) { \
+if ( (hasSizes != 0) ) { \
   sizes.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( sizes[i1], in, version ); \
@@ -4565,7 +4565,7 @@ if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
   NifStream( unknownShort, out, version ); \
 }; \
 NifStream( hasSizes, out, version ); \
-if ( hasSizes != 0 ) { \
+if ( (hasSizes != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( sizes[i1], out, version ); \
   }; \
@@ -4579,7 +4579,7 @@ out << "Size:  " << size << endl; \
 out << "Num Active:  " << numActive << endl; \
 out << "Unknown Short:  " << unknownShort << endl; \
 out << "Has Sizes:  " << hasSizes << endl; \
-if ( hasSizes != 0 ) { \
+if ( (hasSizes != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Sizes[" << i1 << "]:  " << sizes[i1] << endl; \
   }; \
@@ -4596,7 +4596,7 @@ if ( version <= 0x04000002 ) { \
 }; \
 if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
 }; \
-if ( hasSizes != 0 ) { \
+if ( (hasSizes != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
@@ -4867,7 +4867,7 @@ KeyGroup<byte > data; \
 #define NI_BOOL_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
 NifStream( data.numKeys, in, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, in, version ); \
 }; \
 data.keys.resize(data.numKeys); \
@@ -4878,7 +4878,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 #define NI_BOOL_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
 NifStream( data.numKeys, out, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -4889,7 +4889,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Keys:  " << data.numKeys << endl; \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -4899,7 +4899,7 @@ return out.str(); \
 
 #define NI_BOOL_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 }; \
@@ -5372,17 +5372,17 @@ link_stack.push_back( block_num ); \
 NifStream( unknown2, in, version ); \
 NifStream( unknown3, in, version ); \
 NifStream( collisionType, in, version ); \
-if ( collisionType == 0 ) { \
+if ( (collisionType == 0) ) { \
   NifStream( unknown5, in, version ); \
   NifStream( unknown7, in, version ); \
 }; \
-if ( collisionType == 2 ) { \
+if ( (collisionType == 2) ) { \
   unknown6.resize(8); \
   for (uint i1 = 0; i1 < 8; i1++) { \
     NifStream( unknown6[i1], in, version ); \
   }; \
 }; \
-if ( collisionType == 1 ) { \
+if ( (collisionType == 1) ) { \
   unknown8.resize(15); \
   for (uint i1 = 0; i1 < 15; i1++) { \
     NifStream( unknown8[i1], in, version ); \
@@ -5395,16 +5395,16 @@ NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version ); \
 NifStream( unknown2, out, version ); \
 NifStream( unknown3, out, version ); \
 NifStream( collisionType, out, version ); \
-if ( collisionType == 0 ) { \
+if ( (collisionType == 0) ) { \
   NifStream( unknown5, out, version ); \
   NifStream( unknown7, out, version ); \
 }; \
-if ( collisionType == 2 ) { \
+if ( (collisionType == 2) ) { \
   for (uint i1 = 0; i1 < 8; i1++) { \
     NifStream( unknown6[i1], out, version ); \
   }; \
 }; \
-if ( collisionType == 1 ) { \
+if ( (collisionType == 1) ) { \
   for (uint i1 = 0; i1 < 15; i1++) { \
     NifStream( unknown8[i1], out, version ); \
   }; \
@@ -5417,16 +5417,16 @@ out << "Target Node:  " << targetNode << endl; \
 out << "Unknown2:  " << unknown2 << endl; \
 out << "Unknown3:  " << unknown3 << endl; \
 out << "Collision Type:  " << collisionType << endl; \
-if ( collisionType == 0 ) { \
+if ( (collisionType == 0) ) { \
   out << "  Unknown5:  " << unknown5 << endl; \
   out << "  Unknown7:  " << unknown7 << endl; \
 }; \
-if ( collisionType == 2 ) { \
+if ( (collisionType == 2) ) { \
   for (uint i1 = 0; i1 < 8; i1++) { \
     out << "    Unknown6[" << i1 << "]:  " << unknown6[i1] << endl; \
   }; \
 }; \
-if ( collisionType == 1 ) { \
+if ( (collisionType == 1) ) { \
   for (uint i1 = 0; i1 < 15; i1++) { \
     out << "    Unknown8[" << i1 << "]:  " << unknown8[i1] << endl; \
   }; \
@@ -5437,13 +5437,13 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 targetNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
-if ( collisionType == 0 ) { \
+if ( (collisionType == 0) ) { \
 }; \
-if ( collisionType == 2 ) { \
+if ( (collisionType == 2) ) { \
   for (uint i1 = 0; i1 < 8; i1++) { \
   }; \
 }; \
-if ( collisionType == 1 ) { \
+if ( (collisionType == 1) ) { \
   for (uint i1 = 0; i1 < 15; i1++) { \
   }; \
 }; \
@@ -5460,7 +5460,7 @@ KeyGroup<Color4 > data; \
 #define NI_COLOR_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
 NifStream( data.numKeys, in, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, in, version ); \
 }; \
 data.keys.resize(data.numKeys); \
@@ -5471,7 +5471,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 #define NI_COLOR_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
 NifStream( data.numKeys, out, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -5482,7 +5482,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Keys:  " << data.numKeys << endl; \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -5492,7 +5492,7 @@ return out.str(); \
 
 #define NI_COLOR_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 }; \
@@ -6242,7 +6242,7 @@ KeyGroup<float > data; \
 #define NI_FLOAT_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
 NifStream( data.numKeys, in, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, in, version ); \
 }; \
 data.keys.resize(data.numKeys); \
@@ -6253,7 +6253,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 #define NI_FLOAT_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
 NifStream( data.numKeys, out, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -6264,7 +6264,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Keys:  " << data.numKeys << endl; \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -6274,7 +6274,7 @@ return out.str(); \
 
 #define NI_FLOAT_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 }; \
@@ -6764,25 +6764,25 @@ KeyGroup<float > scales; \
 #define NI_KEYFRAME_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
 NifStream( numRotationKeys, in, version ); \
-if ( numRotationKeys != 0 ) { \
+if ( (numRotationKeys != 0) ) { \
   NifStream( rotationType, in, version ); \
 }; \
-if ( rotationType != 4 ) { \
+if ( (rotationType != 4) ) { \
   quaternionKeys.resize(numRotationKeys); \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
     NifStream( quaternionKeys[i1], in, version, rotationType ); \
   }; \
 }; \
 if ( version <= 0x0A010000 ) { \
-  if ( rotationType == 4 ) { \
+  if ( (rotationType == 4) ) { \
     NifStream( unknownFloat, in, version ); \
   }; \
 }; \
-if ( rotationType == 4 ) { \
+if ( (rotationType == 4) ) { \
   xyzRotations.resize(3); \
   for (uint i1 = 0; i1 < 3; i1++) { \
     NifStream( xyzRotations[i1].numKeys, in, version ); \
-    if ( xyzRotations[i1].numKeys != 0 ) { \
+    if ( (xyzRotations[i1].numKeys != 0) ) { \
       NifStream( xyzRotations[i1].interpolation, in, version ); \
     }; \
     xyzRotations[i1].keys.resize(xyzRotations[i1].numKeys); \
@@ -6792,7 +6792,7 @@ if ( rotationType == 4 ) { \
   }; \
 }; \
 NifStream( translations.numKeys, in, version ); \
-if ( translations.numKeys != 0 ) { \
+if ( (translations.numKeys != 0) ) { \
   NifStream( translations.interpolation, in, version ); \
 }; \
 translations.keys.resize(translations.numKeys); \
@@ -6800,7 +6800,7 @@ for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
   NifStream( translations.keys[i0], in, version, translations.interpolation ); \
 }; \
 NifStream( scales.numKeys, in, version ); \
-if ( scales.numKeys != 0 ) { \
+if ( (scales.numKeys != 0) ) { \
   NifStream( scales.interpolation, in, version ); \
 }; \
 scales.keys.resize(scales.numKeys); \
@@ -6811,23 +6811,23 @@ for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
 #define NI_KEYFRAME_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
 NifStream( numRotationKeys, out, version ); \
-if ( numRotationKeys != 0 ) { \
+if ( (numRotationKeys != 0) ) { \
   NifStream( rotationType, out, version ); \
 }; \
-if ( rotationType != 4 ) { \
+if ( (rotationType != 4) ) { \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
     NifStream( quaternionKeys[i1], out, version, rotationType ); \
   }; \
 }; \
 if ( version <= 0x0A010000 ) { \
-  if ( rotationType == 4 ) { \
+  if ( (rotationType == 4) ) { \
     NifStream( unknownFloat, out, version ); \
   }; \
 }; \
-if ( rotationType == 4 ) { \
+if ( (rotationType == 4) ) { \
   for (uint i1 = 0; i1 < 3; i1++) { \
     NifStream( xyzRotations[i1].numKeys, out, version ); \
-    if ( xyzRotations[i1].numKeys != 0 ) { \
+    if ( (xyzRotations[i1].numKeys != 0) ) { \
       NifStream( xyzRotations[i1].interpolation, out, version ); \
     }; \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
@@ -6836,14 +6836,14 @@ if ( rotationType == 4 ) { \
   }; \
 }; \
 NifStream( translations.numKeys, out, version ); \
-if ( translations.numKeys != 0 ) { \
+if ( (translations.numKeys != 0) ) { \
   NifStream( translations.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
   NifStream( translations.keys[i0], out, version, translations.interpolation ); \
 }; \
 NifStream( scales.numKeys, out, version ); \
-if ( scales.numKeys != 0 ) { \
+if ( (scales.numKeys != 0) ) { \
   NifStream( scales.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
@@ -6854,19 +6854,19 @@ for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
 stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Rotation Keys:  " << numRotationKeys << endl; \
-if ( numRotationKeys != 0 ) { \
+if ( (numRotationKeys != 0) ) { \
   out << "  Rotation Type:  " << rotationType << endl; \
 }; \
-if ( rotationType != 4 ) { \
+if ( (rotationType != 4) ) { \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
     out << "    Quaternion Keys[" << i1 << "]:  " << quaternionKeys[i1] << endl; \
   }; \
 }; \
-if ( rotationType == 4 ) { \
+if ( (rotationType == 4) ) { \
   out << "  Unknown Float:  " << unknownFloat << endl; \
   for (uint i1 = 0; i1 < 3; i1++) { \
     out << "    Num Keys:  " << xyzRotations[i1].numKeys << endl; \
-    if ( xyzRotations[i1].numKeys != 0 ) { \
+    if ( (xyzRotations[i1].numKeys != 0) ) { \
       out << "      Interpolation:  " << xyzRotations[i1].interpolation << endl; \
     }; \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
@@ -6875,14 +6875,14 @@ if ( rotationType == 4 ) { \
   }; \
 }; \
 out << "Num Keys:  " << translations.numKeys << endl; \
-if ( translations.numKeys != 0 ) { \
+if ( (translations.numKeys != 0) ) { \
   out << "  Interpolation:  " << translations.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
   out << "  Keys[" << i0 << "]:  " << translations.keys[i0] << endl; \
 }; \
 out << "Num Keys:  " << scales.numKeys << endl; \
-if ( scales.numKeys != 0 ) { \
+if ( (scales.numKeys != 0) ) { \
   out << "  Interpolation:  " << scales.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
@@ -6892,29 +6892,29 @@ return out.str(); \
 
 #define NI_KEYFRAME_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( numRotationKeys != 0 ) { \
+if ( (numRotationKeys != 0) ) { \
 }; \
-if ( rotationType != 4 ) { \
+if ( (rotationType != 4) ) { \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
   }; \
 }; \
 if ( version <= 0x0A010000 ) { \
-  if ( rotationType == 4 ) { \
+  if ( (rotationType == 4) ) { \
   }; \
 }; \
-if ( rotationType == 4 ) { \
+if ( (rotationType == 4) ) { \
   for (uint i1 = 0; i1 < 3; i1++) { \
-    if ( xyzRotations[i1].numKeys != 0 ) { \
+    if ( (xyzRotations[i1].numKeys != 0) ) { \
     }; \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
     }; \
   }; \
 }; \
-if ( translations.numKeys != 0 ) { \
+if ( (translations.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
 }; \
-if ( scales.numKeys != 0 ) { \
+if ( (scales.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
 }; \
@@ -7903,7 +7903,7 @@ uint block_num; \
 NiNode::Read( in, link_stack, version ); \
 uint numLodLevels; \
 NifStream( lodType, in, version ); \
-if ( lodType == 0 ) { \
+if ( (lodType == 0) ) { \
   NifStream( lodCenter, in, version ); \
   NifStream( numLodLevels, in, version ); \
   lodLevels.resize(numLodLevels); \
@@ -7912,7 +7912,7 @@ if ( lodType == 0 ) { \
     NifStream( lodLevels[i1].far, in, version ); \
   }; \
 }; \
-if ( lodType == 1 ) { \
+if ( (lodType == 1) ) { \
   NifStream( unknownShort, in, version ); \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
@@ -7923,7 +7923,7 @@ NiNode::Write( out, link_map, version ); \
 uint numLodLevels; \
 numLodLevels = uint(lodLevels.size()); \
 NifStream( lodType, out, version ); \
-if ( lodType == 0 ) { \
+if ( (lodType == 0) ) { \
   NifStream( lodCenter, out, version ); \
   NifStream( numLodLevels, out, version ); \
   for (uint i1 = 0; i1 < numLodLevels; i1++) { \
@@ -7931,7 +7931,7 @@ if ( lodType == 0 ) { \
     NifStream( lodLevels[i1].far, out, version ); \
   }; \
 }; \
-if ( lodType == 1 ) { \
+if ( (lodType == 1) ) { \
   NifStream( unknownShort, out, version ); \
   NifStream( link_map[StaticCast<NiObject>(rangeData)], out, version ); \
 }; \
@@ -7942,7 +7942,7 @@ out << NiNode::asString(); \
 uint numLodLevels; \
 numLodLevels = uint(lodLevels.size()); \
 out << "LOD Type:  " << lodType << endl; \
-if ( lodType == 0 ) { \
+if ( (lodType == 0) ) { \
   out << "  LOD Center:  " << lodCenter << endl; \
   out << "  Num LOD Levels:  " << numLodLevels << endl; \
   for (uint i1 = 0; i1 < numLodLevels; i1++) { \
@@ -7950,7 +7950,7 @@ if ( lodType == 0 ) { \
     out << "    Far:  " << lodLevels[i1].far << endl; \
   }; \
 }; \
-if ( lodType == 1 ) { \
+if ( (lodType == 1) ) { \
   out << "  Unknown Short:  " << unknownShort << endl; \
   out << "  Range Data:  " << rangeData << endl; \
 }; \
@@ -7960,11 +7960,11 @@ return out.str(); \
 NiNode::FixLinks( objects, link_stack, version ); \
 uint numLodLevels; \
 numLodLevels = uint(lodLevels.size()); \
-if ( lodType == 0 ) { \
+if ( (lodType == 0) ) { \
   for (uint i1 = 0; i1 < numLodLevels; i1++) { \
   }; \
 }; \
-if ( lodType == 1 ) { \
+if ( (lodType == 1) ) { \
   rangeData = DynamicCast<NiRangeLODData>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
@@ -8312,7 +8312,7 @@ NiAutoNormalParticlesData::Read( in, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   NifStream( numActive, in, version ); \
   NifStream( hasUnknownFloats, in, version ); \
-  if ( hasUnknownFloats != 0 ) { \
+  if ( (hasUnknownFloats != 0) ) { \
     unknownFloats.resize(numVertices); \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( unknownFloats[i2], in, version ); \
@@ -8320,7 +8320,7 @@ if ( version >= 0x0A010000 ) { \
   }; \
 }; \
 NifStream( hasRotations, in, version ); \
-if ( hasRotations != 0 ) { \
+if ( (hasRotations != 0) ) { \
   rotations.resize(numVertices); \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( rotations[i1], in, version ); \
@@ -8332,14 +8332,14 @@ NiAutoNormalParticlesData::Write( out, link_map, version ); \
 if ( version >= 0x0A010000 ) { \
   NifStream( numActive, out, version ); \
   NifStream( hasUnknownFloats, out, version ); \
-  if ( hasUnknownFloats != 0 ) { \
+  if ( (hasUnknownFloats != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       NifStream( unknownFloats[i2], out, version ); \
     }; \
   }; \
 }; \
 NifStream( hasRotations, out, version ); \
-if ( hasRotations != 0 ) { \
+if ( (hasRotations != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( rotations[i1], out, version ); \
   }; \
@@ -8350,13 +8350,13 @@ stringstream out; \
 out << NiAutoNormalParticlesData::asString(); \
 out << "Num Active:  " << numActive << endl; \
 out << "Has Unknown Floats:  " << hasUnknownFloats << endl; \
-if ( hasUnknownFloats != 0 ) { \
+if ( (hasUnknownFloats != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl; \
   }; \
 }; \
 out << "Has Rotations:  " << hasRotations << endl; \
-if ( hasRotations != 0 ) { \
+if ( (hasRotations != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Rotations[" << i1 << "]:  " << rotations[i1] << endl; \
   }; \
@@ -8366,12 +8366,12 @@ return out.str(); \
 #define NI_PARTICLES_DATA_FIXLINKS \
 NiAutoNormalParticlesData::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
-  if ( hasUnknownFloats != 0 ) { \
+  if ( (hasUnknownFloats != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
     }; \
   }; \
 }; \
-if ( hasRotations != 0 ) { \
+if ( (hasRotations != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
@@ -9182,7 +9182,7 @@ KeyGroup<Vector3 > data; \
 #define NI_POS_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
 NifStream( data.numKeys, in, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, in, version ); \
 }; \
 data.keys.resize(data.numKeys); \
@@ -9193,7 +9193,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 #define NI_POS_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
 NifStream( data.numKeys, out, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -9204,7 +9204,7 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Keys:  " << data.numKeys << endl; \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
   out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
@@ -9214,7 +9214,7 @@ return out.str(); \
 
 #define NI_POS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( data.numKeys != 0 ) { \
+if ( (data.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 }; \
@@ -9502,7 +9502,7 @@ if ( version <= 0x0A020000 ) { \
 }; \
 if ( version >= 0x14000004 ) { \
   NifStream( unknownBool1, in, version ); \
-  if ( unknownBool1 != 0 ) { \
+  if ( (unknownBool1 != 0) ) { \
     unknownBytes.resize(numVertices); \
     for (uint i2 = 0; i2 < numVertices; i2++) \
       unknownBytes[i2].resize(32); \
@@ -9512,7 +9512,7 @@ if ( version >= 0x14000004 ) { \
       }; \
     }; \
   }; \
-  if ( unknownBool1 == 0 ) { \
+  if ( (unknownBool1 == 0) ) { \
     unknownBytesAlt.resize(numVertices); \
     for (uint i2 = 0; i2 < numVertices; i2++) \
       unknownBytesAlt[i2].resize(28); \
@@ -9524,7 +9524,7 @@ if ( version >= 0x14000004 ) { \
   }; \
   NifStream( unknownByte3, in, version ); \
   NifStream( unknownBool2, in, version ); \
-  if ( unknownBool2 != 0 ) { \
+  if ( (unknownBool2 != 0) ) { \
     unknownBytes2.resize(numVertices); \
     for (uint i2 = 0; i2 < numVertices; i2++) \
       unknownBytes2[i2].resize(4); \
@@ -9548,14 +9548,14 @@ if ( version <= 0x0A020000 ) { \
 }; \
 if ( version >= 0x14000004 ) { \
   NifStream( unknownBool1, out, version ); \
-  if ( unknownBool1 != 0 ) { \
+  if ( (unknownBool1 != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 32; i3++) { \
         NifStream( unknownBytes[i2][i3], out, version ); \
       }; \
     }; \
   }; \
-  if ( unknownBool1 == 0 ) { \
+  if ( (unknownBool1 == 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 28; i3++) { \
         NifStream( unknownBytesAlt[i2][i3], out, version ); \
@@ -9564,7 +9564,7 @@ if ( version >= 0x14000004 ) { \
   }; \
   NifStream( unknownByte3, out, version ); \
   NifStream( unknownBool2, out, version ); \
-  if ( unknownBool2 != 0 ) { \
+  if ( (unknownBool2 != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 4; i3++) { \
         NifStream( unknownBytes2[i2][i3], out, version ); \
@@ -9583,14 +9583,14 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
   }; \
 }; \
 out << "Unknown Bool 1:  " << unknownBool1 << endl; \
-if ( unknownBool1 != 0 ) { \
+if ( (unknownBool1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 32; i2++) { \
       out << "      Unknown Bytes[" << i1 << "][" << i2 << "]:  " << unknownBytes[i1][i2] << endl; \
     }; \
   }; \
 }; \
-if ( unknownBool1 == 0 ) { \
+if ( (unknownBool1 == 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 28; i2++) { \
       out << "      Unknown Bytes Alt[" << i1 << "][" << i2 << "]:  " << unknownBytesAlt[i1][i2] << endl; \
@@ -9599,7 +9599,7 @@ if ( unknownBool1 == 0 ) { \
 }; \
 out << "Unknown Byte 3:  " << unknownByte3 << endl; \
 out << "Unknown Bool 2:  " << unknownBool2 << endl; \
-if ( unknownBool2 != 0 ) { \
+if ( (unknownBool2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 4; i2++) { \
       out << "      Unknown Bytes 2[" << i1 << "][" << i2 << "]:  " << unknownBytes2[i1][i2] << endl; \
@@ -9618,19 +9618,19 @@ if ( version <= 0x0A020000 ) { \
   }; \
 }; \
 if ( version >= 0x14000004 ) { \
-  if ( unknownBool1 != 0 ) { \
+  if ( (unknownBool1 != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 32; i3++) { \
       }; \
     }; \
   }; \
-  if ( unknownBool1 == 0 ) { \
+  if ( (unknownBool1 == 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 28; i3++) { \
       }; \
     }; \
   }; \
-  if ( unknownBool2 != 0 ) { \
+  if ( (unknownBool2 != 0) ) { \
     for (uint i2 = 0; i2 < numVertices; i2++) { \
       for (uint i3 = 0; i3 < 4; i3++) { \
       }; \
@@ -9728,7 +9728,7 @@ vector<Key<byte > > visibilityKeys_; \
 NiObject::Read( in, link_stack, version ); \
 uint numVisibilityKeys_; \
 NifStream( floatKeys_.numKeys, in, version ); \
-if ( floatKeys_.numKeys != 0 ) { \
+if ( (floatKeys_.numKeys != 0) ) { \
   NifStream( floatKeys_.interpolation, in, version ); \
 }; \
 floatKeys_.keys.resize(floatKeys_.numKeys); \
@@ -9746,7 +9746,7 @@ NiObject::Write( out, link_map, version ); \
 uint numVisibilityKeys_; \
 numVisibilityKeys_ = uint(visibilityKeys_.size()); \
 NifStream( floatKeys_.numKeys, out, version ); \
-if ( floatKeys_.numKeys != 0 ) { \
+if ( (floatKeys_.numKeys != 0) ) { \
   NifStream( floatKeys_.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
@@ -9763,7 +9763,7 @@ out << NiObject::asString(); \
 uint numVisibilityKeys_; \
 numVisibilityKeys_ = uint(visibilityKeys_.size()); \
 out << "Num Keys:  " << floatKeys_.numKeys << endl; \
-if ( floatKeys_.numKeys != 0 ) { \
+if ( (floatKeys_.numKeys != 0) ) { \
   out << "  Interpolation:  " << floatKeys_.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
@@ -9779,7 +9779,7 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 uint numVisibilityKeys_; \
 numVisibilityKeys_ = uint(visibilityKeys_.size()); \
-if ( floatKeys_.numKeys != 0 ) { \
+if ( (floatKeys_.numKeys != 0) ) { \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
 }; \
@@ -10863,7 +10863,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexMap != 0) ) { \
       skinPartitionBlocks[i0].vertexMap.resize(skinPartitionBlocks[i0].numVertices); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexMap[i3], in, version ); \
@@ -10882,7 +10882,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
       skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks[i0].numVertices); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) \
         skinPartitionBlocks[i0].vertexWeights[i3].resize(skinPartitionBlocks_numWeightsPerVertex); \
@@ -10911,7 +10911,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasStrips != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       skinPartitionBlocks[i0].strips.resize(skinPartitionBlocks[i0].numStrips); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) \
         skinPartitionBlocks[i0].strips[i3].resize(skinPartitionBlocks_stripLengths); \
@@ -10922,14 +10922,14 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
       }; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].numStrips == 0 ) { \
+  if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
     skinPartitionBlocks[i0].triangles.resize(skinPartitionBlocks_numTriangles); \
     for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
       NifStream( skinPartitionBlocks[i0].triangles[i2], in, version ); \
     }; \
   }; \
   NifStream( skinPartitionBlocks[i0].hasBoneIndices, in, version ); \
-  if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     skinPartitionBlocks[i0].boneIndices.resize(skinPartitionBlocks[i0].numVertices); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) \
       skinPartitionBlocks[i0].boneIndices[i2].resize(skinPartitionBlocks_numWeightsPerVertex); \
@@ -10974,7 +10974,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexMap != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexMap[i3], out, version ); \
       }; \
@@ -10989,7 +10989,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
           NifStream( skinPartitionBlocks[i0].vertexWeights[i3][i4], out, version ); \
@@ -11011,7 +11011,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasStrips != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths; i4++) { \
           NifStream( skinPartitionBlocks[i0].strips[i3][i4], out, version ); \
@@ -11019,13 +11019,13 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
       }; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].numStrips == 0 ) { \
+  if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
       NifStream( skinPartitionBlocks[i0].triangles[i2], out, version ); \
     }; \
   }; \
   NifStream( skinPartitionBlocks[i0].hasBoneIndices, out, version ); \
-  if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].boneIndices[i2][i3], out, version ); \
@@ -11063,7 +11063,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
     out << "    Vertex Map[" << i1 << "]:  " << skinPartitionBlocks[i0].vertexMap[i1] << endl; \
   }; \
-  if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasVertexMap != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       out << "      Vertex Map[" << i2 << "]:  " << skinPartitionBlocks[i0].vertexMap[i2] << endl; \
     }; \
@@ -11074,7 +11074,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
       out << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         out << "        Vertex Weights[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i2][i3] << endl; \
@@ -11090,20 +11090,20 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
       out << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].hasStrips != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths; i3++) { \
         out << "        Strips[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].strips[i2][i3] << endl; \
       }; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].numStrips == 0 ) { \
+  if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
       out << "      Triangles[" << i2 << "]:  " << skinPartitionBlocks[i0].triangles[i2] << endl; \
     }; \
   }; \
   out << "  Has Bone Indices:  " << skinPartitionBlocks[i0].hasBoneIndices << endl; \
-  if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
         out << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
@@ -11137,7 +11137,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexMap != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexMap != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
       }; \
     }; \
@@ -11149,7 +11149,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasVertexWeights != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
         }; \
@@ -11167,18 +11167,18 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     }; \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( skinPartitionBlocks[i0].hasStrips != 0 ) { \
+    if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
         for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths; i4++) { \
         }; \
       }; \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].numStrips == 0 ) { \
+  if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
     }; \
   }; \
-  if ( skinPartitionBlocks[i0].hasBoneIndices != 0 ) { \
+  if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
       }; \
@@ -11209,26 +11209,26 @@ byte unknownByte2; \
 uint block_num; \
 NiObjectNET::Read( in, link_stack, version ); \
 NifStream( useExternal, in, version ); \
-if ( useExternal == 1 ) { \
+if ( (useExternal == 1) ) { \
   NifStream( fileName, in, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 1 ) { \
+  if ( (useExternal == 1) ) { \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
     NifStream( unknownByte, in, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
     NifStream( originalFileName_, in, version ); \
   }; \
 }; \
-if ( useExternal == 0 ) { \
+if ( (useExternal == 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
@@ -11243,25 +11243,25 @@ if ( version >= 0x0A01006A ) { \
 #define NI_SOURCE_TEXTURE_WRITE \
 NiObjectNET::Write( out, link_map, version ); \
 NifStream( useExternal, out, version ); \
-if ( useExternal == 1 ) { \
+if ( (useExternal == 1) ) { \
   NifStream( fileName, out, version ); \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 1 ) { \
+  if ( (useExternal == 1) ) { \
     NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
     NifStream( unknownByte, out, version ); \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
     NifStream( originalFileName_, out, version ); \
   }; \
 }; \
-if ( useExternal == 0 ) { \
+if ( (useExternal == 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(pixelData)], out, version ); \
 }; \
 NifStream( pixelLayout, out, version ); \
@@ -11276,11 +11276,11 @@ if ( version >= 0x0A01006A ) { \
 stringstream out; \
 out << NiObjectNET::asString(); \
 out << "Use External:  " << useExternal << endl; \
-if ( useExternal == 1 ) { \
+if ( (useExternal == 1) ) { \
   out << "  File Name:  " << fileName << endl; \
   out << "  Unknown Link:  " << unknownLink << endl; \
 }; \
-if ( useExternal == 0 ) { \
+if ( (useExternal == 0) ) { \
   out << "  Unknown Byte:  " << unknownByte << endl; \
   out << "  Original File Name?:  " << originalFileName_ << endl; \
   out << "  Pixel Data:  " << pixelData << endl; \
@@ -11294,23 +11294,23 @@ return out.str(); \
 
 #define NI_SOURCE_TEXTURE_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
-if ( useExternal == 1 ) { \
+if ( (useExternal == 1) ) { \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 1 ) { \
+  if ( (useExternal == 1) ) { \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
     link_stack.pop_front(); \
   }; \
 }; \
 if ( version <= 0x0A000100 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( useExternal == 0 ) { \
+  if ( (useExternal == 0) ) { \
   }; \
 }; \
-if ( useExternal == 0 ) { \
+if ( (useExternal == 0) ) { \
   pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
@@ -11835,7 +11835,7 @@ if ( version <= 0x0A000102 ) { \
 NifStream( applyMode, in, version ); \
 NifStream( textureCount, in, version ); \
 NifStream( hasBaseTexture, in, version ); \
-if ( hasBaseTexture != 0 ) { \
+if ( (hasBaseTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( baseTexture.clampMode, in, version ); \
@@ -11850,7 +11850,7 @@ if ( hasBaseTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( baseTexture.hasTextureTransform, in, version ); \
-    if ( baseTexture.hasTextureTransform != 0 ) { \
+    if ( (baseTexture.hasTextureTransform != 0) ) { \
       NifStream( baseTexture.translation, in, version ); \
       NifStream( baseTexture.tiling, in, version ); \
       NifStream( baseTexture.wRotation, in, version ); \
@@ -11860,7 +11860,7 @@ if ( hasBaseTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasDarkTexture, in, version ); \
-if ( hasDarkTexture != 0 ) { \
+if ( (hasDarkTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( darkTexture.clampMode, in, version ); \
@@ -11875,7 +11875,7 @@ if ( hasDarkTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( darkTexture.hasTextureTransform, in, version ); \
-    if ( darkTexture.hasTextureTransform != 0 ) { \
+    if ( (darkTexture.hasTextureTransform != 0) ) { \
       NifStream( darkTexture.translation, in, version ); \
       NifStream( darkTexture.tiling, in, version ); \
       NifStream( darkTexture.wRotation, in, version ); \
@@ -11885,7 +11885,7 @@ if ( hasDarkTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasDetailTexture, in, version ); \
-if ( hasDetailTexture != 0 ) { \
+if ( (hasDetailTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( detailTexture.clampMode, in, version ); \
@@ -11900,7 +11900,7 @@ if ( hasDetailTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( detailTexture.hasTextureTransform, in, version ); \
-    if ( detailTexture.hasTextureTransform != 0 ) { \
+    if ( (detailTexture.hasTextureTransform != 0) ) { \
       NifStream( detailTexture.translation, in, version ); \
       NifStream( detailTexture.tiling, in, version ); \
       NifStream( detailTexture.wRotation, in, version ); \
@@ -11910,7 +11910,7 @@ if ( hasDetailTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasGlossTexture, in, version ); \
-if ( hasGlossTexture != 0 ) { \
+if ( (hasGlossTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( glossTexture.clampMode, in, version ); \
@@ -11925,7 +11925,7 @@ if ( hasGlossTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( glossTexture.hasTextureTransform, in, version ); \
-    if ( glossTexture.hasTextureTransform != 0 ) { \
+    if ( (glossTexture.hasTextureTransform != 0) ) { \
       NifStream( glossTexture.translation, in, version ); \
       NifStream( glossTexture.tiling, in, version ); \
       NifStream( glossTexture.wRotation, in, version ); \
@@ -11935,7 +11935,7 @@ if ( hasGlossTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasGlowTexture, in, version ); \
-if ( hasGlowTexture != 0 ) { \
+if ( (hasGlowTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( glowTexture.clampMode, in, version ); \
@@ -11950,7 +11950,7 @@ if ( hasGlowTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( glowTexture.hasTextureTransform, in, version ); \
-    if ( glowTexture.hasTextureTransform != 0 ) { \
+    if ( (glowTexture.hasTextureTransform != 0) ) { \
       NifStream( glowTexture.translation, in, version ); \
       NifStream( glowTexture.tiling, in, version ); \
       NifStream( glowTexture.wRotation, in, version ); \
@@ -11960,7 +11960,7 @@ if ( hasGlowTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasBumpMapTexture, in, version ); \
-if ( hasBumpMapTexture != 0 ) { \
+if ( (hasBumpMapTexture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( bumpMapTexture.clampMode, in, version ); \
@@ -11975,7 +11975,7 @@ if ( hasBumpMapTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( bumpMapTexture.hasTextureTransform, in, version ); \
-    if ( bumpMapTexture.hasTextureTransform != 0 ) { \
+    if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
       NifStream( bumpMapTexture.translation, in, version ); \
       NifStream( bumpMapTexture.tiling, in, version ); \
       NifStream( bumpMapTexture.wRotation, in, version ); \
@@ -11988,7 +11988,7 @@ if ( hasBumpMapTexture != 0 ) { \
   NifStream( bumpMapMatrix, in, version ); \
 }; \
 NifStream( hasDecal0Texture, in, version ); \
-if ( hasDecal0Texture != 0 ) { \
+if ( (hasDecal0Texture != 0) ) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
   NifStream( decal0Texture.clampMode, in, version ); \
@@ -12003,7 +12003,7 @@ if ( hasDecal0Texture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( decal0Texture.hasTextureTransform, in, version ); \
-    if ( decal0Texture.hasTextureTransform != 0 ) { \
+    if ( (decal0Texture.hasTextureTransform != 0) ) { \
       NifStream( decal0Texture.translation, in, version ); \
       NifStream( decal0Texture.tiling, in, version ); \
       NifStream( decal0Texture.wRotation, in, version ); \
@@ -12012,11 +12012,11 @@ if ( hasDecal0Texture != 0 ) { \
     }; \
   }; \
 }; \
-if ( textureCount == 8 ) { \
+if ( (textureCount == 8) ) { \
   NifStream( hasDecal1Texture, in, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
+  if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
     NifStream( decal1Texture.clampMode, in, version ); \
@@ -12031,7 +12031,7 @@ if ( version >= 0x14000004 ) { \
     }; \
     if ( version >= 0x0A010000 ) { \
       NifStream( decal1Texture.hasTextureTransform, in, version ); \
-      if ( decal1Texture.hasTextureTransform != 0 ) { \
+      if ( (decal1Texture.hasTextureTransform != 0) ) { \
         NifStream( decal1Texture.translation, in, version ); \
         NifStream( decal1Texture.tiling, in, version ); \
         NifStream( decal1Texture.wRotation, in, version ); \
@@ -12046,7 +12046,7 @@ if ( version >= 0x0A000100 ) { \
   shaderTextures.resize(numShaderTextures); \
   for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
     NifStream( shaderTextures[i1].isUsed, in, version ); \
-    if ( shaderTextures[i1].isUsed != 0 ) { \
+    if ( (shaderTextures[i1].isUsed != 0) ) { \
       NifStream( block_num, in, version ); \
       link_stack.push_back( block_num ); \
       NifStream( shaderTextures[i1].textureData.clampMode, in, version ); \
@@ -12061,7 +12061,7 @@ if ( version >= 0x0A000100 ) { \
       }; \
       if ( version >= 0x0A010000 ) { \
         NifStream( shaderTextures[i1].textureData.hasTextureTransform, in, version ); \
-        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+        if ( (shaderTextures[i1].textureData.hasTextureTransform != 0) ) { \
           NifStream( shaderTextures[i1].textureData.translation, in, version ); \
           NifStream( shaderTextures[i1].textureData.tiling, in, version ); \
           NifStream( shaderTextures[i1].textureData.wRotation, in, version ); \
@@ -12084,7 +12084,7 @@ if ( version <= 0x0A000102 ) { \
 NifStream( applyMode, out, version ); \
 NifStream( textureCount, out, version ); \
 NifStream( hasBaseTexture, out, version ); \
-if ( hasBaseTexture != 0 ) { \
+if ( (hasBaseTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(baseTexture.source)], out, version ); \
   NifStream( baseTexture.clampMode, out, version ); \
   NifStream( baseTexture.filterMode, out, version ); \
@@ -12098,7 +12098,7 @@ if ( hasBaseTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( baseTexture.hasTextureTransform, out, version ); \
-    if ( baseTexture.hasTextureTransform != 0 ) { \
+    if ( (baseTexture.hasTextureTransform != 0) ) { \
       NifStream( baseTexture.translation, out, version ); \
       NifStream( baseTexture.tiling, out, version ); \
       NifStream( baseTexture.wRotation, out, version ); \
@@ -12108,7 +12108,7 @@ if ( hasBaseTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasDarkTexture, out, version ); \
-if ( hasDarkTexture != 0 ) { \
+if ( (hasDarkTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(darkTexture.source)], out, version ); \
   NifStream( darkTexture.clampMode, out, version ); \
   NifStream( darkTexture.filterMode, out, version ); \
@@ -12122,7 +12122,7 @@ if ( hasDarkTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( darkTexture.hasTextureTransform, out, version ); \
-    if ( darkTexture.hasTextureTransform != 0 ) { \
+    if ( (darkTexture.hasTextureTransform != 0) ) { \
       NifStream( darkTexture.translation, out, version ); \
       NifStream( darkTexture.tiling, out, version ); \
       NifStream( darkTexture.wRotation, out, version ); \
@@ -12132,7 +12132,7 @@ if ( hasDarkTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasDetailTexture, out, version ); \
-if ( hasDetailTexture != 0 ) { \
+if ( (hasDetailTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(detailTexture.source)], out, version ); \
   NifStream( detailTexture.clampMode, out, version ); \
   NifStream( detailTexture.filterMode, out, version ); \
@@ -12146,7 +12146,7 @@ if ( hasDetailTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( detailTexture.hasTextureTransform, out, version ); \
-    if ( detailTexture.hasTextureTransform != 0 ) { \
+    if ( (detailTexture.hasTextureTransform != 0) ) { \
       NifStream( detailTexture.translation, out, version ); \
       NifStream( detailTexture.tiling, out, version ); \
       NifStream( detailTexture.wRotation, out, version ); \
@@ -12156,7 +12156,7 @@ if ( hasDetailTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasGlossTexture, out, version ); \
-if ( hasGlossTexture != 0 ) { \
+if ( (hasGlossTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(glossTexture.source)], out, version ); \
   NifStream( glossTexture.clampMode, out, version ); \
   NifStream( glossTexture.filterMode, out, version ); \
@@ -12170,7 +12170,7 @@ if ( hasGlossTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( glossTexture.hasTextureTransform, out, version ); \
-    if ( glossTexture.hasTextureTransform != 0 ) { \
+    if ( (glossTexture.hasTextureTransform != 0) ) { \
       NifStream( glossTexture.translation, out, version ); \
       NifStream( glossTexture.tiling, out, version ); \
       NifStream( glossTexture.wRotation, out, version ); \
@@ -12180,7 +12180,7 @@ if ( hasGlossTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasGlowTexture, out, version ); \
-if ( hasGlowTexture != 0 ) { \
+if ( (hasGlowTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(glowTexture.source)], out, version ); \
   NifStream( glowTexture.clampMode, out, version ); \
   NifStream( glowTexture.filterMode, out, version ); \
@@ -12194,7 +12194,7 @@ if ( hasGlowTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( glowTexture.hasTextureTransform, out, version ); \
-    if ( glowTexture.hasTextureTransform != 0 ) { \
+    if ( (glowTexture.hasTextureTransform != 0) ) { \
       NifStream( glowTexture.translation, out, version ); \
       NifStream( glowTexture.tiling, out, version ); \
       NifStream( glowTexture.wRotation, out, version ); \
@@ -12204,7 +12204,7 @@ if ( hasGlowTexture != 0 ) { \
   }; \
 }; \
 NifStream( hasBumpMapTexture, out, version ); \
-if ( hasBumpMapTexture != 0 ) { \
+if ( (hasBumpMapTexture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(bumpMapTexture.source)], out, version ); \
   NifStream( bumpMapTexture.clampMode, out, version ); \
   NifStream( bumpMapTexture.filterMode, out, version ); \
@@ -12218,7 +12218,7 @@ if ( hasBumpMapTexture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( bumpMapTexture.hasTextureTransform, out, version ); \
-    if ( bumpMapTexture.hasTextureTransform != 0 ) { \
+    if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
       NifStream( bumpMapTexture.translation, out, version ); \
       NifStream( bumpMapTexture.tiling, out, version ); \
       NifStream( bumpMapTexture.wRotation, out, version ); \
@@ -12231,7 +12231,7 @@ if ( hasBumpMapTexture != 0 ) { \
   NifStream( bumpMapMatrix, out, version ); \
 }; \
 NifStream( hasDecal0Texture, out, version ); \
-if ( hasDecal0Texture != 0 ) { \
+if ( (hasDecal0Texture != 0) ) { \
   NifStream( link_map[StaticCast<NiObject>(decal0Texture.source)], out, version ); \
   NifStream( decal0Texture.clampMode, out, version ); \
   NifStream( decal0Texture.filterMode, out, version ); \
@@ -12245,7 +12245,7 @@ if ( hasDecal0Texture != 0 ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( decal0Texture.hasTextureTransform, out, version ); \
-    if ( decal0Texture.hasTextureTransform != 0 ) { \
+    if ( (decal0Texture.hasTextureTransform != 0) ) { \
       NifStream( decal0Texture.translation, out, version ); \
       NifStream( decal0Texture.tiling, out, version ); \
       NifStream( decal0Texture.wRotation, out, version ); \
@@ -12254,11 +12254,11 @@ if ( hasDecal0Texture != 0 ) { \
     }; \
   }; \
 }; \
-if ( textureCount == 8 ) { \
+if ( (textureCount == 8) ) { \
   NifStream( hasDecal1Texture, out, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-  if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
+  if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
     NifStream( link_map[StaticCast<NiObject>(decal1Texture.source)], out, version ); \
     NifStream( decal1Texture.clampMode, out, version ); \
     NifStream( decal1Texture.filterMode, out, version ); \
@@ -12272,7 +12272,7 @@ if ( version >= 0x14000004 ) { \
     }; \
     if ( version >= 0x0A010000 ) { \
       NifStream( decal1Texture.hasTextureTransform, out, version ); \
-      if ( decal1Texture.hasTextureTransform != 0 ) { \
+      if ( (decal1Texture.hasTextureTransform != 0) ) { \
         NifStream( decal1Texture.translation, out, version ); \
         NifStream( decal1Texture.tiling, out, version ); \
         NifStream( decal1Texture.wRotation, out, version ); \
@@ -12286,7 +12286,7 @@ if ( version >= 0x0A000100 ) { \
   NifStream( numShaderTextures, out, version ); \
   for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
     NifStream( shaderTextures[i1].isUsed, out, version ); \
-    if ( shaderTextures[i1].isUsed != 0 ) { \
+    if ( (shaderTextures[i1].isUsed != 0) ) { \
       NifStream( link_map[StaticCast<NiObject>(shaderTextures[i1].textureData.source)], out, version ); \
       NifStream( shaderTextures[i1].textureData.clampMode, out, version ); \
       NifStream( shaderTextures[i1].textureData.filterMode, out, version ); \
@@ -12300,7 +12300,7 @@ if ( version >= 0x0A000100 ) { \
       }; \
       if ( version >= 0x0A010000 ) { \
         NifStream( shaderTextures[i1].textureData.hasTextureTransform, out, version ); \
-        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+        if ( (shaderTextures[i1].textureData.hasTextureTransform != 0) ) { \
           NifStream( shaderTextures[i1].textureData.translation, out, version ); \
           NifStream( shaderTextures[i1].textureData.tiling, out, version ); \
           NifStream( shaderTextures[i1].textureData.wRotation, out, version ); \
@@ -12322,7 +12322,7 @@ out << "Flags:  " << flags << endl; \
 out << "Apply Mode:  " << applyMode << endl; \
 out << "Texture Count:  " << textureCount << endl; \
 out << "Has Base Texture:  " << hasBaseTexture << endl; \
-if ( hasBaseTexture != 0 ) { \
+if ( (hasBaseTexture != 0) ) { \
   out << "  Source:  " << baseTexture.source << endl; \
   out << "  Clamp Mode:  " << baseTexture.clampMode << endl; \
   out << "  Filter Mode:  " << baseTexture.filterMode << endl; \
@@ -12331,7 +12331,7 @@ if ( hasBaseTexture != 0 ) { \
   out << "  PS2 K:  " << baseTexture.ps2K << endl; \
   out << "  Unknown1:  " << baseTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << baseTexture.hasTextureTransform << endl; \
-  if ( baseTexture.hasTextureTransform != 0 ) { \
+  if ( (baseTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << baseTexture.translation << endl; \
     out << "    Tiling:  " << baseTexture.tiling << endl; \
     out << "    W Rotation:  " << baseTexture.wRotation << endl; \
@@ -12340,7 +12340,7 @@ if ( hasBaseTexture != 0 ) { \
   }; \
 }; \
 out << "Has Dark Texture:  " << hasDarkTexture << endl; \
-if ( hasDarkTexture != 0 ) { \
+if ( (hasDarkTexture != 0) ) { \
   out << "  Source:  " << darkTexture.source << endl; \
   out << "  Clamp Mode:  " << darkTexture.clampMode << endl; \
   out << "  Filter Mode:  " << darkTexture.filterMode << endl; \
@@ -12349,7 +12349,7 @@ if ( hasDarkTexture != 0 ) { \
   out << "  PS2 K:  " << darkTexture.ps2K << endl; \
   out << "  Unknown1:  " << darkTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << darkTexture.hasTextureTransform << endl; \
-  if ( darkTexture.hasTextureTransform != 0 ) { \
+  if ( (darkTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << darkTexture.translation << endl; \
     out << "    Tiling:  " << darkTexture.tiling << endl; \
     out << "    W Rotation:  " << darkTexture.wRotation << endl; \
@@ -12358,7 +12358,7 @@ if ( hasDarkTexture != 0 ) { \
   }; \
 }; \
 out << "Has Detail Texture:  " << hasDetailTexture << endl; \
-if ( hasDetailTexture != 0 ) { \
+if ( (hasDetailTexture != 0) ) { \
   out << "  Source:  " << detailTexture.source << endl; \
   out << "  Clamp Mode:  " << detailTexture.clampMode << endl; \
   out << "  Filter Mode:  " << detailTexture.filterMode << endl; \
@@ -12367,7 +12367,7 @@ if ( hasDetailTexture != 0 ) { \
   out << "  PS2 K:  " << detailTexture.ps2K << endl; \
   out << "  Unknown1:  " << detailTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << detailTexture.hasTextureTransform << endl; \
-  if ( detailTexture.hasTextureTransform != 0 ) { \
+  if ( (detailTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << detailTexture.translation << endl; \
     out << "    Tiling:  " << detailTexture.tiling << endl; \
     out << "    W Rotation:  " << detailTexture.wRotation << endl; \
@@ -12376,7 +12376,7 @@ if ( hasDetailTexture != 0 ) { \
   }; \
 }; \
 out << "Has Gloss Texture:  " << hasGlossTexture << endl; \
-if ( hasGlossTexture != 0 ) { \
+if ( (hasGlossTexture != 0) ) { \
   out << "  Source:  " << glossTexture.source << endl; \
   out << "  Clamp Mode:  " << glossTexture.clampMode << endl; \
   out << "  Filter Mode:  " << glossTexture.filterMode << endl; \
@@ -12385,7 +12385,7 @@ if ( hasGlossTexture != 0 ) { \
   out << "  PS2 K:  " << glossTexture.ps2K << endl; \
   out << "  Unknown1:  " << glossTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << glossTexture.hasTextureTransform << endl; \
-  if ( glossTexture.hasTextureTransform != 0 ) { \
+  if ( (glossTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << glossTexture.translation << endl; \
     out << "    Tiling:  " << glossTexture.tiling << endl; \
     out << "    W Rotation:  " << glossTexture.wRotation << endl; \
@@ -12394,7 +12394,7 @@ if ( hasGlossTexture != 0 ) { \
   }; \
 }; \
 out << "Has Glow Texture:  " << hasGlowTexture << endl; \
-if ( hasGlowTexture != 0 ) { \
+if ( (hasGlowTexture != 0) ) { \
   out << "  Source:  " << glowTexture.source << endl; \
   out << "  Clamp Mode:  " << glowTexture.clampMode << endl; \
   out << "  Filter Mode:  " << glowTexture.filterMode << endl; \
@@ -12403,7 +12403,7 @@ if ( hasGlowTexture != 0 ) { \
   out << "  PS2 K:  " << glowTexture.ps2K << endl; \
   out << "  Unknown1:  " << glowTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << glowTexture.hasTextureTransform << endl; \
-  if ( glowTexture.hasTextureTransform != 0 ) { \
+  if ( (glowTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << glowTexture.translation << endl; \
     out << "    Tiling:  " << glowTexture.tiling << endl; \
     out << "    W Rotation:  " << glowTexture.wRotation << endl; \
@@ -12412,7 +12412,7 @@ if ( hasGlowTexture != 0 ) { \
   }; \
 }; \
 out << "Has Bump Map Texture:  " << hasBumpMapTexture << endl; \
-if ( hasBumpMapTexture != 0 ) { \
+if ( (hasBumpMapTexture != 0) ) { \
   out << "  Source:  " << bumpMapTexture.source << endl; \
   out << "  Clamp Mode:  " << bumpMapTexture.clampMode << endl; \
   out << "  Filter Mode:  " << bumpMapTexture.filterMode << endl; \
@@ -12421,7 +12421,7 @@ if ( hasBumpMapTexture != 0 ) { \
   out << "  PS2 K:  " << bumpMapTexture.ps2K << endl; \
   out << "  Unknown1:  " << bumpMapTexture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << bumpMapTexture.hasTextureTransform << endl; \
-  if ( bumpMapTexture.hasTextureTransform != 0 ) { \
+  if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << bumpMapTexture.translation << endl; \
     out << "    Tiling:  " << bumpMapTexture.tiling << endl; \
     out << "    W Rotation:  " << bumpMapTexture.wRotation << endl; \
@@ -12433,7 +12433,7 @@ if ( hasBumpMapTexture != 0 ) { \
   out << "  Bump Map Matrix:  " << bumpMapMatrix << endl; \
 }; \
 out << "Has Decal 0 Texture:  " << hasDecal0Texture << endl; \
-if ( hasDecal0Texture != 0 ) { \
+if ( (hasDecal0Texture != 0) ) { \
   out << "  Source:  " << decal0Texture.source << endl; \
   out << "  Clamp Mode:  " << decal0Texture.clampMode << endl; \
   out << "  Filter Mode:  " << decal0Texture.filterMode << endl; \
@@ -12442,7 +12442,7 @@ if ( hasDecal0Texture != 0 ) { \
   out << "  PS2 K:  " << decal0Texture.ps2K << endl; \
   out << "  Unknown1:  " << decal0Texture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << decal0Texture.hasTextureTransform << endl; \
-  if ( decal0Texture.hasTextureTransform != 0 ) { \
+  if ( (decal0Texture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << decal0Texture.translation << endl; \
     out << "    Tiling:  " << decal0Texture.tiling << endl; \
     out << "    W Rotation:  " << decal0Texture.wRotation << endl; \
@@ -12450,10 +12450,10 @@ if ( hasDecal0Texture != 0 ) { \
     out << "    Center Offset:  " << decal0Texture.centerOffset << endl; \
   }; \
 }; \
-if ( textureCount == 8 ) { \
+if ( (textureCount == 8) ) { \
   out << "  Has Decal 1 Texture:  " << hasDecal1Texture << endl; \
 }; \
-if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
+if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
   out << "  Source:  " << decal1Texture.source << endl; \
   out << "  Clamp Mode:  " << decal1Texture.clampMode << endl; \
   out << "  Filter Mode:  " << decal1Texture.filterMode << endl; \
@@ -12462,7 +12462,7 @@ if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
   out << "  PS2 K:  " << decal1Texture.ps2K << endl; \
   out << "  Unknown1:  " << decal1Texture.unknown1 << endl; \
   out << "  Has Texture Transform:  " << decal1Texture.hasTextureTransform << endl; \
-  if ( decal1Texture.hasTextureTransform != 0 ) { \
+  if ( (decal1Texture.hasTextureTransform != 0) ) { \
     out << "    Translation:  " << decal1Texture.translation << endl; \
     out << "    Tiling:  " << decal1Texture.tiling << endl; \
     out << "    W Rotation:  " << decal1Texture.wRotation << endl; \
@@ -12473,7 +12473,7 @@ if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
 out << "Num Shader Textures:  " << numShaderTextures << endl; \
 for (uint i0 = 0; i0 < numShaderTextures; i0++) { \
   out << "  Is Used:  " << shaderTextures[i0].isUsed << endl; \
-  if ( shaderTextures[i0].isUsed != 0 ) { \
+  if ( (shaderTextures[i0].isUsed != 0) ) { \
     out << "    Source:  " << shaderTextures[i0].textureData.source << endl; \
     out << "    Clamp Mode:  " << shaderTextures[i0].textureData.clampMode << endl; \
     out << "    Filter Mode:  " << shaderTextures[i0].textureData.filterMode << endl; \
@@ -12482,7 +12482,7 @@ for (uint i0 = 0; i0 < numShaderTextures; i0++) { \
     out << "    PS2 K:  " << shaderTextures[i0].textureData.ps2K << endl; \
     out << "    Unknown1:  " << shaderTextures[i0].textureData.unknown1 << endl; \
     out << "    Has Texture Transform:  " << shaderTextures[i0].textureData.hasTextureTransform << endl; \
-    if ( shaderTextures[i0].textureData.hasTextureTransform != 0 ) { \
+    if ( (shaderTextures[i0].textureData.hasTextureTransform != 0) ) { \
       out << "      Translation:  " << shaderTextures[i0].textureData.translation << endl; \
       out << "      Tiling:  " << shaderTextures[i0].textureData.tiling << endl; \
       out << "      W Rotation:  " << shaderTextures[i0].textureData.wRotation << endl; \
@@ -12500,7 +12500,7 @@ uint numShaderTextures; \
 numShaderTextures = uint(shaderTextures.size()); \
 if ( version <= 0x0A000102 ) { \
 }; \
-if ( hasBaseTexture != 0 ) { \
+if ( (hasBaseTexture != 0) ) { \
   baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12508,11 +12508,11 @@ if ( hasBaseTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( baseTexture.hasTextureTransform != 0 ) { \
+    if ( (baseTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasDarkTexture != 0 ) { \
+if ( (hasDarkTexture != 0) ) { \
   darkTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12520,11 +12520,11 @@ if ( hasDarkTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( darkTexture.hasTextureTransform != 0 ) { \
+    if ( (darkTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasDetailTexture != 0 ) { \
+if ( (hasDetailTexture != 0) ) { \
   detailTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12532,11 +12532,11 @@ if ( hasDetailTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( detailTexture.hasTextureTransform != 0 ) { \
+    if ( (detailTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasGlossTexture != 0 ) { \
+if ( (hasGlossTexture != 0) ) { \
   glossTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12544,11 +12544,11 @@ if ( hasGlossTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( glossTexture.hasTextureTransform != 0 ) { \
+    if ( (glossTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasGlowTexture != 0 ) { \
+if ( (hasGlowTexture != 0) ) { \
   glowTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12556,11 +12556,11 @@ if ( hasGlowTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( glowTexture.hasTextureTransform != 0 ) { \
+    if ( (glowTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasBumpMapTexture != 0 ) { \
+if ( (hasBumpMapTexture != 0) ) { \
   bumpMapTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12568,11 +12568,11 @@ if ( hasBumpMapTexture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( bumpMapTexture.hasTextureTransform != 0 ) { \
+    if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( hasDecal0Texture != 0 ) { \
+if ( (hasDecal0Texture != 0) ) { \
   decal0Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
   if ( version <= 0x0A020000 ) { \
@@ -12580,14 +12580,14 @@ if ( hasDecal0Texture != 0 ) { \
   if ( version <= 0x0401000C ) { \
   }; \
   if ( version >= 0x0A010000 ) { \
-    if ( decal0Texture.hasTextureTransform != 0 ) { \
+    if ( (decal0Texture.hasTextureTransform != 0) ) { \
     }; \
   }; \
 }; \
-if ( textureCount == 8 ) { \
+if ( (textureCount == 8) ) { \
 }; \
 if ( version >= 0x14000004 ) { \
-  if ( (textureCount == 8) && (hasDecal1Texture != 0) ) { \
+  if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
     decal1Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
     link_stack.pop_front(); \
     if ( version <= 0x0A020000 ) { \
@@ -12595,14 +12595,14 @@ if ( version >= 0x14000004 ) { \
     if ( version <= 0x0401000C ) { \
     }; \
     if ( version >= 0x0A010000 ) { \
-      if ( decal1Texture.hasTextureTransform != 0 ) { \
+      if ( (decal1Texture.hasTextureTransform != 0) ) { \
       }; \
     }; \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
   for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
-    if ( shaderTextures[i1].isUsed != 0 ) { \
+    if ( (shaderTextures[i1].isUsed != 0) ) { \
       shaderTextures[i1].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
       link_stack.pop_front(); \
       if ( version <= 0x0A020000 ) { \
@@ -12610,7 +12610,7 @@ if ( version >= 0x0A000100 ) { \
       if ( version <= 0x0401000C ) { \
       }; \
       if ( version >= 0x0A010000 ) { \
-        if ( shaderTextures[i1].textureData.hasTextureTransform != 0 ) { \
+        if ( (shaderTextures[i1].textureData.hasTextureTransform != 0) ) { \
         }; \
       }; \
     }; \
@@ -12772,7 +12772,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasTriangles != 0 ) { \
+  if ( (hasTriangles != 0) ) { \
     triangles.resize(numTriangles); \
     for (uint i2 = 0; i2 < numTriangles; i2++) { \
       NifStream( triangles[i2], in, version ); \
@@ -12806,7 +12806,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasTriangles != 0 ) { \
+  if ( (hasTriangles != 0) ) { \
     for (uint i2 = 0; i2 < numTriangles; i2++) { \
       NifStream( triangles[i2], out, version ); \
     }; \
@@ -12833,7 +12833,7 @@ out << "Has Triangles:  " << hasTriangles << endl; \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
   out << "  Triangles[" << i0 << "]:  " << triangles[i0] << endl; \
 }; \
-if ( hasTriangles != 0 ) { \
+if ( (hasTriangles != 0) ) { \
   for (uint i1 = 0; i1 < numTriangles; i1++) { \
     out << "    Triangles[" << i1 << "]:  " << triangles[i1] << endl; \
   }; \
@@ -12860,7 +12860,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasTriangles != 0 ) { \
+  if ( (hasTriangles != 0) ) { \
     for (uint i2 = 0; i2 < numTriangles; i2++) { \
     }; \
   }; \
@@ -12927,7 +12927,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasPoints != 0 ) { \
+  if ( (hasPoints != 0) ) { \
     points.resize(numStrips); \
     for (uint i2 = 0; i2 < numStrips; i2++) \
       points[i2].resize(stripLengths); \
@@ -12963,7 +12963,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasPoints != 0 ) { \
+  if ( (hasPoints != 0) ) { \
     for (uint i2 = 0; i2 < numStrips; i2++) { \
       for (uint i3 = 0; i3 < stripLengths; i3++) { \
         NifStream( points[i2][i3], out, version ); \
@@ -12992,7 +12992,7 @@ for (uint i0 = 0; i0 < numStrips; i0++) { \
     out << "    Points[" << i0 << "][" << i1 << "]:  " << points[i0][i1] << endl; \
   }; \
 }; \
-if ( hasPoints != 0 ) { \
+if ( (hasPoints != 0) ) { \
   for (uint i1 = 0; i1 < numStrips; i1++) { \
     for (uint i2 = 0; i2 < stripLengths; i2++) { \
       out << "      Points[" << i1 << "][" << i2 << "]:  " << points[i1][i2] << endl; \
@@ -13020,7 +13020,7 @@ if ( version <= 0x0A000102 ) { \
   }; \
 }; \
 if ( version >= 0x0A010000 ) { \
-  if ( hasPoints != 0 ) { \
+  if ( (hasPoints != 0) ) { \
     for (uint i2 = 0; i2 < numStrips; i2++) { \
       for (uint i3 = 0; i3 < stripLengths; i3++) { \
       }; \
@@ -13076,7 +13076,7 @@ NiObject::Read( in, link_stack, version ); \
 uvGroups.resize(4); \
 for (uint i0 = 0; i0 < 4; i0++) { \
   NifStream( uvGroups[i0].numKeys, in, version ); \
-  if ( uvGroups[i0].numKeys != 0 ) { \
+  if ( (uvGroups[i0].numKeys != 0) ) { \
     NifStream( uvGroups[i0].interpolation, in, version ); \
   }; \
   uvGroups[i0].keys.resize(uvGroups[i0].numKeys); \
@@ -13089,7 +13089,7 @@ for (uint i0 = 0; i0 < 4; i0++) { \
 NiObject::Write( out, link_map, version ); \
 for (uint i0 = 0; i0 < 4; i0++) { \
   NifStream( uvGroups[i0].numKeys, out, version ); \
-  if ( uvGroups[i0].numKeys != 0 ) { \
+  if ( (uvGroups[i0].numKeys != 0) ) { \
     NifStream( uvGroups[i0].interpolation, out, version ); \
   }; \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
@@ -13102,7 +13102,7 @@ stringstream out; \
 out << NiObject::asString(); \
 for (uint i0 = 0; i0 < 4; i0++) { \
   out << "  Num Keys:  " << uvGroups[i0].numKeys << endl; \
-  if ( uvGroups[i0].numKeys != 0 ) { \
+  if ( (uvGroups[i0].numKeys != 0) ) { \
     out << "    Interpolation:  " << uvGroups[i0].interpolation << endl; \
   }; \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
@@ -13114,7 +13114,7 @@ return out.str(); \
 #define NI_U_V_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < 4; i0++) { \
-  if ( uvGroups[i0].numKeys != 0 ) { \
+  if ( (uvGroups[i0].numKeys != 0) ) { \
   }; \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
   }; \
