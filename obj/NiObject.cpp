@@ -9,30 +9,6 @@ const Type NiObject::TYPE("NiObject", NULL );
 //Static to track total number of objects in memory.  Initialize to zero.
 unsigned int NiObject::objectsInMemory = 0;
 
-/*
- * Type Methods
- */
-
-bool Type::IsSameType( const Type & compare_to ) const {
-	return &compare_to == this;
-}
-
-bool Type::IsDerivedType( const Type & compare_to ) const {
-
-	const Type * search = this;
-	while ( search != NULL ) {
-		if ( search == &compare_to ) {
-			return true;
-		}
-		search = search->base_type;
-	}
-	return false;
-}
-
-/*
- * NiObject Methods
- */
-
 bool NiObject::IsSameType( const Type & compare_to) const {
 	return GetType().IsSameType( compare_to );
 }

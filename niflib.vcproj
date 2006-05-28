@@ -794,6 +794,9 @@
 				<File
 					RelativePath=".\obj\TriBasedGeomData.cpp">
 				</File>
+				<File
+					RelativePath=".\obj\Type.cpp">
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1456,6 +1459,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\TriBasedGeomData.h">
+				</File>
+				<File
+					RelativePath=".\obj\Type.h">
 				</File>
 			</Filter>
 		</Filter>

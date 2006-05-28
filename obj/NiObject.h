@@ -14,27 +14,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <vector>
 #include "NIF_IO.h"
 #include "Ref.h"
+#include "Type.h"
 #include "xml_extract.h"
 
 using namespace std;
 
-/**
- * Run Time Type Inforamtion Class
- */
-class Type {
-public:
-	Type (const string & type_name, const Type * base_type );
-	~Type();
 
-	string GetTypeName() const;
-
-	bool IsSameType ( const Type & compare_to ) const;
-	bool IsDerivedType ( const Type & compare_to ) const;
-	bool operator<( const Type & compare_to ) const { return (this < &compare_to); }
-private:
-	string name;
-	const Type * base_type;
-};
 
 /**
  * NiObject - Base Object class from which all other objects derive
