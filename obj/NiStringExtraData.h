@@ -25,6 +25,8 @@ public:
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version );
 private:
+	uint BytesRemaining() const;
+
 	NI_STRING_EXTRA_DATA_MEMBERS
 };
 #endif
