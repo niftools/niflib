@@ -617,7 +617,7 @@ struct Header {
    * Unknown.
    */
   uint unknownInt2;
-  Header() : version(0x04000002), endianType(1) {};
+  Header() : version((uint)0x04000002), endianType((byte)1) {};
 };
 
 /*!
@@ -840,7 +840,7 @@ struct TexDesc {
    * The offset from the origin?
    */
   TexCoord centerOffset;
-  TexDesc() : clampMode(WRAP_S_WRAP_T), filterMode(FILTER_TRILERP), textureSet(0), ps2L(0), ps2K(0xFFB5), hasTextureTransform(false), wRotation(0.0f), transformType_(0) {};
+  TexDesc() : clampMode((TexClampMode)WRAP_S_WRAP_T), filterMode((TexFilterMode)FILTER_TRILERP), textureSet((uint)0), ps2L((ushort)0), ps2K((ushort)0xFFB5), hasTextureTransform((bool)false), wRotation(0.0f), transformType_((uint)0) {};
 };
 
 /*!
@@ -972,7 +972,7 @@ struct BoundingBox {
    * Radius, per direction.
    */
   Vector3 radius;
-  BoundingBox() : unknownInt(1) {};
+  BoundingBox() : unknownInt((uint)1) {};
 };
 
 /*!
@@ -1466,7 +1466,7 @@ uint priority; \
 #define ABHK_CONSTRAINT_PARENT bhkSerializable \
 
 #define ABHK_CONSTRAINT_CONSTRUCT \
- : priority(1) \
+ : priority((uint)1) \
 
 #define ABHK_CONSTRAINT_READ \
 uint block_num; \
@@ -4470,7 +4470,7 @@ byte threshold; \
 #define NI_ALPHA_PROPERTY_PARENT NiProperty \
 
 #define NI_ALPHA_PROPERTY_CONSTRUCT \
- : flags(237) \
+ : flags((unsigned short)237) \
 
 #define NI_ALPHA_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -11203,7 +11203,7 @@ byte unknownByte2; \
 #define NI_SOURCE_TEXTURE_PARENT NiObjectNET \
 
 #define NI_SOURCE_TEXTURE_CONSTRUCT \
- : useExternal(1), pixelLayout(5), useMipmaps(2), alphaFormat(3), unknownByte2(1) \
+ : useExternal((byte)1), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1) \
 
 #define NI_SOURCE_TEXTURE_READ \
 uint block_num; \
@@ -11435,7 +11435,7 @@ uint drawMode; \
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
- : stencilMask(4294967295) \
+ : stencilMask((uint)4294967295) \
 
 #define NI_STENCIL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -11823,7 +11823,7 @@ vector<ShaderTexDesc > shaderTextures; \
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty \
 
 #define NI_TEXTURING_PROPERTY_CONSTRUCT \
- : applyMode(2), textureCount(7) \
+ : applyMode((ApplyMode)2), textureCount((uint)7) \
 
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
@@ -13343,7 +13343,7 @@ uint function; \
 #define NI_Z_BUFFER_PROPERTY_PARENT NiProperty \
 
 #define NI_Z_BUFFER_PROPERTY_CONSTRUCT \
- : flags(3), function(3) \
+ : flags((unsigned short)3), function((uint)3) \
 
 #define NI_Z_BUFFER_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
