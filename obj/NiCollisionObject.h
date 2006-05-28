@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "xml_extract.h"
 #include NI_COLLISION_OBJECT_INCLUDE
+#include "NiAVObject.h"
 
 /*
  * NiCollisionObject
@@ -24,6 +25,8 @@ public:
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version );
+	
+	NiAVObject * Parent() const;
 private:
 	NI_COLLISION_OBJECT_MEMBERS
 };

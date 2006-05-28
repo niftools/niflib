@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAVObject.h"
 #include "NiProperty.h"
 #include "NiCollisionData.h"
+#include "NiCollisionObject.h"
 
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
