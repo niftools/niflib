@@ -842,5 +842,6 @@ ostream & operator<<( ostream & out, Float4 const & val );
 ostream & operator<<( ostream & out, Color4 const & val );
 ostream & operator<<( ostream & out, Quaternion const & val );
 
+typedef Float3 Color3;
 
 #endif
