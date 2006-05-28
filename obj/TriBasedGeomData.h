@@ -27,7 +27,7 @@ public:
 	
 	Vector3 Center() const;
 	float Radius() const;
-private:
+protected:
 	TRI_BASED_GEOM_DATA_MEMBERS
 };
 #endif
