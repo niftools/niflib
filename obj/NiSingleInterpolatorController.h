@@ -8,16 +8,16 @@ All rights reserved.  Please see niflib.h for licence. */
 #include A_SINGLE_INTERPOLATOR_CONTROLLER_INCLUDE
 
 /*
- * ASingleInterpolatorController
+ * NiSingleInterpolatorController
  */
 
-class ASingleInterpolatorController;
-typedef Ref<ASingleInterpolatorController> ASingleInterpolatorControllerRef;
+class NiSingleInterpolatorController;
+typedef Ref<NiSingleInterpolatorController> NiSingleInterpolatorControllerRef;
 
-class ASingleInterpolatorController : public A_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
+class NiSingleInterpolatorController : public A_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
 public:
-	ASingleInterpolatorController();
-	~ASingleInterpolatorController();
+	NiSingleInterpolatorController();
+	~NiSingleInterpolatorController();
 	//Run-Time Type Information
 	static const Type TYPE;
 	virtual void Read( istream& in, list<uint> link_stack, unsigned int version );

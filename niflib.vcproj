@@ -195,9 +195,6 @@
 					RelativePath=".\obj\APSysVolumeEmitter.cpp">
 				</File>
 				<File
-					RelativePath=".\obj\ASingleInterpolatorController.cpp">
-				</File>
-				<File
 					RelativePath=".\obj\AvoidNode.cpp">
 				</File>
 				<File
@@ -687,6 +684,9 @@
 					RelativePath=".\obj\NiShadeProperty.cpp">
 				</File>
 				<File
+					RelativePath=".\obj\NiSingleInterpolatorController.cpp">
+				</File>
+				<File
 					RelativePath=".\obj\NiSkinData.cpp">
 				</File>
 				<File
@@ -856,9 +856,6 @@
 				</File>
 				<File
 					RelativePath=".\obj\APSysVolumeEmitter.h">
-				</File>
-				<File
-					RelativePath=".\obj\ASingleInterpolatorController.h">
 				</File>
 				<File
 					RelativePath=".\obj\AvoidNode.h">
@@ -1348,6 +1345,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiShadeProperty.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiSingleInterpolatorController.h">
 				</File>
 				<File
 					RelativePath=".\obj\NiSkinData.h">
