@@ -7464,8 +7464,8 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( morphs[i0].unknownInt, in, version ); \
   }; \
-  morphs[i0].vectors.resize(attr_arg); \
-  for (uint i1 = 0; i1 < attr_arg; i1++) { \
+  morphs[i0].vectors.resize(numVertices); \
+  for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( morphs[i0].vectors[i1], in, version ); \
   }; \
 }; \
@@ -7493,7 +7493,7 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
     NifStream( morphs[i0].unknownInt, out, version ); \
   }; \
-  for (uint i1 = 0; i1 < attr_arg; i1++) { \
+  for (uint i1 = 0; i1 < numVertices; i1++) { \
     NifStream( morphs[i0].vectors[i1], out, version ); \
   }; \
 }; \
@@ -7516,7 +7516,7 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
     out << "    Morph Keys[" << i1 << "]:  " << morphs[i0].morphKeys[i1] << endl; \
   }; \
   out << "  Unknown Int:  " << morphs[i0].unknownInt << endl; \
-  for (uint i1 = 0; i1 < attr_arg; i1++) { \
+  for (uint i1 = 0; i1 < numVertices; i1++) { \
     out << "    Vectors[" << i1 << "]:  " << morphs[i0].vectors[i1] << endl; \
   }; \
 }; \
@@ -7537,7 +7537,7 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
   }; \
-  for (uint i1 = 0; i1 < attr_arg; i1++) { \
+  for (uint i1 = 0; i1 < numVertices; i1++) { \
   }; \
 }; \
 
