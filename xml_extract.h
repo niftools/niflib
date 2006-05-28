@@ -4656,7 +4656,7 @@ for (uint i0 = 0; i0 < binaryData_size; i0++) { \
 }; \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_MEMBERS \
-byte value; \
+byte boolValue; \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_INCLUDE "ABlendInterpolator.h" \
 
@@ -4666,23 +4666,23 @@ byte value; \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_READ \
 ABlendInterpolator::Read( in, link_stack, version ); \
-NifStream( value, in, version ); \
+NifStream( boolValue, in, version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_WRITE \
 ABlendInterpolator::Write( out, link_map, version ); \
-NifStream( value, out, version ); \
+NifStream( boolValue, out, version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_STRING \
 stringstream out; \
 out << ABlendInterpolator::asString(); \
-out << "Value:  " << value << endl; \
+out << "Bool Value:  " << boolValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS \
 ABlendInterpolator::FixLinks( objects, link_stack, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS \
-float value; \
+float floatValue; \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_INCLUDE "ABlendInterpolator.h" \
 
@@ -4692,23 +4692,23 @@ float value; \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_READ \
 ABlendInterpolator::Read( in, link_stack, version ); \
-NifStream( value, in, version ); \
+NifStream( floatValue, in, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_WRITE \
 ABlendInterpolator::Write( out, link_map, version ); \
-NifStream( value, out, version ); \
+NifStream( floatValue, out, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
 out << ABlendInterpolator::asString(); \
-out << "Value:  " << value << endl; \
+out << "Float Value:  " << floatValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS \
 ABlendInterpolator::FixLinks( objects, link_stack, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_MEMBERS \
-Vector3 value; \
+Vector3 point3Value; \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_INCLUDE "ABlendInterpolator.h" \
 
@@ -4718,16 +4718,16 @@ Vector3 value; \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_READ \
 ABlendInterpolator::Read( in, link_stack, version ); \
-NifStream( value, in, version ); \
+NifStream( point3Value, in, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_WRITE \
 ABlendInterpolator::Write( out, link_map, version ); \
-NifStream( value, out, version ); \
+NifStream( point3Value, out, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
 out << ABlendInterpolator::asString(); \
-out << "Value:  " << value << endl; \
+out << "Point3 Value:  " << point3Value << endl; \
 return out.str(); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS \
@@ -4965,7 +4965,7 @@ data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
 link_stack.pop_front(); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS \
-byte bool; \
+byte boolValue; \
 Ref<NiBoolData > data; \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_INCLUDE "AInterpolator.h" \
@@ -4977,19 +4977,19 @@ Ref<NiBoolData > data; \
 #define NI_BOOL_TIMELINE_INTERPOLATOR_READ \
 uint block_num; \
 AInterpolator::Read( in, link_stack, version ); \
-NifStream( bool, in, version ); \
+NifStream( boolValue, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_WRITE \
 AInterpolator::Write( out, link_map, version ); \
-NifStream( bool, out, version ); \
+NifStream( boolValue, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_STRING \
 stringstream out; \
 out << AInterpolator::asString(); \
-out << "Bool:  " << bool << endl; \
+out << "Bool Value:  " << boolValue << endl; \
 out << "Data:  " << data << endl; \
 return out.str(); \
 
@@ -6061,7 +6061,7 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS \
 uint unknownInt; \
-vector<AVObject > objects; \
+vector<AVObject > theObjects; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_INCLUDE "NiObject.h" \
 
@@ -6075,9 +6075,9 @@ NiObject::Read( in, link_stack, version ); \
 uint numObjects; \
 NifStream( unknownInt, in, version ); \
 NifStream( numObjects, in, version ); \
-objects.resize(numObjects); \
+theObjects.resize(numObjects); \
 for (uint i0 = 0; i0 < numObjects; i0++) { \
-  NifStream( objects[i0].name, in, version ); \
+  NifStream( theObjects[i0].name, in, version ); \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
@@ -6085,33 +6085,33 @@ for (uint i0 = 0; i0 < numObjects; i0++) { \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE \
 NiObject::Write( out, link_map, version ); \
 uint numObjects; \
-numObjects = uint(objects.size()); \
+numObjects = uint(theObjects.size()); \
 NifStream( unknownInt, out, version ); \
 NifStream( numObjects, out, version ); \
 for (uint i0 = 0; i0 < numObjects; i0++) { \
-  NifStream( objects[i0].name, out, version ); \
-  NifStream( link_map[StaticCast<NiObject>(objects[i0].object)], out, version ); \
+  NifStream( theObjects[i0].name, out, version ); \
+  NifStream( link_map[StaticCast<NiObject>(theObjects[i0].object)], out, version ); \
 }; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_STRING \
 stringstream out; \
 out << NiObject::asString(); \
 uint numObjects; \
-numObjects = uint(objects.size()); \
+numObjects = uint(theObjects.size()); \
 out << "Unknown Int:  " << unknownInt << endl; \
 out << "Num Objects:  " << numObjects << endl; \
 for (uint i0 = 0; i0 < numObjects; i0++) { \
-  out << "  Name:  " << objects[i0].name << endl; \
-  out << "  Object:  " << objects[i0].object << endl; \
+  out << "  Name:  " << theObjects[i0].name << endl; \
+  out << "  Object:  " << theObjects[i0].object << endl; \
 }; \
 return out.str(); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 uint numObjects; \
-numObjects = uint(objects.size()); \
+numObjects = uint(theObjects.size()); \
 for (uint i0 = 0; i0 < numObjects; i0++) { \
-  objects[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
+  theObjects[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 
