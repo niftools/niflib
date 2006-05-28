@@ -410,6 +410,17 @@ void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) 
 	}
 }
 
+ostream & operator<<( ostream & out, PixelLayout const & val );
+template <class T> 
+ostream & operator<<( ostream & out, Key<T> const & val ) {
+	return out << "Time:  " << val.time << endl
+			   << "Data:  " << val.data << endl
+			   << "Forward Tangent:  " << val.forward_tangent << endl
+			   << "Backward Tangent:  " << val.backward_tangent << endl
+			   << "Bias:  " << val.bias << endl
+			   << "Continuity:  " << val.continuity << endl;
+}
+
 template <class T> 
 void NifStream( Key<T> const & key, ostream& file, uint version, uint type ) {
 	NifStream( key, file, (KeyType)type );
