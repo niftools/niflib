@@ -786,9 +786,6 @@
 					RelativePath=".\obj\NiZBufferProperty.cpp">
 				</File>
 				<File
-					RelativePath=".\obj\Ref.cpp">
-				</File>
-				<File
 					RelativePath=".\obj\RootCollisionNode.cpp">
 				</File>
 				<File
