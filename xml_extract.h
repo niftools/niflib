@@ -4872,7 +4872,7 @@ if ( data.numKeys != 0 ) { \
 }; \
 data.keys.resize(data.numKeys); \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], in, version ); \
+  NifStream( data.keys[i0], in, version, data.interpolation ); \
 }; \
 
 #define NI_BOOL_DATA_WRITE \
@@ -4882,7 +4882,7 @@ if ( data.numKeys != 0 ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], out, version ); \
+  NifStream( data.keys[i0], out, version, data.interpolation ); \
 }; \
 
 #define NI_BOOL_DATA_STRING \
@@ -5465,7 +5465,7 @@ if ( data.numKeys != 0 ) { \
 }; \
 data.keys.resize(data.numKeys); \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], in, version ); \
+  NifStream( data.keys[i0], in, version, data.interpolation ); \
 }; \
 
 #define NI_COLOR_DATA_WRITE \
@@ -5475,7 +5475,7 @@ if ( data.numKeys != 0 ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], out, version ); \
+  NifStream( data.keys[i0], out, version, data.interpolation ); \
 }; \
 
 #define NI_COLOR_DATA_STRING \
@@ -6247,7 +6247,7 @@ if ( data.numKeys != 0 ) { \
 }; \
 data.keys.resize(data.numKeys); \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], in, version ); \
+  NifStream( data.keys[i0], in, version, data.interpolation ); \
 }; \
 
 #define NI_FLOAT_DATA_WRITE \
@@ -6257,7 +6257,7 @@ if ( data.numKeys != 0 ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], out, version ); \
+  NifStream( data.keys[i0], out, version, data.interpolation ); \
 }; \
 
 #define NI_FLOAT_DATA_STRING \
@@ -6770,7 +6770,7 @@ if ( numRotationKeys != 0 ) { \
 if ( rotationType != 4 ) { \
   quaternionKeys.resize(numRotationKeys); \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
-    NifStream( quaternionKeys[i1], in, version ); \
+    NifStream( quaternionKeys[i1], in, version, rotationType ); \
   }; \
 }; \
 if ( version <= 0x0A010000 ) { \
@@ -6787,7 +6787,7 @@ if ( rotationType == 4 ) { \
     }; \
     xyzRotations[i1].keys.resize(xyzRotations[i1].numKeys); \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
-      NifStream( xyzRotations[i1].keys[i2], in, version ); \
+      NifStream( xyzRotations[i1].keys[i2], in, version, xyzRotations[i1].interpolation ); \
     }; \
   }; \
 }; \
@@ -6797,7 +6797,7 @@ if ( translations.numKeys != 0 ) { \
 }; \
 translations.keys.resize(translations.numKeys); \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
-  NifStream( translations.keys[i0], in, version ); \
+  NifStream( translations.keys[i0], in, version, translations.interpolation ); \
 }; \
 NifStream( scales.numKeys, in, version ); \
 if ( scales.numKeys != 0 ) { \
@@ -6805,7 +6805,7 @@ if ( scales.numKeys != 0 ) { \
 }; \
 scales.keys.resize(scales.numKeys); \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
-  NifStream( scales.keys[i0], in, version ); \
+  NifStream( scales.keys[i0], in, version, scales.interpolation ); \
 }; \
 
 #define NI_KEYFRAME_DATA_WRITE \
@@ -6816,7 +6816,7 @@ if ( numRotationKeys != 0 ) { \
 }; \
 if ( rotationType != 4 ) { \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
-    NifStream( quaternionKeys[i1], out, version ); \
+    NifStream( quaternionKeys[i1], out, version, rotationType ); \
   }; \
 }; \
 if ( version <= 0x0A010000 ) { \
@@ -6831,7 +6831,7 @@ if ( rotationType == 4 ) { \
       NifStream( xyzRotations[i1].interpolation, out, version ); \
     }; \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
-      NifStream( xyzRotations[i1].keys[i2], out, version ); \
+      NifStream( xyzRotations[i1].keys[i2], out, version, xyzRotations[i1].interpolation ); \
     }; \
   }; \
 }; \
@@ -6840,14 +6840,14 @@ if ( translations.numKeys != 0 ) { \
   NifStream( translations.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
-  NifStream( translations.keys[i0], out, version ); \
+  NifStream( translations.keys[i0], out, version, translations.interpolation ); \
 }; \
 NifStream( scales.numKeys, out, version ); \
 if ( scales.numKeys != 0 ) { \
   NifStream( scales.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
-  NifStream( scales.keys[i0], out, version ); \
+  NifStream( scales.keys[i0], out, version, scales.interpolation ); \
 }; \
 
 #define NI_KEYFRAME_DATA_STRING \
@@ -7458,7 +7458,7 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
     NifStream( morphs[i0].morphInterpolation, in, version ); \
     morphs[i0].morphKeys.resize(morphs_numMorphKeys); \
     for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
-      NifStream( morphs[i0].morphKeys[i2], in, version ); \
+      NifStream( morphs[i0].morphKeys[i2], in, version, morphs[i0].morphInterpolation ); \
     }; \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
@@ -7487,7 +7487,7 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
     NifStream( morphs_numMorphKeys, out, version ); \
     NifStream( morphs[i0].morphInterpolation, out, version ); \
     for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
-      NifStream( morphs[i0].morphKeys[i2], out, version ); \
+      NifStream( morphs[i0].morphKeys[i2], out, version, morphs[i0].morphInterpolation ); \
     }; \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
@@ -9187,7 +9187,7 @@ if ( data.numKeys != 0 ) { \
 }; \
 data.keys.resize(data.numKeys); \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], in, version ); \
+  NifStream( data.keys[i0], in, version, data.interpolation ); \
 }; \
 
 #define NI_POS_DATA_WRITE \
@@ -9197,7 +9197,7 @@ if ( data.numKeys != 0 ) { \
   NifStream( data.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  NifStream( data.keys[i0], out, version ); \
+  NifStream( data.keys[i0], out, version, data.interpolation ); \
 }; \
 
 #define NI_POS_DATA_STRING \
@@ -9733,12 +9733,12 @@ if ( floatKeys_.numKeys != 0 ) { \
 }; \
 floatKeys_.keys.resize(floatKeys_.numKeys); \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
-  NifStream( floatKeys_.keys[i0], in, version ); \
+  NifStream( floatKeys_.keys[i0], in, version, floatKeys_.interpolation ); \
 }; \
 NifStream( numVisibilityKeys_, in, version ); \
 visibilityKeys_.resize(numVisibilityKeys_); \
 for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
-  NifStream( visibilityKeys_[i0], in, version ); \
+  NifStream( visibilityKeys_[i0], in, version, 1 ); \
 }; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_WRITE \
@@ -9750,11 +9750,11 @@ if ( floatKeys_.numKeys != 0 ) { \
   NifStream( floatKeys_.interpolation, out, version ); \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
-  NifStream( floatKeys_.keys[i0], out, version ); \
+  NifStream( floatKeys_.keys[i0], out, version, floatKeys_.interpolation ); \
 }; \
 NifStream( numVisibilityKeys_, out, version ); \
 for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
-  NifStream( visibilityKeys_[i0], out, version ); \
+  NifStream( visibilityKeys_[i0], out, version, 1 ); \
 }; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_STRING \
@@ -11619,7 +11619,7 @@ if ( version <= 0x04020200 ) { \
 NifStream( numTextKeys, in, version ); \
 textKeys.resize(numTextKeys); \
 for (uint i0 = 0; i0 < numTextKeys; i0++) { \
-  NifStream( textKeys[i0], in, version ); \
+  NifStream( textKeys[i0], in, version, 1 ); \
 }; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_WRITE \
@@ -11631,7 +11631,7 @@ if ( version <= 0x04020200 ) { \
 }; \
 NifStream( numTextKeys, out, version ); \
 for (uint i0 = 0; i0 < numTextKeys; i0++) { \
-  NifStream( textKeys[i0], out, version ); \
+  NifStream( textKeys[i0], out, version, 1 ); \
 }; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_STRING \
@@ -13081,7 +13081,7 @@ for (uint i0 = 0; i0 < 4; i0++) { \
   }; \
   uvGroups[i0].keys.resize(uvGroups[i0].numKeys); \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
-    NifStream( uvGroups[i0].keys[i1], in, version ); \
+    NifStream( uvGroups[i0].keys[i1], in, version, uvGroups[i0].interpolation ); \
   }; \
 }; \
 
@@ -13093,7 +13093,7 @@ for (uint i0 = 0; i0 < 4; i0++) { \
     NifStream( uvGroups[i0].interpolation, out, version ); \
   }; \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
-    NifStream( uvGroups[i0].keys[i1], out, version ); \
+    NifStream( uvGroups[i0].keys[i1], out, version, uvGroups[i0].interpolation ); \
   }; \
 }; \
 
@@ -13278,7 +13278,7 @@ uint numVisKeys; \
 NifStream( numVisKeys, in, version ); \
 visKeys.resize(numVisKeys); \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
-  NifStream( visKeys[i0], in, version ); \
+  NifStream( visKeys[i0], in, version, 1 ); \
 }; \
 
 #define NI_VIS_DATA_WRITE \
@@ -13287,7 +13287,7 @@ uint numVisKeys; \
 numVisKeys = uint(visKeys.size()); \
 NifStream( numVisKeys, out, version ); \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
-  NifStream( visKeys[i0], out, version ); \
+  NifStream( visKeys[i0], out, version, 1 ); \
 }; \
 
 #define NI_VIS_DATA_STRING \
