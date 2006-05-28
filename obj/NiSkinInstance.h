@@ -24,6 +24,8 @@ public:
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version );
+	
+	NiNode * SkeletonRoot() const;
 private:
 	NI_SKIN_INSTANCE_MEMBERS
 };
