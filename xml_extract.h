@@ -1487,7 +1487,7 @@ return out.str(); \
 bhkRefObject::FixLinks( objects, link_stack, version ); \
 
 #define ABHK_CONSTRAINT_MEMBERS \
-vector<* > bodies; \
+vector<bhkShape * > bodies; \
 uint priority; \
 
 #define ABHK_CONSTRAINT_INCLUDE "bhkSerializable.h" \
@@ -1532,7 +1532,7 @@ return out.str(); \
 #define ABHK_CONSTRAINT_FIXLINKS \
 bhkSerializable::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
-  bodies[i0] = DynamicCast<>(objects[link_stack.front()]); \
+  bodies[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
   link_stack.pop_front(); \
 }; \
 
