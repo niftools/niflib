@@ -33,7 +33,7 @@ typedef NiObject IBlock;
 class NiObject {
 public:
 	NiObject();
-	~NiObject();
+	virtual ~NiObject();
 	//Run-Time Type Information
 	static const Type TYPE;
 
