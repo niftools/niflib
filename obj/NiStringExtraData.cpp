@@ -26,3 +26,5 @@ void NiStringExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_STRING_EXTRA_DATA_FIXLINKS
 }
 
+uint NiStringExtraData::BytesRemaining() const { return 0; };
+

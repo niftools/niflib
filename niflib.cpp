@@ -15,7 +15,7 @@ map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
 void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
-void BuildUpBindPositions( NiObjectRef const & block );
+void BuildUpBindPositions( const NiAVObjectRef & av );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
@@ -312,7 +312,12 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
-	BuildUpBindPositions( FindRoot(blocks) );
+	NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
+	if ( av_root != NULL ) {
+		BuildUpBindPositions( av_root );
+	} else {
+		throw runtime_error("Root object is not a NiAVObject derived class.");
+	}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance
@@ -473,7 +478,7 @@ void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<
 	}
 }
 
-void BuildUpBindPositions( const NiAVObjectRef av ) {
+void BuildUpBindPositions( const NiAVObjectRef & av ) {
 
 	//Get parent if there is one
 	NiAVObjectRef par = DynamicCast<NiAVObject>(av->GetParent());

@@ -323,6 +323,14 @@ Matrix44 Matrix44::Inverse() const {
 	return result;
 }
 
+float Matrix44::Determinant() const {
+	const Matrix44 & t = *this;
+	return  t[0][0] * Submatrix(0, 0).Determinant()
+	      - t[0][1] * Submatrix(0, 1).Determinant()
+	      + t[0][2] * Submatrix(0, 2).Determinant()
+	      - t[0][3] * Submatrix(0, 3).Determinant();
+}
+
 /*
  * Quaternion Methods
  */

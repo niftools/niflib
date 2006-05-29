@@ -9,6 +9,9 @@ const Type NiObject::TYPE("NiObject", NULL );
 //Static to track total number of objects in memory.  Initialize to zero.
 unsigned int NiObject::objectsInMemory = 0;
 
+NiObject::NiObject() : _ref_count(0) {}
+NiObject::~NiObject() {}
+
 bool NiObject::IsSameType( const Type & compare_to) const {
 	return GetType().IsSameType( compare_to );
 }
@@ -36,3 +39,22 @@ void NiObject::SubtractRef() {
 		delete this;
 	}
 }
+
+void NiObject::RemoveCrossRef( NiObject * block_to_remove ) {}
+void NiObject::IncCrossRef( NiObject * block ) {}
+void NiObject::DecCrossRef( NiObject* block ) {}
+void NiObject::ReassignCrossRefs( const map<string,NiObjectRef> & name_map ) {}
+
+unsigned int NiObject::NumObjectsInMemory() {
+	return objectsInMemory;
+}
+
+//These should be pure virtual eventually
+string NiObject::asString( bool verbose ) const {
+	return string();
+}
+
+list<NiObjectRef> NiObject::GetLinks() {
+	return list<NiObjectRef>();
+}
+

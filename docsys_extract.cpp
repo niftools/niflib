@@ -31,1323 +31,670 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-//#include "NIF_Blocks.h"
+#include "obj/NiObject.h"
 
-typedef IBlock * (*blk_factory_func)();
+typedef NiObject*(*blk_factory_func)();
 extern map<string, blk_factory_func> global_block_map;
-
-//--Block Class Constructors--//
-
-AControllable::AControllable() {
-	//AddAttr( attr_string, "Name", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Extra Data", 0, 67240448 );
-	//AddAttr( attr_linkgroup, "Extra Data List", 167772416, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Controller", 0, 0xFFFFFFFF );
-	Init();
-}
-
-AController::AController() {
-	//AddAttr( attr_link, "Next Controller", 0, 0xFFFFFFFF );
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frequency", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Phase", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Start Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Stop Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_controllertarget, "Target", 0, 0xFFFFFFFF );
-	Init();
-}
-
-ADynamicEffect::ADynamicEffect() {
-	//AddAttr( attr_condint, "Affected Node List?", 0, 67108866 );
-	//AddAttr( attr_bool, "Switch State", 167903232, 0xFFFFFFFF );
-	//AddAttr( attr_linkgroup, "Affected Nodes", 167837696, 0xFFFFFFFF );
-	Init();
-}
-
-AFx::AFx() {
-	//AddAttr( attr_byte, "Unknown1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_unk292bytes, "Unknown2", 0, 0xFFFFFFFF );
-	Init();
-}
-
-AInterpolator::AInterpolator() {
-	Init();
-}
-
-ALight::ALight() {
-	//AddAttr( attr_float, "Dimmer", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Specular Color", 0, 0xFFFFFFFF );
-	Init();
-}
-
-ANode::ANode() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Translation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_matrix33, "Rotation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Scale", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Velocity", 0, 67240448 );
-	//AddAttr( attr_linkgroup, "Properties", 0, 0xFFFFFFFF );
-	//AddAttr( attr_bbox, "Bounding Box", 0, 67240448 );
-	//AddAttr( attr_link, "Collision Data", 167772416, 0xFFFFFFFF );
-	Init();
-}
-
-AParentNode::AParentNode() {
-	//AddAttr( attr_linkgroup, "Children", 0, 0xFFFFFFFF );
-	//AddAttr( attr_linkgroup, "Effects", 0, 0xFFFFFFFF );
-	Init();
-}
-
-AParticleModifier::AParticleModifier() {
-	//AddAttr( attr_link, "Next Modifier", 0, 0xFFFFFFFF );
-	//AddAttr( attr_parent, "Previous Modifier", 0, 0xFFFFFFFF );
-	Init();
-}
-
-AParticleNode::AParticleNode() {
-	Init();
-}
-
-AParticleSystemController::AParticleSystemController() {
-	///*AddAttr( attr_float, "Speed", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Speed Random", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Vertical Direction", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Vertical Angle", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Horizontal Direction", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Horizontal Angle", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 8", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 9", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 10", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 11", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Size", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Emit Start Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Emit Stop Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Emit Rate", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Lifetime", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Lifetime Random", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Start Random", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Emitter", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short 2?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 13?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 1?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 2?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short 3?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_particlegroup, "Particles", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Particle Extra", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Trailer", 0, 0xFFFFFFFF );*/
-	Init();
-}
-
-APointLight::APointLight() {
-	/*AddAttr( attr_float, "Constant Attenuation", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Linear Attenuation", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Quadratic Attenuation", 0, 0xFFFFFFFF );*/
-	Init();
-}
-
-AProperty::AProperty() {
-	Init();
-}
-
-APSysEmitter::APSysEmitter() {
-	/*AddAttr( attr_float, "Speed", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Speed Variation", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Declination", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Declination Variation", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Planar Angle", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Planar Angle Variation", 0, 0xFFFFFFFF );
-	AddAttr( attr_color4, "Initial Color", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Initial Radius", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Radius Variation", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Life Span", 0, 0xFFFFFFFF );
-	AddAttr( attr_float, "Life Span Variation", 0, 0xFFFFFFFF );*/
-	Init();
-}
-
-APSysModifier::APSysModifier() {
-	/*AddAttr( attr_string, "Name", 0, 0xFFFFFFFF );
-	AddAttr( attr_int, "Order", 0, 0xFFFFFFFF );
-	AddAttr( attr_controllertarget, "Target", 0, 0xFFFFFFFF );
-	AddAttr( attr_bool, "Active", 0, 0xFFFFFFFF );*/
-	Init();
-}
-
-APSysVolumeEmitter::APSysVolumeEmitter() {
-	/*AddAttr( attr_emitterobject, "Emitter Object", 335544324, 0xFFFFFFFF );*/
-	Init();
-}
-
-AShape::AShape() {
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Skin Instance", 0, 0xFFFFFFFF );
-	//AddAttr( attr_shader, "Shader", 167772416, 0xFFFFFFFF );
-	Init();
-}
-
-AvoidNode::AvoidNode() {
-	Init();
-}
-
-FxButton::FxButton() {
-	Init();
-}
-
-FxRadioButton::FxRadioButton() {
-	//AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int  2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_linkgroup, "Unknown Links", 0, 0xFFFFFFFF );
-	Init();
-}
-
-FxWidget::FxWidget() {
-	Init();
-}
-
-NiAlphaController::NiAlphaController() {
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiAlphaProperty::NiAlphaProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Threshold", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiAmbientLight::NiAmbientLight() {
-	Init();
-}
-
-NiAutoNormalParticles::NiAutoNormalParticles() {
-	Init();
-}
-
-NiBillboardNode::NiBillboardNode() {
-	//AddAttr( attr_short, "Billboard Mode", 167837696, 0xFFFFFFFF );
-	Init();
-}
-
-NiBoolInterpolator::NiBoolInterpolator() {
-	//AddAttr( attr_bool, "Bool Value", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiBSAnimationNode::NiBSAnimationNode() {
-	Init();
-}
-
-NiBSPArrayController::NiBSPArrayController() {
-	Init();
-}
-
-NiBSParticleNode::NiBSParticleNode() {
-	Init();
-}
-
-NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() {
-	//AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[6]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[7]", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiBSplineCompPoint3Interpolator::NiBSplineCompPoint3Interpolator() {
-	//AddAttr( attr_int, "Unknown 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[0]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[1]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[2]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[3]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[4]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Floats[5]", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() {
-	//AddAttr( attr_float, "Unknown1[0]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown1[1]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Basis Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[0]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[1]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[2]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[3]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[4]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[5]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[6]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[7]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[8]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[9]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[10]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[11]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[12]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[13]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[14]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[15]", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown4[16]", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiCamera::NiCamera() {
-	//AddAttr( attr_short, "Unknown Short", 167837696, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Left", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Right", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Top", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Bottom", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Near", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Frustum Far", 0, 0xFFFFFFFF );
-	//AddAttr( attr_bool, "Use Orthographic Projection", 167837696, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Viewport Left", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Viewport Right", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Viewport Top", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Viewport Bottom", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "LOD Adjust", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 2", 67240192, 0xFFFFFFFF );
-	Init();
-}
-
-NiDirectionalLight::NiDirectionalLight() {
-	Init();
-}
-
-NiDitherProperty::NiDitherProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiFlipController::NiFlipController() {
-	//AddAttr( attr_int, "Texture Slot", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 2", 0, 0x0A010000 );
-	//AddAttr( attr_float, "Delta", 0, 0x0A010000 );
-	//AddAttr( attr_linkgroup, "Sources", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiFloatExtraDataController::NiFloatExtraDataController() {
-	//AddAttr( attr_link, "Unknown Link", 335544324, 0xFFFFFFFF );
-	//AddAttr( attr_string, "Unknown String", 335544324, 0xFFFFFFFF );
-	Init();
-}
-
-NiFloatInterpolator::NiFloatInterpolator() {
-	//AddAttr( attr_float, "Float Value", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiFogProperty::NiFogProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Fog Depth", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Fog Color", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiGeomMorpherController::NiGeomMorpherController() {
-	//AddAttr( attr_short, "Unknown", 167837696, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiGravity::NiGravity() {
-	//AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Force", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Type", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Position", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Direction", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiKeyframeController::NiKeyframeController() {
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiLightColorController::NiLightColorController() {
-	//AddAttr( attr_short, "Unknown Short", 167837696, 167837696 );
-	//AddAttr( attr_link, "Data", 0, 167837696 );
-	//AddAttr( attr_link, "Interpolator", 167903232, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short", 167903232, 0xFFFFFFFF );
-	Init();
-}
-
-NiLightDimmerController::NiLightDimmerController() {
-	//AddAttr( attr_link, "Unknown Link", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiLODNode::NiLODNode() {
-	//AddAttr( attr_lodinfo, "LOD Info", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiLookAtController::NiLookAtController() {
-	//AddAttr( attr_short, "Unknown1", 167837696, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Look At Node", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiLookAtInterpolator::NiLookAtInterpolator() {
-	//AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Look At", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Translation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_quaternion, "Rotation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Scale", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link 3", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiMaterialColorController::NiMaterialColorController() {
-	//AddAttr( attr_short, "Unknown", 167837696, 167837696 );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short", 167903232, 0xFFFFFFFF );
-	Init();
-}
-
-NiMaterialProperty::NiMaterialProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 167772416 );
-	//AddAttr( attr_color3, "Ambient Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Diffuse Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Specular Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_color3, "Emissive Color", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Glossiness", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Alpha", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiMeshParticleSystem::NiMeshParticleSystem() {
-	//AddAttr( attr_modifiergroup, "Modifiers", 167837696, 0xFFFFFFFF );
-	Init();
-}
-
-NiMultiTargetTransformController::NiMultiTargetTransformController() {
-	//AddAttr( attr_targetgroup, "Targets", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiNode::NiNode() {
-	Init();
-}
-
-NiParticleBomb::NiParticleBomb() {
-	//AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 8", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 9", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 10", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticleColorModifier::NiParticleColorModifier() {
-	//AddAttr( attr_link, "Color Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticleGrowFade::NiParticleGrowFade() {
-	//AddAttr( attr_float, "Grow", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Fade", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticleMeshes::NiParticleMeshes() {
-	Init();
-}
-
-NiParticleMeshModifier::NiParticleMeshModifier() {
-	//AddAttr( attr_linkgroup, "Particle Meshes", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticleRotation::NiParticleRotation() {
-	//AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticles::NiParticles() {
-	Init();
-}
-
-NiParticleSystem::NiParticleSystem() {
-	//AddAttr( attr_modifiergroup, "Modifiers", 167837696, 0xFFFFFFFF );
-	Init();
-}
-
-NiParticleSystemController::NiParticleSystemController() {
-	Init();
-}
-
-NiPathController::NiPathController() {
-	//AddAttr( attr_short, "Unknown Short 2", 167837696, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown Int 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Pos Data", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Float Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPlanarCollider::NiPlanarCollider() {
-	//AddAttr( attr_short, "Unknown Short", 167772416, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short 2", 67240448, 67240448 );
-	//AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 6", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 7", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 8", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 9", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 10", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 11", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 12", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 13", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 14", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 15", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 16", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPoint3Interpolator::NiPoint3Interpolator() {
-	//AddAttr( attr_vector3, "Point 3 Value", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPointLight::NiPointLight() {
-	Init();
-}
-
-NiPSysAgeDeathModifier::NiPSysAgeDeathModifier() {
-	//AddAttr( attr_bool, "Spawn on Death", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Spawn Modifier", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysBoundUpdateModifier::NiPSysBoundUpdateModifier() {
-	//AddAttr( attr_short, "Update Skip", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysBoxEmitter::NiPSysBoxEmitter() {
-	//AddAttr( attr_float, "Width", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Height", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Depth", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysColliderManager::NiPSysColliderManager() {
-	//AddAttr( attr_link, "Collider", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Bounce", 0, 0xFFFFFFFF );
-	//AddAttr( attr_bool, "Spawn on Collide", 0, 0xFFFFFFFF );
-	//AddAttr( attr_bool, "Die on Collide", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Spawn Modifier", 0, 0xFFFFFFFF );
-	//AddAttr( attr_selflink, "Manager", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Unknown Link?", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Collider Object", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysColorModifier::NiPSysColorModifier() {
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysCylinderEmitter::NiPSysCylinderEmitter() {
-	//AddAttr( attr_float, "Radius", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Height", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysEmitterCtlr::NiPSysEmitterCtlr() {
-	//AddAttr( attr_link, "Interpolator", 167903232, 0xFFFFFFFF );
-	//AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysEmitterDeclinationVarCtlr::NiPSysEmitterDeclinationVarCtlr() {
-	//AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
-	//AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysEmitterInitialRadiusCtlr::NiPSysEmitterInitialRadiusCtlr() {
-	//AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
-	//AddAttr( attr_string, "Unknown String", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysGravityModifier::NiPSysGravityModifier() {
-	//AddAttr( attr_crossref, "Gravity Object", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Gravity Axis", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Decay", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Strength", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Turbulence", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Turbulence Scale", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Force Type", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysGrowFadeModifier::NiPSysGrowFadeModifier() {
-	//AddAttr( attr_float, "Grow Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Grow Generation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Fade Time", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Fade Generation", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysMeshUpdateModifier::NiPSysMeshUpdateModifier() {
-	//AddAttr( attr_linkgroup, "Meshes", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysPlanarCollider::NiPSysPlanarCollider() {
-	//AddAttr( attr_float, "Width", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Height", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "X Axis", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Y Axis", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysPositionModifier::NiPSysPositionModifier() {
-	Init();
-}
-
-NiPSysResetOnLoopCtlr::NiPSysResetOnLoopCtlr() {
-	Init();
-}
-
-NiPSysRotationModifier::NiPSysRotationModifier() {
-	//AddAttr( attr_float, "Initial Rotation Speed", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Initial Rotation Speed Variation", 335544324, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Initial Rotation Angle", 335544324, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Initial Rotation Angle Variation", 335544324, 0xFFFFFFFF );
-	//AddAttr( attr_bool, "Random Rot Speed Sign", 335544324, 0xFFFFFFFF );
-	//AddAttr( attr_bool, "Random Initial Axis", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Initial Axis", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysSpawnModifier::NiPSysSpawnModifier() {
-	//AddAttr( attr_short, "Num Spawn Generations", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Percentage Spawned", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Min Num to Spawn", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Max Num to Spawn", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Spawn Speed Chaos", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Spawn Dir Chaos", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Life Span", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Life Span Variation", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysSphereEmitter::NiPSysSphereEmitter() {
-	//AddAttr( attr_float, "Radius", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiPSysUpdateCtlr::NiPSysUpdateCtlr() {
-	Init();
-}
-
-NiRotatingParticles::NiRotatingParticles() {
-	Init();
-}
-
-NiSequenceStreamHelper::NiSequenceStreamHelper() {
-	Init();
-}
-
-NiShadeProperty::NiShadeProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiSourceTexture::NiSourceTexture() {
-	//AddAttr( attr_texsource, "Texture Source", 0, 0xFFFFFFFF );
-	//AddAttr( attr_pixellayout, "Pixel Layout", 0, 0xFFFFFFFF );
-	//AddAttr( attr_mipmapformat, "Use Mipmaps", 0, 0xFFFFFFFF );
-	//AddAttr( attr_alphaformat, "Alpha Format", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Unknown Byte", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Unknown Byte 2", 167903232, 0xFFFFFFFF );
-	Init();
-}
-
-NiSpecularProperty::NiSpecularProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiSphericalCollider::NiSphericalCollider() {
-	//AddAttr( attr_float, "Unknown Float 1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 4", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float 5", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiSpotLight::NiSpotLight() {
-	//AddAttr( attr_float, "Cutoff Angle", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Exponent", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiStencilProperty::NiStencilProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 167772416 );
-	//AddAttr( attr_bool, "Stencil Enabled", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Stencil Function", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Stencil Ref", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Stencil Mask", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Fail Action", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Z Fail Action", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Pass Action", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Draw Mode", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiTextureEffect::NiTextureEffect() {
-	//AddAttr( attr_matrix33, "Model Projection Matrix", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Model Projection Transform", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Texture Filtering", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Texture Clamping", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Texture Type", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Coordinate Generation Type", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Source Texture", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Clipping Plane", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vector3, "Unknown Vector", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Unknown Float", 0, 0xFFFFFFFF );
-	//AddAttr( attr_short, "PS2 L", 0, 167903232 );
-	//AddAttr( attr_short, "PS2 K", 0, 167903232 );
-	//AddAttr( attr_short, "Unknown Short", 0, 67174412 );
-	Init();
-}
-
-NiTextureTransformController::NiTextureTransformController() {
-	//AddAttr( attr_int, "Unknown1", 0, 0xFFFFFFFF );
-	//AddAttr( attr_byte, "Unknown2", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown3", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Unknown4", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiTransformController::NiTransformController() {
-	//AddAttr( attr_link, "Interpolator", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiTransformInterpolator::NiTransformInterpolator() {
-	//AddAttr( attr_vector3, "Translation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_quaternion, "Rotation", 0, 0xFFFFFFFF );
-	//AddAttr( attr_float, "Scale", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiTriShape::NiTriShape() {
-	Init();
-}
-
-NiTriStrips::NiTriStrips() {
-	Init();
-}
-
-NiUVController::NiUVController() {
-	//AddAttr( attr_short, "Unknown Short", 0, 0xFFFFFFFF );
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiVertexColorProperty::NiVertexColorProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_vertmode, "Vertex Mode", 0, 0xFFFFFFFF );
-	//AddAttr( attr_lightmode, "Lighting Mode", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiVisController::NiVisController() {
-	//AddAttr( attr_link, "Data", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiWireframeProperty::NiWireframeProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	Init();
-}
-
-NiZBufferProperty::NiZBufferProperty() {
-	//AddAttr( attr_flags, "Flags", 0, 0xFFFFFFFF );
-	//AddAttr( attr_int, "Function", 67174412, 0xFFFFFFFF );
-	Init();
-}
-
-RootCollisionNode::RootCollisionNode() {
-	Init();
-}
 
 //--Factory Functions--//
 
-IBlock * CreateAvoidNode() {
+#include "obj/AvoidNode.h"
+NiObject * CreateAvoidNode() {
 	return new AvoidNode;
 }
 
-IBlock * CreateFxButton() {
+#include "obj/FxButton.h"
+NiObject * CreateFxButton() {
 	return new FxButton;
 }
 
-IBlock * CreateFxRadioButton() {
+#include "obj/FxRadioButton.h"
+NiObject * CreateFxRadioButton() {
 	return new FxRadioButton;
 }
 
-IBlock * CreateFxWidget() {
+#include "obj/FxWidget.h"
+NiObject * CreateFxWidget() {
 	return new FxWidget;
 }
 
-IBlock * CreateNiAlphaController() {
+#include "obj/NiAlphaController.h"
+NiObject * CreateNiAlphaController() {
 	return new NiAlphaController;
 }
 
-IBlock * CreateNiAlphaProperty() {
+#include "obj/NiAlphaProperty.h"
+NiObject * CreateNiAlphaProperty() {
 	return new NiAlphaProperty;
 }
 
-IBlock * CreateNiAmbientLight() {
+#include "obj/NiAmbientLight.h"
+NiObject * CreateNiAmbientLight() {
 	return new NiAmbientLight;
 }
 
-IBlock * CreateNiAutoNormalParticles() {
+#include "obj/NiAutoNormalParticles.h"
+NiObject * CreateNiAutoNormalParticles() {
 	return new NiAutoNormalParticles;
 }
 
-IBlock * CreateNiAutoNormalParticlesData() {
+#include "obj/NiAutoNormalParticlesData.h"
+NiObject * CreateNiAutoNormalParticlesData() {
 	return new NiAutoNormalParticlesData;
 }
 
-IBlock * CreateNiBillboardNode() {
+#include "obj/NiBillboardNode.h"
+NiObject * CreateNiBillboardNode() {
 	return new NiBillboardNode;
 }
 
-IBlock * CreateNiBinaryExtraData() {
+#include "obj/NiBinaryExtraData.h"
+NiObject * CreateNiBinaryExtraData() {
 	return new NiBinaryExtraData;
 }
 
-IBlock * CreateNiBoneLODController() {
+#include "obj/NiBoneLODController.h"
+NiObject * CreateNiBoneLODController() {
 	return new NiBoneLODController;
 }
 
-IBlock * CreateNiBoolData() {
+#include "obj/NiBoolData.h"
+NiObject * CreateNiBoolData() {
 	return new NiBoolData;
 }
 
-IBlock * CreateNiBooleanExtraData() {
+#include "obj/NiBooleanExtraData.h"
+NiObject * CreateNiBooleanExtraData() {
 	return new NiBooleanExtraData;
 }
 
-IBlock * CreateNiBoolInterpolator() {
+#include "obj/NiBoolInterpolator.h"
+NiObject * CreateNiBoolInterpolator() {
 	return new NiBoolInterpolator;
 }
 
-IBlock * CreateNiBSAnimationNode() {
+#include "obj/NiBSAnimationNode.h"
+NiObject * CreateNiBSAnimationNode() {
 	return new NiBSAnimationNode;
 }
 
-IBlock * CreateNiBSPArrayController() {
+#include "obj/NiBSPArrayController.h"
+NiObject * CreateNiBSPArrayController() {
 	return new NiBSPArrayController;
 }
 
-IBlock * CreateNiBSParticleNode() {
+#include "obj/NiBSParticleNode.h"
+NiObject * CreateNiBSParticleNode() {
 	return new NiBSParticleNode;
 }
 
-IBlock * CreateNiBSplineBasisData() {
+#include "obj/NiBSplineBasisData.h"
+NiObject * CreateNiBSplineBasisData() {
 	return new NiBSplineBasisData;
 }
 
-IBlock * CreateNiBSplineCompFloatInterpolator() {
+#include "obj/NiBSplineCompFloatInterpolator.h"
+NiObject * CreateNiBSplineCompFloatInterpolator() {
 	return new NiBSplineCompFloatInterpolator;
 }
 
-IBlock * CreateNiBSplineCompPoint3Interpolator() {
+#include "obj/NiBSplineCompPoint3Interpolator.h"
+NiObject * CreateNiBSplineCompPoint3Interpolator() {
 	return new NiBSplineCompPoint3Interpolator;
 }
 
-IBlock * CreateNiBSplineCompTransformInterpolator() {
+#include "obj/NiBSplineCompTransformInterpolator.h"
+NiObject * CreateNiBSplineCompTransformInterpolator() {
 	return new NiBSplineCompTransformInterpolator;
 }
 
-IBlock * CreateNiBSplineData() {
+#include "obj/NiBSplineData.h"
+NiObject * CreateNiBSplineData() {
 	return new NiBSplineData;
 }
 
-IBlock * CreateNiCamera() {
+#include "obj/NiCamera.h"
+NiObject * CreateNiCamera() {
 	return new NiCamera;
 }
 
-IBlock * CreateNiCollisionData() {
+#include "obj/NiCollisionData.h"
+NiObject * CreateNiCollisionData() {
 	return new NiCollisionData;
 }
 
-IBlock * CreateNiColorData() {
+#include "obj/NiColorData.h"
+NiObject * CreateNiColorData() {
 	return new NiColorData;
 }
 
-IBlock * CreateNiColorExtraData() {
+#include "obj/NiColorExtraData.h"
+NiObject * CreateNiColorExtraData() {
 	return new NiColorExtraData;
 }
 
-IBlock * CreateNiControllerSequence() {
+#include "obj/NiControllerSequence.h"
+NiObject * CreateNiControllerSequence() {
 	return new NiControllerSequence;
 }
 
-IBlock * CreateNiDirectionalLight() {
+#include "obj/NiDirectionalLight.h"
+NiObject * CreateNiDirectionalLight() {
 	return new NiDirectionalLight;
 }
 
-IBlock * CreateNiDitherProperty() {
+#include "obj/NiDitherProperty.h"
+NiObject * CreateNiDitherProperty() {
 	return new NiDitherProperty;
 }
 
-IBlock * CreateNiFlipController() {
+#include "obj/NiFlipController.h"
+NiObject * CreateNiFlipController() {
 	return new NiFlipController;
 }
 
-IBlock * CreateNiFloatData() {
+#include "obj/NiFloatData.h"
+NiObject * CreateNiFloatData() {
 	return new NiFloatData;
 }
 
-IBlock * CreateNiFloatExtraData() {
+#include "obj/NiFloatExtraData.h"
+NiObject * CreateNiFloatExtraData() {
 	return new NiFloatExtraData;
 }
 
-IBlock * CreateNiFloatExtraDataController() {
+#include "obj/NiFloatExtraDataController.h"
+NiObject * CreateNiFloatExtraDataController() {
 	return new NiFloatExtraDataController;
 }
 
-IBlock * CreateNiFloatInterpolator() {
+#include "obj/NiFloatInterpolator.h"
+NiObject * CreateNiFloatInterpolator() {
 	return new NiFloatInterpolator;
 }
 
-IBlock * CreateNiFloatsExtraData() {
+#include "obj/NiFloatsExtraData.h"
+NiObject * CreateNiFloatsExtraData() {
 	return new NiFloatsExtraData;
 }
 
-IBlock * CreateNiFogProperty() {
+#include "obj/NiFogProperty.h"
+NiObject * CreateNiFogProperty() {
 	return new NiFogProperty;
 }
 
-IBlock * CreateNiGeomMorpherController() {
+#include "obj/NiGeomMorpherController.h"
+NiObject * CreateNiGeomMorpherController() {
 	return new NiGeomMorpherController;
 }
 
-IBlock * CreateNiGravity() {
+#include "obj/NiGravity.h"
+NiObject * CreateNiGravity() {
 	return new NiGravity;
 }
 
-IBlock * CreateNiIntegerExtraData() {
+#include "obj/NiIntegerExtraData.h"
+NiObject * CreateNiIntegerExtraData() {
 	return new NiIntegerExtraData;
 }
 
-IBlock * CreateNiIntegersExtraData() {
+#include "obj/NiIntegersExtraData.h"
+NiObject * CreateNiIntegersExtraData() {
 	return new NiIntegersExtraData;
 }
 
-IBlock * CreateNiKeyframeController() {
+#include "obj/NiKeyframeController.h"
+NiObject * CreateNiKeyframeController() {
 	return new NiKeyframeController;
 }
 
-IBlock * CreateNiKeyframeData() {
+#include "obj/NiKeyframeData.h"
+NiObject * CreateNiKeyframeData() {
 	return new NiKeyframeData;
 }
 
-IBlock * CreateNiLightColorController() {
+#include "obj/NiLightColorController.h"
+NiObject * CreateNiLightColorController() {
 	return new NiLightColorController;
 }
 
-IBlock * CreateNiLightDimmerController() {
+#include "obj/NiLightDimmerController.h"
+NiObject * CreateNiLightDimmerController() {
 	return new NiLightDimmerController;
 }
 
-IBlock * CreateNiLODNode() {
+#include "obj/NiLODNode.h"
+NiObject * CreateNiLODNode() {
 	return new NiLODNode;
 }
 
-IBlock * CreateNiLookAtController() {
+#include "obj/NiLookAtController.h"
+NiObject * CreateNiLookAtController() {
 	return new NiLookAtController;
 }
 
-IBlock * CreateNiLookAtInterpolator() {
+#include "obj/NiLookAtInterpolator.h"
+NiObject * CreateNiLookAtInterpolator() {
 	return new NiLookAtInterpolator;
 }
 
-IBlock * CreateNiMaterialColorController() {
+#include "obj/NiMaterialColorController.h"
+NiObject * CreateNiMaterialColorController() {
 	return new NiMaterialColorController;
 }
 
-IBlock * CreateNiMaterialProperty() {
+#include "obj/NiMaterialProperty.h"
+NiObject * CreateNiMaterialProperty() {
 	return new NiMaterialProperty;
 }
 
-IBlock * CreateNiMeshParticleSystem() {
+#include "obj/NiMeshParticleSystem.h"
+NiObject * CreateNiMeshParticleSystem() {
 	return new NiMeshParticleSystem;
 }
 
-IBlock * CreateNiMeshPSysData() {
+#include "obj/NiMeshPSysData.h"
+NiObject * CreateNiMeshPSysData() {
 	return new NiMeshPSysData;
 }
 
-IBlock * CreateNiMorphData() {
+#include "obj/NiMorphData.h"
+NiObject * CreateNiMorphData() {
 	return new NiMorphData;
 }
 
-IBlock * CreateNiMultiTargetTransformController() {
+#include "obj/NiMultiTargetTransformController.h"
+NiObject * CreateNiMultiTargetTransformController() {
 	return new NiMultiTargetTransformController;
 }
 
-IBlock * CreateNiNode() {
+#include "obj/NiNode.h"
+NiObject * CreateNiNode() {
 	return new NiNode;
 }
 
-IBlock * CreateNiPalette() {
+#include "obj/NiPalette.h"
+NiObject * CreateNiPalette() {
 	return new NiPalette;
 }
 
-IBlock * CreateNiParticleBomb() {
+#include "obj/NiParticleBomb.h"
+NiObject * CreateNiParticleBomb() {
 	return new NiParticleBomb;
 }
 
-IBlock * CreateNiParticleColorModifier() {
+#include "obj/NiParticleColorModifier.h"
+NiObject * CreateNiParticleColorModifier() {
 	return new NiParticleColorModifier;
 }
 
-IBlock * CreateNiParticleGrowFade() {
+#include "obj/NiParticleGrowFade.h"
+NiObject * CreateNiParticleGrowFade() {
 	return new NiParticleGrowFade;
 }
 
-IBlock * CreateNiParticleMeshes() {
+#include "obj/NiParticleMeshes.h"
+NiObject * CreateNiParticleMeshes() {
 	return new NiParticleMeshes;
 }
 
-IBlock * CreateNiParticleMeshesData() {
+#include "obj/NiParticleMeshesData.h"
+NiObject * CreateNiParticleMeshesData() {
 	return new NiParticleMeshesData;
 }
 
-IBlock * CreateNiParticleMeshModifier() {
+#include "obj/NiParticleMeshModifier.h"
+NiObject * CreateNiParticleMeshModifier() {
 	return new NiParticleMeshModifier;
 }
 
-IBlock * CreateNiParticleRotation() {
+#include "obj/NiParticleRotation.h"
+NiObject * CreateNiParticleRotation() {
 	return new NiParticleRotation;
 }
 
-IBlock * CreateNiParticles() {
+#include "obj/NiParticles.h"
+NiObject * CreateNiParticles() {
 	return new NiParticles;
 }
 
-IBlock * CreateNiParticlesData() {
+#include "obj/NiParticlesData.h"
+NiObject * CreateNiParticlesData() {
 	return new NiParticlesData;
 }
 
-IBlock * CreateNiParticleSystem() {
+#include "obj/NiParticleSystem.h"
+NiObject * CreateNiParticleSystem() {
 	return new NiParticleSystem;
 }
 
-IBlock * CreateNiParticleSystemController() {
+#include "obj/NiParticleSystemController.h"
+NiObject * CreateNiParticleSystemController() {
 	return new NiParticleSystemController;
 }
 
-IBlock * CreateNiPathController() {
+#include "obj/NiPathController.h"
+NiObject * CreateNiPathController() {
 	return new NiPathController;
 }
 
-IBlock * CreateNiPixelData() {
+#include "obj/NiPixelData.h"
+NiObject * CreateNiPixelData() {
 	return new NiPixelData;
 }
 
-IBlock * CreateNiPlanarCollider() {
+#include "obj/NiPlanarCollider.h"
+NiObject * CreateNiPlanarCollider() {
 	return new NiPlanarCollider;
 }
 
-IBlock * CreateNiPoint3Interpolator() {
+#include "obj/NiPoint3Interpolator.h"
+NiObject * CreateNiPoint3Interpolator() {
 	return new NiPoint3Interpolator;
 }
 
-IBlock * CreateNiPointLight() {
+#include "obj/NiPointLight.h"
+NiObject * CreateNiPointLight() {
 	return new NiPointLight;
 }
 
-IBlock * CreateNiPosData() {
+#include "obj/NiPosData.h"
+NiObject * CreateNiPosData() {
 	return new NiPosData;
 }
 
-IBlock * CreateNiPSysAgeDeathModifier() {
+#include "obj/NiPSysAgeDeathModifier.h"
+NiObject * CreateNiPSysAgeDeathModifier() {
 	return new NiPSysAgeDeathModifier;
 }
 
-IBlock * CreateNiPSysBoundUpdateModifier() {
+#include "obj/NiPSysBoundUpdateModifier.h"
+NiObject * CreateNiPSysBoundUpdateModifier() {
 	return new NiPSysBoundUpdateModifier;
 }
 
-IBlock * CreateNiPSysBoxEmitter() {
+#include "obj/NiPSysBoxEmitter.h"
+NiObject * CreateNiPSysBoxEmitter() {
 	return new NiPSysBoxEmitter;
 }
 
-IBlock * CreateNiPSysColliderManager() {
+#include "obj/NiPSysColliderManager.h"
+NiObject * CreateNiPSysColliderManager() {
 	return new NiPSysColliderManager;
 }
 
-IBlock * CreateNiPSysColorModifier() {
+#include "obj/NiPSysColorModifier.h"
+NiObject * CreateNiPSysColorModifier() {
 	return new NiPSysColorModifier;
 }
 
-IBlock * CreateNiPSysCylinderEmitter() {
+#include "obj/NiPSysCylinderEmitter.h"
+NiObject * CreateNiPSysCylinderEmitter() {
 	return new NiPSysCylinderEmitter;
 }
 
-IBlock * CreateNiPSysData() {
+#include "obj/NiPSysData.h"
+NiObject * CreateNiPSysData() {
 	return new NiPSysData;
 }
 
-IBlock * CreateNiPSysEmitterCtlr() {
+#include "obj/NiPSysEmitterCtlr.h"
+NiObject * CreateNiPSysEmitterCtlr() {
 	return new NiPSysEmitterCtlr;
 }
 
-IBlock * CreateNiPSysEmitterCtlrData() {
+#include "obj/NiPSysEmitterCtlrData.h"
+NiObject * CreateNiPSysEmitterCtlrData() {
 	return new NiPSysEmitterCtlrData;
 }
 
-IBlock * CreateNiPSysEmitterDeclinationVarCtlr() {
+#include "obj/NiPSysEmitterDeclinationVarCtlr.h"
+NiObject * CreateNiPSysEmitterDeclinationVarCtlr() {
 	return new NiPSysEmitterDeclinationVarCtlr;
 }
 
-IBlock * CreateNiPSysEmitterInitialRadiusCtlr() {
+#include "obj/NiPSysEmitterInitialRadiusCtlr.h"
+NiObject * CreateNiPSysEmitterInitialRadiusCtlr() {
 	return new NiPSysEmitterInitialRadiusCtlr;
 }
 
-IBlock * CreateNiPSysGravityModifier() {
+#include "obj/NiPSysGravityModifier.h"
+NiObject * CreateNiPSysGravityModifier() {
 	return new NiPSysGravityModifier;
 }
 
-IBlock * CreateNiPSysGrowFadeModifier() {
+#include "obj/NiPSysGrowFadeModifier.h"
+NiObject * CreateNiPSysGrowFadeModifier() {
 	return new NiPSysGrowFadeModifier;
 }
 
-IBlock * CreateNiPSysMeshUpdateModifier() {
+#include "obj/NiPSysMeshUpdateModifier.h"
+NiObject * CreateNiPSysMeshUpdateModifier() {
 	return new NiPSysMeshUpdateModifier;
 }
 
-IBlock * CreateNiPSysPlanarCollider() {
+#include "obj/NiPSysPlanarCollider.h"
+NiObject * CreateNiPSysPlanarCollider() {
 	return new NiPSysPlanarCollider;
 }
 
-IBlock * CreateNiPSysPositionModifier() {
+#include "obj/NiPSysPositionModifier.h"
+NiObject * CreateNiPSysPositionModifier() {
 	return new NiPSysPositionModifier;
 }
 
-IBlock * CreateNiPSysResetOnLoopCtlr() {
+#include "obj/NiPSysResetOnLoopCtlr.h"
+NiObject * CreateNiPSysResetOnLoopCtlr() {
 	return new NiPSysResetOnLoopCtlr;
 }
 
-IBlock * CreateNiPSysRotationModifier() {
+#include "obj/NiPSysRotationModifier.h"
+NiObject * CreateNiPSysRotationModifier() {
 	return new NiPSysRotationModifier;
 }
 
-IBlock * CreateNiPSysSpawnModifier() {
+#include "obj/NiPSysSpawnModifier.h"
+NiObject * CreateNiPSysSpawnModifier() {
 	return new NiPSysSpawnModifier;
 }
 
-IBlock * CreateNiPSysSphereEmitter() {
+#include "obj/NiPSysSphereEmitter.h"
+NiObject * CreateNiPSysSphereEmitter() {
 	return new NiPSysSphereEmitter;
 }
 
-IBlock * CreateNiPSysUpdateCtlr() {
+#include "obj/NiPSysUpdateCtlr.h"
+NiObject * CreateNiPSysUpdateCtlr() {
 	return new NiPSysUpdateCtlr;
 }
 
-IBlock * CreateNiRangeLODData() {
+#include "obj/NiRangeLODData.h"
+NiObject * CreateNiRangeLODData() {
 	return new NiRangeLODData;
 }
 
-IBlock * CreateNiRotatingParticles() {
+#include "obj/NiRotatingParticles.h"
+NiObject * CreateNiRotatingParticles() {
 	return new NiRotatingParticles;
 }
 
-IBlock * CreateNiRotatingParticlesData() {
+#include "obj/NiRotatingParticlesData.h"
+NiObject * CreateNiRotatingParticlesData() {
 	return new NiRotatingParticlesData;
 }
 
-IBlock * CreateNiScreenLODData() {
+#include "obj/NiScreenLODData.h"
+NiObject * CreateNiScreenLODData() {
 	return new NiScreenLODData;
 }
 
-IBlock * CreateNiSequenceStreamHelper() {
+#include "obj/NiSequenceStreamHelper.h"
+NiObject * CreateNiSequenceStreamHelper() {
 	return new NiSequenceStreamHelper;
 }
 
-IBlock * CreateNiShadeProperty() {
+#include "obj/NiShadeProperty.h"
+NiObject * CreateNiShadeProperty() {
 	return new NiShadeProperty;
 }
 
-IBlock * CreateNiSkinData() {
+#include "obj/NiSkinData.h"
+NiObject * CreateNiSkinData() {
 	return new NiSkinData;
 }
 
-IBlock * CreateNiSkinInstance() {
+#include "obj/NiSkinInstance.h"
+NiObject * CreateNiSkinInstance() {
 	return new NiSkinInstance;
 }
 
-IBlock * CreateNiSkinPartition() {
+#include "obj/NiSkinPartition.h"
+NiObject * CreateNiSkinPartition() {
 	return new NiSkinPartition;
 }
 
-IBlock * CreateNiSourceTexture() {
+#include "obj/NiSourceTexture.h"
+NiObject * CreateNiSourceTexture() {
 	return new NiSourceTexture;
 }
 
-IBlock * CreateNiSpecularProperty() {
+#include "obj/NiSpecularProperty.h"
+NiObject * CreateNiSpecularProperty() {
 	return new NiSpecularProperty;
 }
 
-IBlock * CreateNiSphericalCollider() {
+#include "obj/NiSphericalCollider.h"
+NiObject * CreateNiSphericalCollider() {
 	return new NiSphericalCollider;
 }
 
-IBlock * CreateNiSpotLight() {
+#include "obj/NiSpotLight.h"
+NiObject * CreateNiSpotLight() {
 	return new NiSpotLight;
 }
 
-IBlock * CreateNiStencilProperty() {
+#include "obj/NiStencilProperty.h"
+NiObject * CreateNiStencilProperty() {
 	return new NiStencilProperty;
 }
 
-IBlock * CreateNiStringExtraData() {
+#include "obj/NiStringExtraData.h"
+NiObject * CreateNiStringExtraData() {
 	return new NiStringExtraData;
 }
 
-IBlock * CreateNiStringPalette() {
+#include "obj/NiStringPalette.h"
+NiObject * CreateNiStringPalette() {
 	return new NiStringPalette;
 }
 
-IBlock * CreateNiStringsExtraData() {
+#include "obj/NiStringsExtraData.h"
+NiObject * CreateNiStringsExtraData() {
 	return new NiStringsExtraData;
 }
 
-IBlock * CreateNiTextKeyExtraData() {
+#include "obj/NiTextKeyExtraData.h"
+NiObject * CreateNiTextKeyExtraData() {
 	return new NiTextKeyExtraData;
 }
 
-IBlock * CreateNiTextureEffect() {
+#include "obj/NiTextureEffect.h"
+NiObject * CreateNiTextureEffect() {
 	return new NiTextureEffect;
 }
 
-IBlock * CreateNiTextureTransformController() {
+#include "obj/NiTextureTransformController.h"
+NiObject * CreateNiTextureTransformController() {
 	return new NiTextureTransformController;
 }
 
-IBlock * CreateNiTexturingProperty() {
+#include "obj/NiTexturingProperty.h"
+NiObject * CreateNiTexturingProperty() {
 	return new NiTexturingProperty;
 }
 
-IBlock * CreateNiTransformController() {
+#include "obj/NiTransformController.h"
+NiObject * CreateNiTransformController() {
 	return new NiTransformController;
 }
 
-IBlock * CreateNiTransformData() {
+#include "obj/NiTransformData.h"
+NiObject * CreateNiTransformData() {
 	return new NiTransformData;
 }
 
-IBlock * CreateNiTransformInterpolator() {
+#include "obj/NiTransformInterpolator.h"
+NiObject * CreateNiTransformInterpolator() {
 	return new NiTransformInterpolator;
 }
 
-IBlock * CreateNiTriShape() {
+#include "obj/NiTriShape.h"
+NiObject * CreateNiTriShape() {
 	return new NiTriShape;
 }
 
-IBlock * CreateNiTriShapeData() {
+#include "obj/NiTriShapeData.h"
+NiObject * CreateNiTriShapeData() {
 	return new NiTriShapeData;
 }
 
-IBlock * CreateNiTriStrips() {
+#include "obj/NiTriStrips.h"
+NiObject * CreateNiTriStrips() {
 	return new NiTriStrips;
 }
 
-IBlock * CreateNiTriStripsData() {
+#include "obj/NiTriStripsData.h"
+NiObject * CreateNiTriStripsData() {
 	return new NiTriStripsData;
 }
 
-IBlock * CreateNiUVController() {
+#include "obj/NiUVController.h"
+NiObject * CreateNiUVController() {
 	return new NiUVController;
 }
 
-IBlock * CreateNiUVData() {
+#include "obj/NiUVData.h"
+NiObject * CreateNiUVData() {
 	return new NiUVData;
 }
 
-IBlock * CreateNiVectorExtraData() {
+#include "obj/NiVectorExtraData.h"
+NiObject * CreateNiVectorExtraData() {
 	return new NiVectorExtraData;
 }
 
-IBlock * CreateNiVertexColorProperty() {
+#include "obj/NiVertexColorProperty.h"
+NiObject * CreateNiVertexColorProperty() {
 	return new NiVertexColorProperty;
 }
 
-IBlock * CreateNiVertWeightsExtraData() {
+#include "obj/NiVertWeightsExtraData.h"
+NiObject * CreateNiVertWeightsExtraData() {
 	return new NiVertWeightsExtraData;
 }
 
-IBlock * CreateNiVisController() {
+#include "obj/NiVisController.h"
+NiObject * CreateNiVisController() {
 	return new NiVisController;
 }
 
-IBlock * CreateNiVisData() {
+#include "obj/NiVisData.h"
+NiObject * CreateNiVisData() {
 	return new NiVisData;
 }
 
-IBlock * CreateNiWireframeProperty() {
+#include "obj/NiWireframeProperty.h"
+NiObject * CreateNiWireframeProperty() {
 	return new NiWireframeProperty;
 }
 
-IBlock * CreateNiZBufferProperty() {
+#include "obj/NiZBufferProperty.h"
+NiObject * CreateNiZBufferProperty() {
 	return new NiZBufferProperty;
 }
 
-IBlock * CreateRootCollisionNode() {
+#include "obj/RootCollisionNode.h"
+NiObject * CreateRootCollisionNode() {
 	return new RootCollisionNode;
 }
 

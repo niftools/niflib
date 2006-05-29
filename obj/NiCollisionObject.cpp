@@ -26,3 +26,4 @@ void NiCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_COLLISION_OBJECT_FIXLINKS
 }
 
+NiAVObject * NiCollisionObject::Parent() const { return NULL; };

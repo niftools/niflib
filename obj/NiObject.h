@@ -123,13 +123,13 @@ public:
 		return asString();
 	};
 
-	virtual void RemoveCrossLink( NiObject * block_to_remove );
+	virtual void RemoveCrossRef( NiObject * block_to_remove );
 
 	void IncCrossRef( NiObject * block );
 	void DecCrossRef( NiObject* block );
-	virtual void ReassignCrossRefs( const map<string,NiObjectRef> & name_map ) {}
+	virtual void ReassignCrossRefs( const map<string,NiObjectRef> & name_map );
 	
-	static unsigned int NumObjectsInMemory() { return objectsInMemory; }
+	static unsigned int NumObjectsInMemory();
 private:
 	unsigned int _ref_count;
 	list<NiObject*> _cross_refs;

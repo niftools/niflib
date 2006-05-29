@@ -26,3 +26,7 @@ void TriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	TRI_BASED_GEOM_DATA_FIXLINKS
 }
 
+Vector3 TriBasedGeomData::Center() const { return Vector3(); }
+
+float TriBasedGeomData::Radius() const { return 0.0f; }
+

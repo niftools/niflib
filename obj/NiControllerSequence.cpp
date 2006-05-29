@@ -30,3 +30,5 @@ void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_CONTROLLER_SEQUENCE_FIXLINKS
 }
 
+NiControllerManager * NiControllerSequence::Parent() const { return NULL; }
+

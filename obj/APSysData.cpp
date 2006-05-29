@@ -10,6 +10,10 @@ APSysData::APSysData() A_P_SYS_DATA_CONSTRUCT {}
 
 APSysData::~APSysData() {}
 
+void APSysData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+	A_P_SYS_DATA_WRITE
+}
+
 void APSysData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
 	A_P_SYS_DATA_READ
 }

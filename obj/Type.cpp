@@ -26,3 +26,7 @@ bool Type::IsDerivedType( const Type & compare_to ) const {
 	}
 	return false;
 }
+
+string Type::GetTypeName() const {
+	return name;
+}

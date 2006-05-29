@@ -29,3 +29,5 @@ void NiSkinInstance::FixLinks( const vector<NiObjectRef> & objects, list<uint> l
 	NI_SKIN_INSTANCE_FIXLINKS
 }
 
+NiNode * NiSkinInstance::SkeletonRoot() const { return NULL; }
+
