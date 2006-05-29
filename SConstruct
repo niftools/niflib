@@ -14,7 +14,7 @@ if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    cppflags = '-fPIC -Wall'
+    cppflags = '-fPIC -Wall -ggdb'
 elif sys.platform == 'cygwin':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
