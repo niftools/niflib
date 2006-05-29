@@ -10,7 +10,7 @@ NiDitherProperty::NiDitherProperty() NI_DITHER_PROPERTY_CONSTRUCT {}
 
 NiDitherProperty::~NiDitherProperty() {}
 
-void NiDitherProperty::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiDitherProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_DITHER_PROPERTY_READ
 }
 
@@ -22,7 +22,7 @@ string NiDitherProperty::asString( bool verbose ) const {
 	NI_DITHER_PROPERTY_STRING
 }
 
-void NiDitherProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiDitherProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_DITHER_PROPERTY_FIXLINKS
 }
 

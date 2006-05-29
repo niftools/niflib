@@ -11,7 +11,7 @@ NiPSysMeshEmitter::NiPSysMeshEmitter() NI_P_SYS_MESH_EMITTER_CONSTRUCT {}
 
 NiPSysMeshEmitter::~NiPSysMeshEmitter() {}
 
-void NiPSysMeshEmitter::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysMeshEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_MESH_EMITTER_READ
 }
 
@@ -23,7 +23,7 @@ string NiPSysMeshEmitter::asString( bool verbose ) const {
 	NI_P_SYS_MESH_EMITTER_STRING
 }
 
-void NiPSysMeshEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysMeshEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_MESH_EMITTER_FIXLINKS
 }
 

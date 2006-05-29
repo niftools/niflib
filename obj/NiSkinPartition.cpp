@@ -10,7 +10,7 @@ NiSkinPartition::NiSkinPartition() NI_SKIN_PARTITION_CONSTRUCT {}
 
 NiSkinPartition::~NiSkinPartition() {}
 
-void NiSkinPartition::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSkinPartition::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SKIN_PARTITION_READ
 }
 
@@ -22,7 +22,7 @@ string NiSkinPartition::asString( bool verbose ) const {
 	NI_SKIN_PARTITION_STRING
 }
 
-void NiSkinPartition::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSkinPartition::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SKIN_PARTITION_FIXLINKS
 }
 

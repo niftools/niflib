@@ -11,7 +11,7 @@ NiPoint3Interpolator::NiPoint3Interpolator() NI_POINT3_INTERPOLATOR_CONSTRUCT {}
 
 NiPoint3Interpolator::~NiPoint3Interpolator() {}
 
-void NiPoint3Interpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPoint3Interpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_POINT3_INTERPOLATOR_READ
 }
 
@@ -23,7 +23,7 @@ string NiPoint3Interpolator::asString( bool verbose ) const {
 	NI_POINT3_INTERPOLATOR_STRING
 }
 
-void NiPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_POINT3_INTERPOLATOR_FIXLINKS
 }
 

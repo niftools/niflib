@@ -12,7 +12,7 @@ NiTriBasedGeom::NiTriBasedGeom() NI_TRI_BASED_GEOM_CONSTRUCT {}
 
 NiTriBasedGeom::~NiTriBasedGeom() {}
 
-void NiTriBasedGeom::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTriBasedGeom::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_BASED_GEOM_READ
 }
 
@@ -24,7 +24,7 @@ string NiTriBasedGeom::asString( bool verbose ) const {
 	NI_TRI_BASED_GEOM_STRING
 }
 
-void NiTriBasedGeom::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTriBasedGeom::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_BASED_GEOM_FIXLINKS
 }
 

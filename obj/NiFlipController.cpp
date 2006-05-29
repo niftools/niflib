@@ -11,7 +11,7 @@ NiFlipController::NiFlipController() NI_FLIP_CONTROLLER_CONSTRUCT {}
 
 NiFlipController::~NiFlipController() {}
 
-void NiFlipController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiFlipController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_FLIP_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string NiFlipController::asString( bool verbose ) const {
 	NI_FLIP_CONTROLLER_STRING
 }
 
-void NiFlipController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiFlipController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_FLIP_CONTROLLER_FIXLINKS
 }
 

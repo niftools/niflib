@@ -12,7 +12,7 @@ NiGeomMorpherController::NiGeomMorpherController() NI_GEOM_MORPHER_CONTROLLER_CO
 
 NiGeomMorpherController::~NiGeomMorpherController() {}
 
-void NiGeomMorpherController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiGeomMorpherController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_GEOM_MORPHER_CONTROLLER_READ
 }
 
@@ -24,7 +24,7 @@ string NiGeomMorpherController::asString( bool verbose ) const {
 	NI_GEOM_MORPHER_CONTROLLER_STRING
 }
 
-void NiGeomMorpherController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiGeomMorpherController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_GEOM_MORPHER_CONTROLLER_FIXLINKS
 }
 

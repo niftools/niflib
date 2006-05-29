@@ -10,7 +10,7 @@ NiBlendPoint3Interpolator::NiBlendPoint3Interpolator() NI_BLEND_POINT3_INTERPOLA
 
 NiBlendPoint3Interpolator::~NiBlendPoint3Interpolator() {}
 
-void NiBlendPoint3Interpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBlendPoint3Interpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BLEND_POINT3_INTERPOLATOR_READ
 }
 
@@ -22,7 +22,7 @@ string NiBlendPoint3Interpolator::asString( bool verbose ) const {
 	NI_BLEND_POINT3_INTERPOLATOR_STRING
 }
 
-void NiBlendPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBlendPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS
 }
 

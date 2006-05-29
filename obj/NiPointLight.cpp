@@ -10,7 +10,7 @@ NiPointLight::NiPointLight() NI_POINT_LIGHT_CONSTRUCT {}
 
 NiPointLight::~NiPointLight() {}
 
-void NiPointLight::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPointLight::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_POINT_LIGHT_READ
 }
 
@@ -22,7 +22,7 @@ string NiPointLight::asString( bool verbose ) const {
 	NI_POINT_LIGHT_STRING
 }
 
-void NiPointLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPointLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_POINT_LIGHT_FIXLINKS
 }
 

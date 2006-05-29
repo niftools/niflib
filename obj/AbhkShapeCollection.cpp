@@ -10,7 +10,7 @@ AbhkShapeCollection::AbhkShapeCollection() ABHK_SHAPE_COLLECTION_CONSTRUCT {}
 
 AbhkShapeCollection::~AbhkShapeCollection() {}
 
-void AbhkShapeCollection::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AbhkShapeCollection::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	ABHK_SHAPE_COLLECTION_READ
 }
 
@@ -22,7 +22,7 @@ string AbhkShapeCollection::asString( bool verbose ) const {
 	ABHK_SHAPE_COLLECTION_STRING
 }
 
-void AbhkShapeCollection::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AbhkShapeCollection::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	ABHK_SHAPE_COLLECTION_FIXLINKS
 }
 

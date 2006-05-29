@@ -10,7 +10,7 @@ bhkRagdollConstraint::bhkRagdollConstraint() BHK_RAGDOLL_CONSTRAINT_CONSTRUCT {}
 
 bhkRagdollConstraint::~bhkRagdollConstraint() {}
 
-void bhkRagdollConstraint::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkRagdollConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_RAGDOLL_CONSTRAINT_READ
 }
 
@@ -22,7 +22,7 @@ string bhkRagdollConstraint::asString( bool verbose ) const {
 	BHK_RAGDOLL_CONSTRAINT_STRING
 }
 
-void bhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 

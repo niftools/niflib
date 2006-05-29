@@ -11,7 +11,7 @@ AbhkConstraint::AbhkConstraint() ABHK_CONSTRAINT_CONSTRUCT {}
 
 AbhkConstraint::~AbhkConstraint() {}
 
-void AbhkConstraint::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AbhkConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	ABHK_CONSTRAINT_READ
 }
 
@@ -23,7 +23,7 @@ string AbhkConstraint::asString( bool verbose ) const {
 	ABHK_CONSTRAINT_STRING
 }
 
-void AbhkConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AbhkConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	ABHK_CONSTRAINT_FIXLINKS
 }
 

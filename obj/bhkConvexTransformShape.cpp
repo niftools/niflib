@@ -10,7 +10,7 @@ bhkConvexTransformShape::bhkConvexTransformShape() BHK_CONVEX_TRANSFORM_SHAPE_CO
 
 bhkConvexTransformShape::~bhkConvexTransformShape() {}
 
-void bhkConvexTransformShape::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkConvexTransformShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_CONVEX_TRANSFORM_SHAPE_READ
 }
 
@@ -22,7 +22,7 @@ string bhkConvexTransformShape::asString( bool verbose ) const {
 	BHK_CONVEX_TRANSFORM_SHAPE_STRING
 }
 
-void bhkConvexTransformShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkConvexTransformShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS
 }
 

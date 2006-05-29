@@ -10,7 +10,7 @@ NiPSysRotationModifier::NiPSysRotationModifier() NI_P_SYS_ROTATION_MODIFIER_CONS
 
 NiPSysRotationModifier::~NiPSysRotationModifier() {}
 
-void NiPSysRotationModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysRotationModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_ROTATION_MODIFIER_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysRotationModifier::asString( bool verbose ) const {
 	NI_P_SYS_ROTATION_MODIFIER_STRING
 }
 
-void NiPSysRotationModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysRotationModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_ROTATION_MODIFIER_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ bhkSphereShape::bhkSphereShape() BHK_SPHERE_SHAPE_CONSTRUCT {}
 
 bhkSphereShape::~bhkSphereShape() {}
 
-void bhkSphereShape::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkSphereShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_SPHERE_SHAPE_READ
 }
 
@@ -22,7 +22,7 @@ string bhkSphereShape::asString( bool verbose ) const {
 	BHK_SPHERE_SHAPE_STRING
 }
 
-void bhkSphereShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkSphereShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_SPHERE_SHAPE_FIXLINKS
 }
 

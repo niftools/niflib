@@ -10,7 +10,7 @@ NiWireframeProperty::NiWireframeProperty() NI_WIREFRAME_PROPERTY_CONSTRUCT {}
 
 NiWireframeProperty::~NiWireframeProperty() {}
 
-void NiWireframeProperty::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiWireframeProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_WIREFRAME_PROPERTY_READ
 }
 
@@ -22,7 +22,7 @@ string NiWireframeProperty::asString( bool verbose ) const {
 	NI_WIREFRAME_PROPERTY_STRING
 }
 
-void NiWireframeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiWireframeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_WIREFRAME_PROPERTY_FIXLINKS
 }
 

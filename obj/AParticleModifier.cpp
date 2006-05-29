@@ -10,7 +10,7 @@ AParticleModifier::AParticleModifier() A_PARTICLE_MODIFIER_CONSTRUCT {}
 
 AParticleModifier::~AParticleModifier() {}
 
-void AParticleModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AParticleModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_PARTICLE_MODIFIER_READ
 }
 
@@ -22,7 +22,7 @@ string AParticleModifier::asString( bool verbose ) const {
 	A_PARTICLE_MODIFIER_STRING
 }
 
-void AParticleModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AParticleModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_PARTICLE_MODIFIER_FIXLINKS
 }
 

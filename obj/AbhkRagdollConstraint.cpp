@@ -10,7 +10,7 @@ AbhkRagdollConstraint::AbhkRagdollConstraint() ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT
 
 AbhkRagdollConstraint::~AbhkRagdollConstraint() {}
 
-void AbhkRagdollConstraint::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AbhkRagdollConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	ABHK_RAGDOLL_CONSTRAINT_READ
 }
 
@@ -22,7 +22,7 @@ string AbhkRagdollConstraint::asString( bool verbose ) const {
 	ABHK_RAGDOLL_CONSTRAINT_STRING
 }
 
-void AbhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AbhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	ABHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 

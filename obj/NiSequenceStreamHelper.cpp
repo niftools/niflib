@@ -10,7 +10,7 @@ NiSequenceStreamHelper::NiSequenceStreamHelper() NI_SEQUENCE_STREAM_HELPER_CONST
 
 NiSequenceStreamHelper::~NiSequenceStreamHelper() {}
 
-void NiSequenceStreamHelper::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSequenceStreamHelper::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SEQUENCE_STREAM_HELPER_READ
 }
 
@@ -22,7 +22,7 @@ string NiSequenceStreamHelper::asString( bool verbose ) const {
 	NI_SEQUENCE_STREAM_HELPER_STRING
 }
 
-void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SEQUENCE_STREAM_HELPER_FIXLINKS
 }
 

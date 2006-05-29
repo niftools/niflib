@@ -10,7 +10,7 @@ FxRadioButton::FxRadioButton() FX_RADIO_BUTTON_CONSTRUCT {}
 
 FxRadioButton::~FxRadioButton() {}
 
-void FxRadioButton::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void FxRadioButton::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	FX_RADIO_BUTTON_READ
 }
 
@@ -22,7 +22,7 @@ string FxRadioButton::asString( bool verbose ) const {
 	FX_RADIO_BUTTON_STRING
 }
 
-void FxRadioButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void FxRadioButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	FX_RADIO_BUTTON_FIXLINKS
 }
 

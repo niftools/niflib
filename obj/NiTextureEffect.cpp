@@ -11,7 +11,7 @@ NiTextureEffect::NiTextureEffect() NI_TEXTURE_EFFECT_CONSTRUCT {}
 
 NiTextureEffect::~NiTextureEffect() {}
 
-void NiTextureEffect::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTextureEffect::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TEXTURE_EFFECT_READ
 }
 
@@ -23,7 +23,7 @@ string NiTextureEffect::asString( bool verbose ) const {
 	NI_TEXTURE_EFFECT_STRING
 }
 
-void NiTextureEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTextureEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TEXTURE_EFFECT_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
 
 NiStencilProperty::~NiStencilProperty() {}
 
-void NiStencilProperty::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiStencilProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_STENCIL_PROPERTY_READ
 }
 
@@ -22,7 +22,7 @@ string NiStencilProperty::asString( bool verbose ) const {
 	NI_STENCIL_PROPERTY_STRING
 }
 
-void NiStencilProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiStencilProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_STENCIL_PROPERTY_FIXLINKS
 }
 

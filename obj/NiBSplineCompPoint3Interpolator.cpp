@@ -11,7 +11,7 @@ NiBSplineCompPoint3Interpolator::NiBSplineCompPoint3Interpolator() NI_B_SPLINE_C
 
 NiBSplineCompPoint3Interpolator::~NiBSplineCompPoint3Interpolator() {}
 
-void NiBSplineCompPoint3Interpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompPoint3Interpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ
 }
 
@@ -23,7 +23,7 @@ string NiBSplineCompPoint3Interpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_STRING
 }
 
-void NiBSplineCompPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS
 }
 

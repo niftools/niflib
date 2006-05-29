@@ -13,7 +13,7 @@ NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT {}
 
 NiAVObject::~NiAVObject() {}
 
-void NiAVObject::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_A_V_OBJECT_READ
 }
 
@@ -25,7 +25,7 @@ string NiAVObject::asString( bool verbose ) const {
 	NI_A_V_OBJECT_STRING
 }
 
-void NiAVObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiAVObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_A_V_OBJECT_FIXLINKS
 }
 

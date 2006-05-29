@@ -10,7 +10,7 @@ NiSpecularProperty::NiSpecularProperty() NI_SPECULAR_PROPERTY_CONSTRUCT {}
 
 NiSpecularProperty::~NiSpecularProperty() {}
 
-void NiSpecularProperty::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSpecularProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SPECULAR_PROPERTY_READ
 }
 
@@ -22,7 +22,7 @@ string NiSpecularProperty::asString( bool verbose ) const {
 	NI_SPECULAR_PROPERTY_STRING
 }
 
-void NiSpecularProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSpecularProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SPECULAR_PROPERTY_FIXLINKS
 }
 

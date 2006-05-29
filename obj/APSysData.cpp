@@ -14,7 +14,7 @@ void APSysData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned in
 	A_P_SYS_DATA_WRITE
 }
 
-void APSysData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void APSysData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_DATA_READ
 }
 
@@ -22,6 +22,6 @@ string APSysData::asString( bool verbose ) const {
 	A_P_SYS_DATA_STRING
 }
 
-void APSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void APSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_DATA_FIXLINKS
 }

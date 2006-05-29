@@ -10,7 +10,7 @@ bhkBlendController::bhkBlendController() BHK_BLEND_CONTROLLER_CONSTRUCT {}
 
 bhkBlendController::~bhkBlendController() {}
 
-void bhkBlendController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkBlendController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_BLEND_CONTROLLER_READ
 }
 
@@ -22,7 +22,7 @@ string bhkBlendController::asString( bool verbose ) const {
 	BHK_BLEND_CONTROLLER_STRING
 }
 
-void bhkBlendController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkBlendController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_BLEND_CONTROLLER_FIXLINKS
 }
 

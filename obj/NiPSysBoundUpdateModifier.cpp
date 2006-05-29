@@ -10,7 +10,7 @@ NiPSysBoundUpdateModifier::NiPSysBoundUpdateModifier() NI_P_SYS_BOUND_UPDATE_MOD
 
 NiPSysBoundUpdateModifier::~NiPSysBoundUpdateModifier() {}
 
-void NiPSysBoundUpdateModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysBoundUpdateModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysBoundUpdateModifier::asString( bool verbose ) const {
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING
 }
 
-void NiPSysBoundUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysBoundUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS
 }
 

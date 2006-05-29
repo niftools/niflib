@@ -10,7 +10,7 @@ NiPlanarCollider::NiPlanarCollider() NI_PLANAR_COLLIDER_CONSTRUCT {}
 
 NiPlanarCollider::~NiPlanarCollider() {}
 
-void NiPlanarCollider::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPlanarCollider::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PLANAR_COLLIDER_READ
 }
 
@@ -22,7 +22,7 @@ string NiPlanarCollider::asString( bool verbose ) const {
 	NI_PLANAR_COLLIDER_STRING
 }
 
-void NiPlanarCollider::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPlanarCollider::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PLANAR_COLLIDER_FIXLINKS
 }
 

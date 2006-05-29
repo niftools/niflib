@@ -11,7 +11,7 @@ NiMaterialColorController::NiMaterialColorController() NI_MATERIAL_COLOR_CONTROL
 
 NiMaterialColorController::~NiMaterialColorController() {}
 
-void NiMaterialColorController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiMaterialColorController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_MATERIAL_COLOR_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string NiMaterialColorController::asString( bool verbose ) const {
 	NI_MATERIAL_COLOR_CONTROLLER_STRING
 }
 
-void NiMaterialColorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiMaterialColorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiBillboardNode::NiBillboardNode() NI_BILLBOARD_NODE_CONSTRUCT {}
 
 NiBillboardNode::~NiBillboardNode() {}
 
-void NiBillboardNode::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBillboardNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BILLBOARD_NODE_READ
 }
 
@@ -22,7 +22,7 @@ string NiBillboardNode::asString( bool verbose ) const {
 	NI_BILLBOARD_NODE_STRING
 }
 
-void NiBillboardNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBillboardNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BILLBOARD_NODE_FIXLINKS
 }
 

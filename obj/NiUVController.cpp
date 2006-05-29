@@ -11,7 +11,7 @@ NiUVController::NiUVController() NI_U_V_CONTROLLER_CONSTRUCT {}
 
 NiUVController::~NiUVController() {}
 
-void NiUVController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiUVController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_U_V_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string NiUVController::asString( bool verbose ) const {
 	NI_U_V_CONTROLLER_STRING
 }
 
-void NiUVController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiUVController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_U_V_CONTROLLER_FIXLINKS
 }
 

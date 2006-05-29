@@ -10,7 +10,7 @@ BSPSysArrayEmitter::BSPSysArrayEmitter() B_S_P_SYS_ARRAY_EMITTER_CONSTRUCT {}
 
 BSPSysArrayEmitter::~BSPSysArrayEmitter() {}
 
-void BSPSysArrayEmitter::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void BSPSysArrayEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	B_S_P_SYS_ARRAY_EMITTER_READ
 }
 
@@ -22,7 +22,7 @@ string BSPSysArrayEmitter::asString( bool verbose ) const {
 	B_S_P_SYS_ARRAY_EMITTER_STRING
 }
 
-void BSPSysArrayEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void BSPSysArrayEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	B_S_P_SYS_ARRAY_EMITTER_FIXLINKS
 }
 

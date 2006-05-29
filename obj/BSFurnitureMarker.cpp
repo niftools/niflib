@@ -10,7 +10,7 @@ BSFurnitureMarker::BSFurnitureMarker() B_S_FURNITURE_MARKER_CONSTRUCT {}
 
 BSFurnitureMarker::~BSFurnitureMarker() {}
 
-void BSFurnitureMarker::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void BSFurnitureMarker::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	B_S_FURNITURE_MARKER_READ
 }
 
@@ -22,7 +22,7 @@ string BSFurnitureMarker::asString( bool verbose ) const {
 	B_S_FURNITURE_MARKER_STRING
 }
 
-void BSFurnitureMarker::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void BSFurnitureMarker::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	B_S_FURNITURE_MARKER_FIXLINKS
 }
 

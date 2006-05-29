@@ -14,7 +14,7 @@ NiControllerSequence::NiControllerSequence() NI_CONTROLLER_SEQUENCE_CONSTRUCT {}
 
 NiControllerSequence::~NiControllerSequence() {}
 
-void NiControllerSequence::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiControllerSequence::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_CONTROLLER_SEQUENCE_READ
 }
 
@@ -26,7 +26,7 @@ string NiControllerSequence::asString( bool verbose ) const {
 	NI_CONTROLLER_SEQUENCE_STRING
 }
 
-void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_CONTROLLER_SEQUENCE_FIXLINKS
 }
 

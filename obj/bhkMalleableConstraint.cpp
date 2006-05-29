@@ -10,7 +10,7 @@ bhkMalleableConstraint::bhkMalleableConstraint() BHK_MALLEABLE_CONSTRAINT_CONSTR
 
 bhkMalleableConstraint::~bhkMalleableConstraint() {}
 
-void bhkMalleableConstraint::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkMalleableConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_MALLEABLE_CONSTRAINT_READ
 }
 
@@ -22,7 +22,7 @@ string bhkMalleableConstraint::asString( bool verbose ) const {
 	BHK_MALLEABLE_CONSTRAINT_STRING
 }
 
-void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_MALLEABLE_CONSTRAINT_FIXLINKS
 }
 

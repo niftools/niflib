@@ -10,7 +10,7 @@ NiCamera::NiCamera() NI_CAMERA_CONSTRUCT {}
 
 NiCamera::~NiCamera() {}
 
-void NiCamera::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiCamera::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_CAMERA_READ
 }
 
@@ -22,7 +22,7 @@ string NiCamera::asString( bool verbose ) const {
 	NI_CAMERA_STRING
 }
 
-void NiCamera::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiCamera::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_CAMERA_FIXLINKS
 }
 

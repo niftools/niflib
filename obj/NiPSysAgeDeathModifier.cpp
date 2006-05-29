@@ -11,7 +11,7 @@ NiPSysAgeDeathModifier::NiPSysAgeDeathModifier() NI_P_SYS_AGE_DEATH_MODIFIER_CON
 
 NiPSysAgeDeathModifier::~NiPSysAgeDeathModifier() {}
 
-void NiPSysAgeDeathModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysAgeDeathModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_AGE_DEATH_MODIFIER_READ
 }
 
@@ -23,7 +23,7 @@ string NiPSysAgeDeathModifier::asString( bool verbose ) const {
 	NI_P_SYS_AGE_DEATH_MODIFIER_STRING
 }
 
-void NiPSysAgeDeathModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysAgeDeathModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS
 }
 

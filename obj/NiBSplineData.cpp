@@ -10,7 +10,7 @@ NiBSplineData::NiBSplineData() NI_B_SPLINE_DATA_CONSTRUCT {}
 
 NiBSplineData::~NiBSplineData() {}
 
-void NiBSplineData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSplineData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiBSplineData::asString( bool verbose ) const {
 	NI_B_SPLINE_DATA_STRING
 }
 
-void NiBSplineData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSplineData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_DATA_FIXLINKS
 }
 

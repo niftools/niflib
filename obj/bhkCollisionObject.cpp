@@ -10,7 +10,7 @@ bhkCollisionObject::bhkCollisionObject() BHK_COLLISION_OBJECT_CONSTRUCT {}
 
 bhkCollisionObject::~bhkCollisionObject() {}
 
-void bhkCollisionObject::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_COLLISION_OBJECT_READ
 }
 
@@ -22,7 +22,7 @@ string bhkCollisionObject::asString( bool verbose ) const {
 	BHK_COLLISION_OBJECT_STRING
 }
 
-void bhkCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_COLLISION_OBJECT_FIXLINKS
 }
 

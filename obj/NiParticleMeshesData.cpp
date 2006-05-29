@@ -11,7 +11,7 @@ NiParticleMeshesData::NiParticleMeshesData() NI_PARTICLE_MESHES_DATA_CONSTRUCT {
 
 NiParticleMeshesData::~NiParticleMeshesData() {}
 
-void NiParticleMeshesData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiParticleMeshesData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_MESHES_DATA_READ
 }
 
@@ -23,7 +23,7 @@ string NiParticleMeshesData::asString( bool verbose ) const {
 	NI_PARTICLE_MESHES_DATA_STRING
 }
 
-void NiParticleMeshesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiParticleMeshesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_MESHES_DATA_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ ABSplineCompInterpolator::ABSplineCompInterpolator() A_B_SPLINE_COMP_INTERPOLATO
 
 ABSplineCompInterpolator::~ABSplineCompInterpolator() {}
 
-void ABSplineCompInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void ABSplineCompInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_B_SPLINE_COMP_INTERPOLATOR_READ
 }
 
@@ -22,7 +22,7 @@ string ABSplineCompInterpolator::asString( bool verbose ) const {
 	A_B_SPLINE_COMP_INTERPOLATOR_STRING
 }
 
-void ABSplineCompInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void ABSplineCompInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_B_SPLINE_COMP_INTERPOLATOR_FIXLINKS
 }
 

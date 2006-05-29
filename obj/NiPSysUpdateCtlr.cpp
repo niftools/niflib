@@ -10,7 +10,7 @@ NiPSysUpdateCtlr::NiPSysUpdateCtlr() NI_P_SYS_UPDATE_CTLR_CONSTRUCT {}
 
 NiPSysUpdateCtlr::~NiPSysUpdateCtlr() {}
 
-void NiPSysUpdateCtlr::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysUpdateCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_UPDATE_CTLR_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysUpdateCtlr::asString( bool verbose ) const {
 	NI_P_SYS_UPDATE_CTLR_STRING
 }
 
-void NiPSysUpdateCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysUpdateCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_UPDATE_CTLR_FIXLINKS
 }
 

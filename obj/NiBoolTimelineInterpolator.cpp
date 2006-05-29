@@ -11,7 +11,7 @@ NiBoolTimelineInterpolator::NiBoolTimelineInterpolator() NI_BOOL_TIMELINE_INTERP
 
 NiBoolTimelineInterpolator::~NiBoolTimelineInterpolator() {}
 
-void NiBoolTimelineInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBoolTimelineInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BOOL_TIMELINE_INTERPOLATOR_READ
 }
 
@@ -23,7 +23,7 @@ string NiBoolTimelineInterpolator::asString( bool verbose ) const {
 	NI_BOOL_TIMELINE_INTERPOLATOR_STRING
 }
 
-void NiBoolTimelineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBoolTimelineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiBSPArrayController::NiBSPArrayController() NI_B_S_P_ARRAY_CONTROLLER_CONSTRUCT
 
 NiBSPArrayController::~NiBSPArrayController() {}
 
-void NiBSPArrayController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSPArrayController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_S_P_ARRAY_CONTROLLER_READ
 }
 
@@ -22,7 +22,7 @@ string NiBSPArrayController::asString( bool verbose ) const {
 	NI_B_S_P_ARRAY_CONTROLLER_STRING
 }
 
-void NiBSPArrayController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSPArrayController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS
 }
 

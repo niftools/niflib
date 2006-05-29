@@ -11,7 +11,7 @@ APSysModifier::APSysModifier() A_P_SYS_MODIFIER_CONSTRUCT {}
 
 APSysModifier::~APSysModifier() {}
 
-void APSysModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void APSysModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_MODIFIER_READ
 }
 
@@ -23,7 +23,7 @@ string APSysModifier::asString( bool verbose ) const {
 	A_P_SYS_MODIFIER_STRING
 }
 
-void APSysModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void APSysModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_MODIFIER_FIXLINKS
 }
 

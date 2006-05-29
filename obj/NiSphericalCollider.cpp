@@ -10,7 +10,7 @@ NiSphericalCollider::NiSphericalCollider() NI_SPHERICAL_COLLIDER_CONSTRUCT {}
 
 NiSphericalCollider::~NiSphericalCollider() {}
 
-void NiSphericalCollider::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSphericalCollider::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SPHERICAL_COLLIDER_READ
 }
 
@@ -22,7 +22,7 @@ string NiSphericalCollider::asString( bool verbose ) const {
 	NI_SPHERICAL_COLLIDER_STRING
 }
 
-void NiSphericalCollider::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSphericalCollider::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SPHERICAL_COLLIDER_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiTimeController::NiTimeController() NI_TIME_CONTROLLER_CONSTRUCT {}
 
 NiTimeController::~NiTimeController() {}
 
-void NiTimeController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTimeController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TIME_CONTROLLER_READ
 }
 
@@ -22,7 +22,7 @@ string NiTimeController::asString( bool verbose ) const {
 	NI_TIME_CONTROLLER_STRING
 }
 
-void NiTimeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTimeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TIME_CONTROLLER_FIXLINKS
 }
 

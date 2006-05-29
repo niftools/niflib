@@ -10,7 +10,7 @@ NiPosData::NiPosData() NI_POS_DATA_CONSTRUCT {}
 
 NiPosData::~NiPosData() {}
 
-void NiPosData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPosData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_POS_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiPosData::asString( bool verbose ) const {
 	NI_POS_DATA_STRING
 }
 
-void NiPosData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPosData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_POS_DATA_FIXLINKS
 }
 

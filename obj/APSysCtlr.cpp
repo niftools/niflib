@@ -10,7 +10,7 @@ APSysCtlr::APSysCtlr() A_P_SYS_CTLR_CONSTRUCT {}
 
 APSysCtlr::~APSysCtlr() {}
 
-void APSysCtlr::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void APSysCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_CTLR_READ
 }
 
@@ -22,7 +22,7 @@ string APSysCtlr::asString( bool verbose ) const {
 	A_P_SYS_CTLR_STRING
 }
 
-void APSysCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void APSysCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_CTLR_FIXLINKS
 }
 

@@ -12,7 +12,7 @@ NiBoneLODController::NiBoneLODController() NI_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 
 NiBoneLODController::~NiBoneLODController() {}
 
-void NiBoneLODController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BONE_L_O_D_CONTROLLER_READ
 }
 
@@ -24,7 +24,7 @@ string NiBoneLODController::asString( bool verbose ) const {
 	NI_BONE_L_O_D_CONTROLLER_STRING
 }
 
-void NiBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 

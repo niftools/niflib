@@ -10,7 +10,7 @@ RootCollisionNode::RootCollisionNode() ROOT_COLLISION_NODE_CONSTRUCT {}
 
 RootCollisionNode::~RootCollisionNode() {}
 
-void RootCollisionNode::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void RootCollisionNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	ROOT_COLLISION_NODE_READ
 }
 
@@ -22,7 +22,7 @@ string RootCollisionNode::asString( bool verbose ) const {
 	ROOT_COLLISION_NODE_STRING
 }
 
-void RootCollisionNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void RootCollisionNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	ROOT_COLLISION_NODE_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiBinaryExtraData::NiBinaryExtraData() NI_BINARY_EXTRA_DATA_CONSTRUCT {}
 
 NiBinaryExtraData::~NiBinaryExtraData() {}
 
-void NiBinaryExtraData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBinaryExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BINARY_EXTRA_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiBinaryExtraData::asString( bool verbose ) const {
 	NI_BINARY_EXTRA_DATA_STRING
 }
 
-void NiBinaryExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBinaryExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BINARY_EXTRA_DATA_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiPSysModifierActiveCtlr::NiPSysModifierActiveCtlr() NI_P_SYS_MODIFIER_ACTIVE_CT
 
 NiPSysModifierActiveCtlr::~NiPSysModifierActiveCtlr() {}
 
-void NiPSysModifierActiveCtlr::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysModifierActiveCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysModifierActiveCtlr::asString( bool verbose ) const {
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_STRING
 }
 
-void NiPSysModifierActiveCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysModifierActiveCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS
 }
 

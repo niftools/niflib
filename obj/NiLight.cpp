@@ -10,7 +10,7 @@ NiLight::NiLight() NI_LIGHT_CONSTRUCT {}
 
 NiLight::~NiLight() {}
 
-void NiLight::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiLight::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_LIGHT_READ
 }
 
@@ -22,7 +22,7 @@ string NiLight::asString( bool verbose ) const {
 	NI_LIGHT_STRING
 }
 
-void NiLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_LIGHT_FIXLINKS
 }
 

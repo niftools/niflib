@@ -10,7 +10,7 @@ NiFloatsExtraData::NiFloatsExtraData() NI_FLOATS_EXTRA_DATA_CONSTRUCT {}
 
 NiFloatsExtraData::~NiFloatsExtraData() {}
 
-void NiFloatsExtraData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiFloatsExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOATS_EXTRA_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiFloatsExtraData::asString( bool verbose ) const {
 	NI_FLOATS_EXTRA_DATA_STRING
 }
 
-void NiFloatsExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiFloatsExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOATS_EXTRA_DATA_FIXLINKS
 }
 

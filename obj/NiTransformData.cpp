@@ -10,7 +10,7 @@ NiTransformData::NiTransformData() NI_TRANSFORM_DATA_CONSTRUCT {}
 
 NiTransformData::~NiTransformData() {}
 
-void NiTransformData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTransformData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TRANSFORM_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiTransformData::asString( bool verbose ) const {
 	NI_TRANSFORM_DATA_STRING
 }
 
-void NiTransformData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTransformData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TRANSFORM_DATA_FIXLINKS
 }
 

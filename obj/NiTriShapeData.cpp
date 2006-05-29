@@ -10,7 +10,7 @@ NiTriShapeData::NiTriShapeData() NI_TRI_SHAPE_DATA_CONSTRUCT {}
 
 NiTriShapeData::~NiTriShapeData() {}
 
-void NiTriShapeData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTriShapeData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_SHAPE_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiTriShapeData::asString( bool verbose ) const {
 	NI_TRI_SHAPE_DATA_STRING
 }
 
-void NiTriShapeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTriShapeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_SHAPE_DATA_FIXLINKS
 }
 

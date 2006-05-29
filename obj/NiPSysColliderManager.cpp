@@ -11,7 +11,7 @@ NiPSysColliderManager::NiPSysColliderManager() NI_P_SYS_COLLIDER_MANAGER_CONSTRU
 
 NiPSysColliderManager::~NiPSysColliderManager() {}
 
-void NiPSysColliderManager::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysColliderManager::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_COLLIDER_MANAGER_READ
 }
 
@@ -23,7 +23,7 @@ string NiPSysColliderManager::asString( bool verbose ) const {
 	NI_P_SYS_COLLIDER_MANAGER_STRING
 }
 
-void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_COLLIDER_MANAGER_FIXLINKS
 }
 

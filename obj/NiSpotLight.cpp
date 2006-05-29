@@ -10,7 +10,7 @@ NiSpotLight::NiSpotLight() NI_SPOT_LIGHT_CONSTRUCT {}
 
 NiSpotLight::~NiSpotLight() {}
 
-void NiSpotLight::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSpotLight::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SPOT_LIGHT_READ
 }
 
@@ -22,7 +22,7 @@ string NiSpotLight::asString( bool verbose ) const {
 	NI_SPOT_LIGHT_STRING
 }
 
-void NiSpotLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSpotLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SPOT_LIGHT_FIXLINKS
 }
 

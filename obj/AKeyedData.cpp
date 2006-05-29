@@ -10,7 +10,7 @@ AKeyedData::AKeyedData() A_KEYED_DATA_CONSTRUCT {}
 
 AKeyedData::~AKeyedData() {}
 
-void AKeyedData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AKeyedData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_KEYED_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string AKeyedData::asString( bool verbose ) const {
 	A_KEYED_DATA_STRING
 }
 
-void AKeyedData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AKeyedData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_KEYED_DATA_FIXLINKS
 }
 

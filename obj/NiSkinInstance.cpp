@@ -13,7 +13,7 @@ NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
 NiSkinInstance::~NiSkinInstance() {}
 
-void NiSkinInstance::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSkinInstance::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SKIN_INSTANCE_READ
 }
 
@@ -25,7 +25,7 @@ string NiSkinInstance::asString( bool verbose ) const {
 	NI_SKIN_INSTANCE_STRING
 }
 
-void NiSkinInstance::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSkinInstance::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SKIN_INSTANCE_FIXLINKS
 }
 

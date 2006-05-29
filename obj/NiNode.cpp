@@ -11,7 +11,7 @@ NiNode::NiNode() NI_NODE_CONSTRUCT {}
 
 NiNode::~NiNode() {}
 
-void NiNode::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_NODE_READ
 }
 
@@ -23,6 +23,6 @@ string NiNode::asString( bool verbose ) const {
 	NI_NODE_STRING
 }
 
-void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_NODE_FIXLINKS
 }

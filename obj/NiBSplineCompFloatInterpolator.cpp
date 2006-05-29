@@ -10,7 +10,7 @@ NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() NI_B_SPLINE_COM
 
 NiBSplineCompFloatInterpolator::~NiBSplineCompFloatInterpolator() {}
 
-void NiBSplineCompFloatInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompFloatInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_READ
 }
 
@@ -22,7 +22,7 @@ string NiBSplineCompFloatInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_STRING
 }
 
-void NiBSplineCompFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS
 }
 

@@ -12,7 +12,7 @@ NiPSysColorModifier::NiPSysColorModifier() NI_P_SYS_COLOR_MODIFIER_CONSTRUCT {}
 
 NiPSysColorModifier::~NiPSysColorModifier() {}
 
-void NiPSysColorModifier::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysColorModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_COLOR_MODIFIER_READ
 }
 
@@ -24,7 +24,7 @@ string NiPSysColorModifier::asString( bool verbose ) const {
 	NI_P_SYS_COLOR_MODIFIER_STRING
 }
 
-void NiPSysColorModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysColorModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_COLOR_MODIFIER_FIXLINKS
 }
 

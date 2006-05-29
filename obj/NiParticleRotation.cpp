@@ -10,7 +10,7 @@ NiParticleRotation::NiParticleRotation() NI_PARTICLE_ROTATION_CONSTRUCT {}
 
 NiParticleRotation::~NiParticleRotation() {}
 
-void NiParticleRotation::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiParticleRotation::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_ROTATION_READ
 }
 
@@ -22,7 +22,7 @@ string NiParticleRotation::asString( bool verbose ) const {
 	NI_PARTICLE_ROTATION_STRING
 }
 
-void NiParticleRotation::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiParticleRotation::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_ROTATION_FIXLINKS
 }
 

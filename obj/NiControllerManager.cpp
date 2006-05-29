@@ -12,7 +12,7 @@ NiControllerManager::NiControllerManager() NI_CONTROLLER_MANAGER_CONSTRUCT {}
 
 NiControllerManager::~NiControllerManager() {}
 
-void NiControllerManager::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiControllerManager::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_CONTROLLER_MANAGER_READ
 }
 
@@ -24,7 +24,7 @@ string NiControllerManager::asString( bool verbose ) const {
 	NI_CONTROLLER_MANAGER_STRING
 }
 
-void NiControllerManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiControllerManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_CONTROLLER_MANAGER_FIXLINKS
 }
 

@@ -12,7 +12,7 @@ NiParticleSystem::NiParticleSystem() NI_PARTICLE_SYSTEM_CONSTRUCT {}
 
 NiParticleSystem::~NiParticleSystem() {}
 
-void NiParticleSystem::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiParticleSystem::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_SYSTEM_READ
 }
 
@@ -24,7 +24,7 @@ string NiParticleSystem::asString( bool verbose ) const {
 	NI_PARTICLE_SYSTEM_STRING
 }
 
-void NiParticleSystem::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiParticleSystem::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLE_SYSTEM_FIXLINKS
 }
 

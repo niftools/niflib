@@ -11,7 +11,7 @@ BSKeyframeController::BSKeyframeController() B_S_KEYFRAME_CONTROLLER_CONSTRUCT {
 
 BSKeyframeController::~BSKeyframeController() {}
 
-void BSKeyframeController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void BSKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	B_S_KEYFRAME_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string BSKeyframeController::asString( bool verbose ) const {
 	B_S_KEYFRAME_CONTROLLER_STRING
 }
 
-void BSKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void BSKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	B_S_KEYFRAME_CONTROLLER_FIXLINKS
 }
 

@@ -11,7 +11,7 @@ bhkRigidBody::bhkRigidBody() BHK_RIGID_BODY_CONSTRUCT {}
 
 bhkRigidBody::~bhkRigidBody() {}
 
-void bhkRigidBody::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkRigidBody::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_RIGID_BODY_READ
 }
 
@@ -23,7 +23,7 @@ string bhkRigidBody::asString( bool verbose ) const {
 	BHK_RIGID_BODY_STRING
 }
 
-void bhkRigidBody::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkRigidBody::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_RIGID_BODY_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiGravity::NiGravity() NI_GRAVITY_CONSTRUCT {}
 
 NiGravity::~NiGravity() {}
 
-void NiGravity::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiGravity::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_GRAVITY_READ
 }
 
@@ -22,7 +22,7 @@ string NiGravity::asString( bool verbose ) const {
 	NI_GRAVITY_STRING
 }
 
-void NiGravity::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiGravity::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_GRAVITY_FIXLINKS
 }
 

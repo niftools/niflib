@@ -10,7 +10,7 @@ NiAlphaProperty::NiAlphaProperty() NI_ALPHA_PROPERTY_CONSTRUCT {}
 
 NiAlphaProperty::~NiAlphaProperty() {}
 
-void NiAlphaProperty::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiAlphaProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_ALPHA_PROPERTY_READ
 }
 
@@ -22,7 +22,7 @@ string NiAlphaProperty::asString( bool verbose ) const {
 	NI_ALPHA_PROPERTY_STRING
 }
 
-void NiAlphaProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiAlphaProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_ALPHA_PROPERTY_FIXLINKS
 }
 

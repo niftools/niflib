@@ -11,7 +11,7 @@ bhkNiTriStripsShape::bhkNiTriStripsShape() BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT {}
 
 bhkNiTriStripsShape::~bhkNiTriStripsShape() {}
 
-void bhkNiTriStripsShape::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkNiTriStripsShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_NI_TRI_STRIPS_SHAPE_READ
 }
 
@@ -23,7 +23,7 @@ string bhkNiTriStripsShape::asString( bool verbose ) const {
 	BHK_NI_TRI_STRIPS_SHAPE_STRING
 }
 
-void bhkNiTriStripsShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkNiTriStripsShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS
 }
 

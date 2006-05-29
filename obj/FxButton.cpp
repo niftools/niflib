@@ -10,7 +10,7 @@ FxButton::FxButton() FX_BUTTON_CONSTRUCT {}
 
 FxButton::~FxButton() {}
 
-void FxButton::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void FxButton::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	FX_BUTTON_READ
 }
 
@@ -22,7 +22,7 @@ string FxButton::asString( bool verbose ) const {
 	FX_BUTTON_STRING
 }
 
-void FxButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void FxButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	FX_BUTTON_FIXLINKS
 }
 

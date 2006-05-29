@@ -10,7 +10,7 @@ AvoidNode::AvoidNode() AVOID_NODE_CONSTRUCT {}
 
 AvoidNode::~AvoidNode() {}
 
-void AvoidNode::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AvoidNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	AVOID_NODE_READ
 }
 
@@ -22,7 +22,7 @@ string AvoidNode::asString( bool verbose ) const {
 	AVOID_NODE_STRING
 }
 
-void AvoidNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AvoidNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	AVOID_NODE_FIXLINKS
 }
 

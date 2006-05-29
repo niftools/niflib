@@ -10,7 +10,7 @@ NiPSysEmitterSpeedCtlr::NiPSysEmitterSpeedCtlr() NI_P_SYS_EMITTER_SPEED_CTLR_CON
 
 NiPSysEmitterSpeedCtlr::~NiPSysEmitterSpeedCtlr() {}
 
-void NiPSysEmitterSpeedCtlr::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterSpeedCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_SPEED_CTLR_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysEmitterSpeedCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_SPEED_CTLR_STRING
 }
 
-void NiPSysEmitterSpeedCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterSpeedCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS
 }
 

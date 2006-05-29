@@ -12,7 +12,7 @@ NiPathInterpolator::NiPathInterpolator() NI_PATH_INTERPOLATOR_CONSTRUCT {}
 
 NiPathInterpolator::~NiPathInterpolator() {}
 
-void NiPathInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPathInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PATH_INTERPOLATOR_READ
 }
 
@@ -24,7 +24,7 @@ string NiPathInterpolator::asString( bool verbose ) const {
 	NI_PATH_INTERPOLATOR_STRING
 }
 
-void NiPathInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPathInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PATH_INTERPOLATOR_FIXLINKS
 }
 

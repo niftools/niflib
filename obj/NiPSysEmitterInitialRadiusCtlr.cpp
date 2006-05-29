@@ -10,7 +10,7 @@ NiPSysEmitterInitialRadiusCtlr::NiPSysEmitterInitialRadiusCtlr() NI_P_SYS_EMITTE
 
 NiPSysEmitterInitialRadiusCtlr::~NiPSysEmitterInitialRadiusCtlr() {}
 
-void NiPSysEmitterInitialRadiusCtlr::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterInitialRadiusCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysEmitterInitialRadiusCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_STRING
 }
 
-void NiPSysEmitterInitialRadiusCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterInitialRadiusCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS
 }
 

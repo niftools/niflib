@@ -10,7 +10,7 @@ NiCollisionObject::NiCollisionObject() NI_COLLISION_OBJECT_CONSTRUCT {}
 
 NiCollisionObject::~NiCollisionObject() {}
 
-void NiCollisionObject::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_COLLISION_OBJECT_READ
 }
 
@@ -22,7 +22,7 @@ string NiCollisionObject::asString( bool verbose ) const {
 	NI_COLLISION_OBJECT_STRING
 }
 
-void NiCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_COLLISION_OBJECT_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiBSBoneLODController::NiBSBoneLODController() NI_B_S_BONE_L_O_D_CONTROLLER_CONS
 
 NiBSBoneLODController::~NiBSBoneLODController() {}
 
-void NiBSBoneLODController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSBoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_S_BONE_L_O_D_CONTROLLER_READ
 }
 
@@ -22,7 +22,7 @@ string NiBSBoneLODController::asString( bool verbose ) const {
 	NI_B_S_BONE_L_O_D_CONTROLLER_STRING
 }
 
-void NiBSBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 

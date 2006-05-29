@@ -12,7 +12,7 @@ NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() NI_B_SP
 
 NiBSplineCompTransformInterpolator::~NiBSplineCompTransformInterpolator() {}
 
-void NiBSplineCompTransformInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompTransformInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ
 }
 
@@ -24,7 +24,7 @@ string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_STRING
 }
 
-void NiBSplineCompTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBSplineCompTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 

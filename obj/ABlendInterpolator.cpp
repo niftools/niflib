@@ -10,7 +10,7 @@ ABlendInterpolator::ABlendInterpolator() A_BLEND_INTERPOLATOR_CONSTRUCT {}
 
 ABlendInterpolator::~ABlendInterpolator() {}
 
-void ABlendInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void ABlendInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_BLEND_INTERPOLATOR_READ
 }
 
@@ -22,7 +22,7 @@ string ABlendInterpolator::asString( bool verbose ) const {
 	A_BLEND_INTERPOLATOR_STRING
 }
 
-void ABlendInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void ABlendInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_BLEND_INTERPOLATOR_FIXLINKS
 }
 

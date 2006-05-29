@@ -10,7 +10,7 @@ APSysEmitter::APSysEmitter() A_P_SYS_EMITTER_CONSTRUCT {}
 
 APSysEmitter::~APSysEmitter() {}
 
-void APSysEmitter::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void APSysEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_EMITTER_READ
 }
 
@@ -22,7 +22,7 @@ string APSysEmitter::asString( bool verbose ) const {
 	A_P_SYS_EMITTER_STRING
 }
 
-void APSysEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void APSysEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_EMITTER_FIXLINKS
 }
 

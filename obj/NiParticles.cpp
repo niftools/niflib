@@ -10,7 +10,7 @@ NiParticles::NiParticles() NI_PARTICLES_CONSTRUCT {}
 
 NiParticles::~NiParticles() {}
 
-void NiParticles::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiParticles::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLES_READ
 }
 
@@ -22,7 +22,7 @@ string NiParticles::asString( bool verbose ) const {
 	NI_PARTICLES_STRING
 }
 
-void NiParticles::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiParticles::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PARTICLES_FIXLINKS
 }
 

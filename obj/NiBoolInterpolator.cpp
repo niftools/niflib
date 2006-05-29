@@ -11,7 +11,7 @@ NiBoolInterpolator::NiBoolInterpolator() NI_BOOL_INTERPOLATOR_CONSTRUCT {}
 
 NiBoolInterpolator::~NiBoolInterpolator() {}
 
-void NiBoolInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiBoolInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_BOOL_INTERPOLATOR_READ
 }
 
@@ -23,7 +23,7 @@ string NiBoolInterpolator::asString( bool verbose ) const {
 	NI_BOOL_INTERPOLATOR_STRING
 }
 
-void NiBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_BOOL_INTERPOLATOR_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiPalette::NiPalette() NI_PALETTE_CONSTRUCT {}
 
 NiPalette::~NiPalette() {}
 
-void NiPalette::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPalette::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PALETTE_READ
 }
 
@@ -22,7 +22,7 @@ string NiPalette::asString( bool verbose ) const {
 	NI_PALETTE_STRING
 }
 
-void NiPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PALETTE_FIXLINKS
 }
 

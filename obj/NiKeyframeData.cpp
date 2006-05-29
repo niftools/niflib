@@ -10,7 +10,7 @@ NiKeyframeData::NiKeyframeData() NI_KEYFRAME_DATA_CONSTRUCT {}
 
 NiKeyframeData::~NiKeyframeData() {}
 
-void NiKeyframeData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiKeyframeData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_KEYFRAME_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiKeyframeData::asString( bool verbose ) const {
 	NI_KEYFRAME_DATA_STRING
 }
 
-void NiKeyframeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiKeyframeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_KEYFRAME_DATA_FIXLINKS
 }
 

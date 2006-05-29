@@ -10,7 +10,7 @@ NiScreenLODData::NiScreenLODData() NI_SCREEN_L_O_D_DATA_CONSTRUCT {}
 
 NiScreenLODData::~NiScreenLODData() {}
 
-void NiScreenLODData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiScreenLODData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SCREEN_L_O_D_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiScreenLODData::asString( bool verbose ) const {
 	NI_SCREEN_L_O_D_DATA_STRING
 }
 
-void NiScreenLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiScreenLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SCREEN_L_O_D_DATA_FIXLINKS
 }
 

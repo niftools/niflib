@@ -11,7 +11,7 @@ NiDefaultAVObjectPalette::NiDefaultAVObjectPalette() NI_DEFAULT_A_V_OBJECT_PALET
 
 NiDefaultAVObjectPalette::~NiDefaultAVObjectPalette() {}
 
-void NiDefaultAVObjectPalette::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiDefaultAVObjectPalette::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_DEFAULT_A_V_OBJECT_PALETTE_READ
 }
 
@@ -23,7 +23,7 @@ string NiDefaultAVObjectPalette::asString( bool verbose ) const {
 	NI_DEFAULT_A_V_OBJECT_PALETTE_STRING
 }
 
-void NiDefaultAVObjectPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiDefaultAVObjectPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS
 }
 

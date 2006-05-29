@@ -10,7 +10,7 @@ NiFloatData::NiFloatData() NI_FLOAT_DATA_CONSTRUCT {}
 
 NiFloatData::~NiFloatData() {}
 
-void NiFloatData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiFloatData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiFloatData::asString( bool verbose ) const {
 	NI_FLOAT_DATA_STRING
 }
 
-void NiFloatData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiFloatData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_DATA_FIXLINKS
 }
 

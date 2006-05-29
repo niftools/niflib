@@ -11,7 +11,7 @@ APSysVolumeEmitter::APSysVolumeEmitter() A_P_SYS_VOLUME_EMITTER_CONSTRUCT {}
 
 APSysVolumeEmitter::~APSysVolumeEmitter() {}
 
-void APSysVolumeEmitter::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void APSysVolumeEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_VOLUME_EMITTER_READ
 }
 
@@ -23,7 +23,7 @@ string APSysVolumeEmitter::asString( bool verbose ) const {
 	A_P_SYS_VOLUME_EMITTER_STRING
 }
 
-void APSysVolumeEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void APSysVolumeEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_P_SYS_VOLUME_EMITTER_FIXLINKS
 }
 

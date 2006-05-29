@@ -10,7 +10,7 @@ TriBasedGeomData::TriBasedGeomData() TRI_BASED_GEOM_DATA_CONSTRUCT {}
 
 TriBasedGeomData::~TriBasedGeomData() {}
 
-void TriBasedGeomData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void TriBasedGeomData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	TRI_BASED_GEOM_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string TriBasedGeomData::asString( bool verbose ) const {
 	TRI_BASED_GEOM_DATA_STRING
 }
 
-void TriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void TriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	TRI_BASED_GEOM_DATA_FIXLINKS
 }
 

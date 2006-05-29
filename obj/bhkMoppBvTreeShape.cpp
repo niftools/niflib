@@ -10,7 +10,7 @@ bhkMoppBvTreeShape::bhkMoppBvTreeShape() BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT {}
 
 bhkMoppBvTreeShape::~bhkMoppBvTreeShape() {}
 
-void bhkMoppBvTreeShape::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkMoppBvTreeShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_MOPP_BV_TREE_SHAPE_READ
 }
 
@@ -22,7 +22,7 @@ string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	BHK_MOPP_BV_TREE_SHAPE_STRING
 }
 
-void bhkMoppBvTreeShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkMoppBvTreeShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_MOPP_BV_TREE_SHAPE_FIXLINKS
 }
 

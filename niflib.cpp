@@ -304,9 +304,18 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	if ( ! in.eof() )
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
 		
+	cout << "Link Stack:" << endl;
+	list<uint>::iterator it;
+	for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
+		cout << *it << endl;
+	}
+	
+	
+	cout << "Fixing Links:"  << endl;
 	//--Now that all blocks are read, go back and fix the links--//
 	for (uint i = 0; i < blocks.size(); ++i) {
-
+		
+		cout << blocks[i]->GetType().GetTypeName() << endl;
 		//Fix links & other pre-processing
 		blocks[i]->FixLinks( blocks, link_stack, version );
 	}

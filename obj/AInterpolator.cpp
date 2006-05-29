@@ -10,7 +10,7 @@ AInterpolator::AInterpolator() A_INTERPOLATOR_CONSTRUCT {}
 
 AInterpolator::~AInterpolator() {}
 
-void AInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void AInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_INTERPOLATOR_READ
 }
 
@@ -22,7 +22,7 @@ string AInterpolator::asString( bool verbose ) const {
 	A_INTERPOLATOR_STRING
 }
 
-void AInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void AInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_INTERPOLATOR_FIXLINKS
 }
 

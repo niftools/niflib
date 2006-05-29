@@ -11,7 +11,7 @@ ABoneLODController::ABoneLODController() A_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 
 ABoneLODController::~ABoneLODController() {}
 
-void ABoneLODController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void ABoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	A_BONE_L_O_D_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string ABoneLODController::asString( bool verbose ) const {
 	A_BONE_L_O_D_CONTROLLER_STRING
 }
 
-void ABoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void ABoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	A_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 

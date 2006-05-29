@@ -11,7 +11,7 @@ NiMultiTargetTransformController::NiMultiTargetTransformController() NI_MULTI_TA
 
 NiMultiTargetTransformController::~NiMultiTargetTransformController() {}
 
-void NiMultiTargetTransformController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiMultiTargetTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string NiMultiTargetTransformController::asString( bool verbose ) const {
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_STRING
 }
 
-void NiMultiTargetTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiMultiTargetTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS
 }
 

@@ -11,7 +11,7 @@ NiSingleInterpolatorController::NiSingleInterpolatorController() NI_SINGLE_INTER
 
 NiSingleInterpolatorController::~NiSingleInterpolatorController() {}
 
-void NiSingleInterpolatorController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiSingleInterpolatorController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_READ
 }
 
@@ -23,7 +23,7 @@ string NiSingleInterpolatorController::asString( bool verbose ) const {
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING
 }
 
-void NiSingleInterpolatorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiSingleInterpolatorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS
 }
 

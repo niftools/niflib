@@ -10,7 +10,7 @@ bhkTransformShape::bhkTransformShape() BHK_TRANSFORM_SHAPE_CONSTRUCT {}
 
 bhkTransformShape::~bhkTransformShape() {}
 
-void bhkTransformShape::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkTransformShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_TRANSFORM_SHAPE_READ
 }
 
@@ -22,7 +22,7 @@ string bhkTransformShape::asString( bool verbose ) const {
 	BHK_TRANSFORM_SHAPE_STRING
 }
 
-void bhkTransformShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkTransformShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_TRANSFORM_SHAPE_FIXLINKS
 }
 

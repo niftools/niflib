@@ -11,7 +11,7 @@ NiPixelData::NiPixelData() NI_PIXEL_DATA_CONSTRUCT {}
 
 NiPixelData::~NiPixelData() {}
 
-void NiPixelData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPixelData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_PIXEL_DATA_READ
 }
 
@@ -23,7 +23,7 @@ string NiPixelData::asString( bool verbose ) const {
 	NI_PIXEL_DATA_STRING
 }
 
-void NiPixelData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPixelData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_PIXEL_DATA_FIXLINKS
 }
 

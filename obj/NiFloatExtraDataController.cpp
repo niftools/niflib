@@ -10,7 +10,7 @@ NiFloatExtraDataController::NiFloatExtraDataController() NI_FLOAT_EXTRA_DATA_CON
 
 NiFloatExtraDataController::~NiFloatExtraDataController() {}
 
-void NiFloatExtraDataController::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiFloatExtraDataController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_READ
 }
 
@@ -22,7 +22,7 @@ string NiFloatExtraDataController::asString( bool verbose ) const {
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING
 }
 
-void NiFloatExtraDataController::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiFloatExtraDataController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS
 }
 

@@ -10,7 +10,7 @@ NiPSysEmitterCtlrData::NiPSysEmitterCtlrData() NI_P_SYS_EMITTER_CTLR_DATA_CONSTR
 
 NiPSysEmitterCtlrData::~NiPSysEmitterCtlrData() {}
 
-void NiPSysEmitterCtlrData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterCtlrData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_CTLR_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysEmitterCtlrData::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_CTLR_DATA_STRING
 }
 
-void NiPSysEmitterCtlrData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysEmitterCtlrData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_EMITTER_CTLR_DATA_FIXLINKS
 }
 

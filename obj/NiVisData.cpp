@@ -10,7 +10,7 @@ NiVisData::NiVisData() NI_VIS_DATA_CONSTRUCT {}
 
 NiVisData::~NiVisData() {}
 
-void NiVisData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiVisData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_VIS_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiVisData::asString( bool verbose ) const {
 	NI_VIS_DATA_STRING
 }
 
-void NiVisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiVisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_VIS_DATA_FIXLINKS
 }
 

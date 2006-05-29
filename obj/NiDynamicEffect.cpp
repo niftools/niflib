@@ -10,7 +10,7 @@ NiDynamicEffect::NiDynamicEffect() NI_DYNAMIC_EFFECT_CONSTRUCT {}
 
 NiDynamicEffect::~NiDynamicEffect() {}
 
-void NiDynamicEffect::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiDynamicEffect::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_DYNAMIC_EFFECT_READ
 }
 
@@ -22,7 +22,7 @@ string NiDynamicEffect::asString( bool verbose ) const {
 	NI_DYNAMIC_EFFECT_STRING
 }
 
-void NiDynamicEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiDynamicEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_DYNAMIC_EFFECT_FIXLINKS
 }
 

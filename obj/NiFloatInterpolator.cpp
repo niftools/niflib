@@ -11,7 +11,7 @@ NiFloatInterpolator::NiFloatInterpolator() NI_FLOAT_INTERPOLATOR_CONSTRUCT {}
 
 NiFloatInterpolator::~NiFloatInterpolator() {}
 
-void NiFloatInterpolator::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiFloatInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_INTERPOLATOR_READ
 }
 
@@ -23,7 +23,7 @@ string NiFloatInterpolator::asString( bool verbose ) const {
 	NI_FLOAT_INTERPOLATOR_STRING
 }
 
-void NiFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_FLOAT_INTERPOLATOR_FIXLINKS
 }
 

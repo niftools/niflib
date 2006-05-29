@@ -10,7 +10,7 @@ NiTextKeyExtraData::NiTextKeyExtraData() NI_TEXT_KEY_EXTRA_DATA_CONSTRUCT {}
 
 NiTextKeyExtraData::~NiTextKeyExtraData() {}
 
-void NiTextKeyExtraData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTextKeyExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TEXT_KEY_EXTRA_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string NiTextKeyExtraData::asString( bool verbose ) const {
 	NI_TEXT_KEY_EXTRA_DATA_STRING
 }
 
-void NiTextKeyExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTextKeyExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TEXT_KEY_EXTRA_DATA_FIXLINKS
 }
 

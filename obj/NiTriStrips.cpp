@@ -10,7 +10,7 @@ NiTriStrips::NiTriStrips() NI_TRI_STRIPS_CONSTRUCT {}
 
 NiTriStrips::~NiTriStrips() {}
 
-void NiTriStrips::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiTriStrips::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_STRIPS_READ
 }
 
@@ -22,7 +22,7 @@ string NiTriStrips::asString( bool verbose ) const {
 	NI_TRI_STRIPS_STRING
 }
 
-void NiTriStrips::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiTriStrips::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_TRI_STRIPS_FIXLINKS
 }
 

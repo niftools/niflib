@@ -10,7 +10,7 @@ NiPSysSphereEmitter::NiPSysSphereEmitter() NI_P_SYS_SPHERE_EMITTER_CONSTRUCT {}
 
 NiPSysSphereEmitter::~NiPSysSphereEmitter() {}
 
-void NiPSysSphereEmitter::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void NiPSysSphereEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_SPHERE_EMITTER_READ
 }
 
@@ -22,7 +22,7 @@ string NiPSysSphereEmitter::asString( bool verbose ) const {
 	NI_P_SYS_SPHERE_EMITTER_STRING
 }
 
-void NiPSysSphereEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void NiPSysSphereEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	NI_P_SYS_SPHERE_EMITTER_FIXLINKS
 }
 

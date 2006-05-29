@@ -10,7 +10,7 @@ hkPackedNiTriStripsData::hkPackedNiTriStripsData() HK_PACKED_NI_TRI_STRIPS_DATA_
 
 hkPackedNiTriStripsData::~hkPackedNiTriStripsData() {}
 
-void hkPackedNiTriStripsData::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void hkPackedNiTriStripsData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	HK_PACKED_NI_TRI_STRIPS_DATA_READ
 }
 
@@ -22,7 +22,7 @@ string hkPackedNiTriStripsData::asString( bool verbose ) const {
 	HK_PACKED_NI_TRI_STRIPS_DATA_STRING
 }
 
-void hkPackedNiTriStripsData::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void hkPackedNiTriStripsData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS
 }
 

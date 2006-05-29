@@ -10,7 +10,7 @@ bhkLimitedHingeConstraint::bhkLimitedHingeConstraint() BHK_LIMITED_HINGE_CONSTRA
 
 bhkLimitedHingeConstraint::~bhkLimitedHingeConstraint() {}
 
-void bhkLimitedHingeConstraint::Read( istream& in, list<uint> link_stack, unsigned int version ) {
+void bhkLimitedHingeConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
 	BHK_LIMITED_HINGE_CONSTRAINT_READ
 }
 
@@ -22,7 +22,7 @@ string bhkLimitedHingeConstraint::asString( bool verbose ) const {
 	BHK_LIMITED_HINGE_CONSTRAINT_STRING
 }
 
-void bhkLimitedHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> link_stack, unsigned int version ) {
+void bhkLimitedHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
 	BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS
 }
 
