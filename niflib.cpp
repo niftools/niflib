@@ -304,11 +304,11 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	if ( ! in.eof() )
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
 		
-	cout << "Link Stack:" << endl;
-	list<uint>::iterator it;
-	for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
-		cout << *it << endl;
-	}
+	//cout << "Link Stack:" << endl;
+	//list<uint>::iterator it;
+	//for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
+	//	cout << *it << endl;
+	//}
 	
 	
 	cout << "Fixing Links:"  << endl;
@@ -320,13 +320,13 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, version );
 	}
 
-	//Build up the bind pose matricies into their world-space equivalents
-	NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
-	if ( av_root != NULL ) {
-		BuildUpBindPositions( av_root );
-	} else {
-		throw runtime_error("Root object is not a NiAVObject derived class.");
-	}
+	////Build up the bind pose matricies into their world-space equivalents
+	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
+	//if ( av_root != NULL ) {
+	//	BuildUpBindPositions( av_root );
+	//} else {
+	//	throw runtime_error("Root object is not a NiAVObject derived class.");
+	//}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance

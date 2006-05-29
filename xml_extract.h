@@ -233,6 +233,10 @@ class RootCollisionNode;
  */
 struct Bones {
   /*!
+   * The number of node bones referenced as influences.
+   */
+  uint numBones;
+  /*!
    * Block indicies of the bones.
    */
   vector<NiNode * > bones;
@@ -242,6 +246,10 @@ struct Bones {
  * An array of bytes.
  */
 struct ByteArray {
+  /*!
+   * The number of bytes in this array
+   */
+  uint size;
   /*!
    * Unknown.
    */
@@ -256,6 +264,10 @@ struct ByteArray {
  * The NIF file footer.
  */
 struct Footer {
+  /*!
+   * The number of root references.
+   */
+  uint numRoots;
   /*!
    * List of root blocks. If there is a camera, for 1st person view, then
    * this block is referred to as well in this list, even if it is not a
@@ -316,6 +328,10 @@ struct MipMap {
  */
 struct NodeGroup {
   /*!
+   * Number of node references that follow.
+   */
+  uint numNodes;
+  /*!
    * The list of NiNode references.
    */
   vector<Ref<NiNode > > nodes;
@@ -343,6 +359,10 @@ struct ns_keylin {
  */
 template <class T >
 struct ns_keyarray {
+  /*!
+   * Number of keys.
+   */
+  uint numKeys;
   /*!
    * The keys.
    */
@@ -401,6 +421,10 @@ struct QuaternionXYZW {
  */
 struct ShortString {
   /*!
+   * The string length.
+   */
+  byte length;
+  /*!
    * The string itself, null terminated (the null terminator is taken into
    * account in the length byte).
    */
@@ -425,6 +449,10 @@ struct SkinShape {
  * Unknown.
  */
 struct SkinShapeGroup {
+  /*!
+   * Counts unknown.
+   */
+  uint numLinkPairs;
   /*!
    * First link is a NiTriShape block. Second link is a NiSkinInstance
    * block.
@@ -583,6 +611,10 @@ struct Header {
    */
   uint userVersion;
   /*!
+   * Number of file blocks.
+   */
+  uint numBlocks;
+  /*!
    * Unknown.
    */
   uint unknownInt1;
@@ -603,6 +635,10 @@ struct Header {
    * something like 'Default Export Script'.
    */
   ShortString exportScript_;
+  /*!
+   * Number of block types in this NIF file.
+   */
+  ushort numBlockTypes;
   /*!
    * List of all block types used in this NIF file.
    */
@@ -756,6 +792,10 @@ struct ns_keyrotarray {
 template <class T >
 struct ns_keyvecarraytyp {
   /*!
+   * Number of keys
+   */
+  uint numKeys;
+  /*!
    * The key type (1, 2, 3)
    */
   uint keyType;
@@ -906,9 +946,21 @@ struct SkinPartition {
    */
   ushort numVertices;
   /*!
+   * Number of triangles in this submesh.
+   */
+  ushort numTriangles;
+  /*!
+   * Number of bones influencing this submesh.
+   */
+  ushort numBones;
+  /*!
    * Number of strips in this submesh (zero if not stripped).
    */
   ushort numStrips;
+  /*!
+   * Number of weight coefficients per vertex.
+   */
+  ushort numWeightsPerVertex;
   /*!
    * List of bones.
    */
@@ -930,6 +982,10 @@ struct SkinPartition {
    * The vertex weights.
    */
   vector<vector<float > > vertexWeights;
+  /*!
+   * The strip lengths.
+   */
+  vector<ushort > stripLengths;
   /*!
    * Do we have strip data?
    */
@@ -1024,6 +1080,10 @@ struct Morph {
    * Name of the frame.
    */
   string frameName;
+  /*!
+   * The number of morph keys that follow.
+   */
+  uint numMorphKeys;
   /*!
    * Unlike most blocks, the presense of this value is not conditional on
    * there being keys.
@@ -1238,6 +1298,7 @@ return out.str(); \
 bhkRefObject::FixLinks( objects, link_stack, version ); \
 
 #define ABHK_CONSTRAINT_MEMBERS \
+uint numBodies; \
 vector<bhkShape * > bodies; \
 uint priority; \
 
@@ -1251,7 +1312,6 @@ uint priority; \
 #define ABHK_CONSTRAINT_READ \
 uint block_num; \
 bhkSerializable::Read( in, link_stack, version ); \
-uint numBodies; \
 NifStream( numBodies, in, version ); \
 bodies.resize(numBodies); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
@@ -1262,8 +1322,6 @@ NifStream( priority, in, version ); \
 
 #define ABHK_CONSTRAINT_WRITE \
 bhkSerializable::Write( out, link_map, version ); \
-uint numBodies; \
-numBodies = uint(bodies.size()); \
 NifStream( numBodies, out, version ); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(bodies[i0])], out, version ); \
@@ -1273,8 +1331,6 @@ NifStream( priority, out, version ); \
 #define ABHK_CONSTRAINT_STRING \
 stringstream out; \
 out << bhkSerializable::asString(); \
-uint numBodies; \
-numBodies = uint(bodies.size()); \
 out << "Num Bodies:  " << numBodies << endl; \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
   out << "  Bodies[" << i0 << "]:  " << bodies[i0] << endl; \
@@ -1284,8 +1340,6 @@ return out.str(); \
 
 #define ABHK_CONSTRAINT_FIXLINKS \
 bhkSerializable::FixLinks( objects, link_stack, version ); \
-uint numBodies; \
-numBodies = uint(bodies.size()); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     bodies[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
@@ -1516,6 +1570,7 @@ else \
 link_stack.pop_front(); \
 
 #define NI_COLLISION_OBJECT_MEMBERS \
+NiAVObject * parent; \
 ushort unknownShort; \
 Ref<NiObject > body; \
 
@@ -1528,7 +1583,6 @@ Ref<NiObject > body; \
 #define NI_COLLISION_OBJECT_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-NiAVObject * parent; \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( unknownShort, in, version ); \
@@ -1537,8 +1591,6 @@ link_stack.push_back( block_num ); \
 
 #define NI_COLLISION_OBJECT_WRITE \
 NiObject::Write( out, link_map, version ); \
-NiAVObject * parent; \
-parent = Parent(); \
 NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
@@ -1546,8 +1598,6 @@ NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
 #define NI_COLLISION_OBJECT_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-NiAVObject * parent; \
-parent = Parent(); \
 out << "Parent:  " << parent << endl; \
 out << "Unknown Short:  " << unknownShort << endl; \
 out << "Body:  " << body << endl; \
@@ -1555,8 +1605,6 @@ return out.str(); \
 
 #define NI_COLLISION_OBJECT_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-NiAVObject * parent; \
-parent = Parent(); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
 else \
@@ -1607,8 +1655,6 @@ return out.str(); \
 
 #define NI_EXTRA_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A000100 ) { \
-}; \
 if ( version <= 0x04020200 ) { \
   if (link_stack.front() != 0xffffffff) \
     nextExtraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
@@ -1702,6 +1748,7 @@ NiInterpolator::FixLinks( objects, link_stack, version ); \
 #define NI_OBJECT_N_E_T_MEMBERS \
 string name; \
 Ref<NiExtraData > extraData; \
+uint numExtraDataList; \
 vector<Ref<NiExtraData > > extraDataList; \
 Ref<NiTimeController > controller; \
 
@@ -1714,7 +1761,6 @@ Ref<NiTimeController > controller; \
 #define NI_OBJECT_N_E_T_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-uint numExtraDataList; \
 NifStream( name, in, version ); \
 if ( version <= 0x04020200 ) { \
   NifStream( block_num, in, version ); \
@@ -1733,8 +1779,6 @@ link_stack.push_back( block_num ); \
 
 #define NI_OBJECT_N_E_T_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numExtraDataList; \
-numExtraDataList = uint(extraDataList.size()); \
 NifStream( name, out, version ); \
 if ( version <= 0x04020200 ) { \
   NifStream( link_map[StaticCast<NiObject>(extraData)], out, version ); \
@@ -1750,8 +1794,6 @@ NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 #define NI_OBJECT_N_E_T_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numExtraDataList; \
-numExtraDataList = uint(extraDataList.size()); \
 out << "Name:  " << name << endl; \
 out << "Extra Data:  " << extraData << endl; \
 out << "Num Extra Data List:  " << numExtraDataList << endl; \
@@ -1763,8 +1805,6 @@ return out.str(); \
 
 #define NI_OBJECT_N_E_T_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numExtraDataList; \
-numExtraDataList = uint(extraDataList.size()); \
 if ( version <= 0x04020200 ) { \
   if (link_stack.front() != 0xffffffff) \
     extraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
@@ -1793,6 +1833,7 @@ Vector3 translation; \
 Matrix33 rotation; \
 float scale; \
 Vector3 velocity; \
+uint numProperties; \
 vector<Ref<NiProperty > > properties; \
 bool hasBoundingBox; \
 BoundingBox boundingBox; \
@@ -1809,7 +1850,6 @@ Ref<NiCollisionObject > collisionObject; \
 #define NI_A_V_OBJECT_READ \
 uint block_num; \
 NiObjectNET::Read( in, link_stack, version ); \
-uint numProperties; \
 NifStream( flags, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( rotation, in, version ); \
@@ -1843,8 +1883,6 @@ if ( version >= 0x14000005 ) { \
 
 #define NI_A_V_OBJECT_WRITE \
 NiObjectNET::Write( out, link_map, version ); \
-uint numProperties; \
-numProperties = uint(properties.size()); \
 NifStream( flags, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
@@ -1875,8 +1913,6 @@ if ( version >= 0x14000005 ) { \
 #define NI_A_V_OBJECT_STRING \
 stringstream out; \
 out << NiObjectNET::asString(); \
-uint numProperties; \
-numProperties = uint(properties.size()); \
 out << "Flags:  " << flags << endl; \
 out << "Translation:  " << translation << endl; \
 out << "Rotation:  " << rotation << endl; \
@@ -1899,20 +1935,12 @@ return out.str(); \
 
 #define NI_A_V_OBJECT_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
-uint numProperties; \
-numProperties = uint(properties.size()); \
-if ( version <= 0x04020200 ) { \
-}; \
 for (uint i0 = 0; i0 < numProperties; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     properties[i0] = DynamicCast<NiProperty>(objects[link_stack.front()]); \
   else \
     properties[i0] = NULL; \
   link_stack.pop_front(); \
-}; \
-if ( version <= 0x04020200 ) { \
-  if ( (hasBoundingBox != 0) ) { \
-  }; \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -1933,6 +1961,7 @@ if ( version >= 0x14000005 ) { \
 bool hasAffectedNodeList_; \
 uint affectedNodeList_; \
 bool switchState; \
+uint numAffectedNodes; \
 vector<Ref<NiAVObject > > affectedNodes; \
 
 #define NI_DYNAMIC_EFFECT_INCLUDE "NiAVObject.h" \
@@ -1944,7 +1973,6 @@ vector<Ref<NiAVObject > > affectedNodes; \
 #define NI_DYNAMIC_EFFECT_READ \
 uint block_num; \
 NiAVObject::Read( in, link_stack, version ); \
-uint numAffectedNodes; \
 if ( version <= 0x04000002 ) { \
   NifStream( hasAffectedNodeList_, in, version ); \
   if ( (hasAffectedNodeList_ != 0) ) { \
@@ -1965,8 +1993,6 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_DYNAMIC_EFFECT_WRITE \
 NiAVObject::Write( out, link_map, version ); \
-uint numAffectedNodes; \
-numAffectedNodes = uint(affectedNodes.size()); \
 if ( version <= 0x04000002 ) { \
   NifStream( hasAffectedNodeList_, out, version ); \
   if ( (hasAffectedNodeList_ != 0) ) { \
@@ -1986,8 +2012,6 @@ if ( version >= 0x0A010000 ) { \
 #define NI_DYNAMIC_EFFECT_STRING \
 stringstream out; \
 out << NiAVObject::asString(); \
-uint numAffectedNodes; \
-numAffectedNodes = uint(affectedNodes.size()); \
 out << "Has Affected Node List?:  " << hasAffectedNodeList_ << endl; \
 if ( (hasAffectedNodeList_ != 0) ) { \
   out << "  Affected Node List?:  " << affectedNodeList_ << endl; \
@@ -2001,14 +2025,6 @@ return out.str(); \
 
 #define NI_DYNAMIC_EFFECT_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
-uint numAffectedNodes; \
-numAffectedNodes = uint(affectedNodes.size()); \
-if ( version <= 0x04000002 ) { \
-  if ( (hasAffectedNodeList_ != 0) ) { \
-  }; \
-}; \
-if ( version >= 0x0A020000 ) { \
-}; \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numAffectedNodes; i1++) { \
     if (link_stack.front() != 0xffffffff) \
@@ -2294,6 +2310,7 @@ link_stack.pop_front(); \
 
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint unknownInt1; \
+uint numNodeGroups; \
 uint unknownInt2; \
 vector<NodeGroup > nodeGroups; \
 
@@ -2306,16 +2323,14 @@ vector<NodeGroup > nodeGroups; \
 #define A_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
-uint numNodeGroups; \
 NifStream( unknownInt1, in, version ); \
 NifStream( numNodeGroups, in, version ); \
 NifStream( unknownInt2, in, version ); \
 nodeGroups.resize(numNodeGroups); \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
-  uint nodeGroups_numNodes; \
-  NifStream( nodeGroups_numNodes, in, version ); \
-  nodeGroups[i0].nodes.resize(nodeGroups_numNodes); \
-  for (uint i1 = 0; i1 < nodeGroups_numNodes; i1++) { \
+  NifStream( nodeGroups[i0].numNodes, in, version ); \
+  nodeGroups[i0].nodes.resize(nodeGroups[i0].numNodes); \
+  for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
   }; \
@@ -2323,16 +2338,12 @@ for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
 
 #define A_BONE_L_O_D_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
-uint numNodeGroups; \
-numNodeGroups = uint(nodeGroups.size()); \
 NifStream( unknownInt1, out, version ); \
 NifStream( numNodeGroups, out, version ); \
 NifStream( unknownInt2, out, version ); \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
-  uint nodeGroups_numNodes; \
-  nodeGroups_numNodes = uint(nodeGroups[i0].nodes.size()); \
-  NifStream( nodeGroups_numNodes, out, version ); \
-  for (uint i1 = 0; i1 < nodeGroups_numNodes; i1++) { \
+  NifStream( nodeGroups[i0].numNodes, out, version ); \
+  for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
     NifStream( link_map[StaticCast<NiObject>(nodeGroups[i0].nodes[i1])], out, version ); \
   }; \
 }; \
@@ -2340,16 +2351,12 @@ for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
 #define A_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-uint numNodeGroups; \
-numNodeGroups = uint(nodeGroups.size()); \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 out << "Num Node Groups:  " << numNodeGroups << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
-  uint nodeGroups_numNodes; \
-  nodeGroups_numNodes = uint(nodeGroups[i0].nodes.size()); \
-  out << "  Num Nodes:  " << nodeGroups_numNodes << endl; \
-  for (uint i1 = 0; i1 < nodeGroups_numNodes; i1++) { \
+  out << "  Num Nodes:  " << nodeGroups[i0].numNodes << endl; \
+  for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
     out << "    Nodes[" << i1 << "]:  " << nodeGroups[i0].nodes[i1] << endl; \
   }; \
 }; \
@@ -2357,12 +2364,8 @@ return out.str(); \
 
 #define A_BONE_L_O_D_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-uint numNodeGroups; \
-numNodeGroups = uint(nodeGroups.size()); \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
-  uint nodeGroups_numNodes; \
-  nodeGroups_numNodes = uint(nodeGroups[i0].nodes.size()); \
-  for (uint i1 = 0; i1 < nodeGroups_numNodes; i1++) { \
+  for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
     if (link_stack.front() != 0xffffffff) \
       nodeGroups[i0].nodes[i1] = DynamicCast<NiNode>(objects[link_stack.front()]); \
     else \
@@ -2523,8 +2526,11 @@ bool hasNormals; \
 vector<Vector3 > normals; \
 vector<Vector3 > unknownVectors1; \
 vector<Vector3 > unknownVectors2; \
+Vector3 center; \
+float radius; \
 bool hasVertexColors; \
 vector<Color4 > vertexColors; \
+ushort numUvSets; \
 bool hasUv; \
 vector<vector<TexCoord > > uvSets; \
 vector<vector<TexCoord > > uvSets2; \
@@ -2540,9 +2546,6 @@ Ref<NiObject > unknownLink; \
 #define NI_TRI_BASED_GEOM_DATA_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-ushort numUvSets; \
-float radius; \
-Vector3 center; \
 if ( version >= 0x0A020000 ) { \
   NifStream( name, in, version ); \
 }; \
@@ -2623,12 +2626,6 @@ if ( version >= 0x14000004 ) { \
 
 #define NI_TRI_BASED_GEOM_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-ushort numUvSets; \
-numUvSets = ushort(uvSets.size()); \
-float radius; \
-radius = Radius(); \
-Vector3 center; \
-center = Center(); \
 if ( version >= 0x0A020000 ) { \
   NifStream( name, out, version ); \
 }; \
@@ -2698,12 +2695,6 @@ if ( version >= 0x14000004 ) { \
 #define NI_TRI_BASED_GEOM_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-ushort numUvSets; \
-numUvSets = ushort(uvSets.size()); \
-float radius; \
-radius = Radius(); \
-Vector3 center; \
-center = Center(); \
 out << "Name:  " << name << endl; \
 out << "Num Vertices:  " << numVertices << endl; \
 out << "Unknown Short 1:  " << unknownShort1 << endl; \
@@ -2755,54 +2746,6 @@ return out.str(); \
 
 #define NI_TRI_BASED_GEOM_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-ushort numUvSets; \
-numUvSets = ushort(uvSets.size()); \
-float radius; \
-radius = Radius(); \
-Vector3 center; \
-center = Center(); \
-if ( version >= 0x0A020000 ) { \
-}; \
-if ( version >= 0x0A010000 ) { \
-}; \
-if ( (hasVertices != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
-if ( version >= 0x0A000100 ) { \
-}; \
-if ( (hasNormals != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
-if ( version >= 0x0A010000 ) { \
-  if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-    }; \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-    }; \
-  }; \
-}; \
-if ( (hasVertexColors != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
-if ( version <= 0x04020200 ) { \
-}; \
-if ( version <= 0x04000002 ) { \
-}; \
-if ( version <= 0x04020200 ) { \
-  for (uint i1 = 0; i1 < numUvSets; i1++) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-    }; \
-  }; \
-}; \
-if ( version >= 0x0A000100 ) { \
-  for (uint i1 = 0; i1 < (numUvSets2 & 63); i1++) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-    }; \
-  }; \
-}; \
 if ( version >= 0x14000004 ) { \
   if (link_stack.front() != 0xffffffff) \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -2882,14 +2825,6 @@ return out.str(); \
 
 #define A_P_SYS_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
-if ( (hasUnknownFloats1 != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
-if ( (hasUnknownFloats2 != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
 
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS \
 float unknownFloat1; \
@@ -3079,7 +3014,9 @@ NiCollisionObject::FixLinks( objects, link_stack, version ); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
 vector<float > unknownFloats1; \
+uint num1; \
 vector<Float4 > unknownVectors1; \
+uint num2; \
 vector<Float4 > unknownVectors2; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_INCLUDE "bhkSphereRepShape.h" \
@@ -3090,8 +3027,6 @@ vector<Float4 > unknownVectors2; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_READ \
 bhkSphereRepShape::Read( in, link_stack, version ); \
-uint num2; \
-uint num1; \
 unknownFloats1.resize(7); \
 for (uint i0 = 0; i0 < 7; i0++) { \
   NifStream( unknownFloats1[i0], in, version ); \
@@ -3109,10 +3044,6 @@ for (uint i0 = 0; i0 < num2; i0++) { \
 
 #define BHK_CONVEX_VERTICES_SHAPE_WRITE \
 bhkSphereRepShape::Write( out, link_map, version ); \
-uint num2; \
-num2 = uint(unknownVectors2.size()); \
-uint num1; \
-num1 = uint(unknownVectors1.size()); \
 for (uint i0 = 0; i0 < 7; i0++) { \
   NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -3128,10 +3059,6 @@ for (uint i0 = 0; i0 < num2; i0++) { \
 #define BHK_CONVEX_VERTICES_SHAPE_STRING \
 stringstream out; \
 out << bhkSphereRepShape::asString(); \
-uint num2; \
-num2 = uint(unknownVectors2.size()); \
-uint num1; \
-num1 = uint(unknownVectors1.size()); \
 for (uint i0 = 0; i0 < 7; i0++) { \
   out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
@@ -3147,16 +3074,6 @@ return out.str(); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
-uint num2; \
-num2 = uint(unknownVectors2.size()); \
-uint num1; \
-num1 = uint(unknownVectors1.size()); \
-for (uint i0 = 0; i0 < 7; i0++) { \
-}; \
-for (uint i0 = 0; i0 < num1; i0++) { \
-}; \
-for (uint i0 = 0; i0 < num2; i0++) { \
-}; \
 
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
 vector<vector<float > > unknownFloats; \
@@ -3198,10 +3115,6 @@ return out.str(); \
 
 #define BHK_HINGE_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 5; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-}; \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
 uint unknownInt; \
@@ -3230,9 +3143,11 @@ return out.str(); \
 AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
 
 #define BHK_LIST_SHAPE_MEMBERS \
+uint numSubShapes; \
 vector<Ref<bhkShape > > subShapes; \
 uint material; \
 vector<float > unknownFloats; \
+uint numUnknownInts; \
 vector<uint > unknownInts; \
 
 #define BHK_LIST_SHAPE_INCLUDE "AbhkShapeCollection.h" \
@@ -3244,8 +3159,6 @@ vector<uint > unknownInts; \
 #define BHK_LIST_SHAPE_READ \
 uint block_num; \
 AbhkShapeCollection::Read( in, link_stack, version ); \
-uint numUnknownInts; \
-uint numSubShapes; \
 NifStream( numSubShapes, in, version ); \
 subShapes.resize(numSubShapes); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
@@ -3265,10 +3178,6 @@ for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
 
 #define BHK_LIST_SHAPE_WRITE \
 AbhkShapeCollection::Write( out, link_map, version ); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numSubShapes; \
-numSubShapes = uint(subShapes.size()); \
 NifStream( numSubShapes, out, version ); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(subShapes[i0])], out, version ); \
@@ -3285,10 +3194,6 @@ for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
 #define BHK_LIST_SHAPE_STRING \
 stringstream out; \
 out << AbhkShapeCollection::asString(); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numSubShapes; \
-numSubShapes = uint(subShapes.size()); \
 out << "Num Sub Shapes:  " << numSubShapes << endl; \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
   out << "  Sub Shapes[" << i0 << "]:  " << subShapes[i0] << endl; \
@@ -3305,20 +3210,12 @@ return out.str(); \
 
 #define BHK_LIST_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numSubShapes; \
-numSubShapes = uint(subShapes.size()); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     subShapes[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
   else \
     subShapes[i0] = NULL; \
   link_stack.pop_front(); \
-}; \
-for (uint i0 = 0; i0 < 6; i0++) { \
-}; \
-for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
 }; \
 
 #define BHK_MALLEABLE_CONSTRAINT_MEMBERS \
@@ -3419,20 +3316,13 @@ if (link_stack.front() != 0xffffffff) \
 else \
   unknownLink2 = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < 3; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 7; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-}; \
-if ( (type == 2) ) { \
-}; \
 
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
 uint material; \
 vector<byte > unknownBytes1; \
 float unknownFloat; \
+uint numUnknownBytes2; \
 vector<byte > unknownBytes2; \
 Vector3 unknownVector; \
 float unknownFloat2; \
@@ -3446,7 +3336,6 @@ float unknownFloat2; \
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
 uint block_num; \
 bhkShape::Read( in, link_stack, version ); \
-uint numUnknownBytes2; \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( material, in, version ); \
@@ -3465,8 +3354,6 @@ NifStream( unknownFloat2, in, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_WRITE \
 bhkShape::Write( out, link_map, version ); \
-uint numUnknownBytes2; \
-numUnknownBytes2 = uint(unknownBytes2.size()); \
 NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
 NifStream( material, out, version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
@@ -3483,8 +3370,6 @@ NifStream( unknownFloat2, out, version ); \
 #define BHK_MOPP_BV_TREE_SHAPE_STRING \
 stringstream out; \
 out << bhkShape::asString(); \
-uint numUnknownBytes2; \
-numUnknownBytes2 = uint(unknownBytes2.size()); \
 out << "Shape:  " << shape << endl; \
 out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
@@ -3501,17 +3386,11 @@ return out.str(); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
-uint numUnknownBytes2; \
-numUnknownBytes2 = uint(unknownBytes2.size()); \
 if (link_stack.front() != 0xffffffff) \
   shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
 else \
   shape = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < 8; i0++) { \
-}; \
-for (uint i0 = 0; i0 < numUnknownBytes2; i0++) { \
-}; \
 
 #define BHK_MULTI_SPHERE_SHAPE_MEMBERS \
 float unknownFloat1; \
@@ -3561,15 +3440,15 @@ return out.str(); \
 
 #define BHK_MULTI_SPHERE_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 8; i0++) { \
-}; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
 vector<float > unknownFloats1; \
 vector<uint > unknownInts1; \
 vector<float > unknownFloats2; \
 uint unknownInt2; \
+uint numStripsData; \
 vector<Ref<NiTriStripsData > > stripsData; \
+uint numUnknownInts3; \
 vector<uint > unknownInts3; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_INCLUDE "bhkSphereRepShape.h" \
@@ -3581,8 +3460,6 @@ vector<uint > unknownInts3; \
 #define BHK_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
 bhkSphereRepShape::Read( in, link_stack, version ); \
-uint numUnknownInts3; \
-uint numStripsData; \
 unknownFloats1.resize(2); \
 for (uint i0 = 0; i0 < 2; i0++) { \
   NifStream( unknownFloats1[i0], in, version ); \
@@ -3610,10 +3487,6 @@ for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_WRITE \
 bhkSphereRepShape::Write( out, link_map, version ); \
-uint numUnknownInts3; \
-numUnknownInts3 = uint(unknownInts3.size()); \
-uint numStripsData; \
-numStripsData = uint(stripsData.size()); \
 for (uint i0 = 0; i0 < 2; i0++) { \
   NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -3636,10 +3509,6 @@ for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
 #define BHK_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
 out << bhkSphereRepShape::asString(); \
-uint numUnknownInts3; \
-numUnknownInts3 = uint(unknownInts3.size()); \
-uint numStripsData; \
-numStripsData = uint(stripsData.size()); \
 for (uint i0 = 0; i0 < 2; i0++) { \
   out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
@@ -3662,16 +3531,6 @@ return out.str(); \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
-uint numUnknownInts3; \
-numUnknownInts3 = uint(unknownInts3.size()); \
-uint numStripsData; \
-numStripsData = uint(stripsData.size()); \
-for (uint i0 = 0; i0 < 2; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 5; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-}; \
 for (uint i0 = 0; i0 < numStripsData; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     stripsData[i0] = DynamicCast<NiTriStripsData>(objects[link_stack.front()]); \
@@ -3679,10 +3538,9 @@ for (uint i0 = 0; i0 < numStripsData; i0++) { \
     stripsData[i0] = NULL; \
   link_stack.pop_front(); \
 }; \
-for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
-}; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
+ushort numSubparts; \
 vector<vector<uint > > subparts; \
 vector<float > unknownFloats; \
 float scale; \
@@ -3699,7 +3557,6 @@ Ref<hkPackedNiTriStripsData > data; \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
 AbhkShapeCollection::Read( in, link_stack, version ); \
-ushort numSubparts; \
 NifStream( numSubparts, in, version ); \
 subparts.resize(numSubparts); \
 for (uint i0 = 0; i0 < numSubparts; i0++) \
@@ -3723,8 +3580,6 @@ link_stack.push_back( block_num ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_WRITE \
 AbhkShapeCollection::Write( out, link_map, version ); \
-ushort numSubparts; \
-numSubparts = ushort(subparts.size()); \
 NifStream( numSubparts, out, version ); \
 for (uint i0 = 0; i0 < numSubparts; i0++) { \
   for (uint i1 = 0; i1 < 3; i1++) { \
@@ -3743,8 +3598,6 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
 out << AbhkShapeCollection::asString(); \
-ushort numSubparts; \
-numSubparts = ushort(subparts.size()); \
 out << "Num Subparts:  " << numSubparts << endl; \
 for (uint i0 = 0; i0 < numSubparts; i0++) { \
   for (uint i1 = 0; i1 < 3; i1++) { \
@@ -3763,16 +3616,6 @@ return out.str(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
-ushort numSubparts; \
-numSubparts = ushort(subparts.size()); \
-for (uint i0 = 0; i0 < numSubparts; i0++) { \
-  for (uint i1 = 0; i1 < 3; i1++) { \
-  }; \
-}; \
-for (uint i0 = 0; i0 < 9; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]); \
 else \
@@ -3830,12 +3673,6 @@ return out.str(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 8; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-}; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-}; \
 
 #define BHK_RAGDOLL_CONSTRAINT_MEMBERS \
 
@@ -3889,6 +3726,7 @@ byte qualityType; \
 uint unknownInt6; \
 uint unknownInt7; \
 uint unknownInt8; \
+uint numConstraints; \
 vector<Ref<AbhkConstraint > > constraints; \
 
 #define BHK_RIGID_BODY_INCLUDE "bhkEntity.h" \
@@ -3901,7 +3739,6 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_READ \
 uint block_num; \
 bhkEntity::Read( in, link_stack, version ); \
-uint numConstraints; \
 unknownFloats1.resize(5); \
 for (uint i0 = 0; i0 < 5; i0++) { \
   NifStream( unknownFloats1[i0], in, version ); \
@@ -3956,8 +3793,6 @@ NifStream( unknownInt6, in, version ); \
 
 #define BHK_RIGID_BODY_WRITE \
 bhkEntity::Write( out, link_map, version ); \
-uint numConstraints; \
-numConstraints = uint(constraints.size()); \
 for (uint i0 = 0; i0 < 5; i0++) { \
   NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -4007,8 +3842,6 @@ NifStream( unknownInt6, out, version ); \
 #define BHK_RIGID_BODY_STRING \
 stringstream out; \
 out << bhkEntity::asString(); \
-uint numConstraints; \
-numConstraints = uint(constraints.size()); \
 for (uint i0 = 0; i0 < 5; i0++) { \
   out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
@@ -4058,16 +3891,6 @@ return out.str(); \
 
 #define BHK_RIGID_BODY_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
-uint numConstraints; \
-numConstraints = uint(constraints.size()); \
-for (uint i0 = 0; i0 < 5; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 4; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 6; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 12; i0++) { \
-}; \
 for (uint i0 = 0; i0 < numConstraints; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     constraints[i0] = DynamicCast<AbhkConstraint>(objects[link_stack.front()]); \
@@ -4153,12 +3976,6 @@ return out.str(); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 7; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-  for (uint i1 = 0; i1 < 5; i1++) { \
-  }; \
-}; \
 
 #define BHK_S_P_COLLISION_OBJECT_MEMBERS \
 
@@ -4252,10 +4069,6 @@ return out.str(); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 2; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-}; \
 
 #define BHK_TRANSFORM_SHAPE_MEMBERS \
 float unknownFloat1; \
@@ -4349,10 +4162,9 @@ return out.str(); \
 
 #define B_S_BOUND_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 6; i0++) { \
-}; \
 
 #define B_S_FURNITURE_MARKER_MEMBERS \
+uint numPositions; \
 vector<FurniturePosition > positions; \
 
 #define B_S_FURNITURE_MARKER_INCLUDE "NiExtraData.h" \
@@ -4363,7 +4175,6 @@ vector<FurniturePosition > positions; \
 
 #define B_S_FURNITURE_MARKER_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint numPositions; \
 NifStream( numPositions, in, version ); \
 positions.resize(numPositions); \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
@@ -4375,8 +4186,6 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 
 #define B_S_FURNITURE_MARKER_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint numPositions; \
-numPositions = uint(positions.size()); \
 NifStream( numPositions, out, version ); \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
   NifStream( positions[i0].unknownVector, out, version ); \
@@ -4388,8 +4197,6 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 #define B_S_FURNITURE_MARKER_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint numPositions; \
-numPositions = uint(positions.size()); \
 out << "Num Positions:  " << numPositions << endl; \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
   out << "  Unknown Vector:  " << positions[i0].unknownVector << endl; \
@@ -4401,10 +4208,6 @@ return out.str(); \
 
 #define B_S_FURNITURE_MARKER_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint numPositions; \
-numPositions = uint(positions.size()); \
-for (uint i0 = 0; i0 < numPositions; i0++) { \
-}; \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_MEMBERS \
 float unknownFloat; \
@@ -4481,6 +4284,7 @@ return out.str(); \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS \
+uint numTriangles; \
 vector<hkTriangle > triangles; \
 uint numVertices; \
 vector<Vector3 > vertices; \
@@ -4493,7 +4297,6 @@ vector<Vector3 > vertices; \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_READ \
 AbhkShapeCollection::Read( in, link_stack, version ); \
-uint numTriangles; \
 NifStream( numTriangles, in, version ); \
 triangles.resize(numTriangles); \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
@@ -4509,8 +4312,6 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_WRITE \
 AbhkShapeCollection::Write( out, link_map, version ); \
-uint numTriangles; \
-numTriangles = uint(triangles.size()); \
 NifStream( numTriangles, out, version ); \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
   NifStream( triangles[i0].triangle, out, version ); \
@@ -4525,8 +4326,6 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 #define HK_PACKED_NI_TRI_STRIPS_DATA_STRING \
 stringstream out; \
 out << AbhkShapeCollection::asString(); \
-uint numTriangles; \
-numTriangles = uint(triangles.size()); \
 out << "Num Triangles:  " << numTriangles << endl; \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
   out << "  Triangle:  " << triangles[i0].triangle << endl; \
@@ -4541,12 +4340,6 @@ return out.str(); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
-uint numTriangles; \
-numTriangles = uint(triangles.size()); \
-for (uint i0 = 0; i0 < numTriangles; i0++) { \
-}; \
-for (uint i0 = 0; i0 < numVertices; i0++) { \
-}; \
 
 #define NI_ALPHA_CONTROLLER_MEMBERS \
 Ref<NiFloatData > data; \
@@ -4714,18 +4507,6 @@ return out.str(); \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
-if ( version <= 0x04000002 ) { \
-}; \
-if ( version <= 0x0A000100 ) { \
-}; \
-if ( version <= 0x04000002 ) { \
-}; \
-if ( ( version >= 0x0401000C ) && ( version <= 0x0A000100 ) ) { \
-}; \
-if ( (hasSizes != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
 
 #define NI_BINARY_EXTRA_DATA_MEMBERS \
 ByteArray binaryData; \
@@ -4738,48 +4519,37 @@ ByteArray binaryData; \
 
 #define NI_BINARY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint binaryData_size; \
-NifStream( binaryData_size, in, version ); \
+NifStream( binaryData.size, in, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( binaryData.unknownInt, in, version ); \
 }; \
-binaryData.data.resize(binaryData_size); \
-for (uint i0 = 0; i0 < binaryData_size; i0++) { \
+binaryData.data.resize(binaryData.size); \
+for (uint i0 = 0; i0 < binaryData.size; i0++) { \
   NifStream( binaryData.data[i0], in, version ); \
 }; \
 
 #define NI_BINARY_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint binaryData_size; \
-binaryData_size = uint(binaryData.data.size()); \
-NifStream( binaryData_size, out, version ); \
+NifStream( binaryData.size, out, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( binaryData.unknownInt, out, version ); \
 }; \
-for (uint i0 = 0; i0 < binaryData_size; i0++) { \
+for (uint i0 = 0; i0 < binaryData.size; i0++) { \
   NifStream( binaryData.data[i0], out, version ); \
 }; \
 
 #define NI_BINARY_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint binaryData_size; \
-binaryData_size = uint(binaryData.data.size()); \
-out << "Size:  " << binaryData_size << endl; \
+out << "Size:  " << binaryData.size << endl; \
 out << "Unknown Int:  " << binaryData.unknownInt << endl; \
-for (uint i0 = 0; i0 < binaryData_size; i0++) { \
+for (uint i0 = 0; i0 < binaryData.size; i0++) { \
   out << "  Data[" << i0 << "]:  " << binaryData.data[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_BINARY_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint binaryData_size; \
-binaryData_size = uint(binaryData.data.size()); \
-if ( version >= 0x14000004 ) { \
-}; \
-for (uint i0 = 0; i0 < binaryData_size; i0++) { \
-}; \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_MEMBERS \
 byte boolValue; \
@@ -4882,7 +4652,9 @@ return out.str(); \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
 
 #define NI_BONE_L_O_D_CONTROLLER_MEMBERS \
+uint numShapeGroups; \
 vector<SkinShapeGroup > shapeGroups1; \
+uint numShapeGroups2; \
 vector<Ref<NiTriShape > > shapeGroups2; \
 
 #define NI_BONE_L_O_D_CONTROLLER_INCLUDE "ABoneLODController.h" \
@@ -4894,15 +4666,12 @@ vector<Ref<NiTriShape > > shapeGroups2; \
 #define NI_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
 ABoneLODController::Read( in, link_stack, version ); \
-uint numShapeGroups2; \
-uint numShapeGroups; \
 NifStream( numShapeGroups, in, version ); \
 shapeGroups1.resize(numShapeGroups); \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
-  uint shapeGroups1_numLinkPairs; \
-  NifStream( shapeGroups1_numLinkPairs, in, version ); \
-  shapeGroups1[i0].linkPairs.resize(shapeGroups1_numLinkPairs); \
-  for (uint i1 = 0; i1 < shapeGroups1_numLinkPairs; i1++) { \
+  NifStream( shapeGroups1[i0].numLinkPairs, in, version ); \
+  shapeGroups1[i0].linkPairs.resize(shapeGroups1[i0].numLinkPairs); \
+  for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
     NifStream( block_num, in, version ); \
     link_stack.push_back( block_num ); \
     NifStream( block_num, in, version ); \
@@ -4918,16 +4687,10 @@ for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
 
 #define NI_BONE_L_O_D_CONTROLLER_WRITE \
 ABoneLODController::Write( out, link_map, version ); \
-uint numShapeGroups2; \
-numShapeGroups2 = uint(shapeGroups2.size()); \
-uint numShapeGroups; \
-numShapeGroups = uint(shapeGroups1.size()); \
 NifStream( numShapeGroups, out, version ); \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
-  uint shapeGroups1_numLinkPairs; \
-  shapeGroups1_numLinkPairs = uint(shapeGroups1[i0].linkPairs.size()); \
-  NifStream( shapeGroups1_numLinkPairs, out, version ); \
-  for (uint i1 = 0; i1 < shapeGroups1_numLinkPairs; i1++) { \
+  NifStream( shapeGroups1[i0].numLinkPairs, out, version ); \
+  for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
     NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].shape)], out, version ); \
     NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].skinInstance)], out, version ); \
   }; \
@@ -4940,16 +4703,10 @@ for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
 #define NI_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
 out << ABoneLODController::asString(); \
-uint numShapeGroups2; \
-numShapeGroups2 = uint(shapeGroups2.size()); \
-uint numShapeGroups; \
-numShapeGroups = uint(shapeGroups1.size()); \
 out << "Num Shape Groups:  " << numShapeGroups << endl; \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
-  uint shapeGroups1_numLinkPairs; \
-  shapeGroups1_numLinkPairs = uint(shapeGroups1[i0].linkPairs.size()); \
-  out << "  Num Link Pairs:  " << shapeGroups1_numLinkPairs << endl; \
-  for (uint i1 = 0; i1 < shapeGroups1_numLinkPairs; i1++) { \
+  out << "  Num Link Pairs:  " << shapeGroups1[i0].numLinkPairs << endl; \
+  for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
     out << "    Shape:  " << shapeGroups1[i0].linkPairs[i1].shape << endl; \
     out << "    Skin Instance:  " << shapeGroups1[i0].linkPairs[i1].skinInstance << endl; \
   }; \
@@ -4962,14 +4719,8 @@ return out.str(); \
 
 #define NI_BONE_L_O_D_CONTROLLER_FIXLINKS \
 ABoneLODController::FixLinks( objects, link_stack, version ); \
-uint numShapeGroups2; \
-numShapeGroups2 = uint(shapeGroups2.size()); \
-uint numShapeGroups; \
-numShapeGroups = uint(shapeGroups1.size()); \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
-  uint shapeGroups1_numLinkPairs; \
-  shapeGroups1_numLinkPairs = uint(shapeGroups1[i0].linkPairs.size()); \
-  for (uint i1 = 0; i1 < shapeGroups1_numLinkPairs; i1++) { \
+  for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
     if (link_stack.front() != 0xffffffff) \
       shapeGroups1[i0].linkPairs[i1].shape = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
     else \
@@ -5034,10 +4785,6 @@ return out.str(); \
 
 #define NI_BOOL_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( (data.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-}; \
 
 #define NI_BOOLEAN_EXTRA_DATA_MEMBERS \
 byte booleanData; \
@@ -5219,8 +4966,6 @@ return out.str(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 6; i0++) { \
-}; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
 Ref<NiBSplineData > data; \
@@ -5275,8 +5020,6 @@ if (link_stack.front() != 0xffffffff) \
 else \
   unknownLink = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < 6; i0++) { \
-}; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
 Ref<NiBSplineData > data; \
@@ -5331,11 +5074,10 @@ if (link_stack.front() != 0xffffffff) \
 else \
   basisData = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < 17; i0++) { \
-}; \
 
 #define NI_B_SPLINE_DATA_MEMBERS \
 uint unknownInt; \
+uint count; \
 vector<vector<byte > > unknownData; \
 
 #define NI_B_SPLINE_DATA_INCLUDE "NiObject.h" \
@@ -5346,7 +5088,6 @@ vector<vector<byte > > unknownData; \
 
 #define NI_B_SPLINE_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
-uint count; \
 NifStream( unknownInt, in, version ); \
 NifStream( count, in, version ); \
 unknownData.resize(count); \
@@ -5360,8 +5101,6 @@ for (uint i0 = 0; i0 < count; i0++) { \
 
 #define NI_B_SPLINE_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint count; \
-count = uint(unknownData.size()); \
 NifStream( unknownInt, out, version ); \
 NifStream( count, out, version ); \
 for (uint i0 = 0; i0 < count; i0++) { \
@@ -5373,8 +5112,6 @@ for (uint i0 = 0; i0 < count; i0++) { \
 #define NI_B_SPLINE_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint count; \
-count = uint(unknownData.size()); \
 out << "Unknown Int:  " << unknownInt << endl; \
 out << "Count:  " << count << endl; \
 for (uint i0 = 0; i0 < count; i0++) { \
@@ -5386,12 +5123,6 @@ return out.str(); \
 
 #define NI_B_SPLINE_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint count; \
-count = uint(unknownData.size()); \
-for (uint i0 = 0; i0 < count; i0++) { \
-  for (uint i1 = 0; i1 < 2; i1++) { \
-  }; \
-}; \
 
 #define NI_CAMERA_MEMBERS \
 ushort unknownShort; \
@@ -5492,17 +5223,11 @@ return out.str(); \
 
 #define NI_CAMERA_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-}; \
-if ( version >= 0x0A010000 ) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink_ = NULL; \
 link_stack.pop_front(); \
-if ( version >= 0x04020100 ) { \
-}; \
 
 #define NI_COLLISION_DATA_MEMBERS \
 NiNode * targetNode; \
@@ -5596,16 +5321,6 @@ if (link_stack.front() != 0xffffffff) \
 else \
   targetNode = NULL; \
 link_stack.pop_front(); \
-if ( (collisionType == 0) ) { \
-}; \
-if ( (collisionType == 2) ) { \
-  for (uint i1 = 0; i1 < 8; i1++) { \
-  }; \
-}; \
-if ( (collisionType == 1) ) { \
-  for (uint i1 = 0; i1 < 15; i1++) { \
-  }; \
-}; \
 
 #define NI_COLOR_DATA_MEMBERS \
 KeyGroup<Color4 > data; \
@@ -5651,10 +5366,6 @@ return out.str(); \
 
 #define NI_COLOR_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( (data.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-}; \
 
 #define NI_COLOR_EXTRA_DATA_MEMBERS \
 Color4 data; \
@@ -5684,6 +5395,7 @@ NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define NI_CONTROLLER_MANAGER_MEMBERS \
 bool cumulative; \
+uint numControllerSequences; \
 vector<Ref<NiControllerSequence > > controllerSequences; \
 Ref<NiDefaultAVObjectPalette > objectPalette; \
 
@@ -5696,7 +5408,6 @@ Ref<NiDefaultAVObjectPalette > objectPalette; \
 #define NI_CONTROLLER_MANAGER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
-uint numControllerSequences; \
 NifStream( cumulative, in, version ); \
 NifStream( numControllerSequences, in, version ); \
 controllerSequences.resize(numControllerSequences); \
@@ -5709,8 +5420,6 @@ link_stack.push_back( block_num ); \
 
 #define NI_CONTROLLER_MANAGER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
-uint numControllerSequences; \
-numControllerSequences = uint(controllerSequences.size()); \
 NifStream( cumulative, out, version ); \
 NifStream( numControllerSequences, out, version ); \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
@@ -5721,8 +5430,6 @@ NifStream( link_map[StaticCast<NiObject>(objectPalette)], out, version ); \
 #define NI_CONTROLLER_MANAGER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-uint numControllerSequences; \
-numControllerSequences = uint(controllerSequences.size()); \
 out << "Cumulative:  " << cumulative << endl; \
 out << "Num Controller Sequences:  " << numControllerSequences << endl; \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
@@ -5733,8 +5440,6 @@ return out.str(); \
 
 #define NI_CONTROLLER_MANAGER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-uint numControllerSequences; \
-numControllerSequences = uint(controllerSequences.size()); \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     controllerSequences[i0] = DynamicCast<NiControllerSequence>(objects[link_stack.front()]); \
@@ -5751,6 +5456,7 @@ link_stack.pop_front(); \
 #define NI_CONTROLLER_SEQUENCE_MEMBERS \
 string name; \
 ControllerLink textKeys; \
+uint numControlledBlocks; \
 uint unknownInt1; \
 vector<ControllerLink > controlledBlocks; \
 float weight; \
@@ -5762,6 +5468,7 @@ float startTime; \
 float stopTime; \
 float unknownFloat2; \
 byte unknownByte; \
+NiControllerManager * manager; \
 string unknownString; \
 Ref<NiStringPalette > stringPalette; \
 
@@ -5775,8 +5482,6 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-NiControllerManager * manager; \
-uint numControlledBlocks; \
 NifStream( name, in, version ); \
 if ( version <= 0x0A010000 ) { \
   if ( version <= 0x0A010000 ) { \
@@ -5921,10 +5626,6 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_CONTROLLER_SEQUENCE_WRITE \
 NiObject::Write( out, link_map, version ); \
-NiControllerManager * manager; \
-manager = Parent(); \
-uint numControlledBlocks; \
-numControlledBlocks = uint(controlledBlocks.size()); \
 NifStream( name, out, version ); \
 if ( version <= 0x0A010000 ) { \
   if ( version <= 0x0A010000 ) { \
@@ -6058,10 +5759,6 @@ if ( version >= 0x0A020000 ) { \
 #define NI_CONTROLLER_SEQUENCE_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-NiControllerManager * manager; \
-manager = Parent(); \
-uint numControlledBlocks; \
-numControlledBlocks = uint(controlledBlocks.size()); \
 out << "Name:  " << name << endl; \
 out << "Name:  " << textKeys.name << endl; \
 out << "Interpolator:  " << textKeys.interpolator << endl; \
@@ -6117,13 +5814,7 @@ return out.str(); \
 
 #define NI_CONTROLLER_SEQUENCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-NiControllerManager * manager; \
-manager = Parent(); \
-uint numControlledBlocks; \
-numControlledBlocks = uint(controlledBlocks.size()); \
 if ( version <= 0x0A010000 ) { \
-  if ( version <= 0x0A010000 ) { \
-  }; \
   if (link_stack.front() != 0xffffffff) \
     textKeys.interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
   else \
@@ -6143,8 +5834,6 @@ if ( version <= 0x0A010000 ) { \
       textKeys.unknownLink2 = NULL; \
     link_stack.pop_front(); \
   }; \
-  if ( version >= 0x0A01006A ) { \
-  }; \
   if ( version >= 0x0A020000 ) { \
     if (link_stack.front() != 0xffffffff) \
       textKeys.stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
@@ -6152,32 +5841,8 @@ if ( version <= 0x0A010000 ) { \
       textKeys.stringPalette = NULL; \
     link_stack.pop_front(); \
   }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-}; \
-if ( version >= 0x0A01006A ) { \
 }; \
 for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
-  if ( version <= 0x0A010000 ) { \
-  }; \
   if (link_stack.front() != 0xffffffff) \
     controlledBlocks[i0].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
   else \
@@ -6197,34 +5862,12 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
       controlledBlocks[i0].unknownLink2 = NULL; \
     link_stack.pop_front(); \
   }; \
-  if ( version >= 0x0A01006A ) { \
-  }; \
   if ( version >= 0x0A020000 ) { \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
     else \
       controlledBlocks[i0].stringPalette = NULL; \
     link_stack.pop_front(); \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  if ( version >= 0x0A020000 ) { \
   }; \
 }; \
 if ( version >= 0x0A01006A ) { \
@@ -6233,16 +5876,6 @@ if ( version >= 0x0A01006A ) { \
   else \
     textKeys2 = NULL; \
   link_stack.pop_front(); \
-}; \
-if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-}; \
-if ( version >= 0x0A01006A ) { \
-}; \
-if ( ( version >= 0x0A020000 ) && ( version <= 0x0A020000 ) ) { \
-}; \
-if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-}; \
-if ( version >= 0x0A01006A ) { \
   if (link_stack.front() != 0xffffffff) \
     manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]); \
   else \
@@ -6259,6 +5892,7 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS \
 uint unknownInt; \
+uint numObjs; \
 vector<AVObject > objs; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_INCLUDE "NiObject.h" \
@@ -6270,7 +5904,6 @@ vector<AVObject > objs; \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-uint numObjs; \
 NifStream( unknownInt, in, version ); \
 NifStream( numObjs, in, version ); \
 objs.resize(numObjs); \
@@ -6282,8 +5915,6 @@ for (uint i0 = 0; i0 < numObjs; i0++) { \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numObjs; \
-numObjs = uint(objs.size()); \
 NifStream( unknownInt, out, version ); \
 NifStream( numObjs, out, version ); \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
@@ -6294,8 +5925,6 @@ for (uint i0 = 0; i0 < numObjs; i0++) { \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numObjs; \
-numObjs = uint(objs.size()); \
 out << "Unknown Int:  " << unknownInt << endl; \
 out << "Num Objs:  " << numObjs << endl; \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
@@ -6306,8 +5935,6 @@ return out.str(); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numObjs; \
-numObjs = uint(objs.size()); \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     objs[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
@@ -6368,6 +5995,7 @@ NiProperty::FixLinks( objects, link_stack, version ); \
 uint textureSlot; \
 uint unknownInt2; \
 float delta; \
+uint numSources; \
 vector<Ref<NiSourceTexture > > sources; \
 
 #define NI_FLIP_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
@@ -6379,7 +6007,6 @@ vector<Ref<NiSourceTexture > > sources; \
 #define NI_FLIP_CONTROLLER_READ \
 uint block_num; \
 NiSingleInterpolatorController::Read( in, link_stack, version ); \
-uint numSources; \
 NifStream( textureSlot, in, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( unknownInt2, in, version ); \
@@ -6394,8 +6021,6 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 
 #define NI_FLIP_CONTROLLER_WRITE \
 NiSingleInterpolatorController::Write( out, link_map, version ); \
-uint numSources; \
-numSources = uint(sources.size()); \
 NifStream( textureSlot, out, version ); \
 if ( version <= 0x0A010000 ) { \
   NifStream( unknownInt2, out, version ); \
@@ -6409,8 +6034,6 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 #define NI_FLIP_CONTROLLER_STRING \
 stringstream out; \
 out << NiSingleInterpolatorController::asString(); \
-uint numSources; \
-numSources = uint(sources.size()); \
 out << "Texture Slot:  " << textureSlot << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Delta:  " << delta << endl; \
@@ -6422,10 +6045,6 @@ return out.str(); \
 
 #define NI_FLIP_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
-uint numSources; \
-numSources = uint(sources.size()); \
-if ( version <= 0x0A010000 ) { \
-}; \
 for (uint i0 = 0; i0 < numSources; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     sources[i0] = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -6478,10 +6097,6 @@ return out.str(); \
 
 #define NI_FLOAT_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( (data.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-}; \
 
 #define NI_FLOAT_EXTRA_DATA_MEMBERS \
 float floatData; \
@@ -6590,6 +6205,7 @@ else \
 link_stack.pop_front(); \
 
 #define NI_FLOATS_EXTRA_DATA_MEMBERS \
+uint numFloats; \
 vector<float > data; \
 
 #define NI_FLOATS_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -6600,7 +6216,6 @@ vector<float > data; \
 
 #define NI_FLOATS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint numFloats; \
 NifStream( numFloats, in, version ); \
 data.resize(numFloats); \
 for (uint i0 = 0; i0 < numFloats; i0++) { \
@@ -6609,8 +6224,6 @@ for (uint i0 = 0; i0 < numFloats; i0++) { \
 
 #define NI_FLOATS_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint numFloats; \
-numFloats = uint(data.size()); \
 NifStream( numFloats, out, version ); \
 for (uint i0 = 0; i0 < numFloats; i0++) { \
   NifStream( data[i0], out, version ); \
@@ -6619,8 +6232,6 @@ for (uint i0 = 0; i0 < numFloats; i0++) { \
 #define NI_FLOATS_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint numFloats; \
-numFloats = uint(data.size()); \
 out << "Num Floats:  " << numFloats << endl; \
 for (uint i0 = 0; i0 < numFloats; i0++) { \
   out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
@@ -6629,10 +6240,6 @@ return out.str(); \
 
 #define NI_FLOATS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint numFloats; \
-numFloats = uint(data.size()); \
-for (uint i0 = 0; i0 < numFloats; i0++) { \
-}; \
 
 #define NI_FOG_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -6673,7 +6280,9 @@ ushort unknown; \
 byte unknown2; \
 Ref<NiMorphData > data; \
 byte unknownByte; \
+uint numInterpolators; \
 vector<Ref<NiInterpolator > > interpolators; \
+uint numUnknownInts; \
 vector<uint > unknownInts; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_INCLUDE "NiTimeController.h" \
@@ -6685,8 +6294,6 @@ vector<uint > unknownInts; \
 #define NI_GEOM_MORPHER_CONTROLLER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
-uint numUnknownInts; \
-uint numInterpolators; \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown, in, version ); \
 }; \
@@ -6714,10 +6321,6 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_GEOM_MORPHER_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numInterpolators; \
-numInterpolators = uint(interpolators.size()); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknown, out, version ); \
 }; \
@@ -6742,10 +6345,6 @@ if ( version >= 0x0A020000 ) { \
 #define NI_GEOM_MORPHER_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numInterpolators; \
-numInterpolators = uint(interpolators.size()); \
 out << "Unknown:  " << unknown << endl; \
 out << "Unknown 2:  " << unknown2 << endl; \
 out << "Data:  " << data << endl; \
@@ -6762,14 +6361,6 @@ return out.str(); \
 
 #define NI_GEOM_MORPHER_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-uint numUnknownInts; \
-numUnknownInts = uint(unknownInts.size()); \
-uint numInterpolators; \
-numInterpolators = uint(interpolators.size()); \
-if ( version >= 0x0A010000 ) { \
-}; \
-if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiMorphData>(objects[link_stack.front()]); \
 else \
@@ -6782,10 +6373,6 @@ if ( version >= 0x0A01006A ) { \
     else \
       interpolators[i1] = NULL; \
     link_stack.pop_front(); \
-  }; \
-}; \
-if ( version >= 0x0A020000 ) { \
-  for (uint i1 = 0; i1 < numUnknownInts; i1++) { \
   }; \
 }; \
 
@@ -6858,6 +6445,7 @@ return out.str(); \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
 #define NI_INTEGERS_EXTRA_DATA_MEMBERS \
+uint numIntegers; \
 vector<uint > data; \
 
 #define NI_INTEGERS_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -6868,7 +6456,6 @@ vector<uint > data; \
 
 #define NI_INTEGERS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint numIntegers; \
 NifStream( numIntegers, in, version ); \
 data.resize(numIntegers); \
 for (uint i0 = 0; i0 < numIntegers; i0++) { \
@@ -6877,8 +6464,6 @@ for (uint i0 = 0; i0 < numIntegers; i0++) { \
 
 #define NI_INTEGERS_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint numIntegers; \
-numIntegers = uint(data.size()); \
 NifStream( numIntegers, out, version ); \
 for (uint i0 = 0; i0 < numIntegers; i0++) { \
   NifStream( data[i0], out, version ); \
@@ -6887,8 +6472,6 @@ for (uint i0 = 0; i0 < numIntegers; i0++) { \
 #define NI_INTEGERS_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint numIntegers; \
-numIntegers = uint(data.size()); \
 out << "Num Integers:  " << numIntegers << endl; \
 for (uint i0 = 0; i0 < numIntegers; i0++) { \
   out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
@@ -6897,10 +6480,6 @@ return out.str(); \
 
 #define NI_INTEGERS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint numIntegers; \
-numIntegers = uint(data.size()); \
-for (uint i0 = 0; i0 < numIntegers; i0++) { \
-}; \
 
 #define NI_KEYFRAME_CONTROLLER_MEMBERS \
 Ref<NiKeyframeData > data; \
@@ -7114,32 +6693,6 @@ return out.str(); \
 
 #define NI_KEYFRAME_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( (numRotationKeys != 0) ) { \
-}; \
-if ( (rotationType != 4) ) { \
-  for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
-  }; \
-}; \
-if ( version <= 0x0A010000 ) { \
-  if ( (rotationType == 4) ) { \
-  }; \
-}; \
-if ( (rotationType == 4) ) { \
-  for (uint i1 = 0; i1 < 3; i1++) { \
-    if ( (xyzRotations[i1].numKeys != 0) ) { \
-    }; \
-    for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
-    }; \
-  }; \
-}; \
-if ( (translations.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
-}; \
-if ( (scales.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
-}; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_MEMBERS \
 ushort unknownShort; \
@@ -7192,8 +6745,6 @@ return out.str(); \
 
 #define NI_LIGHT_COLOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
-}; \
 if ( version <= 0x0A010000 ) { \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
@@ -7277,8 +6828,6 @@ return out.str(); \
 
 #define NI_LOOK_AT_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   lookAtNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -7407,8 +6956,6 @@ return out.str(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-}; \
 if ( version <= 0x0A010000 ) { \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
@@ -7470,8 +7017,6 @@ return out.str(); \
 
 #define NI_MATERIAL_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
-if ( version <= 0x0A000102 ) { \
-}; \
 
 #define NI_MESH_P_SYS_DATA_MEMBERS \
 byte unknownByte11; \
@@ -7481,6 +7026,7 @@ vector<vector<float > > unknownFloats5; \
 uint unknownInt1; \
 Ref<AParticleModifier > modifier; \
 byte unknownByte2; \
+uint numUnknownLinks; \
 vector<Ref<AParticleModifier > > unknownLinks; \
 ushort unknownShort4; \
 uint unknownInt2; \
@@ -7498,7 +7044,6 @@ Ref<NiNode > unknownLink2; \
 #define NI_MESH_P_SYS_DATA_READ \
 uint block_num; \
 APSysData::Read( in, link_stack, version ); \
-uint numUnknownLinks; \
 if ( version >= 0x14000005 ) { \
   NifStream( unknownByte11, in, version ); \
 }; \
@@ -7558,8 +7103,6 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_MESH_P_SYS_DATA_WRITE \
 APSysData::Write( out, link_map, version ); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
 if ( version >= 0x14000005 ) { \
   NifStream( unknownByte11, out, version ); \
 }; \
@@ -7607,8 +7150,6 @@ if ( version >= 0x0A020000 ) { \
 #define NI_MESH_P_SYS_DATA_STRING \
 stringstream out; \
 out << APSysData::asString(); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
 out << "Unknown Byte 11:  " << unknownByte11 << endl; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
@@ -7642,26 +7183,6 @@ return out.str(); \
 
 #define NI_MESH_P_SYS_DATA_FIXLINKS \
 APSysData::FixLinks( objects, link_stack, version ); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
-if ( version >= 0x14000005 ) { \
-}; \
-if ( version <= 0x14000004 ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-    for (uint i2 = 0; i2 < 4; i2++) { \
-    }; \
-  }; \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-    for (uint i2 = 0; i2 < 10; i2++) { \
-    }; \
-  }; \
-}; \
-if ( version >= 0x14000005 ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-    for (uint i2 = 0; i2 < 12; i2++) { \
-    }; \
-  }; \
-}; \
 if ( version <= 0x14000004 ) { \
   if (link_stack.front() != 0xffffffff) \
     modifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
@@ -7678,8 +7199,6 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
     link_stack.pop_front(); \
   }; \
 }; \
-if ( version >= 0x14000005 ) { \
-}; \
 if ( version >= 0x0A020000 ) { \
   if (link_stack.front() != 0xffffffff) \
     unknownLink2 = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -7689,6 +7208,7 @@ if ( version >= 0x0A020000 ) { \
 }; \
 
 #define NI_MORPH_DATA_MEMBERS \
+uint numMorphs; \
 uint numVertices; \
 byte unknownByte; \
 vector<Morph > morphs; \
@@ -7701,21 +7221,19 @@ vector<Morph > morphs; \
 
 #define NI_MORPH_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
-uint numMorphs; \
 NifStream( numMorphs, in, version ); \
 NifStream( numVertices, in, version ); \
 NifStream( unknownByte, in, version ); \
 morphs.resize(numMorphs); \
 for (uint i0 = 0; i0 < numMorphs; i0++) { \
-  uint morphs_numMorphKeys; \
   if ( version >= 0x0A01006A ) { \
     NifStream( morphs[i0].frameName, in, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    NifStream( morphs_numMorphKeys, in, version ); \
+    NifStream( morphs[i0].numMorphKeys, in, version ); \
     NifStream( morphs[i0].morphInterpolation, in, version ); \
-    morphs[i0].morphKeys.resize(morphs_numMorphKeys); \
-    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
+    morphs[i0].morphKeys.resize(morphs[i0].numMorphKeys); \
+    for (uint i2 = 0; i2 < morphs[i0].numMorphKeys; i2++) { \
       NifStream( morphs[i0].morphKeys[i2], in, version, morphs[i0].morphInterpolation ); \
     }; \
   }; \
@@ -7730,21 +7248,17 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
 
 #define NI_MORPH_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numMorphs; \
-numMorphs = uint(morphs.size()); \
 NifStream( numMorphs, out, version ); \
 NifStream( numVertices, out, version ); \
 NifStream( unknownByte, out, version ); \
 for (uint i0 = 0; i0 < numMorphs; i0++) { \
-  uint morphs_numMorphKeys; \
-  morphs_numMorphKeys = uint(morphs[i0].morphKeys.size()); \
   if ( version >= 0x0A01006A ) { \
     NifStream( morphs[i0].frameName, out, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
-    NifStream( morphs_numMorphKeys, out, version ); \
+    NifStream( morphs[i0].numMorphKeys, out, version ); \
     NifStream( morphs[i0].morphInterpolation, out, version ); \
-    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
+    for (uint i2 = 0; i2 < morphs[i0].numMorphKeys; i2++) { \
       NifStream( morphs[i0].morphKeys[i2], out, version, morphs[i0].morphInterpolation ); \
     }; \
   }; \
@@ -7759,18 +7273,14 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
 #define NI_MORPH_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numMorphs; \
-numMorphs = uint(morphs.size()); \
 out << "Num Morphs:  " << numMorphs << endl; \
 out << "Num Vertices:  " << numVertices << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 for (uint i0 = 0; i0 < numMorphs; i0++) { \
-  uint morphs_numMorphKeys; \
-  morphs_numMorphKeys = uint(morphs[i0].morphKeys.size()); \
   out << "  Frame Name:  " << morphs[i0].frameName << endl; \
-  out << "  Num Morph Keys:  " << morphs_numMorphKeys << endl; \
+  out << "  Num Morph Keys:  " << morphs[i0].numMorphKeys << endl; \
   out << "  Morph Interpolation:  " << morphs[i0].morphInterpolation << endl; \
-  for (uint i1 = 0; i1 < morphs_numMorphKeys; i1++) { \
+  for (uint i1 = 0; i1 < morphs[i0].numMorphKeys; i1++) { \
     out << "    Morph Keys[" << i1 << "]:  " << morphs[i0].morphKeys[i1] << endl; \
   }; \
   out << "  Unknown Int:  " << morphs[i0].unknownInt << endl; \
@@ -7782,24 +7292,9 @@ return out.str(); \
 
 #define NI_MORPH_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numMorphs; \
-numMorphs = uint(morphs.size()); \
-for (uint i0 = 0; i0 < numMorphs; i0++) { \
-  uint morphs_numMorphKeys; \
-  morphs_numMorphKeys = uint(morphs[i0].morphKeys.size()); \
-  if ( version >= 0x0A01006A ) { \
-  }; \
-  if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < morphs_numMorphKeys; i2++) { \
-    }; \
-  }; \
-  if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  }; \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS \
+ushort numExtraTargets; \
 vector<NiNode * > extraTargets; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_INCLUDE "NiTimeController.h" \
@@ -7811,7 +7306,6 @@ vector<NiNode * > extraTargets; \
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
-ushort numExtraTargets; \
 NifStream( numExtraTargets, in, version ); \
 extraTargets.resize(numExtraTargets); \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
@@ -7821,8 +7315,6 @@ for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
-ushort numExtraTargets; \
-numExtraTargets = ushort(extraTargets.size()); \
 NifStream( numExtraTargets, out, version ); \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(extraTargets[i0])], out, version ); \
@@ -7831,8 +7323,6 @@ for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-ushort numExtraTargets; \
-numExtraTargets = ushort(extraTargets.size()); \
 out << "Num Extra Targets:  " << numExtraTargets << endl; \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
   out << "  Extra Targets[" << i0 << "]:  " << extraTargets[i0] << endl; \
@@ -7841,8 +7331,6 @@ return out.str(); \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-ushort numExtraTargets; \
-numExtraTargets = ushort(extraTargets.size()); \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     extraTargets[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -7852,7 +7340,9 @@ for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
 }; \
 
 #define NI_NODE_MEMBERS \
+uint numChildren; \
 vector<Ref<NiAVObject > > children; \
+uint numEffects; \
 vector<Ref<NiDynamicEffect > > effects; \
 
 #define NI_NODE_INCLUDE "NiAVObject.h" \
@@ -7864,8 +7354,6 @@ vector<Ref<NiDynamicEffect > > effects; \
 #define NI_NODE_READ \
 uint block_num; \
 NiAVObject::Read( in, link_stack, version ); \
-uint numEffects; \
-uint numChildren; \
 NifStream( numChildren, in, version ); \
 children.resize(numChildren); \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
@@ -7881,10 +7369,6 @@ for (uint i0 = 0; i0 < numEffects; i0++) { \
 
 #define NI_NODE_WRITE \
 NiAVObject::Write( out, link_map, version ); \
-uint numEffects; \
-numEffects = uint(effects.size()); \
-uint numChildren; \
-numChildren = uint(children.size()); \
 NifStream( numChildren, out, version ); \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(children[i0])], out, version ); \
@@ -7897,10 +7381,6 @@ for (uint i0 = 0; i0 < numEffects; i0++) { \
 #define NI_NODE_STRING \
 stringstream out; \
 out << NiAVObject::asString(); \
-uint numEffects; \
-numEffects = uint(effects.size()); \
-uint numChildren; \
-numChildren = uint(children.size()); \
 out << "Num Children:  " << numChildren << endl; \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
   out << "  Children[" << i0 << "]:  " << children[i0] << endl; \
@@ -7913,10 +7393,6 @@ return out.str(); \
 
 #define NI_NODE_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
-uint numEffects; \
-numEffects = uint(effects.size()); \
-uint numChildren; \
-numChildren = uint(children.size()); \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     children[i0] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
@@ -7990,8 +7466,6 @@ return out.str(); \
 
 #define FX_WIDGET_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 292; i0++) { \
-}; \
 
 #define FX_BUTTON_MEMBERS \
 
@@ -8019,6 +7493,7 @@ FxWidget::FixLinks( objects, link_stack, version ); \
 uint unknownInt1; \
 uint unknownInt2; \
 uint unknownInt3; \
+uint numUnknownLinks; \
 vector<Ref<NiObject > > unknownLinks; \
 
 #define FX_RADIO_BUTTON_INCLUDE "FxWidget.h" \
@@ -8030,7 +7505,6 @@ vector<Ref<NiObject > > unknownLinks; \
 #define FX_RADIO_BUTTON_READ \
 uint block_num; \
 FxWidget::Read( in, link_stack, version ); \
-uint numUnknownLinks; \
 NifStream( unknownInt1, in, version ); \
 NifStream( unknownInt2, in, version ); \
 NifStream( unknownInt3, in, version ); \
@@ -8043,8 +7517,6 @@ for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
 
 #define FX_RADIO_BUTTON_WRITE \
 FxWidget::Write( out, link_map, version ); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
 NifStream( unknownInt1, out, version ); \
 NifStream( unknownInt2, out, version ); \
 NifStream( unknownInt3, out, version ); \
@@ -8056,8 +7528,6 @@ for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
 #define FX_RADIO_BUTTON_STRING \
 stringstream out; \
 out << FxWidget::asString(); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 out << "Unknown Int  2:  " << unknownInt2 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
@@ -8069,8 +7539,6 @@ return out.str(); \
 
 #define FX_RADIO_BUTTON_FIXLINKS \
 FxWidget::FixLinks( objects, link_stack, version ); \
-uint numUnknownLinks; \
-numUnknownLinks = uint(unknownLinks.size()); \
 for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     unknownLinks[i0] = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -8108,8 +7576,6 @@ return out.str(); \
 
 #define NI_BILLBOARD_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-}; \
 
 #define NI_B_S_ANIMATION_NODE_MEMBERS \
 
@@ -8158,6 +7624,7 @@ NiNode::FixLinks( objects, link_stack, version ); \
 #define NI_L_O_D_NODE_MEMBERS \
 uint lodType; \
 Vector3 lodCenter; \
+uint numLodLevels; \
 vector<LODRange > lodLevels; \
 ushort unknownShort; \
 Ref<NiRangeLODData > rangeData; \
@@ -8171,7 +7638,6 @@ Ref<NiRangeLODData > rangeData; \
 #define NI_L_O_D_NODE_READ \
 uint block_num; \
 NiNode::Read( in, link_stack, version ); \
-uint numLodLevels; \
 NifStream( lodType, in, version ); \
 if ( (lodType == 0) ) { \
   NifStream( lodCenter, in, version ); \
@@ -8190,8 +7656,6 @@ if ( (lodType == 1) ) { \
 
 #define NI_L_O_D_NODE_WRITE \
 NiNode::Write( out, link_map, version ); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
 NifStream( lodType, out, version ); \
 if ( (lodType == 0) ) { \
   NifStream( lodCenter, out, version ); \
@@ -8209,8 +7673,6 @@ if ( (lodType == 1) ) { \
 #define NI_L_O_D_NODE_STRING \
 stringstream out; \
 out << NiNode::asString(); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
 out << "LOD Type:  " << lodType << endl; \
 if ( (lodType == 0) ) { \
   out << "  LOD Center:  " << lodCenter << endl; \
@@ -8228,12 +7690,6 @@ return out.str(); \
 
 #define NI_L_O_D_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
-if ( (lodType == 0) ) { \
-  for (uint i1 = 0; i1 < numLodLevels; i1++) { \
-  }; \
-}; \
 if ( (lodType == 1) ) { \
   if (link_stack.front() != 0xffffffff) \
     rangeData = DynamicCast<NiRangeLODData>(objects[link_stack.front()]); \
@@ -8290,10 +7746,6 @@ return out.str(); \
 
 #define NI_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 256; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-}; \
 
 #define NI_PARTICLE_BOMB_MEMBERS \
 float unknownFloat1; \
@@ -8644,16 +8096,6 @@ return out.str(); \
 
 #define NI_PARTICLES_DATA_FIXLINKS \
 NiAutoNormalParticlesData::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-  if ( (hasUnknownFloats != 0) ) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-    }; \
-  }; \
-}; \
-if ( (hasRotations != 0) ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-  }; \
-}; \
 
 #define NI_PARTICLE_MESHES_DATA_MEMBERS \
 Ref<NiTriBasedGeom > unknownLink2; \
@@ -8690,6 +8132,7 @@ link_stack.pop_front(); \
 
 #define NI_PARTICLE_SYSTEM_MEMBERS \
 bool unknownBool; \
+uint numModifiers; \
 vector<Ref<NiPSysModifier > > modifiers; \
 
 #define NI_PARTICLE_SYSTEM_INCLUDE "NiParticles.h" \
@@ -8701,7 +8144,6 @@ vector<Ref<NiPSysModifier > > modifiers; \
 #define NI_PARTICLE_SYSTEM_READ \
 uint block_num; \
 NiParticles::Read( in, link_stack, version ); \
-uint numModifiers; \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknownBool, in, version ); \
   NifStream( numModifiers, in, version ); \
@@ -8714,8 +8156,6 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_PARTICLE_SYSTEM_WRITE \
 NiParticles::Write( out, link_map, version ); \
-uint numModifiers; \
-numModifiers = uint(modifiers.size()); \
 if ( version >= 0x0A010000 ) { \
   NifStream( unknownBool, out, version ); \
   NifStream( numModifiers, out, version ); \
@@ -8727,8 +8167,6 @@ if ( version >= 0x0A010000 ) { \
 #define NI_PARTICLE_SYSTEM_STRING \
 stringstream out; \
 out << NiParticles::asString(); \
-uint numModifiers; \
-numModifiers = uint(modifiers.size()); \
 out << "Unknown Bool:  " << unknownBool << endl; \
 out << "Num Modifiers:  " << numModifiers << endl; \
 for (uint i0 = 0; i0 < numModifiers; i0++) { \
@@ -8738,8 +8176,6 @@ return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_FIXLINKS \
 NiParticles::FixLinks( objects, link_stack, version ); \
-uint numModifiers; \
-numModifiers = uint(modifiers.size()); \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numModifiers; i1++) { \
     if (link_stack.front() != 0xffffffff) \
@@ -8801,6 +8237,7 @@ float unknownFloat13_; \
 uint unknownInt1_; \
 uint unknownInt2_; \
 ushort unknownShort3_; \
+ushort numParticles; \
 ushort numValid; \
 vector<Particle > particles; \
 Ref<NiObject > unknownLink; \
@@ -8817,7 +8254,6 @@ byte trailer; \
 #define NI_PARTICLE_SYSTEM_CONTROLLER_READ \
 uint block_num; \
 NiTimeController::Read( in, link_stack, version ); \
-ushort numParticles; \
 NifStream( speed, in, version ); \
 NifStream( speedRandom, in, version ); \
 NifStream( verticalDirection, in, version ); \
@@ -8869,8 +8305,6 @@ NifStream( trailer, in, version ); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version ); \
-ushort numParticles; \
-numParticles = ushort(particles.size()); \
 NifStream( speed, out, version ); \
 NifStream( speedRandom, out, version ); \
 NifStream( verticalDirection, out, version ); \
@@ -8918,8 +8352,6 @@ NifStream( trailer, out, version ); \
 #define NI_PARTICLE_SYSTEM_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-ushort numParticles; \
-numParticles = ushort(particles.size()); \
 out << "Speed:  " << speed << endl; \
 out << "Speed Random:  " << speedRandom << endl; \
 out << "Vertical Direction:  " << verticalDirection << endl; \
@@ -8967,15 +8399,11 @@ return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-ushort numParticles; \
-numParticles = ushort(particles.size()); \
 if (link_stack.front() != 0xffffffff) \
   emitter = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   emitter = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < numParticles; i0++) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -9070,8 +8498,6 @@ return out.str(); \
 
 #define NI_PATH_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A010000 ) { \
-}; \
 if (link_stack.front() != 0xffffffff) \
   posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
@@ -9149,6 +8575,7 @@ vector<byte > unknown8Bytes; \
 uint unknownInt; \
 vector<byte > unknown54Bytes; \
 Ref<NiPalette > palette; \
+uint numMipmaps; \
 uint bytesPerPixel; \
 vector<MipMap > mipmaps; \
 ByteArray pixelData; \
@@ -9162,7 +8589,6 @@ ByteArray pixelData; \
 #define NI_PIXEL_DATA_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-uint numMipmaps; \
 NifStream( pixelFormat, in, version ); \
 if ( version <= 0x0A020000 ) { \
   NifStream( redMask, in, version ); \
@@ -9194,20 +8620,17 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].height, in, version ); \
   NifStream( mipmaps[i0].offset, in, version ); \
 }; \
-uint pixelData_size; \
-NifStream( pixelData_size, in, version ); \
+NifStream( pixelData.size, in, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( pixelData.unknownInt, in, version ); \
 }; \
-pixelData.data.resize(pixelData_size); \
-for (uint i0 = 0; i0 < pixelData_size; i0++) { \
+pixelData.data.resize(pixelData.size); \
+for (uint i0 = 0; i0 < pixelData.size; i0++) { \
   NifStream( pixelData.data[i0], in, version ); \
 }; \
 
 #define NI_PIXEL_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numMipmaps; \
-numMipmaps = uint(mipmaps.size()); \
 NifStream( pixelFormat, out, version ); \
 if ( version <= 0x0A020000 ) { \
   NifStream( redMask, out, version ); \
@@ -9235,21 +8658,17 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].height, out, version ); \
   NifStream( mipmaps[i0].offset, out, version ); \
 }; \
-uint pixelData_size; \
-pixelData_size = uint(pixelData.data.size()); \
-NifStream( pixelData_size, out, version ); \
+NifStream( pixelData.size, out, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( pixelData.unknownInt, out, version ); \
 }; \
-for (uint i0 = 0; i0 < pixelData_size; i0++) { \
+for (uint i0 = 0; i0 < pixelData.size; i0++) { \
   NifStream( pixelData.data[i0], out, version ); \
 }; \
 
 #define NI_PIXEL_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numMipmaps; \
-numMipmaps = uint(mipmaps.size()); \
 out << "Pixel Format:  " << pixelFormat << endl; \
 out << "Red Mask:  " << redMask << endl; \
 out << "Green Mask:  " << greenMask << endl; \
@@ -9271,42 +8690,20 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   out << "  Height:  " << mipmaps[i0].height << endl; \
   out << "  Offset:  " << mipmaps[i0].offset << endl; \
 }; \
-uint pixelData_size; \
-pixelData_size = uint(pixelData.data.size()); \
-out << "Size:  " << pixelData_size << endl; \
+out << "Size:  " << pixelData.size << endl; \
 out << "Unknown Int:  " << pixelData.unknownInt << endl; \
-for (uint i0 = 0; i0 < pixelData_size; i0++) { \
+for (uint i0 = 0; i0 < pixelData.size; i0++) { \
   out << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_PIXEL_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numMipmaps; \
-numMipmaps = uint(mipmaps.size()); \
-if ( version <= 0x0A020000 ) { \
-  for (uint i1 = 0; i1 < 8; i1++) { \
-  }; \
-}; \
-if ( ( version >= 0x0A010000 ) && ( version <= 0x0A020000 ) ) { \
-}; \
-if ( version >= 0x14000004 ) { \
-  for (uint i1 = 0; i1 < 54; i1++) { \
-  }; \
-}; \
 if (link_stack.front() != 0xffffffff) \
   palette = DynamicCast<NiPalette>(objects[link_stack.front()]); \
 else \
   palette = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < numMipmaps; i0++) { \
-}; \
-uint pixelData_size; \
-pixelData_size = uint(pixelData.data.size()); \
-if ( version >= 0x14000004 ) { \
-}; \
-for (uint i0 = 0; i0 < pixelData_size; i0++) { \
-}; \
 
 #define NI_PLANAR_COLLIDER_MEMBERS \
 ushort unknownShort; \
@@ -9409,10 +8806,6 @@ return out.str(); \
 
 #define NI_PLANAR_COLLIDER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0A000100 ) { \
-}; \
-if ( ( version >= 0x04020200 ) && ( version <= 0x04020200 ) ) { \
-}; \
 
 #define NI_POINT3_INTERPOLATOR_MEMBERS \
 Vector3 point3Value; \
@@ -9529,10 +8922,6 @@ return out.str(); \
 
 #define NI_POS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-if ( (data.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-}; \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_MEMBERS \
 bool spawnOnDeath; \
@@ -9636,12 +9025,6 @@ if (link_stack.front() != 0xffffffff) \
 else \
   unknownLink = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < 2; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-}; \
-for (uint i0 = 0; i0 < 2; i0++) { \
-}; \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_MEMBERS \
 ushort updateSkip; \
@@ -9938,32 +9321,6 @@ return out.str(); \
 
 #define NI_P_SYS_DATA_FIXLINKS \
 APSysData::FixLinks( objects, link_stack, version ); \
-if ( version <= 0x0A020000 ) { \
-  for (uint i1 = 0; i1 < numVertices; i1++) { \
-    for (uint i2 = 0; i2 < 10; i2++) { \
-    }; \
-  }; \
-}; \
-if ( version >= 0x14000004 ) { \
-  if ( (unknownBool1 != 0) ) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-      for (uint i3 = 0; i3 < 32; i3++) { \
-      }; \
-    }; \
-  }; \
-  if ( (unknownBool1 == 0) ) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-      for (uint i3 = 0; i3 < 28; i3++) { \
-      }; \
-    }; \
-  }; \
-  if ( (unknownBool2 != 0) ) { \
-    for (uint i2 = 0; i2 < numVertices; i2++) { \
-      for (uint i3 = 0; i3 < 4; i3++) { \
-      }; \
-    }; \
-  }; \
-}; \
 
 #define NI_P_SYS_DRAG_MODIFIER_MEMBERS \
 NiObject * parent; \
@@ -10049,6 +9406,7 @@ link_stack.pop_front(); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS \
 KeyGroup<float > floatKeys_; \
+uint numVisibilityKeys_; \
 vector<Key<byte > > visibilityKeys_; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_INCLUDE "NiObject.h" \
@@ -10059,7 +9417,6 @@ vector<Key<byte > > visibilityKeys_; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
-uint numVisibilityKeys_; \
 NifStream( floatKeys_.numKeys, in, version ); \
 if ( (floatKeys_.numKeys != 0) ) { \
   NifStream( floatKeys_.interpolation, in, version ); \
@@ -10076,8 +9433,6 @@ for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numVisibilityKeys_; \
-numVisibilityKeys_ = uint(visibilityKeys_.size()); \
 NifStream( floatKeys_.numKeys, out, version ); \
 if ( (floatKeys_.numKeys != 0) ) { \
   NifStream( floatKeys_.interpolation, out, version ); \
@@ -10093,8 +9448,6 @@ for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
 #define NI_P_SYS_EMITTER_CTLR_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numVisibilityKeys_; \
-numVisibilityKeys_ = uint(visibilityKeys_.size()); \
 out << "Num Keys:  " << floatKeys_.numKeys << endl; \
 if ( (floatKeys_.numKeys != 0) ) { \
   out << "  Interpolation:  " << floatKeys_.interpolation << endl; \
@@ -10110,14 +9463,6 @@ return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numVisibilityKeys_; \
-numVisibilityKeys_ = uint(visibilityKeys_.size()); \
-if ( (floatKeys_.numKeys != 0) ) { \
-}; \
-for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
-}; \
-for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
-}; \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS \
 
@@ -10348,6 +9693,7 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_MEMBERS \
+uint numEmitterMeshes; \
 vector<Ref<NiTriBasedGeom > > emitterMeshes; \
 uint initialVelocityType; \
 uint emissionType; \
@@ -10362,7 +9708,6 @@ Vector3 emissionAxis; \
 #define NI_P_SYS_MESH_EMITTER_READ \
 uint block_num; \
 NiPSysEmitter::Read( in, link_stack, version ); \
-uint numEmitterMeshes; \
 NifStream( numEmitterMeshes, in, version ); \
 emitterMeshes.resize(numEmitterMeshes); \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
@@ -10375,8 +9720,6 @@ NifStream( emissionAxis, in, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_WRITE \
 NiPSysEmitter::Write( out, link_map, version ); \
-uint numEmitterMeshes; \
-numEmitterMeshes = uint(emitterMeshes.size()); \
 NifStream( numEmitterMeshes, out, version ); \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(emitterMeshes[i0])], out, version ); \
@@ -10388,8 +9731,6 @@ NifStream( emissionAxis, out, version ); \
 #define NI_P_SYS_MESH_EMITTER_STRING \
 stringstream out; \
 out << NiPSysEmitter::asString(); \
-uint numEmitterMeshes; \
-numEmitterMeshes = uint(emitterMeshes.size()); \
 out << "Num Emitter Meshes:  " << numEmitterMeshes << endl; \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
   out << "  Emitter Meshes[" << i0 << "]:  " << emitterMeshes[i0] << endl; \
@@ -10401,8 +9742,6 @@ return out.str(); \
 
 #define NI_P_SYS_MESH_EMITTER_FIXLINKS \
 NiPSysEmitter::FixLinks( objects, link_stack, version ); \
-uint numEmitterMeshes; \
-numEmitterMeshes = uint(emitterMeshes.size()); \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     emitterMeshes[i0] = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
@@ -10412,6 +9751,7 @@ for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
 }; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_MEMBERS \
+uint numMeshes; \
 vector<Ref<NiNode > > meshes; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_INCLUDE "NiPSysModifier.h" \
@@ -10423,7 +9763,6 @@ vector<Ref<NiNode > > meshes; \
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_READ \
 uint block_num; \
 NiPSysModifier::Read( in, link_stack, version ); \
-uint numMeshes; \
 NifStream( numMeshes, in, version ); \
 meshes.resize(numMeshes); \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
@@ -10433,8 +9772,6 @@ for (uint i0 = 0; i0 < numMeshes; i0++) { \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version ); \
-uint numMeshes; \
-numMeshes = uint(meshes.size()); \
 NifStream( numMeshes, out, version ); \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(meshes[i0])], out, version ); \
@@ -10443,8 +9780,6 @@ for (uint i0 = 0; i0 < numMeshes; i0++) { \
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-uint numMeshes; \
-numMeshes = uint(meshes.size()); \
 out << "Num Meshes:  " << numMeshes << endl; \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
   out << "  Meshes[" << i0 << "]:  " << meshes[i0] << endl; \
@@ -10453,8 +9788,6 @@ return out.str(); \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-uint numMeshes; \
-numMeshes = uint(meshes.size()); \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     meshes[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -10673,8 +10006,6 @@ return out.str(); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x14000004 ) { \
-}; \
 
 #define NI_P_SYS_SPAWN_MODIFIER_MEMBERS \
 ushort numSpawnGenerations; \
@@ -10780,6 +10111,7 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 
 #define NI_RANGE_L_O_D_DATA_MEMBERS \
 Vector3 lodCenter; \
+uint numLodLevels; \
 vector<LODRange > lodLevels; \
 
 #define NI_RANGE_L_O_D_DATA_INCLUDE "NiObject.h" \
@@ -10790,7 +10122,6 @@ vector<LODRange > lodLevels; \
 
 #define NI_RANGE_L_O_D_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
-uint numLodLevels; \
 NifStream( lodCenter, in, version ); \
 NifStream( numLodLevels, in, version ); \
 lodLevels.resize(numLodLevels); \
@@ -10801,8 +10132,6 @@ for (uint i0 = 0; i0 < numLodLevels; i0++) { \
 
 #define NI_RANGE_L_O_D_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
 NifStream( lodCenter, out, version ); \
 NifStream( numLodLevels, out, version ); \
 for (uint i0 = 0; i0 < numLodLevels; i0++) { \
@@ -10813,8 +10142,6 @@ for (uint i0 = 0; i0 < numLodLevels; i0++) { \
 #define NI_RANGE_L_O_D_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
 out << "LOD Center:  " << lodCenter << endl; \
 out << "Num LOD Levels:  " << numLodLevels << endl; \
 for (uint i0 = 0; i0 < numLodLevels; i0++) { \
@@ -10825,10 +10152,6 @@ return out.str(); \
 
 #define NI_RANGE_L_O_D_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numLodLevels; \
-numLodLevels = uint(lodLevels.size()); \
-for (uint i0 = 0; i0 < numLodLevels; i0++) { \
-}; \
 
 #define NI_ROTATING_PARTICLES_MEMBERS \
 
@@ -10876,6 +10199,7 @@ NiParticlesData::FixLinks( objects, link_stack, version ); \
 
 #define NI_SCREEN_L_O_D_DATA_MEMBERS \
 vector<float > unknownFloats; \
+uint unknownCount; \
 vector<float > unknownFloats2; \
 
 #define NI_SCREEN_L_O_D_DATA_INCLUDE "NiObject.h" \
@@ -10886,7 +10210,6 @@ vector<float > unknownFloats2; \
 
 #define NI_SCREEN_L_O_D_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
-uint unknownCount; \
 unknownFloats.resize(8); \
 for (uint i0 = 0; i0 < 8; i0++) { \
   NifStream( unknownFloats[i0], in, version ); \
@@ -10899,8 +10222,6 @@ for (uint i0 = 0; i0 < unknownCount; i0++) { \
 
 #define NI_SCREEN_L_O_D_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint unknownCount; \
-unknownCount = uint(unknownFloats2.size()); \
 for (uint i0 = 0; i0 < 8; i0++) { \
   NifStream( unknownFloats[i0], out, version ); \
 }; \
@@ -10912,8 +10233,6 @@ for (uint i0 = 0; i0 < unknownCount; i0++) { \
 #define NI_SCREEN_L_O_D_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint unknownCount; \
-unknownCount = uint(unknownFloats2.size()); \
 for (uint i0 = 0; i0 < 8; i0++) { \
   out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
@@ -10925,12 +10244,6 @@ return out.str(); \
 
 #define NI_SCREEN_L_O_D_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint unknownCount; \
-unknownCount = uint(unknownFloats2.size()); \
-for (uint i0 = 0; i0 < 8; i0++) { \
-}; \
-for (uint i0 = 0; i0 < unknownCount; i0++) { \
-}; \
 
 #define NI_SEQUENCE_STREAM_HELPER_MEMBERS \
 
@@ -10984,6 +10297,7 @@ NiProperty::FixLinks( objects, link_stack, version ); \
 Matrix33 rotation; \
 Vector3 translation; \
 float scale; \
+uint numBones; \
 Ref<NiSkinPartition > skinPartition; \
 byte unknownByte; \
 vector<SkinData > boneList; \
@@ -10997,7 +10311,6 @@ vector<SkinData > boneList; \
 #define NI_SKIN_DATA_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-uint numBones; \
 NifStream( rotation, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( scale, in, version ); \
@@ -11028,8 +10341,6 @@ for (uint i0 = 0; i0 < numBones; i0++) { \
 
 #define NI_SKIN_DATA_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numBones; \
-numBones = uint(boneList.size()); \
 NifStream( rotation, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( scale, out, version ); \
@@ -11057,8 +10368,6 @@ for (uint i0 = 0; i0 < numBones; i0++) { \
 #define NI_SKIN_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numBones; \
-numBones = uint(boneList.size()); \
 out << "Rotation:  " << rotation << endl; \
 out << "Translation:  " << translation << endl; \
 out << "Scale:  " << scale << endl; \
@@ -11082,8 +10391,6 @@ return out.str(); \
 
 #define NI_SKIN_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numBones; \
-numBones = uint(boneList.size()); \
 if ( version <= 0x0A010000 ) { \
   if (link_stack.front() != 0xffffffff) \
     skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
@@ -11091,18 +10398,11 @@ if ( version <= 0x0A010000 ) { \
     skinPartition = NULL; \
   link_stack.pop_front(); \
 }; \
-if ( version >= 0x04020100 ) { \
-}; \
-for (uint i0 = 0; i0 < numBones; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-  }; \
-  for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
-  }; \
-}; \
 
 #define NI_SKIN_INSTANCE_MEMBERS \
 Ref<NiSkinData > data; \
 Ref<NiSkinPartition > skinPartition; \
+NiNode * skeletonRoot; \
 Bones bones; \
 
 #define NI_SKIN_INSTANCE_INCLUDE "NiObject.h" \
@@ -11114,7 +10414,6 @@ Bones bones; \
 #define NI_SKIN_INSTANCE_READ \
 uint block_num; \
 NiObject::Read( in, link_stack, version ); \
-NiNode * skeletonRoot; \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 if ( version >= 0x0A020000 ) { \
@@ -11123,50 +10422,39 @@ if ( version >= 0x0A020000 ) { \
 }; \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
-uint bones_numBones; \
-NifStream( bones_numBones, in, version ); \
-bones.bones.resize(bones_numBones); \
-for (uint i0 = 0; i0 < bones_numBones; i0++) { \
+NifStream( bones.numBones, in, version ); \
+bones.bones.resize(bones.numBones); \
+for (uint i0 = 0; i0 < bones.numBones; i0++) { \
   NifStream( block_num, in, version ); \
   link_stack.push_back( block_num ); \
 }; \
 
 #define NI_SKIN_INSTANCE_WRITE \
 NiObject::Write( out, link_map, version ); \
-NiNode * skeletonRoot; \
-skeletonRoot = SkeletonRoot(); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 if ( version >= 0x0A020000 ) { \
   NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
 }; \
 NifStream( link_map[StaticCast<NiObject>(skeletonRoot)], out, version ); \
-uint bones_numBones; \
-bones_numBones = uint(bones.bones.size()); \
-NifStream( bones_numBones, out, version ); \
-for (uint i0 = 0; i0 < bones_numBones; i0++) { \
+NifStream( bones.numBones, out, version ); \
+for (uint i0 = 0; i0 < bones.numBones; i0++) { \
   NifStream( link_map[StaticCast<NiObject>(bones.bones[i0])], out, version ); \
 }; \
 
 #define NI_SKIN_INSTANCE_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-NiNode * skeletonRoot; \
-skeletonRoot = SkeletonRoot(); \
 out << "Data:  " << data << endl; \
 out << "Skin Partition:  " << skinPartition << endl; \
 out << "Skeleton Root:  " << skeletonRoot << endl; \
-uint bones_numBones; \
-bones_numBones = uint(bones.bones.size()); \
-out << "Num Bones:  " << bones_numBones << endl; \
-for (uint i0 = 0; i0 < bones_numBones; i0++) { \
+out << "Num Bones:  " << bones.numBones << endl; \
+for (uint i0 = 0; i0 < bones.numBones; i0++) { \
   out << "  Bones[" << i0 << "]:  " << bones.bones[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_SKIN_INSTANCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-NiNode * skeletonRoot; \
-skeletonRoot = SkeletonRoot(); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiSkinData>(objects[link_stack.front()]); \
 else \
@@ -11184,9 +10472,7 @@ if (link_stack.front() != 0xffffffff) \
 else \
   skeletonRoot = NULL; \
 link_stack.pop_front(); \
-uint bones_numBones; \
-bones_numBones = uint(bones.bones.size()); \
-for (uint i0 = 0; i0 < bones_numBones; i0++) { \
+for (uint i0 = 0; i0 < bones.numBones; i0++) { \
   if (link_stack.front() != 0xffffffff) \
     bones.bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -11195,6 +10481,7 @@ for (uint i0 = 0; i0 < bones_numBones; i0++) { \
 }; \
 
 #define NI_SKIN_PARTITION_MEMBERS \
+uint numSkinPartitionBlocks; \
 vector<SkinPartition > skinPartitionBlocks; \
 
 #define NI_SKIN_PARTITION_INCLUDE "NiObject.h" \
@@ -11205,21 +10492,16 @@ vector<SkinPartition > skinPartitionBlocks; \
 
 #define NI_SKIN_PARTITION_READ \
 NiObject::Read( in, link_stack, version ); \
-uint numSkinPartitionBlocks; \
 NifStream( numSkinPartitionBlocks, in, version ); \
 skinPartitionBlocks.resize(numSkinPartitionBlocks); \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  vector<ushort > skinPartitionBlocks_stripLengths; \
-  ushort skinPartitionBlocks_numWeightsPerVertex; \
-  ushort skinPartitionBlocks_numBones; \
-  ushort skinPartitionBlocks_numTriangles; \
   NifStream( skinPartitionBlocks[i0].numVertices, in, version ); \
-  NifStream( skinPartitionBlocks_numTriangles, in, version ); \
-  NifStream( skinPartitionBlocks_numBones, in, version ); \
+  NifStream( skinPartitionBlocks[i0].numTriangles, in, version ); \
+  NifStream( skinPartitionBlocks[i0].numBones, in, version ); \
   NifStream( skinPartitionBlocks[i0].numStrips, in, version ); \
-  NifStream( skinPartitionBlocks_numWeightsPerVertex, in, version ); \
-  skinPartitionBlocks[i0].bones.resize(skinPartitionBlocks_numBones); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numBones; i1++) { \
+  NifStream( skinPartitionBlocks[i0].numWeightsPerVertex, in, version ); \
+  skinPartitionBlocks[i0].bones.resize(skinPartitionBlocks[i0].numBones); \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numBones; i1++) { \
     NifStream( skinPartitionBlocks[i0].bones[i1], in, version ); \
   }; \
   if ( version >= 0x0A010000 ) { \
@@ -11243,9 +10525,9 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version <= 0x0A000102 ) { \
     skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks[i0].numVertices); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) \
-      skinPartitionBlocks[i0].vertexWeights[i2].resize(skinPartitionBlocks_numWeightsPerVertex); \
+      skinPartitionBlocks[i0].vertexWeights[i2].resize(skinPartitionBlocks[i0].numWeightsPerVertex); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexWeights[i2][i3], in, version ); \
       }; \
     }; \
@@ -11254,17 +10536,17 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
       skinPartitionBlocks[i0].vertexWeights.resize(skinPartitionBlocks[i0].numVertices); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) \
-        skinPartitionBlocks[i0].vertexWeights[i3].resize(skinPartitionBlocks_numWeightsPerVertex); \
+        skinPartitionBlocks[i0].vertexWeights[i3].resize(skinPartitionBlocks[i0].numWeightsPerVertex); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks[i0].numWeightsPerVertex; i4++) { \
           NifStream( skinPartitionBlocks[i0].vertexWeights[i3][i4], in, version ); \
         }; \
       }; \
     }; \
   }; \
-  skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].numStrips); \
+  skinPartitionBlocks[i0].stripLengths.resize(skinPartitionBlocks[i0].numStrips); \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    NifStream( skinPartitionBlocks_stripLengths[i1], in, version ); \
+    NifStream( skinPartitionBlocks[i0].stripLengths[i1], in, version ); \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( skinPartitionBlocks[i0].hasStrips, in, version ); \
@@ -11272,9 +10554,9 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version <= 0x0A000102 ) { \
     skinPartitionBlocks[i0].strips.resize(skinPartitionBlocks[i0].numStrips); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) \
-      skinPartitionBlocks[i0].strips[i2].resize(skinPartitionBlocks_stripLengths[i2]); \
+      skinPartitionBlocks[i0].strips[i2].resize(skinPartitionBlocks[i0].stripLengths[i2]); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].stripLengths[i2]; i3++) { \
         NifStream( skinPartitionBlocks[i0].strips[i2][i3], in, version ); \
       }; \
     }; \
@@ -11283,17 +10565,17 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
     if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       skinPartitionBlocks[i0].strips.resize(skinPartitionBlocks[i0].numStrips); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) \
-        skinPartitionBlocks[i0].strips[i3].resize(skinPartitionBlocks_stripLengths[i3]); \
+        skinPartitionBlocks[i0].strips[i3].resize(skinPartitionBlocks[i0].stripLengths[i3]); \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks[i0].stripLengths[i3]; i4++) { \
           NifStream( skinPartitionBlocks[i0].strips[i3][i4], in, version ); \
         }; \
       }; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
-    skinPartitionBlocks[i0].triangles.resize(skinPartitionBlocks_numTriangles); \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
+    skinPartitionBlocks[i0].triangles.resize(skinPartitionBlocks[i0].numTriangles); \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numTriangles; i2++) { \
       NifStream( skinPartitionBlocks[i0].triangles[i2], in, version ); \
     }; \
   }; \
@@ -11301,9 +10583,9 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     skinPartitionBlocks[i0].boneIndices.resize(skinPartitionBlocks[i0].numVertices); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) \
-      skinPartitionBlocks[i0].boneIndices[i2].resize(skinPartitionBlocks_numWeightsPerVertex); \
+      skinPartitionBlocks[i0].boneIndices[i2].resize(skinPartitionBlocks[i0].numWeightsPerVertex); \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].boneIndices[i2][i3], in, version ); \
       }; \
     }; \
@@ -11312,26 +10594,14 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
 
 #define NI_SKIN_PARTITION_WRITE \
 NiObject::Write( out, link_map, version ); \
-uint numSkinPartitionBlocks; \
-numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
 NifStream( numSkinPartitionBlocks, out, version ); \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  vector<ushort > skinPartitionBlocks_stripLengths; \
-  skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
-    skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
-  ushort skinPartitionBlocks_numWeightsPerVertex; \
-  skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
-  ushort skinPartitionBlocks_numBones; \
-  skinPartitionBlocks_numBones = ushort(skinPartitionBlocks[i0].bones.size()); \
-  ushort skinPartitionBlocks_numTriangles; \
-  skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
   NifStream( skinPartitionBlocks[i0].numVertices, out, version ); \
-  NifStream( skinPartitionBlocks_numTriangles, out, version ); \
-  NifStream( skinPartitionBlocks_numBones, out, version ); \
+  NifStream( skinPartitionBlocks[i0].numTriangles, out, version ); \
+  NifStream( skinPartitionBlocks[i0].numBones, out, version ); \
   NifStream( skinPartitionBlocks[i0].numStrips, out, version ); \
-  NifStream( skinPartitionBlocks_numWeightsPerVertex, out, version ); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numBones; i1++) { \
+  NifStream( skinPartitionBlocks[i0].numWeightsPerVertex, out, version ); \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numBones; i1++) { \
     NifStream( skinPartitionBlocks[i0].bones[i1], out, version ); \
   }; \
   if ( version >= 0x0A010000 ) { \
@@ -11352,7 +10622,7 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   if ( version <= 0x0A000102 ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].vertexWeights[i2][i3], out, version ); \
       }; \
     }; \
@@ -11360,21 +10630,21 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version >= 0x0A010000 ) { \
     if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks[i0].numWeightsPerVertex; i4++) { \
           NifStream( skinPartitionBlocks[i0].vertexWeights[i3][i4], out, version ); \
         }; \
       }; \
     }; \
   }; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    NifStream( skinPartitionBlocks_stripLengths[i1], out, version ); \
+    NifStream( skinPartitionBlocks[i0].stripLengths[i1], out, version ); \
   }; \
   if ( version >= 0x0A010000 ) { \
     NifStream( skinPartitionBlocks[i0].hasStrips, out, version ); \
   }; \
   if ( version <= 0x0A000102 ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].stripLengths[i2]; i3++) { \
         NifStream( skinPartitionBlocks[i0].strips[i2][i3], out, version ); \
       }; \
     }; \
@@ -11382,21 +10652,21 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   if ( version >= 0x0A010000 ) { \
     if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
+        for (uint i4 = 0; i4 < skinPartitionBlocks[i0].stripLengths[i3]; i4++) { \
           NifStream( skinPartitionBlocks[i0].strips[i3][i4], out, version ); \
         }; \
       }; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numTriangles; i2++) { \
       NifStream( skinPartitionBlocks[i0].triangles[i2], out, version ); \
     }; \
   }; \
   NifStream( skinPartitionBlocks[i0].hasBoneIndices, out, version ); \
   if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         NifStream( skinPartitionBlocks[i0].boneIndices[i2][i3], out, version ); \
       }; \
     }; \
@@ -11406,26 +10676,14 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
 #define NI_SKIN_PARTITION_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-uint numSkinPartitionBlocks; \
-numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
 out << "Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl; \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  vector<ushort > skinPartitionBlocks_stripLengths; \
-  skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
-    skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
-  ushort skinPartitionBlocks_numWeightsPerVertex; \
-  skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
-  ushort skinPartitionBlocks_numBones; \
-  skinPartitionBlocks_numBones = ushort(skinPartitionBlocks[i0].bones.size()); \
-  ushort skinPartitionBlocks_numTriangles; \
-  skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
   out << "  Num Vertices:  " << skinPartitionBlocks[i0].numVertices << endl; \
-  out << "  Num Triangles:  " << skinPartitionBlocks_numTriangles << endl; \
-  out << "  Num Bones:  " << skinPartitionBlocks_numBones << endl; \
+  out << "  Num Triangles:  " << skinPartitionBlocks[i0].numTriangles << endl; \
+  out << "  Num Bones:  " << skinPartitionBlocks[i0].numBones << endl; \
   out << "  Num Strips:  " << skinPartitionBlocks[i0].numStrips << endl; \
-  out << "  Num Weights Per Vertex:  " << skinPartitionBlocks_numWeightsPerVertex << endl; \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numBones; i1++) { \
+  out << "  Num Weights Per Vertex:  " << skinPartitionBlocks[i0].numWeightsPerVertex << endl; \
+  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numBones; i1++) { \
     out << "    Bones[" << i1 << "]:  " << skinPartitionBlocks[i0].bones[i1] << endl; \
   }; \
   out << "  Has Vertex Map:  " << skinPartitionBlocks[i0].hasVertexMap << endl; \
@@ -11439,42 +10697,42 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
   }; \
   out << "  Has Vertex Weights:  " << skinPartitionBlocks[i0].hasVertexWeights << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numWeightsPerVertex; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numWeightsPerVertex; i2++) { \
       out << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         out << "        Vertex Weights[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i2][i3] << endl; \
       }; \
     }; \
   }; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    out << "    Strip Lengths[" << i1 << "]:  " << skinPartitionBlocks_stripLengths[i1] << endl; \
+    out << "    Strip Lengths[" << i1 << "]:  " << skinPartitionBlocks[i0].stripLengths[i1] << endl; \
   }; \
   out << "  Has Strips:  " << skinPartitionBlocks[i0].hasStrips << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_stripLengths[i1]; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].stripLengths[i1]; i2++) { \
       out << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].stripLengths[i2]; i3++) { \
         out << "        Strips[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].strips[i2][i3] << endl; \
       }; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
+    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numTriangles; i2++) { \
       out << "      Triangles[" << i2 << "]:  " << skinPartitionBlocks[i0].triangles[i2] << endl; \
     }; \
   }; \
   out << "  Has Bone Indices:  " << skinPartitionBlocks[i0].hasBoneIndices << endl; \
   if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
+      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
         out << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
       }; \
     }; \
@@ -11484,76 +10742,6 @@ return out.str(); \
 
 #define NI_SKIN_PARTITION_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-uint numSkinPartitionBlocks; \
-numSkinPartitionBlocks = uint(skinPartitionBlocks.size()); \
-for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  vector<ushort > skinPartitionBlocks_stripLengths; \
-  skinPartitionBlocks_stripLengths.resize(skinPartitionBlocks[i0].strips.size()); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) \
-    skinPartitionBlocks_stripLengths[i1] = ushort(skinPartitionBlocks[i0].strips[i1].size()); \
-  ushort skinPartitionBlocks_numWeightsPerVertex; \
-  skinPartitionBlocks_numWeightsPerVertex = ushort(skinPartitionBlocks[i0].vertexWeights.size()); \
-  ushort skinPartitionBlocks_numBones; \
-  skinPartitionBlocks_numBones = ushort(skinPartitionBlocks[i0].bones.size()); \
-  ushort skinPartitionBlocks_numTriangles; \
-  skinPartitionBlocks_numTriangles = ushort(skinPartitionBlocks[i0].triangles.size()); \
-  for (uint i1 = 0; i1 < skinPartitionBlocks_numBones; i1++) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-  }; \
-  if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-    }; \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (skinPartitionBlocks[i0].hasVertexMap != 0) ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
-      }; \
-    }; \
-  }; \
-  if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
-      }; \
-    }; \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (skinPartitionBlocks[i0].hasVertexWeights != 0) ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numVertices; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_numWeightsPerVertex; i4++) { \
-        }; \
-      }; \
-    }; \
-  }; \
-  for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-  }; \
-  if ( version <= 0x0A000102 ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numStrips; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_stripLengths[i2]; i3++) { \
-      }; \
-    }; \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (skinPartitionBlocks[i0].hasStrips != 0) ) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numStrips; i3++) { \
-        for (uint i4 = 0; i4 < skinPartitionBlocks_stripLengths[i3]; i4++) { \
-        }; \
-      }; \
-    }; \
-  }; \
-  if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks_numTriangles; i2++) { \
-    }; \
-  }; \
-  if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
-    for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
-      for (uint i3 = 0; i3 < skinPartitionBlocks_numWeightsPerVertex; i3++) { \
-      }; \
-    }; \
-  }; \
-}; \
 
 #define NI_SOURCE_TEXTURE_MEMBERS \
 byte useExternal; \
@@ -11663,8 +10851,6 @@ return out.str(); \
 
 #define NI_SOURCE_TEXTURE_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
-if ( (useExternal == 1) ) { \
-}; \
 if ( version >= 0x0A010000 ) { \
   if ( (useExternal == 1) ) { \
     if (link_stack.front() != 0xffffffff) \
@@ -11674,22 +10860,12 @@ if ( version >= 0x0A010000 ) { \
     link_stack.pop_front(); \
   }; \
 }; \
-if ( version <= 0x0A000100 ) { \
-  if ( (useExternal == 0) ) { \
-  }; \
-}; \
-if ( version >= 0x0A010000 ) { \
-  if ( (useExternal == 0) ) { \
-  }; \
-}; \
 if ( (useExternal == 0) ) { \
   if (link_stack.front() != 0xffffffff) \
     pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
   else \
     pixelData = NULL; \
   link_stack.pop_front(); \
-}; \
-if ( version >= 0x0A01006A ) { \
 }; \
 
 #define NI_SPECULAR_PROPERTY_MEMBERS \
@@ -11856,10 +11032,9 @@ return out.str(); \
 
 #define NI_STENCIL_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
-if ( version <= 0x0A000102 ) { \
-}; \
 
 #define NI_STRING_EXTRA_DATA_MEMBERS \
+uint bytesRemaining; \
 string stringData; \
 
 #define NI_STRING_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -11870,7 +11045,6 @@ string stringData; \
 
 #define NI_STRING_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint bytesRemaining; \
 if ( version <= 0x04020200 ) { \
   NifStream( bytesRemaining, in, version ); \
 }; \
@@ -11878,8 +11052,6 @@ NifStream( stringData, in, version ); \
 
 #define NI_STRING_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint bytesRemaining; \
-bytesRemaining = BytesRemaining(); \
 if ( version <= 0x04020200 ) { \
   NifStream( bytesRemaining, out, version ); \
 }; \
@@ -11888,18 +11060,12 @@ NifStream( stringData, out, version ); \
 #define NI_STRING_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint bytesRemaining; \
-bytesRemaining = BytesRemaining(); \
 out << "Bytes Remaining:  " << bytesRemaining << endl; \
 out << "String Data:  " << stringData << endl; \
 return out.str(); \
 
 #define NI_STRING_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint bytesRemaining; \
-bytesRemaining = BytesRemaining(); \
-if ( version <= 0x04020200 ) { \
-}; \
 
 #define NI_STRING_PALETTE_MEMBERS \
 StringPalette palette; \
@@ -11931,6 +11097,7 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 
 #define NI_STRINGS_EXTRA_DATA_MEMBERS \
+uint numStrings; \
 vector<string > data; \
 
 #define NI_STRINGS_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -11941,7 +11108,6 @@ vector<string > data; \
 
 #define NI_STRINGS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint numStrings; \
 NifStream( numStrings, in, version ); \
 data.resize(numStrings); \
 for (uint i0 = 0; i0 < numStrings; i0++) { \
@@ -11950,8 +11116,6 @@ for (uint i0 = 0; i0 < numStrings; i0++) { \
 
 #define NI_STRINGS_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint numStrings; \
-numStrings = uint(data.size()); \
 NifStream( numStrings, out, version ); \
 for (uint i0 = 0; i0 < numStrings; i0++) { \
   NifStream( data[i0], out, version ); \
@@ -11960,8 +11124,6 @@ for (uint i0 = 0; i0 < numStrings; i0++) { \
 #define NI_STRINGS_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint numStrings; \
-numStrings = uint(data.size()); \
 out << "Num Strings:  " << numStrings << endl; \
 for (uint i0 = 0; i0 < numStrings; i0++) { \
   out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
@@ -11970,13 +11132,10 @@ return out.str(); \
 
 #define NI_STRINGS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint numStrings; \
-numStrings = uint(data.size()); \
-for (uint i0 = 0; i0 < numStrings; i0++) { \
-}; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_MEMBERS \
 uint unknownInt1; \
+uint numTextKeys; \
 vector<Key<string > > textKeys; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_INCLUDE "NiExtraData.h" \
@@ -11987,7 +11146,6 @@ vector<Key<string > > textKeys; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-uint numTextKeys; \
 if ( version <= 0x04020200 ) { \
   NifStream( unknownInt1, in, version ); \
 }; \
@@ -11999,8 +11157,6 @@ for (uint i0 = 0; i0 < numTextKeys; i0++) { \
 
 #define NI_TEXT_KEY_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-uint numTextKeys; \
-numTextKeys = uint(textKeys.size()); \
 if ( version <= 0x04020200 ) { \
   NifStream( unknownInt1, out, version ); \
 }; \
@@ -12012,8 +11168,6 @@ for (uint i0 = 0; i0 < numTextKeys; i0++) { \
 #define NI_TEXT_KEY_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-uint numTextKeys; \
-numTextKeys = uint(textKeys.size()); \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 out << "Num Text Keys:  " << numTextKeys << endl; \
 for (uint i0 = 0; i0 < numTextKeys; i0++) { \
@@ -12023,12 +11177,6 @@ return out.str(); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-uint numTextKeys; \
-numTextKeys = uint(textKeys.size()); \
-if ( version <= 0x04020200 ) { \
-}; \
-for (uint i0 = 0; i0 < numTextKeys; i0++) { \
-}; \
 
 #define NI_TEXTURE_EFFECT_MEMBERS \
 Matrix33 modelProjectionMatrix; \
@@ -12118,10 +11266,6 @@ if (link_stack.front() != 0xffffffff) \
 else \
   sourceTexture = NULL; \
 link_stack.pop_front(); \
-if ( version <= 0x0A020000 ) { \
-}; \
-if ( version <= 0x0401000C ) { \
-}; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS \
 byte unknown2; \
@@ -12197,6 +11341,7 @@ bool hasDecal0Texture; \
 TexDesc decal0Texture; \
 bool hasDecal1Texture; \
 TexDesc decal1Texture; \
+uint numShaderTextures; \
 vector<ShaderTexDesc > shaderTextures; \
 
 #define NI_TEXTURING_PROPERTY_INCLUDE "NiProperty.h" \
@@ -12209,7 +11354,6 @@ vector<ShaderTexDesc > shaderTextures; \
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
 NiProperty::Read( in, link_stack, version ); \
-uint numShaderTextures; \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, in, version ); \
 }; \
@@ -12457,8 +11601,6 @@ if ( version >= 0x0A000100 ) { \
 
 #define NI_TEXTURING_PROPERTY_WRITE \
 NiProperty::Write( out, link_map, version ); \
-uint numShaderTextures; \
-numShaderTextures = uint(shaderTextures.size()); \
 if ( version <= 0x0A000102 ) { \
   NifStream( flags, out, version ); \
 }; \
@@ -12697,8 +11839,6 @@ if ( version >= 0x0A000100 ) { \
 #define NI_TEXTURING_PROPERTY_STRING \
 stringstream out; \
 out << NiProperty::asString(); \
-uint numShaderTextures; \
-numShaderTextures = uint(shaderTextures.size()); \
 out << "Flags:  " << flags << endl; \
 out << "Apply Mode:  " << applyMode << endl; \
 out << "Texture Count:  " << textureCount << endl; \
@@ -12877,24 +12017,12 @@ return out.str(); \
 
 #define NI_TEXTURING_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
-uint numShaderTextures; \
-numShaderTextures = uint(shaderTextures.size()); \
-if ( version <= 0x0A000102 ) { \
-}; \
 if ( (hasBaseTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
     baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
     baseTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (baseTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasDarkTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12902,14 +12030,6 @@ if ( (hasDarkTexture != 0) ) { \
   else \
     darkTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (darkTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasDetailTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12917,14 +12037,6 @@ if ( (hasDetailTexture != 0) ) { \
   else \
     detailTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (detailTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasGlossTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12932,14 +12044,6 @@ if ( (hasGlossTexture != 0) ) { \
   else \
     glossTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (glossTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasGlowTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12947,14 +12051,6 @@ if ( (hasGlowTexture != 0) ) { \
   else \
     glowTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (glowTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasBumpMapTexture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12962,14 +12058,6 @@ if ( (hasBumpMapTexture != 0) ) { \
   else \
     bumpMapTexture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
 }; \
 if ( (hasDecal0Texture != 0) ) { \
   if (link_stack.front() != 0xffffffff) \
@@ -12977,16 +12065,6 @@ if ( (hasDecal0Texture != 0) ) { \
   else \
     decal0Texture.source = NULL; \
   link_stack.pop_front(); \
-  if ( version <= 0x0A020000 ) { \
-  }; \
-  if ( version <= 0x0401000C ) { \
-  }; \
-  if ( version >= 0x0A010000 ) { \
-    if ( (decal0Texture.hasTextureTransform != 0) ) { \
-    }; \
-  }; \
-}; \
-if ( (textureCount == 8) ) { \
 }; \
 if ( version >= 0x14000004 ) { \
   if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
@@ -12995,14 +12073,6 @@ if ( version >= 0x14000004 ) { \
     else \
       decal1Texture.source = NULL; \
     link_stack.pop_front(); \
-    if ( version <= 0x0A020000 ) { \
-    }; \
-    if ( version <= 0x0401000C ) { \
-    }; \
-    if ( version >= 0x0A010000 ) { \
-      if ( (decal1Texture.hasTextureTransform != 0) ) { \
-      }; \
-    }; \
   }; \
 }; \
 if ( version >= 0x0A000100 ) { \
@@ -13013,14 +12083,6 @@ if ( version >= 0x0A000100 ) { \
       else \
         shaderTextures[i1].textureData.source = NULL; \
       link_stack.pop_front(); \
-      if ( version <= 0x0A020000 ) { \
-      }; \
-      if ( version <= 0x0401000C ) { \
-      }; \
-      if ( version >= 0x0A010000 ) { \
-        if ( (shaderTextures[i1].textureData.hasTextureTransform != 0) ) { \
-        }; \
-      }; \
     }; \
   }; \
 }; \
@@ -13123,10 +12185,6 @@ return out.str(); \
 
 #define NI_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-  for (uint i1 = 0; i1 < 3; i1++) { \
-  }; \
-}; \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiTransformData>(objects[link_stack.front()]); \
 else \
@@ -13156,9 +12214,11 @@ return out.str(); \
 NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
 
 #define NI_TRI_SHAPE_DATA_MEMBERS \
+ushort numTriangles; \
 uint numTrianglePoints; \
 bool hasTriangles; \
 vector<Triangle > triangles; \
+ushort numMatchGroups; \
 vector<MatchGroup > matchGroups; \
 
 #define NI_TRI_SHAPE_DATA_INCLUDE "NiTriBasedGeomData.h" \
@@ -13169,8 +12229,6 @@ vector<MatchGroup > matchGroups; \
 
 #define NI_TRI_SHAPE_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
-ushort numMatchGroups; \
-ushort numTriangles; \
 NifStream( numTriangles, in, version ); \
 NifStream( numTrianglePoints, in, version ); \
 if ( version >= 0x0A010000 ) { \
@@ -13202,10 +12260,6 @@ for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
 
 #define NI_TRI_SHAPE_DATA_WRITE \
 NiTriBasedGeomData::Write( out, link_map, version ); \
-ushort numMatchGroups; \
-numMatchGroups = ushort(matchGroups.size()); \
-ushort numTriangles; \
-numTriangles = ushort(triangles.size()); \
 NifStream( numTriangles, out, version ); \
 NifStream( numTrianglePoints, out, version ); \
 if ( version >= 0x0A010000 ) { \
@@ -13234,10 +12288,6 @@ for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
 #define NI_TRI_SHAPE_DATA_STRING \
 stringstream out; \
 out << NiTriBasedGeomData::asString(); \
-ushort numMatchGroups; \
-numMatchGroups = ushort(matchGroups.size()); \
-ushort numTriangles; \
-numTriangles = ushort(triangles.size()); \
 out << "Num Triangles:  " << numTriangles << endl; \
 out << "Num Triangle Points:  " << numTrianglePoints << endl; \
 out << "Has Triangles:  " << hasTriangles << endl; \
@@ -13260,26 +12310,6 @@ return out.str(); \
 
 #define NI_TRI_SHAPE_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
-ushort numMatchGroups; \
-numMatchGroups = ushort(matchGroups.size()); \
-ushort numTriangles; \
-numTriangles = ushort(triangles.size()); \
-if ( version >= 0x0A010000 ) { \
-}; \
-if ( version <= 0x0A000102 ) { \
-  for (uint i1 = 0; i1 < numTriangles; i1++) { \
-  }; \
-}; \
-if ( version >= 0x0A010000 ) { \
-  if ( (hasTriangles != 0) ) { \
-    for (uint i2 = 0; i2 < numTriangles; i2++) { \
-    }; \
-  }; \
-}; \
-for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
-  }; \
-}; \
 
 #define NI_TRI_STRIPS_MEMBERS \
 
@@ -13305,6 +12335,8 @@ NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
 
 #define NI_TRI_STRIPS_DATA_MEMBERS \
 ushort numTriangles; \
+ushort numStrips; \
+vector<ushort > stripLengths; \
 bool hasPoints; \
 vector<vector<ushort > > points; \
 
@@ -13316,8 +12348,6 @@ vector<vector<ushort > > points; \
 
 #define NI_TRI_STRIPS_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
-vector<ushort > stripLengths; \
-ushort numStrips; \
 NifStream( numTriangles, in, version ); \
 NifStream( numStrips, in, version ); \
 stripLengths.resize(numStrips); \
@@ -13352,12 +12382,6 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_TRI_STRIPS_DATA_WRITE \
 NiTriBasedGeomData::Write( out, link_map, version ); \
-vector<ushort > stripLengths; \
-stripLengths.resize(points.size()); \
-for (uint i0 = 0; i0 < points.size(); i0++) \
-  stripLengths[i0] = ushort(points[i0].size()); \
-ushort numStrips; \
-numStrips = ushort(stripLengths.size()); \
 NifStream( numTriangles, out, version ); \
 NifStream( numStrips, out, version ); \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
@@ -13386,12 +12410,6 @@ if ( version >= 0x0A010000 ) { \
 #define NI_TRI_STRIPS_DATA_STRING \
 stringstream out; \
 out << NiTriBasedGeomData::asString(); \
-vector<ushort > stripLengths; \
-stripLengths.resize(points.size()); \
-for (uint i0 = 0; i0 < points.size(); i0++) \
-  stripLengths[i0] = ushort(points[i0].size()); \
-ushort numStrips; \
-numStrips = ushort(stripLengths.size()); \
 out << "Num Triangles:  " << numTriangles << endl; \
 out << "Num Strips:  " << numStrips << endl; \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
@@ -13414,30 +12432,6 @@ return out.str(); \
 
 #define NI_TRI_STRIPS_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
-vector<ushort > stripLengths; \
-stripLengths.resize(points.size()); \
-for (uint i0 = 0; i0 < points.size(); i0++) \
-  stripLengths[i0] = ushort(points[i0].size()); \
-ushort numStrips; \
-numStrips = ushort(stripLengths.size()); \
-for (uint i0 = 0; i0 < numStrips; i0++) { \
-}; \
-if ( version >= 0x0A010000 ) { \
-}; \
-if ( version <= 0x0A000102 ) { \
-  for (uint i1 = 0; i1 < numStrips; i1++) { \
-    for (uint i2 = 0; i2 < stripLengths[i1]; i2++) { \
-    }; \
-  }; \
-}; \
-if ( version >= 0x0A010000 ) { \
-  if ( (hasPoints != 0) ) { \
-    for (uint i2 = 0; i2 < numStrips; i2++) { \
-      for (uint i3 = 0; i3 < stripLengths[i2]; i3++) { \
-      }; \
-    }; \
-  }; \
-}; \
 
 #define NI_U_V_CONTROLLER_MEMBERS \
 ushort unknownShort; \
@@ -13527,12 +12521,6 @@ return out.str(); \
 
 #define NI_U_V_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < 4; i0++) { \
-  if ( (uvGroups[i0].numKeys != 0) ) { \
-  }; \
-  for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
-  }; \
-}; \
 
 #define NI_VECTOR_EXTRA_DATA_MEMBERS \
 Vector3 vectorData; \
@@ -13638,8 +12626,6 @@ return out.str(); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
-for (uint i0 = 0; i0 < numVertices; i0++) { \
-}; \
 
 #define NI_VIS_CONTROLLER_MEMBERS \
 Ref<NiVisData > data; \
@@ -13681,6 +12667,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 
 #define NI_VIS_DATA_MEMBERS \
+uint numVisKeys; \
 vector<Key<byte > > visKeys; \
 
 #define NI_VIS_DATA_INCLUDE "AKeyedData.h" \
@@ -13691,7 +12678,6 @@ vector<Key<byte > > visKeys; \
 
 #define NI_VIS_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
-uint numVisKeys; \
 NifStream( numVisKeys, in, version ); \
 visKeys.resize(numVisKeys); \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
@@ -13700,8 +12686,6 @@ for (uint i0 = 0; i0 < numVisKeys; i0++) { \
 
 #define NI_VIS_DATA_WRITE \
 AKeyedData::Write( out, link_map, version ); \
-uint numVisKeys; \
-numVisKeys = uint(visKeys.size()); \
 NifStream( numVisKeys, out, version ); \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
   NifStream( visKeys[i0], out, version, 1 ); \
@@ -13710,8 +12694,6 @@ for (uint i0 = 0; i0 < numVisKeys; i0++) { \
 #define NI_VIS_DATA_STRING \
 stringstream out; \
 out << AKeyedData::asString(); \
-uint numVisKeys; \
-numVisKeys = uint(visKeys.size()); \
 out << "Num Vis Keys:  " << numVisKeys << endl; \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
   out << "  Vis Keys[" << i0 << "]:  " << visKeys[i0] << endl; \
@@ -13720,10 +12702,6 @@ return out.str(); \
 
 #define NI_VIS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
-uint numVisKeys; \
-numVisKeys = uint(visKeys.size()); \
-for (uint i0 = 0; i0 < numVisKeys; i0++) { \
-}; \
 
 #define NI_WIREFRAME_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -13785,8 +12763,6 @@ return out.str(); \
 
 #define NI_Z_BUFFER_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
-if ( version >= 0x0401000C ) { \
-}; \
 
 #define ROOT_COLLISION_NODE_MEMBERS \
 
