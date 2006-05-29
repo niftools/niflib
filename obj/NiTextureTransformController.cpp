@@ -12,18 +12,22 @@ NiTextureTransformController::NiTextureTransformController() NI_TEXTURE_TRANSFOR
 NiTextureTransformController::~NiTextureTransformController() {}
 
 void NiTextureTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_TEXTURE_TRANSFORM_CONTROLLER_READ
+  NI_TEXTURE_TRANSFORM_CONTROLLER_READ
 }
 
 void NiTextureTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE
+  NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE
 }
 
 string NiTextureTransformController::asString( bool verbose ) const {
-	NI_TEXTURE_TRANSFORM_CONTROLLER_STRING
+  NI_TEXTURE_TRANSFORM_CONTROLLER_STRING
 }
 
 void NiTextureTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS
+  NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS
 }
+
+const Type & NiTextureTransformController::GetType() const {
+  return TYPE;
+};
 

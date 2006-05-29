@@ -11,18 +11,22 @@ NiPSysResetOnLoopCtlr::NiPSysResetOnLoopCtlr() NI_P_SYS_RESET_ON_LOOP_CTLR_CONST
 NiPSysResetOnLoopCtlr::~NiPSysResetOnLoopCtlr() {}
 
 void NiPSysResetOnLoopCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_P_SYS_RESET_ON_LOOP_CTLR_READ
+  NI_P_SYS_RESET_ON_LOOP_CTLR_READ
 }
 
 void NiPSysResetOnLoopCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_P_SYS_RESET_ON_LOOP_CTLR_WRITE
+  NI_P_SYS_RESET_ON_LOOP_CTLR_WRITE
 }
 
 string NiPSysResetOnLoopCtlr::asString( bool verbose ) const {
-	NI_P_SYS_RESET_ON_LOOP_CTLR_STRING
+  NI_P_SYS_RESET_ON_LOOP_CTLR_STRING
 }
 
 void NiPSysResetOnLoopCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS
+  NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS
 }
+
+const Type & NiPSysResetOnLoopCtlr::GetType() const {
+  return TYPE;
+};
 

@@ -11,18 +11,22 @@ bhkCapsuleShape::bhkCapsuleShape() BHK_CAPSULE_SHAPE_CONSTRUCT {}
 bhkCapsuleShape::~bhkCapsuleShape() {}
 
 void bhkCapsuleShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	BHK_CAPSULE_SHAPE_READ
+  BHK_CAPSULE_SHAPE_READ
 }
 
 void bhkCapsuleShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	BHK_CAPSULE_SHAPE_WRITE
+  BHK_CAPSULE_SHAPE_WRITE
 }
 
 string bhkCapsuleShape::asString( bool verbose ) const {
-	BHK_CAPSULE_SHAPE_STRING
+  BHK_CAPSULE_SHAPE_STRING
 }
 
 void bhkCapsuleShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	BHK_CAPSULE_SHAPE_FIXLINKS
+  BHK_CAPSULE_SHAPE_FIXLINKS
 }
+
+const Type & bhkCapsuleShape::GetType() const {
+  return TYPE;
+};
 

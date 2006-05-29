@@ -11,18 +11,22 @@ NiTriShapeData::NiTriShapeData() NI_TRI_SHAPE_DATA_CONSTRUCT {}
 NiTriShapeData::~NiTriShapeData() {}
 
 void NiTriShapeData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_TRI_SHAPE_DATA_READ
+  NI_TRI_SHAPE_DATA_READ
 }
 
 void NiTriShapeData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_TRI_SHAPE_DATA_WRITE
+  NI_TRI_SHAPE_DATA_WRITE
 }
 
 string NiTriShapeData::asString( bool verbose ) const {
-	NI_TRI_SHAPE_DATA_STRING
+  NI_TRI_SHAPE_DATA_STRING
 }
 
 void NiTriShapeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_TRI_SHAPE_DATA_FIXLINKS
+  NI_TRI_SHAPE_DATA_FIXLINKS
 }
+
+const Type & NiTriShapeData::GetType() const {
+  return TYPE;
+};
 

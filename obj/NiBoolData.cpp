@@ -11,18 +11,22 @@ NiBoolData::NiBoolData() NI_BOOL_DATA_CONSTRUCT {}
 NiBoolData::~NiBoolData() {}
 
 void NiBoolData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_BOOL_DATA_READ
+  NI_BOOL_DATA_READ
 }
 
 void NiBoolData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_BOOL_DATA_WRITE
+  NI_BOOL_DATA_WRITE
 }
 
 string NiBoolData::asString( bool verbose ) const {
-	NI_BOOL_DATA_STRING
+  NI_BOOL_DATA_STRING
 }
 
 void NiBoolData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_BOOL_DATA_FIXLINKS
+  NI_BOOL_DATA_FIXLINKS
 }
+
+const Type & NiBoolData::GetType() const {
+  return TYPE;
+};
 

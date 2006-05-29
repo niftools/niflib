@@ -12,18 +12,22 @@ NiLODNode::NiLODNode() NI_L_O_D_NODE_CONSTRUCT {}
 NiLODNode::~NiLODNode() {}
 
 void NiLODNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_L_O_D_NODE_READ
+  NI_L_O_D_NODE_READ
 }
 
 void NiLODNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_L_O_D_NODE_WRITE
+  NI_L_O_D_NODE_WRITE
 }
 
 string NiLODNode::asString( bool verbose ) const {
-	NI_L_O_D_NODE_STRING
+  NI_L_O_D_NODE_STRING
 }
 
 void NiLODNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_L_O_D_NODE_FIXLINKS
+  NI_L_O_D_NODE_FIXLINKS
 }
+
+const Type & NiLODNode::GetType() const {
+  return TYPE;
+};
 

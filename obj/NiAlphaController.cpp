@@ -12,18 +12,22 @@ NiAlphaController::NiAlphaController() NI_ALPHA_CONTROLLER_CONSTRUCT {}
 NiAlphaController::~NiAlphaController() {}
 
 void NiAlphaController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_ALPHA_CONTROLLER_READ
+  NI_ALPHA_CONTROLLER_READ
 }
 
 void NiAlphaController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_ALPHA_CONTROLLER_WRITE
+  NI_ALPHA_CONTROLLER_WRITE
 }
 
 string NiAlphaController::asString( bool verbose ) const {
-	NI_ALPHA_CONTROLLER_STRING
+  NI_ALPHA_CONTROLLER_STRING
 }
 
 void NiAlphaController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_ALPHA_CONTROLLER_FIXLINKS
+  NI_ALPHA_CONTROLLER_FIXLINKS
 }
+
+const Type & NiAlphaController::GetType() const {
+  return TYPE;
+};
 

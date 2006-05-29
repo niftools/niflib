@@ -12,18 +12,22 @@ NiDefaultAVObjectPalette::NiDefaultAVObjectPalette() NI_DEFAULT_A_V_OBJECT_PALET
 NiDefaultAVObjectPalette::~NiDefaultAVObjectPalette() {}
 
 void NiDefaultAVObjectPalette::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_READ
+  NI_DEFAULT_A_V_OBJECT_PALETTE_READ
 }
 
 void NiDefaultAVObjectPalette::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE
+  NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE
 }
 
 string NiDefaultAVObjectPalette::asString( bool verbose ) const {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_STRING
+  NI_DEFAULT_A_V_OBJECT_PALETTE_STRING
 }
 
 void NiDefaultAVObjectPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS
+  NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS
 }
+
+const Type & NiDefaultAVObjectPalette::GetType() const {
+  return TYPE;
+};
 

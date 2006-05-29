@@ -11,18 +11,22 @@ bhkRigidBodyT::bhkRigidBodyT() BHK_RIGID_BODY_T_CONSTRUCT {}
 bhkRigidBodyT::~bhkRigidBodyT() {}
 
 void bhkRigidBodyT::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	BHK_RIGID_BODY_T_READ
+  BHK_RIGID_BODY_T_READ
 }
 
 void bhkRigidBodyT::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	BHK_RIGID_BODY_T_WRITE
+  BHK_RIGID_BODY_T_WRITE
 }
 
 string bhkRigidBodyT::asString( bool verbose ) const {
-	BHK_RIGID_BODY_T_STRING
+  BHK_RIGID_BODY_T_STRING
 }
 
 void bhkRigidBodyT::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	BHK_RIGID_BODY_T_FIXLINKS
+  BHK_RIGID_BODY_T_FIXLINKS
 }
+
+const Type & bhkRigidBodyT::GetType() const {
+  return TYPE;
+};
 

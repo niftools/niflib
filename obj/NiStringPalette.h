@@ -16,16 +16,17 @@ typedef Ref<NiStringPalette> NiStringPaletteRef;
 
 class NiStringPalette : public NI_STRING_PALETTE_PARENT {
 public:
-	NiStringPalette();
-	~NiStringPalette();
-	//Run-Time Type Information
-	static const Type TYPE;
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-private:
-	NI_STRING_PALETTE_MEMBERS
+  NiStringPalette();
+  ~NiStringPalette();
+  //Run-Time Type Information
+  static const Type TYPE;
+  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+  virtual string asString( bool verbose = false ) const;
+  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+  virtual const Type & GetType() const;
+protected:
+  NI_STRING_PALETTE_MEMBERS
 };
+
 #endif

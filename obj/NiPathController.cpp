@@ -13,18 +13,22 @@ NiPathController::NiPathController() NI_PATH_CONTROLLER_CONSTRUCT {}
 NiPathController::~NiPathController() {}
 
 void NiPathController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_PATH_CONTROLLER_READ
+  NI_PATH_CONTROLLER_READ
 }
 
 void NiPathController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_PATH_CONTROLLER_WRITE
+  NI_PATH_CONTROLLER_WRITE
 }
 
 string NiPathController::asString( bool verbose ) const {
-	NI_PATH_CONTROLLER_STRING
+  NI_PATH_CONTROLLER_STRING
 }
 
 void NiPathController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_PATH_CONTROLLER_FIXLINKS
+  NI_PATH_CONTROLLER_FIXLINKS
 }
+
+const Type & NiPathController::GetType() const {
+  return TYPE;
+};
 

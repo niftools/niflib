@@ -11,18 +11,22 @@ NiBSplineBasisData::NiBSplineBasisData() NI_B_SPLINE_BASIS_DATA_CONSTRUCT {}
 NiBSplineBasisData::~NiBSplineBasisData() {}
 
 void NiBSplineBasisData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_B_SPLINE_BASIS_DATA_READ
+  NI_B_SPLINE_BASIS_DATA_READ
 }
 
 void NiBSplineBasisData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_B_SPLINE_BASIS_DATA_WRITE
+  NI_B_SPLINE_BASIS_DATA_WRITE
 }
 
 string NiBSplineBasisData::asString( bool verbose ) const {
-	NI_B_SPLINE_BASIS_DATA_STRING
+  NI_B_SPLINE_BASIS_DATA_STRING
 }
 
 void NiBSplineBasisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_B_SPLINE_BASIS_DATA_FIXLINKS
+  NI_B_SPLINE_BASIS_DATA_FIXLINKS
 }
+
+const Type & NiBSplineBasisData::GetType() const {
+  return TYPE;
+};
 

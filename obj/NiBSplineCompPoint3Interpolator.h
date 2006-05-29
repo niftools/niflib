@@ -16,16 +16,17 @@ typedef Ref<NiBSplineCompPoint3Interpolator> NiBSplineCompPoint3InterpolatorRef;
 
 class NiBSplineCompPoint3Interpolator : public NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT {
 public:
-	NiBSplineCompPoint3Interpolator();
-	~NiBSplineCompPoint3Interpolator();
-	//Run-Time Type Information
-	static const Type TYPE;
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-private:
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS
+  NiBSplineCompPoint3Interpolator();
+  ~NiBSplineCompPoint3Interpolator();
+  //Run-Time Type Information
+  static const Type TYPE;
+  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+  virtual string asString( bool verbose = false ) const;
+  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+  virtual const Type & GetType() const;
+protected:
+  NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS
 };
+
 #endif

@@ -11,18 +11,22 @@ NiFloatData::NiFloatData() NI_FLOAT_DATA_CONSTRUCT {}
 NiFloatData::~NiFloatData() {}
 
 void NiFloatData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_FLOAT_DATA_READ
+  NI_FLOAT_DATA_READ
 }
 
 void NiFloatData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_FLOAT_DATA_WRITE
+  NI_FLOAT_DATA_WRITE
 }
 
 string NiFloatData::asString( bool verbose ) const {
-	NI_FLOAT_DATA_STRING
+  NI_FLOAT_DATA_STRING
 }
 
 void NiFloatData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_FLOAT_DATA_FIXLINKS
+  NI_FLOAT_DATA_FIXLINKS
 }
+
+const Type & NiFloatData::GetType() const {
+  return TYPE;
+};
 

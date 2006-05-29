@@ -12,18 +12,22 @@ NiUVController::NiUVController() NI_U_V_CONTROLLER_CONSTRUCT {}
 NiUVController::~NiUVController() {}
 
 void NiUVController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_U_V_CONTROLLER_READ
+  NI_U_V_CONTROLLER_READ
 }
 
 void NiUVController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_U_V_CONTROLLER_WRITE
+  NI_U_V_CONTROLLER_WRITE
 }
 
 string NiUVController::asString( bool verbose ) const {
-	NI_U_V_CONTROLLER_STRING
+  NI_U_V_CONTROLLER_STRING
 }
 
 void NiUVController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_U_V_CONTROLLER_FIXLINKS
+  NI_U_V_CONTROLLER_FIXLINKS
 }
+
+const Type & NiUVController::GetType() const {
+  return TYPE;
+};
 

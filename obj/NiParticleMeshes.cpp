@@ -11,18 +11,22 @@ NiParticleMeshes::NiParticleMeshes() NI_PARTICLE_MESHES_CONSTRUCT {}
 NiParticleMeshes::~NiParticleMeshes() {}
 
 void NiParticleMeshes::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_PARTICLE_MESHES_READ
+  NI_PARTICLE_MESHES_READ
 }
 
 void NiParticleMeshes::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_PARTICLE_MESHES_WRITE
+  NI_PARTICLE_MESHES_WRITE
 }
 
 string NiParticleMeshes::asString( bool verbose ) const {
-	NI_PARTICLE_MESHES_STRING
+  NI_PARTICLE_MESHES_STRING
 }
 
 void NiParticleMeshes::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_PARTICLE_MESHES_FIXLINKS
+  NI_PARTICLE_MESHES_FIXLINKS
 }
+
+const Type & NiParticleMeshes::GetType() const {
+  return TYPE;
+};
 

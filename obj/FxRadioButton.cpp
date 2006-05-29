@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "FxRadioButton.h"
+#include "NiObject.h"
 
 //Definition of TYPE constant
 const Type FxRadioButton::TYPE("FxRadioButton", &FX_RADIO_BUTTON_PARENT::TYPE );
@@ -11,18 +12,22 @@ FxRadioButton::FxRadioButton() FX_RADIO_BUTTON_CONSTRUCT {}
 FxRadioButton::~FxRadioButton() {}
 
 void FxRadioButton::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	FX_RADIO_BUTTON_READ
+  FX_RADIO_BUTTON_READ
 }
 
 void FxRadioButton::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	FX_RADIO_BUTTON_WRITE
+  FX_RADIO_BUTTON_WRITE
 }
 
 string FxRadioButton::asString( bool verbose ) const {
-	FX_RADIO_BUTTON_STRING
+  FX_RADIO_BUTTON_STRING
 }
 
 void FxRadioButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	FX_RADIO_BUTTON_FIXLINKS
+  FX_RADIO_BUTTON_FIXLINKS
 }
+
+const Type & FxRadioButton::GetType() const {
+  return TYPE;
+};
 

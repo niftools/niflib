@@ -11,18 +11,22 @@ NiPSysGrowFadeModifier::NiPSysGrowFadeModifier() NI_P_SYS_GROW_FADE_MODIFIER_CON
 NiPSysGrowFadeModifier::~NiPSysGrowFadeModifier() {}
 
 void NiPSysGrowFadeModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_P_SYS_GROW_FADE_MODIFIER_READ
+  NI_P_SYS_GROW_FADE_MODIFIER_READ
 }
 
 void NiPSysGrowFadeModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_P_SYS_GROW_FADE_MODIFIER_WRITE
+  NI_P_SYS_GROW_FADE_MODIFIER_WRITE
 }
 
 string NiPSysGrowFadeModifier::asString( bool verbose ) const {
-	NI_P_SYS_GROW_FADE_MODIFIER_STRING
+  NI_P_SYS_GROW_FADE_MODIFIER_STRING
 }
 
 void NiPSysGrowFadeModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS
+  NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS
 }
+
+const Type & NiPSysGrowFadeModifier::GetType() const {
+  return TYPE;
+};
 

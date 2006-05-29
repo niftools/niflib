@@ -11,18 +11,22 @@ NiTransformController::NiTransformController() NI_TRANSFORM_CONTROLLER_CONSTRUCT
 NiTransformController::~NiTransformController() {}
 
 void NiTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_TRANSFORM_CONTROLLER_READ
+  NI_TRANSFORM_CONTROLLER_READ
 }
 
 void NiTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_TRANSFORM_CONTROLLER_WRITE
+  NI_TRANSFORM_CONTROLLER_WRITE
 }
 
 string NiTransformController::asString( bool verbose ) const {
-	NI_TRANSFORM_CONTROLLER_STRING
+  NI_TRANSFORM_CONTROLLER_STRING
 }
 
 void NiTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_TRANSFORM_CONTROLLER_FIXLINKS
+  NI_TRANSFORM_CONTROLLER_FIXLINKS
 }
+
+const Type & NiTransformController::GetType() const {
+  return TYPE;
+};
 

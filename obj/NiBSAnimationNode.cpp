@@ -11,18 +11,22 @@ NiBSAnimationNode::NiBSAnimationNode() NI_B_S_ANIMATION_NODE_CONSTRUCT {}
 NiBSAnimationNode::~NiBSAnimationNode() {}
 
 void NiBSAnimationNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_B_S_ANIMATION_NODE_READ
+  NI_B_S_ANIMATION_NODE_READ
 }
 
 void NiBSAnimationNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_B_S_ANIMATION_NODE_WRITE
+  NI_B_S_ANIMATION_NODE_WRITE
 }
 
 string NiBSAnimationNode::asString( bool verbose ) const {
-	NI_B_S_ANIMATION_NODE_STRING
+  NI_B_S_ANIMATION_NODE_STRING
 }
 
 void NiBSAnimationNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_B_S_ANIMATION_NODE_FIXLINKS
+  NI_B_S_ANIMATION_NODE_FIXLINKS
 }
+
+const Type & NiBSAnimationNode::GetType() const {
+  return TYPE;
+};
 

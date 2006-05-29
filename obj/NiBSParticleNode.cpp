@@ -11,18 +11,22 @@ NiBSParticleNode::NiBSParticleNode() NI_B_S_PARTICLE_NODE_CONSTRUCT {}
 NiBSParticleNode::~NiBSParticleNode() {}
 
 void NiBSParticleNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_B_S_PARTICLE_NODE_READ
+  NI_B_S_PARTICLE_NODE_READ
 }
 
 void NiBSParticleNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_B_S_PARTICLE_NODE_WRITE
+  NI_B_S_PARTICLE_NODE_WRITE
 }
 
 string NiBSParticleNode::asString( bool verbose ) const {
-	NI_B_S_PARTICLE_NODE_STRING
+  NI_B_S_PARTICLE_NODE_STRING
 }
 
 void NiBSParticleNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_B_S_PARTICLE_NODE_FIXLINKS
+  NI_B_S_PARTICLE_NODE_FIXLINKS
 }
+
+const Type & NiBSParticleNode::GetType() const {
+  return TYPE;
+};
 

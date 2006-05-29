@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiNode.h"
+#include "NiAVObject.h"
 #include "NiDynamicEffect.h"
 
 //Definition of TYPE constant
@@ -12,17 +13,22 @@ NiNode::NiNode() NI_NODE_CONSTRUCT {}
 NiNode::~NiNode() {}
 
 void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_NODE_READ
+  NI_NODE_READ
 }
 
 void NiNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_NODE_WRITE
+  NI_NODE_WRITE
 }
 
 string NiNode::asString( bool verbose ) const {
-	NI_NODE_STRING
+  NI_NODE_STRING
 }
 
 void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_NODE_FIXLINKS
+  NI_NODE_FIXLINKS
 }
+
+const Type & NiNode::GetType() const {
+  return TYPE;
+};
+

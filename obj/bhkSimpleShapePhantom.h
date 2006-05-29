@@ -16,16 +16,17 @@ typedef Ref<bhkSimpleShapePhantom> bhkSimpleShapePhantomRef;
 
 class bhkSimpleShapePhantom : public BHK_SIMPLE_SHAPE_PHANTOM_PARENT {
 public:
-	bhkSimpleShapePhantom();
-	~bhkSimpleShapePhantom();
-	//Run-Time Type Information
-	static const Type TYPE;
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-private:
-	BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS
+  bhkSimpleShapePhantom();
+  ~bhkSimpleShapePhantom();
+  //Run-Time Type Information
+  static const Type TYPE;
+  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+  virtual string asString( bool verbose = false ) const;
+  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+  virtual const Type & GetType() const;
+protected:
+  BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS
 };
+
 #endif

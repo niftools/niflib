@@ -11,18 +11,22 @@ AbhkShapeCollection::AbhkShapeCollection() ABHK_SHAPE_COLLECTION_CONSTRUCT {}
 AbhkShapeCollection::~AbhkShapeCollection() {}
 
 void AbhkShapeCollection::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	ABHK_SHAPE_COLLECTION_READ
+  ABHK_SHAPE_COLLECTION_READ
 }
 
 void AbhkShapeCollection::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	ABHK_SHAPE_COLLECTION_WRITE
+  ABHK_SHAPE_COLLECTION_WRITE
 }
 
 string AbhkShapeCollection::asString( bool verbose ) const {
-	ABHK_SHAPE_COLLECTION_STRING
+  ABHK_SHAPE_COLLECTION_STRING
 }
 
 void AbhkShapeCollection::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	ABHK_SHAPE_COLLECTION_FIXLINKS
+  ABHK_SHAPE_COLLECTION_FIXLINKS
 }
+
+const Type & AbhkShapeCollection::GetType() const {
+  return TYPE;
+};
 

@@ -165,16 +165,7 @@
 					RelativePath=".\obj\AbhkShapeCollection.cpp">
 				</File>
 				<File
-					RelativePath=".\obj\ABlendInterpolator.cpp">
-				</File>
-				<File
 					RelativePath=".\obj\ABoneLODController.cpp">
-				</File>
-				<File
-					RelativePath=".\obj\ABSplineCompInterpolator.cpp">
-				</File>
-				<File
-					RelativePath=".\obj\AInterpolator.cpp">
 				</File>
 				<File
 					RelativePath=".\obj\AKeyedData.cpp">
@@ -187,15 +178,6 @@
 				</File>
 				<File
 					RelativePath=".\obj\APSysData.cpp">
-				</File>
-				<File
-					RelativePath=".\obj\APSysEmitter.cpp">
-				</File>
-				<File
-					RelativePath=".\obj\APSysModifier.cpp">
-				</File>
-				<File
-					RelativePath=".\obj\APSysVolumeEmitter.cpp">
 				</File>
 				<File
 					RelativePath=".\obj\AvoidNode.cpp">
@@ -354,6 +336,9 @@
 					RelativePath=".\obj\NiBlendFloatInterpolator.cpp">
 				</File>
 				<File
+					RelativePath=".\obj\NiBlendInterpolator.cpp">
+				</File>
+				<File
 					RelativePath=".\obj\NiBlendPoint3Interpolator.cpp">
 				</File>
 				<File
@@ -400,6 +385,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiBSplineData.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiBSplineInterpolator.cpp">
 				</File>
 				<File
 					RelativePath=".\obj\NiCamera.cpp">
@@ -469,6 +457,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiIntegersExtraData.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiInterpolator.cpp">
 				</File>
 				<File
 					RelativePath=".\obj\NiKeyframeController.cpp">
@@ -609,6 +600,9 @@
 					RelativePath=".\obj\NiPSysDragModifier.cpp">
 				</File>
 				<File
+					RelativePath=".\obj\NiPSysEmitter.cpp">
+				</File>
+				<File
 					RelativePath=".\obj\NiPSysEmitterCtlr.cpp">
 				</File>
 				<File
@@ -645,6 +639,9 @@
 					RelativePath=".\obj\NiPSysMeshUpdateModifier.cpp">
 				</File>
 				<File
+					RelativePath=".\obj\NiPSysModifier.cpp">
+				</File>
+				<File
 					RelativePath=".\obj\NiPSysModifierActiveCtlr.cpp">
 				</File>
 				<File
@@ -667,6 +664,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiPSysUpdateCtlr.cpp">
+				</File>
+				<File
+					RelativePath=".\obj\NiPSysVolumeEmitter.cpp">
 				</File>
 				<File
 					RelativePath=".\obj\NiRangeLODData.cpp">
@@ -750,6 +750,9 @@
 					RelativePath=".\obj\NiTriBasedGeom.cpp">
 				</File>
 				<File
+					RelativePath=".\obj\NiTriBasedGeomData.cpp">
+				</File>
+				<File
 					RelativePath=".\obj\NiTriShape.cpp">
 				</File>
 				<File
@@ -792,9 +795,6 @@
 					RelativePath=".\obj\RootCollisionNode.cpp">
 				</File>
 				<File
-					RelativePath=".\obj\TriBasedGeomData.cpp">
-				</File>
-				<File
 					RelativePath=".\obj\Type.cpp">
 				</File>
 			</Filter>
@@ -828,16 +828,7 @@
 					RelativePath=".\obj\AbhkShapeCollection.h">
 				</File>
 				<File
-					RelativePath=".\obj\ABlendInterpolator.h">
-				</File>
-				<File
 					RelativePath=".\obj\ABoneLODController.h">
-				</File>
-				<File
-					RelativePath=".\obj\ABSplineCompInterpolator.h">
-				</File>
-				<File
-					RelativePath=".\obj\AInterpolator.h">
 				</File>
 				<File
 					RelativePath=".\obj\AKeyedData.h">
@@ -850,15 +841,6 @@
 				</File>
 				<File
 					RelativePath=".\obj\APSysData.h">
-				</File>
-				<File
-					RelativePath=".\obj\APSysEmitter.h">
-				</File>
-				<File
-					RelativePath=".\obj\APSysModifier.h">
-				</File>
-				<File
-					RelativePath=".\obj\APSysVolumeEmitter.h">
 				</File>
 				<File
 					RelativePath=".\obj\AvoidNode.h">
@@ -1017,6 +999,9 @@
 					RelativePath=".\obj\NiBlendFloatInterpolator.h">
 				</File>
 				<File
+					RelativePath=".\obj\NiBlendInterpolator.h">
+				</File>
+				<File
 					RelativePath=".\obj\NiBlendPoint3Interpolator.h">
 				</File>
 				<File
@@ -1063,6 +1048,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiBSplineData.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiBSplineInterpolator.h">
 				</File>
 				<File
 					RelativePath=".\obj\NiCamera.h">
@@ -1132,6 +1120,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiIntegersExtraData.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiInterpolator.h">
 				</File>
 				<File
 					RelativePath=".\obj\NiKeyframeController.h">
@@ -1272,6 +1263,9 @@
 					RelativePath=".\obj\NiPSysDragModifier.h">
 				</File>
 				<File
+					RelativePath=".\obj\NiPSysEmitter.h">
+				</File>
+				<File
 					RelativePath=".\obj\NiPSysEmitterCtlr.h">
 				</File>
 				<File
@@ -1308,6 +1302,9 @@
 					RelativePath=".\obj\NiPSysMeshUpdateModifier.h">
 				</File>
 				<File
+					RelativePath=".\obj\NiPSysModifier.h">
+				</File>
+				<File
 					RelativePath=".\obj\NiPSysModifierActiveCtlr.h">
 				</File>
 				<File
@@ -1330,6 +1327,9 @@
 				</File>
 				<File
 					RelativePath=".\obj\NiPSysUpdateCtlr.h">
+				</File>
+				<File
+					RelativePath=".\obj\NiPSysVolumeEmitter.h">
 				</File>
 				<File
 					RelativePath=".\obj\NiRangeLODData.h">
@@ -1413,6 +1413,9 @@
 					RelativePath=".\obj\NiTriBasedGeom.h">
 				</File>
 				<File
+					RelativePath=".\obj\NiTriBasedGeomData.h">
+				</File>
+				<File
 					RelativePath=".\obj\NiTriShape.h">
 				</File>
 				<File
@@ -1456,9 +1459,6 @@
 				</File>
 				<File
 					RelativePath=".\obj\RootCollisionNode.h">
-				</File>
-				<File
-					RelativePath=".\obj\TriBasedGeomData.h">
 				</File>
 				<File
 					RelativePath=".\obj\Type.h">

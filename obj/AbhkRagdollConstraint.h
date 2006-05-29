@@ -16,16 +16,17 @@ typedef Ref<AbhkRagdollConstraint> AbhkRagdollConstraintRef;
 
 class AbhkRagdollConstraint : public ABHK_RAGDOLL_CONSTRAINT_PARENT {
 public:
-	AbhkRagdollConstraint();
-	~AbhkRagdollConstraint();
-	//Run-Time Type Information
-	static const Type TYPE;
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-private:
-	ABHK_RAGDOLL_CONSTRAINT_MEMBERS
+  AbhkRagdollConstraint();
+  ~AbhkRagdollConstraint();
+  //Run-Time Type Information
+  static const Type TYPE;
+  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+  virtual string asString( bool verbose = false ) const;
+  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+  virtual const Type & GetType() const;
+protected:
+  ABHK_RAGDOLL_CONSTRAINT_MEMBERS
 };
+
 #endif

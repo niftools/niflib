@@ -11,18 +11,22 @@ NiShadeProperty::NiShadeProperty() NI_SHADE_PROPERTY_CONSTRUCT {}
 NiShadeProperty::~NiShadeProperty() {}
 
 void NiShadeProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_SHADE_PROPERTY_READ
+  NI_SHADE_PROPERTY_READ
 }
 
 void NiShadeProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_SHADE_PROPERTY_WRITE
+  NI_SHADE_PROPERTY_WRITE
 }
 
 string NiShadeProperty::asString( bool verbose ) const {
-	NI_SHADE_PROPERTY_STRING
+  NI_SHADE_PROPERTY_STRING
 }
 
 void NiShadeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_SHADE_PROPERTY_FIXLINKS
+  NI_SHADE_PROPERTY_FIXLINKS
 }
+
+const Type & NiShadeProperty::GetType() const {
+  return TYPE;
+};
 

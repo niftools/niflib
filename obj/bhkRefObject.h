@@ -16,16 +16,17 @@ typedef Ref<bhkRefObject> bhkRefObjectRef;
 
 class bhkRefObject : public BHK_REF_OBJECT_PARENT {
 public:
-	bhkRefObject();
-	~bhkRefObject();
-	//Run-Time Type Information
-	static const Type TYPE;
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-private:
-	BHK_REF_OBJECT_MEMBERS
+  bhkRefObject();
+  ~bhkRefObject();
+  //Run-Time Type Information
+  static const Type TYPE;
+  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+  virtual string asString( bool verbose = false ) const;
+  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+  virtual const Type & GetType() const;
+protected:
+  BHK_REF_OBJECT_MEMBERS
 };
+
 #endif

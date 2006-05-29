@@ -11,18 +11,22 @@ bhkSimpleShapePhantom::bhkSimpleShapePhantom() BHK_SIMPLE_SHAPE_PHANTOM_CONSTRUC
 bhkSimpleShapePhantom::~bhkSimpleShapePhantom() {}
 
 void bhkSimpleShapePhantom::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	BHK_SIMPLE_SHAPE_PHANTOM_READ
+  BHK_SIMPLE_SHAPE_PHANTOM_READ
 }
 
 void bhkSimpleShapePhantom::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	BHK_SIMPLE_SHAPE_PHANTOM_WRITE
+  BHK_SIMPLE_SHAPE_PHANTOM_WRITE
 }
 
 string bhkSimpleShapePhantom::asString( bool verbose ) const {
-	BHK_SIMPLE_SHAPE_PHANTOM_STRING
+  BHK_SIMPLE_SHAPE_PHANTOM_STRING
 }
 
 void bhkSimpleShapePhantom::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS
+  BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS
 }
+
+const Type & bhkSimpleShapePhantom::GetType() const {
+  return TYPE;
+};
 

@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiCollisionObject.h"
+#include "NiAVObject.h"
+#include "NiObject.h"
 
 //Definition of TYPE constant
 const Type NiCollisionObject::TYPE("NiCollisionObject", &NI_COLLISION_OBJECT_PARENT::TYPE );
@@ -11,19 +13,23 @@ NiCollisionObject::NiCollisionObject() NI_COLLISION_OBJECT_CONSTRUCT {}
 NiCollisionObject::~NiCollisionObject() {}
 
 void NiCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-	NI_COLLISION_OBJECT_READ
+  NI_COLLISION_OBJECT_READ
 }
 
 void NiCollisionObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-	NI_COLLISION_OBJECT_WRITE
+  NI_COLLISION_OBJECT_WRITE
 }
 
 string NiCollisionObject::asString( bool verbose ) const {
-	NI_COLLISION_OBJECT_STRING
+  NI_COLLISION_OBJECT_STRING
 }
 
 void NiCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_COLLISION_OBJECT_FIXLINKS
+  NI_COLLISION_OBJECT_FIXLINKS
 }
 
-NiAVObject * NiCollisionObject::Parent() const { return NULL; };
+const Type & NiCollisionObject::GetType() const {
+  return TYPE;
+};
+
+NiAVObject * NiCollisionObject::Parent() const { return NULL; }
