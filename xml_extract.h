@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _XML_EXTRACT_H_
 
 #include "NIF_IO.h"
-#include "obj\Ref.h"
+#include "obj/Ref.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -1242,11 +1242,13 @@ return out.str(); \
 
 #define A_PARTICLE_MODIFIER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   nextModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 else \
   nextModifier = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   controller = DynamicCast<NiParticleSystemController>(objects[link_stack.front()]); \
 else \
@@ -1341,6 +1343,7 @@ return out.str(); \
 #define ABHK_CONSTRAINT_FIXLINKS \
 bhkSerializable::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     bodies[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
   else \
@@ -1563,6 +1566,7 @@ return out.str(); \
 
 #define BHK_ENTITY_FIXLINKS \
 bhkWorldObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
 else \
@@ -1605,11 +1609,13 @@ return out.str(); \
 
 #define NI_COLLISION_OBJECT_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
 else \
   parent = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   body = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -1656,6 +1662,7 @@ return out.str(); \
 #define NI_EXTRA_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     nextExtraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
   else \
@@ -1806,6 +1813,7 @@ return out.str(); \
 #define NI_OBJECT_N_E_T_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     extraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
   else \
@@ -1814,6 +1822,7 @@ if ( version <= 0x04020200 ) { \
 }; \
 if ( version >= 0x0A000100 ) { \
   for (uint i1 = 0; i1 < numExtraDataList; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       extraDataList[i1] = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
     else \
@@ -1821,6 +1830,7 @@ if ( version >= 0x0A000100 ) { \
     link_stack.pop_front(); \
   }; \
 }; \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   controller = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
 else \
@@ -1936,6 +1946,7 @@ return out.str(); \
 #define NI_A_V_OBJECT_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numProperties; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     properties[i0] = DynamicCast<NiProperty>(objects[link_stack.front()]); \
   else \
@@ -1943,6 +1954,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
   link_stack.pop_front(); \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     collisionData = DynamicCast<NiCollisionData>(objects[link_stack.front()]); \
   else \
@@ -1950,6 +1962,7 @@ if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x14000005 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     collisionObject = DynamicCast<NiCollisionObject>(objects[link_stack.front()]); \
   else \
@@ -2027,6 +2040,7 @@ return out.str(); \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numAffectedNodes; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       affectedNodes[i1] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
     else \
@@ -2134,6 +2148,7 @@ return out.str(); \
 
 #define NI_P_SYS_MODIFIER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   target = DynamicCast<NiParticleSystem>(objects[link_stack.front()]); \
 else \
@@ -2238,6 +2253,7 @@ return out.str(); \
 #define NI_P_SYS_VOLUME_EMITTER_FIXLINKS \
 NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     emitterObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -2297,11 +2313,13 @@ return out.str(); \
 
 #define NI_TIME_CONTROLLER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   nextController = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
 else \
   nextController = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   target = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -2366,6 +2384,7 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
   for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       nodeGroups[i0].nodes[i1] = DynamicCast<NiNode>(objects[link_stack.front()]); \
     else \
@@ -2406,6 +2425,7 @@ return out.str(); \
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A020000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
   else \
@@ -2494,11 +2514,13 @@ return out.str(); \
 
 #define NI_TRI_BASED_GEOM_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiTriBasedGeomData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
 else \
@@ -2506,6 +2528,7 @@ else \
 link_stack.pop_front(); \
 if ( version >= 0x0A000100 ) { \
   if ( (hasShader != 0) ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -2747,6 +2770,7 @@ return out.str(); \
 #define NI_TRI_BASED_GEOM_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
   else \
@@ -3211,6 +3235,7 @@ return out.str(); \
 #define BHK_LIST_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     subShapes[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
   else \
@@ -3306,11 +3331,13 @@ return out.str(); \
 
 #define BHK_MALLEABLE_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink1 = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -3386,6 +3413,7 @@ return out.str(); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
 else \
@@ -3532,6 +3560,7 @@ return out.str(); \
 #define BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numStripsData; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     stripsData[i0] = DynamicCast<NiTriStripsData>(objects[link_stack.front()]); \
   else \
@@ -3616,6 +3645,7 @@ return out.str(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]); \
 else \
@@ -3892,6 +3922,7 @@ return out.str(); \
 #define BHK_RIGID_BODY_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numConstraints; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     constraints[i0] = DynamicCast<AbhkConstraint>(objects[link_stack.front()]); \
   else \
@@ -4373,6 +4404,7 @@ return out.str(); \
 #define NI_ALPHA_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
   else \
@@ -4721,11 +4753,13 @@ return out.str(); \
 ABoneLODController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
   for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       shapeGroups1[i0].linkPairs[i1].shape = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
     else \
       shapeGroups1[i0].linkPairs[i1].shape = NULL; \
     link_stack.pop_front(); \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       shapeGroups1[i0].linkPairs[i1].skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
     else \
@@ -4734,6 +4768,7 @@ for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
   }; \
 }; \
 for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     shapeGroups2[i0] = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
   else \
@@ -4843,6 +4878,7 @@ return out.str(); \
 
 #define NI_BOOL_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
 else \
@@ -4880,6 +4916,7 @@ return out.str(); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
 else \
@@ -5010,11 +5047,13 @@ return out.str(); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -5064,11 +5103,13 @@ return out.str(); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]); \
 else \
@@ -5223,6 +5264,7 @@ return out.str(); \
 
 #define NI_CAMERA_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -5316,6 +5358,7 @@ return out.str(); \
 
 #define NI_COLLISION_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   targetNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -5441,12 +5484,14 @@ return out.str(); \
 #define NI_CONTROLLER_MANAGER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     controllerSequences[i0] = DynamicCast<NiControllerSequence>(objects[link_stack.front()]); \
   else \
     controllerSequences[i0] = NULL; \
   link_stack.pop_front(); \
 }; \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   objectPalette = DynamicCast<NiDefaultAVObjectPalette>(objects[link_stack.front()]); \
 else \
@@ -5815,12 +5860,14 @@ return out.str(); \
 #define NI_CONTROLLER_SEQUENCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     textKeys.interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
   else \
     textKeys.interpolator = NULL; \
   link_stack.pop_front(); \
   if ( version >= 0x0A01006A ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -5828,6 +5875,7 @@ if ( version <= 0x0A010000 ) { \
     link_stack.pop_front(); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -5835,6 +5883,7 @@ if ( version <= 0x0A010000 ) { \
     link_stack.pop_front(); \
   }; \
   if ( version >= 0x0A020000 ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
     else \
@@ -5843,12 +5892,14 @@ if ( version <= 0x0A010000 ) { \
   }; \
 }; \
 for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     controlledBlocks[i0].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
   else \
     controlledBlocks[i0].interpolator = NULL; \
   link_stack.pop_front(); \
   if ( version >= 0x0A01006A ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -5856,6 +5907,7 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
     link_stack.pop_front(); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -5863,6 +5915,7 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
     link_stack.pop_front(); \
   }; \
   if ( version >= 0x0A020000 ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
     else \
@@ -5871,11 +5924,13 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
   }; \
 }; \
 if ( version >= 0x0A01006A ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     textKeys2 = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]); \
   else \
     textKeys2 = NULL; \
   link_stack.pop_front(); \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]); \
   else \
@@ -5883,6 +5938,7 @@ if ( version >= 0x0A01006A ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
   else \
@@ -5936,6 +5992,7 @@ return out.str(); \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     objs[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
   else \
@@ -6046,6 +6103,7 @@ return out.str(); \
 #define NI_FLIP_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numSources; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     sources[i0] = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -6160,6 +6218,7 @@ return out.str(); \
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
   else \
@@ -6198,6 +6257,7 @@ return out.str(); \
 
 #define NI_FLOAT_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
 else \
@@ -6361,6 +6421,7 @@ return out.str(); \
 
 #define NI_GEOM_MORPHER_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiMorphData>(objects[link_stack.front()]); \
 else \
@@ -6368,6 +6429,7 @@ else \
 link_stack.pop_front(); \
 if ( version >= 0x0A01006A ) { \
   for (uint i1 = 0; i1 < numInterpolators; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       interpolators[i1] = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
     else \
@@ -6508,6 +6570,7 @@ return out.str(); \
 
 #define NI_KEYFRAME_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
 else \
@@ -6541,6 +6604,7 @@ return out.str(); \
 
 #define B_S_KEYFRAME_CONTROLLER_FIXLINKS \
 NiKeyframeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data2 = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
 else \
@@ -6746,6 +6810,7 @@ return out.str(); \
 #define NI_LIGHT_COLOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
   else \
@@ -6753,6 +6818,7 @@ if ( version <= 0x0A010000 ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     interpolator = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
   else \
@@ -6787,6 +6853,7 @@ return out.str(); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
 else \
@@ -6828,6 +6895,7 @@ return out.str(); \
 
 #define NI_LOOK_AT_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   lookAtNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -6896,21 +6964,25 @@ return out.str(); \
 
 #define NI_LOOK_AT_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   lookAt = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
   lookAt = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink1 = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
 else \
   unknownLink1 = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
 else \
   unknownLink2 = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink3 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
 else \
@@ -6957,6 +7029,7 @@ return out.str(); \
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
   else \
@@ -7184,6 +7257,7 @@ return out.str(); \
 #define NI_MESH_P_SYS_DATA_FIXLINKS \
 APSysData::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x14000004 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     modifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
   else \
@@ -7192,6 +7266,7 @@ if ( version <= 0x14000004 ) { \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
   for (uint i1 = 0; i1 < numUnknownLinks; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       unknownLinks[i1] = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
     else \
@@ -7200,6 +7275,7 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
   }; \
 }; \
 if ( version >= 0x0A020000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink2 = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -7332,6 +7408,7 @@ return out.str(); \
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     extraTargets[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -7394,6 +7471,7 @@ return out.str(); \
 #define NI_NODE_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     children[i0] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
   else \
@@ -7401,6 +7479,7 @@ for (uint i0 = 0; i0 < numChildren; i0++) { \
   link_stack.pop_front(); \
 }; \
 for (uint i0 = 0; i0 < numEffects; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     effects[i0] = DynamicCast<NiDynamicEffect>(objects[link_stack.front()]); \
   else \
@@ -7540,6 +7619,7 @@ return out.str(); \
 #define FX_RADIO_BUTTON_FIXLINKS \
 FxWidget::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     unknownLinks[i0] = DynamicCast<NiObject>(objects[link_stack.front()]); \
   else \
@@ -7691,6 +7771,7 @@ return out.str(); \
 #define NI_L_O_D_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 if ( (lodType == 1) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     rangeData = DynamicCast<NiRangeLODData>(objects[link_stack.front()]); \
   else \
@@ -7844,6 +7925,7 @@ return out.str(); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   colorData = DynamicCast<NiColorData>(objects[link_stack.front()]); \
 else \
@@ -7911,6 +7993,7 @@ return out.str(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   particleMeshes = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
 else \
@@ -8124,6 +8207,7 @@ return out.str(); \
 
 #define NI_PARTICLE_MESHES_DATA_FIXLINKS \
 NiParticlesData::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
 else \
@@ -8178,6 +8262,7 @@ return out.str(); \
 NiParticles::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numModifiers; i1++) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       modifiers[i1] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]); \
     else \
@@ -8399,21 +8484,25 @@ return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   emitter = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   emitter = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   particleExtra = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 else \
   particleExtra = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -8498,11 +8587,13 @@ return out.str(); \
 
 #define NI_PATH_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
   posData = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
 else \
@@ -8553,11 +8644,13 @@ return out.str(); \
 
 #define NI_PATH_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
   posData = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
 else \
@@ -8699,6 +8792,7 @@ return out.str(); \
 
 #define NI_PIXEL_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   palette = DynamicCast<NiPalette>(objects[link_stack.front()]); \
 else \
@@ -8838,6 +8932,7 @@ return out.str(); \
 
 #define NI_POINT3_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
@@ -8954,6 +9049,7 @@ return out.str(); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
 else \
@@ -9020,6 +9116,7 @@ return out.str(); \
 
 #define NI_P_SYS_BOMB_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -9113,6 +9210,7 @@ return out.str(); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   collider = DynamicCast<NiPSysPlanarCollider>(objects[link_stack.front()]); \
 else \
@@ -9146,6 +9244,7 @@ return out.str(); \
 
 #define NI_P_SYS_COLOR_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiColorData>(objects[link_stack.front()]); \
 else \
@@ -9365,6 +9464,7 @@ return out.str(); \
 
 #define NI_P_SYS_DRAG_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
@@ -9398,6 +9498,7 @@ return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
 else \
@@ -9626,6 +9727,7 @@ return out.str(); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   gravityObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -9743,6 +9845,7 @@ return out.str(); \
 #define NI_P_SYS_MESH_EMITTER_FIXLINKS \
 NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     emitterMeshes[i0] = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
   else \
@@ -9789,6 +9892,7 @@ return out.str(); \
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     meshes[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -9888,21 +9992,25 @@ return out.str(); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
 else \
   spawnModifier = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   parent = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink_ = NULL; \
 link_stack.pop_front(); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   colliderObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
@@ -10392,6 +10500,7 @@ return out.str(); \
 #define NI_SKIN_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
   else \
@@ -10455,24 +10564,28 @@ return out.str(); \
 
 #define NI_SKIN_INSTANCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiSkinData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
 if ( version >= 0x0A020000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
   else \
     skinPartition = NULL; \
   link_stack.pop_front(); \
 }; \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   skeletonRoot = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
   skeletonRoot = NULL; \
 link_stack.pop_front(); \
 for (uint i0 = 0; i0 < bones.numBones; i0++) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     bones.bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
   else \
@@ -10853,6 +10966,7 @@ return out.str(); \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   if ( (useExternal == 1) ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
     else \
@@ -10861,6 +10975,7 @@ if ( version >= 0x0A010000 ) { \
   }; \
 }; \
 if ( (useExternal == 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
   else \
@@ -11261,6 +11376,7 @@ return out.str(); \
 
 #define NI_TEXTURE_EFFECT_FIXLINKS \
 NiDynamicEffect::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   sourceTexture = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
 else \
@@ -11311,6 +11427,7 @@ return out.str(); \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
   else \
@@ -12018,6 +12135,7 @@ return out.str(); \
 #define NI_TEXTURING_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
 if ( (hasBaseTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12025,6 +12143,7 @@ if ( (hasBaseTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDarkTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     darkTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12032,6 +12151,7 @@ if ( (hasDarkTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDetailTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     detailTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12039,6 +12159,7 @@ if ( (hasDetailTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasGlossTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     glossTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12046,6 +12167,7 @@ if ( (hasGlossTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasGlowTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     glowTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12053,6 +12175,7 @@ if ( (hasGlowTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasBumpMapTexture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     bumpMapTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12060,6 +12183,7 @@ if ( (hasBumpMapTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDecal0Texture != 0) ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     decal0Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
   else \
@@ -12068,6 +12192,7 @@ if ( (hasDecal0Texture != 0) ) { \
 }; \
 if ( version >= 0x14000004 ) { \
   if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
+    assert(!link_stack.empty()); \
     if (link_stack.front() != 0xffffffff) \
       decal1Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
     else \
@@ -12078,6 +12203,7 @@ if ( version >= 0x14000004 ) { \
 if ( version >= 0x0A000100 ) { \
   for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
     if ( (shaderTextures[i1].isUsed != 0) ) { \
+      assert(!link_stack.empty()); \
       if (link_stack.front() != 0xffffffff) \
         shaderTextures[i1].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
       else \
@@ -12185,6 +12311,7 @@ return out.str(); \
 
 #define NI_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiTransformData>(objects[link_stack.front()]); \
 else \
@@ -12464,6 +12591,7 @@ return out.str(); \
 
 #define NI_U_V_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+assert(!link_stack.empty()); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiUVData>(objects[link_stack.front()]); \
 else \
@@ -12659,6 +12787,7 @@ return out.str(); \
 #define NI_VIS_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
+  assert(!link_stack.empty()); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiVisData>(objects[link_stack.front()]); \
   else \

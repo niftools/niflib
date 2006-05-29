@@ -32,7 +32,7 @@ protected:
 };
 
 template <class T>
-Ref<T>::Ref( T * object = NULL ) : _object(object) {}
+Ref<T>::Ref( T * object ) : _object(object) {}
 
 template <class T>
 Ref<T>::Ref(const Ref & ref_to_copy ) {
