@@ -241,6 +241,7 @@ struct Bones {
    * Block indicies of the bones.
    */
   vector<NiNode * > bones;
+  Bones() : numBones((uint)0) {};
 };
 
 /*!
@@ -259,6 +260,7 @@ struct ByteArray {
    * The bytes which make up the array
    */
   vector<byte > data;
+  ByteArray() : dataSize((uint)0), unknownInt((uint)0) {};
 };
 
 /*!
@@ -276,6 +278,7 @@ struct Footer {
    * node).
    */
   vector<Ref<NiAVObject > > roots;
+  Footer() : numRoots((uint)0) {};
 };
 
 /*!
@@ -290,6 +293,7 @@ struct LODRange {
    * End of Range.
    */
   float far;
+  LODRange() : near(0.0f), far(0.0f) {};
 };
 
 /*!
@@ -304,6 +308,7 @@ struct MatchGroup {
    * The vertex indices.
    */
   vector<ushort > vertexIndices;
+  MatchGroup() : numVertices((ushort)0) {};
 };
 
 /*!
@@ -322,6 +327,7 @@ struct MipMap {
    * Offset into the pixel data array where this mipmap starts.
    */
   uint offset;
+  MipMap() : width((uint)0), height((uint)0), offset((uint)0) {};
 };
 
 /*!
@@ -336,6 +342,7 @@ struct NodeGroup {
    * The list of NiNode references.
    */
   vector<Ref<NiNode > > nodes;
+  NodeGroup() : numNodes((uint)0) {};
 };
 
 /*!
@@ -352,6 +359,7 @@ struct ns_keylin {
    * The key value.
    */
   T value;
+  ns_keylin() : time(0.0f) {};
 };
 
 /*!
@@ -368,6 +376,7 @@ struct ns_keyarray {
    * The keys.
    */
   vector<ns_keylin<T > > keys;
+  ns_keyarray() : numKeys((uint)0) {};
 };
 
 /*!
@@ -392,6 +401,7 @@ struct ns_keytan {
    * Backward tangent.
    */
   T backward;
+  ns_keytan() : time(0.0f) {};
 };
 
 /*!
@@ -414,6 +424,7 @@ struct QuaternionXYZW {
    * The w-coordinate.
    */
   float w;
+  QuaternionXYZW() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {};
 };
 
 /*!
@@ -430,6 +441,7 @@ struct ShortString {
    * account in the length byte).
    */
   vector<byte > value;
+  ShortString() : length((byte)0) {};
 };
 
 /*!
@@ -444,6 +456,7 @@ struct SkinShape {
    * Skinning instance for the shape?
    */
   Ref<NiSkinInstance > skinInstance;
+  SkinShape() : shape(NULL), skinInstance(NULL) {};
 };
 
 /*!
@@ -459,6 +472,7 @@ struct SkinShapeGroup {
    * block.
    */
   vector<SkinShape > linkPairs;
+  SkinShapeGroup() : numLinkPairs((uint)0) {};
 };
 
 /*!
@@ -473,6 +487,7 @@ struct SkinWeight {
    * The vertex weight - between 0.0 and 1.0
    */
   float weight;
+  SkinWeight() : index((ushort)0), weight(0.0f) {};
 };
 
 /*!
@@ -487,6 +502,7 @@ struct AVObject {
    * Object reference.
    */
   NiAVObject * object;
+  AVObject() : object(NULL) {};
 };
 
 /*!
@@ -583,6 +599,7 @@ struct ControllerLink {
    * files, used for particle system controllers). Usually, -1.
    */
   uint variableOffset2;
+  ControllerLink() : interpolator(NULL), unknownLink1(NULL), unknownLink2(NULL), unknownShort0((ushort)0), priority_((byte)0), stringPalette(NULL), nodeNameOffset((uint)0), propertyTypeOffset((uint)0), controllerTypeOffset((uint)0), variableOffset1((uint)0), variableOffset2((uint)0) {};
 };
 
 /*!
@@ -654,7 +671,7 @@ struct Header {
    * Unknown.
    */
   uint unknownInt2;
-  Header() : version((uint)0x04000002), endianType((byte)1) {};
+  Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)0), unknownInt3((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
 };
 
 /*!
@@ -669,6 +686,7 @@ struct StringPalette {
    * Length of the palette string is repeated here.
    */
   uint length;
+  StringPalette() : length((uint)0) {};
 };
 
 /*!
@@ -687,6 +705,7 @@ struct TBC {
    * Continuity.
    */
   float c;
+  TBC() : t(0.0f), b(0.0f), c(0.0f) {};
 };
 
 /*!
@@ -707,6 +726,7 @@ struct KeyGroup {
    * The keys.
    */
   vector<Key<T > > keys;
+  KeyGroup() : numKeys((uint)0), interpolation((KeyType)0) {};
 };
 
 /*!
@@ -726,6 +746,7 @@ struct ns_keytbc {
    * Tension, bias, continuity.
    */
   TBC tbc;
+  ns_keytbc() : time(0.0f) {};
 };
 
 /*!
@@ -746,6 +767,7 @@ struct ns_keyvecarray {
    * Linearly interpolated keys.
    */
   vector<ns_keylin<T > > keys;
+  ns_keyvecarray() : numKeys((uint)0), keyType((uint)0) {};
 };
 
 /*!
@@ -760,6 +782,7 @@ struct ns_keyrotsub {
    * The sub keys, one for every axis.
    */
   vector<ns_keyvecarray<float > > subKeys;
+  ns_keyrotsub() : time(0.0f) {};
 };
 
 /*!
@@ -784,6 +807,7 @@ struct ns_keyrotarray {
    * Special rotation keys (3 float arrays, one for each axis).
    */
   vector<ns_keyrotsub > keysSub;
+  ns_keyrotarray() : numKeys((uint)0), keyType((uint)0) {};
 };
 
 /*!
@@ -804,6 +828,7 @@ struct ns_keyvecarraytyp {
    * Linearly interpolated keys.
    */
   vector<ns_keylin<T > > keys;
+  ns_keyvecarraytyp() : numKeys((uint)0), keyType((uint)0) {};
 };
 
 /*!
@@ -823,6 +848,7 @@ struct RotationKeyArray {
    * The rotation keys.
    */
   vector<Key<T > > keys;
+  RotationKeyArray() : numKeys((uint)0), keyType((KeyType)0) {};
 };
 
 /*!
@@ -881,7 +907,7 @@ struct TexDesc {
    * The offset from the origin?
    */
   TexCoord centerOffset;
-  TexDesc() : clampMode((TexClampMode)WRAP_S_WRAP_T), filterMode((TexFilterMode)FILTER_TRILERP), textureSet((uint)0), ps2L((ushort)0), ps2K((ushort)0xFFB5), hasTextureTransform((bool)false), wRotation(0.0f), transformType_((uint)0) {};
+  TexDesc() : source(NULL), clampMode((TexClampMode)WRAP_S_WRAP_T), filterMode((TexFilterMode)FILTER_TRILERP), textureSet((uint)0), ps2L((ushort)0), ps2K((ushort)0xFFB5), unknown1((ushort)0), hasTextureTransform(false), wRotation(0.0f), transformType_((uint)0) {};
 };
 
 /*!
@@ -900,6 +926,7 @@ struct ShaderTexDesc {
    * Unknown.
    */
   uint unknownInt;
+  ShaderTexDesc() : isUsed(false), unknownInt((uint)0) {};
 };
 
 /*!
@@ -935,6 +962,7 @@ struct TexSource {
    * Pixel data block index.
    */
   Ref<NiPixelData > pixelData;
+  TexSource() : useExternal((byte)0), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL) {};
 };
 
 /*!
@@ -1007,6 +1035,7 @@ struct SkinPartition {
    * Bone indices, they index into 'Bones'.
    */
   vector<vector<byte > > boneIndices;
+  SkinPartition() : numVertices((ushort)0), numTriangles((ushort)0), numBones((ushort)0), numStrips((ushort)0), numWeightsPerVertex((ushort)0), hasVertexMap(false), hasVertexWeights(false), hasStrips(false), hasBoneIndices(false) {};
 };
 
 /*!
@@ -1052,6 +1081,7 @@ struct FurniturePosition {
    * This might also refer to a furnituremarkerxx.nif file.
    */
   byte positionRef2_;
+  FurniturePosition() : unknownShort((ushort)0), positionRef1_((byte)0), positionRef2_((byte)0) {};
 };
 
 /*!
@@ -1071,6 +1101,7 @@ struct hkTriangle {
    * a tangent vector or something like that.
    */
   Vector3 normal;
+  hkTriangle() : unknownShort((ushort)0) {};
 };
 
 /*!
@@ -1102,6 +1133,7 @@ struct Morph {
    * Morph vectors.
    */
   vector<Vector3 > vectors;
+  Morph() : numMorphKeys((uint)0), morphInterpolation((KeyType)0), unknownInt((uint)0) {};
 };
 
 /*!
@@ -1136,6 +1168,7 @@ struct Particle {
    * Particle/vertex index matches array index
    */
   ushort vertexId;
+  Particle() : lifetime(0.0f), lifespan(0.0f), timestamp(0.0f), unknownShort((ushort)0), vertexId((ushort)0) {};
 };
 
 /*!
@@ -1169,6 +1202,7 @@ struct SkinData {
    * The vertex weights.
    */
   vector<SkinWeight > vertexWeights;
+  SkinData() : scale(0.0f), numVertices((ushort)0) {};
 };
 
 #define NI_OBJECT_MEMBERS \
@@ -1220,6 +1254,7 @@ NiParticleSystemController * controller; \
 #define A_PARTICLE_MODIFIER_PARENT NiObject \
 
 #define A_PARTICLE_MODIFIER_CONSTRUCT \
+ : nextModifier(NULL), controller(NULL) \
 
 #define A_PARTICLE_MODIFIER_READ \
 uint block_num; \
@@ -1310,7 +1345,7 @@ uint priority; \
 #define ABHK_CONSTRAINT_PARENT bhkSerializable \
 
 #define ABHK_CONSTRAINT_CONSTRUCT \
- : priority((uint)1) \
+ : numBodies((uint)0), priority((uint)1) \
 
 #define ABHK_CONSTRAINT_READ \
 uint block_num; \
@@ -1371,6 +1406,7 @@ float maxFriction; \
 #define ABHK_RAGDOLL_CONSTRAINT_PARENT AbhkConstraint \
 
 #define ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT \
+ : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) \
 
 #define ABHK_RAGDOLL_CONSTRAINT_READ \
 AbhkConstraint::Read( in, link_stack, version ); \
@@ -1474,6 +1510,7 @@ uint material; \
 #define BHK_SPHERE_REP_SHAPE_PARENT bhkShape \
 
 #define BHK_SPHERE_REP_SHAPE_CONSTRUCT \
+ : material((uint)0) \
 
 #define BHK_SPHERE_REP_SHAPE_READ \
 bhkShape::Read( in, link_stack, version ); \
@@ -1545,6 +1582,7 @@ uint layer; \
 #define BHK_ENTITY_PARENT bhkWorldObject \
 
 #define BHK_ENTITY_CONSTRUCT \
+ : shape(NULL), layer((uint)0) \
 
 #define BHK_ENTITY_READ \
 uint block_num; \
@@ -1584,6 +1622,7 @@ Ref<NiObject > body; \
 #define NI_COLLISION_OBJECT_PARENT NiObject \
 
 #define NI_COLLISION_OBJECT_CONSTRUCT \
+ : parent(NULL), unknownShort((ushort)0), body(NULL) \
 
 #define NI_COLLISION_OBJECT_READ \
 uint block_num; \
@@ -1632,6 +1671,7 @@ Ref<NiExtraData > nextExtraData; \
 #define NI_EXTRA_DATA_PARENT NiObject \
 
 #define NI_EXTRA_DATA_CONSTRUCT \
+ : nextExtraData(NULL) \
 
 #define NI_EXTRA_DATA_READ \
 uint block_num; \
@@ -1702,6 +1742,7 @@ uint unknownInt; \
 #define NI_BLEND_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_BLEND_INTERPOLATOR_CONSTRUCT \
+ : unknownShort((ushort)0), unknownInt((uint)0) \
 
 #define NI_BLEND_INTERPOLATOR_READ \
 NiInterpolator::Read( in, link_stack, version ); \
@@ -1732,6 +1773,7 @@ float stopTime; \
 #define NI_B_SPLINE_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_B_SPLINE_INTERPOLATOR_CONSTRUCT \
+ : startTime(0.0f), stopTime(0.0f) \
 
 #define NI_B_SPLINE_INTERPOLATOR_READ \
 NiInterpolator::Read( in, link_stack, version ); \
@@ -1765,6 +1807,7 @@ Ref<NiTimeController > controller; \
 #define NI_OBJECT_N_E_T_PARENT NiObject \
 
 #define NI_OBJECT_N_E_T_CONSTRUCT \
+ : extraData(NULL), numExtraDataList((uint)0), controller(NULL) \
 
 #define NI_OBJECT_N_E_T_READ \
 uint block_num; \
@@ -1856,7 +1899,7 @@ Ref<NiCollisionObject > collisionObject; \
 #define NI_A_V_OBJECT_PARENT NiObjectNET \
 
 #define NI_A_V_OBJECT_CONSTRUCT \
- : scale(1.0f) \
+ : flags((unsigned short)0), scale(1.0f), numProperties((uint)0), hasBoundingBox(false), collisionData(NULL), collisionObject(NULL) \
 
 #define NI_A_V_OBJECT_READ \
 uint block_num; \
@@ -1983,6 +2026,7 @@ vector<Ref<NiAVObject > > affectedNodes; \
 #define NI_DYNAMIC_EFFECT_PARENT NiAVObject \
 
 #define NI_DYNAMIC_EFFECT_CONSTRUCT \
+ : hasAffectedNodeList_(false), affectedNodeList_((uint)0), switchState(false), numAffectedNodes((uint)0) \
 
 #define NI_DYNAMIC_EFFECT_READ \
 uint block_num; \
@@ -2061,6 +2105,7 @@ Color3 specularColor; \
 #define NI_LIGHT_PARENT NiDynamicEffect \
 
 #define NI_LIGHT_CONSTRUCT \
+ : dimmer(0.0f) \
 
 #define NI_LIGHT_READ \
 NiDynamicEffect::Read( in, link_stack, version ); \
@@ -2121,6 +2166,7 @@ bool active; \
 #define NI_P_SYS_MODIFIER_PARENT NiObject \
 
 #define NI_P_SYS_MODIFIER_CONSTRUCT \
+ : order((uint)0), target(NULL), active(false) \
 
 #define NI_P_SYS_MODIFIER_READ \
 uint block_num; \
@@ -2174,6 +2220,7 @@ float lifeSpanVariation; \
 #define NI_P_SYS_EMITTER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_EMITTER_CONSTRUCT \
+ : speed(0.0f), speedVariation(0.0f), declination(0.0f), declinationVariation(0.0f), planarAngle(0.0f), planarAngleVariation(0.0f), initialRadius(0.0f), radiusVariation(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f) \
 
 #define NI_P_SYS_EMITTER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -2230,6 +2277,7 @@ NiNode * emitterObject; \
 #define NI_P_SYS_VOLUME_EMITTER_PARENT NiPSysEmitter \
 
 #define NI_P_SYS_VOLUME_EMITTER_CONSTRUCT \
+ : emitterObject(NULL) \
 
 #define NI_P_SYS_VOLUME_EMITTER_READ \
 uint block_num; \
@@ -2276,6 +2324,7 @@ NiObject * target; \
 #define NI_TIME_CONTROLLER_PARENT NiObject \
 
 #define NI_TIME_CONTROLLER_CONSTRUCT \
+ : nextController(NULL), flags((unsigned short)0), frequency(0.0f), phase(0.0f), startTime(0.0f), stopTime(0.0f), target(NULL) \
 
 #define NI_TIME_CONTROLLER_READ \
 uint block_num; \
@@ -2338,6 +2387,7 @@ vector<NodeGroup > nodeGroups; \
 #define A_BONE_L_O_D_CONTROLLER_PARENT NiTimeController \
 
 #define A_BONE_L_O_D_CONTROLLER_CONSTRUCT \
+ : unknownInt1((uint)0), numNodeGroups((uint)0), unknownInt2((uint)0) \
 
 #define A_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
@@ -2402,6 +2452,7 @@ Ref<NiInterpolator > interpolator; \
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT NiTimeController \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_CONSTRUCT \
+ : interpolator(NULL) \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_READ \
 uint block_num; \
@@ -2472,6 +2523,7 @@ Ref<NiObject > unknownLink; \
 #define NI_TRI_BASED_GEOM_PARENT NiAVObject \
 
 #define NI_TRI_BASED_GEOM_CONSTRUCT \
+ : data(NULL), skinInstance(NULL), hasShader(false), unknownLink(NULL) \
 
 #define NI_TRI_BASED_GEOM_READ \
 uint block_num; \
@@ -2566,6 +2618,7 @@ Ref<NiObject > unknownLink; \
 #define NI_TRI_BASED_GEOM_DATA_PARENT NiObject \
 
 #define NI_TRI_BASED_GEOM_DATA_CONSTRUCT \
+ : numVertices((ushort)0), unknownShort1((ushort)0), hasVertices(false), numUvSets2((byte)0), unknownByte((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((ushort)0), hasUv(false), unknownShort2((ushort)0), unknownLink(NULL) \
 
 #define NI_TRI_BASED_GEOM_DATA_READ \
 uint block_num; \
@@ -2792,6 +2845,7 @@ byte unknownByte1; \
 #define A_P_SYS_DATA_PARENT NiTriBasedGeomData \
 
 #define A_P_SYS_DATA_CONSTRUCT \
+ : hasUnknownFloats1(false), unknownShort3((ushort)0), hasUnknownFloats2(false), unknownByte1((byte)0) \
 
 #define A_P_SYS_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
@@ -2860,6 +2914,7 @@ float unknownFloat2; \
 #define BHK_BLEND_COLLISION_OBJECT_PARENT NiCollisionObject \
 
 #define BHK_BLEND_COLLISION_OBJECT_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f) \
 
 #define BHK_BLEND_COLLISION_OBJECT_READ \
 NiCollisionObject::Read( in, link_stack, version ); \
@@ -2889,6 +2944,7 @@ uint unknownInt; \
 #define BHK_BLEND_CONTROLLER_PARENT NiTimeController \
 
 #define BHK_BLEND_CONTROLLER_CONSTRUCT \
+ : unknownInt((uint)0) \
 
 #define BHK_BLEND_CONTROLLER_READ \
 NiTimeController::Read( in, link_stack, version ); \
@@ -2921,6 +2977,7 @@ float unknownFloat2; \
 #define BHK_BOX_SHAPE_PARENT bhkConvexShape \
 
 #define BHK_BOX_SHAPE_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), unknownFloat2(0.0f) \
 
 #define BHK_BOX_SHAPE_READ \
 bhkConvexShape::Read( in, link_stack, version ); \
@@ -2973,6 +3030,7 @@ float radius2; \
 #define BHK_CAPSULE_SHAPE_PARENT bhkConvexShape \
 
 #define BHK_CAPSULE_SHAPE_CONSTRUCT \
+ : radius(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), radius1(0.0f), radius2(0.0f) \
 
 #define BHK_CAPSULE_SHAPE_READ \
 bhkConvexShape::Read( in, link_stack, version ); \
@@ -3049,6 +3107,7 @@ vector<Float4 > unknownVectors2; \
 #define BHK_CONVEX_VERTICES_SHAPE_PARENT bhkSphereRepShape \
 
 #define BHK_CONVEX_VERTICES_SHAPE_CONSTRUCT \
+ : num1((uint)0), num2((uint)0) \
 
 #define BHK_CONVEX_VERTICES_SHAPE_READ \
 bhkSphereRepShape::Read( in, link_stack, version ); \
@@ -3149,6 +3208,7 @@ uint unknownInt; \
 #define BHK_LIMITED_HINGE_CONSTRAINT_PARENT AbhkRagdollConstraint \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_CONSTRUCT \
+ : unknownInt((uint)0) \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_READ \
 AbhkRagdollConstraint::Read( in, link_stack, version ); \
@@ -3180,6 +3240,7 @@ vector<uint > unknownInts; \
 #define BHK_LIST_SHAPE_PARENT AbhkShapeCollection \
 
 #define BHK_LIST_SHAPE_CONSTRUCT \
+ : numSubShapes((uint)0), material((uint)0), numUnknownInts((uint)0) \
 
 #define BHK_LIST_SHAPE_READ \
 uint block_num; \
@@ -3260,6 +3321,7 @@ float unknownFloat2; \
 #define BHK_MALLEABLE_CONSTRAINT_PARENT AbhkConstraint \
 
 #define BHK_MALLEABLE_CONSTRAINT_CONSTRUCT \
+ : type((uint)0), unknownInt2((uint)0), unknownLink1(NULL), unknownLink2(NULL), unknownInt3((uint)0), unknownFloat1(0.0f), unknownFloat2(0.0f) \
 
 #define BHK_MALLEABLE_CONSTRAINT_READ \
 uint block_num; \
@@ -3360,6 +3422,7 @@ float unknownFloat2; \
 #define BHK_MOPP_BV_TREE_SHAPE_PARENT bhkShape \
 
 #define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT \
+ : shape(NULL), material((uint)0), unknownFloat(0.0f), numUnknownBytes2((uint)0), unknownFloat2(0.0f) \
 
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
 uint block_num; \
@@ -3433,6 +3496,7 @@ vector<float > unknownFloats; \
 #define BHK_MULTI_SPHERE_SHAPE_PARENT bhkSphereRepShape \
 
 #define BHK_MULTI_SPHERE_SHAPE_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownInt2((uint)0) \
 
 #define BHK_MULTI_SPHERE_SHAPE_READ \
 bhkSphereRepShape::Read( in, link_stack, version ); \
@@ -3485,6 +3549,7 @@ vector<uint > unknownInts3; \
 #define BHK_NI_TRI_STRIPS_SHAPE_PARENT bhkSphereRepShape \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT \
+ : unknownInt2((uint)0), numStripsData((uint)0), numUnknownInts3((uint)0) \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
@@ -3582,7 +3647,7 @@ Ref<hkPackedNiTriStripsData > data; \
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT AbhkShapeCollection \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT \
- : scale(1.0f) \
+ : numSubparts((ushort)0), scale(1.0f), data(NULL) \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
@@ -3765,7 +3830,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : maxAngularVelocity(31.415926535f) \
+ : layerCopy_((uint)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penDepth(0.0f), motionSystem_((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 uint block_num; \
@@ -3962,6 +4027,7 @@ float unknownFloat; \
 #define BHK_SIMPLE_SHAPE_PHANTOM_PARENT bhkEntity \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_CONSTRUCT \
+ : unknownFloat(0.0f) \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_READ \
 bhkEntity::Read( in, link_stack, version ); \
@@ -4038,6 +4104,7 @@ float radius; \
 #define BHK_SPHERE_SHAPE_PARENT bhkConvexShape \
 
 #define BHK_SPHERE_SHAPE_CONSTRUCT \
+ : radius(0.0f) \
 
 #define BHK_SPHERE_SHAPE_READ \
 bhkConvexShape::Read( in, link_stack, version ); \
@@ -4065,6 +4132,7 @@ float unknownFloat; \
 #define BHK_STIFF_SPRING_CONSTRAINT_PARENT AbhkConstraint \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_CONSTRUCT \
+ : unknownFloat(0.0f) \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_READ \
 AbhkConstraint::Read( in, link_stack, version ); \
@@ -4112,6 +4180,7 @@ Matrix44 transform; \
 #define BHK_TRANSFORM_SHAPE_PARENT bhkEntity \
 
 #define BHK_TRANSFORM_SHAPE_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f) \
 
 #define BHK_TRANSFORM_SHAPE_READ \
 bhkEntity::Read( in, link_stack, version ); \
@@ -4203,6 +4272,7 @@ vector<FurniturePosition > positions; \
 #define B_S_FURNITURE_MARKER_PARENT NiExtraData \
 
 #define B_S_FURNITURE_MARKER_CONSTRUCT \
+ : numPositions((uint)0) \
 
 #define B_S_FURNITURE_MARKER_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -4248,6 +4318,7 @@ float unknownFloat; \
 #define B_S_PARENT_VELOCITY_MODIFIER_PARENT NiPSysModifier \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_CONSTRUCT \
+ : unknownFloat(0.0f) \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -4296,6 +4367,7 @@ uint flags; \
 #define B_S_X_FLAGS_PARENT NiExtraData \
 
 #define B_S_X_FLAGS_CONSTRUCT \
+ : flags((uint)0) \
 
 #define B_S_X_FLAGS_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -4325,6 +4397,7 @@ vector<Vector3 > vertices; \
 #define HK_PACKED_NI_TRI_STRIPS_DATA_PARENT AbhkShapeCollection \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_CONSTRUCT \
+ : numTriangles((uint)0), numVertices((uint)0) \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_READ \
 AbhkShapeCollection::Read( in, link_stack, version ); \
@@ -4380,6 +4453,7 @@ Ref<NiFloatData > data; \
 #define NI_ALPHA_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_ALPHA_CONTROLLER_CONSTRUCT \
+ : data(NULL) \
 
 #define NI_ALPHA_CONTROLLER_READ \
 uint block_num; \
@@ -4421,7 +4495,7 @@ byte threshold; \
 #define NI_ALPHA_PROPERTY_PARENT NiProperty \
 
 #define NI_ALPHA_PROPERTY_CONSTRUCT \
- : flags((unsigned short)237) \
+ : flags((unsigned short)237), threshold((byte)0) \
 
 #define NI_ALPHA_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -4478,6 +4552,7 @@ vector<float > sizes; \
 #define NI_AUTO_NORMAL_PARTICLES_DATA_PARENT NiTriBasedGeomData \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_CONSTRUCT \
+ : numParticles((ushort)0), size(0.0f), numActive((ushort)0), unknownShort((ushort)0), hasSizes(false) \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
@@ -4591,6 +4666,7 @@ byte boolValue; \
 #define NI_BLEND_BOOL_INTERPOLATOR_PARENT NiBlendInterpolator \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_CONSTRUCT \
+ : boolValue((byte)0) \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_READ \
 NiBlendInterpolator::Read( in, link_stack, version ); \
@@ -4617,6 +4693,7 @@ float floatValue; \
 #define NI_BLEND_FLOAT_INTERPOLATOR_PARENT NiBlendInterpolator \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_CONSTRUCT \
+ : floatValue(0.0f) \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_READ \
 NiBlendInterpolator::Read( in, link_stack, version ); \
@@ -4694,6 +4771,7 @@ vector<Ref<NiTriShape > > shapeGroups2; \
 #define NI_BONE_L_O_D_CONTROLLER_PARENT ABoneLODController \
 
 #define NI_BONE_L_O_D_CONTROLLER_CONSTRUCT \
+ : numShapeGroups((uint)0), numShapeGroups2((uint)0) \
 
 #define NI_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
@@ -4829,6 +4907,7 @@ byte booleanData; \
 #define NI_BOOLEAN_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_BOOLEAN_EXTRA_DATA_CONSTRUCT \
+ : booleanData((byte)0) \
 
 #define NI_BOOLEAN_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -4856,6 +4935,7 @@ Ref<NiBoolData > data; \
 #define NI_BOOL_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_BOOL_INTERPOLATOR_CONSTRUCT \
+ : boolValue(false), data(NULL) \
 
 #define NI_BOOL_INTERPOLATOR_READ \
 uint block_num; \
@@ -4894,6 +4974,7 @@ Ref<NiBoolData > data; \
 #define NI_BOOL_TIMELINE_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_CONSTRUCT \
+ : boolValue((byte)0), data(NULL) \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_READ \
 uint block_num; \
@@ -4953,6 +5034,7 @@ uint unknownInt; \
 #define NI_B_SPLINE_BASIS_DATA_PARENT NiObject \
 
 #define NI_B_SPLINE_BASIS_DATA_CONSTRUCT \
+ : unknownInt((uint)0) \
 
 #define NI_B_SPLINE_BASIS_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -5014,6 +5096,7 @@ vector<float > unknownFloats; \
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_CONSTRUCT \
+ : data(NULL), unknownLink(NULL) \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ \
 uint block_num; \
@@ -5070,6 +5153,7 @@ vector<float > unknown4; \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT \
+ : data(NULL), basisData(NULL) \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 uint block_num; \
@@ -5126,6 +5210,7 @@ vector<vector<byte > > unknownData; \
 #define NI_B_SPLINE_DATA_PARENT NiObject \
 
 #define NI_B_SPLINE_DATA_CONSTRUCT \
+ : unknownInt((uint)0), count((uint)0) \
 
 #define NI_B_SPLINE_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -5188,6 +5273,7 @@ uint unknownInt2; \
 #define NI_CAMERA_PARENT NiAVObject \
 
 #define NI_CAMERA_CONSTRUCT \
+ : unknownShort((ushort)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink_(NULL), unknownInt((uint)0), unknownInt2((uint)0) \
 
 #define NI_CAMERA_READ \
 uint block_num; \
@@ -5286,6 +5372,7 @@ vector<float > unknown8; \
 #define NI_COLLISION_DATA_PARENT NiObject \
 
 #define NI_COLLISION_DATA_CONSTRUCT \
+ : targetNode(NULL), unknown2((uint)0), unknown3((byte)0), collisionType((uint)0), unknown5((uint)0) \
 
 #define NI_COLLISION_DATA_READ \
 uint block_num; \
@@ -5447,6 +5534,7 @@ Ref<NiDefaultAVObjectPalette > objectPalette; \
 #define NI_CONTROLLER_MANAGER_PARENT NiTimeController \
 
 #define NI_CONTROLLER_MANAGER_CONSTRUCT \
+ : cumulative(false), numControllerSequences((uint)0), objectPalette(NULL) \
 
 #define NI_CONTROLLER_MANAGER_READ \
 uint block_num; \
@@ -5522,7 +5610,7 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_PARENT NiObject \
 
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT \
- : weight(1.0f) \
+ : numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), textKeys2(NULL), cycleType((uint)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 uint block_num; \
@@ -5956,6 +6044,7 @@ vector<AVObject > objs; \
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT NiObject \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_CONSTRUCT \
+ : unknownInt((uint)0), numObjs((uint)0) \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_READ \
 uint block_num; \
@@ -6030,6 +6119,7 @@ unsigned short flags; \
 #define NI_DITHER_PROPERTY_PARENT NiProperty \
 
 #define NI_DITHER_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0) \
 
 #define NI_DITHER_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -6060,6 +6150,7 @@ vector<Ref<NiSourceTexture > > sources; \
 #define NI_FLIP_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_FLIP_CONTROLLER_CONSTRUCT \
+ : textureSlot((uint)0), unknownInt2((uint)0), delta(0.0f), numSources((uint)0) \
 
 #define NI_FLIP_CONTROLLER_READ \
 uint block_num; \
@@ -6164,6 +6255,7 @@ float floatData; \
 #define NI_FLOAT_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_FLOAT_EXTRA_DATA_CONSTRUCT \
+ : floatData(0.0f) \
 
 #define NI_FLOAT_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -6191,6 +6283,7 @@ string unknownString; \
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_PARENT NiTimeController \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_CONSTRUCT \
+ : unknownLink(NULL) \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_READ \
 uint block_num; \
@@ -6235,6 +6328,7 @@ Ref<NiFloatData > data; \
 #define NI_FLOAT_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_FLOAT_INTERPOLATOR_CONSTRUCT \
+ : floatValue(0.0f), data(NULL) \
 
 #define NI_FLOAT_INTERPOLATOR_READ \
 uint block_num; \
@@ -6273,6 +6367,7 @@ vector<float > data; \
 #define NI_FLOATS_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_FLOATS_EXTRA_DATA_CONSTRUCT \
+ : numFloats((uint)0) \
 
 #define NI_FLOATS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -6311,6 +6406,7 @@ Color3 fogColor; \
 #define NI_FOG_PROPERTY_PARENT NiProperty \
 
 #define NI_FOG_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0), fogDepth(0.0f) \
 
 #define NI_FOG_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -6350,6 +6446,7 @@ vector<uint > unknownInts; \
 #define NI_GEOM_MORPHER_CONTROLLER_PARENT NiTimeController \
 
 #define NI_GEOM_MORPHER_CONTROLLER_CONSTRUCT \
+ : unknown((ushort)0), unknown2((byte)0), data(NULL), unknownByte((byte)0), numInterpolators((uint)0), numUnknownInts((uint)0) \
 
 #define NI_GEOM_MORPHER_CONTROLLER_READ \
 uint block_num; \
@@ -6450,6 +6547,7 @@ Vector3 direction; \
 #define NI_GRAVITY_PARENT AParticleModifier \
 
 #define NI_GRAVITY_CONSTRUCT \
+ : unknownFloat1(0.0f), force(0.0f), type((uint)0) \
 
 #define NI_GRAVITY_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -6488,6 +6586,7 @@ uint integerData; \
 #define NI_INTEGER_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_INTEGER_EXTRA_DATA_CONSTRUCT \
+ : integerData((uint)0) \
 
 #define NI_INTEGER_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -6515,6 +6614,7 @@ vector<uint > data; \
 #define NI_INTEGERS_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_INTEGERS_EXTRA_DATA_CONSTRUCT \
+ : numIntegers((uint)0) \
 
 #define NI_INTEGERS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -6551,6 +6651,7 @@ Ref<NiKeyframeData > data; \
 #define NI_KEYFRAME_CONTROLLER_PARENT NiTimeController \
 
 #define NI_KEYFRAME_CONTROLLER_CONSTRUCT \
+ : data(NULL) \
 
 #define NI_KEYFRAME_CONTROLLER_READ \
 uint block_num; \
@@ -6585,6 +6686,7 @@ Ref<NiKeyframeData > data2; \
 #define B_S_KEYFRAME_CONTROLLER_PARENT NiKeyframeController \
 
 #define B_S_KEYFRAME_CONTROLLER_CONSTRUCT \
+ : data2(NULL) \
 
 #define B_S_KEYFRAME_CONTROLLER_READ \
 uint block_num; \
@@ -6625,6 +6727,7 @@ KeyGroup<float > scales; \
 #define NI_KEYFRAME_DATA_PARENT AKeyedData \
 
 #define NI_KEYFRAME_DATA_CONSTRUCT \
+ : numRotationKeys((uint)0), rotationType((KeyType)0), unknownFloat(0.0f) \
 
 #define NI_KEYFRAME_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
@@ -6768,6 +6871,7 @@ Ref<NiPoint3Interpolator > interpolator; \
 #define NI_LIGHT_COLOR_CONTROLLER_PARENT NiTimeController \
 
 #define NI_LIGHT_COLOR_CONTROLLER_CONSTRUCT \
+ : unknownShort((ushort)0), data(NULL), interpolator(NULL) \
 
 #define NI_LIGHT_COLOR_CONTROLLER_READ \
 uint block_num; \
@@ -6833,6 +6937,7 @@ Ref<NiInterpolator > unknownLink; \
 #define NI_LIGHT_DIMMER_CONTROLLER_PARENT NiTimeController \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_CONSTRUCT \
+ : unknownLink(NULL) \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_READ \
 uint block_num; \
@@ -6868,6 +6973,7 @@ Ref<NiNode > lookAtNode; \
 #define NI_LOOK_AT_CONTROLLER_PARENT NiTimeController \
 
 #define NI_LOOK_AT_CONTROLLER_CONSTRUCT \
+ : unknown1((ushort)0), lookAtNode(NULL) \
 
 #define NI_LOOK_AT_CONTROLLER_READ \
 uint block_num; \
@@ -6917,6 +7023,7 @@ Ref<NiFloatInterpolator > unknownLink3; \
 #define NI_LOOK_AT_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_LOOK_AT_INTERPOLATOR_CONSTRUCT \
+ : unknownShort((ushort)0), lookAt(NULL), unknownFloat(0.0f), scale(0.0f), unknownLink1(NULL), unknownLink2(NULL), unknownLink3(NULL) \
 
 #define NI_LOOK_AT_INTERPOLATOR_READ \
 uint block_num; \
@@ -6997,6 +7104,7 @@ Ref<NiPosData > data; \
 #define NI_MATERIAL_COLOR_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_CONSTRUCT \
+ : unknown((ushort)0), data(NULL) \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_READ \
 uint block_num; \
@@ -7050,6 +7158,7 @@ float alpha; \
 #define NI_MATERIAL_PROPERTY_PARENT NiProperty \
 
 #define NI_MATERIAL_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0), glossiness(0.0f), alpha(0.0f) \
 
 #define NI_MATERIAL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -7112,6 +7221,7 @@ Ref<NiNode > unknownLink2; \
 #define NI_MESH_P_SYS_DATA_PARENT APSysData \
 
 #define NI_MESH_P_SYS_DATA_CONSTRUCT \
+ : unknownByte11((byte)0), unknownInt1((uint)0), modifier(NULL), unknownByte2((byte)0), numUnknownLinks((uint)0), unknownShort4((ushort)0), unknownInt2((uint)0), unknownByte12((byte)0), unknownInt3((uint)0), unknownInt4((uint)0), unknownLink2(NULL) \
 
 #define NI_MESH_P_SYS_DATA_READ \
 uint block_num; \
@@ -7293,6 +7403,7 @@ vector<Morph > morphs; \
 #define NI_MORPH_DATA_PARENT NiObject \
 
 #define NI_MORPH_DATA_CONSTRUCT \
+ : numMorphs((uint)0), numVertices((uint)0), unknownByte((byte)0) \
 
 #define NI_MORPH_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -7377,6 +7488,7 @@ vector<NiNode * > extraTargets; \
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT NiTimeController \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_CONSTRUCT \
+ : numExtraTargets((ushort)0) \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
@@ -7426,6 +7538,7 @@ vector<Ref<NiDynamicEffect > > effects; \
 #define NI_NODE_PARENT NiAVObject \
 
 #define NI_NODE_CONSTRUCT \
+ : numChildren((uint)0), numEffects((uint)0) \
 
 #define NI_NODE_READ \
 uint block_num; \
@@ -7517,6 +7630,7 @@ vector<byte > unknown292Bytes; \
 #define FX_WIDGET_PARENT NiNode \
 
 #define FX_WIDGET_CONSTRUCT \
+ : unknown1((byte)0) \
 
 #define FX_WIDGET_READ \
 NiNode::Read( in, link_stack, version ); \
@@ -7579,6 +7693,7 @@ vector<Ref<NiObject > > unknownLinks; \
 #define FX_RADIO_BUTTON_PARENT FxWidget \
 
 #define FX_RADIO_BUTTON_CONSTRUCT \
+ : unknownInt1((uint)0), unknownInt2((uint)0), unknownInt3((uint)0), numUnknownLinks((uint)0) \
 
 #define FX_RADIO_BUTTON_READ \
 uint block_num; \
@@ -7634,6 +7749,7 @@ ushort billboardMode; \
 #define NI_BILLBOARD_NODE_PARENT NiNode \
 
 #define NI_BILLBOARD_NODE_CONSTRUCT \
+ : billboardMode((ushort)0) \
 
 #define NI_BILLBOARD_NODE_READ \
 NiNode::Read( in, link_stack, version ); \
@@ -7713,6 +7829,7 @@ Ref<NiRangeLODData > rangeData; \
 #define NI_L_O_D_NODE_PARENT NiNode \
 
 #define NI_L_O_D_NODE_CONSTRUCT \
+ : lodType((uint)0), numLodLevels((uint)0), unknownShort((ushort)0), rangeData(NULL) \
 
 #define NI_L_O_D_NODE_READ \
 uint block_num; \
@@ -7788,6 +7905,7 @@ vector<vector<byte > > palette; \
 #define NI_PALETTE_PARENT NiObject \
 
 #define NI_PALETTE_CONSTRUCT \
+ : unknownByte((byte)0), numEntries_((uint)0) \
 
 #define NI_PALETTE_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -7846,6 +7964,7 @@ float unknownFloat10; \
 #define NI_PARTICLE_BOMB_PARENT AParticleModifier \
 
 #define NI_PARTICLE_BOMB_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownInt1((uint)0), unknownInt2((uint)0), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f) \
 
 #define NI_PARTICLE_BOMB_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -7905,6 +8024,7 @@ Ref<NiColorData > colorData; \
 #define NI_PARTICLE_COLOR_MODIFIER_PARENT AParticleModifier \
 
 #define NI_PARTICLE_COLOR_MODIFIER_CONSTRUCT \
+ : colorData(NULL) \
 
 #define NI_PARTICLE_COLOR_MODIFIER_READ \
 uint block_num; \
@@ -7940,6 +8060,7 @@ float fade; \
 #define NI_PARTICLE_GROW_FADE_PARENT AParticleModifier \
 
 #define NI_PARTICLE_GROW_FADE_CONSTRUCT \
+ : grow(0.0f), fade(0.0f) \
 
 #define NI_PARTICLE_GROW_FADE_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -7970,6 +8091,7 @@ Ref<NiTriBasedGeom > particleMeshes; \
 #define NI_PARTICLE_MESH_MODIFIER_PARENT AParticleModifier \
 
 #define NI_PARTICLE_MESH_MODIFIER_CONSTRUCT \
+ : numParticleMeshes((uint)0), particleMeshes(NULL) \
 
 #define NI_PARTICLE_MESH_MODIFIER_READ \
 uint block_num; \
@@ -8011,6 +8133,7 @@ float unknownFloat4; \
 #define NI_PARTICLE_ROTATION_PARENT AParticleModifier \
 
 #define NI_PARTICLE_ROTATION_CONSTRUCT \
+ : unknownByte((byte)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f) \
 
 #define NI_PARTICLE_ROTATION_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -8119,6 +8242,7 @@ vector<Quaternion > rotations; \
 #define NI_PARTICLES_DATA_PARENT NiAutoNormalParticlesData \
 
 #define NI_PARTICLES_DATA_CONSTRUCT \
+ : numActive((ushort)0), hasUnknownFloats(false), hasRotations(false) \
 
 #define NI_PARTICLES_DATA_READ \
 NiAutoNormalParticlesData::Read( in, link_stack, version ); \
@@ -8187,6 +8311,7 @@ Ref<NiTriBasedGeom > unknownLink2; \
 #define NI_PARTICLE_MESHES_DATA_PARENT NiParticlesData \
 
 #define NI_PARTICLE_MESHES_DATA_CONSTRUCT \
+ : unknownLink2(NULL) \
 
 #define NI_PARTICLE_MESHES_DATA_READ \
 uint block_num; \
@@ -8223,6 +8348,7 @@ vector<Ref<NiPSysModifier > > modifiers; \
 #define NI_PARTICLE_SYSTEM_PARENT NiParticles \
 
 #define NI_PARTICLE_SYSTEM_CONSTRUCT \
+ : unknownBool(false), numModifiers((uint)0) \
 
 #define NI_PARTICLE_SYSTEM_READ \
 uint block_num; \
@@ -8334,6 +8460,7 @@ byte trailer; \
 #define NI_PARTICLE_SYSTEM_CONTROLLER_PARENT NiTimeController \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_CONSTRUCT \
+ : speed(0.0f), speedRandom(0.0f), verticalDirection(0.0f), verticalAngle(0.0f), horizontalDirection(0.0f), horizontalAngle(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), size(0.0f), emitStartTime(0.0f), emitStopTime(0.0f), unknownByte((byte)0), emitRate(0.0f), lifetime(0.0f), lifetimeRandom(0.0f), emitFlags((ushort)0), emitter(NULL), unknownShort2_((ushort)0), unknownFloat13_(0.0f), unknownInt1_((uint)0), unknownInt2_((uint)0), unknownShort3_((ushort)0), numParticles((ushort)0), numValid((ushort)0), unknownLink(NULL), particleExtra(NULL), unknownLink2(NULL), trailer((byte)0) \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_READ \
 uint block_num; \
@@ -8544,6 +8671,7 @@ Ref<NiFloatData > floatData; \
 #define NI_PATH_CONTROLLER_PARENT NiTimeController \
 
 #define NI_PATH_CONTROLLER_CONSTRUCT \
+ : unknownShort2((ushort)0), unknownInt1((uint)0), unknownInt2((uint)0), unknownInt3((uint)0), unknownShort((ushort)0), posData(NULL), floatData(NULL) \
 
 #define NI_PATH_CONTROLLER_READ \
 uint block_num; \
@@ -8611,6 +8739,7 @@ Ref<NiFloatData > floatData; \
 #define NI_PATH_INTERPOLATOR_PARENT NiBlendInterpolator \
 
 #define NI_PATH_INTERPOLATOR_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownShort2((ushort)0), posData(NULL), floatData(NULL) \
 
 #define NI_PATH_INTERPOLATOR_READ \
 uint block_num; \
@@ -8677,6 +8806,7 @@ ByteArray pixelData; \
 #define NI_PIXEL_DATA_PARENT NiObject \
 
 #define NI_PIXEL_DATA_CONSTRUCT \
+ : pixelFormat((PixelFormat)0), redMask((uint)0), greenMask((uint)0), blueMask((uint)0), alphaMask((uint)0), bitsPerPixel((uint)0), unknownInt((uint)0), palette(NULL), numMipmaps((uint)0), bytesPerPixel((uint)0) \
 
 #define NI_PIXEL_DATA_READ \
 uint block_num; \
@@ -8823,6 +8953,7 @@ float unknownFloat16; \
 #define NI_PLANAR_COLLIDER_PARENT AParticleModifier \
 
 #define NI_PLANAR_COLLIDER_CONSTRUCT \
+ : unknownShort((ushort)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownShort2((ushort)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), unknownFloat12(0.0f), unknownFloat13(0.0f), unknownFloat14(0.0f), unknownFloat15(0.0f), unknownFloat16(0.0f) \
 
 #define NI_PLANAR_COLLIDER_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -8909,6 +9040,7 @@ Ref<NiPosData > data; \
 #define NI_POINT3_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_POINT3_INTERPOLATOR_CONSTRUCT \
+ : data(NULL) \
 
 #define NI_POINT3_INTERPOLATOR_READ \
 uint block_num; \
@@ -8948,6 +9080,7 @@ float quadraticAttenuation; \
 #define NI_POINT_LIGHT_PARENT NiLight \
 
 #define NI_POINT_LIGHT_CONSTRUCT \
+ : constantAttenuation(0.0f), linearAttenuation(0.0f), quadraticAttenuation(0.0f) \
 
 #define NI_POINT_LIGHT_READ \
 NiLight::Read( in, link_stack, version ); \
@@ -9026,6 +9159,7 @@ Ref<NiPSysSpawnModifier > spawnModifier; \
 #define NI_P_SYS_AGE_DEATH_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_CONSTRUCT \
+ : spawnOnDeath(false), spawnModifier(NULL) \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_READ \
 uint block_num; \
@@ -9066,6 +9200,7 @@ vector<uint > unknownInts2; \
 #define NI_P_SYS_BOMB_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_BOMB_MODIFIER_CONSTRUCT \
+ : unknownLink(NULL) \
 
 #define NI_P_SYS_BOMB_MODIFIER_READ \
 uint block_num; \
@@ -9130,6 +9265,7 @@ ushort updateSkip; \
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_CONSTRUCT \
+ : updateSkip((ushort)0) \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -9158,6 +9294,7 @@ float depth; \
 #define NI_P_SYS_BOX_EMITTER_PARENT NiPSysVolumeEmitter \
 
 #define NI_P_SYS_BOX_EMITTER_CONSTRUCT \
+ : width(0.0f), height(0.0f), depth(0.0f) \
 
 #define NI_P_SYS_BOX_EMITTER_READ \
 NiPSysVolumeEmitter::Read( in, link_stack, version ); \
@@ -9190,6 +9327,7 @@ Ref<NiPSysPlanarCollider > collider; \
 #define NI_P_SYS_COLLIDER_MANAGER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_COLLIDER_MANAGER_CONSTRUCT \
+ : collider(NULL) \
 
 #define NI_P_SYS_COLLIDER_MANAGER_READ \
 uint block_num; \
@@ -9224,6 +9362,7 @@ Ref<NiColorData > data; \
 #define NI_P_SYS_COLOR_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_COLOR_MODIFIER_CONSTRUCT \
+ : data(NULL) \
 
 #define NI_P_SYS_COLOR_MODIFIER_READ \
 uint block_num; \
@@ -9259,6 +9398,7 @@ float height; \
 #define NI_P_SYS_CYLINDER_EMITTER_PARENT NiPSysVolumeEmitter \
 
 #define NI_P_SYS_CYLINDER_EMITTER_CONSTRUCT \
+ : radius(0.0f), height(0.0f) \
 
 #define NI_P_SYS_CYLINDER_EMITTER_READ \
 NiPSysVolumeEmitter::Read( in, link_stack, version ); \
@@ -9295,6 +9435,7 @@ uint unknownInt1; \
 #define NI_P_SYS_DATA_PARENT APSysData \
 
 #define NI_P_SYS_DATA_CONSTRUCT \
+ : unknownBool1(false), unknownByte3((byte)0), unknownBool2(false), unknownInt1((uint)0) \
 
 #define NI_P_SYS_DATA_READ \
 APSysData::Read( in, link_stack, version ); \
@@ -9432,6 +9573,7 @@ float rangeFalloff; \
 #define NI_P_SYS_DRAG_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_DRAG_MODIFIER_CONSTRUCT \
+ : parent(NULL), percentage(0.0f), range(0.0f), rangeFalloff(0.0f) \
 
 #define NI_P_SYS_DRAG_MODIFIER_READ \
 uint block_num; \
@@ -9478,6 +9620,7 @@ Ref<NiInterpolator > visibilityInterpolator; \
 #define NI_P_SYS_EMITTER_CTLR_PARENT APSysCtlr \
 
 #define NI_P_SYS_EMITTER_CTLR_CONSTRUCT \
+ : visibilityInterpolator(NULL) \
 
 #define NI_P_SYS_EMITTER_CTLR_READ \
 uint block_num; \
@@ -9514,6 +9657,7 @@ vector<Key<byte > > visibilityKeys_; \
 #define NI_P_SYS_EMITTER_CTLR_DATA_PARENT NiObject \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_CONSTRUCT \
+ : numVisibilityKeys_((uint)0) \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -9688,7 +9832,7 @@ float turbulenceScale; \
 #define NI_P_SYS_GRAVITY_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_CONSTRUCT \
- : turbulenceScale(1.0f) \
+ : gravityObject(NULL), decay(0.0f), strength(0.0f), forceType((uint)0), turbulence(0.0f), turbulenceScale(1.0f) \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 uint block_num; \
@@ -9766,6 +9910,7 @@ ushort fadeGeneration; \
 #define NI_P_SYS_GROW_FADE_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_CONSTRUCT \
+ : growTime(0.0f), growGeneration((ushort)0), fadeTime(0.0f), fadeGeneration((ushort)0) \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -9805,6 +9950,7 @@ Vector3 emissionAxis; \
 #define NI_P_SYS_MESH_EMITTER_PARENT NiPSysEmitter \
 
 #define NI_P_SYS_MESH_EMITTER_CONSTRUCT \
+ : numEmitterMeshes((uint)0), initialVelocityType((uint)0), emissionType((uint)0) \
 
 #define NI_P_SYS_MESH_EMITTER_READ \
 uint block_num; \
@@ -9861,6 +10007,7 @@ vector<Ref<NiNode > > meshes; \
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_CONSTRUCT \
+ : numMeshes((uint)0) \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_READ \
 uint block_num; \
@@ -9939,6 +10086,7 @@ Vector3 yAxis; \
 #define NI_P_SYS_PLANAR_COLLIDER_PARENT NiObject \
 
 #define NI_P_SYS_PLANAR_COLLIDER_CONSTRUCT \
+ : bounce(0.0f), spawnOnCollide(false), dieOnCollide(false), spawnModifier(NULL), parent(NULL), unknownLink_(NULL), colliderObject(NULL), width(0.0f), height(0.0f) \
 
 #define NI_P_SYS_PLANAR_COLLIDER_READ \
 uint block_num; \
@@ -10074,6 +10222,7 @@ Vector3 initialAxis; \
 #define NI_P_SYS_ROTATION_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_ROTATION_MODIFIER_CONSTRUCT \
+ : initialRotationSpeed(0.0f), initialRotationSpeedVariation(0.0f), initialRotationAngle(0.0f), initialRotationAngleVariation(0.0f), randomRotSpeedSign(false), randomInitialAxis(false) \
 
 #define NI_P_SYS_ROTATION_MODIFIER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -10129,6 +10278,7 @@ float lifeSpanVariation; \
 #define NI_P_SYS_SPAWN_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_SPAWN_MODIFIER_CONSTRUCT \
+ : numSpawnGenerations((ushort)0), percentageSpawned(0.0f), minNumToSpawn((ushort)0), maxNumToSpawn((ushort)0), spawnSpeedChaos(0.0f), spawnDirChaos(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f) \
 
 #define NI_P_SYS_SPAWN_MODIFIER_READ \
 NiPSysModifier::Read( in, link_stack, version ); \
@@ -10176,6 +10326,7 @@ float radius; \
 #define NI_P_SYS_SPHERE_EMITTER_PARENT NiPSysVolumeEmitter \
 
 #define NI_P_SYS_SPHERE_EMITTER_CONSTRUCT \
+ : radius(0.0f) \
 
 #define NI_P_SYS_SPHERE_EMITTER_READ \
 NiPSysVolumeEmitter::Read( in, link_stack, version ); \
@@ -10226,6 +10377,7 @@ vector<LODRange > lodLevels; \
 #define NI_RANGE_L_O_D_DATA_PARENT NiObject \
 
 #define NI_RANGE_L_O_D_DATA_CONSTRUCT \
+ : numLodLevels((uint)0) \
 
 #define NI_RANGE_L_O_D_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -10314,6 +10466,7 @@ vector<float > unknownFloats2; \
 #define NI_SCREEN_L_O_D_DATA_PARENT NiObject \
 
 #define NI_SCREEN_L_O_D_DATA_CONSTRUCT \
+ : unknownCount((uint)0) \
 
 #define NI_SCREEN_L_O_D_DATA_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -10382,6 +10535,7 @@ unsigned short flags; \
 #define NI_SHADE_PROPERTY_PARENT NiProperty \
 
 #define NI_SHADE_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0) \
 
 #define NI_SHADE_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -10414,6 +10568,7 @@ vector<SkinData > boneList; \
 #define NI_SKIN_DATA_PARENT NiObject \
 
 #define NI_SKIN_DATA_CONSTRUCT \
+ : scale(0.0f), numBones((uint)0), skinPartition(NULL), unknownByte((byte)0) \
 
 #define NI_SKIN_DATA_READ \
 uint block_num; \
@@ -10518,6 +10673,7 @@ Bones bones; \
 #define NI_SKIN_INSTANCE_PARENT NiObject \
 
 #define NI_SKIN_INSTANCE_CONSTRUCT \
+ : data(NULL), skinPartition(NULL), skeletonRoot(NULL) \
 
 #define NI_SKIN_INSTANCE_READ \
 uint block_num; \
@@ -10601,6 +10757,7 @@ vector<SkinPartition > skinPartitionBlocks; \
 #define NI_SKIN_PARTITION_PARENT NiObject \
 
 #define NI_SKIN_PARTITION_CONSTRUCT \
+ : numSkinPartitionBlocks((uint)0) \
 
 #define NI_SKIN_PARTITION_READ \
 NiObject::Read( in, link_stack, version ); \
@@ -10853,7 +11010,7 @@ byte unknownByte2; \
 #define NI_SOURCE_TEXTURE_PARENT NiObjectNET \
 
 #define NI_SOURCE_TEXTURE_CONSTRUCT \
- : useExternal((byte)1), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1) \
+ : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1) \
 
 #define NI_SOURCE_TEXTURE_READ \
 uint block_num; \
@@ -10970,6 +11127,7 @@ unsigned short flags; \
 #define NI_SPECULAR_PROPERTY_PARENT NiProperty \
 
 #define NI_SPECULAR_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0) \
 
 #define NI_SPECULAR_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -11001,6 +11159,7 @@ float unknownFloat5; \
 #define NI_SPHERICAL_COLLIDER_PARENT AParticleModifier \
 
 #define NI_SPHERICAL_COLLIDER_CONSTRUCT \
+ : unknownFloat1(0.0f), unknownShort((ushort)0), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f) \
 
 #define NI_SPHERICAL_COLLIDER_READ \
 AParticleModifier::Read( in, link_stack, version ); \
@@ -11043,6 +11202,7 @@ float exponent; \
 #define NI_SPOT_LIGHT_PARENT NiPointLight \
 
 #define NI_SPOT_LIGHT_CONSTRUCT \
+ : cutoffAngle(0.0f), exponent(0.0f) \
 
 #define NI_SPOT_LIGHT_READ \
 NiPointLight::Read( in, link_stack, version ); \
@@ -11080,7 +11240,7 @@ uint drawMode; \
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
- : stencilMask((uint)4294967295) \
+ : flags((unsigned short)0), stencilEnabled(false), stencilFunction((uint)0), stencilRef((uint)0), stencilMask((uint)4294967295), failAction((uint)0), zFailAction((uint)0), passAction((uint)0), drawMode((uint)0) \
 
 #define NI_STENCIL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -11136,6 +11296,7 @@ string stringData; \
 #define NI_STRING_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_STRING_EXTRA_DATA_CONSTRUCT \
+ : bytesRemaining((uint)0) \
 
 #define NI_STRING_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -11199,6 +11360,7 @@ vector<string > data; \
 #define NI_STRINGS_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_STRINGS_EXTRA_DATA_CONSTRUCT \
+ : numStrings((uint)0) \
 
 #define NI_STRINGS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -11237,6 +11399,7 @@ vector<Key<string > > textKeys; \
 #define NI_TEXT_KEY_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_TEXT_KEY_EXTRA_DATA_CONSTRUCT \
+ : unknownInt1((uint)0), numTextKeys((uint)0) \
 
 #define NI_TEXT_KEY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -11292,6 +11455,7 @@ ushort unknownShort; \
 #define NI_TEXTURE_EFFECT_PARENT NiDynamicEffect \
 
 #define NI_TEXTURE_EFFECT_CONSTRUCT \
+ : textureFiltering((uint)0), textureClamping((uint)0), textureType((uint)0), coordinateGenerationType((uint)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((ushort)0), ps2K((ushort)0), unknownShort((ushort)0) \
 
 #define NI_TEXTURE_EFFECT_READ \
 uint block_num; \
@@ -11373,6 +11537,7 @@ Ref<NiFloatData > data; \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT \
+ : unknown2((byte)0), textureSlot((uint)0), operation((uint)0), data(NULL) \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
@@ -11445,7 +11610,7 @@ vector<ShaderTexDesc > shaderTextures; \
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty \
 
 #define NI_TEXTURING_PROPERTY_CONSTRUCT \
- : applyMode((ApplyMode)2), textureCount((uint)7) \
+ : flags((unsigned short)0), applyMode((ApplyMode)2), textureCount((uint)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), numShaderTextures((uint)0) \
 
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
@@ -12248,6 +12413,7 @@ Ref<NiTransformData > data; \
 #define NI_TRANSFORM_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_TRANSFORM_INTERPOLATOR_CONSTRUCT \
+ : scale(0.0f), data(NULL) \
 
 #define NI_TRANSFORM_INTERPOLATOR_READ \
 uint block_num; \
@@ -12332,6 +12498,7 @@ vector<MatchGroup > matchGroups; \
 #define NI_TRI_SHAPE_DATA_PARENT NiTriBasedGeomData \
 
 #define NI_TRI_SHAPE_DATA_CONSTRUCT \
+ : numTriangles((ushort)0), numTrianglePoints((uint)0), hasTriangles(false), numMatchGroups((ushort)0) \
 
 #define NI_TRI_SHAPE_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
@@ -12446,6 +12613,7 @@ vector<vector<ushort > > points; \
 #define NI_TRI_STRIPS_DATA_PARENT NiTriBasedGeomData \
 
 #define NI_TRI_STRIPS_DATA_CONSTRUCT \
+ : numTriangles((ushort)0), numStrips((ushort)0), hasPoints(false) \
 
 #define NI_TRI_STRIPS_DATA_READ \
 NiTriBasedGeomData::Read( in, link_stack, version ); \
@@ -12536,6 +12704,7 @@ Ref<NiUVData > data; \
 #define NI_U_V_CONTROLLER_PARENT NiTimeController \
 
 #define NI_U_V_CONTROLLER_CONSTRUCT \
+ : unknownShort((ushort)0), data(NULL) \
 
 #define NI_U_V_CONTROLLER_READ \
 uint block_num; \
@@ -12626,6 +12795,7 @@ float unknownFloat; \
 #define NI_VECTOR_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_VECTOR_EXTRA_DATA_CONSTRUCT \
+ : unknownFloat(0.0f) \
 
 #define NI_VECTOR_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -12657,6 +12827,7 @@ LightMode lightingMode; \
 #define NI_VERTEX_COLOR_PROPERTY_PARENT NiProperty \
 
 #define NI_VERTEX_COLOR_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0), vertexMode((VertMode)0), lightingMode((LightMode)0) \
 
 #define NI_VERTEX_COLOR_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
@@ -12691,6 +12862,7 @@ vector<float > weight; \
 #define NI_VERT_WEIGHTS_EXTRA_DATA_PARENT NiExtraData \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_CONSTRUCT \
+ : numBytes((uint)0), numVertices((ushort)0) \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
@@ -12730,6 +12902,7 @@ Ref<NiVisData > data; \
 #define NI_VIS_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_VIS_CONTROLLER_CONSTRUCT \
+ : data(NULL) \
 
 #define NI_VIS_CONTROLLER_READ \
 uint block_num; \
@@ -12771,6 +12944,7 @@ vector<Key<byte > > visKeys; \
 #define NI_VIS_DATA_PARENT AKeyedData \
 
 #define NI_VIS_DATA_CONSTRUCT \
+ : numVisKeys((uint)0) \
 
 #define NI_VIS_DATA_READ \
 AKeyedData::Read( in, link_stack, version ); \
@@ -12807,6 +12981,7 @@ unsigned short flags; \
 #define NI_WIREFRAME_PROPERTY_PARENT NiProperty \
 
 #define NI_WIREFRAME_PROPERTY_CONSTRUCT \
+ : flags((unsigned short)0) \
 
 #define NI_WIREFRAME_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version ); \
