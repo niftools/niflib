@@ -127,8 +127,8 @@ vector<NiObjectRef> ReadNifList( string const & file_name ) {
 vector<NiObjectRef> ReadNifList( istream & in ) {
 
 	//--Read Header--//
-	char header_string[256];
-	in.getline( header_string, 256 );
+	char header_string[64];
+	in.getline( header_string, 64 );
 	string headerstr(header_string);
 
 	// make sure this is a NIF file
@@ -152,14 +152,14 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	}
 
 	//There is an Unknown Int here from version 10.1.0.0 on
-	uint unknownInt1 = 0;
+	uint userVersion = 0;
 	if ( version >= VER_10_1_0_0 ) {
-		unknownInt1 = ReadUInt( in );
+		userVersion = ReadUInt( in );
 	}
 
 	uint numBlocks = ReadUInt( in );
 
-	if ( unknownInt1 != 0 ) {
+	if ( userVersion != 0 ) {
 		uint len;
 		ReadUInt( in );
 		len = ReadByte( in );

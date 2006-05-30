@@ -249,7 +249,7 @@ struct ByteArray {
   /*!
    * The number of bytes in this array
    */
-  uint size;
+  uint dataSize;
   /*!
    * Unknown.
    */
@@ -4551,31 +4551,31 @@ ByteArray binaryData; \
 
 #define NI_BINARY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
-NifStream( binaryData.size, in, version ); \
+NifStream( binaryData.dataSize, in, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( binaryData.unknownInt, in, version ); \
 }; \
-binaryData.data.resize(binaryData.size); \
-for (uint i0 = 0; i0 < binaryData.size; i0++) { \
+binaryData.data.resize(binaryData.dataSize); \
+for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
   NifStream( binaryData.data[i0], in, version ); \
 }; \
 
 #define NI_BINARY_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
-NifStream( binaryData.size, out, version ); \
+NifStream( binaryData.dataSize, out, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( binaryData.unknownInt, out, version ); \
 }; \
-for (uint i0 = 0; i0 < binaryData.size; i0++) { \
+for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
   NifStream( binaryData.data[i0], out, version ); \
 }; \
 
 #define NI_BINARY_EXTRA_DATA_STRING \
 stringstream out; \
 out << NiExtraData::asString(); \
-out << "Size:  " << binaryData.size << endl; \
+out << "Data Size:  " << binaryData.dataSize << endl; \
 out << "Unknown Int:  " << binaryData.unknownInt << endl; \
-for (uint i0 = 0; i0 < binaryData.size; i0++) { \
+for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
   out << "  Data[" << i0 << "]:  " << binaryData.data[i0] << endl; \
 }; \
 return out.str(); \
@@ -8713,12 +8713,12 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].height, in, version ); \
   NifStream( mipmaps[i0].offset, in, version ); \
 }; \
-NifStream( pixelData.size, in, version ); \
+NifStream( pixelData.dataSize, in, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( pixelData.unknownInt, in, version ); \
 }; \
-pixelData.data.resize(pixelData.size); \
-for (uint i0 = 0; i0 < pixelData.size; i0++) { \
+pixelData.data.resize(pixelData.dataSize); \
+for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
   NifStream( pixelData.data[i0], in, version ); \
 }; \
 
@@ -8751,11 +8751,11 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].height, out, version ); \
   NifStream( mipmaps[i0].offset, out, version ); \
 }; \
-NifStream( pixelData.size, out, version ); \
+NifStream( pixelData.dataSize, out, version ); \
 if ( version >= 0x14000004 ) { \
   NifStream( pixelData.unknownInt, out, version ); \
 }; \
-for (uint i0 = 0; i0 < pixelData.size; i0++) { \
+for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
   NifStream( pixelData.data[i0], out, version ); \
 }; \
 
@@ -8783,9 +8783,9 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   out << "  Height:  " << mipmaps[i0].height << endl; \
   out << "  Offset:  " << mipmaps[i0].offset << endl; \
 }; \
-out << "Size:  " << pixelData.size << endl; \
+out << "Data Size:  " << pixelData.dataSize << endl; \
 out << "Unknown Int:  " << pixelData.unknownInt << endl; \
-for (uint i0 = 0; i0 < pixelData.size; i0++) { \
+for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
   out << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
 }; \
 return out.str(); \
