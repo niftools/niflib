@@ -9,8 +9,10 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T> class Ref {
 public:
+	Ref();
 	Ref( T * object = NULL );
 	Ref(const Ref & ref_to_copy );
+	~Ref();
 
 	operator T*() const;
 	T& operator*() const;
@@ -32,6 +34,9 @@ protected:
 };
 
 template <class T>
+Ref<T>::Ref() : _object(NULL) {}
+
+template <class T>
 Ref<T>::Ref( T * object ) : _object(object) {}
 
 template <class T>
@@ -40,6 +45,14 @@ Ref<T>::Ref(const Ref & ref_to_copy ) {
 	//If object isn't null, increment reference count
 	if ( _object != NULL ) {
 		_object->AddRef();
+	}
+}
+
+template <class T>
+Ref<T>::~Ref() {
+	//if object insn't null, decrement reference count
+	if ( _object != NULL ) {
+		_object->SubtractRef();
 	}
 }
 
