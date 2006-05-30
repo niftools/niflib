@@ -10,6 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <fstream>
 #include <vector>
 #include <string>
+#include <cassert>
 
 using namespace std;
 
