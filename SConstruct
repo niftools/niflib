@@ -31,6 +31,10 @@ else:
 
 env = Environment(ENV = os.environ)
 
+# force MD5 signatures to check for rebuilds
+
+SourceSignatures('MD5')
+
 # detect SWIG
 try:
     env['SWIG']

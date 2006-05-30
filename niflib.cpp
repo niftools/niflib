@@ -189,13 +189,13 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		ReadUInt( in );
 
 		////Output
-		//cout << endl << endl 
-		//	 << "====[ " << "File Header ]====" << endl
-		//	 << "Header:  " << header_string << endl
-		//	 << "Version:  " << Hex(version) << endl
-		//	 << "Unknown Int 1:  " << unknownInt1 << endl
-		//	 << "Number of Blocks: " << int(numBlocks) << endl
-		//	 << "Block Types:  " << uint(blockTypes.size()) << endl;
+		cout << endl << endl 
+			 << "====[ " << "File Header ]====" << endl
+			 << "Header:  " << header_string << endl
+			 << "Version:  " << version << endl
+			 << "User Version:  " << userVersion << endl
+			 << "Number of Blocks: " << int(numBlocks) << endl
+			 << "Block Types:  " << uint(blockTypes.size()) << endl;
 
 		//for ( uint i = 0; i < blockTypes.size(); ++i ) {
 		//	cout << "   " << i << ":  " << blockTypes[i] << endl;
@@ -267,7 +267,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 		}
 
-		//cout << endl << i << ":  " << blockName;
+		cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);

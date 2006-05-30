@@ -4552,7 +4552,7 @@ ByteArray binaryData; \
 #define NI_BINARY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version ); \
 NifStream( binaryData.dataSize, in, version ); \
-if ( version >= 0x14000004 ) { \
+if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
   NifStream( binaryData.unknownInt, in, version ); \
 }; \
 binaryData.data.resize(binaryData.dataSize); \
@@ -4563,7 +4563,7 @@ for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
 #define NI_BINARY_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version ); \
 NifStream( binaryData.dataSize, out, version ); \
-if ( version >= 0x14000004 ) { \
+if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
   NifStream( binaryData.unknownInt, out, version ); \
 }; \
 for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
@@ -8714,7 +8714,7 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].offset, in, version ); \
 }; \
 NifStream( pixelData.dataSize, in, version ); \
-if ( version >= 0x14000004 ) { \
+if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
   NifStream( pixelData.unknownInt, in, version ); \
 }; \
 pixelData.data.resize(pixelData.dataSize); \
@@ -8752,7 +8752,7 @@ for (uint i0 = 0; i0 < numMipmaps; i0++) { \
   NifStream( mipmaps[i0].offset, out, version ); \
 }; \
 NifStream( pixelData.dataSize, out, version ); \
-if ( version >= 0x14000004 ) { \
+if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
   NifStream( pixelData.unknownInt, out, version ); \
 }; \
 for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
