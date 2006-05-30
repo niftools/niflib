@@ -9,7 +9,6 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T> class Ref {
 public:
-	Ref();
 	Ref( T * object = NULL );
 	Ref(const Ref & ref_to_copy );
 	~Ref();
@@ -32,9 +31,6 @@ protected:
 	//The shared object
 	T* _object;
 };
-
-template <class T>
-Ref<T>::Ref() : _object(NULL) {}
 
 template <class T>
 Ref<T>::Ref( T * object ) : _object(object) {}
