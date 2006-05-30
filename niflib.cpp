@@ -1,6 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
+#define DEBUG // this will produce lot's of output
+
 #include "niflib.h"
 #include "obj/NiAVObject.h"
 #include "obj/NiNode.h"
@@ -146,9 +148,9 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	uint version = ReadUInt( in );
 
 	//There is an unknown Byte here from version 20.0.0.4 on
-	byte unknownByte;
+	byte endianType;
 	if ( version >= VER_20_0_0_4 ) {
-		unknownByte = ReadByte( in );
+		endianType = ReadByte( in );
 	}
 
 	//There is an Unknown Int here from version 10.1.0.0 on
@@ -185,35 +187,40 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			blockTypeIndex[i] = ReadUShort( in );
 		}
 
-		//uint unknownInt2 =
+		uint unknownInt2 =
 		ReadUInt( in );
 
-		////Output
+		//Output
+#ifdef DEBUG
 		cout << endl << endl 
 			 << "====[ " << "File Header ]====" << endl
 			 << "Header:  " << header_string << endl
 			 << "Version:  " << version << endl
+			 << "Endian Type:  " << endianType << endl
 			 << "User Version:  " << userVersion << endl
-			 << "Number of Blocks: " << int(numBlocks) << endl
+			 << "Number of Blocks: " << numBlocks << endl
 			 << "Block Types:  " << uint(blockTypes.size()) << endl;
 
-		//for ( uint i = 0; i < blockTypes.size(); ++i ) {
-		//	cout << "   " << i << ":  " << blockTypes[i] << endl;
-		//}
+		for ( uint i = 0; i < blockTypes.size(); ++i ) {
+			cout << "   " << i << ":  " << blockTypes[i] << endl;
+		}
 
-		//cout << "Block Type Indices:  " << numBlocks << endl;
-		//for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-		//	cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << endl;
-		//}
+		cout << "Block Type Indices:  " << numBlocks << endl;
+		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << "(" << blockTypes[blockTypeIndex[i]] << ")" << endl;
+		}
 
-		//cout << "Unknown Int 2:  " << unknownInt2 << endl;
+		cout << "Unknown Int 2:  " << unknownInt2 << endl;
+#endif
 	} else {
-		////Output
-		//cout << endl << endl 
-		//	<< "====[ " << "File Header ]====" << endl
-		//	<< "Header:  " << header_string << endl
-		//	<< "Version:  " << Hex(version) << endl
-		//	<< "Number of Blocks: " << int(numBlocks) << endl;
+#ifdef DEBUG
+		//Output
+		cout << endl << endl 
+			<< "====[ " << "File Header ]====" << endl
+			<< "Header:  " << header_string << endl
+			<< "Version:  " << version << endl
+			<< "Number of Blocks: " << numBlocks << endl;
+#endif
 	}
 
 
@@ -288,7 +295,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		//blocks[i]->SetBlockNum(i);
 		blocks[i]->Read( in, link_stack, version );
 
-		//cout << endl << blocks[i]->asString() << endl;
+		cout << endl << blocks[i]->asString() << endl;
 	}
 
 	//cout << endl;

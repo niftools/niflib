@@ -625,3 +625,8 @@ void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type ) {
 		WriteFloat( key.continuity, file);
 	}
 }
+
+//Byte
+ostream & operator<<( ostream & out, byte const & val ) {
+	return out << uint(val);
+}

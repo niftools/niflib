@@ -52,7 +52,7 @@ enum ExportOptions {
 };
 
 
-//--Non-mathamatical Basic Types--//
+//--Non-mathematical Basic Types--//
 
 typedef unsigned char	byte;
 typedef unsigned short	ushort;
@@ -433,5 +433,8 @@ void StreamQuatKey( Key<Quaternion> const & key, ostream& file, uint version, Ke
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
 string HexString( const byte * src, uint len );
+
+//Byte
+ostream & operator<<( ostream & out, byte const & val );
 
 #endif
