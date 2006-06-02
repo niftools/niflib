@@ -70,6 +70,19 @@ struct Key {
 	float continuity; /*!< The amount of continuity to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
 };
 
+/*! Used to enable static arrays to be members of vectors */
+template<class T, int size>
+struct array {
+	T data[size];
+	T & operator[]( uint index ) {
+		return data[index];
+	}
+	T operator[]( uint index ) const {
+		return data[index];
+	}
+};
+
+
 struct HeaderString {
 	string header;
 };

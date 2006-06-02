@@ -26,7 +26,7 @@ string NiMeshPSysData::asString( bool verbose ) const {
 }
 
 void NiMeshPSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_MESH_P_SYS_DATA_FIXLINKS
+	NI_MESH_P_SYS_DATA_FIXLINKS
 }
 
 const Type & NiMeshPSysData::GetType() const {
