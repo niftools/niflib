@@ -826,9 +826,6 @@
 					RelativePath=".\gen\hkTriangle.cpp">
 				</File>
 				<File
-					RelativePath=".\gen\KeyGroup.cpp">
-				</File>
-				<File
 					RelativePath=".\gen\LODRange.cpp">
 				</File>
 				<File
