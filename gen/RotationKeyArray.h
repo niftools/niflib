@@ -11,10 +11,6 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T >
 struct RotationKeyArray {
-  /*! Default Constructor */
-  RotationKeyArray();
-  /*! Default Destructor */
-  ~RotationKeyArray();
   /*!
    * Number of keys.
    */

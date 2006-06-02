@@ -33,7 +33,7 @@ struct SkinData {
    * may not be related to each other so their specification as an array of
    * 4 floats may be misleading.
    */
-  vector<float > unknown4Floats;
+  float unknown4Floats[4];
   /*!
    * Number of weighted vertices.
    */

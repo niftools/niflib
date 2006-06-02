@@ -274,7 +274,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 		}
 
-		cout << endl << i << ":  " << blockName;
+		//cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);

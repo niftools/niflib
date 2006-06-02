@@ -850,9 +850,6 @@
 					RelativePath=".\gen\QuaternionXYZW.cpp">
 				</File>
 				<File
-					RelativePath=".\gen\RotationKeyArray.cpp">
-				</File>
-				<File
 					RelativePath=".\gen\ShaderTexDesc.cpp">
 				</File>
 				<File
