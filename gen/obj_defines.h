@@ -291,7 +291,7 @@ NiObject::Write( out, link_map, version ); \
 
 #define A_KEYED_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
+out << NiObject::asString(); \
 return out.str(); \
 
 #define A_KEYED_DATA_FIXLINKS \
@@ -323,21 +323,21 @@ NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 
 #define A_PARTICLE_MODIFIER_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Next Modifier:  " << "AParticleModifier" << endl; \
-cout << "Controller:  " << "NiParticleSystemController" << endl; \
+out << NiObject::asString(); \
+out << "Next Modifier:  " << "AParticleModifier" << endl; \
+out << "Controller:  " << "NiParticleSystemController" << endl; \
 return out.str(); \
 
 #define A_PARTICLE_MODIFIER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   nextModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 else \
   nextModifier = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   controller = DynamicCast<NiParticleSystemController>(objects[link_stack.front()]); \
@@ -361,7 +361,7 @@ NiObject::Write( out, link_map, version ); \
 
 #define BHK_REF_OBJECT_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
+out << NiObject::asString(); \
 return out.str(); \
 
 #define BHK_REF_OBJECT_FIXLINKS \
@@ -383,7 +383,7 @@ bhkRefObject::Write( out, link_map, version ); \
 
 #define BHK_SERIALIZABLE_STRING \
 stringstream out; \
-cout << bhkRefObject::asString(); \
+out << bhkRefObject::asString(); \
 return out.str(); \
 
 #define BHK_SERIALIZABLE_FIXLINKS \
@@ -422,18 +422,18 @@ NifStream( priority, out, version ); \
 
 #define ABHK_CONSTRAINT_STRING \
 stringstream out; \
-cout << bhkSerializable::asString(); \
-cout << "Num Bodies:  " << numBodies << endl; \
+out << bhkSerializable::asString(); \
+out << "Num Bodies:  " << numBodies << endl; \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
-  cout << "  Bodies[" << i0 << "]:  " << "bhkShape" << endl; \
+  out << "  Bodies[" << i0 << "]:  " << "bhkShape" << endl; \
 }; \
-cout << "Priority:  " << priority << endl; \
+out << "Priority:  " << priority << endl; \
 return out.str(); \
 
 #define ABHK_CONSTRAINT_FIXLINKS \
 bhkSerializable::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numBodies; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     bodies[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
@@ -495,19 +495,19 @@ NifStream( maxFriction, out, version ); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkConstraint::asString(); \
-cout << "Pivot A:  " << pivotA << endl; \
-cout << "Plane A:  " << planeA << endl; \
-cout << "Twist A:  " << twistA << endl; \
-cout << "Pivot B:  " << pivotB << endl; \
-cout << "Plane B:  " << planeB << endl; \
-cout << "Twist B:  " << twistB << endl; \
-cout << "Cone Min Angle:  " << coneMinAngle << endl; \
-cout << "Plane Min Angle:  " << planeMinAngle << endl; \
-cout << "Plane Max Angle:  " << planeMaxAngle << endl; \
-cout << "Twist Min Angle:  " << twistMinAngle << endl; \
-cout << "Twist Max Angle:  " << twistMaxAngle << endl; \
-cout << "Max Friction:  " << maxFriction << endl; \
+out << AbhkConstraint::asString(); \
+out << "Pivot A:  " << pivotA << endl; \
+out << "Plane A:  " << planeA << endl; \
+out << "Twist A:  " << twistA << endl; \
+out << "Pivot B:  " << pivotB << endl; \
+out << "Plane B:  " << planeB << endl; \
+out << "Twist B:  " << twistB << endl; \
+out << "Cone Min Angle:  " << coneMinAngle << endl; \
+out << "Plane Min Angle:  " << planeMinAngle << endl; \
+out << "Plane Max Angle:  " << planeMaxAngle << endl; \
+out << "Twist Min Angle:  " << twistMinAngle << endl; \
+out << "Twist Max Angle:  " << twistMaxAngle << endl; \
+out << "Max Friction:  " << maxFriction << endl; \
 return out.str(); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_FIXLINKS \
@@ -529,7 +529,7 @@ bhkSerializable::Write( out, link_map, version ); \
 
 #define BHK_SHAPE_STRING \
 stringstream out; \
-cout << bhkSerializable::asString(); \
+out << bhkSerializable::asString(); \
 return out.str(); \
 
 #define BHK_SHAPE_FIXLINKS \
@@ -551,7 +551,7 @@ bhkShape::Write( out, link_map, version ); \
 
 #define ABHK_SHAPE_COLLECTION_STRING \
 stringstream out; \
-cout << bhkShape::asString(); \
+out << bhkShape::asString(); \
 return out.str(); \
 
 #define ABHK_SHAPE_COLLECTION_FIXLINKS \
@@ -577,8 +577,8 @@ NifStream( material, out, version ); \
 
 #define BHK_SPHERE_REP_SHAPE_STRING \
 stringstream out; \
-cout << bhkShape::asString(); \
-cout << "Material:  " << material << endl; \
+out << bhkShape::asString(); \
+out << "Material:  " << material << endl; \
 return out.str(); \
 
 #define BHK_SPHERE_REP_SHAPE_FIXLINKS \
@@ -600,7 +600,7 @@ bhkSphereRepShape::Write( out, link_map, version ); \
 
 #define BHK_CONVEX_SHAPE_STRING \
 stringstream out; \
-cout << bhkSphereRepShape::asString(); \
+out << bhkSphereRepShape::asString(); \
 return out.str(); \
 
 #define BHK_CONVEX_SHAPE_FIXLINKS \
@@ -622,7 +622,7 @@ bhkShape::Write( out, link_map, version ); \
 
 #define BHK_WORLD_OBJECT_STRING \
 stringstream out; \
-cout << bhkShape::asString(); \
+out << bhkShape::asString(); \
 return out.str(); \
 
 #define BHK_WORLD_OBJECT_FIXLINKS \
@@ -653,14 +653,14 @@ NifStream( layer, out, version ); \
 
 #define BHK_ENTITY_STRING \
 stringstream out; \
-cout << bhkWorldObject::asString(); \
-cout << "Shape:  " << "bhkShape" << endl; \
-cout << "Layer:  " << layer << endl; \
+out << bhkWorldObject::asString(); \
+out << "Shape:  " << "bhkShape" << endl; \
+out << "Layer:  " << layer << endl; \
 return out.str(); \
 
 #define BHK_ENTITY_FIXLINKS \
 bhkWorldObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
@@ -697,22 +697,22 @@ NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
 
 #define NI_COLLISION_OBJECT_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Parent:  " << "NiAVObject" << endl; \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Body:  " << "NiObject" << endl; \
+out << NiObject::asString(); \
+out << "Parent:  " << "NiAVObject" << endl; \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Body:  " << "NiObject" << endl; \
 return out.str(); \
 
 #define NI_COLLISION_OBJECT_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
 else \
   parent = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   body = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -753,15 +753,15 @@ if ( version <= 0x04020200 ) { \
 
 #define NI_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Name:  " << name << endl; \
-cout << "Next Extra Data:  " << "NiExtraData" << endl; \
+out << NiObject::asString(); \
+out << "Name:  " << name << endl; \
+out << "Next Extra Data:  " << "NiExtraData" << endl; \
 return out.str(); \
 
 #define NI_EXTRA_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     nextExtraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
@@ -786,7 +786,7 @@ NiObject::Write( out, link_map, version ); \
 
 #define NI_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
+out << NiObject::asString(); \
 return out.str(); \
 
 #define NI_INTERPOLATOR_FIXLINKS \
@@ -815,9 +815,9 @@ NifStream( unknownInt, out, version ); \
 
 #define NI_BLEND_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Unknown Int:  " << unknownInt << endl; \
+out << NiInterpolator::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define NI_BLEND_INTERPOLATOR_FIXLINKS \
@@ -846,9 +846,9 @@ NifStream( stopTime, out, version ); \
 
 #define NI_B_SPLINE_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Start Time:  " << startTime << endl; \
-cout << "Stop Time:  " << stopTime << endl; \
+out << NiInterpolator::asString(); \
+out << "Start Time:  " << startTime << endl; \
+out << "Stop Time:  " << stopTime << endl; \
 return out.str(); \
 
 #define NI_B_SPLINE_INTERPOLATOR_FIXLINKS \
@@ -903,20 +903,20 @@ NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 
 #define NI_OBJECT_N_E_T_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Name:  " << name << endl; \
-cout << "Extra Data:  " << "NiExtraData" << endl; \
-cout << "Num Extra Data List:  " << numExtraDataList << endl; \
+out << NiObject::asString(); \
+out << "Name:  " << name << endl; \
+out << "Extra Data:  " << "NiExtraData" << endl; \
+out << "Num Extra Data List:  " << numExtraDataList << endl; \
 for (uint i0 = 0; i0 < numExtraDataList; i0++) { \
-  cout << "  Extra Data List[" << i0 << "]:  " << "NiExtraData" << endl; \
+  out << "  Extra Data List[" << i0 << "]:  " << "NiExtraData" << endl; \
 }; \
-cout << "Controller:  " << "NiTimeController" << endl; \
+out << "Controller:  " << "NiTimeController" << endl; \
 return out.str(); \
 
 #define NI_OBJECT_N_E_T_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     extraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
@@ -926,7 +926,7 @@ if ( version <= 0x04020200 ) { \
 }; \
 if ( version >= 0x0A000100 ) { \
   for (uint i1 = 0; i1 < numExtraDataList; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       extraDataList[i1] = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
@@ -935,7 +935,7 @@ if ( version >= 0x0A000100 ) { \
     link_stack.pop_front(); \
   }; \
 }; \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   controller = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
@@ -1028,31 +1028,31 @@ if ( version >= 0x14000005 ) { \
 
 #define NI_A_V_OBJECT_STRING \
 stringstream out; \
-cout << NiObjectNET::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Translation:  " << translation << endl; \
-cout << "Rotation:  " << rotation << endl; \
-cout << "Scale:  " << scale << endl; \
-cout << "Velocity:  " << velocity << endl; \
-cout << "Num Properties:  " << numProperties << endl; \
+out << NiObjectNET::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Translation:  " << translation << endl; \
+out << "Rotation:  " << rotation << endl; \
+out << "Scale:  " << scale << endl; \
+out << "Velocity:  " << velocity << endl; \
+out << "Num Properties:  " << numProperties << endl; \
 for (uint i0 = 0; i0 < numProperties; i0++) { \
-  cout << "  Properties[" << i0 << "]:  " << "NiProperty" << endl; \
+  out << "  Properties[" << i0 << "]:  " << "NiProperty" << endl; \
 }; \
-cout << "Has Bounding Box:  " << hasBoundingBox << endl; \
+out << "Has Bounding Box:  " << hasBoundingBox << endl; \
 if ( (hasBoundingBox != 0) ) { \
-  cout << "  Unknown Int:  " << boundingBox.unknownInt << endl; \
-  cout << "  Translation:  " << boundingBox.translation << endl; \
-  cout << "  Rotation:  " << boundingBox.rotation << endl; \
-  cout << "  Radius:  " << boundingBox.radius << endl; \
+  out << "  Unknown Int:  " << boundingBox.unknownInt << endl; \
+  out << "  Translation:  " << boundingBox.translation << endl; \
+  out << "  Rotation:  " << boundingBox.rotation << endl; \
+  out << "  Radius:  " << boundingBox.radius << endl; \
 }; \
-cout << "Collision Data:  " << "NiCollisionData" << endl; \
-cout << "Collision Object:  " << "NiCollisionObject" << endl; \
+out << "Collision Data:  " << "NiCollisionData" << endl; \
+out << "Collision Object:  " << "NiCollisionObject" << endl; \
 return out.str(); \
 
 #define NI_A_V_OBJECT_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numProperties; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     properties[i0] = DynamicCast<NiProperty>(objects[link_stack.front()]); \
@@ -1061,7 +1061,7 @@ for (uint i0 = 0; i0 < numProperties; i0++) { \
   link_stack.pop_front(); \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     collisionData = DynamicCast<NiCollisionData>(objects[link_stack.front()]); \
@@ -1070,7 +1070,7 @@ if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x14000005 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     collisionObject = DynamicCast<NiCollisionObject>(objects[link_stack.front()]); \
@@ -1134,15 +1134,15 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_DYNAMIC_EFFECT_STRING \
 stringstream out; \
-cout << NiAVObject::asString(); \
-cout << "Has Affected Node List?:  " << hasAffectedNodeList_ << endl; \
+out << NiAVObject::asString(); \
+out << "Has Affected Node List?:  " << hasAffectedNodeList_ << endl; \
 if ( (hasAffectedNodeList_ != 0) ) { \
-  cout << "  Affected Node List?:  " << affectedNodeList_ << endl; \
+  out << "  Affected Node List?:  " << affectedNodeList_ << endl; \
 }; \
-cout << "Switch State:  " << switchState << endl; \
-cout << "Num Affected Nodes:  " << numAffectedNodes << endl; \
+out << "Switch State:  " << switchState << endl; \
+out << "Num Affected Nodes:  " << numAffectedNodes << endl; \
 for (uint i0 = 0; i0 < numAffectedNodes; i0++) { \
-  cout << "  Affected Nodes[" << i0 << "]:  " << "NiAVObject" << endl; \
+  out << "  Affected Nodes[" << i0 << "]:  " << "NiAVObject" << endl; \
 }; \
 return out.str(); \
 
@@ -1150,7 +1150,7 @@ return out.str(); \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numAffectedNodes; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       affectedNodes[i1] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
@@ -1189,11 +1189,11 @@ NifStream( specularColor, out, version ); \
 
 #define NI_LIGHT_STRING \
 stringstream out; \
-cout << NiDynamicEffect::asString(); \
-cout << "Dimmer:  " << dimmer << endl; \
-cout << "Ambient Color:  " << ambientColor << endl; \
-cout << "Diffuse Color:  " << diffuseColor << endl; \
-cout << "Specular Color:  " << specularColor << endl; \
+out << NiDynamicEffect::asString(); \
+out << "Dimmer:  " << dimmer << endl; \
+out << "Ambient Color:  " << ambientColor << endl; \
+out << "Diffuse Color:  " << diffuseColor << endl; \
+out << "Specular Color:  " << specularColor << endl; \
 return out.str(); \
 
 #define NI_LIGHT_FIXLINKS \
@@ -1215,7 +1215,7 @@ NiObjectNET::Write( out, link_map, version ); \
 
 #define NI_PROPERTY_STRING \
 stringstream out; \
-cout << NiObjectNET::asString(); \
+out << NiObjectNET::asString(); \
 return out.str(); \
 
 #define NI_PROPERTY_FIXLINKS \
@@ -1252,16 +1252,16 @@ NifStream( active, out, version ); \
 
 #define NI_P_SYS_MODIFIER_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Name:  " << name << endl; \
-cout << "Order:  " << order << endl; \
-cout << "Target:  " << "NiParticleSystem" << endl; \
-cout << "Active:  " << active << endl; \
+out << NiObject::asString(); \
+out << "Name:  " << name << endl; \
+out << "Order:  " << order << endl; \
+out << "Target:  " << "NiParticleSystem" << endl; \
+out << "Active:  " << active << endl; \
 return out.str(); \
 
 #define NI_P_SYS_MODIFIER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   target = DynamicCast<NiParticleSystem>(objects[link_stack.front()]); \
@@ -1319,18 +1319,18 @@ NifStream( lifeSpanVariation, out, version ); \
 
 #define NI_P_SYS_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Speed:  " << speed << endl; \
-cout << "Speed Variation:  " << speedVariation << endl; \
-cout << "Declination:  " << declination << endl; \
-cout << "Declination Variation:  " << declinationVariation << endl; \
-cout << "Planar Angle:  " << planarAngle << endl; \
-cout << "Planar Angle Variation:  " << planarAngleVariation << endl; \
-cout << "Initial Color:  " << initialColor << endl; \
-cout << "Initial Radius:  " << initialRadius << endl; \
-cout << "Radius Variation:  " << radiusVariation << endl; \
-cout << "Life Span:  " << lifeSpan << endl; \
-cout << "Life Span Variation:  " << lifeSpanVariation << endl; \
+out << NiPSysModifier::asString(); \
+out << "Speed:  " << speed << endl; \
+out << "Speed Variation:  " << speedVariation << endl; \
+out << "Declination:  " << declination << endl; \
+out << "Declination Variation:  " << declinationVariation << endl; \
+out << "Planar Angle:  " << planarAngle << endl; \
+out << "Planar Angle Variation:  " << planarAngleVariation << endl; \
+out << "Initial Color:  " << initialColor << endl; \
+out << "Initial Radius:  " << initialRadius << endl; \
+out << "Radius Variation:  " << radiusVariation << endl; \
+out << "Life Span:  " << lifeSpan << endl; \
+out << "Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_FIXLINKS \
@@ -1362,14 +1362,14 @@ if ( version >= 0x14000004 ) { \
 
 #define NI_P_SYS_VOLUME_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysEmitter::asString(); \
-cout << "Emitter Object:  " << "NiNode" << endl; \
+out << NiPSysEmitter::asString(); \
+out << "Emitter Object:  " << "NiNode" << endl; \
 return out.str(); \
 
 #define NI_P_SYS_VOLUME_EMITTER_FIXLINKS \
 NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     emitterObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -1419,26 +1419,26 @@ NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
 
 #define NI_TIME_CONTROLLER_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Next Controller:  " << "NiTimeController" << endl; \
-cout << "Flags:  " << flags << endl; \
-cout << "Frequency:  " << frequency << endl; \
-cout << "Phase:  " << phase << endl; \
-cout << "Start Time:  " << startTime << endl; \
-cout << "Stop Time:  " << stopTime << endl; \
-cout << "Target:  " << "NiObject" << endl; \
+out << NiObject::asString(); \
+out << "Next Controller:  " << "NiTimeController" << endl; \
+out << "Flags:  " << flags << endl; \
+out << "Frequency:  " << frequency << endl; \
+out << "Phase:  " << phase << endl; \
+out << "Start Time:  " << startTime << endl; \
+out << "Stop Time:  " << stopTime << endl; \
+out << "Target:  " << "NiObject" << endl; \
 return out.str(); \
 
 #define NI_TIME_CONTROLLER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   nextController = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
 else \
   nextController = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   target = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -1489,14 +1489,14 @@ for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
 
 #define A_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Num Node Groups:  " << numNodeGroups << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Num Node Groups:  " << numNodeGroups << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
-  cout << "  Num Nodes:  " << nodeGroups[i0].numNodes << endl; \
+  out << "  Num Nodes:  " << nodeGroups[i0].numNodes << endl; \
   for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
-    cout << "    Nodes[" << i1 << "]:  " << "NiNode" << endl; \
+    out << "    Nodes[" << i1 << "]:  " << "NiNode" << endl; \
   }; \
 }; \
 return out.str(); \
@@ -1505,7 +1505,7 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numNodeGroups; i0++) { \
   for (uint i1 = 0; i1 < nodeGroups[i0].numNodes; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       nodeGroups[i0].nodes[i1] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -1541,14 +1541,14 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Interpolator:  " << "NiInterpolator" << endl; \
+out << NiTimeController::asString(); \
+out << "Interpolator:  " << "NiInterpolator" << endl; \
 return out.str(); \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A020000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -1576,8 +1576,8 @@ NifStream( modifierName, out, version ); \
 
 #define A_P_SYS_CTLR_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Modifier Name:  " << modifierName << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Modifier Name:  " << modifierName << endl; \
 return out.str(); \
 
 #define A_P_SYS_CTLR_FIXLINKS \
@@ -1627,26 +1627,26 @@ if ( version >= 0x0A000100 ) { \
 
 #define NI_TRI_BASED_GEOM_STRING \
 stringstream out; \
-cout << NiAVObject::asString(); \
-cout << "Data:  " << "NiTriBasedGeomData" << endl; \
-cout << "Skin Instance:  " << "NiSkinInstance" << endl; \
-cout << "Has Shader:  " << hasShader << endl; \
+out << NiAVObject::asString(); \
+out << "Data:  " << "NiTriBasedGeomData" << endl; \
+out << "Skin Instance:  " << "NiSkinInstance" << endl; \
+out << "Has Shader:  " << hasShader << endl; \
 if ( (hasShader != 0) ) { \
-  cout << "  Shader Name:  " << shaderName << endl; \
-  cout << "  Unknown Link:  " << "NiObject" << endl; \
+  out << "  Shader Name:  " << shaderName << endl; \
+  out << "  Unknown Link:  " << "NiObject" << endl; \
 }; \
 return out.str(); \
 
 #define NI_TRI_BASED_GEOM_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiTriBasedGeomData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
@@ -1655,7 +1655,7 @@ else \
 link_stack.pop_front(); \
 if ( version >= 0x0A000100 ) { \
   if ( (hasShader != 0) ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -1846,60 +1846,60 @@ if ( version >= 0x14000004 ) { \
 
 #define NI_TRI_BASED_GEOM_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Name:  " << name << endl; \
-cout << "Num Vertices:  " << numVertices << endl; \
-cout << "Unknown Short 1:  " << unknownShort1 << endl; \
-cout << "Has Vertices:  " << hasVertices << endl; \
+out << NiObject::asString(); \
+out << "Name:  " << name << endl; \
+out << "Num Vertices:  " << numVertices << endl; \
+out << "Unknown Short 1:  " << unknownShort1 << endl; \
+out << "Has Vertices:  " << hasVertices << endl; \
 if ( (hasVertices != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl; \
+    out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl; \
   }; \
 }; \
-cout << "Num UV Sets 2:  " << numUvSets2 << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Has Normals:  " << hasNormals << endl; \
+out << "Num UV Sets 2:  " << numUvSets2 << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Has Normals:  " << hasNormals << endl; \
 if ( (hasNormals != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Normals[" << i1 << "]:  " << normals[i1] << endl; \
+    out << "    Normals[" << i1 << "]:  " << normals[i1] << endl; \
   }; \
 }; \
 if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl; \
+    out << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl; \
   }; \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Unknown Vectors 2[" << i1 << "]:  " << unknownVectors2[i1] << endl; \
+    out << "    Unknown Vectors 2[" << i1 << "]:  " << unknownVectors2[i1] << endl; \
   }; \
 }; \
-cout << "Center:  " << center << endl; \
-cout << "Radius:  " << radius << endl; \
-cout << "Has Vertex Colors:  " << hasVertexColors << endl; \
+out << "Center:  " << center << endl; \
+out << "Radius:  " << radius << endl; \
+out << "Has Vertex Colors:  " << hasVertexColors << endl; \
 if ( (hasVertexColors != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Vertex Colors[" << i1 << "]:  " << vertexColors[i1] << endl; \
+    out << "    Vertex Colors[" << i1 << "]:  " << vertexColors[i1] << endl; \
   }; \
 }; \
-cout << "Num UV Sets:  " << numUvSets << endl; \
-cout << "Has UV:  " << hasUv << endl; \
+out << "Num UV Sets:  " << numUvSets << endl; \
+out << "Has UV:  " << hasUv << endl; \
 for (uint i0 = 0; i0 < numUvSets; i0++) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    UV Sets[" << i0 << "][" << i1 << "]:  " << uvSets[i0][i1] << endl; \
+    out << "    UV Sets[" << i0 << "][" << i1 << "]:  " << uvSets[i0][i1] << endl; \
   }; \
 }; \
 for (uint i0 = 0; i0 < (numUvSets2 & 63); i0++) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    UV Sets 2[" << i0 << "][" << i1 << "]:  " << uvSets2[i0][i1] << endl; \
+    out << "    UV Sets 2[" << i0 << "][" << i1 << "]:  " << uvSets2[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Unknown Link:  " << "NiObject" << endl; \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Unknown Link:  " << "NiObject" << endl; \
 return out.str(); \
 
 #define NI_TRI_BASED_GEOM_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -1961,21 +1961,21 @@ NifStream( unknownByte1, out, version ); \
 
 #define A_P_SYS_DATA_STRING \
 stringstream out; \
-cout << NiTriBasedGeomData::asString(); \
-cout << "Has Unknown Floats 1:  " << hasUnknownFloats1 << endl; \
+out << NiTriBasedGeomData::asString(); \
+out << "Has Unknown Floats 1:  " << hasUnknownFloats1 << endl; \
 if ( (hasUnknownFloats1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl; \
+    out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl; \
   }; \
 }; \
-cout << "Unknown Short 3:  " << unknownShort3 << endl; \
-cout << "Has Unknown Floats 2:  " << hasUnknownFloats2 << endl; \
+out << "Unknown Short 3:  " << unknownShort3 << endl; \
+out << "Has Unknown Floats 2:  " << hasUnknownFloats2 << endl; \
 if ( (hasUnknownFloats2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl; \
+    out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl; \
   }; \
 }; \
-cout << "Unknown Byte 1:  " << unknownByte1 << endl; \
+out << "Unknown Byte 1:  " << unknownByte1 << endl; \
 return out.str(); \
 
 #define A_P_SYS_DATA_FIXLINKS \
@@ -2004,9 +2004,9 @@ NifStream( unknownFloat2, out, version ); \
 
 #define BHK_BLEND_COLLISION_OBJECT_STRING \
 stringstream out; \
-cout << NiCollisionObject::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << NiCollisionObject::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_BLEND_COLLISION_OBJECT_FIXLINKS \
@@ -2032,8 +2032,8 @@ NifStream( unknownInt, out, version ); \
 
 #define BHK_BLEND_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Int:  " << unknownInt << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define BHK_BLEND_CONTROLLER_FIXLINKS \
@@ -2077,14 +2077,14 @@ NifStream( unknownFloat2, out, version ); \
 
 #define BHK_BOX_SHAPE_STRING \
 stringstream out; \
-cout << bhkConvexShape::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Short 1:  " << unknownShort1 << endl; \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Unknown Short 3:  " << unknownShort3 << endl; \
-cout << "Unknown Short 4:  " << unknownShort4 << endl; \
-cout << "Unknown Vector:  " << unknownVector << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << bhkConvexShape::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Short 1:  " << unknownShort1 << endl; \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Unknown Short 3:  " << unknownShort3 << endl; \
+out << "Unknown Short 4:  " << unknownShort4 << endl; \
+out << "Unknown Vector:  " << unknownVector << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_BOX_SHAPE_FIXLINKS \
@@ -2134,16 +2134,16 @@ NifStream( radius2, out, version ); \
 
 #define BHK_CAPSULE_SHAPE_STRING \
 stringstream out; \
-cout << bhkConvexShape::asString(); \
-cout << "Radius:  " << radius << endl; \
-cout << "Unknown Short 1:  " << unknownShort1 << endl; \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Unknown Short 3:  " << unknownShort3 << endl; \
-cout << "Unknown Short 4:  " << unknownShort4 << endl; \
-cout << "Unknown Vector 1:  " << unknownVector1 << endl; \
-cout << "Radius 1:  " << radius1 << endl; \
-cout << "Unknown Vector 2:  " << unknownVector2 << endl; \
-cout << "Radius 2:  " << radius2 << endl; \
+out << bhkConvexShape::asString(); \
+out << "Radius:  " << radius << endl; \
+out << "Unknown Short 1:  " << unknownShort1 << endl; \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Unknown Short 3:  " << unknownShort3 << endl; \
+out << "Unknown Short 4:  " << unknownShort4 << endl; \
+out << "Unknown Vector 1:  " << unknownVector1 << endl; \
+out << "Radius 1:  " << radius1 << endl; \
+out << "Unknown Vector 2:  " << unknownVector2 << endl; \
+out << "Radius 2:  " << radius2 << endl; \
 return out.str(); \
 
 #define BHK_CAPSULE_SHAPE_FIXLINKS \
@@ -2165,7 +2165,7 @@ NiCollisionObject::Write( out, link_map, version ); \
 
 #define BHK_COLLISION_OBJECT_STRING \
 stringstream out; \
-cout << NiCollisionObject::asString(); \
+out << NiCollisionObject::asString(); \
 return out.str(); \
 
 #define BHK_COLLISION_OBJECT_FIXLINKS \
@@ -2218,17 +2218,17 @@ for (uint i0 = 0; i0 < num2; i0++) { \
 
 #define BHK_CONVEX_VERTICES_SHAPE_STRING \
 stringstream out; \
-cout << bhkSphereRepShape::asString(); \
+out << bhkSphereRepShape::asString(); \
 for (uint i0 = 0; i0 < 7; i0++) { \
-  cout << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
+  out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
-cout << "Num 1:  " << num1 << endl; \
+out << "Num 1:  " << num1 << endl; \
 for (uint i0 = 0; i0 < num1; i0++) { \
-  cout << "  Unknown Vectors 1[" << i0 << "]:  " << unknownVectors1[i0] << endl; \
+  out << "  Unknown Vectors 1[" << i0 << "]:  " << unknownVectors1[i0] << endl; \
 }; \
-cout << "Num 2:  " << num2 << endl; \
+out << "Num 2:  " << num2 << endl; \
 for (uint i0 = 0; i0 < num2; i0++) { \
-  cout << "  Unknown Vectors 2[" << i0 << "]:  " << unknownVectors2[i0] << endl; \
+  out << "  Unknown Vectors 2[" << i0 << "]:  " << unknownVectors2[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -2265,10 +2265,10 @@ for (uint i0 = 0; i0 < 5; i0++) { \
 
 #define BHK_HINGE_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkConstraint::asString(); \
+out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 5; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
+    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -2296,8 +2296,8 @@ NifStream( unknownInt, out, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkRagdollConstraint::asString(); \
-cout << "Unknown Int:  " << unknownInt << endl; \
+out << AbhkRagdollConstraint::asString(); \
+out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS \
@@ -2355,25 +2355,25 @@ for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
 
 #define BHK_LIST_SHAPE_STRING \
 stringstream out; \
-cout << AbhkShapeCollection::asString(); \
-cout << "Num Sub Shapes:  " << numSubShapes << endl; \
+out << AbhkShapeCollection::asString(); \
+out << "Num Sub Shapes:  " << numSubShapes << endl; \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
-  cout << "  Sub Shapes[" << i0 << "]:  " << "bhkShape" << endl; \
+  out << "  Sub Shapes[" << i0 << "]:  " << "bhkShape" << endl; \
 }; \
-cout << "Material:  " << material << endl; \
+out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
-cout << "Num Unknown Ints:  " << numUnknownInts << endl; \
+out << "Num Unknown Ints:  " << numUnknownInts << endl; \
 for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
-  cout << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
+  out << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
 }; \
 return out.str(); \
 
 #define BHK_LIST_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numSubShapes; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     subShapes[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
@@ -2449,36 +2449,36 @@ if ( (type == 2) ) { \
 
 #define BHK_MALLEABLE_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkConstraint::asString(); \
-cout << "Type:  " << type << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Unknown Link 1:  " << "NiObject" << endl; \
-cout << "Unknown Link 2:  " << "NiObject" << endl; \
-cout << "Unknown Int 3:  " << unknownInt3 << endl; \
+out << AbhkConstraint::asString(); \
+out << "Type:  " << type << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Unknown Link 1:  " << "NiObject" << endl; \
+out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Unknown Int 3:  " << unknownInt3 << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
+  out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 7; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
+    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
 if ( (type == 2) ) { \
-  cout << "  Unknown Float 2:  " << unknownFloat2 << endl; \
+  out << "  Unknown Float 2:  " << unknownFloat2 << endl; \
 }; \
 return out.str(); \
 
 #define BHK_MALLEABLE_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink1 = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -2539,24 +2539,24 @@ NifStream( unknownFloat2, out, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_STRING \
 stringstream out; \
-cout << bhkShape::asString(); \
-cout << "Shape:  " << "bhkShape" << endl; \
-cout << "Material:  " << material << endl; \
+out << bhkShape::asString(); \
+out << "Shape:  " << "bhkShape" << endl; \
+out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  cout << "  Unknown Bytes 1[" << i0 << "]:  " << unknownBytes1[i0] << endl; \
+  out << "  Unknown Bytes 1[" << i0 << "]:  " << unknownBytes1[i0] << endl; \
 }; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
-cout << "Num Unknown Bytes 2:  " << numUnknownBytes2 << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
+out << "Num Unknown Bytes 2:  " << numUnknownBytes2 << endl; \
 for (uint i0 = 0; i0 < numUnknownBytes2; i0++) { \
-  cout << "  Unknown Bytes 2[" << i0 << "]:  " << unknownBytes2[i0] << endl; \
+  out << "  Unknown Bytes 2[" << i0 << "]:  " << unknownBytes2[i0] << endl; \
 }; \
-cout << "Unknown Vector:  " << unknownVector << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Vector:  " << unknownVector << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
@@ -2601,13 +2601,13 @@ for (uint i0 = 0; i0 < 8; i0++) { \
 
 #define BHK_MULTI_SPHERE_SHAPE_STRING \
 stringstream out; \
-cout << bhkSphereRepShape::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << bhkSphereRepShape::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -2682,31 +2682,31 @@ for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
-cout << bhkSphereRepShape::asString(); \
+out << bhkSphereRepShape::asString(); \
 for (uint i0 = 0; i0 < 2; i0++) { \
-  cout << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
+  out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 5; i0++) { \
-  cout << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
+  out << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
+  out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Num Strips Data:  " << numStripsData << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Num Strips Data:  " << numStripsData << endl; \
 for (uint i0 = 0; i0 < numStripsData; i0++) { \
-  cout << "  Strips Data[" << i0 << "]:  " << "NiTriStripsData" << endl; \
+  out << "  Strips Data[" << i0 << "]:  " << "NiTriStripsData" << endl; \
 }; \
-cout << "Num Unknown Ints 3:  " << numUnknownInts3 << endl; \
+out << "Num Unknown Ints 3:  " << numUnknownInts3 << endl; \
 for (uint i0 = 0; i0 < numUnknownInts3; i0++) { \
-  cout << "  Unknown Ints 3[" << i0 << "]:  " << unknownInts3[i0] << endl; \
+  out << "  Unknown Ints 3[" << i0 << "]:  " << unknownInts3[i0] << endl; \
 }; \
 return out.str(); \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numStripsData; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     stripsData[i0] = DynamicCast<NiTriStripsData>(objects[link_stack.front()]); \
@@ -2773,26 +2773,26 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
-cout << AbhkShapeCollection::asString(); \
-cout << "Num Subparts:  " << numSubparts << endl; \
+out << AbhkShapeCollection::asString(); \
+out << "Num Subparts:  " << numSubparts << endl; \
 for (uint i0 = 0; i0 < numSubparts; i0++) { \
   for (uint i1 = 0; i1 < 3; i1++) { \
-    cout << "    Subparts[" << i0 << "][" << i1 << "]:  " << subparts[i0][i1] << endl; \
+    out << "    Subparts[" << i0 << "][" << i1 << "]:  " << subparts[i0][i1] << endl; \
   }; \
 }; \
 for (uint i0 = 0; i0 < 9; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
-cout << "Scale:  " << scale << endl; \
+out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
+  out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
-cout << "Data:  " << "hkPackedNiTriStripsData" << endl; \
+out << "Data:  " << "hkPackedNiTriStripsData" << endl; \
 return out.str(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]); \
@@ -2838,14 +2838,14 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 
 #define BHK_PRISMATIC_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkConstraint::asString(); \
+out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 8; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
+    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
   }; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
+  out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -2868,7 +2868,7 @@ AbhkRagdollConstraint::Write( out, link_map, version ); \
 
 #define BHK_RAGDOLL_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkRagdollConstraint::asString(); \
+out << AbhkRagdollConstraint::asString(); \
 return out.str(); \
 
 #define BHK_RAGDOLL_CONSTRAINT_FIXLINKS \
@@ -3019,57 +3019,57 @@ NifStream( unknownInt6, out, version ); \
 
 #define BHK_RIGID_BODY_STRING \
 stringstream out; \
-cout << bhkEntity::asString(); \
+out << bhkEntity::asString(); \
 for (uint i0 = 0; i0 < 5; i0++) { \
-  cout << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
+  out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 4; i0++) { \
-  cout << "  Unknown Shorts 1[" << i0 << "]:  " << unknownShorts1[i0] << endl; \
+  out << "  Unknown Shorts 1[" << i0 << "]:  " << unknownShorts1[i0] << endl; \
 }; \
-cout << "Layer Copy?:  " << layerCopy_ << endl; \
+out << "Layer Copy?:  " << layerCopy_ << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
-  cout << "  Unknown Shorts 2[" << i0 << "]:  " << unknownShorts2[i0] << endl; \
+  out << "  Unknown Shorts 2[" << i0 << "]:  " << unknownShorts2[i0] << endl; \
 }; \
-cout << "Translation:  " << translation << endl; \
-cout << "Unknown Float 00:  " << unknownFloat00 << endl; \
-cout << "x:  " << rotation.x << endl; \
-cout << "y:  " << rotation.y << endl; \
-cout << "z:  " << rotation.z << endl; \
-cout << "w:  " << rotation.w << endl; \
-cout << "Linear Velocity:  " << linearVelocity << endl; \
-cout << "Unknown Float 01:  " << unknownFloat01 << endl; \
-cout << "Angular Velocity:  " << angularVelocity << endl; \
-cout << "Unknown Float 02:  " << unknownFloat02 << endl; \
+out << "Translation:  " << translation << endl; \
+out << "Unknown Float 00:  " << unknownFloat00 << endl; \
+out << "x:  " << rotation.x << endl; \
+out << "y:  " << rotation.y << endl; \
+out << "z:  " << rotation.z << endl; \
+out << "w:  " << rotation.w << endl; \
+out << "Linear Velocity:  " << linearVelocity << endl; \
+out << "Unknown Float 01:  " << unknownFloat01 << endl; \
+out << "Angular Velocity:  " << angularVelocity << endl; \
+out << "Unknown Float 02:  " << unknownFloat02 << endl; \
 for (uint i0 = 0; i0 < 12; i0++) { \
-  cout << "  Transform?[" << i0 << "]:  " << transform_[i0] << endl; \
+  out << "  Transform?[" << i0 << "]:  " << transform_[i0] << endl; \
 }; \
-cout << "Center:  " << center << endl; \
-cout << "Unknown Float 03:  " << unknownFloat03 << endl; \
-cout << "Mass:  " << mass << endl; \
-cout << "Linear Damping:  " << linearDamping << endl; \
-cout << "Angular Damping:  " << angularDamping << endl; \
-cout << "Friction:  " << friction << endl; \
-cout << "Restitution:  " << restitution << endl; \
-cout << "Max Linear Velocity:  " << maxLinearVelocity << endl; \
-cout << "Max Angular Velocity:  " << maxAngularVelocity << endl; \
-cout << "Pen Depth:  " << penDepth << endl; \
-cout << "Motion System?:  " << motionSystem_ << endl; \
-cout << "Unknown Byte 1:  " << unknownByte1 << endl; \
-cout << "Unknown Byte 2:  " << unknownByte2 << endl; \
-cout << "Quality Type:  " << qualityType << endl; \
-cout << "Unknown Int 6:  " << unknownInt6 << endl; \
-cout << "Unknown Int 7:  " << unknownInt7 << endl; \
-cout << "Unknown Int 8:  " << unknownInt8 << endl; \
-cout << "Num Constraints:  " << numConstraints << endl; \
+out << "Center:  " << center << endl; \
+out << "Unknown Float 03:  " << unknownFloat03 << endl; \
+out << "Mass:  " << mass << endl; \
+out << "Linear Damping:  " << linearDamping << endl; \
+out << "Angular Damping:  " << angularDamping << endl; \
+out << "Friction:  " << friction << endl; \
+out << "Restitution:  " << restitution << endl; \
+out << "Max Linear Velocity:  " << maxLinearVelocity << endl; \
+out << "Max Angular Velocity:  " << maxAngularVelocity << endl; \
+out << "Pen Depth:  " << penDepth << endl; \
+out << "Motion System?:  " << motionSystem_ << endl; \
+out << "Unknown Byte 1:  " << unknownByte1 << endl; \
+out << "Unknown Byte 2:  " << unknownByte2 << endl; \
+out << "Quality Type:  " << qualityType << endl; \
+out << "Unknown Int 6:  " << unknownInt6 << endl; \
+out << "Unknown Int 7:  " << unknownInt7 << endl; \
+out << "Unknown Int 8:  " << unknownInt8 << endl; \
+out << "Num Constraints:  " << numConstraints << endl; \
 for (uint i0 = 0; i0 < numConstraints; i0++) { \
-  cout << "  Constraints[" << i0 << "]:  " << "AbhkConstraint" << endl; \
+  out << "  Constraints[" << i0 << "]:  " << "AbhkConstraint" << endl; \
 }; \
 return out.str(); \
 
 #define BHK_RIGID_BODY_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numConstraints; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     constraints[i0] = DynamicCast<AbhkConstraint>(objects[link_stack.front()]); \
@@ -3094,7 +3094,7 @@ bhkRigidBody::Write( out, link_map, version ); \
 
 #define BHK_RIGID_BODY_T_STRING \
 stringstream out; \
-cout << bhkRigidBody::asString(); \
+out << bhkRigidBody::asString(); \
 return out.str(); \
 
 #define BHK_RIGID_BODY_T_FIXLINKS \
@@ -3142,16 +3142,16 @@ NifStream( unknownFloat, out, version ); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_STRING \
 stringstream out; \
-cout << bhkEntity::asString(); \
+out << bhkEntity::asString(); \
 for (uint i0 = 0; i0 < 7; i0++) { \
-  cout << "  Unkown Floats[" << i0 << "]:  " << unkownFloats[i0] << endl; \
+  out << "  Unkown Floats[" << i0 << "]:  " << unkownFloats[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   for (uint i1 = 0; i1 < 5; i1++) { \
-    cout << "    Unknown Floats 2[" << i0 << "][" << i1 << "]:  " << unknownFloats2[i0][i1] << endl; \
+    out << "    Unknown Floats 2[" << i0 << "][" << i1 << "]:  " << unknownFloats2[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS \
@@ -3173,7 +3173,7 @@ NiCollisionObject::Write( out, link_map, version ); \
 
 #define BHK_S_P_COLLISION_OBJECT_STRING \
 stringstream out; \
-cout << NiCollisionObject::asString(); \
+out << NiCollisionObject::asString(); \
 return out.str(); \
 
 #define BHK_S_P_COLLISION_OBJECT_FIXLINKS \
@@ -3199,8 +3199,8 @@ NifStream( radius, out, version ); \
 
 #define BHK_SPHERE_SHAPE_STRING \
 stringstream out; \
-cout << bhkConvexShape::asString(); \
-cout << "Radius:  " << radius << endl; \
+out << bhkConvexShape::asString(); \
+out << "Radius:  " << radius << endl; \
 return out.str(); \
 
 #define BHK_SPHERE_SHAPE_FIXLINKS \
@@ -3240,13 +3240,13 @@ NifStream( unknownFloat, out, version ); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_STRING \
 stringstream out; \
-cout << AbhkConstraint::asString(); \
+out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 2; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
+    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS \
@@ -3281,11 +3281,11 @@ NifStream( transform, out, version ); \
 
 #define BHK_TRANSFORM_SHAPE_STRING \
 stringstream out; \
-cout << bhkEntity::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Transform:  " << transform << endl; \
+out << bhkEntity::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Transform:  " << transform << endl; \
 return out.str(); \
 
 #define BHK_TRANSFORM_SHAPE_FIXLINKS \
@@ -3307,7 +3307,7 @@ bhkTransformShape::Write( out, link_map, version ); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_STRING \
 stringstream out; \
-cout << bhkTransformShape::asString(); \
+out << bhkTransformShape::asString(); \
 return out.str(); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS \
@@ -3337,9 +3337,9 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 
 #define B_S_BOUND_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
+out << NiExtraData::asString(); \
 for (uint i0 = 0; i0 < 6; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -3380,13 +3380,13 @@ for (uint i0 = 0; i0 < numPositions; i0++) { \
 
 #define B_S_FURNITURE_MARKER_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Num Positions:  " << numPositions << endl; \
+out << NiExtraData::asString(); \
+out << "Num Positions:  " << numPositions << endl; \
 for (uint i0 = 0; i0 < numPositions; i0++) { \
-  cout << "  Unknown Vector:  " << positions[i0].unknownVector << endl; \
-  cout << "  Unknown Short:  " << positions[i0].unknownShort << endl; \
-  cout << "  Position Ref 1?:  " << positions[i0].positionRef1_ << endl; \
-  cout << "  Position Ref 2?:  " << positions[i0].positionRef2_ << endl; \
+  out << "  Unknown Vector:  " << positions[i0].unknownVector << endl; \
+  out << "  Unknown Short:  " << positions[i0].unknownShort << endl; \
+  out << "  Position Ref 1?:  " << positions[i0].positionRef1_ << endl; \
+  out << "  Position Ref 2?:  " << positions[i0].positionRef2_ << endl; \
 }; \
 return out.str(); \
 
@@ -3413,8 +3413,8 @@ NifStream( unknownFloat, out, version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Unknown Float:  " << unknownFloat << endl; \
+out << NiPSysModifier::asString(); \
+out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS \
@@ -3436,7 +3436,7 @@ NiPSysVolumeEmitter::Write( out, link_map, version ); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysVolumeEmitter::asString(); \
+out << NiPSysVolumeEmitter::asString(); \
 return out.str(); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_FIXLINKS \
@@ -3462,8 +3462,8 @@ NifStream( flags, out, version ); \
 
 #define B_S_X_FLAGS_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Flags:  " << flags << endl; \
+out << NiExtraData::asString(); \
+out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define B_S_X_FLAGS_FIXLINKS \
@@ -3512,16 +3512,16 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_STRING \
 stringstream out; \
-cout << AbhkShapeCollection::asString(); \
-cout << "Num Triangles:  " << numTriangles << endl; \
+out << AbhkShapeCollection::asString(); \
+out << "Num Triangles:  " << numTriangles << endl; \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
-  cout << "  Triangle:  " << triangles[i0].triangle << endl; \
-  cout << "  Unknown Short:  " << triangles[i0].unknownShort << endl; \
-  cout << "  Normal:  " << triangles[i0].normal << endl; \
+  out << "  Triangle:  " << triangles[i0].triangle << endl; \
+  out << "  Unknown Short:  " << triangles[i0].unknownShort << endl; \
+  out << "  Normal:  " << triangles[i0].normal << endl; \
 }; \
-cout << "Num Vertices:  " << numVertices << endl; \
+out << "Num Vertices:  " << numVertices << endl; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
-  cout << "  Vertices[" << i0 << "]:  " << vertices[i0] << endl; \
+  out << "  Vertices[" << i0 << "]:  " << vertices[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -3554,14 +3554,14 @@ if ( version <= 0x0A010000 ) { \
 
 #define NI_ALPHA_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Data:  " << "NiFloatData" << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Data:  " << "NiFloatData" << endl; \
 return out.str(); \
 
 #define NI_ALPHA_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
@@ -3593,9 +3593,9 @@ NifStream( threshold, out, version ); \
 
 #define NI_ALPHA_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Threshold:  " << threshold << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Threshold:  " << threshold << endl; \
 return out.str(); \
 
 #define NI_ALPHA_PROPERTY_FIXLINKS \
@@ -3617,7 +3617,7 @@ NiLight::Write( out, link_map, version ); \
 
 #define NI_AMBIENT_LIGHT_STRING \
 stringstream out; \
-cout << NiLight::asString(); \
+out << NiLight::asString(); \
 return out.str(); \
 
 #define NI_AMBIENT_LIGHT_FIXLINKS \
@@ -3683,15 +3683,15 @@ if ( (hasSizes != 0) ) { \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_STRING \
 stringstream out; \
-cout << NiTriBasedGeomData::asString(); \
-cout << "Num Particles:  " << numParticles << endl; \
-cout << "Size:  " << size << endl; \
-cout << "Num Active:  " << numActive << endl; \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Has Sizes:  " << hasSizes << endl; \
+out << NiTriBasedGeomData::asString(); \
+out << "Num Particles:  " << numParticles << endl; \
+out << "Size:  " << size << endl; \
+out << "Num Active:  " << numActive << endl; \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Has Sizes:  " << hasSizes << endl; \
 if ( (hasSizes != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Sizes[" << i1 << "]:  " << sizes[i1] << endl; \
+    out << "    Sizes[" << i1 << "]:  " << sizes[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -3731,11 +3731,11 @@ for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
 
 #define NI_BINARY_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Data Size:  " << binaryData.dataSize << endl; \
-cout << "Unknown Int:  " << binaryData.unknownInt << endl; \
+out << NiExtraData::asString(); \
+out << "Data Size:  " << binaryData.dataSize << endl; \
+out << "Unknown Int:  " << binaryData.unknownInt << endl; \
 for (uint i0 = 0; i0 < binaryData.dataSize; i0++) { \
-  cout << "  Data[" << i0 << "]:  " << binaryData.data[i0] << endl; \
+  out << "  Data[" << i0 << "]:  " << binaryData.data[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -3762,8 +3762,8 @@ NifStream( boolValue, out, version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBlendInterpolator::asString(); \
-cout << "Bool Value:  " << boolValue << endl; \
+out << NiBlendInterpolator::asString(); \
+out << "Bool Value:  " << boolValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS \
@@ -3789,8 +3789,8 @@ NifStream( floatValue, out, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBlendInterpolator::asString(); \
-cout << "Float Value:  " << floatValue << endl; \
+out << NiBlendInterpolator::asString(); \
+out << "Float Value:  " << floatValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS \
@@ -3815,8 +3815,8 @@ NifStream( pointValue, out, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBlendInterpolator::asString(); \
-cout << "Point Value:  " << pointValue << endl; \
+out << NiBlendInterpolator::asString(); \
+out << "Point Value:  " << pointValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS \
@@ -3838,7 +3838,7 @@ NiBlendInterpolator::Write( out, link_map, version ); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBlendInterpolator::asString(); \
+out << NiBlendInterpolator::asString(); \
 return out.str(); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_FIXLINKS \
@@ -3896,18 +3896,18 @@ for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
 
 #define NI_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
-cout << ABoneLODController::asString(); \
-cout << "Num Shape Groups:  " << numShapeGroups << endl; \
+out << ABoneLODController::asString(); \
+out << "Num Shape Groups:  " << numShapeGroups << endl; \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
-  cout << "  Num Link Pairs:  " << shapeGroups1[i0].numLinkPairs << endl; \
+  out << "  Num Link Pairs:  " << shapeGroups1[i0].numLinkPairs << endl; \
   for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
-    cout << "    Shape:  " << "NiTriShape" << endl; \
-    cout << "    Skin Instance:  " << "NiSkinInstance" << endl; \
+    out << "    Shape:  " << "NiTriShape" << endl; \
+    out << "    Skin Instance:  " << "NiSkinInstance" << endl; \
   }; \
 }; \
-cout << "Num Shape Groups 2:  " << numShapeGroups2 << endl; \
+out << "Num Shape Groups 2:  " << numShapeGroups2 << endl; \
 for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
-  cout << "  Shape Groups 2[" << i0 << "]:  " << "NiTriShape" << endl; \
+  out << "  Shape Groups 2[" << i0 << "]:  " << "NiTriShape" << endl; \
 }; \
 return out.str(); \
 
@@ -3915,14 +3915,14 @@ return out.str(); \
 ABoneLODController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
   for (uint i1 = 0; i1 < shapeGroups1[i0].numLinkPairs; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       shapeGroups1[i0].linkPairs[i1].shape = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
     else \
       shapeGroups1[i0].linkPairs[i1].shape = NULL; \
     link_stack.pop_front(); \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       shapeGroups1[i0].linkPairs[i1].skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
@@ -3932,7 +3932,7 @@ for (uint i0 = 0; i0 < numShapeGroups; i0++) { \
   }; \
 }; \
 for (uint i0 = 0; i0 < numShapeGroups2; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     shapeGroups2[i0] = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
@@ -3973,13 +3973,13 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 
 #define NI_BOOL_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Keys:  " << data.numKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Keys:  " << data.numKeys << endl; \
 if ( (data.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << data.interpolation << endl; \
+  out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -4006,8 +4006,8 @@ NifStream( booleanData, out, version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Boolean Data:  " << booleanData << endl; \
+out << NiExtraData::asString(); \
+out << "Boolean Data:  " << booleanData << endl; \
 return out.str(); \
 
 #define NI_BOOLEAN_EXTRA_DATA_FIXLINKS \
@@ -4038,14 +4038,14 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_BOOL_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Bool Value:  " << boolValue << endl; \
-cout << "Data:  " << "NiBoolData" << endl; \
+out << NiInterpolator::asString(); \
+out << "Bool Value:  " << boolValue << endl; \
+out << "Data:  " << "NiBoolData" << endl; \
 return out.str(); \
 
 #define NI_BOOL_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
@@ -4078,14 +4078,14 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Bool Value:  " << boolValue << endl; \
-cout << "Data:  " << "NiBoolData" << endl; \
+out << NiInterpolator::asString(); \
+out << "Bool Value:  " << boolValue << endl; \
+out << "Data:  " << "NiBoolData" << endl; \
 return out.str(); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
@@ -4109,7 +4109,7 @@ ABoneLODController::Write( out, link_map, version ); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
-cout << ABoneLODController::asString(); \
+out << ABoneLODController::asString(); \
 return out.str(); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS \
@@ -4135,8 +4135,8 @@ NifStream( unknownInt, out, version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Unknown Int:  " << unknownInt << endl; \
+out << NiObject::asString(); \
+out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define NI_B_SPLINE_BASIS_DATA_FIXLINKS \
@@ -4166,9 +4166,9 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBSplineInterpolator::asString(); \
+out << NiBSplineInterpolator::asString(); \
 for (uint i0 = 0; i0 < 6; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -4209,24 +4209,24 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBSplineInterpolator::asString(); \
-cout << "Data:  " << "NiBSplineData" << endl; \
-cout << "Unknown Link:  " << "NiObject" << endl; \
+out << NiBSplineInterpolator::asString(); \
+out << "Data:  " << "NiBSplineData" << endl; \
+out << "Unknown Link:  " << "NiObject" << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -4268,24 +4268,24 @@ for (uint i0 = 0; i0 < 17; i0++) { \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBSplineInterpolator::asString(); \
-cout << "Data:  " << "NiBSplineData" << endl; \
-cout << "Basis Data:  " << "NiBSplineBasisData" << endl; \
+out << NiBSplineInterpolator::asString(); \
+out << "Data:  " << "NiBSplineData" << endl; \
+out << "Basis Data:  " << "NiBSplineBasisData" << endl; \
 for (uint i0 = 0; i0 < 17; i0++) { \
-  cout << "  Unknown4[" << i0 << "]:  " << unknown4[i0] << endl; \
+  out << "  Unknown4[" << i0 << "]:  " << unknown4[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
 else \
   data = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]); \
@@ -4330,12 +4330,12 @@ for (uint i0 = 0; i0 < count; i0++) { \
 
 #define NI_B_SPLINE_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Unknown Int:  " << unknownInt << endl; \
-cout << "Count:  " << count << endl; \
+out << NiObject::asString(); \
+out << "Unknown Int:  " << unknownInt << endl; \
+out << "Count:  " << count << endl; \
 for (uint i0 = 0; i0 < count; i0++) { \
   for (uint i1 = 0; i1 < 2; i1++) { \
-    cout << "    Unknown Data[" << i0 << "][" << i1 << "]:  " << unknownData[i0][i1] << endl; \
+    out << "    Unknown Data[" << i0 << "][" << i1 << "]:  " << unknownData[i0][i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -4422,28 +4422,28 @@ if ( version >= 0x04020100 ) { \
 
 #define NI_CAMERA_STRING \
 stringstream out; \
-cout << NiAVObject::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Frustum Left:  " << frustumLeft << endl; \
-cout << "Frustum Right:  " << frustumRight << endl; \
-cout << "Frustum Top:  " << frustumTop << endl; \
-cout << "Frustum Bottom:  " << frustumBottom << endl; \
-cout << "Frustum Near:  " << frustumNear << endl; \
-cout << "Frustum Far:  " << frustumFar << endl; \
-cout << "Use Orthographic Projection:  " << useOrthographicProjection << endl; \
-cout << "Viewport Left:  " << viewportLeft << endl; \
-cout << "Viewport Right:  " << viewportRight << endl; \
-cout << "Viewport Top:  " << viewportTop << endl; \
-cout << "Viewport Bottom:  " << viewportBottom << endl; \
-cout << "LOD Adjust:  " << lodAdjust << endl; \
-cout << "Unknown Link?:  " << "NiObject" << endl; \
-cout << "Unknown Int:  " << unknownInt << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << NiAVObject::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Frustum Left:  " << frustumLeft << endl; \
+out << "Frustum Right:  " << frustumRight << endl; \
+out << "Frustum Top:  " << frustumTop << endl; \
+out << "Frustum Bottom:  " << frustumBottom << endl; \
+out << "Frustum Near:  " << frustumNear << endl; \
+out << "Frustum Far:  " << frustumFar << endl; \
+out << "Use Orthographic Projection:  " << useOrthographicProjection << endl; \
+out << "Viewport Left:  " << viewportLeft << endl; \
+out << "Viewport Right:  " << viewportRight << endl; \
+out << "Viewport Top:  " << viewportTop << endl; \
+out << "Viewport Bottom:  " << viewportBottom << endl; \
+out << "LOD Adjust:  " << lodAdjust << endl; \
+out << "Unknown Link?:  " << "NiObject" << endl; \
+out << "Unknown Int:  " << unknownInt << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
 return out.str(); \
 
 #define NI_CAMERA_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -4516,30 +4516,30 @@ if ( (collisionType == 1) ) { \
 
 #define NI_COLLISION_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Target Node:  " << "NiNode" << endl; \
-cout << "Unknown2:  " << unknown2 << endl; \
-cout << "Unknown3:  " << unknown3 << endl; \
-cout << "Collision Type:  " << collisionType << endl; \
+out << NiObject::asString(); \
+out << "Target Node:  " << "NiNode" << endl; \
+out << "Unknown2:  " << unknown2 << endl; \
+out << "Unknown3:  " << unknown3 << endl; \
+out << "Collision Type:  " << collisionType << endl; \
 if ( (collisionType == 0) ) { \
-  cout << "  Unknown5:  " << unknown5 << endl; \
-  cout << "  Unknown7:  " << unknown7 << endl; \
+  out << "  Unknown5:  " << unknown5 << endl; \
+  out << "  Unknown7:  " << unknown7 << endl; \
 }; \
 if ( (collisionType == 2) ) { \
   for (uint i1 = 0; i1 < 8; i1++) { \
-    cout << "    Unknown6[" << i1 << "]:  " << unknown6[i1] << endl; \
+    out << "    Unknown6[" << i1 << "]:  " << unknown6[i1] << endl; \
   }; \
 }; \
 if ( (collisionType == 1) ) { \
   for (uint i1 = 0; i1 < 15; i1++) { \
-    cout << "    Unknown8[" << i1 << "]:  " << unknown8[i1] << endl; \
+    out << "    Unknown8[" << i1 << "]:  " << unknown8[i1] << endl; \
   }; \
 }; \
 return out.str(); \
 
 #define NI_COLLISION_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   targetNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -4579,13 +4579,13 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 
 #define NI_COLOR_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Keys:  " << data.numKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Keys:  " << data.numKeys << endl; \
 if ( (data.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << data.interpolation << endl; \
+  out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -4611,8 +4611,8 @@ NifStream( data, out, version ); \
 
 #define NI_COLOR_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Data:  " << data << endl; \
+out << NiExtraData::asString(); \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_COLOR_EXTRA_DATA_FIXLINKS \
@@ -4655,19 +4655,19 @@ NifStream( link_map[StaticCast<NiObject>(objectPalette)], out, version ); \
 
 #define NI_CONTROLLER_MANAGER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Cumulative:  " << cumulative << endl; \
-cout << "Num Controller Sequences:  " << numControllerSequences << endl; \
+out << NiTimeController::asString(); \
+out << "Cumulative:  " << cumulative << endl; \
+out << "Num Controller Sequences:  " << numControllerSequences << endl; \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
-  cout << "  Controller Sequences[" << i0 << "]:  " << "NiControllerSequence" << endl; \
+  out << "  Controller Sequences[" << i0 << "]:  " << "NiControllerSequence" << endl; \
 }; \
-cout << "Object Palette:  " << "NiDefaultAVObjectPalette" << endl; \
+out << "Object Palette:  " << "NiDefaultAVObjectPalette" << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_MANAGER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     controllerSequences[i0] = DynamicCast<NiControllerSequence>(objects[link_stack.front()]); \
@@ -4675,7 +4675,7 @@ for (uint i0 = 0; i0 < numControllerSequences; i0++) { \
     controllerSequences[i0] = NULL; \
   link_stack.pop_front(); \
 }; \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   objectPalette = DynamicCast<NiDefaultAVObjectPalette>(objects[link_stack.front()]); \
@@ -4988,64 +4988,64 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_CONTROLLER_SEQUENCE_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Name:  " << name << endl; \
-cout << "Name:  " << textKeys.name << endl; \
-cout << "Interpolator:  " << "NiInterpolator" << endl; \
-cout << "Unknown Link 1:  " << "NiObject" << endl; \
-cout << "Unknown Link 2:  " << "NiObject" << endl; \
-cout << "Unknown Short 0:  " << textKeys.unknownShort0 << endl; \
-cout << "Priority?:  " << textKeys.priority_ << endl; \
-cout << "String Palette:  " << "NiStringPalette" << endl; \
-cout << "Node Name:  " << textKeys.nodeName << endl; \
-cout << "Node Name Offset:  " << textKeys.nodeNameOffset << endl; \
-cout << "Property Type:  " << textKeys.propertyType << endl; \
-cout << "Property Type Offset:  " << textKeys.propertyTypeOffset << endl; \
-cout << "Controller Type:  " << textKeys.controllerType << endl; \
-cout << "Controller Type Offset:  " << textKeys.controllerTypeOffset << endl; \
-cout << "Variable 1:  " << textKeys.variable1 << endl; \
-cout << "Variable Offset 1:  " << textKeys.variableOffset1 << endl; \
-cout << "Variable 2:  " << textKeys.variable2 << endl; \
-cout << "Variable Offset 2:  " << textKeys.variableOffset2 << endl; \
-cout << "Num Controlled Blocks:  " << numControlledBlocks << endl; \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << NiObject::asString(); \
+out << "Name:  " << name << endl; \
+out << "Name:  " << textKeys.name << endl; \
+out << "Interpolator:  " << "NiInterpolator" << endl; \
+out << "Unknown Link 1:  " << "NiObject" << endl; \
+out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Unknown Short 0:  " << textKeys.unknownShort0 << endl; \
+out << "Priority?:  " << textKeys.priority_ << endl; \
+out << "String Palette:  " << "NiStringPalette" << endl; \
+out << "Node Name:  " << textKeys.nodeName << endl; \
+out << "Node Name Offset:  " << textKeys.nodeNameOffset << endl; \
+out << "Property Type:  " << textKeys.propertyType << endl; \
+out << "Property Type Offset:  " << textKeys.propertyTypeOffset << endl; \
+out << "Controller Type:  " << textKeys.controllerType << endl; \
+out << "Controller Type Offset:  " << textKeys.controllerTypeOffset << endl; \
+out << "Variable 1:  " << textKeys.variable1 << endl; \
+out << "Variable Offset 1:  " << textKeys.variableOffset1 << endl; \
+out << "Variable 2:  " << textKeys.variable2 << endl; \
+out << "Variable Offset 2:  " << textKeys.variableOffset2 << endl; \
+out << "Num Controlled Blocks:  " << numControlledBlocks << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
 for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
-  cout << "  Name:  " << controlledBlocks[i0].name << endl; \
-  cout << "  Interpolator:  " << "NiInterpolator" << endl; \
-  cout << "  Unknown Link 1:  " << "NiObject" << endl; \
-  cout << "  Unknown Link 2:  " << "NiObject" << endl; \
-  cout << "  Unknown Short 0:  " << controlledBlocks[i0].unknownShort0 << endl; \
-  cout << "  Priority?:  " << controlledBlocks[i0].priority_ << endl; \
-  cout << "  String Palette:  " << "NiStringPalette" << endl; \
-  cout << "  Node Name:  " << controlledBlocks[i0].nodeName << endl; \
-  cout << "  Node Name Offset:  " << controlledBlocks[i0].nodeNameOffset << endl; \
-  cout << "  Property Type:  " << controlledBlocks[i0].propertyType << endl; \
-  cout << "  Property Type Offset:  " << controlledBlocks[i0].propertyTypeOffset << endl; \
-  cout << "  Controller Type:  " << controlledBlocks[i0].controllerType << endl; \
-  cout << "  Controller Type Offset:  " << controlledBlocks[i0].controllerTypeOffset << endl; \
-  cout << "  Variable 1:  " << controlledBlocks[i0].variable1 << endl; \
-  cout << "  Variable Offset 1:  " << controlledBlocks[i0].variableOffset1 << endl; \
-  cout << "  Variable 2:  " << controlledBlocks[i0].variable2 << endl; \
-  cout << "  Variable Offset 2:  " << controlledBlocks[i0].variableOffset2 << endl; \
+  out << "  Name:  " << controlledBlocks[i0].name << endl; \
+  out << "  Interpolator:  " << "NiInterpolator" << endl; \
+  out << "  Unknown Link 1:  " << "NiObject" << endl; \
+  out << "  Unknown Link 2:  " << "NiObject" << endl; \
+  out << "  Unknown Short 0:  " << controlledBlocks[i0].unknownShort0 << endl; \
+  out << "  Priority?:  " << controlledBlocks[i0].priority_ << endl; \
+  out << "  String Palette:  " << "NiStringPalette" << endl; \
+  out << "  Node Name:  " << controlledBlocks[i0].nodeName << endl; \
+  out << "  Node Name Offset:  " << controlledBlocks[i0].nodeNameOffset << endl; \
+  out << "  Property Type:  " << controlledBlocks[i0].propertyType << endl; \
+  out << "  Property Type Offset:  " << controlledBlocks[i0].propertyTypeOffset << endl; \
+  out << "  Controller Type:  " << controlledBlocks[i0].controllerType << endl; \
+  out << "  Controller Type Offset:  " << controlledBlocks[i0].controllerTypeOffset << endl; \
+  out << "  Variable 1:  " << controlledBlocks[i0].variable1 << endl; \
+  out << "  Variable Offset 1:  " << controlledBlocks[i0].variableOffset1 << endl; \
+  out << "  Variable 2:  " << controlledBlocks[i0].variable2 << endl; \
+  out << "  Variable Offset 2:  " << controlledBlocks[i0].variableOffset2 << endl; \
 }; \
-cout << "Weight:  " << weight << endl; \
-cout << "Text Keys 2:  " << "NiTextKeyExtraData" << endl; \
-cout << "Cycle Type:  " << cycleType << endl; \
-cout << "Unknown Int 0:  " << unknownInt0 << endl; \
-cout << "Frequency:  " << frequency << endl; \
-cout << "Start Time:  " << startTime << endl; \
-cout << "Stop Time:  " << stopTime << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Manager:  " << "NiControllerManager" << endl; \
-cout << "Unknown String:  " << unknownString << endl; \
-cout << "String Palette:  " << "NiStringPalette" << endl; \
+out << "Weight:  " << weight << endl; \
+out << "Text Keys 2:  " << "NiTextKeyExtraData" << endl; \
+out << "Cycle Type:  " << cycleType << endl; \
+out << "Unknown Int 0:  " << unknownInt0 << endl; \
+out << "Frequency:  " << frequency << endl; \
+out << "Start Time:  " << startTime << endl; \
+out << "Stop Time:  " << stopTime << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Manager:  " << "NiControllerManager" << endl; \
+out << "Unknown String:  " << unknownString << endl; \
+out << "String Palette:  " << "NiStringPalette" << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_SEQUENCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     textKeys.interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -5053,7 +5053,7 @@ if ( version <= 0x0A010000 ) { \
     textKeys.interpolator = NULL; \
   link_stack.pop_front(); \
   if ( version >= 0x0A01006A ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -5062,7 +5062,7 @@ if ( version <= 0x0A010000 ) { \
     link_stack.pop_front(); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -5071,7 +5071,7 @@ if ( version <= 0x0A010000 ) { \
     link_stack.pop_front(); \
   }; \
   if ( version >= 0x0A020000 ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       textKeys.stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
@@ -5081,7 +5081,7 @@ if ( version <= 0x0A010000 ) { \
   }; \
 }; \
 for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     controlledBlocks[i0].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -5089,7 +5089,7 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
     controlledBlocks[i0].interpolator = NULL; \
   link_stack.pop_front(); \
   if ( version >= 0x0A01006A ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -5098,7 +5098,7 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
     link_stack.pop_front(); \
   }; \
   if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -5107,7 +5107,7 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
     link_stack.pop_front(); \
   }; \
   if ( version >= 0x0A020000 ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       controlledBlocks[i0].stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
@@ -5117,14 +5117,14 @@ for (uint i0 = 0; i0 < numControlledBlocks; i0++) { \
   }; \
 }; \
 if ( version >= 0x0A01006A ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     textKeys2 = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]); \
   else \
     textKeys2 = NULL; \
   link_stack.pop_front(); \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]); \
@@ -5133,7 +5133,7 @@ if ( version >= 0x0A01006A ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
@@ -5177,19 +5177,19 @@ for (uint i0 = 0; i0 < numObjs; i0++) { \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Unknown Int:  " << unknownInt << endl; \
-cout << "Num Objs:  " << numObjs << endl; \
+out << NiObject::asString(); \
+out << "Unknown Int:  " << unknownInt << endl; \
+out << "Num Objs:  " << numObjs << endl; \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
-  cout << "  Name:  " << objs[i0].name << endl; \
-  cout << "  Object:  " << "NiAVObject" << endl; \
+  out << "  Name:  " << objs[i0].name << endl; \
+  out << "  Object:  " << "NiAVObject" << endl; \
 }; \
 return out.str(); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numObjs; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     objs[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
@@ -5214,7 +5214,7 @@ NiLight::Write( out, link_map, version ); \
 
 #define NI_DIRECTIONAL_LIGHT_STRING \
 stringstream out; \
-cout << NiLight::asString(); \
+out << NiLight::asString(); \
 return out.str(); \
 
 #define NI_DIRECTIONAL_LIGHT_FIXLINKS \
@@ -5240,8 +5240,8 @@ NifStream( flags, out, version ); \
 
 #define NI_DITHER_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_DITHER_PROPERTY_FIXLINKS \
@@ -5290,20 +5290,20 @@ for (uint i0 = 0; i0 < numSources; i0++) { \
 
 #define NI_FLIP_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Texture Slot:  " << textureSlot << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Delta:  " << delta << endl; \
-cout << "Num Sources:  " << numSources << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Texture Slot:  " << textureSlot << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Delta:  " << delta << endl; \
+out << "Num Sources:  " << numSources << endl; \
 for (uint i0 = 0; i0 < numSources; i0++) { \
-  cout << "  Sources[" << i0 << "]:  " << "NiSourceTexture" << endl; \
+  out << "  Sources[" << i0 << "]:  " << "NiSourceTexture" << endl; \
 }; \
 return out.str(); \
 
 #define NI_FLIP_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numSources; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     sources[i0] = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -5344,13 +5344,13 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 
 #define NI_FLOAT_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Keys:  " << data.numKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Keys:  " << data.numKeys << endl; \
 if ( (data.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << data.interpolation << endl; \
+  out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -5377,8 +5377,8 @@ NifStream( floatData, out, version ); \
 
 #define NI_FLOAT_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Float Data:  " << floatData << endl; \
+out << NiExtraData::asString(); \
+out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_FLOAT_EXTRA_DATA_FIXLINKS \
@@ -5413,15 +5413,15 @@ if ( version >= 0x14000004 ) { \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Link:  " << "NiObject" << endl; \
-cout << "Unknown String:  " << unknownString << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Link:  " << "NiObject" << endl; \
+out << "Unknown String:  " << unknownString << endl; \
 return out.str(); \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -5455,14 +5455,14 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Float Value:  " << floatValue << endl; \
-cout << "Data:  " << "NiFloatData" << endl; \
+out << NiInterpolator::asString(); \
+out << "Float Value:  " << floatValue << endl; \
+out << "Data:  " << "NiFloatData" << endl; \
 return out.str(); \
 
 #define NI_FLOAT_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
@@ -5498,10 +5498,10 @@ for (uint i0 = 0; i0 < numFloats; i0++) { \
 
 #define NI_FLOATS_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Num Floats:  " << numFloats << endl; \
+out << NiExtraData::asString(); \
+out << "Num Floats:  " << numFloats << endl; \
 for (uint i0 = 0; i0 < numFloats; i0++) { \
-  cout << "  Data[" << i0 << "]:  " << data[i0] << endl; \
+  out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -5534,10 +5534,10 @@ NifStream( fogColor, out, version ); \
 
 #define NI_FOG_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Fog Depth:  " << fogDepth << endl; \
-cout << "Fog Color:  " << fogColor << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Fog Depth:  " << fogDepth << endl; \
+out << "Fog Color:  " << fogColor << endl; \
 return out.str(); \
 
 #define NI_FOG_PROPERTY_FIXLINKS \
@@ -5613,24 +5613,24 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_GEOM_MORPHER_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown:  " << unknown << endl; \
-cout << "Unknown 2:  " << unknown2 << endl; \
-cout << "Data:  " << "NiMorphData" << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Num Interpolators:  " << numInterpolators << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown:  " << unknown << endl; \
+out << "Unknown 2:  " << unknown2 << endl; \
+out << "Data:  " << "NiMorphData" << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Num Interpolators:  " << numInterpolators << endl; \
 for (uint i0 = 0; i0 < numInterpolators; i0++) { \
-  cout << "  Interpolators[" << i0 << "]:  " << "NiInterpolator" << endl; \
+  out << "  Interpolators[" << i0 << "]:  " << "NiInterpolator" << endl; \
 }; \
-cout << "Num Unknown Ints:  " << numUnknownInts << endl; \
+out << "Num Unknown Ints:  " << numUnknownInts << endl; \
 for (uint i0 = 0; i0 < numUnknownInts; i0++) { \
-  cout << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
+  out << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_GEOM_MORPHER_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiMorphData>(objects[link_stack.front()]); \
@@ -5639,7 +5639,7 @@ else \
 link_stack.pop_front(); \
 if ( version >= 0x0A01006A ) { \
   for (uint i1 = 0; i1 < numInterpolators; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       interpolators[i1] = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -5681,12 +5681,12 @@ NifStream( direction, out, version ); \
 
 #define NI_GRAVITY_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Force:  " << force << endl; \
-cout << "Type:  " << type << endl; \
-cout << "Position:  " << position << endl; \
-cout << "Direction:  " << direction << endl; \
+out << AParticleModifier::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Force:  " << force << endl; \
+out << "Type:  " << type << endl; \
+out << "Position:  " << position << endl; \
+out << "Direction:  " << direction << endl; \
 return out.str(); \
 
 #define NI_GRAVITY_FIXLINKS \
@@ -5712,8 +5712,8 @@ NifStream( integerData, out, version ); \
 
 #define NI_INTEGER_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Integer Data:  " << integerData << endl; \
+out << NiExtraData::asString(); \
+out << "Integer Data:  " << integerData << endl; \
 return out.str(); \
 
 #define NI_INTEGER_EXTRA_DATA_FIXLINKS \
@@ -5747,10 +5747,10 @@ for (uint i0 = 0; i0 < numIntegers; i0++) { \
 
 #define NI_INTEGERS_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Num Integers:  " << numIntegers << endl; \
+out << NiExtraData::asString(); \
+out << "Num Integers:  " << numIntegers << endl; \
 for (uint i0 = 0; i0 < numIntegers; i0++) { \
-  cout << "  Data[" << i0 << "]:  " << data[i0] << endl; \
+  out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -5779,13 +5779,13 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Data:  " << "NiKeyframeData" << endl; \
+out << NiTimeController::asString(); \
+out << "Data:  " << "NiKeyframeData" << endl; \
 return out.str(); \
 
 #define NI_KEYFRAME_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
@@ -5815,13 +5815,13 @@ NifStream( link_map[StaticCast<NiObject>(data2)], out, version ); \
 
 #define B_S_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
-cout << NiKeyframeController::asString(); \
-cout << "Data 2:  " << "NiKeyframeData" << endl; \
+out << NiKeyframeController::asString(); \
+out << "Data 2:  " << "NiKeyframeData" << endl; \
 return out.str(); \
 
 #define B_S_KEYFRAME_CONTROLLER_FIXLINKS \
 NiKeyframeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data2 = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
@@ -5936,41 +5936,41 @@ for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
 
 #define NI_KEYFRAME_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Rotation Keys:  " << numRotationKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Rotation Keys:  " << numRotationKeys << endl; \
 if ( (numRotationKeys != 0) ) { \
-  cout << "  Rotation Type:  " << rotationType << endl; \
+  out << "  Rotation Type:  " << rotationType << endl; \
 }; \
 if ( (rotationType != 4) ) { \
   for (uint i1 = 0; i1 < numRotationKeys; i1++) { \
-    cout << "    Quaternion Keys[" << i1 << "]:  " << quaternionKeys[i1] << endl; \
+    out << "    Quaternion Keys[" << i1 << "]:  " << quaternionKeys[i1] << endl; \
   }; \
 }; \
 if ( (rotationType == 4) ) { \
-  cout << "  Unknown Float:  " << unknownFloat << endl; \
+  out << "  Unknown Float:  " << unknownFloat << endl; \
   for (uint i1 = 0; i1 < 3; i1++) { \
-    cout << "    Num Keys:  " << xyzRotations[i1].numKeys << endl; \
+    out << "    Num Keys:  " << xyzRotations[i1].numKeys << endl; \
     if ( (xyzRotations[i1].numKeys != 0) ) { \
-      cout << "      Interpolation:  " << xyzRotations[i1].interpolation << endl; \
+      out << "      Interpolation:  " << xyzRotations[i1].interpolation << endl; \
     }; \
     for (uint i2 = 0; i2 < xyzRotations[i1].numKeys; i2++) { \
-      cout << "      Keys[" << i2 << "]:  " << xyzRotations[i1].keys[i2] << endl; \
+      out << "      Keys[" << i2 << "]:  " << xyzRotations[i1].keys[i2] << endl; \
     }; \
   }; \
 }; \
-cout << "Num Keys:  " << translations.numKeys << endl; \
+out << "Num Keys:  " << translations.numKeys << endl; \
 if ( (translations.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << translations.interpolation << endl; \
+  out << "  Interpolation:  " << translations.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < translations.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << translations.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << translations.keys[i0] << endl; \
 }; \
-cout << "Num Keys:  " << scales.numKeys << endl; \
+out << "Num Keys:  " << scales.numKeys << endl; \
 if ( (scales.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << scales.interpolation << endl; \
+  out << "  Interpolation:  " << scales.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < scales.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << scales.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << scales.keys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -6020,16 +6020,16 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_LIGHT_COLOR_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Data:  " << "NiPosData" << endl; \
-cout << "Interpolator:  " << "NiPoint3Interpolator" << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Data:  " << "NiPosData" << endl; \
+out << "Interpolator:  " << "NiPoint3Interpolator" << endl; \
 return out.str(); \
 
 #define NI_LIGHT_COLOR_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
@@ -6038,7 +6038,7 @@ if ( version <= 0x0A010000 ) { \
   link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     interpolator = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
@@ -6069,13 +6069,13 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Link:  " << "NiInterpolator" << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Link:  " << "NiInterpolator" << endl; \
 return out.str(); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -6112,14 +6112,14 @@ NifStream( link_map[StaticCast<NiObject>(lookAtNode)], out, version ); \
 
 #define NI_LOOK_AT_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown1:  " << unknown1 << endl; \
-cout << "Look At Node:  " << "NiNode" << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown1:  " << unknown1 << endl; \
+out << "Look At Node:  " << "NiNode" << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   lookAtNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -6176,42 +6176,42 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink3)], out, version ); \
 
 #define NI_LOOK_AT_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Look At:  " << "NiNode" << endl; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
-cout << "Translation:  " << translation << endl; \
-cout << "Rotation:  " << rotation << endl; \
-cout << "Scale:  " << scale << endl; \
-cout << "Unknown Link 1:  " << "NiPoint3Interpolator" << endl; \
-cout << "Unknown Link 2:  " << "NiFloatInterpolator" << endl; \
-cout << "Unknown Link 3:  " << "NiFloatInterpolator" << endl; \
+out << NiInterpolator::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Look At:  " << "NiNode" << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
+out << "Translation:  " << translation << endl; \
+out << "Rotation:  " << rotation << endl; \
+out << "Scale:  " << scale << endl; \
+out << "Unknown Link 1:  " << "NiPoint3Interpolator" << endl; \
+out << "Unknown Link 2:  " << "NiFloatInterpolator" << endl; \
+out << "Unknown Link 3:  " << "NiFloatInterpolator" << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   lookAt = DynamicCast<NiNode>(objects[link_stack.front()]); \
 else \
   lookAt = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink1 = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
 else \
   unknownLink1 = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
 else \
   unknownLink2 = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink3 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
@@ -6252,15 +6252,15 @@ if ( version <= 0x0A010000 ) { \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Unknown:  " << unknown << endl; \
-cout << "Data:  " << "NiPosData" << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Unknown:  " << unknown << endl; \
+out << "Data:  " << "NiPosData" << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
@@ -6311,14 +6311,14 @@ NifStream( alpha, out, version ); \
 
 #define NI_MATERIAL_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Ambient Color:  " << ambientColor << endl; \
-cout << "Diffuse Color:  " << diffuseColor << endl; \
-cout << "Specular Color:  " << specularColor << endl; \
-cout << "Emissive Color:  " << emissiveColor << endl; \
-cout << "Glossiness:  " << glossiness << endl; \
-cout << "Alpha:  " << alpha << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Ambient Color:  " << ambientColor << endl; \
+out << "Diffuse Color:  " << diffuseColor << endl; \
+out << "Specular Color:  " << specularColor << endl; \
+out << "Emissive Color:  " << emissiveColor << endl; \
+out << "Glossiness:  " << glossiness << endl; \
+out << "Alpha:  " << alpha << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_PROPERTY_FIXLINKS \
@@ -6456,42 +6456,42 @@ if ( version >= 0x0A020000 ) { \
 
 #define NI_MESH_P_SYS_DATA_STRING \
 stringstream out; \
-cout << APSysData::asString(); \
-cout << "Unknown Byte 11:  " << unknownByte11 << endl; \
+out << APSysData::asString(); \
+out << "Unknown Byte 11:  " << unknownByte11 << endl; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown Floats 3[" << i0 << "][" << i1 << "]:  " << unknownFloats3[i0][i1] << endl; \
+    out << "    Unknown Floats 3[" << i0 << "][" << i1 << "]:  " << unknownFloats3[i0][i1] << endl; \
   }; \
 }; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
   for (uint i1 = 0; i1 < 10; i1++) { \
-    cout << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
+    out << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
   }; \
 }; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
   for (uint i1 = 0; i1 < 12; i1++) { \
-    cout << "    Unknown Floats 5[" << i0 << "][" << i1 << "]:  " << unknownFloats5[i0][i1] << endl; \
+    out << "    Unknown Floats 5[" << i0 << "][" << i1 << "]:  " << unknownFloats5[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Modifier:  " << "AParticleModifier" << endl; \
-cout << "Unknown Byte 2:  " << unknownByte2 << endl; \
-cout << "Num Unknown Links:  " << numUnknownLinks << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Modifier:  " << "AParticleModifier" << endl; \
+out << "Unknown Byte 2:  " << unknownByte2 << endl; \
+out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
-  cout << "  Unknown Links[" << i0 << "]:  " << "AParticleModifier" << endl; \
+  out << "  Unknown Links[" << i0 << "]:  " << "AParticleModifier" << endl; \
 }; \
-cout << "Unknown Short 4:  " << unknownShort4 << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Unknown Byte 12:  " << unknownByte12 << endl; \
-cout << "Unknown Int 3:  " << unknownInt3 << endl; \
-cout << "Unknown Int 4:  " << unknownInt4 << endl; \
-cout << "Unknown Link 2:  " << "NiNode" << endl; \
+out << "Unknown Short 4:  " << unknownShort4 << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Unknown Byte 12:  " << unknownByte12 << endl; \
+out << "Unknown Int 3:  " << unknownInt3 << endl; \
+out << "Unknown Int 4:  " << unknownInt4 << endl; \
+out << "Unknown Link 2:  " << "NiNode" << endl; \
 return out.str(); \
 
 #define NI_MESH_P_SYS_DATA_FIXLINKS \
 APSysData::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x14000004 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     modifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
@@ -6501,7 +6501,7 @@ if ( version <= 0x14000004 ) { \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
   for (uint i1 = 0; i1 < numUnknownLinks; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       unknownLinks[i1] = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
@@ -6511,7 +6511,7 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
   }; \
 }; \
 if ( version >= 0x0A020000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     unknownLink2 = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -6586,20 +6586,20 @@ for (uint i0 = 0; i0 < numMorphs; i0++) { \
 
 #define NI_MORPH_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Num Morphs:  " << numMorphs << endl; \
-cout << "Num Vertices:  " << numVertices << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
+out << NiObject::asString(); \
+out << "Num Morphs:  " << numMorphs << endl; \
+out << "Num Vertices:  " << numVertices << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
 for (uint i0 = 0; i0 < numMorphs; i0++) { \
-  cout << "  Frame Name:  " << morphs[i0].frameName << endl; \
-  cout << "  Num Morph Keys:  " << morphs[i0].numMorphKeys << endl; \
-  cout << "  Morph Interpolation:  " << morphs[i0].morphInterpolation << endl; \
+  out << "  Frame Name:  " << morphs[i0].frameName << endl; \
+  out << "  Num Morph Keys:  " << morphs[i0].numMorphKeys << endl; \
+  out << "  Morph Interpolation:  " << morphs[i0].morphInterpolation << endl; \
   for (uint i1 = 0; i1 < morphs[i0].numMorphKeys; i1++) { \
-    cout << "    Morph Keys[" << i1 << "]:  " << morphs[i0].morphKeys[i1] << endl; \
+    out << "    Morph Keys[" << i1 << "]:  " << morphs[i0].morphKeys[i1] << endl; \
   }; \
-  cout << "  Unknown Int:  " << morphs[i0].unknownInt << endl; \
+  out << "  Unknown Int:  " << morphs[i0].unknownInt << endl; \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Vectors[" << i1 << "]:  " << morphs[i0].vectors[i1] << endl; \
+    out << "    Vectors[" << i1 << "]:  " << morphs[i0].vectors[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -6637,17 +6637,17 @@ for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Num Extra Targets:  " << numExtraTargets << endl; \
+out << NiTimeController::asString(); \
+out << "Num Extra Targets:  " << numExtraTargets << endl; \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
-  cout << "  Extra Targets[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Extra Targets[" << i0 << "]:  " << "NiNode" << endl; \
 }; \
 return out.str(); \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numExtraTargets; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     extraTargets[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -6698,21 +6698,21 @@ for (uint i0 = 0; i0 < numEffects; i0++) { \
 
 #define NI_NODE_STRING \
 stringstream out; \
-cout << NiAVObject::asString(); \
-cout << "Num Children:  " << numChildren << endl; \
+out << NiAVObject::asString(); \
+out << "Num Children:  " << numChildren << endl; \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
-  cout << "  Children[" << i0 << "]:  " << "NiAVObject" << endl; \
+  out << "  Children[" << i0 << "]:  " << "NiAVObject" << endl; \
 }; \
-cout << "Num Effects:  " << numEffects << endl; \
+out << "Num Effects:  " << numEffects << endl; \
 for (uint i0 = 0; i0 < numEffects; i0++) { \
-  cout << "  Effects[" << i0 << "]:  " << "NiDynamicEffect" << endl; \
+  out << "  Effects[" << i0 << "]:  " << "NiDynamicEffect" << endl; \
 }; \
 return out.str(); \
 
 #define NI_NODE_FIXLINKS \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numChildren; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     children[i0] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
@@ -6721,7 +6721,7 @@ for (uint i0 = 0; i0 < numChildren; i0++) { \
   link_stack.pop_front(); \
 }; \
 for (uint i0 = 0; i0 < numEffects; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     effects[i0] = DynamicCast<NiDynamicEffect>(objects[link_stack.front()]); \
@@ -6746,7 +6746,7 @@ NiNode::Write( out, link_map, version ); \
 
 #define AVOID_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
+out << NiNode::asString(); \
 return out.str(); \
 
 #define AVOID_NODE_FIXLINKS \
@@ -6780,10 +6780,10 @@ for (uint i0 = 0; i0 < 292; i0++) { \
 
 #define FX_WIDGET_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
-cout << "Unknown1:  " << unknown1 << endl; \
+out << NiNode::asString(); \
+out << "Unknown1:  " << unknown1 << endl; \
 for (uint i0 = 0; i0 < 292; i0++) { \
-  cout << "  Unknown 292 Bytes[" << i0 << "]:  " << unknown292Bytes[i0] << endl; \
+  out << "  Unknown 292 Bytes[" << i0 << "]:  " << unknown292Bytes[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -6806,7 +6806,7 @@ FxWidget::Write( out, link_map, version ); \
 
 #define FX_BUTTON_STRING \
 stringstream out; \
-cout << FxWidget::asString(); \
+out << FxWidget::asString(); \
 return out.str(); \
 
 #define FX_BUTTON_FIXLINKS \
@@ -6851,20 +6851,20 @@ for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
 
 #define FX_RADIO_BUTTON_STRING \
 stringstream out; \
-cout << FxWidget::asString(); \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Unknown Int  2:  " << unknownInt2 << endl; \
-cout << "Unknown Int 3:  " << unknownInt3 << endl; \
-cout << "Num Unknown Links:  " << numUnknownLinks << endl; \
+out << FxWidget::asString(); \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Unknown Int  2:  " << unknownInt2 << endl; \
+out << "Unknown Int 3:  " << unknownInt3 << endl; \
+out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
-  cout << "  Unknown Links[" << i0 << "]:  " << "NiObject" << endl; \
+  out << "  Unknown Links[" << i0 << "]:  " << "NiObject" << endl; \
 }; \
 return out.str(); \
 
 #define FX_RADIO_BUTTON_FIXLINKS \
 FxWidget::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numUnknownLinks; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     unknownLinks[i0] = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -6897,8 +6897,8 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_BILLBOARD_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
-cout << "Billboard Mode:  " << billboardMode << endl; \
+out << NiNode::asString(); \
+out << "Billboard Mode:  " << billboardMode << endl; \
 return out.str(); \
 
 #define NI_BILLBOARD_NODE_FIXLINKS \
@@ -6920,7 +6920,7 @@ NiNode::Write( out, link_map, version ); \
 
 #define NI_B_S_ANIMATION_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
+out << NiNode::asString(); \
 return out.str(); \
 
 #define NI_B_S_ANIMATION_NODE_FIXLINKS \
@@ -6942,7 +6942,7 @@ NiNode::Write( out, link_map, version ); \
 
 #define NI_B_S_PARTICLE_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
+out << NiNode::asString(); \
 return out.str(); \
 
 #define NI_B_S_PARTICLE_NODE_FIXLINKS \
@@ -7000,26 +7000,26 @@ if ( (lodType == 1) ) { \
 
 #define NI_L_O_D_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
-cout << "LOD Type:  " << lodType << endl; \
+out << NiNode::asString(); \
+out << "LOD Type:  " << lodType << endl; \
 if ( (lodType == 0) ) { \
-  cout << "  LOD Center:  " << lodCenter << endl; \
-  cout << "  Num LOD Levels:  " << numLodLevels << endl; \
+  out << "  LOD Center:  " << lodCenter << endl; \
+  out << "  Num LOD Levels:  " << numLodLevels << endl; \
   for (uint i1 = 0; i1 < numLodLevels; i1++) { \
-    cout << "    Near:  " << lodLevels[i1].near << endl; \
-    cout << "    Far:  " << lodLevels[i1].far << endl; \
+    out << "    Near:  " << lodLevels[i1].near << endl; \
+    out << "    Far:  " << lodLevels[i1].far << endl; \
   }; \
 }; \
 if ( (lodType == 1) ) { \
-  cout << "  Unknown Short:  " << unknownShort << endl; \
-  cout << "  Range Data:  " << "NiRangeLODData" << endl; \
+  out << "  Unknown Short:  " << unknownShort << endl; \
+  out << "  Range Data:  " << "NiRangeLODData" << endl; \
 }; \
 return out.str(); \
 
 #define NI_L_O_D_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 if ( (lodType == 1) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     rangeData = DynamicCast<NiRangeLODData>(objects[link_stack.front()]); \
@@ -7065,12 +7065,12 @@ for (uint i0 = 0; i0 < 256; i0++) { \
 
 #define NI_PALETTE_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Num Entries?:  " << numEntries_ << endl; \
+out << NiObject::asString(); \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Num Entries?:  " << numEntries_ << endl; \
 for (uint i0 = 0; i0 < 256; i0++) { \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Palette[" << i0 << "][" << i1 << "]:  " << palette[i0][i1] << endl; \
+    out << "    Palette[" << i0 << "][" << i1 << "]:  " << palette[i0][i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -7131,19 +7131,19 @@ NifStream( unknownFloat10, out, version ); \
 
 #define NI_PARTICLE_BOMB_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Unknown Float 4:  " << unknownFloat4 << endl; \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Unknown Float 5:  " << unknownFloat5 << endl; \
-cout << "Unknown Float 6:  " << unknownFloat6 << endl; \
-cout << "Unknown Float 7:  " << unknownFloat7 << endl; \
-cout << "Unknown Float 8:  " << unknownFloat8 << endl; \
-cout << "Unknown Float 9:  " << unknownFloat9 << endl; \
-cout << "Unknown Float 10:  " << unknownFloat10 << endl; \
+out << AParticleModifier::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "Unknown Float 10:  " << unknownFloat10 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_BOMB_FIXLINKS \
@@ -7171,13 +7171,13 @@ NifStream( link_map[StaticCast<NiObject>(colorData)], out, version ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Color Data:  " << "NiColorData" << endl; \
+out << AParticleModifier::asString(); \
+out << "Color Data:  " << "NiColorData" << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   colorData = DynamicCast<NiColorData>(objects[link_stack.front()]); \
@@ -7208,9 +7208,9 @@ NifStream( fade, out, version ); \
 
 #define NI_PARTICLE_GROW_FADE_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Grow:  " << grow << endl; \
-cout << "Fade:  " << fade << endl; \
+out << AParticleModifier::asString(); \
+out << "Grow:  " << grow << endl; \
+out << "Fade:  " << fade << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_GROW_FADE_FIXLINKS \
@@ -7241,14 +7241,14 @@ NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
 
 #define NI_PARTICLE_MESH_MODIFIER_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Num Particle Meshes:  " << numParticleMeshes << endl; \
-cout << "Particle Meshes:  " << "NiTriBasedGeom" << endl; \
+out << AParticleModifier::asString(); \
+out << "Num Particle Meshes:  " << numParticleMeshes << endl; \
+out << "Particle Meshes:  " << "NiTriBasedGeom" << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   particleMeshes = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
@@ -7288,12 +7288,12 @@ NifStream( unknownFloat4, out, version ); \
 
 #define NI_PARTICLE_ROTATION_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Unknown Float 4:  " << unknownFloat4 << endl; \
+out << AParticleModifier::asString(); \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Unknown Float 4:  " << unknownFloat4 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_ROTATION_FIXLINKS \
@@ -7315,7 +7315,7 @@ NiTriBasedGeom::Write( out, link_map, version ); \
 
 #define NI_PARTICLES_STRING \
 stringstream out; \
-cout << NiTriBasedGeom::asString(); \
+out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_PARTICLES_FIXLINKS \
@@ -7337,7 +7337,7 @@ NiParticles::Write( out, link_map, version ); \
 
 #define NI_AUTO_NORMAL_PARTICLES_STRING \
 stringstream out; \
-cout << NiParticles::asString(); \
+out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_AUTO_NORMAL_PARTICLES_FIXLINKS \
@@ -7359,7 +7359,7 @@ NiParticles::Write( out, link_map, version ); \
 
 #define NI_PARTICLE_MESHES_STRING \
 stringstream out; \
-cout << NiParticles::asString(); \
+out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_PARTICLE_MESHES_FIXLINKS \
@@ -7419,18 +7419,18 @@ if ( (hasRotations != 0) ) { \
 
 #define NI_PARTICLES_DATA_STRING \
 stringstream out; \
-cout << NiAutoNormalParticlesData::asString(); \
-cout << "Num Active:  " << numActive << endl; \
-cout << "Has Unknown Floats:  " << hasUnknownFloats << endl; \
+out << NiAutoNormalParticlesData::asString(); \
+out << "Num Active:  " << numActive << endl; \
+out << "Has Unknown Floats:  " << hasUnknownFloats << endl; \
 if ( (hasUnknownFloats != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl; \
+    out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl; \
   }; \
 }; \
-cout << "Has Rotations:  " << hasRotations << endl; \
+out << "Has Rotations:  " << hasRotations << endl; \
 if ( (hasRotations != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
-    cout << "    Rotations[" << i1 << "]:  " << rotations[i1] << endl; \
+    out << "    Rotations[" << i1 << "]:  " << rotations[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -7460,13 +7460,13 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
 
 #define NI_PARTICLE_MESHES_DATA_STRING \
 stringstream out; \
-cout << NiParticlesData::asString(); \
-cout << "Unknown Link 2:  " << "NiTriBasedGeom" << endl; \
+out << NiParticlesData::asString(); \
+out << "Unknown Link 2:  " << "NiTriBasedGeom" << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESHES_DATA_FIXLINKS \
 NiParticlesData::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
@@ -7511,11 +7511,11 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_PARTICLE_SYSTEM_STRING \
 stringstream out; \
-cout << NiParticles::asString(); \
-cout << "Unknown Bool:  " << unknownBool << endl; \
-cout << "Num Modifiers:  " << numModifiers << endl; \
+out << NiParticles::asString(); \
+out << "Unknown Bool:  " << unknownBool << endl; \
+out << "Num Modifiers:  " << numModifiers << endl; \
 for (uint i0 = 0; i0 < numModifiers; i0++) { \
-  cout << "  Modifiers[" << i0 << "]:  " << "NiPSysModifier" << endl; \
+  out << "  Modifiers[" << i0 << "]:  " << "NiPSysModifier" << endl; \
 }; \
 return out.str(); \
 
@@ -7523,7 +7523,7 @@ return out.str(); \
 NiParticles::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   for (uint i1 = 0; i1 < numModifiers; i1++) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       modifiers[i1] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]); \
@@ -7549,7 +7549,7 @@ NiParticleSystem::Write( out, link_map, version ); \
 
 #define NI_MESH_PARTICLE_SYSTEM_STRING \
 stringstream out; \
-cout << NiParticleSystem::asString(); \
+out << NiParticleSystem::asString(); \
 return out.str(); \
 
 #define NI_MESH_PARTICLE_SYSTEM_FIXLINKS \
@@ -7699,76 +7699,76 @@ NifStream( trailer, out, version ); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Speed:  " << speed << endl; \
-cout << "Speed Random:  " << speedRandom << endl; \
-cout << "Vertical Direction:  " << verticalDirection << endl; \
-cout << "Vertical Angle:  " << verticalAngle << endl; \
-cout << "Horizontal Direction:  " << horizontalDirection << endl; \
-cout << "Horizontal Angle:  " << horizontalAngle << endl; \
-cout << "Unknown Float 5:  " << unknownFloat5 << endl; \
-cout << "Unknown Float 6:  " << unknownFloat6 << endl; \
-cout << "Unknown Float 7:  " << unknownFloat7 << endl; \
-cout << "Unknown Float 8:  " << unknownFloat8 << endl; \
-cout << "Unknown Float 9:  " << unknownFloat9 << endl; \
-cout << "Unknown Float 10:  " << unknownFloat10 << endl; \
-cout << "Unknown Float 11:  " << unknownFloat11 << endl; \
-cout << "Size:  " << size << endl; \
-cout << "Emit Start Time:  " << emitStartTime << endl; \
-cout << "Emit Stop Time:  " << emitStopTime << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
-cout << "Emit Rate:  " << emitRate << endl; \
-cout << "Lifetime:  " << lifetime << endl; \
-cout << "Lifetime Random:  " << lifetimeRandom << endl; \
-cout << "Emit Flags:  " << emitFlags << endl; \
-cout << "Start Random:  " << startRandom << endl; \
-cout << "Emitter:  " << "NiObject" << endl; \
-cout << "Unknown Short 2?:  " << unknownShort2_ << endl; \
-cout << "Unknown Float 13?:  " << unknownFloat13_ << endl; \
-cout << "Unknown Int 1?:  " << unknownInt1_ << endl; \
-cout << "Unknown Int 2?:  " << unknownInt2_ << endl; \
-cout << "Unknown Short 3?:  " << unknownShort3_ << endl; \
-cout << "Num Particles:  " << numParticles << endl; \
-cout << "Num Valid:  " << numValid << endl; \
+out << NiTimeController::asString(); \
+out << "Speed:  " << speed << endl; \
+out << "Speed Random:  " << speedRandom << endl; \
+out << "Vertical Direction:  " << verticalDirection << endl; \
+out << "Vertical Angle:  " << verticalAngle << endl; \
+out << "Horizontal Direction:  " << horizontalDirection << endl; \
+out << "Horizontal Angle:  " << horizontalAngle << endl; \
+out << "Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "Unknown Float 10:  " << unknownFloat10 << endl; \
+out << "Unknown Float 11:  " << unknownFloat11 << endl; \
+out << "Size:  " << size << endl; \
+out << "Emit Start Time:  " << emitStartTime << endl; \
+out << "Emit Stop Time:  " << emitStopTime << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
+out << "Emit Rate:  " << emitRate << endl; \
+out << "Lifetime:  " << lifetime << endl; \
+out << "Lifetime Random:  " << lifetimeRandom << endl; \
+out << "Emit Flags:  " << emitFlags << endl; \
+out << "Start Random:  " << startRandom << endl; \
+out << "Emitter:  " << "NiObject" << endl; \
+out << "Unknown Short 2?:  " << unknownShort2_ << endl; \
+out << "Unknown Float 13?:  " << unknownFloat13_ << endl; \
+out << "Unknown Int 1?:  " << unknownInt1_ << endl; \
+out << "Unknown Int 2?:  " << unknownInt2_ << endl; \
+out << "Unknown Short 3?:  " << unknownShort3_ << endl; \
+out << "Num Particles:  " << numParticles << endl; \
+out << "Num Valid:  " << numValid << endl; \
 for (uint i0 = 0; i0 < numParticles; i0++) { \
-  cout << "  Velocity:  " << particles[i0].velocity << endl; \
-  cout << "  Unknown Vector:  " << particles[i0].unknownVector << endl; \
-  cout << "  Lifetime:  " << particles[i0].lifetime << endl; \
-  cout << "  Lifespan:  " << particles[i0].lifespan << endl; \
-  cout << "  Timestamp:  " << particles[i0].timestamp << endl; \
-  cout << "  Unknown Short:  " << particles[i0].unknownShort << endl; \
-  cout << "  Vertex ID:  " << particles[i0].vertexId << endl; \
+  out << "  Velocity:  " << particles[i0].velocity << endl; \
+  out << "  Unknown Vector:  " << particles[i0].unknownVector << endl; \
+  out << "  Lifetime:  " << particles[i0].lifetime << endl; \
+  out << "  Lifespan:  " << particles[i0].lifespan << endl; \
+  out << "  Timestamp:  " << particles[i0].timestamp << endl; \
+  out << "  Unknown Short:  " << particles[i0].unknownShort << endl; \
+  out << "  Vertex ID:  " << particles[i0].vertexId << endl; \
 }; \
-cout << "Unknown Link:  " << "NiObject" << endl; \
-cout << "Particle Extra:  " << "AParticleModifier" << endl; \
-cout << "Unknown Link 2:  " << "NiObject" << endl; \
-cout << "Trailer:  " << trailer << endl; \
+out << "Unknown Link:  " << "NiObject" << endl; \
+out << "Particle Extra:  " << "AParticleModifier" << endl; \
+out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Trailer:  " << trailer << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   emitter = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   emitter = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   particleExtra = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
 else \
   particleExtra = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -7792,7 +7792,7 @@ NiParticleSystemController::Write( out, link_map, version ); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_STRING \
 stringstream out; \
-cout << NiParticleSystemController::asString(); \
+out << NiParticleSystemController::asString(); \
 return out.str(); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS \
@@ -7843,26 +7843,26 @@ NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
 
 #define NI_PATH_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Unknown Int 2:  " << unknownInt2 << endl; \
-cout << "Unknown Int 3:  " << unknownInt3 << endl; \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Pos Data:  " << "NiPosData" << endl; \
-cout << "Float Data:  " << "NiFloatData" << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+out << "Unknown Int 3:  " << unknownInt3 << endl; \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Pos Data:  " << "NiPosData" << endl; \
+out << "Float Data:  " << "NiFloatData" << endl; \
 return out.str(); \
 
 #define NI_PATH_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
   posData = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
@@ -7905,24 +7905,24 @@ NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
 
 #define NI_PATH_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiBlendInterpolator::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Pos Data:  " << "NiPosData" << endl; \
-cout << "Float Data:  " << "NiFloatData" << endl; \
+out << NiBlendInterpolator::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Pos Data:  " << "NiPosData" << endl; \
+out << "Float Data:  " << "NiFloatData" << endl; \
 return out.str(); \
 
 #define NI_PATH_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
 else \
   posData = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
@@ -8035,38 +8035,38 @@ for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
 
 #define NI_PIXEL_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Pixel Format:  " << pixelFormat << endl; \
-cout << "Red Mask:  " << redMask << endl; \
-cout << "Green Mask:  " << greenMask << endl; \
-cout << "Blue Mask:  " << blueMask << endl; \
-cout << "Alpha Mask:  " << alphaMask << endl; \
-cout << "Bits Per Pixel:  " << bitsPerPixel << endl; \
+out << NiObject::asString(); \
+out << "Pixel Format:  " << pixelFormat << endl; \
+out << "Red Mask:  " << redMask << endl; \
+out << "Green Mask:  " << greenMask << endl; \
+out << "Blue Mask:  " << blueMask << endl; \
+out << "Alpha Mask:  " << alphaMask << endl; \
+out << "Bits Per Pixel:  " << bitsPerPixel << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  cout << "  Unknown 8 Bytes[" << i0 << "]:  " << unknown8Bytes[i0] << endl; \
+  out << "  Unknown 8 Bytes[" << i0 << "]:  " << unknown8Bytes[i0] << endl; \
 }; \
-cout << "Unknown Int:  " << unknownInt << endl; \
+out << "Unknown Int:  " << unknownInt << endl; \
 for (uint i0 = 0; i0 < 54; i0++) { \
-  cout << "  Unknown 54 Bytes[" << i0 << "]:  " << unknown54Bytes[i0] << endl; \
+  out << "  Unknown 54 Bytes[" << i0 << "]:  " << unknown54Bytes[i0] << endl; \
 }; \
-cout << "Palette:  " << "NiPalette" << endl; \
-cout << "Num Mipmaps:  " << numMipmaps << endl; \
-cout << "Bytes Per Pixel:  " << bytesPerPixel << endl; \
+out << "Palette:  " << "NiPalette" << endl; \
+out << "Num Mipmaps:  " << numMipmaps << endl; \
+out << "Bytes Per Pixel:  " << bytesPerPixel << endl; \
 for (uint i0 = 0; i0 < numMipmaps; i0++) { \
-  cout << "  Width:  " << mipmaps[i0].width << endl; \
-  cout << "  Height:  " << mipmaps[i0].height << endl; \
-  cout << "  Offset:  " << mipmaps[i0].offset << endl; \
+  out << "  Width:  " << mipmaps[i0].width << endl; \
+  out << "  Height:  " << mipmaps[i0].height << endl; \
+  out << "  Offset:  " << mipmaps[i0].offset << endl; \
 }; \
-cout << "Data Size:  " << pixelData.dataSize << endl; \
-cout << "Unknown Int:  " << pixelData.unknownInt << endl; \
+out << "Data Size:  " << pixelData.dataSize << endl; \
+out << "Unknown Int:  " << pixelData.unknownInt << endl; \
 for (uint i0 = 0; i0 < pixelData.dataSize; i0++) { \
-  cout << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
+  out << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_PIXEL_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   palette = DynamicCast<NiPalette>(objects[link_stack.front()]); \
@@ -8153,25 +8153,25 @@ NifStream( unknownFloat16, out, version ); \
 
 #define NI_PLANAR_COLLIDER_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Short 2:  " << unknownShort2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Unknown Float 4:  " << unknownFloat4 << endl; \
-cout << "Unknown Float 5:  " << unknownFloat5 << endl; \
-cout << "Unknown Float 6:  " << unknownFloat6 << endl; \
-cout << "Unknown Float 7:  " << unknownFloat7 << endl; \
-cout << "Unknown Float 8:  " << unknownFloat8 << endl; \
-cout << "Unknown Float 9:  " << unknownFloat9 << endl; \
-cout << "Unknown Float 10:  " << unknownFloat10 << endl; \
-cout << "Unknown Float 11:  " << unknownFloat11 << endl; \
-cout << "Unknown Float 12:  " << unknownFloat12 << endl; \
-cout << "Unknown Float 13:  " << unknownFloat13 << endl; \
-cout << "Unknown Float 14:  " << unknownFloat14 << endl; \
-cout << "Unknown Float 15:  " << unknownFloat15 << endl; \
-cout << "Unknown Float 16:  " << unknownFloat16 << endl; \
+out << AParticleModifier::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Short 2:  " << unknownShort2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "Unknown Float 5:  " << unknownFloat5 << endl; \
+out << "Unknown Float 6:  " << unknownFloat6 << endl; \
+out << "Unknown Float 7:  " << unknownFloat7 << endl; \
+out << "Unknown Float 8:  " << unknownFloat8 << endl; \
+out << "Unknown Float 9:  " << unknownFloat9 << endl; \
+out << "Unknown Float 10:  " << unknownFloat10 << endl; \
+out << "Unknown Float 11:  " << unknownFloat11 << endl; \
+out << "Unknown Float 12:  " << unknownFloat12 << endl; \
+out << "Unknown Float 13:  " << unknownFloat13 << endl; \
+out << "Unknown Float 14:  " << unknownFloat14 << endl; \
+out << "Unknown Float 15:  " << unknownFloat15 << endl; \
+out << "Unknown Float 16:  " << unknownFloat16 << endl; \
 return out.str(); \
 
 #define NI_PLANAR_COLLIDER_FIXLINKS \
@@ -8202,14 +8202,14 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Point 3 Value:  " << point3Value << endl; \
-cout << "Data:  " << "NiPosData" << endl; \
+out << NiInterpolator::asString(); \
+out << "Point 3 Value:  " << point3Value << endl; \
+out << "Data:  " << "NiPosData" << endl; \
 return out.str(); \
 
 #define NI_POINT3_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
@@ -8243,10 +8243,10 @@ NifStream( quadraticAttenuation, out, version ); \
 
 #define NI_POINT_LIGHT_STRING \
 stringstream out; \
-cout << NiLight::asString(); \
-cout << "Constant Attenuation:  " << constantAttenuation << endl; \
-cout << "Linear Attenuation:  " << linearAttenuation << endl; \
-cout << "Quadratic Attenuation:  " << quadraticAttenuation << endl; \
+out << NiLight::asString(); \
+out << "Constant Attenuation:  " << constantAttenuation << endl; \
+out << "Linear Attenuation:  " << linearAttenuation << endl; \
+out << "Quadratic Attenuation:  " << quadraticAttenuation << endl; \
 return out.str(); \
 
 #define NI_POINT_LIGHT_FIXLINKS \
@@ -8284,13 +8284,13 @@ for (uint i0 = 0; i0 < data.numKeys; i0++) { \
 
 #define NI_POS_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Keys:  " << data.numKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Keys:  " << data.numKeys << endl; \
 if ( (data.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << data.interpolation << endl; \
+  out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -8322,14 +8322,14 @@ NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Spawn on Death:  " << spawnOnDeath << endl; \
-cout << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
+out << NiPSysModifier::asString(); \
+out << "Spawn on Death:  " << spawnOnDeath << endl; \
+out << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
 return out.str(); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
@@ -8383,22 +8383,22 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 
 #define NI_P_SYS_BOMB_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Unknown Link:  " << "NiNode" << endl; \
+out << NiPSysModifier::asString(); \
+out << "Unknown Link:  " << "NiNode" << endl; \
 for (uint i0 = 0; i0 < 2; i0++) { \
-  cout << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
+  out << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 2; i0++) { \
-  cout << "  Unknown Ints 2[" << i0 << "]:  " << unknownInts2[i0] << endl; \
+  out << "  Unknown Ints 2[" << i0 << "]:  " << unknownInts2[i0] << endl; \
 }; \
 return out.str(); \
 
 #define NI_P_SYS_BOMB_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -8426,8 +8426,8 @@ NifStream( updateSkip, out, version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Update Skip:  " << updateSkip << endl; \
+out << NiPSysModifier::asString(); \
+out << "Update Skip:  " << updateSkip << endl; \
 return out.str(); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS \
@@ -8459,10 +8459,10 @@ NifStream( depth, out, version ); \
 
 #define NI_P_SYS_BOX_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysVolumeEmitter::asString(); \
-cout << "Width:  " << width << endl; \
-cout << "Height:  " << height << endl; \
-cout << "Depth:  " << depth << endl; \
+out << NiPSysVolumeEmitter::asString(); \
+out << "Width:  " << width << endl; \
+out << "Height:  " << height << endl; \
+out << "Depth:  " << depth << endl; \
 return out.str(); \
 
 #define NI_P_SYS_BOX_EMITTER_FIXLINKS \
@@ -8490,13 +8490,13 @@ NifStream( link_map[StaticCast<NiObject>(collider)], out, version ); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Collider:  " << "NiPSysPlanarCollider" << endl; \
+out << NiPSysModifier::asString(); \
+out << "Collider:  " << "NiPSysPlanarCollider" << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   collider = DynamicCast<NiPSysPlanarCollider>(objects[link_stack.front()]); \
@@ -8526,13 +8526,13 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_P_SYS_COLOR_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Data:  " << "NiColorData" << endl; \
+out << NiPSysModifier::asString(); \
+out << "Data:  " << "NiColorData" << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLOR_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiColorData>(objects[link_stack.front()]); \
@@ -8563,9 +8563,9 @@ NifStream( height, out, version ); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysVolumeEmitter::asString(); \
-cout << "Radius:  " << radius << endl; \
-cout << "Height:  " << height << endl; \
+out << NiPSysVolumeEmitter::asString(); \
+out << "Radius:  " << radius << endl; \
+out << "Height:  " << height << endl; \
 return out.str(); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_FIXLINKS \
@@ -8676,37 +8676,37 @@ NifStream( unknownInt1, out, version ); \
 
 #define NI_P_SYS_DATA_STRING \
 stringstream out; \
-cout << APSysData::asString(); \
+out << APSysData::asString(); \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
   for (uint i1 = 0; i1 < 10; i1++) { \
-    cout << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
+    out << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
   }; \
 }; \
-cout << "Unknown Bool 1:  " << unknownBool1 << endl; \
+out << "Unknown Bool 1:  " << unknownBool1 << endl; \
 if ( (unknownBool1 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 32; i2++) { \
-      cout << "      Unknown Bytes[" << i1 << "][" << i2 << "]:  " << unknownBytes[i1][i2] << endl; \
+      out << "      Unknown Bytes[" << i1 << "][" << i2 << "]:  " << unknownBytes[i1][i2] << endl; \
     }; \
   }; \
 }; \
 if ( (unknownBool1 == 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 28; i2++) { \
-      cout << "      Unknown Bytes Alt[" << i1 << "][" << i2 << "]:  " << unknownBytesAlt[i1][i2] << endl; \
+      out << "      Unknown Bytes Alt[" << i1 << "][" << i2 << "]:  " << unknownBytesAlt[i1][i2] << endl; \
     }; \
   }; \
 }; \
-cout << "Unknown Byte 3:  " << unknownByte3 << endl; \
-cout << "Unknown Bool 2:  " << unknownBool2 << endl; \
+out << "Unknown Byte 3:  " << unknownByte3 << endl; \
+out << "Unknown Bool 2:  " << unknownBool2 << endl; \
 if ( (unknownBool2 != 0) ) { \
   for (uint i1 = 0; i1 < numVertices; i1++) { \
     for (uint i2 = 0; i2 < 4; i2++) { \
-      cout << "      Unknown Bytes 2[" << i1 << "][" << i2 << "]:  " << unknownBytes2[i1][i2] << endl; \
+      out << "      Unknown Bytes 2[" << i1 << "][" << i2 << "]:  " << unknownBytes2[i1][i2] << endl; \
     }; \
   }; \
 }; \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
 return out.str(); \
 
 #define NI_P_SYS_DATA_FIXLINKS \
@@ -8746,17 +8746,17 @@ NifStream( rangeFalloff, out, version ); \
 
 #define NI_P_SYS_DRAG_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Parent:  " << "NiObject" << endl; \
-cout << "Drag Axis:  " << dragAxis << endl; \
-cout << "Percentage:  " << percentage << endl; \
-cout << "Range:  " << range << endl; \
-cout << "Range Falloff:  " << rangeFalloff << endl; \
+out << NiPSysModifier::asString(); \
+out << "Parent:  " << "NiObject" << endl; \
+out << "Drag Axis:  " << dragAxis << endl; \
+out << "Percentage:  " << percentage << endl; \
+out << "Range:  " << range << endl; \
+out << "Range Falloff:  " << rangeFalloff << endl; \
 return out.str(); \
 
 #define NI_P_SYS_DRAG_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -8786,13 +8786,13 @@ NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version 
 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
-cout << "Visibility Interpolator:  " << "NiInterpolator" << endl; \
+out << APSysCtlr::asString(); \
+out << "Visibility Interpolator:  " << "NiInterpolator" << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
@@ -8844,17 +8844,17 @@ for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Num Keys:  " << floatKeys_.numKeys << endl; \
+out << NiObject::asString(); \
+out << "Num Keys:  " << floatKeys_.numKeys << endl; \
 if ( (floatKeys_.numKeys != 0) ) { \
-  cout << "  Interpolation:  " << floatKeys_.interpolation << endl; \
+  out << "  Interpolation:  " << floatKeys_.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.numKeys; i0++) { \
-  cout << "  Keys[" << i0 << "]:  " << floatKeys_.keys[i0] << endl; \
+  out << "  Keys[" << i0 << "]:  " << floatKeys_.keys[i0] << endl; \
 }; \
-cout << "Num Visibility Keys?:  " << numVisibilityKeys_ << endl; \
+out << "Num Visibility Keys?:  " << numVisibilityKeys_ << endl; \
 for (uint i0 = 0; i0 < numVisibilityKeys_; i0++) { \
-  cout << "  Visibility Keys?[" << i0 << "]:  " << visibilityKeys_[i0] << endl; \
+  out << "  Visibility Keys?[" << i0 << "]:  " << visibilityKeys_[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -8877,7 +8877,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_FIXLINKS \
@@ -8899,7 +8899,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS \
@@ -8921,7 +8921,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS \
@@ -8943,7 +8943,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS \
@@ -8965,7 +8965,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS \
@@ -9011,19 +9011,19 @@ NifStream( turbulenceScale, out, version ); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Gravity Object:  " << "NiNode" << endl; \
-cout << "Gravity Axis:  " << gravityAxis << endl; \
-cout << "Decay:  " << decay << endl; \
-cout << "Strength:  " << strength << endl; \
-cout << "Force Type:  " << forceType << endl; \
-cout << "Turbulence:  " << turbulence << endl; \
-cout << "Turbulence Scale:  " << turbulenceScale << endl; \
+out << NiPSysModifier::asString(); \
+out << "Gravity Object:  " << "NiNode" << endl; \
+out << "Gravity Axis:  " << gravityAxis << endl; \
+out << "Decay:  " << decay << endl; \
+out << "Strength:  " << strength << endl; \
+out << "Force Type:  " << forceType << endl; \
+out << "Turbulence:  " << turbulence << endl; \
+out << "Turbulence Scale:  " << turbulenceScale << endl; \
 return out.str(); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   gravityObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -9047,7 +9047,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS \
@@ -9082,11 +9082,11 @@ NifStream( fadeGeneration, out, version ); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Grow Time:  " << growTime << endl; \
-cout << "Grow Generation:  " << growGeneration << endl; \
-cout << "Fade Time:  " << fadeTime << endl; \
-cout << "Fade Generation:  " << fadeGeneration << endl; \
+out << NiPSysModifier::asString(); \
+out << "Grow Time:  " << growTime << endl; \
+out << "Grow Generation:  " << growGeneration << endl; \
+out << "Fade Time:  " << fadeTime << endl; \
+out << "Fade Generation:  " << fadeGeneration << endl; \
 return out.str(); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS \
@@ -9131,20 +9131,20 @@ NifStream( emissionAxis, out, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysEmitter::asString(); \
-cout << "Num Emitter Meshes:  " << numEmitterMeshes << endl; \
+out << NiPSysEmitter::asString(); \
+out << "Num Emitter Meshes:  " << numEmitterMeshes << endl; \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
-  cout << "  Emitter Meshes[" << i0 << "]:  " << "NiTriBasedGeom" << endl; \
+  out << "  Emitter Meshes[" << i0 << "]:  " << "NiTriBasedGeom" << endl; \
 }; \
-cout << "Initial Velocity Type:  " << initialVelocityType << endl; \
-cout << "Emission Type:  " << emissionType << endl; \
-cout << "Emission Axis:  " << emissionAxis << endl; \
+out << "Initial Velocity Type:  " << initialVelocityType << endl; \
+out << "Emission Type:  " << emissionType << endl; \
+out << "Emission Axis:  " << emissionAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_MESH_EMITTER_FIXLINKS \
 NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numEmitterMeshes; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     emitterMeshes[i0] = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
@@ -9183,17 +9183,17 @@ for (uint i0 = 0; i0 < numMeshes; i0++) { \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Num Meshes:  " << numMeshes << endl; \
+out << NiPSysModifier::asString(); \
+out << "Num Meshes:  " << numMeshes << endl; \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
-  cout << "  Meshes[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Meshes[" << i0 << "]:  " << "NiNode" << endl; \
 }; \
 return out.str(); \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < numMeshes; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     meshes[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -9218,7 +9218,7 @@ APSysCtlr::Write( out, link_map, version ); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_STRING \
 stringstream out; \
-cout << APSysCtlr::asString(); \
+out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS \
@@ -9279,44 +9279,44 @@ NifStream( yAxis, out, version ); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Bounce:  " << bounce << endl; \
-cout << "Spawn on Collide:  " << spawnOnCollide << endl; \
-cout << "Die on Collide:  " << dieOnCollide << endl; \
-cout << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
-cout << "Parent:  " << "NiObject" << endl; \
-cout << "Unknown Link?:  " << "NiObject" << endl; \
-cout << "Collider Object:  " << "NiNode" << endl; \
-cout << "Width:  " << width << endl; \
-cout << "Height:  " << height << endl; \
-cout << "X Axis:  " << xAxis << endl; \
-cout << "Y Axis:  " << yAxis << endl; \
+out << NiObject::asString(); \
+out << "Bounce:  " << bounce << endl; \
+out << "Spawn on Collide:  " << spawnOnCollide << endl; \
+out << "Die on Collide:  " << dieOnCollide << endl; \
+out << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
+out << "Parent:  " << "NiObject" << endl; \
+out << "Unknown Link?:  " << "NiObject" << endl; \
+out << "Collider Object:  " << "NiNode" << endl; \
+out << "Width:  " << width << endl; \
+out << "Height:  " << height << endl; \
+out << "X Axis:  " << xAxis << endl; \
+out << "Y Axis:  " << yAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
 else \
   spawnModifier = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   parent = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
 else \
   unknownLink_ = NULL; \
 link_stack.pop_front(); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   colliderObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -9340,7 +9340,7 @@ NiPSysModifier::Write( out, link_map, version ); \
 
 #define NI_P_SYS_POSITION_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
+out << NiPSysModifier::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_POSITION_MODIFIER_FIXLINKS \
@@ -9362,7 +9362,7 @@ NiTimeController::Write( out, link_map, version ); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
+out << NiTimeController::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS \
@@ -9410,14 +9410,14 @@ NifStream( initialAxis, out, version ); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Initial Rotation Speed:  " << initialRotationSpeed << endl; \
-cout << "Initial Rotation Speed Variation:  " << initialRotationSpeedVariation << endl; \
-cout << "Initial Rotation Angle:  " << initialRotationAngle << endl; \
-cout << "Initial Rotation Angle Variation:  " << initialRotationAngleVariation << endl; \
-cout << "Random Rot Speed Sign:  " << randomRotSpeedSign << endl; \
-cout << "Random Initial Axis:  " << randomInitialAxis << endl; \
-cout << "Initial Axis:  " << initialAxis << endl; \
+out << NiPSysModifier::asString(); \
+out << "Initial Rotation Speed:  " << initialRotationSpeed << endl; \
+out << "Initial Rotation Speed Variation:  " << initialRotationSpeedVariation << endl; \
+out << "Initial Rotation Angle:  " << initialRotationAngle << endl; \
+out << "Initial Rotation Angle Variation:  " << initialRotationAngleVariation << endl; \
+out << "Random Rot Speed Sign:  " << randomRotSpeedSign << endl; \
+out << "Random Initial Axis:  " << randomInitialAxis << endl; \
+out << "Initial Axis:  " << initialAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_FIXLINKS \
@@ -9464,15 +9464,15 @@ NifStream( lifeSpanVariation, out, version ); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_STRING \
 stringstream out; \
-cout << NiPSysModifier::asString(); \
-cout << "Num Spawn Generations:  " << numSpawnGenerations << endl; \
-cout << "Percentage Spawned:  " << percentageSpawned << endl; \
-cout << "Min Num to Spawn:  " << minNumToSpawn << endl; \
-cout << "Max Num to Spawn:  " << maxNumToSpawn << endl; \
-cout << "Spawn Speed Chaos:  " << spawnSpeedChaos << endl; \
-cout << "Spawn Dir Chaos:  " << spawnDirChaos << endl; \
-cout << "Life Span:  " << lifeSpan << endl; \
-cout << "Life Span Variation:  " << lifeSpanVariation << endl; \
+out << NiPSysModifier::asString(); \
+out << "Num Spawn Generations:  " << numSpawnGenerations << endl; \
+out << "Percentage Spawned:  " << percentageSpawned << endl; \
+out << "Min Num to Spawn:  " << minNumToSpawn << endl; \
+out << "Max Num to Spawn:  " << maxNumToSpawn << endl; \
+out << "Spawn Speed Chaos:  " << spawnSpeedChaos << endl; \
+out << "Spawn Dir Chaos:  " << spawnDirChaos << endl; \
+out << "Life Span:  " << lifeSpan << endl; \
+out << "Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_FIXLINKS \
@@ -9498,8 +9498,8 @@ NifStream( radius, out, version ); \
 
 #define NI_P_SYS_SPHERE_EMITTER_STRING \
 stringstream out; \
-cout << NiPSysVolumeEmitter::asString(); \
-cout << "Radius:  " << radius << endl; \
+out << NiPSysVolumeEmitter::asString(); \
+out << "Radius:  " << radius << endl; \
 return out.str(); \
 
 #define NI_P_SYS_SPHERE_EMITTER_FIXLINKS \
@@ -9521,7 +9521,7 @@ NiTimeController::Write( out, link_map, version ); \
 
 #define NI_P_SYS_UPDATE_CTLR_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
+out << NiTimeController::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_UPDATE_CTLR_FIXLINKS \
@@ -9560,12 +9560,12 @@ for (uint i0 = 0; i0 < numLodLevels; i0++) { \
 
 #define NI_RANGE_L_O_D_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "LOD Center:  " << lodCenter << endl; \
-cout << "Num LOD Levels:  " << numLodLevels << endl; \
+out << NiObject::asString(); \
+out << "LOD Center:  " << lodCenter << endl; \
+out << "Num LOD Levels:  " << numLodLevels << endl; \
 for (uint i0 = 0; i0 < numLodLevels; i0++) { \
-  cout << "  Near:  " << lodLevels[i0].near << endl; \
-  cout << "  Far:  " << lodLevels[i0].far << endl; \
+  out << "  Near:  " << lodLevels[i0].near << endl; \
+  out << "  Far:  " << lodLevels[i0].far << endl; \
 }; \
 return out.str(); \
 
@@ -9588,7 +9588,7 @@ NiParticles::Write( out, link_map, version ); \
 
 #define NI_ROTATING_PARTICLES_STRING \
 stringstream out; \
-cout << NiParticles::asString(); \
+out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_ROTATING_PARTICLES_FIXLINKS \
@@ -9610,7 +9610,7 @@ NiParticlesData::Write( out, link_map, version ); \
 
 #define NI_ROTATING_PARTICLES_DATA_STRING \
 stringstream out; \
-cout << NiParticlesData::asString(); \
+out << NiParticlesData::asString(); \
 return out.str(); \
 
 #define NI_ROTATING_PARTICLES_DATA_FIXLINKS \
@@ -9652,13 +9652,13 @@ for (uint i0 = 0; i0 < unknownCount; i0++) { \
 
 #define NI_SCREEN_L_O_D_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
+out << NiObject::asString(); \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  cout << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
+  out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
-cout << "Unknown Count:  " << unknownCount << endl; \
+out << "Unknown Count:  " << unknownCount << endl; \
 for (uint i0 = 0; i0 < unknownCount; i0++) { \
-  cout << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
+  out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -9681,7 +9681,7 @@ NiObjectNET::Write( out, link_map, version ); \
 
 #define NI_SEQUENCE_STREAM_HELPER_STRING \
 stringstream out; \
-cout << NiObjectNET::asString(); \
+out << NiObjectNET::asString(); \
 return out.str(); \
 
 #define NI_SEQUENCE_STREAM_HELPER_FIXLINKS \
@@ -9707,8 +9707,8 @@ NifStream( flags, out, version ); \
 
 #define NI_SHADE_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_SHADE_PROPERTY_FIXLINKS \
@@ -9789,24 +9789,24 @@ for (uint i0 = 0; i0 < numBones; i0++) { \
 
 #define NI_SKIN_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Rotation:  " << rotation << endl; \
-cout << "Translation:  " << translation << endl; \
-cout << "Scale:  " << scale << endl; \
-cout << "Num Bones:  " << numBones << endl; \
-cout << "Skin Partition:  " << "NiSkinPartition" << endl; \
-cout << "Unknown Byte:  " << unknownByte << endl; \
+out << NiObject::asString(); \
+out << "Rotation:  " << rotation << endl; \
+out << "Translation:  " << translation << endl; \
+out << "Scale:  " << scale << endl; \
+out << "Num Bones:  " << numBones << endl; \
+out << "Skin Partition:  " << "NiSkinPartition" << endl; \
+out << "Unknown Byte:  " << unknownByte << endl; \
 for (uint i0 = 0; i0 < numBones; i0++) { \
-  cout << "  Rotation:  " << boneList[i0].rotation << endl; \
-  cout << "  Translation:  " << boneList[i0].translation << endl; \
-  cout << "  Scale:  " << boneList[i0].scale << endl; \
+  out << "  Rotation:  " << boneList[i0].rotation << endl; \
+  out << "  Translation:  " << boneList[i0].translation << endl; \
+  out << "  Scale:  " << boneList[i0].scale << endl; \
   for (uint i1 = 0; i1 < 4; i1++) { \
-    cout << "    Unknown 4 Floats[" << i1 << "]:  " << boneList[i0].unknown4Floats[i1] << endl; \
+    out << "    Unknown 4 Floats[" << i1 << "]:  " << boneList[i0].unknown4Floats[i1] << endl; \
   }; \
-  cout << "  Num Vertices:  " << boneList[i0].numVertices << endl; \
+  out << "  Num Vertices:  " << boneList[i0].numVertices << endl; \
   for (uint i1 = 0; i1 < boneList[i0].numVertices; i1++) { \
-    cout << "    Index:  " << boneList[i0].vertexWeights[i1].index << endl; \
-    cout << "    Weight:  " << boneList[i0].vertexWeights[i1].weight << endl; \
+    out << "    Index:  " << boneList[i0].vertexWeights[i1].index << endl; \
+    out << "    Weight:  " << boneList[i0].vertexWeights[i1].weight << endl; \
   }; \
 }; \
 return out.str(); \
@@ -9814,7 +9814,7 @@ return out.str(); \
 #define NI_SKIN_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
@@ -9868,19 +9868,19 @@ for (uint i0 = 0; i0 < bones.numBones; i0++) { \
 
 #define NI_SKIN_INSTANCE_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Data:  " << "NiSkinData" << endl; \
-cout << "Skin Partition:  " << "NiSkinPartition" << endl; \
-cout << "Skeleton Root:  " << "NiNode" << endl; \
-cout << "Num Bones:  " << bones.numBones << endl; \
+out << NiObject::asString(); \
+out << "Data:  " << "NiSkinData" << endl; \
+out << "Skin Partition:  " << "NiSkinPartition" << endl; \
+out << "Skeleton Root:  " << "NiNode" << endl; \
+out << "Num Bones:  " << bones.numBones << endl; \
 for (uint i0 = 0; i0 < bones.numBones; i0++) { \
-  cout << "  Bones[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Bones[" << i0 << "]:  " << "NiNode" << endl; \
 }; \
 return out.str(); \
 
 #define NI_SKIN_INSTANCE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiSkinData>(objects[link_stack.front()]); \
@@ -9888,7 +9888,7 @@ else \
   data = NULL; \
 link_stack.pop_front(); \
 if ( version >= 0x0A020000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
@@ -9896,7 +9896,7 @@ if ( version >= 0x0A020000 ) { \
     skinPartition = NULL; \
   link_stack.pop_front(); \
 }; \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   skeletonRoot = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -9904,7 +9904,7 @@ else \
   skeletonRoot = NULL; \
 link_stack.pop_front(); \
 for (uint i0 = 0; i0 < bones.numBones; i0++) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     bones.bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
@@ -10109,46 +10109,46 @@ for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
 
 #define NI_SKIN_PARTITION_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl; \
+out << NiObject::asString(); \
+out << "Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl; \
 for (uint i0 = 0; i0 < numSkinPartitionBlocks; i0++) { \
-  cout << "  Num Vertices:  " << skinPartitionBlocks[i0].numVertices << endl; \
-  cout << "  Num Triangles:  " << skinPartitionBlocks[i0].numTriangles << endl; \
-  cout << "  Num Bones:  " << skinPartitionBlocks[i0].numBones << endl; \
-  cout << "  Num Strips:  " << skinPartitionBlocks[i0].numStrips << endl; \
-  cout << "  Num Weights Per Vertex:  " << skinPartitionBlocks[i0].numWeightsPerVertex << endl; \
+  out << "  Num Vertices:  " << skinPartitionBlocks[i0].numVertices << endl; \
+  out << "  Num Triangles:  " << skinPartitionBlocks[i0].numTriangles << endl; \
+  out << "  Num Bones:  " << skinPartitionBlocks[i0].numBones << endl; \
+  out << "  Num Strips:  " << skinPartitionBlocks[i0].numStrips << endl; \
+  out << "  Num Weights Per Vertex:  " << skinPartitionBlocks[i0].numWeightsPerVertex << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numBones; i1++) { \
-    cout << "    Bones[" << i1 << "]:  " << skinPartitionBlocks[i0].bones[i1] << endl; \
+    out << "    Bones[" << i1 << "]:  " << skinPartitionBlocks[i0].bones[i1] << endl; \
   }; \
-  cout << "  Has Vertex Map:  " << skinPartitionBlocks[i0].hasVertexMap << endl; \
+  out << "  Has Vertex Map:  " << skinPartitionBlocks[i0].hasVertexMap << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
-    cout << "    Vertex Map[" << i1 << "]:  " << skinPartitionBlocks[i0].vertexMap[i1] << endl; \
+    out << "    Vertex Map[" << i1 << "]:  " << skinPartitionBlocks[i0].vertexMap[i1] << endl; \
   }; \
-  cout << "  Has Vertex Weights:  " << skinPartitionBlocks[i0].hasVertexWeights << endl; \
+  out << "  Has Vertex Weights:  " << skinPartitionBlocks[i0].hasVertexWeights << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numVertices; i1++) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numWeightsPerVertex; i2++) { \
-      cout << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
+      out << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
     }; \
   }; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
-    cout << "    Strip Lengths[" << i1 << "]:  " << skinPartitionBlocks[i0].stripLengths[i1] << endl; \
+    out << "    Strip Lengths[" << i1 << "]:  " << skinPartitionBlocks[i0].stripLengths[i1] << endl; \
   }; \
-  cout << "  Has Strips:  " << skinPartitionBlocks[i0].hasStrips << endl; \
+  out << "  Has Strips:  " << skinPartitionBlocks[i0].hasStrips << endl; \
   for (uint i1 = 0; i1 < skinPartitionBlocks[i0].numStrips; i1++) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].stripLengths[i1]; i2++) { \
-      cout << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
+      out << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
     }; \
   }; \
   if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numTriangles; i2++) { \
-      cout << "      Triangles[" << i2 << "]:  " << skinPartitionBlocks[i0].triangles[i2] << endl; \
+      out << "      Triangles[" << i2 << "]:  " << skinPartitionBlocks[i0].triangles[i2] << endl; \
     }; \
   }; \
-  cout << "  Has Bone Indices:  " << skinPartitionBlocks[i0].hasBoneIndices << endl; \
+  out << "  Has Bone Indices:  " << skinPartitionBlocks[i0].hasBoneIndices << endl; \
   if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
     for (uint i2 = 0; i2 < skinPartitionBlocks[i0].numVertices; i2++) { \
       for (uint i3 = 0; i3 < skinPartitionBlocks[i0].numWeightsPerVertex; i3++) { \
-        cout << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
+        out << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
       }; \
     }; \
   }; \
@@ -10246,28 +10246,28 @@ if ( version >= 0x0A01006A ) { \
 
 #define NI_SOURCE_TEXTURE_STRING \
 stringstream out; \
-cout << NiObjectNET::asString(); \
-cout << "Use External:  " << useExternal << endl; \
+out << NiObjectNET::asString(); \
+out << "Use External:  " << useExternal << endl; \
 if ( (useExternal == 1) ) { \
-  cout << "  File Name:  " << fileName << endl; \
-  cout << "  Unknown Link:  " << "NiObject" << endl; \
+  out << "  File Name:  " << fileName << endl; \
+  out << "  Unknown Link:  " << "NiObject" << endl; \
 }; \
 if ( (useExternal == 0) ) { \
-  cout << "  Unknown Byte:  " << unknownByte << endl; \
-  cout << "  Original File Name?:  " << originalFileName_ << endl; \
-  cout << "  Pixel Data:  " << "NiPixelData" << endl; \
+  out << "  Unknown Byte:  " << unknownByte << endl; \
+  out << "  Original File Name?:  " << originalFileName_ << endl; \
+  out << "  Pixel Data:  " << "NiPixelData" << endl; \
 }; \
-cout << "Pixel Layout:  " << pixelLayout << endl; \
-cout << "Use Mipmaps:  " << useMipmaps << endl; \
-cout << "Alpha Format:  " << alphaFormat << endl; \
-cout << "Unknown Byte 2:  " << unknownByte2 << endl; \
+out << "Pixel Layout:  " << pixelLayout << endl; \
+out << "Use Mipmaps:  " << useMipmaps << endl; \
+out << "Alpha Format:  " << alphaFormat << endl; \
+out << "Unknown Byte 2:  " << unknownByte2 << endl; \
 return out.str(); \
 
 #define NI_SOURCE_TEXTURE_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A010000 ) { \
   if ( (useExternal == 1) ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
@@ -10277,7 +10277,7 @@ if ( version >= 0x0A010000 ) { \
   }; \
 }; \
 if ( (useExternal == 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
@@ -10306,8 +10306,8 @@ NifStream( flags, out, version ); \
 
 #define NI_SPECULAR_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_SPECULAR_PROPERTY_FIXLINKS \
@@ -10348,13 +10348,13 @@ NifStream( unknownFloat5, out, version ); \
 
 #define NI_SPHERICAL_COLLIDER_STRING \
 stringstream out; \
-cout << AParticleModifier::asString(); \
-cout << "Unknown Float 1:  " << unknownFloat1 << endl; \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Unknown Float 2:  " << unknownFloat2 << endl; \
-cout << "Unknown Float 3:  " << unknownFloat3 << endl; \
-cout << "Unknown Float 4:  " << unknownFloat4 << endl; \
-cout << "Unknown Float 5:  " << unknownFloat5 << endl; \
+out << AParticleModifier::asString(); \
+out << "Unknown Float 1:  " << unknownFloat1 << endl; \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Unknown Float 2:  " << unknownFloat2 << endl; \
+out << "Unknown Float 3:  " << unknownFloat3 << endl; \
+out << "Unknown Float 4:  " << unknownFloat4 << endl; \
+out << "Unknown Float 5:  " << unknownFloat5 << endl; \
 return out.str(); \
 
 #define NI_SPHERICAL_COLLIDER_FIXLINKS \
@@ -10383,9 +10383,9 @@ NifStream( exponent, out, version ); \
 
 #define NI_SPOT_LIGHT_STRING \
 stringstream out; \
-cout << NiPointLight::asString(); \
-cout << "Cutoff Angle:  " << cutoffAngle << endl; \
-cout << "Exponent:  " << exponent << endl; \
+out << NiPointLight::asString(); \
+out << "Cutoff Angle:  " << cutoffAngle << endl; \
+out << "Exponent:  " << exponent << endl; \
 return out.str(); \
 
 #define NI_SPOT_LIGHT_FIXLINKS \
@@ -10439,16 +10439,16 @@ NifStream( drawMode, out, version ); \
 
 #define NI_STENCIL_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Stencil Enabled:  " << stencilEnabled << endl; \
-cout << "Stencil Function:  " << stencilFunction << endl; \
-cout << "Stencil Ref:  " << stencilRef << endl; \
-cout << "Stencil Mask:  " << stencilMask << endl; \
-cout << "Fail Action:  " << failAction << endl; \
-cout << "Z Fail Action:  " << zFailAction << endl; \
-cout << "Pass Action:  " << passAction << endl; \
-cout << "Draw Mode:  " << drawMode << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Stencil Enabled:  " << stencilEnabled << endl; \
+out << "Stencil Function:  " << stencilFunction << endl; \
+out << "Stencil Ref:  " << stencilRef << endl; \
+out << "Stencil Mask:  " << stencilMask << endl; \
+out << "Fail Action:  " << failAction << endl; \
+out << "Z Fail Action:  " << zFailAction << endl; \
+out << "Pass Action:  " << passAction << endl; \
+out << "Draw Mode:  " << drawMode << endl; \
 return out.str(); \
 
 #define NI_STENCIL_PROPERTY_FIXLINKS \
@@ -10481,9 +10481,9 @@ NifStream( stringData, out, version ); \
 
 #define NI_STRING_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Bytes Remaining:  " << bytesRemaining << endl; \
-cout << "String Data:  " << stringData << endl; \
+out << NiExtraData::asString(); \
+out << "Bytes Remaining:  " << bytesRemaining << endl; \
+out << "String Data:  " << stringData << endl; \
 return out.str(); \
 
 #define NI_STRING_EXTRA_DATA_FIXLINKS \
@@ -10510,9 +10510,9 @@ NifStream( palette.length, out, version ); \
 
 #define NI_STRING_PALETTE_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
-cout << "Palette:  " << palette.palette << endl; \
-cout << "Length:  " << palette.length << endl; \
+out << NiObject::asString(); \
+out << "Palette:  " << palette.palette << endl; \
+out << "Length:  " << palette.length << endl; \
 return out.str(); \
 
 #define NI_STRING_PALETTE_FIXLINKS \
@@ -10546,10 +10546,10 @@ for (uint i0 = 0; i0 < numStrings; i0++) { \
 
 #define NI_STRINGS_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Num Strings:  " << numStrings << endl; \
+out << NiExtraData::asString(); \
+out << "Num Strings:  " << numStrings << endl; \
 for (uint i0 = 0; i0 < numStrings; i0++) { \
-  cout << "  Data[" << i0 << "]:  " << data[i0] << endl; \
+  out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -10591,11 +10591,11 @@ for (uint i0 = 0; i0 < numTextKeys; i0++) { \
 
 #define NI_TEXT_KEY_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Unknown Int 1:  " << unknownInt1 << endl; \
-cout << "Num Text Keys:  " << numTextKeys << endl; \
+out << NiExtraData::asString(); \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+out << "Num Text Keys:  " << numTextKeys << endl; \
 for (uint i0 = 0; i0 < numTextKeys; i0++) { \
-  cout << "  Text Keys[" << i0 << "]:  " << textKeys[i0] << endl; \
+  out << "  Text Keys[" << i0 << "]:  " << textKeys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -10668,25 +10668,25 @@ if ( version <= 0x0401000C ) { \
 
 #define NI_TEXTURE_EFFECT_STRING \
 stringstream out; \
-cout << NiDynamicEffect::asString(); \
-cout << "Model Projection Matrix:  " << modelProjectionMatrix << endl; \
-cout << "Model Projection Transform:  " << modelProjectionTransform << endl; \
-cout << "Texture Filtering:  " << textureFiltering << endl; \
-cout << "Texture Clamping:  " << textureClamping << endl; \
-cout << "Texture Type:  " << textureType << endl; \
-cout << "Coordinate Generation Type:  " << coordinateGenerationType << endl; \
-cout << "Source Texture:  " << "NiSourceTexture" << endl; \
-cout << "Clipping Plane:  " << clippingPlane << endl; \
-cout << "Unknown Vector:  " << unknownVector << endl; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
-cout << "PS2 L:  " << ps2L << endl; \
-cout << "PS2 K:  " << ps2K << endl; \
-cout << "Unknown Short:  " << unknownShort << endl; \
+out << NiDynamicEffect::asString(); \
+out << "Model Projection Matrix:  " << modelProjectionMatrix << endl; \
+out << "Model Projection Transform:  " << modelProjectionTransform << endl; \
+out << "Texture Filtering:  " << textureFiltering << endl; \
+out << "Texture Clamping:  " << textureClamping << endl; \
+out << "Texture Type:  " << textureType << endl; \
+out << "Coordinate Generation Type:  " << coordinateGenerationType << endl; \
+out << "Source Texture:  " << "NiSourceTexture" << endl; \
+out << "Clipping Plane:  " << clippingPlane << endl; \
+out << "Unknown Vector:  " << unknownVector << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
+out << "PS2 L:  " << ps2L << endl; \
+out << "PS2 K:  " << ps2K << endl; \
+out << "Unknown Short:  " << unknownShort << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_EFFECT_FIXLINKS \
 NiDynamicEffect::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   sourceTexture = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -10729,17 +10729,17 @@ if ( version <= 0x0A010000 ) { \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Unknown2:  " << unknown2 << endl; \
-cout << "Texture Slot:  " << textureSlot << endl; \
-cout << "Operation:  " << operation << endl; \
-cout << "Data:  " << "NiFloatData" << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Unknown2:  " << unknown2 << endl; \
+out << "Texture Slot:  " << textureSlot << endl; \
+out << "Operation:  " << operation << endl; \
+out << "Data:  " << "NiFloatData" << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
@@ -11268,179 +11268,179 @@ if ( version >= 0x0A000100 ) { \
 
 #define NI_TEXTURING_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Apply Mode:  " << applyMode << endl; \
-cout << "Texture Count:  " << textureCount << endl; \
-cout << "Has Base Texture:  " << hasBaseTexture << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Apply Mode:  " << applyMode << endl; \
+out << "Texture Count:  " << textureCount << endl; \
+out << "Has Base Texture:  " << hasBaseTexture << endl; \
 if ( (hasBaseTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << baseTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << baseTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << baseTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << baseTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << baseTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << baseTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << baseTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << baseTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << baseTexture.filterMode << endl; \
+  out << "  Texture Set:  " << baseTexture.textureSet << endl; \
+  out << "  PS2 L:  " << baseTexture.ps2L << endl; \
+  out << "  PS2 K:  " << baseTexture.ps2K << endl; \
+  out << "  Unknown1:  " << baseTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << baseTexture.hasTextureTransform << endl; \
   if ( (baseTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << baseTexture.translation << endl; \
-    cout << "    Tiling:  " << baseTexture.tiling << endl; \
-    cout << "    W Rotation:  " << baseTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << baseTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << baseTexture.centerOffset << endl; \
+    out << "    Translation:  " << baseTexture.translation << endl; \
+    out << "    Tiling:  " << baseTexture.tiling << endl; \
+    out << "    W Rotation:  " << baseTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << baseTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << baseTexture.centerOffset << endl; \
   }; \
 }; \
-cout << "Has Dark Texture:  " << hasDarkTexture << endl; \
+out << "Has Dark Texture:  " << hasDarkTexture << endl; \
 if ( (hasDarkTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << darkTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << darkTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << darkTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << darkTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << darkTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << darkTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << darkTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << darkTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << darkTexture.filterMode << endl; \
+  out << "  Texture Set:  " << darkTexture.textureSet << endl; \
+  out << "  PS2 L:  " << darkTexture.ps2L << endl; \
+  out << "  PS2 K:  " << darkTexture.ps2K << endl; \
+  out << "  Unknown1:  " << darkTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << darkTexture.hasTextureTransform << endl; \
   if ( (darkTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << darkTexture.translation << endl; \
-    cout << "    Tiling:  " << darkTexture.tiling << endl; \
-    cout << "    W Rotation:  " << darkTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << darkTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << darkTexture.centerOffset << endl; \
+    out << "    Translation:  " << darkTexture.translation << endl; \
+    out << "    Tiling:  " << darkTexture.tiling << endl; \
+    out << "    W Rotation:  " << darkTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << darkTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << darkTexture.centerOffset << endl; \
   }; \
 }; \
-cout << "Has Detail Texture:  " << hasDetailTexture << endl; \
+out << "Has Detail Texture:  " << hasDetailTexture << endl; \
 if ( (hasDetailTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << detailTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << detailTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << detailTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << detailTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << detailTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << detailTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << detailTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << detailTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << detailTexture.filterMode << endl; \
+  out << "  Texture Set:  " << detailTexture.textureSet << endl; \
+  out << "  PS2 L:  " << detailTexture.ps2L << endl; \
+  out << "  PS2 K:  " << detailTexture.ps2K << endl; \
+  out << "  Unknown1:  " << detailTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << detailTexture.hasTextureTransform << endl; \
   if ( (detailTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << detailTexture.translation << endl; \
-    cout << "    Tiling:  " << detailTexture.tiling << endl; \
-    cout << "    W Rotation:  " << detailTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << detailTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << detailTexture.centerOffset << endl; \
+    out << "    Translation:  " << detailTexture.translation << endl; \
+    out << "    Tiling:  " << detailTexture.tiling << endl; \
+    out << "    W Rotation:  " << detailTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << detailTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << detailTexture.centerOffset << endl; \
   }; \
 }; \
-cout << "Has Gloss Texture:  " << hasGlossTexture << endl; \
+out << "Has Gloss Texture:  " << hasGlossTexture << endl; \
 if ( (hasGlossTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << glossTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << glossTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << glossTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << glossTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << glossTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << glossTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << glossTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << glossTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << glossTexture.filterMode << endl; \
+  out << "  Texture Set:  " << glossTexture.textureSet << endl; \
+  out << "  PS2 L:  " << glossTexture.ps2L << endl; \
+  out << "  PS2 K:  " << glossTexture.ps2K << endl; \
+  out << "  Unknown1:  " << glossTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << glossTexture.hasTextureTransform << endl; \
   if ( (glossTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << glossTexture.translation << endl; \
-    cout << "    Tiling:  " << glossTexture.tiling << endl; \
-    cout << "    W Rotation:  " << glossTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << glossTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << glossTexture.centerOffset << endl; \
+    out << "    Translation:  " << glossTexture.translation << endl; \
+    out << "    Tiling:  " << glossTexture.tiling << endl; \
+    out << "    W Rotation:  " << glossTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << glossTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << glossTexture.centerOffset << endl; \
   }; \
 }; \
-cout << "Has Glow Texture:  " << hasGlowTexture << endl; \
+out << "Has Glow Texture:  " << hasGlowTexture << endl; \
 if ( (hasGlowTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << glowTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << glowTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << glowTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << glowTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << glowTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << glowTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << glowTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << glowTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << glowTexture.filterMode << endl; \
+  out << "  Texture Set:  " << glowTexture.textureSet << endl; \
+  out << "  PS2 L:  " << glowTexture.ps2L << endl; \
+  out << "  PS2 K:  " << glowTexture.ps2K << endl; \
+  out << "  Unknown1:  " << glowTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << glowTexture.hasTextureTransform << endl; \
   if ( (glowTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << glowTexture.translation << endl; \
-    cout << "    Tiling:  " << glowTexture.tiling << endl; \
-    cout << "    W Rotation:  " << glowTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << glowTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << glowTexture.centerOffset << endl; \
+    out << "    Translation:  " << glowTexture.translation << endl; \
+    out << "    Tiling:  " << glowTexture.tiling << endl; \
+    out << "    W Rotation:  " << glowTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << glowTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << glowTexture.centerOffset << endl; \
   }; \
 }; \
-cout << "Has Bump Map Texture:  " << hasBumpMapTexture << endl; \
+out << "Has Bump Map Texture:  " << hasBumpMapTexture << endl; \
 if ( (hasBumpMapTexture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << bumpMapTexture.clampMode << endl; \
-  cout << "  Filter Mode:  " << bumpMapTexture.filterMode << endl; \
-  cout << "  Texture Set:  " << bumpMapTexture.textureSet << endl; \
-  cout << "  PS2 L:  " << bumpMapTexture.ps2L << endl; \
-  cout << "  PS2 K:  " << bumpMapTexture.ps2K << endl; \
-  cout << "  Unknown1:  " << bumpMapTexture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << bumpMapTexture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << bumpMapTexture.clampMode << endl; \
+  out << "  Filter Mode:  " << bumpMapTexture.filterMode << endl; \
+  out << "  Texture Set:  " << bumpMapTexture.textureSet << endl; \
+  out << "  PS2 L:  " << bumpMapTexture.ps2L << endl; \
+  out << "  PS2 K:  " << bumpMapTexture.ps2K << endl; \
+  out << "  Unknown1:  " << bumpMapTexture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << bumpMapTexture.hasTextureTransform << endl; \
   if ( (bumpMapTexture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << bumpMapTexture.translation << endl; \
-    cout << "    Tiling:  " << bumpMapTexture.tiling << endl; \
-    cout << "    W Rotation:  " << bumpMapTexture.wRotation << endl; \
-    cout << "    Transform Type?:  " << bumpMapTexture.transformType_ << endl; \
-    cout << "    Center Offset:  " << bumpMapTexture.centerOffset << endl; \
+    out << "    Translation:  " << bumpMapTexture.translation << endl; \
+    out << "    Tiling:  " << bumpMapTexture.tiling << endl; \
+    out << "    W Rotation:  " << bumpMapTexture.wRotation << endl; \
+    out << "    Transform Type?:  " << bumpMapTexture.transformType_ << endl; \
+    out << "    Center Offset:  " << bumpMapTexture.centerOffset << endl; \
   }; \
-  cout << "  Bump Map Luma Scale:  " << bumpMapLumaScale << endl; \
-  cout << "  Bump Map Luma Offset:  " << bumpMapLumaOffset << endl; \
-  cout << "  Bump Map Matrix:  " << bumpMapMatrix << endl; \
+  out << "  Bump Map Luma Scale:  " << bumpMapLumaScale << endl; \
+  out << "  Bump Map Luma Offset:  " << bumpMapLumaOffset << endl; \
+  out << "  Bump Map Matrix:  " << bumpMapMatrix << endl; \
 }; \
-cout << "Has Decal 0 Texture:  " << hasDecal0Texture << endl; \
+out << "Has Decal 0 Texture:  " << hasDecal0Texture << endl; \
 if ( (hasDecal0Texture != 0) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << decal0Texture.clampMode << endl; \
-  cout << "  Filter Mode:  " << decal0Texture.filterMode << endl; \
-  cout << "  Texture Set:  " << decal0Texture.textureSet << endl; \
-  cout << "  PS2 L:  " << decal0Texture.ps2L << endl; \
-  cout << "  PS2 K:  " << decal0Texture.ps2K << endl; \
-  cout << "  Unknown1:  " << decal0Texture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << decal0Texture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << decal0Texture.clampMode << endl; \
+  out << "  Filter Mode:  " << decal0Texture.filterMode << endl; \
+  out << "  Texture Set:  " << decal0Texture.textureSet << endl; \
+  out << "  PS2 L:  " << decal0Texture.ps2L << endl; \
+  out << "  PS2 K:  " << decal0Texture.ps2K << endl; \
+  out << "  Unknown1:  " << decal0Texture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << decal0Texture.hasTextureTransform << endl; \
   if ( (decal0Texture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << decal0Texture.translation << endl; \
-    cout << "    Tiling:  " << decal0Texture.tiling << endl; \
-    cout << "    W Rotation:  " << decal0Texture.wRotation << endl; \
-    cout << "    Transform Type?:  " << decal0Texture.transformType_ << endl; \
-    cout << "    Center Offset:  " << decal0Texture.centerOffset << endl; \
+    out << "    Translation:  " << decal0Texture.translation << endl; \
+    out << "    Tiling:  " << decal0Texture.tiling << endl; \
+    out << "    W Rotation:  " << decal0Texture.wRotation << endl; \
+    out << "    Transform Type?:  " << decal0Texture.transformType_ << endl; \
+    out << "    Center Offset:  " << decal0Texture.centerOffset << endl; \
   }; \
 }; \
 if ( (textureCount == 8) ) { \
-  cout << "  Has Decal 1 Texture:  " << hasDecal1Texture << endl; \
+  out << "  Has Decal 1 Texture:  " << hasDecal1Texture << endl; \
 }; \
 if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
-  cout << "  Source:  " << "NiSourceTexture" << endl; \
-  cout << "  Clamp Mode:  " << decal1Texture.clampMode << endl; \
-  cout << "  Filter Mode:  " << decal1Texture.filterMode << endl; \
-  cout << "  Texture Set:  " << decal1Texture.textureSet << endl; \
-  cout << "  PS2 L:  " << decal1Texture.ps2L << endl; \
-  cout << "  PS2 K:  " << decal1Texture.ps2K << endl; \
-  cout << "  Unknown1:  " << decal1Texture.unknown1 << endl; \
-  cout << "  Has Texture Transform:  " << decal1Texture.hasTextureTransform << endl; \
+  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Clamp Mode:  " << decal1Texture.clampMode << endl; \
+  out << "  Filter Mode:  " << decal1Texture.filterMode << endl; \
+  out << "  Texture Set:  " << decal1Texture.textureSet << endl; \
+  out << "  PS2 L:  " << decal1Texture.ps2L << endl; \
+  out << "  PS2 K:  " << decal1Texture.ps2K << endl; \
+  out << "  Unknown1:  " << decal1Texture.unknown1 << endl; \
+  out << "  Has Texture Transform:  " << decal1Texture.hasTextureTransform << endl; \
   if ( (decal1Texture.hasTextureTransform != 0) ) { \
-    cout << "    Translation:  " << decal1Texture.translation << endl; \
-    cout << "    Tiling:  " << decal1Texture.tiling << endl; \
-    cout << "    W Rotation:  " << decal1Texture.wRotation << endl; \
-    cout << "    Transform Type?:  " << decal1Texture.transformType_ << endl; \
-    cout << "    Center Offset:  " << decal1Texture.centerOffset << endl; \
+    out << "    Translation:  " << decal1Texture.translation << endl; \
+    out << "    Tiling:  " << decal1Texture.tiling << endl; \
+    out << "    W Rotation:  " << decal1Texture.wRotation << endl; \
+    out << "    Transform Type?:  " << decal1Texture.transformType_ << endl; \
+    out << "    Center Offset:  " << decal1Texture.centerOffset << endl; \
   }; \
 }; \
-cout << "Num Shader Textures:  " << numShaderTextures << endl; \
+out << "Num Shader Textures:  " << numShaderTextures << endl; \
 for (uint i0 = 0; i0 < numShaderTextures; i0++) { \
-  cout << "  Is Used:  " << shaderTextures[i0].isUsed << endl; \
+  out << "  Is Used:  " << shaderTextures[i0].isUsed << endl; \
   if ( (shaderTextures[i0].isUsed != 0) ) { \
-    cout << "    Source:  " << "NiSourceTexture" << endl; \
-    cout << "    Clamp Mode:  " << shaderTextures[i0].textureData.clampMode << endl; \
-    cout << "    Filter Mode:  " << shaderTextures[i0].textureData.filterMode << endl; \
-    cout << "    Texture Set:  " << shaderTextures[i0].textureData.textureSet << endl; \
-    cout << "    PS2 L:  " << shaderTextures[i0].textureData.ps2L << endl; \
-    cout << "    PS2 K:  " << shaderTextures[i0].textureData.ps2K << endl; \
-    cout << "    Unknown1:  " << shaderTextures[i0].textureData.unknown1 << endl; \
-    cout << "    Has Texture Transform:  " << shaderTextures[i0].textureData.hasTextureTransform << endl; \
+    out << "    Source:  " << "NiSourceTexture" << endl; \
+    out << "    Clamp Mode:  " << shaderTextures[i0].textureData.clampMode << endl; \
+    out << "    Filter Mode:  " << shaderTextures[i0].textureData.filterMode << endl; \
+    out << "    Texture Set:  " << shaderTextures[i0].textureData.textureSet << endl; \
+    out << "    PS2 L:  " << shaderTextures[i0].textureData.ps2L << endl; \
+    out << "    PS2 K:  " << shaderTextures[i0].textureData.ps2K << endl; \
+    out << "    Unknown1:  " << shaderTextures[i0].textureData.unknown1 << endl; \
+    out << "    Has Texture Transform:  " << shaderTextures[i0].textureData.hasTextureTransform << endl; \
     if ( (shaderTextures[i0].textureData.hasTextureTransform != 0) ) { \
-      cout << "      Translation:  " << shaderTextures[i0].textureData.translation << endl; \
-      cout << "      Tiling:  " << shaderTextures[i0].textureData.tiling << endl; \
-      cout << "      W Rotation:  " << shaderTextures[i0].textureData.wRotation << endl; \
-      cout << "      Transform Type?:  " << shaderTextures[i0].textureData.transformType_ << endl; \
-      cout << "      Center Offset:  " << shaderTextures[i0].textureData.centerOffset << endl; \
+      out << "      Translation:  " << shaderTextures[i0].textureData.translation << endl; \
+      out << "      Tiling:  " << shaderTextures[i0].textureData.tiling << endl; \
+      out << "      W Rotation:  " << shaderTextures[i0].textureData.wRotation << endl; \
+      out << "      Transform Type?:  " << shaderTextures[i0].textureData.transformType_ << endl; \
+      out << "      Center Offset:  " << shaderTextures[i0].textureData.centerOffset << endl; \
     }; \
-    cout << "    Unknown Int:  " << shaderTextures[i0].unknownInt << endl; \
+    out << "    Unknown Int:  " << shaderTextures[i0].unknownInt << endl; \
   }; \
 }; \
 return out.str(); \
@@ -11448,7 +11448,7 @@ return out.str(); \
 #define NI_TEXTURING_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
 if ( (hasBaseTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11457,7 +11457,7 @@ if ( (hasBaseTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDarkTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     darkTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11466,7 +11466,7 @@ if ( (hasDarkTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDetailTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     detailTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11475,7 +11475,7 @@ if ( (hasDetailTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasGlossTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     glossTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11484,7 +11484,7 @@ if ( (hasGlossTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasGlowTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     glowTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11493,7 +11493,7 @@ if ( (hasGlowTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasBumpMapTexture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     bumpMapTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11502,7 +11502,7 @@ if ( (hasBumpMapTexture != 0) ) { \
   link_stack.pop_front(); \
 }; \
 if ( (hasDecal0Texture != 0) ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     decal0Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11512,7 +11512,7 @@ if ( (hasDecal0Texture != 0) ) { \
 }; \
 if ( version >= 0x14000004 ) { \
   if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
-    if (!link_stack.empty()) \
+    if (link_stack.empty()) \
       throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
     if (link_stack.front() != 0xffffffff) \
       decal1Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11524,7 +11524,7 @@ if ( version >= 0x14000004 ) { \
 if ( version >= 0x0A000100 ) { \
   for (uint i1 = 0; i1 < numShaderTextures; i1++) { \
     if ( (shaderTextures[i1].isUsed != 0) ) { \
-      if (!link_stack.empty()) \
+      if (link_stack.empty()) \
         throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
       if (link_stack.front() != 0xffffffff) \
         shaderTextures[i1].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
@@ -11551,7 +11551,7 @@ NiSingleInterpolatorController::Write( out, link_map, version ); \
 
 #define NI_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
+out << NiSingleInterpolatorController::asString(); \
 return out.str(); \
 
 #define NI_TRANSFORM_CONTROLLER_FIXLINKS \
@@ -11573,7 +11573,7 @@ NiKeyframeData::Write( out, link_map, version ); \
 
 #define NI_TRANSFORM_DATA_STRING \
 stringstream out; \
-cout << NiKeyframeData::asString(); \
+out << NiKeyframeData::asString(); \
 return out.str(); \
 
 #define NI_TRANSFORM_DATA_FIXLINKS \
@@ -11622,19 +11622,19 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
-cout << NiInterpolator::asString(); \
-cout << "Translation:  " << translation << endl; \
-cout << "Rotation:  " << rotation << endl; \
-cout << "Scale:  " << scale << endl; \
+out << NiInterpolator::asString(); \
+out << "Translation:  " << translation << endl; \
+out << "Rotation:  " << rotation << endl; \
+out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
-  cout << "  Unknown Bytes[" << i0 << "]:  " << unknownBytes[i0] << endl; \
+  out << "  Unknown Bytes[" << i0 << "]:  " << unknownBytes[i0] << endl; \
 }; \
-cout << "Data:  " << "NiTransformData" << endl; \
+out << "Data:  " << "NiTransformData" << endl; \
 return out.str(); \
 
 #define NI_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiTransformData>(objects[link_stack.front()]); \
@@ -11658,7 +11658,7 @@ NiTriBasedGeom::Write( out, link_map, version ); \
 
 #define NI_TRI_SHAPE_STRING \
 stringstream out; \
-cout << NiTriBasedGeom::asString(); \
+out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_TRI_SHAPE_FIXLINKS \
@@ -11739,18 +11739,18 @@ for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
 
 #define NI_TRI_SHAPE_DATA_STRING \
 stringstream out; \
-cout << NiTriBasedGeomData::asString(); \
-cout << "Num Triangles:  " << numTriangles << endl; \
-cout << "Num Triangle Points:  " << numTrianglePoints << endl; \
-cout << "Has Triangles:  " << hasTriangles << endl; \
+out << NiTriBasedGeomData::asString(); \
+out << "Num Triangles:  " << numTriangles << endl; \
+out << "Num Triangle Points:  " << numTrianglePoints << endl; \
+out << "Has Triangles:  " << hasTriangles << endl; \
 for (uint i0 = 0; i0 < numTriangles; i0++) { \
-  cout << "  Triangles[" << i0 << "]:  " << triangles[i0] << endl; \
+  out << "  Triangles[" << i0 << "]:  " << triangles[i0] << endl; \
 }; \
-cout << "Num Match Groups:  " << numMatchGroups << endl; \
+out << "Num Match Groups:  " << numMatchGroups << endl; \
 for (uint i0 = 0; i0 < numMatchGroups; i0++) { \
-  cout << "  Num Vertices:  " << matchGroups[i0].numVertices << endl; \
+  out << "  Num Vertices:  " << matchGroups[i0].numVertices << endl; \
   for (uint i1 = 0; i1 < matchGroups[i0].numVertices; i1++) { \
-    cout << "    Vertex Indices[" << i1 << "]:  " << matchGroups[i0].vertexIndices[i1] << endl; \
+    out << "    Vertex Indices[" << i1 << "]:  " << matchGroups[i0].vertexIndices[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -11774,7 +11774,7 @@ NiTriBasedGeom::Write( out, link_map, version ); \
 
 #define NI_TRI_STRIPS_STRING \
 stringstream out; \
-cout << NiTriBasedGeom::asString(); \
+out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_TRI_STRIPS_FIXLINKS \
@@ -11857,16 +11857,16 @@ if ( version >= 0x0A010000 ) { \
 
 #define NI_TRI_STRIPS_DATA_STRING \
 stringstream out; \
-cout << NiTriBasedGeomData::asString(); \
-cout << "Num Triangles:  " << numTriangles << endl; \
-cout << "Num Strips:  " << numStrips << endl; \
+out << NiTriBasedGeomData::asString(); \
+out << "Num Triangles:  " << numTriangles << endl; \
+out << "Num Strips:  " << numStrips << endl; \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
-  cout << "  Strip Lengths[" << i0 << "]:  " << stripLengths[i0] << endl; \
+  out << "  Strip Lengths[" << i0 << "]:  " << stripLengths[i0] << endl; \
 }; \
-cout << "Has Points:  " << hasPoints << endl; \
+out << "Has Points:  " << hasPoints << endl; \
 for (uint i0 = 0; i0 < numStrips; i0++) { \
   for (uint i1 = 0; i1 < stripLengths[i0]; i1++) { \
-    cout << "    Points[" << i0 << "][" << i1 << "]:  " << points[i0][i1] << endl; \
+    out << "    Points[" << i0 << "][" << i1 << "]:  " << points[i0][i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -11899,14 +11899,14 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_U_V_CONTROLLER_STRING \
 stringstream out; \
-cout << NiTimeController::asString(); \
-cout << "Unknown Short:  " << unknownShort << endl; \
-cout << "Data:  " << "NiUVData" << endl; \
+out << NiTimeController::asString(); \
+out << "Unknown Short:  " << unknownShort << endl; \
+out << "Data:  " << "NiUVData" << endl; \
 return out.str(); \
 
 #define NI_U_V_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
-if (!link_stack.empty()) \
+if (link_stack.empty()) \
   throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) \
   data = DynamicCast<NiUVData>(objects[link_stack.front()]); \
@@ -11951,14 +11951,14 @@ for (uint i0 = 0; i0 < 4; i0++) { \
 
 #define NI_U_V_DATA_STRING \
 stringstream out; \
-cout << NiObject::asString(); \
+out << NiObject::asString(); \
 for (uint i0 = 0; i0 < 4; i0++) { \
-  cout << "  Num Keys:  " << uvGroups[i0].numKeys << endl; \
+  out << "  Num Keys:  " << uvGroups[i0].numKeys << endl; \
   if ( (uvGroups[i0].numKeys != 0) ) { \
-    cout << "    Interpolation:  " << uvGroups[i0].interpolation << endl; \
+    out << "    Interpolation:  " << uvGroups[i0].interpolation << endl; \
   }; \
   for (uint i1 = 0; i1 < uvGroups[i0].numKeys; i1++) { \
-    cout << "    Keys[" << i1 << "]:  " << uvGroups[i0].keys[i1] << endl; \
+    out << "    Keys[" << i1 << "]:  " << uvGroups[i0].keys[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -11989,9 +11989,9 @@ NifStream( unknownFloat, out, version ); \
 
 #define NI_VECTOR_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Vector Data:  " << vectorData << endl; \
-cout << "Unknown Float:  " << unknownFloat << endl; \
+out << NiExtraData::asString(); \
+out << "Vector Data:  " << vectorData << endl; \
+out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define NI_VECTOR_EXTRA_DATA_FIXLINKS \
@@ -12023,10 +12023,10 @@ NifStream( lightingMode, out, version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Vertex Mode:  " << vertexMode << endl; \
-cout << "Lighting Mode:  " << lightingMode << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Vertex Mode:  " << vertexMode << endl; \
+out << "Lighting Mode:  " << lightingMode << endl; \
 return out.str(); \
 
 #define NI_VERTEX_COLOR_PROPERTY_FIXLINKS \
@@ -12063,11 +12063,11 @@ for (uint i0 = 0; i0 < numVertices; i0++) { \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_STRING \
 stringstream out; \
-cout << NiExtraData::asString(); \
-cout << "Num Bytes:  " << numBytes << endl; \
-cout << "Num Vertices:  " << numVertices << endl; \
+out << NiExtraData::asString(); \
+out << "Num Bytes:  " << numBytes << endl; \
+out << "Num Vertices:  " << numVertices << endl; \
 for (uint i0 = 0; i0 < numVertices; i0++) { \
-  cout << "  Weight[" << i0 << "]:  " << weight[i0] << endl; \
+  out << "  Weight[" << i0 << "]:  " << weight[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -12100,14 +12100,14 @@ if ( version <= 0x0A010000 ) { \
 
 #define NI_VIS_CONTROLLER_STRING \
 stringstream out; \
-cout << NiSingleInterpolatorController::asString(); \
-cout << "Data:  " << "NiVisData" << endl; \
+out << NiSingleInterpolatorController::asString(); \
+out << "Data:  " << "NiVisData" << endl; \
 return out.str(); \
 
 #define NI_VIS_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
-  if (!link_stack.empty()) \
+  if (link_stack.empty()) \
     throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
   if (link_stack.front() != 0xffffffff) \
     data = DynamicCast<NiVisData>(objects[link_stack.front()]); \
@@ -12144,10 +12144,10 @@ for (uint i0 = 0; i0 < numVisKeys; i0++) { \
 
 #define NI_VIS_DATA_STRING \
 stringstream out; \
-cout << AKeyedData::asString(); \
-cout << "Num Vis Keys:  " << numVisKeys << endl; \
+out << AKeyedData::asString(); \
+out << "Num Vis Keys:  " << numVisKeys << endl; \
 for (uint i0 = 0; i0 < numVisKeys; i0++) { \
-  cout << "  Vis Keys[" << i0 << "]:  " << visKeys[i0] << endl; \
+  out << "  Vis Keys[" << i0 << "]:  " << visKeys[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -12174,8 +12174,8 @@ NifStream( flags, out, version ); \
 
 #define NI_WIREFRAME_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_WIREFRAME_PROPERTY_FIXLINKS \
@@ -12208,9 +12208,9 @@ if ( version >= 0x0401000C ) { \
 
 #define NI_Z_BUFFER_PROPERTY_STRING \
 stringstream out; \
-cout << NiProperty::asString(); \
-cout << "Flags:  " << flags << endl; \
-cout << "Function:  " << function << endl; \
+out << NiProperty::asString(); \
+out << "Flags:  " << flags << endl; \
+out << "Function:  " << function << endl; \
 return out.str(); \
 
 #define NI_Z_BUFFER_PROPERTY_FIXLINKS \
@@ -12232,7 +12232,7 @@ NiNode::Write( out, link_map, version ); \
 
 #define ROOT_COLLISION_NODE_STRING \
 stringstream out; \
-cout << NiNode::asString(); \
+out << NiNode::asString(); \
 return out.str(); \
 
 #define ROOT_COLLISION_NODE_FIXLINKS \

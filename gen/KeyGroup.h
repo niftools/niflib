@@ -12,10 +12,6 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T >
 struct KeyGroup {
-  /*! Default Constructor */
-  KeyGroup();
-  /*! Default Destructor */
-  ~KeyGroup();
   /*!
    * Number of keys in the array.
    */

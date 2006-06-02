@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#define DEBUG // this will produce lot's of output
+//#define DEBUG // this will produce lots of output
 
 #include "niflib.h"
 #include "obj/NiAVObject.h"
@@ -274,7 +274,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 		}
 
-		cout << endl << i << ":  " << blockName;
+		//cout << endl << i << ":  " << blockName;
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -295,7 +295,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		//blocks[i]->SetBlockNum(i);
 		blocks[i]->Read( in, link_stack, version );
 
-		cout << endl << blocks[i]->asString() << endl;
+		//cout << endl << blocks[i]->asString() << endl;
 	}
 
 	//cout << endl;
@@ -318,14 +318,14 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	//}
 	
 	
-	cout << "Fixing Links:"  << endl;
-	//--Now that all blocks are read, go back and fix the links--//
-	for (uint i = 0; i < blocks.size(); ++i) {
-		
-		cout << blocks[i]->GetType().GetTypeName() << endl;
-		//Fix links & other pre-processing
-		blocks[i]->FixLinks( blocks, link_stack, version );
-	}
+	//cout << "Fixing Links:"  << endl;
+	////--Now that all blocks are read, go back and fix the links--//
+	//for (uint i = 0; i < blocks.size(); ++i) {
+	//	
+	//	cout << blocks[i]->GetType().GetTypeName() << endl;
+	//	//Fix links & other pre-processing
+	//	blocks[i]->FixLinks( blocks, link_stack, version );
+	//}
 
 	////Build up the bind pose matricies into their world-space equivalents
 	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
