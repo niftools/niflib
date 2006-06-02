@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLESYSTEMCONTROLLER_H_
 #define _NIPARTICLESYSTEMCONTROLLER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_PARTICLE_SYSTEM_CONTROLLER_INCLUDE
 
 /*

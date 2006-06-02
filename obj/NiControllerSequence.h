@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICONTROLLERSEQUENCE_H_
 #define _NICONTROLLERSEQUENCE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_CONTROLLER_SEQUENCE_INCLUDE
 
 /*

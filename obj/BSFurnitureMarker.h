@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BSFURNITUREMARKER_H_
 #define _BSFURNITUREMARKER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include B_S_FURNITURE_MARKER_INCLUDE
 
 /*

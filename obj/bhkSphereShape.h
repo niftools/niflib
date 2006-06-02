@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSPHERESHAPE_H_
 #define _BHKSPHERESHAPE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include BHK_SPHERE_SHAPE_INCLUDE
 
 /*

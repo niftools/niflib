@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _APSYSCTLR_H_
 #define _APSYSCTLR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include A_P_SYS_CTLR_INCLUDE
 
 /*

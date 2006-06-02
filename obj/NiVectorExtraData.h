@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIVECTOREXTRADATA_H_
 #define _NIVECTOREXTRADATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_VECTOR_EXTRA_DATA_INCLUDE
 
 /*

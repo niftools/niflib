@@ -15,7 +15,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NIF_IO.h"
 #include "Ref.h"
 #include "Type.h"
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 
 using namespace std;
 

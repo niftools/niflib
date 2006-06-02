@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSAGEDEATHMODIFIER_H_
 #define _NIPSYSAGEDEATHMODIFIER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_AGE_DEATH_MODIFIER_INCLUDE
 
 /*

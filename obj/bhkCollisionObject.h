@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKCOLLISIONOBJECT_H_
 #define _BHKCOLLISIONOBJECT_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include BHK_COLLISION_OBJECT_INCLUDE
 
 /*

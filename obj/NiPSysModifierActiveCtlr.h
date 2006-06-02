@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSMODIFIERACTIVECTLR_H_
 #define _NIPSYSMODIFIERACTIVECTLR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_MODIFIER_ACTIVE_CTLR_INCLUDE
 
 /*

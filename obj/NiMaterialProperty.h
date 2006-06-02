@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMATERIALPROPERTY_H_
 #define _NIMATERIALPROPERTY_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_MATERIAL_PROPERTY_INCLUDE
 
 /*

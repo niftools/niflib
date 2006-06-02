@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISHADEPROPERTY_H_
 #define _NISHADEPROPERTY_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_SHADE_PROPERTY_INCLUDE
 
 /*

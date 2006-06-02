@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPIXELDATA_H_
 #define _NIPIXELDATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_PIXEL_DATA_INCLUDE
 
 /*

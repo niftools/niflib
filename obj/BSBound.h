@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BSBOUND_H_
 #define _BSBOUND_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include B_S_BOUND_INCLUDE
 
 /*

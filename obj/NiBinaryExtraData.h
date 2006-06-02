@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBINARYEXTRADATA_H_
 #define _NIBINARYEXTRADATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_BINARY_EXTRA_DATA_INCLUDE
 
 /*

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSMODIFIER_H_
 #define _NIPSYSMODIFIER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_MODIFIER_INCLUDE
 
 /*

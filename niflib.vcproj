@@ -135,9 +135,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\docsys_extract.cpp">
-			</File>
-			<File
 				RelativePath=".\NIF_IO.cpp">
 			</File>
 			<File
@@ -151,6 +148,9 @@
 						Name="VCCLCompilerTool"
 						RuntimeLibrary="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Type.cpp">
 			</File>
 			<Filter
 				Name="obj"
@@ -794,8 +794,99 @@
 				<File
 					RelativePath=".\obj\RootCollisionNode.cpp">
 				</File>
+			</Filter>
+			<Filter
+				Name="gen"
+				Filter="">
 				<File
-					RelativePath=".\obj\Type.cpp">
+					RelativePath=".\gen\AVObject.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\Bones.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\BoundingBox.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\ByteArray.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\ControllerLink.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\Footer.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\FurniturePosition.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\Header.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\hkTriangle.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\KeyGroup.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\LODRange.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\MatchGroup.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\MipMap.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\Morph.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\NodeGroup.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\obj_factories.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\Particle.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\QuaternionXYZW.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\RotationKeyArray.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\ShaderTexDesc.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\ShortString.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\SkinData.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\SkinPartition.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\SkinShape.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\SkinShapeGroup.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\SkinWeight.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\StringPalette.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\TBC.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\TexDesc.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\TexSource.cpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -813,7 +904,10 @@
 				RelativePath=".\niflib.h">
 			</File>
 			<File
-				RelativePath=".\xml_extract.h">
+				RelativePath=".\Ref.h">
+			</File>
+			<File
+				RelativePath=".\Type.h">
 			</File>
 			<Filter
 				Name="obj"
@@ -1455,13 +1549,101 @@
 					RelativePath=".\obj\NiZBufferProperty.h">
 				</File>
 				<File
-					RelativePath=".\obj\Ref.h">
-				</File>
-				<File
 					RelativePath=".\obj\RootCollisionNode.h">
 				</File>
+			</Filter>
+			<Filter
+				Name="gen"
+				Filter="">
 				<File
-					RelativePath=".\obj\Type.h">
+					RelativePath=".\gen\AVObject.h">
+				</File>
+				<File
+					RelativePath=".\gen\Bones.h">
+				</File>
+				<File
+					RelativePath=".\gen\BoundingBox.h">
+				</File>
+				<File
+					RelativePath=".\gen\ByteArray.h">
+				</File>
+				<File
+					RelativePath=".\gen\ControllerLink.h">
+				</File>
+				<File
+					RelativePath=".\gen\Footer.h">
+				</File>
+				<File
+					RelativePath=".\gen\FurniturePosition.h">
+				</File>
+				<File
+					RelativePath=".\gen\Header.h">
+				</File>
+				<File
+					RelativePath=".\gen\hkTriangle.h">
+				</File>
+				<File
+					RelativePath=".\gen\KeyGroup.h">
+				</File>
+				<File
+					RelativePath=".\gen\LODRange.h">
+				</File>
+				<File
+					RelativePath=".\gen\MatchGroup.h">
+				</File>
+				<File
+					RelativePath=".\gen\MipMap.h">
+				</File>
+				<File
+					RelativePath=".\gen\Morph.h">
+				</File>
+				<File
+					RelativePath=".\gen\NodeGroup.h">
+				</File>
+				<File
+					RelativePath=".\gen\obj_defines.h">
+				</File>
+				<File
+					RelativePath=".\gen\Particle.h">
+				</File>
+				<File
+					RelativePath=".\gen\QuaternionXYZW.h">
+				</File>
+				<File
+					RelativePath=".\gen\RotationKeyArray.h">
+				</File>
+				<File
+					RelativePath=".\gen\ShaderTexDesc.h">
+				</File>
+				<File
+					RelativePath=".\gen\ShortString.h">
+				</File>
+				<File
+					RelativePath=".\gen\SkinData.h">
+				</File>
+				<File
+					RelativePath=".\gen\SkinPartition.h">
+				</File>
+				<File
+					RelativePath=".\gen\SkinShape.h">
+				</File>
+				<File
+					RelativePath=".\gen\SkinShapeGroup.h">
+				</File>
+				<File
+					RelativePath=".\gen\SkinWeight.h">
+				</File>
+				<File
+					RelativePath=".\gen\StringPalette.h">
+				</File>
+				<File
+					RelativePath=".\gen\TBC.h">
+				</File>
+				<File
+					RelativePath=".\gen\TexDesc.h">
+				</File>
+				<File
+					RelativePath=".\gen\TexSource.h">
 				</File>
 			</Filter>
 		</Filter>

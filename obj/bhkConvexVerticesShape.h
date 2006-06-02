@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKCONVEXVERTICESSHAPE_H_
 #define _BHKCONVEXVERTICESSHAPE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include BHK_CONVEX_VERTICES_SHAPE_INCLUDE
 
 /*

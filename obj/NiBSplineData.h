@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPLINEDATA_H_
 #define _NIBSPLINEDATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_B_SPLINE_DATA_INCLUDE
 
 /*

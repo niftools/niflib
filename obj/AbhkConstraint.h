@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ABHKCONSTRAINT_H_
 #define _ABHKCONSTRAINT_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include ABHK_CONSTRAINT_INCLUDE
 
 /*

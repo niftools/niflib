@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICOLLISIONOBJECT_H_
 #define _NICOLLISIONOBJECT_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_COLLISION_OBJECT_INCLUDE
 
 /*

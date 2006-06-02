@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIRANGELODDATA_H_
 #define _NIRANGELODDATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_RANGE_L_O_D_DATA_INCLUDE
 
 /*

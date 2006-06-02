@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _HKPACKEDNITRISTRIPSDATA_H_
 #define _HKPACKEDNITRISTRIPSDATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include HK_PACKED_NI_TRI_STRIPS_DATA_INCLUDE
 
 /*

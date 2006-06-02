@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIALPHAPROPERTY_H_
 #define _NIALPHAPROPERTY_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_ALPHA_PROPERTY_INCLUDE
 
 /*

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKPACKEDNITRISTRIPSSHAPE_H_
 #define _BHKPACKEDNITRISTRIPSSHAPE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include BHK_PACKED_NI_TRI_STRIPS_SHAPE_INCLUDE
 
 /*

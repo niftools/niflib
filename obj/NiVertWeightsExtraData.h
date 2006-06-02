@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIVERTWEIGHTSEXTRADATA_H_
 #define _NIVERTWEIGHTSEXTRADATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_VERT_WEIGHTS_EXTRA_DATA_INCLUDE
 
 /*

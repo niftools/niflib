@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSUPDATECTLR_H_
 #define _NIPSYSUPDATECTLR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_UPDATE_CTLR_INCLUDE
 
 /*

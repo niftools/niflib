@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ROOTCOLLISIONNODE_H_
 #define _ROOTCOLLISIONNODE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include ROOT_COLLISION_NODE_INCLUDE
 
 /*

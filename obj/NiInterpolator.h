@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIINTERPOLATOR_H_
 #define _NIINTERPOLATOR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_INTERPOLATOR_INCLUDE
 
 /*

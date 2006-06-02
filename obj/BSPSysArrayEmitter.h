@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BSPSYSARRAYEMITTER_H_
 #define _BSPSYSARRAYEMITTER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include B_S_P_SYS_ARRAY_EMITTER_INCLUDE
 
 /*

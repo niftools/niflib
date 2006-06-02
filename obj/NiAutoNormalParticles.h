@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIAUTONORMALPARTICLES_H_
 #define _NIAUTONORMALPARTICLES_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_AUTO_NORMAL_PARTICLES_INCLUDE
 
 /*

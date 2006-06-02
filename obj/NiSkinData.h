@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISKINDATA_H_
 #define _NISKINDATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_SKIN_DATA_INCLUDE
 
 /*

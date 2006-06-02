@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSCOLLIDERMANAGER_H_
 #define _NIPSYSCOLLIDERMANAGER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_COLLIDER_MANAGER_INCLUDE
 
 /*

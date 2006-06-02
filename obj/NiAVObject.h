@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIAVOBJECT_H_
 #define _NIAVOBJECT_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_A_V_OBJECT_INCLUDE
 
 /*

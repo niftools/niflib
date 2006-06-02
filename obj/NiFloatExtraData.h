@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIFLOATEXTRADATA_H_
 #define _NIFLOATEXTRADATA_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_FLOAT_EXTRA_DATA_INCLUDE
 
 /*

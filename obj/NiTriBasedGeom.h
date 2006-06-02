@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRIBASEDGEOM_H_
 #define _NITRIBASEDGEOM_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_TRI_BASED_GEOM_INCLUDE
 
 /*

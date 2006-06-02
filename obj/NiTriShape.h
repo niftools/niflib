@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRISHAPE_H_
 #define _NITRISHAPE_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_TRI_SHAPE_INCLUDE
 
 /*

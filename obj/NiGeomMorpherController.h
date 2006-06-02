@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIGEOMMORPHERCONTROLLER_H_
 #define _NIGEOMMORPHERCONTROLLER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_GEOM_MORPHER_CONTROLLER_INCLUDE
 
 /*

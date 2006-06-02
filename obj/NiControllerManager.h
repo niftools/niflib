@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICONTROLLERMANAGER_H_
 #define _NICONTROLLERMANAGER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_CONTROLLER_MANAGER_INCLUDE
 
 /*

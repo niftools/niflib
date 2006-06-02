@@ -50,7 +50,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "nif_math.h"
 #include "NIF_IO.h"
 #include "obj/NiObject.h"
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include "kfm.h"
 
 using namespace std;

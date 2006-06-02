@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBOOLTIMELINEINTERPOLATOR_H_
 #define _NIBOOLTIMELINEINTERPOLATOR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_BOOL_TIMELINE_INTERPOLATOR_INCLUDE
 
 /*

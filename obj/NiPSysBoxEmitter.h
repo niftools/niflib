@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSBOXEMITTER_H_
 #define _NIPSYSBOXEMITTER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_P_SYS_BOX_EMITTER_INCLUDE
 
 /*

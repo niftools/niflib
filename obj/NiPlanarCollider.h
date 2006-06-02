@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPLANARCOLLIDER_H_
 #define _NIPLANARCOLLIDER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_PLANAR_COLLIDER_INCLUDE
 
 /*

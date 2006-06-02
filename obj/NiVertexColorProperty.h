@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIVERTEXCOLORPROPERTY_H_
 #define _NIVERTEXCOLORPROPERTY_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_VERTEX_COLOR_PROPERTY_INCLUDE
 
 /*

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPARRAYCONTROLLER_H_
 #define _NIBSPARRAYCONTROLLER_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_B_S_P_ARRAY_CONTROLLER_INCLUDE
 
 /*

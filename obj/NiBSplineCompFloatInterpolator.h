@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPLINECOMPFLOATINTERPOLATOR_H_
 #define _NIBSPLINECOMPFLOATINTERPOLATOR_H_
 
-#include "xml_extract.h"
+#include "gen/obj_defines.h"
 #include NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_INCLUDE
 
 /*
