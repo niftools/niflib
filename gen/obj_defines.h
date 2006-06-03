@@ -90,16 +90,20 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	nextModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
-else \
+	if ( nextModifier == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	nextModifier = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	controller = DynamicCast<NiParticleSystemController>(objects[link_stack.front()]); \
-else \
+	if ( controller == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	controller = NULL; \
 link_stack.pop_front(); \
 
@@ -197,9 +201,11 @@ bhkSerializable::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		bodies[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
-	else \
+		if ( bodies[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		bodies[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -424,9 +430,11 @@ return out.str(); \
 bhkWorldObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
-else \
+	if ( shape == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	shape = NULL; \
 link_stack.pop_front(); \
 
@@ -469,16 +477,20 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	parent = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
-else \
+	if ( parent == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	parent = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	body = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( body == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	body = NULL; \
 link_stack.pop_front(); \
 
@@ -525,9 +537,11 @@ NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		nextExtraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
-	else \
+		if ( nextExtraData == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		nextExtraData = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -684,9 +698,11 @@ NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x04020200 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		extraData = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
-	else \
+		if ( extraData == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		extraData = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -694,18 +710,22 @@ if ( version >= 0x0A000100 ) { \
 	for (uint i1 = 0; i1 < extraDataList.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			extraDataList[i1] = DynamicCast<NiExtraData>(objects[link_stack.front()]); \
-		else \
+			if ( extraDataList[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			extraDataList[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
 }; \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	controller = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
-else \
+	if ( controller == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	controller = NULL; \
 link_stack.pop_front(); \
 
@@ -824,27 +844,33 @@ NiObjectNET::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < properties.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		properties[i0] = DynamicCast<NiProperty>(objects[link_stack.front()]); \
-	else \
+		if ( properties[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		properties[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		collisionData = DynamicCast<NiCollisionData>(objects[link_stack.front()]); \
-	else \
+		if ( collisionData == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		collisionData = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( version >= 0x14000005 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		collisionObject = DynamicCast<NiCollisionObject>(objects[link_stack.front()]); \
-	else \
+		if ( collisionObject == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		collisionObject = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -926,9 +952,11 @@ if ( version >= 0x0A010000 ) { \
 	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			affectedNodes[i1] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
-		else \
+			if ( affectedNodes[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			affectedNodes[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -1037,9 +1065,11 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	target = DynamicCast<NiParticleSystem>(objects[link_stack.front()]); \
-else \
+	if ( target == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	target = NULL; \
 link_stack.pop_front(); \
 
@@ -1145,9 +1175,11 @@ NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		emitterObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
-	else \
+		if ( emitterObject == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		emitterObject = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -1207,16 +1239,20 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	nextController = DynamicCast<NiTimeController>(objects[link_stack.front()]); \
-else \
+	if ( nextController == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	nextController = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	target = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( target == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	target = NULL; \
 link_stack.pop_front(); \
 
@@ -1285,9 +1321,11 @@ for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 	for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			nodeGroups[i0].nodes[i1] = DynamicCast<NiNode>(objects[link_stack.front()]); \
-		else \
+			if ( nodeGroups[i0].nodes[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			nodeGroups[i0].nodes[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -1328,9 +1366,11 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-	else \
+		if ( interpolator == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		interpolator = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -1419,25 +1459,31 @@ return out.str(); \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiTriBasedGeomData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
-else \
+	if ( skinInstance == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	skinInstance = NULL; \
 link_stack.pop_front(); \
 if ( version >= 0x0A000100 ) { \
 	if ( (hasShader != 0) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( unknownLink == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			unknownLink = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -1705,9 +1751,11 @@ NiObject::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-	else \
+		if ( unknownLink == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		unknownLink = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -2236,9 +2284,11 @@ AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		subShapes[i0] = DynamicCast<bhkShape>(objects[link_stack.front()]); \
-	else \
+		if ( subShapes[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		subShapes[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -2378,16 +2428,20 @@ return out.str(); \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink1 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink1 = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink2 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 
@@ -2470,9 +2524,11 @@ return out.str(); \
 bhkShape::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	shape = DynamicCast<bhkShape>(objects[link_stack.front()]); \
-else \
+	if ( shape == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	shape = NULL; \
 link_stack.pop_front(); \
 
@@ -2640,9 +2696,11 @@ bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		stripsData[i0] = DynamicCast<NiTriStripsData>(objects[link_stack.front()]); \
-	else \
+		if ( stripsData[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		stripsData[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -2734,9 +2792,11 @@ return out.str(); \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -3025,9 +3085,11 @@ bhkEntity::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < constraints.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		constraints[i0] = DynamicCast<AbhkConstraint>(objects[link_stack.front()]); \
-	else \
+		if ( constraints[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		constraints[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -3529,9 +3591,11 @@ NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
-	else \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -3895,16 +3959,20 @@ for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 	for (uint i1 = 0; i1 < shapeGroups1[i0].linkPairs.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			shapeGroups1[i0].linkPairs[i1].shape = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
-		else \
+			if ( shapeGroups1[i0].linkPairs[i1].shape == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			shapeGroups1[i0].linkPairs[i1].shape = NULL; \
 		link_stack.pop_front(); \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			shapeGroups1[i0].linkPairs[i1].skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]); \
-		else \
+			if ( shapeGroups1[i0].linkPairs[i1].skinInstance == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			shapeGroups1[i0].linkPairs[i1].skinInstance = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -3912,9 +3980,11 @@ for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		shapeGroups2[i0] = DynamicCast<NiTriShape>(objects[link_stack.front()]); \
-	else \
+		if ( shapeGroups2[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		shapeGroups2[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -4029,9 +4099,11 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -4069,9 +4141,11 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiBoolData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -4209,16 +4283,20 @@ return out.str(); \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 
@@ -4271,16 +4349,20 @@ return out.str(); \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiBSplineData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]); \
-else \
+	if ( basisData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	basisData = NULL; \
 link_stack.pop_front(); \
 
@@ -4438,9 +4520,11 @@ return out.str(); \
 NiAVObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink_ == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink_ = NULL; \
 link_stack.pop_front(); \
 
@@ -4540,9 +4624,11 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	targetNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( targetNode == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	targetNode = NULL; \
 link_stack.pop_front(); \
 
@@ -4676,17 +4762,21 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		controllerSequences[i0] = DynamicCast<NiControllerSequence>(objects[link_stack.front()]); \
-	else \
+		if ( controllerSequences[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		controllerSequences[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	objectPalette = DynamicCast<NiDefaultAVObjectPalette>(objects[link_stack.front()]); \
-else \
+	if ( objectPalette == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	objectPalette = NULL; \
 link_stack.pop_front(); \
 
@@ -5054,35 +5144,43 @@ NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		textKeys.interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-	else \
+		if ( textKeys.interpolator == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		textKeys.interpolator = NULL; \
 	link_stack.pop_front(); \
 	if ( version >= 0x0A01006A ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			textKeys.unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( textKeys.unknownLink1 == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			textKeys.unknownLink1 = NULL; \
 		link_stack.pop_front(); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			textKeys.unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( textKeys.unknownLink2 == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			textKeys.unknownLink2 = NULL; \
 		link_stack.pop_front(); \
 	}; \
 	if ( version >= 0x0A020000 ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			textKeys.stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
-		else \
+			if ( textKeys.stringPalette == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			textKeys.stringPalette = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -5090,35 +5188,43 @@ if ( version <= 0x0A010000 ) { \
 for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		controlledBlocks[i0].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-	else \
+		if ( controlledBlocks[i0].interpolator == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		controlledBlocks[i0].interpolator = NULL; \
 	link_stack.pop_front(); \
 	if ( version >= 0x0A01006A ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			controlledBlocks[i0].unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( controlledBlocks[i0].unknownLink1 == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			controlledBlocks[i0].unknownLink1 = NULL; \
 		link_stack.pop_front(); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			controlledBlocks[i0].unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( controlledBlocks[i0].unknownLink2 == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			controlledBlocks[i0].unknownLink2 = NULL; \
 		link_stack.pop_front(); \
 	}; \
 	if ( version >= 0x0A020000 ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			controlledBlocks[i0].stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
-		else \
+			if ( controlledBlocks[i0].stringPalette == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			controlledBlocks[i0].stringPalette = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -5126,25 +5232,31 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 if ( version >= 0x0A01006A ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		textKeys2 = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]); \
-	else \
+		if ( textKeys2 == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		textKeys2 = NULL; \
 	link_stack.pop_front(); \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]); \
-	else \
+		if ( manager == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		manager = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]); \
-	else \
+		if ( stringPalette == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		stringPalette = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -5198,9 +5310,11 @@ NiObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < objs.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		objs[i0].object = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
-	else \
+		if ( objs[i0].object == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		objs[i0].object = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -5316,9 +5430,11 @@ NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < sources.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		sources[i0] = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( sources[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		sources[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -5438,9 +5554,11 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-	else \
+		if ( unknownLink == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		unknownLink = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -5479,9 +5597,11 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -5659,18 +5779,22 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiMorphData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 if ( version >= 0x0A01006A ) { \
 	for (uint i1 = 0; i1 < interpolators.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			interpolators[i1] = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-		else \
+			if ( interpolators[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			interpolators[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -5818,9 +5942,11 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -5854,9 +5980,11 @@ return out.str(); \
 NiKeyframeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data2 = DynamicCast<NiKeyframeData>(objects[link_stack.front()]); \
-else \
+	if ( data2 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data2 = NULL; \
 link_stack.pop_front(); \
 
@@ -6077,18 +6205,22 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
-	else \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		interpolator = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
-	else \
+		if ( interpolator == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		interpolator = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6123,9 +6255,11 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 
@@ -6167,9 +6301,11 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	lookAtNode = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( lookAtNode == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	lookAtNode = NULL; \
 link_stack.pop_front(); \
 
@@ -6238,30 +6374,38 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	lookAt = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( lookAt == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	lookAt = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink1 = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink1 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink1 = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink2 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink3 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink3 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink3 = NULL; \
 link_stack.pop_front(); \
 
@@ -6308,9 +6452,11 @@ NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
-	else \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6549,9 +6695,11 @@ APSysData::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		modifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
-	else \
+		if ( modifier == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		modifier = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6559,9 +6707,11 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
 	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			unknownLinks[i1] = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
-		else \
+			if ( unknownLinks[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			unknownLinks[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -6569,9 +6719,11 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		unknownLink2 = DynamicCast<NiNode>(objects[link_stack.front()]); \
-	else \
+		if ( unknownLink2 == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		unknownLink2 = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6717,9 +6869,11 @@ NiTimeController::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		extraTargets[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
-	else \
+		if ( extraTargets[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		extraTargets[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6790,18 +6944,22 @@ NiAVObject::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		children[i0] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
-	else \
+		if ( children[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		children[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
 for (uint i0 = 0; i0 < effects.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		effects[i0] = DynamicCast<NiDynamicEffect>(objects[link_stack.front()]); \
-	else \
+		if ( effects[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		effects[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -6949,9 +7107,11 @@ FxWidget::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		unknownLinks[i0] = DynamicCast<NiObject>(objects[link_stack.front()]); \
-	else \
+		if ( unknownLinks[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		unknownLinks[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -7104,9 +7264,11 @@ NiNode::FixLinks( objects, link_stack, version ); \
 if ( (lodType == 1) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		rangeData = DynamicCast<NiRangeLODData>(objects[link_stack.front()]); \
-	else \
+		if ( rangeData == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		rangeData = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -7263,9 +7425,11 @@ return out.str(); \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	colorData = DynamicCast<NiColorData>(objects[link_stack.front()]); \
-else \
+	if ( colorData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	colorData = NULL; \
 link_stack.pop_front(); \
 
@@ -7334,9 +7498,11 @@ return out.str(); \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	particleMeshes = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
-else \
+	if ( particleMeshes == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	particleMeshes = NULL; \
 link_stack.pop_front(); \
 
@@ -7560,9 +7726,11 @@ return out.str(); \
 NiParticlesData::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink2 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 
@@ -7621,9 +7789,11 @@ if ( version >= 0x0A010000 ) { \
 	for (uint i1 = 0; i1 < modifiers.size(); i1++) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			modifiers[i1] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]); \
-		else \
+			if ( modifiers[i1] == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			modifiers[i1] = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -7845,30 +8015,38 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	emitter = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( emitter == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	emitter = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	particleExtra = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
-else \
+	if ( particleExtra == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	particleExtra = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink2 == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 
@@ -7953,16 +8131,20 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
-else \
+	if ( posData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	posData = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
-else \
+	if ( floatData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	floatData = NULL; \
 link_stack.pop_front(); \
 
@@ -8013,16 +8195,20 @@ return out.str(); \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	posData = DynamicCast<NiPosData>(objects[link_stack.front()]); \
-else \
+	if ( posData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	posData = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
-else \
+	if ( floatData == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	floatData = NULL; \
 link_stack.pop_front(); \
 
@@ -8174,9 +8360,11 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	palette = DynamicCast<NiPalette>(objects[link_stack.front()]); \
-else \
+	if ( palette == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	palette = NULL; \
 link_stack.pop_front(); \
 
@@ -8317,9 +8505,11 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiPosData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -8441,9 +8631,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
-else \
+	if ( spawnModifier == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	spawnModifier = NULL; \
 link_stack.pop_front(); \
 
@@ -8519,9 +8711,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 
@@ -8617,9 +8811,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	collider = DynamicCast<NiPSysPlanarCollider>(objects[link_stack.front()]); \
-else \
+	if ( collider == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	collider = NULL; \
 link_stack.pop_front(); \
 
@@ -8653,9 +8849,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiColorData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -8885,9 +9083,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( parent == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	parent = NULL; \
 link_stack.pop_front(); \
 
@@ -8921,9 +9121,11 @@ return out.str(); \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-else \
+	if ( visibilityInterpolator == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	visibilityInterpolator = NULL; \
 link_stack.pop_front(); \
 
@@ -9160,9 +9362,11 @@ return out.str(); \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	gravityObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( gravityObject == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	gravityObject = NULL; \
 link_stack.pop_front(); \
 
@@ -9285,9 +9489,11 @@ NiPSysEmitter::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		emitterMeshes[i0] = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
-	else \
+		if ( emitterMeshes[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		emitterMeshes[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -9338,9 +9544,11 @@ NiPSysModifier::FixLinks( objects, link_stack, version ); \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		meshes[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
-	else \
+		if ( meshes[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		meshes[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -9440,30 +9648,38 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]); \
-else \
+	if ( spawnModifier == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	spawnModifier = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	parent = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( parent == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	parent = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]); \
-else \
+	if ( unknownLink_ == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	unknownLink_ = NULL; \
 link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	colliderObject = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( colliderObject == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	colliderObject = NULL; \
 link_stack.pop_front(); \
 
@@ -9969,9 +10185,11 @@ NiObject::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
-	else \
+		if ( skinPartition == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		skinPartition = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -10039,33 +10257,41 @@ return out.str(); \
 NiObject::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiSkinData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]); \
-	else \
+		if ( skinPartition == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		skinPartition = NULL; \
 	link_stack.pop_front(); \
 }; \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	skeletonRoot = DynamicCast<NiNode>(objects[link_stack.front()]); \
-else \
+	if ( skeletonRoot == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	skeletonRoot = NULL; \
 link_stack.pop_front(); \
 for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		bones.bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
-	else \
+		if ( bones.bones[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		bones.bones[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -10449,9 +10675,11 @@ if ( version >= 0x0A010000 ) { \
 	if ( (useExternal == 1) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]); \
-		else \
+			if ( unknownLink == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			unknownLink = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -10459,9 +10687,11 @@ if ( version >= 0x0A010000 ) { \
 if ( (useExternal == 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]); \
-	else \
+		if ( pixelData == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		pixelData = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -10876,9 +11106,11 @@ return out.str(); \
 NiDynamicEffect::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	sourceTexture = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-else \
+	if ( sourceTexture == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	sourceTexture = NULL; \
 link_stack.pop_front(); \
 
@@ -10929,9 +11161,11 @@ NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		data = DynamicCast<NiFloatData>(objects[link_stack.front()]); \
-	else \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -11638,63 +11872,77 @@ NiProperty::FixLinks( objects, link_stack, version ); \
 if ( (hasBaseTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( baseTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		baseTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasDarkTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		darkTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( darkTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		darkTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasDetailTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		detailTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( detailTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		detailTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasGlossTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		glossTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( glossTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		glossTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasGlowTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		glowTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( glowTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		glowTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasBumpMapTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		bumpMapTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( bumpMapTexture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		bumpMapTexture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
 if ( (hasDecal0Texture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		decal0Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-	else \
+		if ( decal0Texture.source == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		decal0Texture.source = NULL; \
 	link_stack.pop_front(); \
 }; \
@@ -11702,9 +11950,11 @@ if ( version >= 0x14000004 ) { \
 	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-		if (link_stack.front() != 0xffffffff) \
+		if (link_stack.front() != 0xffffffff) { \
 			decal1Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-		else \
+			if ( decal1Texture.source == NULL ) \
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+		} else \
 			decal1Texture.source = NULL; \
 		link_stack.pop_front(); \
 	}; \
@@ -11714,9 +11964,11 @@ if ( version >= 0x0A000100 ) { \
 		if ( (shaderTextures[i1].isUsed != 0) ) { \
 			if (link_stack.empty()) \
 				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-			if (link_stack.front() != 0xffffffff) \
+			if (link_stack.front() != 0xffffffff) { \
 				shaderTextures[i1].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]); \
-			else \
+				if ( shaderTextures[i1].textureData.source == NULL ) \
+					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+			} else \
 				shaderTextures[i1].textureData.source = NULL; \
 			link_stack.pop_front(); \
 		}; \
@@ -11827,9 +12079,11 @@ return out.str(); \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiTransformData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -12113,9 +12367,11 @@ return out.str(); \
 NiTimeController::FixLinks( objects, link_stack, version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) \
+if (link_stack.front() != 0xffffffff) { \
 	data = DynamicCast<NiUVData>(objects[link_stack.front()]); \
-else \
+	if ( data == NULL ) \
+		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+} else \
 	data = NULL; \
 link_stack.pop_front(); \
 
@@ -12321,9 +12577,11 @@ NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-	if (link_stack.front() != 0xffffffff) \
+	if (link_stack.front() != 0xffffffff) { \
 		data = DynamicCast<NiVisData>(objects[link_stack.front()]); \
-	else \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
