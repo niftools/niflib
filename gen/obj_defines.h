@@ -80,8 +80,8 @@ NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 #define A_PARTICLE_MODIFIER_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-out << "Next Modifier:  " << "AParticleModifier" << endl; \
-out << "Controller:  " << "NiParticleSystemController" << endl; \
+out << "Next Modifier:  " << nextModifier << endl; \
+out << "Controller:  " << controller << endl; \
 return out.str(); \
 
 #define A_PARTICLE_MODIFIER_FIXLINKS \
@@ -181,7 +181,7 @@ stringstream out; \
 out << bhkSerializable::asString(); \
 out << "Num Bodies:  " << numBodies << endl; \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
-  out << "  Bodies[" << i0 << "]:  " << "bhkShape" << endl; \
+  out << "  Bodies[" << i0 << "]:  " << bodies[i0] << endl; \
 }; \
 out << "Priority:  " << priority << endl; \
 return out.str(); \
@@ -410,7 +410,7 @@ NifStream( layer, out, version ); \
 #define BHK_ENTITY_STRING \
 stringstream out; \
 out << bhkWorldObject::asString(); \
-out << "Shape:  " << "bhkShape" << endl; \
+out << "Shape:  " << shape << endl; \
 out << "Layer:  " << layer << endl; \
 return out.str(); \
 
@@ -454,9 +454,9 @@ NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
 #define NI_COLLISION_OBJECT_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-out << "Parent:  " << "NiAVObject" << endl; \
+out << "Parent:  " << parent << endl; \
 out << "Unknown Short:  " << unknownShort << endl; \
-out << "Body:  " << "NiObject" << endl; \
+out << "Body:  " << body << endl; \
 return out.str(); \
 
 #define NI_COLLISION_OBJECT_FIXLINKS \
@@ -511,7 +511,7 @@ if ( version <= 0x04020200 ) { \
 stringstream out; \
 out << NiObject::asString(); \
 out << "Name:  " << name << endl; \
-out << "Next Extra Data:  " << "NiExtraData" << endl; \
+out << "Next Extra Data:  " << nextExtraData << endl; \
 return out.str(); \
 
 #define NI_EXTRA_DATA_FIXLINKS \
@@ -661,12 +661,12 @@ NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 stringstream out; \
 out << NiObject::asString(); \
 out << "Name:  " << name << endl; \
-out << "Extra Data:  " << "NiExtraData" << endl; \
+out << "Extra Data:  " << extraData << endl; \
 out << "Num Extra Data List:  " << numExtraDataList << endl; \
 for (uint i0 = 0; i0 < extraDataList.size(); i0++) { \
-  out << "  Extra Data List[" << i0 << "]:  " << "NiExtraData" << endl; \
+  out << "  Extra Data List[" << i0 << "]:  " << extraDataList[i0] << endl; \
 }; \
-out << "Controller:  " << "NiTimeController" << endl; \
+out << "Controller:  " << controller << endl; \
 return out.str(); \
 
 #define NI_OBJECT_N_E_T_FIXLINKS \
@@ -792,7 +792,7 @@ out << "Scale:  " << scale << endl; \
 out << "Velocity:  " << velocity << endl; \
 out << "Num Properties:  " << numProperties << endl; \
 for (uint i0 = 0; i0 < properties.size(); i0++) { \
-  out << "  Properties[" << i0 << "]:  " << "NiProperty" << endl; \
+  out << "  Properties[" << i0 << "]:  " << properties[i0] << endl; \
 }; \
 out << "Has Bounding Box:  " << hasBoundingBox << endl; \
 if ( (hasBoundingBox != 0) ) { \
@@ -801,8 +801,8 @@ if ( (hasBoundingBox != 0) ) { \
   out << "  Rotation:  " << boundingBox.rotation << endl; \
   out << "  Radius:  " << boundingBox.radius << endl; \
 }; \
-out << "Collision Data:  " << "NiCollisionData" << endl; \
-out << "Collision Object:  " << "NiCollisionObject" << endl; \
+out << "Collision Data:  " << collisionData << endl; \
+out << "Collision Object:  " << collisionObject << endl; \
 return out.str(); \
 
 #define NI_A_V_OBJECT_FIXLINKS \
@@ -898,7 +898,7 @@ if ( (hasAffectedNodeList_ != 0) ) { \
 out << "Switch State:  " << switchState << endl; \
 out << "Num Affected Nodes:  " << numAffectedNodes << endl; \
 for (uint i0 = 0; i0 < affectedNodes.size(); i0++) { \
-  out << "  Affected Nodes[" << i0 << "]:  " << "NiAVObject" << endl; \
+  out << "  Affected Nodes[" << i0 << "]:  " << affectedNodes[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -1011,7 +1011,7 @@ stringstream out; \
 out << NiObject::asString(); \
 out << "Name:  " << name << endl; \
 out << "Order:  " << order << endl; \
-out << "Target:  " << "NiParticleSystem" << endl; \
+out << "Target:  " << target << endl; \
 out << "Active:  " << active << endl; \
 return out.str(); \
 
@@ -1119,7 +1119,7 @@ if ( version >= 0x14000004 ) { \
 #define NI_P_SYS_VOLUME_EMITTER_STRING \
 stringstream out; \
 out << NiPSysEmitter::asString(); \
-out << "Emitter Object:  " << "NiNode" << endl; \
+out << "Emitter Object:  " << emitterObject << endl; \
 return out.str(); \
 
 #define NI_P_SYS_VOLUME_EMITTER_FIXLINKS \
@@ -1176,13 +1176,13 @@ NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
 #define NI_TIME_CONTROLLER_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-out << "Next Controller:  " << "NiTimeController" << endl; \
+out << "Next Controller:  " << nextController << endl; \
 out << "Flags:  " << flags << endl; \
 out << "Frequency:  " << frequency << endl; \
 out << "Phase:  " << phase << endl; \
 out << "Start Time:  " << startTime << endl; \
 out << "Stop Time:  " << stopTime << endl; \
-out << "Target:  " << "NiObject" << endl; \
+out << "Target:  " << target << endl; \
 return out.str(); \
 
 #define NI_TIME_CONTROLLER_FIXLINKS \
@@ -1252,7 +1252,7 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
   out << "  Num Nodes:  " << nodeGroups[i0].numNodes << endl; \
   for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
-    out << "    Nodes[" << i1 << "]:  " << "NiNode" << endl; \
+    out << "    Nodes[" << i1 << "]:  " << nodeGroups[i0].nodes[i1] << endl; \
   }; \
 }; \
 return out.str(); \
@@ -1298,7 +1298,7 @@ if ( version >= 0x0A020000 ) { \
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-out << "Interpolator:  " << "NiInterpolator" << endl; \
+out << "Interpolator:  " << interpolator << endl; \
 return out.str(); \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
@@ -1384,12 +1384,12 @@ if ( version >= 0x0A000100 ) { \
 #define NI_TRI_BASED_GEOM_STRING \
 stringstream out; \
 out << NiAVObject::asString(); \
-out << "Data:  " << "NiTriBasedGeomData" << endl; \
-out << "Skin Instance:  " << "NiSkinInstance" << endl; \
+out << "Data:  " << data << endl; \
+out << "Skin Instance:  " << skinInstance << endl; \
 out << "Has Shader:  " << hasShader << endl; \
 if ( (hasShader != 0) ) { \
   out << "  Shader Name:  " << shaderName << endl; \
-  out << "  Unknown Link:  " << "NiObject" << endl; \
+  out << "  Unknown Link:  " << unknownLink << endl; \
 }; \
 return out.str(); \
 
@@ -1647,7 +1647,7 @@ for (uint i0 = 0; i0 < uvSets2.size(); i0++) { \
   }; \
 }; \
 out << "Unknown Short 2:  " << unknownShort2 << endl; \
-out << "Unknown Link:  " << "NiObject" << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 #define NI_TRI_BASED_GEOM_DATA_FIXLINKS \
@@ -2133,7 +2133,7 @@ stringstream out; \
 out << AbhkShapeCollection::asString(); \
 out << "Num Sub Shapes:  " << numSubShapes << endl; \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
-  out << "  Sub Shapes[" << i0 << "]:  " << "bhkShape" << endl; \
+  out << "  Sub Shapes[" << i0 << "]:  " << subShapes[i0] << endl; \
 }; \
 out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
@@ -2255,8 +2255,8 @@ stringstream out; \
 out << AbhkConstraint::asString(); \
 out << "Type:  " << type << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
-out << "Unknown Link 1:  " << "NiObject" << endl; \
-out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Unknown Link 1:  " << unknownLink1 << endl; \
+out << "Unknown Link 2:  " << unknownLink2 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
 if ( (type == 7) ) { \
   out << "  Pivot A:  " << ragdoll.pivotA << endl; \
@@ -2358,7 +2358,7 @@ NifStream( unknownFloat2, out, version ); \
 #define BHK_MOPP_BV_TREE_SHAPE_STRING \
 stringstream out; \
 out << bhkShape::asString(); \
-out << "Shape:  " << "bhkShape" << endl; \
+out << "Shape:  " << shape << endl; \
 out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
   out << "  Unknown Bytes 1[" << i0 << "]:  " << unknownBytes1[i0] << endl; \
@@ -2509,7 +2509,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Num Strips Data:  " << numStripsData << endl; \
 for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
-  out << "  Strips Data[" << i0 << "]:  " << "NiTriStripsData" << endl; \
+  out << "  Strips Data[" << i0 << "]:  " << stripsData[i0] << endl; \
 }; \
 out << "Num Unknown Ints 3:  " << numUnknownInts3 << endl; \
 for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
@@ -2597,7 +2597,7 @@ out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
-out << "Data:  " << "hkPackedNiTriStripsData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS \
@@ -2858,7 +2858,7 @@ out << "Unknown Int 7:  " << unknownInt7 << endl; \
 out << "Unknown Int 8:  " << unknownInt8 << endl; \
 out << "Num Constraints:  " << numConstraints << endl; \
 for (uint i0 = 0; i0 < constraints.size(); i0++) { \
-  out << "  Constraints[" << i0 << "]:  " << "AbhkConstraint" << endl; \
+  out << "  Constraints[" << i0 << "]:  " << constraints[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -3343,7 +3343,7 @@ if ( version <= 0x0A010000 ) { \
 #define NI_ALPHA_CONTROLLER_STRING \
 stringstream out; \
 out << NiSingleInterpolatorController::asString(); \
-out << "Data:  " << "NiFloatData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_ALPHA_CONTROLLER_FIXLINKS \
@@ -3689,13 +3689,13 @@ out << "Num Shape Groups:  " << numShapeGroups << endl; \
 for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
   out << "  Num Link Pairs:  " << shapeGroups1[i0].numLinkPairs << endl; \
   for (uint i1 = 0; i1 < shapeGroups1[i0].linkPairs.size(); i1++) { \
-    out << "    Shape:  " << "NiTriShape" << endl; \
-    out << "    Skin Instance:  " << "NiSkinInstance" << endl; \
+    out << "    Shape:  " << shapeGroups1[i0].linkPairs[i1].shape << endl; \
+    out << "    Skin Instance:  " << shapeGroups1[i0].linkPairs[i1].skinInstance << endl; \
   }; \
 }; \
 out << "Num Shape Groups 2:  " << numShapeGroups2 << endl; \
 for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
-  out << "  Shape Groups 2[" << i0 << "]:  " << "NiTriShape" << endl; \
+  out << "  Shape Groups 2[" << i0 << "]:  " << shapeGroups2[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -3828,7 +3828,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 stringstream out; \
 out << NiInterpolator::asString(); \
 out << "Bool Value:  " << boolValue << endl; \
-out << "Data:  " << "NiBoolData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_BOOL_INTERPOLATOR_FIXLINKS \
@@ -3868,7 +3868,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 stringstream out; \
 out << NiInterpolator::asString(); \
 out << "Bool Value:  " << boolValue << endl; \
-out << "Data:  " << "NiBoolData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS \
@@ -3996,8 +3996,8 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
 out << NiBSplineInterpolator::asString(); \
-out << "Data:  " << "NiBSplineData" << endl; \
-out << "Unknown Link:  " << "NiObject" << endl; \
+out << "Data:  " << data << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
   out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
@@ -4054,8 +4054,8 @@ for (uint i0 = 0; i0 < 17; i0++) { \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
 out << NiBSplineInterpolator::asString(); \
-out << "Data:  " << "NiBSplineData" << endl; \
-out << "Basis Data:  " << "NiBSplineBasisData" << endl; \
+out << "Data:  " << data << endl; \
+out << "Basis Data:  " << basisData << endl; \
 for (uint i0 = 0; i0 < 17; i0++) { \
   out << "  Unknown4[" << i0 << "]:  " << unknown4[i0] << endl; \
 }; \
@@ -4219,7 +4219,7 @@ out << "Viewport Right:  " << viewportRight << endl; \
 out << "Viewport Top:  " << viewportTop << endl; \
 out << "Viewport Bottom:  " << viewportBottom << endl; \
 out << "LOD Adjust:  " << lodAdjust << endl; \
-out << "Unknown Link?:  " << "NiObject" << endl; \
+out << "Unknown Link?:  " << unknownLink_ << endl; \
 out << "Unknown Int:  " << unknownInt << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 return out.str(); \
@@ -4298,7 +4298,7 @@ if ( (collisionType == 1) ) { \
 #define NI_COLLISION_DATA_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-out << "Target Node:  " << "NiNode" << endl; \
+out << "Target Node:  " << targetNode << endl; \
 out << "Unknown2:  " << unknown2 << endl; \
 out << "Unknown3:  " << unknown3 << endl; \
 out << "Collision Type:  " << collisionType << endl; \
@@ -4440,9 +4440,9 @@ out << NiTimeController::asString(); \
 out << "Cumulative:  " << cumulative << endl; \
 out << "Num Controller Sequences:  " << numControllerSequences << endl; \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
-  out << "  Controller Sequences[" << i0 << "]:  " << "NiControllerSequence" << endl; \
+  out << "  Controller Sequences[" << i0 << "]:  " << controllerSequences[i0] << endl; \
 }; \
-out << "Object Palette:  " << "NiDefaultAVObjectPalette" << endl; \
+out << "Object Palette:  " << objectPalette << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_MANAGER_FIXLINKS \
@@ -4772,12 +4772,12 @@ stringstream out; \
 out << NiObject::asString(); \
 out << "Name:  " << name << endl; \
 out << "Name:  " << textKeys.name << endl; \
-out << "Interpolator:  " << "NiInterpolator" << endl; \
-out << "Unknown Link 1:  " << "NiObject" << endl; \
-out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Interpolator:  " << textKeys.interpolator << endl; \
+out << "Unknown Link 1:  " << textKeys.unknownLink1 << endl; \
+out << "Unknown Link 2:  " << textKeys.unknownLink2 << endl; \
 out << "Unknown Short 0:  " << textKeys.unknownShort0 << endl; \
 out << "Priority?:  " << textKeys.priority_ << endl; \
-out << "String Palette:  " << "NiStringPalette" << endl; \
+out << "String Palette:  " << textKeys.stringPalette << endl; \
 out << "Node Name:  " << textKeys.nodeName << endl; \
 out << "Node Name Offset:  " << textKeys.nodeNameOffset << endl; \
 out << "Property Type:  " << textKeys.propertyType << endl; \
@@ -4792,12 +4792,12 @@ out << "Num Controlled Blocks:  " << numControlledBlocks << endl; \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
   out << "  Name:  " << controlledBlocks[i0].name << endl; \
-  out << "  Interpolator:  " << "NiInterpolator" << endl; \
-  out << "  Unknown Link 1:  " << "NiObject" << endl; \
-  out << "  Unknown Link 2:  " << "NiObject" << endl; \
+  out << "  Interpolator:  " << controlledBlocks[i0].interpolator << endl; \
+  out << "  Unknown Link 1:  " << controlledBlocks[i0].unknownLink1 << endl; \
+  out << "  Unknown Link 2:  " << controlledBlocks[i0].unknownLink2 << endl; \
   out << "  Unknown Short 0:  " << controlledBlocks[i0].unknownShort0 << endl; \
   out << "  Priority?:  " << controlledBlocks[i0].priority_ << endl; \
-  out << "  String Palette:  " << "NiStringPalette" << endl; \
+  out << "  String Palette:  " << controlledBlocks[i0].stringPalette << endl; \
   out << "  Node Name:  " << controlledBlocks[i0].nodeName << endl; \
   out << "  Node Name Offset:  " << controlledBlocks[i0].nodeNameOffset << endl; \
   out << "  Property Type:  " << controlledBlocks[i0].propertyType << endl; \
@@ -4810,7 +4810,7 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
   out << "  Variable Offset 2:  " << controlledBlocks[i0].variableOffset2 << endl; \
 }; \
 out << "Weight:  " << weight << endl; \
-out << "Text Keys 2:  " << "NiTextKeyExtraData" << endl; \
+out << "Text Keys 2:  " << textKeys2 << endl; \
 out << "Cycle Type:  " << cycleType << endl; \
 out << "Unknown Int 0:  " << unknownInt0 << endl; \
 out << "Frequency:  " << frequency << endl; \
@@ -4818,9 +4818,9 @@ out << "Start Time:  " << startTime << endl; \
 out << "Stop Time:  " << stopTime << endl; \
 out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
-out << "Manager:  " << "NiControllerManager" << endl; \
+out << "Manager:  " << manager << endl; \
 out << "Unknown String:  " << unknownString << endl; \
-out << "String Palette:  " << "NiStringPalette" << endl; \
+out << "String Palette:  " << stringPalette << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_SEQUENCE_FIXLINKS \
@@ -4963,7 +4963,7 @@ out << "Unknown Int:  " << unknownInt << endl; \
 out << "Num Objs:  " << numObjs << endl; \
 for (uint i0 = 0; i0 < objs.size(); i0++) { \
   out << "  Name:  " << objs[i0].name << endl; \
-  out << "  Object:  " << "NiAVObject" << endl; \
+  out << "  Object:  " << objs[i0].object << endl; \
 }; \
 return out.str(); \
 
@@ -5077,7 +5077,7 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Delta:  " << delta << endl; \
 out << "Num Sources:  " << numSources << endl; \
 for (uint i0 = 0; i0 < sources.size(); i0++) { \
-  out << "  Sources[" << i0 << "]:  " << "NiSourceTexture" << endl; \
+  out << "  Sources[" << i0 << "]:  " << sources[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -5195,7 +5195,7 @@ if ( version >= 0x14000004 ) { \
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-out << "Unknown Link:  " << "NiObject" << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
 out << "Unknown String:  " << unknownString << endl; \
 return out.str(); \
 
@@ -5238,7 +5238,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 stringstream out; \
 out << NiInterpolator::asString(); \
 out << "Float Value:  " << floatValue << endl; \
-out << "Data:  " << "NiFloatData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_FLOAT_INTERPOLATOR_FIXLINKS \
@@ -5397,11 +5397,11 @@ stringstream out; \
 out << NiTimeController::asString(); \
 out << "Unknown:  " << unknown << endl; \
 out << "Unknown 2:  " << unknown2 << endl; \
-out << "Data:  " << "NiMorphData" << endl; \
+out << "Data:  " << data << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 out << "Num Interpolators:  " << numInterpolators << endl; \
 for (uint i0 = 0; i0 < interpolators.size(); i0++) { \
-  out << "  Interpolators[" << i0 << "]:  " << "NiInterpolator" << endl; \
+  out << "  Interpolators[" << i0 << "]:  " << interpolators[i0] << endl; \
 }; \
 out << "Num Unknown Ints:  " << numUnknownInts << endl; \
 for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
@@ -5561,7 +5561,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 #define NI_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-out << "Data:  " << "NiKeyframeData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_KEYFRAME_CONTROLLER_FIXLINKS \
@@ -5597,7 +5597,7 @@ NifStream( link_map[StaticCast<NiObject>(data2)], out, version ); \
 #define B_S_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
 out << NiKeyframeController::asString(); \
-out << "Data 2:  " << "NiKeyframeData" << endl; \
+out << "Data 2:  " << data2 << endl; \
 return out.str(); \
 
 #define B_S_KEYFRAME_CONTROLLER_FIXLINKS \
@@ -5802,8 +5802,8 @@ if ( version >= 0x0A020000 ) { \
 stringstream out; \
 out << NiTimeController::asString(); \
 out << "Unknown Short:  " << unknownShort << endl; \
-out << "Data:  " << "NiPosData" << endl; \
-out << "Interpolator:  " << "NiPoint3Interpolator" << endl; \
+out << "Data:  " << data << endl; \
+out << "Interpolator:  " << interpolator << endl; \
 return out.str(); \
 
 #define NI_LIGHT_COLOR_CONTROLLER_FIXLINKS \
@@ -5850,7 +5850,7 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 #define NI_LIGHT_DIMMER_CONTROLLER_STRING \
 stringstream out; \
 out << NiTimeController::asString(); \
-out << "Unknown Link:  " << "NiInterpolator" << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_FIXLINKS \
@@ -5894,7 +5894,7 @@ NifStream( link_map[StaticCast<NiObject>(lookAtNode)], out, version ); \
 stringstream out; \
 out << NiTimeController::asString(); \
 out << "Unknown1:  " << unknown1 << endl; \
-out << "Look At Node:  " << "NiNode" << endl; \
+out << "Look At Node:  " << lookAtNode << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_CONTROLLER_FIXLINKS \
@@ -5958,14 +5958,14 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink3)], out, version ); \
 stringstream out; \
 out << NiInterpolator::asString(); \
 out << "Unknown Short:  " << unknownShort << endl; \
-out << "Look At:  " << "NiNode" << endl; \
+out << "Look At:  " << lookAt << endl; \
 out << "Unknown Float:  " << unknownFloat << endl; \
 out << "Translation:  " << translation << endl; \
 out << "Rotation:  " << rotation << endl; \
 out << "Scale:  " << scale << endl; \
-out << "Unknown Link 1:  " << "NiPoint3Interpolator" << endl; \
-out << "Unknown Link 2:  " << "NiFloatInterpolator" << endl; \
-out << "Unknown Link 3:  " << "NiFloatInterpolator" << endl; \
+out << "Unknown Link 1:  " << unknownLink1 << endl; \
+out << "Unknown Link 2:  " << unknownLink2 << endl; \
+out << "Unknown Link 3:  " << unknownLink3 << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_INTERPOLATOR_FIXLINKS \
@@ -6034,7 +6034,7 @@ if ( version <= 0x0A010000 ) { \
 stringstream out; \
 out << NiSingleInterpolatorController::asString(); \
 out << "Unknown:  " << unknown << endl; \
-out << "Data:  " << "NiPosData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
@@ -6248,18 +6248,18 @@ for (uint i0 = 0; i0 < unknownFloats5.size(); i0++) { \
   }; \
 }; \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
-out << "Modifier:  " << "AParticleModifier" << endl; \
+out << "Modifier:  " << modifier << endl; \
 out << "Unknown Byte 2:  " << unknownByte2 << endl; \
 out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
-  out << "  Unknown Links[" << i0 << "]:  " << "AParticleModifier" << endl; \
+  out << "  Unknown Links[" << i0 << "]:  " << unknownLinks[i0] << endl; \
 }; \
 out << "Unknown Short 4:  " << unknownShort4 << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Unknown Byte 12:  " << unknownByte12 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
 out << "Unknown Int 4:  " << unknownInt4 << endl; \
-out << "Unknown Link 2:  " << "NiNode" << endl; \
+out << "Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 #define NI_MESH_P_SYS_DATA_FIXLINKS \
@@ -6414,7 +6414,7 @@ stringstream out; \
 out << NiTimeController::asString(); \
 out << "Num Extra Targets:  " << numExtraTargets << endl; \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
-  out << "  Extra Targets[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Extra Targets[" << i0 << "]:  " << extraTargets[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -6475,11 +6475,11 @@ stringstream out; \
 out << NiAVObject::asString(); \
 out << "Num Children:  " << numChildren << endl; \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
-  out << "  Children[" << i0 << "]:  " << "NiAVObject" << endl; \
+  out << "  Children[" << i0 << "]:  " << children[i0] << endl; \
 }; \
 out << "Num Effects:  " << numEffects << endl; \
 for (uint i0 = 0; i0 < effects.size(); i0++) { \
-  out << "  Effects[" << i0 << "]:  " << "NiDynamicEffect" << endl; \
+  out << "  Effects[" << i0 << "]:  " << effects[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -6630,7 +6630,7 @@ out << "Unknown Int  2:  " << unknownInt2 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
 out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
-  out << "  Unknown Links[" << i0 << "]:  " << "NiObject" << endl; \
+  out << "  Unknown Links[" << i0 << "]:  " << unknownLinks[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -6785,7 +6785,7 @@ if ( (lodType == 0) ) { \
 }; \
 if ( (lodType == 1) ) { \
   out << "  Unknown Short:  " << unknownShort << endl; \
-  out << "  Range Data:  " << "NiRangeLODData" << endl; \
+  out << "  Range Data:  " << rangeData << endl; \
 }; \
 return out.str(); \
 
@@ -6942,7 +6942,7 @@ NifStream( link_map[StaticCast<NiObject>(colorData)], out, version ); \
 #define NI_PARTICLE_COLOR_MODIFIER_STRING \
 stringstream out; \
 out << AParticleModifier::asString(); \
-out << "Color Data:  " << "NiColorData" << endl; \
+out << "Color Data:  " << colorData << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_FIXLINKS \
@@ -7013,7 +7013,7 @@ NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
 stringstream out; \
 out << AParticleModifier::asString(); \
 out << "Num Particle Meshes:  " << numParticleMeshes << endl; \
-out << "Particle Meshes:  " << "NiTriBasedGeom" << endl; \
+out << "Particle Meshes:  " << particleMeshes << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_FIXLINKS \
@@ -7231,7 +7231,7 @@ NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
 #define NI_PARTICLE_MESHES_DATA_STRING \
 stringstream out; \
 out << NiParticlesData::asString(); \
-out << "Unknown Link 2:  " << "NiTriBasedGeom" << endl; \
+out << "Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESHES_DATA_FIXLINKS \
@@ -7285,7 +7285,7 @@ out << NiParticles::asString(); \
 out << "Unknown Bool:  " << unknownBool << endl; \
 out << "Num Modifiers:  " << numModifiers << endl; \
 for (uint i0 = 0; i0 < modifiers.size(); i0++) { \
-  out << "  Modifiers[" << i0 << "]:  " << "NiPSysModifier" << endl; \
+  out << "  Modifiers[" << i0 << "]:  " << modifiers[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -7492,7 +7492,7 @@ out << "Lifetime:  " << lifetime << endl; \
 out << "Lifetime Random:  " << lifetimeRandom << endl; \
 out << "Emit Flags:  " << emitFlags << endl; \
 out << "Start Random:  " << startRandom << endl; \
-out << "Emitter:  " << "NiObject" << endl; \
+out << "Emitter:  " << emitter << endl; \
 out << "Unknown Short 2?:  " << unknownShort2_ << endl; \
 out << "Unknown Float 13?:  " << unknownFloat13_ << endl; \
 out << "Unknown Int 1?:  " << unknownInt1_ << endl; \
@@ -7509,9 +7509,9 @@ for (uint i0 = 0; i0 < particles.size(); i0++) { \
   out << "  Unknown Short:  " << particles[i0].unknownShort << endl; \
   out << "  Vertex ID:  " << particles[i0].vertexId << endl; \
 }; \
-out << "Unknown Link:  " << "NiObject" << endl; \
-out << "Particle Extra:  " << "AParticleModifier" << endl; \
-out << "Unknown Link 2:  " << "NiObject" << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
+out << "Particle Extra:  " << particleExtra << endl; \
+out << "Unknown Link 2:  " << unknownLink2 << endl; \
 out << "Trailer:  " << trailer << endl; \
 return out.str(); \
 
@@ -7619,8 +7619,8 @@ out << "Unknown Int 1:  " << unknownInt1 << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
 out << "Unknown Short:  " << unknownShort << endl; \
-out << "Pos Data:  " << "NiPosData" << endl; \
-out << "Float Data:  " << "NiFloatData" << endl; \
+out << "Pos Data:  " << posData << endl; \
+out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_PATH_CONTROLLER_FIXLINKS \
@@ -7679,8 +7679,8 @@ out << NiBlendInterpolator::asString(); \
 out << "Unknown Float 1:  " << unknownFloat1 << endl; \
 out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 out << "Unknown Short 2:  " << unknownShort2 << endl; \
-out << "Pos Data:  " << "NiPosData" << endl; \
-out << "Float Data:  " << "NiFloatData" << endl; \
+out << "Pos Data:  " << posData << endl; \
+out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_PATH_INTERPOLATOR_FIXLINKS \
@@ -7817,7 +7817,7 @@ out << "Unknown Int:  " << unknownInt << endl; \
 for (uint i0 = 0; i0 < 54; i0++) { \
   out << "  Unknown 54 Bytes[" << i0 << "]:  " << unknown54Bytes[i0] << endl; \
 }; \
-out << "Palette:  " << "NiPalette" << endl; \
+out << "Palette:  " << palette << endl; \
 out << "Num Mipmaps:  " << numMipmaps << endl; \
 out << "Bytes Per Pixel:  " << bytesPerPixel << endl; \
 for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
@@ -7972,7 +7972,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 stringstream out; \
 out << NiInterpolator::asString(); \
 out << "Point 3 Value:  " << point3Value << endl; \
-out << "Data:  " << "NiPosData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_POINT3_INTERPOLATOR_FIXLINKS \
@@ -8092,7 +8092,7 @@ NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
 stringstream out; \
 out << NiPSysModifier::asString(); \
 out << "Spawn on Death:  " << spawnOnDeath << endl; \
-out << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
+out << "Spawn Modifier:  " << spawnModifier << endl; \
 return out.str(); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS \
@@ -8149,7 +8149,7 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 #define NI_P_SYS_BOMB_MODIFIER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-out << "Unknown Link:  " << "NiNode" << endl; \
+out << "Unknown Link:  " << unknownLink << endl; \
 for (uint i0 = 0; i0 < 2; i0++) { \
   out << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
 }; \
@@ -8256,7 +8256,7 @@ NifStream( link_map[StaticCast<NiObject>(collider)], out, version ); \
 #define NI_P_SYS_COLLIDER_MANAGER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-out << "Collider:  " << "NiPSysPlanarCollider" << endl; \
+out << "Collider:  " << collider << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_FIXLINKS \
@@ -8292,7 +8292,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 #define NI_P_SYS_COLOR_MODIFIER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-out << "Data:  " << "NiColorData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLOR_MODIFIER_FIXLINKS \
@@ -8504,7 +8504,7 @@ NifStream( rangeFalloff, out, version ); \
 #define NI_P_SYS_DRAG_MODIFIER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-out << "Parent:  " << "NiObject" << endl; \
+out << "Parent:  " << parent << endl; \
 out << "Drag Axis:  " << dragAxis << endl; \
 out << "Percentage:  " << percentage << endl; \
 out << "Range:  " << range << endl; \
@@ -8544,7 +8544,7 @@ NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
 stringstream out; \
 out << APSysCtlr::asString(); \
-out << "Visibility Interpolator:  " << "NiInterpolator" << endl; \
+out << "Visibility Interpolator:  " << visibilityInterpolator << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
@@ -8769,7 +8769,7 @@ NifStream( turbulenceScale, out, version ); \
 #define NI_P_SYS_GRAVITY_MODIFIER_STRING \
 stringstream out; \
 out << NiPSysModifier::asString(); \
-out << "Gravity Object:  " << "NiNode" << endl; \
+out << "Gravity Object:  " << gravityObject << endl; \
 out << "Gravity Axis:  " << gravityAxis << endl; \
 out << "Decay:  " << decay << endl; \
 out << "Strength:  " << strength << endl; \
@@ -8891,7 +8891,7 @@ stringstream out; \
 out << NiPSysEmitter::asString(); \
 out << "Num Emitter Meshes:  " << numEmitterMeshes << endl; \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
-  out << "  Emitter Meshes[" << i0 << "]:  " << "NiTriBasedGeom" << endl; \
+  out << "  Emitter Meshes[" << i0 << "]:  " << emitterMeshes[i0] << endl; \
 }; \
 out << "Initial Velocity Type:  " << initialVelocityType << endl; \
 out << "Emission Type:  " << emissionType << endl; \
@@ -8943,7 +8943,7 @@ stringstream out; \
 out << NiPSysModifier::asString(); \
 out << "Num Meshes:  " << numMeshes << endl; \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
-  out << "  Meshes[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Meshes[" << i0 << "]:  " << meshes[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -9040,10 +9040,10 @@ out << NiObject::asString(); \
 out << "Bounce:  " << bounce << endl; \
 out << "Spawn on Collide:  " << spawnOnCollide << endl; \
 out << "Die on Collide:  " << dieOnCollide << endl; \
-out << "Spawn Modifier:  " << "NiPSysSpawnModifier" << endl; \
-out << "Parent:  " << "NiObject" << endl; \
-out << "Unknown Link?:  " << "NiObject" << endl; \
-out << "Collider Object:  " << "NiNode" << endl; \
+out << "Spawn Modifier:  " << spawnModifier << endl; \
+out << "Parent:  " << parent << endl; \
+out << "Unknown Link?:  " << unknownLink_ << endl; \
+out << "Collider Object:  " << colliderObject << endl; \
 out << "Width:  " << width << endl; \
 out << "Height:  " << height << endl; \
 out << "X Axis:  " << xAxis << endl; \
@@ -9549,7 +9549,7 @@ out << "Rotation:  " << rotation << endl; \
 out << "Translation:  " << translation << endl; \
 out << "Scale:  " << scale << endl; \
 out << "Num Bones:  " << numBones << endl; \
-out << "Skin Partition:  " << "NiSkinPartition" << endl; \
+out << "Skin Partition:  " << skinPartition << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 for (uint i0 = 0; i0 < boneList.size(); i0++) { \
   out << "  Rotation:  " << boneList[i0].rotation << endl; \
@@ -9624,12 +9624,12 @@ for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 #define NI_SKIN_INSTANCE_STRING \
 stringstream out; \
 out << NiObject::asString(); \
-out << "Data:  " << "NiSkinData" << endl; \
-out << "Skin Partition:  " << "NiSkinPartition" << endl; \
-out << "Skeleton Root:  " << "NiNode" << endl; \
+out << "Data:  " << data << endl; \
+out << "Skin Partition:  " << skinPartition << endl; \
+out << "Skeleton Root:  " << skeletonRoot << endl; \
 out << "Num Bones:  " << bones.numBones << endl; \
 for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
-  out << "  Bones[" << i0 << "]:  " << "NiNode" << endl; \
+  out << "  Bones[" << i0 << "]:  " << bones.bones[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -10000,12 +10000,12 @@ out << NiObjectNET::asString(); \
 out << "Use External:  " << useExternal << endl; \
 if ( (useExternal == 1) ) { \
   out << "  File Name:  " << fileName << endl; \
-  out << "  Unknown Link:  " << "NiObject" << endl; \
+  out << "  Unknown Link:  " << unknownLink << endl; \
 }; \
 if ( (useExternal == 0) ) { \
   out << "  Unknown Byte:  " << unknownByte << endl; \
   out << "  Original File Name?:  " << originalFileName_ << endl; \
-  out << "  Pixel Data:  " << "NiPixelData" << endl; \
+  out << "  Pixel Data:  " << pixelData << endl; \
 }; \
 out << "Pixel Layout:  " << pixelLayout << endl; \
 out << "Use Mipmaps:  " << useMipmaps << endl; \
@@ -10425,7 +10425,7 @@ out << "Texture Filtering:  " << textureFiltering << endl; \
 out << "Texture Clamping:  " << textureClamping << endl; \
 out << "Texture Type:  " << textureType << endl; \
 out << "Coordinate Generation Type:  " << coordinateGenerationType << endl; \
-out << "Source Texture:  " << "NiSourceTexture" << endl; \
+out << "Source Texture:  " << sourceTexture << endl; \
 out << "Clipping Plane:  " << clippingPlane << endl; \
 out << "Unknown Vector:  " << unknownVector << endl; \
 out << "Unknown Float:  " << unknownFloat << endl; \
@@ -10483,7 +10483,7 @@ out << NiSingleInterpolatorController::asString(); \
 out << "Unknown2:  " << unknown2 << endl; \
 out << "Texture Slot:  " << textureSlot << endl; \
 out << "Operation:  " << operation << endl; \
-out << "Data:  " << "NiFloatData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS \
@@ -11024,7 +11024,7 @@ out << "Apply Mode:  " << applyMode << endl; \
 out << "Texture Count:  " << textureCount << endl; \
 out << "Has Base Texture:  " << hasBaseTexture << endl; \
 if ( (hasBaseTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << baseTexture.source << endl; \
   out << "  Clamp Mode:  " << baseTexture.clampMode << endl; \
   out << "  Filter Mode:  " << baseTexture.filterMode << endl; \
   out << "  Texture Set:  " << baseTexture.textureSet << endl; \
@@ -11042,7 +11042,7 @@ if ( (hasBaseTexture != 0) ) { \
 }; \
 out << "Has Dark Texture:  " << hasDarkTexture << endl; \
 if ( (hasDarkTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << darkTexture.source << endl; \
   out << "  Clamp Mode:  " << darkTexture.clampMode << endl; \
   out << "  Filter Mode:  " << darkTexture.filterMode << endl; \
   out << "  Texture Set:  " << darkTexture.textureSet << endl; \
@@ -11060,7 +11060,7 @@ if ( (hasDarkTexture != 0) ) { \
 }; \
 out << "Has Detail Texture:  " << hasDetailTexture << endl; \
 if ( (hasDetailTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << detailTexture.source << endl; \
   out << "  Clamp Mode:  " << detailTexture.clampMode << endl; \
   out << "  Filter Mode:  " << detailTexture.filterMode << endl; \
   out << "  Texture Set:  " << detailTexture.textureSet << endl; \
@@ -11078,7 +11078,7 @@ if ( (hasDetailTexture != 0) ) { \
 }; \
 out << "Has Gloss Texture:  " << hasGlossTexture << endl; \
 if ( (hasGlossTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << glossTexture.source << endl; \
   out << "  Clamp Mode:  " << glossTexture.clampMode << endl; \
   out << "  Filter Mode:  " << glossTexture.filterMode << endl; \
   out << "  Texture Set:  " << glossTexture.textureSet << endl; \
@@ -11096,7 +11096,7 @@ if ( (hasGlossTexture != 0) ) { \
 }; \
 out << "Has Glow Texture:  " << hasGlowTexture << endl; \
 if ( (hasGlowTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << glowTexture.source << endl; \
   out << "  Clamp Mode:  " << glowTexture.clampMode << endl; \
   out << "  Filter Mode:  " << glowTexture.filterMode << endl; \
   out << "  Texture Set:  " << glowTexture.textureSet << endl; \
@@ -11114,7 +11114,7 @@ if ( (hasGlowTexture != 0) ) { \
 }; \
 out << "Has Bump Map Texture:  " << hasBumpMapTexture << endl; \
 if ( (hasBumpMapTexture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << bumpMapTexture.source << endl; \
   out << "  Clamp Mode:  " << bumpMapTexture.clampMode << endl; \
   out << "  Filter Mode:  " << bumpMapTexture.filterMode << endl; \
   out << "  Texture Set:  " << bumpMapTexture.textureSet << endl; \
@@ -11135,7 +11135,7 @@ if ( (hasBumpMapTexture != 0) ) { \
 }; \
 out << "Has Decal 0 Texture:  " << hasDecal0Texture << endl; \
 if ( (hasDecal0Texture != 0) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << decal0Texture.source << endl; \
   out << "  Clamp Mode:  " << decal0Texture.clampMode << endl; \
   out << "  Filter Mode:  " << decal0Texture.filterMode << endl; \
   out << "  Texture Set:  " << decal0Texture.textureSet << endl; \
@@ -11155,7 +11155,7 @@ if ( (textureCount == 8) ) { \
   out << "  Has Decal 1 Texture:  " << hasDecal1Texture << endl; \
 }; \
 if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
-  out << "  Source:  " << "NiSourceTexture" << endl; \
+  out << "  Source:  " << decal1Texture.source << endl; \
   out << "  Clamp Mode:  " << decal1Texture.clampMode << endl; \
   out << "  Filter Mode:  " << decal1Texture.filterMode << endl; \
   out << "  Texture Set:  " << decal1Texture.textureSet << endl; \
@@ -11175,7 +11175,7 @@ out << "Num Shader Textures:  " << numShaderTextures << endl; \
 for (uint i0 = 0; i0 < shaderTextures.size(); i0++) { \
   out << "  Is Used:  " << shaderTextures[i0].isUsed << endl; \
   if ( (shaderTextures[i0].isUsed != 0) ) { \
-    out << "    Source:  " << "NiSourceTexture" << endl; \
+    out << "    Source:  " << shaderTextures[i0].textureData.source << endl; \
     out << "    Clamp Mode:  " << shaderTextures[i0].textureData.clampMode << endl; \
     out << "    Filter Mode:  " << shaderTextures[i0].textureData.filterMode << endl; \
     out << "    Texture Set:  " << shaderTextures[i0].textureData.textureSet << endl; \
@@ -11378,7 +11378,7 @@ out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   out << "  Unknown Bytes[" << i0 << "]:  " << unknownBytes[i0] << endl; \
 }; \
-out << "Data:  " << "NiTransformData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_TRANSFORM_INTERPOLATOR_FIXLINKS \
@@ -11648,7 +11648,7 @@ NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 stringstream out; \
 out << NiTimeController::asString(); \
 out << "Unknown Short:  " << unknownShort << endl; \
-out << "Data:  " << "NiUVData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_U_V_CONTROLLER_FIXLINKS \
@@ -11847,7 +11847,7 @@ if ( version <= 0x0A010000 ) { \
 #define NI_VIS_CONTROLLER_STRING \
 stringstream out; \
 out << NiSingleInterpolatorController::asString(); \
-out << "Data:  " << "NiVisData" << endl; \
+out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_VIS_CONTROLLER_FIXLINKS \

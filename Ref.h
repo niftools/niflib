@@ -7,6 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 /**
  * Smart Pointer Template
  */
+
+template<class T> class Ref;
+template<class T> ostream & operator<<(ostream &, const Ref<T> &);
+
 template <class T> class Ref {
 public:
 	Ref( T * object = NULL );
@@ -27,6 +31,7 @@ public:
 	bool operator==(const Ref & ref) const;
 	bool operator!=(const Ref & ref) const;
 
+        friend ostream & operator<< <T>(ostream & os, const Ref & ref);
 protected:
 	//The shared object
 	T* _object;
@@ -82,7 +87,7 @@ Ref<T> & Ref<T>::operator=( T * object ) {
 	//Change reference to new object
 	_object = object;
 
-	//Increment reerence count on new object if it is not NULL
+	//Increment reference count on new object if it is not NULL
 	if ( _object != NULL ) {
 		_object->AddRef();
 	}
@@ -105,7 +110,7 @@ Ref<T> & Ref<T>::operator=( const Ref & ref ) {
 	//Change reference to new object
 	_object = ref._object;
 
-	//Increment reerence count on new object if it is not NULL
+	//Increment reference count on new object if it is not NULL
 	if ( _object != NULL ) {
 		_object->AddRef();
 	}
@@ -142,6 +147,16 @@ template <class T>
 bool Ref<T>::operator!=(const Ref & ref) const {
 	//Compare pointer values of referenced objects
 	return ( _object != ref._object );
+}
+
+
+template <class T>
+ostream & operator<<(ostream & os, const Ref<T> & ref) {
+	if (ref._object)
+		os << ref._object << "(" << ref._object->GetType().GetTypeName() << ")";
+	else
+		os << "NULL";
+	return os;
 }
 
 #endif
