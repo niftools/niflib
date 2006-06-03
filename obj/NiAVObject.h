@@ -4,6 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIAVOBJECT_H_
 #define _NIAVOBJECT_H_
 
+// Includes
+#include "obj/NiProperty.h"
+#include "gen/BoundingBox.h"
+#include "obj/NiCollisionData.h"
+#include "obj/NiCollisionObject.h"
+
 #include "gen/obj_defines.h"
 #include NI_A_V_OBJECT_INCLUDE
 

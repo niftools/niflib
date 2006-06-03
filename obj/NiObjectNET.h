@@ -4,6 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIOBJECTNET_H_
 #define _NIOBJECTNET_H_
 
+// Includes
+#include "obj/NiExtraData.h"
+#include "obj/NiTimeController.h"
+
 #include "gen/obj_defines.h"
 #include NI_OBJECT_N_E_T_INCLUDE
 
