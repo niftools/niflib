@@ -153,7 +153,7 @@ bool Ref<T>::operator!=(const Ref & ref) const {
 template <class T>
 ostream & operator<<(ostream & os, const Ref<T> & ref) {
 	if (ref._object)
-		os << ref._object << "(" << ref._object->GetType().GetTypeName() << ")";
+		os << ref->GetIDString();
 	else
 		os << "NULL";
 	return os;

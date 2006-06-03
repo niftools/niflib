@@ -100,6 +100,9 @@ public:
 	 */
 	virtual string asString( bool verbose = false ) const;
 
+	/*! Formats a human readable string that includes the type of the object */
+	virtual string GetIDString();
+
 	/*!
 	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
 	 * \return A list of references to blocks that this attribute links its owner block to.

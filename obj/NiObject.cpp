@@ -58,3 +58,9 @@ list<NiObjectRef> NiObject::GetLinks() {
 	return list<NiObjectRef>();
 }
 
+/*! Used to format a human readable string that includes the type of the object */
+string NiObject::GetIDString() {
+	stringstream out;
+	out << this << "(" << this->GetType().GetTypeName() << ")";
+	return out.str();
+}
