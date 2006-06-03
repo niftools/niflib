@@ -11,22 +11,22 @@ NiVisController::NiVisController() NI_VIS_CONTROLLER_CONSTRUCT {}
 NiVisController::~NiVisController() {}
 
 void NiVisController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_VIS_CONTROLLER_READ
+	NI_VIS_CONTROLLER_READ
 }
 
 void NiVisController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_VIS_CONTROLLER_WRITE
+	NI_VIS_CONTROLLER_WRITE
 }
 
 string NiVisController::asString( bool verbose ) const {
-  NI_VIS_CONTROLLER_STRING
+	NI_VIS_CONTROLLER_STRING
 }
 
 void NiVisController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_VIS_CONTROLLER_FIXLINKS
+	NI_VIS_CONTROLLER_FIXLINKS
 }
 
 const Type & NiVisController::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

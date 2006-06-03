@@ -12,22 +12,22 @@ NiSkinPartition::NiSkinPartition() NI_SKIN_PARTITION_CONSTRUCT {}
 NiSkinPartition::~NiSkinPartition() {}
 
 void NiSkinPartition::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_SKIN_PARTITION_READ
+	NI_SKIN_PARTITION_READ
 }
 
 void NiSkinPartition::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_SKIN_PARTITION_WRITE
+	NI_SKIN_PARTITION_WRITE
 }
 
 string NiSkinPartition::asString( bool verbose ) const {
-  NI_SKIN_PARTITION_STRING
+	NI_SKIN_PARTITION_STRING
 }
 
 void NiSkinPartition::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_SKIN_PARTITION_FIXLINKS
+	NI_SKIN_PARTITION_FIXLINKS
 }
 
 const Type & NiSkinPartition::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

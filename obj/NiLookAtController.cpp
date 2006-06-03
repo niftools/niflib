@@ -11,22 +11,22 @@ NiLookAtController::NiLookAtController() NI_LOOK_AT_CONTROLLER_CONSTRUCT {}
 NiLookAtController::~NiLookAtController() {}
 
 void NiLookAtController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_LOOK_AT_CONTROLLER_READ
+	NI_LOOK_AT_CONTROLLER_READ
 }
 
 void NiLookAtController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_LOOK_AT_CONTROLLER_WRITE
+	NI_LOOK_AT_CONTROLLER_WRITE
 }
 
 string NiLookAtController::asString( bool verbose ) const {
-  NI_LOOK_AT_CONTROLLER_STRING
+	NI_LOOK_AT_CONTROLLER_STRING
 }
 
 void NiLookAtController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_LOOK_AT_CONTROLLER_FIXLINKS
+	NI_LOOK_AT_CONTROLLER_FIXLINKS
 }
 
 const Type & NiLookAtController::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

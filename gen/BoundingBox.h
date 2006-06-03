@@ -11,26 +11,26 @@ All rights reserved.  Please see niflib.h for licence. */
  * Bounding box.
  */
 struct BoundingBox {
-  /*! Default Constructor */
-  BoundingBox();
-  /*! Default Destructor */
-  ~BoundingBox();
-  /*!
-   * Usually 1.
-   */
-  uint unknownInt;
-  /*!
-   * Translation vector.
-   */
-  Vector3 translation;
-  /*!
-   * Rotation matrix.
-   */
-  Matrix33 rotation;
-  /*!
-   * Radius, per direction.
-   */
-  Vector3 radius;
+	/*! Default Constructor */
+	BoundingBox();
+	/*! Default Destructor */
+	~BoundingBox();
+	/*!
+	 * Usually 1.
+	 */
+	uint unknownInt;
+	/*!
+	 * Translation vector.
+	 */
+	Vector3 translation;
+	/*!
+	 * Rotation matrix.
+	 */
+	Matrix33 rotation;
+	/*!
+	 * Radius, per direction.
+	 */
+	Vector3 radius;
 };
 
 #endif

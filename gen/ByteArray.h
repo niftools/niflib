@@ -11,22 +11,22 @@ All rights reserved.  Please see niflib.h for licence. */
  * An array of bytes.
  */
 struct ByteArray {
-  /*! Default Constructor */
-  ByteArray();
-  /*! Default Destructor */
-  ~ByteArray();
-  /*!
-   * The number of bytes in this array
-   */
-  uint dataSize;
-  /*!
-   * Unknown.
-   */
-  uint unknownInt;
-  /*!
-   * The bytes which make up the array
-   */
-  vector<byte > data;
+	/*! Default Constructor */
+	ByteArray();
+	/*! Default Destructor */
+	~ByteArray();
+	/*!
+	 * The number of bytes in this array
+	 */
+	uint dataSize;
+	/*!
+	 * Unknown.
+	 */
+	uint unknownInt;
+	/*!
+	 * The bytes which make up the array
+	 */
+	vector<byte > data;
 };
 
 #endif

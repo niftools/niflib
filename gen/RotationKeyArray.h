@@ -12,18 +12,18 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T >
 struct RotationKeyArray {
-  /*!
-   * Number of keys.
-   */
-  uint numKeys;
-  /*!
-   * Key type (1, 2, 3, or 4).
-   */
-  KeyType keyType;
-  /*!
-   * The rotation keys.
-   */
-  vector<Key<T > > keys;
+	/*!
+	 * Number of keys.
+	 */
+	uint numKeys;
+	/*!
+	 * Key type (1, 2, 3, or 4).
+	 */
+	KeyType keyType;
+	/*!
+	 * The rotation keys.
+	 */
+	vector<Key<T > > keys;
 };
 
 #endif

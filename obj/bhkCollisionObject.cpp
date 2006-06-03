@@ -11,22 +11,22 @@ bhkCollisionObject::bhkCollisionObject() BHK_COLLISION_OBJECT_CONSTRUCT {}
 bhkCollisionObject::~bhkCollisionObject() {}
 
 void bhkCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  BHK_COLLISION_OBJECT_READ
+	BHK_COLLISION_OBJECT_READ
 }
 
 void bhkCollisionObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  BHK_COLLISION_OBJECT_WRITE
+	BHK_COLLISION_OBJECT_WRITE
 }
 
 string bhkCollisionObject::asString( bool verbose ) const {
-  BHK_COLLISION_OBJECT_STRING
+	BHK_COLLISION_OBJECT_STRING
 }
 
 void bhkCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  BHK_COLLISION_OBJECT_FIXLINKS
+	BHK_COLLISION_OBJECT_FIXLINKS
 }
 
 const Type & bhkCollisionObject::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

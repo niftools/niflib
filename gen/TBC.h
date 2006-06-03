@@ -11,22 +11,22 @@ All rights reserved.  Please see niflib.h for licence. */
  * Tension, bias, continuity.
  */
 struct TBC {
-  /*! Default Constructor */
-  TBC();
-  /*! Default Destructor */
-  ~TBC();
-  /*!
-   * Tension.
-   */
-  float t;
-  /*!
-   * Bias.
-   */
-  float b;
-  /*!
-   * Continuity.
-   */
-  float c;
+	/*! Default Constructor */
+	TBC();
+	/*! Default Destructor */
+	~TBC();
+	/*!
+	 * Tension.
+	 */
+	float t;
+	/*!
+	 * Bias.
+	 */
+	float b;
+	/*!
+	 * Continuity.
+	 */
+	float c;
 };
 
 #endif

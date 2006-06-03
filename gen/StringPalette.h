@@ -11,18 +11,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * A list of \\0 terminated strings.
  */
 struct StringPalette {
-  /*! Default Constructor */
-  StringPalette();
-  /*! Default Destructor */
-  ~StringPalette();
-  /*!
-   * A bunch of 0x00 seperated strings.
-   */
-  string palette;
-  /*!
-   * Length of the palette string is repeated here.
-   */
-  uint length;
+	/*! Default Constructor */
+	StringPalette();
+	/*! Default Destructor */
+	~StringPalette();
+	/*!
+	 * A bunch of 0x00 seperated strings.
+	 */
+	string palette;
+	/*!
+	 * Length of the palette string is repeated here.
+	 */
+	uint length;
 };
 
 #endif

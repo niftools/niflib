@@ -13,22 +13,22 @@ NiBoneLODController::NiBoneLODController() NI_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 NiBoneLODController::~NiBoneLODController() {}
 
 void NiBoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_BONE_L_O_D_CONTROLLER_READ
+	NI_BONE_L_O_D_CONTROLLER_READ
 }
 
 void NiBoneLODController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_BONE_L_O_D_CONTROLLER_WRITE
+	NI_BONE_L_O_D_CONTROLLER_WRITE
 }
 
 string NiBoneLODController::asString( bool verbose ) const {
-  NI_BONE_L_O_D_CONTROLLER_STRING
+	NI_BONE_L_O_D_CONTROLLER_STRING
 }
 
 void NiBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_BONE_L_O_D_CONTROLLER_FIXLINKS
+	NI_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 
 const Type & NiBoneLODController::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

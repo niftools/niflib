@@ -11,22 +11,22 @@ NiDynamicEffect::NiDynamicEffect() NI_DYNAMIC_EFFECT_CONSTRUCT {}
 NiDynamicEffect::~NiDynamicEffect() {}
 
 void NiDynamicEffect::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_DYNAMIC_EFFECT_READ
+	NI_DYNAMIC_EFFECT_READ
 }
 
 void NiDynamicEffect::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_DYNAMIC_EFFECT_WRITE
+	NI_DYNAMIC_EFFECT_WRITE
 }
 
 string NiDynamicEffect::asString( bool verbose ) const {
-  NI_DYNAMIC_EFFECT_STRING
+	NI_DYNAMIC_EFFECT_STRING
 }
 
 void NiDynamicEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_DYNAMIC_EFFECT_FIXLINKS
+	NI_DYNAMIC_EFFECT_FIXLINKS
 }
 
 const Type & NiDynamicEffect::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

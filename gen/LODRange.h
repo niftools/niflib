@@ -11,18 +11,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * The distance range where a specific level of detail applies.
  */
 struct LODRange {
-  /*! Default Constructor */
-  LODRange();
-  /*! Default Destructor */
-  ~LODRange();
-  /*!
-   * Begining of range.
-   */
-  float near;
-  /*!
-   * End of Range.
-   */
-  float far;
+	/*! Default Constructor */
+	LODRange();
+	/*! Default Destructor */
+	~LODRange();
+	/*!
+	 * Begining of range.
+	 */
+	float near;
+	/*!
+	 * End of Range.
+	 */
+	float far;
 };
 
 #endif

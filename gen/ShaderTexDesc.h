@@ -11,22 +11,22 @@ All rights reserved.  Please see niflib.h for licence. */
  * An extended texture description for shader textures.
  */
 struct ShaderTexDesc {
-  /*! Default Constructor */
-  ShaderTexDesc();
-  /*! Default Destructor */
-  ~ShaderTexDesc();
-  /*!
-   * Is it used?
-   */
-  bool isUsed;
-  /*!
-   * The texture data.
-   */
-  TexDesc textureData;
-  /*!
-   * Unknown.
-   */
-  uint unknownInt;
+	/*! Default Constructor */
+	ShaderTexDesc();
+	/*! Default Destructor */
+	~ShaderTexDesc();
+	/*!
+	 * Is it used?
+	 */
+	bool isUsed;
+	/*!
+	 * The texture data.
+	 */
+	TexDesc textureData;
+	/*!
+	 * Unknown.
+	 */
+	uint unknownInt;
 };
 
 #endif

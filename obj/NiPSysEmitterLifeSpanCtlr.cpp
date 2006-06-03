@@ -11,22 +11,22 @@ NiPSysEmitterLifeSpanCtlr::NiPSysEmitterLifeSpanCtlr() NI_P_SYS_EMITTER_LIFE_SPA
 NiPSysEmitterLifeSpanCtlr::~NiPSysEmitterLifeSpanCtlr() {}
 
 void NiPSysEmitterLifeSpanCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_READ
+	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_READ
 }
 
 void NiPSysEmitterLifeSpanCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_WRITE
+	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_WRITE
 }
 
 string NiPSysEmitterLifeSpanCtlr::asString( bool verbose ) const {
-  NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING
+	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING
 }
 
 void NiPSysEmitterLifeSpanCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS
+	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS
 }
 
 const Type & NiPSysEmitterLifeSpanCtlr::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

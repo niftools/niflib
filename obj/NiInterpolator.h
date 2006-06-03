@@ -17,17 +17,17 @@ typedef Ref<NiInterpolator> NiInterpolatorRef;
 
 class NiInterpolator : public NI_INTERPOLATOR_PARENT {
 public:
-  NiInterpolator();
-  ~NiInterpolator();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	NiInterpolator();
+	~NiInterpolator();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  NI_INTERPOLATOR_MEMBERS
+	NI_INTERPOLATOR_MEMBERS
 };
 
 #endif

@@ -11,22 +11,22 @@ All rights reserved.  Please see niflib.h for licence. */
  * Description of a MipMap within a NiPixelData block.
  */
 struct MipMap {
-  /*! Default Constructor */
-  MipMap();
-  /*! Default Destructor */
-  ~MipMap();
-  /*!
-   * Width of the mipmap image.
-   */
-  uint width;
-  /*!
-   * Height of the mipmap image.
-   */
-  uint height;
-  /*!
-   * Offset into the pixel data array where this mipmap starts.
-   */
-  uint offset;
+	/*! Default Constructor */
+	MipMap();
+	/*! Default Destructor */
+	~MipMap();
+	/*!
+	 * Width of the mipmap image.
+	 */
+	uint width;
+	/*!
+	 * Height of the mipmap image.
+	 */
+	uint height;
+	/*!
+	 * Offset into the pixel data array where this mipmap starts.
+	 */
+	uint offset;
 };
 
 #endif

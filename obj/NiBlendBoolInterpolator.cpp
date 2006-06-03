@@ -11,22 +11,22 @@ NiBlendBoolInterpolator::NiBlendBoolInterpolator() NI_BLEND_BOOL_INTERPOLATOR_CO
 NiBlendBoolInterpolator::~NiBlendBoolInterpolator() {}
 
 void NiBlendBoolInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_BLEND_BOOL_INTERPOLATOR_READ
+	NI_BLEND_BOOL_INTERPOLATOR_READ
 }
 
 void NiBlendBoolInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_BLEND_BOOL_INTERPOLATOR_WRITE
+	NI_BLEND_BOOL_INTERPOLATOR_WRITE
 }
 
 string NiBlendBoolInterpolator::asString( bool verbose ) const {
-  NI_BLEND_BOOL_INTERPOLATOR_STRING
+	NI_BLEND_BOOL_INTERPOLATOR_STRING
 }
 
 void NiBlendBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS
+	NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS
 }
 
 const Type & NiBlendBoolInterpolator::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

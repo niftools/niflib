@@ -11,22 +11,22 @@ NiMaterialProperty::NiMaterialProperty() NI_MATERIAL_PROPERTY_CONSTRUCT {}
 NiMaterialProperty::~NiMaterialProperty() {}
 
 void NiMaterialProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_MATERIAL_PROPERTY_READ
+	NI_MATERIAL_PROPERTY_READ
 }
 
 void NiMaterialProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_MATERIAL_PROPERTY_WRITE
+	NI_MATERIAL_PROPERTY_WRITE
 }
 
 string NiMaterialProperty::asString( bool verbose ) const {
-  NI_MATERIAL_PROPERTY_STRING
+	NI_MATERIAL_PROPERTY_STRING
 }
 
 void NiMaterialProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_MATERIAL_PROPERTY_FIXLINKS
+	NI_MATERIAL_PROPERTY_FIXLINKS
 }
 
 const Type & NiMaterialProperty::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

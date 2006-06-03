@@ -12,18 +12,18 @@ class NiNode;
  * hierarchy so ints are used to represent the indices.
  */
 struct Bones {
-  /*! Default Constructor */
-  Bones();
-  /*! Default Destructor */
-  ~Bones();
-  /*!
-   * The number of node bones referenced as influences.
-   */
-  uint numBones;
-  /*!
-   * Block indicies of the bones.
-   */
-  vector<NiNode * > bones;
+	/*! Default Constructor */
+	Bones();
+	/*! Default Destructor */
+	~Bones();
+	/*!
+	 * The number of node bones referenced as influences.
+	 */
+	uint numBones;
+	/*!
+	 * Block indicies of the bones.
+	 */
+	vector<NiNode * > bones;
 };
 
 #endif

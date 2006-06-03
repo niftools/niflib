@@ -19,17 +19,17 @@ typedef Ref<NiBoolTimelineInterpolator> NiBoolTimelineInterpolatorRef;
 
 class NiBoolTimelineInterpolator : public NI_BOOL_TIMELINE_INTERPOLATOR_PARENT {
 public:
-  NiBoolTimelineInterpolator();
-  ~NiBoolTimelineInterpolator();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	NiBoolTimelineInterpolator();
+	~NiBoolTimelineInterpolator();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS
+	NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS
 };
 
 #endif

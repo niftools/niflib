@@ -12,22 +12,22 @@ NiTimeController::NiTimeController() NI_TIME_CONTROLLER_CONSTRUCT {}
 NiTimeController::~NiTimeController() {}
 
 void NiTimeController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_TIME_CONTROLLER_READ
+	NI_TIME_CONTROLLER_READ
 }
 
 void NiTimeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_TIME_CONTROLLER_WRITE
+	NI_TIME_CONTROLLER_WRITE
 }
 
 string NiTimeController::asString( bool verbose ) const {
-  NI_TIME_CONTROLLER_STRING
+	NI_TIME_CONTROLLER_STRING
 }
 
 void NiTimeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_TIME_CONTROLLER_FIXLINKS
+	NI_TIME_CONTROLLER_FIXLINKS
 }
 
 const Type & NiTimeController::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

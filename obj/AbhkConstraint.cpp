@@ -12,22 +12,22 @@ AbhkConstraint::AbhkConstraint() ABHK_CONSTRAINT_CONSTRUCT {}
 AbhkConstraint::~AbhkConstraint() {}
 
 void AbhkConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  ABHK_CONSTRAINT_READ
+	ABHK_CONSTRAINT_READ
 }
 
 void AbhkConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  ABHK_CONSTRAINT_WRITE
+	ABHK_CONSTRAINT_WRITE
 }
 
 string AbhkConstraint::asString( bool verbose ) const {
-  ABHK_CONSTRAINT_STRING
+	ABHK_CONSTRAINT_STRING
 }
 
 void AbhkConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  ABHK_CONSTRAINT_FIXLINKS
+	ABHK_CONSTRAINT_FIXLINKS
 }
 
 const Type & AbhkConstraint::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

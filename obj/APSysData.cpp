@@ -11,22 +11,22 @@ APSysData::APSysData() A_P_SYS_DATA_CONSTRUCT {}
 APSysData::~APSysData() {}
 
 void APSysData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  A_P_SYS_DATA_READ
+	A_P_SYS_DATA_READ
 }
 
 void APSysData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  A_P_SYS_DATA_WRITE
+	A_P_SYS_DATA_WRITE
 }
 
 string APSysData::asString( bool verbose ) const {
-  A_P_SYS_DATA_STRING
+	A_P_SYS_DATA_STRING
 }
 
 void APSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  A_P_SYS_DATA_FIXLINKS
+	A_P_SYS_DATA_FIXLINKS
 }
 
 const Type & APSysData::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

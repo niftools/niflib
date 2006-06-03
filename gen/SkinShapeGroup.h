@@ -11,19 +11,19 @@ All rights reserved.  Please see niflib.h for licence. */
  * Unknown.
  */
 struct SkinShapeGroup {
-  /*! Default Constructor */
-  SkinShapeGroup();
-  /*! Default Destructor */
-  ~SkinShapeGroup();
-  /*!
-   * Counts unknown.
-   */
-  uint numLinkPairs;
-  /*!
-   * First link is a NiTriShape block. Second link is a NiSkinInstance
-   * block.
-   */
-  vector<SkinShape > linkPairs;
+	/*! Default Constructor */
+	SkinShapeGroup();
+	/*! Default Destructor */
+	~SkinShapeGroup();
+	/*!
+	 * Counts unknown.
+	 */
+	uint numLinkPairs;
+	/*!
+	 * First link is a NiTriShape block. Second link is a NiSkinInstance
+	 * block.
+	 */
+	vector<SkinShape > linkPairs;
 };
 
 #endif

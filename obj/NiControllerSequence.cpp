@@ -14,23 +14,23 @@ NiControllerSequence::NiControllerSequence() NI_CONTROLLER_SEQUENCE_CONSTRUCT {}
 NiControllerSequence::~NiControllerSequence() {}
 
 void NiControllerSequence::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_CONTROLLER_SEQUENCE_READ
+	NI_CONTROLLER_SEQUENCE_READ
 }
 
 void NiControllerSequence::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_CONTROLLER_SEQUENCE_WRITE
+	NI_CONTROLLER_SEQUENCE_WRITE
 }
 
 string NiControllerSequence::asString( bool verbose ) const {
-  NI_CONTROLLER_SEQUENCE_STRING
+	NI_CONTROLLER_SEQUENCE_STRING
 }
 
 void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_CONTROLLER_SEQUENCE_FIXLINKS
+	NI_CONTROLLER_SEQUENCE_FIXLINKS
 }
 
 const Type & NiControllerSequence::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 
 NiControllerManager * NiControllerSequence::Parent() const { return NULL; }

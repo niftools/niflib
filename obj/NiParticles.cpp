@@ -11,22 +11,22 @@ NiParticles::NiParticles() NI_PARTICLES_CONSTRUCT {}
 NiParticles::~NiParticles() {}
 
 void NiParticles::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_PARTICLES_READ
+	NI_PARTICLES_READ
 }
 
 void NiParticles::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_PARTICLES_WRITE
+	NI_PARTICLES_WRITE
 }
 
 string NiParticles::asString( bool verbose ) const {
-  NI_PARTICLES_STRING
+	NI_PARTICLES_STRING
 }
 
 void NiParticles::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_PARTICLES_FIXLINKS
+	NI_PARTICLES_FIXLINKS
 }
 
 const Type & NiParticles::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

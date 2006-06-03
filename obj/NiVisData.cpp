@@ -11,22 +11,22 @@ NiVisData::NiVisData() NI_VIS_DATA_CONSTRUCT {}
 NiVisData::~NiVisData() {}
 
 void NiVisData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_VIS_DATA_READ
+	NI_VIS_DATA_READ
 }
 
 void NiVisData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_VIS_DATA_WRITE
+	NI_VIS_DATA_WRITE
 }
 
 string NiVisData::asString( bool verbose ) const {
-  NI_VIS_DATA_STRING
+	NI_VIS_DATA_STRING
 }
 
 void NiVisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_VIS_DATA_FIXLINKS
+	NI_VIS_DATA_FIXLINKS
 }
 
 const Type & NiVisData::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

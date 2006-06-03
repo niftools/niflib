@@ -11,18 +11,18 @@ class NiAVObject;
  * Used in NiDefaultAVObjectPalette.
  */
 struct AVObject {
-  /*! Default Constructor */
-  AVObject();
-  /*! Default Destructor */
-  ~AVObject();
-  /*!
-   * Object name.
-   */
-  string name;
-  /*!
-   * Object reference.
-   */
-  NiAVObject * object;
+	/*! Default Constructor */
+	AVObject();
+	/*! Default Destructor */
+	~AVObject();
+	/*!
+	 * Object name.
+	 */
+	string name;
+	/*!
+	 * Object reference.
+	 */
+	NiAVObject * object;
 };
 
 #endif

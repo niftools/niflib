@@ -11,22 +11,22 @@ BSKeyframeController::BSKeyframeController() B_S_KEYFRAME_CONTROLLER_CONSTRUCT {
 BSKeyframeController::~BSKeyframeController() {}
 
 void BSKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  B_S_KEYFRAME_CONTROLLER_READ
+	B_S_KEYFRAME_CONTROLLER_READ
 }
 
 void BSKeyframeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  B_S_KEYFRAME_CONTROLLER_WRITE
+	B_S_KEYFRAME_CONTROLLER_WRITE
 }
 
 string BSKeyframeController::asString( bool verbose ) const {
-  B_S_KEYFRAME_CONTROLLER_STRING
+	B_S_KEYFRAME_CONTROLLER_STRING
 }
 
 void BSKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  B_S_KEYFRAME_CONTROLLER_FIXLINKS
+	B_S_KEYFRAME_CONTROLLER_FIXLINKS
 }
 
 const Type & BSKeyframeController::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

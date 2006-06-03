@@ -19,17 +19,17 @@ typedef Ref<NiPSysEmitterCtlr> NiPSysEmitterCtlrRef;
 
 class NiPSysEmitterCtlr : public NI_P_SYS_EMITTER_CTLR_PARENT {
 public:
-  NiPSysEmitterCtlr();
-  ~NiPSysEmitterCtlr();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	NiPSysEmitterCtlr();
+	~NiPSysEmitterCtlr();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  NI_P_SYS_EMITTER_CTLR_MEMBERS
+	NI_P_SYS_EMITTER_CTLR_MEMBERS
 };
 
 #endif

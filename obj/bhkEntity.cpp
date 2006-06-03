@@ -11,22 +11,22 @@ bhkEntity::bhkEntity() BHK_ENTITY_CONSTRUCT {}
 bhkEntity::~bhkEntity() {}
 
 void bhkEntity::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  BHK_ENTITY_READ
+	BHK_ENTITY_READ
 }
 
 void bhkEntity::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  BHK_ENTITY_WRITE
+	BHK_ENTITY_WRITE
 }
 
 string bhkEntity::asString( bool verbose ) const {
-  BHK_ENTITY_STRING
+	BHK_ENTITY_STRING
 }
 
 void bhkEntity::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  BHK_ENTITY_FIXLINKS
+	BHK_ENTITY_FIXLINKS
 }
 
 const Type & bhkEntity::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

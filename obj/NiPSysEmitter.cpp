@@ -11,22 +11,22 @@ NiPSysEmitter::NiPSysEmitter() NI_P_SYS_EMITTER_CONSTRUCT {}
 NiPSysEmitter::~NiPSysEmitter() {}
 
 void NiPSysEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_P_SYS_EMITTER_READ
+	NI_P_SYS_EMITTER_READ
 }
 
 void NiPSysEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_P_SYS_EMITTER_WRITE
+	NI_P_SYS_EMITTER_WRITE
 }
 
 string NiPSysEmitter::asString( bool verbose ) const {
-  NI_P_SYS_EMITTER_STRING
+	NI_P_SYS_EMITTER_STRING
 }
 
 void NiPSysEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_P_SYS_EMITTER_FIXLINKS
+	NI_P_SYS_EMITTER_FIXLINKS
 }
 
 const Type & NiPSysEmitter::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

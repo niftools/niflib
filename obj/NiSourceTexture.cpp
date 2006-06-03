@@ -11,22 +11,22 @@ NiSourceTexture::NiSourceTexture() NI_SOURCE_TEXTURE_CONSTRUCT {}
 NiSourceTexture::~NiSourceTexture() {}
 
 void NiSourceTexture::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_SOURCE_TEXTURE_READ
+	NI_SOURCE_TEXTURE_READ
 }
 
 void NiSourceTexture::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_SOURCE_TEXTURE_WRITE
+	NI_SOURCE_TEXTURE_WRITE
 }
 
 string NiSourceTexture::asString( bool verbose ) const {
-  NI_SOURCE_TEXTURE_STRING
+	NI_SOURCE_TEXTURE_STRING
 }
 
 void NiSourceTexture::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_SOURCE_TEXTURE_FIXLINKS
+	NI_SOURCE_TEXTURE_FIXLINKS
 }
 
 const Type & NiSourceTexture::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

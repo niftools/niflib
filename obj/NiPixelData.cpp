@@ -13,22 +13,22 @@ NiPixelData::NiPixelData() NI_PIXEL_DATA_CONSTRUCT {}
 NiPixelData::~NiPixelData() {}
 
 void NiPixelData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_PIXEL_DATA_READ
+	NI_PIXEL_DATA_READ
 }
 
 void NiPixelData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_PIXEL_DATA_WRITE
+	NI_PIXEL_DATA_WRITE
 }
 
 string NiPixelData::asString( bool verbose ) const {
-  NI_PIXEL_DATA_STRING
+	NI_PIXEL_DATA_STRING
 }
 
 void NiPixelData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_PIXEL_DATA_FIXLINKS
+	NI_PIXEL_DATA_FIXLINKS
 }
 
 const Type & NiPixelData::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

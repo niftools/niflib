@@ -19,17 +19,17 @@ typedef Ref<bhkNiTriStripsShape> bhkNiTriStripsShapeRef;
 
 class bhkNiTriStripsShape : public BHK_NI_TRI_STRIPS_SHAPE_PARENT {
 public:
-  bhkNiTriStripsShape();
-  ~bhkNiTriStripsShape();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	bhkNiTriStripsShape();
+	~bhkNiTriStripsShape();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  BHK_NI_TRI_STRIPS_SHAPE_MEMBERS
+	BHK_NI_TRI_STRIPS_SHAPE_MEMBERS
 };
 
 #endif

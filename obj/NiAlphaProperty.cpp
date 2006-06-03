@@ -11,22 +11,22 @@ NiAlphaProperty::NiAlphaProperty() NI_ALPHA_PROPERTY_CONSTRUCT {}
 NiAlphaProperty::~NiAlphaProperty() {}
 
 void NiAlphaProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_ALPHA_PROPERTY_READ
+	NI_ALPHA_PROPERTY_READ
 }
 
 void NiAlphaProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_ALPHA_PROPERTY_WRITE
+	NI_ALPHA_PROPERTY_WRITE
 }
 
 string NiAlphaProperty::asString( bool verbose ) const {
-  NI_ALPHA_PROPERTY_STRING
+	NI_ALPHA_PROPERTY_STRING
 }
 
 void NiAlphaProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_ALPHA_PROPERTY_FIXLINKS
+	NI_ALPHA_PROPERTY_FIXLINKS
 }
 
 const Type & NiAlphaProperty::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

@@ -11,18 +11,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * A weighted vertex.
  */
 struct SkinWeight {
-  /*! Default Constructor */
-  SkinWeight();
-  /*! Default Destructor */
-  ~SkinWeight();
-  /*!
-   * The vertex index, in the mesh.
-   */
-  ushort index;
-  /*!
-   * The vertex weight - between 0.0 and 1.0
-   */
-  float weight;
+	/*! Default Constructor */
+	SkinWeight();
+	/*! Default Destructor */
+	~SkinWeight();
+	/*!
+	 * The vertex index, in the mesh.
+	 */
+	ushort index;
+	/*!
+	 * The vertex weight - between 0.0 and 1.0
+	 */
+	float weight;
 };
 
 #endif

@@ -18,17 +18,17 @@ typedef Ref<NiPSysDragModifier> NiPSysDragModifierRef;
 
 class NiPSysDragModifier : public NI_P_SYS_DRAG_MODIFIER_PARENT {
 public:
-  NiPSysDragModifier();
-  ~NiPSysDragModifier();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	NiPSysDragModifier();
+	~NiPSysDragModifier();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  NI_P_SYS_DRAG_MODIFIER_MEMBERS
+	NI_P_SYS_DRAG_MODIFIER_MEMBERS
 };
 
 #endif

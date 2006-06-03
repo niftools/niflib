@@ -11,23 +11,23 @@ All rights reserved.  Please see niflib.h for licence. */
  * A triangle with extra data used for physics.
  */
 struct hkTriangle {
-  /*! Default Constructor */
-  hkTriangle();
-  /*! Default Destructor */
-  ~hkTriangle();
-  /*!
-   * The triangle.
-   */
-  Triangle triangle;
-  /*!
-   * Another short, doesn't look like a vertex index.
-   */
-  ushort unknownShort;
-  /*!
-   * This appears to be a normalized vector, so probably it is a normal or
-   * a tangent vector or something like that.
-   */
-  Vector3 normal;
+	/*! Default Constructor */
+	hkTriangle();
+	/*! Default Destructor */
+	~hkTriangle();
+	/*!
+	 * The triangle.
+	 */
+	Triangle triangle;
+	/*!
+	 * Another short, doesn't look like a vertex index.
+	 */
+	ushort unknownShort;
+	/*!
+	 * This appears to be a normalized vector, so probably it is a normal or
+	 * a tangent vector or something like that.
+	 */
+	Vector3 normal;
 };
 
 #endif

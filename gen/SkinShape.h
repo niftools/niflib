@@ -13,18 +13,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * Reference to shape and skin instance.
  */
 struct SkinShape {
-  /*! Default Constructor */
-  SkinShape();
-  /*! Default Destructor */
-  ~SkinShape();
-  /*!
-   * The shape.
-   */
-  Ref<NiTriShape > shape;
-  /*!
-   * Skinning instance for the shape?
-   */
-  Ref<NiSkinInstance > skinInstance;
+	/*! Default Constructor */
+	SkinShape();
+	/*! Default Destructor */
+	~SkinShape();
+	/*!
+	 * The shape.
+	 */
+	Ref<NiTriShape > shape;
+	/*!
+	 * Skinning instance for the shape?
+	 */
+	Ref<NiSkinInstance > skinInstance;
 };
 
 #endif

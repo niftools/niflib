@@ -19,17 +19,17 @@ typedef Ref<bhkMoppBvTreeShape> bhkMoppBvTreeShapeRef;
 
 class bhkMoppBvTreeShape : public BHK_MOPP_BV_TREE_SHAPE_PARENT {
 public:
-  bhkMoppBvTreeShape();
-  ~bhkMoppBvTreeShape();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	bhkMoppBvTreeShape();
+	~bhkMoppBvTreeShape();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  BHK_MOPP_BV_TREE_SHAPE_MEMBERS
+	BHK_MOPP_BV_TREE_SHAPE_MEMBERS
 };
 
 #endif

@@ -11,37 +11,37 @@ All rights reserved.  Please see niflib.h for licence. */
  * Skinning data component.
  */
 struct SkinData {
-  /*! Default Constructor */
-  SkinData();
-  /*! Default Destructor */
-  ~SkinData();
-  /*!
-   * Rotation offset of the skin from this bone in bind position.
-   */
-  Matrix33 rotation;
-  /*!
-   * Translation offset of the skin from this bone in bind position.
-   */
-  Vector3 translation;
-  /*!
-   * Scale offset of the skin from this bone in bind position. (Assumption
-   * - this is always 1.0 so far)
-   */
-  float scale;
-  /*!
-   * This has been verified not to be a normalized quaternion.  They may or
-   * may not be related to each other so their specification as an array of
-   * 4 floats may be misleading.
-   */
-  float unknown4Floats[4];
-  /*!
-   * Number of weighted vertices.
-   */
-  ushort numVertices;
-  /*!
-   * The vertex weights.
-   */
-  vector<SkinWeight > vertexWeights;
+	/*! Default Constructor */
+	SkinData();
+	/*! Default Destructor */
+	~SkinData();
+	/*!
+	 * Rotation offset of the skin from this bone in bind position.
+	 */
+	Matrix33 rotation;
+	/*!
+	 * Translation offset of the skin from this bone in bind position.
+	 */
+	Vector3 translation;
+	/*!
+	 * Scale offset of the skin from this bone in bind position. (Assumption
+	 * - this is always 1.0 so far)
+	 */
+	float scale;
+	/*!
+	 * This has been verified not to be a normalized quaternion.  They may or
+	 * may not be related to each other so their specification as an array of
+	 * 4 floats may be misleading.
+	 */
+	float unknown4Floats[4];
+	/*!
+	 * Number of weighted vertices.
+	 */
+	ushort numVertices;
+	/*!
+	 * The vertex weights.
+	 */
+	vector<SkinWeight > vertexWeights;
 };
 
 #endif

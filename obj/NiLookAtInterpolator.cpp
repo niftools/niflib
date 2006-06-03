@@ -11,22 +11,22 @@ NiLookAtInterpolator::NiLookAtInterpolator() NI_LOOK_AT_INTERPOLATOR_CONSTRUCT {
 NiLookAtInterpolator::~NiLookAtInterpolator() {}
 
 void NiLookAtInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_LOOK_AT_INTERPOLATOR_READ
+	NI_LOOK_AT_INTERPOLATOR_READ
 }
 
 void NiLookAtInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_LOOK_AT_INTERPOLATOR_WRITE
+	NI_LOOK_AT_INTERPOLATOR_WRITE
 }
 
 string NiLookAtInterpolator::asString( bool verbose ) const {
-  NI_LOOK_AT_INTERPOLATOR_STRING
+	NI_LOOK_AT_INTERPOLATOR_STRING
 }
 
 void NiLookAtInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_LOOK_AT_INTERPOLATOR_FIXLINKS
+	NI_LOOK_AT_INTERPOLATOR_FIXLINKS
 }
 
 const Type & NiLookAtInterpolator::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

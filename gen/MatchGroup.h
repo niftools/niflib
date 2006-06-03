@@ -11,18 +11,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * Group of vertex indices of vertices that match.
  */
 struct MatchGroup {
-  /*! Default Constructor */
-  MatchGroup();
-  /*! Default Destructor */
-  ~MatchGroup();
-  /*!
-   * Number of vertices in this group.
-   */
-  ushort numVertices;
-  /*!
-   * The vertex indices.
-   */
-  vector<ushort > vertexIndices;
+	/*! Default Constructor */
+	MatchGroup();
+	/*! Default Destructor */
+	~MatchGroup();
+	/*!
+	 * Number of vertices in this group.
+	 */
+	ushort numVertices;
+	/*!
+	 * The vertex indices.
+	 */
+	vector<ushort > vertexIndices;
 };
 
 #endif

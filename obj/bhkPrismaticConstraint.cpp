@@ -11,22 +11,22 @@ bhkPrismaticConstraint::bhkPrismaticConstraint() BHK_PRISMATIC_CONSTRAINT_CONSTR
 bhkPrismaticConstraint::~bhkPrismaticConstraint() {}
 
 void bhkPrismaticConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  BHK_PRISMATIC_CONSTRAINT_READ
+	BHK_PRISMATIC_CONSTRAINT_READ
 }
 
 void bhkPrismaticConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  BHK_PRISMATIC_CONSTRAINT_WRITE
+	BHK_PRISMATIC_CONSTRAINT_WRITE
 }
 
 string bhkPrismaticConstraint::asString( bool verbose ) const {
-  BHK_PRISMATIC_CONSTRAINT_STRING
+	BHK_PRISMATIC_CONSTRAINT_STRING
 }
 
 void bhkPrismaticConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  BHK_PRISMATIC_CONSTRAINT_FIXLINKS
+	BHK_PRISMATIC_CONSTRAINT_FIXLINKS
 }
 
 const Type & bhkPrismaticConstraint::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

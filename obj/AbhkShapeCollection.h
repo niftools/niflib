@@ -17,17 +17,17 @@ typedef Ref<AbhkShapeCollection> AbhkShapeCollectionRef;
 
 class AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
 public:
-  AbhkShapeCollection();
-  ~AbhkShapeCollection();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	AbhkShapeCollection();
+	~AbhkShapeCollection();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  ABHK_SHAPE_COLLECTION_MEMBERS
+	ABHK_SHAPE_COLLECTION_MEMBERS
 };
 
 #endif

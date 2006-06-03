@@ -11,22 +11,22 @@ bhkHingeConstraint::bhkHingeConstraint() BHK_HINGE_CONSTRAINT_CONSTRUCT {}
 bhkHingeConstraint::~bhkHingeConstraint() {}
 
 void bhkHingeConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  BHK_HINGE_CONSTRAINT_READ
+	BHK_HINGE_CONSTRAINT_READ
 }
 
 void bhkHingeConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  BHK_HINGE_CONSTRAINT_WRITE
+	BHK_HINGE_CONSTRAINT_WRITE
 }
 
 string bhkHingeConstraint::asString( bool verbose ) const {
-  BHK_HINGE_CONSTRAINT_STRING
+	BHK_HINGE_CONSTRAINT_STRING
 }
 
 void bhkHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  BHK_HINGE_CONSTRAINT_FIXLINKS
+	BHK_HINGE_CONSTRAINT_FIXLINKS
 }
 
 const Type & bhkHingeConstraint::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

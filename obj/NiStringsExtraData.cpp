@@ -11,22 +11,22 @@ NiStringsExtraData::NiStringsExtraData() NI_STRINGS_EXTRA_DATA_CONSTRUCT {}
 NiStringsExtraData::~NiStringsExtraData() {}
 
 void NiStringsExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_STRINGS_EXTRA_DATA_READ
+	NI_STRINGS_EXTRA_DATA_READ
 }
 
 void NiStringsExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_STRINGS_EXTRA_DATA_WRITE
+	NI_STRINGS_EXTRA_DATA_WRITE
 }
 
 string NiStringsExtraData::asString( bool verbose ) const {
-  NI_STRINGS_EXTRA_DATA_STRING
+	NI_STRINGS_EXTRA_DATA_STRING
 }
 
 void NiStringsExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_STRINGS_EXTRA_DATA_FIXLINKS
+	NI_STRINGS_EXTRA_DATA_FIXLINKS
 }
 
 const Type & NiStringsExtraData::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

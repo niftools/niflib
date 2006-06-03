@@ -11,38 +11,38 @@ All rights reserved.  Please see niflib.h for licence. */
  * particle array entry
  */
 struct Particle {
-  /*! Default Constructor */
-  Particle();
-  /*! Default Destructor */
-  ~Particle();
-  /*!
-   * Particle velocity
-   */
-  Vector3 velocity;
-  /*!
-   * Unknown
-   */
-  Vector3 unknownVector;
-  /*!
-   * The particle's age.
-   */
-  float lifetime;
-  /*!
-   * Maximum age of the particle.
-   */
-  float lifespan;
-  /*!
-   * Timestamp of the last update.
-   */
-  float timestamp;
-  /*!
-   * Unknown short (=0)
-   */
-  ushort unknownShort;
-  /*!
-   * Particle/vertex index matches array index
-   */
-  ushort vertexId;
+	/*! Default Constructor */
+	Particle();
+	/*! Default Destructor */
+	~Particle();
+	/*!
+	 * Particle velocity
+	 */
+	Vector3 velocity;
+	/*!
+	 * Unknown
+	 */
+	Vector3 unknownVector;
+	/*!
+	 * The particle's age.
+	 */
+	float lifetime;
+	/*!
+	 * Maximum age of the particle.
+	 */
+	float lifespan;
+	/*!
+	 * Timestamp of the last update.
+	 */
+	float timestamp;
+	/*!
+	 * Unknown short (=0)
+	 */
+	ushort unknownShort;
+	/*!
+	 * Particle/vertex index matches array index
+	 */
+	ushort vertexId;
 };
 
 #endif

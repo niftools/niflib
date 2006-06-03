@@ -12,19 +12,19 @@ All rights reserved.  Please see niflib.h for licence. */
  * specific header tags.
  */
 struct ShortString {
-  /*! Default Constructor */
-  ShortString();
-  /*! Default Destructor */
-  ~ShortString();
-  /*!
-   * The string length.
-   */
-  byte length;
-  /*!
-   * The string itself, null terminated (the null terminator is taken into
-   * account in the length byte).
-   */
-  vector<byte > value;
+	/*! Default Constructor */
+	ShortString();
+	/*! Default Destructor */
+	~ShortString();
+	/*!
+	 * The string length.
+	 */
+	byte length;
+	/*!
+	 * The string itself, null terminated (the null terminator is taken into
+	 * account in the length byte).
+	 */
+	vector<byte > value;
 };
 
 #endif

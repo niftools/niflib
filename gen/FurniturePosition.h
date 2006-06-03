@@ -11,26 +11,26 @@ All rights reserved.  Please see niflib.h for licence. */
  * Describes a furniture position?
  */
 struct FurniturePosition {
-  /*! Default Constructor */
-  FurniturePosition();
-  /*! Default Destructor */
-  ~FurniturePosition();
-  /*!
-   * Unknown. Position?
-   */
-  Vector3 unknownVector;
-  /*!
-   * Unknown.
-   */
-  ushort unknownShort;
-  /*!
-   * This might refer to a furnituremarkerxx.nif file.
-   */
-  byte positionRef1_;
-  /*!
-   * This might also refer to a furnituremarkerxx.nif file.
-   */
-  byte positionRef2_;
+	/*! Default Constructor */
+	FurniturePosition();
+	/*! Default Destructor */
+	~FurniturePosition();
+	/*!
+	 * Unknown. Position?
+	 */
+	Vector3 unknownVector;
+	/*!
+	 * Unknown.
+	 */
+	ushort unknownShort;
+	/*!
+	 * This might refer to a furnituremarkerxx.nif file.
+	 */
+	byte positionRef1_;
+	/*!
+	 * This might also refer to a furnituremarkerxx.nif file.
+	 */
+	byte positionRef2_;
 };
 
 #endif

@@ -11,22 +11,22 @@ NiBoolTimelineInterpolator::NiBoolTimelineInterpolator() NI_BOOL_TIMELINE_INTERP
 NiBoolTimelineInterpolator::~NiBoolTimelineInterpolator() {}
 
 void NiBoolTimelineInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_BOOL_TIMELINE_INTERPOLATOR_READ
+	NI_BOOL_TIMELINE_INTERPOLATOR_READ
 }
 
 void NiBoolTimelineInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_BOOL_TIMELINE_INTERPOLATOR_WRITE
+	NI_BOOL_TIMELINE_INTERPOLATOR_WRITE
 }
 
 string NiBoolTimelineInterpolator::asString( bool verbose ) const {
-  NI_BOOL_TIMELINE_INTERPOLATOR_STRING
+	NI_BOOL_TIMELINE_INTERPOLATOR_STRING
 }
 
 void NiBoolTimelineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS
+	NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS
 }
 
 const Type & NiBoolTimelineInterpolator::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

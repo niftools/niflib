@@ -11,22 +11,22 @@ NiPalette::NiPalette() NI_PALETTE_CONSTRUCT {}
 NiPalette::~NiPalette() {}
 
 void NiPalette::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_PALETTE_READ
+	NI_PALETTE_READ
 }
 
 void NiPalette::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_PALETTE_WRITE
+	NI_PALETTE_WRITE
 }
 
 string NiPalette::asString( bool verbose ) const {
-  NI_PALETTE_STRING
+	NI_PALETTE_STRING
 }
 
 void NiPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_PALETTE_FIXLINKS
+	NI_PALETTE_FIXLINKS
 }
 
 const Type & NiPalette::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

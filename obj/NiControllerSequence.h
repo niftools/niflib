@@ -22,18 +22,18 @@ typedef Ref<NiControllerSequence> NiControllerSequenceRef;
 
 class NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
 public:
-  NiControllerSequence();
-  ~NiControllerSequence();
-  //Run-Time Type Information
-  static const Type TYPE;
-  virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-  virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
-  virtual string asString( bool verbose = false ) const;
-  virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
-  virtual const Type & GetType() const;
+	NiControllerSequence();
+	~NiControllerSequence();
+	//Run-Time Type Information
+	static const Type TYPE;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual string asString( bool verbose = false ) const;
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual const Type & GetType() const;
 protected:
-  NiControllerManager * NiControllerSequence::Parent() const;
-  NI_CONTROLLER_SEQUENCE_MEMBERS
+	NiControllerManager * NiControllerSequence::Parent() const;
+	NI_CONTROLLER_SEQUENCE_MEMBERS
 };
 
 #endif

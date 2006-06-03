@@ -11,50 +11,50 @@ All rights reserved.  Please see niflib.h for licence. */
  * 
  */
 struct LimitedHingeDescriptor {
-  /*! Default Constructor */
-  LimitedHingeDescriptor();
-  /*! Default Destructor */
-  ~LimitedHingeDescriptor();
-  /*!
-   * Unknown.
-   */
-  Float4 pivotA;
-  /*!
-   * Unknown.
-   */
-  Float4 axleA_;
-  /*!
-   * Unknown.
-   */
-  Float4 perp2axleina1;
-  /*!
-   * Unknown.
-   */
-  Float4 perp2axleina2;
-  /*!
-   * Unknown.
-   */
-  Float4 pivotB;
-  /*!
-   * Unknown.
-   */
-  Float4 axleB;
-  /*!
-   * Unknown.
-   */
-  Float4 unknownVector;
-  /*!
-   * Unknown.
-   */
-  float minAngle;
-  /*!
-   * Unknown.
-   */
-  float maxAngle;
-  /*!
-   * Unknown.
-   */
-  float maxFriction;
+	/*! Default Constructor */
+	LimitedHingeDescriptor();
+	/*! Default Destructor */
+	~LimitedHingeDescriptor();
+	/*!
+	 * Unknown.
+	 */
+	Float4 pivotA;
+	/*!
+	 * Unknown.
+	 */
+	Float4 axleA_;
+	/*!
+	 * Unknown.
+	 */
+	Float4 perp2axleina1;
+	/*!
+	 * Unknown.
+	 */
+	Float4 perp2axleina2;
+	/*!
+	 * Unknown.
+	 */
+	Float4 pivotB;
+	/*!
+	 * Unknown.
+	 */
+	Float4 axleB;
+	/*!
+	 * Unknown.
+	 */
+	Float4 unknownVector;
+	/*!
+	 * Unknown.
+	 */
+	float minAngle;
+	/*!
+	 * Unknown.
+	 */
+	float maxAngle;
+	/*!
+	 * Unknown.
+	 */
+	float maxFriction;
 };
 
 #endif

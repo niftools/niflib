@@ -12,22 +12,22 @@ AParticleModifier::AParticleModifier() A_PARTICLE_MODIFIER_CONSTRUCT {}
 AParticleModifier::~AParticleModifier() {}
 
 void AParticleModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  A_PARTICLE_MODIFIER_READ
+	A_PARTICLE_MODIFIER_READ
 }
 
 void AParticleModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  A_PARTICLE_MODIFIER_WRITE
+	A_PARTICLE_MODIFIER_WRITE
 }
 
 string AParticleModifier::asString( bool verbose ) const {
-  A_PARTICLE_MODIFIER_STRING
+	A_PARTICLE_MODIFIER_STRING
 }
 
 void AParticleModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  A_PARTICLE_MODIFIER_FIXLINKS
+	A_PARTICLE_MODIFIER_FIXLINKS
 }
 
 const Type & AParticleModifier::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

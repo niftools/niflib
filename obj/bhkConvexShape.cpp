@@ -11,22 +11,22 @@ bhkConvexShape::bhkConvexShape() BHK_CONVEX_SHAPE_CONSTRUCT {}
 bhkConvexShape::~bhkConvexShape() {}
 
 void bhkConvexShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  BHK_CONVEX_SHAPE_READ
+	BHK_CONVEX_SHAPE_READ
 }
 
 void bhkConvexShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  BHK_CONVEX_SHAPE_WRITE
+	BHK_CONVEX_SHAPE_WRITE
 }
 
 string bhkConvexShape::asString( bool verbose ) const {
-  BHK_CONVEX_SHAPE_STRING
+	BHK_CONVEX_SHAPE_STRING
 }
 
 void bhkConvexShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  BHK_CONVEX_SHAPE_FIXLINKS
+	BHK_CONVEX_SHAPE_FIXLINKS
 }
 
 const Type & bhkConvexShape::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

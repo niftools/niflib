@@ -12,18 +12,18 @@ All rights reserved.  Please see niflib.h for licence. */
  * A group of NiNodes references.
  */
 struct NodeGroup {
-  /*! Default Constructor */
-  NodeGroup();
-  /*! Default Destructor */
-  ~NodeGroup();
-  /*!
-   * Number of node references that follow.
-   */
-  uint numNodes;
-  /*!
-   * The list of NiNode references.
-   */
-  vector<Ref<NiNode > > nodes;
+	/*! Default Constructor */
+	NodeGroup();
+	/*! Default Destructor */
+	~NodeGroup();
+	/*!
+	 * Number of node references that follow.
+	 */
+	uint numNodes;
+	/*!
+	 * The list of NiNode references.
+	 */
+	vector<Ref<NiNode > > nodes;
 };
 
 #endif

@@ -11,22 +11,22 @@ NiProperty::NiProperty() NI_PROPERTY_CONSTRUCT {}
 NiProperty::~NiProperty() {}
 
 void NiProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
-  NI_PROPERTY_READ
+	NI_PROPERTY_READ
 }
 
 void NiProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
-  NI_PROPERTY_WRITE
+	NI_PROPERTY_WRITE
 }
 
 string NiProperty::asString( bool verbose ) const {
-  NI_PROPERTY_STRING
+	NI_PROPERTY_STRING
 }
 
 void NiProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-  NI_PROPERTY_FIXLINKS
+	NI_PROPERTY_FIXLINKS
 }
 
 const Type & NiProperty::GetType() const {
-  return TYPE;
+	return TYPE;
 };
 

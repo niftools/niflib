@@ -13,18 +13,18 @@ All rights reserved.  Please see niflib.h for licence. */
  */
 template <class T >
 struct KeyGroup {
-  /*!
-   * Number of keys in the array.
-   */
-  uint numKeys;
-  /*!
-   * The key type.
-   */
-  KeyType interpolation;
-  /*!
-   * The keys.
-   */
-  vector<Key<T > > keys;
+	/*!
+	 * Number of keys in the array.
+	 */
+	uint numKeys;
+	/*!
+	 * The key type.
+	 */
+	KeyType interpolation;
+	/*!
+	 * The keys.
+	 */
+	vector<Key<T > > keys;
 };
 
 #endif
