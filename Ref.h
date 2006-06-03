@@ -64,7 +64,7 @@ Ref<T>::operator T*() const {
 
 template <class T>
 T& Ref<T>::operator*() const {
-	return _object;
+	return *_object;
 }
 
 template <class T>

@@ -826,6 +826,9 @@
 					RelativePath=".\gen\hkTriangle.cpp">
 				</File>
 				<File
+					RelativePath=".\gen\LimitedHingeDescriptor.cpp">
+				</File>
+				<File
 					RelativePath=".\gen\LODRange.cpp">
 				</File>
 				<File
@@ -848,6 +851,9 @@
 				</File>
 				<File
 					RelativePath=".\gen\QuaternionXYZW.cpp">
+				</File>
+				<File
+					RelativePath=".\gen\RagDollDescriptor.cpp">
 				</File>
 				<File
 					RelativePath=".\gen\ShaderTexDesc.cpp">
@@ -1580,6 +1586,9 @@
 					RelativePath=".\gen\KeyGroup.h">
 				</File>
 				<File
+					RelativePath=".\gen\LimitedHingeDescriptor.h">
+				</File>
+				<File
 					RelativePath=".\gen\LODRange.h">
 				</File>
 				<File
@@ -1602,6 +1611,9 @@
 				</File>
 				<File
 					RelativePath=".\gen\QuaternionXYZW.h">
+				</File>
+				<File
+					RelativePath=".\gen\RagDollDescriptor.h">
 				</File>
 				<File
 					RelativePath=".\gen\RotationKeyArray.h">
