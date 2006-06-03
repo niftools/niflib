@@ -320,12 +320,12 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	
 	//cout << "Fixing Links:"  << endl;
 	////--Now that all blocks are read, go back and fix the links--//
-	//for (uint i = 0; i < blocks.size(); ++i) {
-	//	
-	//	cout << blocks[i]->GetType().GetTypeName() << endl;
-	//	//Fix links & other pre-processing
-	//	blocks[i]->FixLinks( blocks, link_stack, version );
-	//}
+	for (uint i = 0; i < blocks.size(); ++i) {
+		
+		cout << blocks[i]->GetType().GetTypeName() << endl;
+		//Fix links & other pre-processing
+		blocks[i]->FixLinks( blocks, link_stack, version );
+	}
 
 	////Build up the bind pose matricies into their world-space equivalents
 	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
