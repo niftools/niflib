@@ -4,6 +4,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _OBJ_DEFINES_H_
 #define _OBJ_DEFINES_H_
 
+#define MAXARRAYDUMP 20
+
 #include "NIF_IO.h"
 #include "Ref.h"
 #include <iostream>
@@ -181,6 +183,10 @@ stringstream out; \
 out << bhkSerializable::asString(); \
 out << "Num Bodies:  " << numBodies << endl; \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Bodies[" << i0 << "]:  " << bodies[i0] << endl; \
 }; \
 out << "Priority:  " << priority << endl; \
@@ -664,6 +670,10 @@ out << "Name:  " << name << endl; \
 out << "Extra Data:  " << extraData << endl; \
 out << "Num Extra Data List:  " << numExtraDataList << endl; \
 for (uint i0 = 0; i0 < extraDataList.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Extra Data List[" << i0 << "]:  " << extraDataList[i0] << endl; \
 }; \
 out << "Controller:  " << controller << endl; \
@@ -792,6 +802,10 @@ out << "Scale:  " << scale << endl; \
 out << "Velocity:  " << velocity << endl; \
 out << "Num Properties:  " << numProperties << endl; \
 for (uint i0 = 0; i0 < properties.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Properties[" << i0 << "]:  " << properties[i0] << endl; \
 }; \
 out << "Has Bounding Box:  " << hasBoundingBox << endl; \
@@ -898,6 +912,10 @@ if ( (hasAffectedNodeList_ != 0) ) { \
 out << "Switch State:  " << switchState << endl; \
 out << "Num Affected Nodes:  " << numAffectedNodes << endl; \
 for (uint i0 = 0; i0 < affectedNodes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Affected Nodes[" << i0 << "]:  " << affectedNodes[i0] << endl; \
 }; \
 return out.str(); \
@@ -1252,6 +1270,10 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 	out << "  Num Nodes:  " << nodeGroups[i0].numNodes << endl; \
 	for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Nodes[" << i1 << "]:  " << nodeGroups[i0].nodes[i1] << endl; \
 	}; \
 }; \
@@ -1607,6 +1629,10 @@ out << "Unknown Short 1:  " << unknownShort1 << endl; \
 out << "Has Vertices:  " << hasVertices << endl; \
 if ( (hasVertices != 0) ) { \
 	for (uint i1 = 0; i1 < vertices.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl; \
 	}; \
 }; \
@@ -1615,14 +1641,26 @@ out << "Unknown Byte:  " << unknownByte << endl; \
 out << "Has Normals:  " << hasNormals << endl; \
 if ( (hasNormals != 0) ) { \
 	for (uint i1 = 0; i1 < normals.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Normals[" << i1 << "]:  " << normals[i1] << endl; \
 	}; \
 }; \
 if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) { \
 	for (uint i1 = 0; i1 < unknownVectors1.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl; \
 	}; \
 	for (uint i1 = 0; i1 < unknownVectors2.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Vectors 2[" << i1 << "]:  " << unknownVectors2[i1] << endl; \
 	}; \
 }; \
@@ -1631,6 +1669,10 @@ out << "Radius:  " << radius << endl; \
 out << "Has Vertex Colors:  " << hasVertexColors << endl; \
 if ( (hasVertexColors != 0) ) { \
 	for (uint i1 = 0; i1 < vertexColors.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Vertex Colors[" << i1 << "]:  " << vertexColors[i1] << endl; \
 	}; \
 }; \
@@ -1638,11 +1680,19 @@ out << "Num UV Sets:  " << numUvSets << endl; \
 out << "Has UV:  " << hasUv << endl; \
 for (uint i0 = 0; i0 < uvSets.size(); i0++) { \
 	for (uint i1 = 0; i1 < uvSets[i0].size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    UV Sets[" << i0 << "][" << i1 << "]:  " << uvSets[i0][i1] << endl; \
 	}; \
 }; \
 for (uint i0 = 0; i0 < uvSets2.size(); i0++) { \
 	for (uint i1 = 0; i1 < uvSets2[i0].size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    UV Sets 2[" << i0 << "][" << i1 << "]:  " << uvSets2[i0][i1] << endl; \
 	}; \
 }; \
@@ -1719,6 +1769,10 @@ out << NiTriBasedGeomData::asString(); \
 out << "Has Unknown Floats 1:  " << hasUnknownFloats1 << endl; \
 if ( (hasUnknownFloats1 != 0) ) { \
 	for (uint i1 = 0; i1 < unknownFloats1.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl; \
 	}; \
 }; \
@@ -1726,6 +1780,10 @@ out << "Unknown Short 3:  " << unknownShort3 << endl; \
 out << "Has Unknown Floats 2:  " << hasUnknownFloats2 << endl; \
 if ( (hasUnknownFloats2 != 0) ) { \
 	for (uint i1 = 0; i1 < unknownFloats2.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl; \
 	}; \
 }; \
@@ -1973,14 +2031,26 @@ for (uint i0 = 0; i0 < unknownVectors2.size(); i0++) { \
 stringstream out; \
 out << bhkSphereRepShape::asString(); \
 for (uint i0 = 0; i0 < 7; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 out << "Num 1:  " << num1 << endl; \
 for (uint i0 = 0; i0 < unknownVectors1.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Vectors 1[" << i0 << "]:  " << unknownVectors1[i0] << endl; \
 }; \
 out << "Num 2:  " << num2 << endl; \
 for (uint i0 = 0; i0 < unknownVectors2.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Vectors 2[" << i0 << "]:  " << unknownVectors2[i0] << endl; \
 }; \
 return out.str(); \
@@ -2018,6 +2088,10 @@ stringstream out; \
 out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 5; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
 	}; \
 }; \
@@ -2133,14 +2207,26 @@ stringstream out; \
 out << AbhkShapeCollection::asString(); \
 out << "Num Sub Shapes:  " << numSubShapes << endl; \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Sub Shapes[" << i0 << "]:  " << subShapes[i0] << endl; \
 }; \
 out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 out << "Num Unknown Ints:  " << numUnknownInts << endl; \
 for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
 }; \
 return out.str(); \
@@ -2361,11 +2447,19 @@ out << bhkShape::asString(); \
 out << "Shape:  " << shape << endl; \
 out << "Material:  " << material << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Bytes 1[" << i0 << "]:  " << unknownBytes1[i0] << endl; \
 }; \
 out << "Unknown Float:  " << unknownFloat << endl; \
 out << "Num Unknown Bytes 2:  " << numUnknownBytes2 << endl; \
 for (uint i0 = 0; i0 < unknownBytes2.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Bytes 2[" << i0 << "]:  " << unknownBytes2[i0] << endl; \
 }; \
 out << "Unknown Vector:  " << unknownVector << endl; \
@@ -2424,6 +2518,10 @@ out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 out << "Unknown Float 3:  " << unknownFloat3 << endl; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
@@ -2498,21 +2596,41 @@ for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
 stringstream out; \
 out << bhkSphereRepShape::asString(); \
 for (uint i0 = 0; i0 < 2; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 5; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Num Strips Data:  " << numStripsData << endl; \
 for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Strips Data[" << i0 << "]:  " << stripsData[i0] << endl; \
 }; \
 out << "Num Unknown Ints 3:  " << numUnknownInts3 << endl; \
 for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints 3[" << i0 << "]:  " << unknownInts3[i0] << endl; \
 }; \
 return out.str(); \
@@ -2587,14 +2705,26 @@ out << AbhkShapeCollection::asString(); \
 out << "Num Subparts:  " << numSubparts << endl; \
 for (uint i0 = 0; i0 < subparts.size(); i0++) { \
 	for (uint i1 = 0; i1 < 3; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Subparts[" << i0 << "][" << i1 << "]:  " << subparts[i0][i1] << endl; \
 	}; \
 }; \
 for (uint i0 = 0; i0 < 9; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 out << "Data:  " << data << endl; \
@@ -2642,9 +2772,17 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 stringstream out; \
 out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 8; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Vectors[" << i0 << "]:  " << unknownVectors[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 return out.str(); \
@@ -2817,13 +2955,25 @@ NifStream( unknownInt6, out, version ); \
 stringstream out; \
 out << bhkEntity::asString(); \
 for (uint i0 = 0; i0 < 5; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 4; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Shorts 1[" << i0 << "]:  " << unknownShorts1[i0] << endl; \
 }; \
 out << "Layer Copy?:  " << layerCopy_ << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Shorts 2[" << i0 << "]:  " << unknownShorts2[i0] << endl; \
 }; \
 out << "Translation:  " << translation << endl; \
@@ -2837,6 +2987,10 @@ out << "Unknown Float 01:  " << unknownFloat01 << endl; \
 out << "Angular Velocity:  " << angularVelocity << endl; \
 out << "Unknown Float 02:  " << unknownFloat02 << endl; \
 for (uint i0 = 0; i0 < 12; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Transform?[" << i0 << "]:  " << transform_[i0] << endl; \
 }; \
 out << "Center:  " << center << endl; \
@@ -2858,6 +3012,10 @@ out << "Unknown Int 7:  " << unknownInt7 << endl; \
 out << "Unknown Int 8:  " << unknownInt8 << endl; \
 out << "Num Constraints:  " << numConstraints << endl; \
 for (uint i0 = 0; i0 < constraints.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Constraints[" << i0 << "]:  " << constraints[i0] << endl; \
 }; \
 return out.str(); \
@@ -2936,10 +3094,18 @@ NifStream( unknownFloat, out, version ); \
 stringstream out; \
 out << bhkEntity::asString(); \
 for (uint i0 = 0; i0 < 7; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unkown Floats[" << i0 << "]:  " << unkownFloats[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
 	for (uint i1 = 0; i1 < 5; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 2[" << i0 << "][" << i1 << "]:  " << unknownFloats2[i0][i1] << endl; \
 	}; \
 }; \
@@ -3032,6 +3198,10 @@ stringstream out; \
 out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
 	}; \
 }; \
@@ -3127,6 +3297,10 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 stringstream out; \
 out << NiExtraData::asString(); \
 for (uint i0 = 0; i0 < 6; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
@@ -3309,6 +3483,10 @@ for (uint i0 = 0; i0 < triangles.size(); i0++) { \
 }; \
 out << "Num Vertices:  " << numVertices << endl; \
 for (uint i0 = 0; i0 < vertices.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Vertices[" << i0 << "]:  " << vertices[i0] << endl; \
 }; \
 return out.str(); \
@@ -3479,6 +3657,10 @@ out << "Unknown Short:  " << unknownShort << endl; \
 out << "Has Sizes:  " << hasSizes << endl; \
 if ( (hasSizes != 0) ) { \
 	for (uint i1 = 0; i1 < sizes.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Sizes[" << i1 << "]:  " << sizes[i1] << endl; \
 	}; \
 }; \
@@ -3523,6 +3705,10 @@ out << NiExtraData::asString(); \
 out << "Data Size:  " << binaryData.dataSize << endl; \
 out << "Unknown Int:  " << binaryData.unknownInt << endl; \
 for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Data[" << i0 << "]:  " << binaryData.data[i0] << endl; \
 }; \
 return out.str(); \
@@ -3695,6 +3881,10 @@ for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 }; \
 out << "Num Shape Groups 2:  " << numShapeGroups2 << endl; \
 for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Shape Groups 2[" << i0 << "]:  " << shapeGroups2[i0] << endl; \
 }; \
 return out.str(); \
@@ -3767,6 +3957,10 @@ if ( (data.numKeys != 0) ) { \
 	out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
@@ -3955,6 +4149,10 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 stringstream out; \
 out << NiBSplineInterpolator::asString(); \
 for (uint i0 = 0; i0 < 6; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
@@ -3999,6 +4197,10 @@ out << NiBSplineInterpolator::asString(); \
 out << "Data:  " << data << endl; \
 out << "Unknown Link:  " << unknownLink << endl; \
 for (uint i0 = 0; i0 < 6; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 return out.str(); \
@@ -4057,6 +4259,10 @@ out << NiBSplineInterpolator::asString(); \
 out << "Data:  " << data << endl; \
 out << "Basis Data:  " << basisData << endl; \
 for (uint i0 = 0; i0 < 17; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown4[" << i0 << "]:  " << unknown4[i0] << endl; \
 }; \
 return out.str(); \
@@ -4118,6 +4324,10 @@ out << "Unknown Int:  " << unknownInt << endl; \
 out << "Count:  " << count << endl; \
 for (uint i0 = 0; i0 < unknownData.size(); i0++) { \
 	for (uint i1 = 0; i1 < 2; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Data[" << i0 << "][" << i1 << "]:  " << unknownData[i0][i1] << endl; \
 	}; \
 }; \
@@ -4308,11 +4518,19 @@ if ( (collisionType == 0) ) { \
 }; \
 if ( (collisionType == 2) ) { \
 	for (uint i1 = 0; i1 < 8; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown6[" << i1 << "]:  " << unknown6[i1] << endl; \
 	}; \
 }; \
 if ( (collisionType == 1) ) { \
 	for (uint i1 = 0; i1 < 15; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown8[" << i1 << "]:  " << unknown8[i1] << endl; \
 	}; \
 }; \
@@ -4366,6 +4584,10 @@ if ( (data.numKeys != 0) ) { \
 	out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
@@ -4440,6 +4662,10 @@ out << NiTimeController::asString(); \
 out << "Cumulative:  " << cumulative << endl; \
 out << "Num Controller Sequences:  " << numControllerSequences << endl; \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Controller Sequences[" << i0 << "]:  " << controllerSequences[i0] << endl; \
 }; \
 out << "Object Palette:  " << objectPalette << endl; \
@@ -5077,6 +5303,10 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Delta:  " << delta << endl; \
 out << "Num Sources:  " << numSources << endl; \
 for (uint i0 = 0; i0 < sources.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Sources[" << i0 << "]:  " << sources[i0] << endl; \
 }; \
 return out.str(); \
@@ -5131,6 +5361,10 @@ if ( (data.numKeys != 0) ) { \
 	out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
@@ -5282,6 +5516,10 @@ stringstream out; \
 out << NiExtraData::asString(); \
 out << "Num Floats:  " << numFloats << endl; \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
@@ -5401,10 +5639,18 @@ out << "Data:  " << data << endl; \
 out << "Unknown Byte:  " << unknownByte << endl; \
 out << "Num Interpolators:  " << numInterpolators << endl; \
 for (uint i0 = 0; i0 < interpolators.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Interpolators[" << i0 << "]:  " << interpolators[i0] << endl; \
 }; \
 out << "Num Unknown Ints:  " << numUnknownInts << endl; \
 for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints[" << i0 << "]:  " << unknownInts[i0] << endl; \
 }; \
 return out.str(); \
@@ -5531,6 +5777,10 @@ stringstream out; \
 out << NiExtraData::asString(); \
 out << "Num Integers:  " << numIntegers << endl; \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
@@ -5723,6 +5973,10 @@ if ( (numRotationKeys != 0) ) { \
 }; \
 if ( (rotationType != 4) ) { \
 	for (uint i1 = 0; i1 < quaternionKeys.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Quaternion Keys[" << i1 << "]:  " << quaternionKeys[i1] << endl; \
 	}; \
 }; \
@@ -5734,6 +5988,10 @@ if ( (rotationType == 4) ) { \
 			out << "      Interpolation:  " << xyzRotations[i1].interpolation << endl; \
 		}; \
 		for (uint i2 = 0; i2 < xyzRotations[i1].keys.size(); i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Keys[" << i2 << "]:  " << xyzRotations[i1].keys[i2] << endl; \
 		}; \
 	}; \
@@ -5743,6 +6001,10 @@ if ( (translations.numKeys != 0) ) { \
 	out << "  Interpolation:  " << translations.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < translations.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << translations.keys[i0] << endl; \
 }; \
 out << "Num Keys:  " << scales.numKeys << endl; \
@@ -5750,6 +6012,10 @@ if ( (scales.numKeys != 0) ) { \
 	out << "  Interpolation:  " << scales.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < scales.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << scales.keys[i0] << endl; \
 }; \
 return out.str(); \
@@ -6234,16 +6500,28 @@ out << APSysData::asString(); \
 out << "Unknown Byte 11:  " << unknownByte11 << endl; \
 for (uint i0 = 0; i0 < unknownFloats3.size(); i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 3[" << i0 << "][" << i1 << "]:  " << unknownFloats3[i0][i1] << endl; \
 	}; \
 }; \
 for (uint i0 = 0; i0 < unknownFloats4.size(); i0++) { \
 	for (uint i1 = 0; i1 < 10; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
 	}; \
 }; \
 for (uint i0 = 0; i0 < unknownFloats5.size(); i0++) { \
 	for (uint i1 = 0; i1 < 12; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 5[" << i0 << "][" << i1 << "]:  " << unknownFloats5[i0][i1] << endl; \
 	}; \
 }; \
@@ -6252,6 +6530,10 @@ out << "Modifier:  " << modifier << endl; \
 out << "Unknown Byte 2:  " << unknownByte2 << endl; \
 out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Links[" << i0 << "]:  " << unknownLinks[i0] << endl; \
 }; \
 out << "Unknown Short 4:  " << unknownShort4 << endl; \
@@ -6369,10 +6651,18 @@ for (uint i0 = 0; i0 < morphs.size(); i0++) { \
 	out << "  Num Morph Keys:  " << morphs[i0].numMorphKeys << endl; \
 	out << "  Morph Interpolation:  " << morphs[i0].morphInterpolation << endl; \
 	for (uint i1 = 0; i1 < morphs[i0].morphKeys.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Morph Keys[" << i1 << "]:  " << morphs[i0].morphKeys[i1] << endl; \
 	}; \
 	out << "  Unknown Int:  " << morphs[i0].unknownInt << endl; \
 	for (uint i1 = 0; i1 < morphs[i0].vectors.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Vectors[" << i1 << "]:  " << morphs[i0].vectors[i1] << endl; \
 	}; \
 }; \
@@ -6414,6 +6704,10 @@ stringstream out; \
 out << NiTimeController::asString(); \
 out << "Num Extra Targets:  " << numExtraTargets << endl; \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Extra Targets[" << i0 << "]:  " << extraTargets[i0] << endl; \
 }; \
 return out.str(); \
@@ -6475,10 +6769,18 @@ stringstream out; \
 out << NiAVObject::asString(); \
 out << "Num Children:  " << numChildren << endl; \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Children[" << i0 << "]:  " << children[i0] << endl; \
 }; \
 out << "Num Effects:  " << numEffects << endl; \
 for (uint i0 = 0; i0 < effects.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Effects[" << i0 << "]:  " << effects[i0] << endl; \
 }; \
 return out.str(); \
@@ -6556,6 +6858,10 @@ stringstream out; \
 out << NiNode::asString(); \
 out << "Unknown1:  " << unknown1 << endl; \
 for (uint i0 = 0; i0 < 292; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown 292 Bytes[" << i0 << "]:  " << unknown292Bytes[i0] << endl; \
 }; \
 return out.str(); \
@@ -6630,6 +6936,10 @@ out << "Unknown Int  2:  " << unknownInt2 << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
 out << "Num Unknown Links:  " << numUnknownLinks << endl; \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Links[" << i0 << "]:  " << unknownLinks[i0] << endl; \
 }; \
 return out.str(); \
@@ -6840,6 +7150,10 @@ out << "Unknown Byte:  " << unknownByte << endl; \
 out << "Num Entries?:  " << numEntries_ << endl; \
 for (uint i0 = 0; i0 < 256; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Palette[" << i0 << "][" << i1 << "]:  " << palette[i0][i1] << endl; \
 	}; \
 }; \
@@ -7194,12 +7508,20 @@ out << "Num Active:  " << numActive << endl; \
 out << "Has Unknown Floats:  " << hasUnknownFloats << endl; \
 if ( (hasUnknownFloats != 0) ) { \
 	for (uint i1 = 0; i1 < unknownFloats.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl; \
 	}; \
 }; \
 out << "Has Rotations:  " << hasRotations << endl; \
 if ( (hasRotations != 0) ) { \
 	for (uint i1 = 0; i1 < rotations.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Rotations[" << i1 << "]:  " << rotations[i1] << endl; \
 	}; \
 }; \
@@ -7285,6 +7607,10 @@ out << NiParticles::asString(); \
 out << "Unknown Bool:  " << unknownBool << endl; \
 out << "Num Modifiers:  " << numModifiers << endl; \
 for (uint i0 = 0; i0 < modifiers.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Modifiers[" << i0 << "]:  " << modifiers[i0] << endl; \
 }; \
 return out.str(); \
@@ -7811,10 +8137,18 @@ out << "Blue Mask:  " << blueMask << endl; \
 out << "Alpha Mask:  " << alphaMask << endl; \
 out << "Bits Per Pixel:  " << bitsPerPixel << endl; \
 for (uint i0 = 0; i0 < 8; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown 8 Bytes[" << i0 << "]:  " << unknown8Bytes[i0] << endl; \
 }; \
 out << "Unknown Int:  " << unknownInt << endl; \
 for (uint i0 = 0; i0 < 54; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown 54 Bytes[" << i0 << "]:  " << unknown54Bytes[i0] << endl; \
 }; \
 out << "Palette:  " << palette << endl; \
@@ -7828,6 +8162,10 @@ for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
 out << "Data Size:  " << pixelData.dataSize << endl; \
 out << "Unknown Int:  " << pixelData.unknownInt << endl; \
 for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
 }; \
 return out.str(); \
@@ -8058,6 +8396,10 @@ if ( (data.numKeys != 0) ) { \
 	out << "  Interpolation:  " << data.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << data.keys[i0] << endl; \
 }; \
 return out.str(); \
@@ -8151,12 +8493,24 @@ stringstream out; \
 out << NiPSysModifier::asString(); \
 out << "Unknown Link:  " << unknownLink << endl; \
 for (uint i0 = 0; i0 < 2; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints 1[" << i0 << "]:  " << unknownInts1[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 2; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Ints 2[" << i0 << "]:  " << unknownInts2[i0] << endl; \
 }; \
 return out.str(); \
@@ -8436,6 +8790,10 @@ stringstream out; \
 out << APSysData::asString(); \
 for (uint i0 = 0; i0 < unknownFloats4.size(); i0++) { \
 	for (uint i1 = 0; i1 < 10; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown Floats 4[" << i0 << "][" << i1 << "]:  " << unknownFloats4[i0][i1] << endl; \
 	}; \
 }; \
@@ -8443,6 +8801,10 @@ out << "Unknown Bool 1:  " << unknownBool1 << endl; \
 if ( (unknownBool1 != 0) ) { \
 	for (uint i1 = 0; i1 < unknownBytes.size(); i1++) { \
 		for (uint i2 = 0; i2 < 32; i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Unknown Bytes[" << i1 << "][" << i2 << "]:  " << unknownBytes[i1][i2] << endl; \
 		}; \
 	}; \
@@ -8450,6 +8812,10 @@ if ( (unknownBool1 != 0) ) { \
 if ( (unknownBool1 == 0) ) { \
 	for (uint i1 = 0; i1 < unknownBytesAlt.size(); i1++) { \
 		for (uint i2 = 0; i2 < 28; i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Unknown Bytes Alt[" << i1 << "][" << i2 << "]:  " << unknownBytesAlt[i1][i2] << endl; \
 		}; \
 	}; \
@@ -8459,6 +8825,10 @@ out << "Unknown Bool 2:  " << unknownBool2 << endl; \
 if ( (unknownBool2 != 0) ) { \
 	for (uint i1 = 0; i1 < unknownBytes2.size(); i1++) { \
 		for (uint i2 = 0; i2 < 4; i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Unknown Bytes 2[" << i1 << "][" << i2 << "]:  " << unknownBytes2[i1][i2] << endl; \
 		}; \
 	}; \
@@ -8607,10 +8977,18 @@ if ( (floatKeys_.numKeys != 0) ) { \
 	out << "  Interpolation:  " << floatKeys_.interpolation << endl; \
 }; \
 for (uint i0 = 0; i0 < floatKeys_.keys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Keys[" << i0 << "]:  " << floatKeys_.keys[i0] << endl; \
 }; \
 out << "Num Visibility Keys?:  " << numVisibilityKeys_ << endl; \
 for (uint i0 = 0; i0 < visibilityKeys_.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Visibility Keys?[" << i0 << "]:  " << visibilityKeys_[i0] << endl; \
 }; \
 return out.str(); \
@@ -8891,6 +9269,10 @@ stringstream out; \
 out << NiPSysEmitter::asString(); \
 out << "Num Emitter Meshes:  " << numEmitterMeshes << endl; \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Emitter Meshes[" << i0 << "]:  " << emitterMeshes[i0] << endl; \
 }; \
 out << "Initial Velocity Type:  " << initialVelocityType << endl; \
@@ -8943,6 +9325,10 @@ stringstream out; \
 out << NiPSysModifier::asString(); \
 out << "Num Meshes:  " << numMeshes << endl; \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Meshes[" << i0 << "]:  " << meshes[i0] << endl; \
 }; \
 return out.str(); \
@@ -9410,10 +9796,18 @@ for (uint i0 = 0; i0 < unknownFloats2.size(); i0++) { \
 stringstream out; \
 out << NiObject::asString(); \
 for (uint i0 = 0; i0 < 8; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats[" << i0 << "]:  " << unknownFloats[i0] << endl; \
 }; \
 out << "Unknown Count:  " << unknownCount << endl; \
 for (uint i0 = 0; i0 < unknownFloats2.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \
 }; \
 return out.str(); \
@@ -9556,6 +9950,10 @@ for (uint i0 = 0; i0 < boneList.size(); i0++) { \
 	out << "  Translation:  " << boneList[i0].translation << endl; \
 	out << "  Scale:  " << boneList[i0].scale << endl; \
 	for (uint i1 = 0; i1 < 4; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Unknown 4 Floats[" << i1 << "]:  " << boneList[i0].unknown4Floats[i1] << endl; \
 	}; \
 	out << "  Num Vertices:  " << boneList[i0].numVertices << endl; \
@@ -9629,6 +10027,10 @@ out << "Skin Partition:  " << skinPartition << endl; \
 out << "Skeleton Root:  " << skeletonRoot << endl; \
 out << "Num Bones:  " << bones.numBones << endl; \
 for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Bones[" << i0 << "]:  " << bones.bones[i0] << endl; \
 }; \
 return out.str(); \
@@ -9868,29 +10270,53 @@ for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
 	out << "  Num Strips:  " << skinPartitionBlocks[i0].numStrips << endl; \
 	out << "  Num Weights Per Vertex:  " << skinPartitionBlocks[i0].numWeightsPerVertex << endl; \
 	for (uint i1 = 0; i1 < skinPartitionBlocks[i0].bones.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Bones[" << i1 << "]:  " << skinPartitionBlocks[i0].bones[i1] << endl; \
 	}; \
 	out << "  Has Vertex Map:  " << skinPartitionBlocks[i0].hasVertexMap << endl; \
 	for (uint i1 = 0; i1 < skinPartitionBlocks[i0].vertexMap.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Vertex Map[" << i1 << "]:  " << skinPartitionBlocks[i0].vertexMap[i1] << endl; \
 	}; \
 	out << "  Has Vertex Weights:  " << skinPartitionBlocks[i0].hasVertexWeights << endl; \
 	for (uint i1 = 0; i1 < skinPartitionBlocks[i0].vertexWeights.size(); i1++) { \
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i0].vertexWeights[i1].size(); i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Vertex Weights[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].vertexWeights[i1][i2] << endl; \
 		}; \
 	}; \
 	for (uint i1 = 0; i1 < skinPartitionBlocks[i0].stripLengths.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Strip Lengths[" << i1 << "]:  " << skinPartitionBlocks[i0].stripLengths[i1] << endl; \
 	}; \
 	out << "  Has Strips:  " << skinPartitionBlocks[i0].hasStrips << endl; \
 	for (uint i1 = 0; i1 < skinPartitionBlocks[i0].strips.size(); i1++) { \
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i0].stripLengths[i1]; i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Strips[" << i1 << "][" << i2 << "]:  " << skinPartitionBlocks[i0].strips[i1][i2] << endl; \
 		}; \
 	}; \
 	if ( (skinPartitionBlocks[i0].numStrips == 0) ) { \
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i0].triangles.size(); i2++) { \
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) { \
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+				break; \
+			}; \
 			out << "      Triangles[" << i2 << "]:  " << skinPartitionBlocks[i0].triangles[i2] << endl; \
 		}; \
 	}; \
@@ -9898,6 +10324,10 @@ for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
 	if ( (skinPartitionBlocks[i0].hasBoneIndices != 0) ) { \
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i0].boneIndices.size(); i2++) { \
 			for (uint i3 = 0; i3 < skinPartitionBlocks[i0].boneIndices[i2].size(); i3++) { \
+				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) { \
+					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+					break; \
+				}; \
 				out << "        Bone Indices[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i0].boneIndices[i2][i3] << endl; \
 			}; \
 		}; \
@@ -10299,6 +10729,10 @@ stringstream out; \
 out << NiExtraData::asString(); \
 out << "Num Strings:  " << numStrings << endl; \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Data[" << i0 << "]:  " << data[i0] << endl; \
 }; \
 return out.str(); \
@@ -10345,6 +10779,10 @@ out << NiExtraData::asString(); \
 out << "Unknown Int 1:  " << unknownInt1 << endl; \
 out << "Num Text Keys:  " << numTextKeys << endl; \
 for (uint i0 = 0; i0 < textKeys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Text Keys[" << i0 << "]:  " << textKeys[i0] << endl; \
 }; \
 return out.str(); \
@@ -11376,6 +11814,10 @@ out << "Translation:  " << translation << endl; \
 out << "Rotation:  " << rotation << endl; \
 out << "Scale:  " << scale << endl; \
 for (uint i0 = 0; i0 < 3; i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Unknown Bytes[" << i0 << "]:  " << unknownBytes[i0] << endl; \
 }; \
 out << "Data:  " << data << endl; \
@@ -11493,12 +11935,20 @@ out << "Num Triangles:  " << numTriangles << endl; \
 out << "Num Triangle Points:  " << numTrianglePoints << endl; \
 out << "Has Triangles:  " << hasTriangles << endl; \
 for (uint i0 = 0; i0 < triangles.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Triangles[" << i0 << "]:  " << triangles[i0] << endl; \
 }; \
 out << "Num Match Groups:  " << numMatchGroups << endl; \
 for (uint i0 = 0; i0 < matchGroups.size(); i0++) { \
 	out << "  Num Vertices:  " << matchGroups[i0].numVertices << endl; \
 	for (uint i1 = 0; i1 < matchGroups[i0].vertexIndices.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Vertex Indices[" << i1 << "]:  " << matchGroups[i0].vertexIndices[i1] << endl; \
 	}; \
 }; \
@@ -11608,11 +12058,19 @@ out << NiTriBasedGeomData::asString(); \
 out << "Num Triangles:  " << numTriangles << endl; \
 out << "Num Strips:  " << numStrips << endl; \
 for (uint i0 = 0; i0 < stripLengths.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Strip Lengths[" << i0 << "]:  " << stripLengths[i0] << endl; \
 }; \
 out << "Has Points:  " << hasPoints << endl; \
 for (uint i0 = 0; i0 < points.size(); i0++) { \
 	for (uint i1 = 0; i1 < stripLengths[i0]; i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Points[" << i0 << "][" << i1 << "]:  " << points[i0][i1] << endl; \
 	}; \
 }; \
@@ -11704,6 +12162,10 @@ for (uint i0 = 0; i0 < 4; i0++) { \
 		out << "    Interpolation:  " << uvGroups[i0].interpolation << endl; \
 	}; \
 	for (uint i1 = 0; i1 < uvGroups[i0].keys.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
 		out << "    Keys[" << i1 << "]:  " << uvGroups[i0].keys[i1] << endl; \
 	}; \
 }; \
@@ -11813,6 +12275,10 @@ out << NiExtraData::asString(); \
 out << "Num Bytes:  " << numBytes << endl; \
 out << "Num Vertices:  " << numVertices << endl; \
 for (uint i0 = 0; i0 < weight.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Weight[" << i0 << "]:  " << weight[i0] << endl; \
 }; \
 return out.str(); \
@@ -11893,6 +12359,10 @@ stringstream out; \
 out << AKeyedData::asString(); \
 out << "Num Vis Keys:  " << numVisKeys << endl; \
 for (uint i0 = 0; i0 < visKeys.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
 	out << "  Vis Keys[" << i0 << "]:  " << visKeys[i0] << endl; \
 }; \
 return out.str(); \
