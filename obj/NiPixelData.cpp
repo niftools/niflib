@@ -1,8 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPixelData.h"
-#include "NiPalette.h"
+#include "obj/NiPixelData.h"
+#include "gen/MipMap.h"
+#include "gen/ByteArray.h"
 
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NI_PIXEL_DATA_PARENT::TYPE );

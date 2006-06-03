@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysEmitterSpeedCtlr.h"
+#include "obj/NiPSysEmitterSpeedCtlr.h"
 
 //Definition of TYPE constant
 const Type NiPSysEmitterSpeedCtlr::TYPE("NiPSysEmitterSpeedCtlr", &NI_P_SYS_EMITTER_SPEED_CTLR_PARENT::TYPE );

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBLENDTRANSFORMINTERPOLATOR_H_
 #define _NIBLENDTRANSFORMINTERPOLATOR_H_
 
+#include "NiBlendInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_BLEND_TRANSFORM_INTERPOLATOR_INCLUDE
 
 /*
  * NiBlendTransformInterpolator

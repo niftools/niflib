@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIUVDATA_H_
 #define _NIUVDATA_H_
 
+#include "NiObject.h"
+#include "gen/KeyGroup.h"
+
 #include "gen/obj_defines.h"
-#include NI_U_V_DATA_INCLUDE
 
 /*
  * NiUVData

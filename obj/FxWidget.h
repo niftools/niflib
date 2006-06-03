@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _FXWIDGET_H_
 #define _FXWIDGET_H_
 
+#include "NiNode.h"
+
 #include "gen/obj_defines.h"
-#include FX_WIDGET_INCLUDE
 
 /*
  * FxWidget

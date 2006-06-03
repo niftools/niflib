@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLECOLORMODIFIER_H_
 #define _NIPARTICLECOLORMODIFIER_H_
 
+#include "AParticleModifier.h"
+#include "Ref.h"
+#include "obj/NiColorData.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_COLOR_MODIFIER_INCLUDE
 
 /*
  * NiParticleColorModifier

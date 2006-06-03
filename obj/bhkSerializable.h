@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSERIALIZABLE_H_
 #define _BHKSERIALIZABLE_H_
 
+#include "bhkRefObject.h"
+
 #include "gen/obj_defines.h"
-#include BHK_SERIALIZABLE_INCLUDE
 
 /*
  * bhkSerializable

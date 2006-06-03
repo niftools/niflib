@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiCamera.h"
-#include "NiObject.h"
+#include "obj/NiCamera.h"
 
 //Definition of TYPE constant
 const Type NiCamera::TYPE("NiCamera", &NI_CAMERA_PARENT::TYPE );

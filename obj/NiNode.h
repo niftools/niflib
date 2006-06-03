@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NINODE_H_
 #define _NINODE_H_
 
+#include "NiAVObject.h"
+#include "Ref.h"
+#include "obj/NiAVObject.h"
+#include "obj/NiDynamicEffect.h"
+
 #include "gen/obj_defines.h"
-#include NI_NODE_INCLUDE
 
 /*
  * NiNode

@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMATERIALCOLORCONTROLLER_H_
 #define _NIMATERIALCOLORCONTROLLER_H_
 
+#include "NiSingleInterpolatorController.h"
+#include "Ref.h"
+#include "obj/NiPosData.h"
+
 #include "gen/obj_defines.h"
-#include NI_MATERIAL_COLOR_CONTROLLER_INCLUDE
 
 /*
  * NiMaterialColorController

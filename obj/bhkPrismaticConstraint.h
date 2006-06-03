@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKPRISMATICCONSTRAINT_H_
 #define _BHKPRISMATICCONSTRAINT_H_
 
+#include "AbhkConstraint.h"
+
 #include "gen/obj_defines.h"
-#include BHK_PRISMATIC_CONSTRAINT_INCLUDE
 
 /*
  * bhkPrismaticConstraint

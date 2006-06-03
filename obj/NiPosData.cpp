@@ -1,7 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPosData.h"
+#include "obj/NiPosData.h"
+#include "gen/KeyGroup.h"
 
 //Definition of TYPE constant
 const Type NiPosData::TYPE("NiPosData", &NI_POS_DATA_PARENT::TYPE );

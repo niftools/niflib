@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMESHPARTICLESYSTEM_H_
 #define _NIMESHPARTICLESYSTEM_H_
 
+#include "NiParticleSystem.h"
+
 #include "gen/obj_defines.h"
-#include NI_MESH_PARTICLE_SYSTEM_INCLUDE
 
 /*
  * NiMeshParticleSystem

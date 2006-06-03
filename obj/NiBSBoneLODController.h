@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSBONELODCONTROLLER_H_
 #define _NIBSBONELODCONTROLLER_H_
 
+#include "ABoneLODController.h"
+
 #include "gen/obj_defines.h"
-#include NI_B_S_BONE_L_O_D_CONTROLLER_INCLUDE
 
 /*
  * NiBSBoneLODController

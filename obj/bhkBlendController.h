@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKBLENDCONTROLLER_H_
 #define _BHKBLENDCONTROLLER_H_
 
+#include "NiTimeController.h"
+
 #include "gen/obj_defines.h"
-#include BHK_BLEND_CONTROLLER_INCLUDE
 
 /*
  * bhkBlendController

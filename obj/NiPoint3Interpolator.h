@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPOINT3INTERPOLATOR_H_
 #define _NIPOINT3INTERPOLATOR_H_
 
+#include "NiInterpolator.h"
+#include "Ref.h"
+#include "obj/NiPosData.h"
+
 #include "gen/obj_defines.h"
-#include NI_POINT3_INTERPOLATOR_INCLUDE
 
 /*
  * NiPoint3Interpolator

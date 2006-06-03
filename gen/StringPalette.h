@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 
+
 /*!
  * A list of \\0 terminated strings.
  */

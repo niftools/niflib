@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIKEYFRAMECONTROLLER_H_
 #define _NIKEYFRAMECONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiKeyframeData.h"
+
 #include "gen/obj_defines.h"
-#include NI_KEYFRAME_CONTROLLER_INCLUDE
 
 /*
  * NiKeyframeController

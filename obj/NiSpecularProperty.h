@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISPECULARPROPERTY_H_
 #define _NISPECULARPROPERTY_H_
 
+#include "NiProperty.h"
+
 #include "gen/obj_defines.h"
-#include NI_SPECULAR_PROPERTY_INCLUDE
 
 /*
  * NiSpecularProperty

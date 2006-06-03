@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiCollisionData.h"
-#include "NiNode.h"
+#include "obj/NiCollisionData.h"
+#include "obj/NiNode.h"
 
 //Definition of TYPE constant
 const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TYPE );

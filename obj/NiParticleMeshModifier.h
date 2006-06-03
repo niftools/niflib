@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLEMESHMODIFIER_H_
 #define _NIPARTICLEMESHMODIFIER_H_
 
+#include "AParticleModifier.h"
+#include "Ref.h"
+#include "obj/NiTriBasedGeom.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_MESH_MODIFIER_INCLUDE
 
 /*
  * NiParticleMeshModifier

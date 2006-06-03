@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiVisController.h"
-#include "NiVisData.h"
+#include "obj/NiVisController.h"
 
 //Definition of TYPE constant
 const Type NiVisController::TYPE("NiVisController", &NI_VIS_CONTROLLER_PARENT::TYPE );

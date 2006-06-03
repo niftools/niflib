@@ -6,9 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "Ref.h"
-
-//Forward Declarations
-class NiNode;
+#include "obj/NiNode.h"
 
 /*!
  * A group of NiNodes references.

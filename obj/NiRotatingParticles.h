@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIROTATINGPARTICLES_H_
 #define _NIROTATINGPARTICLES_H_
 
+#include "NiParticles.h"
+
 #include "gen/obj_defines.h"
-#include NI_ROTATING_PARTICLES_INCLUDE
 
 /*
  * NiRotatingParticles

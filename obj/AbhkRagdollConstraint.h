@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ABHKRAGDOLLCONSTRAINT_H_
 #define _ABHKRAGDOLLCONSTRAINT_H_
 
+#include "AbhkConstraint.h"
+
 #include "gen/obj_defines.h"
-#include ABHK_RAGDOLL_CONSTRAINT_INCLUDE
 
 /*
  * AbhkRagdollConstraint

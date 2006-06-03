@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _AKEYEDDATA_H_
 #define _AKEYEDDATA_H_
 
+#include "NiObject.h"
+
 #include "gen/obj_defines.h"
-#include A_KEYED_DATA_INCLUDE
 
 /*
  * AKeyedData

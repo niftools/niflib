@@ -6,9 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "Ref.h"
-
-//Forward Declarations
-class NiAVObject;
+#include "obj/NiAVObject.h"
 
 /*!
  * The NIF file footer.

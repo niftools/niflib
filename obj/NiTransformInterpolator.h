@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRANSFORMINTERPOLATOR_H_
 #define _NITRANSFORMINTERPOLATOR_H_
 
+#include "NiInterpolator.h"
+#include "Ref.h"
+#include "obj/NiTransformData.h"
+
 #include "gen/obj_defines.h"
-#include NI_TRANSFORM_INTERPOLATOR_INCLUDE
 
 /*
  * NiTransformInterpolator

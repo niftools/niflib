@@ -6,9 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "Ref.h"
-
-//Forward Declarations
-class NiSourceTexture;
+#include "obj/NiSourceTexture.h"
 
 /*!
  * Texture description.

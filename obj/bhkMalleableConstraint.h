@@ -4,8 +4,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKMALLEABLECONSTRAINT_H_
 #define _BHKMALLEABLECONSTRAINT_H_
 
+#include "AbhkConstraint.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+#include "gen/RagDollDescriptor.h"
+#include "gen/LimitedHingeDescriptor.h"
+
 #include "gen/obj_defines.h"
-#include BHK_MALLEABLE_CONSTRAINT_INCLUDE
 
 /*
  * bhkMalleableConstraint

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLESDATA_H_
 #define _NIPARTICLESDATA_H_
 
+#include "NiAutoNormalParticlesData.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLES_DATA_INCLUDE
 
 /*
  * NiParticlesData

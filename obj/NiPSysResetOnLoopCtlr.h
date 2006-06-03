@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSRESETONLOOPCTLR_H_
 #define _NIPSYSRESETONLOOPCTLR_H_
 
+#include "NiTimeController.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_RESET_ON_LOOP_CTLR_INCLUDE
 
 /*
  * NiPSysResetOnLoopCtlr

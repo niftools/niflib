@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICOLLISIONDATA_H_
 #define _NICOLLISIONDATA_H_
 
+#include "NiObject.h"
+class NiNode;
+
 #include "gen/obj_defines.h"
-#include NI_COLLISION_DATA_INCLUDE
 
 /*
  * NiCollisionData

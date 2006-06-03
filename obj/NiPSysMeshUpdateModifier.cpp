@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysMeshUpdateModifier.h"
-#include "NiNode.h"
+#include "obj/NiPSysMeshUpdateModifier.h"
 
 //Definition of TYPE constant
 const Type NiPSysMeshUpdateModifier::TYPE("NiPSysMeshUpdateModifier", &NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT::TYPE );

@@ -4,8 +4,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICONTROLLERSEQUENCE_H_
 #define _NICONTROLLERSEQUENCE_H_
 
+#include "NiObject.h"
+#include "gen/ControllerLink.h"
+#include "Ref.h"
+#include "obj/NiTextKeyExtraData.h"
+#include "obj/NiStringPalette.h"
+class NiControllerManager;
+
 #include "gen/obj_defines.h"
-#include NI_CONTROLLER_SEQUENCE_INCLUDE
 
 /*
  * NiControllerSequence

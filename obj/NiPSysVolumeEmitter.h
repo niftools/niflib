@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSVOLUMEEMITTER_H_
 #define _NIPSYSVOLUMEEMITTER_H_
 
+#include "NiPSysEmitter.h"
+class NiNode;
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_VOLUME_EMITTER_INCLUDE
 
 /*
  * NiPSysVolumeEmitter

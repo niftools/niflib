@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPALETTE_H_
 #define _NIPALETTE_H_
 
+#include "NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_PALETTE_INCLUDE
 
 /*
  * NiPalette

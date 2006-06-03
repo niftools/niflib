@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISTRINGPALETTE_H_
 #define _NISTRINGPALETTE_H_
 
+#include "NiObject.h"
+#include "gen/StringPalette.h"
+
 #include "gen/obj_defines.h"
-#include NI_STRING_PALETTE_INCLUDE
 
 /*
  * NiStringPalette

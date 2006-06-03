@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIFLOATEXTRADATACONTROLLER_H_
 #define _NIFLOATEXTRADATACONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_FLOAT_EXTRA_DATA_CONTROLLER_INCLUDE
 
 /*
  * NiFloatExtraDataController

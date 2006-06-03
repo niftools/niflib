@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKRIGIDBODYT_H_
 #define _BHKRIGIDBODYT_H_
 
+#include "bhkRigidBody.h"
+
 #include "gen/obj_defines.h"
-#include BHK_RIGID_BODY_T_INCLUDE
 
 /*
  * bhkRigidBodyT

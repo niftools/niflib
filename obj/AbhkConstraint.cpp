@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "AbhkConstraint.h"
-#include "bhkShape.h"
+#include "obj/AbhkConstraint.h"
+#include "obj/bhkShape.h"
 
 //Definition of TYPE constant
 const Type AbhkConstraint::TYPE("AbhkConstraint", &ABHK_CONSTRAINT_PARENT::TYPE );

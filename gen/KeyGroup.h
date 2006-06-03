@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 
+
 /*!
  * Array of vector keys (anything that can be interpolated, except
  * rotations).

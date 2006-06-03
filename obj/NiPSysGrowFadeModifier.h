@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSGROWFADEMODIFIER_H_
 #define _NIPSYSGROWFADEMODIFIER_H_
 
+#include "NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_GROW_FADE_MODIFIER_INCLUDE
 
 /*
  * NiPSysGrowFadeModifier

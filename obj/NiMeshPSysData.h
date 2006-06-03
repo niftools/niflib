@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMESHPSYSDATA_H_
 #define _NIMESHPSYSDATA_H_
 
+#include "APSysData.h"
+#include "Ref.h"
+#include "obj/AParticleModifier.h"
+#include "obj/NiNode.h"
+
 #include "gen/obj_defines.h"
-#include NI_MESH_P_SYS_DATA_INCLUDE
 
 /*
  * NiMeshPSysData

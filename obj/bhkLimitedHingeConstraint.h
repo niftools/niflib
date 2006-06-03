@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKLIMITEDHINGECONSTRAINT_H_
 #define _BHKLIMITEDHINGECONSTRAINT_H_
 
+#include "AbhkConstraint.h"
+#include "gen/LimitedHingeDescriptor.h"
+
 #include "gen/obj_defines.h"
-#include BHK_LIMITED_HINGE_CONSTRAINT_INCLUDE
 
 /*
  * bhkLimitedHingeConstraint

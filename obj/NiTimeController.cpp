@@ -1,9 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTimeController.h"
-#include "NiTimeController.h"
-#include "NiObject.h"
+#include "obj/NiTimeController.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiTimeController::TYPE("NiTimeController", &NI_TIME_CONTROLLER_PARENT::TYPE );

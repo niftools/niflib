@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIFLIPCONTROLLER_H_
 #define _NIFLIPCONTROLLER_H_
 
+#include "NiSingleInterpolatorController.h"
+#include "Ref.h"
+#include "obj/NiSourceTexture.h"
+
 #include "gen/obj_defines.h"
-#include NI_FLIP_CONTROLLER_INCLUDE
 
 /*
  * NiFlipController

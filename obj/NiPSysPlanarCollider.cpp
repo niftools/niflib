@@ -1,11 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysPlanarCollider.h"
-#include "NiPSysSpawnModifier.h"
-#include "NiObject.h"
-#include "NiObject.h"
-#include "NiNode.h"
+#include "obj/NiPSysPlanarCollider.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiPSysPlanarCollider::TYPE("NiPSysPlanarCollider", &NI_P_SYS_PLANAR_COLLIDER_PARENT::TYPE );

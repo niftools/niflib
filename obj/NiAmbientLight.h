@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIAMBIENTLIGHT_H_
 #define _NIAMBIENTLIGHT_H_
 
+#include "NiLight.h"
+
 #include "gen/obj_defines.h"
-#include NI_AMBIENT_LIGHT_INCLUDE
 
 /*
  * NiAmbientLight

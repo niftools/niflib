@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBLENDFLOATINTERPOLATOR_H_
 #define _NIBLENDFLOATINTERPOLATOR_H_
 
+#include "NiBlendInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_BLEND_FLOAT_INTERPOLATOR_INCLUDE
 
 /*
  * NiBlendFloatInterpolator

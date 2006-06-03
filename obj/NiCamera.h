@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NICAMERA_H_
 #define _NICAMERA_H_
 
+#include "NiAVObject.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_CAMERA_INCLUDE
 
 /*
  * NiCamera

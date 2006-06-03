@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSEMITTERSPEEDCTLR_H_
 #define _NIPSYSEMITTERSPEEDCTLR_H_
 
+#include "APSysCtlr.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_EMITTER_SPEED_CTLR_INCLUDE
 
 /*
  * NiPSysEmitterSpeedCtlr

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSHAPE_H_
 #define _BHKSHAPE_H_
 
+#include "bhkSerializable.h"
+
 #include "gen/obj_defines.h"
-#include BHK_SHAPE_INCLUDE
 
 /*
  * bhkShape

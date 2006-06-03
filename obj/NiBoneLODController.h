@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBONELODCONTROLLER_H_
 #define _NIBONELODCONTROLLER_H_
 
+#include "ABoneLODController.h"
+#include "gen/SkinShapeGroup.h"
+#include "Ref.h"
+#include "obj/NiTriShape.h"
+
 #include "gen/obj_defines.h"
-#include NI_BONE_L_O_D_CONTROLLER_INCLUDE
 
 /*
  * NiBoneLODController

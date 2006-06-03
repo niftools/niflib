@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSSPHEREEMITTER_H_
 #define _NIPSYSSPHEREEMITTER_H_
 
+#include "NiPSysVolumeEmitter.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_SPHERE_EMITTER_INCLUDE
 
 /*
  * NiPSysSphereEmitter

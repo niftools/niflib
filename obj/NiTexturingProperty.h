@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITEXTURINGPROPERTY_H_
 #define _NITEXTURINGPROPERTY_H_
 
+#include "NiProperty.h"
+#include "gen/TexDesc.h"
+#include "gen/ShaderTexDesc.h"
+
 #include "gen/obj_defines.h"
-#include NI_TEXTURING_PROPERTY_INCLUDE
 
 /*
  * NiTexturingProperty

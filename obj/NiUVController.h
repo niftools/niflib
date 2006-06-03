@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIUVCONTROLLER_H_
 #define _NIUVCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiUVData.h"
+
 #include "gen/obj_defines.h"
-#include NI_U_V_CONTROLLER_INCLUDE
 
 /*
  * NiUVController

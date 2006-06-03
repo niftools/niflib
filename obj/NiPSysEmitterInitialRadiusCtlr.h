@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSEMITTERINITIALRADIUSCTLR_H_
 #define _NIPSYSEMITTERINITIALRADIUSCTLR_H_
 
+#include "APSysCtlr.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_INCLUDE
 
 /*
  * NiPSysEmitterInitialRadiusCtlr

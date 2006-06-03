@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ABHKCONSTRAINT_H_
 #define _ABHKCONSTRAINT_H_
 
+#include "bhkSerializable.h"
+class bhkShape;
+
 #include "gen/obj_defines.h"
-#include ABHK_CONSTRAINT_INCLUDE
 
 /*
  * AbhkConstraint

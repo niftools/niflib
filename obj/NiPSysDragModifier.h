@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSDRAGMODIFIER_H_
 #define _NIPSYSDRAGMODIFIER_H_
 
+#include "NiPSysModifier.h"
+class NiObject;
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_DRAG_MODIFIER_INCLUDE
 
 /*
  * NiPSysDragModifier

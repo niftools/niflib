@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIRANGELODDATA_H_
 #define _NIRANGELODDATA_H_
 
+#include "NiObject.h"
+#include "gen/LODRange.h"
+
 #include "gen/obj_defines.h"
-#include NI_RANGE_L_O_D_DATA_INCLUDE
 
 /*
  * NiRangeLODData

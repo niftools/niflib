@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 
+
 /*!
  * The distance range where a specific level of detail applies.
  */

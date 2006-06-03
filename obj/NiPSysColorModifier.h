@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSCOLORMODIFIER_H_
 #define _NIPSYSCOLORMODIFIER_H_
 
+#include "NiPSysModifier.h"
+#include "Ref.h"
+#include "obj/NiColorData.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_COLOR_MODIFIER_INCLUDE
 
 /*
  * NiPSysColorModifier

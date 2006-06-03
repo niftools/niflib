@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTriShape.h"
+#include "obj/NiTriShape.h"
 
 //Definition of TYPE constant
 const Type NiTriShape::TYPE("NiTriShape", &NI_TRI_SHAPE_PARENT::TYPE );

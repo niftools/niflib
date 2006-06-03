@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysDragModifier.h"
-#include "NiObject.h"
+#include "obj/NiPSysDragModifier.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiPSysDragModifier::TYPE("NiPSysDragModifier", &NI_P_SYS_DRAG_MODIFIER_PARENT::TYPE );

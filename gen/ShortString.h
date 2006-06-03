@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 
+
 /*!
  * Another string format, for short strings.  Specific to Bethesda-
  * specific header tags.

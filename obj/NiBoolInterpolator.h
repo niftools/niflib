@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBOOLINTERPOLATOR_H_
 #define _NIBOOLINTERPOLATOR_H_
 
+#include "NiInterpolator.h"
+#include "Ref.h"
+#include "obj/NiBoolData.h"
+
 #include "gen/obj_defines.h"
-#include NI_BOOL_INTERPOLATOR_INCLUDE
 
 /*
  * NiBoolInterpolator

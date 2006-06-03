@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSMODIFIER_H_
 #define _NIPSYSMODIFIER_H_
 
+#include "NiObject.h"
+class NiParticleSystem;
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_MODIFIER_INCLUDE
 
 /*
  * NiPSysModifier

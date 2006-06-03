@@ -6,10 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "Ref.h"
-
-//Forward Declarations
-class NiTriShape;
-class NiSkinInstance;
+#include "obj/NiTriShape.h"
+#include "obj/NiSkinInstance.h"
 
 /*!
  * Reference to shape and skin instance.

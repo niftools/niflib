@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPOSDATA_H_
 #define _NIPOSDATA_H_
 
+#include "AKeyedData.h"
+#include "gen/KeyGroup.h"
+
 #include "gen/obj_defines.h"
-#include NI_POS_DATA_INCLUDE
 
 /*
  * NiPosData

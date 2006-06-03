@@ -6,8 +6,6 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "gen/ShortString.h"
-#include "gen/ShortString.h"
-#include "gen/ShortString.h"
 
 /*!
  * The NIF file header.

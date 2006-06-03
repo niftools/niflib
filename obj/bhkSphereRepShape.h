@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSPHEREREPSHAPE_H_
 #define _BHKSPHEREREPSHAPE_H_
 
+#include "bhkShape.h"
+
 #include "gen/obj_defines.h"
-#include BHK_SPHERE_REP_SHAPE_INCLUDE
 
 /*
  * bhkSphereRepShape

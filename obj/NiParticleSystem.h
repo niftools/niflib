@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLESYSTEM_H_
 #define _NIPARTICLESYSTEM_H_
 
+#include "NiParticles.h"
+#include "Ref.h"
+#include "obj/NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_SYSTEM_INCLUDE
 
 /*
  * NiParticleSystem

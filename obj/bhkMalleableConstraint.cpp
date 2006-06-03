@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "bhkMalleableConstraint.h"
-#include "NiObject.h"
-#include "NiObject.h"
+#include "obj/bhkMalleableConstraint.h"
+#include "gen/RagDollDescriptor.h"
+#include "gen/LimitedHingeDescriptor.h"
 
 //Definition of TYPE constant
 const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &BHK_MALLEABLE_CONSTRAINT_PARENT::TYPE );

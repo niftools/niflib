@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRANSFORMDATA_H_
 #define _NITRANSFORMDATA_H_
 
+#include "NiKeyframeData.h"
+
 #include "gen/obj_defines.h"
-#include NI_TRANSFORM_DATA_INCLUDE
 
 /*
  * NiTransformData

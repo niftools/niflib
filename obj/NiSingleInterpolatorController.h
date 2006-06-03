@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISINGLEINTERPOLATORCONTROLLER_H_
 #define _NISINGLEINTERPOLATORCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_SINGLE_INTERPOLATOR_CONTROLLER_INCLUDE
 
 /*
  * NiSingleInterpolatorController

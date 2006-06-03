@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiFloatInterpolator.h"
-#include "NiFloatData.h"
+#include "obj/NiFloatInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiFloatInterpolator::TYPE("NiFloatInterpolator", &NI_FLOAT_INTERPOLATOR_PARENT::TYPE );

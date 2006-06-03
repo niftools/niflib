@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiParticleMeshesData.h"
-#include "NiTriBasedGeom.h"
+#include "obj/NiParticleMeshesData.h"
 
 //Definition of TYPE constant
 const Type NiParticleMeshesData::TYPE("NiParticleMeshesData", &NI_PARTICLE_MESHES_DATA_PARENT::TYPE );

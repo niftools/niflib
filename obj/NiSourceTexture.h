@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISOURCETEXTURE_H_
 #define _NISOURCETEXTURE_H_
 
+#include "NiObjectNET.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+#include "obj/NiPixelData.h"
+
 #include "gen/obj_defines.h"
-#include NI_SOURCE_TEXTURE_INCLUDE
 
 /*
  * NiSourceTexture

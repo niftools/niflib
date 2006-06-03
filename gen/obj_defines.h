@@ -13,250 +13,6 @@ All rights reserved.  Please see niflib.h for licence. */
 
 using namespace std;
 
-#include "gen/Bones.h"
-#include "gen/ByteArray.h"
-#include "gen/Footer.h"
-#include "gen/LODRange.h"
-#include "gen/MatchGroup.h"
-#include "gen/MipMap.h"
-#include "gen/NodeGroup.h"
-#include "gen/QuaternionXYZW.h"
-#include "gen/ShortString.h"
-#include "gen/SkinShape.h"
-#include "gen/SkinShapeGroup.h"
-#include "gen/SkinWeight.h"
-#include "gen/AVObject.h"
-#include "gen/ControllerLink.h"
-#include "gen/Header.h"
-#include "gen/StringPalette.h"
-#include "gen/TBC.h"
-#include "gen/KeyGroup.h"
-#include "gen/RotationKeyArray.h"
-#include "gen/TexDesc.h"
-#include "gen/ShaderTexDesc.h"
-#include "gen/TexSource.h"
-#include "gen/SkinPartition.h"
-#include "gen/BoundingBox.h"
-#include "gen/FurniturePosition.h"
-#include "gen/hkTriangle.h"
-#include "gen/Morph.h"
-#include "gen/Particle.h"
-#include "gen/SkinData.h"
-
-class NiObject;
-class AKeyedData;
-class AParticleModifier;
-class bhkRefObject;
-class bhkSerializable;
-class AbhkConstraint;
-class AbhkRagdollConstraint;
-class bhkShape;
-class AbhkShapeCollection;
-class bhkSphereRepShape;
-class bhkConvexShape;
-class bhkWorldObject;
-class bhkEntity;
-class NiCollisionObject;
-class NiExtraData;
-class NiInterpolator;
-class NiBlendInterpolator;
-class NiBSplineInterpolator;
-class NiObjectNET;
-class NiAVObject;
-class NiDynamicEffect;
-class NiLight;
-class NiProperty;
-class NiPSysModifier;
-class NiPSysEmitter;
-class NiPSysVolumeEmitter;
-class NiTimeController;
-class ABoneLODController;
-class NiSingleInterpolatorController;
-class APSysCtlr;
-class NiTriBasedGeom;
-class NiTriBasedGeomData;
-class APSysData;
-class bhkBlendCollisionObject;
-class bhkBlendController;
-class bhkBoxShape;
-class bhkCapsuleShape;
-class bhkCollisionObject;
-class bhkConvexVerticesShape;
-class bhkHingeConstraint;
-class bhkLimitedHingeConstraint;
-class bhkListShape;
-class bhkMalleableConstraint;
-class bhkMoppBvTreeShape;
-class bhkMultiSphereShape;
-class bhkNiTriStripsShape;
-class bhkPackedNiTriStripsShape;
-class bhkPrismaticConstraint;
-class bhkRagdollConstraint;
-class bhkRigidBody;
-class bhkRigidBodyT;
-class bhkSimpleShapePhantom;
-class bhkSPCollisionObject;
-class bhkSphereShape;
-class bhkStiffSpringConstraint;
-class bhkTransformShape;
-class bhkConvexTransformShape;
-class BSBound;
-class BSFurnitureMarker;
-class BSParentVelocityModifier;
-class BSPSysArrayEmitter;
-class BSXFlags;
-class hkPackedNiTriStripsData;
-class NiAlphaController;
-class NiAlphaProperty;
-class NiAmbientLight;
-class NiAutoNormalParticlesData;
-class NiBinaryExtraData;
-class NiBlendBoolInterpolator;
-class NiBlendFloatInterpolator;
-class NiBlendPoint3Interpolator;
-class NiBlendTransformInterpolator;
-class NiBoneLODController;
-class NiBoolData;
-class NiBooleanExtraData;
-class NiBoolInterpolator;
-class NiBoolTimelineInterpolator;
-class NiBSBoneLODController;
-class NiBSplineBasisData;
-class NiBSplineCompFloatInterpolator;
-class NiBSplineCompPoint3Interpolator;
-class NiBSplineCompTransformInterpolator;
-class NiBSplineData;
-class NiCamera;
-class NiCollisionData;
-class NiColorData;
-class NiColorExtraData;
-class NiControllerManager;
-class NiControllerSequence;
-class NiDefaultAVObjectPalette;
-class NiDirectionalLight;
-class NiDitherProperty;
-class NiFlipController;
-class NiFloatData;
-class NiFloatExtraData;
-class NiFloatExtraDataController;
-class NiFloatInterpolator;
-class NiFloatsExtraData;
-class NiFogProperty;
-class NiGeomMorpherController;
-class NiGravity;
-class NiIntegerExtraData;
-class NiIntegersExtraData;
-class NiKeyframeController;
-class BSKeyframeController;
-class NiKeyframeData;
-class NiLightColorController;
-class NiLightDimmerController;
-class NiLookAtController;
-class NiLookAtInterpolator;
-class NiMaterialColorController;
-class NiMaterialProperty;
-class NiMeshPSysData;
-class NiMorphData;
-class NiMultiTargetTransformController;
-class NiNode;
-class AvoidNode;
-class FxWidget;
-class FxButton;
-class FxRadioButton;
-class NiBillboardNode;
-class NiBSAnimationNode;
-class NiBSParticleNode;
-class NiLODNode;
-class NiPalette;
-class NiParticleBomb;
-class NiParticleColorModifier;
-class NiParticleGrowFade;
-class NiParticleMeshModifier;
-class NiParticleRotation;
-class NiParticles;
-class NiAutoNormalParticles;
-class NiParticleMeshes;
-class NiParticlesData;
-class NiParticleMeshesData;
-class NiParticleSystem;
-class NiMeshParticleSystem;
-class NiParticleSystemController;
-class NiBSPArrayController;
-class NiPathController;
-class NiPathInterpolator;
-class NiPixelData;
-class NiPlanarCollider;
-class NiPoint3Interpolator;
-class NiPointLight;
-class NiPosData;
-class NiPSysAgeDeathModifier;
-class NiPSysBombModifier;
-class NiPSysBoundUpdateModifier;
-class NiPSysBoxEmitter;
-class NiPSysColliderManager;
-class NiPSysColorModifier;
-class NiPSysCylinderEmitter;
-class NiPSysData;
-class NiPSysDragModifier;
-class NiPSysEmitterCtlr;
-class NiPSysEmitterCtlrData;
-class NiPSysEmitterDeclinationCtlr;
-class NiPSysEmitterDeclinationVarCtlr;
-class NiPSysEmitterInitialRadiusCtlr;
-class NiPSysEmitterLifeSpanCtlr;
-class NiPSysEmitterSpeedCtlr;
-class NiPSysGravityModifier;
-class NiPSysGravityStrengthCtlr;
-class NiPSysGrowFadeModifier;
-class NiPSysMeshEmitter;
-class NiPSysMeshUpdateModifier;
-class NiPSysModifierActiveCtlr;
-class NiPSysPlanarCollider;
-class NiPSysPositionModifier;
-class NiPSysResetOnLoopCtlr;
-class NiPSysRotationModifier;
-class NiPSysSpawnModifier;
-class NiPSysSphereEmitter;
-class NiPSysUpdateCtlr;
-class NiRangeLODData;
-class NiRotatingParticles;
-class NiRotatingParticlesData;
-class NiScreenLODData;
-class NiSequenceStreamHelper;
-class NiShadeProperty;
-class NiSkinData;
-class NiSkinInstance;
-class NiSkinPartition;
-class NiSourceTexture;
-class NiSpecularProperty;
-class NiSphericalCollider;
-class NiSpotLight;
-class NiStencilProperty;
-class NiStringExtraData;
-class NiStringPalette;
-class NiStringsExtraData;
-class NiTextKeyExtraData;
-class NiTextureEffect;
-class NiTextureTransformController;
-class NiTexturingProperty;
-class NiTransformController;
-class NiTransformData;
-class NiTransformInterpolator;
-class NiTriShape;
-class NiTriShapeData;
-class NiTriStrips;
-class NiTriStripsData;
-class NiUVController;
-class NiUVData;
-class NiVectorExtraData;
-class NiVertexColorProperty;
-class NiVertWeightsExtraData;
-class NiVisController;
-class NiVisData;
-class NiWireframeProperty;
-class NiZBufferProperty;
-class RootCollisionNode;
-
 #define NI_OBJECT_MEMBERS \
 
 #define NI_OBJECT_INCLUDE ".h" \
@@ -2273,31 +2029,57 @@ return out.str(); \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
-uint unknownInt; \
+LimitedHingeDescriptor limitedHinge; \
 
-#define BHK_LIMITED_HINGE_CONSTRAINT_INCLUDE "AbhkRagdollConstraint.h" \
+#define BHK_LIMITED_HINGE_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
 
-#define BHK_LIMITED_HINGE_CONSTRAINT_PARENT AbhkRagdollConstraint \
+#define BHK_LIMITED_HINGE_CONSTRAINT_PARENT AbhkConstraint \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_CONSTRUCT \
- : unknownInt((uint)0) \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_READ \
-AbhkRagdollConstraint::Read( in, link_stack, version ); \
-NifStream( unknownInt, in, version ); \
+AbhkConstraint::Read( in, link_stack, version ); \
+NifStream( limitedHinge.pivotA, in, version ); \
+NifStream( limitedHinge.axleA_, in, version ); \
+NifStream( limitedHinge.perp2axleina1, in, version ); \
+NifStream( limitedHinge.perp2axleina2, in, version ); \
+NifStream( limitedHinge.pivotB, in, version ); \
+NifStream( limitedHinge.axleB, in, version ); \
+NifStream( limitedHinge.unknownVector, in, version ); \
+NifStream( limitedHinge.minAngle, in, version ); \
+NifStream( limitedHinge.maxAngle, in, version ); \
+NifStream( limitedHinge.maxFriction, in, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_WRITE \
-AbhkRagdollConstraint::Write( out, link_map, version ); \
-NifStream( unknownInt, out, version ); \
+AbhkConstraint::Write( out, link_map, version ); \
+NifStream( limitedHinge.pivotA, out, version ); \
+NifStream( limitedHinge.axleA_, out, version ); \
+NifStream( limitedHinge.perp2axleina1, out, version ); \
+NifStream( limitedHinge.perp2axleina2, out, version ); \
+NifStream( limitedHinge.pivotB, out, version ); \
+NifStream( limitedHinge.axleB, out, version ); \
+NifStream( limitedHinge.unknownVector, out, version ); \
+NifStream( limitedHinge.minAngle, out, version ); \
+NifStream( limitedHinge.maxAngle, out, version ); \
+NifStream( limitedHinge.maxFriction, out, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_STRING \
 stringstream out; \
-out << AbhkRagdollConstraint::asString(); \
-out << "Unknown Int:  " << unknownInt << endl; \
+out << AbhkConstraint::asString(); \
+out << "Pivot A:  " << limitedHinge.pivotA << endl; \
+out << "Axle A ?:  " << limitedHinge.axleA_ << endl; \
+out << "Perp2AxleInA1:  " << limitedHinge.perp2axleina1 << endl; \
+out << "Perp2AxleInA2:  " << limitedHinge.perp2axleina2 << endl; \
+out << "Pivot B:  " << limitedHinge.pivotB << endl; \
+out << "Axle B:  " << limitedHinge.axleB << endl; \
+out << "Unknown Vector:  " << limitedHinge.unknownVector << endl; \
+out << "Min Angle:  " << limitedHinge.minAngle << endl; \
+out << "Max Angle:  " << limitedHinge.maxAngle << endl; \
+out << "Max Friction:  " << limitedHinge.maxFriction << endl; \
 return out.str(); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS \
-AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version ); \
 
 #define BHK_LIST_SHAPE_MEMBERS \
 uint numSubShapes; \
@@ -2383,17 +2165,17 @@ uint unknownInt2; \
 Ref<NiObject > unknownLink1; \
 Ref<NiObject > unknownLink2; \
 uint unknownInt3; \
-float unknownFloats1[3]; \
-float unknownFloats[7][4]; \
-float unknownFloat1; \
-float unknownFloat2; \
+RagDollDescriptor ragdoll; \
+LimitedHingeDescriptor limitedHinge; \
+float tau; \
+float damping; \
 
 #define BHK_MALLEABLE_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
 
 #define BHK_MALLEABLE_CONSTRAINT_PARENT AbhkConstraint \
 
 #define BHK_MALLEABLE_CONSTRAINT_CONSTRUCT \
- : type((uint)0), unknownInt2((uint)0), unknownLink1(NULL), unknownLink2(NULL), unknownInt3((uint)0), unknownFloat1(0.0f), unknownFloat2(0.0f) \
+ : type((uint)0), unknownInt2((uint)0), unknownLink1(NULL), unknownLink2(NULL), unknownInt3((uint)0), tau(0.0f), damping(0.0f) \
 
 #define BHK_MALLEABLE_CONSTRAINT_READ \
 uint block_num; \
@@ -2405,18 +2187,34 @@ link_stack.push_back( block_num ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( unknownInt3, in, version ); \
-for (uint i0 = 0; i0 < 3; i0++) { \
-  NifStream( unknownFloats1[i0], in, version ); \
+if ( (type == 7) ) { \
+  NifStream( ragdoll.pivotA, in, version ); \
+  NifStream( ragdoll.planeA, in, version ); \
+  NifStream( ragdoll.twistA, in, version ); \
+  NifStream( ragdoll.pivotB, in, version ); \
+  NifStream( ragdoll.planeB, in, version ); \
+  NifStream( ragdoll.twistB, in, version ); \
+  NifStream( ragdoll.coneMinAngle, in, version ); \
+  NifStream( ragdoll.planeMinAngle, in, version ); \
+  NifStream( ragdoll.planeMaxAngle, in, version ); \
+  NifStream( ragdoll.twistMinAngle, in, version ); \
+  NifStream( ragdoll.twistMaxAngle, in, version ); \
+  NifStream( ragdoll.maxFriction, in, version ); \
 }; \
-for (uint i0 = 0; i0 < 7; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    NifStream( unknownFloats[i0][i1], in, version ); \
-  }; \
-}; \
-NifStream( unknownFloat1, in, version ); \
 if ( (type == 2) ) { \
-  NifStream( unknownFloat2, in, version ); \
+  NifStream( limitedHinge.pivotA, in, version ); \
+  NifStream( limitedHinge.axleA_, in, version ); \
+  NifStream( limitedHinge.perp2axleina1, in, version ); \
+  NifStream( limitedHinge.perp2axleina2, in, version ); \
+  NifStream( limitedHinge.pivotB, in, version ); \
+  NifStream( limitedHinge.axleB, in, version ); \
+  NifStream( limitedHinge.unknownVector, in, version ); \
+  NifStream( limitedHinge.minAngle, in, version ); \
+  NifStream( limitedHinge.maxAngle, in, version ); \
+  NifStream( limitedHinge.maxFriction, in, version ); \
 }; \
+NifStream( tau, in, version ); \
+NifStream( damping, in, version ); \
 
 #define BHK_MALLEABLE_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, link_map, version ); \
@@ -2425,18 +2223,34 @@ NifStream( unknownInt2, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
 NifStream( unknownInt3, out, version ); \
-for (uint i0 = 0; i0 < 3; i0++) { \
-  NifStream( unknownFloats1[i0], out, version ); \
+if ( (type == 7) ) { \
+  NifStream( ragdoll.pivotA, out, version ); \
+  NifStream( ragdoll.planeA, out, version ); \
+  NifStream( ragdoll.twistA, out, version ); \
+  NifStream( ragdoll.pivotB, out, version ); \
+  NifStream( ragdoll.planeB, out, version ); \
+  NifStream( ragdoll.twistB, out, version ); \
+  NifStream( ragdoll.coneMinAngle, out, version ); \
+  NifStream( ragdoll.planeMinAngle, out, version ); \
+  NifStream( ragdoll.planeMaxAngle, out, version ); \
+  NifStream( ragdoll.twistMinAngle, out, version ); \
+  NifStream( ragdoll.twistMaxAngle, out, version ); \
+  NifStream( ragdoll.maxFriction, out, version ); \
 }; \
-for (uint i0 = 0; i0 < 7; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    NifStream( unknownFloats[i0][i1], out, version ); \
-  }; \
-}; \
-NifStream( unknownFloat1, out, version ); \
 if ( (type == 2) ) { \
-  NifStream( unknownFloat2, out, version ); \
+  NifStream( limitedHinge.pivotA, out, version ); \
+  NifStream( limitedHinge.axleA_, out, version ); \
+  NifStream( limitedHinge.perp2axleina1, out, version ); \
+  NifStream( limitedHinge.perp2axleina2, out, version ); \
+  NifStream( limitedHinge.pivotB, out, version ); \
+  NifStream( limitedHinge.axleB, out, version ); \
+  NifStream( limitedHinge.unknownVector, out, version ); \
+  NifStream( limitedHinge.minAngle, out, version ); \
+  NifStream( limitedHinge.maxAngle, out, version ); \
+  NifStream( limitedHinge.maxFriction, out, version ); \
 }; \
+NifStream( tau, out, version ); \
+NifStream( damping, out, version ); \
 
 #define BHK_MALLEABLE_CONSTRAINT_STRING \
 stringstream out; \
@@ -2446,18 +2260,34 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 out << "Unknown Link 1:  " << "NiObject" << endl; \
 out << "Unknown Link 2:  " << "NiObject" << endl; \
 out << "Unknown Int 3:  " << unknownInt3 << endl; \
-for (uint i0 = 0; i0 < 3; i0++) { \
-  out << "  Unknown Floats 1[" << i0 << "]:  " << unknownFloats1[i0] << endl; \
+if ( (type == 7) ) { \
+  out << "  Pivot A:  " << ragdoll.pivotA << endl; \
+  out << "  Plane A:  " << ragdoll.planeA << endl; \
+  out << "  Twist A:  " << ragdoll.twistA << endl; \
+  out << "  Pivot B:  " << ragdoll.pivotB << endl; \
+  out << "  Plane B:  " << ragdoll.planeB << endl; \
+  out << "  Twist B:  " << ragdoll.twistB << endl; \
+  out << "  Cone Min Angle:  " << ragdoll.coneMinAngle << endl; \
+  out << "  Plane Min Angle:  " << ragdoll.planeMinAngle << endl; \
+  out << "  Plane Max Angle:  " << ragdoll.planeMaxAngle << endl; \
+  out << "  Twist Min Angle:  " << ragdoll.twistMinAngle << endl; \
+  out << "  Twist Max Angle:  " << ragdoll.twistMaxAngle << endl; \
+  out << "  Max Friction:  " << ragdoll.maxFriction << endl; \
 }; \
-for (uint i0 = 0; i0 < 7; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
-  }; \
-}; \
-out << "Unknown Float 1:  " << unknownFloat1 << endl; \
 if ( (type == 2) ) { \
-  out << "  Unknown Float 2:  " << unknownFloat2 << endl; \
+  out << "  Pivot A:  " << limitedHinge.pivotA << endl; \
+  out << "  Axle A ?:  " << limitedHinge.axleA_ << endl; \
+  out << "  Perp2AxleInA1:  " << limitedHinge.perp2axleina1 << endl; \
+  out << "  Perp2AxleInA2:  " << limitedHinge.perp2axleina2 << endl; \
+  out << "  Pivot B:  " << limitedHinge.pivotB << endl; \
+  out << "  Axle B:  " << limitedHinge.axleB << endl; \
+  out << "  Unknown Vector:  " << limitedHinge.unknownVector << endl; \
+  out << "  Min Angle:  " << limitedHinge.minAngle << endl; \
+  out << "  Max Angle:  " << limitedHinge.maxAngle << endl; \
+  out << "  Max Friction:  " << limitedHinge.maxFriction << endl; \
 }; \
+out << "Tau:  " << tau << endl; \
+out << "Damping:  " << damping << endl; \
 return out.str(); \
 
 #define BHK_MALLEABLE_CONSTRAINT_FIXLINKS \
@@ -2783,7 +2613,7 @@ else \
 link_stack.pop_front(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
-float unknownFloats[8][4]; \
+Float4 unknownVectors[8]; \
 float unknownFloats2[3]; \
 
 #define BHK_PRISMATIC_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
@@ -2795,9 +2625,7 @@ float unknownFloats2[3]; \
 #define BHK_PRISMATIC_CONSTRAINT_READ \
 AbhkConstraint::Read( in, link_stack, version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    NifStream( unknownFloats[i0][i1], in, version ); \
-  }; \
+  NifStream( unknownVectors[i0], in, version ); \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   NifStream( unknownFloats2[i0], in, version ); \
@@ -2806,9 +2634,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 #define BHK_PRISMATIC_CONSTRAINT_WRITE \
 AbhkConstraint::Write( out, link_map, version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    NifStream( unknownFloats[i0][i1], out, version ); \
-  }; \
+  NifStream( unknownVectors[i0], out, version ); \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   NifStream( unknownFloats2[i0], out, version ); \
@@ -2818,9 +2644,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 stringstream out; \
 out << AbhkConstraint::asString(); \
 for (uint i0 = 0; i0 < 8; i0++) { \
-  for (uint i1 = 0; i1 < 4; i1++) { \
-    out << "    Unknown Floats[" << i0 << "][" << i1 << "]:  " << unknownFloats[i0][i1] << endl; \
-  }; \
+  out << "  Unknown Vectors[" << i0 << "]:  " << unknownVectors[i0] << endl; \
 }; \
 for (uint i0 = 0; i0 < 3; i0++) { \
   out << "  Unknown Floats 2[" << i0 << "]:  " << unknownFloats2[i0] << endl; \

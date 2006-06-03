@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIGEOMMORPHERCONTROLLER_H_
 #define _NIGEOMMORPHERCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiMorphData.h"
+#include "obj/NiInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_GEOM_MORPHER_CONTROLLER_INCLUDE
 
 /*
  * NiGeomMorpherController

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSCYLINDEREMITTER_H_
 #define _NIPSYSCYLINDEREMITTER_H_
 
+#include "NiPSysVolumeEmitter.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_CYLINDER_EMITTER_INCLUDE
 
 /*
  * NiPSysCylinderEmitter

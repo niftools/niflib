@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPATHINTERPOLATOR_H_
 #define _NIPATHINTERPOLATOR_H_
 
+#include "NiBlendInterpolator.h"
+#include "Ref.h"
+#include "obj/NiPosData.h"
+#include "obj/NiFloatData.h"
+
 #include "gen/obj_defines.h"
-#include NI_PATH_INTERPOLATOR_INCLUDE
 
 /*
  * NiPathInterpolator

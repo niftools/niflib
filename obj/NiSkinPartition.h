@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISKINPARTITION_H_
 #define _NISKINPARTITION_H_
 
+#include "NiObject.h"
+#include "gen/SkinPartition.h"
+
 #include "gen/obj_defines.h"
-#include NI_SKIN_PARTITION_INCLUDE
 
 /*
  * NiSkinPartition

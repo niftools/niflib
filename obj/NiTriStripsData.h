@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRISTRIPSDATA_H_
 #define _NITRISTRIPSDATA_H_
 
+#include "NiTriBasedGeomData.h"
+
 #include "gen/obj_defines.h"
-#include NI_TRI_STRIPS_DATA_INCLUDE
 
 /*
  * NiTriStripsData

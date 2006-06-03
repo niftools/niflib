@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMULTITARGETTRANSFORMCONTROLLER_H_
 #define _NIMULTITARGETTRANSFORMCONTROLLER_H_
 
+#include "NiTimeController.h"
+class NiNode;
+
 #include "gen/obj_defines.h"
-#include NI_MULTI_TARGET_TRANSFORM_CONTROLLER_INCLUDE
 
 /*
  * NiMultiTargetTransformController

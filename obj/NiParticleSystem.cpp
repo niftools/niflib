@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiParticleSystem.h"
-#include "NiPSysModifier.h"
+#include "obj/NiParticleSystem.h"
 
 //Definition of TYPE constant
 const Type NiParticleSystem::TYPE("NiParticleSystem", &NI_PARTICLE_SYSTEM_PARENT::TYPE );

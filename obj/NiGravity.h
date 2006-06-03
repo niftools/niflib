@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIGRAVITY_H_
 #define _NIGRAVITY_H_
 
+#include "AParticleModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_GRAVITY_INCLUDE
 
 /*
  * NiGravity

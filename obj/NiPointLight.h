@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPOINTLIGHT_H_
 #define _NIPOINTLIGHT_H_
 
+#include "NiLight.h"
+
 #include "gen/obj_defines.h"
-#include NI_POINT_LIGHT_INCLUDE
 
 /*
  * NiPointLight

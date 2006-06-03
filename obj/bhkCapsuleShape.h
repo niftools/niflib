@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKCAPSULESHAPE_H_
 #define _BHKCAPSULESHAPE_H_
 
+#include "bhkConvexShape.h"
+
 #include "gen/obj_defines.h"
-#include BHK_CAPSULE_SHAPE_INCLUDE
 
 /*
  * bhkCapsuleShape

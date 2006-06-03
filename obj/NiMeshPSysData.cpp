@@ -1,10 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiMeshPSysData.h"
-#include "AParticleModifier.h"
-#include "AParticleModifier.h"
-#include "NiNode.h"
+#include "obj/NiMeshPSysData.h"
 
 //Definition of TYPE constant
 const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NI_MESH_P_SYS_DATA_PARENT::TYPE );
@@ -26,7 +23,7 @@ string NiMeshPSysData::asString( bool verbose ) const {
 }
 
 void NiMeshPSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
-	NI_MESH_P_SYS_DATA_FIXLINKS
+  NI_MESH_P_SYS_DATA_FIXLINKS
 }
 
 const Type & NiMeshPSysData::GetType() const {

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ABHKSHAPECOLLECTION_H_
 #define _ABHKSHAPECOLLECTION_H_
 
+#include "bhkShape.h"
+
 #include "gen/obj_defines.h"
-#include ABHK_SHAPE_COLLECTION_INCLUDE
 
 /*
  * AbhkShapeCollection

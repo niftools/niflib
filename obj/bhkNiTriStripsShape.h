@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKNITRISTRIPSSHAPE_H_
 #define _BHKNITRISTRIPSSHAPE_H_
 
+#include "bhkSphereRepShape.h"
+#include "Ref.h"
+#include "obj/NiTriStripsData.h"
+
 #include "gen/obj_defines.h"
-#include BHK_NI_TRI_STRIPS_SHAPE_INCLUDE
 
 /*
  * bhkNiTriStripsShape

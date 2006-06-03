@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIEXTRADATA_H_
 #define _NIEXTRADATA_H_
 
+#include "NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_EXTRA_DATA_INCLUDE
 
 /*
  * NiExtraData

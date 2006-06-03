@@ -1,7 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTriShapeData.h"
+#include "obj/NiTriShapeData.h"
+#include "gen/MatchGroup.h"
 
 //Definition of TYPE constant
 const Type NiTriShapeData::TYPE("NiTriShapeData", &NI_TRI_SHAPE_DATA_PARENT::TYPE );

@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKRIGIDBODY_H_
 #define _BHKRIGIDBODY_H_
 
+#include "bhkEntity.h"
+#include "gen/QuaternionXYZW.h"
+#include "Ref.h"
+#include "obj/AbhkConstraint.h"
+
 #include "gen/obj_defines.h"
-#include BHK_RIGID_BODY_INCLUDE
 
 /*
  * bhkRigidBody

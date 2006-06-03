@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiLight.h"
+#include "obj/NiLight.h"
 
 //Definition of TYPE constant
 const Type NiLight::TYPE("NiLight", &NI_LIGHT_PARENT::TYPE );

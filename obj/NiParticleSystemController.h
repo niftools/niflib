@@ -4,8 +4,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLESYSTEMCONTROLLER_H_
 #define _NIPARTICLESYSTEMCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+#include "gen/Particle.h"
+#include "obj/AParticleModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_SYSTEM_CONTROLLER_INCLUDE
 
 /*
  * NiParticleSystemController

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSTIFFSPRINGCONSTRAINT_H_
 #define _BHKSTIFFSPRINGCONSTRAINT_H_
 
+#include "AbhkConstraint.h"
+
 #include "gen/obj_defines.h"
-#include BHK_STIFF_SPRING_CONSTRAINT_INCLUDE
 
 /*
  * bhkStiffSpringConstraint

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKTRANSFORMSHAPE_H_
 #define _BHKTRANSFORMSHAPE_H_
 
+#include "bhkEntity.h"
+
 #include "gen/obj_defines.h"
-#include BHK_TRANSFORM_SHAPE_INCLUDE
 
 /*
  * bhkTransformShape

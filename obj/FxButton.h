@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _FXBUTTON_H_
 #define _FXBUTTON_H_
 
+#include "FxWidget.h"
+
 #include "gen/obj_defines.h"
-#include FX_BUTTON_INCLUDE
 
 /*
  * FxButton

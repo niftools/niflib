@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NILIGHT_H_
 #define _NILIGHT_H_
 
+#include "NiDynamicEffect.h"
+
 #include "gen/obj_defines.h"
-#include NI_LIGHT_INCLUDE
 
 /*
  * NiLight

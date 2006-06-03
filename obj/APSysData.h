@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _APSYSDATA_H_
 #define _APSYSDATA_H_
 
+#include "NiTriBasedGeomData.h"
+
 #include "gen/obj_defines.h"
-#include A_P_SYS_DATA_INCLUDE
 
 /*
  * APSysData

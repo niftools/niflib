@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITEXTKEYEXTRADATA_H_
 #define _NITEXTKEYEXTRADATA_H_
 
+#include "NiExtraData.h"
+
 #include "gen/obj_defines.h"
-#include NI_TEXT_KEY_EXTRA_DATA_INCLUDE
 
 /*
  * NiTextKeyExtraData

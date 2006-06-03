@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BSKEYFRAMECONTROLLER_H_
 #define _BSKEYFRAMECONTROLLER_H_
 
+#include "NiKeyframeController.h"
+#include "Ref.h"
+#include "obj/NiKeyframeData.h"
+
 #include "gen/obj_defines.h"
-#include B_S_KEYFRAME_CONTROLLER_INCLUDE
 
 /*
  * BSKeyframeController

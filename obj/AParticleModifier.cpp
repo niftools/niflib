@@ -1,9 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "AParticleModifier.h"
-#include "AParticleModifier.h"
-#include "NiParticleSystemController.h"
+#include "obj/AParticleModifier.h"
+#include "obj/NiParticleSystemController.h"
 
 //Definition of TYPE constant
 const Type AParticleModifier::TYPE("AParticleModifier", &A_PARTICLE_MODIFIER_PARENT::TYPE );

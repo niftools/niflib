@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBLENDPOINT3INTERPOLATOR_H_
 #define _NIBLENDPOINT3INTERPOLATOR_H_
 
+#include "NiBlendInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_BLEND_POINT3_INTERPOLATOR_INCLUDE
 
 /*
  * NiBlendPoint3Interpolator

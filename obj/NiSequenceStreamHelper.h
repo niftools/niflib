@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISEQUENCESTREAMHELPER_H_
 #define _NISEQUENCESTREAMHELPER_H_
 
+#include "NiObjectNET.h"
+
 #include "gen/obj_defines.h"
-#include NI_SEQUENCE_STREAM_HELPER_INCLUDE
 
 /*
  * NiSequenceStreamHelper

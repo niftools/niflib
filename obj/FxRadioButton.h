@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _FXRADIOBUTTON_H_
 #define _FXRADIOBUTTON_H_
 
+#include "FxWidget.h"
+#include "Ref.h"
+#include "obj/NiObject.h"
+
 #include "gen/obj_defines.h"
-#include FX_RADIO_BUTTON_INCLUDE
 
 /*
  * FxRadioButton

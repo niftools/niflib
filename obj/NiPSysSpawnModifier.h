@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSSPAWNMODIFIER_H_
 #define _NIPSYSSPAWNMODIFIER_H_
 
+#include "NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_SPAWN_MODIFIER_INCLUDE
 
 /*
  * NiPSysSpawnModifier

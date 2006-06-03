@@ -1,9 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPathController.h"
-#include "NiPosData.h"
-#include "NiFloatData.h"
+#include "obj/NiPathController.h"
 
 //Definition of TYPE constant
 const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TYPE );

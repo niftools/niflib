@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSROTATIONMODIFIER_H_
 #define _NIPSYSROTATIONMODIFIER_H_
 
+#include "NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_ROTATION_MODIFIER_INCLUDE
 
 /*
  * NiPSysRotationModifier

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBILLBOARDNODE_H_
 #define _NIBILLBOARDNODE_H_
 
+#include "NiNode.h"
+
 #include "gen/obj_defines.h"
-#include NI_BILLBOARD_NODE_INCLUDE
 
 /*
  * NiBillboardNode

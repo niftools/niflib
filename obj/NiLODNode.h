@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NILODNODE_H_
 #define _NILODNODE_H_
 
+#include "NiNode.h"
+#include "gen/LODRange.h"
+#include "Ref.h"
+#include "obj/NiRangeLODData.h"
+
 #include "gen/obj_defines.h"
-#include NI_L_O_D_NODE_INCLUDE
 
 /*
  * NiLODNode

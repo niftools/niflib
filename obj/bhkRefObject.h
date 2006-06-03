@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKREFOBJECT_H_
 #define _BHKREFOBJECT_H_
 
+#include "NiObject.h"
+
 #include "gen/obj_defines.h"
-#include BHK_REF_OBJECT_INCLUDE
 
 /*
  * bhkRefObject

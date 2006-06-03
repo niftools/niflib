@@ -1,8 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSkinData.h"
-#include "NiSkinPartition.h"
+#include "obj/NiSkinData.h"
+#include "gen/SkinData.h"
+#include "gen/SkinWeight.h"
 
 //Definition of TYPE constant
 const Type NiSkinData::TYPE("NiSkinData", &NI_SKIN_DATA_PARENT::TYPE );

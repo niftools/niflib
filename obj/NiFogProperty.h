@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIFOGPROPERTY_H_
 #define _NIFOGPROPERTY_H_
 
+#include "NiProperty.h"
+
 #include "gen/obj_defines.h"
-#include NI_FOG_PROPERTY_INCLUDE
 
 /*
  * NiFogProperty

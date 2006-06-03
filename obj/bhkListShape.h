@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKLISTSHAPE_H_
 #define _BHKLISTSHAPE_H_
 
+#include "AbhkShapeCollection.h"
+#include "Ref.h"
+#include "obj/bhkShape.h"
+
 #include "gen/obj_defines.h"
-#include BHK_LIST_SHAPE_INCLUDE
 
 /*
  * bhkListShape

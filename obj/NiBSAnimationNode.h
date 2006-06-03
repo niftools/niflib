@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSANIMATIONNODE_H_
 #define _NIBSANIMATIONNODE_H_
 
+#include "NiNode.h"
+
 #include "gen/obj_defines.h"
-#include NI_B_S_ANIMATION_NODE_INCLUDE
 
 /*
  * NiBSAnimationNode

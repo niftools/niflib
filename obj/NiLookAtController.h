@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NILOOKATCONTROLLER_H_
 #define _NILOOKATCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiNode.h"
+
 #include "gen/obj_defines.h"
-#include NI_LOOK_AT_CONTROLLER_INCLUDE
 
 /*
  * NiLookAtController

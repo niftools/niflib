@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIAUTONORMALPARTICLESDATA_H_
 #define _NIAUTONORMALPARTICLESDATA_H_
 
+#include "NiTriBasedGeomData.h"
+
 #include "gen/obj_defines.h"
-#include NI_AUTO_NORMAL_PARTICLES_DATA_INCLUDE
 
 /*
  * NiAutoNormalParticlesData

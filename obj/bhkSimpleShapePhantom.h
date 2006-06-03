@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKSIMPLESHAPEPHANTOM_H_
 #define _BHKSIMPLESHAPEPHANTOM_H_
 
+#include "bhkEntity.h"
+
 #include "gen/obj_defines.h"
-#include BHK_SIMPLE_SHAPE_PHANTOM_INCLUDE
 
 /*
  * bhkSimpleShapePhantom

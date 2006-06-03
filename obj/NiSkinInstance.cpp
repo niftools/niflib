@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSkinInstance.h"
-#include "NiSkinData.h"
-#include "NiSkinPartition.h"
-#include "NiNode.h"
+#include "obj/NiSkinInstance.h"
+#include "gen/Bones.h"
+#include "obj/NiNode.h"
+#include "obj/NiNode.h"
 
 //Definition of TYPE constant
 const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TYPE );

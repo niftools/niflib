@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIVISCONTROLLER_H_
 #define _NIVISCONTROLLER_H_
 
+#include "NiSingleInterpolatorController.h"
+#include "Ref.h"
+#include "obj/NiVisData.h"
+
 #include "gen/obj_defines.h"
-#include NI_VIS_CONTROLLER_INCLUDE
 
 /*
  * NiVisController

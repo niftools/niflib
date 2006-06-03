@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiLookAtController.h"
-#include "NiNode.h"
+#include "obj/NiLookAtController.h"
 
 //Definition of TYPE constant
 const Type NiLookAtController::TYPE("NiLookAtController", &NI_LOOK_AT_CONTROLLER_PARENT::TYPE );

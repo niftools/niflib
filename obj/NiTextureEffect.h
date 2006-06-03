@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITEXTUREEFFECT_H_
 #define _NITEXTUREEFFECT_H_
 
+#include "NiDynamicEffect.h"
+#include "Ref.h"
+#include "obj/NiSourceTexture.h"
+
 #include "gen/obj_defines.h"
-#include NI_TEXTURE_EFFECT_INCLUDE
 
 /*
  * NiTextureEffect

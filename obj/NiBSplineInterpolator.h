@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPLINEINTERPOLATOR_H_
 #define _NIBSPLINEINTERPOLATOR_H_
 
+#include "NiInterpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_B_SPLINE_INTERPOLATOR_INCLUDE
 
 /*
  * NiBSplineInterpolator

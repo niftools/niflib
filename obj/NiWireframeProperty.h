@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIWIREFRAMEPROPERTY_H_
 #define _NIWIREFRAMEPROPERTY_H_
 
+#include "NiProperty.h"
+
 #include "gen/obj_defines.h"
-#include NI_WIREFRAME_PROPERTY_INCLUDE
 
 /*
  * NiWireframeProperty

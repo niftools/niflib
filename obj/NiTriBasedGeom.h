@@ -4,8 +4,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITRIBASEDGEOM_H_
 #define _NITRIBASEDGEOM_H_
 
+#include "NiAVObject.h"
+#include "Ref.h"
+#include "obj/NiTriBasedGeomData.h"
+#include "obj/NiSkinInstance.h"
+#include "obj/NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_TRI_BASED_GEOM_INCLUDE
 
 /*
  * NiTriBasedGeom

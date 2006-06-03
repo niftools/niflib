@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysColliderManager.h"
-#include "NiPSysPlanarCollider.h"
+#include "obj/NiPSysColliderManager.h"
 
 //Definition of TYPE constant
 const Type NiPSysColliderManager::TYPE("NiPSysColliderManager", &NI_P_SYS_COLLIDER_MANAGER_PARENT::TYPE );

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLEBOMB_H_
 #define _NIPARTICLEBOMB_H_
 
+#include "AParticleModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_BOMB_INCLUDE
 
 /*
  * NiParticleBomb

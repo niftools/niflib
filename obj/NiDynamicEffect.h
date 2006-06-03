@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIDYNAMICEFFECT_H_
 #define _NIDYNAMICEFFECT_H_
 
+#include "NiAVObject.h"
+#include "Ref.h"
+#include "obj/NiAVObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_DYNAMIC_EFFECT_INCLUDE
 
 /*
  * NiDynamicEffect

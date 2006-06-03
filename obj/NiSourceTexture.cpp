@@ -1,9 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSourceTexture.h"
-#include "NiObject.h"
-#include "NiPixelData.h"
+#include "obj/NiSourceTexture.h"
 
 //Definition of TYPE constant
 const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TYPE );

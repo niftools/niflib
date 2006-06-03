@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKCONVEXTRANSFORMSHAPE_H_
 #define _BHKCONVEXTRANSFORMSHAPE_H_
 
+#include "bhkTransformShape.h"
+
 #include "gen/obj_defines.h"
-#include BHK_CONVEX_TRANSFORM_SHAPE_INCLUDE
 
 /*
  * bhkConvexTransformShape

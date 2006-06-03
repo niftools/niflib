@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSCOLLIDERMANAGER_H_
 #define _NIPSYSCOLLIDERMANAGER_H_
 
+#include "NiPSysModifier.h"
+#include "Ref.h"
+#include "obj/NiPSysPlanarCollider.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_COLLIDER_MANAGER_INCLUDE
 
 /*
  * NiPSysColliderManager

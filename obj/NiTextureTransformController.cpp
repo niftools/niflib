@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTextureTransformController.h"
-#include "NiFloatData.h"
+#include "obj/NiTextureTransformController.h"
 
 //Definition of TYPE constant
 const Type NiTextureTransformController::TYPE("NiTextureTransformController", &NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT::TYPE );

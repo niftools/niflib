@@ -1,8 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysColorModifier.h"
-#include "NiColorData.h"
+#include "obj/NiPSysColorModifier.h"
 
 //Definition of TYPE constant
 const Type NiPSysColorModifier::TYPE("NiPSysColorModifier", &NI_P_SYS_COLOR_MODIFIER_PARENT::TYPE );

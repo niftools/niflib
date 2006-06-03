@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIDIRECTIONALLIGHT_H_
 #define _NIDIRECTIONALLIGHT_H_
 
+#include "NiLight.h"
+
 #include "gen/obj_defines.h"
-#include NI_DIRECTIONAL_LIGHT_INCLUDE
 
 /*
  * NiDirectionalLight

@@ -6,10 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 #include "Ref.h"
-
-//Forward Declarations
-class NiObject;
-class NiPixelData;
+#include "obj/NiObject.h"
+#include "obj/NiPixelData.h"
 
 /*!
  * A texture source.

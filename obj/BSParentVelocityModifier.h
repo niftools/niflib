@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BSPARENTVELOCITYMODIFIER_H_
 #define _BSPARENTVELOCITYMODIFIER_H_
 
+#include "NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include B_S_PARENT_VELOCITY_MODIFIER_INCLUDE
 
 /*
  * BSParentVelocityModifier

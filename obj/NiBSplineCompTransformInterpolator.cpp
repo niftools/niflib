@@ -1,9 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiBSplineCompTransformInterpolator.h"
-#include "NiBSplineData.h"
-#include "NiBSplineBasisData.h"
+#include "obj/NiBSplineCompTransformInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT::TYPE );

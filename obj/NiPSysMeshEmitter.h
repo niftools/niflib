@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSMESHEMITTER_H_
 #define _NIPSYSMESHEMITTER_H_
 
+#include "NiPSysEmitter.h"
+#include "Ref.h"
+#include "obj/NiTriBasedGeom.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_MESH_EMITTER_INCLUDE
 
 /*
  * NiPSysMeshEmitter

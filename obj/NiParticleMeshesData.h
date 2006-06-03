@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLEMESHESDATA_H_
 #define _NIPARTICLEMESHESDATA_H_
 
+#include "NiParticlesData.h"
+#include "Ref.h"
+#include "obj/NiTriBasedGeom.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_MESHES_DATA_INCLUDE
 
 /*
  * NiParticleMeshesData

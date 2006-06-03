@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIDEFAULTAVOBJECTPALETTE_H_
 #define _NIDEFAULTAVOBJECTPALETTE_H_
 
+#include "NiObject.h"
+#include "gen/AVObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_DEFAULT_A_V_OBJECT_PALETTE_INCLUDE
 
 /*
  * NiDefaultAVObjectPalette

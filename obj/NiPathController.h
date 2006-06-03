@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPATHCONTROLLER_H_
 #define _NIPATHCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiPosData.h"
+#include "obj/NiFloatData.h"
+
 #include "gen/obj_defines.h"
-#include NI_PATH_CONTROLLER_INCLUDE
 
 /*
  * NiPathController

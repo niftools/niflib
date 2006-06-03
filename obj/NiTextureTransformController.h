@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NITEXTURETRANSFORMCONTROLLER_H_
 #define _NITEXTURETRANSFORMCONTROLLER_H_
 
+#include "NiSingleInterpolatorController.h"
+#include "Ref.h"
+#include "obj/NiFloatData.h"
+
 #include "gen/obj_defines.h"
-#include NI_TEXTURE_TRANSFORM_CONTROLLER_INCLUDE
 
 /*
  * NiTextureTransformController

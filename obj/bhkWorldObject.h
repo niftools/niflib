@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BHKWORLDOBJECT_H_
 #define _BHKWORLDOBJECT_H_
 
+#include "bhkShape.h"
+
 #include "gen/obj_defines.h"
-#include BHK_WORLD_OBJECT_INCLUDE
 
 /*
  * bhkWorldObject

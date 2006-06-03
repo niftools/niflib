@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISKINDATA_H_
 #define _NISKINDATA_H_
 
+#include "NiObject.h"
+#include "Ref.h"
+#include "obj/NiSkinPartition.h"
+#include "gen/SkinData.h"
+
 #include "gen/obj_defines.h"
-#include NI_SKIN_DATA_INCLUDE
 
 /*
  * NiSkinData

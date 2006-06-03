@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPLINEBASISDATA_H_
 #define _NIBSPLINEBASISDATA_H_
 
+#include "NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_B_SPLINE_BASIS_DATA_INCLUDE
 
 /*
  * NiBSplineBasisData

@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPARTICLEROTATION_H_
 #define _NIPARTICLEROTATION_H_
 
+#include "AParticleModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_PARTICLE_ROTATION_INCLUDE
 
 /*
  * NiParticleRotation

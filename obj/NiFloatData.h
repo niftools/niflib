@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIFLOATDATA_H_
 #define _NIFLOATDATA_H_
 
+#include "AKeyedData.h"
+#include "gen/KeyGroup.h"
+
 #include "gen/obj_defines.h"
-#include NI_FLOAT_DATA_INCLUDE
 
 /*
  * NiFloatData

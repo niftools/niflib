@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIKEYFRAMEDATA_H_
 #define _NIKEYFRAMEDATA_H_
 
+#include "AKeyedData.h"
+#include "gen/KeyGroup.h"
+
 #include "gen/obj_defines.h"
-#include NI_KEYFRAME_DATA_INCLUDE
 
 /*
  * NiKeyframeData

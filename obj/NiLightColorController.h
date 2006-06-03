@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NILIGHTCOLORCONTROLLER_H_
 #define _NILIGHTCOLORCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "Ref.h"
+#include "obj/NiPosData.h"
+#include "obj/NiPoint3Interpolator.h"
+
 #include "gen/obj_defines.h"
-#include NI_LIGHT_COLOR_CONTROLLER_INCLUDE
 
 /*
  * NiLightColorController

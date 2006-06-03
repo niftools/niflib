@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
 
+
 /*!
  * Skinning data for a submesh, optimized for hardware skinning. Part of
  * NiSkinPartition.

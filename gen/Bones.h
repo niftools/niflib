@@ -5,9 +5,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BONES_H_
 
 #include "NIF_IO.h"
-#include "Ref.h"
-
-//Forward Declarations
 class NiNode;
 
 /*!

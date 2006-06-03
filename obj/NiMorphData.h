@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIMORPHDATA_H_
 #define _NIMORPHDATA_H_
 
+#include "NiObject.h"
+#include "gen/Morph.h"
+
 #include "gen/obj_defines.h"
-#include NI_MORPH_DATA_INCLUDE
 
 /*
  * NiMorphData

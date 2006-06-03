@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSPOSITIONMODIFIER_H_
 #define _NIPSYSPOSITIONMODIFIER_H_
 
+#include "NiPSysModifier.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_POSITION_MODIFIER_INCLUDE
 
 /*
  * NiPSysPositionModifier

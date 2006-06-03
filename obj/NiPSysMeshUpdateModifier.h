@@ -4,8 +4,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSMESHUPDATEMODIFIER_H_
 #define _NIPSYSMESHUPDATEMODIFIER_H_
 
+#include "NiPSysModifier.h"
+#include "Ref.h"
+#include "obj/NiNode.h"
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_MESH_UPDATE_MODIFIER_INCLUDE
 
 /*
  * NiPSysMeshUpdateModifier

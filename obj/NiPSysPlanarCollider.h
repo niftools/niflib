@@ -4,8 +4,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIPSYSPLANARCOLLIDER_H_
 #define _NIPSYSPLANARCOLLIDER_H_
 
+#include "NiObject.h"
+#include "Ref.h"
+#include "obj/NiPSysSpawnModifier.h"
+#include "obj/NiObject.h"
+#include "obj/NiNode.h"
+class NiObject;
+
 #include "gen/obj_defines.h"
-#include NI_P_SYS_PLANAR_COLLIDER_INCLUDE
 
 /*
  * NiPSysPlanarCollider

@@ -4,8 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _ABONELODCONTROLLER_H_
 #define _ABONELODCONTROLLER_H_
 
+#include "NiTimeController.h"
+#include "gen/NodeGroup.h"
+
 #include "gen/obj_defines.h"
-#include A_BONE_L_O_D_CONTROLLER_INCLUDE
 
 /*
  * ABoneLODController

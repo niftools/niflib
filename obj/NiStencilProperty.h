@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NISTENCILPROPERTY_H_
 #define _NISTENCILPROPERTY_H_
 
+#include "NiProperty.h"
+
 #include "gen/obj_defines.h"
-#include NI_STENCIL_PROPERTY_INCLUDE
 
 /*
  * NiStencilProperty

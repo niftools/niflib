@@ -4,8 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIZBUFFERPROPERTY_H_
 #define _NIZBUFFERPROPERTY_H_
 
+#include "NiProperty.h"
+
 #include "gen/obj_defines.h"
-#include NI_Z_BUFFER_PROPERTY_INCLUDE
 
 /*
  * NiZBufferProperty

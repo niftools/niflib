@@ -4,8 +4,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIBSPLINECOMPPOINT3INTERPOLATOR_H_
 #define _NIBSPLINECOMPPOINT3INTERPOLATOR_H_
 
+#include "NiBSplineInterpolator.h"
+#include "Ref.h"
+#include "obj/NiBSplineData.h"
+#include "obj/NiObject.h"
+
 #include "gen/obj_defines.h"
-#include NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_INCLUDE
 
 /*
  * NiBSplineCompPoint3Interpolator
