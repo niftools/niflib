@@ -63,9 +63,9 @@ public:
 	bool IsDerivedType( const NiObject * objct ) const;
 
 	//Streaming Functions
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version ) {}
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {}
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {}
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {}
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
 
 	//Reference Counting
 	void AddRef(); //Should not be called directly

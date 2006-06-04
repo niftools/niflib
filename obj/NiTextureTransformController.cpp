@@ -11,11 +11,11 @@ NiTextureTransformController::NiTextureTransformController() NI_TEXTURE_TRANSFOR
 
 NiTextureTransformController::~NiTextureTransformController() {}
 
-void NiTextureTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiTextureTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_READ
 }
 
-void NiTextureTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiTextureTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiTextureTransformController::asString( bool verbose ) const {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_STRING
 }
 
-void NiTextureTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiTextureTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS
 }
 

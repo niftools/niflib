@@ -10,11 +10,11 @@ NiMeshParticleSystem::NiMeshParticleSystem() NI_MESH_PARTICLE_SYSTEM_CONSTRUCT {
 
 NiMeshParticleSystem::~NiMeshParticleSystem() {}
 
-void NiMeshParticleSystem::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiMeshParticleSystem::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MESH_PARTICLE_SYSTEM_READ
 }
 
-void NiMeshParticleSystem::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiMeshParticleSystem::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_MESH_PARTICLE_SYSTEM_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiMeshParticleSystem::asString( bool verbose ) const {
 	NI_MESH_PARTICLE_SYSTEM_STRING
 }
 
-void NiMeshParticleSystem::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiMeshParticleSystem::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MESH_PARTICLE_SYSTEM_FIXLINKS
 }
 

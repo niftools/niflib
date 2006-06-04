@@ -11,11 +11,11 @@ NiPSysBombModifier::NiPSysBombModifier() NI_P_SYS_BOMB_MODIFIER_CONSTRUCT {}
 
 NiPSysBombModifier::~NiPSysBombModifier() {}
 
-void NiPSysBombModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysBombModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOMB_MODIFIER_READ
 }
 
-void NiPSysBombModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysBombModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_BOMB_MODIFIER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiPSysBombModifier::asString( bool verbose ) const {
 	NI_P_SYS_BOMB_MODIFIER_STRING
 }
 
-void NiPSysBombModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysBombModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOMB_MODIFIER_FIXLINKS
 }
 

@@ -12,11 +12,11 @@ NiNode::NiNode() NI_NODE_CONSTRUCT {}
 
 NiNode::~NiNode() {}
 
-void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_NODE_READ
 }
 
-void NiNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_NODE_WRITE
 }
 
@@ -24,7 +24,7 @@ string NiNode::asString( bool verbose ) const {
 	NI_NODE_STRING
 }
 
-void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_NODE_FIXLINKS
 }
 

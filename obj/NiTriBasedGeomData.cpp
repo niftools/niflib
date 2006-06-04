@@ -11,11 +11,11 @@ NiTriBasedGeomData::NiTriBasedGeomData() NI_TRI_BASED_GEOM_DATA_CONSTRUCT {}
 
 NiTriBasedGeomData::~NiTriBasedGeomData() {}
 
-void NiTriBasedGeomData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiTriBasedGeomData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_BASED_GEOM_DATA_READ
 }
 
-void NiTriBasedGeomData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiTriBasedGeomData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_TRI_BASED_GEOM_DATA_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiTriBasedGeomData::asString( bool verbose ) const {
 	NI_TRI_BASED_GEOM_DATA_STRING
 }
 
-void NiTriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiTriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_BASED_GEOM_DATA_FIXLINKS
 }
 

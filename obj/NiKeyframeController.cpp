@@ -11,11 +11,11 @@ NiKeyframeController::NiKeyframeController() NI_KEYFRAME_CONTROLLER_CONSTRUCT {}
 
 NiKeyframeController::~NiKeyframeController() {}
 
-void NiKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_KEYFRAME_CONTROLLER_READ
 }
 
-void NiKeyframeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiKeyframeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_KEYFRAME_CONTROLLER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiKeyframeController::asString( bool verbose ) const {
 	NI_KEYFRAME_CONTROLLER_STRING
 }
 
-void NiKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_KEYFRAME_CONTROLLER_FIXLINKS
 }
 

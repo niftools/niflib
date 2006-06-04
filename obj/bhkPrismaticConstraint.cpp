@@ -10,11 +10,11 @@ bhkPrismaticConstraint::bhkPrismaticConstraint() BHK_PRISMATIC_CONSTRAINT_CONSTR
 
 bhkPrismaticConstraint::~bhkPrismaticConstraint() {}
 
-void bhkPrismaticConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void bhkPrismaticConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_PRISMATIC_CONSTRAINT_READ
 }
 
-void bhkPrismaticConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void bhkPrismaticConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	BHK_PRISMATIC_CONSTRAINT_WRITE
 }
 
@@ -22,7 +22,7 @@ string bhkPrismaticConstraint::asString( bool verbose ) const {
 	BHK_PRISMATIC_CONSTRAINT_STRING
 }
 
-void bhkPrismaticConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void bhkPrismaticConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_PRISMATIC_CONSTRAINT_FIXLINKS
 }
 

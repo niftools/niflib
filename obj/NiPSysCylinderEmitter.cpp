@@ -10,11 +10,11 @@ NiPSysCylinderEmitter::NiPSysCylinderEmitter() NI_P_SYS_CYLINDER_EMITTER_CONSTRU
 
 NiPSysCylinderEmitter::~NiPSysCylinderEmitter() {}
 
-void NiPSysCylinderEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysCylinderEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_CYLINDER_EMITTER_READ
 }
 
-void NiPSysCylinderEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysCylinderEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_CYLINDER_EMITTER_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiPSysCylinderEmitter::asString( bool verbose ) const {
 	NI_P_SYS_CYLINDER_EMITTER_STRING
 }
 
-void NiPSysCylinderEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysCylinderEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_CYLINDER_EMITTER_FIXLINKS
 }
 

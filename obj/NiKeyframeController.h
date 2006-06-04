@@ -12,13 +12,12 @@ class NiKeyframeData;
 
 #include "gen/obj_defines.h"
 
+/*
+ * NiKeyframeController
+ */
+
 class NiKeyframeController;
 typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
-
-/*!
- * NiKeyframeController - A time controller block for animation key
- * frames.
- */
 
 class NiKeyframeController : public NI_KEYFRAME_CONTROLLER_PARENT {
 public:
@@ -26,10 +25,10 @@ public:
 	~NiKeyframeController();
 	//Run-Time Type Information
 	static const Type TYPE;
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 protected:

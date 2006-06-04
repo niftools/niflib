@@ -11,11 +11,11 @@ NiPSysColliderManager::NiPSysColliderManager() NI_P_SYS_COLLIDER_MANAGER_CONSTRU
 
 NiPSysColliderManager::~NiPSysColliderManager() {}
 
-void NiPSysColliderManager::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysColliderManager::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_COLLIDER_MANAGER_READ
 }
 
-void NiPSysColliderManager::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysColliderManager::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_COLLIDER_MANAGER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiPSysColliderManager::asString( bool verbose ) const {
 	NI_P_SYS_COLLIDER_MANAGER_STRING
 }
 
-void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_COLLIDER_MANAGER_FIXLINKS
 }
 

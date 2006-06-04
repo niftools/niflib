@@ -10,11 +10,11 @@ FxWidget::FxWidget() FX_WIDGET_CONSTRUCT {}
 
 FxWidget::~FxWidget() {}
 
-void FxWidget::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void FxWidget::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FX_WIDGET_READ
 }
 
-void FxWidget::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void FxWidget::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	FX_WIDGET_WRITE
 }
 
@@ -22,7 +22,7 @@ string FxWidget::asString( bool verbose ) const {
 	FX_WIDGET_STRING
 }
 
-void FxWidget::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void FxWidget::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FX_WIDGET_FIXLINKS
 }
 

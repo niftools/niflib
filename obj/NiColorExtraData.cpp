@@ -10,11 +10,11 @@ NiColorExtraData::NiColorExtraData() NI_COLOR_EXTRA_DATA_CONSTRUCT {}
 
 NiColorExtraData::~NiColorExtraData() {}
 
-void NiColorExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiColorExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_COLOR_EXTRA_DATA_READ
 }
 
-void NiColorExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiColorExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_COLOR_EXTRA_DATA_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiColorExtraData::asString( bool verbose ) const {
 	NI_COLOR_EXTRA_DATA_STRING
 }
 
-void NiColorExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiColorExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_COLOR_EXTRA_DATA_FIXLINKS
 }
 

@@ -15,12 +15,12 @@ class NiPalette;
 
 #include "gen/obj_defines.h"
 
+/*
+ * NiPixelData
+ */
+
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;
-
-/*!
- * NiPixelData - A texture.
- */
 
 class NiPixelData : public NI_PIXEL_DATA_PARENT {
 public:
@@ -28,10 +28,10 @@ public:
 	~NiPixelData();
 	//Run-Time Type Information
 	static const Type TYPE;
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 protected:

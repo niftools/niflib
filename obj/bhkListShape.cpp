@@ -11,11 +11,11 @@ bhkListShape::bhkListShape() BHK_LIST_SHAPE_CONSTRUCT {}
 
 bhkListShape::~bhkListShape() {}
 
-void bhkListShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void bhkListShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_LIST_SHAPE_READ
 }
 
-void bhkListShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void bhkListShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	BHK_LIST_SHAPE_WRITE
 }
 
@@ -23,7 +23,7 @@ string bhkListShape::asString( bool verbose ) const {
 	BHK_LIST_SHAPE_STRING
 }
 
-void bhkListShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void bhkListShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_LIST_SHAPE_FIXLINKS
 }
 

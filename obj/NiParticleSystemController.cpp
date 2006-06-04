@@ -13,11 +13,11 @@ NiParticleSystemController::NiParticleSystemController() NI_PARTICLE_SYSTEM_CONT
 
 NiParticleSystemController::~NiParticleSystemController() {}
 
-void NiParticleSystemController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiParticleSystemController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PARTICLE_SYSTEM_CONTROLLER_READ
 }
 
-void NiParticleSystemController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiParticleSystemController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_PARTICLE_SYSTEM_CONTROLLER_WRITE
 }
 
@@ -25,7 +25,7 @@ string NiParticleSystemController::asString( bool verbose ) const {
 	NI_PARTICLE_SYSTEM_CONTROLLER_STRING
 }
 
-void NiParticleSystemController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiParticleSystemController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS
 }
 

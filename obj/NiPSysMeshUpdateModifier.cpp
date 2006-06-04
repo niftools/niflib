@@ -11,11 +11,11 @@ NiPSysMeshUpdateModifier::NiPSysMeshUpdateModifier() NI_P_SYS_MESH_UPDATE_MODIFI
 
 NiPSysMeshUpdateModifier::~NiPSysMeshUpdateModifier() {}
 
-void NiPSysMeshUpdateModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysMeshUpdateModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_MESH_UPDATE_MODIFIER_READ
 }
 
-void NiPSysMeshUpdateModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysMeshUpdateModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_MESH_UPDATE_MODIFIER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiPSysMeshUpdateModifier::asString( bool verbose ) const {
 	NI_P_SYS_MESH_UPDATE_MODIFIER_STRING
 }
 
-void NiPSysMeshUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysMeshUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS
 }
 

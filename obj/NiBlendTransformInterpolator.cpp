@@ -10,11 +10,11 @@ NiBlendTransformInterpolator::NiBlendTransformInterpolator() NI_BLEND_TRANSFORM_
 
 NiBlendTransformInterpolator::~NiBlendTransformInterpolator() {}
 
-void NiBlendTransformInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiBlendTransformInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_TRANSFORM_INTERPOLATOR_READ
 }
 
-void NiBlendTransformInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiBlendTransformInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_BLEND_TRANSFORM_INTERPOLATOR_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiBlendTransformInterpolator::asString( bool verbose ) const {
 	NI_BLEND_TRANSFORM_INTERPOLATOR_STRING
 }
 
-void NiBlendTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiBlendTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 

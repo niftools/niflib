@@ -10,11 +10,11 @@ NiAmbientLight::NiAmbientLight() NI_AMBIENT_LIGHT_CONSTRUCT {}
 
 NiAmbientLight::~NiAmbientLight() {}
 
-void NiAmbientLight::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiAmbientLight::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_AMBIENT_LIGHT_READ
 }
 
-void NiAmbientLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiAmbientLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_AMBIENT_LIGHT_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiAmbientLight::asString( bool verbose ) const {
 	NI_AMBIENT_LIGHT_STRING
 }
 
-void NiAmbientLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiAmbientLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_AMBIENT_LIGHT_FIXLINKS
 }
 

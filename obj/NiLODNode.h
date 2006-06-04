@@ -14,14 +14,12 @@ class NiRangeLODData;
 
 #include "gen/obj_defines.h"
 
+/*
+ * NiLODNode
+ */
+
 class NiLODNode;
 typedef Ref<NiLODNode> NiLODNodeRef;
-
-/*!
- * NiLODNode - Level of detail selector. Links to different levels of
- * detail of the same model, used to switch a geometry at a specified
- * distance.
- */
 
 class NiLODNode : public NI_L_O_D_NODE_PARENT {
 public:
@@ -29,10 +27,10 @@ public:
 	~NiLODNode();
 	//Run-Time Type Information
 	static const Type TYPE;
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version );
-	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
+	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 protected:

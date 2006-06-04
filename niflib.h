@@ -150,6 +150,7 @@ blk_ref ReadNifTree( istream & in );
  * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
  * \param root The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * \param user_version Some companies implement special extentions to the format which can be specified here.
  * 
  * <b>Example:</b> 
  * \code
@@ -165,7 +166,7 @@ blk_ref ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2 );
+void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -173,7 +174,7 @@ void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned 
  * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version );
+void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.

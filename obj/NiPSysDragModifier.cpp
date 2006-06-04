@@ -11,11 +11,11 @@ NiPSysDragModifier::NiPSysDragModifier() NI_P_SYS_DRAG_MODIFIER_CONSTRUCT {}
 
 NiPSysDragModifier::~NiPSysDragModifier() {}
 
-void NiPSysDragModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysDragModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_DRAG_MODIFIER_READ
 }
 
-void NiPSysDragModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysDragModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_DRAG_MODIFIER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiPSysDragModifier::asString( bool verbose ) const {
 	NI_P_SYS_DRAG_MODIFIER_STRING
 }
 
-void NiPSysDragModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysDragModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_DRAG_MODIFIER_FIXLINKS
 }
 

@@ -10,11 +10,11 @@ NiSequenceStreamHelper::NiSequenceStreamHelper() NI_SEQUENCE_STREAM_HELPER_CONST
 
 NiSequenceStreamHelper::~NiSequenceStreamHelper() {}
 
-void NiSequenceStreamHelper::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiSequenceStreamHelper::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SEQUENCE_STREAM_HELPER_READ
 }
 
-void NiSequenceStreamHelper::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiSequenceStreamHelper::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_SEQUENCE_STREAM_HELPER_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiSequenceStreamHelper::asString( bool verbose ) const {
 	NI_SEQUENCE_STREAM_HELPER_STRING
 }
 
-void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SEQUENCE_STREAM_HELPER_FIXLINKS
 }
 

@@ -10,11 +10,11 @@ NiVectorExtraData::NiVectorExtraData() NI_VECTOR_EXTRA_DATA_CONSTRUCT {}
 
 NiVectorExtraData::~NiVectorExtraData() {}
 
-void NiVectorExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiVectorExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VECTOR_EXTRA_DATA_READ
 }
 
-void NiVectorExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiVectorExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_VECTOR_EXTRA_DATA_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiVectorExtraData::asString( bool verbose ) const {
 	NI_VECTOR_EXTRA_DATA_STRING
 }
 
-void NiVectorExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiVectorExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VECTOR_EXTRA_DATA_FIXLINKS
 }
 

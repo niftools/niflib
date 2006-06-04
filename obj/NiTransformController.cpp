@@ -10,11 +10,11 @@ NiTransformController::NiTransformController() NI_TRANSFORM_CONTROLLER_CONSTRUCT
 
 NiTransformController::~NiTransformController() {}
 
-void NiTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiTransformController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRANSFORM_CONTROLLER_READ
 }
 
-void NiTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiTransformController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_TRANSFORM_CONTROLLER_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiTransformController::asString( bool verbose ) const {
 	NI_TRANSFORM_CONTROLLER_STRING
 }
 
-void NiTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRANSFORM_CONTROLLER_FIXLINKS
 }
 

@@ -10,11 +10,11 @@ bhkConvexVerticesShape::bhkConvexVerticesShape() BHK_CONVEX_VERTICES_SHAPE_CONST
 
 bhkConvexVerticesShape::~bhkConvexVerticesShape() {}
 
-void bhkConvexVerticesShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void bhkConvexVerticesShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_CONVEX_VERTICES_SHAPE_READ
 }
 
-void bhkConvexVerticesShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void bhkConvexVerticesShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	BHK_CONVEX_VERTICES_SHAPE_WRITE
 }
 
@@ -22,7 +22,7 @@ string bhkConvexVerticesShape::asString( bool verbose ) const {
 	BHK_CONVEX_VERTICES_SHAPE_STRING
 }
 
-void bhkConvexVerticesShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void bhkConvexVerticesShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_CONVEX_VERTICES_SHAPE_FIXLINKS
 }
 

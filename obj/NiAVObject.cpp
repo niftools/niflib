@@ -14,11 +14,11 @@ NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
 
 NiAVObject::~NiAVObject() {}
 
-void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_A_V_OBJECT_READ
 }
 
-void NiAVObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiAVObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_A_V_OBJECT_WRITE
 }
 
@@ -26,7 +26,7 @@ string NiAVObject::asString( bool verbose ) const {
 	NI_A_V_OBJECT_STRING
 }
 
-void NiAVObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiAVObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_A_V_OBJECT_FIXLINKS
 }
 

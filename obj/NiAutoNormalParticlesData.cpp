@@ -10,11 +10,11 @@ NiAutoNormalParticlesData::NiAutoNormalParticlesData() NI_AUTO_NORMAL_PARTICLES_
 
 NiAutoNormalParticlesData::~NiAutoNormalParticlesData() {}
 
-void NiAutoNormalParticlesData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiAutoNormalParticlesData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_AUTO_NORMAL_PARTICLES_DATA_READ
 }
 
-void NiAutoNormalParticlesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiAutoNormalParticlesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_AUTO_NORMAL_PARTICLES_DATA_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiAutoNormalParticlesData::asString( bool verbose ) const {
 	NI_AUTO_NORMAL_PARTICLES_DATA_STRING
 }
 
-void NiAutoNormalParticlesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiAutoNormalParticlesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_AUTO_NORMAL_PARTICLES_DATA_FIXLINKS
 }
 

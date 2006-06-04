@@ -223,6 +223,9 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 #endif
 	}
 
+	//TODO:  Actually read the user_version from the right place
+	uint user_version = 0;
+
 
 	//--Read Blocks--//
 	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
@@ -293,7 +296,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		}
 
 		//blocks[i]->SetBlockNum(i);
-		blocks[i]->Read( in, link_stack, version );
+		blocks[i]->Read( in, link_stack, version, user_version );
 
 		//cout << endl << blocks[i]->asString() << endl;
 	}
@@ -328,7 +331,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		cout << blocks[i]->GetType().GetTypeName() << endl;
 #endif
 		//Fix links & other pre-processing
-		blocks[i]->FixLinks( blocks, link_stack, version );
+		blocks[i]->FixLinks( blocks, link_stack, version, user_version );
 	}
 
 	//Build up the bind pose matricies into their world-space equivalents
@@ -372,18 +375,18 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string const & file_name, NiObjectRef const & root_block, unsigned int version ) {
+void WriteNifTree( string const & file_name, NiObjectRef const & root_block, unsigned int version, unsigned int user_version ) {
 	//Open output file
 	ofstream out( file_name.c_str(), ofstream::binary );
 
-	WriteNifTree( out, root_block, version );
+	WriteNifTree( out, root_block, version, user_version );
 
 	//Close file
 	out.close();
 }
 
 // Writes a valid Nif File given an ostream, a pointer to the root block of a file tree
-void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version ) {
+void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version, unsigned int user_version ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -464,7 +467,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 			WriteUInt( 0, out );
 		}
 
-		objects[i]->Write( out, link_map, version );
+		objects[i]->Write( out, link_map, version, user_version );
 	}
 
 	//--Write Footer--//

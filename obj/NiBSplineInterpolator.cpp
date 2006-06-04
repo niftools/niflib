@@ -10,11 +10,11 @@ NiBSplineInterpolator::NiBSplineInterpolator() NI_B_SPLINE_INTERPOLATOR_CONSTRUC
 
 NiBSplineInterpolator::~NiBSplineInterpolator() {}
 
-void NiBSplineInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiBSplineInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_INTERPOLATOR_READ
 }
 
-void NiBSplineInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiBSplineInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_B_SPLINE_INTERPOLATOR_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiBSplineInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_INTERPOLATOR_STRING
 }
 
-void NiBSplineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiBSplineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_INTERPOLATOR_FIXLINKS
 }
 

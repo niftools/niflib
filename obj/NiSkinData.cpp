@@ -13,11 +13,11 @@ NiSkinData::NiSkinData() NI_SKIN_DATA_CONSTRUCT {}
 
 NiSkinData::~NiSkinData() {}
 
-void NiSkinData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiSkinData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SKIN_DATA_READ
 }
 
-void NiSkinData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiSkinData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_SKIN_DATA_WRITE
 }
 
@@ -25,7 +25,7 @@ string NiSkinData::asString( bool verbose ) const {
 	NI_SKIN_DATA_STRING
 }
 
-void NiSkinData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiSkinData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SKIN_DATA_FIXLINKS
 }
 

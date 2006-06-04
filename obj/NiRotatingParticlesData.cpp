@@ -10,11 +10,11 @@ NiRotatingParticlesData::NiRotatingParticlesData() NI_ROTATING_PARTICLES_DATA_CO
 
 NiRotatingParticlesData::~NiRotatingParticlesData() {}
 
-void NiRotatingParticlesData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiRotatingParticlesData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_ROTATING_PARTICLES_DATA_READ
 }
 
-void NiRotatingParticlesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiRotatingParticlesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_ROTATING_PARTICLES_DATA_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiRotatingParticlesData::asString( bool verbose ) const {
 	NI_ROTATING_PARTICLES_DATA_STRING
 }
 
-void NiRotatingParticlesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiRotatingParticlesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_ROTATING_PARTICLES_DATA_FIXLINKS
 }
 

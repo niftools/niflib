@@ -11,11 +11,11 @@ NiLookAtController::NiLookAtController() NI_LOOK_AT_CONTROLLER_CONSTRUCT {}
 
 NiLookAtController::~NiLookAtController() {}
 
-void NiLookAtController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiLookAtController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_LOOK_AT_CONTROLLER_READ
 }
 
-void NiLookAtController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiLookAtController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_LOOK_AT_CONTROLLER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiLookAtController::asString( bool verbose ) const {
 	NI_LOOK_AT_CONTROLLER_STRING
 }
 
-void NiLookAtController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiLookAtController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_LOOK_AT_CONTROLLER_FIXLINKS
 }
 

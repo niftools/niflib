@@ -10,11 +10,11 @@ bhkWorldObject::bhkWorldObject() BHK_WORLD_OBJECT_CONSTRUCT {}
 
 bhkWorldObject::~bhkWorldObject() {}
 
-void bhkWorldObject::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void bhkWorldObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_WORLD_OBJECT_READ
 }
 
-void bhkWorldObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void bhkWorldObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	BHK_WORLD_OBJECT_WRITE
 }
 
@@ -22,7 +22,7 @@ string bhkWorldObject::asString( bool verbose ) const {
 	BHK_WORLD_OBJECT_STRING
 }
 
-void bhkWorldObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void bhkWorldObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_WORLD_OBJECT_FIXLINKS
 }
 

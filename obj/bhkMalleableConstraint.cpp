@@ -13,11 +13,11 @@ bhkMalleableConstraint::bhkMalleableConstraint() BHK_MALLEABLE_CONSTRAINT_CONSTR
 
 bhkMalleableConstraint::~bhkMalleableConstraint() {}
 
-void bhkMalleableConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void bhkMalleableConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_MALLEABLE_CONSTRAINT_READ
 }
 
-void bhkMalleableConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void bhkMalleableConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	BHK_MALLEABLE_CONSTRAINT_WRITE
 }
 
@@ -25,7 +25,7 @@ string bhkMalleableConstraint::asString( bool verbose ) const {
 	BHK_MALLEABLE_CONSTRAINT_STRING
 }
 
-void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_MALLEABLE_CONSTRAINT_FIXLINKS
 }
 

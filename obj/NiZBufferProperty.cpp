@@ -10,11 +10,11 @@ NiZBufferProperty::NiZBufferProperty() NI_Z_BUFFER_PROPERTY_CONSTRUCT {}
 
 NiZBufferProperty::~NiZBufferProperty() {}
 
-void NiZBufferProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiZBufferProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_Z_BUFFER_PROPERTY_READ
 }
 
-void NiZBufferProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiZBufferProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_Z_BUFFER_PROPERTY_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiZBufferProperty::asString( bool verbose ) const {
 	NI_Z_BUFFER_PROPERTY_STRING
 }
 
-void NiZBufferProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiZBufferProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_Z_BUFFER_PROPERTY_FIXLINKS
 }
 

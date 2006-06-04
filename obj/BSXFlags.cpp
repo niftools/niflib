@@ -10,11 +10,11 @@ BSXFlags::BSXFlags() B_S_X_FLAGS_CONSTRUCT {}
 
 BSXFlags::~BSXFlags() {}
 
-void BSXFlags::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void BSXFlags::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_X_FLAGS_READ
 }
 
-void BSXFlags::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void BSXFlags::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	B_S_X_FLAGS_WRITE
 }
 
@@ -22,7 +22,7 @@ string BSXFlags::asString( bool verbose ) const {
 	B_S_X_FLAGS_STRING
 }
 
-void BSXFlags::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void BSXFlags::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_X_FLAGS_FIXLINKS
 }
 

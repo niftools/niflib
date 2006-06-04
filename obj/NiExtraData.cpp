@@ -10,11 +10,11 @@ NiExtraData::NiExtraData() NI_EXTRA_DATA_CONSTRUCT {}
 
 NiExtraData::~NiExtraData() {}
 
-void NiExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_EXTRA_DATA_READ
 }
 
-void NiExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_EXTRA_DATA_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiExtraData::asString( bool verbose ) const {
 	NI_EXTRA_DATA_STRING
 }
 
-void NiExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_EXTRA_DATA_FIXLINKS
 }
 

@@ -29,11 +29,11 @@ NiTexturingProperty::NiTexturingProperty() NI_TEXTURING_PROPERTY_CONSTRUCT {}
 
 NiTexturingProperty::~NiTexturingProperty() {}
 
-void NiTexturingProperty::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiTexturingProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURING_PROPERTY_READ
 }
 
-void NiTexturingProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiTexturingProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_TEXTURING_PROPERTY_WRITE
 }
 
@@ -41,7 +41,7 @@ string NiTexturingProperty::asString( bool verbose ) const {
 	NI_TEXTURING_PROPERTY_STRING
 }
 
-void NiTexturingProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiTexturingProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURING_PROPERTY_FIXLINKS
 }
 

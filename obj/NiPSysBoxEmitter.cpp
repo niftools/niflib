@@ -10,11 +10,11 @@ NiPSysBoxEmitter::NiPSysBoxEmitter() NI_P_SYS_BOX_EMITTER_CONSTRUCT {}
 
 NiPSysBoxEmitter::~NiPSysBoxEmitter() {}
 
-void NiPSysBoxEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysBoxEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOX_EMITTER_READ
 }
 
-void NiPSysBoxEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysBoxEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_BOX_EMITTER_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiPSysBoxEmitter::asString( bool verbose ) const {
 	NI_P_SYS_BOX_EMITTER_STRING
 }
 
-void NiPSysBoxEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysBoxEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOX_EMITTER_FIXLINKS
 }
 

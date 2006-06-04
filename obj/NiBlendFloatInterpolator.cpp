@@ -10,11 +10,11 @@ NiBlendFloatInterpolator::NiBlendFloatInterpolator() NI_BLEND_FLOAT_INTERPOLATOR
 
 NiBlendFloatInterpolator::~NiBlendFloatInterpolator() {}
 
-void NiBlendFloatInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiBlendFloatInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_FLOAT_INTERPOLATOR_READ
 }
 
-void NiBlendFloatInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiBlendFloatInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_BLEND_FLOAT_INTERPOLATOR_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiBlendFloatInterpolator::asString( bool verbose ) const {
 	NI_BLEND_FLOAT_INTERPOLATOR_STRING
 }
 
-void NiBlendFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiBlendFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS
 }
 

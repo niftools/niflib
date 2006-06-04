@@ -10,11 +10,11 @@ NiPSysPositionModifier::NiPSysPositionModifier() NI_P_SYS_POSITION_MODIFIER_CONS
 
 NiPSysPositionModifier::~NiPSysPositionModifier() {}
 
-void NiPSysPositionModifier::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysPositionModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_POSITION_MODIFIER_READ
 }
 
-void NiPSysPositionModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysPositionModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_POSITION_MODIFIER_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiPSysPositionModifier::asString( bool verbose ) const {
 	NI_P_SYS_POSITION_MODIFIER_STRING
 }
 
-void NiPSysPositionModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysPositionModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_POSITION_MODIFIER_FIXLINKS
 }
 

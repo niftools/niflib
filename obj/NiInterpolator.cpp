@@ -10,11 +10,11 @@ NiInterpolator::NiInterpolator() NI_INTERPOLATOR_CONSTRUCT {}
 
 NiInterpolator::~NiInterpolator() {}
 
-void NiInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_INTERPOLATOR_READ
 }
 
-void NiInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_INTERPOLATOR_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiInterpolator::asString( bool verbose ) const {
 	NI_INTERPOLATOR_STRING
 }
 
-void NiInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_INTERPOLATOR_FIXLINKS
 }
 

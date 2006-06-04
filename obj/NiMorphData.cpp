@@ -11,11 +11,11 @@ NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
 
 NiMorphData::~NiMorphData() {}
 
-void NiMorphData::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiMorphData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MORPH_DATA_READ
 }
 
-void NiMorphData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiMorphData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_MORPH_DATA_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiMorphData::asString( bool verbose ) const {
 	NI_MORPH_DATA_STRING
 }
 
-void NiMorphData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiMorphData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MORPH_DATA_FIXLINKS
 }
 

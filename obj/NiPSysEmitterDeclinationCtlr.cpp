@@ -10,11 +10,11 @@ NiPSysEmitterDeclinationCtlr::NiPSysEmitterDeclinationCtlr() NI_P_SYS_EMITTER_DE
 
 NiPSysEmitterDeclinationCtlr::~NiPSysEmitterDeclinationCtlr() {}
 
-void NiPSysEmitterDeclinationCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiPSysEmitterDeclinationCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_EMITTER_DECLINATION_CTLR_READ
 }
 
-void NiPSysEmitterDeclinationCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiPSysEmitterDeclinationCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_P_SYS_EMITTER_DECLINATION_CTLR_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiPSysEmitterDeclinationCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_DECLINATION_CTLR_STRING
 }
 
-void NiPSysEmitterDeclinationCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiPSysEmitterDeclinationCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_EMITTER_DECLINATION_CTLR_FIXLINKS
 }
 

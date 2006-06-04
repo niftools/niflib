@@ -10,11 +10,11 @@ NiTriShape::NiTriShape() NI_TRI_SHAPE_CONSTRUCT {}
 
 NiTriShape::~NiTriShape() {}
 
-void NiTriShape::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiTriShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_SHAPE_READ
 }
 
-void NiTriShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiTriShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_TRI_SHAPE_WRITE
 }
 
@@ -22,7 +22,7 @@ string NiTriShape::asString( bool verbose ) const {
 	NI_TRI_SHAPE_STRING
 }
 
-void NiTriShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiTriShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_SHAPE_FIXLINKS
 }
 

@@ -46,10 +46,10 @@ return refs; \
 #define A_KEYED_DATA_CONSTRUCT \
 
 #define A_KEYED_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 
 #define A_KEYED_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 
 #define A_KEYED_DATA_STRING \
 stringstream out; \
@@ -57,7 +57,7 @@ out << NiObject::asString(); \
 return out.str(); \
 
 #define A_KEYED_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define A_KEYED_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -77,14 +77,14 @@ NiParticleSystemController * controller; \
 
 #define A_PARTICLE_MODIFIER_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define A_PARTICLE_MODIFIER_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(nextModifier)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
 
@@ -96,7 +96,7 @@ out << "Controller:  " << controller << endl; \
 return out.str(); \
 
 #define A_PARTICLE_MODIFIER_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -131,10 +131,10 @@ return refs; \
 #define BHK_REF_OBJECT_CONSTRUCT \
 
 #define BHK_REF_OBJECT_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 
 #define BHK_REF_OBJECT_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 
 #define BHK_REF_OBJECT_STRING \
 stringstream out; \
@@ -142,7 +142,7 @@ out << NiObject::asString(); \
 return out.str(); \
 
 #define BHK_REF_OBJECT_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_REF_OBJECT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -158,10 +158,10 @@ return refs; \
 #define BHK_SERIALIZABLE_CONSTRUCT \
 
 #define BHK_SERIALIZABLE_READ \
-bhkRefObject::Read( in, link_stack, version ); \
+bhkRefObject::Read( in, link_stack, version, user_version ); \
 
 #define BHK_SERIALIZABLE_WRITE \
-bhkRefObject::Write( out, link_map, version ); \
+bhkRefObject::Write( out, link_map, version, user_version ); \
 
 #define BHK_SERIALIZABLE_STRING \
 stringstream out; \
@@ -169,7 +169,7 @@ out << bhkRefObject::asString(); \
 return out.str(); \
 
 #define BHK_SERIALIZABLE_FIXLINKS \
-bhkRefObject::FixLinks( objects, link_stack, version ); \
+bhkRefObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_SERIALIZABLE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -190,7 +190,7 @@ uint priority; \
 
 #define ABHK_CONSTRAINT_READ \
 uint block_num; \
-bhkSerializable::Read( in, link_stack, version ); \
+bhkSerializable::Read( in, link_stack, version, user_version ); \
 NifStream( numBodies, in, version ); \
 bodies.resize(numBodies); \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
@@ -200,7 +200,7 @@ for (uint i0 = 0; i0 < bodies.size(); i0++) { \
 NifStream( priority, in, version ); \
 
 #define ABHK_CONSTRAINT_WRITE \
-bhkSerializable::Write( out, link_map, version ); \
+bhkSerializable::Write( out, link_map, version, user_version ); \
 NifStream( numBodies, out, version ); \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(bodies[i0])], out, version ); \
@@ -222,7 +222,7 @@ out << "Priority:  " << priority << endl; \
 return out.str(); \
 
 #define ABHK_CONSTRAINT_FIXLINKS \
-bhkSerializable::FixLinks( objects, link_stack, version ); \
+bhkSerializable::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -264,7 +264,7 @@ float maxFriction; \
  : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) \
 
 #define ABHK_RAGDOLL_CONSTRAINT_READ \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 NifStream( pivotA, in, version ); \
 NifStream( planeA, in, version ); \
 NifStream( twistA, in, version ); \
@@ -279,7 +279,7 @@ NifStream( twistMaxAngle, in, version ); \
 NifStream( maxFriction, in, version ); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 NifStream( pivotA, out, version ); \
 NifStream( planeA, out, version ); \
 NifStream( twistA, out, version ); \
@@ -311,7 +311,7 @@ out << "Max Friction:  " << maxFriction << endl; \
 return out.str(); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define ABHK_RAGDOLL_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -327,10 +327,10 @@ return refs; \
 #define BHK_SHAPE_CONSTRUCT \
 
 #define BHK_SHAPE_READ \
-bhkSerializable::Read( in, link_stack, version ); \
+bhkSerializable::Read( in, link_stack, version, user_version ); \
 
 #define BHK_SHAPE_WRITE \
-bhkSerializable::Write( out, link_map, version ); \
+bhkSerializable::Write( out, link_map, version, user_version ); \
 
 #define BHK_SHAPE_STRING \
 stringstream out; \
@@ -338,7 +338,7 @@ out << bhkSerializable::asString(); \
 return out.str(); \
 
 #define BHK_SHAPE_FIXLINKS \
-bhkSerializable::FixLinks( objects, link_stack, version ); \
+bhkSerializable::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -354,10 +354,10 @@ return refs; \
 #define ABHK_SHAPE_COLLECTION_CONSTRUCT \
 
 #define ABHK_SHAPE_COLLECTION_READ \
-bhkShape::Read( in, link_stack, version ); \
+bhkShape::Read( in, link_stack, version, user_version ); \
 
 #define ABHK_SHAPE_COLLECTION_WRITE \
-bhkShape::Write( out, link_map, version ); \
+bhkShape::Write( out, link_map, version, user_version ); \
 
 #define ABHK_SHAPE_COLLECTION_STRING \
 stringstream out; \
@@ -365,7 +365,7 @@ out << bhkShape::asString(); \
 return out.str(); \
 
 #define ABHK_SHAPE_COLLECTION_FIXLINKS \
-bhkShape::FixLinks( objects, link_stack, version ); \
+bhkShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define ABHK_SHAPE_COLLECTION_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -383,11 +383,11 @@ uint material; \
  : material((uint)0) \
 
 #define BHK_SPHERE_REP_SHAPE_READ \
-bhkShape::Read( in, link_stack, version ); \
+bhkShape::Read( in, link_stack, version, user_version ); \
 NifStream( material, in, version ); \
 
 #define BHK_SPHERE_REP_SHAPE_WRITE \
-bhkShape::Write( out, link_map, version ); \
+bhkShape::Write( out, link_map, version, user_version ); \
 NifStream( material, out, version ); \
 
 #define BHK_SPHERE_REP_SHAPE_STRING \
@@ -397,7 +397,7 @@ out << "Material:  " << material << endl; \
 return out.str(); \
 
 #define BHK_SPHERE_REP_SHAPE_FIXLINKS \
-bhkShape::FixLinks( objects, link_stack, version ); \
+bhkShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_SPHERE_REP_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -413,10 +413,10 @@ return refs; \
 #define BHK_CONVEX_SHAPE_CONSTRUCT \
 
 #define BHK_CONVEX_SHAPE_READ \
-bhkSphereRepShape::Read( in, link_stack, version ); \
+bhkSphereRepShape::Read( in, link_stack, version, user_version ); \
 
 #define BHK_CONVEX_SHAPE_WRITE \
-bhkSphereRepShape::Write( out, link_map, version ); \
+bhkSphereRepShape::Write( out, link_map, version, user_version ); \
 
 #define BHK_CONVEX_SHAPE_STRING \
 stringstream out; \
@@ -424,7 +424,7 @@ out << bhkSphereRepShape::asString(); \
 return out.str(); \
 
 #define BHK_CONVEX_SHAPE_FIXLINKS \
-bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
+bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_CONVEX_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -440,10 +440,10 @@ return refs; \
 #define BHK_WORLD_OBJECT_CONSTRUCT \
 
 #define BHK_WORLD_OBJECT_READ \
-bhkShape::Read( in, link_stack, version ); \
+bhkShape::Read( in, link_stack, version, user_version ); \
 
 #define BHK_WORLD_OBJECT_WRITE \
-bhkShape::Write( out, link_map, version ); \
+bhkShape::Write( out, link_map, version, user_version ); \
 
 #define BHK_WORLD_OBJECT_STRING \
 stringstream out; \
@@ -451,7 +451,7 @@ out << bhkShape::asString(); \
 return out.str(); \
 
 #define BHK_WORLD_OBJECT_FIXLINKS \
-bhkShape::FixLinks( objects, link_stack, version ); \
+bhkShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_WORLD_OBJECT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -471,13 +471,13 @@ uint layer; \
 
 #define BHK_ENTITY_READ \
 uint block_num; \
-bhkWorldObject::Read( in, link_stack, version ); \
+bhkWorldObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( layer, in, version ); \
 
 #define BHK_ENTITY_WRITE \
-bhkWorldObject::Write( out, link_map, version ); \
+bhkWorldObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
 NifStream( layer, out, version ); \
 
@@ -489,7 +489,7 @@ out << "Layer:  " << layer << endl; \
 return out.str(); \
 
 #define BHK_ENTITY_FIXLINKS \
-bhkWorldObject::FixLinks( objects, link_stack, version ); \
+bhkWorldObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -520,7 +520,7 @@ Ref<NiObject > body; \
 
 #define NI_COLLISION_OBJECT_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( unknownShort, in, version ); \
@@ -528,7 +528,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_COLLISION_OBJECT_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
@@ -542,7 +542,7 @@ out << "Body:  " << body << endl; \
 return out.str(); \
 
 #define NI_COLLISION_OBJECT_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -581,7 +581,7 @@ Ref<NiExtraData > nextExtraData; \
 
 #define NI_EXTRA_DATA_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A000100 ) { \
 	NifStream( name, in, version ); \
 }; \
@@ -591,7 +591,7 @@ if ( version <= 0x04020200 ) { \
 }; \
 
 #define NI_EXTRA_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A000100 ) { \
 	NifStream( name, out, version ); \
 }; \
@@ -607,7 +607,7 @@ out << "Next Extra Data:  " << nextExtraData << endl; \
 return out.str(); \
 
 #define NI_EXTRA_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -635,10 +635,10 @@ return refs; \
 #define NI_INTERPOLATOR_CONSTRUCT \
 
 #define NI_INTERPOLATOR_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 
 #define NI_INTERPOLATOR_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 
 #define NI_INTERPOLATOR_STRING \
 stringstream out; \
@@ -646,7 +646,7 @@ out << NiObject::asString(); \
 return out.str(); \
 
 #define NI_INTERPOLATOR_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -665,12 +665,12 @@ uint unknownInt; \
  : unknownShort((ushort)0), unknownInt((uint)0) \
 
 #define NI_BLEND_INTERPOLATOR_READ \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( unknownShort, in, version ); \
 NifStream( unknownInt, in, version ); \
 
 #define NI_BLEND_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( unknownInt, out, version ); \
 
@@ -682,7 +682,7 @@ out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define NI_BLEND_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BLEND_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -701,12 +701,12 @@ float stopTime; \
  : startTime(0.0f), stopTime(0.0f) \
 
 #define NI_B_SPLINE_INTERPOLATOR_READ \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( startTime, in, version ); \
 NifStream( stopTime, in, version ); \
 
 #define NI_B_SPLINE_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( startTime, out, version ); \
 NifStream( stopTime, out, version ); \
 
@@ -718,7 +718,7 @@ out << "Stop Time:  " << stopTime << endl; \
 return out.str(); \
 
 #define NI_B_SPLINE_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_SPLINE_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -741,7 +741,7 @@ Ref<NiTimeController > controller; \
 
 #define NI_OBJECT_N_E_T_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( name, in, version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( block_num, in, version ); \
@@ -759,7 +759,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_OBJECT_N_E_T_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( name, out, version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( link_map[StaticCast<NiObject>(extraData)], out, version ); \
@@ -789,7 +789,7 @@ out << "Controller:  " << controller << endl; \
 return out.str(); \
 
 #define NI_OBJECT_N_E_T_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -856,7 +856,7 @@ Ref<NiCollisionObject > collisionObject; \
 
 #define NI_A_V_OBJECT_READ \
 uint block_num; \
-NiObjectNET::Read( in, link_stack, version ); \
+NiObjectNET::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( rotation, in, version ); \
@@ -889,7 +889,7 @@ if ( version >= 0x14000005 ) { \
 }; \
 
 #define NI_A_V_OBJECT_WRITE \
-NiObjectNET::Write( out, link_map, version ); \
+NiObjectNET::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
@@ -945,7 +945,7 @@ out << "Collision Object:  " << collisionObject << endl; \
 return out.str(); \
 
 #define NI_A_V_OBJECT_FIXLINKS \
-NiObjectNET::FixLinks( objects, link_stack, version ); \
+NiObjectNET::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < properties.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -1006,7 +1006,7 @@ vector<Ref<NiAVObject > > affectedNodes; \
 
 #define NI_DYNAMIC_EFFECT_READ \
 uint block_num; \
-NiAVObject::Read( in, link_stack, version ); \
+NiAVObject::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x04000002 ) { \
 	NifStream( hasAffectedNodeList_, in, version ); \
 	if ( (hasAffectedNodeList_ != 0) ) { \
@@ -1026,7 +1026,7 @@ if ( version >= 0x0A010000 ) { \
 }; \
 
 #define NI_DYNAMIC_EFFECT_WRITE \
-NiAVObject::Write( out, link_map, version ); \
+NiAVObject::Write( out, link_map, version, user_version ); \
 if ( version <= 0x04000002 ) { \
 	NifStream( hasAffectedNodeList_, out, version ); \
 	if ( (hasAffectedNodeList_ != 0) ) { \
@@ -1062,7 +1062,7 @@ for (uint i0 = 0; i0 < affectedNodes.size(); i0++) { \
 return out.str(); \
 
 #define NI_DYNAMIC_EFFECT_FIXLINKS \
-NiAVObject::FixLinks( objects, link_stack, version ); \
+NiAVObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) { \
 		if (link_stack.empty()) \
@@ -1099,14 +1099,14 @@ Color3 specularColor; \
  : dimmer(0.0f) \
 
 #define NI_LIGHT_READ \
-NiDynamicEffect::Read( in, link_stack, version ); \
+NiDynamicEffect::Read( in, link_stack, version, user_version ); \
 NifStream( dimmer, in, version ); \
 NifStream( ambientColor, in, version ); \
 NifStream( diffuseColor, in, version ); \
 NifStream( specularColor, in, version ); \
 
 #define NI_LIGHT_WRITE \
-NiDynamicEffect::Write( out, link_map, version ); \
+NiDynamicEffect::Write( out, link_map, version, user_version ); \
 NifStream( dimmer, out, version ); \
 NifStream( ambientColor, out, version ); \
 NifStream( diffuseColor, out, version ); \
@@ -1122,7 +1122,7 @@ out << "Specular Color:  " << specularColor << endl; \
 return out.str(); \
 
 #define NI_LIGHT_FIXLINKS \
-NiDynamicEffect::FixLinks( objects, link_stack, version ); \
+NiDynamicEffect::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_LIGHT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -1138,10 +1138,10 @@ return refs; \
 #define NI_PROPERTY_CONSTRUCT \
 
 #define NI_PROPERTY_READ \
-NiObjectNET::Read( in, link_stack, version ); \
+NiObjectNET::Read( in, link_stack, version, user_version ); \
 
 #define NI_PROPERTY_WRITE \
-NiObjectNET::Write( out, link_map, version ); \
+NiObjectNET::Write( out, link_map, version, user_version ); \
 
 #define NI_PROPERTY_STRING \
 stringstream out; \
@@ -1149,7 +1149,7 @@ out << NiObjectNET::asString(); \
 return out.str(); \
 
 #define NI_PROPERTY_FIXLINKS \
-NiObjectNET::FixLinks( objects, link_stack, version ); \
+NiObjectNET::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -1171,7 +1171,7 @@ bool active; \
 
 #define NI_P_SYS_MODIFIER_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( name, in, version ); \
 NifStream( order, in, version ); \
 NifStream( block_num, in, version ); \
@@ -1179,7 +1179,7 @@ link_stack.push_back( block_num ); \
 NifStream( active, in, version ); \
 
 #define NI_P_SYS_MODIFIER_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( name, out, version ); \
 NifStream( order, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
@@ -1195,7 +1195,7 @@ out << "Active:  " << active << endl; \
 return out.str(); \
 
 #define NI_P_SYS_MODIFIER_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -1232,7 +1232,7 @@ float lifeSpanVariation; \
  : speed(0.0f), speedVariation(0.0f), declination(0.0f), declinationVariation(0.0f), planarAngle(0.0f), planarAngleVariation(0.0f), initialRadius(0.0f), radiusVariation(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f) \
 
 #define NI_P_SYS_EMITTER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( speed, in, version ); \
 NifStream( speedVariation, in, version ); \
 NifStream( declination, in, version ); \
@@ -1246,7 +1246,7 @@ NifStream( lifeSpan, in, version ); \
 NifStream( lifeSpanVariation, in, version ); \
 
 #define NI_P_SYS_EMITTER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( speed, out, version ); \
 NifStream( speedVariation, out, version ); \
 NifStream( declination, out, version ); \
@@ -1276,7 +1276,7 @@ out << "Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -1295,14 +1295,14 @@ NiNode * emitterObject; \
 
 #define NI_P_SYS_VOLUME_EMITTER_READ \
 uint block_num; \
-NiPSysEmitter::Read( in, link_stack, version ); \
+NiPSysEmitter::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
 
 #define NI_P_SYS_VOLUME_EMITTER_WRITE \
-NiPSysEmitter::Write( out, link_map, version ); \
+NiPSysEmitter::Write( out, link_map, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( link_map[StaticCast<NiObject>(emitterObject)], out, version ); \
 }; \
@@ -1314,7 +1314,7 @@ out << "Emitter Object:  " << emitterObject << endl; \
 return out.str(); \
 
 #define NI_P_SYS_VOLUME_EMITTER_FIXLINKS \
-NiPSysEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysEmitter::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -1350,7 +1350,7 @@ NiObject * target; \
 
 #define NI_TIME_CONTROLLER_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( flags, in, version ); \
@@ -1362,7 +1362,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_TIME_CONTROLLER_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(nextController)], out, version ); \
 NifStream( flags, out, version ); \
 NifStream( frequency, out, version ); \
@@ -1384,7 +1384,7 @@ out << "Target:  " << target << endl; \
 return out.str(); \
 
 #define NI_TIME_CONTROLLER_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -1425,7 +1425,7 @@ vector<NodeGroup > nodeGroups; \
 
 #define A_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt1, in, version ); \
 NifStream( numNodeGroups, in, version ); \
 NifStream( unknownInt2, in, version ); \
@@ -1440,7 +1440,7 @@ for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 }; \
 
 #define A_BONE_L_O_D_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt1, out, version ); \
 NifStream( numNodeGroups, out, version ); \
 NifStream( unknownInt2, out, version ); \
@@ -1470,7 +1470,7 @@ for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 return out.str(); \
 
 #define A_BONE_L_O_D_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 	for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
 		if (link_stack.empty()) \
@@ -1507,14 +1507,14 @@ Ref<NiInterpolator > interpolator; \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
 	NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
 }; \
@@ -1526,7 +1526,7 @@ out << "Interpolator:  " << interpolator << endl; \
 return out.str(); \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -1555,11 +1555,11 @@ string modifierName; \
 #define A_P_SYS_CTLR_CONSTRUCT \
 
 #define A_P_SYS_CTLR_READ \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 NifStream( modifierName, in, version ); \
 
 #define A_P_SYS_CTLR_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 NifStream( modifierName, out, version ); \
 
 #define A_P_SYS_CTLR_STRING \
@@ -1569,7 +1569,7 @@ out << "Modifier Name:  " << modifierName << endl; \
 return out.str(); \
 
 #define A_P_SYS_CTLR_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define A_P_SYS_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -1592,7 +1592,7 @@ Ref<NiObject > unknownLink; \
 
 #define NI_TRI_BASED_GEOM_READ \
 uint block_num; \
-NiAVObject::Read( in, link_stack, version ); \
+NiAVObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( block_num, in, version ); \
@@ -1607,7 +1607,7 @@ if ( version >= 0x0A000100 ) { \
 }; \
 
 #define NI_TRI_BASED_GEOM_WRITE \
-NiAVObject::Write( out, link_map, version ); \
+NiAVObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version ); \
 if ( version >= 0x0A000100 ) { \
@@ -1631,7 +1631,7 @@ if ( (hasShader != 0) ) { \
 return out.str(); \
 
 #define NI_TRI_BASED_GEOM_FIXLINKS \
-NiAVObject::FixLinks( objects, link_stack, version ); \
+NiAVObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -1704,7 +1704,7 @@ Ref<NiObject > unknownLink; \
 
 #define NI_TRI_BASED_GEOM_DATA_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
 	NifStream( name, in, version ); \
 }; \
@@ -1782,7 +1782,7 @@ if ( version >= 0x14000004 ) { \
 }; \
 
 #define NI_TRI_BASED_GEOM_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
 	NifStream( name, out, version ); \
 }; \
@@ -1930,7 +1930,7 @@ out << "Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 #define NI_TRI_BASED_GEOM_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -1965,7 +1965,7 @@ byte unknownByte1; \
  : hasUnknownFloats1(false), unknownShort3((ushort)0), hasUnknownFloats2(false), unknownByte1((byte)0) \
 
 #define A_P_SYS_DATA_READ \
-NiTriBasedGeomData::Read( in, link_stack, version ); \
+NiTriBasedGeomData::Read( in, link_stack, version, user_version ); \
 NifStream( hasUnknownFloats1, in, version ); \
 if ( (hasUnknownFloats1 != 0) ) { \
 	unknownFloats1.resize(numVertices); \
@@ -1984,7 +1984,7 @@ if ( (hasUnknownFloats2 != 0) ) { \
 NifStream( unknownByte1, in, version ); \
 
 #define A_P_SYS_DATA_WRITE \
-NiTriBasedGeomData::Write( out, link_map, version ); \
+NiTriBasedGeomData::Write( out, link_map, version, user_version ); \
 NifStream( hasUnknownFloats1, out, version ); \
 if ( (hasUnknownFloats1 != 0) ) { \
 	for (uint i1 = 0; i1 < unknownFloats1.size(); i1++) { \
@@ -2028,7 +2028,7 @@ out << "Unknown Byte 1:  " << unknownByte1 << endl; \
 return out.str(); \
 
 #define A_P_SYS_DATA_FIXLINKS \
-NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define A_P_SYS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2047,12 +2047,12 @@ float unknownFloat2; \
  : unknownFloat1(0.0f), unknownFloat2(0.0f) \
 
 #define BHK_BLEND_COLLISION_OBJECT_READ \
-NiCollisionObject::Read( in, link_stack, version ); \
+NiCollisionObject::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 
 #define BHK_BLEND_COLLISION_OBJECT_WRITE \
-NiCollisionObject::Write( out, link_map, version ); \
+NiCollisionObject::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 
@@ -2064,7 +2064,7 @@ out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_BLEND_COLLISION_OBJECT_FIXLINKS \
-NiCollisionObject::FixLinks( objects, link_stack, version ); \
+NiCollisionObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_BLEND_COLLISION_OBJECT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2082,11 +2082,11 @@ uint unknownInt; \
  : unknownInt((uint)0) \
 
 #define BHK_BLEND_CONTROLLER_READ \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt, in, version ); \
 
 #define BHK_BLEND_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt, out, version ); \
 
 #define BHK_BLEND_CONTROLLER_STRING \
@@ -2096,7 +2096,7 @@ out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define BHK_BLEND_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_BLEND_CONTROLLER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2120,7 +2120,7 @@ float unknownFloat2; \
  : unknownFloat1(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), unknownFloat2(0.0f) \
 
 #define BHK_BOX_SHAPE_READ \
-bhkConvexShape::Read( in, link_stack, version ); \
+bhkConvexShape::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownShort1, in, version ); \
 NifStream( unknownShort2, in, version ); \
@@ -2130,7 +2130,7 @@ NifStream( unknownVector, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 
 #define BHK_BOX_SHAPE_WRITE \
-bhkConvexShape::Write( out, link_map, version ); \
+bhkConvexShape::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownShort1, out, version ); \
 NifStream( unknownShort2, out, version ); \
@@ -2152,7 +2152,7 @@ out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_BOX_SHAPE_FIXLINKS \
-bhkConvexShape::FixLinks( objects, link_stack, version ); \
+bhkConvexShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_BOX_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2178,7 +2178,7 @@ float radius2; \
  : radius(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), radius1(0.0f), radius2(0.0f) \
 
 #define BHK_CAPSULE_SHAPE_READ \
-bhkConvexShape::Read( in, link_stack, version ); \
+bhkConvexShape::Read( in, link_stack, version, user_version ); \
 NifStream( radius, in, version ); \
 NifStream( unknownShort1, in, version ); \
 NifStream( unknownShort2, in, version ); \
@@ -2190,7 +2190,7 @@ NifStream( unknownVector2, in, version ); \
 NifStream( radius2, in, version ); \
 
 #define BHK_CAPSULE_SHAPE_WRITE \
-bhkConvexShape::Write( out, link_map, version ); \
+bhkConvexShape::Write( out, link_map, version, user_version ); \
 NifStream( radius, out, version ); \
 NifStream( unknownShort1, out, version ); \
 NifStream( unknownShort2, out, version ); \
@@ -2216,7 +2216,7 @@ out << "Radius 2:  " << radius2 << endl; \
 return out.str(); \
 
 #define BHK_CAPSULE_SHAPE_FIXLINKS \
-bhkConvexShape::FixLinks( objects, link_stack, version ); \
+bhkConvexShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_CAPSULE_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2232,10 +2232,10 @@ return refs; \
 #define BHK_COLLISION_OBJECT_CONSTRUCT \
 
 #define BHK_COLLISION_OBJECT_READ \
-NiCollisionObject::Read( in, link_stack, version ); \
+NiCollisionObject::Read( in, link_stack, version, user_version ); \
 
 #define BHK_COLLISION_OBJECT_WRITE \
-NiCollisionObject::Write( out, link_map, version ); \
+NiCollisionObject::Write( out, link_map, version, user_version ); \
 
 #define BHK_COLLISION_OBJECT_STRING \
 stringstream out; \
@@ -2243,7 +2243,7 @@ out << NiCollisionObject::asString(); \
 return out.str(); \
 
 #define BHK_COLLISION_OBJECT_FIXLINKS \
-NiCollisionObject::FixLinks( objects, link_stack, version ); \
+NiCollisionObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_COLLISION_OBJECT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2265,7 +2265,7 @@ vector<Float4 > unknownVectors2; \
  : num1((uint)0), num2((uint)0) \
 
 #define BHK_CONVEX_VERTICES_SHAPE_READ \
-bhkSphereRepShape::Read( in, link_stack, version ); \
+bhkSphereRepShape::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 7; i0++) { \
 	NifStream( unknownFloats1[i0], in, version ); \
 }; \
@@ -2281,7 +2281,7 @@ for (uint i0 = 0; i0 < unknownVectors2.size(); i0++) { \
 }; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_WRITE \
-bhkSphereRepShape::Write( out, link_map, version ); \
+bhkSphereRepShape::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 7; i0++) { \
 	NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -2323,7 +2323,7 @@ for (uint i0 = 0; i0 < unknownVectors2.size(); i0++) { \
 return out.str(); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_FIXLINKS \
-bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
+bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2340,7 +2340,7 @@ float unknownFloats[5][4]; \
 #define BHK_HINGE_CONSTRAINT_CONSTRUCT \
 
 #define BHK_HINGE_CONSTRAINT_READ \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 5; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
 		NifStream( unknownFloats[i0][i1], in, version ); \
@@ -2348,7 +2348,7 @@ for (uint i0 = 0; i0 < 5; i0++) { \
 }; \
 
 #define BHK_HINGE_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 5; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
 		NifStream( unknownFloats[i0][i1], out, version ); \
@@ -2370,7 +2370,7 @@ for (uint i0 = 0; i0 < 5; i0++) { \
 return out.str(); \
 
 #define BHK_HINGE_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_HINGE_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2387,7 +2387,7 @@ LimitedHingeDescriptor limitedHinge; \
 #define BHK_LIMITED_HINGE_CONSTRAINT_CONSTRUCT \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_READ \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 NifStream( limitedHinge.pivotA, in, version ); \
 NifStream( limitedHinge.axleA_, in, version ); \
 NifStream( limitedHinge.perp2axleina1, in, version ); \
@@ -2400,7 +2400,7 @@ NifStream( limitedHinge.maxAngle, in, version ); \
 NifStream( limitedHinge.maxFriction, in, version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 NifStream( limitedHinge.pivotA, out, version ); \
 NifStream( limitedHinge.axleA_, out, version ); \
 NifStream( limitedHinge.perp2axleina1, out, version ); \
@@ -2428,7 +2428,7 @@ out << "Max Friction:  " << limitedHinge.maxFriction << endl; \
 return out.str(); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2452,7 +2452,7 @@ vector<uint > unknownInts; \
 
 #define BHK_LIST_SHAPE_READ \
 uint block_num; \
-AbhkShapeCollection::Read( in, link_stack, version ); \
+AbhkShapeCollection::Read( in, link_stack, version, user_version ); \
 NifStream( numSubShapes, in, version ); \
 subShapes.resize(numSubShapes); \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
@@ -2470,7 +2470,7 @@ for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
 }; \
 
 #define BHK_LIST_SHAPE_WRITE \
-AbhkShapeCollection::Write( out, link_map, version ); \
+AbhkShapeCollection::Write( out, link_map, version, user_version ); \
 NifStream( numSubShapes, out, version ); \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(subShapes[i0])], out, version ); \
@@ -2514,7 +2514,7 @@ for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
 return out.str(); \
 
 #define BHK_LIST_SHAPE_FIXLINKS \
-AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
+AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -2555,7 +2555,7 @@ float damping; \
 
 #define BHK_MALLEABLE_CONSTRAINT_READ \
 uint block_num; \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 NifStream( type, in, version ); \
 NifStream( unknownInt2, in, version ); \
 NifStream( block_num, in, version ); \
@@ -2593,7 +2593,7 @@ NifStream( tau, in, version ); \
 NifStream( damping, in, version ); \
 
 #define BHK_MALLEABLE_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 NifStream( type, out, version ); \
 NifStream( unknownInt2, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
@@ -2667,7 +2667,7 @@ out << "Damping:  " << damping << endl; \
 return out.str(); \
 
 #define BHK_MALLEABLE_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -2713,7 +2713,7 @@ float unknownFloat2; \
 
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
 uint block_num; \
-bhkShape::Read( in, link_stack, version ); \
+bhkShape::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( material, in, version ); \
@@ -2730,7 +2730,7 @@ NifStream( unknownVector, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_WRITE \
-bhkShape::Write( out, link_map, version ); \
+bhkShape::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
 NifStream( material, out, version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
@@ -2770,7 +2770,7 @@ out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_FIXLINKS \
-bhkShape::FixLinks( objects, link_stack, version ); \
+bhkShape::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -2802,7 +2802,7 @@ float unknownFloats[8]; \
  : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownInt2((uint)0) \
 
 #define BHK_MULTI_SPHERE_SHAPE_READ \
-bhkSphereRepShape::Read( in, link_stack, version ); \
+bhkSphereRepShape::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 NifStream( unknownFloat3, in, version ); \
@@ -2812,7 +2812,7 @@ for (uint i0 = 0; i0 < 8; i0++) { \
 }; \
 
 #define BHK_MULTI_SPHERE_SHAPE_WRITE \
-bhkSphereRepShape::Write( out, link_map, version ); \
+bhkSphereRepShape::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 NifStream( unknownFloat3, out, version ); \
@@ -2838,7 +2838,7 @@ for (uint i0 = 0; i0 < 8; i0++) { \
 return out.str(); \
 
 #define BHK_MULTI_SPHERE_SHAPE_FIXLINKS \
-bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
+bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_MULTI_SPHERE_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -2864,7 +2864,7 @@ vector<uint > unknownInts3; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
-bhkSphereRepShape::Read( in, link_stack, version ); \
+bhkSphereRepShape::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	NifStream( unknownFloats1[i0], in, version ); \
 }; \
@@ -2888,7 +2888,7 @@ for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
 }; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_WRITE \
-bhkSphereRepShape::Write( out, link_map, version ); \
+bhkSphereRepShape::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -2952,7 +2952,7 @@ for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
 return out.str(); \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS \
-bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
+bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -2990,7 +2990,7 @@ Ref<hkPackedNiTriStripsData > data; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_READ \
 uint block_num; \
-AbhkShapeCollection::Read( in, link_stack, version ); \
+AbhkShapeCollection::Read( in, link_stack, version, user_version ); \
 NifStream( numSubparts, in, version ); \
 subparts.resize(numSubparts); \
 for (uint i0 = 0; i0 < subparts.size(); i0++) { \
@@ -3009,7 +3009,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_WRITE \
-AbhkShapeCollection::Write( out, link_map, version ); \
+AbhkShapeCollection::Write( out, link_map, version, user_version ); \
 NifStream( numSubparts, out, version ); \
 for (uint i0 = 0; i0 < subparts.size(); i0++) { \
 	for (uint i1 = 0; i1 < 3; i1++) { \
@@ -3057,7 +3057,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS \
-AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
+AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -3085,7 +3085,7 @@ float unknownFloats2[3]; \
 #define BHK_PRISMATIC_CONSTRAINT_CONSTRUCT \
 
 #define BHK_PRISMATIC_CONSTRAINT_READ \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
 	NifStream( unknownVectors[i0], in, version ); \
 }; \
@@ -3094,7 +3094,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 }; \
 
 #define BHK_PRISMATIC_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
 	NifStream( unknownVectors[i0], out, version ); \
 }; \
@@ -3122,7 +3122,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 return out.str(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_PRISMATIC_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3138,10 +3138,10 @@ return refs; \
 #define BHK_RAGDOLL_CONSTRAINT_CONSTRUCT \
 
 #define BHK_RAGDOLL_CONSTRAINT_READ \
-AbhkRagdollConstraint::Read( in, link_stack, version ); \
+AbhkRagdollConstraint::Read( in, link_stack, version, user_version ); \
 
 #define BHK_RAGDOLL_CONSTRAINT_WRITE \
-AbhkRagdollConstraint::Write( out, link_map, version ); \
+AbhkRagdollConstraint::Write( out, link_map, version, user_version ); \
 
 #define BHK_RAGDOLL_CONSTRAINT_STRING \
 stringstream out; \
@@ -3149,7 +3149,7 @@ out << AbhkRagdollConstraint::asString(); \
 return out.str(); \
 
 #define BHK_RAGDOLL_CONSTRAINT_FIXLINKS \
-AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
+AbhkRagdollConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_RAGDOLL_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3198,7 +3198,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 
 #define BHK_RIGID_BODY_READ \
 uint block_num; \
-bhkEntity::Read( in, link_stack, version ); \
+bhkEntity::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 5; i0++) { \
 	NifStream( unknownFloats1[i0], in, version ); \
 }; \
@@ -3248,7 +3248,7 @@ for (uint i0 = 0; i0 < constraints.size(); i0++) { \
 NifStream( unknownInt6, in, version ); \
 
 #define BHK_RIGID_BODY_WRITE \
-bhkEntity::Write( out, link_map, version ); \
+bhkEntity::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 5; i0++) { \
 	NifStream( unknownFloats1[i0], out, version ); \
 }; \
@@ -3365,7 +3365,7 @@ for (uint i0 = 0; i0 < constraints.size(); i0++) { \
 return out.str(); \
 
 #define BHK_RIGID_BODY_FIXLINKS \
-bhkEntity::FixLinks( objects, link_stack, version ); \
+bhkEntity::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < constraints.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -3395,10 +3395,10 @@ return refs; \
 #define BHK_RIGID_BODY_T_CONSTRUCT \
 
 #define BHK_RIGID_BODY_T_READ \
-bhkRigidBody::Read( in, link_stack, version ); \
+bhkRigidBody::Read( in, link_stack, version, user_version ); \
 
 #define BHK_RIGID_BODY_T_WRITE \
-bhkRigidBody::Write( out, link_map, version ); \
+bhkRigidBody::Write( out, link_map, version, user_version ); \
 
 #define BHK_RIGID_BODY_T_STRING \
 stringstream out; \
@@ -3406,7 +3406,7 @@ out << bhkRigidBody::asString(); \
 return out.str(); \
 
 #define BHK_RIGID_BODY_T_FIXLINKS \
-bhkRigidBody::FixLinks( objects, link_stack, version ); \
+bhkRigidBody::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_RIGID_BODY_T_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3426,7 +3426,7 @@ float unknownFloat; \
  : unknownFloat(0.0f) \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_READ \
-bhkEntity::Read( in, link_stack, version ); \
+bhkEntity::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 7; i0++) { \
 	NifStream( unkownFloats[i0], in, version ); \
 }; \
@@ -3438,7 +3438,7 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 NifStream( unknownFloat, in, version ); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_WRITE \
-bhkEntity::Write( out, link_map, version ); \
+bhkEntity::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 7; i0++) { \
 	NifStream( unkownFloats[i0], out, version ); \
 }; \
@@ -3472,7 +3472,7 @@ out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS \
-bhkEntity::FixLinks( objects, link_stack, version ); \
+bhkEntity::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3488,10 +3488,10 @@ return refs; \
 #define BHK_S_P_COLLISION_OBJECT_CONSTRUCT \
 
 #define BHK_S_P_COLLISION_OBJECT_READ \
-NiCollisionObject::Read( in, link_stack, version ); \
+NiCollisionObject::Read( in, link_stack, version, user_version ); \
 
 #define BHK_S_P_COLLISION_OBJECT_WRITE \
-NiCollisionObject::Write( out, link_map, version ); \
+NiCollisionObject::Write( out, link_map, version, user_version ); \
 
 #define BHK_S_P_COLLISION_OBJECT_STRING \
 stringstream out; \
@@ -3499,7 +3499,7 @@ out << NiCollisionObject::asString(); \
 return out.str(); \
 
 #define BHK_S_P_COLLISION_OBJECT_FIXLINKS \
-NiCollisionObject::FixLinks( objects, link_stack, version ); \
+NiCollisionObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_S_P_COLLISION_OBJECT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3517,11 +3517,11 @@ float radius; \
  : radius(0.0f) \
 
 #define BHK_SPHERE_SHAPE_READ \
-bhkConvexShape::Read( in, link_stack, version ); \
+bhkConvexShape::Read( in, link_stack, version, user_version ); \
 NifStream( radius, in, version ); \
 
 #define BHK_SPHERE_SHAPE_WRITE \
-bhkConvexShape::Write( out, link_map, version ); \
+bhkConvexShape::Write( out, link_map, version, user_version ); \
 NifStream( radius, out, version ); \
 
 #define BHK_SPHERE_SHAPE_STRING \
@@ -3531,7 +3531,7 @@ out << "Radius:  " << radius << endl; \
 return out.str(); \
 
 #define BHK_SPHERE_SHAPE_FIXLINKS \
-bhkConvexShape::FixLinks( objects, link_stack, version ); \
+bhkConvexShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_SPHERE_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3550,7 +3550,7 @@ float unknownFloat; \
  : unknownFloat(0.0f) \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_READ \
-AbhkConstraint::Read( in, link_stack, version ); \
+AbhkConstraint::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
 		NifStream( unknownFloats[i0][i1], in, version ); \
@@ -3559,7 +3559,7 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 NifStream( unknownFloat, in, version ); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_WRITE \
-AbhkConstraint::Write( out, link_map, version ); \
+AbhkConstraint::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	for (uint i1 = 0; i1 < 4; i1++) { \
 		NifStream( unknownFloats[i0][i1], out, version ); \
@@ -3583,7 +3583,7 @@ out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS \
-AbhkConstraint::FixLinks( objects, link_stack, version ); \
+AbhkConstraint::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3604,14 +3604,14 @@ Matrix44 transform; \
  : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f) \
 
 #define BHK_TRANSFORM_SHAPE_READ \
-bhkEntity::Read( in, link_stack, version ); \
+bhkEntity::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 NifStream( unknownFloat3, in, version ); \
 NifStream( transform, in, version ); \
 
 #define BHK_TRANSFORM_SHAPE_WRITE \
-bhkEntity::Write( out, link_map, version ); \
+bhkEntity::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 NifStream( unknownFloat3, out, version ); \
@@ -3627,7 +3627,7 @@ out << "Transform:  " << transform << endl; \
 return out.str(); \
 
 #define BHK_TRANSFORM_SHAPE_FIXLINKS \
-bhkEntity::FixLinks( objects, link_stack, version ); \
+bhkEntity::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_TRANSFORM_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3643,10 +3643,10 @@ return refs; \
 #define BHK_CONVEX_TRANSFORM_SHAPE_CONSTRUCT \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_READ \
-bhkTransformShape::Read( in, link_stack, version ); \
+bhkTransformShape::Read( in, link_stack, version, user_version ); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_WRITE \
-bhkTransformShape::Write( out, link_map, version ); \
+bhkTransformShape::Write( out, link_map, version, user_version ); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_STRING \
 stringstream out; \
@@ -3654,7 +3654,7 @@ out << bhkTransformShape::asString(); \
 return out.str(); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS \
-bhkTransformShape::FixLinks( objects, link_stack, version ); \
+bhkTransformShape::FixLinks( objects, link_stack, version, user_version ); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3671,13 +3671,13 @@ float unknownFloats[6]; \
 #define B_S_BOUND_CONSTRUCT \
 
 #define B_S_BOUND_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 	NifStream( unknownFloats[i0], in, version ); \
 }; \
 
 #define B_S_BOUND_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 	NifStream( unknownFloats[i0], out, version ); \
 }; \
@@ -3695,7 +3695,7 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 return out.str(); \
 
 #define B_S_BOUND_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define B_S_BOUND_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3714,7 +3714,7 @@ vector<FurniturePosition > positions; \
  : numPositions((uint)0) \
 
 #define B_S_FURNITURE_MARKER_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numPositions, in, version ); \
 positions.resize(numPositions); \
 for (uint i0 = 0; i0 < positions.size(); i0++) { \
@@ -3725,7 +3725,7 @@ for (uint i0 = 0; i0 < positions.size(); i0++) { \
 }; \
 
 #define B_S_FURNITURE_MARKER_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numPositions, out, version ); \
 for (uint i0 = 0; i0 < positions.size(); i0++) { \
 	NifStream( positions[i0].unknownVector, out, version ); \
@@ -3747,7 +3747,7 @@ for (uint i0 = 0; i0 < positions.size(); i0++) { \
 return out.str(); \
 
 #define B_S_FURNITURE_MARKER_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define B_S_FURNITURE_MARKER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3765,11 +3765,11 @@ float unknownFloat; \
  : unknownFloat(0.0f) \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat, in, version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat, out, version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_STRING \
@@ -3779,7 +3779,7 @@ out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define B_S_PARENT_VELOCITY_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3795,10 +3795,10 @@ return refs; \
 #define B_S_P_SYS_ARRAY_EMITTER_CONSTRUCT \
 
 #define B_S_P_SYS_ARRAY_EMITTER_READ \
-NiPSysVolumeEmitter::Read( in, link_stack, version ); \
+NiPSysVolumeEmitter::Read( in, link_stack, version, user_version ); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_WRITE \
-NiPSysVolumeEmitter::Write( out, link_map, version ); \
+NiPSysVolumeEmitter::Write( out, link_map, version, user_version ); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_STRING \
 stringstream out; \
@@ -3806,7 +3806,7 @@ out << NiPSysVolumeEmitter::asString(); \
 return out.str(); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_FIXLINKS \
-NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version ); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3824,11 +3824,11 @@ uint flags; \
  : flags((uint)0) \
 
 #define B_S_X_FLAGS_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 
 #define B_S_X_FLAGS_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 
 #define B_S_X_FLAGS_STRING \
@@ -3838,7 +3838,7 @@ out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define B_S_X_FLAGS_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define B_S_X_FLAGS_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3859,7 +3859,7 @@ vector<Vector3 > vertices; \
  : numTriangles((uint)0), numVertices((uint)0) \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_READ \
-AbhkShapeCollection::Read( in, link_stack, version ); \
+AbhkShapeCollection::Read( in, link_stack, version, user_version ); \
 NifStream( numTriangles, in, version ); \
 triangles.resize(numTriangles); \
 for (uint i0 = 0; i0 < triangles.size(); i0++) { \
@@ -3874,7 +3874,7 @@ for (uint i0 = 0; i0 < vertices.size(); i0++) { \
 }; \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_WRITE \
-AbhkShapeCollection::Write( out, link_map, version ); \
+AbhkShapeCollection::Write( out, link_map, version, user_version ); \
 NifStream( numTriangles, out, version ); \
 for (uint i0 = 0; i0 < triangles.size(); i0++) { \
 	NifStream( triangles[i0].triangle, out, version ); \
@@ -3906,7 +3906,7 @@ for (uint i0 = 0; i0 < vertices.size(); i0++) { \
 return out.str(); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS \
-AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
+AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version ); \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -3925,14 +3925,14 @@ Ref<NiFloatData > data; \
 
 #define NI_ALPHA_CONTROLLER_READ \
 uint block_num; \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
 
 #define NI_ALPHA_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 }; \
@@ -3944,7 +3944,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_ALPHA_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -3975,12 +3975,12 @@ byte threshold; \
  : flags((unsigned short)237), threshold((byte)0) \
 
 #define NI_ALPHA_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 NifStream( threshold, in, version ); \
 
 #define NI_ALPHA_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 NifStream( threshold, out, version ); \
 
@@ -3992,7 +3992,7 @@ out << "Threshold:  " << threshold << endl; \
 return out.str(); \
 
 #define NI_ALPHA_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_ALPHA_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4008,10 +4008,10 @@ return refs; \
 #define NI_AMBIENT_LIGHT_CONSTRUCT \
 
 #define NI_AMBIENT_LIGHT_READ \
-NiLight::Read( in, link_stack, version ); \
+NiLight::Read( in, link_stack, version, user_version ); \
 
 #define NI_AMBIENT_LIGHT_WRITE \
-NiLight::Write( out, link_map, version ); \
+NiLight::Write( out, link_map, version, user_version ); \
 
 #define NI_AMBIENT_LIGHT_STRING \
 stringstream out; \
@@ -4019,7 +4019,7 @@ out << NiLight::asString(); \
 return out.str(); \
 
 #define NI_AMBIENT_LIGHT_FIXLINKS \
-NiLight::FixLinks( objects, link_stack, version ); \
+NiLight::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_AMBIENT_LIGHT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4042,7 +4042,7 @@ vector<float > sizes; \
  : numParticles((ushort)0), size(0.0f), numActive((ushort)0), unknownShort((ushort)0), hasSizes(false) \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_READ \
-NiTriBasedGeomData::Read( in, link_stack, version ); \
+NiTriBasedGeomData::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x04000002 ) { \
 	NifStream( numParticles, in, version ); \
 }; \
@@ -4064,7 +4064,7 @@ if ( (hasSizes != 0) ) { \
 }; \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_WRITE \
-NiTriBasedGeomData::Write( out, link_map, version ); \
+NiTriBasedGeomData::Write( out, link_map, version, user_version ); \
 if ( version <= 0x04000002 ) { \
 	NifStream( numParticles, out, version ); \
 }; \
@@ -4104,7 +4104,7 @@ if ( (hasSizes != 0) ) { \
 return out.str(); \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_FIXLINKS \
-NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4121,7 +4121,7 @@ ByteArray binaryData; \
 #define NI_BINARY_EXTRA_DATA_CONSTRUCT \
 
 #define NI_BINARY_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( binaryData.dataSize, in, version ); \
 if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
 	NifStream( binaryData.unknownInt, in, version ); \
@@ -4132,7 +4132,7 @@ for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 }; \
 
 #define NI_BINARY_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( binaryData.dataSize, out, version ); \
 if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
 	NifStream( binaryData.unknownInt, out, version ); \
@@ -4156,7 +4156,7 @@ for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 return out.str(); \
 
 #define NI_BINARY_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BINARY_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4174,11 +4174,11 @@ byte boolValue; \
  : boolValue((byte)0) \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_READ \
-NiBlendInterpolator::Read( in, link_stack, version ); \
+NiBlendInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( boolValue, in, version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_WRITE \
-NiBlendInterpolator::Write( out, link_map, version ); \
+NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( boolValue, out, version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_STRING \
@@ -4188,7 +4188,7 @@ out << "Bool Value:  " << boolValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS \
-NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4206,11 +4206,11 @@ float floatValue; \
  : floatValue(0.0f) \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_READ \
-NiBlendInterpolator::Read( in, link_stack, version ); \
+NiBlendInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( floatValue, in, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_WRITE \
-NiBlendInterpolator::Write( out, link_map, version ); \
+NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( floatValue, out, version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_STRING \
@@ -4220,7 +4220,7 @@ out << "Float Value:  " << floatValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS \
-NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4237,11 +4237,11 @@ Vector3 pointValue; \
 #define NI_BLEND_POINT3_INTERPOLATOR_CONSTRUCT \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_READ \
-NiBlendInterpolator::Read( in, link_stack, version ); \
+NiBlendInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( pointValue, in, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_WRITE \
-NiBlendInterpolator::Write( out, link_map, version ); \
+NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( pointValue, out, version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_STRING \
@@ -4251,7 +4251,7 @@ out << "Point Value:  " << pointValue << endl; \
 return out.str(); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS \
-NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BLEND_POINT3_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4267,10 +4267,10 @@ return refs; \
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_CONSTRUCT \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_READ \
-NiBlendInterpolator::Read( in, link_stack, version ); \
+NiBlendInterpolator::Read( in, link_stack, version, user_version ); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_WRITE \
-NiBlendInterpolator::Write( out, link_map, version ); \
+NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
@@ -4278,7 +4278,7 @@ out << NiBlendInterpolator::asString(); \
 return out.str(); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_FIXLINKS \
-NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4300,7 +4300,7 @@ vector<Ref<NiTriShape > > shapeGroups2; \
 
 #define NI_BONE_L_O_D_CONTROLLER_READ \
 uint block_num; \
-ABoneLODController::Read( in, link_stack, version ); \
+ABoneLODController::Read( in, link_stack, version, user_version ); \
 NifStream( numShapeGroups, in, version ); \
 shapeGroups1.resize(numShapeGroups); \
 for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
@@ -4321,7 +4321,7 @@ for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
 }; \
 
 #define NI_BONE_L_O_D_CONTROLLER_WRITE \
-ABoneLODController::Write( out, link_map, version ); \
+ABoneLODController::Write( out, link_map, version, user_version ); \
 NifStream( numShapeGroups, out, version ); \
 for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 	NifStream( shapeGroups1[i0].numLinkPairs, out, version ); \
@@ -4357,7 +4357,7 @@ for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
 return out.str(); \
 
 #define NI_BONE_L_O_D_CONTROLLER_FIXLINKS \
-ABoneLODController::FixLinks( objects, link_stack, version ); \
+ABoneLODController::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 	for (uint i1 = 0; i1 < shapeGroups1[i0].linkPairs.size(); i1++) { \
 		if (link_stack.empty()) \
@@ -4416,7 +4416,7 @@ KeyGroup<byte > data; \
 #define NI_BOOL_DATA_CONSTRUCT \
 
 #define NI_BOOL_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( data.numKeys, in, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, in, version ); \
@@ -4427,7 +4427,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 }; \
 
 #define NI_BOOL_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( data.numKeys, out, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, out, version ); \
@@ -4453,7 +4453,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 return out.str(); \
 
 #define NI_BOOL_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BOOL_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4471,11 +4471,11 @@ byte booleanData; \
  : booleanData((byte)0) \
 
 #define NI_BOOLEAN_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( booleanData, in, version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( booleanData, out, version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_STRING \
@@ -4485,7 +4485,7 @@ out << "Boolean Data:  " << booleanData << endl; \
 return out.str(); \
 
 #define NI_BOOLEAN_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BOOLEAN_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4505,13 +4505,13 @@ Ref<NiBoolData > data; \
 
 #define NI_BOOL_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( boolValue, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_BOOL_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( boolValue, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
@@ -4523,7 +4523,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_BOOL_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -4553,13 +4553,13 @@ Ref<NiBoolData > data; \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( boolValue, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( boolValue, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
@@ -4571,7 +4571,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -4597,10 +4597,10 @@ return refs; \
 #define NI_B_S_BONE_L_O_D_CONTROLLER_CONSTRUCT \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_READ \
-ABoneLODController::Read( in, link_stack, version ); \
+ABoneLODController::Read( in, link_stack, version, user_version ); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_WRITE \
-ABoneLODController::Write( out, link_map, version ); \
+ABoneLODController::Write( out, link_map, version, user_version ); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_STRING \
 stringstream out; \
@@ -4608,7 +4608,7 @@ out << ABoneLODController::asString(); \
 return out.str(); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS \
-ABoneLODController::FixLinks( objects, link_stack, version ); \
+ABoneLODController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4626,11 +4626,11 @@ uint unknownInt; \
  : unknownInt((uint)0) \
 
 #define NI_B_SPLINE_BASIS_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt, in, version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt, out, version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_STRING \
@@ -4640,7 +4640,7 @@ out << "Unknown Int:  " << unknownInt << endl; \
 return out.str(); \
 
 #define NI_B_SPLINE_BASIS_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_SPLINE_BASIS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4657,13 +4657,13 @@ float unknownFloats[6]; \
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_CONSTRUCT \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_READ \
-NiBSplineInterpolator::Read( in, link_stack, version ); \
+NiBSplineInterpolator::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 	NifStream( unknownFloats[i0], in, version ); \
 }; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_WRITE \
-NiBSplineInterpolator::Write( out, link_map, version ); \
+NiBSplineInterpolator::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 	NifStream( unknownFloats[i0], out, version ); \
 }; \
@@ -4681,7 +4681,7 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 return out.str(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS \
-NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4702,7 +4702,7 @@ float unknownFloats[6]; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ \
 uint block_num; \
-NiBSplineInterpolator::Read( in, link_stack, version ); \
+NiBSplineInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( block_num, in, version ); \
@@ -4712,7 +4712,7 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 }; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_WRITE \
-NiBSplineInterpolator::Write( out, link_map, version ); \
+NiBSplineInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
@@ -4734,7 +4734,7 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 return out.str(); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS \
-NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -4775,7 +4775,7 @@ float unknown4[17]; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 uint block_num; \
-NiBSplineInterpolator::Read( in, link_stack, version ); \
+NiBSplineInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( block_num, in, version ); \
@@ -4785,7 +4785,7 @@ for (uint i0 = 0; i0 < 17; i0++) { \
 }; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_WRITE \
-NiBSplineInterpolator::Write( out, link_map, version ); \
+NiBSplineInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 NifStream( link_map[StaticCast<NiObject>(basisData)], out, version ); \
 for (uint i0 = 0; i0 < 17; i0++) { \
@@ -4807,7 +4807,7 @@ for (uint i0 = 0; i0 < 17; i0++) { \
 return out.str(); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS \
-NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -4847,7 +4847,7 @@ vector< array<byte,2> > unknownData; \
  : unknownInt((uint)0), count((uint)0) \
 
 #define NI_B_SPLINE_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt, in, version ); \
 NifStream( count, in, version ); \
 unknownData.resize(count); \
@@ -4858,7 +4858,7 @@ for (uint i0 = 0; i0 < unknownData.size(); i0++) { \
 }; \
 
 #define NI_B_SPLINE_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt, out, version ); \
 NifStream( count, out, version ); \
 for (uint i0 = 0; i0 < unknownData.size(); i0++) { \
@@ -4884,7 +4884,7 @@ for (uint i0 = 0; i0 < unknownData.size(); i0++) { \
 return out.str(); \
 
 #define NI_B_SPLINE_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_SPLINE_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -4918,7 +4918,7 @@ uint unknownInt2; \
 
 #define NI_CAMERA_READ \
 uint block_num; \
-NiAVObject::Read( in, link_stack, version ); \
+NiAVObject::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownShort, in, version ); \
 }; \
@@ -4944,7 +4944,7 @@ if ( version >= 0x04020100 ) { \
 }; \
 
 #define NI_CAMERA_WRITE \
-NiAVObject::Write( out, link_map, version ); \
+NiAVObject::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownShort, out, version ); \
 }; \
@@ -4990,7 +4990,7 @@ out << "Unknown Int 2:  " << unknownInt2 << endl; \
 return out.str(); \
 
 #define NI_CAMERA_FIXLINKS \
-NiAVObject::FixLinks( objects, link_stack, version ); \
+NiAVObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -5026,7 +5026,7 @@ float unknown8[15]; \
 
 #define NI_COLLISION_DATA_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( unknown2, in, version ); \
@@ -5048,7 +5048,7 @@ if ( (collisionType == 1) ) { \
 }; \
 
 #define NI_COLLISION_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version ); \
 NifStream( unknown2, out, version ); \
 NifStream( unknown3, out, version ); \
@@ -5100,7 +5100,7 @@ if ( (collisionType == 1) ) { \
 return out.str(); \
 
 #define NI_COLLISION_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -5126,7 +5126,7 @@ KeyGroup<Color4 > data; \
 #define NI_COLOR_DATA_CONSTRUCT \
 
 #define NI_COLOR_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( data.numKeys, in, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, in, version ); \
@@ -5137,7 +5137,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 }; \
 
 #define NI_COLOR_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( data.numKeys, out, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, out, version ); \
@@ -5163,7 +5163,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 return out.str(); \
 
 #define NI_COLOR_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_COLOR_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -5180,11 +5180,11 @@ Color4 data; \
 #define NI_COLOR_EXTRA_DATA_CONSTRUCT \
 
 #define NI_COLOR_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( data, in, version ); \
 
 #define NI_COLOR_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( data, out, version ); \
 
 #define NI_COLOR_EXTRA_DATA_STRING \
@@ -5194,7 +5194,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_COLOR_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_COLOR_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -5216,7 +5216,7 @@ Ref<NiDefaultAVObjectPalette > objectPalette; \
 
 #define NI_CONTROLLER_MANAGER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( cumulative, in, version ); \
 NifStream( numControllerSequences, in, version ); \
 controllerSequences.resize(numControllerSequences); \
@@ -5228,7 +5228,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_CONTROLLER_MANAGER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( cumulative, out, version ); \
 NifStream( numControllerSequences, out, version ); \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
@@ -5252,7 +5252,7 @@ out << "Object Palette:  " << objectPalette << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_MANAGER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -5311,7 +5311,7 @@ Ref<NiStringPalette > stringPalette; \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( name, in, version ); \
 if ( version <= 0x0A010000 ) { \
 	if ( version <= 0x0A010000 ) { \
@@ -5455,7 +5455,7 @@ if ( version >= 0x0A020000 ) { \
 }; \
 
 #define NI_CONTROLLER_SEQUENCE_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( name, out, version ); \
 if ( version <= 0x0A010000 ) { \
 	if ( version <= 0x0A010000 ) { \
@@ -5643,7 +5643,7 @@ out << "String Palette:  " << stringPalette << endl; \
 return out.str(); \
 
 #define NI_CONTROLLER_SEQUENCE_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -5795,7 +5795,7 @@ vector<AVObject > objs; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt, in, version ); \
 NifStream( numObjs, in, version ); \
 objs.resize(numObjs); \
@@ -5806,7 +5806,7 @@ for (uint i0 = 0; i0 < objs.size(); i0++) { \
 }; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt, out, version ); \
 NifStream( numObjs, out, version ); \
 for (uint i0 = 0; i0 < objs.size(); i0++) { \
@@ -5826,7 +5826,7 @@ for (uint i0 = 0; i0 < objs.size(); i0++) { \
 return out.str(); \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < objs.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -5855,10 +5855,10 @@ return refs; \
 #define NI_DIRECTIONAL_LIGHT_CONSTRUCT \
 
 #define NI_DIRECTIONAL_LIGHT_READ \
-NiLight::Read( in, link_stack, version ); \
+NiLight::Read( in, link_stack, version, user_version ); \
 
 #define NI_DIRECTIONAL_LIGHT_WRITE \
-NiLight::Write( out, link_map, version ); \
+NiLight::Write( out, link_map, version, user_version ); \
 
 #define NI_DIRECTIONAL_LIGHT_STRING \
 stringstream out; \
@@ -5866,7 +5866,7 @@ out << NiLight::asString(); \
 return out.str(); \
 
 #define NI_DIRECTIONAL_LIGHT_FIXLINKS \
-NiLight::FixLinks( objects, link_stack, version ); \
+NiLight::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_DIRECTIONAL_LIGHT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -5884,11 +5884,11 @@ unsigned short flags; \
  : flags((unsigned short)0) \
 
 #define NI_DITHER_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 
 #define NI_DITHER_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 
 #define NI_DITHER_PROPERTY_STRING \
@@ -5898,7 +5898,7 @@ out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_DITHER_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_DITHER_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -5921,7 +5921,7 @@ vector<Ref<NiSourceTexture > > sources; \
 
 #define NI_FLIP_CONTROLLER_READ \
 uint block_num; \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 NifStream( textureSlot, in, version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( unknownInt2, in, version ); \
@@ -5935,7 +5935,7 @@ for (uint i0 = 0; i0 < sources.size(); i0++) { \
 }; \
 
 #define NI_FLIP_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 NifStream( textureSlot, out, version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( unknownInt2, out, version ); \
@@ -5963,7 +5963,7 @@ for (uint i0 = 0; i0 < sources.size(); i0++) { \
 return out.str(); \
 
 #define NI_FLIP_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < sources.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -5994,7 +5994,7 @@ KeyGroup<float > data; \
 #define NI_FLOAT_DATA_CONSTRUCT \
 
 #define NI_FLOAT_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( data.numKeys, in, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, in, version ); \
@@ -6005,7 +6005,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 }; \
 
 #define NI_FLOAT_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( data.numKeys, out, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, out, version ); \
@@ -6031,7 +6031,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 return out.str(); \
 
 #define NI_FLOAT_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_FLOAT_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6049,11 +6049,11 @@ float floatData; \
  : floatData(0.0f) \
 
 #define NI_FLOAT_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( floatData, in, version ); \
 
 #define NI_FLOAT_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( floatData, out, version ); \
 
 #define NI_FLOAT_EXTRA_DATA_STRING \
@@ -6063,7 +6063,7 @@ out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_FLOAT_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_FLOAT_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6083,7 +6083,7 @@ string unknownString; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
@@ -6091,7 +6091,7 @@ if ( version >= 0x14000004 ) { \
 }; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 	NifStream( unknownString, out, version ); \
@@ -6105,7 +6105,7 @@ out << "Unknown String:  " << unknownString << endl; \
 return out.str(); \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -6137,13 +6137,13 @@ Ref<NiFloatData > data; \
 
 #define NI_FLOAT_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( floatValue, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_FLOAT_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( floatValue, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
@@ -6155,7 +6155,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_FLOAT_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6184,7 +6184,7 @@ vector<float > data; \
  : numFloats((uint)0) \
 
 #define NI_FLOATS_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numFloats, in, version ); \
 data.resize(numFloats); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
@@ -6192,7 +6192,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 }; \
 
 #define NI_FLOATS_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numFloats, out, version ); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
 	NifStream( data[i0], out, version ); \
@@ -6212,7 +6212,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 return out.str(); \
 
 #define NI_FLOATS_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_FLOATS_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6232,13 +6232,13 @@ Color3 fogColor; \
  : flags((unsigned short)0), fogDepth(0.0f) \
 
 #define NI_FOG_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 NifStream( fogDepth, in, version ); \
 NifStream( fogColor, in, version ); \
 
 #define NI_FOG_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 NifStream( fogDepth, out, version ); \
 NifStream( fogColor, out, version ); \
@@ -6252,7 +6252,7 @@ out << "Fog Color:  " << fogColor << endl; \
 return out.str(); \
 
 #define NI_FOG_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_FOG_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6278,7 +6278,7 @@ vector<uint > unknownInts; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown, in, version ); \
 }; \
@@ -6305,7 +6305,7 @@ if ( version >= 0x0A020000 ) { \
 }; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown, out, version ); \
 }; \
@@ -6353,7 +6353,7 @@ for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
 return out.str(); \
 
 #define NI_GEOM_MORPHER_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6401,7 +6401,7 @@ Vector3 direction; \
  : unknownFloat1(0.0f), force(0.0f), type((uint)0) \
 
 #define NI_GRAVITY_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( force, in, version ); \
 NifStream( type, in, version ); \
@@ -6409,7 +6409,7 @@ NifStream( position, in, version ); \
 NifStream( direction, in, version ); \
 
 #define NI_GRAVITY_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( force, out, version ); \
 NifStream( type, out, version ); \
@@ -6427,7 +6427,7 @@ out << "Direction:  " << direction << endl; \
 return out.str(); \
 
 #define NI_GRAVITY_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_GRAVITY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6445,11 +6445,11 @@ uint integerData; \
  : integerData((uint)0) \
 
 #define NI_INTEGER_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( integerData, in, version ); \
 
 #define NI_INTEGER_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( integerData, out, version ); \
 
 #define NI_INTEGER_EXTRA_DATA_STRING \
@@ -6459,7 +6459,7 @@ out << "Integer Data:  " << integerData << endl; \
 return out.str(); \
 
 #define NI_INTEGER_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_INTEGER_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6478,7 +6478,7 @@ vector<uint > data; \
  : numIntegers((uint)0) \
 
 #define NI_INTEGERS_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numIntegers, in, version ); \
 data.resize(numIntegers); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
@@ -6486,7 +6486,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 }; \
 
 #define NI_INTEGERS_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numIntegers, out, version ); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
 	NifStream( data[i0], out, version ); \
@@ -6506,7 +6506,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 return out.str(); \
 
 #define NI_INTEGERS_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_INTEGERS_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6525,12 +6525,12 @@ Ref<NiKeyframeData > data; \
 
 #define NI_KEYFRAME_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_KEYFRAME_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_KEYFRAME_CONTROLLER_STRING \
@@ -6540,7 +6540,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_KEYFRAME_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6569,12 +6569,12 @@ Ref<NiKeyframeData > data2; \
 
 #define B_S_KEYFRAME_CONTROLLER_READ \
 uint block_num; \
-NiKeyframeController::Read( in, link_stack, version ); \
+NiKeyframeController::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define B_S_KEYFRAME_CONTROLLER_WRITE \
-NiKeyframeController::Write( out, link_map, version ); \
+NiKeyframeController::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data2)], out, version ); \
 
 #define B_S_KEYFRAME_CONTROLLER_STRING \
@@ -6584,7 +6584,7 @@ out << "Data 2:  " << data2 << endl; \
 return out.str(); \
 
 #define B_S_KEYFRAME_CONTROLLER_FIXLINKS \
-NiKeyframeController::FixLinks( objects, link_stack, version ); \
+NiKeyframeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6618,7 +6618,7 @@ KeyGroup<float > scales; \
  : numRotationKeys((uint)0), rotationType((KeyType)0), unknownFloat(0.0f) \
 
 #define NI_KEYFRAME_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( numRotationKeys, in, version ); \
 if ( (numRotationKeys != 0) ) { \
 	NifStream( rotationType, in, version ); \
@@ -6664,7 +6664,7 @@ for (uint i0 = 0; i0 < scales.keys.size(); i0++) { \
 }; \
 
 #define NI_KEYFRAME_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( numRotationKeys, out, version ); \
 if ( (numRotationKeys != 0) ) { \
 	NifStream( rotationType, out, version ); \
@@ -6762,7 +6762,7 @@ for (uint i0 = 0; i0 < scales.keys.size(); i0++) { \
 return out.str(); \
 
 #define NI_KEYFRAME_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_KEYFRAME_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -6783,7 +6783,7 @@ Ref<NiPoint3Interpolator > interpolator; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
 	NifStream( unknownShort, in, version ); \
 }; \
@@ -6798,7 +6798,7 @@ if ( version >= 0x0A020000 ) { \
 }; \
 
 #define NI_LIGHT_COLOR_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
 	NifStream( unknownShort, out, version ); \
 }; \
@@ -6819,7 +6819,7 @@ out << "Interpolator:  " << interpolator << endl; \
 return out.str(); \
 
 #define NI_LIGHT_COLOR_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -6862,12 +6862,12 @@ Ref<NiInterpolator > unknownLink; \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_STRING \
@@ -6877,7 +6877,7 @@ out << "Unknown Link:  " << unknownLink << endl; \
 return out.str(); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6907,7 +6907,7 @@ Ref<NiNode > lookAtNode; \
 
 #define NI_LOOK_AT_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown1, in, version ); \
 }; \
@@ -6915,7 +6915,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_LOOK_AT_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown1, out, version ); \
 }; \
@@ -6929,7 +6929,7 @@ out << "Look At Node:  " << lookAtNode << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -6966,7 +6966,7 @@ Ref<NiFloatInterpolator > unknownLink3; \
 
 #define NI_LOOK_AT_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( unknownShort, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
@@ -6982,7 +6982,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_LOOK_AT_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(lookAt)], out, version ); \
 NifStream( unknownFloat, out, version ); \
@@ -7008,7 +7008,7 @@ out << "Unknown Link 3:  " << unknownLink3 << endl; \
 return out.str(); \
 
 #define NI_LOOK_AT_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -7068,7 +7068,7 @@ Ref<NiPosData > data; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_READ \
 uint block_num; \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown, in, version ); \
 }; \
@@ -7078,7 +7078,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown, out, version ); \
 }; \
@@ -7094,7 +7094,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -7130,7 +7130,7 @@ float alpha; \
  : flags((unsigned short)0), glossiness(0.0f), alpha(0.0f) \
 
 #define NI_MATERIAL_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, in, version ); \
 }; \
@@ -7142,7 +7142,7 @@ NifStream( glossiness, in, version ); \
 NifStream( alpha, in, version ); \
 
 #define NI_MATERIAL_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, out, version ); \
 }; \
@@ -7166,7 +7166,7 @@ out << "Alpha:  " << alpha << endl; \
 return out.str(); \
 
 #define NI_MATERIAL_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_MATERIAL_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7199,7 +7199,7 @@ Ref<NiNode > unknownLink2; \
 
 #define NI_MESH_P_SYS_DATA_READ \
 uint block_num; \
-APSysData::Read( in, link_stack, version ); \
+APSysData::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x14000005 ) { \
 	NifStream( unknownByte11, in, version ); \
 }; \
@@ -7252,7 +7252,7 @@ if ( version >= 0x0A020000 ) { \
 }; \
 
 #define NI_MESH_P_SYS_DATA_WRITE \
-APSysData::Write( out, link_map, version ); \
+APSysData::Write( out, link_map, version, user_version ); \
 if ( version >= 0x14000005 ) { \
 	NifStream( unknownByte11, out, version ); \
 }; \
@@ -7348,7 +7348,7 @@ out << "Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 #define NI_MESH_P_SYS_DATA_FIXLINKS \
-APSysData::FixLinks( objects, link_stack, version ); \
+APSysData::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -7409,7 +7409,7 @@ vector<Morph > morphs; \
  : numMorphs((uint)0), numVertices((uint)0), unknownByte((byte)0) \
 
 #define NI_MORPH_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( numMorphs, in, version ); \
 NifStream( numVertices, in, version ); \
 NifStream( unknownByte, in, version ); \
@@ -7436,7 +7436,7 @@ for (uint i0 = 0; i0 < morphs.size(); i0++) { \
 }; \
 
 #define NI_MORPH_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( numMorphs, out, version ); \
 NifStream( numVertices, out, version ); \
 NifStream( unknownByte, out, version ); \
@@ -7488,7 +7488,7 @@ for (uint i0 = 0; i0 < morphs.size(); i0++) { \
 return out.str(); \
 
 #define NI_MORPH_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_MORPH_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7508,7 +7508,7 @@ vector<NiNode * > extraTargets; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( numExtraTargets, in, version ); \
 extraTargets.resize(numExtraTargets); \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
@@ -7517,7 +7517,7 @@ for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 }; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( numExtraTargets, out, version ); \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(extraTargets[i0])], out, version ); \
@@ -7537,7 +7537,7 @@ for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 return out.str(); \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -7572,7 +7572,7 @@ vector<Ref<NiDynamicEffect > > effects; \
 
 #define NI_NODE_READ \
 uint block_num; \
-NiAVObject::Read( in, link_stack, version ); \
+NiAVObject::Read( in, link_stack, version, user_version ); \
 NifStream( numChildren, in, version ); \
 children.resize(numChildren); \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
@@ -7587,7 +7587,7 @@ for (uint i0 = 0; i0 < effects.size(); i0++) { \
 }; \
 
 #define NI_NODE_WRITE \
-NiAVObject::Write( out, link_map, version ); \
+NiAVObject::Write( out, link_map, version, user_version ); \
 NifStream( numChildren, out, version ); \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(children[i0])], out, version ); \
@@ -7619,7 +7619,7 @@ for (uint i0 = 0; i0 < effects.size(); i0++) { \
 return out.str(); \
 
 #define NI_NODE_FIXLINKS \
-NiAVObject::FixLinks( objects, link_stack, version ); \
+NiAVObject::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -7663,10 +7663,10 @@ return refs; \
 #define AVOID_NODE_CONSTRUCT \
 
 #define AVOID_NODE_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 
 #define AVOID_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 
 #define AVOID_NODE_STRING \
 stringstream out; \
@@ -7674,7 +7674,7 @@ out << NiNode::asString(); \
 return out.str(); \
 
 #define AVOID_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define AVOID_NODE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7693,14 +7693,14 @@ byte unknown292Bytes[292]; \
  : unknown1((byte)0) \
 
 #define FX_WIDGET_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 NifStream( unknown1, in, version ); \
 for (uint i0 = 0; i0 < 292; i0++) { \
 	NifStream( unknown292Bytes[i0], in, version ); \
 }; \
 
 #define FX_WIDGET_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 NifStream( unknown1, out, version ); \
 for (uint i0 = 0; i0 < 292; i0++) { \
 	NifStream( unknown292Bytes[i0], out, version ); \
@@ -7720,7 +7720,7 @@ for (uint i0 = 0; i0 < 292; i0++) { \
 return out.str(); \
 
 #define FX_WIDGET_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define FX_WIDGET_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7736,10 +7736,10 @@ return refs; \
 #define FX_BUTTON_CONSTRUCT \
 
 #define FX_BUTTON_READ \
-FxWidget::Read( in, link_stack, version ); \
+FxWidget::Read( in, link_stack, version, user_version ); \
 
 #define FX_BUTTON_WRITE \
-FxWidget::Write( out, link_map, version ); \
+FxWidget::Write( out, link_map, version, user_version ); \
 
 #define FX_BUTTON_STRING \
 stringstream out; \
@@ -7747,7 +7747,7 @@ out << FxWidget::asString(); \
 return out.str(); \
 
 #define FX_BUTTON_FIXLINKS \
-FxWidget::FixLinks( objects, link_stack, version ); \
+FxWidget::FixLinks( objects, link_stack, version, user_version ); \
 
 #define FX_BUTTON_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7770,7 +7770,7 @@ vector<Ref<NiObject > > unknownLinks; \
 
 #define FX_RADIO_BUTTON_READ \
 uint block_num; \
-FxWidget::Read( in, link_stack, version ); \
+FxWidget::Read( in, link_stack, version, user_version ); \
 NifStream( unknownInt1, in, version ); \
 NifStream( unknownInt2, in, version ); \
 NifStream( unknownInt3, in, version ); \
@@ -7782,7 +7782,7 @@ for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
 }; \
 
 #define FX_RADIO_BUTTON_WRITE \
-FxWidget::Write( out, link_map, version ); \
+FxWidget::Write( out, link_map, version, user_version ); \
 NifStream( unknownInt1, out, version ); \
 NifStream( unknownInt2, out, version ); \
 NifStream( unknownInt3, out, version ); \
@@ -7808,7 +7808,7 @@ for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
 return out.str(); \
 
 #define FX_RADIO_BUTTON_FIXLINKS \
-FxWidget::FixLinks( objects, link_stack, version ); \
+FxWidget::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -7840,13 +7840,13 @@ ushort billboardMode; \
  : billboardMode((ushort)0) \
 
 #define NI_BILLBOARD_NODE_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( billboardMode, in, version ); \
 }; \
 
 #define NI_BILLBOARD_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( billboardMode, out, version ); \
 }; \
@@ -7858,7 +7858,7 @@ out << "Billboard Mode:  " << billboardMode << endl; \
 return out.str(); \
 
 #define NI_BILLBOARD_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_BILLBOARD_NODE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7874,10 +7874,10 @@ return refs; \
 #define NI_B_S_ANIMATION_NODE_CONSTRUCT \
 
 #define NI_B_S_ANIMATION_NODE_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 
 #define NI_B_S_ANIMATION_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 
 #define NI_B_S_ANIMATION_NODE_STRING \
 stringstream out; \
@@ -7885,7 +7885,7 @@ out << NiNode::asString(); \
 return out.str(); \
 
 #define NI_B_S_ANIMATION_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_S_ANIMATION_NODE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7901,10 +7901,10 @@ return refs; \
 #define NI_B_S_PARTICLE_NODE_CONSTRUCT \
 
 #define NI_B_S_PARTICLE_NODE_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 
 #define NI_B_S_PARTICLE_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 
 #define NI_B_S_PARTICLE_NODE_STRING \
 stringstream out; \
@@ -7912,7 +7912,7 @@ out << NiNode::asString(); \
 return out.str(); \
 
 #define NI_B_S_PARTICLE_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_S_PARTICLE_NODE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -7936,7 +7936,7 @@ Ref<NiRangeLODData > rangeData; \
 
 #define NI_L_O_D_NODE_READ \
 uint block_num; \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 NifStream( lodType, in, version ); \
 if ( (lodType == 0) ) { \
 	NifStream( lodCenter, in, version ); \
@@ -7954,7 +7954,7 @@ if ( (lodType == 1) ) { \
 }; \
 
 #define NI_L_O_D_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 NifStream( lodType, out, version ); \
 if ( (lodType == 0) ) { \
 	NifStream( lodCenter, out, version ); \
@@ -7988,7 +7988,7 @@ if ( (lodType == 1) ) { \
 return out.str(); \
 
 #define NI_L_O_D_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 if ( (lodType == 1) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -8020,7 +8020,7 @@ byte palette[256][4]; \
  : unknownByte((byte)0), numEntries_((uint)0) \
 
 #define NI_PALETTE_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( unknownByte, in, version ); \
 NifStream( numEntries_, in, version ); \
 for (uint i0 = 0; i0 < 256; i0++) { \
@@ -8030,7 +8030,7 @@ for (uint i0 = 0; i0 < 256; i0++) { \
 }; \
 
 #define NI_PALETTE_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( unknownByte, out, version ); \
 NifStream( numEntries_, out, version ); \
 for (uint i0 = 0; i0 < 256; i0++) { \
@@ -8056,7 +8056,7 @@ for (uint i0 = 0; i0 < 256; i0++) { \
 return out.str(); \
 
 #define NI_PALETTE_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PALETTE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8085,7 +8085,7 @@ float unknownFloat10; \
  : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownInt1((uint)0), unknownInt2((uint)0), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f) \
 
 #define NI_PARTICLE_BOMB_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 NifStream( unknownFloat3, in, version ); \
@@ -8100,7 +8100,7 @@ NifStream( unknownFloat9, in, version ); \
 NifStream( unknownFloat10, in, version ); \
 
 #define NI_PARTICLE_BOMB_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 NifStream( unknownFloat3, out, version ); \
@@ -8132,7 +8132,7 @@ out << "Unknown Float 10:  " << unknownFloat10 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_BOMB_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLE_BOMB_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8151,12 +8151,12 @@ Ref<NiColorData > colorData; \
 
 #define NI_PARTICLE_COLOR_MODIFIER_READ \
 uint block_num; \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(colorData)], out, version ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_STRING \
@@ -8166,7 +8166,7 @@ out << "Color Data:  " << colorData << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -8195,12 +8195,12 @@ float fade; \
  : grow(0.0f), fade(0.0f) \
 
 #define NI_PARTICLE_GROW_FADE_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( grow, in, version ); \
 NifStream( fade, in, version ); \
 
 #define NI_PARTICLE_GROW_FADE_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( grow, out, version ); \
 NifStream( fade, out, version ); \
 
@@ -8212,7 +8212,7 @@ out << "Fade:  " << fade << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_GROW_FADE_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLE_GROW_FADE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8232,13 +8232,13 @@ Ref<NiTriBasedGeom > particleMeshes; \
 
 #define NI_PARTICLE_MESH_MODIFIER_READ \
 uint block_num; \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( numParticleMeshes, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_PARTICLE_MESH_MODIFIER_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( numParticleMeshes, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
 
@@ -8250,7 +8250,7 @@ out << "Particle Meshes:  " << particleMeshes << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -8282,7 +8282,7 @@ float unknownFloat4; \
  : unknownByte((byte)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f) \
 
 #define NI_PARTICLE_ROTATION_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( unknownByte, in, version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
@@ -8290,7 +8290,7 @@ NifStream( unknownFloat3, in, version ); \
 NifStream( unknownFloat4, in, version ); \
 
 #define NI_PARTICLE_ROTATION_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( unknownByte, out, version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
@@ -8308,7 +8308,7 @@ out << "Unknown Float 4:  " << unknownFloat4 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_ROTATION_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLE_ROTATION_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8324,10 +8324,10 @@ return refs; \
 #define NI_PARTICLES_CONSTRUCT \
 
 #define NI_PARTICLES_READ \
-NiTriBasedGeom::Read( in, link_stack, version ); \
+NiTriBasedGeom::Read( in, link_stack, version, user_version ); \
 
 #define NI_PARTICLES_WRITE \
-NiTriBasedGeom::Write( out, link_map, version ); \
+NiTriBasedGeom::Write( out, link_map, version, user_version ); \
 
 #define NI_PARTICLES_STRING \
 stringstream out; \
@@ -8335,7 +8335,7 @@ out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_PARTICLES_FIXLINKS \
-NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLES_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8351,10 +8351,10 @@ return refs; \
 #define NI_AUTO_NORMAL_PARTICLES_CONSTRUCT \
 
 #define NI_AUTO_NORMAL_PARTICLES_READ \
-NiParticles::Read( in, link_stack, version ); \
+NiParticles::Read( in, link_stack, version, user_version ); \
 
 #define NI_AUTO_NORMAL_PARTICLES_WRITE \
-NiParticles::Write( out, link_map, version ); \
+NiParticles::Write( out, link_map, version, user_version ); \
 
 #define NI_AUTO_NORMAL_PARTICLES_STRING \
 stringstream out; \
@@ -8362,7 +8362,7 @@ out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_AUTO_NORMAL_PARTICLES_FIXLINKS \
-NiParticles::FixLinks( objects, link_stack, version ); \
+NiParticles::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_AUTO_NORMAL_PARTICLES_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8378,10 +8378,10 @@ return refs; \
 #define NI_PARTICLE_MESHES_CONSTRUCT \
 
 #define NI_PARTICLE_MESHES_READ \
-NiParticles::Read( in, link_stack, version ); \
+NiParticles::Read( in, link_stack, version, user_version ); \
 
 #define NI_PARTICLE_MESHES_WRITE \
-NiParticles::Write( out, link_map, version ); \
+NiParticles::Write( out, link_map, version, user_version ); \
 
 #define NI_PARTICLE_MESHES_STRING \
 stringstream out; \
@@ -8389,7 +8389,7 @@ out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_PARTICLE_MESHES_FIXLINKS \
-NiParticles::FixLinks( objects, link_stack, version ); \
+NiParticles::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLE_MESHES_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8411,7 +8411,7 @@ vector<Quaternion > rotations; \
  : numActive((ushort)0), hasUnknownFloats(false), hasRotations(false) \
 
 #define NI_PARTICLES_DATA_READ \
-NiAutoNormalParticlesData::Read( in, link_stack, version ); \
+NiAutoNormalParticlesData::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( numActive, in, version ); \
 	NifStream( hasUnknownFloats, in, version ); \
@@ -8431,7 +8431,7 @@ if ( (hasRotations != 0) ) { \
 }; \
 
 #define NI_PARTICLES_DATA_WRITE \
-NiAutoNormalParticlesData::Write( out, link_map, version ); \
+NiAutoNormalParticlesData::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( numActive, out, version ); \
 	NifStream( hasUnknownFloats, out, version ); \
@@ -8475,7 +8475,7 @@ if ( (hasRotations != 0) ) { \
 return out.str(); \
 
 #define NI_PARTICLES_DATA_FIXLINKS \
-NiAutoNormalParticlesData::FixLinks( objects, link_stack, version ); \
+NiAutoNormalParticlesData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PARTICLES_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8494,12 +8494,12 @@ Ref<NiTriBasedGeom > unknownLink2; \
 
 #define NI_PARTICLE_MESHES_DATA_READ \
 uint block_num; \
-NiParticlesData::Read( in, link_stack, version ); \
+NiParticlesData::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_PARTICLE_MESHES_DATA_WRITE \
-NiParticlesData::Write( out, link_map, version ); \
+NiParticlesData::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
 
 #define NI_PARTICLE_MESHES_DATA_STRING \
@@ -8509,7 +8509,7 @@ out << "Unknown Link 2:  " << unknownLink2 << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_MESHES_DATA_FIXLINKS \
-NiParticlesData::FixLinks( objects, link_stack, version ); \
+NiParticlesData::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -8540,7 +8540,7 @@ vector<Ref<NiPSysModifier > > modifiers; \
 
 #define NI_PARTICLE_SYSTEM_READ \
 uint block_num; \
-NiParticles::Read( in, link_stack, version ); \
+NiParticles::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownBool, in, version ); \
 	NifStream( numModifiers, in, version ); \
@@ -8552,7 +8552,7 @@ if ( version >= 0x0A010000 ) { \
 }; \
 
 #define NI_PARTICLE_SYSTEM_WRITE \
-NiParticles::Write( out, link_map, version ); \
+NiParticles::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownBool, out, version ); \
 	NifStream( numModifiers, out, version ); \
@@ -8576,7 +8576,7 @@ for (uint i0 = 0; i0 < modifiers.size(); i0++) { \
 return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_FIXLINKS \
-NiParticles::FixLinks( objects, link_stack, version ); \
+NiParticles::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	for (uint i1 = 0; i1 < modifiers.size(); i1++) { \
 		if (link_stack.empty()) \
@@ -8608,10 +8608,10 @@ return refs; \
 #define NI_MESH_PARTICLE_SYSTEM_CONSTRUCT \
 
 #define NI_MESH_PARTICLE_SYSTEM_READ \
-NiParticleSystem::Read( in, link_stack, version ); \
+NiParticleSystem::Read( in, link_stack, version, user_version ); \
 
 #define NI_MESH_PARTICLE_SYSTEM_WRITE \
-NiParticleSystem::Write( out, link_map, version ); \
+NiParticleSystem::Write( out, link_map, version, user_version ); \
 
 #define NI_MESH_PARTICLE_SYSTEM_STRING \
 stringstream out; \
@@ -8619,7 +8619,7 @@ out << NiParticleSystem::asString(); \
 return out.str(); \
 
 #define NI_MESH_PARTICLE_SYSTEM_FIXLINKS \
-NiParticleSystem::FixLinks( objects, link_stack, version ); \
+NiParticleSystem::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_MESH_PARTICLE_SYSTEM_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8672,7 +8672,7 @@ byte trailer; \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( speed, in, version ); \
 NifStream( speedRandom, in, version ); \
 NifStream( verticalDirection, in, version ); \
@@ -8723,7 +8723,7 @@ link_stack.push_back( block_num ); \
 NifStream( trailer, in, version ); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( speed, out, version ); \
 NifStream( speedRandom, out, version ); \
 NifStream( verticalDirection, out, version ); \
@@ -8817,7 +8817,7 @@ out << "Trailer:  " << trailer << endl; \
 return out.str(); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -8873,10 +8873,10 @@ return refs; \
 #define NI_B_S_P_ARRAY_CONTROLLER_CONSTRUCT \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_READ \
-NiParticleSystemController::Read( in, link_stack, version ); \
+NiParticleSystemController::Read( in, link_stack, version, user_version ); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_WRITE \
-NiParticleSystemController::Write( out, link_map, version ); \
+NiParticleSystemController::Write( out, link_map, version, user_version ); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_STRING \
 stringstream out; \
@@ -8884,7 +8884,7 @@ out << NiParticleSystemController::asString(); \
 return out.str(); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS \
-NiParticleSystemController::FixLinks( objects, link_stack, version ); \
+NiParticleSystemController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -8909,7 +8909,7 @@ Ref<NiFloatData > floatData; \
 
 #define NI_PATH_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownShort2, in, version ); \
 }; \
@@ -8923,7 +8923,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_PATH_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknownShort2, out, version ); \
 }; \
@@ -8947,7 +8947,7 @@ out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_PATH_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -8990,7 +8990,7 @@ Ref<NiFloatData > floatData; \
 
 #define NI_PATH_INTERPOLATOR_READ \
 uint block_num; \
-NiBlendInterpolator::Read( in, link_stack, version ); \
+NiBlendInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 NifStream( unknownShort2, in, version ); \
@@ -9000,7 +9000,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_PATH_INTERPOLATOR_WRITE \
-NiBlendInterpolator::Write( out, link_map, version ); \
+NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 NifStream( unknownShort2, out, version ); \
@@ -9018,7 +9018,7 @@ out << "Float Data:  " << floatData << endl; \
 return out.str(); \
 
 #define NI_PATH_INTERPOLATOR_FIXLINKS \
-NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9070,7 +9070,7 @@ ByteArray pixelData; \
 
 #define NI_PIXEL_DATA_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( pixelFormat, in, version ); \
 if ( version <= 0x0A020000 ) { \
 	NifStream( redMask, in, version ); \
@@ -9110,7 +9110,7 @@ for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 }; \
 
 #define NI_PIXEL_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( pixelFormat, out, version ); \
 if ( version <= 0x0A020000 ) { \
 	NifStream( redMask, out, version ); \
@@ -9190,7 +9190,7 @@ for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 return out.str(); \
 
 #define NI_PIXEL_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9235,7 +9235,7 @@ float unknownFloat16; \
  : unknownShort((ushort)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownShort2((ushort)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), unknownFloat12(0.0f), unknownFloat13(0.0f), unknownFloat14(0.0f), unknownFloat15(0.0f), unknownFloat16(0.0f) \
 
 #define NI_PLANAR_COLLIDER_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 if ( version >= 0x0A000100 ) { \
 	NifStream( unknownShort, in, version ); \
 }; \
@@ -9260,7 +9260,7 @@ NifStream( unknownFloat15, in, version ); \
 NifStream( unknownFloat16, in, version ); \
 
 #define NI_PLANAR_COLLIDER_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A000100 ) { \
 	NifStream( unknownShort, out, version ); \
 }; \
@@ -9308,7 +9308,7 @@ out << "Unknown Float 16:  " << unknownFloat16 << endl; \
 return out.str(); \
 
 #define NI_PLANAR_COLLIDER_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_PLANAR_COLLIDER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9328,13 +9328,13 @@ Ref<NiPosData > data; \
 
 #define NI_POINT3_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( point3Value, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_POINT3_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( point3Value, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
@@ -9346,7 +9346,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_POINT3_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9376,13 +9376,13 @@ float quadraticAttenuation; \
  : constantAttenuation(0.0f), linearAttenuation(0.0f), quadraticAttenuation(0.0f) \
 
 #define NI_POINT_LIGHT_READ \
-NiLight::Read( in, link_stack, version ); \
+NiLight::Read( in, link_stack, version, user_version ); \
 NifStream( constantAttenuation, in, version ); \
 NifStream( linearAttenuation, in, version ); \
 NifStream( quadraticAttenuation, in, version ); \
 
 #define NI_POINT_LIGHT_WRITE \
-NiLight::Write( out, link_map, version ); \
+NiLight::Write( out, link_map, version, user_version ); \
 NifStream( constantAttenuation, out, version ); \
 NifStream( linearAttenuation, out, version ); \
 NifStream( quadraticAttenuation, out, version ); \
@@ -9396,7 +9396,7 @@ out << "Quadratic Attenuation:  " << quadraticAttenuation << endl; \
 return out.str(); \
 
 #define NI_POINT_LIGHT_FIXLINKS \
-NiLight::FixLinks( objects, link_stack, version ); \
+NiLight::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_POINT_LIGHT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9413,7 +9413,7 @@ KeyGroup<Vector3 > data; \
 #define NI_POS_DATA_CONSTRUCT \
 
 #define NI_POS_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( data.numKeys, in, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, in, version ); \
@@ -9424,7 +9424,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 }; \
 
 #define NI_POS_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( data.numKeys, out, version ); \
 if ( (data.numKeys != 0) ) { \
 	NifStream( data.interpolation, out, version ); \
@@ -9450,7 +9450,7 @@ for (uint i0 = 0; i0 < data.keys.size(); i0++) { \
 return out.str(); \
 
 #define NI_POS_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_POS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9470,13 +9470,13 @@ Ref<NiPSysSpawnModifier > spawnModifier; \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( spawnOnDeath, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( spawnOnDeath, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
 
@@ -9488,7 +9488,7 @@ out << "Spawn Modifier:  " << spawnModifier << endl; \
 return out.str(); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9520,7 +9520,7 @@ uint unknownInts2[2]; \
 
 #define NI_P_SYS_BOMB_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
@@ -9534,7 +9534,7 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 }; \
 
 #define NI_P_SYS_BOMB_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	NifStream( unknownInts1[i0], out, version ); \
@@ -9574,7 +9574,7 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 return out.str(); \
 
 #define NI_P_SYS_BOMB_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9601,11 +9601,11 @@ ushort updateSkip; \
  : updateSkip((ushort)0) \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( updateSkip, in, version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( updateSkip, out, version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING \
@@ -9615,7 +9615,7 @@ out << "Update Skip:  " << updateSkip << endl; \
 return out.str(); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9635,13 +9635,13 @@ float depth; \
  : width(0.0f), height(0.0f), depth(0.0f) \
 
 #define NI_P_SYS_BOX_EMITTER_READ \
-NiPSysVolumeEmitter::Read( in, link_stack, version ); \
+NiPSysVolumeEmitter::Read( in, link_stack, version, user_version ); \
 NifStream( width, in, version ); \
 NifStream( height, in, version ); \
 NifStream( depth, in, version ); \
 
 #define NI_P_SYS_BOX_EMITTER_WRITE \
-NiPSysVolumeEmitter::Write( out, link_map, version ); \
+NiPSysVolumeEmitter::Write( out, link_map, version, user_version ); \
 NifStream( width, out, version ); \
 NifStream( height, out, version ); \
 NifStream( depth, out, version ); \
@@ -9655,7 +9655,7 @@ out << "Depth:  " << depth << endl; \
 return out.str(); \
 
 #define NI_P_SYS_BOX_EMITTER_FIXLINKS \
-NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_BOX_EMITTER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9674,12 +9674,12 @@ Ref<NiPSysPlanarCollider > collider; \
 
 #define NI_P_SYS_COLLIDER_MANAGER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(collider)], out, version ); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_STRING \
@@ -9689,7 +9689,7 @@ out << "Collider:  " << collider << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9718,12 +9718,12 @@ Ref<NiColorData > data; \
 
 #define NI_P_SYS_COLOR_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_COLOR_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
 #define NI_P_SYS_COLOR_MODIFIER_STRING \
@@ -9733,7 +9733,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_P_SYS_COLOR_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -9762,12 +9762,12 @@ float height; \
  : radius(0.0f), height(0.0f) \
 
 #define NI_P_SYS_CYLINDER_EMITTER_READ \
-NiPSysVolumeEmitter::Read( in, link_stack, version ); \
+NiPSysVolumeEmitter::Read( in, link_stack, version, user_version ); \
 NifStream( radius, in, version ); \
 NifStream( height, in, version ); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_WRITE \
-NiPSysVolumeEmitter::Write( out, link_map, version ); \
+NiPSysVolumeEmitter::Write( out, link_map, version, user_version ); \
 NifStream( radius, out, version ); \
 NifStream( height, out, version ); \
 
@@ -9779,7 +9779,7 @@ out << "Height:  " << height << endl; \
 return out.str(); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_FIXLINKS \
-NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9804,7 +9804,7 @@ uint unknownInt1; \
  : unknownBool1(false), unknownByte3((byte)0), unknownBool2(false), unknownInt1((uint)0) \
 
 #define NI_P_SYS_DATA_READ \
-APSysData::Read( in, link_stack, version ); \
+APSysData::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A020000 ) { \
 	unknownFloats4.resize(numVertices); \
 	for (uint i1 = 0; i1 < unknownFloats4.size(); i1++) { \
@@ -9845,7 +9845,7 @@ if ( version >= 0x14000004 ) { \
 NifStream( unknownInt1, in, version ); \
 
 #define NI_P_SYS_DATA_WRITE \
-APSysData::Write( out, link_map, version ); \
+APSysData::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A020000 ) { \
 	for (uint i1 = 0; i1 < unknownFloats4.size(); i1++) { \
 		for (uint i2 = 0; i2 < 10; i2++) { \
@@ -9933,7 +9933,7 @@ out << "Unknown Int 1:  " << unknownInt1 << endl; \
 return out.str(); \
 
 #define NI_P_SYS_DATA_FIXLINKS \
-APSysData::FixLinks( objects, link_stack, version ); \
+APSysData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -9956,7 +9956,7 @@ float rangeFalloff; \
 
 #define NI_P_SYS_DRAG_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( dragAxis, in, version ); \
@@ -9965,7 +9965,7 @@ NifStream( range, in, version ); \
 NifStream( rangeFalloff, in, version ); \
 
 #define NI_P_SYS_DRAG_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
 NifStream( dragAxis, out, version ); \
 NifStream( percentage, out, version ); \
@@ -9983,7 +9983,7 @@ out << "Range Falloff:  " << rangeFalloff << endl; \
 return out.str(); \
 
 #define NI_P_SYS_DRAG_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -10011,12 +10011,12 @@ Ref<NiInterpolator > visibilityInterpolator; \
 
 #define NI_P_SYS_EMITTER_CTLR_READ \
 uint block_num; \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_EMITTER_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
@@ -10026,7 +10026,7 @@ out << "Visibility Interpolator:  " << visibilityInterpolator << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -10056,7 +10056,7 @@ vector<Key<byte > > visibilityKeys_; \
  : numVisibilityKeys_((uint)0) \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( floatKeys_.numKeys, in, version ); \
 if ( (floatKeys_.numKeys != 0) ) { \
 	NifStream( floatKeys_.interpolation, in, version ); \
@@ -10072,7 +10072,7 @@ for (uint i0 = 0; i0 < visibilityKeys_.size(); i0++) { \
 }; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( floatKeys_.numKeys, out, version ); \
 if ( (floatKeys_.numKeys != 0) ) { \
 	NifStream( floatKeys_.interpolation, out, version ); \
@@ -10110,7 +10110,7 @@ for (uint i0 = 0; i0 < visibilityKeys_.size(); i0++) { \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10126,10 +10126,10 @@ return refs; \
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_STRING \
 stringstream out; \
@@ -10137,7 +10137,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10153,10 +10153,10 @@ return refs; \
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_STRING \
 stringstream out; \
@@ -10164,7 +10164,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10180,10 +10180,10 @@ return refs; \
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_STRING \
 stringstream out; \
@@ -10191,7 +10191,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10207,10 +10207,10 @@ return refs; \
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING \
 stringstream out; \
@@ -10218,7 +10218,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10234,10 +10234,10 @@ return refs; \
 #define NI_P_SYS_EMITTER_SPEED_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_STRING \
 stringstream out; \
@@ -10245,7 +10245,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10270,7 +10270,7 @@ float turbulenceScale; \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 NifStream( gravityAxis, in, version ); \
@@ -10281,7 +10281,7 @@ NifStream( turbulence, in, version ); \
 NifStream( turbulenceScale, in, version ); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(gravityObject)], out, version ); \
 NifStream( gravityAxis, out, version ); \
 NifStream( decay, out, version ); \
@@ -10303,7 +10303,7 @@ out << "Turbulence Scale:  " << turbulenceScale << endl; \
 return out.str(); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -10328,10 +10328,10 @@ return refs; \
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_STRING \
 stringstream out; \
@@ -10339,7 +10339,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10360,14 +10360,14 @@ ushort fadeGeneration; \
  : growTime(0.0f), growGeneration((ushort)0), fadeTime(0.0f), fadeGeneration((ushort)0) \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( growTime, in, version ); \
 NifStream( growGeneration, in, version ); \
 NifStream( fadeTime, in, version ); \
 NifStream( fadeGeneration, in, version ); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( growTime, out, version ); \
 NifStream( growGeneration, out, version ); \
 NifStream( fadeTime, out, version ); \
@@ -10383,7 +10383,7 @@ out << "Fade Generation:  " << fadeGeneration << endl; \
 return out.str(); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10406,7 +10406,7 @@ Vector3 emissionAxis; \
 
 #define NI_P_SYS_MESH_EMITTER_READ \
 uint block_num; \
-NiPSysEmitter::Read( in, link_stack, version ); \
+NiPSysEmitter::Read( in, link_stack, version, user_version ); \
 NifStream( numEmitterMeshes, in, version ); \
 emitterMeshes.resize(numEmitterMeshes); \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
@@ -10418,7 +10418,7 @@ NifStream( emissionType, in, version ); \
 NifStream( emissionAxis, in, version ); \
 
 #define NI_P_SYS_MESH_EMITTER_WRITE \
-NiPSysEmitter::Write( out, link_map, version ); \
+NiPSysEmitter::Write( out, link_map, version, user_version ); \
 NifStream( numEmitterMeshes, out, version ); \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(emitterMeshes[i0])], out, version ); \
@@ -10444,7 +10444,7 @@ out << "Emission Axis:  " << emissionAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_MESH_EMITTER_FIXLINKS \
-NiPSysEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysEmitter::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -10478,7 +10478,7 @@ vector<Ref<NiNode > > meshes; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_READ \
 uint block_num; \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( numMeshes, in, version ); \
 meshes.resize(numMeshes); \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
@@ -10487,7 +10487,7 @@ for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 }; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( numMeshes, out, version ); \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 	NifStream( link_map[StaticCast<NiObject>(meshes[i0])], out, version ); \
@@ -10507,7 +10507,7 @@ for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 return out.str(); \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -10537,10 +10537,10 @@ return refs; \
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_READ \
-APSysCtlr::Read( in, link_stack, version ); \
+APSysCtlr::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_WRITE \
-APSysCtlr::Write( out, link_map, version ); \
+APSysCtlr::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_STRING \
 stringstream out; \
@@ -10548,7 +10548,7 @@ out << APSysCtlr::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS \
-APSysCtlr::FixLinks( objects, link_stack, version ); \
+APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10577,7 +10577,7 @@ Vector3 yAxis; \
 
 #define NI_P_SYS_PLANAR_COLLIDER_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( bounce, in, version ); \
 NifStream( spawnOnCollide, in, version ); \
 NifStream( dieOnCollide, in, version ); \
@@ -10595,7 +10595,7 @@ NifStream( xAxis, in, version ); \
 NifStream( yAxis, in, version ); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( bounce, out, version ); \
 NifStream( spawnOnCollide, out, version ); \
 NifStream( dieOnCollide, out, version ); \
@@ -10625,7 +10625,7 @@ out << "Y Axis:  " << yAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_PLANAR_COLLIDER_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -10680,10 +10680,10 @@ return refs; \
 #define NI_P_SYS_POSITION_MODIFIER_CONSTRUCT \
 
 #define NI_P_SYS_POSITION_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_POSITION_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_POSITION_MODIFIER_STRING \
 stringstream out; \
@@ -10691,7 +10691,7 @@ out << NiPSysModifier::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_POSITION_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_POSITION_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10707,10 +10707,10 @@ return refs; \
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_READ \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_STRING \
 stringstream out; \
@@ -10718,7 +10718,7 @@ out << NiTimeController::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10742,7 +10742,7 @@ Vector3 initialAxis; \
  : initialRotationSpeed(0.0f), initialRotationSpeedVariation(0.0f), initialRotationAngle(0.0f), initialRotationAngleVariation(0.0f), randomRotSpeedSign(false), randomInitialAxis(false) \
 
 #define NI_P_SYS_ROTATION_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( initialRotationSpeed, in, version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( initialRotationSpeedVariation, in, version ); \
@@ -10754,7 +10754,7 @@ NifStream( randomInitialAxis, in, version ); \
 NifStream( initialAxis, in, version ); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( initialRotationSpeed, out, version ); \
 if ( version >= 0x14000004 ) { \
 	NifStream( initialRotationSpeedVariation, out, version ); \
@@ -10778,7 +10778,7 @@ out << "Initial Axis:  " << initialAxis << endl; \
 return out.str(); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_ROTATION_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10803,7 +10803,7 @@ float lifeSpanVariation; \
  : numSpawnGenerations((ushort)0), percentageSpawned(0.0f), minNumToSpawn((ushort)0), maxNumToSpawn((ushort)0), spawnSpeedChaos(0.0f), spawnDirChaos(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f) \
 
 #define NI_P_SYS_SPAWN_MODIFIER_READ \
-NiPSysModifier::Read( in, link_stack, version ); \
+NiPSysModifier::Read( in, link_stack, version, user_version ); \
 NifStream( numSpawnGenerations, in, version ); \
 NifStream( percentageSpawned, in, version ); \
 NifStream( minNumToSpawn, in, version ); \
@@ -10814,7 +10814,7 @@ NifStream( lifeSpan, in, version ); \
 NifStream( lifeSpanVariation, in, version ); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_WRITE \
-NiPSysModifier::Write( out, link_map, version ); \
+NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( numSpawnGenerations, out, version ); \
 NifStream( percentageSpawned, out, version ); \
 NifStream( minNumToSpawn, out, version ); \
@@ -10838,7 +10838,7 @@ out << "Life Span Variation:  " << lifeSpanVariation << endl; \
 return out.str(); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_FIXLINKS \
-NiPSysModifier::FixLinks( objects, link_stack, version ); \
+NiPSysModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_SPAWN_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10856,11 +10856,11 @@ float radius; \
  : radius(0.0f) \
 
 #define NI_P_SYS_SPHERE_EMITTER_READ \
-NiPSysVolumeEmitter::Read( in, link_stack, version ); \
+NiPSysVolumeEmitter::Read( in, link_stack, version, user_version ); \
 NifStream( radius, in, version ); \
 
 #define NI_P_SYS_SPHERE_EMITTER_WRITE \
-NiPSysVolumeEmitter::Write( out, link_map, version ); \
+NiPSysVolumeEmitter::Write( out, link_map, version, user_version ); \
 NifStream( radius, out, version ); \
 
 #define NI_P_SYS_SPHERE_EMITTER_STRING \
@@ -10870,7 +10870,7 @@ out << "Radius:  " << radius << endl; \
 return out.str(); \
 
 #define NI_P_SYS_SPHERE_EMITTER_FIXLINKS \
-NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_SPHERE_EMITTER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10886,10 +10886,10 @@ return refs; \
 #define NI_P_SYS_UPDATE_CTLR_CONSTRUCT \
 
 #define NI_P_SYS_UPDATE_CTLR_READ \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 
 #define NI_P_SYS_UPDATE_CTLR_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 
 #define NI_P_SYS_UPDATE_CTLR_STRING \
 stringstream out; \
@@ -10897,7 +10897,7 @@ out << NiTimeController::asString(); \
 return out.str(); \
 
 #define NI_P_SYS_UPDATE_CTLR_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_P_SYS_UPDATE_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10917,7 +10917,7 @@ vector<LODRange > lodLevels; \
  : numLodLevels((uint)0) \
 
 #define NI_RANGE_L_O_D_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( lodCenter, in, version ); \
 NifStream( numLodLevels, in, version ); \
 lodLevels.resize(numLodLevels); \
@@ -10927,7 +10927,7 @@ for (uint i0 = 0; i0 < lodLevels.size(); i0++) { \
 }; \
 
 #define NI_RANGE_L_O_D_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( lodCenter, out, version ); \
 NifStream( numLodLevels, out, version ); \
 for (uint i0 = 0; i0 < lodLevels.size(); i0++) { \
@@ -10947,7 +10947,7 @@ for (uint i0 = 0; i0 < lodLevels.size(); i0++) { \
 return out.str(); \
 
 #define NI_RANGE_L_O_D_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_RANGE_L_O_D_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10963,10 +10963,10 @@ return refs; \
 #define NI_ROTATING_PARTICLES_CONSTRUCT \
 
 #define NI_ROTATING_PARTICLES_READ \
-NiParticles::Read( in, link_stack, version ); \
+NiParticles::Read( in, link_stack, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_WRITE \
-NiParticles::Write( out, link_map, version ); \
+NiParticles::Write( out, link_map, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_STRING \
 stringstream out; \
@@ -10974,7 +10974,7 @@ out << NiParticles::asString(); \
 return out.str(); \
 
 #define NI_ROTATING_PARTICLES_FIXLINKS \
-NiParticles::FixLinks( objects, link_stack, version ); \
+NiParticles::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -10990,10 +10990,10 @@ return refs; \
 #define NI_ROTATING_PARTICLES_DATA_CONSTRUCT \
 
 #define NI_ROTATING_PARTICLES_DATA_READ \
-NiParticlesData::Read( in, link_stack, version ); \
+NiParticlesData::Read( in, link_stack, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_DATA_WRITE \
-NiParticlesData::Write( out, link_map, version ); \
+NiParticlesData::Write( out, link_map, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_DATA_STRING \
 stringstream out; \
@@ -11001,7 +11001,7 @@ out << NiParticlesData::asString(); \
 return out.str(); \
 
 #define NI_ROTATING_PARTICLES_DATA_FIXLINKS \
-NiParticlesData::FixLinks( objects, link_stack, version ); \
+NiParticlesData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11021,7 +11021,7 @@ vector<float > unknownFloats2; \
  : unknownCount((uint)0) \
 
 #define NI_SCREEN_L_O_D_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
 	NifStream( unknownFloats[i0], in, version ); \
 }; \
@@ -11032,7 +11032,7 @@ for (uint i0 = 0; i0 < unknownFloats2.size(); i0++) { \
 }; \
 
 #define NI_SCREEN_L_O_D_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
 	NifStream( unknownFloats[i0], out, version ); \
 }; \
@@ -11062,7 +11062,7 @@ for (uint i0 = 0; i0 < unknownFloats2.size(); i0++) { \
 return out.str(); \
 
 #define NI_SCREEN_L_O_D_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SCREEN_L_O_D_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11078,10 +11078,10 @@ return refs; \
 #define NI_SEQUENCE_STREAM_HELPER_CONSTRUCT \
 
 #define NI_SEQUENCE_STREAM_HELPER_READ \
-NiObjectNET::Read( in, link_stack, version ); \
+NiObjectNET::Read( in, link_stack, version, user_version ); \
 
 #define NI_SEQUENCE_STREAM_HELPER_WRITE \
-NiObjectNET::Write( out, link_map, version ); \
+NiObjectNET::Write( out, link_map, version, user_version ); \
 
 #define NI_SEQUENCE_STREAM_HELPER_STRING \
 stringstream out; \
@@ -11089,7 +11089,7 @@ out << NiObjectNET::asString(); \
 return out.str(); \
 
 #define NI_SEQUENCE_STREAM_HELPER_FIXLINKS \
-NiObjectNET::FixLinks( objects, link_stack, version ); \
+NiObjectNET::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SEQUENCE_STREAM_HELPER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11107,11 +11107,11 @@ unsigned short flags; \
  : flags((unsigned short)0) \
 
 #define NI_SHADE_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 
 #define NI_SHADE_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 
 #define NI_SHADE_PROPERTY_STRING \
@@ -11121,7 +11121,7 @@ out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_SHADE_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SHADE_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11146,7 +11146,7 @@ vector<SkinData > boneList; \
 
 #define NI_SKIN_DATA_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( rotation, in, version ); \
 NifStream( translation, in, version ); \
 NifStream( scale, in, version ); \
@@ -11175,7 +11175,7 @@ for (uint i0 = 0; i0 < boneList.size(); i0++) { \
 }; \
 
 #define NI_SKIN_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( rotation, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( scale, out, version ); \
@@ -11229,7 +11229,7 @@ for (uint i0 = 0; i0 < boneList.size(); i0++) { \
 return out.str(); \
 
 #define NI_SKIN_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -11263,7 +11263,7 @@ Bones bones; \
 
 #define NI_SKIN_INSTANCE_READ \
 uint block_num; \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 if ( version >= 0x0A020000 ) { \
@@ -11280,7 +11280,7 @@ for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 }; \
 
 #define NI_SKIN_INSTANCE_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 if ( version >= 0x0A020000 ) { \
 	NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
@@ -11308,7 +11308,7 @@ for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 return out.str(); \
 
 #define NI_SKIN_INSTANCE_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -11371,7 +11371,7 @@ vector<SkinPartition > skinPartitionBlocks; \
  : numSkinPartitionBlocks((uint)0) \
 
 #define NI_SKIN_PARTITION_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( numSkinPartitionBlocks, in, version ); \
 skinPartitionBlocks.resize(numSkinPartitionBlocks); \
 for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
@@ -11468,7 +11468,7 @@ for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
 }; \
 
 #define NI_SKIN_PARTITION_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( numSkinPartitionBlocks, out, version ); \
 for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
 	NifStream( skinPartitionBlocks[i0].numVertices, out, version ); \
@@ -11625,7 +11625,7 @@ for (uint i0 = 0; i0 < skinPartitionBlocks.size(); i0++) { \
 return out.str(); \
 
 #define NI_SKIN_PARTITION_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SKIN_PARTITION_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11653,7 +11653,7 @@ byte unknownByte2; \
 
 #define NI_SOURCE_TEXTURE_READ \
 uint block_num; \
-NiObjectNET::Read( in, link_stack, version ); \
+NiObjectNET::Read( in, link_stack, version, user_version ); \
 NifStream( useExternal, in, version ); \
 if ( (useExternal == 1) ) { \
 	NifStream( fileName, in, version ); \
@@ -11687,7 +11687,7 @@ if ( version >= 0x0A01006A ) { \
 }; \
 
 #define NI_SOURCE_TEXTURE_WRITE \
-NiObjectNET::Write( out, link_map, version ); \
+NiObjectNET::Write( out, link_map, version, user_version ); \
 NifStream( useExternal, out, version ); \
 if ( (useExternal == 1) ) { \
 	NifStream( fileName, out, version ); \
@@ -11738,7 +11738,7 @@ out << "Unknown Byte 2:  " << unknownByte2 << endl; \
 return out.str(); \
 
 #define NI_SOURCE_TEXTURE_FIXLINKS \
-NiObjectNET::FixLinks( objects, link_stack, version ); \
+NiObjectNET::FixLinks( objects, link_stack, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	if ( (useExternal == 1) ) { \
 		if (link_stack.empty()) \
@@ -11782,11 +11782,11 @@ unsigned short flags; \
  : flags((unsigned short)0) \
 
 #define NI_SPECULAR_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 
 #define NI_SPECULAR_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 
 #define NI_SPECULAR_PROPERTY_STRING \
@@ -11796,7 +11796,7 @@ out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_SPECULAR_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SPECULAR_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11819,7 +11819,7 @@ float unknownFloat5; \
  : unknownFloat1(0.0f), unknownShort((ushort)0), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f) \
 
 #define NI_SPHERICAL_COLLIDER_READ \
-AParticleModifier::Read( in, link_stack, version ); \
+AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( unknownFloat1, in, version ); \
 NifStream( unknownShort, in, version ); \
 NifStream( unknownFloat2, in, version ); \
@@ -11828,7 +11828,7 @@ NifStream( unknownFloat4, in, version ); \
 NifStream( unknownFloat5, in, version ); \
 
 #define NI_SPHERICAL_COLLIDER_WRITE \
-AParticleModifier::Write( out, link_map, version ); \
+AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( unknownFloat2, out, version ); \
@@ -11848,7 +11848,7 @@ out << "Unknown Float 5:  " << unknownFloat5 << endl; \
 return out.str(); \
 
 #define NI_SPHERICAL_COLLIDER_FIXLINKS \
-AParticleModifier::FixLinks( objects, link_stack, version ); \
+AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SPHERICAL_COLLIDER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11867,12 +11867,12 @@ float exponent; \
  : cutoffAngle(0.0f), exponent(0.0f) \
 
 #define NI_SPOT_LIGHT_READ \
-NiPointLight::Read( in, link_stack, version ); \
+NiPointLight::Read( in, link_stack, version, user_version ); \
 NifStream( cutoffAngle, in, version ); \
 NifStream( exponent, in, version ); \
 
 #define NI_SPOT_LIGHT_WRITE \
-NiPointLight::Write( out, link_map, version ); \
+NiPointLight::Write( out, link_map, version, user_version ); \
 NifStream( cutoffAngle, out, version ); \
 NifStream( exponent, out, version ); \
 
@@ -11884,7 +11884,7 @@ out << "Exponent:  " << exponent << endl; \
 return out.str(); \
 
 #define NI_SPOT_LIGHT_FIXLINKS \
-NiPointLight::FixLinks( objects, link_stack, version ); \
+NiPointLight::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_SPOT_LIGHT_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11910,7 +11910,7 @@ uint drawMode; \
  : flags((unsigned short)0), stencilEnabled(false), stencilFunction((uint)0), stencilRef((uint)0), stencilMask((uint)4294967295), failAction((uint)0), zFailAction((uint)0), passAction((uint)0), drawMode((uint)0) \
 
 #define NI_STENCIL_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, in, version ); \
 }; \
@@ -11924,7 +11924,7 @@ NifStream( passAction, in, version ); \
 NifStream( drawMode, in, version ); \
 
 #define NI_STENCIL_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, out, version ); \
 }; \
@@ -11952,7 +11952,7 @@ out << "Draw Mode:  " << drawMode << endl; \
 return out.str(); \
 
 #define NI_STENCIL_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_STENCIL_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -11971,14 +11971,14 @@ string stringData; \
  : bytesRemaining((uint)0) \
 
 #define NI_STRING_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( bytesRemaining, in, version ); \
 }; \
 NifStream( stringData, in, version ); \
 
 #define NI_STRING_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( bytesRemaining, out, version ); \
 }; \
@@ -11992,7 +11992,7 @@ out << "String Data:  " << stringData << endl; \
 return out.str(); \
 
 #define NI_STRING_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_STRING_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -12009,12 +12009,12 @@ StringPalette palette; \
 #define NI_STRING_PALETTE_CONSTRUCT \
 
 #define NI_STRING_PALETTE_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 NifStream( palette.palette, in, version ); \
 NifStream( palette.length, in, version ); \
 
 #define NI_STRING_PALETTE_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 NifStream( palette.palette, out, version ); \
 NifStream( palette.length, out, version ); \
 
@@ -12026,7 +12026,7 @@ out << "Length:  " << palette.length << endl; \
 return out.str(); \
 
 #define NI_STRING_PALETTE_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_STRING_PALETTE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -12045,7 +12045,7 @@ vector<string > data; \
  : numStrings((uint)0) \
 
 #define NI_STRINGS_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numStrings, in, version ); \
 data.resize(numStrings); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
@@ -12053,7 +12053,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 }; \
 
 #define NI_STRINGS_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numStrings, out, version ); \
 for (uint i0 = 0; i0 < data.size(); i0++) { \
 	NifStream( data[i0], out, version ); \
@@ -12073,7 +12073,7 @@ for (uint i0 = 0; i0 < data.size(); i0++) { \
 return out.str(); \
 
 #define NI_STRINGS_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_STRINGS_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -12093,7 +12093,7 @@ vector<Key<string > > textKeys; \
  : unknownInt1((uint)0), numTextKeys((uint)0) \
 
 #define NI_TEXT_KEY_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( unknownInt1, in, version ); \
 }; \
@@ -12104,7 +12104,7 @@ for (uint i0 = 0; i0 < textKeys.size(); i0++) { \
 }; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 if ( version <= 0x04020200 ) { \
 	NifStream( unknownInt1, out, version ); \
 }; \
@@ -12128,7 +12128,7 @@ for (uint i0 = 0; i0 < textKeys.size(); i0++) { \
 return out.str(); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -12159,7 +12159,7 @@ ushort unknownShort; \
 
 #define NI_TEXTURE_EFFECT_READ \
 uint block_num; \
-NiDynamicEffect::Read( in, link_stack, version ); \
+NiDynamicEffect::Read( in, link_stack, version, user_version ); \
 NifStream( modelProjectionMatrix, in, version ); \
 NifStream( modelProjectionTransform, in, version ); \
 NifStream( textureFiltering, in, version ); \
@@ -12180,7 +12180,7 @@ if ( version <= 0x0401000C ) { \
 }; \
 
 #define NI_TEXTURE_EFFECT_WRITE \
-NiDynamicEffect::Write( out, link_map, version ); \
+NiDynamicEffect::Write( out, link_map, version, user_version ); \
 NifStream( modelProjectionMatrix, out, version ); \
 NifStream( modelProjectionTransform, out, version ); \
 NifStream( textureFiltering, out, version ); \
@@ -12218,7 +12218,7 @@ out << "Unknown Short:  " << unknownShort << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_EFFECT_FIXLINKS \
-NiDynamicEffect::FixLinks( objects, link_stack, version ); \
+NiDynamicEffect::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -12250,7 +12250,7 @@ Ref<NiFloatData > data; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 uint block_num; \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 NifStream( unknown2, in, version ); \
 NifStream( textureSlot, in, version ); \
 NifStream( operation, in, version ); \
@@ -12260,7 +12260,7 @@ if ( version <= 0x0A010000 ) { \
 }; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 NifStream( unknown2, out, version ); \
 NifStream( textureSlot, out, version ); \
 NifStream( operation, out, version ); \
@@ -12278,7 +12278,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -12332,7 +12332,7 @@ vector<ShaderTexDesc > shaderTextures; \
 
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, in, version ); \
 }; \
@@ -12579,7 +12579,7 @@ if ( version >= 0x0A000100 ) { \
 }; \
 
 #define NI_TEXTURING_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A000102 ) { \
 	NifStream( flags, out, version ); \
 }; \
@@ -12995,7 +12995,7 @@ for (uint i0 = 0; i0 < shaderTextures.size(); i0++) { \
 return out.str(); \
 
 #define NI_TEXTURING_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 if ( (hasBaseTexture != 0) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -13127,10 +13127,10 @@ return refs; \
 #define NI_TRANSFORM_CONTROLLER_CONSTRUCT \
 
 #define NI_TRANSFORM_CONTROLLER_READ \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 
 #define NI_TRANSFORM_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 
 #define NI_TRANSFORM_CONTROLLER_STRING \
 stringstream out; \
@@ -13138,7 +13138,7 @@ out << NiSingleInterpolatorController::asString(); \
 return out.str(); \
 
 #define NI_TRANSFORM_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRANSFORM_CONTROLLER_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13154,10 +13154,10 @@ return refs; \
 #define NI_TRANSFORM_DATA_CONSTRUCT \
 
 #define NI_TRANSFORM_DATA_READ \
-NiKeyframeData::Read( in, link_stack, version ); \
+NiKeyframeData::Read( in, link_stack, version, user_version ); \
 
 #define NI_TRANSFORM_DATA_WRITE \
-NiKeyframeData::Write( out, link_map, version ); \
+NiKeyframeData::Write( out, link_map, version, user_version ); \
 
 #define NI_TRANSFORM_DATA_STRING \
 stringstream out; \
@@ -13165,7 +13165,7 @@ out << NiKeyframeData::asString(); \
 return out.str(); \
 
 #define NI_TRANSFORM_DATA_FIXLINKS \
-NiKeyframeData::FixLinks( objects, link_stack, version ); \
+NiKeyframeData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRANSFORM_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13188,7 +13188,7 @@ Ref<NiTransformData > data; \
 
 #define NI_TRANSFORM_INTERPOLATOR_READ \
 uint block_num; \
-NiInterpolator::Read( in, link_stack, version ); \
+NiInterpolator::Read( in, link_stack, version, user_version ); \
 NifStream( translation, in, version ); \
 NifStream( rotation, in, version ); \
 NifStream( scale, in, version ); \
@@ -13201,7 +13201,7 @@ NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_TRANSFORM_INTERPOLATOR_WRITE \
-NiInterpolator::Write( out, link_map, version ); \
+NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
 NifStream( scale, out, version ); \
@@ -13229,7 +13229,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_TRANSFORM_INTERPOLATOR_FIXLINKS \
-NiInterpolator::FixLinks( objects, link_stack, version ); \
+NiInterpolator::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -13255,10 +13255,10 @@ return refs; \
 #define NI_TRI_SHAPE_CONSTRUCT \
 
 #define NI_TRI_SHAPE_READ \
-NiTriBasedGeom::Read( in, link_stack, version ); \
+NiTriBasedGeom::Read( in, link_stack, version, user_version ); \
 
 #define NI_TRI_SHAPE_WRITE \
-NiTriBasedGeom::Write( out, link_map, version ); \
+NiTriBasedGeom::Write( out, link_map, version, user_version ); \
 
 #define NI_TRI_SHAPE_STRING \
 stringstream out; \
@@ -13266,7 +13266,7 @@ out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_TRI_SHAPE_FIXLINKS \
-NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRI_SHAPE_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13289,7 +13289,7 @@ vector<MatchGroup > matchGroups; \
  : numTriangles((ushort)0), numTrianglePoints((uint)0), hasTriangles(false), numMatchGroups((ushort)0) \
 
 #define NI_TRI_SHAPE_DATA_READ \
-NiTriBasedGeomData::Read( in, link_stack, version ); \
+NiTriBasedGeomData::Read( in, link_stack, version, user_version ); \
 NifStream( numTriangles, in, version ); \
 NifStream( numTrianglePoints, in, version ); \
 if ( version >= 0x0A010000 ) { \
@@ -13320,7 +13320,7 @@ for (uint i0 = 0; i0 < matchGroups.size(); i0++) { \
 }; \
 
 #define NI_TRI_SHAPE_DATA_WRITE \
-NiTriBasedGeomData::Write( out, link_map, version ); \
+NiTriBasedGeomData::Write( out, link_map, version, user_version ); \
 NifStream( numTriangles, out, version ); \
 NifStream( numTrianglePoints, out, version ); \
 if ( version >= 0x0A010000 ) { \
@@ -13373,7 +13373,7 @@ for (uint i0 = 0; i0 < matchGroups.size(); i0++) { \
 return out.str(); \
 
 #define NI_TRI_SHAPE_DATA_FIXLINKS \
-NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRI_SHAPE_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13389,10 +13389,10 @@ return refs; \
 #define NI_TRI_STRIPS_CONSTRUCT \
 
 #define NI_TRI_STRIPS_READ \
-NiTriBasedGeom::Read( in, link_stack, version ); \
+NiTriBasedGeom::Read( in, link_stack, version, user_version ); \
 
 #define NI_TRI_STRIPS_WRITE \
-NiTriBasedGeom::Write( out, link_map, version ); \
+NiTriBasedGeom::Write( out, link_map, version, user_version ); \
 
 #define NI_TRI_STRIPS_STRING \
 stringstream out; \
@@ -13400,7 +13400,7 @@ out << NiTriBasedGeom::asString(); \
 return out.str(); \
 
 #define NI_TRI_STRIPS_FIXLINKS \
-NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRI_STRIPS_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13422,7 +13422,7 @@ vector<vector<ushort > > points; \
  : numTriangles((ushort)0), numStrips((ushort)0), hasPoints(false) \
 
 #define NI_TRI_STRIPS_DATA_READ \
-NiTriBasedGeomData::Read( in, link_stack, version ); \
+NiTriBasedGeomData::Read( in, link_stack, version, user_version ); \
 NifStream( numTriangles, in, version ); \
 NifStream( numStrips, in, version ); \
 stripLengths.resize(numStrips); \
@@ -13454,7 +13454,7 @@ if ( version >= 0x0A010000 ) { \
 }; \
 
 #define NI_TRI_STRIPS_DATA_WRITE \
-NiTriBasedGeomData::Write( out, link_map, version ); \
+NiTriBasedGeomData::Write( out, link_map, version, user_version ); \
 NifStream( numTriangles, out, version ); \
 NifStream( numStrips, out, version ); \
 for (uint i0 = 0; i0 < stripLengths.size(); i0++) { \
@@ -13505,7 +13505,7 @@ for (uint i0 = 0; i0 < points.size(); i0++) { \
 return out.str(); \
 
 #define NI_TRI_STRIPS_DATA_FIXLINKS \
-NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
+NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRI_STRIPS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13525,13 +13525,13 @@ Ref<NiUVData > data; \
 
 #define NI_U_V_CONTROLLER_READ \
 uint block_num; \
-NiTimeController::Read( in, link_stack, version ); \
+NiTimeController::Read( in, link_stack, version, user_version ); \
 NifStream( unknownShort, in, version ); \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
 
 #define NI_U_V_CONTROLLER_WRITE \
-NiTimeController::Write( out, link_map, version ); \
+NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( unknownShort, out, version ); \
 NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 
@@ -13543,7 +13543,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_U_V_CONTROLLER_FIXLINKS \
-NiTimeController::FixLinks( objects, link_stack, version ); \
+NiTimeController::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
@@ -13570,7 +13570,7 @@ KeyGroup<float > uvGroups[4]; \
 #define NI_U_V_DATA_CONSTRUCT \
 
 #define NI_U_V_DATA_READ \
-NiObject::Read( in, link_stack, version ); \
+NiObject::Read( in, link_stack, version, user_version ); \
 for (uint i0 = 0; i0 < 4; i0++) { \
 	NifStream( uvGroups[i0].numKeys, in, version ); \
 	if ( (uvGroups[i0].numKeys != 0) ) { \
@@ -13583,7 +13583,7 @@ for (uint i0 = 0; i0 < 4; i0++) { \
 }; \
 
 #define NI_U_V_DATA_WRITE \
-NiObject::Write( out, link_map, version ); \
+NiObject::Write( out, link_map, version, user_version ); \
 for (uint i0 = 0; i0 < 4; i0++) { \
 	NifStream( uvGroups[i0].numKeys, out, version ); \
 	if ( (uvGroups[i0].numKeys != 0) ) { \
@@ -13613,7 +13613,7 @@ for (uint i0 = 0; i0 < 4; i0++) { \
 return out.str(); \
 
 #define NI_U_V_DATA_FIXLINKS \
-NiObject::FixLinks( objects, link_stack, version ); \
+NiObject::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_U_V_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13632,12 +13632,12 @@ float unknownFloat; \
  : unknownFloat(0.0f) \
 
 #define NI_VECTOR_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( vectorData, in, version ); \
 NifStream( unknownFloat, in, version ); \
 
 #define NI_VECTOR_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( vectorData, out, version ); \
 NifStream( unknownFloat, out, version ); \
 
@@ -13649,7 +13649,7 @@ out << "Unknown Float:  " << unknownFloat << endl; \
 return out.str(); \
 
 #define NI_VECTOR_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_VECTOR_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13669,13 +13669,13 @@ LightMode lightingMode; \
  : flags((unsigned short)0), vertexMode((VertMode)0), lightingMode((LightMode)0) \
 
 #define NI_VERTEX_COLOR_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 NifStream( vertexMode, in, version ); \
 NifStream( lightingMode, in, version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 NifStream( vertexMode, out, version ); \
 NifStream( lightingMode, out, version ); \
@@ -13689,7 +13689,7 @@ out << "Lighting Mode:  " << lightingMode << endl; \
 return out.str(); \
 
 #define NI_VERTEX_COLOR_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_VERTEX_COLOR_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13709,7 +13709,7 @@ vector<float > weight; \
  : numBytes((uint)0), numVertices((ushort)0) \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_READ \
-NiExtraData::Read( in, link_stack, version ); \
+NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numBytes, in, version ); \
 NifStream( numVertices, in, version ); \
 weight.resize(numVertices); \
@@ -13718,7 +13718,7 @@ for (uint i0 = 0; i0 < weight.size(); i0++) { \
 }; \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_WRITE \
-NiExtraData::Write( out, link_map, version ); \
+NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numBytes, out, version ); \
 NifStream( numVertices, out, version ); \
 for (uint i0 = 0; i0 < weight.size(); i0++) { \
@@ -13740,7 +13740,7 @@ for (uint i0 = 0; i0 < weight.size(); i0++) { \
 return out.str(); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS \
-NiExtraData::FixLinks( objects, link_stack, version ); \
+NiExtraData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13759,14 +13759,14 @@ Ref<NiVisData > data; \
 
 #define NI_VIS_CONTROLLER_READ \
 uint block_num; \
-NiSingleInterpolatorController::Read( in, link_stack, version ); \
+NiSingleInterpolatorController::Read( in, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
 
 #define NI_VIS_CONTROLLER_WRITE \
-NiSingleInterpolatorController::Write( out, link_map, version ); \
+NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
 }; \
@@ -13778,7 +13778,7 @@ out << "Data:  " << data << endl; \
 return out.str(); \
 
 #define NI_VIS_CONTROLLER_FIXLINKS \
-NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
@@ -13809,7 +13809,7 @@ vector<Key<byte > > visKeys; \
  : numVisKeys((uint)0) \
 
 #define NI_VIS_DATA_READ \
-AKeyedData::Read( in, link_stack, version ); \
+AKeyedData::Read( in, link_stack, version, user_version ); \
 NifStream( numVisKeys, in, version ); \
 visKeys.resize(numVisKeys); \
 for (uint i0 = 0; i0 < visKeys.size(); i0++) { \
@@ -13817,7 +13817,7 @@ for (uint i0 = 0; i0 < visKeys.size(); i0++) { \
 }; \
 
 #define NI_VIS_DATA_WRITE \
-AKeyedData::Write( out, link_map, version ); \
+AKeyedData::Write( out, link_map, version, user_version ); \
 NifStream( numVisKeys, out, version ); \
 for (uint i0 = 0; i0 < visKeys.size(); i0++) { \
 	NifStream( visKeys[i0], out, version, 1 ); \
@@ -13837,7 +13837,7 @@ for (uint i0 = 0; i0 < visKeys.size(); i0++) { \
 return out.str(); \
 
 #define NI_VIS_DATA_FIXLINKS \
-AKeyedData::FixLinks( objects, link_stack, version ); \
+AKeyedData::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_VIS_DATA_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13855,11 +13855,11 @@ unsigned short flags; \
  : flags((unsigned short)0) \
 
 #define NI_WIREFRAME_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 
 #define NI_WIREFRAME_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 
 #define NI_WIREFRAME_PROPERTY_STRING \
@@ -13869,7 +13869,7 @@ out << "Flags:  " << flags << endl; \
 return out.str(); \
 
 #define NI_WIREFRAME_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_WIREFRAME_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13888,14 +13888,14 @@ uint function; \
  : flags((unsigned short)3), function((uint)3) \
 
 #define NI_Z_BUFFER_PROPERTY_READ \
-NiProperty::Read( in, link_stack, version ); \
+NiProperty::Read( in, link_stack, version, user_version ); \
 NifStream( flags, in, version ); \
 if ( version >= 0x0401000C ) { \
 	NifStream( function, in, version ); \
 }; \
 
 #define NI_Z_BUFFER_PROPERTY_WRITE \
-NiProperty::Write( out, link_map, version ); \
+NiProperty::Write( out, link_map, version, user_version ); \
 NifStream( flags, out, version ); \
 if ( version >= 0x0401000C ) { \
 	NifStream( function, out, version ); \
@@ -13909,7 +13909,7 @@ out << "Function:  " << function << endl; \
 return out.str(); \
 
 #define NI_Z_BUFFER_PROPERTY_FIXLINKS \
-NiProperty::FixLinks( objects, link_stack, version ); \
+NiProperty::FixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_Z_BUFFER_PROPERTY_GETREFS \
 list<Ref<NiObject> > refs; \
@@ -13925,10 +13925,10 @@ return refs; \
 #define ROOT_COLLISION_NODE_CONSTRUCT \
 
 #define ROOT_COLLISION_NODE_READ \
-NiNode::Read( in, link_stack, version ); \
+NiNode::Read( in, link_stack, version, user_version ); \
 
 #define ROOT_COLLISION_NODE_WRITE \
-NiNode::Write( out, link_map, version ); \
+NiNode::Write( out, link_map, version, user_version ); \
 
 #define ROOT_COLLISION_NODE_STRING \
 stringstream out; \
@@ -13936,7 +13936,7 @@ out << NiNode::asString(); \
 return out.str(); \
 
 #define ROOT_COLLISION_NODE_FIXLINKS \
-NiNode::FixLinks( objects, link_stack, version ); \
+NiNode::FixLinks( objects, link_stack, version, user_version ); \
 
 #define ROOT_COLLISION_NODE_GETREFS \
 list<Ref<NiObject> > refs; \

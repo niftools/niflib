@@ -11,11 +11,11 @@ NiVisController::NiVisController() NI_VIS_CONTROLLER_CONSTRUCT {}
 
 NiVisController::~NiVisController() {}
 
-void NiVisController::Read( istream& in, list<uint> & link_stack, unsigned int version ) {
+void NiVisController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VIS_CONTROLLER_READ
 }
 
-void NiVisController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const {
+void NiVisController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NI_VIS_CONTROLLER_WRITE
 }
 
@@ -23,7 +23,7 @@ string NiVisController::asString( bool verbose ) const {
 	NI_VIS_CONTROLLER_STRING
 }
 
-void NiVisController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version ) {
+void NiVisController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VIS_CONTROLLER_FIXLINKS
 }
 
