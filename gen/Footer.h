@@ -9,6 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 // Forward define of referenced blocks
 #include "Ref.h"
 class NiAVObject;
+#include "obj/NiObject.h"
 
 /*!
  * The NIF file footer.
@@ -29,6 +30,9 @@ struct Footer {
 	 * node).
 	 */
 	vector<Ref<NiAVObject > > roots;
+	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	string asString( bool verbose = false ) const;
 };
 
 #endif

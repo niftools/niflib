@@ -236,6 +236,18 @@ void NifStream( HeaderString & val, istream& in, uint version ) {
 	char tmp[64];
 	in.getline( tmp, 64 );
 	val.header = tmp;
+
+        // make sure this is a NIF file
+        if ( ( val.header.substr(0, 22) != "NetImmerse File Format" )
+        && ( val.header.substr(0, 20) != "Gamebryo File Format" ) )
+                throw runtime_error("Not a NIF file.");
+
+        // detect old versions
+        if ( ( val.header == "NetImmerse File Format, Version 3.1" )
+        || ( val.header == "NetImmerse File Format, Version 3.03" )
+        || ( val.header == "NetImmerse File Format, Version 3.0" )
+        || ( val.header == "NetImmerse File Format, Version 2.3" ) )
+                throw runtime_error("Unsupported: " + val.header);
 };
 
 void NifStream( HeaderString const & val, ostream& out, uint version ) {
@@ -251,7 +263,7 @@ void NifStream( HeaderString const & val, ostream& out, uint version ) {
 
 	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 
-	out << header_string.str();
+	out << header_string.str() << "\n";
 };
 
 ostream & operator<<( ostream & out, HeaderString const & val ) {

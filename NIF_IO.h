@@ -367,6 +367,11 @@ void NifStream( LightMode & val, istream& in, uint version = 0 );
 void NifStream( LightMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, LightMode const & val );
 
+//HeaderString
+void NifStream( HeaderString & val, istream& in, uint version = 0 );
+void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, HeaderString const & val );
+
 //--Templates--//
 
 //Key<T>
