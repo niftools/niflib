@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkShape
- */
-
 class bhkShape;
 typedef Ref<bhkShape> bhkShapeRef;
+
+/*!
+ * bhkShape - A Havok Shape?
+ */
 
 class bhkShape : public BHK_SHAPE_PARENT {
 public:

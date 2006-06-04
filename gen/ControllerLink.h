@@ -46,8 +46,7 @@ struct ControllerLink {
 	/*!
 	 * Idle animations tend to have low values for this, and blocks that have
 	 * high values tend to correspond with the important parts of the
-	 * animation. WARNING: BREAKS CIV4 NIF FILES! Only observed in Oblivion
-	 * NIF files so far.
+	 * animation.
 	 */
 	byte priority_;
 	/*!

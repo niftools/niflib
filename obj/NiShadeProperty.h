@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiShadeProperty
- */
-
 class NiShadeProperty;
 typedef Ref<NiShadeProperty> NiShadePropertyRef;
+
+/*!
+ * NiShadeProperty - Determines whether flat shading or smooth shading is
+ * used on a shape.
+ */
 
 class NiShadeProperty : public NI_SHADE_PROPERTY_PARENT {
 public:

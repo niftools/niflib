@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBlendBoolInterpolator
- */
-
 class NiBlendBoolInterpolator;
 typedef Ref<NiBlendBoolInterpolator> NiBlendBoolInterpolatorRef;
+
+/*!
+ * NiBlendBoolInterpolator - An interpolator for a bool.
+ */
 
 class NiBlendBoolInterpolator : public NI_BLEND_BOOL_INTERPOLATOR_PARENT {
 public:

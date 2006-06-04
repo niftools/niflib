@@ -14,12 +14,14 @@ class NiRangeLODData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLODNode
- */
-
 class NiLODNode;
 typedef Ref<NiLODNode> NiLODNodeRef;
+
+/*!
+ * NiLODNode - Level of detail selector. Links to different levels of
+ * detail of the same model, used to switch a geometry at a specified
+ * distance.
+ */
 
 class NiLODNode : public NI_L_O_D_NODE_PARENT {
 public:

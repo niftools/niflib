@@ -14,12 +14,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTriBasedGeom
- */
-
 class NiTriBasedGeom;
 typedef Ref<NiTriBasedGeom> NiTriBasedGeomRef;
+
+/*!
+ * NiTriBasedGeom - Describes a mesh, built from triangles.
+ */
 
 class NiTriBasedGeom : public NI_TRI_BASED_GEOM_PARENT {
 public:

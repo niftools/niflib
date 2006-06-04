@@ -12,12 +12,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysBombModifier
- */
-
 class NiPSysBombModifier;
 typedef Ref<NiPSysBombModifier> NiPSysBombModifierRef;
+
+/*!
+ * NiPSysBombModifier - Unknown.
+ */
 
 class NiPSysBombModifier : public NI_P_SYS_BOMB_MODIFIER_PARENT {
 public:

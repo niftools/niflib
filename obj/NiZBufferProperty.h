@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiZBufferProperty
- */
-
 class NiZBufferProperty;
 typedef Ref<NiZBufferProperty> NiZBufferPropertyRef;
+
+/*!
+ * NiZBufferProperty - This Property controlls the Z buffer (OpenGL:
+ * depth buffer).
+ */
 
 class NiZBufferProperty : public NI_Z_BUFFER_PROPERTY_PARENT {
 public:

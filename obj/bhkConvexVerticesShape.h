@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkConvexVerticesShape
- */
-
 class bhkConvexVerticesShape;
 typedef Ref<bhkConvexVerticesShape> bhkConvexVerticesShapeRef;
+
+/*!
+ * bhkConvexVerticesShape - A convex shape built from vertices?
+ */
 
 class bhkConvexVerticesShape : public BHK_CONVEX_VERTICES_SHAPE_PARENT {
 public:

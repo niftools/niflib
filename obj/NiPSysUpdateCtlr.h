@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysUpdateCtlr
- */
-
 class NiPSysUpdateCtlr;
 typedef Ref<NiPSysUpdateCtlr> NiPSysUpdateCtlrRef;
+
+/*!
+ * NiPSysUpdateCtlr - Particle system controller, used for ???.
+ */
 
 class NiPSysUpdateCtlr : public NI_P_SYS_UPDATE_CTLR_PARENT {
 public:

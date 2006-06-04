@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBlendInterpolator
- */
-
 class NiBlendInterpolator;
 typedef Ref<NiBlendInterpolator> NiBlendInterpolatorRef;
+
+/*!
+ * NiBlendInterpolator - An extended type of interpolater.
+ */
 
 class NiBlendInterpolator : public NI_BLEND_INTERPOLATOR_PARENT {
 public:

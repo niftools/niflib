@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkTransformShape
- */
-
 class bhkTransformShape;
 typedef Ref<bhkTransformShape> bhkTransformShapeRef;
+
+/*!
+ * bhkTransformShape - Transforms a shape.
+ */
 
 class bhkTransformShape : public BHK_TRANSFORM_SHAPE_PARENT {
 public:

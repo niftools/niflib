@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPlanarCollider
- */
-
 class NiPlanarCollider;
 typedef Ref<NiPlanarCollider> NiPlanarColliderRef;
+
+/*!
+ * NiPlanarCollider - Unknown.
+ */
 
 class NiPlanarCollider : public NI_PLANAR_COLLIDER_PARENT {
 public:

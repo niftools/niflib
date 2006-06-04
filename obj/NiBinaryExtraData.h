@@ -10,12 +10,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBinaryExtraData
- */
-
 class NiBinaryExtraData;
 typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;
+
+/*!
+ * NiBinaryExtraData - Binary extra data block. Used to store normals and
+ * binormals in Oblivion.
+ */
 
 class NiBinaryExtraData : public NI_BINARY_EXTRA_DATA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysData
- */
-
 class NiPSysData;
 typedef Ref<NiPSysData> NiPSysDataRef;
+
+/*!
+ * NiPSysData - Particle system data.
+ */
 
 class NiPSysData : public NI_P_SYS_DATA_PARENT {
 public:

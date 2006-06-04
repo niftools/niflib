@@ -12,12 +12,12 @@ class NiInterpolator;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLightDimmerController
- */
-
 class NiLightDimmerController;
 typedef Ref<NiLightDimmerController> NiLightDimmerControllerRef;
+
+/*!
+ * NiLightDimmerController - Unknown controller.
+ */
 
 class NiLightDimmerController : public NI_LIGHT_DIMMER_CONTROLLER_PARENT {
 public:

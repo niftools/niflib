@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTriStrips
- */
-
 class NiTriStrips;
 typedef Ref<NiTriStrips> NiTriStripsRef;
+
+/*!
+ * NiTriStrips - A shape node that refers to data organized into strips
+ * of triangles
+ */
 
 class NiTriStrips : public NI_TRI_STRIPS_PARENT {
 public:

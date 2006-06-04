@@ -12,12 +12,12 @@ class NiTriStripsData;
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkNiTriStripsShape
- */
-
 class bhkNiTriStripsShape;
 typedef Ref<bhkNiTriStripsShape> bhkNiTriStripsShapeRef;
+
+/*!
+ * bhkNiTriStripsShape - A shape constructed from a bunch of strips.
+ */
 
 class bhkNiTriStripsShape : public BHK_NI_TRI_STRIPS_SHAPE_PARENT {
 public:

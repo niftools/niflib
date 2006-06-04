@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPointLight
- */
-
 class NiPointLight;
 typedef Ref<NiPointLight> NiPointLightRef;
+
+/*!
+ * NiPointLight - A point light.
+ */
 
 class NiPointLight : public NI_POINT_LIGHT_PARENT {
 public:

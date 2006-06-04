@@ -12,12 +12,13 @@ class NiInterpolator;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSingleInterpolatorController
- */
-
 class NiSingleInterpolatorController;
 typedef Ref<NiSingleInterpolatorController> NiSingleInterpolatorControllerRef;
+
+/*!
+ * NiSingleInterpolatorController - A controller referring to an
+ * interpolator.
+ */
 
 class NiSingleInterpolatorController : public NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
 public:

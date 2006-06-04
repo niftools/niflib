@@ -12,12 +12,12 @@ class bhkShape;
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkEntity
- */
-
 class bhkEntity;
 typedef Ref<bhkEntity> bhkEntityRef;
+
+/*!
+ * bhkEntity - A havok node, describes physical properties.
+ */
 
 class bhkEntity : public BHK_ENTITY_PARENT {
 public:

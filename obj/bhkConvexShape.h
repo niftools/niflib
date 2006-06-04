@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkConvexShape
- */
-
 class bhkConvexShape;
 typedef Ref<bhkConvexShape> bhkConvexShapeRef;
+
+/*!
+ * bhkConvexShape - A havok shape.
+ */
 
 class bhkConvexShape : public BHK_CONVEX_SHAPE_PARENT {
 public:

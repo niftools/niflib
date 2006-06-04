@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineCompFloatInterpolator
- */
-
 class NiBSplineCompFloatInterpolator;
 typedef Ref<NiBSplineCompFloatInterpolator> NiBSplineCompFloatInterpolatorRef;
+
+/*!
+ * NiBSplineCompFloatInterpolator - Unknown.
+ */
 
 class NiBSplineCompFloatInterpolator : public NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT {
 public:

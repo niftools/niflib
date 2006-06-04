@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiDirectionalLight
- */
-
 class NiDirectionalLight;
 typedef Ref<NiDirectionalLight> NiDirectionalLightRef;
+
+/*!
+ * NiDirectionalLight - Directional light source.
+ */
 
 class NiDirectionalLight : public NI_DIRECTIONAL_LIGHT_PARENT {
 public:

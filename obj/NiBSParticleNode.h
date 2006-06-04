@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSParticleNode
- */
-
 class NiBSParticleNode;
 typedef Ref<NiBSParticleNode> NiBSParticleNodeRef;
+
+/*!
+ * NiBSParticleNode - Unknown.
+ */
 
 class NiBSParticleNode : public NI_B_S_PARTICLE_NODE_PARENT {
 public:

@@ -12,12 +12,12 @@ class NiKeyframeData;
 
 #include "gen/obj_defines.h"
 
-/*
- * BSKeyframeController
- */
-
 class BSKeyframeController;
 typedef Ref<BSKeyframeController> BSKeyframeControllerRef;
+
+/*!
+ * BSKeyframeController - An extended keyframe controller.
+ */
 
 class BSKeyframeController : public B_S_KEYFRAME_CONTROLLER_PARENT {
 public:

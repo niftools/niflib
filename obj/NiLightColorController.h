@@ -13,12 +13,12 @@ class NiPoint3Interpolator;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLightColorController
- */
-
 class NiLightColorController;
 typedef Ref<NiLightColorController> NiLightColorControllerRef;
+
+/*!
+ * NiLightColorController - Light color animation controller.
+ */
 
 class NiLightColorController : public NI_LIGHT_COLOR_CONTROLLER_PARENT {
 public:

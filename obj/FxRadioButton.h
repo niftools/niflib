@@ -12,12 +12,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * FxRadioButton
- */
-
 class FxRadioButton;
 typedef Ref<FxRadioButton> FxRadioButtonRef;
+
+/*!
+ * FxRadioButton - Unknown.
+ */
 
 class FxRadioButton : public FX_RADIO_BUTTON_PARENT {
 public:

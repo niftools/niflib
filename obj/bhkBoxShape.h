@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkBoxShape
- */
-
 class bhkBoxShape;
 typedef Ref<bhkBoxShape> bhkBoxShapeRef;
+
+/*!
+ * bhkBoxShape - A box.
+ */
 
 class bhkBoxShape : public BHK_BOX_SHAPE_PARENT {
 public:

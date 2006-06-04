@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * AvoidNode
- */
-
 class AvoidNode;
 typedef Ref<AvoidNode> AvoidNodeRef;
+
+/*!
+ * AvoidNode - Morrowind specific?
+ */
 
 class AvoidNode : public AVOID_NODE_PARENT {
 public:

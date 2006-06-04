@@ -12,12 +12,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMultiTargetTransformController
- */
-
 class NiMultiTargetTransformController;
 typedef Ref<NiMultiTargetTransformController> NiMultiTargetTransformControllerRef;
+
+/*!
+ * NiMultiTargetTransformController - Unknown.
+ */
 
 class NiMultiTargetTransformController : public NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT {
 public:

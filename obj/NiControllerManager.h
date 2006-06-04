@@ -13,12 +13,12 @@ class NiDefaultAVObjectPalette;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiControllerManager
- */
-
 class NiControllerManager;
 typedef Ref<NiControllerManager> NiControllerManagerRef;
+
+/*!
+ * NiControllerManager - Unknown. Root of all controllers?
+ */
 
 class NiControllerManager : public NI_CONTROLLER_MANAGER_PARENT {
 public:

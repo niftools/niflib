@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTriShapeData
- */
-
 class NiTriShapeData;
 typedef Ref<NiTriShapeData> NiTriShapeDataRef;
+
+/*!
+ * NiTriShapeData - Holds mesh data using a list of singular triangles.
+ */
 
 class NiTriShapeData : public NI_TRI_SHAPE_DATA_PARENT {
 public:

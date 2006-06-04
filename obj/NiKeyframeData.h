@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiKeyframeData
- */
-
 class NiKeyframeData;
 typedef Ref<NiKeyframeData> NiKeyframeDataRef;
+
+/*!
+ * NiKeyframeData - Keyframes for mesh animation.
+ */
 
 class NiKeyframeData : public NI_KEYFRAME_DATA_PARENT {
 public:

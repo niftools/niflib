@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSpotLight
- */
-
 class NiSpotLight;
 typedef Ref<NiSpotLight> NiSpotLightRef;
+
+/*!
+ * NiSpotLight - A spot.
+ */
 
 class NiSpotLight : public NI_SPOT_LIGHT_PARENT {
 public:

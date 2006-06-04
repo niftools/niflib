@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysModifierActiveCtlr
- */
-
 class NiPSysModifierActiveCtlr;
 typedef Ref<NiPSysModifierActiveCtlr> NiPSysModifierActiveCtlrRef;
+
+/*!
+ * NiPSysModifierActiveCtlr - Unknown.
+ */
 
 class NiPSysModifierActiveCtlr : public NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT {
 public:

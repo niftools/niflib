@@ -13,12 +13,12 @@ class NiDynamicEffect;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiNode
- */
-
 class NiNode;
 typedef Ref<NiNode> NiNodeRef;
+
+/*!
+ * NiNode - Generic node block for grouping.
+ */
 
 class NiNode : public NI_NODE_PARENT {
 public:

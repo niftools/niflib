@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTransformController
- */
-
 class NiTransformController;
 typedef Ref<NiTransformController> NiTransformControllerRef;
+
+/*!
+ * NiTransformController - NiTransformController replaces the
+ * NiKeyframeController.
+ */
 
 class NiTransformController : public NI_TRANSFORM_CONTROLLER_PARENT {
 public:

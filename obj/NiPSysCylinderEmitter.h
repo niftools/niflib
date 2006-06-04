@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysCylinderEmitter
- */
-
 class NiPSysCylinderEmitter;
 typedef Ref<NiPSysCylinderEmitter> NiPSysCylinderEmitterRef;
+
+/*!
+ * NiPSysCylinderEmitter - Unknown.
+ */
 
 class NiPSysCylinderEmitter : public NI_P_SYS_CYLINDER_EMITTER_PARENT {
 public:

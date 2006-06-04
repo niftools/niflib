@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * ABoneLODController
- */
-
 class ABoneLODController;
 typedef Ref<ABoneLODController> ABoneLODControllerRef;
+
+/*!
+ * ABoneLODController - Level of detail controller for bones?
+ */
 
 class ABoneLODController : public A_BONE_L_O_D_CONTROLLER_PARENT {
 public:

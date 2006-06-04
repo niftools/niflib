@@ -12,12 +12,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiCamera
- */
-
 class NiCamera;
 typedef Ref<NiCamera> NiCameraRef;
+
+/*!
+ * NiCamera - Camera object.
+ */
 
 class NiCamera : public NI_CAMERA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticles
- */
-
 class NiParticles;
 typedef Ref<NiParticles> NiParticlesRef;
+
+/*!
+ * NiParticles - Generic particle system node.
+ */
 
 class NiParticles : public NI_PARTICLES_PARENT {
 public:

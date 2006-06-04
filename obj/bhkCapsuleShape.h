@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkCapsuleShape
- */
-
 class bhkCapsuleShape;
 typedef Ref<bhkCapsuleShape> bhkCapsuleShapeRef;
+
+/*!
+ * bhkCapsuleShape - A capsule.
+ */
 
 class bhkCapsuleShape : public BHK_CAPSULE_SHAPE_PARENT {
 public:

@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * AbhkShapeCollection
- */
-
 class AbhkShapeCollection;
 typedef Ref<AbhkShapeCollection> AbhkShapeCollectionRef;
+
+/*!
+ * AbhkShapeCollection - Havok data, not sure where to put in the
+ * hierarchy.
+ */
 
 class AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
 public:

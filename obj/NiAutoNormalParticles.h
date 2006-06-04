@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiAutoNormalParticles
- */
-
 class NiAutoNormalParticles;
 typedef Ref<NiAutoNormalParticles> NiAutoNormalParticlesRef;
+
+/*!
+ * NiAutoNormalParticles - Unknown.
+ */
 
 class NiAutoNormalParticles : public NI_AUTO_NORMAL_PARTICLES_PARENT {
 public:

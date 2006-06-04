@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleMeshes
- */
-
 class NiParticleMeshes;
 typedef Ref<NiParticleMeshes> NiParticleMeshesRef;
+
+/*!
+ * NiParticleMeshes - Mesh particle node?
+ */
 
 class NiParticleMeshes : public NI_PARTICLE_MESHES_PARENT {
 public:

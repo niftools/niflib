@@ -12,12 +12,15 @@ class NiSourceTexture;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTextureEffect
- */
-
 class NiTextureEffect;
 typedef Ref<NiTextureEffect> NiTextureEffectRef;
+
+/*!
+ * NiTextureEffect - Enables environment mapping. Should be in both the
+ * children list and effects list of the NiTriShape block. For Morrowind:
+ * the bump map can be used to bump the environment map (note that the
+ * bump map is ignored if no NiTextureEffect block is present).
+ */
 
 class NiTextureEffect : public NI_TEXTURE_EFFECT_PARENT {
 public:

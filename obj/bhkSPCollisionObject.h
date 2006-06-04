@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkSPCollisionObject
- */
-
 class bhkSPCollisionObject;
 typedef Ref<bhkSPCollisionObject> bhkSPCollisionObjectRef;
+
+/*!
+ * bhkSPCollisionObject - Unknown.
+ */
 
 class bhkSPCollisionObject : public BHK_S_P_COLLISION_OBJECT_PARENT {
 public:

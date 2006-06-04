@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkRigidBodyT
- */
-
 class bhkRigidBodyT;
 typedef Ref<bhkRigidBodyT> bhkRigidBodyTRef;
+
+/*!
+ * bhkRigidBodyT - Unknown.
+ */
 
 class bhkRigidBodyT : public BHK_RIGID_BODY_T_PARENT {
 public:

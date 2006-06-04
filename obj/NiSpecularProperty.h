@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSpecularProperty
- */
-
 class NiSpecularProperty;
 typedef Ref<NiSpecularProperty> NiSpecularPropertyRef;
+
+/*!
+ * NiSpecularProperty - Gives specularity to a shape. Flags 0x0001.
+ */
 
 class NiSpecularProperty : public NI_SPECULAR_PROPERTY_PARENT {
 public:

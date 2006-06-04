@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiUVData
- */
-
 class NiUVData;
 typedef Ref<NiUVData> NiUVDataRef;
+
+/*!
+ * NiUVData - Texture coordinate data.
+ */
 
 class NiUVData : public NI_U_V_DATA_PARENT {
 public:

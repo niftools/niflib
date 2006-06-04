@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiVisData
- */
-
 class NiVisData;
 typedef Ref<NiVisData> NiVisDataRef;
+
+/*!
+ * NiVisData - Visibility data for a controller.
+ */
 
 class NiVisData : public NI_VIS_DATA_PARENT {
 public:

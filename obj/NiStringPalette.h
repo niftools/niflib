@@ -10,12 +10,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiStringPalette
- */
-
 class NiStringPalette;
 typedef Ref<NiStringPalette> NiStringPaletteRef;
+
+/*!
+ * NiStringPalette - List of 0x00-seperated strings, which are names of
+ * controlled blocks and controller types. Used in .kf files in
+ * conjunction with NiControllerSequence.
+ */
 
 class NiStringPalette : public NI_STRING_PALETTE_PARENT {
 public:

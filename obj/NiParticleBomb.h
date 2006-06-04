@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleBomb
- */
-
 class NiParticleBomb;
 typedef Ref<NiParticleBomb> NiParticleBombRef;
+
+/*!
+ * NiParticleBomb - A particle modifier.
+ */
 
 class NiParticleBomb : public NI_PARTICLE_BOMB_PARENT {
 public:

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "gen/FurniturePosition.h"
 
 //Constructor
-FurniturePosition::FurniturePosition() : unknownShort((ushort)0), positionRef1_((byte)0), positionRef2_((byte)0) {};
+FurniturePosition::FurniturePosition() : orientation((ushort)0), positionRef1((byte)0), positionRef2((byte)0) {};
 
 //Destructor
 FurniturePosition::~FurniturePosition() {};

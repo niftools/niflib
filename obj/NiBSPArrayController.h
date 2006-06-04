@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSPArrayController
- */
-
 class NiBSPArrayController;
 typedef Ref<NiBSPArrayController> NiBSPArrayControllerRef;
+
+/*!
+ * NiBSPArrayController - A particle system controller, used by BS in
+ * conjunction with NiBSParticleNode.
+ */
 
 class NiBSPArrayController : public NI_B_S_P_ARRAY_CONTROLLER_PARENT {
 public:

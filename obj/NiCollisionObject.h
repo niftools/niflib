@@ -13,12 +13,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiCollisionObject
- */
-
 class NiCollisionObject;
 typedef Ref<NiCollisionObject> NiCollisionObjectRef;
+
+/*!
+ * NiCollisionObject - Unknown.
+ */
 
 class NiCollisionObject : public NI_COLLISION_OBJECT_PARENT {
 public:

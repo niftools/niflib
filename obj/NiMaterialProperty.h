@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMaterialProperty
- */
-
 class NiMaterialProperty;
 typedef Ref<NiMaterialProperty> NiMaterialPropertyRef;
+
+/*!
+ * NiMaterialProperty - Describes the material shading properties.
+ */
 
 class NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
 public:

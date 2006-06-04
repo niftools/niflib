@@ -2109,7 +2109,7 @@ ushort unknownShort1; \
 ushort unknownShort2; \
 ushort unknownShort3; \
 ushort unknownShort4; \
-Vector3 unknownVector; \
+Vector3 dimensions; \
 float unknownFloat2; \
 
 #define BHK_BOX_SHAPE_INCLUDE "bhkConvexShape.h" \
@@ -2126,7 +2126,7 @@ NifStream( unknownShort1, in, version ); \
 NifStream( unknownShort2, in, version ); \
 NifStream( unknownShort3, in, version ); \
 NifStream( unknownShort4, in, version ); \
-NifStream( unknownVector, in, version ); \
+NifStream( dimensions, in, version ); \
 NifStream( unknownFloat2, in, version ); \
 
 #define BHK_BOX_SHAPE_WRITE \
@@ -2136,7 +2136,7 @@ NifStream( unknownShort1, out, version ); \
 NifStream( unknownShort2, out, version ); \
 NifStream( unknownShort3, out, version ); \
 NifStream( unknownShort4, out, version ); \
-NifStream( unknownVector, out, version ); \
+NifStream( dimensions, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 
 #define BHK_BOX_SHAPE_STRING \
@@ -2147,7 +2147,7 @@ out << "Unknown Short 1:  " << unknownShort1 << endl; \
 out << "Unknown Short 2:  " << unknownShort2 << endl; \
 out << "Unknown Short 3:  " << unknownShort3 << endl; \
 out << "Unknown Short 4:  " << unknownShort4 << endl; \
-out << "Unknown Vector:  " << unknownVector << endl; \
+out << "Dimensions:  " << dimensions << endl; \
 out << "Unknown Float 2:  " << unknownFloat2 << endl; \
 return out.str(); \
 
@@ -2165,9 +2165,9 @@ ushort unknownShort1; \
 ushort unknownShort2; \
 ushort unknownShort3; \
 ushort unknownShort4; \
-Vector3 unknownVector1; \
+Vector3 firstPoint; \
 float radius1; \
-Vector3 unknownVector2; \
+Vector3 secondPoint; \
 float radius2; \
 
 #define BHK_CAPSULE_SHAPE_INCLUDE "bhkConvexShape.h" \
@@ -2184,9 +2184,9 @@ NifStream( unknownShort1, in, version ); \
 NifStream( unknownShort2, in, version ); \
 NifStream( unknownShort3, in, version ); \
 NifStream( unknownShort4, in, version ); \
-NifStream( unknownVector1, in, version ); \
+NifStream( firstPoint, in, version ); \
 NifStream( radius1, in, version ); \
-NifStream( unknownVector2, in, version ); \
+NifStream( secondPoint, in, version ); \
 NifStream( radius2, in, version ); \
 
 #define BHK_CAPSULE_SHAPE_WRITE \
@@ -2196,9 +2196,9 @@ NifStream( unknownShort1, out, version ); \
 NifStream( unknownShort2, out, version ); \
 NifStream( unknownShort3, out, version ); \
 NifStream( unknownShort4, out, version ); \
-NifStream( unknownVector1, out, version ); \
+NifStream( firstPoint, out, version ); \
 NifStream( radius1, out, version ); \
-NifStream( unknownVector2, out, version ); \
+NifStream( secondPoint, out, version ); \
 NifStream( radius2, out, version ); \
 
 #define BHK_CAPSULE_SHAPE_STRING \
@@ -2209,9 +2209,9 @@ out << "Unknown Short 1:  " << unknownShort1 << endl; \
 out << "Unknown Short 2:  " << unknownShort2 << endl; \
 out << "Unknown Short 3:  " << unknownShort3 << endl; \
 out << "Unknown Short 4:  " << unknownShort4 << endl; \
-out << "Unknown Vector 1:  " << unknownVector1 << endl; \
+out << "First Point:  " << firstPoint << endl; \
 out << "Radius 1:  " << radius1 << endl; \
-out << "Unknown Vector 2:  " << unknownVector2 << endl; \
+out << "Second Point:  " << secondPoint << endl; \
 out << "Radius 2:  " << radius2 << endl; \
 return out.str(); \
 
@@ -3718,20 +3718,20 @@ NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( numPositions, in, version ); \
 positions.resize(numPositions); \
 for (uint i0 = 0; i0 < positions.size(); i0++) { \
-	NifStream( positions[i0].unknownVector, in, version ); \
-	NifStream( positions[i0].unknownShort, in, version ); \
-	NifStream( positions[i0].positionRef1_, in, version ); \
-	NifStream( positions[i0].positionRef2_, in, version ); \
+	NifStream( positions[i0].offset, in, version ); \
+	NifStream( positions[i0].orientation, in, version ); \
+	NifStream( positions[i0].positionRef1, in, version ); \
+	NifStream( positions[i0].positionRef2, in, version ); \
 }; \
 
 #define B_S_FURNITURE_MARKER_WRITE \
 NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( numPositions, out, version ); \
 for (uint i0 = 0; i0 < positions.size(); i0++) { \
-	NifStream( positions[i0].unknownVector, out, version ); \
-	NifStream( positions[i0].unknownShort, out, version ); \
-	NifStream( positions[i0].positionRef1_, out, version ); \
-	NifStream( positions[i0].positionRef2_, out, version ); \
+	NifStream( positions[i0].offset, out, version ); \
+	NifStream( positions[i0].orientation, out, version ); \
+	NifStream( positions[i0].positionRef1, out, version ); \
+	NifStream( positions[i0].positionRef2, out, version ); \
 }; \
 
 #define B_S_FURNITURE_MARKER_STRING \
@@ -3739,10 +3739,10 @@ stringstream out; \
 out << NiExtraData::asString(); \
 out << "Num Positions:  " << numPositions << endl; \
 for (uint i0 = 0; i0 < positions.size(); i0++) { \
-	out << "  Unknown Vector:  " << positions[i0].unknownVector << endl; \
-	out << "  Unknown Short:  " << positions[i0].unknownShort << endl; \
-	out << "  Position Ref 1?:  " << positions[i0].positionRef1_ << endl; \
-	out << "  Position Ref 2?:  " << positions[i0].positionRef2_ << endl; \
+	out << "  Offset:  " << positions[i0].offset << endl; \
+	out << "  Orientation:  " << positions[i0].orientation << endl; \
+	out << "  Position Ref 1:  " << positions[i0].positionRef1 << endl; \
+	out << "  Position Ref 2:  " << positions[i0].positionRef2 << endl; \
 }; \
 return out.str(); \
 

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiInterpolator
- */
-
 class NiInterpolator;
 typedef Ref<NiInterpolator> NiInterpolatorRef;
+
+/*!
+ * NiInterpolator - Interpolator blocks - function unknown.
+ */
 
 class NiInterpolator : public NI_INTERPOLATOR_PARENT {
 public:

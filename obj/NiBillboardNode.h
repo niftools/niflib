@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBillboardNode
- */
-
 class NiBillboardNode;
 typedef Ref<NiBillboardNode> NiBillboardNodeRef;
+
+/*!
+ * NiBillboardNode - These nodes will always be rotated to face the
+ * camera creating a billboard effect for any attached objects.
+ */
 
 class NiBillboardNode : public NI_BILLBOARD_NODE_PARENT {
 public:

@@ -12,12 +12,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFloatExtraDataController
- */
-
 class NiFloatExtraDataController;
 typedef Ref<NiFloatExtraDataController> NiFloatExtraDataControllerRef;
+
+/*!
+ * NiFloatExtraDataController - Unknown.
+ */
 
 class NiFloatExtraDataController : public NI_FLOAT_EXTRA_DATA_CONTROLLER_PARENT {
 public:

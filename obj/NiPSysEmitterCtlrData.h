@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysEmitterCtlrData
- */
-
 class NiPSysEmitterCtlrData;
 typedef Ref<NiPSysEmitterCtlrData> NiPSysEmitterCtlrDataRef;
+
+/*!
+ * NiPSysEmitterCtlrData - Particle system emitter controller data.
+ */
 
 class NiPSysEmitterCtlrData : public NI_P_SYS_EMITTER_CTLR_DATA_PARENT {
 public:

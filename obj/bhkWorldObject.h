@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkWorldObject
- */
-
 class bhkWorldObject;
 typedef Ref<bhkWorldObject> bhkWorldObjectRef;
+
+/*!
+ * bhkWorldObject - Havok objects that have a position in the world?
+ */
 
 class bhkWorldObject : public BHK_WORLD_OBJECT_PARENT {
 public:

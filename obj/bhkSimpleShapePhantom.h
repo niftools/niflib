@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkSimpleShapePhantom
- */
-
 class bhkSimpleShapePhantom;
 typedef Ref<bhkSimpleShapePhantom> bhkSimpleShapePhantomRef;
+
+/*!
+ * bhkSimpleShapePhantom - Unknown shape.
+ */
 
 class bhkSimpleShapePhantom : public BHK_SIMPLE_SHAPE_PHANTOM_PARENT {
 public:

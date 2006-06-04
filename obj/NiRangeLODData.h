@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiRangeLODData
- */
-
 class NiRangeLODData;
 typedef Ref<NiRangeLODData> NiRangeLODDataRef;
+
+/*!
+ * NiRangeLODData - Describes levels of detail.
+ */
 
 class NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysSpawnModifier
- */
-
 class NiPSysSpawnModifier;
 typedef Ref<NiPSysSpawnModifier> NiPSysSpawnModifierRef;
+
+/*!
+ * NiPSysSpawnModifier - Unknown particle modifier.
+ */
 
 class NiPSysSpawnModifier : public NI_P_SYS_SPAWN_MODIFIER_PARENT {
 public:

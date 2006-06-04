@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysPositionModifier
- */
-
 class NiPSysPositionModifier;
 typedef Ref<NiPSysPositionModifier> NiPSysPositionModifierRef;
+
+/*!
+ * NiPSysPositionModifier - Unknown particle system modifier.
+ */
 
 class NiPSysPositionModifier : public NI_P_SYS_POSITION_MODIFIER_PARENT {
 public:

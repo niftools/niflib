@@ -12,12 +12,13 @@ class bhkShape;
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkMoppBvTreeShape
- */
-
 class bhkMoppBvTreeShape;
 typedef Ref<bhkMoppBvTreeShape> bhkMoppBvTreeShapeRef;
+
+/*!
+ * bhkMoppBvTreeShape - Memory optimized partial polytope bounding volume
+ * tree shape (not an entity).
+ */
 
 class bhkMoppBvTreeShape : public BHK_MOPP_BV_TREE_SHAPE_PARENT {
 public:

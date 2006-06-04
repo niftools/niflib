@@ -12,12 +12,12 @@ class NiTriBasedGeom;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleMeshesData
- */
-
 class NiParticleMeshesData;
 typedef Ref<NiParticleMeshesData> NiParticleMeshesDataRef;
+
+/*!
+ * NiParticleMeshesData - Particle meshes data.
+ */
 
 class NiParticleMeshesData : public NI_PARTICLE_MESHES_DATA_PARENT {
 public:

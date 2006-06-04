@@ -14,12 +14,12 @@ class NiSkinPartition;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSkinData
- */
-
 class NiSkinData;
 typedef Ref<NiSkinData> NiSkinDataRef;
+
+/*!
+ * NiSkinData - Skinning data.
+ */
 
 class NiSkinData : public NI_SKIN_DATA_PARENT {
 public:

@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFloatData
- */
-
 class NiFloatData;
 typedef Ref<NiFloatData> NiFloatDataRef;
+
+/*!
+ * NiFloatData - Possibly the 1D position along a 3D path.
+ */
 
 class NiFloatData : public NI_FLOAT_DATA_PARENT {
 public:

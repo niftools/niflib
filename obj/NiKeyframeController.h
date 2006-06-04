@@ -12,12 +12,13 @@ class NiKeyframeData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiKeyframeController
- */
-
 class NiKeyframeController;
 typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
+
+/*!
+ * NiKeyframeController - A time controller block for animation key
+ * frames.
+ */
 
 class NiKeyframeController : public NI_KEYFRAME_CONTROLLER_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysEmitterInitialRadiusCtlr
- */
-
 class NiPSysEmitterInitialRadiusCtlr;
 typedef Ref<NiPSysEmitterInitialRadiusCtlr> NiPSysEmitterInitialRadiusCtlrRef;
+
+/*!
+ * NiPSysEmitterInitialRadiusCtlr - Unknown.
+ */
 
 class NiPSysEmitterInitialRadiusCtlr : public NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_PARENT {
 public:

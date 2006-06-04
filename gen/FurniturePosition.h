@@ -16,21 +16,23 @@ struct FurniturePosition {
 	/*! Default Destructor */
 	~FurniturePosition();
 	/*!
-	 * Unknown. Position?
+	 * Offset of furniture marker.
 	 */
-	Vector3 unknownVector;
+	Vector3 offset;
 	/*!
-	 * Unknown.
+	 * Furniture marker orientation.
 	 */
-	ushort unknownShort;
+	ushort orientation;
 	/*!
-	 * This might refer to a furnituremarkerxx.nif file.
+	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as
+	 * Position Ref 2.
 	 */
-	byte positionRef1_;
+	byte positionRef1;
 	/*!
-	 * This might also refer to a furnituremarkerxx.nif file.
+	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as
+	 * Position Ref 1.
 	 */
-	byte positionRef2_;
+	byte positionRef2;
 };
 
 #endif

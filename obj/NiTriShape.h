@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTriShape
- */
-
 class NiTriShape;
 typedef Ref<NiTriShape> NiTriShapeRef;
+
+/*!
+ * NiTriShape - A shape node that refers to singular triangle data.
+ */
 
 class NiTriShape : public NI_TRI_SHAPE_PARENT {
 public:

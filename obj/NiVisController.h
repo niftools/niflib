@@ -12,12 +12,12 @@ class NiVisData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiVisController
- */
-
 class NiVisController;
 typedef Ref<NiVisController> NiVisControllerRef;
+
+/*!
+ * NiVisController - Time controller for visibility.
+ */
 
 class NiVisController : public NI_VIS_CONTROLLER_PARENT {
 public:

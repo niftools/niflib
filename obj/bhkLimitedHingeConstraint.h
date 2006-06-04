@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkLimitedHingeConstraint
- */
-
 class bhkLimitedHingeConstraint;
 typedef Ref<bhkLimitedHingeConstraint> bhkLimitedHingeConstraintRef;
+
+/*!
+ * bhkLimitedHingeConstraint - Hinge constraint.
+ */
 
 class bhkLimitedHingeConstraint : public BHK_LIMITED_HINGE_CONSTRAINT_PARENT {
 public:

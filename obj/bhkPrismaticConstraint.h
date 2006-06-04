@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkPrismaticConstraint
- */
-
 class bhkPrismaticConstraint;
 typedef Ref<bhkPrismaticConstraint> bhkPrismaticConstraintRef;
+
+/*!
+ * bhkPrismaticConstraint - A prismatic constraint.
+ */
 
 class bhkPrismaticConstraint : public BHK_PRISMATIC_CONSTRAINT_PARENT {
 public:

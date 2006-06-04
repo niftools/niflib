@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysGravityStrengthCtlr
- */
-
 class NiPSysGravityStrengthCtlr;
 typedef Ref<NiPSysGravityStrengthCtlr> NiPSysGravityStrengthCtlrRef;
+
+/*!
+ * NiPSysGravityStrengthCtlr - Unknown.
+ */
 
 class NiPSysGravityStrengthCtlr : public NI_P_SYS_GRAVITY_STRENGTH_CTLR_PARENT {
 public:

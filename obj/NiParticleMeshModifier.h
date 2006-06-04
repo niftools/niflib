@@ -12,12 +12,12 @@ class NiTriBasedGeom;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleMeshModifier
- */
-
 class NiParticleMeshModifier;
 typedef Ref<NiParticleMeshModifier> NiParticleMeshModifierRef;
+
+/*!
+ * NiParticleMeshModifier - Unknown.
+ */
 
 class NiParticleMeshModifier : public NI_PARTICLE_MESH_MODIFIER_PARENT {
 public:

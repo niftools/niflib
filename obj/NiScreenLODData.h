@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiScreenLODData
- */
-
 class NiScreenLODData;
 typedef Ref<NiScreenLODData> NiScreenLODDataRef;
+
+/*!
+ * NiScreenLODData - Unknown.
+ */
 
 class NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
 public:

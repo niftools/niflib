@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTextKeyExtraData
- */
-
 class NiTextKeyExtraData;
 typedef Ref<NiTextKeyExtraData> NiTextKeyExtraDataRef;
+
+/*!
+ * NiTextKeyExtraData - Extra data, used to name different animation
+ * sequences.
+ */
 
 class NiTextKeyExtraData : public NI_TEXT_KEY_EXTRA_DATA_PARENT {
 public:

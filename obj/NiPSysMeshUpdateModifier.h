@@ -12,12 +12,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysMeshUpdateModifier
- */
-
 class NiPSysMeshUpdateModifier;
 typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;
+
+/*!
+ * NiPSysMeshUpdateModifier - Unknown.
+ */
 
 class NiPSysMeshUpdateModifier : public NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT {
 public:

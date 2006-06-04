@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * BSFurnitureMarker
- */
-
 class BSFurnitureMarker;
 typedef Ref<BSFurnitureMarker> BSFurnitureMarkerRef;
+
+/*!
+ * BSFurnitureMarker - Unknown. Marks furniture sitting positions?
+ */
 
 class BSFurnitureMarker : public B_S_FURNITURE_MARKER_PARENT {
 public:

@@ -12,12 +12,12 @@ class NiColorData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysColorModifier
- */
-
 class NiPSysColorModifier;
 typedef Ref<NiPSysColorModifier> NiPSysColorModifierRef;
+
+/*!
+ * NiPSysColorModifier - Unknown particle modifier.
+ */
 
 class NiPSysColorModifier : public NI_P_SYS_COLOR_MODIFIER_PARENT {
 public:

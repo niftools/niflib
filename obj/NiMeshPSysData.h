@@ -13,12 +13,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMeshPSysData
- */
-
 class NiMeshPSysData;
 typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;
+
+/*!
+ * NiMeshPSysData - Particle meshes data.
+ */
 
 class NiMeshPSysData : public NI_MESH_P_SYS_DATA_PARENT {
 public:
