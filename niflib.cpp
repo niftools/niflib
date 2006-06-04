@@ -16,7 +16,7 @@ bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
-void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map );
+void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map );
 void BuildUpBindPositions( const NiAVObjectRef & av );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
@@ -226,7 +226,6 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	//TODO:  Actually read the user_version from the right place
 	uint user_version = 0;
 
-
 	//--Read Blocks--//
 	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
@@ -391,22 +390,26 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	//int block_count = ResetBlockNums( 0, root_block );
 	
 	//Enumerate all objects in tree
-	map<Type,uint> type_map;
+	map<Type*,uint> type_map;
 	map<NiObjectRef, uint> link_map;
 
+	//cout << "Enumerating Objects..." << endl;
 	EnumerateObjects( root, type_map, link_map );
 
+	//cout << "Building vectors for reverse look-up..." << endl;
 	//Build vectors for reverse look-up
 	vector<NiObjectRef> objects(link_map.size());
 	for ( map<NiObjectRef, uint>::iterator it = link_map.begin(); it != link_map.end(); ++it ) {
+		//cout << "Objects[" << it->second << "] = " << it->first << endl;
 		objects[it->second] = it->first;
 	}
 
 	vector<const Type*> types(type_map.size());
-	for ( map<Type, uint>::iterator it = type_map.begin(); it != type_map.end(); ++it ) {
-		types[it->second] = &(it->first);
+	for ( map<Type*, uint>::iterator it = type_map.begin(); it != type_map.end(); ++it ) {
+		types[it->second] = it->first;
 	}
 
+	//cout << "Writing Header..." << endl;
 	//--Write Header--//
 	//Version 10.0.1.0 is the last known to use the name NetImmerse
 	stringstream header_string;
@@ -448,7 +451,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 
 		//Write type number of each block
 		for ( uint i = 0; i < objects.size(); ++i ) {
-			WriteUShort( type_map[objects[i]->GetType()], out );
+			WriteUShort( type_map[(Type*)&(objects[i]->GetType())], out );
 
 		}
 
@@ -456,11 +459,13 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 		WriteUInt( 0, out );
 	}
 
+	//cout << "Writing objects..." << endl;
+
 	//--Write Objects--//
 	for (uint i = 0; i < objects.size(); ++i) {
 
 		if (version < 0x05000001) {
-			//cout << i << ":  " << blk_list[i]->GetBlockType() << endl;
+			//cout << i << ":  " << objects[i]->GetType().GetTypeName() << endl;
 			//Write Block Type
 			WriteString( objects[i]->GetType().GetTypeName() , out );
 		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
@@ -470,12 +475,14 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 		objects[i]->Write( out, link_map, version, user_version );
 	}
 
+	//cout << "Writing footer.." << endl;
+
 	//--Write Footer--//
 	WriteUInt( 1, out ); // Unknown Int = 1 (usually)
 	WriteUInt( 0, out ); // Unknown Int = 0 (usually)
 }
 
-void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<NiObjectRef, uint> link_map ) {
+void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map ) {
 	//Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
@@ -486,16 +493,19 @@ void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<
 	link_map[root] = uint(link_map.size());
 
 	//Add this object type to the map if it isn't there already
-	if ( type_map.find( root->GetType() ) == type_map.end() ) {
+	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
-		type_map[root->GetType()] = uint(type_map.size());
+		//cout << "Types[" << uint(type_map.size()) << "] = " << root->GetType().GetTypeName() << endl;
+		type_map[ (Type*)&(root->GetType()) ] = uint(type_map.size());
 	}
-	
+
 	//Call this function on all links of this object
 	
 	list<NiObjectRef> links = root->GetRefs();
 	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-		EnumerateObjects( *it, type_map, link_map );
+		if ( *it != NULL ) {
+			EnumerateObjects( *it, type_map, link_map );
+		}
 	}
 }
 
