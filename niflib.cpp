@@ -335,8 +335,6 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
 	if ( av_root != NULL ) {
 		BuildUpBindPositions( av_root );
-	} else {
-		throw runtime_error("Root object is not a NiAVObject derived class.");
 	}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
