@@ -5,10 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIAVOBJECT_H_
 
 // Includes
-#include "obj/NiProperty.h"
 #include "gen/BoundingBox.h"
-#include "obj/NiCollisionData.h"
-#include "obj/NiCollisionObject.h"
+
+//Forward Defines
+class NiProperty;
+class NiCollisionData;
+class NiCollisionObject;
+class NiNode;
 
 #include "gen/obj_defines.h"
 #include NI_A_V_OBJECT_INCLUDE
@@ -34,7 +37,7 @@ public:
 
 	//TODO: list of NiProperty pointers.  Need functions to add/remove.
 	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
-
+	
 	/*! 
 	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
 	 * \return A 4x4 transformation matrix built from the node's transform attributes.
@@ -69,15 +72,15 @@ public:
 	 */
 	void SetWorldBindPos( Matrix44 const & m );
 
-	void SetParent( NiAVObjectRef new_parent ) {
-		parent = new_parent;
-	}
-	NiAVObjectRef GetParent() { return parent; }
+	/*! Meant to be called by NiNode during the addition of new children.  Should not be called directly. */
+	void SetParent( Ref<NiNode> new_parent );
+
+	Ref<NiNode> GetParent() const;
 
 private:
 	NI_A_V_OBJECT_MEMBERS
 
-	NiAVObject * parent;
+	NiNode * parent;
 	void ResetSkinnedFlag();
 	Matrix44 bindPosition;
 };

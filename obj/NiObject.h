@@ -100,7 +100,10 @@ public:
 	 */
 	virtual string asString( bool verbose = false ) const;
 
-	/*! Formats a human readable string that includes the type of the object */
+	/*!
+	 * Formats a human readable string that includes the type of the object
+	 * \return A string in the form:  address(type)
+	 */
 	virtual string GetIDString();
 
 	/*!

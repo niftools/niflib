@@ -331,13 +331,13 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, version );
 	}
 
-	////Build up the bind pose matricies into their world-space equivalents
-	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
-	//if ( av_root != NULL ) {
-	//	BuildUpBindPositions( av_root );
-	//} else {
-	//	throw runtime_error("Root object is not a NiAVObject derived class.");
-	//}
+	//Build up the bind pose matricies into their world-space equivalents
+	NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
+	if ( av_root != NULL ) {
+		BuildUpBindPositions( av_root );
+	} else {
+		throw runtime_error("Root object is not a NiAVObject derived class.");
+	}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance
@@ -501,9 +501,9 @@ void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<
 void BuildUpBindPositions( const NiAVObjectRef & av ) {
 
 	//Get parent if there is one
-	NiAVObjectRef par = DynamicCast<NiAVObject>(av->GetParent());
+	NiNodeRef par = av->GetParent();
 	if ( par != NULL ) {
-		//There is an AV Object parent
+		//There is a node parent
 
 		//Post-multipy the block's bind matrix with the parent's bind matrix
 		Matrix44 result = av->GetWorldBindPos() * par->GetWorldBindPos();
