@@ -30,6 +30,10 @@ void NiAVObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	NI_A_V_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> NiAVObject::GetRefs() const {
+	NI_A_V_OBJECT_GETREFS
+}
+
 /*! 
  * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
  * \return A 4x4 transformation matrix built from the node's transform attributes.

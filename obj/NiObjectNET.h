@@ -34,7 +34,8 @@ public:
 	 */
 	virtual string GetIDString();
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	
+	virtual list<NiObjectRef> GetRefs() const;
+
 	string GetName();
 	void SetName( string & new_name );
 	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.

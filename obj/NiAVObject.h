@@ -34,6 +34,7 @@ public:
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual list<NiObjectRef> GetRefs() const;
 
 	//TODO: list of NiProperty pointers.  Need functions to add/remove.
 	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?

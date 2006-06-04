@@ -28,6 +28,10 @@ void NiObjectNET::FixLinks( const vector<NiObjectRef> & objects, list<uint> & li
 	NI_OBJECT_N_E_T_FIXLINKS
 }
 
+list<NiObjectRef> NiObjectNET::GetRefs() const {
+	NI_OBJECT_N_E_T_GETREFS
+}
+
 string NiObjectNET::GetName() {
 	return name;
 }
