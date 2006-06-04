@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBlendTransformInterpolator
- */
-
 class NiBlendTransformInterpolator;
 typedef Ref<NiBlendTransformInterpolator> NiBlendTransformInterpolatorRef;
+
+/*!
+ * NiBlendTransformInterpolator - Unknown.
+ */
 
 class NiBlendTransformInterpolator : public NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT {
 public:

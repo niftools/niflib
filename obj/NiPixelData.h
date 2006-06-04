@@ -15,12 +15,12 @@ class NiPalette;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPixelData
- */
-
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;
+
+/*!
+ * NiPixelData - A texture.
+ */
 
 class NiPixelData : public NI_PIXEL_DATA_PARENT {
 public:

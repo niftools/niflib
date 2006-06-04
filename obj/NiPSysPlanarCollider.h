@@ -14,12 +14,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysPlanarCollider
- */
-
 class NiPSysPlanarCollider;
 typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;
+
+/*!
+ * NiPSysPlanarCollider - Unknown.
+ */
 
 class NiPSysPlanarCollider : public NI_P_SYS_PLANAR_COLLIDER_PARENT {
 public:

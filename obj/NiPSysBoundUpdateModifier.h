@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysBoundUpdateModifier
- */
-
 class NiPSysBoundUpdateModifier;
 typedef Ref<NiPSysBoundUpdateModifier> NiPSysBoundUpdateModifierRef;
+
+/*!
+ * NiPSysBoundUpdateModifier - Unknown particle system modifier.
+ */
 
 class NiPSysBoundUpdateModifier : public NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT {
 public:

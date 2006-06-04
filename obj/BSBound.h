@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * BSBound
- */
-
 class BSBound;
 typedef Ref<BSBound> BSBoundRef;
+
+/*!
+ * BSBound - Unknown.
+ */
 
 class BSBound : public B_S_BOUND_PARENT {
 public:

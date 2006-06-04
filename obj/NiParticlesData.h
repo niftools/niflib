@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticlesData
- */
-
 class NiParticlesData;
 typedef Ref<NiParticlesData> NiParticlesDataRef;
+
+/*!
+ * NiParticlesData - Generic rotating particles data block.
+ */
 
 class NiParticlesData : public NI_PARTICLES_DATA_PARENT {
 public:

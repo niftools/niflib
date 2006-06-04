@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * FxWidget
- */
-
 class FxWidget;
 typedef Ref<FxWidget> FxWidgetRef;
+
+/*!
+ * FxWidget - Firaxis-specific UI widgets?
+ */
 
 class FxWidget : public FX_WIDGET_PARENT {
 public:

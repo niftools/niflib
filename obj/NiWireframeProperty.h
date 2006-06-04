@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiWireframeProperty
- */
-
 class NiWireframeProperty;
 typedef Ref<NiWireframeProperty> NiWireframePropertyRef;
+
+/*!
+ * NiWireframeProperty - Unknown.
+ */
 
 class NiWireframeProperty : public NI_WIREFRAME_PROPERTY_PARENT {
 public:

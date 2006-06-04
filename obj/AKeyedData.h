@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * AKeyedData
- */
-
 class AKeyedData;
 typedef Ref<AKeyedData> AKeyedDataRef;
+
+/*!
+ * AKeyedData - Single items of data linked to particular key times.
+ */
 
 class AKeyedData : public A_KEYED_DATA_PARENT {
 public:

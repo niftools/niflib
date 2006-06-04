@@ -12,12 +12,12 @@ class NiColorData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleColorModifier
- */
-
 class NiParticleColorModifier;
 typedef Ref<NiParticleColorModifier> NiParticleColorModifierRef;
+
+/*!
+ * NiParticleColorModifier - Unknown.
+ */
 
 class NiParticleColorModifier : public NI_PARTICLE_COLOR_MODIFIER_PARENT {
 public:

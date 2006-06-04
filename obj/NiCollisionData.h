@@ -12,12 +12,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiCollisionData
- */
-
 class NiCollisionData;
 typedef Ref<NiCollisionData> NiCollisionDataRef;
+
+/*!
+ * NiCollisionData - Collision box.
+ */
 
 class NiCollisionData : public NI_COLLISION_DATA_PARENT {
 public:

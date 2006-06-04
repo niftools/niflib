@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkConvexTransformShape
- */
-
 class bhkConvexTransformShape;
 typedef Ref<bhkConvexTransformShape> bhkConvexTransformShapeRef;
+
+/*!
+ * bhkConvexTransformShape - A convex transformed shape?
+ */
 
 class bhkConvexTransformShape : public BHK_CONVEX_TRANSFORM_SHAPE_PARENT {
 public:

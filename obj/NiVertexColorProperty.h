@@ -8,12 +8,15 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiVertexColorProperty
- */
-
 class NiVertexColorProperty;
 typedef Ref<NiVertexColorProperty> NiVertexColorPropertyRef;
+
+/*!
+ * NiVertexColorProperty - Property of vertex colors. This block is
+ * referred to by the root block of the NIF file whenever some
+ * NiTriShapeData block has vertex colors with non-default settings; if
+ * not present, vertex colors have vertex_mode=2 and lighting_mode=1.
+ */
 
 class NiVertexColorProperty : public NI_VERTEX_COLOR_PROPERTY_PARENT {
 public:

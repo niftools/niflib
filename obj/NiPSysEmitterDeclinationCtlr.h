@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysEmitterDeclinationCtlr
- */
-
 class NiPSysEmitterDeclinationCtlr;
 typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
+
+/*!
+ * NiPSysEmitterDeclinationCtlr - Unknown.
+ */
 
 class NiPSysEmitterDeclinationCtlr : public NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT {
 public:

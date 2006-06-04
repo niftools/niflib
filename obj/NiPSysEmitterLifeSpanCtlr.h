@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysEmitterLifeSpanCtlr
- */
-
 class NiPSysEmitterLifeSpanCtlr;
 typedef Ref<NiPSysEmitterLifeSpanCtlr> NiPSysEmitterLifeSpanCtlrRef;
+
+/*!
+ * NiPSysEmitterLifeSpanCtlr - Unknown.
+ */
 
 class NiPSysEmitterLifeSpanCtlr : public NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT {
 public:

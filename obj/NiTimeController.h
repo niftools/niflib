@@ -12,12 +12,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTimeController
- */
-
 class NiTimeController;
 typedef Ref<NiTimeController> NiTimeControllerRef;
+
+/*!
+ * NiTimeController - A generic time controller block.
+ */
 
 class NiTimeController : public NI_TIME_CONTROLLER_PARENT {
 public:

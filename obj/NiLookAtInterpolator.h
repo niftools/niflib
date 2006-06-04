@@ -14,12 +14,12 @@ class NiFloatInterpolator;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLookAtInterpolator
- */
-
 class NiLookAtInterpolator;
 typedef Ref<NiLookAtInterpolator> NiLookAtInterpolatorRef;
+
+/*!
+ * NiLookAtInterpolator - Unknown.
+ */
 
 class NiLookAtInterpolator : public NI_LOOK_AT_INTERPOLATOR_PARENT {
 public:

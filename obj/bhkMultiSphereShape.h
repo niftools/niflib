@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkMultiSphereShape
- */
-
 class bhkMultiSphereShape;
 typedef Ref<bhkMultiSphereShape> bhkMultiSphereShapeRef;
+
+/*!
+ * bhkMultiSphereShape - Unknown.
+ */
 
 class bhkMultiSphereShape : public BHK_MULTI_SPHERE_SHAPE_PARENT {
 public:

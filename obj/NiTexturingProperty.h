@@ -11,12 +11,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTexturingProperty
- */
-
 class NiTexturingProperty;
 typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
+
+/*!
+ * NiTexturingProperty - Describes an object's textures.
+ */
 
 class NiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
 public:

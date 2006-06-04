@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * APSysCtlr
- */
-
 class APSysCtlr;
 typedef Ref<APSysCtlr> APSysCtlrRef;
+
+/*!
+ * APSysCtlr - Unknown.
+ */
 
 class APSysCtlr : public A_P_SYS_CTLR_PARENT {
 public:

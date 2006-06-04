@@ -13,12 +13,12 @@ class NiInterpolator;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiGeomMorpherController
- */
-
 class NiGeomMorpherController;
 typedef Ref<NiGeomMorpherController> NiGeomMorpherControllerRef;
+
+/*!
+ * NiGeomMorpherController - Time controller for geometry morphing.
+ */
 
 class NiGeomMorpherController : public NI_GEOM_MORPHER_CONTROLLER_PARENT {
 public:

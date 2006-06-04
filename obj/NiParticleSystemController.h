@@ -15,12 +15,13 @@ class AParticleModifier;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleSystemController
- */
-
 class NiParticleSystemController;
 typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;
+
+/*!
+ * NiParticleSystemController - A generic particle system time controller
+ * block.
+ */
 
 class NiParticleSystemController : public NI_PARTICLE_SYSTEM_CONTROLLER_PARENT {
 public:

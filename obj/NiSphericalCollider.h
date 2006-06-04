@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSphericalCollider
- */
-
 class NiSphericalCollider;
 typedef Ref<NiSphericalCollider> NiSphericalColliderRef;
+
+/*!
+ * NiSphericalCollider - Unknown.
+ */
 
 class NiSphericalCollider : public NI_SPHERICAL_COLLIDER_PARENT {
 public:

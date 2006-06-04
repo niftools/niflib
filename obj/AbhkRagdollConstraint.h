@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * AbhkRagdollConstraint
- */
-
 class AbhkRagdollConstraint;
 typedef Ref<AbhkRagdollConstraint> AbhkRagdollConstraintRef;
+
+/*!
+ * AbhkRagdollConstraint - Ragdoll constraint.
+ */
 
 class AbhkRagdollConstraint : public ABHK_RAGDOLL_CONSTRAINT_PARENT {
 public:

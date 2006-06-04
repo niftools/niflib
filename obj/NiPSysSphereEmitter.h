@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysSphereEmitter
- */
-
 class NiPSysSphereEmitter;
 typedef Ref<NiPSysSphereEmitter> NiPSysSphereEmitterRef;
+
+/*!
+ * NiPSysSphereEmitter - Unknown.
+ */
 
 class NiPSysSphereEmitter : public NI_P_SYS_SPHERE_EMITTER_PARENT {
 public:

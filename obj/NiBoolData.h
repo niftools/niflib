@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBoolData
- */
-
 class NiBoolData;
 typedef Ref<NiBoolData> NiBoolDataRef;
+
+/*!
+ * NiBoolData - Timed boolean data.
+ */
 
 class NiBoolData : public NI_BOOL_DATA_PARENT {
 public:

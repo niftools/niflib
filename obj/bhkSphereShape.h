@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkSphereShape
- */
-
 class bhkSphereShape;
 typedef Ref<bhkSphereShape> bhkSphereShapeRef;
+
+/*!
+ * bhkSphereShape - A sphere.
+ */
 
 class bhkSphereShape : public BHK_SPHERE_SHAPE_PARENT {
 public:

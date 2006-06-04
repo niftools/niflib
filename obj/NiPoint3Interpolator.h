@@ -12,12 +12,12 @@ class NiPosData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPoint3Interpolator
- */
-
 class NiPoint3Interpolator;
 typedef Ref<NiPoint3Interpolator> NiPoint3InterpolatorRef;
+
+/*!
+ * NiPoint3Interpolator - Unknown.
+ */
 
 class NiPoint3Interpolator : public NI_POINT3_INTERPOLATOR_PARENT {
 public:

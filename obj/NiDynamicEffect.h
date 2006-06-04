@@ -12,12 +12,12 @@ class NiAVObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiDynamicEffect
- */
-
 class NiDynamicEffect;
 typedef Ref<NiDynamicEffect> NiDynamicEffectRef;
+
+/*!
+ * NiDynamicEffect - A dynamic effect such as a light or environment map.
+ */
 
 class NiDynamicEffect : public NI_DYNAMIC_EFFECT_PARENT {
 public:

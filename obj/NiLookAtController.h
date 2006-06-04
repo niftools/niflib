@@ -12,12 +12,13 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLookAtController
- */
-
 class NiLookAtController;
 typedef Ref<NiLookAtController> NiLookAtControllerRef;
+
+/*!
+ * NiLookAtController - Unknown. Start time is 3.4e+38 and stop time is
+ * -3.4e+38.
+ */
 
 class NiLookAtController : public NI_LOOK_AT_CONTROLLER_PARENT {
 public:

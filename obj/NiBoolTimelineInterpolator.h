@@ -12,12 +12,12 @@ class NiBoolData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBoolTimelineInterpolator
- */
-
 class NiBoolTimelineInterpolator;
 typedef Ref<NiBoolTimelineInterpolator> NiBoolTimelineInterpolatorRef;
+
+/*!
+ * NiBoolTimelineInterpolator - Unknown.
+ */
 
 class NiBoolTimelineInterpolator : public NI_BOOL_TIMELINE_INTERPOLATOR_PARENT {
 public:

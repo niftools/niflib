@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysRotationModifier
- */
-
 class NiPSysRotationModifier;
 typedef Ref<NiPSysRotationModifier> NiPSysRotationModifierRef;
+
+/*!
+ * NiPSysRotationModifier - Unknown particle system modifier.
+ */
 
 class NiPSysRotationModifier : public NI_P_SYS_ROTATION_MODIFIER_PARENT {
 public:

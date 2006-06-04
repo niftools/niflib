@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMeshParticleSystem
- */
-
 class NiMeshParticleSystem;
 typedef Ref<NiMeshParticleSystem> NiMeshParticleSystemRef;
+
+/*!
+ * NiMeshParticleSystem - Particle system.
+ */
 
 class NiMeshParticleSystem : public NI_MESH_PARTICLE_SYSTEM_PARENT {
 public:

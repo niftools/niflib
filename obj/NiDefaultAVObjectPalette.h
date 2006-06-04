@@ -10,12 +10,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiDefaultAVObjectPalette
- */
-
 class NiDefaultAVObjectPalette;
 typedef Ref<NiDefaultAVObjectPalette> NiDefaultAVObjectPaletteRef;
+
+/*!
+ * NiDefaultAVObjectPalette - Unknown. Refers to a list of objects. Used
+ * by NiControllerManager.
+ */
 
 class NiDefaultAVObjectPalette : public NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT {
 public:

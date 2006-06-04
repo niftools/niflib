@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiStringsExtraData
- */
-
 class NiStringsExtraData;
 typedef Ref<NiStringsExtraData> NiStringsExtraDataRef;
+
+/*!
+ * NiStringsExtraData - List of strings; for example, a list of all bone
+ * names.
+ */
 
 class NiStringsExtraData : public NI_STRINGS_EXTRA_DATA_PARENT {
 public:

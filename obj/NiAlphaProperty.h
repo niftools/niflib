@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiAlphaProperty
- */
-
 class NiAlphaProperty;
 typedef Ref<NiAlphaProperty> NiAlphaPropertyRef;
+
+/*!
+ * NiAlphaProperty - Transparency. Flags 0x00ED.
+ */
 
 class NiAlphaProperty : public NI_ALPHA_PROPERTY_PARENT {
 public:

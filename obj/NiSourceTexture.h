@@ -13,12 +13,12 @@ class NiPixelData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSourceTexture
- */
-
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;
+
+/*!
+ * NiSourceTexture - Describes texture source and properties.
+ */
 
 class NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
 public:

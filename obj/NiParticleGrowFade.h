@@ -8,12 +8,15 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleGrowFade
- */
-
 class NiParticleGrowFade;
 typedef Ref<NiParticleGrowFade> NiParticleGrowFadeRef;
+
+/*!
+ * NiParticleGrowFade - This particle system modifier controls the
+ * particle size. If it is present the particles start with size 0.0 .
+ * Then they grow to their original size and stay there until they fade
+ * to zero size again at the end of their lifetime cycle.
+ */
 
 class NiParticleGrowFade : public NI_PARTICLE_GROW_FADE_PARENT {
 public:

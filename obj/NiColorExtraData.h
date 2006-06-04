@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiColorExtraData
- */
-
 class NiColorExtraData;
 typedef Ref<NiColorExtraData> NiColorExtraDataRef;
+
+/*!
+ * NiColorExtraData - Unknown.
+ */
 
 class NiColorExtraData : public NI_COLOR_EXTRA_DATA_PARENT {
 public:

@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiAutoNormalParticlesData
- */
-
 class NiAutoNormalParticlesData;
 typedef Ref<NiAutoNormalParticlesData> NiAutoNormalParticlesDataRef;
+
+/*!
+ * NiAutoNormalParticlesData - Particle system data block (with automatic
+ * normals?).
+ */
 
 class NiAutoNormalParticlesData : public NI_AUTO_NORMAL_PARTICLES_DATA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPalette
- */
-
 class NiPalette;
 typedef Ref<NiPalette> NiPaletteRef;
+
+/*!
+ * NiPalette - A color palette.
+ */
 
 class NiPalette : public NI_PALETTE_PARENT {
 public:

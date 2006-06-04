@@ -14,12 +14,12 @@ class AbhkConstraint;
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkRigidBody
- */
-
 class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;
+
+/*!
+ * bhkRigidBody - Describes physical properties of an object.
+ */
 
 class bhkRigidBody : public BHK_RIGID_BODY_PARENT {
 public:

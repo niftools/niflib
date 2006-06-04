@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSBoneLODController
- */
-
 class NiBSBoneLODController;
 typedef Ref<NiBSBoneLODController> NiBSBoneLODControllerRef;
+
+/*!
+ * NiBSBoneLODController - A simple LOD controller for bones.
+ */
 
 class NiBSBoneLODController : public NI_B_S_BONE_L_O_D_CONTROLLER_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * BSPSysArrayEmitter
- */
-
 class BSPSysArrayEmitter;
 typedef Ref<BSPSysArrayEmitter> BSPSysArrayEmitterRef;
+
+/*!
+ * BSPSysArrayEmitter - Unknown.
+ */
 
 class BSPSysArrayEmitter : public B_S_P_SYS_ARRAY_EMITTER_PARENT {
 public:

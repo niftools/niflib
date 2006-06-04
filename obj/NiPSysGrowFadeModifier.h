@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysGrowFadeModifier
- */
-
 class NiPSysGrowFadeModifier;
 typedef Ref<NiPSysGrowFadeModifier> NiPSysGrowFadeModifierRef;
+
+/*!
+ * NiPSysGrowFadeModifier - Unknown particle system modifier.
+ */
 
 class NiPSysGrowFadeModifier : public NI_P_SYS_GROW_FADE_MODIFIER_PARENT {
 public:

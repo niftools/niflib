@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * RootCollisionNode
- */
-
 class RootCollisionNode;
 typedef Ref<RootCollisionNode> RootCollisionNodeRef;
+
+/*!
+ * RootCollisionNode - Morrowind-specific node for collision mesh.
+ */
 
 class RootCollisionNode : public ROOT_COLLISION_NODE_PARENT {
 public:

@@ -10,12 +10,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSkinPartition
- */
-
 class NiSkinPartition;
 typedef Ref<NiSkinPartition> NiSkinPartitionRef;
+
+/*!
+ * NiSkinPartition - Skinning data, optimized for hardware skinning. The
+ * mesh is partitioned in submeshes such that each vertex of a submesh is
+ * influenced only by a limited and fixed number of bones.
+ */
 
 class NiSkinPartition : public NI_SKIN_PARTITION_PARENT {
 public:

@@ -16,12 +16,13 @@ class NiStringPalette;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiControllerSequence
- */
-
 class NiControllerSequence;
 typedef Ref<NiControllerSequence> NiControllerSequenceRef;
+
+/*!
+ * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and
+ * up).
+ */
 
 class NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
 public:

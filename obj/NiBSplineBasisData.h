@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineBasisData
- */
-
 class NiBSplineBasisData;
 typedef Ref<NiBSplineBasisData> NiBSplineBasisDataRef;
+
+/*!
+ * NiBSplineBasisData - Unknown.
+ */
 
 class NiBSplineBasisData : public NI_B_SPLINE_BASIS_DATA_PARENT {
 public:

@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkBlendController
- */
-
 class bhkBlendController;
 typedef Ref<bhkBlendController> bhkBlendControllerRef;
+
+/*!
+ * bhkBlendController - Unknown. Is apparently only used in skeleton.nif
+ * files.
+ */
 
 class bhkBlendController : public BHK_BLEND_CONTROLLER_PARENT {
 public:

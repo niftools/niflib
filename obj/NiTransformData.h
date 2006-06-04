@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTransformData
- */
-
 class NiTransformData;
 typedef Ref<NiTransformData> NiTransformDataRef;
+
+/*!
+ * NiTransformData - Mesh animation keyframe data.
+ */
 
 class NiTransformData : public NI_TRANSFORM_DATA_PARENT {
 public:

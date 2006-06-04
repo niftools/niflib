@@ -12,12 +12,12 @@ class NiTransformData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTransformInterpolator
- */
-
 class NiTransformInterpolator;
 typedef Ref<NiTransformInterpolator> NiTransformInterpolatorRef;
+
+/*!
+ * NiTransformInterpolator - Unknown.
+ */
 
 class NiTransformInterpolator : public NI_TRANSFORM_INTERPOLATOR_PARENT {
 public:

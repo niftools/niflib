@@ -12,12 +12,12 @@ class NiPSysPlanarCollider;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysColliderManager
- */
-
 class NiPSysColliderManager;
 typedef Ref<NiPSysColliderManager> NiPSysColliderManagerRef;
+
+/*!
+ * NiPSysColliderManager - Unknown.
+ */
 
 class NiPSysColliderManager : public NI_P_SYS_COLLIDER_MANAGER_PARENT {
 public:

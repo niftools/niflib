@@ -12,12 +12,12 @@ class bhkShape;
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkListShape
- */
-
 class bhkListShape;
 typedef Ref<bhkListShape> bhkListShapeRef;
+
+/*!
+ * bhkListShape - A list of shapes.
+ */
 
 class bhkListShape : public BHK_LIST_SHAPE_PARENT {
 public:

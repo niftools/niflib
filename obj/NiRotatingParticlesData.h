@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiRotatingParticlesData
- */
-
 class NiRotatingParticlesData;
 typedef Ref<NiRotatingParticlesData> NiRotatingParticlesDataRef;
+
+/*!
+ * NiRotatingParticlesData - Rotating particles data block.
+ */
 
 class NiRotatingParticlesData : public NI_ROTATING_PARTICLES_DATA_PARENT {
 public:

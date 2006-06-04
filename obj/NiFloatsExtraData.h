@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFloatsExtraData
- */
-
 class NiFloatsExtraData;
 typedef Ref<NiFloatsExtraData> NiFloatsExtraDataRef;
+
+/*!
+ * NiFloatsExtraData - Unknown.
+ */
 
 class NiFloatsExtraData : public NI_FLOATS_EXTRA_DATA_PARENT {
 public:

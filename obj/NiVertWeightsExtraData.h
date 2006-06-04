@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiVertWeightsExtraData
- */
-
 class NiVertWeightsExtraData;
 typedef Ref<NiVertWeightsExtraData> NiVertWeightsExtraDataRef;
+
+/*!
+ * NiVertWeightsExtraData - Not used in skinning. Unsure of use - perhaps
+ * for morphing animation or gravity.
+ */
 
 class NiVertWeightsExtraData : public NI_VERT_WEIGHTS_EXTRA_DATA_PARENT {
 public:

@@ -12,12 +12,12 @@ class NiFloatData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFloatInterpolator
- */
-
 class NiFloatInterpolator;
 typedef Ref<NiFloatInterpolator> NiFloatInterpolatorRef;
+
+/*!
+ * NiFloatInterpolator - Unknown.
+ */
 
 class NiFloatInterpolator : public NI_FLOAT_INTERPOLATOR_PARENT {
 public:

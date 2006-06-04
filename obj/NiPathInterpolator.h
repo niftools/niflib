@@ -13,12 +13,12 @@ class NiFloatData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPathInterpolator
- */
-
 class NiPathInterpolator;
 typedef Ref<NiPathInterpolator> NiPathInterpolatorRef;
+
+/*!
+ * NiPathInterpolator - Unknown interpolator.
+ */
 
 class NiPathInterpolator : public NI_PATH_INTERPOLATOR_PARENT {
 public:

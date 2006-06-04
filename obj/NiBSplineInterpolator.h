@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineInterpolator
- */
-
 class NiBSplineInterpolator;
 typedef Ref<NiBSplineInterpolator> NiBSplineInterpolatorRef;
+
+/*!
+ * NiBSplineInterpolator - A B-spline (component?) interpolator.
+ */
 
 class NiBSplineInterpolator : public NI_B_SPLINE_INTERPOLATOR_PARENT {
 public:

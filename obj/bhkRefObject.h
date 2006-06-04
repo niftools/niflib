@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkRefObject
- */
-
 class bhkRefObject;
 typedef Ref<bhkRefObject> bhkRefObjectRef;
+
+/*!
+ * bhkRefObject - The base type of all Havok objects?
+ */
 
 class bhkRefObject : public BHK_REF_OBJECT_PARENT {
 public:

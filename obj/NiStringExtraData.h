@@ -8,12 +8,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiStringExtraData
- */
-
 class NiStringExtraData;
 typedef Ref<NiStringExtraData> NiStringExtraDataRef;
+
+/*!
+ * NiStringExtraData - Apparently commands for an optimizer instructing
+ * it to keep things it would normally discard. Also refers to NiNode
+ * blocks (through their name) in animation .kf files.
+ */
 
 class NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {
 public:

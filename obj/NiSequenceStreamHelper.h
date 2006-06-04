@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSequenceStreamHelper
- */
-
 class NiSequenceStreamHelper;
 typedef Ref<NiSequenceStreamHelper> NiSequenceStreamHelperRef;
+
+/*!
+ * NiSequenceStreamHelper - Keyframe animation root node, in .kf files.
+ */
 
 class NiSequenceStreamHelper : public NI_SEQUENCE_STREAM_HELPER_PARENT {
 public:

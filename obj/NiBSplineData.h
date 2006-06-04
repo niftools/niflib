@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineData
- */
-
 class NiBSplineData;
 typedef Ref<NiBSplineData> NiBSplineDataRef;
+
+/*!
+ * NiBSplineData - Unknown.
+ */
 
 class NiBSplineData : public NI_B_SPLINE_DATA_PARENT {
 public:

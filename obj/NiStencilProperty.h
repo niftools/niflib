@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiStencilProperty
- */
-
 class NiStencilProperty;
 typedef Ref<NiStencilProperty> NiStencilPropertyRef;
+
+/*!
+ * NiStencilProperty - Allows control of stencil testing.
+ */
 
 class NiStencilProperty : public NI_STENCIL_PROPERTY_PARENT {
 public:

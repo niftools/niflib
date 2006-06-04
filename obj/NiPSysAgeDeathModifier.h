@@ -12,12 +12,12 @@ class NiPSysSpawnModifier;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysAgeDeathModifier
- */
-
 class NiPSysAgeDeathModifier;
 typedef Ref<NiPSysAgeDeathModifier> NiPSysAgeDeathModifierRef;
+
+/*!
+ * NiPSysAgeDeathModifier - Unknown particle modifier.
+ */
 
 class NiPSysAgeDeathModifier : public NI_P_SYS_AGE_DEATH_MODIFIER_PARENT {
 public:

@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkSphereRepShape
- */
-
 class bhkSphereRepShape;
 typedef Ref<bhkSphereRepShape> bhkSphereRepShapeRef;
+
+/*!
+ * bhkSphereRepShape - A havok shape, perhaps with a bounding sphere for
+ * quick rejection in addition to more detailed shape data?
+ */
 
 class bhkSphereRepShape : public BHK_SPHERE_REP_SHAPE_PARENT {
 public:

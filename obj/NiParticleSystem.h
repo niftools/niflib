@@ -12,12 +12,12 @@ class NiPSysModifier;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleSystem
- */
-
 class NiParticleSystem;
 typedef Ref<NiParticleSystem> NiParticleSystemRef;
+
+/*!
+ * NiParticleSystem - A particle system.
+ */
 
 class NiParticleSystem : public NI_PARTICLE_SYSTEM_PARENT {
 public:

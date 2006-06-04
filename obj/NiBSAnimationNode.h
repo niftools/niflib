@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSAnimationNode
- */
-
 class NiBSAnimationNode;
 typedef Ref<NiBSAnimationNode> NiBSAnimationNodeRef;
+
+/*!
+ * NiBSAnimationNode - Bethesda-specific extension of Node with animation
+ * properties stored in the flags.
+ */
 
 class NiBSAnimationNode : public NI_B_S_ANIMATION_NODE_PARENT {
 public:

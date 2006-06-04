@@ -12,12 +12,12 @@ class bhkShape;
 
 #include "gen/obj_defines.h"
 
-/*
- * AbhkConstraint
- */
-
 class AbhkConstraint;
 typedef Ref<AbhkConstraint> AbhkConstraintRef;
+
+/*!
+ * AbhkConstraint - Describes a physical constraint.
+ */
 
 class AbhkConstraint : public ABHK_CONSTRAINT_PARENT {
 public:

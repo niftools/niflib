@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFogProperty
- */
-
 class NiFogProperty;
 typedef Ref<NiFogProperty> NiFogPropertyRef;
+
+/*!
+ * NiFogProperty - Describes... fog?
+ */
 
 class NiFogProperty : public NI_FOG_PROPERTY_PARENT {
 public:

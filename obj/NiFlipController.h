@@ -12,12 +12,12 @@ class NiSourceTexture;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiFlipController
- */
-
 class NiFlipController;
 typedef Ref<NiFlipController> NiFlipControllerRef;
+
+/*!
+ * NiFlipController - Texture flipping controller.
+ */
 
 class NiFlipController : public NI_FLIP_CONTROLLER_PARENT {
 public:

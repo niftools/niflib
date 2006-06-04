@@ -13,12 +13,12 @@ class NiBSplineBasisData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineCompTransformInterpolator
- */
-
 class NiBSplineCompTransformInterpolator;
 typedef Ref<NiBSplineCompTransformInterpolator> NiBSplineCompTransformInterpolatorRef;
+
+/*!
+ * NiBSplineCompTransformInterpolator - Unknown.
+ */
 
 class NiBSplineCompTransformInterpolator : public NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT {
 public:

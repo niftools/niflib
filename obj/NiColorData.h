@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiColorData
- */
-
 class NiColorData;
 typedef Ref<NiColorData> NiColorDataRef;
+
+/*!
+ * NiColorData - Color data for material color controller.
+ */
 
 class NiColorData : public NI_COLOR_DATA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTriStripsData
- */
-
 class NiTriStripsData;
 typedef Ref<NiTriStripsData> NiTriStripsDataRef;
+
+/*!
+ * NiTriStripsData - Holds mesh data using strips of triangles.
+ */
 
 class NiTriStripsData : public NI_TRI_STRIPS_DATA_PARENT {
 public:

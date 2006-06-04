@@ -12,12 +12,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysDragModifier
- */
-
 class NiPSysDragModifier;
 typedef Ref<NiPSysDragModifier> NiPSysDragModifierRef;
+
+/*!
+ * NiPSysDragModifier - Unknown.
+ */
 
 class NiPSysDragModifier : public NI_P_SYS_DRAG_MODIFIER_PARENT {
 public:

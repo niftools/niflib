@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiIntegersExtraData
- */
-
 class NiIntegersExtraData;
 typedef Ref<NiIntegersExtraData> NiIntegersExtraDataRef;
+
+/*!
+ * NiIntegersExtraData - Integers data.
+ */
 
 class NiIntegersExtraData : public NI_INTEGERS_EXTRA_DATA_PARENT {
 public:

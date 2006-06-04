@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * BSParentVelocityModifier
- */
-
 class BSParentVelocityModifier;
 typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;
+
+/*!
+ * BSParentVelocityModifier - Unknown.
+ */
 
 class BSParentVelocityModifier : public B_S_PARENT_VELOCITY_MODIFIER_PARENT {
 public:

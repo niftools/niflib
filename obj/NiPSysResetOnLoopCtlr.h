@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysResetOnLoopCtlr
- */
-
 class NiPSysResetOnLoopCtlr;
 typedef Ref<NiPSysResetOnLoopCtlr> NiPSysResetOnLoopCtlrRef;
+
+/*!
+ * NiPSysResetOnLoopCtlr - Unknown.
+ */
 
 class NiPSysResetOnLoopCtlr : public NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT {
 public:

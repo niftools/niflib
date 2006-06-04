@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiParticleRotation
- */
-
 class NiParticleRotation;
 typedef Ref<NiParticleRotation> NiParticleRotationRef;
+
+/*!
+ * NiParticleRotation - Unknown.
+ */
 
 class NiParticleRotation : public NI_PARTICLE_ROTATION_PARENT {
 public:

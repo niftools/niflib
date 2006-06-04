@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkRagdollConstraint
- */
-
 class bhkRagdollConstraint;
 typedef Ref<bhkRagdollConstraint> bhkRagdollConstraintRef;
+
+/*!
+ * bhkRagdollConstraint - Ragdoll constraint.
+ */
 
 class bhkRagdollConstraint : public BHK_RAGDOLL_CONSTRAINT_PARENT {
 public:

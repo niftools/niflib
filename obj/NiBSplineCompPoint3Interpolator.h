@@ -13,12 +13,12 @@ class NiObject;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBSplineCompPoint3Interpolator
- */
-
 class NiBSplineCompPoint3Interpolator;
 typedef Ref<NiBSplineCompPoint3Interpolator> NiBSplineCompPoint3InterpolatorRef;
+
+/*!
+ * NiBSplineCompPoint3Interpolator - Unknown.
+ */
 
 class NiBSplineCompPoint3Interpolator : public NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT {
 public:

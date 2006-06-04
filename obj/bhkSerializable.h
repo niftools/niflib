@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkSerializable
- */
-
 class bhkSerializable;
 typedef Ref<bhkSerializable> bhkSerializableRef;
+
+/*!
+ * bhkSerializable - Havok objects that can be saved and loaded from
+ * disk?
+ */
 
 class bhkSerializable : public BHK_SERIALIZABLE_PARENT {
 public:

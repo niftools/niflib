@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * FxButton
- */
-
 class FxButton;
 typedef Ref<FxButton> FxButtonRef;
+
+/*!
+ * FxButton - Unknown.
+ */
 
 class FxButton : public FX_BUTTON_PARENT {
 public:

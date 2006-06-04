@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiBooleanExtraData
- */
-
 class NiBooleanExtraData;
 typedef Ref<NiBooleanExtraData> NiBooleanExtraDataRef;
+
+/*!
+ * NiBooleanExtraData - Boolean extra data.
+ */
 
 class NiBooleanExtraData : public NI_BOOLEAN_EXTRA_DATA_PARENT {
 public:

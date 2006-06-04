@@ -12,12 +12,12 @@ class NiFloatData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiTextureTransformController
- */
-
 class NiTextureTransformController;
 typedef Ref<NiTextureTransformController> NiTextureTransformControllerRef;
+
+/*!
+ * NiTextureTransformController - Texture transformation controller.
+ */
 
 class NiTextureTransformController : public NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT {
 public:

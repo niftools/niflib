@@ -12,12 +12,12 @@ class NiTriBasedGeom;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysMeshEmitter
- */
-
 class NiPSysMeshEmitter;
 typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;
+
+/*!
+ * NiPSysMeshEmitter - Unknown.
+ */
 
 class NiPSysMeshEmitter : public NI_P_SYS_MESH_EMITTER_PARENT {
 public:

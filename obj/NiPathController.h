@@ -13,12 +13,12 @@ class NiFloatData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPathController
- */
-
 class NiPathController;
 typedef Ref<NiPathController> NiPathControllerRef;
+
+/*!
+ * NiPathController - Time controller for a path.
+ */
 
 class NiPathController : public NI_PATH_CONTROLLER_PARENT {
 public:

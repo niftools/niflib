@@ -12,12 +12,12 @@ class NiFloatData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiAlphaController
- */
-
 class NiAlphaController;
 typedef Ref<NiAlphaController> NiAlphaControllerRef;
+
+/*!
+ * NiAlphaController - Time controller for transparency.
+ */
 
 class NiAlphaController : public NI_ALPHA_CONTROLLER_PARENT {
 public:

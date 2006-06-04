@@ -12,12 +12,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysVolumeEmitter
- */
-
 class NiPSysVolumeEmitter;
 typedef Ref<NiPSysVolumeEmitter> NiPSysVolumeEmitterRef;
+
+/*!
+ * NiPSysVolumeEmitter - An emitter that emits meshes?
+ */
 
 class NiPSysVolumeEmitter : public NI_P_SYS_VOLUME_EMITTER_PARENT {
 public:

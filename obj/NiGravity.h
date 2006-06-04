@@ -8,12 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiGravity
- */
-
 class NiGravity;
 typedef Ref<NiGravity> NiGravityRef;
+
+/*!
+ * NiGravity - A particle modifier; applies a gravitational field on the
+ * particles.
+ */
 
 class NiGravity : public NI_GRAVITY_PARENT {
 public:

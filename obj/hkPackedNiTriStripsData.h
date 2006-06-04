@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * hkPackedNiTriStripsData
- */
-
 class hkPackedNiTriStripsData;
 typedef Ref<hkPackedNiTriStripsData> hkPackedNiTriStripsDataRef;
+
+/*!
+ * hkPackedNiTriStripsData - NiTriStripsData for havok data?
+ */
 
 class hkPackedNiTriStripsData : public HK_PACKED_NI_TRI_STRIPS_DATA_PARENT {
 public:

@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPSysBoxEmitter
- */
-
 class NiPSysBoxEmitter;
 typedef Ref<NiPSysBoxEmitter> NiPSysBoxEmitterRef;
+
+/*!
+ * NiPSysBoxEmitter - Unknown particle modifier.
+ */
 
 class NiPSysBoxEmitter : public NI_P_SYS_BOX_EMITTER_PARENT {
 public:

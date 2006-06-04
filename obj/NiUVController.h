@@ -12,12 +12,12 @@ class NiUVData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiUVController
- */
-
 class NiUVController;
 typedef Ref<NiUVController> NiUVControllerRef;
+
+/*!
+ * NiUVController - Time controller for texture coordinates.
+ */
 
 class NiUVController : public NI_U_V_CONTROLLER_PARENT {
 public:

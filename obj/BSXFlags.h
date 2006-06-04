@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * BSXFlags
- */
-
 class BSXFlags;
 typedef Ref<BSXFlags> BSXFlagsRef;
+
+/*!
+ * BSXFlags - Unknown.
+ */
 
 class BSXFlags : public B_S_X_FLAGS_PARENT {
 public:

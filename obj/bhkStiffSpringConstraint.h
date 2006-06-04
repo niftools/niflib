@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * bhkStiffSpringConstraint
- */
-
 class bhkStiffSpringConstraint;
 typedef Ref<bhkStiffSpringConstraint> bhkStiffSpringConstraintRef;
+
+/*!
+ * bhkStiffSpringConstraint - A spring constraint.
+ */
 
 class bhkStiffSpringConstraint : public BHK_STIFF_SPRING_CONSTRAINT_PARENT {
 public:

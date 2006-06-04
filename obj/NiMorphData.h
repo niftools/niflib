@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMorphData
- */
-
 class NiMorphData;
 typedef Ref<NiMorphData> NiMorphDataRef;
+
+/*!
+ * NiMorphData - Geometry morphing data.
+ */
 
 class NiMorphData : public NI_MORPH_DATA_PARENT {
 public:

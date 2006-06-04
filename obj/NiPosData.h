@@ -10,12 +10,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiPosData
- */
-
 class NiPosData;
 typedef Ref<NiPosData> NiPosDataRef;
+
+/*!
+ * NiPosData - Position data.
+ */
 
 class NiPosData : public NI_POS_DATA_PARENT {
 public:

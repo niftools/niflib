@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiAmbientLight
- */
-
 class NiAmbientLight;
 typedef Ref<NiAmbientLight> NiAmbientLightRef;
+
+/*!
+ * NiAmbientLight - Ambient light source.
+ */
 
 class NiAmbientLight : public NI_AMBIENT_LIGHT_PARENT {
 public:

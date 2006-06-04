@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiLight
- */
-
 class NiLight;
 typedef Ref<NiLight> NiLightRef;
+
+/*!
+ * NiLight - Light source.
+ */
 
 class NiLight : public NI_LIGHT_PARENT {
 public:

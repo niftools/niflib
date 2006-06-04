@@ -16,12 +16,12 @@ class NiNode;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiSkinInstance
- */
-
 class NiSkinInstance;
 typedef Ref<NiSkinInstance> NiSkinInstanceRef;
+
+/*!
+ * NiSkinInstance - Skinning instance.
+ */
 
 class NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
 public:

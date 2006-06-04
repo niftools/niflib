@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiDitherProperty
- */
-
 class NiDitherProperty;
 typedef Ref<NiDitherProperty> NiDitherPropertyRef;
+
+/*!
+ * NiDitherProperty - Unknown.
+ */
 
 class NiDitherProperty : public NI_DITHER_PROPERTY_PARENT {
 public:

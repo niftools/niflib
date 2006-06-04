@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiProperty
- */
-
 class NiProperty;
 typedef Ref<NiProperty> NiPropertyRef;
+
+/*!
+ * NiProperty - A generic property block.
+ */
 
 class NiProperty : public NI_PROPERTY_PARENT {
 public:

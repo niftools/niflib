@@ -12,12 +12,12 @@ class NiPosData;
 
 #include "gen/obj_defines.h"
 
-/*
- * NiMaterialColorController
- */
-
 class NiMaterialColorController;
 typedef Ref<NiMaterialColorController> NiMaterialColorControllerRef;
+
+/*!
+ * NiMaterialColorController - Time controller for material color.
+ */
 
 class NiMaterialColorController : public NI_MATERIAL_COLOR_CONTROLLER_PARENT {
 public:

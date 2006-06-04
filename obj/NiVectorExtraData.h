@@ -8,12 +8,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/obj_defines.h"
 
-/*
- * NiVectorExtraData
- */
-
 class NiVectorExtraData;
 typedef Ref<NiVectorExtraData> NiVectorExtraDataRef;
+
+/*!
+ * NiVectorExtraData - Extra vector data.
+ */
 
 class NiVectorExtraData : public NI_VECTOR_EXTRA_DATA_PARENT {
 public:
