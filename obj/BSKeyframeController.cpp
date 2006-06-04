@@ -27,6 +27,10 @@ void BSKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<u
 	B_S_KEYFRAME_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> BSKeyframeController::GetRefs() const {
+	B_S_KEYFRAME_CONTROLLER_GETREFS
+}
+
 const Type & BSKeyframeController::GetType() const {
 	return TYPE;
 };

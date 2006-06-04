@@ -27,6 +27,10 @@ void bhkNiTriStripsShape::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkNiTriStripsShape::GetRefs() const {
+	BHK_NI_TRI_STRIPS_SHAPE_GETREFS
+}
+
 const Type & bhkNiTriStripsShape::GetType() const {
 	return TYPE;
 };

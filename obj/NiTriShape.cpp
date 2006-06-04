@@ -26,6 +26,10 @@ void NiTriShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	NI_TRI_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> NiTriShape::GetRefs() const {
+	NI_TRI_SHAPE_GETREFS
+}
+
 const Type & NiTriShape::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiVertexColorProperty::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_VERTEX_COLOR_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiVertexColorProperty::GetRefs() const {
+	NI_VERTEX_COLOR_PROPERTY_GETREFS
+}
+
 const Type & NiVertexColorProperty::GetType() const {
 	return TYPE;
 };

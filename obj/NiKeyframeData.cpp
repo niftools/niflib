@@ -29,6 +29,10 @@ void NiKeyframeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_KEYFRAME_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiKeyframeData::GetRefs() const {
+	NI_KEYFRAME_DATA_GETREFS
+}
+
 const Type & NiKeyframeData::GetType() const {
 	return TYPE;
 };

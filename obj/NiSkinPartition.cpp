@@ -27,6 +27,10 @@ void NiSkinPartition::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_SKIN_PARTITION_FIXLINKS
 }
 
+list<NiObjectRef> NiSkinPartition::GetRefs() const {
+	NI_SKIN_PARTITION_GETREFS
+}
+
 const Type & NiSkinPartition::GetType() const {
 	return TYPE;
 };

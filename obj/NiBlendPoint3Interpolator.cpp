@@ -26,6 +26,10 @@ void NiBlendPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, l
 	NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBlendPoint3Interpolator::GetRefs() const {
+	NI_BLEND_POINT3_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBlendPoint3Interpolator::GetType() const {
 	return TYPE;
 };

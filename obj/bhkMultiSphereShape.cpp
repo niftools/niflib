@@ -26,6 +26,10 @@ void bhkMultiSphereShape::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	BHK_MULTI_SPHERE_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkMultiSphereShape::GetRefs() const {
+	BHK_MULTI_SPHERE_SHAPE_GETREFS
+}
+
 const Type & bhkMultiSphereShape::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void bhkBlendController::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	BHK_BLEND_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> bhkBlendController::GetRefs() const {
+	BHK_BLEND_CONTROLLER_GETREFS
+}
+
 const Type & bhkBlendController::GetType() const {
 	return TYPE;
 };

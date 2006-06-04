@@ -26,6 +26,10 @@ void NiParticleGrowFade::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_PARTICLE_GROW_FADE_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleGrowFade::GetRefs() const {
+	NI_PARTICLE_GROW_FADE_GETREFS
+}
+
 const Type & NiParticleGrowFade::GetType() const {
 	return TYPE;
 };

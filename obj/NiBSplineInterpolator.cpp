@@ -26,6 +26,10 @@ void NiBSplineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_B_SPLINE_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBSplineInterpolator::GetRefs() const {
+	NI_B_SPLINE_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBSplineInterpolator::GetType() const {
 	return TYPE;
 };

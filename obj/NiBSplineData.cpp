@@ -26,6 +26,10 @@ void NiBSplineData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & 
 	NI_B_SPLINE_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiBSplineData::GetRefs() const {
+	NI_B_SPLINE_DATA_GETREFS
+}
+
 const Type & NiBSplineData::GetType() const {
 	return TYPE;
 };

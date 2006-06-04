@@ -27,6 +27,10 @@ void NiTextureTransformController::FixLinks( const vector<NiObjectRef> & objects
 	NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiTextureTransformController::GetRefs() const {
+	NI_TEXTURE_TRANSFORM_CONTROLLER_GETREFS
+}
+
 const Type & NiTextureTransformController::GetType() const {
 	return TYPE;
 };

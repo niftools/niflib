@@ -26,6 +26,10 @@ void NiShadeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_SHADE_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiShadeProperty::GetRefs() const {
+	NI_SHADE_PROPERTY_GETREFS
+}
+
 const Type & NiShadeProperty::GetType() const {
 	return TYPE;
 };

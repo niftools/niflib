@@ -27,6 +27,10 @@ void NiFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_FLOAT_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiFloatInterpolator::GetRefs() const {
+	NI_FLOAT_INTERPOLATOR_GETREFS
+}
+
 const Type & NiFloatInterpolator::GetType() const {
 	return TYPE;
 };

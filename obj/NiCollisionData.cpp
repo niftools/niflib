@@ -27,6 +27,10 @@ void NiCollisionData::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_COLLISION_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiCollisionData::GetRefs() const {
+	NI_COLLISION_DATA_GETREFS
+}
+
 const Type & NiCollisionData::GetType() const {
 	return TYPE;
 };

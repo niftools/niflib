@@ -28,6 +28,10 @@ void NiPathController::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_PATH_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiPathController::GetRefs() const {
+	NI_PATH_CONTROLLER_GETREFS
+}
+
 const Type & NiPathController::GetType() const {
 	return TYPE;
 };

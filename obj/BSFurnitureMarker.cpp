@@ -27,6 +27,10 @@ void BSFurnitureMarker::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	B_S_FURNITURE_MARKER_FIXLINKS
 }
 
+list<NiObjectRef> BSFurnitureMarker::GetRefs() const {
+	B_S_FURNITURE_MARKER_GETREFS
+}
+
 const Type & BSFurnitureMarker::GetType() const {
 	return TYPE;
 };

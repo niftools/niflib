@@ -26,6 +26,10 @@ void bhkRigidBodyT::FixLinks( const vector<NiObjectRef> & objects, list<uint> & 
 	BHK_RIGID_BODY_T_FIXLINKS
 }
 
+list<NiObjectRef> bhkRigidBodyT::GetRefs() const {
+	BHK_RIGID_BODY_T_GETREFS
+}
+
 const Type & bhkRigidBodyT::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void bhkPrismaticConstraint::FixLinks( const vector<NiObjectRef> & objects, list
 	BHK_PRISMATIC_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> bhkPrismaticConstraint::GetRefs() const {
+	BHK_PRISMATIC_CONSTRAINT_GETREFS
+}
+
 const Type & bhkPrismaticConstraint::GetType() const {
 	return TYPE;
 };

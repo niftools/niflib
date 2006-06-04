@@ -26,6 +26,10 @@ void bhkCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	BHK_COLLISION_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> bhkCollisionObject::GetRefs() const {
+	BHK_COLLISION_OBJECT_GETREFS
+}
+
 const Type & bhkCollisionObject::GetType() const {
 	return TYPE;
 };

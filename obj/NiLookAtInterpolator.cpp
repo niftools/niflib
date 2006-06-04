@@ -29,6 +29,10 @@ void NiLookAtInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_LOOK_AT_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiLookAtInterpolator::GetRefs() const {
+	NI_LOOK_AT_INTERPOLATOR_GETREFS
+}
+
 const Type & NiLookAtInterpolator::GetType() const {
 	return TYPE;
 };

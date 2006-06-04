@@ -26,6 +26,10 @@ void NiExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & li
 	NI_EXTRA_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiExtraData::GetRefs() const {
+	NI_EXTRA_DATA_GETREFS
+}
+
 const Type & NiExtraData::GetType() const {
 	return TYPE;
 };

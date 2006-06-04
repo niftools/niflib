@@ -26,6 +26,10 @@ void bhkConvexTransformShape::FixLinks( const vector<NiObjectRef> & objects, lis
 	BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkConvexTransformShape::GetRefs() const {
+	BHK_CONVEX_TRANSFORM_SHAPE_GETREFS
+}
+
 const Type & bhkConvexTransformShape::GetType() const {
 	return TYPE;
 };

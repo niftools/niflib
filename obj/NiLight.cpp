@@ -26,6 +26,10 @@ void NiLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_s
 	NI_LIGHT_FIXLINKS
 }
 
+list<NiObjectRef> NiLight::GetRefs() const {
+	NI_LIGHT_GETREFS
+}
+
 const Type & NiLight::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_POINT3_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiPoint3Interpolator::GetRefs() const {
+	NI_POINT3_INTERPOLATOR_GETREFS
+}
+
 const Type & NiPoint3Interpolator::GetType() const {
 	return TYPE;
 };

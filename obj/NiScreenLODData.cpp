@@ -26,6 +26,10 @@ void NiScreenLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_SCREEN_L_O_D_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiScreenLODData::GetRefs() const {
+	NI_SCREEN_L_O_D_DATA_GETREFS
+}
+
 const Type & NiScreenLODData::GetType() const {
 	return TYPE;
 };

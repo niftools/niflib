@@ -27,6 +27,10 @@ void NiSingleInterpolatorController::FixLinks( const vector<NiObjectRef> & objec
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiSingleInterpolatorController::GetRefs() const {
+	NI_SINGLE_INTERPOLATOR_CONTROLLER_GETREFS
+}
+
 const Type & NiSingleInterpolatorController::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void hkPackedNiTriStripsData::FixLinks( const vector<NiObjectRef> & objects, lis
 	HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> hkPackedNiTriStripsData::GetRefs() const {
+	HK_PACKED_NI_TRI_STRIPS_DATA_GETREFS
+}
+
 const Type & hkPackedNiTriStripsData::GetType() const {
 	return TYPE;
 };

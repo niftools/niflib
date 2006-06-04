@@ -26,6 +26,10 @@ void NiAmbientLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_AMBIENT_LIGHT_FIXLINKS
 }
 
+list<NiObjectRef> NiAmbientLight::GetRefs() const {
+	NI_AMBIENT_LIGHT_GETREFS
+}
+
 const Type & NiAmbientLight::GetType() const {
 	return TYPE;
 };

@@ -29,6 +29,10 @@ void NiPSysPlanarCollider::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_P_SYS_PLANAR_COLLIDER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysPlanarCollider::GetRefs() const {
+	NI_P_SYS_PLANAR_COLLIDER_GETREFS
+}
+
 const Type & NiPSysPlanarCollider::GetType() const {
 	return TYPE;
 };

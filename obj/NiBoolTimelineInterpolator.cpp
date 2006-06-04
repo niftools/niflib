@@ -27,6 +27,10 @@ void NiBoolTimelineInterpolator::FixLinks( const vector<NiObjectRef> & objects, 
 	NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBoolTimelineInterpolator::GetRefs() const {
+	NI_BOOL_TIMELINE_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBoolTimelineInterpolator::GetType() const {
 	return TYPE;
 };

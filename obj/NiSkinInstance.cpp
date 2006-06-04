@@ -31,6 +31,10 @@ void NiSkinInstance::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_SKIN_INSTANCE_FIXLINKS
 }
 
+list<NiObjectRef> NiSkinInstance::GetRefs() const {
+	NI_SKIN_INSTANCE_GETREFS
+}
+
 const Type & NiSkinInstance::GetType() const {
 	return TYPE;
 };

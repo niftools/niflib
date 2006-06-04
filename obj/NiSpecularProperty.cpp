@@ -26,6 +26,10 @@ void NiSpecularProperty::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_SPECULAR_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiSpecularProperty::GetRefs() const {
+	NI_SPECULAR_PROPERTY_GETREFS
+}
+
 const Type & NiSpecularProperty::GetType() const {
 	return TYPE;
 };

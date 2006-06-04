@@ -26,6 +26,10 @@ void NiBSAnimationNode::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_B_S_ANIMATION_NODE_FIXLINKS
 }
 
+list<NiObjectRef> NiBSAnimationNode::GetRefs() const {
+	NI_B_S_ANIMATION_NODE_GETREFS
+}
+
 const Type & NiBSAnimationNode::GetType() const {
 	return TYPE;
 };

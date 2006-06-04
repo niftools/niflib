@@ -26,6 +26,10 @@ void bhkRefObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & l
 	BHK_REF_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> bhkRefObject::GetRefs() const {
+	BHK_REF_OBJECT_GETREFS
+}
+
 const Type & bhkRefObject::GetType() const {
 	return TYPE;
 };

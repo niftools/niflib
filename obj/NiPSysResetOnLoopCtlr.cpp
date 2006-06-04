@@ -26,6 +26,10 @@ void NiPSysResetOnLoopCtlr::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysResetOnLoopCtlr::GetRefs() const {
+	NI_P_SYS_RESET_ON_LOOP_CTLR_GETREFS
+}
+
 const Type & NiPSysResetOnLoopCtlr::GetType() const {
 	return TYPE;
 };

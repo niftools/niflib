@@ -27,6 +27,10 @@ void AbhkConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	ABHK_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> AbhkConstraint::GetRefs() const {
+	ABHK_CONSTRAINT_GETREFS
+}
+
 const Type & AbhkConstraint::GetType() const {
 	return TYPE;
 };

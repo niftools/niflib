@@ -26,6 +26,10 @@ void NiFogProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & 
 	NI_FOG_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiFogProperty::GetRefs() const {
+	NI_FOG_PROPERTY_GETREFS
+}
+
 const Type & NiFogProperty::GetType() const {
 	return TYPE;
 };

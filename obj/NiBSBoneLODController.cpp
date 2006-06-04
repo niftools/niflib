@@ -26,6 +26,10 @@ void NiBSBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiBSBoneLODController::GetRefs() const {
+	NI_B_S_BONE_L_O_D_CONTROLLER_GETREFS
+}
+
 const Type & NiBSBoneLODController::GetType() const {
 	return TYPE;
 };

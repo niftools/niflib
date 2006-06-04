@@ -122,7 +122,7 @@ public:
 	 * attr_list = my_block.GetRefs()
 	 * \endcode
 	 */
-	virtual list<NiObjectRef> GetRefs();
+	virtual list<NiObjectRef> GetRefs() const;
 	
 	// Python Operator Overloads
 	string __str__() const {

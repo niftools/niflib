@@ -26,6 +26,10 @@ void NiSphericalCollider::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_SPHERICAL_COLLIDER_FIXLINKS
 }
 
+list<NiObjectRef> NiSphericalCollider::GetRefs() const {
+	NI_SPHERICAL_COLLIDER_GETREFS
+}
+
 const Type & NiSphericalCollider::GetType() const {
 	return TYPE;
 };

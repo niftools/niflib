@@ -26,6 +26,10 @@ void AvoidNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	AVOID_NODE_FIXLINKS
 }
 
+list<NiObjectRef> AvoidNode::GetRefs() const {
+	AVOID_NODE_GETREFS
+}
+
 const Type & AvoidNode::GetType() const {
 	return TYPE;
 };

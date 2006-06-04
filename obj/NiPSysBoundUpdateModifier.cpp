@@ -26,6 +26,10 @@ void NiPSysBoundUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, l
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysBoundUpdateModifier::GetRefs() const {
+	NI_P_SYS_BOUND_UPDATE_MODIFIER_GETREFS
+}
+
 const Type & NiPSysBoundUpdateModifier::GetType() const {
 	return TYPE;
 };

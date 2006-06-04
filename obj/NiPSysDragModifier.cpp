@@ -27,6 +27,10 @@ void NiPSysDragModifier::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_P_SYS_DRAG_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysDragModifier::GetRefs() const {
+	NI_P_SYS_DRAG_MODIFIER_GETREFS
+}
+
 const Type & NiPSysDragModifier::GetType() const {
 	return TYPE;
 };

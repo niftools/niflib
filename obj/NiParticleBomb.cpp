@@ -26,6 +26,10 @@ void NiParticleBomb::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_PARTICLE_BOMB_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleBomb::GetRefs() const {
+	NI_PARTICLE_BOMB_GETREFS
+}
+
 const Type & NiParticleBomb::GetType() const {
 	return TYPE;
 };

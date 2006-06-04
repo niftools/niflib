@@ -26,6 +26,10 @@ void NiTriStripsData::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_TRI_STRIPS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiTriStripsData::GetRefs() const {
+	NI_TRI_STRIPS_DATA_GETREFS
+}
+
 const Type & NiTriStripsData::GetType() const {
 	return TYPE;
 };

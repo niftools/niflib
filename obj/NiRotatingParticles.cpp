@@ -26,6 +26,10 @@ void NiRotatingParticles::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_ROTATING_PARTICLES_FIXLINKS
 }
 
+list<NiObjectRef> NiRotatingParticles::GetRefs() const {
+	NI_ROTATING_PARTICLES_GETREFS
+}
+
 const Type & NiRotatingParticles::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiPosData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	NI_POS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiPosData::GetRefs() const {
+	NI_POS_DATA_GETREFS
+}
+
 const Type & NiPosData::GetType() const {
 	return TYPE;
 };

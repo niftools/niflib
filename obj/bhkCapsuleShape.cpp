@@ -26,6 +26,10 @@ void bhkCapsuleShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	BHK_CAPSULE_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkCapsuleShape::GetRefs() const {
+	BHK_CAPSULE_SHAPE_GETREFS
+}
+
 const Type & bhkCapsuleShape::GetType() const {
 	return TYPE;
 };

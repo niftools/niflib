@@ -27,6 +27,10 @@ void NiFlipController::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_FLIP_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiFlipController::GetRefs() const {
+	NI_FLIP_CONTROLLER_GETREFS
+}
+
 const Type & NiFlipController::GetType() const {
 	return TYPE;
 };

@@ -28,6 +28,10 @@ void NiSourceTexture::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_SOURCE_TEXTURE_FIXLINKS
 }
 
+list<NiObjectRef> NiSourceTexture::GetRefs() const {
+	NI_SOURCE_TEXTURE_GETREFS
+}
+
 const Type & NiSourceTexture::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiTimeController::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_TIME_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiTimeController::GetRefs() const {
+	NI_TIME_CONTROLLER_GETREFS
+}
+
 const Type & NiTimeController::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, lis
 	NI_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiTransformInterpolator::GetRefs() const {
+	NI_TRANSFORM_INTERPOLATOR_GETREFS
+}
+
 const Type & NiTransformInterpolator::GetType() const {
 	return TYPE;
 };

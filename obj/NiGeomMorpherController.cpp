@@ -28,6 +28,10 @@ void NiGeomMorpherController::FixLinks( const vector<NiObjectRef> & objects, lis
 	NI_GEOM_MORPHER_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiGeomMorpherController::GetRefs() const {
+	NI_GEOM_MORPHER_CONTROLLER_GETREFS
+}
+
 const Type & NiGeomMorpherController::GetType() const {
 	return TYPE;
 };

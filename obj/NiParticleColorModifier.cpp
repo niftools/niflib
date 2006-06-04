@@ -27,6 +27,10 @@ void NiParticleColorModifier::FixLinks( const vector<NiObjectRef> & objects, lis
 	NI_PARTICLE_COLOR_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleColorModifier::GetRefs() const {
+	NI_PARTICLE_COLOR_MODIFIER_GETREFS
+}
+
 const Type & NiParticleColorModifier::GetType() const {
 	return TYPE;
 };

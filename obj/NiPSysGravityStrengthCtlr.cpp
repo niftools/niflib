@@ -26,6 +26,10 @@ void NiPSysGravityStrengthCtlr::FixLinks( const vector<NiObjectRef> & objects, l
 	NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysGravityStrengthCtlr::GetRefs() const {
+	NI_P_SYS_GRAVITY_STRENGTH_CTLR_GETREFS
+}
+
 const Type & NiPSysGravityStrengthCtlr::GetType() const {
 	return TYPE;
 };

@@ -28,6 +28,10 @@ void NiLODNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	NI_L_O_D_NODE_FIXLINKS
 }
 
+list<NiObjectRef> NiLODNode::GetRefs() const {
+	NI_L_O_D_NODE_GETREFS
+}
+
 const Type & NiLODNode::GetType() const {
 	return TYPE;
 };

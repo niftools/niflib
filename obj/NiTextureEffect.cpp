@@ -27,6 +27,10 @@ void NiTextureEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_TEXTURE_EFFECT_FIXLINKS
 }
 
+list<NiObjectRef> NiTextureEffect::GetRefs() const {
+	NI_TEXTURE_EFFECT_GETREFS
+}
+
 const Type & NiTextureEffect::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiBSplineCompFloatInterpolator::FixLinks( const vector<NiObjectRef> & objec
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBSplineCompFloatInterpolator::GetRefs() const {
+	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBSplineCompFloatInterpolator::GetType() const {
 	return TYPE;
 };

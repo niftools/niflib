@@ -27,6 +27,10 @@ void NiPSysBombModifier::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_P_SYS_BOMB_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysBombModifier::GetRefs() const {
+	NI_P_SYS_BOMB_MODIFIER_GETREFS
+}
+
 const Type & NiPSysBombModifier::GetType() const {
 	return TYPE;
 };

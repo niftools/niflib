@@ -26,6 +26,10 @@ void NiZBufferProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_Z_BUFFER_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiZBufferProperty::GetRefs() const {
+	NI_Z_BUFFER_PROPERTY_GETREFS
+}
+
 const Type & NiZBufferProperty::GetType() const {
 	return TYPE;
 };

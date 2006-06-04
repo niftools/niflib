@@ -26,6 +26,10 @@ void NiTransformController::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_TRANSFORM_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiTransformController::GetRefs() const {
+	NI_TRANSFORM_CONTROLLER_GETREFS
+}
+
 const Type & NiTransformController::GetType() const {
 	return TYPE;
 };

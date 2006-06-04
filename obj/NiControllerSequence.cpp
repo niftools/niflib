@@ -37,6 +37,10 @@ void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_CONTROLLER_SEQUENCE_FIXLINKS
 }
 
+list<NiObjectRef> NiControllerSequence::GetRefs() const {
+	NI_CONTROLLER_SEQUENCE_GETREFS
+}
+
 const Type & NiControllerSequence::GetType() const {
 	return TYPE;
 };

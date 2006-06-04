@@ -27,6 +27,10 @@ void NiMaterialColorController::FixLinks( const vector<NiObjectRef> & objects, l
 	NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiMaterialColorController::GetRefs() const {
+	NI_MATERIAL_COLOR_CONTROLLER_GETREFS
+}
+
 const Type & NiMaterialColorController::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void AbhkShapeCollection::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	ABHK_SHAPE_COLLECTION_FIXLINKS
 }
 
+list<NiObjectRef> AbhkShapeCollection::GetRefs() const {
+	ABHK_SHAPE_COLLECTION_GETREFS
+}
+
 const Type & AbhkShapeCollection::GetType() const {
 	return TYPE;
 };

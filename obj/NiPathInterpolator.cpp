@@ -28,6 +28,10 @@ void NiPathInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_PATH_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiPathInterpolator::GetRefs() const {
+	NI_PATH_INTERPOLATOR_GETREFS
+}
+
 const Type & NiPathInterpolator::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiPSysColorModifier::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_P_SYS_COLOR_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysColorModifier::GetRefs() const {
+	NI_P_SYS_COLOR_MODIFIER_GETREFS
+}
+
 const Type & NiPSysColorModifier::GetType() const {
 	return TYPE;
 };

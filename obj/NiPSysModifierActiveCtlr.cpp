@@ -26,6 +26,10 @@ void NiPSysModifierActiveCtlr::FixLinks( const vector<NiObjectRef> & objects, li
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysModifierActiveCtlr::GetRefs() const {
+	NI_P_SYS_MODIFIER_ACTIVE_CTLR_GETREFS
+}
+
 const Type & NiPSysModifierActiveCtlr::GetType() const {
 	return TYPE;
 };

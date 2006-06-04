@@ -27,6 +27,10 @@ void NiCamera::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_
 	NI_CAMERA_FIXLINKS
 }
 
+list<NiObjectRef> NiCamera::GetRefs() const {
+	NI_CAMERA_GETREFS
+}
+
 const Type & NiCamera::GetType() const {
 	return TYPE;
 };

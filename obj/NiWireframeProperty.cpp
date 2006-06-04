@@ -26,6 +26,10 @@ void NiWireframeProperty::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_WIREFRAME_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiWireframeProperty::GetRefs() const {
+	NI_WIREFRAME_PROPERTY_GETREFS
+}
+
 const Type & NiWireframeProperty::GetType() const {
 	return TYPE;
 };

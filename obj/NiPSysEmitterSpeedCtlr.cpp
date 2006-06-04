@@ -26,6 +26,10 @@ void NiPSysEmitterSpeedCtlr::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysEmitterSpeedCtlr::GetRefs() const {
+	NI_P_SYS_EMITTER_SPEED_CTLR_GETREFS
+}
+
 const Type & NiPSysEmitterSpeedCtlr::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	NI_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiProperty::GetRefs() const {
+	NI_PROPERTY_GETREFS
+}
+
 const Type & NiProperty::GetType() const {
 	return TYPE;
 };

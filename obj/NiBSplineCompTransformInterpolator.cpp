@@ -28,6 +28,10 @@ void NiBSplineCompTransformInterpolator::FixLinks( const vector<NiObjectRef> & o
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
+	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBSplineCompTransformInterpolator::GetType() const {
 	return TYPE;
 };

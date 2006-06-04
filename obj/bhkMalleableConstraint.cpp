@@ -29,6 +29,10 @@ void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list
 	BHK_MALLEABLE_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> bhkMalleableConstraint::GetRefs() const {
+	BHK_MALLEABLE_CONSTRAINT_GETREFS
+}
+
 const Type & bhkMalleableConstraint::GetType() const {
 	return TYPE;
 };

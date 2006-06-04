@@ -26,6 +26,10 @@ void NiTransformData::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_TRANSFORM_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiTransformData::GetRefs() const {
+	NI_TRANSFORM_DATA_GETREFS
+}
+
 const Type & NiTransformData::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiMultiTargetTransformController::FixLinks( const vector<NiObjectRef> & obj
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiMultiTargetTransformController::GetRefs() const {
+	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_GETREFS
+}
+
 const Type & NiMultiTargetTransformController::GetType() const {
 	return TYPE;
 };

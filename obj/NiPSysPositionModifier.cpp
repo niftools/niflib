@@ -26,6 +26,10 @@ void NiPSysPositionModifier::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_P_SYS_POSITION_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysPositionModifier::GetRefs() const {
+	NI_P_SYS_POSITION_MODIFIER_GETREFS
+}
+
 const Type & NiPSysPositionModifier::GetType() const {
 	return TYPE;
 };

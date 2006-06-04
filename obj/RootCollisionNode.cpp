@@ -26,6 +26,10 @@ void RootCollisionNode::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	ROOT_COLLISION_NODE_FIXLINKS
 }
 
+list<NiObjectRef> RootCollisionNode::GetRefs() const {
+	ROOT_COLLISION_NODE_GETREFS
+}
+
 const Type & RootCollisionNode::GetType() const {
 	return TYPE;
 };

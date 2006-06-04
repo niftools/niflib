@@ -54,7 +54,7 @@ string NiObject::asString( bool verbose ) const {
 	return string();
 }
 
-list<NiObjectRef> NiObject::GetRefs() {
+list<NiObjectRef> NiObject::GetRefs() const {
 	return list<NiObjectRef>();
 }
 

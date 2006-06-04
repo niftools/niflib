@@ -27,6 +27,10 @@ void NiStringPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_STRING_PALETTE_FIXLINKS
 }
 
+list<NiObjectRef> NiStringPalette::GetRefs() const {
+	NI_STRING_PALETTE_GETREFS
+}
+
 const Type & NiStringPalette::GetType() const {
 	return TYPE;
 };

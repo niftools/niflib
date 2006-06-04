@@ -27,6 +27,10 @@ void NiParticleMeshModifier::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_PARTICLE_MESH_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleMeshModifier::GetRefs() const {
+	NI_PARTICLE_MESH_MODIFIER_GETREFS
+}
+
 const Type & NiParticleMeshModifier::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiPSysEmitterInitialRadiusCtlr::FixLinks( const vector<NiObjectRef> & objec
 	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysEmitterInitialRadiusCtlr::GetRefs() const {
+	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_GETREFS
+}
+
 const Type & NiPSysEmitterInitialRadiusCtlr::GetType() const {
 	return TYPE;
 };

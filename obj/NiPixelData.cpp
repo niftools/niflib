@@ -29,6 +29,10 @@ void NiPixelData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & li
 	NI_PIXEL_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiPixelData::GetRefs() const {
+	NI_PIXEL_DATA_GETREFS
+}
+
 const Type & NiPixelData::GetType() const {
 	return TYPE;
 };

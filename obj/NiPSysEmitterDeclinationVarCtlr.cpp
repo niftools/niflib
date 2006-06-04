@@ -26,6 +26,10 @@ void NiPSysEmitterDeclinationVarCtlr::FixLinks( const vector<NiObjectRef> & obje
 	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysEmitterDeclinationVarCtlr::GetRefs() const {
+	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_GETREFS
+}
+
 const Type & NiPSysEmitterDeclinationVarCtlr::GetType() const {
 	return TYPE;
 };

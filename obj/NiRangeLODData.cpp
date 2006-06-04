@@ -27,6 +27,10 @@ void NiRangeLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_RANGE_L_O_D_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiRangeLODData::GetRefs() const {
+	NI_RANGE_L_O_D_DATA_GETREFS
+}
+
 const Type & NiRangeLODData::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void bhkListShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & l
 	BHK_LIST_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkListShape::GetRefs() const {
+	BHK_LIST_SHAPE_GETREFS
+}
+
 const Type & bhkListShape::GetType() const {
 	return TYPE;
 };

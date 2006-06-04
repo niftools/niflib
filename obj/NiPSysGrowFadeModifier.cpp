@@ -26,6 +26,10 @@ void NiPSysGrowFadeModifier::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysGrowFadeModifier::GetRefs() const {
+	NI_P_SYS_GROW_FADE_MODIFIER_GETREFS
+}
+
 const Type & NiPSysGrowFadeModifier::GetType() const {
 	return TYPE;
 };

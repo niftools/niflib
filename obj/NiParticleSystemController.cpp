@@ -29,6 +29,10 @@ void NiParticleSystemController::FixLinks( const vector<NiObjectRef> & objects, 
 	NI_PARTICLE_SYSTEM_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleSystemController::GetRefs() const {
+	NI_PARTICLE_SYSTEM_CONTROLLER_GETREFS
+}
+
 const Type & NiParticleSystemController::GetType() const {
 	return TYPE;
 };

@@ -45,6 +45,10 @@ void NiTexturingProperty::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_TEXTURING_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiTexturingProperty::GetRefs() const {
+	NI_TEXTURING_PROPERTY_GETREFS
+}
+
 const Type & NiTexturingProperty::GetType() const {
 	return TYPE;
 };

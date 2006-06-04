@@ -27,6 +27,10 @@ void NiPSysMeshUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, li
 	NI_P_SYS_MESH_UPDATE_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysMeshUpdateModifier::GetRefs() const {
+	NI_P_SYS_MESH_UPDATE_MODIFIER_GETREFS
+}
+
 const Type & NiPSysMeshUpdateModifier::GetType() const {
 	return TYPE;
 };

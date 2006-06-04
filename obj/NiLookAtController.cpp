@@ -27,6 +27,10 @@ void NiLookAtController::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_LOOK_AT_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiLookAtController::GetRefs() const {
+	NI_LOOK_AT_CONTROLLER_GETREFS
+}
+
 const Type & NiLookAtController::GetType() const {
 	return TYPE;
 };

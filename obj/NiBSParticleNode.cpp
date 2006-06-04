@@ -26,6 +26,10 @@ void NiBSParticleNode::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_B_S_PARTICLE_NODE_FIXLINKS
 }
 
+list<NiObjectRef> NiBSParticleNode::GetRefs() const {
+	NI_B_S_PARTICLE_NODE_GETREFS
+}
+
 const Type & NiBSParticleNode::GetType() const {
 	return TYPE;
 };

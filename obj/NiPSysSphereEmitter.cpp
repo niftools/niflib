@@ -26,6 +26,10 @@ void NiPSysSphereEmitter::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_P_SYS_SPHERE_EMITTER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysSphereEmitter::GetRefs() const {
+	NI_P_SYS_SPHERE_EMITTER_GETREFS
+}
+
 const Type & NiPSysSphereEmitter::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void bhkSimpleShapePhantom::FixLinks( const vector<NiObjectRef> & objects, list<
 	BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS
 }
 
+list<NiObjectRef> bhkSimpleShapePhantom::GetRefs() const {
+	BHK_SIMPLE_SHAPE_PHANTOM_GETREFS
+}
+
 const Type & bhkSimpleShapePhantom::GetType() const {
 	return TYPE;
 };

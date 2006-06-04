@@ -27,6 +27,10 @@ void NiUVData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_
 	NI_U_V_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiUVData::GetRefs() const {
+	NI_U_V_DATA_GETREFS
+}
+
 const Type & NiUVData::GetType() const {
 	return TYPE;
 };

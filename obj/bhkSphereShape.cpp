@@ -26,6 +26,10 @@ void bhkSphereShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	BHK_SPHERE_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkSphereShape::GetRefs() const {
+	BHK_SPHERE_SHAPE_GETREFS
+}
+
 const Type & bhkSphereShape::GetType() const {
 	return TYPE;
 };

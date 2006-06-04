@@ -26,6 +26,10 @@ void NiBSPArrayController::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiBSPArrayController::GetRefs() const {
+	NI_B_S_P_ARRAY_CONTROLLER_GETREFS
+}
+
 const Type & NiBSPArrayController::GetType() const {
 	return TYPE;
 };

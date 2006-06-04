@@ -27,6 +27,10 @@ void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_P_SYS_COLLIDER_MANAGER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysColliderManager::GetRefs() const {
+	NI_P_SYS_COLLIDER_MANAGER_GETREFS
+}
+
 const Type & NiPSysColliderManager::GetType() const {
 	return TYPE;
 };

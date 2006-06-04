@@ -27,6 +27,10 @@ void FxRadioButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & 
 	FX_RADIO_BUTTON_FIXLINKS
 }
 
+list<NiObjectRef> FxRadioButton::GetRefs() const {
+	FX_RADIO_BUTTON_GETREFS
+}
+
 const Type & FxRadioButton::GetType() const {
 	return TYPE;
 };

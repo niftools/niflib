@@ -29,6 +29,7 @@ public:
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version ) const;
 	virtual string asString( bool verbose = false ) const;
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version );
+	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 protected:
 	NI_KEYFRAME_CONTROLLER_MEMBERS

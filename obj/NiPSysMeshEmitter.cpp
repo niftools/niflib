@@ -27,6 +27,10 @@ void NiPSysMeshEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_P_SYS_MESH_EMITTER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysMeshEmitter::GetRefs() const {
+	NI_P_SYS_MESH_EMITTER_GETREFS
+}
+
 const Type & NiPSysMeshEmitter::GetType() const {
 	return TYPE;
 };

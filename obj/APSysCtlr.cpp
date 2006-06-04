@@ -26,6 +26,10 @@ void APSysCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	A_P_SYS_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> APSysCtlr::GetRefs() const {
+	A_P_SYS_CTLR_GETREFS
+}
+
 const Type & APSysCtlr::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void bhkBlendCollisionObject::FixLinks( const vector<NiObjectRef> & objects, lis
 	BHK_BLEND_COLLISION_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> bhkBlendCollisionObject::GetRefs() const {
+	BHK_BLEND_COLLISION_OBJECT_GETREFS
+}
+
 const Type & bhkBlendCollisionObject::GetType() const {
 	return TYPE;
 };

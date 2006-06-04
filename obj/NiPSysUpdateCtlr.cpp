@@ -26,6 +26,10 @@ void NiPSysUpdateCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_P_SYS_UPDATE_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysUpdateCtlr::GetRefs() const {
+	NI_P_SYS_UPDATE_CTLR_GETREFS
+}
+
 const Type & NiPSysUpdateCtlr::GetType() const {
 	return TYPE;
 };

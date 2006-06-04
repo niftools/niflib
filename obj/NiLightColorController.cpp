@@ -28,6 +28,10 @@ void NiLightColorController::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_LIGHT_COLOR_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiLightColorController::GetRefs() const {
+	NI_LIGHT_COLOR_CONTROLLER_GETREFS
+}
+
 const Type & NiLightColorController::GetType() const {
 	return TYPE;
 };

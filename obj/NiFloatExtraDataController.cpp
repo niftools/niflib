@@ -27,6 +27,10 @@ void NiFloatExtraDataController::FixLinks( const vector<NiObjectRef> & objects, 
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiFloatExtraDataController::GetRefs() const {
+	NI_FLOAT_EXTRA_DATA_CONTROLLER_GETREFS
+}
+
 const Type & NiFloatExtraDataController::GetType() const {
 	return TYPE;
 };

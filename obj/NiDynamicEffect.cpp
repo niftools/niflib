@@ -27,6 +27,10 @@ void NiDynamicEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_DYNAMIC_EFFECT_FIXLINKS
 }
 
+list<NiObjectRef> NiDynamicEffect::GetRefs() const {
+	NI_DYNAMIC_EFFECT_GETREFS
+}
+
 const Type & NiDynamicEffect::GetType() const {
 	return TYPE;
 };

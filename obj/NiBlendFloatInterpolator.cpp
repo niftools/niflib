@@ -26,6 +26,10 @@ void NiBlendFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, li
 	NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBlendFloatInterpolator::GetRefs() const {
+	NI_BLEND_FLOAT_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBlendFloatInterpolator::GetType() const {
 	return TYPE;
 };

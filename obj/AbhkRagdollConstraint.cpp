@@ -26,6 +26,10 @@ void AbhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<
 	ABHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> AbhkRagdollConstraint::GetRefs() const {
+	ABHK_RAGDOLL_CONSTRAINT_GETREFS
+}
+
 const Type & AbhkRagdollConstraint::GetType() const {
 	return TYPE;
 };

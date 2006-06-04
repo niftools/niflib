@@ -26,6 +26,10 @@ void NiBlendInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_BLEND_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBlendInterpolator::GetRefs() const {
+	NI_BLEND_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBlendInterpolator::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_KEYFRAME_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiKeyframeController::GetRefs() const {
+	NI_KEYFRAME_CONTROLLER_GETREFS
+}
+
 const Type & NiKeyframeController::GetType() const {
 	return TYPE;
 };

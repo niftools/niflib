@@ -26,6 +26,10 @@ void NiVertWeightsExtraData::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiVertWeightsExtraData::GetRefs() const {
+	NI_VERT_WEIGHTS_EXTRA_DATA_GETREFS
+}
+
 const Type & NiVertWeightsExtraData::GetType() const {
 	return TYPE;
 };

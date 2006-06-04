@@ -26,6 +26,10 @@ void NiAutoNormalParticles::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_AUTO_NORMAL_PARTICLES_FIXLINKS
 }
 
+list<NiObjectRef> NiAutoNormalParticles::GetRefs() const {
+	NI_AUTO_NORMAL_PARTICLES_GETREFS
+}
+
 const Type & NiAutoNormalParticles::GetType() const {
 	return TYPE;
 };

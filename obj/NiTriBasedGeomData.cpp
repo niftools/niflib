@@ -27,6 +27,10 @@ void NiTriBasedGeomData::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_TRI_BASED_GEOM_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiTriBasedGeomData::GetRefs() const {
+	NI_TRI_BASED_GEOM_DATA_GETREFS
+}
+
 const Type & NiTriBasedGeomData::GetType() const {
 	return TYPE;
 };

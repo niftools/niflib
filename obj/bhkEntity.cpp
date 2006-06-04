@@ -27,6 +27,10 @@ void bhkEntity::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	BHK_ENTITY_FIXLINKS
 }
 
+list<NiObjectRef> bhkEntity::GetRefs() const {
+	BHK_ENTITY_GETREFS
+}
+
 const Type & bhkEntity::GetType() const {
 	return TYPE;
 };

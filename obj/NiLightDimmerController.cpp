@@ -27,6 +27,10 @@ void NiLightDimmerController::FixLinks( const vector<NiObjectRef> & objects, lis
 	NI_LIGHT_DIMMER_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiLightDimmerController::GetRefs() const {
+	NI_LIGHT_DIMMER_CONTROLLER_GETREFS
+}
+
 const Type & NiLightDimmerController::GetType() const {
 	return TYPE;
 };

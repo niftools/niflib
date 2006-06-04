@@ -26,6 +26,10 @@ void bhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<u
 	BHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> bhkRagdollConstraint::GetRefs() const {
+	BHK_RAGDOLL_CONSTRAINT_GETREFS
+}
+
 const Type & bhkRagdollConstraint::GetType() const {
 	return TYPE;
 };

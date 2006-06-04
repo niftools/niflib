@@ -26,6 +26,10 @@ void BSPSysArrayEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	B_S_P_SYS_ARRAY_EMITTER_FIXLINKS
 }
 
+list<NiObjectRef> BSPSysArrayEmitter::GetRefs() const {
+	B_S_P_SYS_ARRAY_EMITTER_GETREFS
+}
+
 const Type & BSPSysArrayEmitter::GetType() const {
 	return TYPE;
 };

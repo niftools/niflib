@@ -27,6 +27,10 @@ void AParticleModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	A_PARTICLE_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> AParticleModifier::GetRefs() const {
+	A_PARTICLE_MODIFIER_GETREFS
+}
+
 const Type & AParticleModifier::GetType() const {
 	return TYPE;
 };

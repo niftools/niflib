@@ -26,6 +26,10 @@ void NiBlendBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, lis
 	NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBlendBoolInterpolator::GetRefs() const {
+	NI_BLEND_BOOL_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBlendBoolInterpolator::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiGravity::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	NI_GRAVITY_FIXLINKS
 }
 
+list<NiObjectRef> NiGravity::GetRefs() const {
+	NI_GRAVITY_GETREFS
+}
+
 const Type & NiGravity::GetType() const {
 	return TYPE;
 };

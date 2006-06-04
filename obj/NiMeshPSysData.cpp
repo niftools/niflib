@@ -28,6 +28,10 @@ void NiMeshPSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	NI_MESH_P_SYS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiMeshPSysData::GetRefs() const {
+	NI_MESH_P_SYS_DATA_GETREFS
+}
+
 const Type & NiMeshPSysData::GetType() const {
 	return TYPE;
 };

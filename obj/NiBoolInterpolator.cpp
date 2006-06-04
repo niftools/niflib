@@ -27,6 +27,10 @@ void NiBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_BOOL_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBoolInterpolator::GetRefs() const {
+	NI_BOOL_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBoolInterpolator::GetType() const {
 	return TYPE;
 };

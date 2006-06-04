@@ -26,6 +26,10 @@ void BSXFlags::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_
 	B_S_X_FLAGS_FIXLINKS
 }
 
+list<NiObjectRef> BSXFlags::GetRefs() const {
+	B_S_X_FLAGS_GETREFS
+}
+
 const Type & BSXFlags::GetType() const {
 	return TYPE;
 };

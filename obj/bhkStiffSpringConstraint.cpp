@@ -26,6 +26,10 @@ void bhkStiffSpringConstraint::FixLinks( const vector<NiObjectRef> & objects, li
 	BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> bhkStiffSpringConstraint::GetRefs() const {
+	BHK_STIFF_SPRING_CONSTRAINT_GETREFS
+}
+
 const Type & bhkStiffSpringConstraint::GetType() const {
 	return TYPE;
 };

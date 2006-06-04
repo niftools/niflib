@@ -26,6 +26,10 @@ void BSBound::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_s
 	B_S_BOUND_FIXLINKS
 }
 
+list<NiObjectRef> BSBound::GetRefs() const {
+	B_S_BOUND_GETREFS
+}
+
 const Type & BSBound::GetType() const {
 	return TYPE;
 };

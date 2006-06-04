@@ -26,6 +26,10 @@ void NiPSysEmitterLifeSpanCtlr::FixLinks( const vector<NiObjectRef> & objects, l
 	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysEmitterLifeSpanCtlr::GetRefs() const {
+	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_GETREFS
+}
+
 const Type & NiPSysEmitterLifeSpanCtlr::GetType() const {
 	return TYPE;
 };

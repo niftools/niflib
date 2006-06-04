@@ -26,6 +26,10 @@ void NiBillboardNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_BILLBOARD_NODE_FIXLINKS
 }
 
+list<NiObjectRef> NiBillboardNode::GetRefs() const {
+	NI_BILLBOARD_NODE_GETREFS
+}
+
 const Type & NiBillboardNode::GetType() const {
 	return TYPE;
 };

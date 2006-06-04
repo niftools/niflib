@@ -26,6 +26,10 @@ void FxWidget::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_
 	FX_WIDGET_FIXLINKS
 }
 
+list<NiObjectRef> FxWidget::GetRefs() const {
+	FX_WIDGET_GETREFS
+}
+
 const Type & FxWidget::GetType() const {
 	return TYPE;
 };

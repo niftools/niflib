@@ -26,6 +26,10 @@ void NiTextKeyExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_TEXT_KEY_EXTRA_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiTextKeyExtraData::GetRefs() const {
+	NI_TEXT_KEY_EXTRA_DATA_GETREFS
+}
+
 const Type & NiTextKeyExtraData::GetType() const {
 	return TYPE;
 };

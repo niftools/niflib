@@ -27,6 +27,10 @@ void NiParticleMeshesData::FixLinks( const vector<NiObjectRef> & objects, list<u
 	NI_PARTICLE_MESHES_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiParticleMeshesData::GetRefs() const {
+	NI_PARTICLE_MESHES_DATA_GETREFS
+}
+
 const Type & NiParticleMeshesData::GetType() const {
 	return TYPE;
 };

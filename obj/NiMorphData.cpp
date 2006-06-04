@@ -27,6 +27,10 @@ void NiMorphData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & li
 	NI_MORPH_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiMorphData::GetRefs() const {
+	NI_MORPH_DATA_GETREFS
+}
+
 const Type & NiMorphData::GetType() const {
 	return TYPE;
 };

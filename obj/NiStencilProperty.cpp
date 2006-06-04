@@ -26,6 +26,10 @@ void NiStencilProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_STENCIL_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiStencilProperty::GetRefs() const {
+	NI_STENCIL_PROPERTY_GETREFS
+}
+
 const Type & NiStencilProperty::GetType() const {
 	return TYPE;
 };

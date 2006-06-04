@@ -26,6 +26,10 @@ void AKeyedData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	A_KEYED_DATA_FIXLINKS
 }
 
+list<NiObjectRef> AKeyedData::GetRefs() const {
+	A_KEYED_DATA_GETREFS
+}
+
 const Type & AKeyedData::GetType() const {
 	return TYPE;
 };

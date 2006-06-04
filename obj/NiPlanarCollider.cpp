@@ -26,6 +26,10 @@ void NiPlanarCollider::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_PLANAR_COLLIDER_FIXLINKS
 }
 
+list<NiObjectRef> NiPlanarCollider::GetRefs() const {
+	NI_PLANAR_COLLIDER_GETREFS
+}
+
 const Type & NiPlanarCollider::GetType() const {
 	return TYPE;
 };

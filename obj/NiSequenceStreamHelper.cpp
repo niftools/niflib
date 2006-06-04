@@ -26,6 +26,10 @@ void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_SEQUENCE_STREAM_HELPER_FIXLINKS
 }
 
+list<NiObjectRef> NiSequenceStreamHelper::GetRefs() const {
+	NI_SEQUENCE_STREAM_HELPER_GETREFS
+}
+
 const Type & NiSequenceStreamHelper::GetType() const {
 	return TYPE;
 };

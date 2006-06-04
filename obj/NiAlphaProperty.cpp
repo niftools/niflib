@@ -26,6 +26,10 @@ void NiAlphaProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	NI_ALPHA_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiAlphaProperty::GetRefs() const {
+	NI_ALPHA_PROPERTY_GETREFS
+}
+
 const Type & NiAlphaProperty::GetType() const {
 	return TYPE;
 };

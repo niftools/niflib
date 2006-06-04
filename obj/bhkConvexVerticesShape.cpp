@@ -26,6 +26,10 @@ void bhkConvexVerticesShape::FixLinks( const vector<NiObjectRef> & objects, list
 	BHK_CONVEX_VERTICES_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkConvexVerticesShape::GetRefs() const {
+	BHK_CONVEX_VERTICES_SHAPE_GETREFS
+}
+
 const Type & bhkConvexVerticesShape::GetType() const {
 	return TYPE;
 };

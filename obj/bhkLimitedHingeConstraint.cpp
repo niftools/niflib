@@ -27,6 +27,10 @@ void bhkLimitedHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, l
 	BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS
 }
 
+list<NiObjectRef> bhkLimitedHingeConstraint::GetRefs() const {
+	BHK_LIMITED_HINGE_CONSTRAINT_GETREFS
+}
+
 const Type & bhkLimitedHingeConstraint::GetType() const {
 	return TYPE;
 };

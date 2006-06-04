@@ -27,6 +27,10 @@ void bhkMoppBvTreeShape::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	BHK_MOPP_BV_TREE_SHAPE_FIXLINKS
 }
 
+list<NiObjectRef> bhkMoppBvTreeShape::GetRefs() const {
+	BHK_MOPP_BV_TREE_SHAPE_GETREFS
+}
+
 const Type & bhkMoppBvTreeShape::GetType() const {
 	return TYPE;
 };

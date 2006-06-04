@@ -26,6 +26,10 @@ void BSParentVelocityModifier::FixLinks( const vector<NiObjectRef> & objects, li
 	B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> BSParentVelocityModifier::GetRefs() const {
+	B_S_PARENT_VELOCITY_MODIFIER_GETREFS
+}
+
 const Type & BSParentVelocityModifier::GetType() const {
 	return TYPE;
 };

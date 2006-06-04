@@ -26,6 +26,10 @@ void NiBooleanExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_BOOLEAN_EXTRA_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiBooleanExtraData::GetRefs() const {
+	NI_BOOLEAN_EXTRA_DATA_GETREFS
+}
+
 const Type & NiBooleanExtraData::GetType() const {
 	return TYPE;
 };

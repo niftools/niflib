@@ -33,6 +33,10 @@ return out.str(); \
 
 #define NI_OBJECT_FIXLINKS \
 
+#define NI_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+return refs; \
+
 #define A_KEYED_DATA_MEMBERS \
 
 #define A_KEYED_DATA_INCLUDE "NiObject.h" \
@@ -54,6 +58,11 @@ return out.str(); \
 
 #define A_KEYED_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define A_KEYED_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define A_PARTICLE_MODIFIER_MEMBERS \
 Ref<AParticleModifier > nextModifier; \
@@ -107,6 +116,12 @@ if (link_stack.front() != 0xffffffff) { \
 	controller = NULL; \
 link_stack.pop_front(); \
 
+#define A_PARTICLE_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(nextModifier)); \
+return refs; \
+
 #define BHK_REF_OBJECT_MEMBERS \
 
 #define BHK_REF_OBJECT_INCLUDE "NiObject.h" \
@@ -129,6 +144,11 @@ return out.str(); \
 #define BHK_REF_OBJECT_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define BHK_REF_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define BHK_SERIALIZABLE_MEMBERS \
 
 #define BHK_SERIALIZABLE_INCLUDE "bhkRefObject.h" \
@@ -150,6 +170,11 @@ return out.str(); \
 
 #define BHK_SERIALIZABLE_FIXLINKS \
 bhkRefObject::FixLinks( objects, link_stack, version ); \
+
+#define BHK_SERIALIZABLE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkRefObject::GetRefs(); \
+return refs; \
 
 #define ABHK_CONSTRAINT_MEMBERS \
 uint numBodies; \
@@ -209,6 +234,13 @@ for (uint i0 = 0; i0 < bodies.size(); i0++) { \
 		bodies[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define ABHK_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSerializable::GetRefs(); \
+for (uint i0 = 0; i0 < bodies.size(); i0++) { \
+}; \
+return refs; \
 
 #define ABHK_RAGDOLL_CONSTRAINT_MEMBERS \
 Float4 pivotA; \
@@ -281,6 +313,11 @@ return out.str(); \
 #define ABHK_RAGDOLL_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
 
+#define ABHK_RAGDOLL_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+return refs; \
+
 #define BHK_SHAPE_MEMBERS \
 
 #define BHK_SHAPE_INCLUDE "bhkSerializable.h" \
@@ -303,6 +340,11 @@ return out.str(); \
 #define BHK_SHAPE_FIXLINKS \
 bhkSerializable::FixLinks( objects, link_stack, version ); \
 
+#define BHK_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSerializable::GetRefs(); \
+return refs; \
+
 #define ABHK_SHAPE_COLLECTION_MEMBERS \
 
 #define ABHK_SHAPE_COLLECTION_INCLUDE "bhkShape.h" \
@@ -324,6 +366,11 @@ return out.str(); \
 
 #define ABHK_SHAPE_COLLECTION_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
+
+#define ABHK_SHAPE_COLLECTION_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkShape::GetRefs(); \
+return refs; \
 
 #define BHK_SPHERE_REP_SHAPE_MEMBERS \
 uint material; \
@@ -352,6 +399,11 @@ return out.str(); \
 #define BHK_SPHERE_REP_SHAPE_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
 
+#define BHK_SPHERE_REP_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkShape::GetRefs(); \
+return refs; \
+
 #define BHK_CONVEX_SHAPE_MEMBERS \
 
 #define BHK_CONVEX_SHAPE_INCLUDE "bhkSphereRepShape.h" \
@@ -374,6 +426,11 @@ return out.str(); \
 #define BHK_CONVEX_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 
+#define BHK_CONVEX_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSphereRepShape::GetRefs(); \
+return refs; \
+
 #define BHK_WORLD_OBJECT_MEMBERS \
 
 #define BHK_WORLD_OBJECT_INCLUDE "bhkShape.h" \
@@ -395,6 +452,11 @@ return out.str(); \
 
 #define BHK_WORLD_OBJECT_FIXLINKS \
 bhkShape::FixLinks( objects, link_stack, version ); \
+
+#define BHK_WORLD_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkShape::GetRefs(); \
+return refs; \
 
 #define BHK_ENTITY_MEMBERS \
 Ref<bhkShape > shape; \
@@ -437,6 +499,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	shape = NULL; \
 link_stack.pop_front(); \
+
+#define BHK_ENTITY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkWorldObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(shape)); \
+return refs; \
 
 #define NI_COLLISION_OBJECT_MEMBERS \
 NiAVObject * parent; \
@@ -494,6 +562,12 @@ if (link_stack.front() != 0xffffffff) { \
 	body = NULL; \
 link_stack.pop_front(); \
 
+#define NI_COLLISION_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(body)); \
+return refs; \
+
 #define NI_EXTRA_DATA_MEMBERS \
 string name; \
 Ref<NiExtraData > nextExtraData; \
@@ -546,6 +620,12 @@ if ( version <= 0x04020200 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(nextExtraData)); \
+return refs; \
+
 #define NI_INTERPOLATOR_MEMBERS \
 
 #define NI_INTERPOLATOR_INCLUDE "NiObject.h" \
@@ -567,6 +647,11 @@ return out.str(); \
 
 #define NI_INTERPOLATOR_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define NI_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_BLEND_INTERPOLATOR_MEMBERS \
 ushort unknownShort; \
@@ -599,6 +684,11 @@ return out.str(); \
 #define NI_BLEND_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
 
+#define NI_BLEND_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+return refs; \
+
 #define NI_B_SPLINE_INTERPOLATOR_MEMBERS \
 float startTime; \
 float stopTime; \
@@ -629,6 +719,11 @@ return out.str(); \
 
 #define NI_B_SPLINE_INTERPOLATOR_FIXLINKS \
 NiInterpolator::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_SPLINE_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+return refs; \
 
 #define NI_OBJECT_N_E_T_MEMBERS \
 string name; \
@@ -728,6 +823,16 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	controller = NULL; \
 link_stack.pop_front(); \
+
+#define NI_OBJECT_N_E_T_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(extraData)); \
+for (uint i0 = 0; i0 < extraDataList.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(extraDataList[i0])); \
+}; \
+refs.push_back(StaticCast<NiObject>(controller)); \
+return refs; \
 
 #define NI_A_V_OBJECT_MEMBERS \
 unsigned short flags; \
@@ -875,6 +980,16 @@ if ( version >= 0x14000005 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_A_V_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObjectNET::GetRefs(); \
+for (uint i0 = 0; i0 < properties.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(properties[i0])); \
+}; \
+refs.push_back(StaticCast<NiObject>(collisionData)); \
+refs.push_back(StaticCast<NiObject>(collisionObject)); \
+return refs; \
+
 #define NI_DYNAMIC_EFFECT_MEMBERS \
 bool hasAffectedNodeList_; \
 uint affectedNodeList_; \
@@ -962,6 +1077,14 @@ if ( version >= 0x0A010000 ) { \
 	}; \
 }; \
 
+#define NI_DYNAMIC_EFFECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiAVObject::GetRefs(); \
+for (uint i0 = 0; i0 < affectedNodes.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(affectedNodes[i0])); \
+}; \
+return refs; \
+
 #define NI_LIGHT_MEMBERS \
 float dimmer; \
 Color3 ambientColor; \
@@ -1001,6 +1124,11 @@ return out.str(); \
 #define NI_LIGHT_FIXLINKS \
 NiDynamicEffect::FixLinks( objects, link_stack, version ); \
 
+#define NI_LIGHT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiDynamicEffect::GetRefs(); \
+return refs; \
+
 #define NI_PROPERTY_MEMBERS \
 
 #define NI_PROPERTY_INCLUDE "NiObjectNET.h" \
@@ -1022,6 +1150,11 @@ return out.str(); \
 
 #define NI_PROPERTY_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
+
+#define NI_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObjectNET::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_MODIFIER_MEMBERS \
 string name; \
@@ -1072,6 +1205,11 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	target = NULL; \
 link_stack.pop_front(); \
+
+#define NI_P_SYS_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_EMITTER_MEMBERS \
 float speed; \
@@ -1140,6 +1278,11 @@ return out.str(); \
 #define NI_P_SYS_EMITTER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_VOLUME_EMITTER_MEMBERS \
 NiNode * emitterObject; \
 
@@ -1183,6 +1326,11 @@ if ( version >= 0x14000004 ) { \
 		emitterObject = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define NI_P_SYS_VOLUME_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysEmitter::GetRefs(); \
+return refs; \
 
 #define NI_TIME_CONTROLLER_MEMBERS \
 Ref<NiTimeController > nextController; \
@@ -1255,6 +1403,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	target = NULL; \
 link_stack.pop_front(); \
+
+#define NI_TIME_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(nextController)); \
+return refs; \
 
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint unknownInt1; \
@@ -1331,6 +1485,16 @@ for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 	}; \
 }; \
 
+#define A_BONE_L_O_D_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
+	for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
+		refs.push_back(StaticCast<NiObject>(nodeGroups[i0].nodes[i1])); \
+	}; \
+}; \
+return refs; \
+
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS \
 Ref<NiInterpolator > interpolator; \
 
@@ -1375,6 +1539,12 @@ if ( version >= 0x0A020000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_SINGLE_INTERPOLATOR_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(interpolator)); \
+return refs; \
+
 #define A_P_SYS_CTLR_MEMBERS \
 string modifierName; \
 
@@ -1400,6 +1570,11 @@ return out.str(); \
 
 #define A_P_SYS_CTLR_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
+
+#define A_P_SYS_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+return refs; \
 
 #define NI_TRI_BASED_GEOM_MEMBERS \
 Ref<NiTriBasedGeomData > data; \
@@ -1488,6 +1663,14 @@ if ( version >= 0x0A000100 ) { \
 		link_stack.pop_front(); \
 	}; \
 }; \
+
+#define NI_TRI_BASED_GEOM_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiAVObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+refs.push_back(StaticCast<NiObject>(skinInstance)); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+return refs; \
 
 #define NI_TRI_BASED_GEOM_DATA_MEMBERS \
 string name; \
@@ -1760,6 +1943,12 @@ if ( version >= 0x14000004 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_TRI_BASED_GEOM_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+return refs; \
+
 #define A_P_SYS_DATA_MEMBERS \
 bool hasUnknownFloats1; \
 vector<float > unknownFloats1; \
@@ -1841,6 +2030,11 @@ return out.str(); \
 #define A_P_SYS_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
 
+#define A_P_SYS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeomData::GetRefs(); \
+return refs; \
+
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS \
 float unknownFloat1; \
 float unknownFloat2; \
@@ -1872,6 +2066,11 @@ return out.str(); \
 #define BHK_BLEND_COLLISION_OBJECT_FIXLINKS \
 NiCollisionObject::FixLinks( objects, link_stack, version ); \
 
+#define BHK_BLEND_COLLISION_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiCollisionObject::GetRefs(); \
+return refs; \
+
 #define BHK_BLEND_CONTROLLER_MEMBERS \
 uint unknownInt; \
 
@@ -1898,6 +2097,11 @@ return out.str(); \
 
 #define BHK_BLEND_CONTROLLER_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+
+#define BHK_BLEND_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+return refs; \
 
 #define BHK_BOX_SHAPE_MEMBERS \
 float unknownFloat1; \
@@ -1949,6 +2153,11 @@ return out.str(); \
 
 #define BHK_BOX_SHAPE_FIXLINKS \
 bhkConvexShape::FixLinks( objects, link_stack, version ); \
+
+#define BHK_BOX_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkConvexShape::GetRefs(); \
+return refs; \
 
 #define BHK_CAPSULE_SHAPE_MEMBERS \
 float radius; \
@@ -2009,6 +2218,11 @@ return out.str(); \
 #define BHK_CAPSULE_SHAPE_FIXLINKS \
 bhkConvexShape::FixLinks( objects, link_stack, version ); \
 
+#define BHK_CAPSULE_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkConvexShape::GetRefs(); \
+return refs; \
+
 #define BHK_COLLISION_OBJECT_MEMBERS \
 
 #define BHK_COLLISION_OBJECT_INCLUDE "NiCollisionObject.h" \
@@ -2030,6 +2244,11 @@ return out.str(); \
 
 #define BHK_COLLISION_OBJECT_FIXLINKS \
 NiCollisionObject::FixLinks( objects, link_stack, version ); \
+
+#define BHK_COLLISION_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiCollisionObject::GetRefs(); \
+return refs; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
 float unknownFloats1[7]; \
@@ -2106,6 +2325,11 @@ return out.str(); \
 #define BHK_CONVEX_VERTICES_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
 
+#define BHK_CONVEX_VERTICES_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSphereRepShape::GetRefs(); \
+return refs; \
+
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
 float unknownFloats[5][4]; \
 
@@ -2147,6 +2371,11 @@ return out.str(); \
 
 #define BHK_HINGE_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
+
+#define BHK_HINGE_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+return refs; \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
 LimitedHingeDescriptor limitedHinge; \
@@ -2200,6 +2429,11 @@ return out.str(); \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
+
+#define BHK_LIMITED_HINGE_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+return refs; \
 
 #define BHK_LIST_SHAPE_MEMBERS \
 uint numSubShapes; \
@@ -2292,6 +2526,14 @@ for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
 		subShapes[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define BHK_LIST_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkShapeCollection::GetRefs(); \
+for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(subShapes[i0])); \
+}; \
+return refs; \
 
 #define BHK_MALLEABLE_CONSTRAINT_MEMBERS \
 uint type; \
@@ -2445,6 +2687,13 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 
+#define BHK_MALLEABLE_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink1)); \
+refs.push_back(StaticCast<NiObject>(unknownLink2)); \
+return refs; \
+
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
 uint material; \
@@ -2532,6 +2781,12 @@ if (link_stack.front() != 0xffffffff) { \
 	shape = NULL; \
 link_stack.pop_front(); \
 
+#define BHK_MOPP_BV_TREE_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkShape::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(shape)); \
+return refs; \
+
 #define BHK_MULTI_SPHERE_SHAPE_MEMBERS \
 float unknownFloat1; \
 float unknownFloat2; \
@@ -2584,6 +2839,11 @@ return out.str(); \
 
 #define BHK_MULTI_SPHERE_SHAPE_FIXLINKS \
 bhkSphereRepShape::FixLinks( objects, link_stack, version ); \
+
+#define BHK_MULTI_SPHERE_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSphereRepShape::GetRefs(); \
+return refs; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
 float unknownFloats1[2]; \
@@ -2705,6 +2965,14 @@ for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define BHK_NI_TRI_STRIPS_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkSphereRepShape::GetRefs(); \
+for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(stripsData[i0])); \
+}; \
+return refs; \
+
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 ushort numSubparts; \
 vector< array<uint,3> > subparts; \
@@ -2800,6 +3068,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define BHK_PACKED_NI_TRI_STRIPS_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkShapeCollection::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
 Float4 unknownVectors[8]; \
 float unknownFloats2[3]; \
@@ -2850,6 +3124,11 @@ return out.str(); \
 #define BHK_PRISMATIC_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
 
+#define BHK_PRISMATIC_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+return refs; \
+
 #define BHK_RAGDOLL_CONSTRAINT_MEMBERS \
 
 #define BHK_RAGDOLL_CONSTRAINT_INCLUDE "AbhkRagdollConstraint.h" \
@@ -2871,6 +3150,11 @@ return out.str(); \
 
 #define BHK_RAGDOLL_CONSTRAINT_FIXLINKS \
 AbhkRagdollConstraint::FixLinks( objects, link_stack, version ); \
+
+#define BHK_RAGDOLL_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkRagdollConstraint::GetRefs(); \
+return refs; \
 
 #define BHK_RIGID_BODY_MEMBERS \
 float unknownFloats1[5]; \
@@ -3094,6 +3378,14 @@ for (uint i0 = 0; i0 < constraints.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define BHK_RIGID_BODY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkEntity::GetRefs(); \
+for (uint i0 = 0; i0 < constraints.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(constraints[i0])); \
+}; \
+return refs; \
+
 #define BHK_RIGID_BODY_T_MEMBERS \
 
 #define BHK_RIGID_BODY_T_INCLUDE "bhkRigidBody.h" \
@@ -3115,6 +3407,11 @@ return out.str(); \
 
 #define BHK_RIGID_BODY_T_FIXLINKS \
 bhkRigidBody::FixLinks( objects, link_stack, version ); \
+
+#define BHK_RIGID_BODY_T_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkRigidBody::GetRefs(); \
+return refs; \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS \
 float unkownFloats[7]; \
@@ -3177,6 +3474,11 @@ return out.str(); \
 #define BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
 
+#define BHK_SIMPLE_SHAPE_PHANTOM_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkEntity::GetRefs(); \
+return refs; \
+
 #define BHK_S_P_COLLISION_OBJECT_MEMBERS \
 
 #define BHK_S_P_COLLISION_OBJECT_INCLUDE "NiCollisionObject.h" \
@@ -3198,6 +3500,11 @@ return out.str(); \
 
 #define BHK_S_P_COLLISION_OBJECT_FIXLINKS \
 NiCollisionObject::FixLinks( objects, link_stack, version ); \
+
+#define BHK_S_P_COLLISION_OBJECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiCollisionObject::GetRefs(); \
+return refs; \
 
 #define BHK_SPHERE_SHAPE_MEMBERS \
 float radius; \
@@ -3225,6 +3532,11 @@ return out.str(); \
 
 #define BHK_SPHERE_SHAPE_FIXLINKS \
 bhkConvexShape::FixLinks( objects, link_stack, version ); \
+
+#define BHK_SPHERE_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkConvexShape::GetRefs(); \
+return refs; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS \
 float unknownFloats[2][4]; \
@@ -3273,6 +3585,11 @@ return out.str(); \
 #define BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS \
 AbhkConstraint::FixLinks( objects, link_stack, version ); \
 
+#define BHK_STIFF_SPRING_CONSTRAINT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkConstraint::GetRefs(); \
+return refs; \
+
 #define BHK_TRANSFORM_SHAPE_MEMBERS \
 float unknownFloat1; \
 float unknownFloat2; \
@@ -3312,6 +3629,11 @@ return out.str(); \
 #define BHK_TRANSFORM_SHAPE_FIXLINKS \
 bhkEntity::FixLinks( objects, link_stack, version ); \
 
+#define BHK_TRANSFORM_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkEntity::GetRefs(); \
+return refs; \
+
 #define BHK_CONVEX_TRANSFORM_SHAPE_MEMBERS \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_INCLUDE "bhkTransformShape.h" \
@@ -3333,6 +3655,11 @@ return out.str(); \
 
 #define BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS \
 bhkTransformShape::FixLinks( objects, link_stack, version ); \
+
+#define BHK_CONVEX_TRANSFORM_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = bhkTransformShape::GetRefs(); \
+return refs; \
 
 #define B_S_BOUND_MEMBERS \
 float unknownFloats[6]; \
@@ -3369,6 +3696,11 @@ return out.str(); \
 
 #define B_S_BOUND_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define B_S_BOUND_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define B_S_FURNITURE_MARKER_MEMBERS \
 uint numPositions; \
@@ -3417,6 +3749,11 @@ return out.str(); \
 #define B_S_FURNITURE_MARKER_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define B_S_FURNITURE_MARKER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define B_S_PARENT_VELOCITY_MODIFIER_MEMBERS \
 float unknownFloat; \
 
@@ -3444,6 +3781,11 @@ return out.str(); \
 #define B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
+#define B_S_PARENT_VELOCITY_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define B_S_P_SYS_ARRAY_EMITTER_MEMBERS \
 
 #define B_S_P_SYS_ARRAY_EMITTER_INCLUDE "NiPSysVolumeEmitter.h" \
@@ -3465,6 +3807,11 @@ return out.str(); \
 
 #define B_S_P_SYS_ARRAY_EMITTER_FIXLINKS \
 NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+
+#define B_S_P_SYS_ARRAY_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysVolumeEmitter::GetRefs(); \
+return refs; \
 
 #define B_S_X_FLAGS_MEMBERS \
 uint flags; \
@@ -3492,6 +3839,11 @@ return out.str(); \
 
 #define B_S_X_FLAGS_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define B_S_X_FLAGS_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS \
 uint numTriangles; \
@@ -3556,6 +3908,11 @@ return out.str(); \
 #define HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS \
 AbhkShapeCollection::FixLinks( objects, link_stack, version ); \
 
+#define HK_PACKED_NI_TRI_STRIPS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AbhkShapeCollection::GetRefs(); \
+return refs; \
+
 #define NI_ALPHA_CONTROLLER_MEMBERS \
 Ref<NiFloatData > data; \
 
@@ -3600,6 +3957,12 @@ if ( version <= 0x0A010000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_ALPHA_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_ALPHA_PROPERTY_MEMBERS \
 unsigned short flags; \
 byte threshold; \
@@ -3631,6 +3994,11 @@ return out.str(); \
 #define NI_ALPHA_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
 
+#define NI_ALPHA_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
+
 #define NI_AMBIENT_LIGHT_MEMBERS \
 
 #define NI_AMBIENT_LIGHT_INCLUDE "NiLight.h" \
@@ -3652,6 +4020,11 @@ return out.str(); \
 
 #define NI_AMBIENT_LIGHT_FIXLINKS \
 NiLight::FixLinks( objects, link_stack, version ); \
+
+#define NI_AMBIENT_LIGHT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiLight::GetRefs(); \
+return refs; \
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_MEMBERS \
 ushort numParticles; \
@@ -3733,6 +4106,11 @@ return out.str(); \
 #define NI_AUTO_NORMAL_PARTICLES_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
 
+#define NI_AUTO_NORMAL_PARTICLES_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeomData::GetRefs(); \
+return refs; \
+
 #define NI_BINARY_EXTRA_DATA_MEMBERS \
 ByteArray binaryData; \
 
@@ -3780,6 +4158,11 @@ return out.str(); \
 #define NI_BINARY_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define NI_BINARY_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define NI_BLEND_BOOL_INTERPOLATOR_MEMBERS \
 byte boolValue; \
 
@@ -3806,6 +4189,11 @@ return out.str(); \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+
+#define NI_BLEND_BOOL_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBlendInterpolator::GetRefs(); \
+return refs; \
 
 #define NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS \
 float floatValue; \
@@ -3834,6 +4222,11 @@ return out.str(); \
 #define NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
 
+#define NI_BLEND_FLOAT_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBlendInterpolator::GetRefs(); \
+return refs; \
+
 #define NI_BLEND_POINT3_INTERPOLATOR_MEMBERS \
 Vector3 pointValue; \
 
@@ -3860,6 +4253,11 @@ return out.str(); \
 #define NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
 
+#define NI_BLEND_POINT3_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBlendInterpolator::GetRefs(); \
+return refs; \
+
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_MEMBERS \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_INCLUDE "NiBlendInterpolator.h" \
@@ -3881,6 +4279,11 @@ return out.str(); \
 
 #define NI_BLEND_TRANSFORM_INTERPOLATOR_FIXLINKS \
 NiBlendInterpolator::FixLinks( objects, link_stack, version ); \
+
+#define NI_BLEND_TRANSFORM_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBlendInterpolator::GetRefs(); \
+return refs; \
 
 #define NI_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint numShapeGroups; \
@@ -3989,6 +4392,20 @@ for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_BONE_L_O_D_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = ABoneLODController::GetRefs(); \
+for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
+	for (uint i1 = 0; i1 < shapeGroups1[i0].linkPairs.size(); i1++) { \
+		refs.push_back(StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].shape)); \
+		refs.push_back(StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].skinInstance)); \
+	}; \
+}; \
+for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(shapeGroups2[i0])); \
+}; \
+return refs; \
+
 #define NI_BOOL_DATA_MEMBERS \
 KeyGroup<byte > data; \
 
@@ -4038,6 +4455,11 @@ return out.str(); \
 #define NI_BOOL_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_BOOL_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_BOOLEAN_EXTRA_DATA_MEMBERS \
 byte booleanData; \
 
@@ -4064,6 +4486,11 @@ return out.str(); \
 
 #define NI_BOOLEAN_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_BOOLEAN_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_BOOL_INTERPOLATOR_MEMBERS \
 bool boolValue; \
@@ -4107,6 +4534,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_BOOL_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS \
 byte boolValue; \
 Ref<NiBoolData > data; \
@@ -4149,6 +4582,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_BOOL_TIMELINE_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_B_S_BONE_L_O_D_CONTROLLER_MEMBERS \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_INCLUDE "ABoneLODController.h" \
@@ -4170,6 +4609,11 @@ return out.str(); \
 
 #define NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS \
 ABoneLODController::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_S_BONE_L_O_D_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = ABoneLODController::GetRefs(); \
+return refs; \
 
 #define NI_B_SPLINE_BASIS_DATA_MEMBERS \
 uint unknownInt; \
@@ -4197,6 +4641,11 @@ return out.str(); \
 
 #define NI_B_SPLINE_BASIS_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_SPLINE_BASIS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS \
 float unknownFloats[6]; \
@@ -4233,6 +4682,11 @@ return out.str(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS \
 NiBSplineInterpolator::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBSplineInterpolator::GetRefs(); \
+return refs; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
 Ref<NiBSplineData > data; \
@@ -4300,6 +4754,13 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 
+#define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBSplineInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+return refs; \
+
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
 Ref<NiBSplineData > data; \
 Ref<NiBSplineBasisData > basisData; \
@@ -4366,6 +4827,13 @@ if (link_stack.front() != 0xffffffff) { \
 	basisData = NULL; \
 link_stack.pop_front(); \
 
+#define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBSplineInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+refs.push_back(StaticCast<NiObject>(basisData)); \
+return refs; \
+
 #define NI_B_SPLINE_DATA_MEMBERS \
 uint unknownInt; \
 uint count; \
@@ -4417,6 +4885,11 @@ return out.str(); \
 
 #define NI_B_SPLINE_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_SPLINE_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_CAMERA_MEMBERS \
 ushort unknownShort; \
@@ -4528,6 +5001,12 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink_ = NULL; \
 link_stack.pop_front(); \
 
+#define NI_CAMERA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiAVObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink_)); \
+return refs; \
+
 #define NI_COLLISION_DATA_MEMBERS \
 NiNode * targetNode; \
 uint unknown2; \
@@ -4632,6 +5111,11 @@ if (link_stack.front() != 0xffffffff) { \
 	targetNode = NULL; \
 link_stack.pop_front(); \
 
+#define NI_COLLISION_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_COLOR_DATA_MEMBERS \
 KeyGroup<Color4 > data; \
 
@@ -4681,6 +5165,11 @@ return out.str(); \
 #define NI_COLOR_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_COLOR_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_COLOR_EXTRA_DATA_MEMBERS \
 Color4 data; \
 
@@ -4706,6 +5195,11 @@ return out.str(); \
 
 #define NI_COLOR_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_COLOR_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_CONTROLLER_MANAGER_MEMBERS \
 bool cumulative; \
@@ -4779,6 +5273,15 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	objectPalette = NULL; \
 link_stack.pop_front(); \
+
+#define NI_CONTROLLER_MANAGER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(controllerSequences[i0])); \
+}; \
+refs.push_back(StaticCast<NiObject>(objectPalette)); \
+return refs; \
 
 #define NI_CONTROLLER_SEQUENCE_MEMBERS \
 string name; \
@@ -5261,6 +5764,23 @@ if ( version >= 0x0A020000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_CONTROLLER_SEQUENCE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(textKeys.interpolator)); \
+refs.push_back(StaticCast<NiObject>(textKeys.unknownLink1)); \
+refs.push_back(StaticCast<NiObject>(textKeys.unknownLink2)); \
+refs.push_back(StaticCast<NiObject>(textKeys.stringPalette)); \
+for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(controlledBlocks[i0].interpolator)); \
+	refs.push_back(StaticCast<NiObject>(controlledBlocks[i0].unknownLink1)); \
+	refs.push_back(StaticCast<NiObject>(controlledBlocks[i0].unknownLink2)); \
+	refs.push_back(StaticCast<NiObject>(controlledBlocks[i0].stringPalette)); \
+}; \
+refs.push_back(StaticCast<NiObject>(textKeys2)); \
+refs.push_back(StaticCast<NiObject>(stringPalette)); \
+return refs; \
+
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS \
 uint unknownInt; \
 uint numObjs; \
@@ -5319,6 +5839,13 @@ for (uint i0 = 0; i0 < objs.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_DEFAULT_A_V_OBJECT_PALETTE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+for (uint i0 = 0; i0 < objs.size(); i0++) { \
+}; \
+return refs; \
+
 #define NI_DIRECTIONAL_LIGHT_MEMBERS \
 
 #define NI_DIRECTIONAL_LIGHT_INCLUDE "NiLight.h" \
@@ -5340,6 +5867,11 @@ return out.str(); \
 
 #define NI_DIRECTIONAL_LIGHT_FIXLINKS \
 NiLight::FixLinks( objects, link_stack, version ); \
+
+#define NI_DIRECTIONAL_LIGHT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiLight::GetRefs(); \
+return refs; \
 
 #define NI_DITHER_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -5367,6 +5899,11 @@ return out.str(); \
 
 #define NI_DITHER_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_DITHER_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_FLIP_CONTROLLER_MEMBERS \
 uint textureSlot; \
@@ -5439,6 +5976,14 @@ for (uint i0 = 0; i0 < sources.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_FLIP_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+for (uint i0 = 0; i0 < sources.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(sources[i0])); \
+}; \
+return refs; \
+
 #define NI_FLOAT_DATA_MEMBERS \
 KeyGroup<float > data; \
 
@@ -5488,6 +6033,11 @@ return out.str(); \
 #define NI_FLOAT_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_FLOAT_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_FLOAT_EXTRA_DATA_MEMBERS \
 float floatData; \
 
@@ -5514,6 +6064,11 @@ return out.str(); \
 
 #define NI_FLOAT_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_FLOAT_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS \
 Ref<NiObject > unknownLink; \
@@ -5563,6 +6118,12 @@ if ( version >= 0x14000004 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_FLOAT_EXTRA_DATA_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+return refs; \
+
 #define NI_FLOAT_INTERPOLATOR_MEMBERS \
 float floatValue; \
 Ref<NiFloatData > data; \
@@ -5604,6 +6165,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	data = NULL; \
 link_stack.pop_front(); \
+
+#define NI_FLOAT_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
 
 #define NI_FLOATS_EXTRA_DATA_MEMBERS \
 uint numFloats; \
@@ -5647,6 +6214,11 @@ return out.str(); \
 #define NI_FLOATS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define NI_FLOATS_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define NI_FOG_PROPERTY_MEMBERS \
 unsigned short flags; \
 float fogDepth; \
@@ -5681,6 +6253,11 @@ return out.str(); \
 
 #define NI_FOG_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_FOG_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_GEOM_MORPHER_CONTROLLER_MEMBERS \
 ushort unknown; \
@@ -5800,6 +6377,15 @@ if ( version >= 0x0A01006A ) { \
 	}; \
 }; \
 
+#define NI_GEOM_MORPHER_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+for (uint i0 = 0; i0 < interpolators.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(interpolators[i0])); \
+}; \
+return refs; \
+
 #define NI_GRAVITY_MEMBERS \
 float unknownFloat1; \
 float force; \
@@ -5843,6 +6429,11 @@ return out.str(); \
 #define NI_GRAVITY_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_GRAVITY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
+
 #define NI_INTEGER_EXTRA_DATA_MEMBERS \
 uint integerData; \
 
@@ -5869,6 +6460,11 @@ return out.str(); \
 
 #define NI_INTEGER_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_INTEGER_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_INTEGERS_EXTRA_DATA_MEMBERS \
 uint numIntegers; \
@@ -5912,6 +6508,11 @@ return out.str(); \
 #define NI_INTEGERS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define NI_INTEGERS_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define NI_KEYFRAME_CONTROLLER_MEMBERS \
 Ref<NiKeyframeData > data; \
 
@@ -5950,6 +6551,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_KEYFRAME_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define B_S_KEYFRAME_CONTROLLER_MEMBERS \
 Ref<NiKeyframeData > data2; \
 
@@ -5987,6 +6594,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	data2 = NULL; \
 link_stack.pop_front(); \
+
+#define B_S_KEYFRAME_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiKeyframeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data2)); \
+return refs; \
 
 #define NI_KEYFRAME_DATA_MEMBERS \
 uint numRotationKeys; \
@@ -6151,6 +6764,11 @@ return out.str(); \
 #define NI_KEYFRAME_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_KEYFRAME_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_LIGHT_COLOR_CONTROLLER_MEMBERS \
 ushort unknownShort; \
 Ref<NiPosData > data; \
@@ -6225,6 +6843,13 @@ if ( version >= 0x0A020000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_LIGHT_COLOR_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+refs.push_back(StaticCast<NiObject>(interpolator)); \
+return refs; \
+
 #define NI_LIGHT_DIMMER_CONTROLLER_MEMBERS \
 Ref<NiInterpolator > unknownLink; \
 
@@ -6262,6 +6887,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
+
+#define NI_LIGHT_DIMMER_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+return refs; \
 
 #define NI_LOOK_AT_CONTROLLER_MEMBERS \
 ushort unknown1; \
@@ -6308,6 +6939,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	lookAtNode = NULL; \
 link_stack.pop_front(); \
+
+#define NI_LOOK_AT_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(lookAtNode)); \
+return refs; \
 
 #define NI_LOOK_AT_INTERPOLATOR_MEMBERS \
 ushort unknownShort; \
@@ -6409,6 +7046,15 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink3 = NULL; \
 link_stack.pop_front(); \
 
+#define NI_LOOK_AT_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(lookAt)); \
+refs.push_back(StaticCast<NiObject>(unknownLink1)); \
+refs.push_back(StaticCast<NiObject>(unknownLink2)); \
+refs.push_back(StaticCast<NiObject>(unknownLink3)); \
+return refs; \
+
 #define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS \
 ushort unknown; \
 Ref<NiPosData > data; \
@@ -6460,6 +7106,12 @@ if ( version <= 0x0A010000 ) { \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define NI_MATERIAL_COLOR_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
 
 #define NI_MATERIAL_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -6515,6 +7167,11 @@ return out.str(); \
 
 #define NI_MATERIAL_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_MATERIAL_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_MESH_P_SYS_DATA_MEMBERS \
 byte unknownByte11; \
@@ -6728,6 +7385,16 @@ if ( version >= 0x0A020000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_MESH_P_SYS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysData::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(modifier)); \
+for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(unknownLinks[i0])); \
+}; \
+refs.push_back(StaticCast<NiObject>(unknownLink2)); \
+return refs; \
+
 #define NI_MORPH_DATA_MEMBERS \
 uint numMorphs; \
 uint numVertices; \
@@ -6823,6 +7490,11 @@ return out.str(); \
 #define NI_MORPH_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_MORPH_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS \
 ushort numExtraTargets; \
 vector<NiNode * > extraTargets; \
@@ -6877,6 +7549,13 @@ for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 		extraTargets[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
+}; \
+return refs; \
 
 #define NI_NODE_MEMBERS \
 uint numChildren; \
@@ -6964,6 +7643,17 @@ for (uint i0 = 0; i0 < effects.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiAVObject::GetRefs(); \
+for (uint i0 = 0; i0 < children.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(children[i0])); \
+}; \
+for (uint i0 = 0; i0 < effects.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(effects[i0])); \
+}; \
+return refs; \
+
 #define AVOID_NODE_MEMBERS \
 
 #define AVOID_NODE_INCLUDE "NiNode.h" \
@@ -6985,6 +7675,11 @@ return out.str(); \
 
 #define AVOID_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
+
+#define AVOID_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
 
 #define FX_WIDGET_MEMBERS \
 byte unknown1; \
@@ -7027,6 +7722,11 @@ return out.str(); \
 #define FX_WIDGET_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 
+#define FX_WIDGET_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
+
 #define FX_BUTTON_MEMBERS \
 
 #define FX_BUTTON_INCLUDE "FxWidget.h" \
@@ -7048,6 +7748,11 @@ return out.str(); \
 
 #define FX_BUTTON_FIXLINKS \
 FxWidget::FixLinks( objects, link_stack, version ); \
+
+#define FX_BUTTON_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = FxWidget::GetRefs(); \
+return refs; \
 
 #define FX_RADIO_BUTTON_MEMBERS \
 uint unknownInt1; \
@@ -7116,6 +7821,14 @@ for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define FX_RADIO_BUTTON_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = FxWidget::GetRefs(); \
+for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(unknownLinks[i0])); \
+}; \
+return refs; \
+
 #define NI_BILLBOARD_NODE_MEMBERS \
 ushort billboardMode; \
 
@@ -7147,6 +7860,11 @@ return out.str(); \
 #define NI_BILLBOARD_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 
+#define NI_BILLBOARD_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
+
 #define NI_B_S_ANIMATION_NODE_MEMBERS \
 
 #define NI_B_S_ANIMATION_NODE_INCLUDE "NiNode.h" \
@@ -7169,6 +7887,11 @@ return out.str(); \
 #define NI_B_S_ANIMATION_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
 
+#define NI_B_S_ANIMATION_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
+
 #define NI_B_S_PARTICLE_NODE_MEMBERS \
 
 #define NI_B_S_PARTICLE_NODE_INCLUDE "NiNode.h" \
@@ -7190,6 +7913,11 @@ return out.str(); \
 
 #define NI_B_S_PARTICLE_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_S_PARTICLE_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
 
 #define NI_L_O_D_NODE_MEMBERS \
 uint lodType; \
@@ -7273,6 +8001,12 @@ if ( (lodType == 1) ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_L_O_D_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(rangeData)); \
+return refs; \
+
 #define NI_PALETTE_MEMBERS \
 byte unknownByte; \
 uint numEntries_; \
@@ -7323,6 +8057,11 @@ return out.str(); \
 
 #define NI_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define NI_PALETTE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_PARTICLE_BOMB_MEMBERS \
 float unknownFloat1; \
@@ -7395,6 +8134,11 @@ return out.str(); \
 #define NI_PARTICLE_BOMB_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_PARTICLE_BOMB_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
+
 #define NI_PARTICLE_COLOR_MODIFIER_MEMBERS \
 Ref<NiColorData > colorData; \
 
@@ -7433,6 +8177,12 @@ if (link_stack.front() != 0xffffffff) { \
 	colorData = NULL; \
 link_stack.pop_front(); \
 
+#define NI_PARTICLE_COLOR_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(colorData)); \
+return refs; \
+
 #define NI_PARTICLE_GROW_FADE_MEMBERS \
 float grow; \
 float fade; \
@@ -7463,6 +8213,11 @@ return out.str(); \
 
 #define NI_PARTICLE_GROW_FADE_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
+
+#define NI_PARTICLE_GROW_FADE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
 
 #define NI_PARTICLE_MESH_MODIFIER_MEMBERS \
 uint numParticleMeshes; \
@@ -7505,6 +8260,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	particleMeshes = NULL; \
 link_stack.pop_front(); \
+
+#define NI_PARTICLE_MESH_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(particleMeshes)); \
+return refs; \
 
 #define NI_PARTICLE_ROTATION_MEMBERS \
 byte unknownByte; \
@@ -7549,6 +8310,11 @@ return out.str(); \
 #define NI_PARTICLE_ROTATION_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_PARTICLE_ROTATION_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
+
 #define NI_PARTICLES_MEMBERS \
 
 #define NI_PARTICLES_INCLUDE "NiTriBasedGeom.h" \
@@ -7570,6 +8336,11 @@ return out.str(); \
 
 #define NI_PARTICLES_FIXLINKS \
 NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+
+#define NI_PARTICLES_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeom::GetRefs(); \
+return refs; \
 
 #define NI_AUTO_NORMAL_PARTICLES_MEMBERS \
 
@@ -7593,6 +8364,11 @@ return out.str(); \
 #define NI_AUTO_NORMAL_PARTICLES_FIXLINKS \
 NiParticles::FixLinks( objects, link_stack, version ); \
 
+#define NI_AUTO_NORMAL_PARTICLES_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticles::GetRefs(); \
+return refs; \
+
 #define NI_PARTICLE_MESHES_MEMBERS \
 
 #define NI_PARTICLE_MESHES_INCLUDE "NiParticles.h" \
@@ -7614,6 +8390,11 @@ return out.str(); \
 
 #define NI_PARTICLE_MESHES_FIXLINKS \
 NiParticles::FixLinks( objects, link_stack, version ); \
+
+#define NI_PARTICLE_MESHES_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticles::GetRefs(); \
+return refs; \
 
 #define NI_PARTICLES_DATA_MEMBERS \
 ushort numActive; \
@@ -7696,6 +8477,11 @@ return out.str(); \
 #define NI_PARTICLES_DATA_FIXLINKS \
 NiAutoNormalParticlesData::FixLinks( objects, link_stack, version ); \
 
+#define NI_PARTICLES_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiAutoNormalParticlesData::GetRefs(); \
+return refs; \
+
 #define NI_PARTICLE_MESHES_DATA_MEMBERS \
 Ref<NiTriBasedGeom > unknownLink2; \
 
@@ -7733,6 +8519,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
+
+#define NI_PARTICLE_MESHES_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticlesData::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink2)); \
+return refs; \
 
 #define NI_PARTICLE_SYSTEM_MEMBERS \
 bool unknownBool; \
@@ -7799,6 +8591,14 @@ if ( version >= 0x0A010000 ) { \
 	}; \
 }; \
 
+#define NI_PARTICLE_SYSTEM_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticles::GetRefs(); \
+for (uint i0 = 0; i0 < modifiers.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(modifiers[i0])); \
+}; \
+return refs; \
+
 #define NI_MESH_PARTICLE_SYSTEM_MEMBERS \
 
 #define NI_MESH_PARTICLE_SYSTEM_INCLUDE "NiParticleSystem.h" \
@@ -7820,6 +8620,11 @@ return out.str(); \
 
 #define NI_MESH_PARTICLE_SYSTEM_FIXLINKS \
 NiParticleSystem::FixLinks( objects, link_stack, version ); \
+
+#define NI_MESH_PARTICLE_SYSTEM_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticleSystem::GetRefs(); \
+return refs; \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_MEMBERS \
 float speed; \
@@ -8050,6 +8855,15 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink2 = NULL; \
 link_stack.pop_front(); \
 
+#define NI_PARTICLE_SYSTEM_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(emitter)); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+refs.push_back(StaticCast<NiObject>(particleExtra)); \
+refs.push_back(StaticCast<NiObject>(unknownLink2)); \
+return refs; \
+
 #define NI_B_S_P_ARRAY_CONTROLLER_MEMBERS \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_INCLUDE "NiParticleSystemController.h" \
@@ -8071,6 +8885,11 @@ return out.str(); \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS \
 NiParticleSystemController::FixLinks( objects, link_stack, version ); \
+
+#define NI_B_S_P_ARRAY_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticleSystemController::GetRefs(); \
+return refs; \
 
 #define NI_PATH_CONTROLLER_MEMBERS \
 ushort unknownShort2; \
@@ -8148,6 +8967,13 @@ if (link_stack.front() != 0xffffffff) { \
 	floatData = NULL; \
 link_stack.pop_front(); \
 
+#define NI_PATH_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(posData)); \
+refs.push_back(StaticCast<NiObject>(floatData)); \
+return refs; \
+
 #define NI_PATH_INTERPOLATOR_MEMBERS \
 float unknownFloat1; \
 float unknownFloat2; \
@@ -8211,6 +9037,13 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	floatData = NULL; \
 link_stack.pop_front(); \
+
+#define NI_PATH_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiBlendInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(posData)); \
+refs.push_back(StaticCast<NiObject>(floatData)); \
+return refs; \
 
 #define NI_PIXEL_DATA_MEMBERS \
 PixelFormat pixelFormat; \
@@ -8368,6 +9201,12 @@ if (link_stack.front() != 0xffffffff) { \
 	palette = NULL; \
 link_stack.pop_front(); \
 
+#define NI_PIXEL_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(palette)); \
+return refs; \
+
 #define NI_PLANAR_COLLIDER_MEMBERS \
 ushort unknownShort; \
 float unknownFloat1; \
@@ -8471,6 +9310,11 @@ return out.str(); \
 #define NI_PLANAR_COLLIDER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_PLANAR_COLLIDER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
+
 #define NI_POINT3_INTERPOLATOR_MEMBERS \
 Vector3 point3Value; \
 Ref<NiPosData > data; \
@@ -8513,6 +9357,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_POINT3_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_POINT_LIGHT_MEMBERS \
 float constantAttenuation; \
 float linearAttenuation; \
@@ -8547,6 +9397,11 @@ return out.str(); \
 
 #define NI_POINT_LIGHT_FIXLINKS \
 NiLight::FixLinks( objects, link_stack, version ); \
+
+#define NI_POINT_LIGHT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiLight::GetRefs(); \
+return refs; \
 
 #define NI_POS_DATA_MEMBERS \
 KeyGroup<Vector3 > data; \
@@ -8597,6 +9452,11 @@ return out.str(); \
 #define NI_POS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_POS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_AGE_DEATH_MODIFIER_MEMBERS \
 bool spawnOnDeath; \
 Ref<NiPSysSpawnModifier > spawnModifier; \
@@ -8638,6 +9498,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	spawnModifier = NULL; \
 link_stack.pop_front(); \
+
+#define NI_P_SYS_AGE_DEATH_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(spawnModifier)); \
+return refs; \
 
 #define NI_P_SYS_BOMB_MODIFIER_MEMBERS \
 NiNode * unknownLink; \
@@ -8719,6 +9585,11 @@ if (link_stack.front() != 0xffffffff) { \
 	unknownLink = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_BOMB_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_MEMBERS \
 ushort updateSkip; \
 
@@ -8745,6 +9616,11 @@ return out.str(); \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_BOUND_UPDATE_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_BOX_EMITTER_MEMBERS \
 float width; \
@@ -8780,6 +9656,11 @@ return out.str(); \
 
 #define NI_P_SYS_BOX_EMITTER_FIXLINKS \
 NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_BOX_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysVolumeEmitter::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_COLLIDER_MANAGER_MEMBERS \
 Ref<NiPSysPlanarCollider > collider; \
@@ -8819,6 +9700,12 @@ if (link_stack.front() != 0xffffffff) { \
 	collider = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_COLLIDER_MANAGER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(collider)); \
+return refs; \
+
 #define NI_P_SYS_COLOR_MODIFIER_MEMBERS \
 Ref<NiColorData > data; \
 
@@ -8857,6 +9744,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_COLOR_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_P_SYS_CYLINDER_EMITTER_MEMBERS \
 float radius; \
 float height; \
@@ -8887,6 +9780,11 @@ return out.str(); \
 
 #define NI_P_SYS_CYLINDER_EMITTER_FIXLINKS \
 NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_CYLINDER_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysVolumeEmitter::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_DATA_MEMBERS \
 vector< array<float,10> > unknownFloats4; \
@@ -9037,6 +9935,11 @@ return out.str(); \
 #define NI_P_SYS_DATA_FIXLINKS \
 APSysData::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysData::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_DRAG_MODIFIER_MEMBERS \
 NiObject * parent; \
 Vector3 dragAxis; \
@@ -9091,6 +9994,11 @@ if (link_stack.front() != 0xffffffff) { \
 	parent = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_DRAG_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_EMITTER_CTLR_MEMBERS \
 Ref<NiInterpolator > visibilityInterpolator; \
 
@@ -9128,6 +10036,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	visibilityInterpolator = NULL; \
 link_stack.pop_front(); \
+
+#define NI_P_SYS_EMITTER_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(visibilityInterpolator)); \
+return refs; \
 
 #define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS \
 KeyGroup<float > floatKeys_; \
@@ -9198,6 +10112,11 @@ return out.str(); \
 #define NI_P_SYS_EMITTER_CTLR_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_EMITTER_CTLR_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_INCLUDE "APSysCtlr.h" \
@@ -9219,6 +10138,11 @@ return out.str(); \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_EMITTER_DECLINATION_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_MEMBERS \
 
@@ -9242,6 +10166,11 @@ return out.str(); \
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_INCLUDE "APSysCtlr.h" \
@@ -9263,6 +10192,11 @@ return out.str(); \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_MEMBERS \
 
@@ -9286,6 +10220,11 @@ return out.str(); \
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_EMITTER_SPEED_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_INCLUDE "APSysCtlr.h" \
@@ -9307,6 +10246,11 @@ return out.str(); \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_EMITTER_SPEED_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_MEMBERS \
 NiNode * gravityObject; \
@@ -9370,6 +10314,11 @@ if (link_stack.front() != 0xffffffff) { \
 	gravityObject = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_GRAVITY_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_MEMBERS \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_INCLUDE "APSysCtlr.h" \
@@ -9391,6 +10340,11 @@ return out.str(); \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_GRAVITY_STRENGTH_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_MEMBERS \
 float growTime; \
@@ -9430,6 +10384,11 @@ return out.str(); \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_GROW_FADE_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_MESH_EMITTER_MEMBERS \
 uint numEmitterMeshes; \
@@ -9498,6 +10457,14 @@ for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_P_SYS_MESH_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysEmitter::GetRefs(); \
+for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(emitterMeshes[i0])); \
+}; \
+return refs; \
+
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_MEMBERS \
 uint numMeshes; \
 vector<Ref<NiNode > > meshes; \
@@ -9553,6 +10520,14 @@ for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_P_SYS_MESH_UPDATE_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+for (uint i0 = 0; i0 < meshes.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(meshes[i0])); \
+}; \
+return refs; \
+
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_MEMBERS \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_INCLUDE "APSysCtlr.h" \
@@ -9574,6 +10549,11 @@ return out.str(); \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_MODIFIER_ACTIVE_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = APSysCtlr::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_PLANAR_COLLIDER_MEMBERS \
 float bounce; \
@@ -9683,6 +10663,14 @@ if (link_stack.front() != 0xffffffff) { \
 	colliderObject = NULL; \
 link_stack.pop_front(); \
 
+#define NI_P_SYS_PLANAR_COLLIDER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(spawnModifier)); \
+refs.push_back(StaticCast<NiObject>(unknownLink_)); \
+refs.push_back(StaticCast<NiObject>(colliderObject)); \
+return refs; \
+
 #define NI_P_SYS_POSITION_MODIFIER_MEMBERS \
 
 #define NI_P_SYS_POSITION_MODIFIER_INCLUDE "NiPSysModifier.h" \
@@ -9705,6 +10693,11 @@ return out.str(); \
 #define NI_P_SYS_POSITION_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_POSITION_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_MEMBERS \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_INCLUDE "NiTimeController.h" \
@@ -9726,6 +10719,11 @@ return out.str(); \
 
 #define NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_RESET_ON_LOOP_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+return refs; \
 
 #define NI_P_SYS_ROTATION_MODIFIER_MEMBERS \
 float initialRotationSpeed; \
@@ -9782,6 +10780,11 @@ return out.str(); \
 #define NI_P_SYS_ROTATION_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_ROTATION_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_SPAWN_MODIFIER_MEMBERS \
 ushort numSpawnGenerations; \
 float percentageSpawned; \
@@ -9837,6 +10840,11 @@ return out.str(); \
 #define NI_P_SYS_SPAWN_MODIFIER_FIXLINKS \
 NiPSysModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_SPAWN_MODIFIER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysModifier::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_SPHERE_EMITTER_MEMBERS \
 float radius; \
 
@@ -9864,6 +10872,11 @@ return out.str(); \
 #define NI_P_SYS_SPHERE_EMITTER_FIXLINKS \
 NiPSysVolumeEmitter::FixLinks( objects, link_stack, version ); \
 
+#define NI_P_SYS_SPHERE_EMITTER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPSysVolumeEmitter::GetRefs(); \
+return refs; \
+
 #define NI_P_SYS_UPDATE_CTLR_MEMBERS \
 
 #define NI_P_SYS_UPDATE_CTLR_INCLUDE "NiTimeController.h" \
@@ -9885,6 +10898,11 @@ return out.str(); \
 
 #define NI_P_SYS_UPDATE_CTLR_FIXLINKS \
 NiTimeController::FixLinks( objects, link_stack, version ); \
+
+#define NI_P_SYS_UPDATE_CTLR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+return refs; \
 
 #define NI_RANGE_L_O_D_DATA_MEMBERS \
 Vector3 lodCenter; \
@@ -9931,6 +10949,11 @@ return out.str(); \
 #define NI_RANGE_L_O_D_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_RANGE_L_O_D_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_ROTATING_PARTICLES_MEMBERS \
 
 #define NI_ROTATING_PARTICLES_INCLUDE "NiParticles.h" \
@@ -9953,6 +10976,11 @@ return out.str(); \
 #define NI_ROTATING_PARTICLES_FIXLINKS \
 NiParticles::FixLinks( objects, link_stack, version ); \
 
+#define NI_ROTATING_PARTICLES_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticles::GetRefs(); \
+return refs; \
+
 #define NI_ROTATING_PARTICLES_DATA_MEMBERS \
 
 #define NI_ROTATING_PARTICLES_DATA_INCLUDE "NiParticlesData.h" \
@@ -9974,6 +11002,11 @@ return out.str(); \
 
 #define NI_ROTATING_PARTICLES_DATA_FIXLINKS \
 NiParticlesData::FixLinks( objects, link_stack, version ); \
+
+#define NI_ROTATING_PARTICLES_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiParticlesData::GetRefs(); \
+return refs; \
 
 #define NI_SCREEN_L_O_D_DATA_MEMBERS \
 float unknownFloats[8]; \
@@ -10031,6 +11064,11 @@ return out.str(); \
 #define NI_SCREEN_L_O_D_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_SCREEN_L_O_D_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_SEQUENCE_STREAM_HELPER_MEMBERS \
 
 #define NI_SEQUENCE_STREAM_HELPER_INCLUDE "NiObjectNET.h" \
@@ -10052,6 +11090,11 @@ return out.str(); \
 
 #define NI_SEQUENCE_STREAM_HELPER_FIXLINKS \
 NiObjectNET::FixLinks( objects, link_stack, version ); \
+
+#define NI_SEQUENCE_STREAM_HELPER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObjectNET::GetRefs(); \
+return refs; \
 
 #define NI_SHADE_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -10079,6 +11122,11 @@ return out.str(); \
 
 #define NI_SHADE_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_SHADE_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_SKIN_DATA_MEMBERS \
 Matrix33 rotation; \
@@ -10194,6 +11242,12 @@ if ( version <= 0x0A010000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_SKIN_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(skinPartition)); \
+return refs; \
+
 #define NI_SKIN_INSTANCE_MEMBERS \
 Ref<NiSkinData > data; \
 Ref<NiSkinPartition > skinPartition; \
@@ -10295,6 +11349,15 @@ for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 		bones.bones[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define NI_SKIN_INSTANCE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+refs.push_back(StaticCast<NiObject>(skinPartition)); \
+for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+}; \
+return refs; \
 
 #define NI_SKIN_PARTITION_MEMBERS \
 uint numSkinPartitionBlocks; \
@@ -10564,6 +11627,11 @@ return out.str(); \
 #define NI_SKIN_PARTITION_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_SKIN_PARTITION_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_SOURCE_TEXTURE_MEMBERS \
 byte useExternal; \
 string fileName; \
@@ -10696,6 +11764,13 @@ if ( (useExternal == 0) ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_SOURCE_TEXTURE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObjectNET::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(unknownLink)); \
+refs.push_back(StaticCast<NiObject>(pixelData)); \
+return refs; \
+
 #define NI_SPECULAR_PROPERTY_MEMBERS \
 unsigned short flags; \
 
@@ -10722,6 +11797,11 @@ return out.str(); \
 
 #define NI_SPECULAR_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_SPECULAR_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_SPHERICAL_COLLIDER_MEMBERS \
 float unknownFloat1; \
@@ -10770,6 +11850,11 @@ return out.str(); \
 #define NI_SPHERICAL_COLLIDER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version ); \
 
+#define NI_SPHERICAL_COLLIDER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AParticleModifier::GetRefs(); \
+return refs; \
+
 #define NI_SPOT_LIGHT_MEMBERS \
 float cutoffAngle; \
 float exponent; \
@@ -10800,6 +11885,11 @@ return out.str(); \
 
 #define NI_SPOT_LIGHT_FIXLINKS \
 NiPointLight::FixLinks( objects, link_stack, version ); \
+
+#define NI_SPOT_LIGHT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiPointLight::GetRefs(); \
+return refs; \
 
 #define NI_STENCIL_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -10864,6 +11954,11 @@ return out.str(); \
 #define NI_STENCIL_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
 
+#define NI_STENCIL_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
+
 #define NI_STRING_EXTRA_DATA_MEMBERS \
 uint bytesRemaining; \
 string stringData; \
@@ -10899,6 +11994,11 @@ return out.str(); \
 #define NI_STRING_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define NI_STRING_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define NI_STRING_PALETTE_MEMBERS \
 StringPalette palette; \
 
@@ -10927,6 +12027,11 @@ return out.str(); \
 
 #define NI_STRING_PALETTE_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
+
+#define NI_STRING_PALETTE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
 
 #define NI_STRINGS_EXTRA_DATA_MEMBERS \
 uint numStrings; \
@@ -10969,6 +12074,11 @@ return out.str(); \
 
 #define NI_STRINGS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_STRINGS_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_TEXT_KEY_EXTRA_DATA_MEMBERS \
 uint unknownInt1; \
@@ -11019,6 +12129,11 @@ return out.str(); \
 
 #define NI_TEXT_KEY_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_TEXT_KEY_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_TEXTURE_EFFECT_MEMBERS \
 Matrix33 modelProjectionMatrix; \
@@ -11114,6 +12229,12 @@ if (link_stack.front() != 0xffffffff) { \
 	sourceTexture = NULL; \
 link_stack.pop_front(); \
 
+#define NI_TEXTURE_EFFECT_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiDynamicEffect::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(sourceTexture)); \
+return refs; \
+
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS \
 byte unknown2; \
 uint textureSlot; \
@@ -11169,6 +12290,12 @@ if ( version <= 0x0A010000 ) { \
 		data = NULL; \
 	link_stack.pop_front(); \
 }; \
+
+#define NI_TEXTURE_TRANSFORM_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
 
 #define NI_TEXTURING_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -11975,6 +13102,22 @@ if ( version >= 0x0A000100 ) { \
 	}; \
 }; \
 
+#define NI_TEXTURING_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(baseTexture.source)); \
+refs.push_back(StaticCast<NiObject>(darkTexture.source)); \
+refs.push_back(StaticCast<NiObject>(detailTexture.source)); \
+refs.push_back(StaticCast<NiObject>(glossTexture.source)); \
+refs.push_back(StaticCast<NiObject>(glowTexture.source)); \
+refs.push_back(StaticCast<NiObject>(bumpMapTexture.source)); \
+refs.push_back(StaticCast<NiObject>(decal0Texture.source)); \
+refs.push_back(StaticCast<NiObject>(decal1Texture.source)); \
+for (uint i0 = 0; i0 < shaderTextures.size(); i0++) { \
+	refs.push_back(StaticCast<NiObject>(shaderTextures[i0].textureData.source)); \
+}; \
+return refs; \
+
 #define NI_TRANSFORM_CONTROLLER_MEMBERS \
 
 #define NI_TRANSFORM_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
@@ -11997,6 +13140,11 @@ return out.str(); \
 #define NI_TRANSFORM_CONTROLLER_FIXLINKS \
 NiSingleInterpolatorController::FixLinks( objects, link_stack, version ); \
 
+#define NI_TRANSFORM_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+return refs; \
+
 #define NI_TRANSFORM_DATA_MEMBERS \
 
 #define NI_TRANSFORM_DATA_INCLUDE "NiKeyframeData.h" \
@@ -12018,6 +13166,11 @@ return out.str(); \
 
 #define NI_TRANSFORM_DATA_FIXLINKS \
 NiKeyframeData::FixLinks( objects, link_stack, version ); \
+
+#define NI_TRANSFORM_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiKeyframeData::GetRefs(); \
+return refs; \
 
 #define NI_TRANSFORM_INTERPOLATOR_MEMBERS \
 Vector3 translation; \
@@ -12087,6 +13240,12 @@ if (link_stack.front() != 0xffffffff) { \
 	data = NULL; \
 link_stack.pop_front(); \
 
+#define NI_TRANSFORM_INTERPOLATOR_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiInterpolator::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_TRI_SHAPE_MEMBERS \
 
 #define NI_TRI_SHAPE_INCLUDE "NiTriBasedGeom.h" \
@@ -12108,6 +13267,11 @@ return out.str(); \
 
 #define NI_TRI_SHAPE_FIXLINKS \
 NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+
+#define NI_TRI_SHAPE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeom::GetRefs(); \
+return refs; \
 
 #define NI_TRI_SHAPE_DATA_MEMBERS \
 ushort numTriangles; \
@@ -12211,6 +13375,11 @@ return out.str(); \
 #define NI_TRI_SHAPE_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
 
+#define NI_TRI_SHAPE_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeomData::GetRefs(); \
+return refs; \
+
 #define NI_TRI_STRIPS_MEMBERS \
 
 #define NI_TRI_STRIPS_INCLUDE "NiTriBasedGeom.h" \
@@ -12232,6 +13401,11 @@ return out.str(); \
 
 #define NI_TRI_STRIPS_FIXLINKS \
 NiTriBasedGeom::FixLinks( objects, link_stack, version ); \
+
+#define NI_TRI_STRIPS_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeom::GetRefs(); \
+return refs; \
 
 #define NI_TRI_STRIPS_DATA_MEMBERS \
 ushort numTriangles; \
@@ -12333,6 +13507,11 @@ return out.str(); \
 #define NI_TRI_STRIPS_DATA_FIXLINKS \
 NiTriBasedGeomData::FixLinks( objects, link_stack, version ); \
 
+#define NI_TRI_STRIPS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTriBasedGeomData::GetRefs(); \
+return refs; \
+
 #define NI_U_V_CONTROLLER_MEMBERS \
 ushort unknownShort; \
 Ref<NiUVData > data; \
@@ -12374,6 +13553,12 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	data = NULL; \
 link_stack.pop_front(); \
+
+#define NI_U_V_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiTimeController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
 
 #define NI_U_V_DATA_MEMBERS \
 KeyGroup<float > uvGroups[4]; \
@@ -12430,6 +13615,11 @@ return out.str(); \
 #define NI_U_V_DATA_FIXLINKS \
 NiObject::FixLinks( objects, link_stack, version ); \
 
+#define NI_U_V_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiObject::GetRefs(); \
+return refs; \
+
 #define NI_VECTOR_EXTRA_DATA_MEMBERS \
 Vector3 vectorData; \
 float unknownFloat; \
@@ -12460,6 +13650,11 @@ return out.str(); \
 
 #define NI_VECTOR_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
+
+#define NI_VECTOR_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
 
 #define NI_VERTEX_COLOR_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -12495,6 +13690,11 @@ return out.str(); \
 
 #define NI_VERTEX_COLOR_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_VERTEX_COLOR_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_VERT_WEIGHTS_EXTRA_DATA_MEMBERS \
 uint numBytes; \
@@ -12542,6 +13742,11 @@ return out.str(); \
 #define NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS \
 NiExtraData::FixLinks( objects, link_stack, version ); \
 
+#define NI_VERT_WEIGHTS_EXTRA_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiExtraData::GetRefs(); \
+return refs; \
+
 #define NI_VIS_CONTROLLER_MEMBERS \
 Ref<NiVisData > data; \
 
@@ -12586,6 +13791,12 @@ if ( version <= 0x0A010000 ) { \
 	link_stack.pop_front(); \
 }; \
 
+#define NI_VIS_CONTROLLER_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiSingleInterpolatorController::GetRefs(); \
+refs.push_back(StaticCast<NiObject>(data)); \
+return refs; \
+
 #define NI_VIS_DATA_MEMBERS \
 uint numVisKeys; \
 vector<Key<byte > > visKeys; \
@@ -12628,6 +13839,11 @@ return out.str(); \
 #define NI_VIS_DATA_FIXLINKS \
 AKeyedData::FixLinks( objects, link_stack, version ); \
 
+#define NI_VIS_DATA_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = AKeyedData::GetRefs(); \
+return refs; \
+
 #define NI_WIREFRAME_PROPERTY_MEMBERS \
 unsigned short flags; \
 
@@ -12654,6 +13870,11 @@ return out.str(); \
 
 #define NI_WIREFRAME_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
+
+#define NI_WIREFRAME_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
 
 #define NI_Z_BUFFER_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -12690,6 +13911,11 @@ return out.str(); \
 #define NI_Z_BUFFER_PROPERTY_FIXLINKS \
 NiProperty::FixLinks( objects, link_stack, version ); \
 
+#define NI_Z_BUFFER_PROPERTY_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiProperty::GetRefs(); \
+return refs; \
+
 #define ROOT_COLLISION_NODE_MEMBERS \
 
 #define ROOT_COLLISION_NODE_INCLUDE "NiNode.h" \
@@ -12711,5 +13937,10 @@ return out.str(); \
 
 #define ROOT_COLLISION_NODE_FIXLINKS \
 NiNode::FixLinks( objects, link_stack, version ); \
+
+#define ROOT_COLLISION_NODE_GETREFS \
+list<Ref<NiObject> > refs; \
+refs = NiNode::GetRefs(); \
+return refs; \
 
 #endif

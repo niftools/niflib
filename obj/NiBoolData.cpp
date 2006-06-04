@@ -27,6 +27,10 @@ void NiBoolData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	NI_BOOL_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiBoolData::GetRefs() const {
+	NI_BOOL_DATA_GETREFS
+}
+
 const Type & NiBoolData::GetType() const {
 	return TYPE;
 };

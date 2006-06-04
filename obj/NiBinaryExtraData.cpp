@@ -27,6 +27,10 @@ void NiBinaryExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_BINARY_EXTRA_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiBinaryExtraData::GetRefs() const {
+	NI_BINARY_EXTRA_DATA_GETREFS
+}
+
 const Type & NiBinaryExtraData::GetType() const {
 	return TYPE;
 };

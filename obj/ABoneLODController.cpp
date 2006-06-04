@@ -28,6 +28,10 @@ void ABoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	A_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> ABoneLODController::GetRefs() const {
+	A_BONE_L_O_D_CONTROLLER_GETREFS
+}
+
 const Type & ABoneLODController::GetType() const {
 	return TYPE;
 };

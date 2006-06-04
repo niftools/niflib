@@ -26,6 +26,10 @@ void NiDitherProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint>
 	NI_DITHER_PROPERTY_FIXLINKS
 }
 
+list<NiObjectRef> NiDitherProperty::GetRefs() const {
+	NI_DITHER_PROPERTY_GETREFS
+}
+
 const Type & NiDitherProperty::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiDirectionalLight::FixLinks( const vector<NiObjectRef> & objects, list<uin
 	NI_DIRECTIONAL_LIGHT_FIXLINKS
 }
 
+list<NiObjectRef> NiDirectionalLight::GetRefs() const {
+	NI_DIRECTIONAL_LIGHT_GETREFS
+}
+
 const Type & NiDirectionalLight::GetType() const {
 	return TYPE;
 };

@@ -28,6 +28,10 @@ void NiBSplineCompPoint3Interpolator::FixLinks( const vector<NiObjectRef> & obje
 	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS
 }
 
+list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
+	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_GETREFS
+}
+
 const Type & NiBSplineCompPoint3Interpolator::GetType() const {
 	return TYPE;
 };

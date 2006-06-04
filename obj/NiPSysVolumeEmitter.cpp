@@ -27,6 +27,10 @@ void NiPSysVolumeEmitter::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_P_SYS_VOLUME_EMITTER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysVolumeEmitter::GetRefs() const {
+	NI_P_SYS_VOLUME_EMITTER_GETREFS
+}
+
 const Type & NiPSysVolumeEmitter::GetType() const {
 	return TYPE;
 };

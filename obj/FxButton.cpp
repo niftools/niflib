@@ -26,6 +26,10 @@ void FxButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_
 	FX_BUTTON_FIXLINKS
 }
 
+list<NiObjectRef> FxButton::GetRefs() const {
+	FX_BUTTON_GETREFS
+}
+
 const Type & FxButton::GetType() const {
 	return TYPE;
 };

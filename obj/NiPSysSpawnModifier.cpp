@@ -26,6 +26,10 @@ void NiPSysSpawnModifier::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_P_SYS_SPAWN_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysSpawnModifier::GetRefs() const {
+	NI_P_SYS_SPAWN_MODIFIER_GETREFS
+}
+
 const Type & NiPSysSpawnModifier::GetType() const {
 	return TYPE;
 };

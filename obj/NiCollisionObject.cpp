@@ -28,6 +28,10 @@ void NiCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_COLLISION_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> NiCollisionObject::GetRefs() const {
+	NI_COLLISION_OBJECT_GETREFS
+}
+
 const Type & NiCollisionObject::GetType() const {
 	return TYPE;
 };

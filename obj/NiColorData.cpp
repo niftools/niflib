@@ -27,6 +27,10 @@ void NiColorData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & li
 	NI_COLOR_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiColorData::GetRefs() const {
+	NI_COLOR_DATA_GETREFS
+}
+
 const Type & NiColorData::GetType() const {
 	return TYPE;
 };

@@ -27,6 +27,10 @@ void NiPSysGravityModifier::FixLinks( const vector<NiObjectRef> & objects, list<
 	NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysGravityModifier::GetRefs() const {
+	NI_P_SYS_GRAVITY_MODIFIER_GETREFS
+}
+
 const Type & NiPSysGravityModifier::GetType() const {
 	return TYPE;
 };

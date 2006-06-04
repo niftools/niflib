@@ -26,6 +26,10 @@ void bhkWorldObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	BHK_WORLD_OBJECT_FIXLINKS
 }
 
+list<NiObjectRef> bhkWorldObject::GetRefs() const {
+	BHK_WORLD_OBJECT_GETREFS
+}
+
 const Type & bhkWorldObject::GetType() const {
 	return TYPE;
 };

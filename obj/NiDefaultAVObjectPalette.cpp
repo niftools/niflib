@@ -28,6 +28,10 @@ void NiDefaultAVObjectPalette::FixLinks( const vector<NiObjectRef> & objects, li
 	NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS
 }
 
+list<NiObjectRef> NiDefaultAVObjectPalette::GetRefs() const {
+	NI_DEFAULT_A_V_OBJECT_PALETTE_GETREFS
+}
+
 const Type & NiDefaultAVObjectPalette::GetType() const {
 	return TYPE;
 };

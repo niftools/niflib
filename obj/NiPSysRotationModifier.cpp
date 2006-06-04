@@ -26,6 +26,10 @@ void NiPSysRotationModifier::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_P_SYS_ROTATION_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysRotationModifier::GetRefs() const {
+	NI_P_SYS_ROTATION_MODIFIER_GETREFS
+}
+
 const Type & NiPSysRotationModifier::GetType() const {
 	return TYPE;
 };

@@ -26,6 +26,10 @@ void NiPSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & lin
 	NI_P_SYS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysData::GetRefs() const {
+	NI_P_SYS_DATA_GETREFS
+}
+
 const Type & NiPSysData::GetType() const {
 	return TYPE;
 };

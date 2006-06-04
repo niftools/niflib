@@ -26,6 +26,10 @@ void bhkSerializable::FixLinks( const vector<NiObjectRef> & objects, list<uint> 
 	BHK_SERIALIZABLE_FIXLINKS
 }
 
+list<NiObjectRef> bhkSerializable::GetRefs() const {
+	BHK_SERIALIZABLE_GETREFS
+}
+
 const Type & bhkSerializable::GetType() const {
 	return TYPE;
 };

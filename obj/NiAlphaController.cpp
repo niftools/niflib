@@ -27,6 +27,10 @@ void NiAlphaController::FixLinks( const vector<NiObjectRef> & objects, list<uint
 	NI_ALPHA_CONTROLLER_FIXLINKS
 }
 
+list<NiObjectRef> NiAlphaController::GetRefs() const {
+	NI_ALPHA_CONTROLLER_GETREFS
+}
+
 const Type & NiAlphaController::GetType() const {
 	return TYPE;
 };

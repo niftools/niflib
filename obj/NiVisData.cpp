@@ -26,6 +26,10 @@ void NiVisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link
 	NI_VIS_DATA_FIXLINKS
 }
 
+list<NiObjectRef> NiVisData::GetRefs() const {
+	NI_VIS_DATA_GETREFS
+}
+
 const Type & NiVisData::GetType() const {
 	return TYPE;
 };

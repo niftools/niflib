@@ -28,6 +28,10 @@ void NiControllerManager::FixLinks( const vector<NiObjectRef> & objects, list<ui
 	NI_CONTROLLER_MANAGER_FIXLINKS
 }
 
+list<NiObjectRef> NiControllerManager::GetRefs() const {
+	NI_CONTROLLER_MANAGER_GETREFS
+}
+
 const Type & NiControllerManager::GetType() const {
 	return TYPE;
 };

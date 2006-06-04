@@ -27,6 +27,10 @@ void NiPSysAgeDeathModifier::FixLinks( const vector<NiObjectRef> & objects, list
 	NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysAgeDeathModifier::GetRefs() const {
+	NI_P_SYS_AGE_DEATH_MODIFIER_GETREFS
+}
+
 const Type & NiPSysAgeDeathModifier::GetType() const {
 	return TYPE;
 };

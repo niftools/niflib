@@ -26,6 +26,10 @@ void NiPSysEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & 
 	NI_P_SYS_EMITTER_FIXLINKS
 }
 
+list<NiObjectRef> NiPSysEmitter::GetRefs() const {
+	NI_P_SYS_EMITTER_GETREFS
+}
+
 const Type & NiPSysEmitter::GetType() const {
 	return TYPE;
 };
