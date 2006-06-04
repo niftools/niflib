@@ -85,8 +85,14 @@ link_stack.push_back( block_num ); \
 
 #define A_PARTICLE_MODIFIER_WRITE \
 NiObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(nextModifier)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
+if ( nextModifier != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(nextModifier)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( controller != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define A_PARTICLE_MODIFIER_STRING \
 stringstream out; \
@@ -204,7 +210,10 @@ NifStream( priority, in, version ); \
 bhkSerializable::Write( out, link_map, version, user_version ); \
 NifStream( numBodies, out, version ); \
 for (uint i0 = 0; i0 < bodies.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(bodies[i0])], out, version ); \
+	if ( bodies[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(bodies[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( priority, out, version ); \
 
@@ -479,7 +488,10 @@ NifStream( layer, in, version ); \
 
 #define BHK_ENTITY_WRITE \
 bhkWorldObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
+if ( shape != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( layer, out, version ); \
 
 #define BHK_ENTITY_STRING \
@@ -531,9 +543,15 @@ link_stack.push_back( block_num ); \
 
 #define NI_COLLISION_OBJECT_WRITE \
 NiObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
+if ( parent != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownShort, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
+if ( body != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(body)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_COLLISION_OBJECT_STRING \
 stringstream out; \
@@ -599,7 +617,10 @@ if ( version >= 0x0A000100 ) { \
 	NifStream( name, out, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
-	NifStream( link_map[StaticCast<NiObject>(nextExtraData)], out, version ); \
+	if ( nextExtraData != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(nextExtraData)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_EXTRA_DATA_STRING \
@@ -766,15 +787,24 @@ link_stack.push_back( block_num ); \
 NiObject::Write( out, link_map, version, user_version ); \
 NifStream( name, out, version ); \
 if ( version <= 0x04020200 ) { \
-	NifStream( link_map[StaticCast<NiObject>(extraData)], out, version ); \
+	if ( extraData != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(extraData)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( version >= 0x0A000100 ) { \
 	NifStream( numExtraDataList, out, version ); \
 	for (uint i1 = 0; i1 < extraDataList.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(extraDataList[i1])], out, version ); \
+		if ( extraDataList[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(extraDataList[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
-NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
+if ( controller != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(controller)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_OBJECT_N_E_T_STRING \
 stringstream out; \
@@ -906,7 +936,10 @@ if ( version <= 0x04020200 ) { \
 }; \
 NifStream( numProperties, out, version ); \
 for (uint i0 = 0; i0 < properties.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(properties[i0])], out, version ); \
+	if ( properties[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(properties[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( version <= 0x04020200 ) { \
 	NifStream( hasBoundingBox, out, version ); \
@@ -918,10 +951,16 @@ if ( version <= 0x04020200 ) { \
 	}; \
 }; \
 if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
-	NifStream( link_map[StaticCast<NiObject>(collisionData)], out, version ); \
+	if ( collisionData != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(collisionData)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( version >= 0x14000005 ) { \
-	NifStream( link_map[StaticCast<NiObject>(collisionObject)], out, version ); \
+	if ( collisionObject != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(collisionObject)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_A_V_OBJECT_STRING \
@@ -1049,7 +1088,10 @@ if ( version >= 0x0A020000 ) { \
 if ( version >= 0x0A010000 ) { \
 	NifStream( numAffectedNodes, out, version ); \
 	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(affectedNodes[i1])], out, version ); \
+		if ( affectedNodes[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(affectedNodes[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 
@@ -1193,7 +1235,10 @@ NifStream( active, in, version ); \
 NiObject::Write( out, link_map, version, user_version ); \
 NifStream( name, out, version ); \
 NifStream( order, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
+if ( target != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( active, out, version ); \
 
 #define NI_P_SYS_MODIFIER_STRING \
@@ -1315,7 +1360,10 @@ if ( version >= 0x14000004 ) { \
 #define NI_P_SYS_VOLUME_EMITTER_WRITE \
 NiPSysEmitter::Write( out, link_map, version, user_version ); \
 if ( version >= 0x14000004 ) { \
-	NifStream( link_map[StaticCast<NiObject>(emitterObject)], out, version ); \
+	if ( emitterObject != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(emitterObject)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_P_SYS_VOLUME_EMITTER_STRING \
@@ -1374,13 +1422,19 @@ link_stack.push_back( block_num ); \
 
 #define NI_TIME_CONTROLLER_WRITE \
 NiObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(nextController)], out, version ); \
+if ( nextController != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(nextController)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( flags, out, version ); \
 NifStream( frequency, out, version ); \
 NifStream( phase, out, version ); \
 NifStream( startTime, out, version ); \
 NifStream( stopTime, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
+if ( target != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(target)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_TIME_CONTROLLER_STRING \
 stringstream out; \
@@ -1459,7 +1513,10 @@ NifStream( unknownInt2, out, version ); \
 for (uint i0 = 0; i0 < nodeGroups.size(); i0++) { \
 	NifStream( nodeGroups[i0].numNodes, out, version ); \
 	for (uint i1 = 0; i1 < nodeGroups[i0].nodes.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(nodeGroups[i0].nodes[i1])], out, version ); \
+		if ( nodeGroups[i0].nodes[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(nodeGroups[i0].nodes[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 
@@ -1529,7 +1586,10 @@ if ( version >= 0x0A020000 ) { \
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A020000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
+	if ( interpolator != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING \
@@ -1622,13 +1682,22 @@ if ( version >= 0x0A000100 ) { \
 
 #define NI_TRI_BASED_GEOM_WRITE \
 NiAVObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( skinInstance != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 if ( version >= 0x0A000100 ) { \
 	NifStream( hasShader, out, version ); \
 	if ( (hasShader != 0) ) { \
 		NifStream( shaderName, out, version ); \
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+		if ( unknownLink != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 
@@ -1863,7 +1932,10 @@ if ( version >= 0x0A000100 ) { \
 	NifStream( unknownShort2, out, version ); \
 }; \
 if ( version >= 0x14000004 ) { \
-	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+	if ( unknownLink != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_TRI_BASED_GEOM_DATA_STRING \
@@ -2491,7 +2563,10 @@ for (uint i0 = 0; i0 < unknownInts.size(); i0++) { \
 AbhkShapeCollection::Write( out, link_map, version, user_version ); \
 NifStream( numSubShapes, out, version ); \
 for (uint i0 = 0; i0 < subShapes.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(subShapes[i0])], out, version ); \
+	if ( subShapes[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(subShapes[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( material, out, version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
@@ -2615,8 +2690,14 @@ NifStream( damping, in, version ); \
 AbhkConstraint::Write( out, link_map, version, user_version ); \
 NifStream( type, out, version ); \
 NifStream( unknownInt2, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+if ( unknownLink1 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink2 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownInt3, out, version ); \
 if ( (type == 7) ) { \
 	NifStream( ragdoll.pivotA, out, version ); \
@@ -2752,7 +2833,10 @@ NifStream( unknownFloat2, in, version ); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_WRITE \
 bhkShape::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
+if ( shape != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(shape)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( material, out, version ); \
 for (uint i0 = 0; i0 < 8; i0++) { \
 	NifStream( unknownBytes1[i0], out, version ); \
@@ -2923,7 +3007,10 @@ for (uint i0 = 0; i0 < 3; i0++) { \
 NifStream( unknownInt2, out, version ); \
 NifStream( numStripsData, out, version ); \
 for (uint i0 = 0; i0 < stripsData.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(stripsData[i0])], out, version ); \
+	if ( stripsData[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(stripsData[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( numUnknownInts3, out, version ); \
 for (uint i0 = 0; i0 < unknownInts3.size(); i0++) { \
@@ -3046,7 +3133,10 @@ NifStream( scale, out, version ); \
 for (uint i0 = 0; i0 < 3; i0++) { \
 	NifStream( unknownFloats2[i0], out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_STRING \
 stringstream out; \
@@ -3315,7 +3405,10 @@ NifStream( unknownInt7, out, version ); \
 NifStream( unknownInt8, out, version ); \
 NifStream( numConstraints, out, version ); \
 for (uint i0 = 0; i0 < constraints.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(constraints[i0])], out, version ); \
+	if ( constraints[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(constraints[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( unknownInt6, out, version ); \
 
@@ -3959,7 +4052,10 @@ if ( version <= 0x0A010000 ) { \
 #define NI_ALPHA_CONTROLLER_WRITE \
 NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_ALPHA_CONTROLLER_STRING \
@@ -4352,13 +4448,22 @@ NifStream( numShapeGroups, out, version ); \
 for (uint i0 = 0; i0 < shapeGroups1.size(); i0++) { \
 	NifStream( shapeGroups1[i0].numLinkPairs, out, version ); \
 	for (uint i1 = 0; i1 < shapeGroups1[i0].linkPairs.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].shape)], out, version ); \
-		NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].skinInstance)], out, version ); \
+		if ( shapeGroups1[i0].linkPairs[i1].shape != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].shape)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
+		if ( shapeGroups1[i0].linkPairs[i1].skinInstance != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i0].linkPairs[i1].skinInstance)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 NifStream( numShapeGroups2, out, version ); \
 for (uint i0 = 0; i0 < shapeGroups2.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(shapeGroups2[i0])], out, version ); \
+	if ( shapeGroups2[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(shapeGroups2[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_BONE_L_O_D_CONTROLLER_STRING \
@@ -4542,7 +4647,10 @@ link_stack.push_back( block_num ); \
 #define NI_BOOL_INTERPOLATOR_WRITE \
 NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( boolValue, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_BOOL_INTERPOLATOR_STRING \
 stringstream out; \
@@ -4591,7 +4699,10 @@ link_stack.push_back( block_num ); \
 #define NI_BOOL_TIMELINE_INTERPOLATOR_WRITE \
 NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( boolValue, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_BOOL_TIMELINE_INTERPOLATOR_STRING \
 stringstream out; \
@@ -4744,8 +4855,14 @@ for (uint i0 = 0; i0 < 6; i0++) { \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_WRITE \
 NiBSplineInterpolator::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 for (uint i0 = 0; i0 < 6; i0++) { \
 	NifStream( unknownFloats[i0], out, version ); \
 }; \
@@ -4819,8 +4936,14 @@ for (uint i0 = 0; i0 < 17; i0++) { \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_WRITE \
 NiBSplineInterpolator::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(basisData)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( basisData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(basisData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 for (uint i0 = 0; i0 < 17; i0++) { \
 	NifStream( unknown4[i0], out, version ); \
 }; \
@@ -4997,7 +5120,10 @@ NifStream( viewportRight, out, version ); \
 NifStream( viewportTop, out, version ); \
 NifStream( viewportBottom, out, version ); \
 NifStream( lodAdjust, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version ); \
+if ( unknownLink_ != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownInt, out, version ); \
 if ( version >= 0x04020100 ) { \
 	NifStream( unknownInt2, out, version ); \
@@ -5085,7 +5211,10 @@ if ( (collisionType == 1) ) { \
 
 #define NI_COLLISION_DATA_WRITE \
 NiObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version ); \
+if ( targetNode != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknown2, out, version ); \
 NifStream( unknown3, out, version ); \
 NifStream( collisionType, out, version ); \
@@ -5268,9 +5397,15 @@ NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( cumulative, out, version ); \
 NifStream( numControllerSequences, out, version ); \
 for (uint i0 = 0; i0 < controllerSequences.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(controllerSequences[i0])], out, version ); \
+	if ( controllerSequences[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(controllerSequences[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(objectPalette)], out, version ); \
+if ( objectPalette != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(objectPalette)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_CONTROLLER_MANAGER_STRING \
 stringstream out; \
@@ -5499,19 +5634,31 @@ if ( version <= 0x0A010000 ) { \
 	if ( version <= 0x0A010000 ) { \
 		NifStream( textKeys.name, out, version ); \
 	}; \
-	NifStream( link_map[StaticCast<NiObject>(textKeys.interpolator)], out, version ); \
+	if ( textKeys.interpolator != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(textKeys.interpolator)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	if ( version >= 0x0A01006A ) { \
-		NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink1)], out, version ); \
+		if ( textKeys.unknownLink1 != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink1)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-		NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink2)], out, version ); \
+		if ( textKeys.unknownLink2 != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink2)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 		NifStream( textKeys.unknownShort0, out, version ); \
 	}; \
 	if ( version >= 0x0A01006A ) { \
 		NifStream( textKeys.priority_, out, version ); \
 	}; \
 	if ( version >= 0x0A020000 ) { \
-		NifStream( link_map[StaticCast<NiObject>(textKeys.stringPalette)], out, version ); \
+		if ( textKeys.stringPalette != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(textKeys.stringPalette)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 		NifStream( textKeys.nodeName, out, version ); \
@@ -5552,19 +5699,31 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 	if ( version <= 0x0A010000 ) { \
 		NifStream( controlledBlocks[i0].name, out, version ); \
 	}; \
-	NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].interpolator)], out, version ); \
+	if ( controlledBlocks[i0].interpolator != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].interpolator)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	if ( version >= 0x0A01006A ) { \
-		NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].unknownLink1)], out, version ); \
+		if ( controlledBlocks[i0].unknownLink1 != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].unknownLink1)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
-		NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].unknownLink2)], out, version ); \
+		if ( controlledBlocks[i0].unknownLink2 != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].unknownLink2)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 		NifStream( controlledBlocks[i0].unknownShort0, out, version ); \
 	}; \
 	if ( version >= 0x0A01006A ) { \
 		NifStream( controlledBlocks[i0].priority_, out, version ); \
 	}; \
 	if ( version >= 0x0A020000 ) { \
-		NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].stringPalette)], out, version ); \
+		if ( controlledBlocks[i0].stringPalette != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i0].stringPalette)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 		NifStream( controlledBlocks[i0].nodeName, out, version ); \
@@ -5599,7 +5758,10 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 }; \
 if ( version >= 0x0A01006A ) { \
 	NifStream( weight, out, version ); \
-	NifStream( link_map[StaticCast<NiObject>(textKeys2)], out, version ); \
+	if ( textKeys2 != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(textKeys2)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( cycleType, out, version ); \
 }; \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
@@ -5617,11 +5779,17 @@ if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 	NifStream( unknownByte, out, version ); \
 }; \
 if ( version >= 0x0A01006A ) { \
-	NifStream( link_map[StaticCast<NiObject>(manager)], out, version ); \
+	if ( manager != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(manager)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( unknownString, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(stringPalette)], out, version ); \
+	if ( stringPalette != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(stringPalette)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_CONTROLLER_SEQUENCE_STRING \
@@ -5859,7 +6027,10 @@ NifStream( unknownInt, out, version ); \
 NifStream( numObjs, out, version ); \
 for (uint i0 = 0; i0 < objs.size(); i0++) { \
 	NifStream( objs[i0].name, out, version ); \
-	NifStream( link_map[StaticCast<NiObject>(objs[i0].object)], out, version ); \
+	if ( objs[i0].object != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(objs[i0].object)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_STRING \
@@ -5991,7 +6162,10 @@ if ( version <= 0x0A010000 ) { \
 }; \
 NifStream( numSources, out, version ); \
 for (uint i0 = 0; i0 < sources.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(sources[i0])], out, version ); \
+	if ( sources[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(sources[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_FLIP_CONTROLLER_STRING \
@@ -6142,7 +6316,10 @@ if ( version >= 0x14000004 ) { \
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x14000004 ) { \
-	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+	if ( unknownLink != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( unknownString, out, version ); \
 }; \
 
@@ -6195,7 +6372,10 @@ link_stack.push_back( block_num ); \
 #define NI_FLOAT_INTERPOLATOR_WRITE \
 NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( floatValue, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_FLOAT_INTERPOLATOR_STRING \
 stringstream out; \
@@ -6363,12 +6543,18 @@ if ( version >= 0x0A010000 ) { \
 if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 	NifStream( unknown2, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownByte, out, version ); \
 if ( version >= 0x0A01006A ) { \
 	NifStream( numInterpolators, out, version ); \
 	for (uint i1 = 0; i1 < interpolators.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(interpolators[i1])], out, version ); \
+		if ( interpolators[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(interpolators[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 if ( version >= 0x0A020000 ) { \
@@ -6584,7 +6770,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_KEYFRAME_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
@@ -6629,7 +6818,10 @@ link_stack.push_back( block_num ); \
 
 #define B_S_KEYFRAME_CONTROLLER_WRITE \
 NiKeyframeController::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data2)], out, version ); \
+if ( data2 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data2)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define B_S_KEYFRAME_CONTROLLER_STRING \
 stringstream out; \
@@ -6858,10 +7050,16 @@ if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) { \
 	NifStream( unknownShort, out, version ); \
 }; \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
+	if ( interpolator != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( unknownShort, out, version ); \
 }; \
 
@@ -6925,7 +7123,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+if ( unknownLink != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_LIGHT_DIMMER_CONTROLLER_STRING \
 stringstream out; \
@@ -6977,7 +7178,10 @@ NiTimeController::Write( out, link_map, version, user_version ); \
 if ( version >= 0x0A010000 ) { \
 	NifStream( unknown1, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(lookAtNode)], out, version ); \
+if ( lookAtNode != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(lookAtNode)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_LOOK_AT_CONTROLLER_STRING \
 stringstream out; \
@@ -7043,14 +7247,26 @@ link_stack.push_back( block_num ); \
 #define NI_LOOK_AT_INTERPOLATOR_WRITE \
 NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( unknownShort, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(lookAt)], out, version ); \
+if ( lookAt != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(lookAt)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownFloat, out, version ); \
 NifStream( translation, out, version ); \
 NifStream( rotation, out, version ); \
 NifStream( scale, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink3)], out, version ); \
+if ( unknownLink1 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink2 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink3 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink3)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_LOOK_AT_INTERPOLATOR_STRING \
 stringstream out; \
@@ -7146,7 +7362,10 @@ if ( version >= 0x0A010000 ) { \
 	NifStream( unknown, out, version ); \
 }; \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_STRING \
@@ -7341,13 +7560,19 @@ if ( version >= 0x14000005 ) { \
 }; \
 NifStream( unknownInt1, out, version ); \
 if ( version <= 0x14000004 ) { \
-	NifStream( link_map[StaticCast<NiObject>(modifier)], out, version ); \
+	if ( modifier != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(modifier)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
 	NifStream( unknownByte2, out, version ); \
 	NifStream( numUnknownLinks, out, version ); \
 	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(unknownLinks[i1])], out, version ); \
+		if ( unknownLinks[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(unknownLinks[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 if ( version >= 0x14000005 ) { \
@@ -7358,7 +7583,10 @@ if ( version >= 0x14000005 ) { \
 	NifStream( unknownInt4, out, version ); \
 }; \
 if ( version >= 0x0A020000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+	if ( unknownLink2 != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_MESH_P_SYS_DATA_STRING \
@@ -7587,7 +7815,10 @@ for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
 NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( numExtraTargets, out, version ); \
 for (uint i0 = 0; i0 < extraTargets.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(extraTargets[i0])], out, version ); \
+	if ( extraTargets[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(extraTargets[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_STRING \
@@ -7657,11 +7888,17 @@ for (uint i0 = 0; i0 < effects.size(); i0++) { \
 NiAVObject::Write( out, link_map, version, user_version ); \
 NifStream( numChildren, out, version ); \
 for (uint i0 = 0; i0 < children.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(children[i0])], out, version ); \
+	if ( children[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(children[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( numEffects, out, version ); \
 for (uint i0 = 0; i0 < effects.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(effects[i0])], out, version ); \
+	if ( effects[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(effects[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_NODE_STRING \
@@ -7857,7 +8094,10 @@ NifStream( unknownInt2, out, version ); \
 NifStream( unknownInt3, out, version ); \
 NifStream( numUnknownLinks, out, version ); \
 for (uint i0 = 0; i0 < unknownLinks.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(unknownLinks[i0])], out, version ); \
+	if ( unknownLinks[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(unknownLinks[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define FX_RADIO_BUTTON_STRING \
@@ -8036,7 +8276,10 @@ if ( (lodType == 0) ) { \
 }; \
 if ( (lodType == 1) ) { \
 	NifStream( unknownShort, out, version ); \
-	NifStream( link_map[StaticCast<NiObject>(rangeData)], out, version ); \
+	if ( rangeData != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(rangeData)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_L_O_D_NODE_STRING \
@@ -8228,7 +8471,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_WRITE \
 AParticleModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(colorData)], out, version ); \
+if ( colorData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(colorData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_PARTICLE_COLOR_MODIFIER_STRING \
 stringstream out; \
@@ -8312,7 +8558,10 @@ link_stack.push_back( block_num ); \
 #define NI_PARTICLE_MESH_MODIFIER_WRITE \
 AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( numParticleMeshes, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
+if ( particleMeshes != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_PARTICLE_MESH_MODIFIER_STRING \
 stringstream out; \
@@ -8573,7 +8822,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_PARTICLE_MESHES_DATA_WRITE \
 NiParticlesData::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+if ( unknownLink2 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_PARTICLE_MESHES_DATA_STRING \
 stringstream out; \
@@ -8631,7 +8883,10 @@ if ( version >= 0x0A010000 ) { \
 	NifStream( unknownBool, out, version ); \
 	NifStream( numModifiers, out, version ); \
 	for (uint i1 = 0; i1 < modifiers.size(); i1++) { \
-		NifStream( link_map[StaticCast<NiObject>(modifiers[i1])], out, version ); \
+		if ( modifiers[i1] != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(modifiers[i1])], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 
@@ -8821,7 +9076,10 @@ NifStream( lifetime, out, version ); \
 NifStream( lifetimeRandom, out, version ); \
 NifStream( emitFlags, out, version ); \
 NifStream( startRandom, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(emitter)], out, version ); \
+if ( emitter != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(emitter)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( unknownShort2_, out, version ); \
 NifStream( unknownFloat13_, out, version ); \
 NifStream( unknownInt1_, out, version ); \
@@ -8838,9 +9096,18 @@ for (uint i0 = 0; i0 < particles.size(); i0++) { \
 	NifStream( particles[i0].unknownShort, out, version ); \
 	NifStream( particles[i0].vertexId, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(particleExtra)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+if ( unknownLink != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( particleExtra != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(particleExtra)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink2 != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( trailer, out, version ); \
 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_STRING \
@@ -9010,8 +9277,14 @@ NifStream( unknownInt1, out, version ); \
 NifStream( unknownInt2, out, version ); \
 NifStream( unknownInt3, out, version ); \
 NifStream( unknownShort, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(posData)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
+if ( posData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(posData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( floatData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_PATH_CONTROLLER_STRING \
 stringstream out; \
@@ -9085,8 +9358,14 @@ NiBlendInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( unknownFloat1, out, version ); \
 NifStream( unknownFloat2, out, version ); \
 NifStream( unknownShort2, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(posData)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
+if ( posData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(posData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( floatData != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(floatData)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_PATH_INTERPOLATOR_STRING \
 stringstream out; \
@@ -9213,7 +9492,10 @@ if ( version >= 0x14000004 ) { \
 		NifStream( unknown54Bytes[i1], out, version ); \
 	}; \
 }; \
-NifStream( link_map[StaticCast<NiObject>(palette)], out, version ); \
+if ( palette != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(palette)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( numMipmaps, out, version ); \
 NifStream( bytesPerPixel, out, version ); \
 for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
@@ -9420,7 +9702,10 @@ link_stack.push_back( block_num ); \
 #define NI_POINT3_INTERPOLATOR_WRITE \
 NiInterpolator::Write( out, link_map, version, user_version ); \
 NifStream( point3Value, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_POINT3_INTERPOLATOR_STRING \
 stringstream out; \
@@ -9563,7 +9848,10 @@ link_stack.push_back( block_num ); \
 #define NI_P_SYS_AGE_DEATH_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( spawnOnDeath, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
+if ( spawnModifier != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_P_SYS_AGE_DEATH_MODIFIER_STRING \
 stringstream out; \
@@ -9621,7 +9909,10 @@ for (uint i0 = 0; i0 < 2; i0++) { \
 
 #define NI_P_SYS_BOMB_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+if ( unknownLink != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 for (uint i0 = 0; i0 < 2; i0++) { \
 	NifStream( unknownInts1[i0], out, version ); \
 }; \
@@ -9766,7 +10057,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(collider)], out, version ); \
+if ( collider != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(collider)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_P_SYS_COLLIDER_MANAGER_STRING \
 stringstream out; \
@@ -9811,7 +10105,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_COLOR_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_P_SYS_COLOR_MODIFIER_STRING \
 stringstream out; \
@@ -10054,7 +10351,10 @@ NifStream( rangeFalloff, in, version ); \
 
 #define NI_P_SYS_DRAG_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
+if ( parent != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( dragAxis, out, version ); \
 NifStream( percentage, out, version ); \
 NifStream( range, out, version ); \
@@ -10105,7 +10405,10 @@ link_stack.push_back( block_num ); \
 
 #define NI_P_SYS_EMITTER_CTLR_WRITE \
 APSysCtlr::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
+if ( visibilityInterpolator != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
 stringstream out; \
@@ -10371,7 +10674,10 @@ NifStream( turbulenceScale, in, version ); \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_WRITE \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(gravityObject)], out, version ); \
+if ( gravityObject != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(gravityObject)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( gravityAxis, out, version ); \
 NifStream( decay, out, version ); \
 NifStream( strength, out, version ); \
@@ -10510,7 +10816,10 @@ NifStream( emissionAxis, in, version ); \
 NiPSysEmitter::Write( out, link_map, version, user_version ); \
 NifStream( numEmitterMeshes, out, version ); \
 for (uint i0 = 0; i0 < emitterMeshes.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(emitterMeshes[i0])], out, version ); \
+	if ( emitterMeshes[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(emitterMeshes[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( initialVelocityType, out, version ); \
 NifStream( emissionType, out, version ); \
@@ -10580,7 +10889,10 @@ for (uint i0 = 0; i0 < meshes.size(); i0++) { \
 NiPSysModifier::Write( out, link_map, version, user_version ); \
 NifStream( numMeshes, out, version ); \
 for (uint i0 = 0; i0 < meshes.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(meshes[i0])], out, version ); \
+	if ( meshes[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(meshes[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_P_SYS_MESH_UPDATE_MODIFIER_STRING \
@@ -10690,10 +11002,22 @@ NiObject::Write( out, link_map, version, user_version ); \
 NifStream( bounce, out, version ); \
 NifStream( spawnOnCollide, out, version ); \
 NifStream( dieOnCollide, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version ); \
-NifStream( link_map[StaticCast<NiObject>(colliderObject)], out, version ); \
+if ( spawnModifier != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( parent != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(parent)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( unknownLink_ != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
+if ( colliderObject != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(colliderObject)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( width, out, version ); \
 NifStream( height, out, version ); \
 NifStream( xAxis, out, version ); \
@@ -11275,7 +11599,10 @@ NifStream( translation, out, version ); \
 NifStream( scale, out, version ); \
 NifStream( numBones, out, version ); \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
+	if ( skinPartition != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 if ( version >= 0x04020100 ) { \
 	NifStream( unknownByte, out, version ); \
@@ -11376,14 +11703,26 @@ for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
 
 #define NI_SKIN_INSTANCE_WRITE \
 NiObject::Write( out, link_map, version, user_version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 if ( version >= 0x0A020000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
+	if ( skinPartition != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
-NifStream( link_map[StaticCast<NiObject>(skeletonRoot)], out, version ); \
+if ( skeletonRoot != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(skeletonRoot)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( bones.numBones, out, version ); \
 for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
-	NifStream( link_map[StaticCast<NiObject>(bones.bones[i0])], out, version ); \
+	if ( bones.bones[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(bones.bones[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_SKIN_INSTANCE_STRING \
@@ -11791,7 +12130,10 @@ if ( (useExternal == 1) ) { \
 }; \
 if ( version >= 0x0A010000 ) { \
 	if ( (useExternal == 1) ) { \
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+		if ( unknownLink != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 	}; \
 }; \
 if ( version <= 0x0A000100 ) { \
@@ -11805,7 +12147,10 @@ if ( version >= 0x0A010000 ) { \
 	}; \
 }; \
 if ( (useExternal == 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(pixelData)], out, version ); \
+	if ( pixelData != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(pixelData)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 NifStream( pixelLayout, out, version ); \
 NifStream( useMipmaps, out, version ); \
@@ -12286,7 +12631,10 @@ NifStream( textureFiltering, out, version ); \
 NifStream( textureClamping, out, version ); \
 NifStream( textureType, out, version ); \
 NifStream( coordinateGenerationType, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(sourceTexture)], out, version ); \
+if ( sourceTexture != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(sourceTexture)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 NifStream( clippingPlane, out, version ); \
 NifStream( unknownVector, out, version ); \
 NifStream( unknownFloat, out, version ); \
@@ -12365,7 +12713,10 @@ NifStream( unknown2, out, version ); \
 NifStream( textureSlot, out, version ); \
 NifStream( operation, out, version ); \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_STRING \
@@ -12688,7 +13039,10 @@ NifStream( applyMode, out, version ); \
 NifStream( textureCount, out, version ); \
 NifStream( hasBaseTexture, out, version ); \
 if ( (hasBaseTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(baseTexture.source)], out, version ); \
+	if ( baseTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(baseTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( baseTexture.clampMode, out, version ); \
 	NifStream( baseTexture.filterMode, out, version ); \
 	NifStream( baseTexture.textureSet, out, version ); \
@@ -12712,7 +13066,10 @@ if ( (hasBaseTexture != 0) ) { \
 }; \
 NifStream( hasDarkTexture, out, version ); \
 if ( (hasDarkTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(darkTexture.source)], out, version ); \
+	if ( darkTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(darkTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( darkTexture.clampMode, out, version ); \
 	NifStream( darkTexture.filterMode, out, version ); \
 	NifStream( darkTexture.textureSet, out, version ); \
@@ -12736,7 +13093,10 @@ if ( (hasDarkTexture != 0) ) { \
 }; \
 NifStream( hasDetailTexture, out, version ); \
 if ( (hasDetailTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(detailTexture.source)], out, version ); \
+	if ( detailTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(detailTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( detailTexture.clampMode, out, version ); \
 	NifStream( detailTexture.filterMode, out, version ); \
 	NifStream( detailTexture.textureSet, out, version ); \
@@ -12760,7 +13120,10 @@ if ( (hasDetailTexture != 0) ) { \
 }; \
 NifStream( hasGlossTexture, out, version ); \
 if ( (hasGlossTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(glossTexture.source)], out, version ); \
+	if ( glossTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(glossTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( glossTexture.clampMode, out, version ); \
 	NifStream( glossTexture.filterMode, out, version ); \
 	NifStream( glossTexture.textureSet, out, version ); \
@@ -12784,7 +13147,10 @@ if ( (hasGlossTexture != 0) ) { \
 }; \
 NifStream( hasGlowTexture, out, version ); \
 if ( (hasGlowTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(glowTexture.source)], out, version ); \
+	if ( glowTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(glowTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( glowTexture.clampMode, out, version ); \
 	NifStream( glowTexture.filterMode, out, version ); \
 	NifStream( glowTexture.textureSet, out, version ); \
@@ -12808,7 +13174,10 @@ if ( (hasGlowTexture != 0) ) { \
 }; \
 NifStream( hasBumpMapTexture, out, version ); \
 if ( (hasBumpMapTexture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(bumpMapTexture.source)], out, version ); \
+	if ( bumpMapTexture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(bumpMapTexture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( bumpMapTexture.clampMode, out, version ); \
 	NifStream( bumpMapTexture.filterMode, out, version ); \
 	NifStream( bumpMapTexture.textureSet, out, version ); \
@@ -12835,7 +13204,10 @@ if ( (hasBumpMapTexture != 0) ) { \
 }; \
 NifStream( hasDecal0Texture, out, version ); \
 if ( (hasDecal0Texture != 0) ) { \
-	NifStream( link_map[StaticCast<NiObject>(decal0Texture.source)], out, version ); \
+	if ( decal0Texture.source != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(decal0Texture.source)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 	NifStream( decal0Texture.clampMode, out, version ); \
 	NifStream( decal0Texture.filterMode, out, version ); \
 	NifStream( decal0Texture.textureSet, out, version ); \
@@ -12862,7 +13234,10 @@ if ( (textureCount == 8) ) { \
 }; \
 if ( version >= 0x14000004 ) { \
 	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) { \
-		NifStream( link_map[StaticCast<NiObject>(decal1Texture.source)], out, version ); \
+		if ( decal1Texture.source != NULL ) \
+			NifStream( link_map[StaticCast<NiObject>(decal1Texture.source)], out, version ); \
+		else \
+			NifStream( 0xffffffff, out, version ); \
 		NifStream( decal1Texture.clampMode, out, version ); \
 		NifStream( decal1Texture.filterMode, out, version ); \
 		NifStream( decal1Texture.textureSet, out, version ); \
@@ -12890,7 +13265,10 @@ if ( version >= 0x0A000100 ) { \
 	for (uint i1 = 0; i1 < shaderTextures.size(); i1++) { \
 		NifStream( shaderTextures[i1].isUsed, out, version ); \
 		if ( (shaderTextures[i1].isUsed != 0) ) { \
-			NifStream( link_map[StaticCast<NiObject>(shaderTextures[i1].textureData.source)], out, version ); \
+			if ( shaderTextures[i1].textureData.source != NULL ) \
+				NifStream( link_map[StaticCast<NiObject>(shaderTextures[i1].textureData.source)], out, version ); \
+			else \
+				NifStream( 0xffffffff, out, version ); \
 			NifStream( shaderTextures[i1].textureData.clampMode, out, version ); \
 			NifStream( shaderTextures[i1].textureData.filterMode, out, version ); \
 			NifStream( shaderTextures[i1].textureData.textureSet, out, version ); \
@@ -13320,7 +13698,10 @@ if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) { \
 		NifStream( unknownBytes[i1], out, version ); \
 	}; \
 }; \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_TRANSFORM_INTERPOLATOR_STRING \
 stringstream out; \
@@ -13644,7 +14025,10 @@ link_stack.push_back( block_num ); \
 #define NI_U_V_CONTROLLER_WRITE \
 NiTimeController::Write( out, link_map, version, user_version ); \
 NifStream( unknownShort, out, version ); \
-NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+if ( data != NULL ) \
+	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+else \
+	NifStream( 0xffffffff, out, version ); \
 
 #define NI_U_V_CONTROLLER_STRING \
 stringstream out; \
@@ -13880,7 +14264,10 @@ if ( version <= 0x0A010000 ) { \
 #define NI_VIS_CONTROLLER_WRITE \
 NiSingleInterpolatorController::Write( out, link_map, version, user_version ); \
 if ( version <= 0x0A010000 ) { \
-	NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
 }; \
 
 #define NI_VIS_CONTROLLER_STRING \

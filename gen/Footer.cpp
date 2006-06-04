@@ -23,7 +23,10 @@ void Footer::Read( istream& in, list<uint> & link_stack, unsigned int version, u
 void Footer::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NifStream( numRoots, out, version );
 	for (uint i1 = 0; i1 < roots.size(); i1++) {
-		NifStream( link_map[StaticCast<NiObject>(roots[i1])], out, version );
+		if ( roots[i1] != NULL )
+			NifStream( link_map[StaticCast<NiObject>(roots[i1])], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
 	};
 }
 
