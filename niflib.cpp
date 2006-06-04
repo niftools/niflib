@@ -490,7 +490,7 @@ void EnumerateObjects( NiObjectRef const & root, map<Type,uint> & type_map, map<
 	
 	//Call this function on all links of this object
 	
-	list<NiObjectRef> links = root->GetLinks();
+	list<NiObjectRef> links = root->GetRefs();
 	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
 		EnumerateObjects( *it, type_map, link_map );
 	}
@@ -529,7 +529,7 @@ NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & type ) {
 		return root;
 	}
 
-	list<NiObjectRef> links = root->GetLinks();
+	list<NiObjectRef> links = root->GetRefs();
 	for (list <NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
 		// Can no longer guarantee that some objects won't be visited twice.  Oh well.
 		NiObjectRef result = GetObjectByType( *it, type );
@@ -548,7 +548,7 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
 	if ( root->IsSameType(type) ) {
 		result.push_back( root );
 	}
-	list<NiObjectRef> links = root->GetLinks();
+	list<NiObjectRef> links = root->GetRefs();
 	for (list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
 		// Can no longer guarantee that some objects won't be visited twice.  Oh well.
 		list<NiObjectRef> childresult = GetAllObjectsByType( *it, type );
@@ -561,7 +561,7 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
 //list<NiObjectRef> GetNifTree( NiObjectRef const & root_block ) {
 //	list<NiObjectRef> result;
 //	result.push_back( root_block );
-//	list<NiObjectRef> links = root_block->GetLinks();
+//	list<NiObjectRef> links = root_block->GetRefs();
 //	for (list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
 //		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
 //			list<NiObjectRef> childresult = GetNifTree( *it );
@@ -738,7 +738,7 @@ void ReassignTreeCrossRefs( map<string,NiAVObjectRef> & name_map, NiAVObjectRef 
 	////Reassign any cross references on this block
 	//((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
 
-	//list<NiObjectRef> links = par->GetLinks();
+	//list<NiObjectRef> links = par->GetRefs();
 	//for (list <NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
 	//	// if the link is not null, and if the child's first parent is root_block
 	//	// (this makes sure we only check every child once, even if it is shared by multiple parents),

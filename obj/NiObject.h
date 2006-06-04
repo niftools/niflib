@@ -113,16 +113,16 @@ public:
 	 * <b>Example:</b> 
 	 * \code
 	 * blk_ref my_block = ReadNifTree("test_in.nif");
-	 * list<blk_ref> attr_list = my_block->GetLinks();
+	 * list<blk_ref> attr_list = my_block->GetRefs();
 	 * \endcode
 	 * 
 	 * <b>In Python:</b>
 	 * \code
 	 * my_block = ReadNifTree("test_in.nif")
-	 * attr_list = my_block.GetLinks()
+	 * attr_list = my_block.GetRefs()
 	 * \endcode
 	 */
-	virtual list<NiObjectRef> GetLinks();
+	virtual list<NiObjectRef> GetRefs();
 	
 	// Python Operator Overloads
 	string __str__() const {
