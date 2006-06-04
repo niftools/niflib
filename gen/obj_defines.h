@@ -13943,4 +13943,174 @@ list<Ref<NiObject> > refs; \
 refs = NiNode::GetRefs(); \
 return refs; \
 
+#define HEADER_READ \
+NifStream( headerString, in, version ); \
+NifStream( version, in, version ); \
+if ( version >= 0x14000004 ) { \
+	NifStream( endianType, in, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+	NifStream( userVersion, in, version ); \
+}; \
+NifStream( numBlocks, in, version ); \
+if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) { \
+	NifStream( unknownInt1, in, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+	if ( (userVersion != 0) ) { \
+		NifStream( unknownInt3, in, version ); \
+	}; \
+}; \
+if ( version >= 0x0A000102 ) { \
+	if ( (userVersion != 0) ) { \
+		NifStream( creator_.length, in, version ); \
+		creator_.value.resize(creator_.length); \
+		for (uint i2 = 0; i2 < creator_.value.size(); i2++) { \
+			NifStream( creator_.value[i2], in, version ); \
+		}; \
+		NifStream( exportType_.length, in, version ); \
+		exportType_.value.resize(exportType_.length); \
+		for (uint i2 = 0; i2 < exportType_.value.size(); i2++) { \
+			NifStream( exportType_.value[i2], in, version ); \
+		}; \
+		NifStream( exportScript_.length, in, version ); \
+		exportScript_.value.resize(exportScript_.length); \
+		for (uint i2 = 0; i2 < exportScript_.value.size(); i2++) { \
+			NifStream( exportScript_.value[i2], in, version ); \
+		}; \
+	}; \
+}; \
+if ( version >= 0x0A000100 ) { \
+	NifStream( numBlockTypes, in, version ); \
+	blockTypes.resize(numBlockTypes); \
+	for (uint i1 = 0; i1 < blockTypes.size(); i1++) { \
+		NifStream( blockTypes[i1], in, version ); \
+	}; \
+	blockTypeIndex.resize(numBlocks); \
+	for (uint i1 = 0; i1 < blockTypeIndex.size(); i1++) { \
+		NifStream( blockTypeIndex[i1], in, version ); \
+	}; \
+	NifStream( unknownInt2, in, version ); \
+}; \
+
+#define HEADER_WRITE \
+NifStream( headerString, out, version ); \
+NifStream( version, out, version ); \
+if ( version >= 0x14000004 ) { \
+	NifStream( endianType, out, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+	NifStream( userVersion, out, version ); \
+}; \
+NifStream( numBlocks, out, version ); \
+if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) { \
+	NifStream( unknownInt1, out, version ); \
+}; \
+if ( version >= 0x0A010000 ) { \
+	if ( (userVersion != 0) ) { \
+		NifStream( unknownInt3, out, version ); \
+	}; \
+}; \
+if ( version >= 0x0A000102 ) { \
+	if ( (userVersion != 0) ) { \
+		NifStream( creator_.length, out, version ); \
+		for (uint i2 = 0; i2 < creator_.value.size(); i2++) { \
+			NifStream( creator_.value[i2], out, version ); \
+		}; \
+		NifStream( exportType_.length, out, version ); \
+		for (uint i2 = 0; i2 < exportType_.value.size(); i2++) { \
+			NifStream( exportType_.value[i2], out, version ); \
+		}; \
+		NifStream( exportScript_.length, out, version ); \
+		for (uint i2 = 0; i2 < exportScript_.value.size(); i2++) { \
+			NifStream( exportScript_.value[i2], out, version ); \
+		}; \
+	}; \
+}; \
+if ( version >= 0x0A000100 ) { \
+	NifStream( numBlockTypes, out, version ); \
+	for (uint i1 = 0; i1 < blockTypes.size(); i1++) { \
+		NifStream( blockTypes[i1], out, version ); \
+	}; \
+	for (uint i1 = 0; i1 < blockTypeIndex.size(); i1++) { \
+		NifStream( blockTypeIndex[i1], out, version ); \
+	}; \
+	NifStream( unknownInt2, out, version ); \
+}; \
+
+#define HEADER_STRING \
+out << "Header String:  " << headerString << endl; \
+out << "Version:  " << version << endl; \
+out << "Endian Type:  " << endianType << endl; \
+out << "User Version:  " << userVersion << endl; \
+out << "Num Blocks:  " << numBlocks << endl; \
+out << "Unknown Int 1:  " << unknownInt1 << endl; \
+if ( (userVersion != 0) ) { \
+	out << "  Unknown Int 3:  " << unknownInt3 << endl; \
+	out << "  Length:  " << creator_.length << endl; \
+	for (uint i1 = 0; i1 < creator_.value.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
+		out << "    Value[" << i1 << "]:  " << creator_.value[i1] << endl; \
+	}; \
+	out << "  Length:  " << exportType_.length << endl; \
+	for (uint i1 = 0; i1 < exportType_.value.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
+		out << "    Value[" << i1 << "]:  " << exportType_.value[i1] << endl; \
+	}; \
+	out << "  Length:  " << exportScript_.length << endl; \
+	for (uint i1 = 0; i1 < exportScript_.value.size(); i1++) { \
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+			break; \
+		}; \
+		out << "    Value[" << i1 << "]:  " << exportScript_.value[i1] << endl; \
+	}; \
+}; \
+out << "Num Block Types:  " << numBlockTypes << endl; \
+for (uint i0 = 0; i0 < blockTypes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
+	out << "  Block Types[" << i0 << "]:  " << blockTypes[i0] << endl; \
+}; \
+for (uint i0 = 0; i0 < blockTypeIndex.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
+	out << "  Block Type Index[" << i0 << "]:  " << blockTypeIndex[i0] << endl; \
+}; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
+
+#define FOOTER_READ \
+NifStream( numRoots, in, version ); \
+roots.resize(numRoots); \
+for (uint i0 = 0; i0 < roots.size(); i0++) { \
+	NifStream( block_num, in, version ); \
+	link_stack.push_back( block_num ); \
+}; \
+
+#define FOOTER_WRITE \
+NifStream( numRoots, out, version ); \
+for (uint i0 = 0; i0 < roots.size(); i0++) { \
+	NifStream( link_map[StaticCast<NiObject>(roots[i0])], out, version ); \
+}; \
+
+#define FOOTER_STRING \
+out << "Num Roots:  " << numRoots << endl; \
+for (uint i0 = 0; i0 < roots.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
+	out << "  Roots[" << i0 << "]:  " << roots[i0] << endl; \
+}; \
+
 #endif
