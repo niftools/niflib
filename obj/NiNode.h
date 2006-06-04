@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NINODE_H_
 
 #include "NiAVObject.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiAVObject.h"
-#include "obj/NiDynamicEffect.h"
+class NiAVObject;
+class NiDynamicEffect;
 
 #include "gen/obj_defines.h"
 

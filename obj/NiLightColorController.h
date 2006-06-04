@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NILIGHTCOLORCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPosData.h"
-#include "obj/NiPoint3Interpolator.h"
+class NiPosData;
+class NiPoint3Interpolator;
 
 #include "gen/obj_defines.h"
 

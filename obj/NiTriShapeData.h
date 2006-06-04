@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITRISHAPEDATA_H_
 
 #include "NiTriBasedGeomData.h"
+// Include structures
 #include "gen/MatchGroup.h"
 
 #include "gen/obj_defines.h"

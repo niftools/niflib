@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _FOOTER_H_
 
 #include "NIF_IO.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiAVObject.h"
+class NiAVObject;
 
 /*!
  * The NIF file footer.

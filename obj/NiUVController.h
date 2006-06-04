@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIUVCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiUVData.h"
+class NiUVData;
 
 #include "gen/obj_defines.h"
 

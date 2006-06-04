@@ -4,6 +4,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiSkinInstance.h"
 #include "gen/Bones.h"
 #include "obj/NiNode.h"
+#include "obj/NiSkinData.h"
+#include "obj/NiSkinPartition.h"
 #include "obj/NiNode.h"
 
 //Definition of TYPE constant

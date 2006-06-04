@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIVISCONTROLLER_H_
 
 #include "NiSingleInterpolatorController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiVisData.h"
+class NiVisData;
 
 #include "gen/obj_defines.h"
 

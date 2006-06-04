@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIKEYFRAMEDATA_H_
 
 #include "AKeyedData.h"
+// Include structures
 #include "gen/KeyGroup.h"
 
 #include "gen/obj_defines.h"

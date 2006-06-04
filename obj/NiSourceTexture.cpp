@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiSourceTexture.h"
+#include "obj/NiObject.h"
+#include "obj/NiPixelData.h"
 
 //Definition of TYPE constant
 const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TYPE );

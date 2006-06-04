@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiTransformInterpolator.h"
+#include "obj/NiTransformData.h"
 
 //Definition of TYPE constant
 const Type NiTransformInterpolator::TYPE("NiTransformInterpolator", &NI_TRANSFORM_INTERPOLATOR_PARENT::TYPE );

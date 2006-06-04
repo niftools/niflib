@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiCollisionObject.h"
 #include "obj/NiAVObject.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiCollisionObject::TYPE("NiCollisionObject", &NI_COLLISION_OBJECT_PARENT::TYPE );

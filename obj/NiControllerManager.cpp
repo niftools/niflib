@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiControllerManager.h"
+#include "obj/NiControllerSequence.h"
+#include "obj/NiDefaultAVObjectPalette.h"
 
 //Definition of TYPE constant
 const Type NiControllerManager::TYPE("NiControllerManager", &NI_CONTROLLER_MANAGER_PARENT::TYPE );

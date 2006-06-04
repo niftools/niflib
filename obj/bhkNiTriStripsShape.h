@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKNITRISTRIPSSHAPE_H_
 
 #include "bhkSphereRepShape.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiTriStripsData.h"
+class NiTriStripsData;
 
 #include "gen/obj_defines.h"
 

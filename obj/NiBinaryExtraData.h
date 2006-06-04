@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIBINARYEXTRADATA_H_
 
 #include "NiExtraData.h"
+// Include structures
 #include "gen/ByteArray.h"
 
 #include "gen/obj_defines.h"

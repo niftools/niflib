@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiParticleSystem.h"
+#include "obj/NiPSysModifier.h"
 
 //Definition of TYPE constant
 const Type NiParticleSystem::TYPE("NiParticleSystem", &NI_PARTICLE_SYSTEM_PARENT::TYPE );

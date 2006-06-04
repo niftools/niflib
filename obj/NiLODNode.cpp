@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiLODNode.h"
 #include "gen/LODRange.h"
+#include "obj/NiRangeLODData.h"
 
 //Definition of TYPE constant
 const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TYPE );

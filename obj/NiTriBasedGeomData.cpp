@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiTriBasedGeomData.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiTriBasedGeomData::TYPE("NiTriBasedGeomData", &NI_TRI_BASED_GEOM_DATA_PARENT::TYPE );

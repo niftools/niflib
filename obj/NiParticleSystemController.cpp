@@ -3,6 +3,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiParticleSystemController.h"
 #include "gen/Particle.h"
+#include "obj/NiObject.h"
+#include "obj/AParticleModifier.h"
 
 //Definition of TYPE constant
 const Type NiParticleSystemController::TYPE("NiParticleSystemController", &NI_PARTICLE_SYSTEM_CONTROLLER_PARENT::TYPE );

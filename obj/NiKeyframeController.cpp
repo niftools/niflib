@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiKeyframeController.h"
+#include "obj/NiKeyframeData.h"
 
 //Definition of TYPE constant
 const Type NiKeyframeController::TYPE("NiKeyframeController", &NI_KEYFRAME_CONTROLLER_PARENT::TYPE );

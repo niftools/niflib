@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiLightColorController.h"
+#include "obj/NiPosData.h"
+#include "obj/NiPoint3Interpolator.h"
 
 //Definition of TYPE constant
 const Type NiLightColorController::TYPE("NiLightColorController", &NI_LIGHT_COLOR_CONTROLLER_PARENT::TYPE );

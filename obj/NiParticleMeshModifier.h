@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPARTICLEMESHMODIFIER_H_
 
 #include "AParticleModifier.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiTriBasedGeom.h"
+class NiTriBasedGeom;
 
 #include "gen/obj_defines.h"
 

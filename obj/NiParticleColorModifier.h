@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPARTICLECOLORMODIFIER_H_
 
 #include "AParticleModifier.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiColorData.h"
+class NiColorData;
 
 #include "gen/obj_defines.h"
 

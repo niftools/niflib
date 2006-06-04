@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/TexSource.h"
+#include "obj/NiObject.h"
+#include "obj/NiPixelData.h"
 
 //Constructor
 TexSource::TexSource() : useExternal((byte)0), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL) {};

@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITRIBASEDGEOMDATA_H_
 
 #include "NiObject.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiObject.h"
+class NiObject;
 
 #include "gen/obj_defines.h"
 

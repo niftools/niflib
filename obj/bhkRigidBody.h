@@ -5,9 +5,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKRIGIDBODY_H_
 
 #include "bhkEntity.h"
+// Include structures
 #include "gen/QuaternionXYZW.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/AbhkConstraint.h"
+class AbhkConstraint;
 
 #include "gen/obj_defines.h"
 

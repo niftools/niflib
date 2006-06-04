@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIDEFAULTAVOBJECTPALETTE_H_
 
 #include "NiObject.h"
+// Include structures
 #include "gen/AVObject.h"
 
 #include "gen/obj_defines.h"

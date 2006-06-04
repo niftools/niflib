@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiCamera.h"
+#include "obj/NiObject.h"
 
 //Definition of TYPE constant
 const Type NiCamera::TYPE("NiCamera", &NI_CAMERA_PARENT::TYPE );

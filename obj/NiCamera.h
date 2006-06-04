@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NICAMERA_H_
 
 #include "NiAVObject.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiObject.h"
+class NiObject;
 
 #include "gen/obj_defines.h"
 

@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIGEOMMORPHERCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiMorphData.h"
-#include "obj/NiInterpolator.h"
+class NiMorphData;
+class NiInterpolator;
 
 #include "gen/obj_defines.h"
 

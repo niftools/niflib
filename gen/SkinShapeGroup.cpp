@@ -3,6 +3,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/SkinShapeGroup.h"
 #include "gen/SkinShape.h"
+#include "obj/NiTriShape.h"
+#include "obj/NiSkinInstance.h"
 
 //Constructor
 SkinShapeGroup::SkinShapeGroup() : numLinkPairs((uint)0) {};

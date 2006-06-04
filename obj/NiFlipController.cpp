@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiFlipController.h"
+#include "obj/NiSourceTexture.h"
 
 //Definition of TYPE constant
 const Type NiFlipController::TYPE("NiFlipController", &NI_FLIP_CONTROLLER_PARENT::TYPE );

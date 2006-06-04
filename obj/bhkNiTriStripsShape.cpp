@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/bhkNiTriStripsShape.h"
+#include "obj/NiTriStripsData.h"
 
 //Definition of TYPE constant
 const Type bhkNiTriStripsShape::TYPE("bhkNiTriStripsShape", &BHK_NI_TRI_STRIPS_SHAPE_PARENT::TYPE );

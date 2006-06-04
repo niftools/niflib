@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _TEXSOURCE_H_
 
 #include "NIF_IO.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiObject.h"
-#include "obj/NiPixelData.h"
+class NiObject;
+class NiPixelData;
 
 /*!
  * A texture source.

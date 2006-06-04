@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITEXTURINGPROPERTY_H_
 
 #include "NiProperty.h"
+// Include structures
 #include "gen/TexDesc.h"
 #include "gen/ShaderTexDesc.h"
 

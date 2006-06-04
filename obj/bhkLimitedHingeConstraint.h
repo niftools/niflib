@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKLIMITEDHINGECONSTRAINT_H_
 
 #include "AbhkConstraint.h"
+// Include structures
 #include "gen/LimitedHingeDescriptor.h"
 
 #include "gen/obj_defines.h"

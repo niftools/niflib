@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiPathController.h"
+#include "obj/NiPosData.h"
+#include "obj/NiFloatData.h"
 
 //Definition of TYPE constant
 const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TYPE );

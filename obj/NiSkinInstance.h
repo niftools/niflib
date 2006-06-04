@@ -5,10 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NISKININSTANCE_H_
 
 #include "NiObject.h"
-#include "Ref.h"
-#include "obj/NiSkinData.h"
-#include "obj/NiSkinPartition.h"
+// Include structures
 #include "gen/Bones.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
+class NiSkinData;
+class NiSkinPartition;
 class NiNode;
 
 #include "gen/obj_defines.h"

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "gen/NodeGroup.h"
+#include "obj/NiNode.h"
 
 //Constructor
 NodeGroup::NodeGroup() : numNodes((uint)0) {};

@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BSFURNITUREMARKER_H_
 
 #include "NiExtraData.h"
+// Include structures
 #include "gen/FurniturePosition.h"
 
 #include "gen/obj_defines.h"

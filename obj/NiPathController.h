@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPATHCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPosData.h"
-#include "obj/NiFloatData.h"
+class NiPosData;
+class NiFloatData;
 
 #include "gen/obj_defines.h"
 

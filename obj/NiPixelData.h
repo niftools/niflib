@@ -5,10 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPIXELDATA_H_
 
 #include "NiObject.h"
-#include "Ref.h"
-#include "obj/NiPalette.h"
+// Include structures
 #include "gen/MipMap.h"
 #include "gen/ByteArray.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
+class NiPalette;
 
 #include "gen/obj_defines.h"
 

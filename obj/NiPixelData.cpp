@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiPixelData.h"
 #include "gen/MipMap.h"
 #include "gen/ByteArray.h"
+#include "obj/NiPalette.h"
 
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NI_PIXEL_DATA_PARENT::TYPE );

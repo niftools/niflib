@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BSKEYFRAMECONTROLLER_H_
 
 #include "NiKeyframeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiKeyframeData.h"
+class NiKeyframeData;
 
 #include "gen/obj_defines.h"
 

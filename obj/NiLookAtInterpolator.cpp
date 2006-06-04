@@ -2,6 +2,9 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiLookAtInterpolator.h"
+#include "obj/NiNode.h"
+#include "obj/NiPoint3Interpolator.h"
+#include "obj/NiFloatInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiLookAtInterpolator::TYPE("NiLookAtInterpolator", &NI_LOOK_AT_INTERPOLATOR_PARENT::TYPE );

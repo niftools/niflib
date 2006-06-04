@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITEXTUREEFFECT_H_
 
 #include "NiDynamicEffect.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiSourceTexture.h"
+class NiSourceTexture;
 
 #include "gen/obj_defines.h"
 

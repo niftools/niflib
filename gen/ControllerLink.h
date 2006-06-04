@@ -5,10 +5,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _CONTROLLERLINK_H_
 
 #include "NIF_IO.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiInterpolator.h"
-#include "obj/NiObject.h"
-#include "obj/NiStringPalette.h"
+class NiInterpolator;
+class NiObject;
+class NiStringPalette;
 
 /*!
  * In a .kf file, this links to a controllable block, via its name (or

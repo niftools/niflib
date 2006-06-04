@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPSYSCOLLIDERMANAGER_H_
 
 #include "NiPSysModifier.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPSysPlanarCollider.h"
+class NiPSysPlanarCollider;
 
 #include "gen/obj_defines.h"
 

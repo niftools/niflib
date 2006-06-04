@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _SKINSHAPE_H_
 
 #include "NIF_IO.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiTriShape.h"
-#include "obj/NiSkinInstance.h"
+class NiTriShape;
+class NiSkinInstance;
 
 /*!
  * Reference to shape and skin instance.

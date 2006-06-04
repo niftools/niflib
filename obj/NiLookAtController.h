@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NILOOKATCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiNode.h"
+class NiNode;
 
 #include "gen/obj_defines.h"
 

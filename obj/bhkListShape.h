@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKLISTSHAPE_H_
 
 #include "AbhkShapeCollection.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/bhkShape.h"
+class bhkShape;
 
 #include "gen/obj_defines.h"
 

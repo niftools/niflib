@@ -3,15 +3,24 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiTexturingProperty.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 #include "gen/ShaderTexDesc.h"
 #include "gen/TexDesc.h"
+#include "obj/NiSourceTexture.h"
 
 //Definition of TYPE constant
 const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TYPE );

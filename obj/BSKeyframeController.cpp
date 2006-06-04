@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/BSKeyframeController.h"
+#include "obj/NiKeyframeData.h"
 
 //Definition of TYPE constant
 const Type BSKeyframeController::TYPE("BSKeyframeController", &B_S_KEYFRAME_CONTROLLER_PARENT::TYPE );

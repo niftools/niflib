@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _ABONELODCONTROLLER_H_
 
 #include "NiTimeController.h"
+// Include structures
 #include "gen/NodeGroup.h"
 
 #include "gen/obj_defines.h"

@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIBSPLINECOMPTRANSFORMINTERPOLATOR_H_
 
 #include "NiBSplineInterpolator.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiBSplineData.h"
-#include "obj/NiBSplineBasisData.h"
+class NiBSplineData;
+class NiBSplineBasisData;
 
 #include "gen/obj_defines.h"
 

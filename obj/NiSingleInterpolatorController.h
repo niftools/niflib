@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NISINGLEINTERPOLATORCONTROLLER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiInterpolator.h"
+class NiInterpolator;
 
 #include "gen/obj_defines.h"
 

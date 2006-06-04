@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPARTICLESYSTEM_H_
 
 #include "NiParticles.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPSysModifier.h"
+class NiPSysModifier;
 
 #include "gen/obj_defines.h"
 

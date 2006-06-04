@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIFLOATINTERPOLATOR_H_
 
 #include "NiInterpolator.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiFloatData.h"
+class NiFloatData;
 
 #include "gen/obj_defines.h"
 

@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPOINT3INTERPOLATOR_H_
 
 #include "NiInterpolator.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPosData.h"
+class NiPosData;
 
 #include "gen/obj_defines.h"
 

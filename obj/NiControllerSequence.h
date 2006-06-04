@@ -5,11 +5,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NICONTROLLERSEQUENCE_H_
 
 #include "NiObject.h"
+// Include structures
 #include "gen/ControllerLink.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiTextKeyExtraData.h"
-#include "obj/NiStringPalette.h"
+class NiTextKeyExtraData;
 class NiControllerManager;
+class NiStringPalette;
 
 #include "gen/obj_defines.h"
 

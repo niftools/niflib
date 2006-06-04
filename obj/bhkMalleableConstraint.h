@@ -5,10 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKMALLEABLECONSTRAINT_H_
 
 #include "AbhkConstraint.h"
-#include "Ref.h"
-#include "obj/NiObject.h"
+// Include structures
 #include "gen/RagDollDescriptor.h"
 #include "gen/LimitedHingeDescriptor.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
+class NiObject;
 
 #include "gen/obj_defines.h"
 

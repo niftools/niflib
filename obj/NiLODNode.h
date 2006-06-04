@@ -5,9 +5,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NILODNODE_H_
 
 #include "NiNode.h"
+// Include structures
 #include "gen/LODRange.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiRangeLODData.h"
+class NiRangeLODData;
 
 #include "gen/obj_defines.h"
 

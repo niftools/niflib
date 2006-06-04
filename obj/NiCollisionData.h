@@ -5,6 +5,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NICOLLISIONDATA_H_
 
 #include "NiObject.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
 class NiNode;
 
 #include "gen/obj_defines.h"

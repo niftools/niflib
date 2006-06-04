@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiNode.h"
+#include "obj/NiAVObject.h"
+#include "obj/NiDynamicEffect.h"
 
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );

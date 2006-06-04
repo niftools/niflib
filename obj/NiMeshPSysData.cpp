@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiMeshPSysData.h"
+#include "obj/AParticleModifier.h"
+#include "obj/NiNode.h"
 
 //Definition of TYPE constant
 const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NI_MESH_P_SYS_DATA_PARENT::TYPE );

@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIMESHPSYSDATA_H_
 
 #include "APSysData.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/AParticleModifier.h"
-#include "obj/NiNode.h"
+class AParticleModifier;
+class NiNode;
 
 #include "gen/obj_defines.h"
 

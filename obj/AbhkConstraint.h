@@ -5,6 +5,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _ABHKCONSTRAINT_H_
 
 #include "bhkSerializable.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
 class bhkShape;
 
 #include "gen/obj_defines.h"

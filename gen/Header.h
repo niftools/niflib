@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _HEADER_H_
 
 #include "NIF_IO.h"
+// Include structures
 #include "gen/ShortString.h"
 
 /*!

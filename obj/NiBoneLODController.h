@@ -5,9 +5,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIBONELODCONTROLLER_H_
 
 #include "ABoneLODController.h"
+// Include structures
 #include "gen/SkinShapeGroup.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiTriShape.h"
+class NiTriShape;
 
 #include "gen/obj_defines.h"
 

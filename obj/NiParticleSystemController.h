@@ -5,10 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPARTICLESYSTEMCONTROLLER_H_
 
 #include "NiTimeController.h"
-#include "Ref.h"
-#include "obj/NiObject.h"
+// Include structures
 #include "gen/Particle.h"
-#include "obj/AParticleModifier.h"
+
+// Forward define of referenced blocks
+#include "Ref.h"
+class NiObject;
+class AParticleModifier;
 
 #include "gen/obj_defines.h"
 

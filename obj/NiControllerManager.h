@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NICONTROLLERMANAGER_H_
 
 #include "NiTimeController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiControllerSequence.h"
-#include "obj/NiDefaultAVObjectPalette.h"
+class NiControllerSequence;
+class NiDefaultAVObjectPalette;
 
 #include "gen/obj_defines.h"
 

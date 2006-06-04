@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiPSysMeshEmitter.h"
+#include "obj/NiTriBasedGeom.h"
 
 //Definition of TYPE constant
 const Type NiPSysMeshEmitter::TYPE("NiPSysMeshEmitter", &NI_P_SYS_MESH_EMITTER_PARENT::TYPE );

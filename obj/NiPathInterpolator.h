@@ -5,9 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPATHINTERPOLATOR_H_
 
 #include "NiBlendInterpolator.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPosData.h"
-#include "obj/NiFloatData.h"
+class NiPosData;
+class NiFloatData;
 
 #include "gen/obj_defines.h"
 

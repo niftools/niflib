@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIMATERIALCOLORCONTROLLER_H_
 
 #include "NiSingleInterpolatorController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiPosData.h"
+class NiPosData;
 
 #include "gen/obj_defines.h"
 

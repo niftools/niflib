@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/bhkEntity.h"
+#include "obj/bhkShape.h"
 
 //Definition of TYPE constant
 const Type bhkEntity::TYPE("bhkEntity", &BHK_ENTITY_PARENT::TYPE );

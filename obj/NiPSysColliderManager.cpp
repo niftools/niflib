@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/NiPSysColliderManager.h"
+#include "obj/NiPSysPlanarCollider.h"
 
 //Definition of TYPE constant
 const Type NiPSysColliderManager::TYPE("NiPSysColliderManager", &NI_P_SYS_COLLIDER_MANAGER_PARENT::TYPE );

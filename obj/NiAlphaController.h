@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIALPHACONTROLLER_H_
 
 #include "NiSingleInterpolatorController.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/NiFloatData.h"
+class NiFloatData;
 
 #include "gen/obj_defines.h"
 

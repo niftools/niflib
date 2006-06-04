@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "obj/bhkRigidBody.h"
 #include "gen/QuaternionXYZW.h"
+#include "obj/AbhkConstraint.h"
 
 //Definition of TYPE constant
 const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TYPE );

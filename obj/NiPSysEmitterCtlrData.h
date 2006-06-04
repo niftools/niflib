@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPSYSEMITTERCTLRDATA_H_
 
 #include "NiObject.h"
+// Include structures
 #include "gen/KeyGroup.h"
 
 #include "gen/obj_defines.h"

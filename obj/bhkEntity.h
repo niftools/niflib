@@ -5,8 +5,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKENTITY_H_
 
 #include "bhkWorldObject.h"
+
+// Forward define of referenced blocks
 #include "Ref.h"
-#include "obj/bhkShape.h"
+class bhkShape;
 
 #include "gen/obj_defines.h"
 
