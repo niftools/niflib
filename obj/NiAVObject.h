@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIAVOBJECT_H_
 
 // Includes
-#include "gen/BoundingBox.h"
+#include "../gen/BoundingBox.h"
 
 //Forward Defines
 class NiProperty;
@@ -13,7 +13,7 @@ class NiCollisionData;
 class NiCollisionObject;
 class NiNode;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 #include NI_A_V_OBJECT_INCLUDE
 
 /*
@@ -77,6 +77,11 @@ public:
 	void SetParent( Ref<NiNode> new_parent );
 
 	Ref<NiNode> GetParent() const;
+
+	void AddProperty( Ref<NiProperty> & obj );
+	void RemoveProperty( Ref<NiProperty> obj );
+	void ClearProperties();
+	vector< Ref<NiProperty> > GetProperties() const;
 
 private:
 	NI_A_V_OBJECT_MEMBERS

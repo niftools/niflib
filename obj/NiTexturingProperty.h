@@ -6,10 +6,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiProperty.h"
 // Include structures
-#include "gen/TexDesc.h"
-#include "gen/ShaderTexDesc.h"
+#include "../gen/TexDesc.h"
+#include "../gen/ShaderTexDesc.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiTexturingProperty;
 typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;

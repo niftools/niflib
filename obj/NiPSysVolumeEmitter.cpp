@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiPSysVolumeEmitter.h"
-#include "obj/NiNode.h"
+#include "NiPSysVolumeEmitter.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type NiPSysVolumeEmitter::TYPE("NiPSysVolumeEmitter", &NI_P_SYS_VOLUME_EMITTER_PARENT::TYPE );

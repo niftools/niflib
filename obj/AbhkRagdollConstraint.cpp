@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/AbhkRagdollConstraint.h"
+#include "AbhkRagdollConstraint.h"
 
 //Definition of TYPE constant
 const Type AbhkRagdollConstraint::TYPE("AbhkRagdollConstraint", &ABHK_RAGDOLL_CONSTRAINT_PARENT::TYPE );

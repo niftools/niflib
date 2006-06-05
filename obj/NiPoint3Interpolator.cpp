@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiPoint3Interpolator.h"
-#include "obj/NiPosData.h"
+#include "NiPoint3Interpolator.h"
+#include "NiPosData.h"
 
 //Definition of TYPE constant
 const Type NiPoint3Interpolator::TYPE("NiPoint3Interpolator", &NI_POINT3_INTERPOLATOR_PARENT::TYPE );

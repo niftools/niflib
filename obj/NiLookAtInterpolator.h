@@ -7,12 +7,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiInterpolator.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiNode;
 class NiPoint3Interpolator;
 class NiFloatInterpolator;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiLookAtInterpolator;
 typedef Ref<NiLookAtInterpolator> NiLookAtInterpolatorRef;

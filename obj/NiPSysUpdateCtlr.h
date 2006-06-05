@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysUpdateCtlr;
 typedef Ref<NiPSysUpdateCtlr> NiPSysUpdateCtlrRef;

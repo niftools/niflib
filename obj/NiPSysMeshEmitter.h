@@ -7,10 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysEmitter.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiTriBasedGeom;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysMeshEmitter;
 typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;

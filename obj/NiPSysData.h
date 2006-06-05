@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "APSysData.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysData;
 typedef Ref<NiPSysData> NiPSysDataRef;

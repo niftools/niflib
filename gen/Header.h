@@ -4,10 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _HEADER_H_
 #define _HEADER_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 // Include structures
-#include "gen/ShortString.h"
-#include "obj/NiObject.h"
+#include "ShortString.h"
+#include "../obj/NiObject.h"
 
 /*!
  * The NIF file header.

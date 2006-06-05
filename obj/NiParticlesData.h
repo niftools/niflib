@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiAutoNormalParticlesData.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiParticlesData;
 typedef Ref<NiParticlesData> NiParticlesDataRef;

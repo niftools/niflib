@@ -1,12 +1,12 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiBoneLODController.h"
-#include "gen/SkinShapeGroup.h"
-#include "gen/SkinShape.h"
-#include "obj/NiTriShape.h"
-#include "obj/NiSkinInstance.h"
-#include "obj/NiTriShape.h"
+#include "NiBoneLODController.h"
+#include "../gen/SkinShapeGroup.h"
+#include "../gen/SkinShape.h"
+#include "NiTriShape.h"
+#include "NiSkinInstance.h"
+#include "NiTriShape.h"
 
 //Definition of TYPE constant
 const Type NiBoneLODController::TYPE("NiBoneLODController", &NI_BONE_L_O_D_CONTROLLER_PARENT::TYPE );

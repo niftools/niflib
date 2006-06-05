@@ -6,14 +6,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "AbhkConstraint.h"
 // Include structures
-#include "gen/RagDollDescriptor.h"
-#include "gen/LimitedHingeDescriptor.h"
+#include "../gen/RagDollDescriptor.h"
+#include "../gen/LimitedHingeDescriptor.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiObject;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class bhkMalleableConstraint;
 typedef Ref<bhkMalleableConstraint> bhkMalleableConstraintRef;

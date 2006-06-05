@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysVolumeEmitter.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysBoxEmitter;
 typedef Ref<NiPSysBoxEmitter> NiPSysBoxEmitterRef;

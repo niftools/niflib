@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiProperty.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiShadeProperty;
 typedef Ref<NiShadeProperty> NiShadePropertyRef;

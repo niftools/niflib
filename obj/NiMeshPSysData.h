@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "APSysData.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class AParticleModifier;
 class NiNode;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiMeshPSysData;
 typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;

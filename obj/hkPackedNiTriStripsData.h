@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "AbhkShapeCollection.h"
 // Include structures
-#include "gen/hkTriangle.h"
+#include "../gen/hkTriangle.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class hkPackedNiTriStripsData;
 typedef Ref<hkPackedNiTriStripsData> hkPackedNiTriStripsDataRef;

@@ -104,3 +104,26 @@ Ref<NiNode> NiAVObject::GetParent() const {
 void NiAVObject::ResetSkinnedFlag() {
 
 }
+
+void NiAVObject::AddProperty( Ref<NiProperty> & obj ) {
+	properties.push_back( obj );
+}
+
+void NiAVObject::RemoveProperty( Ref<NiProperty> obj ) {
+	//Search property list for the one to remove
+	for ( vector< NiPropertyRef >::iterator it = properties.begin(); it != properties.end(); ) {
+		if ( *it == obj ) {
+			it = properties.erase( it );
+		} else {
+			++it;
+		}
+	}
+}
+
+void NiAVObject::ClearProperties() {
+	properties.clear();
+}
+
+vector< Ref<NiProperty> > NiAVObject::GetProperties() const {
+	return properties;
+}

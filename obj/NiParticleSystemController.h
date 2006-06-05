@@ -6,14 +6,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
 // Include structures
-#include "gen/Particle.h"
+#include "../gen/Particle.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiObject;
 class AParticleModifier;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiParticleSystemController;
 typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;

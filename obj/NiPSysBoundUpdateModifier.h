@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysModifier.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysBoundUpdateModifier;
 typedef Ref<NiPSysBoundUpdateModifier> NiPSysBoundUpdateModifierRef;

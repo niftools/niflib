@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/bhkLimitedHingeConstraint.h"
-#include "gen/LimitedHingeDescriptor.h"
+#include "bhkLimitedHingeConstraint.h"
+#include "../gen/LimitedHingeDescriptor.h"
 
 //Definition of TYPE constant
 const Type bhkLimitedHingeConstraint::TYPE("bhkLimitedHingeConstraint", &BHK_LIMITED_HINGE_CONSTRAINT_PARENT::TYPE );

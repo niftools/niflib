@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _LODRANGE_H_
 #define _LODRANGE_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 
 
 /*!

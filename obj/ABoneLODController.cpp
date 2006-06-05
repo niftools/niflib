@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/ABoneLODController.h"
-#include "gen/NodeGroup.h"
-#include "obj/NiNode.h"
+#include "ABoneLODController.h"
+#include "../gen/NodeGroup.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type ABoneLODController::TYPE("ABoneLODController", &A_BONE_L_O_D_CONTROLLER_PARENT::TYPE );

@@ -6,15 +6,15 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
-#include "gen/Bones.h"
+#include "../gen/Bones.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiSkinData;
 class NiSkinPartition;
 class NiNode;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiSkinInstance;
 typedef Ref<NiSkinInstance> NiSkinInstanceRef;

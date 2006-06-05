@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAVObject.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiAVObject;
 class NiDynamicEffect;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiNode;
 typedef Ref<NiNode> NiNodeRef;

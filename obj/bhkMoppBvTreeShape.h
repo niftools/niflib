@@ -7,10 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkShape.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class bhkShape;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class bhkMoppBvTreeShape;
 typedef Ref<bhkMoppBvTreeShape> bhkMoppBvTreeShapeRef;

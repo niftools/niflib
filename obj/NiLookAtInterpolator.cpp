@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiLookAtInterpolator.h"
-#include "obj/NiNode.h"
-#include "obj/NiPoint3Interpolator.h"
-#include "obj/NiFloatInterpolator.h"
+#include "NiLookAtInterpolator.h"
+#include "NiNode.h"
+#include "NiPoint3Interpolator.h"
+#include "NiFloatInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiLookAtInterpolator::TYPE("NiLookAtInterpolator", &NI_LOOK_AT_INTERPOLATOR_PARENT::TYPE );

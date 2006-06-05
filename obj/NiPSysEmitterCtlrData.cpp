@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiPSysEmitterCtlrData.h"
-#include "gen/KeyGroup.h"
+#include "NiPSysEmitterCtlrData.h"
+#include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
 const Type NiPSysEmitterCtlrData::TYPE("NiPSysEmitterCtlrData", &NI_P_SYS_EMITTER_CTLR_DATA_PARENT::TYPE );

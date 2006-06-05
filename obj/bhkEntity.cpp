@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/bhkEntity.h"
-#include "obj/bhkShape.h"
+#include "bhkEntity.h"
+#include "bhkShape.h"
 
 //Definition of TYPE constant
 const Type bhkEntity::TYPE("bhkEntity", &BHK_ENTITY_PARENT::TYPE );

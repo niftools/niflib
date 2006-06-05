@@ -7,12 +7,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiPSysSpawnModifier;
 class NiObject;
 class NiNode;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysPlanarCollider;
 typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;

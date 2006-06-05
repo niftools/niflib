@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTriBasedGeomData.h"
 // Include structures
-#include "gen/MatchGroup.h"
+#include "../gen/MatchGroup.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiTriShapeData;
 typedef Ref<NiTriShapeData> NiTriShapeDataRef;

@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiTriBasedGeomData.h"
-#include "obj/NiObject.h"
+#include "NiTriBasedGeomData.h"
+#include "NiObject.h"
 
 //Definition of TYPE constant
 const Type NiTriBasedGeomData::TYPE("NiTriBasedGeomData", &NI_TRI_BASED_GEOM_DATA_PARENT::TYPE );

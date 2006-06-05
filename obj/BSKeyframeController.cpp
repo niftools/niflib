@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/BSKeyframeController.h"
-#include "obj/NiKeyframeData.h"
+#include "BSKeyframeController.h"
+#include "NiKeyframeData.h"
 
 //Definition of TYPE constant
 const Type BSKeyframeController::TYPE("BSKeyframeController", &B_S_KEYFRAME_CONTROLLER_PARENT::TYPE );

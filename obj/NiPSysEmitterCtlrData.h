@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
-#include "gen/KeyGroup.h"
+#include "../gen/KeyGroup.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysEmitterCtlrData;
 typedef Ref<NiPSysEmitterCtlrData> NiPSysEmitterCtlrDataRef;

@@ -6,13 +6,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "ABoneLODController.h"
 // Include structures
-#include "gen/SkinShapeGroup.h"
+#include "../gen/SkinShapeGroup.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiTriShape;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiBoneLODController;
 typedef Ref<NiBoneLODController> NiBoneLODControllerRef;

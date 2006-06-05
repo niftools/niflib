@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiParticleMeshModifier.h"
-#include "obj/NiTriBasedGeom.h"
+#include "NiParticleMeshModifier.h"
+#include "NiTriBasedGeom.h"
 
 //Definition of TYPE constant
 const Type NiParticleMeshModifier::TYPE("NiParticleMeshModifier", &NI_PARTICLE_MESH_MODIFIER_PARENT::TYPE );

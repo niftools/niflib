@@ -6,8 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #define MAXARRAYDUMP 20
 
-#include "NIF_IO.h"
-#include "Ref.h"
+#include "../NIF_IO.h"
+#include "../Ref.h"
 #include <iostream>
 #include <fstream>
 #include <vector>

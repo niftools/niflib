@@ -4,9 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _SKINSHAPEGROUP_H_
 #define _SKINSHAPEGROUP_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 // Include structures
-#include "gen/SkinShape.h"
+#include "SkinShape.h"
 
 /*!
  * Unknown.

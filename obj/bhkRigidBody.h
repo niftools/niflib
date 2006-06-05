@@ -6,13 +6,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkEntity.h"
 // Include structures
-#include "gen/QuaternionXYZW.h"
+#include "../gen/QuaternionXYZW.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class AbhkConstraint;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;

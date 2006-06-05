@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "APSysCtlr.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysModifierActiveCtlr;
 typedef Ref<NiPSysModifierActiveCtlr> NiPSysModifierActiveCtlrRef;

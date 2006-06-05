@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObjectNET.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiSequenceStreamHelper;
 typedef Ref<NiSequenceStreamHelper> NiSequenceStreamHelperRef;

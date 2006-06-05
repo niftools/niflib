@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiParticleColorModifier.h"
-#include "obj/NiColorData.h"
+#include "NiParticleColorModifier.h"
+#include "NiColorData.h"
 
 //Definition of TYPE constant
 const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &NI_PARTICLE_COLOR_MODIFIER_PARENT::TYPE );

@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiNode.h"
-#include "obj/NiAVObject.h"
-#include "obj/NiDynamicEffect.h"
+#include "NiNode.h"
+#include "NiAVObject.h"
+#include "NiDynamicEffect.h"
 
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );

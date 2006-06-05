@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBlendInterpolator.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiBlendPoint3Interpolator;
 typedef Ref<NiBlendPoint3Interpolator> NiBlendPoint3InterpolatorRef;

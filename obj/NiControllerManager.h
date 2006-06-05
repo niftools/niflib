@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTimeController.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiControllerSequence;
 class NiDefaultAVObjectPalette;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiControllerManager;
 typedef Ref<NiControllerManager> NiControllerManagerRef;

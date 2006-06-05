@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkEntity.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class bhkTransformShape;
 typedef Ref<bhkTransformShape> bhkTransformShapeRef;

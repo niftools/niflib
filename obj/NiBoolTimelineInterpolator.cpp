@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiBoolTimelineInterpolator.h"
-#include "obj/NiBoolData.h"
+#include "NiBoolTimelineInterpolator.h"
+#include "NiBoolData.h"
 
 //Definition of TYPE constant
 const Type NiBoolTimelineInterpolator::TYPE("NiBoolTimelineInterpolator", &NI_BOOL_TIMELINE_INTERPOLATOR_PARENT::TYPE );

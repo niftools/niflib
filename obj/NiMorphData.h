@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
-#include "gen/Morph.h"
+#include "../gen/Morph.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiMorphData;
 typedef Ref<NiMorphData> NiMorphDataRef;

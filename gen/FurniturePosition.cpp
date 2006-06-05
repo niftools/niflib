@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "gen/FurniturePosition.h"
+#include "FurniturePosition.h"
 
 //Constructor
 FurniturePosition::FurniturePosition() : orientation((ushort)0), positionRef1((byte)0), positionRef2((byte)0) {};

@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiExtraData.h"
 // Include structures
-#include "gen/ByteArray.h"
+#include "../gen/ByteArray.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiBinaryExtraData;
 typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;

@@ -7,12 +7,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAVObject.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiTriBasedGeomData;
 class NiSkinInstance;
 class NiObject;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiTriBasedGeom;
 typedef Ref<NiTriBasedGeom> NiTriBasedGeomRef;

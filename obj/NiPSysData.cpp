@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiPSysData.h"
+#include "NiPSysData.h"
 
 //Definition of TYPE constant
 const Type NiPSysData::TYPE("NiPSysData", &NI_P_SYS_DATA_PARENT::TYPE );

@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiParticleSystemController.h"
-#include "gen/Particle.h"
-#include "obj/NiObject.h"
-#include "obj/AParticleModifier.h"
+#include "NiParticleSystemController.h"
+#include "../gen/Particle.h"
+#include "NiObject.h"
+#include "AParticleModifier.h"
 
 //Definition of TYPE constant
 const Type NiParticleSystemController::TYPE("NiParticleSystemController", &NI_PARTICLE_SYSTEM_CONTROLLER_PARENT::TYPE );

@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
-#include "gen/LODRange.h"
+#include "../gen/LODRange.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiRangeLODData;
 typedef Ref<NiRangeLODData> NiRangeLODDataRef;

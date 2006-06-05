@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/BSFurnitureMarker.h"
-#include "gen/FurniturePosition.h"
+#include "BSFurnitureMarker.h"
+#include "../gen/FurniturePosition.h"
 
 //Definition of TYPE constant
 const Type BSFurnitureMarker::TYPE("BSFurnitureMarker", &B_S_FURNITURE_MARKER_PARENT::TYPE );

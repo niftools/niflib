@@ -6,14 +6,14 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
-#include "gen/MipMap.h"
-#include "gen/ByteArray.h"
+#include "../gen/MipMap.h"
+#include "../gen/ByteArray.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiPalette;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;

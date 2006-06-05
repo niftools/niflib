@@ -4,9 +4,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _SKINDATA_H_
 #define _SKINDATA_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 // Include structures
-#include "gen/SkinWeight.h"
+#include "SkinWeight.h"
 
 /*!
  * Skinning data component.

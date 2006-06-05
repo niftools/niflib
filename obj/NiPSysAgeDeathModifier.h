@@ -7,10 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysModifier.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiPSysSpawnModifier;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiPSysAgeDeathModifier;
 typedef Ref<NiPSysAgeDeathModifier> NiPSysAgeDeathModifierRef;

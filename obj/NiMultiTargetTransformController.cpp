@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiMultiTargetTransformController.h"
-#include "obj/NiNode.h"
+#include "NiMultiTargetTransformController.h"
+#include "NiNode.h"
 
 //Definition of TYPE constant
 const Type NiMultiTargetTransformController::TYPE("NiMultiTargetTransformController", &NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT::TYPE );

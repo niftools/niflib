@@ -6,13 +6,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiNode.h"
 // Include structures
-#include "gen/LODRange.h"
+#include "../gen/LODRange.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiRangeLODData;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiLODNode;
 typedef Ref<NiLODNode> NiLODNodeRef;

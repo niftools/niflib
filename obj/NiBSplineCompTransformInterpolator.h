@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiBSplineInterpolator.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiBSplineData;
 class NiBSplineBasisData;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiBSplineCompTransformInterpolator;
 typedef Ref<NiBSplineCompTransformInterpolator> NiBSplineCompTransformInterpolatorRef;

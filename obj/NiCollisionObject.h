@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiAVObject;
 class NiObject;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiCollisionObject;
 typedef Ref<NiCollisionObject> NiCollisionObjectRef;

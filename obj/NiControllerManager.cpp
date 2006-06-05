@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiControllerManager.h"
-#include "obj/NiControllerSequence.h"
-#include "obj/NiDefaultAVObjectPalette.h"
+#include "NiControllerManager.h"
+#include "NiControllerSequence.h"
+#include "NiDefaultAVObjectPalette.h"
 
 //Definition of TYPE constant
 const Type NiControllerManager::TYPE("NiControllerManager", &NI_CONTROLLER_MANAGER_PARENT::TYPE );

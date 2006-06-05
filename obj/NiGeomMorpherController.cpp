@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiGeomMorpherController.h"
-#include "obj/NiMorphData.h"
-#include "obj/NiInterpolator.h"
+#include "NiGeomMorpherController.h"
+#include "NiMorphData.h"
+#include "NiInterpolator.h"
 
 //Definition of TYPE constant
 const Type NiGeomMorpherController::TYPE("NiGeomMorpherController", &NI_GEOM_MORPHER_CONTROLLER_PARENT::TYPE );

@@ -7,11 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObjectNET.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiObject;
 class NiPixelData;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;

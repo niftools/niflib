@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/FxButton.h"
+#include "FxButton.h"
 
 //Definition of TYPE constant
 const Type FxButton::TYPE("FxButton", &FX_BUTTON_PARENT::TYPE );

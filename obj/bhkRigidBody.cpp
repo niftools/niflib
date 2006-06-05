@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/bhkRigidBody.h"
-#include "gen/QuaternionXYZW.h"
-#include "obj/AbhkConstraint.h"
+#include "bhkRigidBody.h"
+#include "../gen/QuaternionXYZW.h"
+#include "AbhkConstraint.h"
 
 //Definition of TYPE constant
 const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TYPE );

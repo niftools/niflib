@@ -1,18 +1,18 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiControllerSequence.h"
-#include "gen/ControllerLink.h"
-#include "obj/NiInterpolator.h"
-#include "obj/NiObject.h"
-#include "obj/NiStringPalette.h"
-#include "gen/ControllerLink.h"
-#include "obj/NiInterpolator.h"
-#include "obj/NiObject.h"
-#include "obj/NiStringPalette.h"
-#include "obj/NiTextKeyExtraData.h"
-#include "obj/NiControllerManager.h"
-#include "obj/NiStringPalette.h"
+#include "NiControllerSequence.h"
+#include "../gen/ControllerLink.h"
+#include "NiInterpolator.h"
+#include "NiObject.h"
+#include "NiStringPalette.h"
+#include "../gen/ControllerLink.h"
+#include "NiInterpolator.h"
+#include "NiObject.h"
+#include "NiStringPalette.h"
+#include "NiTextKeyExtraData.h"
+#include "NiControllerManager.h"
+#include "NiStringPalette.h"
 
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TYPE );

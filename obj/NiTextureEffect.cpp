@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiTextureEffect.h"
-#include "obj/NiSourceTexture.h"
+#include "NiTextureEffect.h"
+#include "NiSourceTexture.h"
 
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NI_TEXTURE_EFFECT_PARENT::TYPE );

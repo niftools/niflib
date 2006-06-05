@@ -4,10 +4,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NODEGROUP_H_
 #define _NODEGROUP_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiNode;
 
 /*!

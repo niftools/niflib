@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _MATCHGROUP_H_
 #define _MATCHGROUP_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 
 
 /*!

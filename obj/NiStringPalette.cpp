@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "obj/NiStringPalette.h"
-#include "gen/StringPalette.h"
+#include "NiStringPalette.h"
+#include "../gen/StringPalette.h"
 
 //Definition of TYPE constant
 const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TYPE );

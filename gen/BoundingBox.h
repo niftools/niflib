@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _BOUNDINGBOX_H_
 #define _BOUNDINGBOX_H_
 
-#include "NIF_IO.h"
+#include "../NIF_IO.h"
 
 
 /*!

@@ -6,9 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
 // Include structures
-#include "gen/NodeGroup.h"
+#include "../gen/NodeGroup.h"
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class ABoneLODController;
 typedef Ref<ABoneLODController> ABoneLODControllerRef;

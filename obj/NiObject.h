@@ -12,10 +12,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <list>
 #include <map>
 #include <vector>
-#include "NIF_IO.h"
-#include "Ref.h"
-#include "Type.h"
-#include "gen/obj_defines.h"
+#include "../NIF_IO.h"
+#include "../Ref.h"
+#include "../Type.h"
+#include "../gen/obj_defines.h"
 
 using namespace std;
 

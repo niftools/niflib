@@ -7,10 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSingleInterpolatorController.h"
 
 // Forward define of referenced blocks
-#include "Ref.h"
+#include "../Ref.h"
 class NiVisData;
 
-#include "gen/obj_defines.h"
+#include "../gen/obj_defines.h"
 
 class NiVisController;
 typedef Ref<NiVisController> NiVisControllerRef;
