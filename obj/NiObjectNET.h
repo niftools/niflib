@@ -11,11 +11,13 @@ class NiTimeController;
 #include "gen/obj_defines.h"
 #include NI_OBJECT_N_E_T_INCLUDE
 
+class NiObjectNET;
+class NiExtraData;
+class NiTimeController;
+
 /*
  * NiObjectNET - An object that has a name.  Can have extra data and controllers attatched.
  */
-
-class NiObjectNET;
 typedef Ref<NiObjectNET> NiObjectNETRef;
 
 class NiObjectNET : public NI_OBJECT_N_E_T_PARENT {
@@ -28,17 +30,28 @@ public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	/*!
-	 * Formats a human readable string that includes the type of the object
-	 * \return A string in the form:  address(type) {name}
-	 */
-	virtual string GetIDString();
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 
 	string GetName();
 	void SetName( string & new_name );
-	//TODO: pointer to extra data type... find out what that is.  AExtraData right now.  Need functions to add/remove.
+	/*!
+	 * Formats a human readable string that includes the type of the object
+	 * \return A string in the form:  address(type) {name}
+	 */
+	virtual string GetIDString();
+
+	void AddExtraData( Ref<NiExtraData> & obj, uint version = VER_10_0_1_0 );
+	void RemoveExtraData( Ref<NiExtraData> obj );
+	void ShiftExtraData( uint version = VER_10_0_1_0 );
+	void ClearExtraData();
+	list< Ref<NiExtraData> > GetExtraData() const;
+
+	void AddController( Ref<NiTimeController> & obj );
+	void RemoveController( Ref<NiTimeController> obj );
+	void ClearControllers();
+	list< Ref<NiTimeController> > GetControllers() const;
+
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 private:
 	NI_OBJECT_N_E_T_MEMBERS

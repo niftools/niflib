@@ -47,3 +47,116 @@ string NiObjectNET::GetIDString() {
 	return out.str();
 }
 
+void NiObjectNET::AddExtraData( Ref<NiExtraData> & obj, uint version ) {
+	if ( version >= VER_10_0_1_0 ) {
+		//In later versions, extra data is just stored in a vector
+		extraDataList.push_back( obj );
+	} else {
+		//In earlier versions, extra data is a singly linked list
+		//Insert at begining of list
+		obj->SetNextExtraData( extraData);
+		extraData = obj;
+	}
+}
+
+void NiObjectNET::RemoveExtraData( Ref<NiExtraData> obj ) {
+	//Search both types of extra data list for the one to remove
+	for ( vector< NiExtraDataRef >::iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
+		if ( *it == obj ) {
+			it = extraDataList.erase( it );
+		} else {
+			++it;
+		}
+	}
+	
+	NiExtraDataRef * extra = &extraData;
+	while ( (*extra) != NULL ) {
+		if ( (*extra) == obj ) {
+			//Cut this reference out of the list
+			(*extra) = (*extra)->GetNextExtraData();
+		} else {
+			//Advance to the next extra data
+			extra = &((*extra)->GetNextExtraData());
+		}
+	}
+}
+
+void NiObjectNET::ShiftExtraData( uint version ) {
+	//Shift any extra data references that are stored in a way that doesn't match
+	//the requested version to the way that does
+	if ( version >= VER_10_0_1_0 ) {
+		//In later versions, extra data is just stored in a vector
+		//Empty the linked list into the vector
+
+		NiExtraDataRef extra = extraData;
+		while ( extra != NULL ) {
+			extraDataList.push_back( extra );
+			extra = extra->GetNextExtraData();
+			extraDataList.back()->SetNextExtraData(NULL);
+		}
+		extraData = NULL;
+	} else {
+		//In earlier versions, extra data is a singly linked list
+		//Insert at begining of list
+		//Empty the list into the linked list
+		for ( vector< NiExtraDataRef >::iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
+			(*it)->SetNextExtraData( extraData );
+			extraData = (*it);
+		}
+		extraDataList.clear();
+	}
+}
+
+void NiObjectNET::ClearExtraData() {
+	extraDataList.clear();
+	extraData = NULL;
+}
+
+list< Ref<NiExtraData> > NiObjectNET::GetExtraData() const {
+	list< Ref<NiExtraData> > extras;
+	for ( vector< NiExtraDataRef >::const_iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
+		extras.push_back( *it );
+	}
+
+	NiExtraDataRef extra = extraData;
+	while ( extra != NULL ) {
+		extras.push_back( extra );
+		extra = extra->GetNextExtraData();
+	}
+
+	return extras;
+}
+
+void NiObjectNET::AddController( Ref<NiTimeController> & obj ) {
+	//Insert at begining of list
+	obj->SetNextController( controller );
+	controller = obj;
+}
+
+void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
+	NiTimeControllerRef * cont = &controller;
+	while ( (*cont) != NULL ) {
+		if ( (*cont) == obj ) {
+			//Cut this reference out of the list
+			(*cont) = (*cont)->GetNextController();
+		} else {
+			//Advance to the next controller
+			cont = &((*cont)->GetNextController());
+		}
+	}
+}
+void NiObjectNET::ClearControllers() {
+	controller = NULL;
+}
+
+list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
+	list< Ref<NiTimeController> > conts;
+
+	NiTimeControllerRef cont = controller;
+	while ( cont != NULL ) {
+		conts.push_back( cont );
+		cont = cont->GetNextController();
+	}
+
+	return conts;
+}

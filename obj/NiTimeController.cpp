@@ -35,3 +35,10 @@ const Type & NiTimeController::GetType() const {
 	return TYPE;
 };
 
+NiTimeControllerRef NiTimeController::GetNextController() const {
+	return nextController;
+}
+
+void NiTimeController::SetNextController( const NiTimeControllerRef & obj ) {
+	nextController = obj;
+}

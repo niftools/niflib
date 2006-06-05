@@ -31,6 +31,18 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*! Returns a reference to the next controller in a linked list.
+	 * This function should only be called by NiObjectNET.
+	 * \return A reference to the next controller in the linked list.
+	 */
+	NiTimeControllerRef GetNextController() const;
+
+	/*! Sets the next controller in a linked list.
+	 * This function should only be called by NiObjectNET.
+	 * \param obj A reference to the object to set as the one after this in the chain.
+	 */
+	void SetNextController( const NiTimeControllerRef & obj );
 protected:
 	NI_TIME_CONTROLLER_MEMBERS
 };
