@@ -17,7 +17,7 @@ map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
 void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map );
-void BuildUpBindPositions( const NiAVObjectRef & av );
+void BuildUpBindPositions( const NiAVObjectRef & root );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
@@ -509,30 +509,30 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 	}
 }
 
-void BuildUpBindPositions( const NiAVObjectRef & av ) {
+void BuildUpBindPositions( const NiAVObjectRef & root ) {
 
 	//Get parent if there is one
-	NiNodeRef par = av->GetParent();
+	NiNodeRef par = root->GetParent();
 	if ( par != NULL ) {
 		//There is a node parent
 
 		//Post-multipy the block's bind matrix with the parent's bind matrix
-		Matrix44 result = av->GetWorldBindPos() * par->GetWorldBindPos();
+		Matrix44 result = root->GetWorldBindPos() * par->GetWorldBindPos();
 
 		//Store result back to block bind position
-		av->SetWorldBindPos( result );
+		root->SetWorldBindPos( result );
 	}
 
-	//TODO:  Implement Child storage and access functions in NiNode
-	////Call this function for all child nodes if any
-	//attr_ref child_attr = block["Children"];
-	//if ( child_attr.is_null() == false ) {
-	//	list<NiObjectRef> children = child_attr->asLinkList();
-	//	list<NiObjectRef>::iterator it;
-	//	for (it = children.begin(); it != children.end(); ++it) {
-	//		BuildUpBindPositions( *it );
-	//	}
-	//}
+	//If this is a NiNode, call this function for all child AVObjects
+	NiNodeRef node = DynamicCast<NiNode>(root);
+	if ( node != NULL ) {
+		vector<NiAVObjectRef> children = node->GetChildren();
+		for (vector<NiAVObjectRef>::iterator it = children.begin(); it != children.end(); ++it) {
+			if ( *it != NULL ) {
+				BuildUpBindPositions( *it );
+			}
+		}
+	}
 }
 
 //TODO: Should this be returning an object of a derived type too?

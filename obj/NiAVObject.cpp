@@ -12,7 +12,10 @@ const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
 
 NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
 
-NiAVObject::~NiAVObject() {}
+NiAVObject::~NiAVObject() {
+	//Clear Properties
+	ClearProperties();
+}
 
 void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_A_V_OBJECT_READ
@@ -93,7 +96,7 @@ Matrix44 NiAVObject::GetLocalBindPos() const {
  */
 void NiAVObject::SetWorldBindPos( Matrix44 const & m )  {}
 
-void NiAVObject::SetParent( Ref<NiNode> new_parent ) {
+void NiAVObject::SetParent( NiNode * new_parent ) {
 	parent = new_parent;
 }
 

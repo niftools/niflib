@@ -1399,7 +1399,7 @@ float frequency; \
 float phase; \
 float startTime; \
 float stopTime; \
-NiObject * target; \
+NiObjectNET * target; \
 
 #define NI_TIME_CONTROLLER_INCLUDE "NiObject.h" \
 
@@ -1463,7 +1463,7 @@ link_stack.pop_front(); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
-	target = DynamicCast<NiObject>(objects[link_stack.front()]); \
+	target = DynamicCast<NiObjectNET>(objects[link_stack.front()]); \
 	if ( target == NULL ) \
 		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 } else \

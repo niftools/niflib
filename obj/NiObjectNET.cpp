@@ -10,7 +10,11 @@ const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TYPE );
 
 NiObjectNET::NiObjectNET() NI_OBJECT_N_E_T_CONSTRUCT {}
 
-NiObjectNET::~NiObjectNET() {}
+NiObjectNET::~NiObjectNET() {
+	//Clear Lists
+	ClearExtraData();
+	ClearControllers();
+}
 
 void NiObjectNET::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_OBJECT_N_E_T_READ
@@ -129,6 +133,7 @@ list< Ref<NiExtraData> > NiObjectNET::GetExtraData() const {
 
 void NiObjectNET::AddController( Ref<NiTimeController> & obj ) {
 	//Insert at begining of list
+	obj->SetTarget( this );
 	obj->SetNextController( controller );
 	controller = obj;
 }
@@ -138,6 +143,7 @@ void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
 	while ( (*cont) != NULL ) {
 		if ( (*cont) == obj ) {
 			//Cut this reference out of the list
+			(*cont)->SetTarget( NULL );
 			(*cont) = (*cont)->GetNextController();
 		} else {
 			//Advance to the next controller
@@ -146,6 +152,10 @@ void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
 	}
 }
 void NiObjectNET::ClearControllers() {
+	NiTimeControllerRef cont = controller;
+	while ( cont != NULL ) {
+		cont->SetTarget(NULL);
+	}
 	controller = NULL;
 }
 

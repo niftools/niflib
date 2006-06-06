@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
-#include "NiObject.h"
+#include "NiObjectNET.h"
 
 //Definition of TYPE constant
 const Type NiTimeController::TYPE("NiTimeController", &NI_TIME_CONTROLLER_PARENT::TYPE );
@@ -41,4 +41,12 @@ NiTimeControllerRef NiTimeController::GetNextController() const {
 
 void NiTimeController::SetNextController( const NiTimeControllerRef & obj ) {
 	nextController = obj;
+}
+
+void NiTimeController::SetTarget( NiObjectNET * new_target ) {
+	target = new_target;
+}
+
+Ref<NiObjectNET> NiTimeController::GetTarget() {
+	return target;
 }

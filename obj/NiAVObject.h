@@ -36,7 +36,6 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 
-	//TODO: list of NiProperty pointers.  Need functions to add/remove.
 	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
 	
 	/*! 
@@ -74,7 +73,7 @@ public:
 	void SetWorldBindPos( Matrix44 const & m );
 
 	/*! Meant to be called by NiNode during the addition of new children.  Should not be called directly. */
-	void SetParent( Ref<NiNode> new_parent );
+	void SetParent( NiNode * new_parent );
 
 	Ref<NiNode> GetParent() const;
 

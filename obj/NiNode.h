@@ -14,6 +14,7 @@ class NiDynamicEffect;
 #include "../gen/obj_defines.h"
 
 class NiNode;
+class NiAVObject;
 typedef Ref<NiNode> NiNodeRef;
 
 /*!
@@ -32,6 +33,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	void AddChild( Ref<NiAVObject> & obj );
+	void RemoveChild( Ref<NiAVObject> obj );
+	void ClearChildren();
+	vector< Ref<NiAVObject> > GetChildren() const;
 protected:
 	NI_NODE_MEMBERS
 };
