@@ -46,12 +46,6 @@ public:
 	 */
 	short GetUVSetCount() const { return short(uvSets.size()); }
 
-	/*! Changes the number of vertices used by this mesh.  If the mesh already contains data, it will be retained so long as the new number is higher than the old number.  Otherwise any verticies above the new number will be deleted.  This also resizes any normal, color, or UV data associated with these verticies.  Triangles and triangle strips that may be attached via other interfaces are not culled of references to newly invalid vertices, however.
-	 * \param n The new size of the vertex array.
-	 * \sa IShapeData::GetVertexCount
-	 */
-	void SetVertexCount(int n);
-
 	/*! Changes the number of UV sets used by this mesh.  If he new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
 	 * \param n The new size of the uv set array.
 	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
@@ -59,6 +53,23 @@ public:
 	void SetUVSetCount(int n);
 
 	//--Getters--//
+
+	/*! Returns the 3D center of the mesh.
+	 * \return The center of this mesh.
+	 */
+	Vector3 GetCenter() const;
+
+	/*! Returns the radius of the mesh.  That is the distance from the center to
+	 * the farthest point from the center.
+	 * \return The radius of this mesh.
+	 */
+	float GetRadius() const;
+
+	/*! Returns the triangle faces that make up this mesh.
+	 * \return A vector containing the triangle faces that make up this mesh.
+	 * \sa ITriShapeData::SetTriangles
+	 */
+	virtual vector<Triangle> GetTriangles() const { return vector<Triangle>(); }  //TODO:  Make this pure virtual?
 
 	/*! Used to retrive the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
 	 * \return A vector cntaining the vertices used by this mesh.
@@ -87,11 +98,11 @@ public:
 	
 //--Setters--//
 
-	/*! Used to set the vertex data used by this mesh.  The size of the vector must be the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	/*! Used to set the vertex data used by this mesh.  Calling this function will clear all other data in this object.
 	 * \param in A vector containing the vertices to replace those in the mesh with.  Note that there is no way to set vertices one at a time, they must be sent in one batch.
-	 * \sa IShapeData::GetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
+	 * \sa IShapeData::GetVertices, IShapeData::GetVertexCount
 	 */
-	void SetVertices( const vector<Vector3> & in );
+	virtual void SetVertices( const vector<Vector3> & in );
 
 	/*! Used to set the normal data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
 	 * \param in A vector containing the normals to replace those in the mesh with.  Note that there is no way to set normals one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using normals.
@@ -115,7 +126,6 @@ public:
 protected:
 	Vector3 Center() const;
 	float Radius() const;
-	void CalcCentAndRad( Vector3 & center, float & radius ) const;
 	NI_TRI_BASED_GEOM_DATA_MEMBERS
 };
 

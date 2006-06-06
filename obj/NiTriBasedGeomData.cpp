@@ -35,7 +35,26 @@ const Type & NiTriBasedGeomData::GetType() const {
 	return TYPE;
 };
 
-void NiTriBasedGeomData::CalcCentAndRad( Vector3 & center, float & radius ) const {
+void NiTriBasedGeomData::SetUVSetCount(int n) {
+	uvSets.resize(n);
+	hasUv = ( vertexColors.size() != 0 );
+}
+
+//--Setters--//
+void NiTriBasedGeomData::SetVertices( const vector<Vector3> & in ) {
+	vertices = in;
+	hasVertices = ( vertices.size() != 0 );
+
+	//Clear out all other data as it is now based on old vertex information
+	normals.clear();
+	hasNormals = false;
+	vertexColors.clear();
+	this->hasVertexColors = false;
+	for (uint i = 0; i < uvSets.size(); ++i ) {
+		uvSets[i].clear();
+	}
+
+	//If any vertices were given, calculate the new center and radius
 	//Check if there are no vertices
 	if ( vertices.size() == 0 ) {
 		center.Set(0.0f, 0.0f, 0.0f);
@@ -79,62 +98,41 @@ void NiTriBasedGeomData::CalcCentAndRad( Vector3 & center, float & radius ) cons
 	radius = sqrt(maxdist2);
 }
 
-void NiTriBasedGeomData::SetVertexCount(int n) {
-	if ( n > 65535 || n < 0 )
-		throw runtime_error("Invalid Vertex Count: must be between 0 and 65535.");
-
-	if ( n == 0 ) {
-		vertices.clear();
-		normals.clear();
-		vertexColors.clear();
-		for (uint i = 0; i < uvSets.size(); ++i) {
-			uvSets[i].clear();
-		}
-		return;
-	}
-	
-	//n != 0
-	vertices.resize(n);
-
-	if ( normals.size() != 0 ) { 
-		normals.resize(n);
-	}
-	if ( vertexColors.size() != 0 ) {
-		vertexColors.resize(n);
-	}
-	for (uint i = 0; i < uvSets.size(); ++i) {	
-		uvSets[i].resize(n);
-	}
-}
-
-void NiTriBasedGeomData::SetUVSetCount(int n) {
-	uvSets.resize(n);
-}
-
-//--Setters--//
-void NiTriBasedGeomData::SetVertices( const vector<Vector3> & in ) {
-	if (in.size() != vertices.size() && in.size() != 0 )
-		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
-	vertices = in;
-}
-
 void NiTriBasedGeomData::SetNormals( const vector<Vector3> & in ) {
 	if (in.size() != vertices.size() && in.size() != 0 )
-		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
+		throw runtime_error("Vector size must equal Vertex Count or zero.");
 	normals = in;
+	hasNormals = ( normals.size() != 0 );
 }
 
 void NiTriBasedGeomData::SetVertexColors( const vector<Color4> & in ) {
 	if (in.size() != vertices.size() && in.size() != 0 )
-		throw runtime_error("Vector size must equal Vertex Count or zero.  Call SetVertexCount() to resize.");
+		throw runtime_error("Vector size must equal Vertex Count or zero.");
 	vertexColors = in;
+	hasVertexColors = ( vertexColors.size() != 0 );
 }
 
 void NiTriBasedGeomData::SetUVSet( int index, const vector<TexCoord> & in ) {
 	if (in.size() != vertices.size())
-		throw runtime_error("Vector size must equal Vertex Count.  Call SetVertexCount() to resize.");
+		throw runtime_error("Vector size must equal Vertex Count.");
 	uvSets[index] = in;
 }
 
-Vector3 NiTriBasedGeomData::Center() const { return Vector3(); }
-float NiTriBasedGeomData::Radius() const { return float(); }
+/*! Returns the 3D center of the mesh.
+ * \return The center of this mesh.
+ */
+Vector3 NiTriBasedGeomData::GetCenter() const {
+	return center;
+}
+
+/*! Returns the radius of the mesh.  That is the distance from the center to
+ * the farthest point from the center.
+ * \return The radius of this mesh.
+ */
+float NiTriBasedGeomData::GetRadius() const {
+	return radius;
+}
+
+//TODO: Remove these
+Vector3 NiTriBasedGeomData::Center() const { return center; }
+float NiTriBasedGeomData::Radius() const { return radius; }
