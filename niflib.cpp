@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "niflib.h"
 #include "obj/NiAVObject.h"
 #include "obj/NiNode.h"
+#include "obj/NiTextKeyExtraData.h"
 #include <exception>
 #include <stdexcept>
 using namespace std;
@@ -595,8 +596,7 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
 void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiObjectRef & xkf_root, Kfm & kfm, int kf_type ) {
 	// Do we have animation groups (a NiTextKeyExtraData block)?
 	// If so, create XNif and XKf trees.
-	//TODO: Implement NiTextKeyExtraData so it has a TYPE
-	NiObjectRef txtkey_block; // = GetObjectByType( root_block, NiTextKeyExtraData::TYPE ); 
+	NiObjectRef txtkey_block = GetObjectByType( root_block, NiTextKeyExtraData::TYPE ); 
 	if ( txtkey_block != NULL ) {
 		if ( kf_type == KF_MW ) {
 			// Construct the XNif file...
@@ -609,7 +609,7 @@ void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiOb
 			
 			// Add a copy of the NiTextKeyExtraData block to the XKf header.
 			NiObjectRef xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
-			//TODO: Implement functions to query extra data
+			//TODO: Have Amorilia fix this
 			//xkf_root["Extra Data"] = xkf_txtkey_block;
 			
 			/*ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
@@ -619,7 +619,7 @@ void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiOb
 			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
 			list<NiObjectRef> nodes = GetAllObjectsByType( root_block, NiNode::TYPE );
 			for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ) {
-				//TODO: Implement functions to add and query controllers
+				//TODO: Have Amorilia Fix this
 				/*if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
 					it = nodes.erase( it );
 				else
@@ -638,7 +638,7 @@ void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiOb
 			// Add controllers & controller data.
 			last_block = xkf_root;
 			for ( list<NiObjectRef>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-				//TODO:  Implement NiTimeController class
+				//TODO:  Implement NiTimeController class functions/variables
 				//NiObjectRef controller = (*it)->GetAttr("Controller")->asLink();
 				//NiObjectRef xkf_controller = CreateBlock("NiKeyframeController");
 				//xkf_controller["Flags"] = controller["Flags"]->asInt();
@@ -724,24 +724,18 @@ unsigned int BlocksInMemory() {
 	return NiObject::NumObjectsInMemory();
 }
 
-void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiAVObjectRef par ) {
+void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiNodeRef & par ) {
 
-	//TODO: Implement functions to get and set children
-	////Check if this is a parent node
-	//attr_ref children = par->GetAttr("Children");
-	//if ( children.is_null() == true ) {
-	//	//We are only interested in parent nodes
-	//	return;
-	//}
 
 	//Add the par node to the map, and then call this function for each of its children
 	name_map[par->GetName()] = par;
 
-	//TODO: Implement functions to get and set children
-	list<NiAVObjectRef> links;// = par->GetAttr("Children")->asLinkList();;
-	for (list<NiAVObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
-		if ( (*it) != NULL ) {
-			MapParentNodeNames( name_map, *it );
+	
+	vector<NiAVObjectRef> links = par->GetChildren();
+	for (vector<NiAVObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
+		NiNodeRef child_node = DynamicCast<NiNode>(*it);
+		if ( child_node != NULL ) {
+			MapParentNodeNames( name_map, child_node );
 		};
 	};
 }
@@ -765,46 +759,49 @@ void ReassignTreeCrossRefs( map<string,NiAVObjectRef> & name_map, NiAVObjectRef 
 //This function will merge two scene graphs by attatching new objects to the correct position
 //on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
 //existing nodes by changing their data or attatched properties
-void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiAVObjectRef & root, NiAVObjectRef par ) {
+void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiNodeRef & root, NiAVObjectRef par ) {
 	//Check if this block's name exists in the block map
 	string name = par->GetName();
 
 	if ( name_map.find(name) != name_map.end() ) {
-		//This block already exists in the original file, so continue on to its children
+		//This block already exists in the original file, so continue on to its children, if it is a NiNode
 		
-		//TODO:  Implement children
-		list<NiAVObjectRef> links;// = par->GetAttr("Children")->asLinkList();;
-		for (list <NiAVObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
-			if ( (*it) != NULL ) {
-				MergeSceneGraph( name_map, root, *it );
+		NiNodeRef par_node = DynamicCast<NiNode>(par);
+		if ( par_node != NULL ) {
+			vector<NiAVObjectRef> children = par_node->GetChildren();
+			for ( vector<NiAVObjectRef>::iterator it = children.begin(); it != children.end(); ++it ) {
+				if ( (*it) != NULL ) {
+					MergeSceneGraph( name_map, root, *it );
+				};
 			};
-		};
+		}
 		return;
 	}
 
 	//This block has a new name and either it has no parent or its parent has a name that is
 	// in the list.  Attatch it to the block with the same name as its parent
 	//all child blocks will follow along.
-	NiAVObjectRef par_par = DynamicCast<NiAVObject>(par->GetParent());
+	NiNodeRef par_par = par->GetParent();
 
 	if ( par_par == NULL) {
-		//TODO:  Implement children
-		////This block has a new name and no parents.  That means it is the root block
-		////of a disimilar Nif file.
-		//attr_ref par_children = par->GetAttr("Children");
-		
-		////Get the current root child list
-		//attr_ref root_children = root->GetAttr("Children");
+		//This block has a new name and no parents.  That means it is the root block
+		//of a disimilar Nif file.
 			
-		//if ( par_children.is_null() == true ) {
-		//	//This is not a ParentNode class, so simply add it as a new child of the
-		//	//target root node
-		//	root_children->AddLink( par );
-		//	cout << "Added link to " << par << " in " << root << " block.";
-		//} else {
-		//	//This is a ParentNode class, so merge its child list with that of the root
-		//	root_children->AddLinks( par_children->asLinkList() );
-		//}
+		//Check whether we have a NiNode ( a node that might have children) or not.
+		NiNodeRef par_node = DynamicCast<NiNode>(par);
+		if ( par_node == NULL ) {
+			//This is not a NiNode class, so simply add it as a new child of the
+			//target root node
+			root->AddChild( par );
+
+			//cout << "Added link to " << par << " in " << root << " block.";
+		} else {
+			//This is a NiNode class, so merge its child list with that of the root
+			vector<NiAVObjectRef> children = par_node->GetChildren();
+			for ( uint i = 0; i < children.size(); ++i ) {
+				root->AddChild( children[i] );
+			}
+		}
 	} else {
 		//This block has a new name and has a parent with a name that already exists.
 		//Attatch it to the block in the target tree that matches the name of its
@@ -824,7 +821,7 @@ void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiAVObjectRef 
 	}
 }
 
-void MergeNifTrees( NiAVObjectRef target, NiAVObjectRef right, unsigned int version ) {
+void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version ) {
 	//For now assume that both are normal Nif trees just to verify that it works
 
 	//Make a clone of the tree to add

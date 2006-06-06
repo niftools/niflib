@@ -29,6 +29,15 @@ string NiNode::asString( bool verbose ) const {
 
 void NiNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_NODE_FIXLINKS
+	//Connect children to their parents and remove any NULL ones
+	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
+		if ( *it == NULL) {
+			it = children.erase( it );
+		} else {
+			(*it)->SetParent(this);
+			++it;
+		}
+	}
 }
 
 list<NiObjectRef> NiNode::GetRefs() const {
