@@ -15,7 +15,7 @@ typedef Ref<NiSequenceStreamHelper> NiSequenceStreamHelperRef;
  * NiSequenceStreamHelper - Keyframe animation root node, in .kf files.
  */
 
-class DLLEXPORT NiSequenceStreamHelper : public NI_SEQUENCE_STREAM_HELPER_PARENT {
+class NIFLIB_API NiSequenceStreamHelper : public NI_SEQUENCE_STREAM_HELPER_PARENT {
 public:
 	NiSequenceStreamHelper();
 	~NiSequenceStreamHelper();

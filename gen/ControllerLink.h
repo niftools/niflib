@@ -18,7 +18,7 @@ class NiStringPalette;
  * that contains the name), and a sequence of interpolators that apply to
  * this controllable block, via links.
  */
-struct DLLEXPORT ControllerLink {
+struct NIFLIB_API ControllerLink {
 	/*! Default Constructor */
 	ControllerLink();
 	/*! Default Destructor */

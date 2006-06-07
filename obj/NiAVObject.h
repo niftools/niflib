@@ -23,7 +23,7 @@ class NiNode;
 class NiAVObject;
 typedef Ref<NiAVObject> NiAVObjectRef;
 
-class DLLEXPORT NiAVObject : public NI_A_V_OBJECT_PARENT {
+class NIFLIB_API NiAVObject : public NI_A_V_OBJECT_PARENT {
 public:
 	NiAVObject();
 	~NiAVObject();

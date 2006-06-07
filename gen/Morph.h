@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Geometry morphing data component.
  */
-struct DLLEXPORT Morph {
+struct NIFLIB_API Morph {
 	/*! Default Constructor */
 	Morph();
 	/*! Default Destructor */

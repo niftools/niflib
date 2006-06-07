@@ -17,7 +17,7 @@ typedef Ref<BSFurnitureMarker> BSFurnitureMarkerRef;
  * BSFurnitureMarker - Unknown. Marks furniture sitting positions?
  */
 
-class DLLEXPORT BSFurnitureMarker : public B_S_FURNITURE_MARKER_PARENT {
+class NIFLIB_API BSFurnitureMarker : public B_S_FURNITURE_MARKER_PARENT {
 public:
 	BSFurnitureMarker();
 	~BSFurnitureMarker();

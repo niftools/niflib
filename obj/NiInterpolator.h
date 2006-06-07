@@ -15,7 +15,7 @@ typedef Ref<NiInterpolator> NiInterpolatorRef;
  * NiInterpolator - Interpolator blocks - function unknown.
  */
 
-class DLLEXPORT NiInterpolator : public NI_INTERPOLATOR_PARENT {
+class NIFLIB_API NiInterpolator : public NI_INTERPOLATOR_PARENT {
 public:
 	NiInterpolator();
 	~NiInterpolator();

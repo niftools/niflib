@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
  * Skinning data for a submesh, optimized for hardware skinning. Part of
  * NiSkinPartition.
  */
-struct DLLEXPORT SkinPartition {
+struct NIFLIB_API SkinPartition {
 	/*! Default Constructor */
 	SkinPartition();
 	/*! Default Destructor */

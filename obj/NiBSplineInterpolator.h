@@ -15,7 +15,7 @@ typedef Ref<NiBSplineInterpolator> NiBSplineInterpolatorRef;
  * NiBSplineInterpolator - A B-spline (component?) interpolator.
  */
 
-class DLLEXPORT NiBSplineInterpolator : public NI_B_SPLINE_INTERPOLATOR_PARENT {
+class NIFLIB_API NiBSplineInterpolator : public NI_B_SPLINE_INTERPOLATOR_PARENT {
 public:
 	NiBSplineInterpolator();
 	~NiBSplineInterpolator();

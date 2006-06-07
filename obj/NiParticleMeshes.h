@@ -15,7 +15,7 @@ typedef Ref<NiParticleMeshes> NiParticleMeshesRef;
  * NiParticleMeshes - Mesh particle node?
  */
 
-class DLLEXPORT NiParticleMeshes : public NI_PARTICLE_MESHES_PARENT {
+class NIFLIB_API NiParticleMeshes : public NI_PARTICLE_MESHES_PARENT {
 public:
 	NiParticleMeshes();
 	~NiParticleMeshes();

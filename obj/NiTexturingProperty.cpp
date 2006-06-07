@@ -100,6 +100,9 @@ TexDesc NiTexturingProperty::GetTexture( int n ) const {
 		case DECAL_1_MAP:
 			return decal1Texture;
 	};
+
+	//If we get here, an invalid texture was requested.
+	throw runtime_error("Invalid texture requested.");
 }
 
 TexDesc NiTexturingProperty::GetShaderTexture( int n ) const {

@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Unknown.
  */
-struct DLLEXPORT SkinShapeGroup {
+struct NIFLIB_API SkinShapeGroup {
 	/*! Default Constructor */
 	SkinShapeGroup();
 	/*! Default Destructor */

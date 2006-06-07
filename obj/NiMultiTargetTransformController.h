@@ -19,7 +19,7 @@ typedef Ref<NiMultiTargetTransformController> NiMultiTargetTransformControllerRe
  * NiMultiTargetTransformController - Unknown.
  */
 
-class DLLEXPORT NiMultiTargetTransformController : public NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT {
+class NIFLIB_API NiMultiTargetTransformController : public NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT {
 public:
 	NiMultiTargetTransformController();
 	~NiMultiTargetTransformController();

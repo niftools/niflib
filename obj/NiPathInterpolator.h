@@ -20,7 +20,7 @@ typedef Ref<NiPathInterpolator> NiPathInterpolatorRef;
  * NiPathInterpolator - Unknown interpolator.
  */
 
-class DLLEXPORT NiPathInterpolator : public NI_PATH_INTERPOLATOR_PARENT {
+class NIFLIB_API NiPathInterpolator : public NI_PATH_INTERPOLATOR_PARENT {
 public:
 	NiPathInterpolator();
 	~NiPathInterpolator();

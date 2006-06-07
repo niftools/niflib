@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * A triangle with extra data used for physics.
  */
-struct DLLEXPORT hkTriangle {
+struct NIFLIB_API hkTriangle {
 	/*! Default Constructor */
 	hkTriangle();
 	/*! Default Destructor */

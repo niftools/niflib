@@ -15,7 +15,7 @@ typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;
  * BSParentVelocityModifier - Unknown.
  */
 
-class DLLEXPORT BSParentVelocityModifier : public B_S_PARENT_VELOCITY_MODIFIER_PARENT {
+class NIFLIB_API BSParentVelocityModifier : public B_S_PARENT_VELOCITY_MODIFIER_PARENT {
 public:
 	BSParentVelocityModifier();
 	~BSParentVelocityModifier();

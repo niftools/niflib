@@ -20,7 +20,7 @@ typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
  * frames.
  */
 
-class DLLEXPORT NiKeyframeController : public NI_KEYFRAME_CONTROLLER_PARENT {
+class NIFLIB_API NiKeyframeController : public NI_KEYFRAME_CONTROLLER_PARENT {
 public:
 	NiKeyframeController();
 	~NiKeyframeController();

@@ -91,7 +91,7 @@ using namespace std;
  *      print blocks[0]
  * \endcode
  */
-DLLEXPORT unsigned int CheckNifHeader( string const & file_name );
+NIFLIB_API unsigned int CheckNifHeader( string const & file_name );
 
 /*!
  * Reads the given file by file name and returns a vector of block references
@@ -110,14 +110,14 @@ DLLEXPORT unsigned int CheckNifHeader( string const & file_name );
  * 
  * \sa ReadNifTree, WriteNifTree
  */
-DLLEXPORT vector<NiObjectRef> ReadNifList( string const & file_name );
+NIFLIB_API vector<NiObjectRef> ReadNifList( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a vector of block references
  * \param stream The input stream to read NIF data from.
  * \return A vector of block references that point to all the blocks read from the stream.
  */
-DLLEXPORT vector<NiObjectRef> ReadNifList( istream & in );
+NIFLIB_API vector<NiObjectRef> ReadNifList( istream & in );
 
 /*!
  * Reads the given file by file name and returns a reference to the root block.
@@ -136,14 +136,14 @@ DLLEXPORT vector<NiObjectRef> ReadNifList( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-DLLEXPORT NiObjectRef ReadNifTree( string const & file_name );
+NIFLIB_API NiObjectRef ReadNifTree( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a reference to the root block.
  * \param stream The input stream to read NIF data from.
  * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
  */
-DLLEXPORT NiObjectRef ReadNifTree( istream & in );
+NIFLIB_API NiObjectRef ReadNifTree( istream & in );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
@@ -166,7 +166,7 @@ DLLEXPORT NiObjectRef ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-DLLEXPORT void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -174,7 +174,7 @@ DLLEXPORT void WriteNifTree( string const & file_name, NiObjectRef const & root,
  * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-DLLEXPORT void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
@@ -184,7 +184,7 @@ DLLEXPORT void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigne
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-DLLEXPORT void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
+NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
@@ -192,7 +192,7 @@ DLLEXPORT void WriteFileGroup( string const & file_name, NiObjectRef const & roo
  * \param right The root block of the second Nif tree to merge.
  * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
  */
-DLLEXPORT void MergeNifTrees( NiObjectRef target, NiObjectRef right, unsigned int version = 0xFFFFFFFF );
+NIFLIB_API void MergeNifTrees( NiObjectRef target, NiObjectRef right, unsigned int version = 0xFFFFFFFF );
 
 
 //// Returns list of all blocks in the tree rooted by root block.
@@ -218,7 +218,7 @@ DLLEXPORT void MergeNifTrees( NiObjectRef target, NiObjectRef right, unsigned in
  * 
  * sa BlocksInMemory
  */
-DLLEXPORT NiObjectRef CreateBlock( string block_type );
+NIFLIB_API NiObjectRef CreateBlock( string block_type );
 
 
 

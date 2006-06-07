@@ -16,7 +16,7 @@ typedef Ref<NiTextKeyExtraData> NiTextKeyExtraDataRef;
  * sequences.
  */
 
-class DLLEXPORT NiTextKeyExtraData : public NI_TEXT_KEY_EXTRA_DATA_PARENT {
+class NIFLIB_API NiTextKeyExtraData : public NI_TEXT_KEY_EXTRA_DATA_PARENT {
 public:
 	NiTextKeyExtraData();
 	~NiTextKeyExtraData();

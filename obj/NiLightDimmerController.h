@@ -19,7 +19,7 @@ typedef Ref<NiLightDimmerController> NiLightDimmerControllerRef;
  * NiLightDimmerController - Unknown controller.
  */
 
-class DLLEXPORT NiLightDimmerController : public NI_LIGHT_DIMMER_CONTROLLER_PARENT {
+class NIFLIB_API NiLightDimmerController : public NI_LIGHT_DIMMER_CONTROLLER_PARENT {
 public:
 	NiLightDimmerController();
 	~NiLightDimmerController();

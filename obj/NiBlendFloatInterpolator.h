@@ -15,7 +15,7 @@ typedef Ref<NiBlendFloatInterpolator> NiBlendFloatInterpolatorRef;
  * NiBlendFloatInterpolator - An interpolator for a float.
  */
 
-class DLLEXPORT NiBlendFloatInterpolator : public NI_BLEND_FLOAT_INTERPOLATOR_PARENT {
+class NIFLIB_API NiBlendFloatInterpolator : public NI_BLEND_FLOAT_INTERPOLATOR_PARENT {
 public:
 	NiBlendFloatInterpolator();
 	~NiBlendFloatInterpolator();

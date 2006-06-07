@@ -16,7 +16,7 @@ typedef Ref<NiZBufferProperty> NiZBufferPropertyRef;
  * depth buffer).
  */
 
-class DLLEXPORT NiZBufferProperty : public NI_Z_BUFFER_PROPERTY_PARENT {
+class NIFLIB_API NiZBufferProperty : public NI_Z_BUFFER_PROPERTY_PARENT {
 public:
 	NiZBufferProperty();
 	~NiZBufferProperty();

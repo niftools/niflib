@@ -15,7 +15,7 @@ typedef Ref<NiFloatExtraData> NiFloatExtraDataRef;
  * NiFloatExtraData - Float extra data.
  */
 
-class DLLEXPORT NiFloatExtraData : public NI_FLOAT_EXTRA_DATA_PARENT {
+class NIFLIB_API NiFloatExtraData : public NI_FLOAT_EXTRA_DATA_PARENT {
 public:
 	NiFloatExtraData();
 	~NiFloatExtraData();

@@ -19,7 +19,7 @@ typedef Ref<NiPoint3Interpolator> NiPoint3InterpolatorRef;
  * NiPoint3Interpolator - Unknown.
  */
 
-class DLLEXPORT NiPoint3Interpolator : public NI_POINT3_INTERPOLATOR_PARENT {
+class NIFLIB_API NiPoint3Interpolator : public NI_POINT3_INTERPOLATOR_PARENT {
 public:
 	NiPoint3Interpolator();
 	~NiPoint3Interpolator();

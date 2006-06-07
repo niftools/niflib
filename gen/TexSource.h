@@ -14,7 +14,7 @@ class NiPixelData;
 /*!
  * A texture source.
  */
-struct DLLEXPORT TexSource {
+struct NIFLIB_API TexSource {
 	/*! Default Constructor */
 	TexSource();
 	/*! Default Destructor */

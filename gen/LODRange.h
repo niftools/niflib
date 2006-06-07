@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * The distance range where a specific level of detail applies.
  */
-struct DLLEXPORT LODRange {
+struct NIFLIB_API LODRange {
 	/*! Default Constructor */
 	LODRange();
 	/*! Default Destructor */

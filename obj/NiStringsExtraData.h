@@ -16,7 +16,7 @@ typedef Ref<NiStringsExtraData> NiStringsExtraDataRef;
  * names.
  */
 
-class DLLEXPORT NiStringsExtraData : public NI_STRINGS_EXTRA_DATA_PARENT {
+class NIFLIB_API NiStringsExtraData : public NI_STRINGS_EXTRA_DATA_PARENT {
 public:
 	NiStringsExtraData();
 	~NiStringsExtraData();

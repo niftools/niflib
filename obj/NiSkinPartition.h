@@ -19,7 +19,7 @@ typedef Ref<NiSkinPartition> NiSkinPartitionRef;
  * influenced only by a limited and fixed number of bones.
  */
 
-class DLLEXPORT NiSkinPartition : public NI_SKIN_PARTITION_PARENT {
+class NIFLIB_API NiSkinPartition : public NI_SKIN_PARTITION_PARENT {
 public:
 	NiSkinPartition();
 	~NiSkinPartition();

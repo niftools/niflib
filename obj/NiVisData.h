@@ -15,7 +15,7 @@ typedef Ref<NiVisData> NiVisDataRef;
  * NiVisData - Visibility data for a controller.
  */
 
-class DLLEXPORT NiVisData : public NI_VIS_DATA_PARENT {
+class NIFLIB_API NiVisData : public NI_VIS_DATA_PARENT {
 public:
 	NiVisData();
 	~NiVisData();

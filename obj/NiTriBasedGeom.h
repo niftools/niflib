@@ -21,7 +21,7 @@ typedef Ref<NiTriBasedGeom> NiTriBasedGeomRef;
  * NiTriBasedGeom - Describes a mesh, built from triangles.
  */
 
-class DLLEXPORT NiTriBasedGeom : public NI_TRI_BASED_GEOM_PARENT {
+class NIFLIB_API NiTriBasedGeom : public NI_TRI_BASED_GEOM_PARENT {
 public:
 	NiTriBasedGeom();
 	~NiTriBasedGeom();

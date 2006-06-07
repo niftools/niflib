@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
  * rotations).
  */
 template <class T >
-struct DLLEXPORT KeyGroup {
+struct NIFLIB_API KeyGroup {
 	/*!
 	 * Number of keys in the array.
 	 */

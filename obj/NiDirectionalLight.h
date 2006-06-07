@@ -15,7 +15,7 @@ typedef Ref<NiDirectionalLight> NiDirectionalLightRef;
  * NiDirectionalLight - Directional light source.
  */
 
-class DLLEXPORT NiDirectionalLight : public NI_DIRECTIONAL_LIGHT_PARENT {
+class NIFLIB_API NiDirectionalLight : public NI_DIRECTIONAL_LIGHT_PARENT {
 public:
 	NiDirectionalLight();
 	~NiDirectionalLight();

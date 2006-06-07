@@ -15,7 +15,7 @@ typedef Ref<bhkSPCollisionObject> bhkSPCollisionObjectRef;
  * bhkSPCollisionObject - Unknown.
  */
 
-class DLLEXPORT bhkSPCollisionObject : public BHK_S_P_COLLISION_OBJECT_PARENT {
+class NIFLIB_API bhkSPCollisionObject : public BHK_S_P_COLLISION_OBJECT_PARENT {
 public:
 	bhkSPCollisionObject();
 	~bhkSPCollisionObject();

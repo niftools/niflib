@@ -15,7 +15,7 @@ typedef Ref<bhkWorldObject> bhkWorldObjectRef;
  * bhkWorldObject - Havok objects that have a position in the world?
  */
 
-class DLLEXPORT bhkWorldObject : public BHK_WORLD_OBJECT_PARENT {
+class NIFLIB_API bhkWorldObject : public BHK_WORLD_OBJECT_PARENT {
 public:
 	bhkWorldObject();
 	~bhkWorldObject();

@@ -11,16 +11,16 @@ using namespace std;
 /**
  * Run Time Type Inforamtion Class
  */
-class DLLEXPORT Type {
+class Type {
 public:
-	Type (const string & type_name, const Type * par_type );
-	~Type();
+	NIFLIB_API Type (const string & type_name, const Type * par_type );
+	NIFLIB_API ~Type();
 
-	string GetTypeName() const;
+	NIFLIB_API string GetTypeName() const;
 
-	bool IsSameType ( const Type & compare_to ) const;
-	bool IsDerivedType ( const Type & compare_to ) const;
-	bool operator<( const Type & compare_to ) const;
+	NIFLIB_API bool IsSameType ( const Type & compare_to ) const;
+	NIFLIB_API bool IsDerivedType ( const Type & compare_to ) const;
+	NIFLIB_API bool operator<( const Type & compare_to ) const;
 private:
 	string name;
 	const Type * base_type;

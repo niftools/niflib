@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * A list of \\0 terminated strings.
  */
-struct DLLEXPORT StringPalette {
+struct NIFLIB_API StringPalette {
 	/*! Default Constructor */
 	StringPalette();
 	/*! Default Destructor */

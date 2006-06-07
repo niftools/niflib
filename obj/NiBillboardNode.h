@@ -16,7 +16,7 @@ typedef Ref<NiBillboardNode> NiBillboardNodeRef;
  * camera creating a billboard effect for any attached objects.
  */
 
-class DLLEXPORT NiBillboardNode : public NI_BILLBOARD_NODE_PARENT {
+class NIFLIB_API NiBillboardNode : public NI_BILLBOARD_NODE_PARENT {
 public:
 	NiBillboardNode();
 	~NiBillboardNode();

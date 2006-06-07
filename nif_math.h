@@ -29,7 +29,7 @@ struct Float4;
 struct Matrix44;
 
 /*! Stores 2D texture coordinates – two floating point variables, u and v. */
-struct DLLEXPORT TexCoord {
+struct NIFLIB_API TexCoord {
 	float u; /*!< The U value in this coordinate pair. */ 
 	float v; /*!< The V value in this coordinate pair. */ 
 
@@ -56,7 +56,7 @@ struct DLLEXPORT TexCoord {
 };
 
 /*! Represents a triangle face formed between three vertices referenced by number */
-struct DLLEXPORT Triangle {
+struct NIFLIB_API Triangle {
 	short v1; /*!< The index of the first vertex. */ 
 	short v2; /*!< The index of the second vertex. */ 
 	short v3; /*!< The index of the third vertex. */ 
@@ -109,7 +109,7 @@ struct DLLEXPORT Triangle {
 };
 
 /*!Represents a position or direction in 3D space*/
-struct DLLEXPORT Vector3 {
+struct NIFLIB_API Vector3 {
 	float x; /*!< The X component of this vector. */ 
 	float y; /*!< The Y component of this vector. */ 
 	float z; /*!< The Z component of this vector. */ 
@@ -240,7 +240,7 @@ struct DLLEXPORT Vector3 {
 };
 
 /* Stores two floating point numbers.  Used as a row of a Matrix22 */
-struct DLLEXPORT Float2 {
+struct NIFLIB_API Float2 {
 	float data[2]; /*!< The two floating point numbers stored as an array. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
@@ -299,15 +299,15 @@ struct Matrix22 {
 	 * \param n The index into the row array.  Should be 0 or 1.
 	 * \return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
-	DLLEXPORT Float2 & operator[](int n) {
+	NIFLIB_API Float2 & operator[](int n) {
 		return rows[n];
 	}
-	DLLEXPORT const Float2 & operator[](int n) const {
+	NIFLIB_API const Float2 & operator[](int n) const {
 		return rows[n];
 	}
 
 	/*! Default Constructor */
-	DLLEXPORT Matrix22();
+	NIFLIB_API Matrix22();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param m11 The value to set at row 1, column 1.
@@ -315,7 +315,7 @@ struct Matrix22 {
 	 * \param m21 The value to set at row 2, column 1.
 	 * \param m22 The value to set at row 2, column 2.
 	 */
-	DLLEXPORT Matrix22(
+	NIFLIB_API Matrix22(
 		float m11, float m12,
 		float m21, float m22
 	) {
@@ -329,7 +329,7 @@ struct Matrix22 {
 	 * \param m21 The value to set at row 2, column 1.
 	 * \param m22 The value to set at row 2, column 2.
 	 */
-	DLLEXPORT void Set(
+	NIFLIB_API void Set(
 		float m11, float m12,
 		float m21, float m22
 	) {
@@ -337,10 +337,10 @@ struct Matrix22 {
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
 
-	DLLEXPORT Quaternion AsQuaternion();
+	NIFLIB_API Quaternion AsQuaternion();
 
 	//Python Operator Overloads
-	DLLEXPORT Float2 & __getitem__(int n) {
+	NIFLIB_API Float2 & __getitem__(int n) {
 		if (n > 1 || n < 0)
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
@@ -348,7 +348,7 @@ struct Matrix22 {
 };
 
 /* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
-struct DLLEXPORT Float3 {
+struct NIFLIB_API Float3 {
 	float data[3]; /*!< The three floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
@@ -411,15 +411,15 @@ struct Matrix33 {
 	 * \param n The index into the row array.  Should be 0, 1, or 2.
 	 * \return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
-	DLLEXPORT Float3 & operator[](int n) {
+	NIFLIB_API Float3 & operator[](int n) {
 		return rows[n];
 	}
-	DLLEXPORT const Float3 & operator[](int n) const {
+	NIFLIB_API const Float3 & operator[](int n) const {
 		return rows[n];
 	}
 
 	/*! Default constructor.   Initializes matrix to identity.  */
-	DLLEXPORT Matrix33();
+	NIFLIB_API Matrix33();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param m11 The value to set at row 1, column 1.
@@ -432,7 +432,7 @@ struct Matrix33 {
 	 * \param m32 The value to set at row 3, column 2.
 	 * \param m33 The value to set at row 3, column 3.
 	 */
-	DLLEXPORT Matrix33(
+	NIFLIB_API Matrix33(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
 		float m31, float m32, float m33
@@ -453,7 +453,7 @@ struct Matrix33 {
 	 * \param m32 The value to set at row 3, column 2.
 	 * \param m33 The value to set at row 3, column 3.
 	 */
-	DLLEXPORT void Set(
+	NIFLIB_API void Set(
 		float m11, float m12, float m13,
 		float m21, float m22, float m23,
 		float m31, float m32, float m33
@@ -466,22 +466,22 @@ struct Matrix33 {
 	/*! Returns a quaternion representation of the rotation stored in this matrix. 
 	 * \return A quaternion with an equivalent rotation to the one stored in this matrix.
 	 */
-	DLLEXPORT Quaternion AsQuaternion();
+	NIFLIB_API Quaternion AsQuaternion();
 
 	/*! Calculates the determinant of this matrix.
 	 * \return The determinant of this matrix.
 	 */
-	DLLEXPORT float Determinant() const;
+	NIFLIB_API float Determinant() const;
 
 	//Undocumented
-	DLLEXPORT void AsFloatArr( float out[3][3] ) {
+	NIFLIB_API void AsFloatArr( float out[3][3] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2];
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2];
 	}
 
 	//Python Operator Overloads
-	DLLEXPORT Float3 & __getitem__(int n) {
+	NIFLIB_API Float3 & __getitem__(int n) {
 		if (n > 2 || n < 0)
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
@@ -489,7 +489,7 @@ struct Matrix33 {
 };
 
 /* Stores four floating point numbers.  Used as a row of a Matrix44. */
-struct DLLEXPORT Float4 {
+struct NIFLIB_API Float4 {
 	float data[4]; /*!< The four floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
@@ -556,20 +556,20 @@ struct Matrix44 {
 	 * \param n The index into the row array.  Should be 0, 1, 2, or 3.
 	 * \return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
-	DLLEXPORT Float4 & operator[](int n) {
+	NIFLIB_API Float4 & operator[](int n) {
 		return rows[n];
 	}
-	DLLEXPORT Float4 const & operator[](int n) const {
+	NIFLIB_API Float4 const & operator[](int n) const {
 		return rows[n];
 	}
 
 	/*! Default constructor. Initializes Matrix to Identity. */
-	DLLEXPORT Matrix44();
+	NIFLIB_API Matrix44();
 
 	/*! Copy constructor.  Initializes Matrix to another Matrix44.
 	 * \param The matrix to initialize this one to. 
 	 */
-	DLLEXPORT Matrix44( const Matrix44 & m ) { memcpy(rows, m.rows, sizeof(Float4) * 4); }
+	NIFLIB_API Matrix44( const Matrix44 & m ) { memcpy(rows, m.rows, sizeof(Float4) * 4); }
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param m11 The value to set at row 1, column 1.
@@ -589,7 +589,7 @@ struct Matrix44 {
 	 * \param m43 The value to set at row 4, column 3.
 	 * \param m44 The value to set at row 4, column 4.
 	 */
-	DLLEXPORT Matrix44(
+	NIFLIB_API Matrix44(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
 		float m31, float m32, float m33, float m34,
@@ -607,7 +607,7 @@ struct Matrix44 {
 	 * \param rotate The 3x3 rotation matrix.
 	 * \param scale The scale factor.
 	 */
-	DLLEXPORT Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
+	NIFLIB_API Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
 
 	/*! This function can be used to set all values in this matrix at the same time.
 	 * \param m11 The value to set at row 1, column 1.
@@ -643,94 +643,94 @@ struct Matrix44 {
 	 * \param rh The matrix to multiply this one with.
 	 * \return The result of the multiplication.
 	 */
-	DLLEXPORT Matrix44 operator*( const Matrix44 & rh ) const;
+	NIFLIB_API Matrix44 operator*( const Matrix44 & rh ) const;
 
 	/* Multiplies this matrix by another and sets the result to itself.
 	 * \param rh The matrix to multiply this one with.
 	 * \return This matrix is returned.
 	 */
-	DLLEXPORT Matrix44 & operator*=( const Matrix44 & rh );
+	NIFLIB_API Matrix44 & operator*=( const Matrix44 & rh );
 
 	/* Multiplies this matrix by a scalar value.
 	 * \param rh The scalar value to multiply each component of this matrix by.
 	 * \return The result of the multiplication.
 	 */
-	DLLEXPORT Matrix44 operator*( float rh ) const;
+	NIFLIB_API Matrix44 operator*( float rh ) const;
 
 	/* Multiplies this matrix by a scalar value and sets the resutl to itself.
 	 * \param rh The scalar value to multiply each component of this matrix by.
 	 * \return This matrix is returned.
 	 */
-	DLLEXPORT Matrix44 & operator*=( float rh );
+	NIFLIB_API Matrix44 & operator*=( float rh );
 
 	/* Multiplies this matrix by a vector with x, y, and z components.
 	 * \param rh The vector to multiply this matrix with.
 	 * \return The result of the multiplication.
 	 */
-	DLLEXPORT Vector3 operator*( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator*( const Vector3 & rh ) const;
 
 	/* Adds this matrix to another.
 	 * \param rh The matrix to be added to this one.
 	 * \return The result of the addition.
 	 */
-	DLLEXPORT Matrix44 operator+( const Matrix44 & rh ) const;
+	NIFLIB_API Matrix44 operator+( const Matrix44 & rh ) const;
 
 	/* Adds this matrix to another and sets the result to itself.
 	 * \param rh The matrix to be added to this one.
 	 * \return This matrix is returned.
 	 */
-	DLLEXPORT Matrix44 & operator+=( const Matrix44 & rh );
+	NIFLIB_API Matrix44 & operator+=( const Matrix44 & rh );
 
 	/* Sets the values of this matrix to those of the given matrix.
 	 * \param rh The matrix to copy values from.
 	 * \return This matrix is returned.
 	 */
-	DLLEXPORT Matrix44 & operator=( const Matrix44 & rh );
+	NIFLIB_API Matrix44 & operator=( const Matrix44 & rh );
 
 	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
 	 * \param rh The matrix to compare this one with.
 	 * \return true if the matricies are equal, false otherwise.
 	 */
-	DLLEXPORT bool operator==( const Matrix44 & rh ) const;
+	NIFLIB_API bool operator==( const Matrix44 & rh ) const;
 
 	/* Allows the contents of the matrix to be printed to an ostream.
 	 * \param lh The ostream to insert the text into.
 	 * \param rh The matrix to insert into the stream.
 	 * \return The given ostream is returned.
 	 */
-	DLLEXPORT friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
+	NIFLIB_API friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
 
 	/*! Calculates the transpose of this matrix.
 	 * \return The transpose of this matrix.
 	 */
-	DLLEXPORT Matrix44 Transpose() const;
+	NIFLIB_API Matrix44 Transpose() const;
 
 	/*! Calculates the determinant of this matrix.
 	 * \return The determinant of this matrix.
 	 */
-	DLLEXPORT float Determinant() const;
+	NIFLIB_API float Determinant() const;
 
 	/*! Calculates the inverse of this matrix.
 	 * \retun The inverse of this matrix.
 	 */
-	DLLEXPORT Matrix44 Inverse() const;
+	NIFLIB_API Matrix44 Inverse() const;
 
 	/*! Returns a 3x3 submatrix of this matrix created by skipping the indicated row and column.
 	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
 	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
 	 * \return The 3x3 submatrix obtained by skipping the indicated row and column.
 	 */
-	DLLEXPORT Matrix33 Submatrix( int skip_r, int skip_c ) const;
+	NIFLIB_API Matrix33 Submatrix( int skip_r, int skip_c ) const;
 
 	/*! Calculates the adjunct of this matrix created by skipping the indicated row and column.
 	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
 	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
 	 * \return The adjunct obtained by skipping the indicated row and column.
 	 */
-	DLLEXPORT float Adjunct( int skip_r, int skip_c ) const;
+	NIFLIB_API float Adjunct( int skip_r, int skip_c ) const;
 
 	//undocumented
-	DLLEXPORT void AsFloatArr( float out[4][4] ) {
+	NIFLIB_API void AsFloatArr( float out[4][4] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2]; out[1][3] = rows[1][3];
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2]; out[2][3] = rows[2][3];
@@ -738,7 +738,7 @@ struct Matrix44 {
 	}
 
 	//Python Operator Overloads
-	DLLEXPORT Float4 & __getitem__(int n) {
+	NIFLIB_API Float4 & __getitem__(int n) {
 		if (n > 3 || n < 0)
 			throw std::out_of_range("Index out of range for Matrix44");
         return rows[n];
@@ -746,7 +746,7 @@ struct Matrix44 {
 };
 
 /*! Stores a color along with alpha translucency */
-struct DLLEXPORT Color4 {
+struct NIFLIB_API Color4 {
 	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
 	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
 	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
@@ -783,7 +783,7 @@ struct DLLEXPORT Color4 {
 };
 
 /*! Represents a quaternion - a 4D extention of complex numbers used as an alternitive to matrices to represent rotation.*/
-struct DLLEXPORT Quaternion {
+struct NIFLIB_API Quaternion {
 	float w; /*!< The W scalar component of this Quaternion. */ 
 	float x; /*!< The X vector component of this Quaternion. */ 
 	float y; /*!< The Y vector component of this Quaternion. */ 

@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Describes a furniture position?
  */
-struct DLLEXPORT FurniturePosition {
+struct NIFLIB_API FurniturePosition {
 	/*! Default Constructor */
 	FurniturePosition();
 	/*! Default Destructor */

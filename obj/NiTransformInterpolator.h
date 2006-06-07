@@ -19,7 +19,7 @@ typedef Ref<NiTransformInterpolator> NiTransformInterpolatorRef;
  * NiTransformInterpolator - Unknown.
  */
 
-class DLLEXPORT NiTransformInterpolator : public NI_TRANSFORM_INTERPOLATOR_PARENT {
+class NIFLIB_API NiTransformInterpolator : public NI_TRANSFORM_INTERPOLATOR_PARENT {
 public:
 	NiTransformInterpolator();
 	~NiTransformInterpolator();

@@ -15,7 +15,7 @@ typedef Ref<NiRotatingParticlesData> NiRotatingParticlesDataRef;
  * NiRotatingParticlesData - Rotating particles data block.
  */
 
-class DLLEXPORT NiRotatingParticlesData : public NI_ROTATING_PARTICLES_DATA_PARENT {
+class NIFLIB_API NiRotatingParticlesData : public NI_ROTATING_PARTICLES_DATA_PARENT {
 public:
 	NiRotatingParticlesData();
 	~NiRotatingParticlesData();

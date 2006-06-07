@@ -14,7 +14,7 @@ class NiSkinInstance;
 /*!
  * Reference to shape and skin instance.
  */
-struct DLLEXPORT SkinShape {
+struct NIFLIB_API SkinShape {
 	/*! Default Constructor */
 	SkinShape();
 	/*! Default Destructor */

@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Skinning data component.
  */
-struct DLLEXPORT SkinData {
+struct NIFLIB_API SkinData {
 	/*! Default Constructor */
 	SkinData();
 	/*! Default Destructor */

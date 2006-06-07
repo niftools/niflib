@@ -19,7 +19,7 @@ typedef Ref<NiParticleMeshesData> NiParticleMeshesDataRef;
  * NiParticleMeshesData - Particle meshes data.
  */
 
-class DLLEXPORT NiParticleMeshesData : public NI_PARTICLE_MESHES_DATA_PARENT {
+class NIFLIB_API NiParticleMeshesData : public NI_PARTICLE_MESHES_DATA_PARENT {
 public:
 	NiParticleMeshesData();
 	~NiParticleMeshesData();

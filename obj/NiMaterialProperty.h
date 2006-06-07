@@ -15,7 +15,7 @@ typedef Ref<NiMaterialProperty> NiMaterialPropertyRef;
  * NiMaterialProperty - Describes the material shading properties.
  */
 
-class DLLEXPORT NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
+class NIFLIB_API NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
 public:
 	NiMaterialProperty();
 	~NiMaterialProperty();

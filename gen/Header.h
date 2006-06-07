@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * The NIF file header.
  */
-struct DLLEXPORT Header {
+struct NIFLIB_API Header {
 	/*! Default Constructor */
 	Header();
 	/*! Default Destructor */

@@ -15,7 +15,7 @@ typedef Ref<NiBSBoneLODController> NiBSBoneLODControllerRef;
  * NiBSBoneLODController - A simple LOD controller for bones.
  */
 
-class DLLEXPORT NiBSBoneLODController : public NI_B_S_BONE_L_O_D_CONTROLLER_PARENT {
+class NIFLIB_API NiBSBoneLODController : public NI_B_S_BONE_L_O_D_CONTROLLER_PARENT {
 public:
 	NiBSBoneLODController();
 	~NiBSBoneLODController();

@@ -15,7 +15,7 @@ typedef Ref<bhkPrismaticConstraint> bhkPrismaticConstraintRef;
  * bhkPrismaticConstraint - A prismatic constraint.
  */
 
-class DLLEXPORT bhkPrismaticConstraint : public BHK_PRISMATIC_CONSTRAINT_PARENT {
+class NIFLIB_API bhkPrismaticConstraint : public BHK_PRISMATIC_CONSTRAINT_PARENT {
 public:
 	bhkPrismaticConstraint();
 	~bhkPrismaticConstraint();

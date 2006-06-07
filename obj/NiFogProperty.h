@@ -15,7 +15,7 @@ typedef Ref<NiFogProperty> NiFogPropertyRef;
  * NiFogProperty - Describes... fog?
  */
 
-class DLLEXPORT NiFogProperty : public NI_FOG_PROPERTY_PARENT {
+class NIFLIB_API NiFogProperty : public NI_FOG_PROPERTY_PARENT {
 public:
 	NiFogProperty();
 	~NiFogProperty();

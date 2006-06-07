@@ -15,7 +15,7 @@ typedef Ref<NiTriShape> NiTriShapeRef;
  * NiTriShape - A shape node that refers to singular triangle data.
  */
 
-class DLLEXPORT NiTriShape : public NI_TRI_SHAPE_PARENT {
+class NIFLIB_API NiTriShape : public NI_TRI_SHAPE_PARENT {
 public:
 	NiTriShape();
 	~NiTriShape();

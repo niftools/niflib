@@ -16,7 +16,7 @@ typedef Ref<bhkSphereRepShape> bhkSphereRepShapeRef;
  * quick rejection in addition to more detailed shape data?
  */
 
-class DLLEXPORT bhkSphereRepShape : public BHK_SPHERE_REP_SHAPE_PARENT {
+class NIFLIB_API bhkSphereRepShape : public BHK_SPHERE_REP_SHAPE_PARENT {
 public:
 	bhkSphereRepShape();
 	~bhkSphereRepShape();

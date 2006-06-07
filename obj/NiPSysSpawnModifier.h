@@ -15,7 +15,7 @@ typedef Ref<NiPSysSpawnModifier> NiPSysSpawnModifierRef;
  * NiPSysSpawnModifier - Unknown particle modifier.
  */
 
-class DLLEXPORT NiPSysSpawnModifier : public NI_P_SYS_SPAWN_MODIFIER_PARENT {
+class NIFLIB_API NiPSysSpawnModifier : public NI_P_SYS_SPAWN_MODIFIER_PARENT {
 public:
 	NiPSysSpawnModifier();
 	~NiPSysSpawnModifier();

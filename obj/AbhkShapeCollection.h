@@ -16,7 +16,7 @@ typedef Ref<AbhkShapeCollection> AbhkShapeCollectionRef;
  * hierarchy.
  */
 
-class DLLEXPORT AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
+class NIFLIB_API AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
 public:
 	AbhkShapeCollection();
 	~AbhkShapeCollection();

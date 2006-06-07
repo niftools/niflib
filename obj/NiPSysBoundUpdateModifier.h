@@ -15,7 +15,7 @@ typedef Ref<NiPSysBoundUpdateModifier> NiPSysBoundUpdateModifierRef;
  * NiPSysBoundUpdateModifier - Unknown particle system modifier.
  */
 
-class DLLEXPORT NiPSysBoundUpdateModifier : public NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT {
+class NIFLIB_API NiPSysBoundUpdateModifier : public NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT {
 public:
 	NiPSysBoundUpdateModifier();
 	~NiPSysBoundUpdateModifier();

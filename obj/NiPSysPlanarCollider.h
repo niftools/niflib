@@ -21,7 +21,7 @@ typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;
  * NiPSysPlanarCollider - Unknown.
  */
 
-class DLLEXPORT NiPSysPlanarCollider : public NI_P_SYS_PLANAR_COLLIDER_PARENT {
+class NIFLIB_API NiPSysPlanarCollider : public NI_P_SYS_PLANAR_COLLIDER_PARENT {
 public:
 	NiPSysPlanarCollider();
 	~NiPSysPlanarCollider();

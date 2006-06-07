@@ -15,7 +15,7 @@ typedef Ref<bhkHingeConstraint> bhkHingeConstraintRef;
  * bhkHingeConstraint - A hinge constraint.
  */
 
-class DLLEXPORT bhkHingeConstraint : public BHK_HINGE_CONSTRAINT_PARENT {
+class NIFLIB_API bhkHingeConstraint : public BHK_HINGE_CONSTRAINT_PARENT {
 public:
 	bhkHingeConstraint();
 	~bhkHingeConstraint();

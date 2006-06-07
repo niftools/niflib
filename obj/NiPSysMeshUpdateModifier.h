@@ -19,7 +19,7 @@ typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;
  * NiPSysMeshUpdateModifier - Unknown.
  */
 
-class DLLEXPORT NiPSysMeshUpdateModifier : public NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT {
+class NIFLIB_API NiPSysMeshUpdateModifier : public NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT {
 public:
 	NiPSysMeshUpdateModifier();
 	~NiPSysMeshUpdateModifier();

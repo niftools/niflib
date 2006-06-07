@@ -20,7 +20,7 @@ typedef Ref<NiLookAtController> NiLookAtControllerRef;
  * -3.4e+38.
  */
 
-class DLLEXPORT NiLookAtController : public NI_LOOK_AT_CONTROLLER_PARENT {
+class NIFLIB_API NiLookAtController : public NI_LOOK_AT_CONTROLLER_PARENT {
 public:
 	NiLookAtController();
 	~NiLookAtController();

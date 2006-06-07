@@ -15,7 +15,7 @@ typedef Ref<bhkSimpleShapePhantom> bhkSimpleShapePhantomRef;
  * bhkSimpleShapePhantom - Unknown shape.
  */
 
-class DLLEXPORT bhkSimpleShapePhantom : public BHK_SIMPLE_SHAPE_PHANTOM_PARENT {
+class NIFLIB_API bhkSimpleShapePhantom : public BHK_SIMPLE_SHAPE_PHANTOM_PARENT {
 public:
 	bhkSimpleShapePhantom();
 	~bhkSimpleShapePhantom();

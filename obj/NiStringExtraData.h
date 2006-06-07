@@ -17,7 +17,7 @@ typedef Ref<NiStringExtraData> NiStringExtraDataRef;
  * blocks (through their name) in animation .kf files.
  */
 
-class DLLEXPORT NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {
+class NIFLIB_API NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {
 public:
 	NiStringExtraData();
 	~NiStringExtraData();

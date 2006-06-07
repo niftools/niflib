@@ -20,7 +20,7 @@ typedef Ref<NiGeomMorpherController> NiGeomMorpherControllerRef;
  * NiGeomMorpherController - Time controller for geometry morphing.
  */
 
-class DLLEXPORT NiGeomMorpherController : public NI_GEOM_MORPHER_CONTROLLER_PARENT {
+class NIFLIB_API NiGeomMorpherController : public NI_GEOM_MORPHER_CONTROLLER_PARENT {
 public:
 	NiGeomMorpherController();
 	~NiGeomMorpherController();

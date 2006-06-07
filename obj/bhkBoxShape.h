@@ -15,7 +15,7 @@ typedef Ref<bhkBoxShape> bhkBoxShapeRef;
  * bhkBoxShape - A box.
  */
 
-class DLLEXPORT bhkBoxShape : public BHK_BOX_SHAPE_PARENT {
+class NIFLIB_API bhkBoxShape : public BHK_BOX_SHAPE_PARENT {
 public:
 	bhkBoxShape();
 	~bhkBoxShape();

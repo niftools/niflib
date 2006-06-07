@@ -15,7 +15,7 @@ typedef Ref<NiPSysSphereEmitter> NiPSysSphereEmitterRef;
  * NiPSysSphereEmitter - Unknown.
  */
 
-class DLLEXPORT NiPSysSphereEmitter : public NI_P_SYS_SPHERE_EMITTER_PARENT {
+class NIFLIB_API NiPSysSphereEmitter : public NI_P_SYS_SPHERE_EMITTER_PARENT {
 public:
 	NiPSysSphereEmitter();
 	~NiPSysSphereEmitter();

@@ -15,7 +15,7 @@ typedef Ref<NiTriStripsData> NiTriStripsDataRef;
  * NiTriStripsData - Holds mesh data using strips of triangles.
  */
 
-class DLLEXPORT NiTriStripsData : public NI_TRI_STRIPS_DATA_PARENT {
+class NIFLIB_API NiTriStripsData : public NI_TRI_STRIPS_DATA_PARENT {
 public:
 	NiTriStripsData();
 	~NiTriStripsData();

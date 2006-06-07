@@ -23,7 +23,7 @@ typedef Ref<NiLODNode> NiLODNodeRef;
  * distance.
  */
 
-class DLLEXPORT NiLODNode : public NI_L_O_D_NODE_PARENT {
+class NIFLIB_API NiLODNode : public NI_L_O_D_NODE_PARENT {
 public:
 	NiLODNode();
 	~NiLODNode();

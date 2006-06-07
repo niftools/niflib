@@ -15,7 +15,7 @@ typedef Ref<NiTransformData> NiTransformDataRef;
  * NiTransformData - Mesh animation keyframe data.
  */
 
-class DLLEXPORT NiTransformData : public NI_TRANSFORM_DATA_PARENT {
+class NIFLIB_API NiTransformData : public NI_TRANSFORM_DATA_PARENT {
 public:
 	NiTransformData();
 	~NiTransformData();

@@ -19,7 +19,7 @@ typedef Ref<NiParticleMeshModifier> NiParticleMeshModifierRef;
  * NiParticleMeshModifier - Unknown.
  */
 
-class DLLEXPORT NiParticleMeshModifier : public NI_PARTICLE_MESH_MODIFIER_PARENT {
+class NIFLIB_API NiParticleMeshModifier : public NI_PARTICLE_MESH_MODIFIER_PARENT {
 public:
 	NiParticleMeshModifier();
 	~NiParticleMeshModifier();

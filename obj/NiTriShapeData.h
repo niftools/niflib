@@ -17,7 +17,7 @@ typedef Ref<NiTriShapeData> NiTriShapeDataRef;
  * NiTriShapeData - Holds mesh data using a list of singular triangles.
  */
 
-class DLLEXPORT NiTriShapeData : public NI_TRI_SHAPE_DATA_PARENT {
+class NIFLIB_API NiTriShapeData : public NI_TRI_SHAPE_DATA_PARENT {
 public:
 	NiTriShapeData();
 	~NiTriShapeData();

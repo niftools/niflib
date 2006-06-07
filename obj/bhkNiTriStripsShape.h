@@ -19,7 +19,7 @@ typedef Ref<bhkNiTriStripsShape> bhkNiTriStripsShapeRef;
  * bhkNiTriStripsShape - A shape constructed from a bunch of strips.
  */
 
-class DLLEXPORT bhkNiTriStripsShape : public BHK_NI_TRI_STRIPS_SHAPE_PARENT {
+class NIFLIB_API bhkNiTriStripsShape : public BHK_NI_TRI_STRIPS_SHAPE_PARENT {
 public:
 	bhkNiTriStripsShape();
 	~bhkNiTriStripsShape();

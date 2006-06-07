@@ -19,7 +19,7 @@ typedef Ref<NiPSysEmitterCtlr> NiPSysEmitterCtlrRef;
  * NiPSysEmitterCtlr - Particle system emitter controller.
  */
 
-class DLLEXPORT NiPSysEmitterCtlr : public NI_P_SYS_EMITTER_CTLR_PARENT {
+class NIFLIB_API NiPSysEmitterCtlr : public NI_P_SYS_EMITTER_CTLR_PARENT {
 public:
 	NiPSysEmitterCtlr();
 	~NiPSysEmitterCtlr();

@@ -15,7 +15,7 @@ typedef Ref<NiSpecularProperty> NiSpecularPropertyRef;
  * NiSpecularProperty - Gives specularity to a shape. Flags 0x0001.
  */
 
-class DLLEXPORT NiSpecularProperty : public NI_SPECULAR_PROPERTY_PARENT {
+class NIFLIB_API NiSpecularProperty : public NI_SPECULAR_PROPERTY_PARENT {
 public:
 	NiSpecularProperty();
 	~NiSpecularProperty();

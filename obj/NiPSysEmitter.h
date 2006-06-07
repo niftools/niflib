@@ -15,7 +15,7 @@ typedef Ref<NiPSysEmitter> NiPSysEmitterRef;
  * NiPSysEmitter - A particle emitter modifier?
  */
 
-class DLLEXPORT NiPSysEmitter : public NI_P_SYS_EMITTER_PARENT {
+class NIFLIB_API NiPSysEmitter : public NI_P_SYS_EMITTER_PARENT {
 public:
 	NiPSysEmitter();
 	~NiPSysEmitter();

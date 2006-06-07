@@ -15,7 +15,7 @@ typedef Ref<bhkConvexShape> bhkConvexShapeRef;
  * bhkConvexShape - A havok shape.
  */
 
-class DLLEXPORT bhkConvexShape : public BHK_CONVEX_SHAPE_PARENT {
+class NIFLIB_API bhkConvexShape : public BHK_CONVEX_SHAPE_PARENT {
 public:
 	bhkConvexShape();
 	~bhkConvexShape();

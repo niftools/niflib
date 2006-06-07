@@ -19,7 +19,7 @@ typedef Ref<NiVisController> NiVisControllerRef;
  * NiVisController - Time controller for visibility.
  */
 
-class DLLEXPORT NiVisController : public NI_VIS_CONTROLLER_PARENT {
+class NIFLIB_API NiVisController : public NI_VIS_CONTROLLER_PARENT {
 public:
 	NiVisController();
 	~NiVisController();

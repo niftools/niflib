@@ -19,7 +19,7 @@ typedef Ref<NiPSysGravityModifier> NiPSysGravityModifierRef;
  * NiPSysGravityModifier - Unknown particle system modifier.
  */
 
-class DLLEXPORT NiPSysGravityModifier : public NI_P_SYS_GRAVITY_MODIFIER_PARENT {
+class NIFLIB_API NiPSysGravityModifier : public NI_P_SYS_GRAVITY_MODIFIER_PARENT {
 public:
 	NiPSysGravityModifier();
 	~NiPSysGravityModifier();

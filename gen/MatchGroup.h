@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Group of vertex indices of vertices that match.
  */
-struct DLLEXPORT MatchGroup {
+struct NIFLIB_API MatchGroup {
 	/*! Default Constructor */
 	MatchGroup();
 	/*! Default Destructor */

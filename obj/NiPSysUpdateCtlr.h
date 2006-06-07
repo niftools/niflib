@@ -15,7 +15,7 @@ typedef Ref<NiPSysUpdateCtlr> NiPSysUpdateCtlrRef;
  * NiPSysUpdateCtlr - Particle system controller, used for ???.
  */
 
-class DLLEXPORT NiPSysUpdateCtlr : public NI_P_SYS_UPDATE_CTLR_PARENT {
+class NIFLIB_API NiPSysUpdateCtlr : public NI_P_SYS_UPDATE_CTLR_PARENT {
 public:
 	NiPSysUpdateCtlr();
 	~NiPSysUpdateCtlr();

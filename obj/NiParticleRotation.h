@@ -15,7 +15,7 @@ typedef Ref<NiParticleRotation> NiParticleRotationRef;
  * NiParticleRotation - Unknown.
  */
 
-class DLLEXPORT NiParticleRotation : public NI_PARTICLE_ROTATION_PARENT {
+class NIFLIB_API NiParticleRotation : public NI_PARTICLE_ROTATION_PARENT {
 public:
 	NiParticleRotation();
 	~NiParticleRotation();

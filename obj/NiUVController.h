@@ -19,7 +19,7 @@ typedef Ref<NiUVController> NiUVControllerRef;
  * NiUVController - Time controller for texture coordinates.
  */
 
-class DLLEXPORT NiUVController : public NI_U_V_CONTROLLER_PARENT {
+class NIFLIB_API NiUVController : public NI_U_V_CONTROLLER_PARENT {
 public:
 	NiUVController();
 	~NiUVController();

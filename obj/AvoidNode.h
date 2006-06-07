@@ -15,7 +15,7 @@ typedef Ref<AvoidNode> AvoidNodeRef;
  * AvoidNode - Morrowind specific?
  */
 
-class DLLEXPORT AvoidNode : public AVOID_NODE_PARENT {
+class NIFLIB_API AvoidNode : public AVOID_NODE_PARENT {
 public:
 	AvoidNode();
 	~AvoidNode();

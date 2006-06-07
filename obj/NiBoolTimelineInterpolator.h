@@ -19,7 +19,7 @@ typedef Ref<NiBoolTimelineInterpolator> NiBoolTimelineInterpolatorRef;
  * NiBoolTimelineInterpolator - Unknown.
  */
 
-class DLLEXPORT NiBoolTimelineInterpolator : public NI_BOOL_TIMELINE_INTERPOLATOR_PARENT {
+class NIFLIB_API NiBoolTimelineInterpolator : public NI_BOOL_TIMELINE_INTERPOLATOR_PARENT {
 public:
 	NiBoolTimelineInterpolator();
 	~NiBoolTimelineInterpolator();

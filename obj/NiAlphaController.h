@@ -19,7 +19,7 @@ typedef Ref<NiAlphaController> NiAlphaControllerRef;
  * NiAlphaController - Time controller for transparency.
  */
 
-class DLLEXPORT NiAlphaController : public NI_ALPHA_CONTROLLER_PARENT {
+class NIFLIB_API NiAlphaController : public NI_ALPHA_CONTROLLER_PARENT {
 public:
 	NiAlphaController();
 	~NiAlphaController();

@@ -20,7 +20,7 @@ class NiTimeController;
  */
 typedef Ref<NiObjectNET> NiObjectNETRef;
 
-class DLLEXPORT NiObjectNET : public NI_OBJECT_N_E_T_PARENT {
+class NIFLIB_API NiObjectNET : public NI_OBJECT_N_E_T_PARENT {
 public:
 	NiObjectNET();
 	~NiObjectNET();

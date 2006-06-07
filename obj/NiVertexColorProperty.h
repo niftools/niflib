@@ -18,7 +18,7 @@ typedef Ref<NiVertexColorProperty> NiVertexColorPropertyRef;
  * not present, vertex colors have vertex_mode=2 and lighting_mode=1.
  */
 
-class DLLEXPORT NiVertexColorProperty : public NI_VERTEX_COLOR_PROPERTY_PARENT {
+class NIFLIB_API NiVertexColorProperty : public NI_VERTEX_COLOR_PROPERTY_PARENT {
 public:
 	NiVertexColorProperty();
 	~NiVertexColorProperty();

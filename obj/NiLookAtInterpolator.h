@@ -21,7 +21,7 @@ typedef Ref<NiLookAtInterpolator> NiLookAtInterpolatorRef;
  * NiLookAtInterpolator - Unknown.
  */
 
-class DLLEXPORT NiLookAtInterpolator : public NI_LOOK_AT_INTERPOLATOR_PARENT {
+class NIFLIB_API NiLookAtInterpolator : public NI_LOOK_AT_INTERPOLATOR_PARENT {
 public:
 	NiLookAtInterpolator();
 	~NiLookAtInterpolator();

@@ -16,7 +16,7 @@ typedef Ref<bhkBlendController> bhkBlendControllerRef;
  * files.
  */
 
-class DLLEXPORT bhkBlendController : public BHK_BLEND_CONTROLLER_PARENT {
+class NIFLIB_API bhkBlendController : public BHK_BLEND_CONTROLLER_PARENT {
 public:
 	bhkBlendController();
 	~bhkBlendController();

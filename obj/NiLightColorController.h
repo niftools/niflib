@@ -20,7 +20,7 @@ typedef Ref<NiLightColorController> NiLightColorControllerRef;
  * NiLightColorController - Light color animation controller.
  */
 
-class DLLEXPORT NiLightColorController : public NI_LIGHT_COLOR_CONTROLLER_PARENT {
+class NIFLIB_API NiLightColorController : public NI_LIGHT_COLOR_CONTROLLER_PARENT {
 public:
 	NiLightColorController();
 	~NiLightColorController();

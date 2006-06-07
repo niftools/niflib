@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * 
  */
-struct DLLEXPORT RagDollDescriptor {
+struct NIFLIB_API RagDollDescriptor {
 	/*! Default Constructor */
 	RagDollDescriptor();
 	/*! Default Destructor */

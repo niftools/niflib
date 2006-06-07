@@ -14,7 +14,7 @@ class NiAVObject;
 /*!
  * The NIF file footer.
  */
-struct DLLEXPORT Footer {
+struct NIFLIB_API Footer {
 	/*! Default Constructor */
 	Footer();
 	/*! Default Destructor */

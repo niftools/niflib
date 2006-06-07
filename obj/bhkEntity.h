@@ -19,7 +19,7 @@ typedef Ref<bhkEntity> bhkEntityRef;
  * bhkEntity - A havok node, describes physical properties.
  */
 
-class DLLEXPORT bhkEntity : public BHK_ENTITY_PARENT {
+class NIFLIB_API bhkEntity : public BHK_ENTITY_PARENT {
 public:
 	bhkEntity();
 	~bhkEntity();

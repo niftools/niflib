@@ -15,7 +15,7 @@ typedef Ref<bhkBlendCollisionObject> bhkBlendCollisionObjectRef;
  * bhkBlendCollisionObject - Unknown.
  */
 
-class DLLEXPORT bhkBlendCollisionObject : public BHK_BLEND_COLLISION_OBJECT_PARENT {
+class NIFLIB_API bhkBlendCollisionObject : public BHK_BLEND_COLLISION_OBJECT_PARENT {
 public:
 	bhkBlendCollisionObject();
 	~bhkBlendCollisionObject();

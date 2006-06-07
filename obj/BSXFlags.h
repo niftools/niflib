@@ -15,7 +15,7 @@ typedef Ref<BSXFlags> BSXFlagsRef;
  * BSXFlags - Unknown.
  */
 
-class DLLEXPORT BSXFlags : public B_S_X_FLAGS_PARENT {
+class NIFLIB_API BSXFlags : public B_S_X_FLAGS_PARENT {
 public:
 	BSXFlags();
 	~BSXFlags();

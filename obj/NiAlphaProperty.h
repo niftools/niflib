@@ -15,7 +15,7 @@ typedef Ref<NiAlphaProperty> NiAlphaPropertyRef;
  * NiAlphaProperty - Transparency. Flags 0x00ED.
  */
 
-class DLLEXPORT NiAlphaProperty : public NI_ALPHA_PROPERTY_PARENT {
+class NIFLIB_API NiAlphaProperty : public NI_ALPHA_PROPERTY_PARENT {
 public:
 	NiAlphaProperty();
 	~NiAlphaProperty();

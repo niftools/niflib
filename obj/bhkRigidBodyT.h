@@ -15,7 +15,7 @@ typedef Ref<bhkRigidBodyT> bhkRigidBodyTRef;
  * bhkRigidBodyT - Unknown.
  */
 
-class DLLEXPORT bhkRigidBodyT : public BHK_RIGID_BODY_T_PARENT {
+class NIFLIB_API bhkRigidBodyT : public BHK_RIGID_BODY_T_PARENT {
 public:
 	bhkRigidBodyT();
 	~bhkRigidBodyT();

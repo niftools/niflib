@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 //#define DEBUG // this will produce lots of output
+//#define PRINT_BLOCK_NAMES
+//#define PRINT_BLOCK_CONTENTS
 
 #include "niflib.h"
 #include "obj/NiAVObject.h"
@@ -277,7 +279,9 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 		}
 
-		//cout << endl << i << ":  " << blockName;
+#ifdef PRINT_BLOCK_NAMES
+		cout << endl << i << ":  " << blockName;
+#endif
 
 		//Create Block of the type that was found
 		blocks[i] = CreateBlock(blockName);
@@ -297,8 +301,9 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 
 		//blocks[i]->SetBlockNum(i);
 		blocks[i]->Read( in, link_stack, version, user_version );
-
-		//cout << endl << blocks[i]->asString() << endl;
+#ifdef PRINT_BLOCK_CONTENTS
+		cout << endl << blocks[i]->asString() << endl;
+#endif
 	}
 
 	//cout << endl;

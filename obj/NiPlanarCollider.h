@@ -15,7 +15,7 @@ typedef Ref<NiPlanarCollider> NiPlanarColliderRef;
  * NiPlanarCollider - Unknown.
  */
 
-class DLLEXPORT NiPlanarCollider : public NI_PLANAR_COLLIDER_PARENT {
+class NIFLIB_API NiPlanarCollider : public NI_PLANAR_COLLIDER_PARENT {
 public:
 	NiPlanarCollider();
 	~NiPlanarCollider();

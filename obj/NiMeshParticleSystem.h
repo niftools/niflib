@@ -15,7 +15,7 @@ typedef Ref<NiMeshParticleSystem> NiMeshParticleSystemRef;
  * NiMeshParticleSystem - Particle system.
  */
 
-class DLLEXPORT NiMeshParticleSystem : public NI_MESH_PARTICLE_SYSTEM_PARENT {
+class NIFLIB_API NiMeshParticleSystem : public NI_MESH_PARTICLE_SYSTEM_PARENT {
 public:
 	NiMeshParticleSystem();
 	~NiMeshParticleSystem();

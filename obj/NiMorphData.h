@@ -17,7 +17,7 @@ typedef Ref<NiMorphData> NiMorphDataRef;
  * NiMorphData - Geometry morphing data.
  */
 
-class DLLEXPORT NiMorphData : public NI_MORPH_DATA_PARENT {
+class NIFLIB_API NiMorphData : public NI_MORPH_DATA_PARENT {
 public:
 	NiMorphData();
 	~NiMorphData();

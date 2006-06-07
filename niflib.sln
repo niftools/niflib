@@ -8,6 +8,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		PyNiflib|Win32 = PyNiflib|Win32
+		Release - DLL|Win32 = Release - DLL|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -15,12 +16,15 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug|Win32.Build.0 = Debug|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.PyNiflib|Win32.ActiveCfg = PyNiflib|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.PyNiflib|Win32.Build.0 = PyNiflib|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - DLL|Win32.ActiveCfg = Release - DLL|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - DLL|Win32.Build.0 = Release - DLL|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.ActiveCfg = Release|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.Build.0 = Release|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Debug|Win32.Build.0 = Debug|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.PyNiflib|Win32.ActiveCfg = PyNiflib|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.PyNiflib|Win32.Build.0 = PyNiflib|Win32
+		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Release - DLL|Win32.ActiveCfg = Release - DLL|Win32
 		{7517F24D-B1A1-427C-B952-F5DD5DDAD7A7}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

@@ -15,7 +15,7 @@ typedef Ref<NiWireframeProperty> NiWireframePropertyRef;
  * NiWireframeProperty - Unknown.
  */
 
-class DLLEXPORT NiWireframeProperty : public NI_WIREFRAME_PROPERTY_PARENT {
+class NIFLIB_API NiWireframeProperty : public NI_WIREFRAME_PROPERTY_PARENT {
 public:
 	NiWireframeProperty();
 	~NiWireframeProperty();

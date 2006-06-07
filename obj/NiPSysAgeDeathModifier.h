@@ -19,7 +19,7 @@ typedef Ref<NiPSysAgeDeathModifier> NiPSysAgeDeathModifierRef;
  * NiPSysAgeDeathModifier - Unknown particle modifier.
  */
 
-class DLLEXPORT NiPSysAgeDeathModifier : public NI_P_SYS_AGE_DEATH_MODIFIER_PARENT {
+class NIFLIB_API NiPSysAgeDeathModifier : public NI_P_SYS_AGE_DEATH_MODIFIER_PARENT {
 public:
 	NiPSysAgeDeathModifier();
 	~NiPSysAgeDeathModifier();

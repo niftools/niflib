@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * particle array entry
  */
-struct DLLEXPORT Particle {
+struct NIFLIB_API Particle {
 	/*! Default Constructor */
 	Particle();
 	/*! Default Destructor */

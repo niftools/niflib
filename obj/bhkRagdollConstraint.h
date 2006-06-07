@@ -15,7 +15,7 @@ typedef Ref<bhkRagdollConstraint> bhkRagdollConstraintRef;
  * bhkRagdollConstraint - Ragdoll constraint.
  */
 
-class DLLEXPORT bhkRagdollConstraint : public BHK_RAGDOLL_CONSTRAINT_PARENT {
+class NIFLIB_API bhkRagdollConstraint : public BHK_RAGDOLL_CONSTRAINT_PARENT {
 public:
 	bhkRagdollConstraint();
 	~bhkRagdollConstraint();

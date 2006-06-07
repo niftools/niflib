@@ -15,7 +15,7 @@ typedef Ref<bhkShape> bhkShapeRef;
  * bhkShape - A Havok Shape?
  */
 
-class DLLEXPORT bhkShape : public BHK_SHAPE_PARENT {
+class NIFLIB_API bhkShape : public BHK_SHAPE_PARENT {
 public:
 	bhkShape();
 	~bhkShape();

@@ -15,7 +15,7 @@ typedef Ref<NiBSplineBasisData> NiBSplineBasisDataRef;
  * NiBSplineBasisData - Unknown.
  */
 
-class DLLEXPORT NiBSplineBasisData : public NI_B_SPLINE_BASIS_DATA_PARENT {
+class NIFLIB_API NiBSplineBasisData : public NI_B_SPLINE_BASIS_DATA_PARENT {
 public:
 	NiBSplineBasisData();
 	~NiBSplineBasisData();

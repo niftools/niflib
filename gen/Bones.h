@@ -14,7 +14,7 @@ class NiNode;
  * This is a list of bone influences.  It points to blocks higher in the
  * hierarchy so ints are used to represent the indices.
  */
-struct DLLEXPORT Bones {
+struct NIFLIB_API Bones {
 	/*! Default Constructor */
 	Bones();
 	/*! Default Destructor */

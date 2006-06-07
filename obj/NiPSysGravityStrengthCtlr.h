@@ -15,7 +15,7 @@ typedef Ref<NiPSysGravityStrengthCtlr> NiPSysGravityStrengthCtlrRef;
  * NiPSysGravityStrengthCtlr - Unknown.
  */
 
-class DLLEXPORT NiPSysGravityStrengthCtlr : public NI_P_SYS_GRAVITY_STRENGTH_CTLR_PARENT {
+class NIFLIB_API NiPSysGravityStrengthCtlr : public NI_P_SYS_GRAVITY_STRENGTH_CTLR_PARENT {
 public:
 	NiPSysGravityStrengthCtlr();
 	~NiPSysGravityStrengthCtlr();

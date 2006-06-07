@@ -19,7 +19,7 @@ typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;
  * NiPSysMeshEmitter - Unknown.
  */
 
-class DLLEXPORT NiPSysMeshEmitter : public NI_P_SYS_MESH_EMITTER_PARENT {
+class NIFLIB_API NiPSysMeshEmitter : public NI_P_SYS_MESH_EMITTER_PARENT {
 public:
 	NiPSysMeshEmitter();
 	~NiPSysMeshEmitter();

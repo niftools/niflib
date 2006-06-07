@@ -19,7 +19,7 @@ typedef Ref<FxRadioButton> FxRadioButtonRef;
  * FxRadioButton - Unknown.
  */
 
-class DLLEXPORT FxRadioButton : public FX_RADIO_BUTTON_PARENT {
+class NIFLIB_API FxRadioButton : public FX_RADIO_BUTTON_PARENT {
 public:
 	FxRadioButton();
 	~FxRadioButton();

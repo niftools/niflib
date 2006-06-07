@@ -15,7 +15,7 @@ typedef Ref<bhkStiffSpringConstraint> bhkStiffSpringConstraintRef;
  * bhkStiffSpringConstraint - A spring constraint.
  */
 
-class DLLEXPORT bhkStiffSpringConstraint : public BHK_STIFF_SPRING_CONSTRAINT_PARENT {
+class NIFLIB_API bhkStiffSpringConstraint : public BHK_STIFF_SPRING_CONSTRAINT_PARENT {
 public:
 	bhkStiffSpringConstraint();
 	~bhkStiffSpringConstraint();

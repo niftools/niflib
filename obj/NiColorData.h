@@ -17,7 +17,7 @@ typedef Ref<NiColorData> NiColorDataRef;
  * NiColorData - Color data for material color controller.
  */
 
-class DLLEXPORT NiColorData : public NI_COLOR_DATA_PARENT {
+class NIFLIB_API NiColorData : public NI_COLOR_DATA_PARENT {
 public:
 	NiColorData();
 	~NiColorData();

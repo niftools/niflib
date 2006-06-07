@@ -20,7 +20,7 @@ typedef Ref<bhkMoppBvTreeShape> bhkMoppBvTreeShapeRef;
  * tree shape (not an entity).
  */
 
-class DLLEXPORT bhkMoppBvTreeShape : public BHK_MOPP_BV_TREE_SHAPE_PARENT {
+class NIFLIB_API bhkMoppBvTreeShape : public BHK_MOPP_BV_TREE_SHAPE_PARENT {
 public:
 	bhkMoppBvTreeShape();
 	~bhkMoppBvTreeShape();

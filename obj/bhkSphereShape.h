@@ -15,7 +15,7 @@ typedef Ref<bhkSphereShape> bhkSphereShapeRef;
  * bhkSphereShape - A sphere.
  */
 
-class DLLEXPORT bhkSphereShape : public BHK_SPHERE_SHAPE_PARENT {
+class NIFLIB_API bhkSphereShape : public BHK_SPHERE_SHAPE_PARENT {
 public:
 	bhkSphereShape();
 	~bhkSphereShape();

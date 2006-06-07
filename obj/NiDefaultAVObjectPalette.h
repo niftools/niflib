@@ -18,7 +18,7 @@ typedef Ref<NiDefaultAVObjectPalette> NiDefaultAVObjectPaletteRef;
  * by NiControllerManager.
  */
 
-class DLLEXPORT NiDefaultAVObjectPalette : public NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT {
+class NIFLIB_API NiDefaultAVObjectPalette : public NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT {
 public:
 	NiDefaultAVObjectPalette();
 	~NiDefaultAVObjectPalette();

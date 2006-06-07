@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * 
  */
-struct DLLEXPORT LimitedHingeDescriptor {
+struct NIFLIB_API LimitedHingeDescriptor {
 	/*! Default Constructor */
 	LimitedHingeDescriptor();
 	/*! Default Destructor */

@@ -15,7 +15,7 @@ typedef Ref<NiPSysGrowFadeModifier> NiPSysGrowFadeModifierRef;
  * NiPSysGrowFadeModifier - Unknown particle system modifier.
  */
 
-class DLLEXPORT NiPSysGrowFadeModifier : public NI_P_SYS_GROW_FADE_MODIFIER_PARENT {
+class NIFLIB_API NiPSysGrowFadeModifier : public NI_P_SYS_GROW_FADE_MODIFIER_PARENT {
 public:
 	NiPSysGrowFadeModifier();
 	~NiPSysGrowFadeModifier();

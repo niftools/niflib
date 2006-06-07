@@ -15,7 +15,7 @@ typedef Ref<APSysCtlr> APSysCtlrRef;
  * APSysCtlr - Unknown.
  */
 
-class DLLEXPORT APSysCtlr : public A_P_SYS_CTLR_PARENT {
+class NIFLIB_API APSysCtlr : public A_P_SYS_CTLR_PARENT {
 public:
 	APSysCtlr();
 	~APSysCtlr();

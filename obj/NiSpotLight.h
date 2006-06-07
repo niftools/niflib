@@ -15,7 +15,7 @@ typedef Ref<NiSpotLight> NiSpotLightRef;
  * NiSpotLight - A spot.
  */
 
-class DLLEXPORT NiSpotLight : public NI_SPOT_LIGHT_PARENT {
+class NIFLIB_API NiSpotLight : public NI_SPOT_LIGHT_PARENT {
 public:
 	NiSpotLight();
 	~NiSpotLight();

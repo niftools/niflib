@@ -20,7 +20,7 @@ typedef Ref<NiSourceTexture> NiSourceTextureRef;
  * NiSourceTexture - Describes texture source and properties.
  */
 
-class DLLEXPORT NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
+class NIFLIB_API NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
 public:
 	NiSourceTexture();
 	~NiSourceTexture();

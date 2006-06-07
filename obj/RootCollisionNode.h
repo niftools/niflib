@@ -15,7 +15,7 @@ typedef Ref<RootCollisionNode> RootCollisionNodeRef;
  * RootCollisionNode - Morrowind-specific node for collision mesh.
  */
 
-class DLLEXPORT RootCollisionNode : public ROOT_COLLISION_NODE_PARENT {
+class NIFLIB_API RootCollisionNode : public ROOT_COLLISION_NODE_PARENT {
 public:
 	RootCollisionNode();
 	~RootCollisionNode();

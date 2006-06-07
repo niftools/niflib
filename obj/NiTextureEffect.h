@@ -22,7 +22,7 @@ typedef Ref<NiTextureEffect> NiTextureEffectRef;
  * bump map is ignored if no NiTextureEffect block is present).
  */
 
-class DLLEXPORT NiTextureEffect : public NI_TEXTURE_EFFECT_PARENT {
+class NIFLIB_API NiTextureEffect : public NI_TEXTURE_EFFECT_PARENT {
 public:
 	NiTextureEffect();
 	~NiTextureEffect();

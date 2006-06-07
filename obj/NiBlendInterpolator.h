@@ -15,7 +15,7 @@ typedef Ref<NiBlendInterpolator> NiBlendInterpolatorRef;
  * NiBlendInterpolator - An extended type of interpolater.
  */
 
-class DLLEXPORT NiBlendInterpolator : public NI_BLEND_INTERPOLATOR_PARENT {
+class NIFLIB_API NiBlendInterpolator : public NI_BLEND_INTERPOLATOR_PARENT {
 public:
 	NiBlendInterpolator();
 	~NiBlendInterpolator();

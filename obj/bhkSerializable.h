@@ -16,7 +16,7 @@ typedef Ref<bhkSerializable> bhkSerializableRef;
  * disk?
  */
 
-class DLLEXPORT bhkSerializable : public BHK_SERIALIZABLE_PARENT {
+class NIFLIB_API bhkSerializable : public BHK_SERIALIZABLE_PARENT {
 public:
 	bhkSerializable();
 	~bhkSerializable();

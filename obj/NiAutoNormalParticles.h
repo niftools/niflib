@@ -15,7 +15,7 @@ typedef Ref<NiAutoNormalParticles> NiAutoNormalParticlesRef;
  * NiAutoNormalParticles - Unknown.
  */
 
-class DLLEXPORT NiAutoNormalParticles : public NI_AUTO_NORMAL_PARTICLES_PARENT {
+class NIFLIB_API NiAutoNormalParticles : public NI_AUTO_NORMAL_PARTICLES_PARENT {
 public:
 	NiAutoNormalParticles();
 	~NiAutoNormalParticles();

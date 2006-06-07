@@ -19,7 +19,7 @@ typedef Ref<NiParticleColorModifier> NiParticleColorModifierRef;
  * NiParticleColorModifier - Unknown.
  */
 
-class DLLEXPORT NiParticleColorModifier : public NI_PARTICLE_COLOR_MODIFIER_PARENT {
+class NIFLIB_API NiParticleColorModifier : public NI_PARTICLE_COLOR_MODIFIER_PARENT {
 public:
 	NiParticleColorModifier();
 	~NiParticleColorModifier();

@@ -20,7 +20,7 @@ typedef Ref<NiCollisionObject> NiCollisionObjectRef;
  * NiCollisionObject - Unknown.
  */
 
-class DLLEXPORT NiCollisionObject : public NI_COLLISION_OBJECT_PARENT {
+class NIFLIB_API NiCollisionObject : public NI_COLLISION_OBJECT_PARENT {
 public:
 	NiCollisionObject();
 	~NiCollisionObject();

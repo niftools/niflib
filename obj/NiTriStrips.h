@@ -16,7 +16,7 @@ typedef Ref<NiTriStrips> NiTriStripsRef;
  * of triangles
  */
 
-class DLLEXPORT NiTriStrips : public NI_TRI_STRIPS_PARENT {
+class NIFLIB_API NiTriStrips : public NI_TRI_STRIPS_PARENT {
 public:
 	NiTriStrips();
 	~NiTriStrips();
