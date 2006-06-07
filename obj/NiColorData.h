@@ -29,6 +29,30 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*! Retrieves the type of color interpolation being used.
+	 * \return The color key type specifing the type of interpolation being used.
+	 * \sa NiColorData::SetKeyType
+	 */
+	KeyType GetKeyType() const;
+
+	/*! Sets the type of color interpolation being used.  Does not affect existing key data.
+	 * \param t The new color key type specifing the type of interpolation to be used.
+	 * \sa NiColorData::GetKeyType
+	 */
+	void SetKeyType( KeyType t );
+
+	/*! Retrieves the color key data.
+	 * \return A vector containing Key<Color4> data which specify color over time.
+	 * \sa NiColorData::SetKeys, Key
+	 */
+	vector< Key<Color4> > GetKeys() const;
+
+	/*! Sets the color key data.
+	 * \param keys A vector containing new Key<Color4> data which will replace any existing data.
+	 * \sa NiColorData::GetKeys, Key
+	 */
+	void SetKeys( vector< Key<Color4> > const & keys );
 protected:
 	NI_COLOR_DATA_MEMBERS
 };

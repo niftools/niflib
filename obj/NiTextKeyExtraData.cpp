@@ -34,3 +34,11 @@ const Type & NiTextKeyExtraData::GetType() const {
 	return TYPE;
 };
 
+vector< Key<string> > NiTextKeyExtraData::GetKeys() const {
+	return textKeys;
+}
+
+void NiTextKeyExtraData::SetKeys( vector< Key<string> > const & keys ) {
+	textKeys = keys;
+}
+

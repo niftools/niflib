@@ -35,3 +35,20 @@ const Type & NiFloatData::GetType() const {
 	return TYPE;
 };
 
+KeyType NiFloatData::GetKeyType() const {
+	return data.interpolation;
+}
+
+void NiFloatData::SetKeyType( KeyType t ) {
+	data.interpolation = t;
+}
+
+vector< Key<float> > NiFloatData::GetKeys() const {
+	return data.keys;
+}
+
+void NiFloatData::SetKeys( vector< Key<float> > const & keys ) {
+	data.keys = keys;
+}
+
+

@@ -35,3 +35,19 @@ const Type & NiPosData::GetType() const {
 	return TYPE;
 };
 
+KeyType NiPosData::GetKeyType() const {
+	return data.interpolation;
+}
+
+void NiPosData::SetKeyType( KeyType t ) {
+	data.interpolation = t;
+}
+
+vector< Key<Vector3> > NiPosData::GetKeys() const {
+	return data.keys;
+}
+
+void NiPosData::SetKeys( vector< Key<Vector3> > const & keys ) {
+	data.keys = keys;
+}
+

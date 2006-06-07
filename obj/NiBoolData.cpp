@@ -35,3 +35,18 @@ const Type & NiBoolData::GetType() const {
 	return TYPE;
 };
 
+KeyType NiBoolData::GetKeyType() const {
+	return data.interpolation;
+}
+
+void NiBoolData::SetKeyType( KeyType t ) {
+	data.interpolation= t;
+}
+
+vector< Key<unsigned char> > NiBoolData::GetKeys() const {
+	return data.keys;
+}
+
+void NiBoolData::SetKeys( vector< Key<unsigned char> > const & keys ) {
+	data.keys = keys;
+}

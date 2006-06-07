@@ -35,3 +35,19 @@ const Type & NiColorData::GetType() const {
 	return TYPE;
 };
 
+KeyType NiColorData::GetKeyType() const {
+	return data.interpolation;
+}
+
+void NiColorData::SetKeyType( KeyType t ) {
+	data.interpolation = t;
+}
+
+vector< Key<Color4> > NiColorData::GetKeys() const {
+	return data.keys;
+}
+
+void NiColorData::SetKeys( vector< Key<Color4> > const & keys ) {
+	data.keys = keys;
+}
+
