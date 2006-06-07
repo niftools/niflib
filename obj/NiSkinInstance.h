@@ -23,7 +23,7 @@ typedef Ref<NiSkinInstance> NiSkinInstanceRef;
  * NiSkinInstance - Skinning instance.
  */
 
-class NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
+class DLLEXPORT NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
 public:
 	NiSkinInstance();
 	~NiSkinInstance();

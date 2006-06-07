@@ -15,7 +15,7 @@ typedef Ref<NiScreenLODData> NiScreenLODDataRef;
  * NiScreenLODData - Unknown.
  */
 
-class NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
+class DLLEXPORT NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
 public:
 	NiScreenLODData();
 	~NiScreenLODData();

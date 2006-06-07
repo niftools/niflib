@@ -15,7 +15,7 @@ typedef Ref<bhkRefObject> bhkRefObjectRef;
  * bhkRefObject - The base type of all Havok objects?
  */
 
-class bhkRefObject : public BHK_REF_OBJECT_PARENT {
+class DLLEXPORT bhkRefObject : public BHK_REF_OBJECT_PARENT {
 public:
 	bhkRefObject();
 	~bhkRefObject();

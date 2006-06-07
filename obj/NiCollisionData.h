@@ -19,7 +19,7 @@ typedef Ref<NiCollisionData> NiCollisionDataRef;
  * NiCollisionData - Collision box.
  */
 
-class NiCollisionData : public NI_COLLISION_DATA_PARENT {
+class DLLEXPORT NiCollisionData : public NI_COLLISION_DATA_PARENT {
 public:
 	NiCollisionData();
 	~NiCollisionData();

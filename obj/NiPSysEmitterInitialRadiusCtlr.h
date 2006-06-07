@@ -15,7 +15,7 @@ typedef Ref<NiPSysEmitterInitialRadiusCtlr> NiPSysEmitterInitialRadiusCtlrRef;
  * NiPSysEmitterInitialRadiusCtlr - Unknown.
  */
 
-class NiPSysEmitterInitialRadiusCtlr : public NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_PARENT {
+class DLLEXPORT NiPSysEmitterInitialRadiusCtlr : public NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_PARENT {
 public:
 	NiPSysEmitterInitialRadiusCtlr();
 	~NiPSysEmitterInitialRadiusCtlr();

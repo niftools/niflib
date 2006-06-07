@@ -17,7 +17,7 @@ typedef Ref<NiPosData> NiPosDataRef;
  * NiPosData - Position data.
  */
 
-class NiPosData : public NI_POS_DATA_PARENT {
+class DLLEXPORT NiPosData : public NI_POS_DATA_PARENT {
 public:
 	NiPosData();
 	~NiPosData();

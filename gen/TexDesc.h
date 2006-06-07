@@ -13,7 +13,7 @@ class NiSourceTexture;
 /*!
  * Texture description.
  */
-struct TexDesc {
+struct DLLEXPORT TexDesc {
 	/*! Default Constructor */
 	TexDesc();
 	/*! Default Destructor */

@@ -19,7 +19,7 @@ typedef Ref<NiPSysDragModifier> NiPSysDragModifierRef;
  * NiPSysDragModifier - Unknown.
  */
 
-class NiPSysDragModifier : public NI_P_SYS_DRAG_MODIFIER_PARENT {
+class DLLEXPORT NiPSysDragModifier : public NI_P_SYS_DRAG_MODIFIER_PARENT {
 public:
 	NiPSysDragModifier();
 	~NiPSysDragModifier();

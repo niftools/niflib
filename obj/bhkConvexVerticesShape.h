@@ -15,7 +15,7 @@ typedef Ref<bhkConvexVerticesShape> bhkConvexVerticesShapeRef;
  * bhkConvexVerticesShape - A convex shape built from vertices?
  */
 
-class bhkConvexVerticesShape : public BHK_CONVEX_VERTICES_SHAPE_PARENT {
+class DLLEXPORT bhkConvexVerticesShape : public BHK_CONVEX_VERTICES_SHAPE_PARENT {
 public:
 	bhkConvexVerticesShape();
 	~bhkConvexVerticesShape();

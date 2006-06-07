@@ -21,7 +21,7 @@ typedef Ref<NiBoneLODController> NiBoneLODControllerRef;
  * NiBoneLODController - A LOD controller for bones?
  */
 
-class NiBoneLODController : public NI_BONE_L_O_D_CONTROLLER_PARENT {
+class DLLEXPORT NiBoneLODController : public NI_BONE_L_O_D_CONTROLLER_PARENT {
 public:
 	NiBoneLODController();
 	~NiBoneLODController();

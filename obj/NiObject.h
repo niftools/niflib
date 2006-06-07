@@ -30,7 +30,7 @@ typedef Ref<NiObject> NiObjectRef;
 typedef Ref<NiObject> blk_ref; //Temporary to make old code compile
 typedef NiObject IBlock;
 
-class NiObject {
+class DLLEXPORT NiObject {
 public:
 	NiObject();
 	virtual ~NiObject();

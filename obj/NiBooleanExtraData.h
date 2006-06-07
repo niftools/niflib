@@ -15,7 +15,7 @@ typedef Ref<NiBooleanExtraData> NiBooleanExtraDataRef;
  * NiBooleanExtraData - Boolean extra data.
  */
 
-class NiBooleanExtraData : public NI_BOOLEAN_EXTRA_DATA_PARENT {
+class DLLEXPORT NiBooleanExtraData : public NI_BOOLEAN_EXTRA_DATA_PARENT {
 public:
 	NiBooleanExtraData();
 	~NiBooleanExtraData();

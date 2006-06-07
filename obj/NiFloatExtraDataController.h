@@ -19,7 +19,7 @@ typedef Ref<NiFloatExtraDataController> NiFloatExtraDataControllerRef;
  * NiFloatExtraDataController - Unknown.
  */
 
-class NiFloatExtraDataController : public NI_FLOAT_EXTRA_DATA_CONTROLLER_PARENT {
+class DLLEXPORT NiFloatExtraDataController : public NI_FLOAT_EXTRA_DATA_CONTROLLER_PARENT {
 public:
 	NiFloatExtraDataController();
 	~NiFloatExtraDataController();

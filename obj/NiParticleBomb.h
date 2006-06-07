@@ -15,7 +15,7 @@ typedef Ref<NiParticleBomb> NiParticleBombRef;
  * NiParticleBomb - A particle modifier.
  */
 
-class NiParticleBomb : public NI_PARTICLE_BOMB_PARENT {
+class DLLEXPORT NiParticleBomb : public NI_PARTICLE_BOMB_PARENT {
 public:
 	NiParticleBomb();
 	~NiParticleBomb();

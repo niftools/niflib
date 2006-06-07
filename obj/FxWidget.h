@@ -15,7 +15,7 @@ typedef Ref<FxWidget> FxWidgetRef;
  * FxWidget - Firaxis-specific UI widgets?
  */
 
-class FxWidget : public FX_WIDGET_PARENT {
+class DLLEXPORT FxWidget : public FX_WIDGET_PARENT {
 public:
 	FxWidget();
 	~FxWidget();

@@ -19,7 +19,7 @@ typedef Ref<NiTextureTransformController> NiTextureTransformControllerRef;
  * NiTextureTransformController - Texture transformation controller.
  */
 
-class NiTextureTransformController : public NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT {
+class DLLEXPORT NiTextureTransformController : public NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT {
 public:
 	NiTextureTransformController();
 	~NiTextureTransformController();

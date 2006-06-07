@@ -23,7 +23,7 @@ typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;
  * block.
  */
 
-class NiParticleSystemController : public NI_PARTICLE_SYSTEM_CONTROLLER_PARENT {
+class DLLEXPORT NiParticleSystemController : public NI_PARTICLE_SYSTEM_CONTROLLER_PARENT {
 public:
 	NiParticleSystemController();
 	~NiParticleSystemController();

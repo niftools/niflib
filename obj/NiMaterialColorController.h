@@ -19,7 +19,7 @@ typedef Ref<NiMaterialColorController> NiMaterialColorControllerRef;
  * NiMaterialColorController - Time controller for material color.
  */
 
-class NiMaterialColorController : public NI_MATERIAL_COLOR_CONTROLLER_PARENT {
+class DLLEXPORT NiMaterialColorController : public NI_MATERIAL_COLOR_CONTROLLER_PARENT {
 public:
 	NiMaterialColorController();
 	~NiMaterialColorController();

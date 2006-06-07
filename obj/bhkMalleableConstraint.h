@@ -22,7 +22,7 @@ typedef Ref<bhkMalleableConstraint> bhkMalleableConstraintRef;
  * bhkMalleableConstraint - A malleable constraint.
  */
 
-class bhkMalleableConstraint : public BHK_MALLEABLE_CONSTRAINT_PARENT {
+class DLLEXPORT bhkMalleableConstraint : public BHK_MALLEABLE_CONSTRAINT_PARENT {
 public:
 	bhkMalleableConstraint();
 	~bhkMalleableConstraint();

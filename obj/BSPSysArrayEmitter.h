@@ -15,7 +15,7 @@ typedef Ref<BSPSysArrayEmitter> BSPSysArrayEmitterRef;
  * BSPSysArrayEmitter - Unknown.
  */
 
-class BSPSysArrayEmitter : public B_S_P_SYS_ARRAY_EMITTER_PARENT {
+class DLLEXPORT BSPSysArrayEmitter : public B_S_P_SYS_ARRAY_EMITTER_PARENT {
 public:
 	BSPSysArrayEmitter();
 	~BSPSysArrayEmitter();

@@ -17,7 +17,7 @@ typedef Ref<NiUVData> NiUVDataRef;
  * NiUVData - Texture coordinate data.
  */
 
-class NiUVData : public NI_U_V_DATA_PARENT {
+class DLLEXPORT NiUVData : public NI_U_V_DATA_PARENT {
 public:
 	NiUVData();
 	~NiUVData();

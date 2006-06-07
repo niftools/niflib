@@ -20,7 +20,7 @@ typedef Ref<NiBSplineCompTransformInterpolator> NiBSplineCompTransformInterpolat
  * NiBSplineCompTransformInterpolator - Unknown.
  */
 
-class NiBSplineCompTransformInterpolator : public NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBSplineCompTransformInterpolator : public NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT {
 public:
 	NiBSplineCompTransformInterpolator();
 	~NiBSplineCompTransformInterpolator();

@@ -19,7 +19,7 @@ typedef Ref<AbhkConstraint> AbhkConstraintRef;
  * AbhkConstraint - Describes a physical constraint.
  */
 
-class AbhkConstraint : public ABHK_CONSTRAINT_PARENT {
+class DLLEXPORT AbhkConstraint : public ABHK_CONSTRAINT_PARENT {
 public:
 	AbhkConstraint();
 	~AbhkConstraint();

@@ -15,7 +15,7 @@ typedef Ref<NiPointLight> NiPointLightRef;
  * NiPointLight - A point light.
  */
 
-class NiPointLight : public NI_POINT_LIGHT_PARENT {
+class DLLEXPORT NiPointLight : public NI_POINT_LIGHT_PARENT {
 public:
 	NiPointLight();
 	~NiPointLight();

@@ -15,7 +15,7 @@ typedef Ref<AKeyedData> AKeyedDataRef;
  * AKeyedData - Single items of data linked to particular key times.
  */
 
-class AKeyedData : public A_KEYED_DATA_PARENT {
+class DLLEXPORT AKeyedData : public A_KEYED_DATA_PARENT {
 public:
 	AKeyedData();
 	~AKeyedData();

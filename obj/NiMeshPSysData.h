@@ -20,7 +20,7 @@ typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;
  * NiMeshPSysData - Particle meshes data.
  */
 
-class NiMeshPSysData : public NI_MESH_P_SYS_DATA_PARENT {
+class DLLEXPORT NiMeshPSysData : public NI_MESH_P_SYS_DATA_PARENT {
 public:
 	NiMeshPSysData();
 	~NiMeshPSysData();

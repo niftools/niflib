@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
  * Another string format, for short strings.  Specific to Bethesda-
  * specific header tags.
  */
-struct ShortString {
+struct DLLEXPORT ShortString {
 	/*! Default Constructor */
 	ShortString();
 	/*! Default Destructor */

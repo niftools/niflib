@@ -19,7 +19,7 @@ typedef Ref<NiTriBasedGeomData> NiTriBasedGeomDataRef;
  * NiTriBasedGeomData - Mesh data: vertices, vertex normals, etc.
  */
 
-class NiTriBasedGeomData : public NI_TRI_BASED_GEOM_DATA_PARENT {
+class DLLEXPORT NiTriBasedGeomData : public NI_TRI_BASED_GEOM_DATA_PARENT {
 public:
 	NiTriBasedGeomData();
 	~NiTriBasedGeomData();

@@ -19,7 +19,7 @@ typedef Ref<NiStringPalette> NiStringPaletteRef;
  * conjunction with NiControllerSequence.
  */
 
-class NiStringPalette : public NI_STRING_PALETTE_PARENT {
+class DLLEXPORT NiStringPalette : public NI_STRING_PALETTE_PARENT {
 public:
 	NiStringPalette();
 	~NiStringPalette();

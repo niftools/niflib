@@ -15,7 +15,7 @@ typedef Ref<NiBSplineCompFloatInterpolator> NiBSplineCompFloatInterpolatorRef;
  * NiBSplineCompFloatInterpolator - Unknown.
  */
 
-class NiBSplineCompFloatInterpolator : public NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBSplineCompFloatInterpolator : public NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT {
 public:
 	NiBSplineCompFloatInterpolator();
 	~NiBSplineCompFloatInterpolator();

@@ -16,7 +16,7 @@ typedef Ref<NiBSAnimationNode> NiBSAnimationNodeRef;
  * properties stored in the flags.
  */
 
-class NiBSAnimationNode : public NI_B_S_ANIMATION_NODE_PARENT {
+class DLLEXPORT NiBSAnimationNode : public NI_B_S_ANIMATION_NODE_PARENT {
 public:
 	NiBSAnimationNode();
 	~NiBSAnimationNode();

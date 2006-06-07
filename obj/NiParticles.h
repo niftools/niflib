@@ -15,7 +15,7 @@ typedef Ref<NiParticles> NiParticlesRef;
  * NiParticles - Generic particle system node.
  */
 
-class NiParticles : public NI_PARTICLES_PARENT {
+class DLLEXPORT NiParticles : public NI_PARTICLES_PARENT {
 public:
 	NiParticles();
 	~NiParticles();

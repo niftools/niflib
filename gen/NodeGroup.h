@@ -13,7 +13,7 @@ class NiNode;
 /*!
  * A group of NiNodes references.
  */
-struct NodeGroup {
+struct DLLEXPORT NodeGroup {
 	/*! Default Constructor */
 	NodeGroup();
 	/*! Default Destructor */

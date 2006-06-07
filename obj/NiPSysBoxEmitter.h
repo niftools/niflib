@@ -15,7 +15,7 @@ typedef Ref<NiPSysBoxEmitter> NiPSysBoxEmitterRef;
  * NiPSysBoxEmitter - Unknown particle modifier.
  */
 
-class NiPSysBoxEmitter : public NI_P_SYS_BOX_EMITTER_PARENT {
+class DLLEXPORT NiPSysBoxEmitter : public NI_P_SYS_BOX_EMITTER_PARENT {
 public:
 	NiPSysBoxEmitter();
 	~NiPSysBoxEmitter();

@@ -15,7 +15,7 @@ typedef Ref<bhkConvexTransformShape> bhkConvexTransformShapeRef;
  * bhkConvexTransformShape - A convex transformed shape?
  */
 
-class bhkConvexTransformShape : public BHK_CONVEX_TRANSFORM_SHAPE_PARENT {
+class DLLEXPORT bhkConvexTransformShape : public BHK_CONVEX_TRANSFORM_SHAPE_PARENT {
 public:
 	bhkConvexTransformShape();
 	~bhkConvexTransformShape();

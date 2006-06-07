@@ -20,7 +20,7 @@ typedef Ref<NiBSplineCompPoint3Interpolator> NiBSplineCompPoint3InterpolatorRef;
  * NiBSplineCompPoint3Interpolator - Unknown.
  */
 
-class NiBSplineCompPoint3Interpolator : public NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBSplineCompPoint3Interpolator : public NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT {
 public:
 	NiBSplineCompPoint3Interpolator();
 	~NiBSplineCompPoint3Interpolator();

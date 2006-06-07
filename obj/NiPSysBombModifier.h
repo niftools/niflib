@@ -19,7 +19,7 @@ typedef Ref<NiPSysBombModifier> NiPSysBombModifierRef;
  * NiPSysBombModifier - Unknown.
  */
 
-class NiPSysBombModifier : public NI_P_SYS_BOMB_MODIFIER_PARENT {
+class DLLEXPORT NiPSysBombModifier : public NI_P_SYS_BOMB_MODIFIER_PARENT {
 public:
 	NiPSysBombModifier();
 	~NiPSysBombModifier();

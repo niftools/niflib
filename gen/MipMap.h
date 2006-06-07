@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Description of a MipMap within a NiPixelData block.
  */
-struct MipMap {
+struct DLLEXPORT MipMap {
 	/*! Default Constructor */
 	MipMap();
 	/*! Default Destructor */

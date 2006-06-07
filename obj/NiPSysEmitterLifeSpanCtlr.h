@@ -15,7 +15,7 @@ typedef Ref<NiPSysEmitterLifeSpanCtlr> NiPSysEmitterLifeSpanCtlrRef;
  * NiPSysEmitterLifeSpanCtlr - Unknown.
  */
 
-class NiPSysEmitterLifeSpanCtlr : public NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT {
+class DLLEXPORT NiPSysEmitterLifeSpanCtlr : public NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT {
 public:
 	NiPSysEmitterLifeSpanCtlr();
 	~NiPSysEmitterLifeSpanCtlr();

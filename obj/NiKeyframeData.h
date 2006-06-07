@@ -17,7 +17,7 @@ typedef Ref<NiKeyframeData> NiKeyframeDataRef;
  * NiKeyframeData - Keyframes for mesh animation.
  */
 
-class NiKeyframeData : public NI_KEYFRAME_DATA_PARENT {
+class DLLEXPORT NiKeyframeData : public NI_KEYFRAME_DATA_PARENT {
 public:
 	NiKeyframeData();
 	~NiKeyframeData();

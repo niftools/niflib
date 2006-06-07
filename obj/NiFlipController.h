@@ -19,7 +19,7 @@ typedef Ref<NiFlipController> NiFlipControllerRef;
  * NiFlipController - Texture flipping controller.
  */
 
-class NiFlipController : public NI_FLIP_CONTROLLER_PARENT {
+class DLLEXPORT NiFlipController : public NI_FLIP_CONTROLLER_PARENT {
 public:
 	NiFlipController();
 	~NiFlipController();

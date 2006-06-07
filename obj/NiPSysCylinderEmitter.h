@@ -15,7 +15,7 @@ typedef Ref<NiPSysCylinderEmitter> NiPSysCylinderEmitterRef;
  * NiPSysCylinderEmitter - Unknown.
  */
 
-class NiPSysCylinderEmitter : public NI_P_SYS_CYLINDER_EMITTER_PARENT {
+class DLLEXPORT NiPSysCylinderEmitter : public NI_P_SYS_CYLINDER_EMITTER_PARENT {
 public:
 	NiPSysCylinderEmitter();
 	~NiPSysCylinderEmitter();

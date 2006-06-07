@@ -15,7 +15,7 @@ typedef Ref<NiDitherProperty> NiDitherPropertyRef;
  * NiDitherProperty - Unknown.
  */
 
-class NiDitherProperty : public NI_DITHER_PROPERTY_PARENT {
+class DLLEXPORT NiDitherProperty : public NI_DITHER_PROPERTY_PARENT {
 public:
 	NiDitherProperty();
 	~NiDitherProperty();

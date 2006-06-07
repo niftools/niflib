@@ -15,7 +15,7 @@ typedef Ref<NiProperty> NiPropertyRef;
  * NiProperty - A generic property block.
  */
 
-class NiProperty : public NI_PROPERTY_PARENT {
+class DLLEXPORT NiProperty : public NI_PROPERTY_PARENT {
 public:
 	NiProperty();
 	~NiProperty();

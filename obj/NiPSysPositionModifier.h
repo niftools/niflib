@@ -15,7 +15,7 @@ typedef Ref<NiPSysPositionModifier> NiPSysPositionModifierRef;
  * NiPSysPositionModifier - Unknown particle system modifier.
  */
 
-class NiPSysPositionModifier : public NI_P_SYS_POSITION_MODIFIER_PARENT {
+class DLLEXPORT NiPSysPositionModifier : public NI_P_SYS_POSITION_MODIFIER_PARENT {
 public:
 	NiPSysPositionModifier();
 	~NiPSysPositionModifier();

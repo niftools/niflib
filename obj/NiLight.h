@@ -15,7 +15,7 @@ typedef Ref<NiLight> NiLightRef;
  * NiLight - Light source.
  */
 
-class NiLight : public NI_LIGHT_PARENT {
+class DLLEXPORT NiLight : public NI_LIGHT_PARENT {
 public:
 	NiLight();
 	~NiLight();

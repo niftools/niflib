@@ -20,7 +20,7 @@ typedef Ref<NiControllerManager> NiControllerManagerRef;
  * NiControllerManager - Unknown. Root of all controllers?
  */
 
-class NiControllerManager : public NI_CONTROLLER_MANAGER_PARENT {
+class DLLEXPORT NiControllerManager : public NI_CONTROLLER_MANAGER_PARENT {
 public:
 	NiControllerManager();
 	~NiControllerManager();

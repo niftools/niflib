@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * An array of bytes.
  */
-struct ByteArray {
+struct DLLEXPORT ByteArray {
 	/*! Default Constructor */
 	ByteArray();
 	/*! Default Destructor */

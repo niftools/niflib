@@ -15,7 +15,7 @@ typedef Ref<NiPSysData> NiPSysDataRef;
  * NiPSysData - Particle system data.
  */
 
-class NiPSysData : public NI_P_SYS_DATA_PARENT {
+class DLLEXPORT NiPSysData : public NI_P_SYS_DATA_PARENT {
 public:
 	NiPSysData();
 	~NiPSysData();

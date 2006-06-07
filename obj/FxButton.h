@@ -15,7 +15,7 @@ typedef Ref<FxButton> FxButtonRef;
  * FxButton - Unknown.
  */
 
-class FxButton : public FX_BUTTON_PARENT {
+class DLLEXPORT FxButton : public FX_BUTTON_PARENT {
 public:
 	FxButton();
 	~FxButton();

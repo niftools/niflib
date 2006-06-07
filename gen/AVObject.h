@@ -13,7 +13,7 @@ class NiAVObject;
 /*!
  * Used in NiDefaultAVObjectPalette.
  */
-struct AVObject {
+struct DLLEXPORT AVObject {
 	/*! Default Constructor */
 	AVObject();
 	/*! Default Destructor */

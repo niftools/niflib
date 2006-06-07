@@ -15,7 +15,7 @@ typedef Ref<NiIntegersExtraData> NiIntegersExtraDataRef;
  * NiIntegersExtraData - Integers data.
  */
 
-class NiIntegersExtraData : public NI_INTEGERS_EXTRA_DATA_PARENT {
+class DLLEXPORT NiIntegersExtraData : public NI_INTEGERS_EXTRA_DATA_PARENT {
 public:
 	NiIntegersExtraData();
 	~NiIntegersExtraData();

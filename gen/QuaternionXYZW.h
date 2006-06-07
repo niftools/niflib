@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * A quaternion as it appears in the havok blocks.
  */
-struct QuaternionXYZW {
+struct DLLEXPORT QuaternionXYZW {
 	/*! Default Constructor */
 	QuaternionXYZW();
 	/*! Default Destructor */

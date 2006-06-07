@@ -15,7 +15,7 @@ typedef Ref<BSBound> BSBoundRef;
  * BSBound - Unknown.
  */
 
-class BSBound : public B_S_BOUND_PARENT {
+class DLLEXPORT BSBound : public B_S_BOUND_PARENT {
 public:
 	BSBound();
 	~BSBound();

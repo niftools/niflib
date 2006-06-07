@@ -15,7 +15,7 @@ typedef Ref<NiBlendTransformInterpolator> NiBlendTransformInterpolatorRef;
  * NiBlendTransformInterpolator - Unknown.
  */
 
-class NiBlendTransformInterpolator : public NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBlendTransformInterpolator : public NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT {
 public:
 	NiBlendTransformInterpolator();
 	~NiBlendTransformInterpolator();

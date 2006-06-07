@@ -15,7 +15,7 @@ typedef Ref<NiSphericalCollider> NiSphericalColliderRef;
  * NiSphericalCollider - Unknown.
  */
 
-class NiSphericalCollider : public NI_SPHERICAL_COLLIDER_PARENT {
+class DLLEXPORT NiSphericalCollider : public NI_SPHERICAL_COLLIDER_PARENT {
 public:
 	NiSphericalCollider();
 	~NiSphericalCollider();

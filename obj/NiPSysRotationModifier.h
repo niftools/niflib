@@ -15,7 +15,7 @@ typedef Ref<NiPSysRotationModifier> NiPSysRotationModifierRef;
  * NiPSysRotationModifier - Unknown particle system modifier.
  */
 
-class NiPSysRotationModifier : public NI_P_SYS_ROTATION_MODIFIER_PARENT {
+class DLLEXPORT NiPSysRotationModifier : public NI_P_SYS_ROTATION_MODIFIER_PARENT {
 public:
 	NiPSysRotationModifier();
 	~NiPSysRotationModifier();

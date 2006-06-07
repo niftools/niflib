@@ -19,7 +19,7 @@ typedef Ref<AParticleModifier> AParticleModifierRef;
  * AParticleModifier - A particle system modifier.
  */
 
-class AParticleModifier : public A_PARTICLE_MODIFIER_PARENT {
+class DLLEXPORT AParticleModifier : public A_PARTICLE_MODIFIER_PARENT {
 public:
 	AParticleModifier();
 	~AParticleModifier();

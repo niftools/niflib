@@ -15,7 +15,7 @@ typedef Ref<APSysData> APSysDataRef;
  * APSysData - Particle system data.  Probably really NiPSysData.
  */
 
-class APSysData : public A_P_SYS_DATA_PARENT {
+class DLLEXPORT APSysData : public A_P_SYS_DATA_PARENT {
 public:
 	APSysData();
 	~APSysData();

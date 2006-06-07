@@ -15,7 +15,7 @@ typedef Ref<NiFloatsExtraData> NiFloatsExtraDataRef;
  * NiFloatsExtraData - Unknown.
  */
 
-class NiFloatsExtraData : public NI_FLOATS_EXTRA_DATA_PARENT {
+class DLLEXPORT NiFloatsExtraData : public NI_FLOATS_EXTRA_DATA_PARENT {
 public:
 	NiFloatsExtraData();
 	~NiFloatsExtraData();

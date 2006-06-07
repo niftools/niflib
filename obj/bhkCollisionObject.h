@@ -15,7 +15,7 @@ typedef Ref<bhkCollisionObject> bhkCollisionObjectRef;
  * bhkCollisionObject - Unknown.
  */
 
-class bhkCollisionObject : public BHK_COLLISION_OBJECT_PARENT {
+class DLLEXPORT bhkCollisionObject : public BHK_COLLISION_OBJECT_PARENT {
 public:
 	bhkCollisionObject();
 	~bhkCollisionObject();

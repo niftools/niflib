@@ -16,7 +16,7 @@ typedef Ref<NiVertWeightsExtraData> NiVertWeightsExtraDataRef;
  * for morphing animation or gravity.
  */
 
-class NiVertWeightsExtraData : public NI_VERT_WEIGHTS_EXTRA_DATA_PARENT {
+class DLLEXPORT NiVertWeightsExtraData : public NI_VERT_WEIGHTS_EXTRA_DATA_PARENT {
 public:
 	NiVertWeightsExtraData();
 	~NiVertWeightsExtraData();

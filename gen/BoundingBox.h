@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Bounding box.
  */
-struct BoundingBox {
+struct DLLEXPORT BoundingBox {
 	/*! Default Constructor */
 	BoundingBox();
 	/*! Default Destructor */

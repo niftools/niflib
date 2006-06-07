@@ -15,7 +15,7 @@ typedef Ref<NiParticlesData> NiParticlesDataRef;
  * NiParticlesData - Generic rotating particles data block.
  */
 
-class NiParticlesData : public NI_PARTICLES_DATA_PARENT {
+class DLLEXPORT NiParticlesData : public NI_PARTICLES_DATA_PARENT {
 public:
 	NiParticlesData();
 	~NiParticlesData();

@@ -21,7 +21,7 @@ typedef Ref<NiSkinData> NiSkinDataRef;
  * NiSkinData - Skinning data.
  */
 
-class NiSkinData : public NI_SKIN_DATA_PARENT {
+class DLLEXPORT NiSkinData : public NI_SKIN_DATA_PARENT {
 public:
 	NiSkinData();
 	~NiSkinData();

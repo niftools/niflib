@@ -15,7 +15,7 @@ typedef Ref<bhkMultiSphereShape> bhkMultiSphereShapeRef;
  * bhkMultiSphereShape - Unknown.
  */
 
-class bhkMultiSphereShape : public BHK_MULTI_SPHERE_SHAPE_PARENT {
+class DLLEXPORT bhkMultiSphereShape : public BHK_MULTI_SPHERE_SHAPE_PARENT {
 public:
 	bhkMultiSphereShape();
 	~bhkMultiSphereShape();

@@ -18,7 +18,7 @@ typedef Ref<NiParticleGrowFade> NiParticleGrowFadeRef;
  * to zero size again at the end of their lifetime cycle.
  */
 
-class NiParticleGrowFade : public NI_PARTICLE_GROW_FADE_PARENT {
+class DLLEXPORT NiParticleGrowFade : public NI_PARTICLE_GROW_FADE_PARENT {
 public:
 	NiParticleGrowFade();
 	~NiParticleGrowFade();

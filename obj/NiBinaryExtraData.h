@@ -18,7 +18,7 @@ typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;
  * binormals in Oblivion.
  */
 
-class NiBinaryExtraData : public NI_BINARY_EXTRA_DATA_PARENT {
+class DLLEXPORT NiBinaryExtraData : public NI_BINARY_EXTRA_DATA_PARENT {
 public:
 	NiBinaryExtraData();
 	~NiBinaryExtraData();

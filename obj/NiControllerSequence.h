@@ -24,7 +24,7 @@ typedef Ref<NiControllerSequence> NiControllerSequenceRef;
  * up).
  */
 
-class NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
+class DLLEXPORT NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
 public:
 	NiControllerSequence();
 	~NiControllerSequence();

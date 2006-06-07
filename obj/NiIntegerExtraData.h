@@ -15,7 +15,7 @@ typedef Ref<NiIntegerExtraData> NiIntegerExtraDataRef;
  * NiIntegerExtraData - Extra integer data.
  */
 
-class NiIntegerExtraData : public NI_INTEGER_EXTRA_DATA_PARENT {
+class DLLEXPORT NiIntegerExtraData : public NI_INTEGER_EXTRA_DATA_PARENT {
 public:
 	NiIntegerExtraData();
 	~NiIntegerExtraData();

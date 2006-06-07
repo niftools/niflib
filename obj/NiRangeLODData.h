@@ -17,7 +17,7 @@ typedef Ref<NiRangeLODData> NiRangeLODDataRef;
  * NiRangeLODData - Describes levels of detail.
  */
 
-class NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
+class DLLEXPORT NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
 public:
 	NiRangeLODData();
 	~NiRangeLODData();

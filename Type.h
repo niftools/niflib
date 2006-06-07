@@ -11,7 +11,7 @@ using namespace std;
 /**
  * Run Time Type Inforamtion Class
  */
-class Type {
+class DLLEXPORT Type {
 public:
 	Type (const string & type_name, const Type * par_type );
 	~Type();

@@ -17,7 +17,7 @@ typedef Ref<hkPackedNiTriStripsData> hkPackedNiTriStripsDataRef;
  * hkPackedNiTriStripsData - NiTriStripsData for havok data?
  */
 
-class hkPackedNiTriStripsData : public HK_PACKED_NI_TRI_STRIPS_DATA_PARENT {
+class DLLEXPORT hkPackedNiTriStripsData : public HK_PACKED_NI_TRI_STRIPS_DATA_PARENT {
 public:
 	hkPackedNiTriStripsData();
 	~hkPackedNiTriStripsData();

@@ -19,7 +19,7 @@ typedef Ref<NiDynamicEffect> NiDynamicEffectRef;
  * NiDynamicEffect - A dynamic effect such as a light or environment map.
  */
 
-class NiDynamicEffect : public NI_DYNAMIC_EFFECT_PARENT {
+class DLLEXPORT NiDynamicEffect : public NI_DYNAMIC_EFFECT_PARENT {
 public:
 	NiDynamicEffect();
 	~NiDynamicEffect();

@@ -20,7 +20,7 @@ typedef Ref<NiPathController> NiPathControllerRef;
  * NiPathController - Time controller for a path.
  */
 
-class NiPathController : public NI_PATH_CONTROLLER_PARENT {
+class DLLEXPORT NiPathController : public NI_PATH_CONTROLLER_PARENT {
 public:
 	NiPathController();
 	~NiPathController();

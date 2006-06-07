@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * Tension, bias, continuity.
  */
-struct TBC {
+struct DLLEXPORT TBC {
 	/*! Default Constructor */
 	TBC();
 	/*! Default Destructor */

@@ -50,7 +50,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "nif_math.h"
 #include "NIF_IO.h"
 #include "obj/NiObject.h"
-#include "gen/obj_defines.h"
+//#include "gen/obj_defines.h"
 #include "kfm.h"
 
 using namespace std;
@@ -73,7 +73,7 @@ using namespace std;
  * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
  * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
  * else {
- *   vector<blk_ref> blocks = ReadNifList( "test_in.nif" );
+ *   vector<NiObjectRef> blocks = ReadNifList( "test_in.nif" );
  *   cout << blocks[0] << endl;
  * };
  *
@@ -91,7 +91,7 @@ using namespace std;
  *      print blocks[0]
  * \endcode
  */
-unsigned int CheckNifHeader( string const & file_name );
+DLLEXPORT unsigned int CheckNifHeader( string const & file_name );
 
 /*!
  * Reads the given file by file name and returns a vector of block references
@@ -100,7 +100,7 @@ unsigned int CheckNifHeader( string const & file_name );
  * 
  * <b>Example:</b> 
  * \code
- * blk_ref my_block = ReadNifList("test_in.nif");
+ * NiObjectRef my_block = ReadNifList("test_in.nif");
  * \endcode
  * 
  * <b>In Python:</b>
@@ -110,14 +110,14 @@ unsigned int CheckNifHeader( string const & file_name );
  * 
  * \sa ReadNifTree, WriteNifTree
  */
-vector<NiObjectRef> ReadNifList( string const & file_name );
+DLLEXPORT vector<NiObjectRef> ReadNifList( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a vector of block references
  * \param stream The input stream to read NIF data from.
  * \return A vector of block references that point to all the blocks read from the stream.
  */
-vector<blk_ref> ReadNifList( istream & in );
+DLLEXPORT vector<NiObjectRef> ReadNifList( istream & in );
 
 /*!
  * Reads the given file by file name and returns a reference to the root block.
@@ -126,7 +126,7 @@ vector<blk_ref> ReadNifList( istream & in );
  * 
  * <b>Example:</b> 
  * \code
- * blk_ref my_block = ReadNifTree("test_in.nif");
+ * NiObjectRef my_block = ReadNifTree("test_in.nif");
  * \endcode
  * 
  * <b>In Python:</b>
@@ -136,14 +136,14 @@ vector<blk_ref> ReadNifList( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-blk_ref ReadNifTree( string const & file_name );
+DLLEXPORT NiObjectRef ReadNifTree( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a reference to the root block.
  * \param stream The input stream to read NIF data from.
  * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
  */
-blk_ref ReadNifTree( istream & in );
+DLLEXPORT NiObjectRef ReadNifTree( istream & in );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
@@ -154,7 +154,7 @@ blk_ref ReadNifTree( istream & in );
  * 
  * <b>Example:</b> 
  * \code
- * blk_ref my_block = ReadNifTree("test_in.nif");
+ * NiObjectRef my_block = ReadNifTree("test_in.nif");
  * WriteNifTree( "test_out.nif", my_block );
  * \endcode
  * 
@@ -166,7 +166,7 @@ blk_ref ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+DLLEXPORT void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -174,7 +174,7 @@ void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned 
  * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+DLLEXPORT void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
@@ -184,7 +184,7 @@ void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int vers
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-void WriteFileGroup( string const & file_name, blk_ref const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
+DLLEXPORT void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
@@ -192,11 +192,11 @@ void WriteFileGroup( string const & file_name, blk_ref const & root, unsigned in
  * \param right The root block of the second Nif tree to merge.
  * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
  */
-void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version = 0xFFFFFFFF );
+DLLEXPORT void MergeNifTrees( NiObjectRef target, NiObjectRef right, unsigned int version = 0xFFFFFFFF );
 
 
 //// Returns list of all blocks in the tree rooted by root block.
-//list<blk_ref> GetNifTree( blk_ref const & root_block );
+//list<NiObjectRef> GetNifTree( NiObjectRef const & root_block );
 
 ////Returns the NIF spec version of a file, given a file name.
 //string GetFileVersion(string file_name);
@@ -208,7 +208,7 @@ void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version = 0xFFFF
  * 
  * <b>Example:</b> 
  * \code
- * blk_ref my_block = CreateBlock("NiNode");
+ * NiObjectRef my_block = CreateBlock("NiNode");
  * \endcode
  * 
  * <b>In Python:</b>
@@ -218,7 +218,7 @@ void MergeNifTrees( blk_ref target, blk_ref right, unsigned int version = 0xFFFF
  * 
  * sa BlocksInMemory
  */
-blk_ref CreateBlock( string block_type );
+DLLEXPORT NiObjectRef CreateBlock( string block_type );
 
 
 

@@ -19,7 +19,7 @@ typedef Ref<bhkListShape> bhkListShapeRef;
  * bhkListShape - A list of shapes.
  */
 
-class bhkListShape : public BHK_LIST_SHAPE_PARENT {
+class DLLEXPORT bhkListShape : public BHK_LIST_SHAPE_PARENT {
 public:
 	bhkListShape();
 	~bhkListShape();

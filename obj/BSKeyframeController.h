@@ -19,7 +19,7 @@ typedef Ref<BSKeyframeController> BSKeyframeControllerRef;
  * BSKeyframeController - An extended keyframe controller.
  */
 
-class BSKeyframeController : public B_S_KEYFRAME_CONTROLLER_PARENT {
+class DLLEXPORT BSKeyframeController : public B_S_KEYFRAME_CONTROLLER_PARENT {
 public:
 	BSKeyframeController();
 	~BSKeyframeController();

@@ -21,7 +21,7 @@ typedef Ref<NiNode> NiNodeRef;
  * NiNode - Generic node block for grouping.
  */
 
-class NiNode : public NI_NODE_PARENT {
+class DLLEXPORT NiNode : public NI_NODE_PARENT {
 public:
 	NiNode();
 	~NiNode();

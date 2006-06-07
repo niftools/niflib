@@ -16,7 +16,7 @@ typedef Ref<NiGravity> NiGravityRef;
  * particles.
  */
 
-class NiGravity : public NI_GRAVITY_PARENT {
+class DLLEXPORT NiGravity : public NI_GRAVITY_PARENT {
 public:
 	NiGravity();
 	~NiGravity();

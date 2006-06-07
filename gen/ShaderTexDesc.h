@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * An extended texture description for shader textures.
  */
-struct ShaderTexDesc {
+struct DLLEXPORT ShaderTexDesc {
 	/*! Default Constructor */
 	ShaderTexDesc();
 	/*! Default Destructor */

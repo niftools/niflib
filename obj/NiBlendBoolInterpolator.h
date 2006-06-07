@@ -15,7 +15,7 @@ typedef Ref<NiBlendBoolInterpolator> NiBlendBoolInterpolatorRef;
  * NiBlendBoolInterpolator - An interpolator for a bool.
  */
 
-class NiBlendBoolInterpolator : public NI_BLEND_BOOL_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBlendBoolInterpolator : public NI_BLEND_BOOL_INTERPOLATOR_PARENT {
 public:
 	NiBlendBoolInterpolator();
 	~NiBlendBoolInterpolator();

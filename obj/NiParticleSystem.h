@@ -19,7 +19,7 @@ typedef Ref<NiParticleSystem> NiParticleSystemRef;
  * NiParticleSystem - A particle system.
  */
 
-class NiParticleSystem : public NI_PARTICLE_SYSTEM_PARENT {
+class DLLEXPORT NiParticleSystem : public NI_PARTICLE_SYSTEM_PARENT {
 public:
 	NiParticleSystem();
 	~NiParticleSystem();

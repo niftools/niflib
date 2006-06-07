@@ -16,7 +16,7 @@ typedef Ref<NiShadeProperty> NiShadePropertyRef;
  * used on a shape.
  */
 
-class NiShadeProperty : public NI_SHADE_PROPERTY_PARENT {
+class DLLEXPORT NiShadeProperty : public NI_SHADE_PROPERTY_PARENT {
 public:
 	NiShadeProperty();
 	~NiShadeProperty();

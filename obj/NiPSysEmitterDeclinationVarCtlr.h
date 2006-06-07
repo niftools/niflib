@@ -15,7 +15,7 @@ typedef Ref<NiPSysEmitterDeclinationVarCtlr> NiPSysEmitterDeclinationVarCtlrRef;
  * NiPSysEmitterDeclinationVarCtlr - Unknown.
  */
 
-class NiPSysEmitterDeclinationVarCtlr : public NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_PARENT {
+class DLLEXPORT NiPSysEmitterDeclinationVarCtlr : public NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_PARENT {
 public:
 	NiPSysEmitterDeclinationVarCtlr();
 	~NiPSysEmitterDeclinationVarCtlr();

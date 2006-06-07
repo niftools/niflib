@@ -16,7 +16,7 @@ typedef Ref<NiAutoNormalParticlesData> NiAutoNormalParticlesDataRef;
  * normals?).
  */
 
-class NiAutoNormalParticlesData : public NI_AUTO_NORMAL_PARTICLES_DATA_PARENT {
+class DLLEXPORT NiAutoNormalParticlesData : public NI_AUTO_NORMAL_PARTICLES_DATA_PARENT {
 public:
 	NiAutoNormalParticlesData();
 	~NiAutoNormalParticlesData();

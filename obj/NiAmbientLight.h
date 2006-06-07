@@ -15,7 +15,7 @@ typedef Ref<NiAmbientLight> NiAmbientLightRef;
  * NiAmbientLight - Ambient light source.
  */
 
-class NiAmbientLight : public NI_AMBIENT_LIGHT_PARENT {
+class DLLEXPORT NiAmbientLight : public NI_AMBIENT_LIGHT_PARENT {
 public:
 	NiAmbientLight();
 	~NiAmbientLight();

@@ -16,7 +16,7 @@ typedef Ref<NiBSPArrayController> NiBSPArrayControllerRef;
  * conjunction with NiBSParticleNode.
  */
 
-class NiBSPArrayController : public NI_B_S_P_ARRAY_CONTROLLER_PARENT {
+class DLLEXPORT NiBSPArrayController : public NI_B_S_P_ARRAY_CONTROLLER_PARENT {
 public:
 	NiBSPArrayController();
 	~NiBSPArrayController();

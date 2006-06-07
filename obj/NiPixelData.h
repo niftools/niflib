@@ -22,7 +22,7 @@ typedef Ref<NiPixelData> NiPixelDataRef;
  * NiPixelData - A texture.
  */
 
-class NiPixelData : public NI_PIXEL_DATA_PARENT {
+class DLLEXPORT NiPixelData : public NI_PIXEL_DATA_PARENT {
 public:
 	NiPixelData();
 	~NiPixelData();

@@ -20,7 +20,7 @@ typedef Ref<NiTimeController> NiTimeControllerRef;
  * NiTimeController - A generic time controller block.
  */
 
-class NiTimeController : public NI_TIME_CONTROLLER_PARENT {
+class DLLEXPORT NiTimeController : public NI_TIME_CONTROLLER_PARENT {
 public:
 	NiTimeController();
 	~NiTimeController();

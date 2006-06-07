@@ -19,7 +19,7 @@ typedef Ref<NiPSysColliderManager> NiPSysColliderManagerRef;
  * NiPSysColliderManager - Unknown.
  */
 
-class NiPSysColliderManager : public NI_P_SYS_COLLIDER_MANAGER_PARENT {
+class DLLEXPORT NiPSysColliderManager : public NI_P_SYS_COLLIDER_MANAGER_PARENT {
 public:
 	NiPSysColliderManager();
 	~NiPSysColliderManager();

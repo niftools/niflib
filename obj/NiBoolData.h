@@ -17,7 +17,7 @@ typedef Ref<NiBoolData> NiBoolDataRef;
  * NiBoolData - Timed boolean data.
  */
 
-class NiBoolData : public NI_BOOL_DATA_PARENT {
+class DLLEXPORT NiBoolData : public NI_BOOL_DATA_PARENT {
 public:
 	NiBoolData();
 	~NiBoolData();

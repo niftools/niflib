@@ -16,7 +16,7 @@ typedef Ref<AbhkShapeCollection> AbhkShapeCollectionRef;
  * hierarchy.
  */
 
-class AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
+class DLLEXPORT AbhkShapeCollection : public ABHK_SHAPE_COLLECTION_PARENT {
 public:
 	AbhkShapeCollection();
 	~AbhkShapeCollection();

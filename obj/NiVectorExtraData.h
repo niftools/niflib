@@ -15,7 +15,7 @@ typedef Ref<NiVectorExtraData> NiVectorExtraDataRef;
  * NiVectorExtraData - Extra vector data.
  */
 
-class NiVectorExtraData : public NI_VECTOR_EXTRA_DATA_PARENT {
+class DLLEXPORT NiVectorExtraData : public NI_VECTOR_EXTRA_DATA_PARENT {
 public:
 	NiVectorExtraData();
 	~NiVectorExtraData();

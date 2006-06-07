@@ -16,7 +16,7 @@ typedef Ref<NiTransformController> NiTransformControllerRef;
  * NiKeyframeController.
  */
 
-class NiTransformController : public NI_TRANSFORM_CONTROLLER_PARENT {
+class DLLEXPORT NiTransformController : public NI_TRANSFORM_CONTROLLER_PARENT {
 public:
 	NiTransformController();
 	~NiTransformController();

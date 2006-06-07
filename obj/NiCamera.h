@@ -19,7 +19,7 @@ typedef Ref<NiCamera> NiCameraRef;
  * NiCamera - Camera object.
  */
 
-class NiCamera : public NI_CAMERA_PARENT {
+class DLLEXPORT NiCamera : public NI_CAMERA_PARENT {
 public:
 	NiCamera();
 	~NiCamera();

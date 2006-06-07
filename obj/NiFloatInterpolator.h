@@ -19,7 +19,7 @@ typedef Ref<NiFloatInterpolator> NiFloatInterpolatorRef;
  * NiFloatInterpolator - Unknown.
  */
 
-class NiFloatInterpolator : public NI_FLOAT_INTERPOLATOR_PARENT {
+class DLLEXPORT NiFloatInterpolator : public NI_FLOAT_INTERPOLATOR_PARENT {
 public:
 	NiFloatInterpolator();
 	~NiFloatInterpolator();

@@ -15,7 +15,7 @@ typedef Ref<NiPalette> NiPaletteRef;
  * NiPalette - A color palette.
  */
 
-class NiPalette : public NI_PALETTE_PARENT {
+class DLLEXPORT NiPalette : public NI_PALETTE_PARENT {
 public:
 	NiPalette();
 	~NiPalette();

@@ -15,7 +15,7 @@ typedef Ref<NiPSysResetOnLoopCtlr> NiPSysResetOnLoopCtlrRef;
  * NiPSysResetOnLoopCtlr - Unknown.
  */
 
-class NiPSysResetOnLoopCtlr : public NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT {
+class DLLEXPORT NiPSysResetOnLoopCtlr : public NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT {
 public:
 	NiPSysResetOnLoopCtlr();
 	~NiPSysResetOnLoopCtlr();

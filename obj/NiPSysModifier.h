@@ -19,7 +19,7 @@ typedef Ref<NiPSysModifier> NiPSysModifierRef;
  * NiPSysModifier - Generic particle system modifier block.
  */
 
-class NiPSysModifier : public NI_P_SYS_MODIFIER_PARENT {
+class DLLEXPORT NiPSysModifier : public NI_P_SYS_MODIFIER_PARENT {
 public:
 	NiPSysModifier();
 	~NiPSysModifier();

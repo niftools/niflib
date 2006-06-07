@@ -15,7 +15,7 @@ typedef Ref<NiBlendPoint3Interpolator> NiBlendPoint3InterpolatorRef;
  * NiBlendPoint3Interpolator - Interpolates a point?
  */
 
-class NiBlendPoint3Interpolator : public NI_BLEND_POINT3_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBlendPoint3Interpolator : public NI_BLEND_POINT3_INTERPOLATOR_PARENT {
 public:
 	NiBlendPoint3Interpolator();
 	~NiBlendPoint3Interpolator();

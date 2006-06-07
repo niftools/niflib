@@ -15,7 +15,7 @@ typedef Ref<NiPSysEmitterSpeedCtlr> NiPSysEmitterSpeedCtlrRef;
  * NiPSysEmitterSpeedCtlr - Unknown.
  */
 
-class NiPSysEmitterSpeedCtlr : public NI_P_SYS_EMITTER_SPEED_CTLR_PARENT {
+class DLLEXPORT NiPSysEmitterSpeedCtlr : public NI_P_SYS_EMITTER_SPEED_CTLR_PARENT {
 public:
 	NiPSysEmitterSpeedCtlr();
 	~NiPSysEmitterSpeedCtlr();

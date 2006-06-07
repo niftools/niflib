@@ -15,7 +15,7 @@ typedef Ref<NiRotatingParticles> NiRotatingParticlesRef;
  * NiRotatingParticles - Unknown.
  */
 
-class NiRotatingParticles : public NI_ROTATING_PARTICLES_PARENT {
+class DLLEXPORT NiRotatingParticles : public NI_ROTATING_PARTICLES_PARENT {
 public:
 	NiRotatingParticles();
 	~NiRotatingParticles();

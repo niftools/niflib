@@ -15,7 +15,7 @@ typedef Ref<bhkCapsuleShape> bhkCapsuleShapeRef;
  * bhkCapsuleShape - A capsule.
  */
 
-class bhkCapsuleShape : public BHK_CAPSULE_SHAPE_PARENT {
+class DLLEXPORT bhkCapsuleShape : public BHK_CAPSULE_SHAPE_PARENT {
 public:
 	bhkCapsuleShape();
 	~bhkCapsuleShape();

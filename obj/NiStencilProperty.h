@@ -15,7 +15,7 @@ typedef Ref<NiStencilProperty> NiStencilPropertyRef;
  * NiStencilProperty - Allows control of stencil testing.
  */
 
-class NiStencilProperty : public NI_STENCIL_PROPERTY_PARENT {
+class DLLEXPORT NiStencilProperty : public NI_STENCIL_PROPERTY_PARENT {
 public:
 	NiStencilProperty();
 	~NiStencilProperty();

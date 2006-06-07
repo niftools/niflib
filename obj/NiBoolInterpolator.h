@@ -19,7 +19,7 @@ typedef Ref<NiBoolInterpolator> NiBoolInterpolatorRef;
  * NiBoolInterpolator - Unknown.
  */
 
-class NiBoolInterpolator : public NI_BOOL_INTERPOLATOR_PARENT {
+class DLLEXPORT NiBoolInterpolator : public NI_BOOL_INTERPOLATOR_PARENT {
 public:
 	NiBoolInterpolator();
 	~NiBoolInterpolator();

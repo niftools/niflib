@@ -17,7 +17,7 @@ typedef Ref<bhkLimitedHingeConstraint> bhkLimitedHingeConstraintRef;
  * bhkLimitedHingeConstraint - Hinge constraint.
  */
 
-class bhkLimitedHingeConstraint : public BHK_LIMITED_HINGE_CONSTRAINT_PARENT {
+class DLLEXPORT bhkLimitedHingeConstraint : public BHK_LIMITED_HINGE_CONSTRAINT_PARENT {
 public:
 	bhkLimitedHingeConstraint();
 	~bhkLimitedHingeConstraint();

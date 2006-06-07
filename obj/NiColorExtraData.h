@@ -15,7 +15,7 @@ typedef Ref<NiColorExtraData> NiColorExtraDataRef;
  * NiColorExtraData - Unknown.
  */
 
-class NiColorExtraData : public NI_COLOR_EXTRA_DATA_PARENT {
+class DLLEXPORT NiColorExtraData : public NI_COLOR_EXTRA_DATA_PARENT {
 public:
 	NiColorExtraData();
 	~NiColorExtraData();

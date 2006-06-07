@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 /*!
  * A weighted vertex.
  */
-struct SkinWeight {
+struct DLLEXPORT SkinWeight {
 	/*! Default Constructor */
 	SkinWeight();
 	/*! Default Destructor */

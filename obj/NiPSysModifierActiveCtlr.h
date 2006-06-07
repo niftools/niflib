@@ -15,7 +15,7 @@ typedef Ref<NiPSysModifierActiveCtlr> NiPSysModifierActiveCtlrRef;
  * NiPSysModifierActiveCtlr - Unknown.
  */
 
-class NiPSysModifierActiveCtlr : public NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT {
+class DLLEXPORT NiPSysModifierActiveCtlr : public NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT {
 public:
 	NiPSysModifierActiveCtlr();
 	~NiPSysModifierActiveCtlr();

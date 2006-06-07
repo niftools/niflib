@@ -17,7 +17,7 @@ typedef Ref<NiFloatData> NiFloatDataRef;
  * NiFloatData - Possibly the 1D position along a 3D path.
  */
 
-class NiFloatData : public NI_FLOAT_DATA_PARENT {
+class DLLEXPORT NiFloatData : public NI_FLOAT_DATA_PARENT {
 public:
 	NiFloatData();
 	~NiFloatData();

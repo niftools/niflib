@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
  * Rotation key array.
  */
 template <class T >
-struct RotationKeyArray {
+struct DLLEXPORT RotationKeyArray {
 	/*!
 	 * Number of keys.
 	 */

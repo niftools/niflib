@@ -18,7 +18,7 @@ typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
  * NiTexturingProperty - Describes an object's textures.
  */
 
-class NiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
+class DLLEXPORT NiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
 public:
 	NiTexturingProperty();
 	~NiTexturingProperty();

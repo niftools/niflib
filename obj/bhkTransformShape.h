@@ -15,7 +15,7 @@ typedef Ref<bhkTransformShape> bhkTransformShapeRef;
  * bhkTransformShape - Transforms a shape.
  */
 
-class bhkTransformShape : public BHK_TRANSFORM_SHAPE_PARENT {
+class DLLEXPORT bhkTransformShape : public BHK_TRANSFORM_SHAPE_PARENT {
 public:
 	bhkTransformShape();
 	~bhkTransformShape();

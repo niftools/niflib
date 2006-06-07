@@ -19,7 +19,7 @@ typedef Ref<NiPSysVolumeEmitter> NiPSysVolumeEmitterRef;
  * NiPSysVolumeEmitter - An emitter that emits meshes?
  */
 
-class NiPSysVolumeEmitter : public NI_P_SYS_VOLUME_EMITTER_PARENT {
+class DLLEXPORT NiPSysVolumeEmitter : public NI_P_SYS_VOLUME_EMITTER_PARENT {
 public:
 	NiPSysVolumeEmitter();
 	~NiPSysVolumeEmitter();

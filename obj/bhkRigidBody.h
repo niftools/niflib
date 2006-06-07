@@ -21,7 +21,7 @@ typedef Ref<bhkRigidBody> bhkRigidBodyRef;
  * bhkRigidBody - Describes physical properties of an object.
  */
 
-class bhkRigidBody : public BHK_RIGID_BODY_PARENT {
+class DLLEXPORT bhkRigidBody : public BHK_RIGID_BODY_PARENT {
 public:
 	bhkRigidBody();
 	~bhkRigidBody();

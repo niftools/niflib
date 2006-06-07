@@ -20,7 +20,7 @@ typedef Ref<NiSingleInterpolatorController> NiSingleInterpolatorControllerRef;
  * interpolator.
  */
 
-class NiSingleInterpolatorController : public NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
+class DLLEXPORT NiSingleInterpolatorController : public NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
 public:
 	NiSingleInterpolatorController();
 	~NiSingleInterpolatorController();

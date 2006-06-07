@@ -17,7 +17,7 @@ typedef Ref<NiPSysEmitterCtlrData> NiPSysEmitterCtlrDataRef;
  * NiPSysEmitterCtlrData - Particle system emitter controller data.
  */
 
-class NiPSysEmitterCtlrData : public NI_P_SYS_EMITTER_CTLR_DATA_PARENT {
+class DLLEXPORT NiPSysEmitterCtlrData : public NI_P_SYS_EMITTER_CTLR_DATA_PARENT {
 public:
 	NiPSysEmitterCtlrData();
 	~NiPSysEmitterCtlrData();

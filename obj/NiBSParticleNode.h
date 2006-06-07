@@ -15,7 +15,7 @@ typedef Ref<NiBSParticleNode> NiBSParticleNodeRef;
  * NiBSParticleNode - Unknown.
  */
 
-class NiBSParticleNode : public NI_B_S_PARTICLE_NODE_PARENT {
+class DLLEXPORT NiBSParticleNode : public NI_B_S_PARTICLE_NODE_PARENT {
 public:
 	NiBSParticleNode();
 	~NiBSParticleNode();
