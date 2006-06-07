@@ -98,7 +98,8 @@ enum TexType {
 	GLOSS_MAP = 3, /*!< Allows the glossyness of an object to differ across its surface. */ 
 	GLOW_MAP = 4, /*!< Creates a glowing effect. */ 
 	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */ 
-	DECAL_0_MAP = 6 /*!< For placing images on the object like stickers. */ 
+	DECAL_0_MAP = 6, /*!< For placing images on the object like stickers. */ 
+	DECAL_1_MAP = 7 /*!< For placing images on the object like stickers. */ 
 };
 
 /*! Specifies the availiable texture apply modes.  Affects the way colors are composed together. */

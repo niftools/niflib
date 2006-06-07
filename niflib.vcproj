@@ -85,6 +85,7 @@
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -103,9 +104,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/FI&quot;pch.h&quot;"
+				Optimization="3"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
@@ -225,6 +229,18 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						RuntimeLibrary="3"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\pch.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
 			</File>
@@ -1228,6 +1244,10 @@
 			</File>
 			<File
 				RelativePath=".\niflib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\pch.h"
 				>
 			</File>
 			<File
