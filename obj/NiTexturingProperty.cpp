@@ -137,40 +137,7 @@ void NiTexturingProperty::SetTextureCount( int new_count ) {
 
 	if ( new_count < int(textureCount) ) {
 		for ( int i = int(textureCount); i > new_count; --i ) {
-			switch (i) {
-				case BASE_MAP:
-					hasBaseTexture = false;
-					baseTexture.source = NULL;
-					break;
-				case DARK_MAP:
-					hasDarkTexture = false;
-					darkTexture.source = NULL;
-					break;
-				case DETAIL_MAP:
-					hasDetailTexture = false;
-					detailTexture.source = NULL;
-					break;
-				case GLOSS_MAP:
-					hasGlossTexture = false;
-					glossTexture.source = NULL;
-					break;
-				case GLOW_MAP:
-					hasGlowTexture = false;
-					glowTexture.source = NULL;
-					break;
-				case BUMP_MAP:
-					hasBumpMapTexture = false;
-					bumpMapTexture.source = NULL;
-					break;
-				case DECAL_0_MAP:
-					hasDecal0Texture = false;
-					decal0Texture.source = NULL;
-					break;
-				case DECAL_1_MAP:
-					hasDecal1Texture = false;
-					decal1Texture.source = NULL;
-					break;
-			};
+			ClearTexture(i);
 		}
 	}
 }
@@ -225,4 +192,62 @@ void NiTexturingProperty::SetShaderTexture( int n, TexDesc & new_val ) {
 
 	//Copy the values
 	shaderTextures[n].textureData = new_val;
+}
+
+bool NiTexturingProperty::HasTexture( int n ) const {
+	switch (n) {
+		case BASE_MAP:
+			return hasBaseTexture;
+		case DARK_MAP:
+			return hasDarkTexture;
+		case DETAIL_MAP:
+			return hasDetailTexture;
+		case GLOSS_MAP:
+			return hasGlossTexture;
+		case GLOW_MAP:
+			return hasGlowTexture;
+		case BUMP_MAP:
+			return hasBumpMapTexture;
+		case DECAL_0_MAP:
+			return hasDecal0Texture;
+		case DECAL_1_MAP:
+			return hasDecal1Texture;
+	};
+}
+
+void NiTexturingProperty::ClearTexture( int n ) {
+	switch (n) {
+		case BASE_MAP:
+			hasBaseTexture = false;
+			baseTexture.source = NULL;
+			break;
+		case DARK_MAP:
+			hasDarkTexture = false;
+			darkTexture.source = NULL;
+			break;
+		case DETAIL_MAP:
+			hasDetailTexture = false;
+			detailTexture.source = NULL;
+			break;
+		case GLOSS_MAP:
+			hasGlossTexture = false;
+			glossTexture.source = NULL;
+			break;
+		case GLOW_MAP:
+			hasGlowTexture = false;
+			glowTexture.source = NULL;
+			break;
+		case BUMP_MAP:
+			hasBumpMapTexture = false;
+			bumpMapTexture.source = NULL;
+			break;
+		case DECAL_0_MAP:
+			hasDecal0Texture = false;
+			decal0Texture.source = NULL;
+			break;
+		case DECAL_1_MAP:
+			hasDecal1Texture = false;
+			decal1Texture.source = NULL;
+			break;
+	};
 }

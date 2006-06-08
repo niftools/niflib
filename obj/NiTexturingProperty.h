@@ -73,6 +73,17 @@ public:
 	 */
 	TexDesc GetTexture( int n ) const;
 
+	/*! Checks whether a particular texture type is being used
+	 * \param n The slot number of the texture to check.  This is a positive zero based index that must be less than the value returned by NiTexturingProperty::GetTextureCount.
+	 * \return true if the texture in this slot is used, false otherwise.
+	 */
+	bool HasTexture( int n ) const;
+
+	/*! Clears a specific texture slot.
+	 * \param n The slot number of the texture to clear.  This is a positive zero based index that must be less than the value returned by NiTexturingProperty::GetTextureCount.
+	 */
+	void ClearTexture( int n );
+
 	/*! Sets a new description for the texture in the given slot number.  The TexType enum is provided to make it easy to select the texture slot with the specific qualities that you want.
 	 * \param n The slot number of the texture to set the texture description of.  This is a positive zero based index that must be less than the value returned by ITexturingProperty::GetTextureCount.
 	 * \param new_val Thew new texture descriptoin for the texture at the given slot number.

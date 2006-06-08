@@ -81,6 +81,7 @@ public:
 	void RemoveProperty( Ref<NiProperty> obj );
 	void ClearProperties();
 	vector< Ref<NiProperty> > GetProperties() const;
+	Ref<NiProperty> GetPropertyByType( const Type & compare_to );
 
 private:
 	NI_A_V_OBJECT_MEMBERS

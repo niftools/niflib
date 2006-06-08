@@ -130,3 +130,13 @@ void NiAVObject::ClearProperties() {
 vector< Ref<NiProperty> > NiAVObject::GetProperties() const {
 	return properties;
 }
+
+Ref<NiProperty> NiAVObject::GetPropertyByType( const Type & compare_to ) {
+	for ( uint i = 0; i < properties.size(); ++i ) {
+		if ( properties[i]->IsSameType( compare_to ) ) {
+			return properties[i];
+		}
+	}
+	//No matching properties found, return NULL
+	return NULL;
+}
