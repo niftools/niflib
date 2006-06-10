@@ -38,7 +38,12 @@ protected:
 };
 
 template <class T>
-Ref<T>::Ref( T * object ) : _object(object) {}
+Ref<T>::Ref( T * object ) : _object(object) {
+   //If object isn't null, increment reference count
+   if ( _object != NULL ) {
+      _object->AddRef();
+   }
+}
 
 template <class T>
 Ref<T>::Ref(const Ref & ref_to_copy ) {

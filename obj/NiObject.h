@@ -151,7 +151,7 @@ template <class T> Ref<T> StaticCast( NiObject * object ) {
 	return (T*)object;
 }
 
-template <class T> const Ref<T> SaticCast (const NiObject * object) {
+template <class T> Ref<const T> StaticCast (const NiObject * object) {
 	return (const T*)object;
 }
 
@@ -163,7 +163,7 @@ template <class T> Ref<T> DynamicCast( NiObject * object ) {
 	}
 }
 
-template <class T> const Ref<T> DynamicCast( const NiObject * object ) {
+template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
 	if ( object->IsDerivedType(T::TYPE) ) {
 		return (const T*)object;
 	} else {
