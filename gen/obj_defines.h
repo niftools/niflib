@@ -6,15 +6,6 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #define MAXARRAYDUMP 20
 
-#include "../NIF_IO.h"
-#include "../Ref.h"
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-
-using namespace std;
-
 #define NI_OBJECT_MEMBERS \
 
 #define NI_OBJECT_INCLUDE ".h" \
@@ -1778,7 +1769,6 @@ vector<Color4 > vertexColors; \
 ushort numUvSets; \
 bool hasUv; \
 vector<vector<TexCoord > > uvSets; \
-vector<vector<TexCoord > > uvSets2; \
 ushort unknownShort2; \
 Ref<NiObject > unknownLink; \
 
@@ -1854,11 +1844,11 @@ if ( version <= 0x04020200 ) { \
 	}; \
 }; \
 if ( version >= 0x0A000100 ) { \
-	uvSets2.resize((numUvSets2 & 63)); \
-	for (uint i1 = 0; i1 < uvSets2.size(); i1++) { \
-		uvSets2[i1].resize(numVertices); \
-		for (uint i2 = 0; i2 < uvSets2[i1].size(); i2++) { \
-			NifStream( uvSets2[i1][i2], in, version ); \
+	uvSets.resize((numUvSets2 & 63)); \
+	for (uint i1 = 0; i1 < uvSets.size(); i1++) { \
+		uvSets[i1].resize(numVertices); \
+		for (uint i2 = 0; i2 < uvSets[i1].size(); i2++) { \
+			NifStream( uvSets[i1][i2], in, version ); \
 		}; \
 	}; \
 	NifStream( unknownShort2, in, version ); \
@@ -1925,9 +1915,9 @@ if ( version <= 0x04020200 ) { \
 	}; \
 }; \
 if ( version >= 0x0A000100 ) { \
-	for (uint i1 = 0; i1 < uvSets2.size(); i1++) { \
-		for (uint i2 = 0; i2 < uvSets2[i1].size(); i2++) { \
-			NifStream( uvSets2[i1][i2], out, version ); \
+	for (uint i1 = 0; i1 < uvSets.size(); i1++) { \
+		for (uint i2 = 0; i2 < uvSets[i1].size(); i2++) { \
+			NifStream( uvSets[i1][i2], out, version ); \
 		}; \
 	}; \
 	NifStream( unknownShort2, out, version ); \
@@ -2004,15 +1994,6 @@ for (uint i0 = 0; i0 < uvSets.size(); i0++) { \
 			break; \
 		}; \
 		out << "    UV Sets[" << i0 << "][" << i1 << "]:  " << uvSets[i0][i1] << endl; \
-	}; \
-}; \
-for (uint i0 = 0; i0 < uvSets2.size(); i0++) { \
-	for (uint i1 = 0; i1 < uvSets2[i0].size(); i1++) { \
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) { \
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
-			break; \
-		}; \
-		out << "    UV Sets 2[" << i0 << "][" << i1 << "]:  " << uvSets2[i0][i1] << endl; \
 	}; \
 }; \
 out << "Unknown Short 2:  " << unknownShort2 << endl; \
