@@ -52,7 +52,7 @@ int NiMorphData::GetMorphCount() const {
 }
 
 void NiMorphData::SetMorphCount( int n ) {
-	int old_size = morphs.size();
+	uint old_size = uint(morphs.size());
 	morphs.resize( n );
 
 	//Make sure any new vertex groups are the right size

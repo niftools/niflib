@@ -37,3 +37,33 @@ const Type & NiTriBasedGeom::GetType() const {
 	return TYPE;
 };
 
+Ref<NiTriBasedGeomData> NiTriBasedGeom::GetData() const {
+	return data;
+}
+
+void NiTriBasedGeom::SetData( const Ref<NiTriBasedGeomData> & n ) {
+	data = n;
+}
+
+Ref<NiObject> NiTriBasedGeom::GetUnknownLink() const {
+	return unknownLink;
+}
+
+void NiTriBasedGeom::SetUnknownLink( const Ref<NiObject> & n ) {
+	unknownLink = n;
+}
+
+string NiTriBasedGeom::GetShader() const {
+	return shaderName;
+}
+
+void NiTriBasedGeom::SetShader( const string & n ) {
+	//Check if name is blank, if so clear shader
+	if ( n.size() == 0 ) {
+		hasShader = false;
+		shaderName.clear();
+	} else {
+		shaderName = n;
+	}
+}
+	

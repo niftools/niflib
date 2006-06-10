@@ -445,8 +445,12 @@ ostream & operator<<( ostream & out, Matrix44 const & val ) {
 	return out;
 }
 
+ostream & operator<<( ostream & out, Color3 const & val ) {
+	return out << "{R:" << setw(6) << val.r << " G:" << setw(6) << val.g << " B:" << setw(6) << val.b << "}";
+}
+
 ostream & operator<<( ostream & out, Color4 const & val ) {
-	return out << "R:" << setw(6) << val.r << " G:" << setw(6) << val.g << " B:" << setw(6) << val.b << " A:" << setw(6) << val.a << "}";
+	return out << "{R:" << setw(6) << val.r << " G:" << setw(6) << val.g << " B:" << setw(6) << val.b << " A:" << setw(6) << val.a << "}";
 }
 
 ostream & operator<<( ostream & out, Quaternion const & val ) {

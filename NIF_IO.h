@@ -303,6 +303,10 @@ void NifStream( Float4 const & val, ostream& out, uint version = 0  );
 void NifStream( Matrix44 & val, istream& in, uint version = 0 );
 void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
 
+//Color3
+void NifStream( Color3 & val, istream& in, uint version = 0 );
+void NifStream( Color3 const & val, ostream& out, uint version = 0  );
+
 //Color4
 void NifStream( Color4 & val, istream& in, uint version = 0 );
 void NifStream( Color4 const & val, ostream& out, uint version = 0  );

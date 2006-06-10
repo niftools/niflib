@@ -34,3 +34,58 @@ const Type & NiMaterialProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiMaterialProperty::GetFlags() const {
+	return flags;
+}
+
+void NiMaterialProperty::SetFlags( ushort n ) {
+	flags = n;
+}
+
+float NiMaterialProperty::GetTransparency() const {
+	return alpha;
+}
+
+void NiMaterialProperty::SetTransparency( float n ) {
+	alpha = n;
+}
+
+float NiMaterialProperty::GetGlossiness() const {
+	return glossiness;
+}
+
+void NiMaterialProperty::SetGlossiness( float n ) {
+	glossiness = n;
+}
+
+Color3 NiMaterialProperty::GetAmbientColor() const {
+	return ambientColor;
+}
+
+void NiMaterialProperty::SetAmbientColor( const Color3 & n ) {
+	ambientColor = n;
+}
+
+Color3 NiMaterialProperty::GetDiffuseColor() const {
+	return diffuseColor;
+}
+
+void NiMaterialProperty::SetDiffuseColor( const Color3 & n ) {
+	diffuseColor = n;
+}
+
+Color3 NiMaterialProperty::GetEmissiveColor() const {
+	return emissiveColor;
+}
+
+void NiMaterialProperty::SetEmissiveColor( const Color3 & n ) {
+	emissiveColor = n;
+}
+
+Color3 NiMaterialProperty::GetSpecularColor() const {
+	return specularColor;
+}
+
+void NiMaterialProperty::SetSpecularColor( const Color3 & n ) {
+	specularColor = n;
+}

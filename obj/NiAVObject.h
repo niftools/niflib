@@ -83,6 +83,21 @@ public:
 	vector< Ref<NiProperty> > GetProperties() const;
 	Ref<NiProperty> GetPropertyByType( const Type & compare_to );
 
+	ushort GetFlags() const;
+	void SetFlags( ushort n );
+
+	Matrix33 GetLocalRotation() const;
+	void SetLocalRotation( const Matrix33 & n );
+
+	Vector3 GetLocalTranslation() const;
+	void SetLocalTranslation( const Vector3 & n );
+
+	float GetLocalScale() const;
+	void SetLocalScale( float n );
+
+	Vector3 GetVelocity() const;
+	void SetVelocity( const Vector3 & n );
+
 private:
 	NI_A_V_OBJECT_MEMBERS
 

@@ -140,3 +140,43 @@ Ref<NiProperty> NiAVObject::GetPropertyByType( const Type & compare_to ) {
 	//No matching properties found, return NULL
 	return NULL;
 }
+
+ushort NiAVObject::GetFlags() const {
+	return flags;
+}
+
+void NiAVObject::SetFlags( ushort n ) {
+	flags = n;
+}
+
+Matrix33 NiAVObject::GetLocalRotation() const {
+	return rotation;
+}
+
+void NiAVObject::SetLocalRotation( const Matrix33 & n ) {
+	rotation = n;
+}
+
+Vector3 NiAVObject::GetLocalTranslation() const {
+	return translation;
+}
+
+void NiAVObject::SetLocalTranslation( const Vector3 & n ) {
+	translation = n;
+}
+
+float NiAVObject::GetLocalScale() const {
+	return scale;
+}
+
+void NiAVObject::SetLocalScale( float n ) {
+	scale = n;
+}
+
+Vector3 NiAVObject::GetVelocity() const {
+	return velocity;
+}
+
+void NiAVObject::SetVelocity( const Vector3 & n ) {
+	velocity = n;
+}

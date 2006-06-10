@@ -746,6 +746,40 @@ struct Matrix44 {
 };
 
 /*! Stores a color along with alpha translucency */
+struct NIFLIB_API Color3 {
+	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
+	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
+	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
+
+	/*! Default constructor */
+	Color3() {}
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 */
+	Color3(float r, float g, float b) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+	}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 */
+	void Set(float r, float g, float b) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+	}
+};
+
+/*! Stores a color along with alpha translucency */
 struct NIFLIB_API Color4 {
 	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
 	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
@@ -840,9 +874,8 @@ ostream & operator<<( ostream & out, Matrix22 const & val );
 ostream & operator<<( ostream & out, Float3 const & val );
 ostream & operator<<( ostream & out, Matrix33 const & val );
 ostream & operator<<( ostream & out, Float4 const & val );
+ostream & operator<<( ostream & out, Color3 const & val );
 ostream & operator<<( ostream & out, Color4 const & val );
 ostream & operator<<( ostream & out, Quaternion const & val );
-
-typedef Float3 Color3;
 
 #endif

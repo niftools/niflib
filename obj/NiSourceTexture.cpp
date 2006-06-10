@@ -36,3 +36,77 @@ const Type & NiSourceTexture::GetType() const {
 	return TYPE;
 };
 
+bool NiSourceTexture::IsTextureExternal () {
+	return ( useExternal != 0 );
+}
+
+void NiSourceTexture::SetExternalTexture( string file_name, const Ref<NiObject> & unk_link ) {
+	useExternal = 0;
+	pixelData = NULL;
+	this->originalFileName_.clear();
+
+	fileName = file_name;
+	unknownLink = unk_link;
+}
+
+
+void NiSourceTexture::SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data ) {
+	useExternal = 1;
+	fileName.clear();
+	
+	//TODO: Fix name problem with Unknown Byte in XML
+	unknownByte = unk_byte;
+	originalFileName_ = original_file_name;
+	pixelData = pixel_data;
+}
+
+string NiSourceTexture::GetExternalFileName() const {
+	return fileName;
+}
+
+Ref<NiObject> NiSourceTexture::GetExternalUnknownLink() const {
+	return unknownLink;
+}
+
+byte NiSourceTexture::GetInternalUnknownByte() const {
+	return unknownByte;
+}
+
+string NiSourceTexture::GetInternalOriginalFileName() const {
+	return originalFileName_;
+}
+
+Ref<NiPixelData> NiSourceTexture::GetInternalPixelData() const {
+	return pixelData;
+}
+
+PixelLayout NiSourceTexture::GetPixelLayout() const {
+	return pixelLayout;
+}
+
+void NiSourceTexture::SetPixelLayout( PixelLayout n ) {
+	pixelLayout = n;
+}
+
+MipMapFormat NiSourceTexture::GetMipMapFormat() const {
+	return useMipmaps;
+}
+
+void NiSourceTexture::SetMipMapFormat( MipMapFormat n ) {
+	useMipmaps = n;
+}
+
+AlphaFormat NiSourceTexture::GetAlphaFormat() const {
+	return alphaFormat;
+}
+
+void NiSourceTexture::SetAlphaFormat( AlphaFormat n ) {
+	alphaFormat = n;
+}
+
+//TODO: Fix name problem with Unknown Byte in XML
+//byte NiSourceTexture::GetUnknownByte2() const;
+//SNiSourceTexture::etUnknownByte2( byte n );
+//
+//byte NiSourceTexture::GetUnknownByte3() const;
+//NiSourceTexture::SetUnknownByte3( byte n );

@@ -397,6 +397,19 @@ void NifStream( Matrix44 const & val, ostream& out, uint version ) {
 	}
 }
 
+//Color3
+void NifStream( Color3 & val, istream& in, uint version ) {
+	val.r = ReadFloat( in );
+	val.g = ReadFloat( in );
+	val.b = ReadFloat( in );
+};
+
+void NifStream( Color3 const & val, ostream& out, uint version ) {
+	WriteFloat( val.r, out );
+	WriteFloat( val.g, out );
+	WriteFloat( val.b, out );
+};
+
 //Color4
 void NifStream( Color4 & val, istream& in, uint version ) {
 	val.r = ReadFloat( in );

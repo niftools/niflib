@@ -32,6 +32,35 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	bool IsTextureExternal ();
+
+	void SetExternalTexture( string file_name, const Ref<NiObject> & unk_link );
+
+	void SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data );
+
+	string GetExternalFileName() const;
+	Ref<NiObject> GetExternalUnknownLink() const;
+
+	byte GetInternalUnknownByte() const;
+	string GetInternalOriginalFileName() const;
+	Ref<NiPixelData> GetInternalPixelData() const;
+
+	PixelLayout GetPixelLayout() const;
+	void SetPixelLayout( PixelLayout n );
+
+	MipMapFormat GetMipMapFormat() const;
+	void SetMipMapFormat( MipMapFormat n );
+
+	AlphaFormat GetAlphaFormat() const;
+	void SetAlphaFormat( AlphaFormat n );
+
+	//TODO: Fix name problem with Unknown Byte in XML
+	//byte GetUnknownByte2() const;
+	//SetUnknownByte2( byte n );
+
+	//byte GetUnknownByte3() const;
+	//SetUnknownByte3( byte n );
 protected:
 	NI_SOURCE_TEXTURE_MEMBERS
 };

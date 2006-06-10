@@ -34,3 +34,19 @@ const Type & NiAlphaProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiAlphaProperty::GetFlags() const {
+	return flags;
+}
+
+void NiAlphaProperty::SetFlags( ushort n ) {
+	flags = n;
+}
+
+byte NiAlphaProperty::GetAlphaTestThreshold() const {
+	return threshold;
+}
+
+void NiAlphaProperty::SetAlphaTestThreshold( byte n ) {
+	threshold = n;
+}
+

@@ -33,6 +33,18 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	//TODO:  Handle attatchment of SkinInstance with new skinning API
+
+	Ref<NiTriBasedGeomData> GetData() const;
+	void SetData( const Ref<NiTriBasedGeomData> & n );
+
+	Ref<NiObject> GetUnknownLink() const;
+	void SetUnknownLink( const Ref<NiObject> & n );
+
+	string GetShader() const;
+	void SetShader( const string & n );
+	
 protected:
 	NI_TRI_BASED_GEOM_MEMBERS
 };
