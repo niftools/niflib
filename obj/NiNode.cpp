@@ -69,7 +69,7 @@ void NiNode::RemoveChild( Ref<NiAVObject> obj ) {
 }
 
 void NiNode::ClearChildren() {
-	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
+	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ++it) {
 		(*it)->SetParent(NULL);
 	}
 	children.clear();

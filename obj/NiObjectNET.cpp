@@ -152,11 +152,11 @@ void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
 	}
 }
 void NiObjectNET::ClearControllers() {
-	NiTimeControllerRef cont = controller;
-	while ( cont != NULL ) {
-		cont->SetTarget(NULL);
+	NiTimeControllerRef * cont = &controller;
+	while ( (*cont) != NULL ) {
+	   (*cont)->SetTarget(NULL);
+      (*cont) = (*cont)->GetNextController();
 	}
-	controller = NULL;
 }
 
 list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
