@@ -63,6 +63,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 }
 #endif
 
+// we need to define this because the wrapper gets confused about NIFLIB_API'd functions otherwise
+#define NIFLIB_API
+
 %{
 	#include "niflib.h"
 %}
