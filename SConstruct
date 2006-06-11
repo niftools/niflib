@@ -24,7 +24,7 @@ elif sys.platform == 'win32':
     python_include = [sysconfig.get_python_inc()]
     python_libpath = [sysconfig.get_python_lib(1, 1) + '/../libs']
     python_lib = ['python24']
-    cppflags = '/EHsc /O2 /ML /GS /Zi /TP'
+    cppflags = '/EHsc /O2 /GS /Zi /TP'
 else:
     print "Error: Platform %s not supported."%sys.platform
     Exit(1)

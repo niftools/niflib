@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _TYPE_H_
 
 #include <string>
+#include "dll_export.h"
 
 using namespace std;
 

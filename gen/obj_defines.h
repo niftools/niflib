@@ -1130,7 +1130,6 @@ for (uint i0 = 0; i0 < affectedNodes.size(); i0++) { \
 return refs; \
 
 #define NI_LIGHT_MEMBERS \
-public: \
 float dimmer; \
 Color3 ambientColor; \
 Color3 diffuseColor; \

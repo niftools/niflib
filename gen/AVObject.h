@@ -7,7 +7,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../NIF_IO.h"
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiAVObject;
 
 /*!

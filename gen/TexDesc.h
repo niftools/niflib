@@ -6,8 +6,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+
+// Forward define of referenced blocks
 class NiSourceTexture;
 
 /*!
