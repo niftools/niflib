@@ -41,7 +41,7 @@ bool NiSourceTexture::IsTextureExternal () {
 }
 
 void NiSourceTexture::SetExternalTexture( string file_name, const Ref<NiObject> & unk_link ) {
-	useExternal = 0;
+	useExternal = 1;
 	pixelData = NULL;
 	this->originalFileName_.clear();
 
@@ -51,7 +51,7 @@ void NiSourceTexture::SetExternalTexture( string file_name, const Ref<NiObject> 
 
 
 void NiSourceTexture::SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data ) {
-	useExternal = 1;
+	useExternal = 0;
 	fileName.clear();
 	
 	//TODO: Fix name problem with Unknown Byte in XML
