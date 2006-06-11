@@ -11655,14 +11655,15 @@ return refs; \
 Ref<NiSkinData > data; \
 Ref<NiSkinPartition > skinPartition; \
 NiNode * skeletonRoot; \
-Bones bones; \
+uint numBones; \
+vector<NiNode * > bones; \
 
 #define NI_SKIN_INSTANCE_INCLUDE "NiObject.h" \
 
 #define NI_SKIN_INSTANCE_PARENT NiObject \
 
 #define NI_SKIN_INSTANCE_CONSTRUCT \
- : data(NULL), skinPartition(NULL), skeletonRoot(NULL) \
+ : data(NULL), skinPartition(NULL), skeletonRoot(NULL), numBones((uint)0) \
 
 #define NI_SKIN_INSTANCE_READ \
 uint block_num; \
@@ -11675,9 +11676,9 @@ if ( version >= 0x0A020000 ) { \
 }; \
 NifStream( block_num, in, version ); \
 link_stack.push_back( block_num ); \
-NifStream( bones.numBones, in, version ); \
-bones.bones.resize(bones.numBones); \
-for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+NifStream( numBones, in, version ); \
+bones.resize(numBones); \
+for (uint i0 = 0; i0 < bones.size(); i0++) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
@@ -11698,10 +11699,10 @@ if ( skeletonRoot != NULL ) \
 	NifStream( link_map[StaticCast<NiObject>(skeletonRoot)], out, version ); \
 else \
 	NifStream( 0xffffffff, out, version ); \
-NifStream( bones.numBones, out, version ); \
-for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
-	if ( bones.bones[i0] != NULL ) \
-		NifStream( link_map[StaticCast<NiObject>(bones.bones[i0])], out, version ); \
+NifStream( numBones, out, version ); \
+for (uint i0 = 0; i0 < bones.size(); i0++) { \
+	if ( bones[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(bones[i0])], out, version ); \
 	else \
 		NifStream( 0xffffffff, out, version ); \
 }; \
@@ -11712,13 +11713,13 @@ out << NiObject::asString(); \
 out << "Data:  " << data << endl; \
 out << "Skin Partition:  " << skinPartition << endl; \
 out << "Skeleton Root:  " << skeletonRoot << endl; \
-out << "Num Bones:  " << bones.numBones << endl; \
-for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+out << "Num Bones:  " << numBones << endl; \
+for (uint i0 = 0; i0 < bones.size(); i0++) { \
 	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
 		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
 		break; \
 	}; \
-	out << "  Bones[" << i0 << "]:  " << bones.bones[i0] << endl; \
+	out << "  Bones[" << i0 << "]:  " << bones[i0] << endl; \
 }; \
 return out.str(); \
 
@@ -11753,15 +11754,15 @@ if (link_stack.front() != 0xffffffff) { \
 } else \
 	skeletonRoot = NULL; \
 link_stack.pop_front(); \
-for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+for (uint i0 = 0; i0 < bones.size(); i0++) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 	if (link_stack.front() != 0xffffffff) { \
-		bones.bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
-		if ( bones.bones[i0] == NULL ) \
+		bones[i0] = DynamicCast<NiNode>(objects[link_stack.front()]); \
+		if ( bones[i0] == NULL ) \
 			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 	} else \
-		bones.bones[i0] = NULL; \
+		bones[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
 
@@ -11772,7 +11773,7 @@ if ( data != NULL ) \
 	refs.push_back(StaticCast<NiObject>(data)); \
 if ( skinPartition != NULL ) \
 	refs.push_back(StaticCast<NiObject>(skinPartition)); \
-for (uint i0 = 0; i0 < bones.bones.size(); i0++) { \
+for (uint i0 = 0; i0 < bones.size(); i0++) { \
 }; \
 return refs; \
 

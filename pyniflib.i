@@ -1,7 +1,7 @@
 // Swig module description file for a C dynamic library source file
 // Generate with: swig -c++ -python -o py_wrap.cpp pyniflib.i
 
-/* Copyright (c) 2005, NIF File Format Library and Tools
+/* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
