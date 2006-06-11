@@ -88,7 +88,7 @@ struct Key {
 %template(vector_ushort) std::vector<ushort>;
 %template(vector_byte) std::vector<byte>;
 %template(vector_uint) std::vector<uint>;
-%template(vector_unsigned short) std::vector<unsigned short>;
+%template(vector_ushort) std::vector<ushort>;
 %template(vector_float) std::vector<float>;
 %template(vector_HeaderString) std::vector<HeaderString>;
 %template(vector_KeyType) std::vector<KeyType>;

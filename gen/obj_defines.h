@@ -863,7 +863,7 @@ if ( controller != NULL ) \
 return refs; \
 
 #define NI_A_V_OBJECT_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 Vector3 translation; \
 Matrix33 rotation; \
 float scale; \
@@ -880,7 +880,7 @@ Ref<NiCollisionObject > collisionObject; \
 #define NI_A_V_OBJECT_PARENT NiObjectNET \
 
 #define NI_A_V_OBJECT_CONSTRUCT \
- : flags((unsigned short)0), scale(1.0f), numProperties((uint)0), hasBoundingBox(false), collisionData(NULL), collisionObject(NULL) \
+ : flags((ushort)0), scale(1.0f), numProperties((uint)0), hasBoundingBox(false), collisionData(NULL), collisionObject(NULL) \
 
 #define NI_A_V_OBJECT_READ \
 uint block_num; \
@@ -1384,7 +1384,7 @@ return refs; \
 
 #define NI_TIME_CONTROLLER_MEMBERS \
 Ref<NiTimeController > nextController; \
-unsigned short flags; \
+ushort flags; \
 float frequency; \
 float phase; \
 float startTime; \
@@ -1396,7 +1396,7 @@ NiObjectNET * target; \
 #define NI_TIME_CONTROLLER_PARENT NiObject \
 
 #define NI_TIME_CONTROLLER_CONSTRUCT \
- : nextController(NULL), flags((unsigned short)0), frequency(0.0f), phase(0.0f), startTime(0.0f), stopTime(0.0f), target(NULL) \
+ : nextController(NULL), flags((ushort)0), frequency(0.0f), phase(0.0f), startTime(0.0f), stopTime(0.0f), target(NULL) \
 
 #define NI_TIME_CONTROLLER_READ \
 uint block_num; \
@@ -4067,7 +4067,7 @@ if ( data != NULL ) \
 return refs; \
 
 #define NI_ALPHA_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 byte threshold; \
 
 #define NI_ALPHA_PROPERTY_INCLUDE "NiProperty.h" \
@@ -4075,7 +4075,7 @@ byte threshold; \
 #define NI_ALPHA_PROPERTY_PARENT NiProperty \
 
 #define NI_ALPHA_PROPERTY_CONSTRUCT \
- : flags((unsigned short)237), threshold((byte)0) \
+ : flags((ushort)237), threshold((byte)0) \
 
 #define NI_ALPHA_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -6074,14 +6074,14 @@ refs = NiLight::GetRefs(); \
 return refs; \
 
 #define NI_DITHER_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 
 #define NI_DITHER_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_DITHER_PROPERTY_PARENT NiProperty \
 
 #define NI_DITHER_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0) \
+ : flags((ushort)0) \
 
 #define NI_DITHER_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -6432,7 +6432,7 @@ refs = NiExtraData::GetRefs(); \
 return refs; \
 
 #define NI_FOG_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 float fogDepth; \
 Color3 fogColor; \
 
@@ -6441,7 +6441,7 @@ Color3 fogColor; \
 #define NI_FOG_PROPERTY_PARENT NiProperty \
 
 #define NI_FOG_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0), fogDepth(0.0f) \
+ : flags((ushort)0), fogDepth(0.0f) \
 
 #define NI_FOG_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -7378,7 +7378,7 @@ if ( data != NULL ) \
 return refs; \
 
 #define NI_MATERIAL_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 Color3 ambientColor; \
 Color3 diffuseColor; \
 Color3 specularColor; \
@@ -7391,7 +7391,7 @@ float alpha; \
 #define NI_MATERIAL_PROPERTY_PARENT NiProperty \
 
 #define NI_MATERIAL_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0), glossiness(0.0f), alpha(0.0f) \
+ : flags((ushort)0), glossiness(0.0f), alpha(0.0f) \
 
 #define NI_MATERIAL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -11496,14 +11496,14 @@ refs = NiObjectNET::GetRefs(); \
 return refs; \
 
 #define NI_SHADE_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 
 #define NI_SHADE_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_SHADE_PROPERTY_PARENT NiProperty \
 
 #define NI_SHADE_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0) \
+ : flags((ushort)0) \
 
 #define NI_SHADE_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -12198,14 +12198,14 @@ if ( pixelData != NULL ) \
 return refs; \
 
 #define NI_SPECULAR_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 
 #define NI_SPECULAR_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_SPECULAR_PROPERTY_PARENT NiProperty \
 
 #define NI_SPECULAR_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0) \
+ : flags((ushort)0) \
 
 #define NI_SPECULAR_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -12318,7 +12318,7 @@ refs = NiPointLight::GetRefs(); \
 return refs; \
 
 #define NI_STENCIL_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 bool stencilEnabled; \
 uint stencilFunction; \
 uint stencilRef; \
@@ -12333,7 +12333,7 @@ uint drawMode; \
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0), stencilEnabled(false), stencilFunction((uint)0), stencilRef((uint)0), stencilMask((uint)4294967295), failAction((uint)0), zFailAction((uint)0), passAction((uint)0), drawMode((uint)0) \
+ : flags((ushort)0), stencilEnabled(false), stencilFunction((uint)0), stencilRef((uint)0), stencilMask((uint)4294967295), failAction((uint)0), zFailAction((uint)0), passAction((uint)0), drawMode((uint)0) \
 
 #define NI_STENCIL_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -12732,7 +12732,7 @@ if ( data != NULL ) \
 return refs; \
 
 #define NI_TEXTURING_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 ApplyMode applyMode; \
 uint textureCount; \
 bool hasBaseTexture; \
@@ -12762,7 +12762,7 @@ vector<ShaderTexDesc > shaderTextures; \
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty \
 
 #define NI_TEXTURING_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0), applyMode((ApplyMode)2), textureCount((uint)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), numShaderTextures((uint)0) \
+ : flags((ushort)0), applyMode((ApplyMode)2), textureCount((uint)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), numShaderTextures((uint)0) \
 
 #define NI_TEXTURING_PROPERTY_READ \
 uint block_num; \
@@ -14135,7 +14135,7 @@ refs = NiExtraData::GetRefs(); \
 return refs; \
 
 #define NI_VERTEX_COLOR_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 VertMode vertexMode; \
 LightMode lightingMode; \
 
@@ -14144,7 +14144,7 @@ LightMode lightingMode; \
 #define NI_VERTEX_COLOR_PROPERTY_PARENT NiProperty \
 
 #define NI_VERTEX_COLOR_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0), vertexMode((VertMode)0), lightingMode((LightMode)0) \
+ : flags((ushort)0), vertexMode((VertMode)0), lightingMode((LightMode)0) \
 
 #define NI_VERTEX_COLOR_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -14327,14 +14327,14 @@ refs = AKeyedData::GetRefs(); \
 return refs; \
 
 #define NI_WIREFRAME_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 
 #define NI_WIREFRAME_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_WIREFRAME_PROPERTY_PARENT NiProperty \
 
 #define NI_WIREFRAME_PROPERTY_CONSTRUCT \
- : flags((unsigned short)0) \
+ : flags((ushort)0) \
 
 #define NI_WIREFRAME_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
@@ -14359,7 +14359,7 @@ refs = NiProperty::GetRefs(); \
 return refs; \
 
 #define NI_Z_BUFFER_PROPERTY_MEMBERS \
-unsigned short flags; \
+ushort flags; \
 uint function; \
 
 #define NI_Z_BUFFER_PROPERTY_INCLUDE "NiProperty.h" \
@@ -14367,7 +14367,7 @@ uint function; \
 #define NI_Z_BUFFER_PROPERTY_PARENT NiProperty \
 
 #define NI_Z_BUFFER_PROPERTY_CONSTRUCT \
- : flags((unsigned short)3), function((uint)3) \
+ : flags((ushort)3), function((uint)3) \
 
 #define NI_Z_BUFFER_PROPERTY_READ \
 NiProperty::Read( in, link_stack, version, user_version ); \
