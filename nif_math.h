@@ -729,7 +729,11 @@ struct Matrix44 {
 	 */
 	NIFLIB_API float Adjunct( int skip_r, int skip_c ) const;
 
-	//undocumented
+	NIFLIB_API Matrix33 GetRotation() const;
+	NIFLIB_API Vector3 GetScale() const;
+	NIFLIB_API Vector3 GetTranslation() const;
+
+	//undocumented, may be removed
 	NIFLIB_API void AsFloatArr( float out[4][4] ) {
 		out[0][0] = rows[0][0]; out[0][1] = rows[0][1]; out[0][2] = rows[0][2]; out[0][3] = rows[0][3];
 		out[1][0] = rows[1][0]; out[1][1] = rows[1][1]; out[1][2] = rows[1][2]; out[1][3] = rows[1][3];

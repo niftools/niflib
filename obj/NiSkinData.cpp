@@ -37,3 +37,21 @@ const Type & NiSkinData::GetType() const {
 	return TYPE;
 };
 
+void NiSkinData::SetBoneData( const vector<SkinData> & n ) {
+	boneList = n;
+}
+
+vector<SkinData> NiSkinData::GetBoneData() const {
+	return boneList;
+}
+
+void NiSkinData::SetOverallTransform( const Matrix44 & n ) {
+	translation = n.GetTranslation();
+	rotation = n.GetRotation();
+	Vector3 s = n.GetScale();
+	scale = s.x + s.y + s.z / 3.0f;
+}
+	
+Matrix44 NiSkinData::GetOverallTransform() const {
+	return Matrix44( translation, rotation, scale );
+}

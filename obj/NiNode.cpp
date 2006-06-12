@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAVObject.h"
 #include "NiDynamicEffect.h"
 #include "NiSkinInstance.h"
+#include "NiSkinData.h"
 
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );
@@ -14,6 +15,11 @@ NiNode::NiNode() NI_NODE_CONSTRUCT {}
 NiNode::~NiNode() {
 	//Clear Children
 	ClearChildren();
+
+	//Unbind any attached skins
+	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
+		(*it)->SkeletonLost();
+	}
 }
 
 void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
@@ -93,10 +99,6 @@ bool NiNode::IsSkinInfluence() const {
 	return ((flags & 8) == 0);
 }
 
-void NiNode::GoToSkeletonBindPosition() {
-	//TODO:: Implement GoToSkeletonBindPosition()
-}
-
 void NiNode::AddSkin( NiSkinInstance * skin_inst ) {
 	//Ensure that all bones are below this node on the scene graph
 	vector<NiNodeRef> bones = skin_inst->GetBones();
@@ -151,4 +153,72 @@ void NiNode::SetSkinFlag( bool n ) {
 		//Requested value is different, flip bit
 		flags ^= 8;
 	}
+}
+
+void NiNode::GoToSkeletonBindPosition() {
+	map<NiNodeRef, Matrix44> world_positions;
+	
+	//Loop through all attached skins, straightening the skeleton on each
+	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
+		//Get Bone list and Skin Data
+		vector<NiNodeRef> bones = (*it)->GetBones();
+		NiSkinDataRef skin_data = (*it)->GetSkinData();
+
+		if ( skin_data == NULL ) {
+			//There's no skin data for this skin instance; skip it.
+			continue;
+		}
+
+		//Get bone data from NiSkinData class
+		vector<SkinData> bone_data = skin_data->GetBoneData();
+
+		//Make sure the counts match
+		if ( bones.size() != bone_data.size() ) {
+			throw runtime_error( "Bone counts in NiSkinInstance and attached NiSkinData must match" );
+		}
+
+		//Loop through all bones influing this skin
+		for ( uint i = 0; i < bones.size(); ++i ) {
+			//Get current offset Matrix for this bone
+			Matrix44 parent_offset( bone_data[i].translation,
+				                    bone_data[i].rotation,
+									bone_data[i].scale );
+
+			//Loop through all bones again, checking for any that have this bone as a parent
+			for ( uint j = 0; j < bones.size(); ++j ) {
+				if ( bones[j]->GetParent() == bones[i] ) {
+					//Node 2 has node 1 as a parent
+
+					//Get child offset Matrix33
+					Matrix44 child_offset( bone_data[j].translation,
+										   bone_data[j].rotation,
+										   bone_data[j].scale );
+
+					//Do calculation to get correct bone postion in relation to parent
+					Matrix44 inverse_co = child_offset.Inverse();
+					world_positions[bones[j]] = inverse_co * parent_offset;
+				}
+			}
+		}
+	}
+
+	//All the world positoins have been calculated, so use them to set the local
+	//positoins
+
+	//Put skeleton root into world positions if it's not already there
+	if ( world_positions.find( this ) == world_positions.end() ) {
+		world_positions[this] = GetWorldTransform();
+	}
+
+	//Now loop through all nodes in the world_positions map
+	for ( map< NiNodeRef, Matrix44>::iterator it = world_positions.begin(); it != world_positions.end(); ++it ) {
+		Matrix44 res_mat = world_positions[it->first] * world_positions[it->first->GetParent()].Inverse();
+
+		//Store result in node's local transforms
+		it->first->SetLocalRotation( res_mat.GetRotation() );
+		it->first->SetLocalTranslation( res_mat.GetTranslation());
+		Vector3 scale = res_mat.GetScale();
+		it->first->SetLocalScale( 1.0f );//scale.x + scale.y + scale.z / 3.0f );
+	}
+
 }

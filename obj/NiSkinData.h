@@ -33,6 +33,12 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	void SetOverallTransform( const Matrix44 & n );
+	Matrix44 GetOverallTransform() const;
+
+	void SetBoneData( const vector<SkinData> & n );
+	vector<SkinData> GetBoneData() const;
 protected:
 	NI_SKIN_DATA_MEMBERS
 };

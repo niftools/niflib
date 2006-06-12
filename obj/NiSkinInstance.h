@@ -62,6 +62,12 @@ public:
 	Ref<NiSkinPartition> GetSkinPartition() const;
 	void SetSkinPartition( const Ref<NiSkinPartition> & n );
 
+	/*! 
+	 * Called by skeleton root NiNode when it self destructs to inform this skin
+	 * instance that the skeleton has been lost.  Should not be called directly.
+	 */
+	void SkeletonLost();
+
 protected:
 	NI_SKIN_INSTANCE_MEMBERS
 };

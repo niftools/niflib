@@ -217,6 +217,46 @@ Matrix44::Matrix44( const Vector3 & t, const Matrix33 & r, float scale ) {
 	*this = s * rt;
 }
 
+Matrix33 Matrix44::GetRotation() const {
+	const Matrix44 & t = *this;
+
+	Matrix33 m( t[0][0], t[0][1], t[0][2],
+	            t[1][0], t[1][1], t[1][2],
+				t[2][0], t[2][1], t[2][2]
+			   );
+
+   	//--Extract Scale from first 3 rows--//
+	float scale[3];
+	for (int r = 0; r < 3; ++r) {
+		//Get scale for this row
+		scale[r] = sqrt(m[r][0] * m[r][0] + m[r][1] * m[r][1] + m[r][2] * m[r][2]);
+
+		//Normalize the row by dividing each factor by scale
+		m[r][0] /= scale[r];
+		m[r][1] /= scale[r];
+		m[r][2] /= scale[r];
+	}
+
+	//Return result
+	return m;
+}
+
+Vector3 Matrix44::GetScale() const {
+	const Matrix44 & m = *this;
+	float scale[3];
+	for (int r = 0; r < 3; ++r) {
+		//Get scale for this row
+		scale[r] = sqrt(m[r][0] * m[r][0] + m[r][1] * m[r][1] + m[r][2] * m[r][2]);
+	}
+	return Vector3( scale[0], scale[1], scale[2] );
+}
+
+
+Vector3 Matrix44::GetTranslation() const {
+	const Matrix44 & m = *this;
+	return Vector3( m[3][0], m[3][1], m[3][2] );
+}
+
 Matrix44 Matrix44::operator*( const Matrix44 & rh ) const {
 	return Matrix44(*this) *= rh;
 }

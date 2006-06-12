@@ -336,6 +336,14 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, version, user_version );
 	}
 
+	//TODO:  Make this an optional step?
+	for (uint i = 0; i < blocks.size(); ++i) {
+		NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
+		if ( node != NULL && node->IsSkeletonRoot() ) {
+			node->GoToSkeletonBindPosition();
+		}
+	}
+
 	//TODO:  No longer necessary?
 	////Build up the bind pose matricies into their world-space equivalents
 	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
