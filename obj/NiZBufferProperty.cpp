@@ -34,3 +34,18 @@ const Type & NiZBufferProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiZBufferProperty::GetFlags() const {
+   return flags;
+}
+
+void NiZBufferProperty::SetFlags(ushort value) {
+   flags = value;
+}
+
+uint NiZBufferProperty::GetFunction() const {
+   return function;
+}
+
+void NiZBufferProperty::SetFunction(uint value) {
+   function = value;
+}

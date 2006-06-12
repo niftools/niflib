@@ -34,3 +34,10 @@ const Type & NiShadeProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiShadeProperty::GetFlags() const {
+   return flags;
+}
+
+void NiShadeProperty::SetFlags( ushort n ) {
+   flags = n;
+}

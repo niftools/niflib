@@ -30,6 +30,16 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+   ushort GetFlags() const;
+   void SetFlags(ushort value);
+
+   VertMode GetVertexMode() const;
+   void SetVertexMode(VertMode value);
+
+   LightMode GetLightingMode() const;
+   void SetLightingMode(LightMode value);
+
 protected:
 	NI_VERTEX_COLOR_PROPERTY_MEMBERS
 };

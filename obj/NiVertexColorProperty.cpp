@@ -34,3 +34,26 @@ const Type & NiVertexColorProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiVertexColorProperty::GetFlags() const {
+   return flags;
+}
+
+void NiVertexColorProperty::SetFlags(ushort value) {
+   flags = value;
+}
+
+VertMode NiVertexColorProperty::GetVertexMode() const {
+   return vertexMode;
+}
+
+void NiVertexColorProperty::SetVertexMode(VertMode value) {
+   vertexMode = value;
+}
+
+LightMode NiVertexColorProperty::GetLightingMode() const {
+   return lightingMode;
+}
+
+void NiVertexColorProperty::SetLightingMode(LightMode value) {
+   lightingMode = value;
+}

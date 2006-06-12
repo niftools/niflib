@@ -34,3 +34,11 @@ const Type & NiDitherProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiDitherProperty::GetFlags() const {
+   return flags;
+}
+
+void NiDitherProperty::SetFlags( ushort n ) {
+   flags = n;
+}
+

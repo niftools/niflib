@@ -27,6 +27,10 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+   ushort GetFlags() const;
+   void SetFlags( ushort n );
+
 protected:
 	NI_WIREFRAME_PROPERTY_MEMBERS
 };

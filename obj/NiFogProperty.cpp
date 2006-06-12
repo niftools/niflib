@@ -34,3 +34,27 @@ const Type & NiFogProperty::GetType() const {
 	return TYPE;
 };
 
+
+ushort NiFogProperty::GetFlags() const {
+   return flags;
+}
+
+void NiFogProperty::SetFlags( ushort n ) {
+   flags = n;
+}
+
+float NiFogProperty::GetFogDepth() const {
+   return fogDepth;
+}
+
+void NiFogProperty::SetFogDepth(float value) {
+   fogDepth = value;
+}
+
+Color3 NiFogProperty::GetFogColor() const {
+   return fogColor;
+}
+
+void NiFogProperty::SetFogColor(Color3 value) {
+   fogColor = value;
+}

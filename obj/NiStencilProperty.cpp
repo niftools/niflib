@@ -34,3 +34,74 @@ const Type & NiStencilProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiStencilProperty::GetFlags() const {
+   return flags;
+}
+
+void NiStencilProperty::SetFlags(ushort value) {
+   flags = value;
+}
+
+bool NiStencilProperty::GetStencilEnabled() const {
+   return stencilEnabled;
+}
+
+void NiStencilProperty::SetStencilEnabled(bool value) {
+   stencilEnabled = value;
+}
+
+uint NiStencilProperty::GetStencilFunction() const {
+   return stencilFunction;
+}
+
+void NiStencilProperty::SetStencilFunction(uint value) {
+   stencilFunction = value;
+}
+
+uint NiStencilProperty::GetStencilRef() const {
+   return stencilRef;
+}
+
+void NiStencilProperty::SetStencilRef(uint value) {
+   stencilRef = value;
+}
+
+uint NiStencilProperty::GetStencilMask() const {
+   return stencilMask;
+}
+
+void NiStencilProperty::SetStencilMask(uint value) {
+   stencilMask = value;
+}
+
+uint NiStencilProperty::GetFailAction() const {
+   return failAction;
+}
+
+void NiStencilProperty::SetFailAction(uint value) {
+   failAction = value;
+}
+
+uint NiStencilProperty::GetZFailAction() const {
+   return zFailAction;
+}
+
+void NiStencilProperty::SetZFailAction(uint value) {
+   zFailAction = value;
+}
+
+uint NiStencilProperty::GetPassAction() const {
+   return passAction;
+}
+
+void NiStencilProperty::SetPassAction(uint value) {
+   passAction = value;
+}
+
+uint NiStencilProperty::GetDrawMode() const {
+   return drawMode;
+}
+
+void NiStencilProperty::SetDrawMode(uint value) {
+   drawMode = value;
+}

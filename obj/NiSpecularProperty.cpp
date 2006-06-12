@@ -34,3 +34,10 @@ const Type & NiSpecularProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiSpecularProperty::GetFlags() const {
+   return flags;
+}
+
+void NiSpecularProperty::SetFlags( ushort n ) {
+   flags = n;
+}

@@ -27,6 +27,35 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+   ushort GetFlags() const;
+   void SetFlags(ushort value);
+
+   bool GetStencilEnabled() const;
+   void SetStencilEnabled(bool value);
+
+   uint GetStencilFunction() const;
+   void SetStencilFunction(uint value);
+
+   uint GetStencilRef() const;
+   void SetStencilRef(uint value);
+
+   uint GetStencilMask() const;
+   void SetStencilMask(uint value);
+
+   uint GetFailAction() const;
+   void SetFailAction(uint value);
+
+   uint GetZFailAction() const;
+   void SetZFailAction(uint value);
+
+   uint GetPassAction() const;
+   void SetPassAction(uint value);
+
+   uint GetDrawMode() const;
+   void SetDrawMode(uint value);
+
+
 protected:
 	NI_STENCIL_PROPERTY_MEMBERS
 };

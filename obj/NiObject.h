@@ -171,4 +171,36 @@ template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
 	}
 }
 
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+/*!
+ * Dynamically cast from a collection of objects to another collection
+ * \param objs A collection of object references to be dynamically casted to the specified type.
+ * \return A collection of objects that support the requested type.
+ */
+template <typename U, typename T>
+inline vector<Ref<U> > DynamicCast( vector<Ref<T> > const & objs ) {
+   vector<Ref<U> > retval;
+   for (vector<Ref<T> >::const_iterator itr = objs.begin(), end = objs.end(); itr != end; ++itr) {
+      Ref<U> obj = DynamicCast<U>(*itr);
+      if (obj) retval.insert(retval.end(), obj);
+   }
+   return retval;
+}
+
+/*!
+* Dynamically cast from a collection of objects to another collection
+* \param objs A collection of object references to be dynamically casted to the specified type.
+* \return A collection of objects that support the requested type.
+*/
+template <typename U, typename T>
+inline list<Ref<U> > DynamicCast( list<Ref<T> > const & objs ) {
+   list<Ref<U> > retval;
+   for (list<Ref<T> >::const_iterator itr = objs.begin(), end = objs.end(); itr != end; ++itr) {
+      Ref<U> obj = DynamicCast<U>(*itr);
+      if (obj) retval.insert(retval.end(), obj);
+   }
+   return retval;
+}
+#endif
+
 #endif

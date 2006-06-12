@@ -34,3 +34,11 @@ const Type & NiWireframeProperty::GetType() const {
 	return TYPE;
 };
 
+ushort NiWireframeProperty::GetFlags() const {
+   return flags;
+}
+
+void NiWireframeProperty::SetFlags(ushort value) {
+   flags = value;
+}
+
