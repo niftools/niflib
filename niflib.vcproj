@@ -1196,10 +1196,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Bones.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\gen\BoundingBox.cpp"
 					>
 				</File>
@@ -2207,10 +2203,6 @@
 				>
 				<File
 					RelativePath=".\gen\AVObject.h"
-					>
-				</File>
-				<File
-					RelativePath=".\gen\Bones.h"
 					>
 				</File>
 				<File

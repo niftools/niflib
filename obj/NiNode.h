@@ -7,7 +7,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAVObject.h"
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiAVObject;
 class NiDynamicEffect;
 
@@ -15,6 +14,7 @@ class NiDynamicEffect;
 
 class NiNode;
 class NiAVObject;
+class NiSkinInstance;
 typedef Ref<NiNode> NiNodeRef;
 
 /*!
@@ -38,7 +38,36 @@ public:
 	void RemoveChild( Ref<NiAVObject> obj );
 	void ClearChildren();
 	vector< Ref<NiAVObject> > GetChildren() const;
+
+	/*! Checks if this node has any skins attached. */
+	bool IsSkeletonRoot() const;
+
+	/*! Checks if this node influences the vertices in any skins. */
+	bool IsSkinInfluence() const;
+
+	/*! Causes all children's transforms to be changed so that all the skin
+	 * pieces line up without any vertex transformations.
+	 */
+	void GoToSkeletonBindPosition();
+
+	/*! 
+	 * Should only be called by NiTriBasedGeom
+	 * Adds a new SkinInstance to the specified mesh.
+	 * The bones must be below this node in the scene graph tree
+	 */
+	void AddSkin( NiSkinInstance * skin_inst );
+
+	/*! 
+	 * Should only be called by NiTriBasedGeom
+	 * Detaches the skin associated with a child mesh.
+	 */
+	void RemoveSkin( NiSkinInstance * skin_inst );
+
+	/*! Should not be called directly */
+	void SetSkinFlag( bool n );
+
 protected:
+	list<NiSkinInstance*> skins;
 	NI_NODE_MEMBERS
 };
 

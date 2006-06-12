@@ -9,9 +9,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiAVObject.h"
 #include "obj/NiNode.h"
 #include "obj/NiTextKeyExtraData.h"
-#include <exception>
-#include <stdexcept>
-using namespace std;
 
 //Stores the mapping between block names and factory function pointers to create them
 typedef IBlock * (*blk_factory_func)();
@@ -20,7 +17,7 @@ map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
 void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map );
-void BuildUpBindPositions( const NiAVObjectRef & root );
+//void BuildUpBindPositions( const NiAVObjectRef & root );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
@@ -83,7 +80,7 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
 
 	//Move up the chain to the root node
 	while ( root->GetParent() != NULL ) {
-		root = root->GetParent();
+		root = StaticCast<NiAVObject>(root->GetParent());
 	}
 
 	return StaticCast<NiObject>(root);
@@ -339,11 +336,12 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, version, user_version );
 	}
 
-	//Build up the bind pose matricies into their world-space equivalents
-	NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
-	if ( av_root != NULL ) {
-		BuildUpBindPositions( av_root );
-	}
+	//TODO:  No longer necessary?
+	////Build up the bind pose matricies into their world-space equivalents
+	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
+	//if ( av_root != NULL ) {
+	//	BuildUpBindPositions( av_root );
+	//}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance
@@ -515,31 +513,31 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 	}
 }
 
-void BuildUpBindPositions( const NiAVObjectRef & root ) {
-
-	//Get parent if there is one
-	NiNodeRef par = root->GetParent();
-	if ( par != NULL ) {
-		//There is a node parent
-
-		//Post-multipy the block's bind matrix with the parent's bind matrix
-		Matrix44 result = root->GetWorldBindPos() * par->GetWorldBindPos();
-
-		//Store result back to block bind position
-		root->SetWorldBindPos( result );
-	}
-
-	//If this is a NiNode, call this function for all child AVObjects
-	NiNodeRef node = DynamicCast<NiNode>(root);
-	if ( node != NULL ) {
-		vector<NiAVObjectRef> children = node->GetChildren();
-		for (vector<NiAVObjectRef>::iterator it = children.begin(); it != children.end(); ++it) {
-			if ( *it != NULL ) {
-				BuildUpBindPositions( *it );
-			}
-		}
-	}
-}
+//void BuildUpBindPositions( const NiAVObjectRef & root ) {
+//
+//	//Get parent if there is one
+//	NiNodeRef par = root->GetParent();
+//	if ( par != NULL ) {
+//		//There is a node parent
+//
+//		//Post-multipy the block's bind matrix with the parent's bind matrix
+//		Matrix44 result = root->GetWorldBindPos() * par->GetWorldBindPos();
+//
+//		//Store result back to block bind position
+//		root->SetWorldBindPos( result );
+//	}
+//
+//	//If this is a NiNode, call this function for all child AVObjects
+//	NiNodeRef node = DynamicCast<NiNode>(root);
+//	if ( node != NULL ) {
+//		vector<NiAVObjectRef> children = node->GetChildren();
+//		for (vector<NiAVObjectRef>::iterator it = children.begin(); it != children.end(); ++it) {
+//			if ( *it != NULL ) {
+//				BuildUpBindPositions( *it );
+//			}
+//		}
+//	}
+//}
 
 //TODO: Should this be returning an object of a derived type too?
 // Searches for the first object in the hierarchy of type.

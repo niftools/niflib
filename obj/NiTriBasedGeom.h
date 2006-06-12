@@ -44,6 +44,9 @@ public:
 
 	string GetShader() const;
 	void SetShader( const string & n );
+
+	void SetSkinInstance( Ref<NiSkinInstance> & n );
+	Ref<NiSkinInstance> GetSkinInstance() const;
 	
 protected:
 	NI_TRI_BASED_GEOM_MEMBERS

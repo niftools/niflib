@@ -67,3 +67,10 @@ void NiTriBasedGeom::SetShader( const string & n ) {
 	}
 }
 	
+void NiTriBasedGeom::SetSkinInstance( Ref<NiSkinInstance> & n ) {
+	skinInstance = n;
+}
+
+Ref<NiSkinInstance> NiTriBasedGeom::GetSkinInstance() const {
+	return skinInstance;
+}

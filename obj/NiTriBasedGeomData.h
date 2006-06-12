@@ -124,8 +124,6 @@ public:
 	void SetUVSet( int index, const vector<TexCoord> & in );
 
 protected:
-	Vector3 Center() const;
-	float Radius() const;
 	NI_TRI_BASED_GEOM_DATA_MEMBERS
 };
 

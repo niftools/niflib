@@ -52,26 +52,6 @@ public:
 	 */
 	Matrix44 GetWorldTransform() const;
 
-	/*!
-	 * This function returns the bind position world matrix.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
-	 * \return The 4x4 world bind position matrix of this node.
-	 * \sa INode::GetLocalBindPos, INode::SetWorldBindPos
-	 */
-	Matrix44 GetWorldBindPos() const;
-
-	/*! This function returns the bind position world matrix of this node multiplied with the inverse of the bind position world matrix of its parent object if any.  Thus it returns the bind position of the object in local coordinates.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.
-	 * \return The 4x4 local bind position matrix of this node.
-	 * \sa INode::SetWorldBindPos, INode::GetWorldBindPos
-	 */
-	Matrix44 GetLocalBindPos() const;
-
-	/*!
-	 * This function sets the bind position of this object relative to the origin.  The bind position (also called the rest position) is the position of an object in a skin and bones system before any posing has been done.  This function must be called on every object in a skin and bones system (the bones and the skinned shapes) in order for skinning information to be written to a Nif file.
-	 * \param m The 4x4 world bind position matrix of this node
-	 * \sa INode::GetLocalBindPos, INode::GetWorldBindPos
-	 */
-	void SetWorldBindPos( Matrix44 const & m );
-
 	/*! Meant to be called by NiNode during the addition of new children.  Should not be called directly. */
 	void SetParent( NiNode * new_parent );
 
@@ -98,12 +78,10 @@ public:
 	Vector3 GetVelocity() const;
 	void SetVelocity( const Vector3 & n );
 
-private:
+protected:
 	NI_A_V_OBJECT_MEMBERS
 
 	NiNode * parent;
-	void ResetSkinnedFlag();
-	Matrix44 bindPosition;
 };
 
 #endif

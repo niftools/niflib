@@ -132,7 +132,3 @@ Vector3 NiTriBasedGeomData::GetCenter() const {
 float NiTriBasedGeomData::GetRadius() const {
 	return radius;
 }
-
-//TODO: Remove these
-Vector3 NiTriBasedGeomData::Center() const { return center; }
-float NiTriBasedGeomData::Radius() const { return radius; }

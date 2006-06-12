@@ -446,7 +446,7 @@ public:
 private:
 	Matrix33 * _data;
 };
-/*
+
 class BoneAttr : public AAttr {
 public:
 	BoneAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
@@ -961,7 +961,7 @@ public:
 
 };*/
 
-/*class EmitterObjectAttr : public AAttr {
+class EmitterObjectAttr : public AAttr {
 public:
 	EmitterObjectAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~EmitterObjectAttr() {}
@@ -1009,9 +1009,9 @@ public:
 	blk_ref asLink() const { return FindTarget(); }
 	void Set(blk_ref const &) { throw runtime_error("The attribute you tried to set is calculated automatically.  You cannot change it directly."); }
 
-};*/
+};
 
-/*class SelfLinkAttr : public AAttr {
+class SelfLinkAttr : public AAttr {
 public:
 	SelfLinkAttr( string const & name, IBlock * owner ) : AAttr(name, owner, first_ver, last_ver) {}
 	~SelfLinkAttr() {}

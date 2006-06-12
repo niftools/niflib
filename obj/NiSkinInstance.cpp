@@ -2,7 +2,6 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSkinInstance.h"
-#include "../gen/Bones.h"
 #include "NiNode.h"
 #include "NiSkinData.h"
 #include "NiSkinPartition.h"
@@ -39,4 +38,60 @@ const Type & NiSkinInstance::GetType() const {
 	return TYPE;
 };
 
-NiNode * NiSkinInstance::SkeletonRoot() const { return NULL; }
+vector< Ref<NiNode> > NiSkinInstance::GetBones() const {
+	vector<NiNodeRef> ref_bones( bones.size() );
+	for (uint i = 0; i < bones.size(); ++i ) {
+		ref_bones[i] = bones[i];
+	}
+	return ref_bones;
+}
+
+void NiSkinInstance::Bind( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
+	//Ensure skin is not aleady bound
+	if ( bones.size() != 0 ) {
+		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
+	}
+	
+	//Add the bones to the internal list
+	bones.resize( bone_nodes.size() );
+	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+		bones[i] = bone_nodes[i];
+	}
+
+	//Store skeleton root and inform it of this attachment
+	skeletonRoot = skeleton_root;
+	skeletonRoot->AddSkin( this );
+};
+
+void NiSkinInstance::Unbind() {
+	//Inform Skeleton Root of detatchment and clear it.
+	skeletonRoot->RemoveSkin( this );
+	skeletonRoot = NULL;
+
+	//Clear bone list
+	bones.clear();
+
+	//Destroy skin data
+	data = NULL;
+	skinPartition = NULL;
+}
+
+void NiSkinInstance::CalcHardwareSkinningData () {
+
+}
+
+Ref<NiSkinData> NiSkinInstance::GetSkinData() const {
+	return data;
+}
+
+void NiSkinInstance::SetSkinData( const Ref<NiSkinData> & n ) {
+	data = n;
+}
+
+Ref<NiSkinPartition> NiSkinInstance::GetSkinPartition() const {
+	return skinPartition;
+}
+
+void NiSkinInstance::SetSkinPartition( const Ref<NiSkinPartition> & n ) {
+	skinPartition = n;
+}

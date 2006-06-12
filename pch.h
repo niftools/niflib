@@ -10,7 +10,6 @@
 //#include "Type.h"
 
 #include "gen/AVObject.h"
-#include "gen/Bones.h"
 #include "gen/BoundingBox.h"
 #include "gen/ByteArray.h"
 #include "gen/ControllerLink.h"
