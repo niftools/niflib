@@ -62,3 +62,7 @@ string NiObject::GetIDString() {
 	out << this << "(" << this->GetType().GetTypeName() << ")";
 	return out.str();
 }
+
+NiObjectRef NiObject::Clone( unsigned int version ) {
+	throw runtime_error("Cloning not yet implemented.");
+};
