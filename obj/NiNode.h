@@ -66,6 +66,8 @@ public:
 	/*! Should not be called directly */
 	void SetSkinFlag( bool n );
 
+private:
+	void NiNode::RepositionGeom( NiAVObjectRef root );
 protected:
 	list<NiSkinInstance*> skins;
 	NI_NODE_MEMBERS

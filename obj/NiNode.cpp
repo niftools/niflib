@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiDynamicEffect.h"
 #include "NiSkinInstance.h"
 #include "NiSkinData.h"
+#include "NiTriBasedGeom.h"
 
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );
@@ -227,28 +228,79 @@ void NiNode::GoToSkeletonBindPosition() {
 		}
 	}
 
-	//All the world positoins have been calculated, so use them to set the local
-	//positoins
+	//Search for any NiTriBasedGeom classes lower in the scene graph and
+	//reposition them
+	RepositionGeom(this);
+}
 
-	////Put skeleton root into world positions if it's not already there
-	//if ( world_positions.find( this ) == world_positions.end() ) {
-	//	world_positions[this] = GetWorldTransform();
-	//}
+void NiNode::RepositionGeom( NiAVObjectRef root ) {
+	//Check if this is a NiTriBasedGeom
+	NiTriBasedGeomRef geom = DynamicCast<NiTriBasedGeom>(root);
 
-	////Now loop through all nodes in the world_positions map
-	//for ( map< NiNodeRef, Matrix44>::iterator it = world_positions.begin(); it != world_positions.end(); ++it ) {
-	//	if ( world_positions.find(it->first->GetParent()) != world_positions.end() ) {
-	//		Matrix44 res_mat = world_positions[it->first] * world_positions[it->first->GetParent()].Inverse();
+	if ( geom != NULL ) {
+		//This is a NiTriBasedGeom class
+		//Get NiSkinInstance and NiSkinData
 
-	//		//Store result in node's local transforms
-	//		it->first->SetLocalRotation( Matrix33( 
-	//						res_mat[0][0], res_mat[0][1], res_mat[0][2],
-	//						res_mat[1][0], res_mat[1][1], res_mat[1][2],
-	//						res_mat[2][0], res_mat[2][1], res_mat[2][2]
-	//					) );
-	//		it->first->SetLocalTranslation( Vector3( res_mat[3][0], res_mat[3][1], res_mat[3][2] ) );
-	//		//Vector3 scale = res_mat.GetScale();
-	//		it->first->SetLocalScale( 1.0f );//scale.x + scale.y + scale.z / 3.0f );
-	//	}
-	//}
+		NiSkinInstanceRef skin_inst = geom->GetSkinInstance();
+
+		if ( skin_inst == NULL ) {
+			return;
+		}
+
+		NiSkinDataRef skin_data = skin_inst->GetSkinData();
+
+		if ( skin_data == NULL ) {
+			return;
+		}
+
+		//Get bone info
+		vector<NiNodeRef> bones = skin_inst->GetBones();
+		vector<SkinData> bone_data = skin_data->GetBoneData();
+
+		//Make sure the counts match
+		if ( bones.size() != bone_data.size() ) {
+			throw runtime_error( "Bone counts in NiSkinInstance and attached NiSkinData must match" );
+		}
+
+		//There must be at least one bone to do anything
+		if ( bones.size() == 0 ) {
+			return;
+		}
+
+		//Use first bone (arbitrary choice)
+		Matrix44 offset_mat(
+			bone_data[0].rotation[0][0], bone_data[0].rotation[0][1], bone_data[0].rotation[0][2], 0.0f,
+			bone_data[0].rotation[1][0], bone_data[0].rotation[1][1], bone_data[0].rotation[1][2], 0.0f,
+			bone_data[0].rotation[2][0], bone_data[0].rotation[2][1], bone_data[0].rotation[2][2], 0.0f,
+			bone_data[0].translation.x, bone_data[0].translation.y, bone_data[0].translation.z, 1.0f
+		);
+			
+		//Get built up rotations to the root of the skeleton from this bone
+		Matrix44 bone_mat = bones[0]->GetWorldTransform();
+
+		Matrix44 world_mat = offset_mat * bone_mat;
+
+		Matrix44 result_mat = world_mat * geom->GetParent()->GetWorldTransform().Inverse();
+
+		//--Set TriShape Local Position to Result--//
+		geom->SetLocalRotation( result_mat.GetRotation() );
+		geom->SetLocalTranslation( result_mat.GetTranslation() );
+		geom->SetLocalScale( 1.0f );
+
+		//TODO: Calculate the correct adjustment for the NiSkinData overall matrix
+		//due to this change
+
+		return;
+	}
+
+	//Check if this is a NiNode
+	NiNodeRef node = DynamicCast<NiNode>(root);
+	
+	if ( node != NULL ) {
+		//This is a NiNode, call this function on all children
+		vector<NiAVObjectRef> children = node->GetChildren();
+		for ( uint i = 0; i < children.size(); ++i ) {
+			RepositionGeom( children[i] );
+		}
+	}
 }
