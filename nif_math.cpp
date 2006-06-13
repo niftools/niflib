@@ -229,7 +229,7 @@ Matrix33 Matrix44::GetRotation() const {
 	float scale[3];
 	for (int r = 0; r < 3; ++r) {
 		//Get scale for this row
-		scale[r] = sqrt(m[r][0] * m[r][0] + m[r][1] * m[r][1] + m[r][2] * m[r][2]);
+		scale[r] = Vector3( m[r][0], m[r][1], m[r][2] ).Magnitude();
 
 		//Normalize the row by dividing each factor by scale
 		m[r][0] /= scale[r];
@@ -246,7 +246,7 @@ Vector3 Matrix44::GetScale() const {
 	float scale[3];
 	for (int r = 0; r < 3; ++r) {
 		//Get scale for this row
-		scale[r] = sqrt(m[r][0] * m[r][0] + m[r][1] * m[r][1] + m[r][2] * m[r][2]);
+		scale[r] = Vector3( m[r][0], m[r][1], m[r][2] ).Magnitude();
 	}
 	return Vector3( scale[0], scale[1], scale[2] );
 }
@@ -331,10 +331,10 @@ Matrix33 Matrix44::Submatrix( int skip_r, int skip_c ) const {
 	Matrix33 sub;
 	int i = 0, j = 0;
 	for (int r = 0; r < 4; r++) {
-		if (r == skip_c)
+		if (r == skip_r)
 			continue;
 		for (int c = 0; c < 4; c++) {
-			if (c == skip_r)
+			if (c == skip_c)
 				continue;
 			sub[i][j] = (*this)[r][c];
 			j++;
@@ -345,7 +345,7 @@ Matrix33 Matrix44::Submatrix( int skip_r, int skip_c ) const {
 	return sub;
 }
 
-float Matrix44::Adjunct( int skip_r, int skip_c ) const {
+float Matrix44::Adjoint( int skip_r, int skip_c ) const {
 	Matrix33 sub = Submatrix( skip_r, skip_c );
 	return pow(-1.0f, float(skip_r + skip_c)) * sub.Determinant();
 }
@@ -354,9 +354,11 @@ Matrix44 Matrix44::Inverse() const {
 	Matrix44 result;
 
 	float det = Determinant();
+	cout << "Determinant:  " << det << endl;
 	for (int r = 0; r < 4; r++) {
 		for (int c = 0; c < 4; c++) {
-			result[r][c] = Adjunct(r, c) / det;
+			//cout << "Adjoint(" << r << "," << c << "):  " << Adjunct(r, c) << endl;
+			result[c][r] = Adjoint(r, c) / det;
 		}
 	}
 

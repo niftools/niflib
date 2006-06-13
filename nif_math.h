@@ -727,7 +727,7 @@ struct Matrix44 {
 	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
 	 * \return The adjunct obtained by skipping the indicated row and column.
 	 */
-	NIFLIB_API float Adjunct( int skip_r, int skip_c ) const;
+	NIFLIB_API float Adjoint( int skip_r, int skip_c ) const;
 
 	NIFLIB_API Matrix33 GetRotation() const;
 	NIFLIB_API Vector3 GetScale() const;

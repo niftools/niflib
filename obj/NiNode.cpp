@@ -156,7 +156,7 @@ void NiNode::SetSkinFlag( bool n ) {
 }
 
 void NiNode::GoToSkeletonBindPosition() {
-	map<NiNodeRef, Matrix44> world_positions;
+	//map<NiNodeRef, Matrix44> world_positions;
 	
 	//Loop through all attached skins, straightening the skeleton on each
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
@@ -177,26 +177,51 @@ void NiNode::GoToSkeletonBindPosition() {
 			throw runtime_error( "Bone counts in NiSkinInstance and attached NiSkinData must match" );
 		}
 
-		//Loop through all bones influing this skin
+		//Loop through all bones influencing this skin
 		for ( uint i = 0; i < bones.size(); ++i ) {
 			//Get current offset Matrix for this bone
-			Matrix44 parent_offset( bone_data[i].translation,
-				                    bone_data[i].rotation,
-									bone_data[i].scale );
+			//Matrix44 parent_offset( bone_data[i].translation,
+			//	                    bone_data[i].rotation,
+			//						bone_data[i].scale );
+			Matrix44 parent_offset(
+				bone_data[i].rotation[0][0], bone_data[i].rotation[0][1], bone_data[i].rotation[0][2], 0.0f,
+				bone_data[i].rotation[1][0], bone_data[i].rotation[1][1], bone_data[i].rotation[1][2], 0.0f,
+				bone_data[i].rotation[2][0], bone_data[i].rotation[2][1], bone_data[i].rotation[2][2], 0.0f,
+				bone_data[i].translation.x, bone_data[i].translation.y, bone_data[i].translation.z, 1.0f
+			); 
 
 			//Loop through all bones again, checking for any that have this bone as a parent
 			for ( uint j = 0; j < bones.size(); ++j ) {
 				if ( bones[j]->GetParent() == bones[i] ) {
+					cout << "Bone " << bones[j] << " has bone " << bones[i] << " as parent." << endl;
 					//Node 2 has node 1 as a parent
 
 					//Get child offset Matrix33
-					Matrix44 child_offset( bone_data[j].translation,
+					/*Matrix44 child_offset( bone_data[j].translation,
 										   bone_data[j].rotation,
-										   bone_data[j].scale );
+										   bone_data[j].scale );*/
+					Matrix44 child_offset(
+						bone_data[j].rotation[0][0], bone_data[j].rotation[0][1], bone_data[j].rotation[0][2], 0.0f,
+						bone_data[j].rotation[1][0], bone_data[j].rotation[1][1], bone_data[j].rotation[1][2], 0.0f,
+						bone_data[j].rotation[2][0], bone_data[j].rotation[2][1], bone_data[j].rotation[2][2], 0.0f,
+						bone_data[j].translation.x, bone_data[j].translation.y, bone_data[j].translation.z, 1.0f
+					);
 
 					//Do calculation to get correct bone postion in relation to parent
+					//Matrix44 inverse_co = child_offset.Inverse();
+					//world_positions[bones[j]] = inverse_co * parent_offset;
 					Matrix44 inverse_co = child_offset.Inverse();
-					world_positions[bones[j]] = inverse_co * parent_offset;
+					Matrix44 child_pos = inverse_co * parent_offset;
+
+					//bones[j]->SetWorldBindPos( child_pos );
+					bones[j]->SetLocalRotation( child_pos.GetRotation() );
+					bones[j]->SetLocalScale( 1.0f );
+					bones[j]->SetLocalTranslation( child_pos.GetTranslation() );
+
+					//cout << "Matrix:  " << cout << "Translation:  " << world_positions[bones[j]] << endl;
+					//cout << "Translation:  " << world_positions[bones[j]].GetTranslation() << endl;
+					//cout << "Rotation:  " << world_positions[bones[j]].GetRotation() << endl;
+					//cout << "Scale:  " << world_positions[bones[j]].GetScale() << endl;
 				}
 			}
 		}
@@ -205,20 +230,25 @@ void NiNode::GoToSkeletonBindPosition() {
 	//All the world positoins have been calculated, so use them to set the local
 	//positoins
 
-	//Put skeleton root into world positions if it's not already there
-	if ( world_positions.find( this ) == world_positions.end() ) {
-		world_positions[this] = GetWorldTransform();
-	}
+	////Put skeleton root into world positions if it's not already there
+	//if ( world_positions.find( this ) == world_positions.end() ) {
+	//	world_positions[this] = GetWorldTransform();
+	//}
 
-	//Now loop through all nodes in the world_positions map
-	for ( map< NiNodeRef, Matrix44>::iterator it = world_positions.begin(); it != world_positions.end(); ++it ) {
-		Matrix44 res_mat = world_positions[it->first] * world_positions[it->first->GetParent()].Inverse();
+	////Now loop through all nodes in the world_positions map
+	//for ( map< NiNodeRef, Matrix44>::iterator it = world_positions.begin(); it != world_positions.end(); ++it ) {
+	//	if ( world_positions.find(it->first->GetParent()) != world_positions.end() ) {
+	//		Matrix44 res_mat = world_positions[it->first] * world_positions[it->first->GetParent()].Inverse();
 
-		//Store result in node's local transforms
-		it->first->SetLocalRotation( res_mat.GetRotation() );
-		it->first->SetLocalTranslation( res_mat.GetTranslation());
-		Vector3 scale = res_mat.GetScale();
-		it->first->SetLocalScale( 1.0f );//scale.x + scale.y + scale.z / 3.0f );
-	}
-
+	//		//Store result in node's local transforms
+	//		it->first->SetLocalRotation( Matrix33( 
+	//						res_mat[0][0], res_mat[0][1], res_mat[0][2],
+	//						res_mat[1][0], res_mat[1][1], res_mat[1][2],
+	//						res_mat[2][0], res_mat[2][1], res_mat[2][2]
+	//					) );
+	//		it->first->SetLocalTranslation( Vector3( res_mat[3][0], res_mat[3][1], res_mat[3][2] ) );
+	//		//Vector3 scale = res_mat.GetScale();
+	//		it->first->SetLocalScale( 1.0f );//scale.x + scale.y + scale.z / 3.0f );
+	//	}
+	//}
 }

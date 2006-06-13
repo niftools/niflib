@@ -336,20 +336,22 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, version, user_version );
 	}
 
-	//TODO:  Make this an optional step?
+
+
+	////TODO:  Make this an optional step?
+	////Build up the bind pose matricies into their world-space equivalents
+	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
+	//if ( av_root != NULL ) {
+	//	BuildUpBindPositions( av_root );
+	//}
+
+	//Send all skeleton roots to bind position
 	for (uint i = 0; i < blocks.size(); ++i) {
 		NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
 		if ( node != NULL && node->IsSkeletonRoot() ) {
 			node->GoToSkeletonBindPosition();
 		}
 	}
-
-	//TODO:  No longer necessary?
-	////Build up the bind pose matricies into their world-space equivalents
-	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
-	//if ( av_root != NULL ) {
-	//	BuildUpBindPositions( av_root );
-	//}
 
 	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
 	//// Re-position any TriShapes with a SkinInstance
