@@ -907,11 +907,11 @@ if ( version <= 0x04020200 ) { \
 		NifStream( boundingBox.radius, in, version ); \
 	}; \
 }; \
-if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x0A020000 ) ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
-if ( version >= 0x14000005 ) { \
+if ( version >= 0x14000004 ) { \
 	NifStream( block_num, in, version ); \
 	link_stack.push_back( block_num ); \
 }; \
@@ -941,13 +941,13 @@ if ( version <= 0x04020200 ) { \
 		NifStream( boundingBox.radius, out, version ); \
 	}; \
 }; \
-if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x0A020000 ) ) { \
 	if ( collisionData != NULL ) \
 		NifStream( link_map[StaticCast<NiObject>(collisionData)], out, version ); \
 	else \
 		NifStream( 0xffffffff, out, version ); \
 }; \
-if ( version >= 0x14000005 ) { \
+if ( version >= 0x14000004 ) { \
 	if ( collisionObject != NULL ) \
 		NifStream( link_map[StaticCast<NiObject>(collisionObject)], out, version ); \
 	else \
@@ -994,7 +994,7 @@ for (uint i0 = 0; i0 < properties.size(); i0++) { \
 		properties[i0] = NULL; \
 	link_stack.pop_front(); \
 }; \
-if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
+if ( ( version >= 0x0A000100 ) && ( version <= 0x0A020000 ) ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 	if (link_stack.front() != 0xffffffff) { \
@@ -1005,7 +1005,7 @@ if ( ( version >= 0x0A000100 ) && ( version <= 0x14000004 ) ) { \
 		collisionData = NULL; \
 	link_stack.pop_front(); \
 }; \
-if ( version >= 0x14000005 ) { \
+if ( version >= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 	if (link_stack.front() != 0xffffffff) { \
