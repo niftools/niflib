@@ -8513,54 +8513,69 @@ return refs; \
 
 #define NI_PARTICLE_MESH_MODIFIER_MEMBERS \
 uint numParticleMeshes; \
-Ref<NiAVObject > particleMeshes; \
+vector<Ref<NiAVObject > > particleMeshes; \
 
 #define NI_PARTICLE_MESH_MODIFIER_INCLUDE "AParticleModifier.h" \
 
 #define NI_PARTICLE_MESH_MODIFIER_PARENT AParticleModifier \
 
 #define NI_PARTICLE_MESH_MODIFIER_CONSTRUCT \
- : numParticleMeshes((uint)0), particleMeshes(NULL) \
+ : numParticleMeshes((uint)0) \
 
 #define NI_PARTICLE_MESH_MODIFIER_READ \
 uint block_num; \
 AParticleModifier::Read( in, link_stack, version, user_version ); \
 NifStream( numParticleMeshes, in, version ); \
-NifStream( block_num, in, version ); \
-link_stack.push_back( block_num ); \
+particleMeshes.resize(numParticleMeshes); \
+for (uint i0 = 0; i0 < particleMeshes.size(); i0++) { \
+	NifStream( block_num, in, version ); \
+	link_stack.push_back( block_num ); \
+}; \
 
 #define NI_PARTICLE_MESH_MODIFIER_WRITE \
 AParticleModifier::Write( out, link_map, version, user_version ); \
 NifStream( numParticleMeshes, out, version ); \
-if ( particleMeshes != NULL ) \
-	NifStream( link_map[StaticCast<NiObject>(particleMeshes)], out, version ); \
-else \
-	NifStream( 0xffffffff, out, version ); \
+for (uint i0 = 0; i0 < particleMeshes.size(); i0++) { \
+	if ( particleMeshes[i0] != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(particleMeshes[i0])], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
+}; \
 
 #define NI_PARTICLE_MESH_MODIFIER_STRING \
 stringstream out; \
 out << AParticleModifier::asString(); \
 out << "Num Particle Meshes:  " << numParticleMeshes << endl; \
-out << "Particle Meshes:  " << particleMeshes << endl; \
+for (uint i0 = 0; i0 < particleMeshes.size(); i0++) { \
+	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
+		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
+		break; \
+	}; \
+	out << "  Particle Meshes[" << i0 << "]:  " << particleMeshes[i0] << endl; \
+}; \
 return out.str(); \
 
 #define NI_PARTICLE_MESH_MODIFIER_FIXLINKS \
 AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
-if (link_stack.empty()) \
-	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) { \
-	particleMeshes = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
-	if ( particleMeshes == NULL ) \
-		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
-} else \
-	particleMeshes = NULL; \
-link_stack.pop_front(); \
+for (uint i0 = 0; i0 < particleMeshes.size(); i0++) { \
+	if (link_stack.empty()) \
+		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
+	if (link_stack.front() != 0xffffffff) { \
+		particleMeshes[i0] = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
+		if ( particleMeshes[i0] == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
+		particleMeshes[i0] = NULL; \
+	link_stack.pop_front(); \
+}; \
 
 #define NI_PARTICLE_MESH_MODIFIER_GETREFS \
 list<Ref<NiObject> > refs; \
 refs = AParticleModifier::GetRefs(); \
-if ( particleMeshes != NULL ) \
-	refs.push_back(StaticCast<NiObject>(particleMeshes)); \
+for (uint i0 = 0; i0 < particleMeshes.size(); i0++) { \
+	if ( particleMeshes[i0] != NULL ) \
+		refs.push_back(StaticCast<NiObject>(particleMeshes[i0])); \
+}; \
 return refs; \
 
 #define NI_PARTICLE_ROTATION_MEMBERS \

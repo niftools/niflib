@@ -119,7 +119,7 @@ float ReadFloat( istream &in ){
 string ReadString( istream &in ) {
 	uint len = ReadUInt( in );
 	string out;
-	if ( len > 4000 )
+	if ( len > 10000 )
 	    throw runtime_error("String too long. Not a NIF file or unsupported format?");
 	if ( len > 0 ) {
 	    out.resize(len);
@@ -612,7 +612,12 @@ string HexString( const byte * src, uint len ) {
 
 }
 
- void StreamQuatKey( Key<Quaternion> & key, istream& file, KeyType type ) {
+//Byte
+ostream & operator<<( ostream & out, byte const & val ) {
+	return out << uint(val);
+}
+
+void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type ) {
 	key.time = ReadFloat( file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -632,7 +637,7 @@ string HexString( const byte * src, uint len ) {
 }
 
 
-void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type ) {
+void NifStream( Key<Quaternion> const & key, ostream& file, uint version,  KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -649,9 +654,4 @@ void StreamQuatKey( Key<Quaternion> const & key, ostream& file, KeyType type ) {
 		WriteFloat( key.bias, file);
 		WriteFloat( key.continuity, file);
 	}
-}
-
-//Byte
-ostream & operator<<( ostream & out, byte const & val ) {
-	return out << uint(val);
 }

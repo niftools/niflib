@@ -379,6 +379,11 @@ ostream & operator<<( ostream & out, HeaderString const & val );
 
 //--Templates--//
 
+void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type );
+
+
+void NifStream( Key<Quaternion> const & key, ostream& file, uint version,  KeyType type );
+
 //Key<T>
 template <class T> 
 void NifStream( Key<T> & key, istream& file, uint version, KeyType type ) {
@@ -450,8 +455,8 @@ ostream & operator<<( ostream & out, Key<T> const & val ) {
 }
 
 //Key<Quaternion>
-void StreamQuatKey( Key<Quaternion> & key, istream& file, uint version, KeyType type );
-void StreamQuatKey( Key<Quaternion> const & key, ostream& file, uint version, KeyType type );
+//void StreamQuatKey( Key<Quaternion> & key, istream& file, uint version, KeyType type );
+//void StreamQuatKey( Key<Quaternion> const & key, ostream& file, uint version, KeyType type );
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood

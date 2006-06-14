@@ -194,7 +194,7 @@ NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & ro
  * \param right The root block of the second Nif tree to merge.
  * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
  */
-NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xffffffff );
+//NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xffffffff );
 
 
 //// Returns list of all blocks in the tree rooted by root block.
