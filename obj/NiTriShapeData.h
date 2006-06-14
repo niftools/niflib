@@ -31,7 +31,7 @@ public:
 	virtual const Type & GetType() const;
 protected:
 	NI_TRI_SHAPE_DATA_MEMBERS
-
+public:
 	//--Match Detection--//
 	
 	//Re-implemented only to casue match detection data to be cleared
