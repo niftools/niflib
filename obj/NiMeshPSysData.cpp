@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiMeshPSysData.h"
-#include "AParticleModifier.h"
+#include "NiPSysModifier.h"
 #include "NiNode.h"
 
 //Definition of TYPE constant

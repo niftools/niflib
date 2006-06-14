@@ -7443,10 +7443,10 @@ vector< array<float,4> > unknownFloats3; \
 vector< array<float,10> > unknownFloats4; \
 vector< array<float,12> > unknownFloats5; \
 uint unknownInt1; \
-Ref<AParticleModifier > modifier; \
+Ref<NiPSysModifier > modifier; \
 byte unknownByte2; \
 uint numUnknownLinks; \
-vector<Ref<AParticleModifier > > unknownLinks; \
+vector<Ref<NiPSysModifier > > unknownLinks; \
 ushort unknownShort4; \
 uint unknownInt2; \
 byte unknownByte12; \
@@ -7626,7 +7626,7 @@ if ( version <= 0x14000004 ) { \
 	if (link_stack.empty()) \
 		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 	if (link_stack.front() != 0xffffffff) { \
-		modifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
+		modifier = DynamicCast<NiPSysModifier>(objects[link_stack.front()]); \
 		if ( modifier == NULL ) \
 			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 	} else \
@@ -7638,7 +7638,7 @@ if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) { \
 		if (link_stack.empty()) \
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 		if (link_stack.front() != 0xffffffff) { \
-			unknownLinks[i1] = DynamicCast<AParticleModifier>(objects[link_stack.front()]); \
+			unknownLinks[i1] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]); \
 			if ( unknownLinks[i1] == NULL ) \
 				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 		} else \
@@ -10369,6 +10369,7 @@ refs = NiPSysModifier::GetRefs(); \
 return refs; \
 
 #define NI_P_SYS_EMITTER_CTLR_MEMBERS \
+Ref<NiPSysEmitterCtlrData > data; \
 Ref<NiInterpolator > visibilityInterpolator; \
 
 #define NI_P_SYS_EMITTER_CTLR_INCLUDE "APSysCtlr.h" \
@@ -10376,42 +10377,72 @@ Ref<NiInterpolator > visibilityInterpolator; \
 #define NI_P_SYS_EMITTER_CTLR_PARENT APSysCtlr \
 
 #define NI_P_SYS_EMITTER_CTLR_CONSTRUCT \
- : visibilityInterpolator(NULL) \
+ : data(NULL), visibilityInterpolator(NULL) \
 
 #define NI_P_SYS_EMITTER_CTLR_READ \
 uint block_num; \
 APSysCtlr::Read( in, link_stack, version, user_version ); \
-NifStream( block_num, in, version ); \
-link_stack.push_back( block_num ); \
+if ( version <= 0x0A010000 ) { \
+	NifStream( block_num, in, version ); \
+	link_stack.push_back( block_num ); \
+}; \
+if ( version >= 0x0A020000 ) { \
+	NifStream( block_num, in, version ); \
+	link_stack.push_back( block_num ); \
+}; \
 
 #define NI_P_SYS_EMITTER_CTLR_WRITE \
 APSysCtlr::Write( out, link_map, version, user_version ); \
-if ( visibilityInterpolator != NULL ) \
-	NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
-else \
-	NifStream( 0xffffffff, out, version ); \
+if ( version <= 0x0A010000 ) { \
+	if ( data != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(data)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
+}; \
+if ( version >= 0x0A020000 ) { \
+	if ( visibilityInterpolator != NULL ) \
+		NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version ); \
+	else \
+		NifStream( 0xffffffff, out, version ); \
+}; \
 
 #define NI_P_SYS_EMITTER_CTLR_STRING \
 stringstream out; \
 out << APSysCtlr::asString(); \
+out << "Data:  " << data << endl; \
 out << "Visibility Interpolator:  " << visibilityInterpolator << endl; \
 return out.str(); \
 
 #define NI_P_SYS_EMITTER_CTLR_FIXLINKS \
 APSysCtlr::FixLinks( objects, link_stack, version, user_version ); \
-if (link_stack.empty()) \
-	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
-if (link_stack.front() != 0xffffffff) { \
-	visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
-	if ( visibilityInterpolator == NULL ) \
-		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
-} else \
-	visibilityInterpolator = NULL; \
-link_stack.pop_front(); \
+if ( version <= 0x0A010000 ) { \
+	if (link_stack.empty()) \
+		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
+	if (link_stack.front() != 0xffffffff) { \
+		data = DynamicCast<NiPSysEmitterCtlrData>(objects[link_stack.front()]); \
+		if ( data == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
+		data = NULL; \
+	link_stack.pop_front(); \
+}; \
+if ( version >= 0x0A020000 ) { \
+	if (link_stack.empty()) \
+		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
+	if (link_stack.front() != 0xffffffff) { \
+		visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]); \
+		if ( visibilityInterpolator == NULL ) \
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
+	} else \
+		visibilityInterpolator = NULL; \
+	link_stack.pop_front(); \
+}; \
 
 #define NI_P_SYS_EMITTER_CTLR_GETREFS \
 list<Ref<NiObject> > refs; \
 refs = APSysCtlr::GetRefs(); \
+if ( data != NULL ) \
+	refs.push_back(StaticCast<NiObject>(data)); \
 if ( visibilityInterpolator != NULL ) \
 	refs.push_back(StaticCast<NiObject>(visibilityInterpolator)); \
 return refs; \

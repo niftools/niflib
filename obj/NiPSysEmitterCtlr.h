@@ -13,6 +13,7 @@ class NiInterpolator;
 #include "../gen/obj_defines.h"
 
 class NiPSysEmitterCtlr;
+class NiPSysEmitterCtlrData;
 typedef Ref<NiPSysEmitterCtlr> NiPSysEmitterCtlrRef;
 
 /*!

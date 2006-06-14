@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Forward define of referenced blocks
 #include "../Ref.h"
-class AParticleModifier;
+class NiPSysModifier;
 class NiNode;
 
 #include "../gen/obj_defines.h"
