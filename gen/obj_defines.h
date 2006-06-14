@@ -8520,7 +8520,7 @@ return refs; \
 
 #define NI_PARTICLE_MESH_MODIFIER_MEMBERS \
 uint numParticleMeshes; \
-Ref<NiTriBasedGeom > particleMeshes; \
+Ref<NiAVObject > particleMeshes; \
 
 #define NI_PARTICLE_MESH_MODIFIER_INCLUDE "AParticleModifier.h" \
 
@@ -8556,7 +8556,7 @@ AParticleModifier::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
-	particleMeshes = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
+	particleMeshes = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
 	if ( particleMeshes == NULL ) \
 		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 } else \
@@ -8786,7 +8786,7 @@ refs = NiAutoNormalParticlesData::GetRefs(); \
 return refs; \
 
 #define NI_PARTICLE_MESHES_DATA_MEMBERS \
-Ref<NiTriBasedGeom > unknownLink2; \
+Ref<NiAVObject > unknownLink2; \
 
 #define NI_PARTICLE_MESHES_DATA_INCLUDE "NiParticlesData.h" \
 
@@ -8819,7 +8819,7 @@ NiParticlesData::FixLinks( objects, link_stack, version, user_version ); \
 if (link_stack.empty()) \
 	throw runtime_error("Trying to pop a link from empty stack. This is probably a bug."); \
 if (link_stack.front() != 0xffffffff) { \
-	unknownLink2 = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]); \
+	unknownLink2 = DynamicCast<NiAVObject>(objects[link_stack.front()]); \
 	if ( unknownLink2 == NULL ) \
 		throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood."); \
 } else \

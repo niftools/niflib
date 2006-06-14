@@ -235,7 +235,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	//--Read Blocks--//
 	vector<NiObjectRef> blocks( header.numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
-	string blockName;
+	string objectType;
 	for (uint i = 0; i < header.numBlocks; i++) {
 
 		//Check for EOF
@@ -251,54 +251,54 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 				uint checkValue = ReadUInt( in );
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
-					cout << "ERROR!  Bad block position.  Invalid check value\a" << endl;
-					cout << "====[ " << "Block " << i << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+					cout << "ERROR!  Bad object position.  Invalid check value\a" << endl;
+					cout << "====[ " << "Object " << i << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 					cout << blocks[i - 1]->asString();
-					throw runtime_error("Read failue - Bad block position");
+					throw runtime_error("Read failue - Bad object position");
 				}
 			}
 
 			// Find which block type this is by using the header arrays
-			blockName = header.blockTypes[ header.blockTypeIndex[i] ];
+			objectType = header.blockTypes[ header.blockTypeIndex[i] ];
 		} else {
 			// Find which block type this is by reading the string at this location
-			uint blockNameLength = ReadUInt( in );
-			if (blockNameLength > 30 || blockNameLength < 6) {
-				cout << "ERROR!  Bad block position.  Invalid Name Length:  " << blockNameLength << "\a" << endl;
-				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+			uint objectTypeLength = ReadUInt( in );
+			if (objectTypeLength > 30 || objectTypeLength < 6) {
+				cout << "ERROR!  Bad object position.  Invalid Type Name Length:  " << objectTypeLength << "\a" << endl;
+				cout << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
-				throw runtime_error("Read failue - Bad block position");
+				throw runtime_error("Read failue - Bad object position");
 			}
-			char* charBlockName = new char[blockNameLength + 1];
-			in.read( charBlockName, blockNameLength );
-			charBlockName[blockNameLength] = 0;
-			blockName = string(charBlockName);
-			delete [] charBlockName;
-			if ( (blockName[0] != 'N' || blockName[1] != 'i') && (blockName[0] != 'R' || blockName[1] != 'o') && (blockName[0] != 'A' || blockName[1] != 'v')) {
-				cout << "ERROR!  Bad block position.  Invalid Name:  " << blockName << "\a" << endl;
-				cout << "====[ " << "Block " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+			char* charobjectType = new char[objectTypeLength + 1];
+			in.read( charobjectType, objectTypeLength );
+			charobjectType[objectTypeLength] = 0;
+			objectType = string(charobjectType);
+			delete [] charobjectType;
+			if ( (objectType[0] != 'N' || objectType[1] != 'i') && (objectType[0] != 'R' || objectType[1] != 'o') && (objectType[0] != 'A' || objectType[1] != 'v')) {
+				cout << "ERROR!  Bad object position.  Invalid Type Name:  " << objectType << "\a" << endl;
+				cout << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
 				cout << blocks[i - 1]->asString();
-				throw runtime_error("Read failue - Bad block position");
+				throw runtime_error("Read failue - Bad object position");
 			}
 		}
 
 #ifdef PRINT_OBJECT_NAMES
-		cout << endl << i << ":  " << blockName;
+		cout << endl << i << ":  " << objectType;
 #endif
 
 		//Create Block of the type that was found
-		blocks[i] = CreateBlock(blockName);
+		blocks[i] = CreateBlock(objectType);
 
 		//Check for an unknown block type
 		if ( blocks[i] == NULL ) {
 			//For version 5.0.0.1 and up, throw an exception - there's nothing we can do
 			//if ( version >= 0x05000001 ) {
 				stringstream str;
-				str << "Unknown block type encountered during file read:  " << blockName;
+				str << "Unknown object type encountered during file read:  " << objectType;
 				throw runtime_error( str.str() );
 			//} else {
 				//We can skip over this block in older versions
-				//blocks[i] = new UnknownBlock(blockName);
+				//blocks[i] = new UnknownBlock(objectType);
 			//}
 		}
 

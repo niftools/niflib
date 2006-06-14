@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Forward define of referenced blocks
 #include "../Ref.h"
-class NiTriBasedGeom;
+class NiAVObject;
 
 #include "../gen/obj_defines.h"
 
