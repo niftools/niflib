@@ -354,10 +354,8 @@ Matrix44 Matrix44::Inverse() const {
 	Matrix44 result;
 
 	float det = Determinant();
-	cout << "Determinant:  " << det << endl;
 	for (int r = 0; r < 4; r++) {
 		for (int c = 0; c < 4; c++) {
-			//cout << "Adjoint(" << r << "," << c << "):  " << Adjunct(r, c) << endl;
 			result[c][r] = Adjoint(r, c) / det;
 		}
 	}

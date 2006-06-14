@@ -119,7 +119,7 @@ float ReadFloat( istream &in ){
 string ReadString( istream &in ) {
 	uint len = ReadUInt( in );
 	string out;
-	if ( len > 3000 )
+	if ( len > 4000 )
 	    throw runtime_error("String too long. Not a NIF file or unsupported format?");
 	if ( len > 0 ) {
 	    out.resize(len);

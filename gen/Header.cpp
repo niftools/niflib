@@ -12,7 +12,7 @@ Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((
 //Destructor
 Header::~Header() {};
 
-void Header::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
 	NifStream( version, in, version );
 	if ( version >= 0x14000004 ) {
@@ -63,7 +63,7 @@ void Header::Read( istream& in, list<uint> & link_stack, unsigned int version, u
 	};
 }
 
-void Header::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void Header::Write( ostream& out ) const {
 	NifStream( headerString, out, version );
 	NifStream( version, out, version );
 	if ( version >= 0x14000004 ) {

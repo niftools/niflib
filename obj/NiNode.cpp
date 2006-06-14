@@ -101,28 +101,6 @@ bool NiNode::IsSkinInfluence() const {
 }
 
 void NiNode::AddSkin( NiSkinInstance * skin_inst ) {
-	//Ensure that all bones are below this node on the scene graph
-	vector<NiNodeRef> bones = skin_inst->GetBones();
-	for ( uint i = 0; i < bones.size(); ++i ) {
-		bool is_decended = false;
-		NiNodeRef node = bones[i];
-		while ( node != NULL ) {
-			if ( node == this ) {
-				is_decended = true;
-				break;
-			}
-			node = node->GetParent();
-		}
-		if ( is_decended == false ) {
-			throw runtime_error( "All bones must be lower than the skeleton root in the scene graph." );
-		}
-	}
-
-	//Flag any bones that are part of this skin instance
-	for ( uint i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(true);
-	}
-	
 	skins.push_back( skin_inst );
 }
 
@@ -194,7 +172,7 @@ void NiNode::GoToSkeletonBindPosition() {
 			//Loop through all bones again, checking for any that have this bone as a parent
 			for ( uint j = 0; j < bones.size(); ++j ) {
 				if ( bones[j]->GetParent() == bones[i] ) {
-					cout << "Bone " << bones[j] << " has bone " << bones[i] << " as parent." << endl;
+					//cout << "Bone " << bones[j] << " has bone " << bones[i] << " as parent." << endl;
 					//Node 2 has node 1 as a parent
 
 					//Get child offset Matrix33

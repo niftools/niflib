@@ -2,8 +2,9 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 //#define DEBUG // this will produce lots of output
-//#define PRINT_BLOCK_NAMES
-//#define PRINT_BLOCK_CONTENTS
+//#define PRINT_OBJECT_NAMES
+//#define PRINT_OBJECT_CONTENTS
+#define DEBUG_LINK_PHASE
 
 #include "niflib.h"
 #include "obj/NiAVObject.h"
@@ -129,108 +130,113 @@ vector<NiObjectRef> ReadNifList( string const & file_name ) {
 vector<NiObjectRef> ReadNifList( istream & in ) {
 
 	//--Read Header--//
-	char header_string[64];
-	in.getline( header_string, 64 );
-	string headerstr(header_string);
+	Header header;
 
-	// make sure this is a NIF file
-	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
-	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
-		throw runtime_error("Not a NIF file.");
+	//Read header.
+	header.Read( in );
 
-	// detect old versions
-	if ( ( headerstr == "NetImmerse File Format, Version 3.1" )
-	|| ( headerstr == "NetImmerse File Format, Version 3.03" )
-	|| ( headerstr == "NetImmerse File Format, Version 3.0" )
-	|| ( headerstr == "NetImmerse File Format, Version 2.3" ) )
-		throw runtime_error("Unsupported: " + headerstr);
-
-	uint version = ReadUInt( in );
-
-	//There is an unknown Byte here from version 20.0.0.4 on
-	byte endianType;
-	if ( version >= VER_20_0_0_4 ) {
-		endianType = ReadByte( in );
-	}
-
-	//There is an Unknown Int here from version 10.1.0.0 on
-	uint userVersion = 0;
-	if ( version >= VER_10_1_0_0 ) {
-		userVersion = ReadUInt( in );
-	}
-
-	uint numBlocks = ReadUInt( in );
-
-	if ( userVersion != 0 ) {
-		uint len;
-		ReadUInt( in );
-		len = ReadByte( in );
-		for (uint i = 0; i < len; i++) ReadByte( in );
-		len = ReadByte( in );
-		for (uint i = 0; i < len; i++) ReadByte( in );
-		len = ReadByte( in );
-		for (uint i = 0; i < len; i++) ReadByte( in );
-	}
-	
-	vector<string> blockTypes;
-	vector<short> blockTypeIndex;
-	//New header data exists from version 5.0.0.1 on
-	if ( version >= 0x05000001 ) {
-		short numBlockTypes = ReadUShort( in );
-		blockTypes.resize(numBlockTypes);
-		for ( uint i = 0; i < blockTypes.size(); ++i ) {
-			blockTypes[i] = ReadString( in );
-		}
-
-		blockTypeIndex.resize(numBlocks);
-		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-			blockTypeIndex[i] = ReadUShort( in );
-		}
-
-		uint unknownInt2 =
-		ReadUInt( in );
-
-		//Output
-#ifdef DEBUG
-		cout << endl << endl 
-			 << "====[ " << "File Header ]====" << endl
-			 << "Header:  " << header_string << endl
-			 << "Version:  " << version << endl
-			 << "Endian Type:  " << endianType << endl
-			 << "User Version:  " << userVersion << endl
-			 << "Number of Blocks: " << numBlocks << endl
-			 << "Block Types:  " << uint(blockTypes.size()) << endl;
-
-		for ( uint i = 0; i < blockTypes.size(); ++i ) {
-			cout << "   " << i << ":  " << blockTypes[i] << endl;
-		}
-
-		cout << "Block Type Indices:  " << numBlocks << endl;
-		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << "(" << blockTypes[blockTypeIndex[i]] << ")" << endl;
-		}
-
-		cout << "Unknown Int 2:  " << unknownInt2 << endl;
-#endif
-	} else {
-#ifdef DEBUG
-		//Output
-		cout << endl << endl 
-			<< "====[ " << "File Header ]====" << endl
-			<< "Header:  " << header_string << endl
-			<< "Version:  " << version << endl
-			<< "Number of Blocks: " << numBlocks << endl;
-#endif
-	}
-
-	//TODO:  Actually read the user_version from the right place
-	uint user_version = 0;
+//	char header_string[64];
+//	in.getline( header_string, 64 );
+//	string headerstr(header_string);
+//
+//	// make sure this is a NIF file
+//	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
+//	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
+//		throw runtime_error("Not a NIF file.");
+//
+//	// detect old versions
+//	if ( ( headerstr == "NetImmerse File Format, Version 3.1" )
+//	|| ( headerstr == "NetImmerse File Format, Version 3.03" )
+//	|| ( headerstr == "NetImmerse File Format, Version 3.0" )
+//	|| ( headerstr == "NetImmerse File Format, Version 2.3" ) )
+//		throw runtime_error("Unsupported: " + headerstr);
+//
+//	uint version = ReadUInt( in );
+//
+//	//There is an unknown Byte here from version 20.0.0.4 on
+//	byte endianType;
+//	if ( version >= VER_20_0_0_4 ) {
+//		endianType = ReadByte( in );
+//	}
+//
+//	//There is an Unknown Int here from version 10.1.0.0 on
+//	uint userVersion = 0;
+//	if ( version >= VER_10_1_0_0 ) {
+//		userVersion = ReadUInt( in );
+//	}
+//
+//	uint numBlocks = ReadUInt( in );
+//
+//	if ( userVersion != 0 ) {
+//		uint len;
+//		ReadUInt( in );
+//		len = ReadByte( in );
+//		for (uint i = 0; i < len; i++) ReadByte( in );
+//		len = ReadByte( in );
+//		for (uint i = 0; i < len; i++) ReadByte( in );
+//		len = ReadByte( in );
+//		for (uint i = 0; i < len; i++) ReadByte( in );
+//	}
+//	
+//	vector<string> blockTypes;
+//	vector<short> blockTypeIndex;
+//	//New header data exists from version 5.0.0.1 on
+//	if ( version >= 0x05000001 ) {
+//		short numBlockTypes = ReadUShort( in );
+//		blockTypes.resize(numBlockTypes);
+//		for ( uint i = 0; i < blockTypes.size(); ++i ) {
+//			blockTypes[i] = ReadString( in );
+//		}
+//
+//		blockTypeIndex.resize(numBlocks);
+//		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+//			blockTypeIndex[i] = ReadUShort( in );
+//		}
+//
+//		uint unknownInt2 =
+//		ReadUInt( in );
+//
+//		//Output
+//#ifdef DEBUG
+//		cout << endl << endl 
+//			 << "====[ " << "File Header ]====" << endl
+//			 << "Header:  " << header_string << endl
+//			 << "Version:  " << version << endl
+//			 << "Endian Type:  " << endianType << endl
+//			 << "User Version:  " << userVersion << endl
+//			 << "Number of Blocks: " << numBlocks << endl
+//			 << "Block Types:  " << uint(blockTypes.size()) << endl;
+//
+//		for ( uint i = 0; i < blockTypes.size(); ++i ) {
+//			cout << "   " << i << ":  " << blockTypes[i] << endl;
+//		}
+//
+//		cout << "Block Type Indices:  " << numBlocks << endl;
+//		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
+//			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << "(" << blockTypes[blockTypeIndex[i]] << ")" << endl;
+//		}
+//
+//		cout << "Unknown Int 2:  " << unknownInt2 << endl;
+//#endif
+//	} else {
+//#ifdef DEBUG
+//		//Output
+//		cout << endl << endl 
+//			<< "====[ " << "File Header ]====" << endl
+//			<< "Header:  " << header_string << endl
+//			<< "Version:  " << version << endl
+//			<< "Number of Blocks: " << numBlocks << endl;
+//#endif
+//	}
+//
+//	//TODO:  Actually read the user_version from the right place
+//	uint user_version = 0;
 
 	//--Read Blocks--//
-	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
+	vector<NiObjectRef> blocks( header.numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
 	string blockName;
-	for (uint i = 0; i < numBlocks; i++) {
+	for (uint i = 0; i < header.numBlocks; i++) {
 
 		//Check for EOF
 		//if (in.eof() ) {
@@ -238,10 +244,10 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		//}
 	
 		//There are two ways to read blocks, one before version 5.0.0.1 and one after that
-		if ( version >= 0x05000001 ) {
+		if ( header.version >= 0x05000001 ) {
 			//From version 5.0.0.1 to version 10.0.1.0  there is a zero byte at the begining of each block
 			
-			if ( version <= VER_10_1_0_0 ) {
+			if ( header.version <= VER_10_1_0_0 ) {
 				uint checkValue = ReadUInt( in );
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
@@ -253,7 +259,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 
 			// Find which block type this is by using the header arrays
-			blockName = blockTypes[ blockTypeIndex[i] ];
+			blockName = header.blockTypes[ header.blockTypeIndex[i] ];
 		} else {
 			// Find which block type this is by reading the string at this location
 			uint blockNameLength = ReadUInt( in );
@@ -276,7 +282,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			}
 		}
 
-#ifdef PRINT_BLOCK_NAMES
+#ifdef PRINT_OBJECT_NAMES
 		cout << endl << i << ":  " << blockName;
 #endif
 
@@ -297,8 +303,8 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		}
 
 		//blocks[i]->SetBlockNum(i);
-		blocks[i]->Read( in, link_stack, version, user_version );
-#ifdef PRINT_BLOCK_CONTENTS
+		blocks[i]->Read( in, link_stack, header.version, header.userVersion );
+#ifdef PRINT_OBJECT_CONTENTS
 		cout << endl << blocks[i]->asString() << endl;
 #endif
 	}
@@ -316,7 +322,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	if ( ! in.eof() )
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
 
-#ifdef DEBUG
+#ifdef DEBUG_LINK_PHASE
 	cout << "Link Stack:" << endl;
 	list<uint>::iterator it;
 	for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
@@ -324,16 +330,16 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	}
 #endif
 	
-#ifdef DEBUG
+#ifdef DEBUG_LINK_PHASE
 	cout << "Fixing Links:"  << endl;
 #endif
 	//--Now that all blocks are read, go back and fix the links--//
 	for (uint i = 0; i < blocks.size(); ++i) {
-#ifdef DEBUG
-		cout << blocks[i]->GetType().GetTypeName() << endl;
+#ifdef DEBUG_LINK_PHASE
+		cout << i << ":  " << blocks[i] << endl;
 #endif
 		//Fix links & other pre-processing
-		blocks[i]->FixLinks( blocks, link_stack, version, user_version );
+		blocks[i]->FixLinks( blocks, link_stack, header.version, header.userVersion );
 	}
 
 

@@ -83,8 +83,8 @@ struct NIFLIB_API Header {
 	 * Unknown.
 	 */
 	uint unknownInt2;
-	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	void Read( istream& in );
+	void Write( ostream& out ) const;
 	string asString( bool verbose = false ) const;
 };
 

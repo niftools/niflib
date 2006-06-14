@@ -56,11 +56,32 @@ void NiSkinInstance::Bind( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone
 	if ( bones.size() != 0 ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
 	}
-	
+
+	//Ensure that all bones are below the skeleton root node on the scene graph
+	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+		bool is_decended = false;
+		NiNodeRef node = bone_nodes[i];
+		while ( node != NULL ) {
+			if ( node == skeleton_root ) {
+				is_decended = true;
+				break;
+			}
+			node = node->GetParent();
+		}
+		if ( is_decended == false ) {
+			throw runtime_error( "All bones must be lower than the skeleton root in the scene graph." );
+		}
+	}
+
 	//Add the bones to the internal list
 	bones.resize( bone_nodes.size() );
 	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
 		bones[i] = bone_nodes[i];
+	}
+
+	//Flag any bones that are part of this skin instance
+	for ( uint i = 0; i < bones.size(); ++i ) {
+		bones[i]->SetSkinFlag(true);
 	}
 
 	//Store skeleton root and inform it of this attachment
