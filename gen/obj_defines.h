@@ -4226,9 +4226,6 @@ ByteArray binaryData; \
 #define NI_BINARY_EXTRA_DATA_READ \
 NiExtraData::Read( in, link_stack, version, user_version ); \
 NifStream( binaryData.dataSize, in, version ); \
-if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
-	NifStream( binaryData.unknownInt, in, version ); \
-}; \
 binaryData.data.resize(binaryData.dataSize); \
 for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 	NifStream( binaryData.data[i0], in, version ); \
@@ -4237,9 +4234,6 @@ for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 #define NI_BINARY_EXTRA_DATA_WRITE \
 NiExtraData::Write( out, link_map, version, user_version ); \
 NifStream( binaryData.dataSize, out, version ); \
-if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
-	NifStream( binaryData.unknownInt, out, version ); \
-}; \
 for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 	NifStream( binaryData.data[i0], out, version ); \
 }; \
@@ -4248,7 +4242,6 @@ for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 stringstream out; \
 out << NiExtraData::asString(); \
 out << "Data Size:  " << binaryData.dataSize << endl; \
-out << "Unknown Int:  " << binaryData.unknownInt << endl; \
 for (uint i0 = 0; i0 < binaryData.data.size(); i0++) { \
 	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
 		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
@@ -9403,13 +9396,14 @@ uint numMipmaps; \
 uint bytesPerPixel; \
 vector<MipMap > mipmaps; \
 ByteArray pixelData; \
+uint unknownInt2; \
 
 #define NI_PIXEL_DATA_INCLUDE "NiObject.h" \
 
 #define NI_PIXEL_DATA_PARENT NiObject \
 
 #define NI_PIXEL_DATA_CONSTRUCT \
- : pixelFormat((PixelFormat)0), redMask((uint)0), greenMask((uint)0), blueMask((uint)0), alphaMask((uint)0), bitsPerPixel((uint)0), unknownInt((uint)0), palette(NULL), numMipmaps((uint)0), bytesPerPixel((uint)0) \
+ : pixelFormat((PixelFormat)0), redMask((uint)0), greenMask((uint)0), blueMask((uint)0), alphaMask((uint)0), bitsPerPixel((uint)0), unknownInt((uint)0), palette(NULL), numMipmaps((uint)0), bytesPerPixel((uint)0), unknownInt2((uint)0) \
 
 #define NI_PIXEL_DATA_READ \
 uint block_num; \
@@ -9444,12 +9438,12 @@ for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
 	NifStream( mipmaps[i0].offset, in, version ); \
 }; \
 NifStream( pixelData.dataSize, in, version ); \
-if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
-	NifStream( pixelData.unknownInt, in, version ); \
-}; \
 pixelData.data.resize(pixelData.dataSize); \
 for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 	NifStream( pixelData.data[i0], in, version ); \
+}; \
+if ( version >= 0x14000004 ) { \
+	NifStream( unknownInt2, in, version ); \
 }; \
 
 #define NI_PIXEL_DATA_WRITE \
@@ -9485,11 +9479,11 @@ for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
 	NifStream( mipmaps[i0].offset, out, version ); \
 }; \
 NifStream( pixelData.dataSize, out, version ); \
-if ( ( version >= 0x14000004 ) && ( version <= 0x14000004 ) ) { \
-	NifStream( pixelData.unknownInt, out, version ); \
-}; \
 for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 	NifStream( pixelData.data[i0], out, version ); \
+}; \
+if ( version >= 0x14000004 ) { \
+	NifStream( unknownInt2, out, version ); \
 }; \
 
 #define NI_PIXEL_DATA_STRING \
@@ -9525,7 +9519,6 @@ for (uint i0 = 0; i0 < mipmaps.size(); i0++) { \
 	out << "  Offset:  " << mipmaps[i0].offset << endl; \
 }; \
 out << "Data Size:  " << pixelData.dataSize << endl; \
-out << "Unknown Int:  " << pixelData.unknownInt << endl; \
 for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 	if ( !verbose && ( i0 > MAXARRAYDUMP ) ) { \
 		out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl; \
@@ -9533,6 +9526,7 @@ for (uint i0 = 0; i0 < pixelData.data.size(); i0++) { \
 	}; \
 	out << "  Data[" << i0 << "]:  " << pixelData.data[i0] << endl; \
 }; \
+out << "Unknown Int 2:  " << unknownInt2 << endl; \
 return out.str(); \
 
 #define NI_PIXEL_DATA_FIXLINKS \
