@@ -46,7 +46,7 @@ public:
 	 */
 	short GetUVSetCount() const { return short(uvSets.size()); }
 
-	/*! Changes the number of UV sets used by this mesh.  If he new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
+	/*! Changes the number of UV sets used by this mesh.  If the new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
 	 * \param n The new size of the uv set array.
 	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
 	 */
