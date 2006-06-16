@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AbhkConstraint.h"
 
 //Definition of TYPE constant
-const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TYPE );
+const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TypeConst() );
 
 bhkRigidBody::bhkRigidBody() BHK_RIGID_BODY_CONSTRUCT {}
 

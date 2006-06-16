@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiVertWeightsExtraData.h"
 
 //Definition of TYPE constant
-const Type NiVertWeightsExtraData::TYPE("NiVertWeightsExtraData", &NI_VERT_WEIGHTS_EXTRA_DATA_PARENT::TYPE );
+const Type NiVertWeightsExtraData::TYPE("NiVertWeightsExtraData", &NI_VERT_WEIGHTS_EXTRA_DATA_PARENT::TypeConst() );
 
 NiVertWeightsExtraData::NiVertWeightsExtraData() NI_VERT_WEIGHTS_EXTRA_DATA_CONSTRUCT {}
 

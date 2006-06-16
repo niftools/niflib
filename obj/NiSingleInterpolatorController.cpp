@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiInterpolator.h"
 
 //Definition of TYPE constant
-const Type NiSingleInterpolatorController::TYPE("NiSingleInterpolatorController", &NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TYPE );
+const Type NiSingleInterpolatorController::TYPE("NiSingleInterpolatorController", &NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TypeConst() );
 
 NiSingleInterpolatorController::NiSingleInterpolatorController() NI_SINGLE_INTERPOLATOR_CONTROLLER_CONSTRUCT {}
 

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiNode.h"
 
 //Definition of TYPE constant
-const Type NiPSysBombModifier::TYPE("NiPSysBombModifier", &NI_P_SYS_BOMB_MODIFIER_PARENT::TYPE );
+const Type NiPSysBombModifier::TYPE("NiPSysBombModifier", &NI_P_SYS_BOMB_MODIFIER_PARENT::TypeConst() );
 
 NiPSysBombModifier::NiPSysBombModifier() NI_P_SYS_BOMB_MODIFIER_CONSTRUCT {}
 

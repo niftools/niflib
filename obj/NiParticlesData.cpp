@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiParticlesData.h"
 
 //Definition of TYPE constant
-const Type NiParticlesData::TYPE("NiParticlesData", &NI_PARTICLES_DATA_PARENT::TYPE );
+const Type NiParticlesData::TYPE("NiParticlesData", &NI_PARTICLES_DATA_PARENT::TypeConst() );
 
 NiParticlesData::NiParticlesData() NI_PARTICLES_DATA_CONSTRUCT {}
 

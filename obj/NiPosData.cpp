@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiPosData::TYPE("NiPosData", &NI_POS_DATA_PARENT::TYPE );
+const Type NiPosData::TYPE("NiPosData", &NI_POS_DATA_PARENT::TypeConst() );
 
 NiPosData::NiPosData() NI_POS_DATA_CONSTRUCT {}
 

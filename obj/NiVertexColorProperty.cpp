@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiVertexColorProperty.h"
 
 //Definition of TYPE constant
-const Type NiVertexColorProperty::TYPE("NiVertexColorProperty", &NI_VERTEX_COLOR_PROPERTY_PARENT::TYPE );
+const Type NiVertexColorProperty::TYPE("NiVertexColorProperty", &NI_VERTEX_COLOR_PROPERTY_PARENT::TypeConst() );
 
 NiVertexColorProperty::NiVertexColorProperty() NI_VERTEX_COLOR_PROPERTY_CONSTRUCT {}
 

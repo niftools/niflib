@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTransformController.h"
 
 //Definition of TYPE constant
-const Type NiTransformController::TYPE("NiTransformController", &NI_TRANSFORM_CONTROLLER_PARENT::TYPE );
+const Type NiTransformController::TYPE("NiTransformController", &NI_TRANSFORM_CONTROLLER_PARENT::TypeConst() );
 
 NiTransformController::NiTransformController() NI_TRANSFORM_CONTROLLER_CONSTRUCT {}
 

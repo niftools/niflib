@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiMaterialProperty.h"
 
 //Definition of TYPE constant
-const Type NiMaterialProperty::TYPE("NiMaterialProperty", &NI_MATERIAL_PROPERTY_PARENT::TYPE );
+const Type NiMaterialProperty::TYPE("NiMaterialProperty", &NI_MATERIAL_PROPERTY_PARENT::TypeConst() );
 
 NiMaterialProperty::NiMaterialProperty() NI_MATERIAL_PROPERTY_CONSTRUCT {}
 

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkBlendController.h"
 
 //Definition of TYPE constant
-const Type bhkBlendController::TYPE("bhkBlendController", &BHK_BLEND_CONTROLLER_PARENT::TYPE );
+const Type bhkBlendController::TYPE("bhkBlendController", &BHK_BLEND_CONTROLLER_PARENT::TypeConst() );
 
 bhkBlendController::bhkBlendController() BHK_BLEND_CONTROLLER_CONSTRUCT {}
 

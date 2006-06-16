@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkSPCollisionObject.h"
 
 //Definition of TYPE constant
-const Type bhkSPCollisionObject::TYPE("bhkSPCollisionObject", &BHK_S_P_COLLISION_OBJECT_PARENT::TYPE );
+const Type bhkSPCollisionObject::TYPE("bhkSPCollisionObject", &BHK_S_P_COLLISION_OBJECT_PARENT::TypeConst() );
 
 bhkSPCollisionObject::bhkSPCollisionObject() BHK_S_P_COLLISION_OBJECT_CONSTRUCT {}
 

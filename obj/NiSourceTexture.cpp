@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPixelData.h"
 
 //Definition of TYPE constant
-const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TYPE );
+const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TypeConst() );
 
 NiSourceTexture::NiSourceTexture() NI_SOURCE_TEXTURE_CONSTRUCT {}
 

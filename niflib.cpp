@@ -52,6 +52,7 @@ NiObjectRef CreateBlock( string block_type ) {
 //Reads the given file by file name and returns a reference to the root block
 NiObjectRef ReadNifTree( string const & file_name ) {
 	//Read block list
+	cout << "File name:  " << file_name << endl;
 	vector<NiObjectRef> blocks = ReadNifList( file_name );
 	return FindRoot( blocks );
 }
@@ -615,7 +616,7 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
 void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiObjectRef & xkf_root, Kfm & kfm, int kf_type ) {
 	// Do we have animation groups (a NiTextKeyExtraData block)?
 	// If so, create XNif and XKf trees.
-	NiObjectRef txtkey_block = GetObjectByType( root_block, NiTextKeyExtraData::TYPE ); 
+	NiObjectRef txtkey_block = GetObjectByType( root_block, NiTextKeyExtraData::TypeConst() ); 
 	if ( txtkey_block != NULL ) {
 		if ( kf_type == KF_MW ) {
 			// Construct the XNif file...
@@ -636,7 +637,7 @@ void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiOb
 			ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());*/
 			
 			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
-			list<NiObjectRef> nodes = GetAllObjectsByType( root_block, NiNode::TYPE );
+			list<NiObjectRef> nodes = GetAllObjectsByType( root_block, NiNode::TypeConst() );
 			for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ) {
 				//TODO: Have Amorilia Fix this
 				/*if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )

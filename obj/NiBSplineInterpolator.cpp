@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiBSplineInterpolator.h"
 
 //Definition of TYPE constant
-const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TYPE );
+const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TypeConst() );
 
 NiBSplineInterpolator::NiBSplineInterpolator() NI_B_SPLINE_INTERPOLATOR_CONSTRUCT {}
 

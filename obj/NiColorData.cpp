@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiColorData::TYPE("NiColorData", &NI_COLOR_DATA_PARENT::TYPE );
+const Type NiColorData::TYPE("NiColorData", &NI_COLOR_DATA_PARENT::TypeConst() );
 
 NiColorData::NiColorData() NI_COLOR_DATA_CONSTRUCT {}
 

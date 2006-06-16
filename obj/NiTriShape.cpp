@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriShape.h"
 
 //Definition of TYPE constant
-const Type NiTriShape::TYPE("NiTriShape", &NI_TRI_SHAPE_PARENT::TYPE );
+const Type NiTriShape::TYPE("NiTriShape", &NI_TRI_SHAPE_PARENT::TypeConst() );
 
 NiTriShape::NiTriShape() NI_TRI_SHAPE_CONSTRUCT {}
 

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "FxButton.h"
 
 //Definition of TYPE constant
-const Type FxButton::TYPE("FxButton", &FX_BUTTON_PARENT::TYPE );
+const Type FxButton::TYPE("FxButton", &FX_BUTTON_PARENT::TypeConst() );
 
 FxButton::FxButton() FX_BUTTON_CONSTRUCT {}
 

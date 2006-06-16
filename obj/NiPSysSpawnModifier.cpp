@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysSpawnModifier.h"
 
 //Definition of TYPE constant
-const Type NiPSysSpawnModifier::TYPE("NiPSysSpawnModifier", &NI_P_SYS_SPAWN_MODIFIER_PARENT::TYPE );
+const Type NiPSysSpawnModifier::TYPE("NiPSysSpawnModifier", &NI_P_SYS_SPAWN_MODIFIER_PARENT::TypeConst() );
 
 NiPSysSpawnModifier::NiPSysSpawnModifier() NI_P_SYS_SPAWN_MODIFIER_CONSTRUCT {}
 

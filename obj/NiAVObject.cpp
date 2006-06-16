@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiCollisionObject.h"
 
 //Definition of TYPE constant
-const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
+const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TypeConst() );
 
 NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
 

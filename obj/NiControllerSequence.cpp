@@ -16,7 +16,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTimeController.h"
 
 //Definition of TYPE constant
-const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TYPE );
+const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TypeConst() );
 
 NiControllerSequence::NiControllerSequence() NI_CONTROLLER_SEQUENCE_CONSTRUCT {}
 

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AvoidNode.h"
 
 //Definition of TYPE constant
-const Type AvoidNode::TYPE("AvoidNode", &AVOID_NODE_PARENT::TYPE );
+const Type AvoidNode::TYPE("AvoidNode", &AVOID_NODE_PARENT::TypeConst() );
 
 AvoidNode::AvoidNode() AVOID_NODE_CONSTRUCT {}
 

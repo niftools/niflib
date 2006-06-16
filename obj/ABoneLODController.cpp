@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiNode.h"
 
 //Definition of TYPE constant
-const Type ABoneLODController::TYPE("ABoneLODController", &A_BONE_L_O_D_CONTROLLER_PARENT::TYPE );
+const Type ABoneLODController::TYPE("ABoneLODController", &A_BONE_L_O_D_CONTROLLER_PARENT::TypeConst() );
 
 ABoneLODController::ABoneLODController() A_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 

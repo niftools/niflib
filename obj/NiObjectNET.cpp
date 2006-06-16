@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTimeController.h"
 
 //Definition of TYPE constant
-const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TYPE );
+const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TypeConst() );
 
 NiObjectNET::NiObjectNET() NI_OBJECT_N_E_T_CONSTRUCT {}
 

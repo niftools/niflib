@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSpotLight.h"
 
 //Definition of TYPE constant
-const Type NiSpotLight::TYPE("NiSpotLight", &NI_SPOT_LIGHT_PARENT::TYPE );
+const Type NiSpotLight::TYPE("NiSpotLight", &NI_SPOT_LIGHT_PARENT::TypeConst() );
 
 NiSpotLight::NiSpotLight() NI_SPOT_LIGHT_CONSTRUCT {}
 

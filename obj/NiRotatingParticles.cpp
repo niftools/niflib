@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiRotatingParticles.h"
 
 //Definition of TYPE constant
-const Type NiRotatingParticles::TYPE("NiRotatingParticles", &NI_ROTATING_PARTICLES_PARENT::TYPE );
+const Type NiRotatingParticles::TYPE("NiRotatingParticles", &NI_ROTATING_PARTICLES_PARENT::TypeConst() );
 
 NiRotatingParticles::NiRotatingParticles() NI_ROTATING_PARTICLES_CONSTRUCT {}
 

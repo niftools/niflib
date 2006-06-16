@@ -23,7 +23,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSourceTexture.h"
 
 //Definition of TYPE constant
-const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TYPE );
+const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TypeConst() );
 
 NiTexturingProperty::NiTexturingProperty() NI_TEXTURING_PROPERTY_CONSTRUCT {}
 

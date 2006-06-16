@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiFloatData.h"
 
 //Definition of TYPE constant
-const Type NiAlphaController::TYPE("NiAlphaController", &NI_ALPHA_CONTROLLER_PARENT::TYPE );
+const Type NiAlphaController::TYPE("NiAlphaController", &NI_ALPHA_CONTROLLER_PARENT::TypeConst() );
 
 NiAlphaController::NiAlphaController() NI_ALPHA_CONTROLLER_CONSTRUCT {}
 

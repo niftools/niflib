@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkSphereRepShape.h"
 
 //Definition of TYPE constant
-const Type bhkSphereRepShape::TYPE("bhkSphereRepShape", &BHK_SPHERE_REP_SHAPE_PARENT::TYPE );
+const Type bhkSphereRepShape::TYPE("bhkSphereRepShape", &BHK_SPHERE_REP_SHAPE_PARENT::TypeConst() );
 
 bhkSphereRepShape::bhkSphereRepShape() BHK_SPHERE_REP_SHAPE_CONSTRUCT {}
 

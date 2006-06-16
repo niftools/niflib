@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "BSBound.h"
 
 //Definition of TYPE constant
-const Type BSBound::TYPE("BSBound", &B_S_BOUND_PARENT::TYPE );
+const Type BSBound::TYPE("BSBound", &B_S_BOUND_PARENT::TypeConst() );
 
 BSBound::BSBound() B_S_BOUND_CONSTRUCT {}
 

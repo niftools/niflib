@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "APSysCtlr.h"
 
 //Definition of TYPE constant
-const Type APSysCtlr::TYPE("APSysCtlr", &A_P_SYS_CTLR_PARENT::TYPE );
+const Type APSysCtlr::TYPE("APSysCtlr", &A_P_SYS_CTLR_PARENT::TypeConst() );
 
 APSysCtlr::APSysCtlr() A_P_SYS_CTLR_CONSTRUCT {}
 

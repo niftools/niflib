@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiShadeProperty.h"
 
 //Definition of TYPE constant
-const Type NiShadeProperty::TYPE("NiShadeProperty", &NI_SHADE_PROPERTY_PARENT::TYPE );
+const Type NiShadeProperty::TYPE("NiShadeProperty", &NI_SHADE_PROPERTY_PARENT::TypeConst() );
 
 NiShadeProperty::NiShadeProperty() NI_SHADE_PROPERTY_CONSTRUCT {}
 

@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 
 //Definition of TYPE constant
-const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &BHK_MALLEABLE_CONSTRAINT_PARENT::TYPE );
+const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &BHK_MALLEABLE_CONSTRAINT_PARENT::TypeConst() );
 
 bhkMalleableConstraint::bhkMalleableConstraint() BHK_MALLEABLE_CONSTRAINT_CONSTRUCT {}
 

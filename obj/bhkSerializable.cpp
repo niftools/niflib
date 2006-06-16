@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkSerializable.h"
 
 //Definition of TYPE constant
-const Type bhkSerializable::TYPE("bhkSerializable", &BHK_SERIALIZABLE_PARENT::TYPE );
+const Type bhkSerializable::TYPE("bhkSerializable", &BHK_SERIALIZABLE_PARENT::TypeConst() );
 
 bhkSerializable::bhkSerializable() BHK_SERIALIZABLE_CONSTRUCT {}
 

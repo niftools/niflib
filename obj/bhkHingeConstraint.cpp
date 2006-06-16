@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkHingeConstraint.h"
 
 //Definition of TYPE constant
-const Type bhkHingeConstraint::TYPE("bhkHingeConstraint", &BHK_HINGE_CONSTRAINT_PARENT::TYPE );
+const Type bhkHingeConstraint::TYPE("bhkHingeConstraint", &BHK_HINGE_CONSTRAINT_PARENT::TypeConst() );
 
 bhkHingeConstraint::bhkHingeConstraint() BHK_HINGE_CONSTRAINT_CONSTRUCT {}
 

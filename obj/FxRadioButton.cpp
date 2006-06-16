@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 
 //Definition of TYPE constant
-const Type FxRadioButton::TYPE("FxRadioButton", &FX_RADIO_BUTTON_PARENT::TYPE );
+const Type FxRadioButton::TYPE("FxRadioButton", &FX_RADIO_BUTTON_PARENT::TypeConst() );
 
 FxRadioButton::FxRadioButton() FX_RADIO_BUTTON_CONSTRUCT {}
 

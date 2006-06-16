@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiPSysEmitterCtlrData::TYPE("NiPSysEmitterCtlrData", &NI_P_SYS_EMITTER_CTLR_DATA_PARENT::TYPE );
+const Type NiPSysEmitterCtlrData::TYPE("NiPSysEmitterCtlrData", &NI_P_SYS_EMITTER_CTLR_DATA_PARENT::TypeConst() );
 
 NiPSysEmitterCtlrData::NiPSysEmitterCtlrData() NI_P_SYS_EMITTER_CTLR_DATA_CONSTRUCT {}
 

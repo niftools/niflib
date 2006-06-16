@@ -22,7 +22,10 @@ public:
 	NiKeyframeData();
 	~NiKeyframeData();
 	//Run-Time Type Information
+	static const Type & TypeConst() { return TYPE; }
+private:	
 	static const Type TYPE;
+public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/Morph.h"
 
 //Definition of TYPE constant
-const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TYPE );
+const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TypeConst() );
 
 NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
 

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSourceTexture.h"
 
 //Definition of TYPE constant
-const Type NiTextureEffect::TYPE("NiTextureEffect", &NI_TEXTURE_EFFECT_PARENT::TYPE );
+const Type NiTextureEffect::TYPE("NiTextureEffect", &NI_TEXTURE_EFFECT_PARENT::TypeConst() );
 
 NiTextureEffect::NiTextureEffect() NI_TEXTURE_EFFECT_CONSTRUCT {}
 

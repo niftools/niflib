@@ -20,6 +20,7 @@ public:
 	operator T*() const;
 	T& operator*() const;
 	T* operator->() const;
+	T* Ptr() const;
 
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
@@ -74,6 +75,11 @@ T& Ref<T>::operator*() const {
 
 template <class T>
 T* Ref<T>::operator->() const {
+	return _object;
+}
+
+template <class T>
+T* Ref<T>::Ptr() const {
 	return _object;
 }
 

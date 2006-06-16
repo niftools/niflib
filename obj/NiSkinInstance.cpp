@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiNode.h"
 
 //Definition of TYPE constant
-const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TYPE );
+const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TypeConst() );
 
 NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiRangeLODData.h"
 
 //Definition of TYPE constant
-const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TYPE );
+const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TypeConst() );
 
 NiLODNode::NiLODNode() NI_L_O_D_NODE_CONSTRUCT {}
 

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiUVData::TYPE("NiUVData", &NI_U_V_DATA_PARENT::TYPE );
+const Type NiUVData::TYPE("NiUVData", &NI_U_V_DATA_PARENT::TypeConst() );
 
 NiUVData::NiUVData() NI_U_V_DATA_CONSTRUCT {}
 

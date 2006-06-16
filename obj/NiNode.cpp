@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriBasedGeom.h"
 
 //Definition of TYPE constant
-const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );
+const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TypeConst() );
 
 NiNode::NiNode() NI_NODE_CONSTRUCT {}
 

@@ -35,7 +35,10 @@ public:
 	NIFLIB_API NiObject();
 	NIFLIB_API virtual ~NiObject();
 	//Run-Time Type Information
-	NIFLIB_API static const Type TYPE;
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+private:	
+	static const Type TYPE;
+public:
 
 	/*!
 	 * Used to determine an object's type.  These type strings are the same as the class names of the blocks in the <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.
@@ -68,8 +71,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
 
 	//Reference Counting
-	NIFLIB_API void AddRef(); //Should not be called directly
-	NIFLIB_API void SubtractRef(); //Should not be called directly
+	NIFLIB_API void AddRef() const; //Should not be called directly
+	NIFLIB_API void SubtractRef() const; //Should not be called directly
 	NIFLIB_API unsigned int GetNumRefs() { return _ref_count; }
 
 	/*! Returns A new block that contains all the same data that this block does, but occupies a different part of memory.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
@@ -137,7 +140,7 @@ public:
 	
 	NIFLIB_API static unsigned int NumObjectsInMemory();
 private:
-	unsigned int _ref_count;
+	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
 };
@@ -156,7 +159,7 @@ template <class T> Ref<const T> StaticCast (const NiObject * object) {
 }
 
 template <class T> Ref<T> DynamicCast( NiObject * object ) {
-	if ( object->IsDerivedType(T::TYPE) ) {
+	if ( object->IsDerivedType(T::TypeConst()) ) {
 		return (T*)object;
 	} else {
 		return NULL;
@@ -164,7 +167,7 @@ template <class T> Ref<T> DynamicCast( NiObject * object ) {
 }
 
 template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
-	if ( object->IsDerivedType(T::TYPE) ) {
+	if ( object->IsDerivedType(T::TypeConst()) ) {
 		return (const T*)object;
 	} else {
 		return NULL;

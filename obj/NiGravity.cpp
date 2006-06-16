@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiGravity.h"
 
 //Definition of TYPE constant
-const Type NiGravity::TYPE("NiGravity", &NI_GRAVITY_PARENT::TYPE );
+const Type NiGravity::TYPE("NiGravity", &NI_GRAVITY_PARENT::TypeConst() );
 
 NiGravity::NiGravity() NI_GRAVITY_CONSTRUCT {}
 

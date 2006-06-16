@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "BSParentVelocityModifier.h"
 
 //Definition of TYPE constant
-const Type BSParentVelocityModifier::TYPE("BSParentVelocityModifier", &B_S_PARENT_VELOCITY_MODIFIER_PARENT::TYPE );
+const Type BSParentVelocityModifier::TYPE("BSParentVelocityModifier", &B_S_PARENT_VELOCITY_MODIFIER_PARENT::TypeConst() );
 
 BSParentVelocityModifier::BSParentVelocityModifier() B_S_PARENT_VELOCITY_MODIFIER_CONSTRUCT {}
 

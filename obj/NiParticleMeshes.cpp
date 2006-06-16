@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiParticleMeshes.h"
 
 //Definition of TYPE constant
-const Type NiParticleMeshes::TYPE("NiParticleMeshes", &NI_PARTICLE_MESHES_PARENT::TYPE );
+const Type NiParticleMeshes::TYPE("NiParticleMeshes", &NI_PARTICLE_MESHES_PARENT::TypeConst() );
 
 NiParticleMeshes::NiParticleMeshes() NI_PARTICLE_MESHES_CONSTRUCT {}
 

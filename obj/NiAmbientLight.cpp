@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiAmbientLight.h"
 
 //Definition of TYPE constant
-const Type NiAmbientLight::TYPE("NiAmbientLight", &NI_AMBIENT_LIGHT_PARENT::TYPE );
+const Type NiAmbientLight::TYPE("NiAmbientLight", &NI_AMBIENT_LIGHT_PARENT::TypeConst() );
 
 NiAmbientLight::NiAmbientLight() NI_AMBIENT_LIGHT_CONSTRUCT {}
 

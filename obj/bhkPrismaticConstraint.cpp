@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkPrismaticConstraint.h"
 
 //Definition of TYPE constant
-const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &BHK_PRISMATIC_CONSTRAINT_PARENT::TYPE );
+const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &BHK_PRISMATIC_CONSTRAINT_PARENT::TypeConst() );
 
 bhkPrismaticConstraint::bhkPrismaticConstraint() BHK_PRISMATIC_CONSTRAINT_CONSTRUCT {}
 

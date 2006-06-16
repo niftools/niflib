@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/StringPalette.h"
 
 //Definition of TYPE constant
-const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TYPE );
+const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TypeConst() );
 
 NiStringPalette::NiStringPalette() NI_STRING_PALETTE_CONSTRUCT {}
 

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiParticleBomb.h"
 
 //Definition of TYPE constant
-const Type NiParticleBomb::TYPE("NiParticleBomb", &NI_PARTICLE_BOMB_PARENT::TYPE );
+const Type NiParticleBomb::TYPE("NiParticleBomb", &NI_PARTICLE_BOMB_PARENT::TypeConst() );
 
 NiParticleBomb::NiParticleBomb() NI_PARTICLE_BOMB_CONSTRUCT {}
 

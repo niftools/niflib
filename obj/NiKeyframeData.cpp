@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiKeyframeData::TYPE("NiKeyframeData", &NI_KEYFRAME_DATA_PARENT::TYPE );
+const Type NiKeyframeData::TYPE("NiKeyframeData", &NI_KEYFRAME_DATA_PARENT::TypeConst() );
 
 NiKeyframeData::NiKeyframeData() NI_KEYFRAME_DATA_CONSTRUCT {}
 

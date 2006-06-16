@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiFloatData.h"
 
 //Definition of TYPE constant
-const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TYPE );
+const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TypeConst() );
 
 NiPathController::NiPathController() NI_PATH_CONTROLLER_CONSTRUCT {}
 

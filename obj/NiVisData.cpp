@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiVisData.h"
 
 //Definition of TYPE constant
-const Type NiVisData::TYPE("NiVisData", &NI_VIS_DATA_PARENT::TYPE );
+const Type NiVisData::TYPE("NiVisData", &NI_VIS_DATA_PARENT::TypeConst() );
 
 NiVisData::NiVisData() NI_VIS_DATA_CONSTRUCT {}
 

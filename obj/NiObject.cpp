@@ -28,11 +28,11 @@ bool NiObject::IsDerivedType( const NiObject * object ) const {
 	return GetType().IsDerivedType( object->GetType() );
 }
 
-void NiObject::AddRef() {
+void NiObject::AddRef() const {
 	++_ref_count;
 }
 
-void NiObject::SubtractRef() {
+void NiObject::SubtractRef() const {
 	if ( --_ref_count == 0 ) {
 		delete this;
 	}

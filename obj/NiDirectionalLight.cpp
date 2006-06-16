@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiDirectionalLight.h"
 
 //Definition of TYPE constant
-const Type NiDirectionalLight::TYPE("NiDirectionalLight", &NI_DIRECTIONAL_LIGHT_PARENT::TYPE );
+const Type NiDirectionalLight::TYPE("NiDirectionalLight", &NI_DIRECTIONAL_LIGHT_PARENT::TypeConst() );
 
 NiDirectionalLight::NiDirectionalLight() NI_DIRECTIONAL_LIGHT_CONSTRUCT {}
 

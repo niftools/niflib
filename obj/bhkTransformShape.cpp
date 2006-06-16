@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkTransformShape.h"
 
 //Definition of TYPE constant
-const Type bhkTransformShape::TYPE("bhkTransformShape", &BHK_TRANSFORM_SHAPE_PARENT::TYPE );
+const Type bhkTransformShape::TYPE("bhkTransformShape", &BHK_TRANSFORM_SHAPE_PARENT::TypeConst() );
 
 bhkTransformShape::bhkTransformShape() BHK_TRANSFORM_SHAPE_CONSTRUCT {}
 

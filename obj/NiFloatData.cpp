@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiFloatData::TYPE("NiFloatData", &NI_FLOAT_DATA_PARENT::TYPE );
+const Type NiFloatData::TYPE("NiFloatData", &NI_FLOAT_DATA_PARENT::TypeConst() );
 
 NiFloatData::NiFloatData() NI_FLOAT_DATA_CONSTRUCT {}
 

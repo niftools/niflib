@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiProperty.h"
 
 //Definition of TYPE constant
-const Type NiProperty::TYPE("NiProperty", &NI_PROPERTY_PARENT::TYPE );
+const Type NiProperty::TYPE("NiProperty", &NI_PROPERTY_PARENT::TypeConst() );
 
 NiProperty::NiProperty() NI_PROPERTY_CONSTRUCT {}
 

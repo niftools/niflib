@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysBoundUpdateModifier.h"
 
 //Definition of TYPE constant
-const Type NiPSysBoundUpdateModifier::TYPE("NiPSysBoundUpdateModifier", &NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT::TYPE );
+const Type NiPSysBoundUpdateModifier::TYPE("NiPSysBoundUpdateModifier", &NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT::TypeConst() );
 
 NiPSysBoundUpdateModifier::NiPSysBoundUpdateModifier() NI_P_SYS_BOUND_UPDATE_MODIFIER_CONSTRUCT {}
 

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiStencilProperty.h"
 
 //Definition of TYPE constant
-const Type NiStencilProperty::TYPE("NiStencilProperty", &NI_STENCIL_PROPERTY_PARENT::TYPE );
+const Type NiStencilProperty::TYPE("NiStencilProperty", &NI_STENCIL_PROPERTY_PARENT::TypeConst() );
 
 NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
 

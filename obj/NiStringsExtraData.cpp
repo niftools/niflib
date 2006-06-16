@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiStringsExtraData.h"
 
 //Definition of TYPE constant
-const Type NiStringsExtraData::TYPE("NiStringsExtraData", &NI_STRINGS_EXTRA_DATA_PARENT::TYPE );
+const Type NiStringsExtraData::TYPE("NiStringsExtraData", &NI_STRINGS_EXTRA_DATA_PARENT::TypeConst() );
 
 NiStringsExtraData::NiStringsExtraData() NI_STRINGS_EXTRA_DATA_CONSTRUCT {}
 

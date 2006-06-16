@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriShape.h"
 
 //Definition of TYPE constant
-const Type NiBoneLODController::TYPE("NiBoneLODController", &NI_BONE_L_O_D_CONTROLLER_PARENT::TYPE );
+const Type NiBoneLODController::TYPE("NiBoneLODController", &NI_BONE_L_O_D_CONTROLLER_PARENT::TypeConst() );
 
 NiBoneLODController::NiBoneLODController() NI_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 

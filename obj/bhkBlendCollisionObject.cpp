@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkBlendCollisionObject.h"
 
 //Definition of TYPE constant
-const Type bhkBlendCollisionObject::TYPE("bhkBlendCollisionObject", &BHK_BLEND_COLLISION_OBJECT_PARENT::TYPE );
+const Type bhkBlendCollisionObject::TYPE("bhkBlendCollisionObject", &BHK_BLEND_COLLISION_OBJECT_PARENT::TypeConst() );
 
 bhkBlendCollisionObject::bhkBlendCollisionObject() BHK_BLEND_COLLISION_OBJECT_CONSTRUCT {}
 

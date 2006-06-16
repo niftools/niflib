@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AKeyedData.h"
 
 //Definition of TYPE constant
-const Type AKeyedData::TYPE("AKeyedData", &A_KEYED_DATA_PARENT::TYPE );
+const Type AKeyedData::TYPE("AKeyedData", &A_KEYED_DATA_PARENT::TypeConst() );
 
 AKeyedData::AKeyedData() A_KEYED_DATA_CONSTRUCT {}
 

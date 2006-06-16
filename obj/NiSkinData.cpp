@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSkinPartition.h"
 
 //Definition of TYPE constant
-const Type NiSkinData::TYPE("NiSkinData", &NI_SKIN_DATA_PARENT::TYPE );
+const Type NiSkinData::TYPE("NiSkinData", &NI_SKIN_DATA_PARENT::TypeConst() );
 
 NiSkinData::NiSkinData() NI_SKIN_DATA_CONSTRUCT {}
 

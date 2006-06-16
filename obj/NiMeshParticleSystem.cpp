@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiMeshParticleSystem.h"
 
 //Definition of TYPE constant
-const Type NiMeshParticleSystem::TYPE("NiMeshParticleSystem", &NI_MESH_PARTICLE_SYSTEM_PARENT::TYPE );
+const Type NiMeshParticleSystem::TYPE("NiMeshParticleSystem", &NI_MESH_PARTICLE_SYSTEM_PARENT::TypeConst() );
 
 NiMeshParticleSystem::NiMeshParticleSystem() NI_MESH_PARTICLE_SYSTEM_CONSTRUCT {}
 

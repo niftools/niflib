@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiVectorExtraData.h"
 
 //Definition of TYPE constant
-const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NI_VECTOR_EXTRA_DATA_PARENT::TYPE );
+const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NI_VECTOR_EXTRA_DATA_PARENT::TypeConst() );
 
 NiVectorExtraData::NiVectorExtraData() NI_VECTOR_EXTRA_DATA_CONSTRUCT {}
 

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkShape.h"
 
 //Definition of TYPE constant
-const Type bhkListShape::TYPE("bhkListShape", &BHK_LIST_SHAPE_PARENT::TYPE );
+const Type bhkListShape::TYPE("bhkListShape", &BHK_LIST_SHAPE_PARENT::TypeConst() );
 
 bhkListShape::bhkListShape() BHK_LIST_SHAPE_CONSTRUCT {}
 

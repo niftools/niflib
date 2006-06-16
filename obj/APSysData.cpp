@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "APSysData.h"
 
 //Definition of TYPE constant
-const Type APSysData::TYPE("APSysData", &A_P_SYS_DATA_PARENT::TYPE );
+const Type APSysData::TYPE("APSysData", &A_P_SYS_DATA_PARENT::TypeConst() );
 
 APSysData::APSysData() A_P_SYS_DATA_CONSTRUCT {}
 

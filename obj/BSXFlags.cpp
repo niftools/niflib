@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "BSXFlags.h"
 
 //Definition of TYPE constant
-const Type BSXFlags::TYPE("BSXFlags", &B_S_X_FLAGS_PARENT::TYPE );
+const Type BSXFlags::TYPE("BSXFlags", &B_S_X_FLAGS_PARENT::TypeConst() );
 
 BSXFlags::BSXFlags() B_S_X_FLAGS_CONSTRUCT {}
 

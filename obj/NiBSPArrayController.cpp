@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiBSPArrayController.h"
 
 //Definition of TYPE constant
-const Type NiBSPArrayController::TYPE("NiBSPArrayController", &NI_B_S_P_ARRAY_CONTROLLER_PARENT::TYPE );
+const Type NiBSPArrayController::TYPE("NiBSPArrayController", &NI_B_S_P_ARRAY_CONTROLLER_PARENT::TypeConst() );
 
 NiBSPArrayController::NiBSPArrayController() NI_B_S_P_ARRAY_CONTROLLER_CONSTRUCT {}
 

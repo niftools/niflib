@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiNode.h"
 
 //Definition of TYPE constant
-const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TYPE );
+const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TypeConst() );
 
 NiCollisionData::NiCollisionData() NI_COLLISION_DATA_CONSTRUCT {}
 

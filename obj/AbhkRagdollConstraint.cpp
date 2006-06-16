@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AbhkRagdollConstraint.h"
 
 //Definition of TYPE constant
-const Type AbhkRagdollConstraint::TYPE("AbhkRagdollConstraint", &ABHK_RAGDOLL_CONSTRAINT_PARENT::TYPE );
+const Type AbhkRagdollConstraint::TYPE("AbhkRagdollConstraint", &ABHK_RAGDOLL_CONSTRAINT_PARENT::TypeConst() );
 
 AbhkRagdollConstraint::AbhkRagdollConstraint() ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT {}
 

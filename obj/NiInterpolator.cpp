@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiInterpolator.h"
 
 //Definition of TYPE constant
-const Type NiInterpolator::TYPE("NiInterpolator", &NI_INTERPOLATOR_PARENT::TYPE );
+const Type NiInterpolator::TYPE("NiInterpolator", &NI_INTERPOLATOR_PARENT::TypeConst() );
 
 NiInterpolator::NiInterpolator() NI_INTERPOLATOR_CONSTRUCT {}
 

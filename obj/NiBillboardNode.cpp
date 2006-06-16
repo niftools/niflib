@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiBillboardNode.h"
 
 //Definition of TYPE constant
-const Type NiBillboardNode::TYPE("NiBillboardNode", &NI_BILLBOARD_NODE_PARENT::TYPE );
+const Type NiBillboardNode::TYPE("NiBillboardNode", &NI_BILLBOARD_NODE_PARENT::TypeConst() );
 
 NiBillboardNode::NiBillboardNode() NI_BILLBOARD_NODE_CONSTRUCT {}
 

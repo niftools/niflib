@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiParticleSystem.h"
 
 //Definition of TYPE constant
-const Type NiPSysModifier::TYPE("NiPSysModifier", &NI_P_SYS_MODIFIER_PARENT::TYPE );
+const Type NiPSysModifier::TYPE("NiPSysModifier", &NI_P_SYS_MODIFIER_PARENT::TypeConst() );
 
 NiPSysModifier::NiPSysModifier() NI_P_SYS_MODIFIER_CONSTRUCT {}
 

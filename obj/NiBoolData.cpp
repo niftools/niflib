@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/KeyGroup.h"
 
 //Definition of TYPE constant
-const Type NiBoolData::TYPE("NiBoolData", &NI_BOOL_DATA_PARENT::TYPE );
+const Type NiBoolData::TYPE("NiBoolData", &NI_BOOL_DATA_PARENT::TypeConst() );
 
 NiBoolData::NiBoolData() NI_BOOL_DATA_CONSTRUCT {}
 
