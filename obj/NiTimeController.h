@@ -36,28 +36,46 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	/*! Returns a reference to the next controller in a linked list.
+	/*! 
+	 * Returns a reference to the next controller in a linked list.
 	 * This function should only be called by NiObjectNET.
 	 * \return A reference to the next controller in the linked list.
 	 */
 	NiTimeControllerRef GetNextController() const;
 
-	/*! Sets the next controller in a linked list.
+	/*! 
+	 * Sets the next controller in a linked list.
 	 * This function should only be called by NiObjectNET.
 	 * \param obj A reference to the object to set as the one after this in the chain.
 	 */
 	void SetNextController( const NiTimeControllerRef & obj );
 
-	/*! This function should only be called by NiObjectNET.  It sets the target of
+	/*! 
+	 * This function should only be called by NiObjectNET.  It sets the target of
 	 * this controller when it is attatched to the NiObjectNET class. */
 	void SetTarget( NiObjectNET * new_target );
 
-	/*! This function returns the current target NiObjectNET, if any, that this controller
+	/*! 
+	 * This function returns the current target NiObjectNET, if any, that this controller
 	 * is acting on.
 	 * \return A reference to the current target of this controller.
 	 */
 	Ref<NiObjectNET> GetTarget();
 
+	ushort GetFlags() const;
+	void SetFlags( ushort n );
+
+	float GetFrequency() const;
+	void SetFrequency( float n );
+
+	float GetPhase() const;
+	void SetPhase( float n );
+
+	float GetStartTime() const;
+	void SetStartTime( float n );
+
+	float GetStopTime() const;
+	void SetStopTime( float n );
 protected:
 	NI_TIME_CONTROLLER_MEMBERS
 };

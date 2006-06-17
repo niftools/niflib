@@ -50,3 +50,43 @@ void NiTimeController::SetTarget( NiObjectNET * new_target ) {
 Ref<NiObjectNET> NiTimeController::GetTarget() {
 	return target;
 }
+
+ushort NiTimeController::GetFlags() const {
+	return flags;
+}
+
+void NiTimeController::SetFlags( ushort n ) {
+	flags = n;
+}
+
+float NiTimeController::GetFrequency() const {
+	return frequency;
+}
+
+void NiTimeController::SetFrequency( float n ) {
+	frequency = n;
+}
+
+float NiTimeController::GetPhase() const {
+	return phase;
+}
+
+void NiTimeController::SetPhase( float n ) {
+	phase = n;
+}
+
+float NiTimeController::GetStartTime() const {
+	return startTime;
+}
+
+void NiTimeController::SetStartTime( float n ) {
+	startTime = n;
+}
+
+float NiTimeController::GetStopTime() const {
+	return stopTime;
+}
+
+void NiTimeController::SetStopTime( float n ) {
+	stopTime = n;
+}

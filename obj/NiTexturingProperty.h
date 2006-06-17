@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#ifndef _NNiTexturingProperty_H_
-#define _NNiTexturingProperty_H_
+#ifndef _NiTexturingProperty_H_
+#define _NiTexturingProperty_H_
 
 #include "NiProperty.h"
 // Include structures
@@ -11,17 +11,17 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../gen/obj_defines.h"
 
-class NNiTexturingProperty;
-typedef Ref<NNiTexturingProperty> NNiTexturingPropertyRef;
+class NiTexturingProperty;
+typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
 
 /*!
- * NNiTexturingProperty - Describes an object's textures.
+ * NiTexturingProperty - Describes an object's textures.
  */
 
-class NIFLIB_API NNiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
+class NIFLIB_API NiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
 public:
-	NNiTexturingProperty();
-	~NNiTexturingProperty();
+	NiTexturingProperty();
+	~NiTexturingProperty();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
 private:	
@@ -77,13 +77,13 @@ public:
 	TexDesc GetTexture( int n ) const;
 
 	/*! Checks whether a particular texture type is being used
-	 * \param n The slot number of the texture to check.  This is a positive zero based index that must be less than the value returned by NNiTexturingProperty::GetTextureCount.
+	 * \param n The slot number of the texture to check.  This is a positive zero based index that must be less than the value returned by NiTexturingProperty::GetTextureCount.
 	 * \return true if the texture in this slot is used, false otherwise.
 	 */
 	bool HasTexture( int n ) const;
 
 	/*! Clears a specific texture slot.
-	 * \param n The slot number of the texture to clear.  This is a positive zero based index that must be less than the value returned by NNiTexturingProperty::GetTextureCount.
+	 * \param n The slot number of the texture to clear.  This is a positive zero based index that must be less than the value returned by NiTexturingProperty::GetTextureCount.
 	 */
 	void ClearTexture( int n );
 
