@@ -71,221 +71,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 %ignore DynamicCast( const NiObject * object );
 %ignore StaticCast (const NiObject * object);
 
-//Do not wrap base classes as their methods are accessed through Ref smart pointers
-%ignore NiObject;
-%ignore AKeyedData;
-%ignore AParticleModifier;
-%ignore bhkRefObject;
-%ignore bhkSerializable;
-%ignore AbhkConstraint;
-%ignore AbhkRagdollConstraint;
-%ignore bhkShape;
-%ignore AbhkShapeCollection;
-%ignore bhkSphereRepShape;
-%ignore bhkConvexShape;
-%ignore bhkWorldObject;
-%ignore bhkEntity;
-%ignore NiCollisionObject;
-%ignore NiExtraData;
-%ignore NiInterpolator;
-%ignore NiBlendInterpolator;
-%ignore NiBSplineInterpolator;
-%ignore NiObjectNET;
-%ignore NiAVObject;
-%ignore NiDynamicEffect;
-%ignore NiLight;
-%ignore NiProperty;
-%ignore NiPSysModifier;
-%ignore NiPSysEmitter;
-%ignore NiPSysVolumeEmitter;
-%ignore NiTimeController;
-%ignore ABoneLODController;
-%ignore NiSingleInterpolatorController;
-%ignore APSysCtlr;
-%ignore NiTriBasedGeom;
-%ignore NiTriBasedGeomData;
-%ignore APSysData;
-%ignore bhkBlendCollisionObject;
-%ignore bhkBlendController;
-%ignore bhkBoxShape;
-%ignore bhkCapsuleShape;
-%ignore bhkCollisionObject;
-%ignore bhkConvexVerticesShape;
-%ignore bhkHingeConstraint;
-%ignore bhkLimitedHingeConstraint;
-%ignore bhkListShape;
-%ignore bhkMalleableConstraint;
-%ignore bhkMoppBvTreeShape;
-%ignore bhkMultiSphereShape;
-%ignore bhkNiTriStripsShape;
-%ignore bhkPackedNiTriStripsShape;
-%ignore bhkPrismaticConstraint;
-%ignore bhkRagdollConstraint;
-%ignore bhkRigidBody;
-%ignore bhkRigidBodyT;
-%ignore bhkSimpleShapePhantom;
-%ignore bhkSPCollisionObject;
-%ignore bhkSphereShape;
-%ignore bhkStiffSpringConstraint;
-%ignore bhkTransformShape;
-%ignore bhkConvexTransformShape;
-%ignore BSBound;
-%ignore BSFurnitureMarker;
-%ignore BSParentVelocityModifier;
-%ignore BSPSysArrayEmitter;
-%ignore BSXFlags;
-%ignore hkPackedNiTriStripsData;
-%ignore NiAlphaController;
-%ignore NiAlphaProperty;
-%ignore NiAmbientLight;
-%ignore NiAutoNormalParticlesData;
-%ignore NiBinaryExtraData;
-%ignore NiBlendBoolInterpolator;
-%ignore NiBlendFloatInterpolator;
-%ignore NiBlendPoint3Interpolator;
-%ignore NiBlendTransformInterpolator;
-%ignore NiBoneLODController;
-%ignore NiBoolData;
-%ignore NiBooleanExtraData;
-%ignore NiBoolInterpolator;
-%ignore NiBoolTimelineInterpolator;
-%ignore NiBSBoneLODController;
-%ignore NiBSplineBasisData;
-%ignore NiBSplineCompFloatInterpolator;
-%ignore NiBSplineCompPoint3Interpolator;
-%ignore NiBSplineCompTransformInterpolator;
-%ignore NiBSplineData;
-%ignore NiCamera;
-%ignore NiCollisionData;
-%ignore NiColorData;
-%ignore NiColorExtraData;
-%ignore NiControllerManager;
-%ignore NiControllerSequence;
-%ignore NiDefaultAVObjectPalette;
-%ignore NiDirectionalLight;
-%ignore NiDitherProperty;
-%ignore NiFlipController;
-%ignore NiFloatData;
-%ignore NiFloatExtraData;
-%ignore NiFloatExtraDataController;
-%ignore NiFloatInterpolator;
-%ignore NiFloatsExtraData;
-%ignore NiFogProperty;
-%ignore NiGeomMorpherController;
-%ignore NiGravity;
-%ignore NiIntegerExtraData;
-%ignore NiIntegersExtraData;
-%ignore NiKeyframeController;
-%ignore BSKeyframeController;
-%ignore NiKeyframeData;
-%ignore NiLightColorController;
-%ignore NiLightDimmerController;
-%ignore NiLookAtController;
-%ignore NiLookAtInterpolator;
-%ignore NiMaterialColorController;
-%ignore NiMaterialProperty;
-%ignore NiMeshPSysData;
-%ignore NiMorphData;
-%ignore NiMultiTargetTransformController;
-%ignore NiNode;
-%ignore AvoidNode;
-%ignore FxWidget;
-%ignore FxButton;
-%ignore FxRadioButton;
-%ignore NiBillboardNode;
-%ignore NiBSAnimationNode;
-%ignore NiBSParticleNode;
-%ignore NiLODNode;
-%ignore NiPalette;
-%ignore NiParticleBomb;
-%ignore NiParticleColorModifier;
-%ignore NiParticleGrowFade;
-%ignore NiParticleMeshModifier;
-%ignore NiParticleRotation;
-%ignore NiParticles;
-%ignore NiAutoNormalParticles;
-%ignore NiParticleMeshes;
-%ignore NiParticlesData;
-%ignore NiParticleMeshesData;
-%ignore NiParticleSystem;
-%ignore NiMeshParticleSystem;
-%ignore NiParticleSystemController;
-%ignore NiBSPArrayController;
-%ignore NiPathController;
-%ignore NiPathInterpolator;
-%ignore NiPixelData;
-%ignore NiPlanarCollider;
-%ignore NiPoint3Interpolator;
-%ignore NiPointLight;
-%ignore NiPosData;
-%ignore NiPSysAgeDeathModifier;
-%ignore NiPSysBombModifier;
-%ignore NiPSysBoundUpdateModifier;
-%ignore NiPSysBoxEmitter;
-%ignore NiPSysColliderManager;
-%ignore NiPSysColorModifier;
-%ignore NiPSysCylinderEmitter;
-%ignore NiPSysData;
-%ignore NiPSysDragModifier;
-%ignore NiPSysEmitterCtlr;
-%ignore NiPSysEmitterCtlrData;
-%ignore NiPSysEmitterDeclinationCtlr;
-%ignore NiPSysEmitterDeclinationVarCtlr;
-%ignore NiPSysEmitterInitialRadiusCtlr;
-%ignore NiPSysEmitterLifeSpanCtlr;
-%ignore NiPSysEmitterSpeedCtlr;
-%ignore NiPSysGravityModifier;
-%ignore NiPSysGravityStrengthCtlr;
-%ignore NiPSysGrowFadeModifier;
-%ignore NiPSysMeshEmitter;
-%ignore NiPSysMeshUpdateModifier;
-%ignore NiPSysModifierActiveCtlr;
-%ignore NiPSysPlanarCollider;
-%ignore NiPSysPositionModifier;
-%ignore NiPSysResetOnLoopCtlr;
-%ignore NiPSysRotationModifier;
-%ignore NiPSysSpawnModifier;
-%ignore NiPSysSphereEmitter;
-%ignore NiPSysUpdateCtlr;
-%ignore NiRangeLODData;
-%ignore NiRotatingParticles;
-%ignore NiRotatingParticlesData;
-%ignore NiScreenLODData;
-%ignore NiSequenceStreamHelper;
-%ignore NiShadeProperty;
-%ignore NiSkinData;
-%ignore NiSkinInstance;
-%ignore NiSkinPartition;
-%ignore NiSourceTexture;
-%ignore NiSpecularProperty;
-%ignore NiSphericalCollider;
-%ignore NiSpotLight;
-%ignore NiStencilProperty;
-%ignore NiStringExtraData;
-%ignore NiStringPalette;
-%ignore NiStringsExtraData;
-%ignore NiTextKeyExtraData;
-%ignore NiTextureEffect;
-%ignore NiTextureTransformController;
-%ignore NiTexturingProperty;
-%ignore NiTransformController;
-%ignore NiTransformData;
-%ignore NiTransformInterpolator;
-%ignore NiTriShape;
-%ignore NiTriShapeData;
-%ignore NiTriStrips;
-%ignore NiTriStripsData;
-%ignore NiUVController;
-%ignore NiUVData;
-%ignore NiVectorExtraData;
-%ignore NiVertexColorProperty;
-%ignore NiVertWeightsExtraData;
-%ignore NiVisController;
-%ignore NiVisData;
-%ignore NiWireframeProperty;
-%ignore NiZBufferProperty;
-%ignore RootCollisionNode;
-
+//Do not use smart pointer support as it doubles the size of the library
+//and makes it take twice as long to be imported
+%ignore Ref::operator->;
+%ignore Ref::operator=;
 
 // we need this to get all the defines in there
 %include "gen/obj_defines.h"
@@ -507,6 +296,36 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/NiWireframeProperty.h"
 		#include "obj/NiZBufferProperty.h"
 		#include "obj/RootCollisionNode.h"
+		#include "gen/ByteArray.h"
+		#include "gen/Footer.h"
+		#include "gen/LODRange.h"
+		#include "gen/MatchGroup.h"
+		#include "gen/MipMap.h"
+		#include "gen/NodeGroup.h"
+		#include "gen/QuaternionXYZW.h"
+		#include "gen/ShortString.h"
+		#include "gen/SkinShape.h"
+		#include "gen/SkinShapeGroup.h"
+		#include "gen/SkinWeight.h"
+		#include "gen/AVObject.h"
+		#include "gen/ControllerLink.h"
+		#include "gen/Header.h"
+		#include "gen/StringPalette.h"
+		#include "gen/TBC.h"
+		#include "gen/KeyGroup.h"
+		#include "gen/RotationKeyArray.h"
+		#include "gen/TexDesc.h"
+		#include "gen/ShaderTexDesc.h"
+		#include "gen/TexSource.h"
+		#include "gen/SkinPartition.h"
+		#include "gen/BoundingBox.h"
+		#include "gen/FurniturePosition.h"
+		#include "gen/hkTriangle.h"
+		#include "gen/Morph.h"
+		#include "gen/Particle.h"
+		#include "gen/SkinData.h"
+		#include "gen/RagDollDescriptor.h"
+		#include "gen/LimitedHingeDescriptor.h"
 %}
 
 
@@ -548,8 +367,10 @@ struct Key {
 %template(pair_int_float) std::pair<int, float>;
 %template(map_int_float) std::map<int, float>;
 
-%include "Ref.h"
 %include "niflib.h"
+%include "Ref.h"
+%include "Type.h"
+%include "nif_math.h"
 %include "obj/NiObject.h"
 %template(NiObjectRef) Ref<NiObject>;
 %template(DynamicCastToNiObject) DynamicCast<NiObject>;
@@ -1402,5 +1223,35 @@ struct Key {
 %template(RootCollisionNodeRef) Ref<RootCollisionNode>;
 %template(DynamicCastToRootCollisionNode) DynamicCast<RootCollisionNode>;
 %template(StaticCastToRootCollisionNode) StaticCast<RootCollisionNode>;
+%include "gen/ByteArray.h"
+%include "gen/Footer.h"
+%include "gen/LODRange.h"
+%include "gen/MatchGroup.h"
+%include "gen/MipMap.h"
+%include "gen/NodeGroup.h"
+%include "gen/QuaternionXYZW.h"
+%include "gen/ShortString.h"
+%include "gen/SkinShape.h"
+%include "gen/SkinShapeGroup.h"
+%include "gen/SkinWeight.h"
+%include "gen/AVObject.h"
+%include "gen/ControllerLink.h"
+%include "gen/Header.h"
+%include "gen/StringPalette.h"
+%include "gen/TBC.h"
+%include "gen/KeyGroup.h"
+%include "gen/RotationKeyArray.h"
+%include "gen/TexDesc.h"
+%include "gen/ShaderTexDesc.h"
+%include "gen/TexSource.h"
+%include "gen/SkinPartition.h"
+%include "gen/BoundingBox.h"
+%include "gen/FurniturePosition.h"
+%include "gen/hkTriangle.h"
+%include "gen/Morph.h"
+%include "gen/Particle.h"
+%include "gen/SkinData.h"
+%include "gen/RagDollDescriptor.h"
+%include "gen/LimitedHingeDescriptor.h"
 
 %template(vector_NiAVObjectRef) std::vector<NiAVObjectRef>;

@@ -291,6 +291,18 @@ Matrix44 & Matrix44::operator*=( float rh ) {
 	return *this;
 }
 
+Vector3 Matrix44::operator*( const Vector3 & rh ) const {
+	const Matrix44 & t = *this;
+	Vector3 v;
+	//Multiply, ignoring w
+	v.x = rh.x * t[0][0] + rh.y * t[1][0] + rh.z * t[2][0] + t[3][0];
+	v.y = rh.x * t[0][1] + rh.y * t[1][1] + rh.z * t[2][1] + t[3][1];
+	v.z = rh.x * t[0][2] + rh.y * t[1][2] + rh.z * t[2][2] + t[3][2];
+	//answer[3] = rh[0] * t(0,3) + rh[1] * t(1,3) + rh[2] * t(2,3) + t(3,3);
+
+	return v;
+}
+
 Matrix44 Matrix44::operator+( const Matrix44 & rh ) const {
 	return Matrix44(*this) += rh;
 } 

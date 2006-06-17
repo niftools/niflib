@@ -337,8 +337,6 @@ struct Matrix22 {
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
 
-	NIFLIB_API Quaternion AsQuaternion();
-
 	//Python Operator Overloads
 	NIFLIB_API Float2 & __getitem__(int n) {
 		if (n > 1 || n < 0)

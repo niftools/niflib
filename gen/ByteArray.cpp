@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "ByteArray.h"
 
 //Constructor
-ByteArray::ByteArray() : dataSize((uint)0), unknownInt((uint)0) {};
+ByteArray::ByteArray() : dataSize((uint)0) {};
 
 //Destructor
 ByteArray::~ByteArray() {};

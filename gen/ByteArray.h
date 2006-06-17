@@ -20,10 +20,6 @@ struct NIFLIB_API ByteArray {
 	 */
 	uint dataSize;
 	/*!
-	 * Unknown.
-	 */
-	uint unknownInt;
-	/*!
 	 * The bytes which make up the array
 	 */
 	vector<byte > data;

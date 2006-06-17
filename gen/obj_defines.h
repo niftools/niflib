@@ -5475,6 +5475,9 @@ if ( version <= 0x0A010000 ) { \
 		link_stack.push_back( block_num ); \
 		NifStream( textKeys.unknownShort0, in, version ); \
 	}; \
+	if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) { \
+		NifStream( textKeys.priority_, in, version ); \
+	}; \
 	if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) { \
 		NifStream( textKeys.priority_, in, version ); \
 	}; \
@@ -5532,6 +5535,9 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 		NifStream( block_num, in, version ); \
 		link_stack.push_back( block_num ); \
 		NifStream( controlledBlocks[i0].unknownShort0, in, version ); \
+	}; \
+	if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) { \
+		NifStream( controlledBlocks[i0].priority_, in, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) { \
 		NifStream( controlledBlocks[i0].priority_, in, version ); \
@@ -5625,6 +5631,9 @@ if ( version <= 0x0A010000 ) { \
 			NifStream( 0xffffffff, out, version ); \
 		NifStream( textKeys.unknownShort0, out, version ); \
 	}; \
+	if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) { \
+		NifStream( textKeys.priority_, out, version ); \
+	}; \
 	if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) { \
 		NifStream( textKeys.priority_, out, version ); \
 	}; \
@@ -5689,6 +5698,9 @@ for (uint i0 = 0; i0 < controlledBlocks.size(); i0++) { \
 		else \
 			NifStream( 0xffffffff, out, version ); \
 		NifStream( controlledBlocks[i0].unknownShort0, out, version ); \
+	}; \
+	if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) { \
+		NifStream( controlledBlocks[i0].priority_, out, version ); \
 	}; \
 	if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) { \
 		NifStream( controlledBlocks[i0].priority_, out, version ); \
