@@ -34,3 +34,11 @@ const Type & NiIntegersExtraData::GetType() const {
 	return TYPE;
 };
 
+vector<uint> NiIntegersExtraData::GetData() const {
+	return data;
+};
+	
+void NiIntegersExtraData::SetData( const vector<uint> & n ) {
+	numIntegers = uint( n.size() );
+	data = n;
+};

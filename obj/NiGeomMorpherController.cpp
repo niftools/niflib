@@ -36,3 +36,19 @@ const Type & NiGeomMorpherController::GetType() const {
 	return TYPE;
 };
 
+vector< Ref<NiInterpolator> > NiGeomMorpherController::GetInterpolators() const {
+	return interpolators;
+}
+
+void NiGeomMorpherController::SetInterpolators( const vector< Ref<NiInterpolator> > & n ) {
+	numInterpolators = uint(n.size());
+	interpolators = n;
+}
+
+Ref<NiMorphData> NiGeomMorpherController::GetData() const {
+	return data;
+}
+
+void NiGeomMorpherController::SetData( const Ref<NiMorphData> & n ) {
+	data = n;
+}

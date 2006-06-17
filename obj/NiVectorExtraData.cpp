@@ -34,3 +34,11 @@ const Type & NiVectorExtraData::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiVectorExtraData::GetData() const {
+	return vectorData;
+};
+	
+void NiVectorExtraData::SetData( const Vector3 & n ) {
+	vectorData = n;
+};
+

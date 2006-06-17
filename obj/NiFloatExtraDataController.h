@@ -34,6 +34,8 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	//TODO:  The function of all data is currently unknown.
 protected:
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS
 };

@@ -34,3 +34,12 @@ const Type & NiVertWeightsExtraData::GetType() const {
 	return TYPE;
 };
 
+vector<float> NiVertWeightsExtraData::GetData() const {
+	return weight;
+}
+	
+void NiVertWeightsExtraData::SetData( const vector<float> & n ) {
+	numVertices = uint(n.size());
+	numBytes = numVertices + 2;
+	weight = n;
+}

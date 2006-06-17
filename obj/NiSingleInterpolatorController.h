@@ -35,6 +35,9 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	Ref<NiInterpolator> GetInterpolator() const;
+	void SetInterpolator( const Ref<NiInterpolator> & n );
 protected:
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
 };

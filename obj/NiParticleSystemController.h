@@ -38,6 +38,7 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+	//TODO:  This controller is not a priority and it has a lot of unknown data.
 protected:
 	NI_PARTICLE_SYSTEM_CONTROLLER_MEMBERS
 };

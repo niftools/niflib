@@ -35,6 +35,10 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	Ref<NiKeyframeData> GetData() const;
+	void SetData( const Ref<NiKeyframeData> & n );
+
 protected:
 	NI_KEYFRAME_CONTROLLER_MEMBERS
 };

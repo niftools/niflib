@@ -36,3 +36,18 @@ const Type & NiPathController::GetType() const {
 	return TYPE;
 };
 
+Ref<NiFloatData> NiPathController::GetFloatData() const {
+	return floatData;
+}
+
+void NiPathController::SetFloatData( const Ref<NiFloatData> & n ) {
+	floatData = n;
+}
+
+Ref<NiPosData> NiPathController::GetPosData() const {
+	return posData;
+}
+
+void NiPathController::SetPosData( const Ref<NiPosData> & n ) {
+	posData = n;
+}

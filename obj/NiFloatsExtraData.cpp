@@ -34,3 +34,11 @@ const Type & NiFloatsExtraData::GetType() const {
 	return TYPE;
 };
 
+vector<float> NiFloatsExtraData::GetData() const {
+	return data;
+}
+	
+void NiFloatsExtraData::SetData( const vector<float> & n ) {
+	numFloats = uint(n.size());
+	data = n;
+}

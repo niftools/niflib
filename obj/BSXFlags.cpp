@@ -34,3 +34,10 @@ const Type & BSXFlags::GetType() const {
 	return TYPE;
 };
 
+uint BSXFlags::GetFlags() const {
+	return flags;
+};
+
+void BSXFlags::SetFlags( uint n ) {
+	flags = n;
+};

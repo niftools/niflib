@@ -34,3 +34,10 @@ const Type & NiBooleanExtraData::GetType() const {
 	return TYPE;
 };
 
+bool NiBooleanExtraData::GetData() const {
+	return (booleanData != 0);
+}
+
+void NiBooleanExtraData::SetData( bool n ) {
+	booleanData = n;
+}

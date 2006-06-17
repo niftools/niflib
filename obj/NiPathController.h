@@ -35,6 +35,13 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	//TODO:  This class has a lot of unknown data
+	Ref<NiFloatData> GetFloatData() const;
+	void SetFloatData( const Ref<NiFloatData> & n );
+
+	Ref<NiPosData> GetPosData() const;
+	void SetPosData( const Ref<NiPosData> & n );
 protected:
 	NI_PATH_CONTROLLER_MEMBERS
 };

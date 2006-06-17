@@ -30,6 +30,10 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	uint GetData() const;
+	void SetData( uint n );
+
 protected:
 	NI_INTEGER_EXTRA_DATA_MEMBERS
 };

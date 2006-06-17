@@ -35,3 +35,12 @@ const Type & NiBinaryExtraData::GetType() const {
 	return TYPE;
 };
 
+
+vector<byte> NiBinaryExtraData::GetData() const {
+	return binaryData.data;
+};
+
+void NiBinaryExtraData::SetData( const vector<byte> & n ) {
+	binaryData.dataSize = uint(n.size());
+	binaryData.data = n;
+};

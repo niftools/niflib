@@ -34,3 +34,10 @@ const Type & NiColorExtraData::GetType() const {
 	return TYPE;
 };
 
+Color4 NiColorExtraData::GetData() const {
+	return data;
+}
+	
+void NiColorExtraData::SetData( const Color4 & n ) {
+	data = n;
+}

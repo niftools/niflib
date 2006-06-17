@@ -35,3 +35,12 @@ const Type & BSFurnitureMarker::GetType() const {
 	return TYPE;
 };
 
+vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {
+	return positions;
+}
+	
+void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> & n ) {
+	numPositions = uint(n.size());
+	positions = n;
+}
+

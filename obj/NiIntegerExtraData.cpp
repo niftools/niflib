@@ -34,3 +34,10 @@ const Type & NiIntegerExtraData::GetType() const {
 	return TYPE;
 };
 
+uint NiIntegerExtraData::GetData() const {
+	return integerData;
+}
+	
+void NiIntegerExtraData::SetData( uint n ) {
+	integerData = n;
+}

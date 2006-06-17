@@ -30,6 +30,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	Vector3 GetData() const;
+	void SetData( const Vector3 & n );
+
+	//TODO:  There is an unknown member in this class
 protected:
 	NI_VECTOR_EXTRA_DATA_MEMBERS
 };

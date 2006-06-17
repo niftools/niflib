@@ -35,3 +35,10 @@ const Type & NiKeyframeController::GetType() const {
 	return TYPE;
 };
 
+Ref<NiKeyframeData> NiKeyframeController::GetData() const {
+	return data;
+}
+	
+void NiKeyframeController::SetData( const Ref<NiKeyframeData> & n ) {
+	data = n;
+}

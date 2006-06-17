@@ -34,4 +34,11 @@ const Type & NiStringExtraData::GetType() const {
 	return TYPE;
 };
 
-uint NiStringExtraData::BytesRemaining() const { return uint(); }
+string NiStringExtraData::GetData() const {
+	return stringData;
+}
+
+void NiStringExtraData::SetData( const string & n ) {
+	stringData = n;
+	bytesRemaining = uint(stringData.size()) + 4;
+}

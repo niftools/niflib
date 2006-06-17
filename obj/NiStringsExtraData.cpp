@@ -34,3 +34,11 @@ const Type & NiStringsExtraData::GetType() const {
 	return TYPE;
 };
 
+vector<string> NiStringsExtraData::GetData() const {
+	return data;
+};
+	
+void NiStringsExtraData::SetData( const vector<string> & n ) {
+	numStrings = uint(n.size());
+	data = n;
+};

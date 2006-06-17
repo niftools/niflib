@@ -44,6 +44,8 @@ public:
 	 */
 	void SetKeys( vector< Key<string> > const & keys );
 
+	//TODO:  There is an unknown member in this class
+
 protected:
 	NI_TEXT_KEY_EXTRA_DATA_MEMBERS
 };

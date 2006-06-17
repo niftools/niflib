@@ -35,3 +35,10 @@ const Type & NiUVController::GetType() const {
 	return TYPE;
 };
 
+Ref<NiUVData> NiUVController::GetData() const {
+	return data;
+}
+
+void NiUVController::SetData( const Ref<NiUVData> & n ) {
+	data = n;
+}

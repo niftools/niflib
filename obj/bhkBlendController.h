@@ -31,6 +31,8 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	//TODO:  This is not a priority but needs to be implemented eventually
 protected:
 	BHK_BLEND_CONTROLLER_MEMBERS
 };
