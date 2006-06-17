@@ -330,7 +330,6 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}"
-			RelativePathToProject=".\niflib.vcproj"
 		/>
 	</References>
 	<Files>
@@ -365,7 +364,7 @@
 						Name="VCCustomBuildTool"
 						Description="Running SWIG..."
 						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i&#x0D;&#x0A;"
-						AdditionalDependencies="niflib.h"
+						AdditionalDependencies=""
 						Outputs="py_wrap.cpp"
 					/>
 				</FileConfiguration>
