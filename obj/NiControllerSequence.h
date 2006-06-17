@@ -43,7 +43,7 @@ public:
 
 	/*! Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
 	 * \param new_name The name of the NiTextKeyExtraData block to use.
-	 * \param new_link The block reference of the NiTextKeyExtraData block to use.
+	 * \param txt_key A reference to the NiTextKeyExtraData object to use.
 	 * \sa NiTextKeyExtraData
 	 */
 	void SetTextKey( const string new_name, const Ref<NiTextKeyExtraData> & txt_key );

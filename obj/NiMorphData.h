@@ -78,6 +78,7 @@ public:
 	vector< Key<float> > GetMorphKeys( int n ) const;
 
 	/*! Sets the morph key data.
+	 * \param n The index of the morph target to set the keys for.
 	 * \param keys A vector containing new Key<float> data which will replace any existing data for this morph target.
 	 * \sa NiMorphData::GetMorphKeys, Key
 	 */

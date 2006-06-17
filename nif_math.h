@@ -604,7 +604,7 @@ struct Matrix44 {
 	/*! This constructor allows a 4x4 transform matrix to be initalized from a
 	 * translate vector, a 3x3 rotation matrix, and a scale factor.
 	 * \param translate The translation vector that specifies the new x, y, and z coordinates.
-	 * \param rotate The 3x3 rotation matrix.
+	 * \param rotation The 3x3 rotation matrix.
 	 * \param scale The scale factor.
 	 */
 	NIFLIB_API Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
@@ -711,7 +711,7 @@ struct Matrix44 {
 	NIFLIB_API float Determinant() const;
 
 	/*! Calculates the inverse of this matrix.
-	 * \retun The inverse of this matrix.
+	 * \return The inverse of this matrix.
 	 */
 	NIFLIB_API Matrix44 Inverse() const;
 

@@ -64,6 +64,7 @@ public:
 
 	/*! Used to set the triangle face data in a specific triangle strip.
 	 * \param index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \param in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
 	 * \sa NiTriStripData::GetStrip, NiTriStripData::GetTriangles
 	 */
 	void SetStrip( int index, const vector<ushort> & in );

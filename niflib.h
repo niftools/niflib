@@ -354,30 +354,41 @@ NIFLIB_API NiObjectRef CreateBlock( string block_type );
 \section user_guide User Guide
 - \ref intro_page
 - \ref starting_out
-- \ref attrs
-- \ref link_blks
-- \ref adv_interf
 */
 
 ///////////////////////////////////////////////////////////////////////////////
 
 /*! \page intro_page Introduction
 
-\section include Including the Library
+\section compile Compiling the Library
 
-You probably already know how to include a library, but here’s the basic gist if you don’t:
+Starting with version 0.5, Niflib creates a lib file that is too large to distribute directly, so to use it through C++ you must first compile it.  If you need help to do this, there is information about it on our main website here:  <a href="http://niftools.sourceforge.net/wiki/index.php/Niflib/Compile">Compiling Niflib</a>.
+
+A Python compile of the library will still be available for Windows, but for other platforms you will need to compile the library yourself.
+
+\section include Including the Library
 
 \subsection cpp C++
 
-If you’re going to use the pre-compiled header file, make sure it is referenced in your project or make file.  Otherwise, make sure all the source code is included in your compile process. Also, make sure you add the location that you place niflib.h to your include directory paths.  With that out of the way, simply include this line at the top of your source code:
+Once you have compiled Niflib, you will have a binary library file which you must reference from your project.  If you’re using Visual Studio, you can add it as an “Additional Dependancy” within your project options.  You can also include all the source code in your compile process if you do not want to use an intermediate library file. Finally, make sure the path to niflib.h is in your include search paths. 
 
 \code
 #include "niflib.h"
 \endcode
 
+There are now separate include files for each object type in a NIF file.  To include the NiNode object, for example, include the obj/NiNode.h file like so:
+
+\code
+#include "obj/NiNode.h"
+\endcode
+
+You will have one such line in your source code for each NIF object that your program needs access to.
+
 \subsection py Python
 
-You should follow the instructions in the readme file that comes with the pre-compiled version of the Python SWIG wrapper for Windows.  Briefly, you will place the _niflib.dll and the niflib.py files in your Python folder.  If you want to compile them yourself you will need to get SWIG 1.3.25 or higher.  There is a make file provided for this purpose.  Once you have these files in the proper position in the Python directory, you can use the library in either of the two standard Python ways:
+If you are using the pre-compiled version of the Python SWIG wrapper for Windows, you should follow the instructions in the readme file that is included. Briefly, you will place the _niflib.dll and the niflib.py files in your Python 2.4 install location. If you want to compile them yourself you will need to get SWIG 1.3.25 or higher. There there are two build methods, Scons and a Visual Studio 2005 project, provided for this purpose.
+
+Once you have these files in the proper position in the Python directory, you can use the library in either of the two standard Python ways:
 
 \code
 from niflib import *
@@ -387,22 +398,21 @@ or
 import niflib
 \endcode
 
-To save space I will assume in the examples that you have used the first method.  Of course if you use the second, you will have to preface all function calls with niflib.  For example, ReadNifTree() becomes niflib.ReadNifTree().
+To save space, the examples assume that you have used the first method. Of course if you use the second, you will have to preface all function calls with niflib. For example, ReadNifTree() becomes niflib.ReadNifTree().  Currently the Python module includes all NIF objects and is not split into separate modules for each object like the C++ version, so you will only need a single import statement to get everything.
 
 \section exept Exceptions
 
-Niflib is a very much a C++ library, and therefore it uses exceptions rather than error return codes.  These are a lot more convenient in that you don’t have to use as many if statements, but not everyone understands what they are, so I thought I’d provide enough of an intro to get you along.  C++ exceptions should be mapped to Python exceptions transparently, so this only applies to people using the library via C++.
+Niflib uses C++ exceptions rather than error return codes. These are a lot more convenient in that you don’t have to wrap every single function in an if-test, but not everyone understands what they are, so I thought I’d provide enough of an intro to get you along. C++ exceptions should be mapped to Python exceptions transparently, so this only applies to people using the library via C++.
 
-Very very basically, if you want to check if a Niflib function has failed, and why, wrap it in a try block like this:
+Very basically, if you want to check if Niflib function calls are failing, and why, wrap them in a try block like this:
 
 \code
 try {
     //Niflib Function Call
-    blocks = ReadNifList( current_file );
+    vector<NiObject> objects = ReadNifList( current_file );
 }
 catch( exception & e ) {
     cout << "Error: " << e.what() << endl;
-    cout << "\a";
     return 0;
 }
 catch( ... ) {
@@ -411,162 +421,90 @@ catch( ... ) {
 }
 \endcode
 
-The really nice thing about exceptions is that you can place all of your Niflib calls within the try block, and if any one of them fails, execution will jump to the catch block.  If the exception is of the standard C++ type, which Niflib’s are, the first block will catch it, and an error message can be extracted and printed.  Otherwise, it will go to the second block, which is a catch-all statement that will end your program for any other reason.  There are ways to recover from exceptions, but this should be enough to allow you to at least exit gracefully if a function signals an error.
+The really nice thing about exceptions is that you can place all of your Niflib calls within one try block, and if any one of them fails, execution will jump to the catch block. The first block will catch any exception thrown explicitly by Niflib, and an error message can be extracted and printed. Other exceptions, such as from bugs in the library or errors it never occurred to us to test for, will go to the second block which is a catch-all statement that will end your program for any other reason.
+
+There are ways to recover from exceptions, but this should be enough to allow you to at least exit gracefully if a function signals an error.
 
 \section stl_temp STL & Templates
 
-Niflib makes quite a bit of use of the standard template library, and also includes at least one template of its own.  You should be familiar with the template syntax for defining variables (ex: template<type>) You should also be familiar with at least the following STL built-in types:  string, vector, list, map.  These types map to Python types seamlessly (string, tuple, tuple, and dictionary respectively), so no understanding of C++ is required for Python users.
+Niflib makes quite a bit of use of the standard template library, and also includes some templates of its own. You should be familiar with the template syntax for defining variables (ex: template<type>) You should also be familiar with at least the following STL built-in types: string, vector, and list. These types map to Python types seamlessly (string, tuple, and tuple respectively), so no understanding of C++ is required for Python users.
+
+//<center>\ref starting_out "Next Section >>>"</center>
+
 */
 
 ///////////////////////////////////////////////////////////////////////////////
 
 /*! \page starting_out Starting Out with Niflib
 
-\section blk_basics NIF Block Basics
+\section file_basics NIF File Basics
 
-NIF files consist of several types of data blocks that store various things and are linked together.  These blocks are stored using blk_ref variables.  blk_ref is short for “Block Reference” and the blk_ref class is a kind of auto pointer similar to a C++ reference in that it does not need to be deleted, but more like a pointer in that it can be changed to point to a new block at any time.
+NIF files are the result of the NetImmmerse/Gamebryo engine saving the current state of a scene graph.  A scene graph is a tree of 3D transforms that has meshes and rendering instructions attached.  Each object is a class which, when the file is saved, writes its contents to disk.  So the NIF file is a listing of all the NIF classes, or objects, that are required to recreate a particular scene.
 
-The member functions of the blk_ref class will be covered in detail as they are needed.  There are also overloaded operators that make most of them unnecessary when working through C++.
+The objects in a NIF file all inherit from the NiObject class and reference eachother in various ways.  These relationships are reconstructed when the file is loaded from disk and can then be broken or redirected.  The most important structure is formed by the scene graph objects.  These objects inherit from the NiAVObject class and form the spacial structure of the scene represented by the NIF file.  Each has a 3D transform that is relative to its parent.
 
-As long as there is a blk_ref somewhere pointing to a particular block, it will remain in memory.  Therefore, you do not have to worry about freeing the blocks yourself.  You may be curious how many blocks are loaded into memory by the library at any particular time.  You can check with the \ref BlocksInMemory function.
+Attatched to the NiAVObject classes are various other sorts of objects that either contain the raw data used to render the scene, such as the verticies in NiTriBasedGeomData and the animation keyframes in NiKeyFrameData, or modify the way the scene is drawn in some other way such as objects inheriting from NiProperty and NiExtraData.
+
+Each object type has member functions which allow you to get and set data, adjust linkage to other objects, and some also include functions to perform useful calculations on the data.
+
+You do not access the classes directly, however.  Niflib uses reference counting to determine when objects are destroyed, so you always access a class through a Ref smart pointer.  This is a template which takes the class as its template argumetn, such as Ref<NiNode>.  For each type of Ref a typedef has been provided in the form of [class name]Ref, so Ref<NiNode> has the typedef NiNodeRef, and this name can be used instead of the more unusual template syntax.  When the last Ref smart pointer that points to a particular object is reassigned or goes out of scope, that object will take care of cleaning itself up automatically.
+
+Objects use Ref smart pointers internally as well, so you don’t have to worry about objects that are referenced by other objects destroying themselves unexpectedly.
+
 
 \section rw_files Reading and Writing NIF Files
 
-To check whether NIF file has a valid header, and to make sure that its version is supported, call the \ref CheckNifHeader function. There are two ways to read in a NIF file – as a list of blocks in the order they appear in the file and as the root block of a tree arranged correctly.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all blocks.  Un-supported blocks may not be included in the tree representation if no other blocks reference them.  So you’re going to want to call the \ref ReadNifTree function.
+To check whether a NIF file has a valid header, and to make sure that its version is supported, call the \ref CheckNifHeader function. There are two ways to read in a NIF file – as a list of objects in the order they appear in the file and as a single Ref pointing to the root of the scene graph tree from which all other objects can be found by following the links between objects.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all objects, regardless of whether we fully understand the links that keep them from destroying themselves.  Un-supported blocks may not be included in the tree representation if no other blocks reference them.  So most of the time, you’re going to want to call the \ref ReadNifTree function.
 
-That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one block in memory – the root block of the tree.  You can pass this same block to the \ref WriteNifTree function to create a new NIF file from the representation in memory.  WARNING:  Some features of the NIF format are still un-supported by Niflib, therefore in some cases the exported NIF may either be different from the original, or completely unusable.  DO NOT OVERWRITE THE ORIGINAL NIF FILE.
+That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one NIF object in memory – the root block of the tree.  You can pass this same block to the \ref WriteNifTree function to create a new NIF file from the representation in memory.
 
-\section work_blk Working with Blocks
+WARNING:  Some features of the NIF format are still unsupported by Niflib, therefore in some cases the exported NIF may either be different from the original, or completely unusable.  DO NOT OVERWRITE THE ORIGINAL NIF FILE.
 
-New blocks don’t have to just come from loaded NIF files.  To create a block yourself, you need to know the type of the block you want to create, for example a NiNode, and call the \ref CreateBlock function.
+\section work_blk Working with NIF Objects
 
-To actually do anything with these blocks, you need to know about the \ref IBlock interface that the block references (blk_ref variables) provide access to.  An interface is a class that consists completely of virtual functions, but all you have to know are the public functions it provides.
+New class objects don’t have to just come from loaded NIF files.  To create an object block yourself, you can do so by using the C++ new keyword like so:
 
-\ref IBlock has a lot of functions and I’ll cover each one as they come up.  You can access these functions through a blk_ref variable as if using a pointer by using the -> operator.  In Python you can simply use the dot (.) operator.
+\code
+RefNiNode node = new NiNode;
+\endcode
 
-You might want a quick summary of what one of the blocks you have read in contains; in this case you can use the \ref IBlock::asString function to get the contents as an English summary.
+It is recommended to always use smart pointers, rather than plain pointers, to ensure that your object is not destroyed before you realize it.  So do NOT do this:
 
-You will probably also want to know the type of a block at some point.  You can retrieve this with the \ref IBlock::GetBlockType function.
+\code
+NiNode * node = new NiNode;
+\endcode
 
-<center>\ref attrs "Next Section >>>"</center>
-*/
+All NIF objects inherit from \ref NiObject so a good place to start would be understanding the methods of that class.
 
-///////////////////////////////////////////////////////////////////////////////
+You can access the member functions of any class through a Ref smart pointer of the right type by using the -> operator.  In Python you can simply use the dot (.) operator.
 
-/*! \page attrs Attributes
+If you have a Ref of one type, such as a generic NiObjectRef, and you want to know if the object it points to also inherits from the NiNode class, you use the \ref DynamicCast template function.  To cast from a NiObjectRef to a NiNodeRef, you would do the following:
 
-Of course, the interesting thing about blocks is the data they contain.  For all the basic block types, this data is stored in attributes.  Each block contains a list of attributes that you can iterate through, examine, and change.  Attributes are passed around in the library via the attr_ref.  Similar to blk_ref, attr_ref contains a reference to a particular attribute and gives you several overloaded operators to make them seem almost like normal variables of all sorts of different types.
+\code
+NiObjectRef root = ReadNifTree( “test.nif” );
+NiNodeRef node = DynamicCast<NiNode>( root );
+if ( node != NULL ) {
+   ...
+\endcode
 
-You do not create attributes; they are added to NIF blocks automatically when they are created either by reading a NIF file or by the \ref CreateBlock function.  The attributes that a particular block will have depend on its type.  The names of these attributes are analogous to those found in our <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.  To get an attribute from a block, you generally ask for it by name using the \ref IBlock::GetAttr function.
+Note the template syntax of the \ref DynamicCast function.  In Python these tempates are mapped to functions named DynamicCastTo[object type].  For example, DynamicCastToNiNode.  To use them you must use the \ref Ref::Ptr() function as they expect pointers rather than references.  For example:
 
-As you may have noticed from the example if you clicked the link to that function, the attr_ref class has a handy overloaded bracket operator that allows you to get attributes by using bracket notation instead of actually typing out the name of the \ref IBlock::GetAttr function.
+\code
+root = ReadNifTree( “test.nif” );
+node = DynamicCastToNiNode( root.Ptr() );
+if root != NULL:
+   ...
+\endcode
 
-You may also have noticed that this function will return a null reference if the attribute you requested does not exist in a particular block.  A null reference is one that points to nothing, and no functions can be called on it.  You can determine whether a particular attr_ref is null by calling the \ref attr_ref::is_null function.
+Notice also that you must always check the value returned by \ref DynamicCast.  If the cast is not successful, i.e. the object is not a derived type of the one you’re trying to cast it to, the function will return NULL.
 
-The reason that the GetAttr function does not simply throw an exception if the attribute doesn’t exist is that it can be useful to ask a block whether it has an attribute without ever knowing what it is.  For example, many blocks have identical attributes because they inherit them from abstract blocks in the format documentation.  It might be useful to loop through all blocks in a file and call the \ref IBlock::GetAttr function on each one requesting the “Translate” attribute.  You would then do whatever it was you were trying to do only if the function did not return a null attribute.
+Casting down the inheritance tree should be automatic in C++, but you can also explicitly call the \ref StaticCast function.  You will need to use this function in Python to cast a Ref to the type expected by some member functions which take Ref arguments.
 
-You can also get a list of all attributes in a block in the form of an STL vector of attr_ref variables by calling the \ref IBlock::GetAttrs function.
+One useful function of all NIF objects is the \ref NiObject::asString function.  You can use it to get an English summary of the contents of that object.  You can also call the \ref NiObject::GetIDString function to get a short read out that includes the memory address, type, and name, if any, of the object.
 
-So what are attributes good for?  Basically, they serve as a generic container for different types of data.  An attribute could be a string, or an integer number, or even a whole structure.  I will list the different types of data an attribute can store.
+You will probably also want to know the type of a block at some point.  You can retrieve this with the \ref NiObject::GetType function.  This returns a reference to the Type value that uniquly identifies this class.  You can get its name by calling the \ref Type::GetTypeName function.
 
-
-<table><tr><th>Basic C++ Types</th><th>Niflib Basic Types</th><th>Niflib Structures</th></tr>
-<tr><td>int<br>
-float<br>
-string<br>
-</td><td>
-blk_ref<br>
-list<blk_ref><br>
-</td><td>
-Float3<br>
-Matrix33<br>
-TexSource<br>
-BoundingBox<br>
-TexDesc<br>
-</td></tr></table>
-
-Most of the time, attributes will hold simple data types like C++ types, blk_ref references, or a list of references.  However, sometimes they hold structures.  You may want to take a moment to familiarize yourself with these structures by clicking on their names in the table above.
-
-So how is data stored in Attributes manipulated?  For that we must understand the IAttr interface to which atter_ref variables contain a reference to.
-
-Did you click the link?  Wow, that’s a lot of functions!  But don’t worry, as you may have noticed most of them just do exactly the same thing but for different data types – They get and set data stored within the attribute.  Each data type that I listed above has an asType function and a matching Set function.  Once you understand one, you understand them all.
-
-For example, check out the IAttr::Set(float) function and the IAttr::asFloat function.
-
-From the C++ side, most of this is almost automatic because you can use the overloaded = operator to set attributes, and every type has an overloaded operator for that type so you can omit the function call and everything will usually work out fine.  If you have any trouble, though, you may want to try spelling it out explicitly.  Python has similar shortcuts, but they only work if you access the attribute using a block's bracket operator.  Otherwise, you will have to type out the whole function name.
-
-There are several types of attributes, more than the list above, and each type stores a different type (or types) of values.  Following is a list of attribute types and the type of values they hold:
-
-<table><tr><th>Attribute Type</th><th>Value Types held</th></tr>
-<tr><td>attr_alphaformat</td><td>int</td></tr>
-<tr><td>attr_applymode</td><td>int</td></tr>
-<tr><td>attr_bbox</td><td>BoundingBox</td></tr>
-<tr><td>attr_bones</td><td>Automatic.</td></tr>
-<tr><td>attr_bumpmap</td><td>TexDesc & blk_ref</td></tr>
-<tr><td>attr_byte</td><td>int</td></tr>
-<tr><td>attr_color3</td><td>Float3</td></tr>
-<tr><td>attr_controllertarget</td><td>Automatic.</td></tr>
-<tr><td>attr_flags</td><td>int</td></tr>
-<tr><td>attr_float</td><td>float</td></tr>
-<tr><td>attr_float3</td><td>Float3</td></tr>
-<tr><td>attr_int</td><td>int</td></tr>
-<tr><td>attr_lightmode</td><td>int</td></tr>
-<tr><td>attr_link</td><td>blk_ref</td></tr>
-<tr><td>attr_linkgroup</td><td>vector<blk_ref></td></tr>
-<tr><td>attr_lodinfo</td><td>Coming Soon.</td></tr>
-<tr><td>attr_matrix33</td><td>Matrix33</td></tr>
-<tr><td>attr_mipmapformat</td><td>int</td></tr>
-<tr><td>attr_parent</td><td>Automatic.</td></tr>
-<tr><td>attr_particlegroup</td><td>Coming Soon.</td></tr>
-<tr><td>attr_pixellayout</td><td>int</td></tr>
-<tr><td>attr_short</td><td>int</td></tr>
-<tr><td>attr_skeletonroot</td><td>Automatic.</td></tr>
-<tr><td>attr_string</td><td>string</td></tr>
-<tr><td>attr_texsource</td><td>TexSource</td></tr>
-<tr><td>attr_texture</td><td>TexDesc & blk_ref</td></tr>
-<tr><td>attr_vector3</td><td>Float3</td></tr>
-<tr><td>attr_vertmode</td><td>int</td></tr>
-</table>
-
-To determine the type of an attribute, you can call the IAttr::GetType function.
-
-You may also want to get the name of an attribute at runtime, say if you’re iterating through a list of all the attributes in a block to print out something about each one and you’d like to know the name.  For this you can call the IAttr::GetName function.
-
-One other function that all attributes have in common is the IAttr::asString function.  Similarly to the function by the same name of the IBlock interface, this function returns a string that contains a formatted printout of the information held by a specific attribute.  The IBlock::asString function actually loops through its own attributes calling the IAttr::GetName and the IAttr::asString function for each one to create its output.
-
-<center>\ref starting_out "<< Previous Section"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\ref link_blks "Next Section >>>"</center>
-*/
-
-///////////////////////////////////////////////////////////////////////////////
-
-/*! \page link_blks Linking Blocks
-
-Niflib views the NIF file as a group of interconnected blocks.  Technically a NIF file is a directed acyclic graph, and not a pure tree.  Basically this means that some nodes in the graph can have multiple parents, but loops cannot be formed.  There are two main categories of blocks in a nif file, Nodes and Non-Nodes.  Both types may have simple connect points for other nodes.  These are attributes which store a single block reference (blk_ref).  In order to link blocks together, you use these attributes in much the same way as other attributes that store data, but you call the IAttr::asLink and IAttr::Set(blk_ref const &) functions.  These functions will not only change the data inside the attribute, but they will have the affect of linking the two blocks together.  Niflib is aware of these connections and will not destroy a block that is connected to another, even if the variable expires in your code.  The WriteNifTree function uses these connections to determine the proper order and indexing to use when writing out a NIF file.
-
-Once the blocks are linked, the child will now be aware of its new parent.  You can query the child block for the first parent it receives by calling the IBlock::GetParent function on that block.  Niflib keeps track of all parents, but usually the first one is the only one that’s important so this is what the IBlock::GetParent function returns.
-
-Node blocks are always arranged in a tree fashion via the “Children” attribute and will always have one parent.  The “Children” attribute is an attr_linkgroup type attribute which stores a vector of block references (vector<blk_ref>) .  “Properties” is another common example of an attr_linkgroup type attribute.  These linkgroup attributes have a few more functions specific to them.  First of all, instead of having just one link, these blocks can have several or none.  So you need to use the IAttr::asLinkList function to get all the links contained within the attribute.
-
-What if you wanted to follow all the links of a block? Say if you were trying to descend the entire graph easily.  In that case, you can use the IBlock::GetLinks function.  This will return a list of all blocks linked through any attribute within that block.
-
-Instead of setting a linkgroup attribute all at once, you add or subtract links as necessary.  You can add links one at a time with the IAttr::AddLink function, or in a group with the IAttr::AddLinks function.  You can remove all links to a specific block by calling the IAttr::RemoveLinks function.  The IAttr::ClearLinks function will remove all the links.  Finally, it can sometimes be handy to find a link based on its block type (NiNode, for instance).  For that you can use the IAttr::FindLink function.
-
-<center>\ref attrs "<< Previous Section"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\ref adv_interf "Next Section >>>"</center>
-*/
-
-///////////////////////////////////////////////////////////////////////////////
-
-/*! \page adv_interf Advanced Block Interfaces
-
-You now know how to access and change the information in most of the NIF blocks.  You know how to link blocks and unlink them, and you know how to read and write NIF files.  But if you take a close look at the types of attributes available, you will notice some apparent omissions.  Where are the lists of vertices?  How do you set up animation keys?  What about skin weights?  All these features are available through advanced block interfaces which you can query from simple block references.
-
-Because calling the IBlock::QueryInterface function yourself can get a little messy (and is impossible from Python), several query functions are provided, one for each type of advanced block interface.  All of these functions work the same way, so I’ll just use one example to illustrate the rest.
-
-The INode interface is an advanced interface that is present in all blocks that are nodes.  Blocks can have more than one advanced interface; you can use the QueryNode function to determine if INode is one of them.  Bear in mind that interfaces must be stored in pointers, so the return value of QueryNode is a pointer to an INode interface.  That is, it’s type is INode*.  This is not important for Python users to know, but C++ users must be able to declare a variable to hold their newly queried advanced interface.
-
-Node data blocks in NIF files are arranged in a pure tree.  This tree defines a transform hierarchy… in other words, if a block’s parent is moved to a position in 3D space, its children will move to the same position.  Therefore, any 3D transform on the child is relative to its parent… and its parent, all the way back to the root node.  This can be a lot to keep track of, so Niflib does it for you.  Using the functions of the INode interface, you can get a full 4x4 transform matrix for both local (relative to the parent) and world (relative to the origin) coordinates.  To do this, you call the INode::GetLocalTransform and INode::GetWorldTransform functions respectively.  
-
-<center>\ref link_blks "<< Previous Section"</center>
+<center>\ref intro_page "<< Previous Section"</center>
 
 */
 

@@ -38,7 +38,7 @@ public:
 	vector<Color4> GetPalette() const;
 
 	/*! Sets the palette data for this palette block.
-	 * \param new_apl A vector containing the the new colors to be stored in the palette.
+	 * \param new_pal A vector containing the the new colors to be stored in the palette.
 	 * \sa NiPalette::GetPalette
 	 */
 	void SetPalette( const vector<Color4> & new_pal );

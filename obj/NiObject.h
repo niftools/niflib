@@ -84,7 +84,7 @@ public:
 
 	/*!
 	 * Summarizes the information contained in this block in English.
-	 * \verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \param verbose Determines whether or not detailed information about large areas of data will be printed out.
 	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
 	 * 
 	 * <b>Example:</b> 
