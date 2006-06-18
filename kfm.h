@@ -2,6 +2,7 @@
 #define _KFM_H
 
 #include "niflib.h"
+namespace NifLib {
 
 using namespace std;
 
@@ -68,4 +69,5 @@ struct Kfm {
 	//void Write( ostream & out, unsigned int version );
 };
 
+}
 #endif
