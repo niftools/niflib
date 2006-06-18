@@ -6,6 +6,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiAVObject.h"
 
+// Include structures
+#include "../Ref.h"
+namespace NifLib {
+
 // Forward define of referenced blocks
 class NiAVObject;
 class NiDynamicEffect;
@@ -37,10 +41,21 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	void AddChild( Ref<NiAVObject> & obj );
+	void AddChild( Ref<NiAVObject> obj );
 	void RemoveChild( Ref<NiAVObject> obj );
 	void ClearChildren();
 	vector< Ref<NiAVObject> > GetChildren() const;
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+   template <typename ChildEquivalence>
+   inline void SortChildren(ChildEquivalence pred) {
+      std::stable_sort(children.begin(), children.end(), pred);
+   }
+#endif
+
+   void AddEffect( Ref<NiDynamicEffect> effect );
+   void RemoveEffect( Ref<NiDynamicEffect> effect );
+   void ClearEffects();
+   vector< Ref<NiDynamicEffect> > GetEffects() const;
 
 	/*! Checks if this node has any skins attached. */
 	bool IsSkeletonRoot() const;
@@ -74,6 +89,8 @@ private:
 protected:
 	list<NiSkinInstance*> skins;
 	NI_NODE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

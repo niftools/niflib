@@ -8,6 +8,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "TexDesc.h"
+namespace NifLib {
+
 
 /*!
  * An extended texture description for shader textures.
@@ -31,4 +33,5 @@ struct NIFLIB_API ShaderTexDesc {
 	uint unknownInt;
 };
 
+}
 #endif

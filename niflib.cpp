@@ -10,6 +10,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiAVObject.h"
 #include "obj/NiNode.h"
 #include "obj/NiTextKeyExtraData.h"
+#include "gen/header.h"
+namespace NifLib {
 
 //Stores the mapping between block names and factory function pointers to create them
 typedef IBlock * (*blk_factory_func)();
@@ -234,10 +236,11 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 //	uint user_version = 0;
 
 	//--Read Blocks--//
-	vector<NiObjectRef> blocks( header.numBlocks ); //List to hold the blocks
+   size_t numBlocks = header.numBlocks;
+	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
 	string objectType;
-	for (uint i = 0; i < header.numBlocks; i++) {
+	for (uint i = 0; i < numBlocks; i++) {
 
 		//Check for EOF
 		//if (in.eof() ) {
@@ -748,7 +751,7 @@ void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiNodeRef & par )
 
 
 	//Add the par node to the map, and then call this function for each of its children
-	name_map[par->GetName()] = par;
+	name_map[par->GetName()] = StaticCast<NiAVObject>(par);
 
 	
 	vector<NiAVObjectRef> links = par->GetChildren();
@@ -862,3 +865,46 @@ void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version 
 	MergeSceneGraph( name_map, target, new_tree );
 }
 
+
+bool IsVersionSupported(unsigned int ver) {
+   switch (ver)
+   {
+   case VER_4_0_0_2:
+   case VER_4_1_0_12:
+   case VER_4_2_0_2:
+   case VER_4_2_1_0:
+   case VER_4_2_2_0:
+   case VER_10_0_1_0:
+   case VER_10_1_0_0:
+   case VER_10_2_0_0:
+   case VER_20_0_0_4:
+   case VER_20_0_0_5:
+      return true;
+   }
+   return false;
+}
+
+unsigned int GetVersion(string version){
+   unsigned int outver = 0;
+   string::size_type start = 0;
+   for(int offset = 3; offset >= 0 && start < version.length(); --offset) {
+      string::size_type end = version.find_first_of(".", start);
+      string::size_type len = (end == string.npos) ? end : end-start;
+      int num = 0;
+      stringstream sstr(version.substr(start, len));
+      sstr >> num;
+      if (num > 0xFF) {
+         outver = VER_INVALID;
+         break;
+      }
+      outver |= (num << (offset * 8));
+      if (len == string::npos) 
+         break;
+      start = start + len + 1;
+   }
+   if (outver == 0)
+      outver = VER_INVALID;
+   return outver;
+}
+
+} // namespace NifLib

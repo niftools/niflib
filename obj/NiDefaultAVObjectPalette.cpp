@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiDefaultAVObjectPalette.h"
 #include "../gen/AVObject.h"
 #include "NiAVObject.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiDefaultAVObjectPalette::TYPE("NiDefaultAVObjectPalette", &NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT::TypeConst() );

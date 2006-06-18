@@ -5,10 +5,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _HEADER_H_
 
 #include "../NIF_IO.h"
+#include "../obj/NiObject.h"
 
 // Include structures
 #include "ShortString.h"
-#include "../obj/NiObject.h"
+namespace NifLib {
+
 
 /*!
  * The NIF file header.
@@ -43,7 +45,7 @@ struct NIFLIB_API Header {
 	/*!
 	 * Number of file blocks.
 	 */
-	uint numBlocks;
+	mutable uint numBlocks;
 	/*!
 	 * Unknown.
 	 */
@@ -68,7 +70,7 @@ struct NIFLIB_API Header {
 	/*!
 	 * Number of block types in this NIF file.
 	 */
-	ushort numBlockTypes;
+	mutable ushort numBlockTypes;
 	/*!
 	 * List of all block types used in this NIF file.
 	 */
@@ -88,4 +90,5 @@ struct NIFLIB_API Header {
 	string asString( bool verbose = false ) const;
 };
 
+}
 #endif

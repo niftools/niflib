@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkWorldObject.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkWorldObject::TYPE("bhkWorldObject", &BHK_WORLD_OBJECT_PARENT::TypeConst() );

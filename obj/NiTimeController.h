@@ -6,8 +6,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
 class NiObject;
 
 #include "../gen/obj_defines.h"
@@ -78,6 +79,8 @@ public:
 	void SetStopTime( float n );
 protected:
 	NI_TIME_CONTROLLER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

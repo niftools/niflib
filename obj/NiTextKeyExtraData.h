@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITEXTKEYEXTRADATA_H_
 
 #include "NiExtraData.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -48,6 +49,8 @@ public:
 
 protected:
 	NI_TEXT_KEY_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "BSFurnitureMarker.h"
 #include "../gen/FurniturePosition.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type BSFurnitureMarker::TYPE("BSFurnitureMarker", &B_S_FURNITURE_MARKER_PARENT::TypeConst() );

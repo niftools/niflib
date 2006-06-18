@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 // Forward define of referenced blocks
 class NiAVObject;
 
@@ -27,4 +29,5 @@ struct NIFLIB_API AVObject {
 	NiAVObject * object;
 };
 
+}
 #endif

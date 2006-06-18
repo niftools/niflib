@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysGrowFadeModifier.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysGrowFadeModifier::TYPE("NiPSysGrowFadeModifier", &NI_P_SYS_GROW_FADE_MODIFIER_PARENT::TypeConst() );

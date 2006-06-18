@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysModifierActiveCtlr.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysModifierActiveCtlr::TYPE("NiPSysModifierActiveCtlr", &NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT::TypeConst() );

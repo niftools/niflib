@@ -2,8 +2,12 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "../obj/NiObject.h"
+using namespace NifLib;
+using namespace std;
+namespace NifLib {
 typedef NiObject*(*blk_factory_func)();
 extern map<string, blk_factory_func> global_block_map;
+}
 
 #include "../obj/bhkBlendCollisionObject.h"
 NiObject * CreatebhkBlendCollisionObject() { return new bhkBlendCollisionObject; }
@@ -366,6 +370,7 @@ NiObject * CreateNiZBufferProperty() { return new NiZBufferProperty; }
 #include "../obj/RootCollisionNode.h"
 NiObject * CreateRootCollisionNode() { return new RootCollisionNode; }
 
+namespace NifLib {
 //This function registers the factory functions with global_block_map which is used by CreateBlock
 void RegisterBlockFactories() {
 	global_block_map["bhkBlendCollisionObject"] = CreatebhkBlendCollisionObject;
@@ -548,4 +553,5 @@ void RegisterBlockFactories() {
 	global_block_map["NiWireframeProperty"] = CreateNiWireframeProperty;
 	global_block_map["NiZBufferProperty"] = CreateNiZBufferProperty;
 	global_block_map["RootCollisionNode"] = CreateRootCollisionNode;
+}
 }

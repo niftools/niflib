@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NodeGroup.h"
 #include "../obj/NiNode.h"
+using namespace NifLib;
 
 //Constructor
 NodeGroup::NodeGroup() : numNodes((uint)0) {};

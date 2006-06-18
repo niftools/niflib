@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiInterpolator;
 
 #include "../gen/obj_defines.h"
@@ -26,7 +29,7 @@ public:
 	~NiSingleInterpolatorController();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -40,6 +43,8 @@ public:
 	void SetInterpolator( const Ref<NiInterpolator> & n );
 protected:
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

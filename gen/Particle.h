@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * particle array entry
@@ -45,4 +47,5 @@ struct NIFLIB_API Particle {
 	ushort vertexId;
 };
 
+}
 #endif

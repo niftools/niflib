@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "AbhkConstraint.h"
 #include "bhkShape.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type AbhkConstraint::TYPE("AbhkConstraint", &ABHK_CONSTRAINT_PARENT::TypeConst() );

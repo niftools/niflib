@@ -6,6 +6,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 
+// Include structures
+#include "../Ref.h"
+namespace NifLib {
+
 #include "../gen/obj_defines.h"
 
 class NiExtraData;
@@ -66,6 +70,8 @@ public:
 
 protected:
 	NI_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

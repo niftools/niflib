@@ -3,171 +3,171 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #ifndef _REF_H_
 #define _REF_H_
+#include <ostream>
+#include "dll_export.h"
+namespace NifLib {
 
 /**
  * Smart Pointer Template
  */
 
 template<class T> class Ref;
-template<class T> ostream & operator<<(ostream &, const Ref<T> &);
+template<class T> std::ostream & operator<<(std::ostream &, const Ref<T> &);
 
-template <class T> class Ref {
-public:
-	Ref( T * object = NULL );
-	Ref(const Ref & ref_to_copy );
-	~Ref();
 
-	operator T*() const;
-	T& operator*() const;
-	T* operator->() const;
-	T* Ptr() const;
-
-	Ref & operator=( T * object );
-	Ref & operator=( const Ref & ref );
-
-	bool operator<(const Ref & ref) const;
-
-	bool operator==(T * object) const;
-	bool operator!=(T * object) const;
-	bool operator==(const Ref & ref) const;
-	bool operator!=(const Ref & ref) const;
-
-        friend ostream & operator<< <T>(ostream & os, const Ref & ref);
-protected:
-	//The shared object
-	T* _object;
+/**
+* Ref Traits:  Class overridable behavior methods
+*/
+template<typename T>
+class RefTraits
+{
+public:	
+   static void AddRef( T* p )   { if (p) p->AddRef(); }
+   static void Release( T* p )  { if (p) p->SubtractRef(); }
+   static bool Less( T*l, T*r ) { return ( l < r ); }
+   static ::std::ostream & ToStream(::std::ostream &os, T* p) { 
+      if (p) os << p->GetIDString();
+      else   os << "NULL";
+      return os; 
+   }
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+   template<typename U> static T* StaticCast(U* p) { return static_cast<T*>(p); }
+   template<typename U> static T* DynamicCast(U* p) {
+      if ( (NULL != p) && p->IsDerivedType(T::TypeConst()) ) {
+         return static_cast<T*>(p);
+      } else {
+         return NULL;
+      }
+   }
+#endif
 };
 
-template <class T>
-Ref<T>::Ref( T * object ) : _object(object) {
-   //If object isn't null, increment reference count
-   if ( _object != NULL ) {
-      _object->AddRef();
+
+/**
+* Smart reference
+*/
+template<class T>
+class Ref
+{
+public:
+   Ref( T* p = 0 ) 
+      : p_( ShallowCopy( p ) )
+   {
+   }	
+
+   ~Ref() { Release( ); }
+
+   Ref& Attach( T* p = 0 )
+   {
+      Reset();
+      p_ = p;
+      return (*this);
    }
+
+   // Normally I'd disable this and force you to use safe/explicit conversions
+   operator T*() const { return p_; }
+
+   T& operator*() const { return *p_; }
+
+   T* operator->() const { return p_; }
+
+   T* ToPointer() const { return p_; }
+
+   void Swap( Ref& other ) { std::swap( p_, other.p_); }
+
+   bool isEmpty() const
+   { return (p_ == 0); }
+
+   bool isSet() const
+   { return (p_ != 0); }
+
+   /**
+   * overload all potential null test comparison operators
+   */
+   operator bool() const // Enables "if (sp) ..."
+   { return (p_ != 0); }
+
+   bool operator!() const // Enables "if (!sp) ..."
+   { return (p_ == 0); }
+
+   inline friend bool operator==(const Ref& lhs, const Ref& rhs)
+   { return (lhs.p_ == rhs.p_); }
+
+   inline friend bool operator!=(const Ref& lhs, const Ref& rhs)
+   { return (lhs.p_ != rhs.p_); }
+
+   inline friend bool operator==(const Ref& lhs, const T* rhs)
+   { return (lhs.p_ == rhs); }
+
+   inline friend bool operator==(const T* lhs, const Ref& rhs)
+   { return (lhs == rhs.p_); }
+
+   inline friend bool operator==(const Ref& lhs, intptr_t rhs)
+   { return (lhs.p_ == reinterpret_cast<T*>(rhs)); }
+
+   inline friend bool operator==(intptr_t rhs, const Ref& lhs)
+   { return (reinterpret_cast<T*>(lhs) == rhs.p_); }
+
+   inline friend bool operator!=(const Ref& lhs, const T* rhs)
+   { return (lhs.p_ != rhs); }
+
+   inline friend bool operator!=(const T* lhs, const Ref& rhs)
+   { return (lhs != rhs.p_); }
+
+   inline friend bool operator!=(const Ref& lhs, intptr_t rhs)
+   { return (lhs.p_ != reinterpret_cast<T*>(rhs)); }
+
+   inline friend bool operator!=(intptr_t rhs, const Ref& lhs)
+   { return (reinterpret_cast<T*>(lhs) != rhs.p_); }
+
+   inline friend bool operator<(const Ref& lhs, const Ref& rhs)
+   { return RefTraits<T>::Less(lhs.p_, rhs.p_); }
+
+   inline friend std::ostream & operator<<(std::ostream &os, const Ref& rhs)
+   { return RefTraits<T>::ToStream(os, rhs.p_); }
+
+   Ref( const Ref& other )
+      : p_( ShallowCopy( other.p_ ) )
+   { }
+
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+   template<typename U>
+   Ref( const Ref<U>& other ) 
+      : p_( ShallowCopy(RefTraits<T>::DynamicCast(other.p_)) )
+   { }
+#endif
+
+   Ref& operator=( T * other )
+   {
+      Ref temp(other);
+      Swap(temp);
+      return *this;
+   }
+
+   Ref& operator=( const Ref& other )
+   {
+      Ref temp(other);
+      Swap(temp);
+      return *this;
+   }
+
+private:
+   template<typename U> friend class Ref;
+
+   T* ShallowCopy( T* p ) 
+   {
+      RefTraits<T>::AddRef( p );
+      return p;
+   }
+
+   void Release( )
+   {
+      RefTraits<T>::Release( p_ );
+      p_ = 0;
+   }
+
+   T* p_;
+};
+
 }
-
-template <class T>
-Ref<T>::Ref(const Ref & ref_to_copy ) {
-	_object = ref_to_copy._object;
-	//If object isn't null, increment reference count
-	if ( _object != NULL ) {
-		_object->AddRef();
-	}
-}
-
-template <class T>
-Ref<T>::~Ref() {
-	//if object insn't null, decrement reference count
-	if ( _object != NULL ) {
-		_object->SubtractRef();
-	}
-}
-
-template <class T>
-Ref<T>::operator T*() const {
-	return _object;
-}
-
-template <class T>
-T& Ref<T>::operator*() const {
-	return *_object;
-}
-
-template <class T>
-T* Ref<T>::operator->() const {
-	return _object;
-}
-
-template <class T>
-T* Ref<T>::Ptr() const {
-	return _object;
-}
-
-template <class T>
-Ref<T> & Ref<T>::operator=( T * object ) {
-	//Check if referenced objects are already the same
-	if ( _object == object ) {
-		return *this; //Do nothing
-	}
-
-	//Decriment reference count on previously referenced object, if any
-	if ( _object != NULL ) {
-		_object->SubtractRef();
-	}
-
-	//Change reference to new object
-	_object = object;
-
-	//Increment reference count on new object if it is not NULL
-	if ( _object != NULL ) {
-		_object->AddRef();
-	}
-
-	return *this;
-}
-
-template <class T>
-Ref<T> & Ref<T>::operator=( const Ref & ref ) {
-	//Check if referenced objects are already the same
-	if ( _object == ref._object ) {
-		return *this; //Do nothing
-	}
-
-	//Decriment reference count on previously referenced object, if any
-	if ( _object != NULL ) {
-		_object->SubtractRef();
-	}
-
-	//Change reference to new object
-	_object = ref._object;
-
-	//Increment reference count on new object if it is not NULL
-	if ( _object != NULL ) {
-		_object->AddRef();
-	}
-
-	return *this;
-}
-
-//Template functions must be in the header file
-
-template <class T>
-bool Ref<T>::operator<(const Ref & ref) const {
-	return (_object < ref._object);
-}
-
-template <class T>
-bool Ref<T>::operator==(T * object) const {
-	//Compare pointer values of referenced objects
-	return ( _object == object );
-}
-
-template <class T>
-bool Ref<T>::operator!=(T * object) const {
-	//Compare pointer values of referenced objects
-	return ( _object != object );
-}
-
-template <class T>
-bool Ref<T>::operator==(const Ref & ref) const {
-	//Compare pointer values of referenced objects
-	return ( _object == ref._object );
-}
-
-template <class T>
-bool Ref<T>::operator!=(const Ref & ref) const {
-	//Compare pointer values of referenced objects
-	return ( _object != ref._object );
-}
-
-
-template <class T>
-ostream & operator<<(ostream & os, const Ref<T> & ref) {
-	if (ref._object)
-		os << ref->GetIDString();
-	else
-		os << "NULL";
-	return os;
-}
-
 #endif

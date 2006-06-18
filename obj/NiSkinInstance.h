@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiSkinData;
 class NiSkinPartition;
 class NiNode;
@@ -73,6 +76,8 @@ public:
 
 protected:
 	NI_SKIN_INSTANCE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

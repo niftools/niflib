@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkShape.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkShape::TYPE("bhkShape", &BHK_SHAPE_PARENT::TypeConst() );

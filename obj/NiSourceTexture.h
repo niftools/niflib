@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObjectNET.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiObject;
 class NiPixelData;
 
@@ -66,6 +69,8 @@ public:
 	//SetUnknownByte3( byte n );
 protected:
 	NI_SOURCE_TEXTURE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/SkinData.h"
 #include "../gen/SkinWeight.h"
 #include "NiSkinPartition.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiSkinData::TYPE("NiSkinData", &NI_SKIN_DATA_PARENT::TypeConst() );

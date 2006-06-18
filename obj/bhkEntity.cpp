@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkEntity.h"
 #include "bhkShape.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkEntity::TYPE("bhkEntity", &BHK_ENTITY_PARENT::TypeConst() );

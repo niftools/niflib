@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
 class NiInterpolator;
@@ -113,4 +114,5 @@ struct NIFLIB_API ControllerLink {
 	uint variableOffset2;
 };
 
+}
 #endif

@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiObject;
 
 #include "../gen/obj_defines.h"
@@ -128,6 +131,8 @@ public:
 
 protected:
 	NI_TRI_BASED_GEOM_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

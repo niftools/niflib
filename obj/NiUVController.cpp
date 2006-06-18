@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiUVController.h"
 #include "NiUVData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiUVController::TYPE("NiUVController", &NI_U_V_CONTROLLER_PARENT::TypeConst() );

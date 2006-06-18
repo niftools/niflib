@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Description of a MipMap within a NiPixelData block.
@@ -29,4 +31,5 @@ struct NIFLIB_API MipMap {
 	uint offset;
 };
 
+}
 #endif

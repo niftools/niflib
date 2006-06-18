@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPalette.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPalette::TYPE("NiPalette", &NI_PALETTE_PARENT::TypeConst() );

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSplineInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TypeConst() );

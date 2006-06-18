@@ -5,6 +5,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BSXFLAGS_H_
 
 #include "NiExtraData.h"
+namespace NifLib {
+
 
 #include "../gen/obj_defines.h"
 
@@ -21,7 +23,7 @@ public:
 	~BSXFlags();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -36,6 +38,8 @@ public:
 
 protected:
 	B_S_X_FLAGS_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

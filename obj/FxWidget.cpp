@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "FxWidget.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type FxWidget::TYPE("FxWidget", &FX_WIDGET_PARENT::TypeConst() );

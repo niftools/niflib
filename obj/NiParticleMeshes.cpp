@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiParticleMeshes.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiParticleMeshes::TYPE("NiParticleMeshes", &NI_PARTICLE_MESHES_PARENT::TypeConst() );

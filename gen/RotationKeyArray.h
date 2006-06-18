@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Rotation key array.
@@ -15,7 +17,7 @@ struct NIFLIB_API RotationKeyArray {
 	/*!
 	 * Number of keys.
 	 */
-	uint numKeys;
+	mutable uint numKeys;
 	/*!
 	 * Key type (1, 2, 3, or 4).
 	 */
@@ -26,4 +28,5 @@ struct NIFLIB_API RotationKeyArray {
 	vector<Key<T > > keys;
 };
 
+}
 #endif

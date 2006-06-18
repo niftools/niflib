@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Another string format, for short strings.  Specific to Bethesda-
@@ -19,7 +21,7 @@ struct NIFLIB_API ShortString {
 	/*!
 	 * The string length.
 	 */
-	byte length;
+	mutable byte length;
 	/*!
 	 * The string itself, null terminated (the null terminator is taken into
 	 * account in the length byte).
@@ -27,4 +29,5 @@ struct NIFLIB_API ShortString {
 	vector<byte > value;
 };
 
+}
 #endif

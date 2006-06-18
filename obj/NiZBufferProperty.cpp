@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiZBufferProperty.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiZBufferProperty::TYPE("NiZBufferProperty", &NI_Z_BUFFER_PROPERTY_PARENT::TypeConst() );

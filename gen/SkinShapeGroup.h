@@ -8,6 +8,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "SkinShape.h"
+namespace NifLib {
+
 
 /*!
  * Unknown.
@@ -20,7 +22,7 @@ struct NIFLIB_API SkinShapeGroup {
 	/*!
 	 * Counts unknown.
 	 */
-	uint numLinkPairs;
+	mutable uint numLinkPairs;
 	/*!
 	 * First link is a NiTriShape block. Second link is a NiSkinInstance
 	 * block.
@@ -28,4 +30,5 @@ struct NIFLIB_API SkinShapeGroup {
 	vector<SkinShape > linkPairs;
 };
 
+}
 #endif

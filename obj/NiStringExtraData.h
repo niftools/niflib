@@ -5,6 +5,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NISTRINGEXTRADATA_H_
 
 #include "NiExtraData.h"
+namespace NifLib {
+
 
 #include "../gen/obj_defines.h"
 
@@ -23,7 +25,7 @@ public:
 	~NiStringExtraData();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -37,8 +39,9 @@ public:
 	void SetData( const string & n );
 
 protected:
-	uint BytesRemaining() const;
 	NI_STRING_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSingleInterpolatorController.h"
 #include "NiInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiSingleInterpolatorController::TYPE("NiSingleInterpolatorController", &NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TypeConst() );

@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BSPARENTVELOCITYMODIFIER_H_
 
 #include "NiPSysModifier.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -21,7 +22,7 @@ public:
 	~BSParentVelocityModifier();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -30,8 +31,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
 protected:
 	B_S_PARENT_VELOCITY_MODIFIER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiColorExtraData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiColorExtraData::TYPE("NiColorExtraData", &NI_COLOR_EXTRA_DATA_PARENT::TypeConst() );

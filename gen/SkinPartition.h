@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Skinning data for a submesh, optimized for hardware skinning. Part of
@@ -19,23 +21,27 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * Number of vertices in this submesh.
 	 */
-	ushort numVertices;
+	mutable ushort numVertices;
 	/*!
 	 * Number of triangles in this submesh.
 	 */
-	ushort numTriangles;
+	mutable ushort numTriangles;
+	/*!
+	 * Number of triangles in this submesh.
+	 */
+	ushort CalcNumTriangles() const;
 	/*!
 	 * Number of bones influencing this submesh.
 	 */
-	ushort numBones;
+	mutable ushort numBones;
 	/*!
 	 * Number of strips in this submesh (zero if not stripped).
 	 */
-	ushort numStrips;
+	mutable ushort numStrips;
 	/*!
 	 * Number of weight coefficients per vertex.
 	 */
-	ushort numWeightsPerVertex;
+	mutable ushort numWeightsPerVertex;
 	/*!
 	 * List of bones.
 	 */
@@ -60,7 +66,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * The strip lengths.
 	 */
-	vector<ushort > stripLengths;
+	mutable vector<ushort > stripLengths;
 	/*!
 	 * Do we have strip data?
 	 */
@@ -83,4 +89,5 @@ struct NIFLIB_API SkinPartition {
 	vector<vector<byte > > boneIndices;
 };
 
+}
 #endif

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiVisController.h"
 #include "NiVisData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiVisController::TYPE("NiVisController", &NI_VIS_CONTROLLER_PARENT::TypeConst() );

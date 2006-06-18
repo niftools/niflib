@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "ShaderTexDesc.h"
 #include "TexDesc.h"
 #include "../obj/NiSourceTexture.h"
+using namespace NifLib;
 
 //Constructor
 ShaderTexDesc::ShaderTexDesc() : isUsed(false), unknownInt((uint)0) {};

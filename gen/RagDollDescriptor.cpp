@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "RagDollDescriptor.h"
+using namespace NifLib;
 
 //Constructor
 RagDollDescriptor::RagDollDescriptor() : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};

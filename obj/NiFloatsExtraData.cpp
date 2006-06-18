@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiFloatsExtraData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiFloatsExtraData::TYPE("NiFloatsExtraData", &NI_FLOATS_EXTRA_DATA_PARENT::TypeConst() );

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "hkPackedNiTriStripsData.h"
 #include "../gen/hkTriangle.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type hkPackedNiTriStripsData::TYPE("hkPackedNiTriStripsData", &HK_PACKED_NI_TRI_STRIPS_DATA_PARENT::TypeConst() );

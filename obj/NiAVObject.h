@@ -6,15 +6,16 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Includes
 #include "../gen/BoundingBox.h"
+#include "../gen/obj_defines.h"
+#include NI_A_V_OBJECT_INCLUDE
+namespace NifLib {
 
-//Forward Defines
+// Forward define of referenced blocks
 class NiProperty;
 class NiCollisionData;
 class NiCollisionObject;
 class NiNode;
 
-#include "../gen/obj_defines.h"
-#include NI_A_V_OBJECT_INCLUDE
 
 /*
  * NiAVObject - An audio/video object?  Part of the scene graph and has a position in 3D.
@@ -82,9 +83,10 @@ public:
 	void SetVelocity( const Vector3 & n );
 
 protected:
-	NI_A_V_OBJECT_MEMBERS
-
 	NiNode * parent;
+	NI_A_V_OBJECT_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

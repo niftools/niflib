@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * A quaternion as it appears in the havok blocks.
@@ -33,4 +35,5 @@ struct NIFLIB_API QuaternionXYZW {
 	float w;
 };
 
+}
 #endif

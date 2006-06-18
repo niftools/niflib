@@ -4,12 +4,16 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIOBJECTNET_H_
 #define _NIOBJECTNET_H_
 
-// Forward defines
+#include "NiObject.h"
+
+#include NI_OBJECT_N_E_T_INCLUDE
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiExtraData;
 class NiTimeController;
 
 #include "../gen/obj_defines.h"
-#include NI_OBJECT_N_E_T_INCLUDE
 
 class NiObjectNET;
 class NiExtraData;
@@ -58,5 +62,8 @@ public:
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 private:
 	NI_OBJECT_N_E_T_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
+
+}
 #endif

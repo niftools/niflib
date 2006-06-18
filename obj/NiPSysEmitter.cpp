@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysEmitter.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysEmitter::TYPE("NiPSysEmitter", &NI_P_SYS_EMITTER_PARENT::TypeConst() );

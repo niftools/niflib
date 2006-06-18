@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysModifier.h"
 #include "NiParticleSystem.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysModifier::TYPE("NiPSysModifier", &NI_P_SYS_MODIFIER_PARENT::TypeConst() );

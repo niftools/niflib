@@ -47,6 +47,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <vector>
 #include <list>
 #include <map>
+#include "dll_export.h"
 #include "nif_math.h"
 #include "NIF_IO.h"
 #include "obj/NiObject.h"
@@ -56,6 +57,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "kfm.h"
 
 using namespace std;
+namespace NifLib {
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
@@ -222,6 +224,19 @@ NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & ro
  */
 NIFLIB_API NiObjectRef CreateBlock( string block_type );
 
+/*!
+ * Returns whether the requested version is supported.
+ * \param version The version of the nif format to test for availablity.
+ * \return Whether the requested version is supported.
+ */
+NIFLIB_API bool IsVersionSupported(unsigned int ver);
+
+/*!
+ * Parses the version string and returns in the equivalent version as integer
+ * \param version The version of the nif format to parse.
+ * \return The version in integer format. Returns VER_INVALID for invalid version strings.
+ */
+NIFLIB_API unsigned int GetVersion(string version);
 
 
 //struct ComplexVertex {
@@ -508,4 +523,5 @@ You will probably also want to know the type of a block at some point.  You can 
 
 */
 
+}
 #endif

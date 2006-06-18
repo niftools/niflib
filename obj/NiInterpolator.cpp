@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiInterpolator::TYPE("NiInterpolator", &NI_INTERPOLATOR_PARENT::TypeConst() );

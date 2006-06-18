@@ -6,10 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
+#include "../Ref.h"
 #include "../gen/SkinData.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiSkinPartition;
 
 #include "../gen/obj_defines.h"
@@ -44,6 +45,8 @@ public:
 	vector<SkinData> GetBoneData() const;
 protected:
 	NI_SKIN_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

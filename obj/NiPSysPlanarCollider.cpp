@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysSpawnModifier.h"
 #include "NiObject.h"
 #include "NiNode.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysPlanarCollider::TYPE("NiPSysPlanarCollider", &NI_P_SYS_PLANAR_COLLIDER_PARENT::TypeConst() );

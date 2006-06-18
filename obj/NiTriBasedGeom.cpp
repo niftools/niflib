@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriBasedGeomData.h"
 #include "NiSkinInstance.h"
 #include "NiObject.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiTriBasedGeom::TYPE("NiTriBasedGeom", &NI_TRI_BASED_GEOM_PARENT::TypeConst() );

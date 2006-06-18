@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiColorData.h"
 #include "../gen/KeyGroup.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiColorData::TYPE("NiColorData", &NI_COLOR_DATA_PARENT::TypeConst() );

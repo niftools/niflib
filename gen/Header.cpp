@@ -5,13 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "ShortString.h"
 #include "ShortString.h"
 #include "ShortString.h"
+using namespace NifLib;
 
 //Constructor
 Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)0), unknownInt3((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
 
 //Destructor
 Header::~Header() {};
-
 void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
 	NifStream( version, in, version );
@@ -64,6 +64,8 @@ void Header::Read( istream& in ) {
 }
 
 void Header::Write( ostream& out ) const {
+	numBlockTypes = ushort(blockTypes.size());
+	numBlocks = uint(blockTypeIndex.size());
 	NifStream( headerString, out, version );
 	NifStream( version, out, version );
 	if ( version >= 0x14000004 ) {
@@ -83,14 +85,17 @@ void Header::Write( ostream& out ) const {
 	};
 	if ( version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
+			creator_.length = byte(creator_.value.size());
 			NifStream( creator_.length, out, version );
 			for (uint i3 = 0; i3 < creator_.value.size(); i3++) {
 				NifStream( creator_.value[i3], out, version );
 			};
+			exportType_.length = byte(exportType_.value.size());
 			NifStream( exportType_.length, out, version );
 			for (uint i3 = 0; i3 < exportType_.value.size(); i3++) {
 				NifStream( exportType_.value[i3], out, version );
 			};
+			exportScript_.length = byte(exportScript_.value.size());
 			NifStream( exportScript_.length, out, version );
 			for (uint i3 = 0; i3 < exportScript_.value.size(); i3++) {
 				NifStream( exportScript_.value[i3], out, version );
@@ -111,6 +116,8 @@ void Header::Write( ostream& out ) const {
 
 string Header::asString( bool verbose ) const {
 	stringstream out;
+	numBlockTypes = ushort(blockTypes.size());
+	numBlocks = uint(blockTypeIndex.size());
 	out << "  Header String:  " << headerString << endl;
 	out << "  Version:  " << version << endl;
 	out << "  Endian Type:  " << endianType << endl;
@@ -119,6 +126,7 @@ string Header::asString( bool verbose ) const {
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	if ( (userVersion != 0) ) {
 		out << "    Unknown Int 3:  " << unknownInt3 << endl;
+		creator_.length = byte(creator_.value.size());
 		out << "    Length:  " << creator_.length << endl;
 		for (uint i2 = 0; i2 < creator_.value.size(); i2++) {
 			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
@@ -127,6 +135,7 @@ string Header::asString( bool verbose ) const {
 			};
 			out << "      Value[" << i2 << "]:  " << creator_.value[i2] << endl;
 		};
+		exportType_.length = byte(exportType_.value.size());
 		out << "    Length:  " << exportType_.length << endl;
 		for (uint i2 = 0; i2 < exportType_.value.size(); i2++) {
 			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
@@ -135,6 +144,7 @@ string Header::asString( bool verbose ) const {
 			};
 			out << "      Value[" << i2 << "]:  " << exportType_.value[i2] << endl;
 		};
+		exportScript_.length = byte(exportScript_.value.size());
 		out << "    Length:  " << exportScript_.length << endl;
 		for (uint i2 = 0; i2 < exportScript_.value.size(); i2++) {
 			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {

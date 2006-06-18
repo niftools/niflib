@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * The distance range where a specific level of detail applies.
@@ -25,4 +27,5 @@ struct NIFLIB_API LODRange {
 	float far;
 };
 
+}
 #endif

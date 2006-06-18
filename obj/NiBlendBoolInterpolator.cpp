@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBlendBoolInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiBlendBoolInterpolator::TYPE("NiBlendBoolInterpolator", &NI_BLEND_BOOL_INTERPOLATOR_PARENT::TypeConst() );

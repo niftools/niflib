@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiAutoNormalParticles.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiAutoNormalParticles::TYPE("NiAutoNormalParticles", &NI_AUTO_NORMAL_PARTICLES_PARENT::TypeConst() );

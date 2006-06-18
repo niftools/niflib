@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "LODRange.h"
+using namespace NifLib;
 
 //Constructor
 LODRange::LODRange() : near(0.0f), far(0.0f) {};

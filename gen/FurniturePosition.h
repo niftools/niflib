@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Describes a furniture position?
@@ -35,4 +37,5 @@ struct NIFLIB_API FurniturePosition {
 	byte positionRef2;
 };
 
+}
 #endif

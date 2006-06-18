@@ -5,8 +5,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _ABONELODCONTROLLER_H_
 
 #include "NiTimeController.h"
+
 // Include structures
 #include "../gen/NodeGroup.h"
+namespace NifLib {
+
 
 #include "../gen/obj_defines.h"
 
@@ -23,7 +26,7 @@ public:
 	~ABoneLODController();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -36,6 +39,8 @@ public:
 	//TODO:  This is not a priority but needs to be implemented eventually
 protected:
 	A_BONE_L_O_D_CONTROLLER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

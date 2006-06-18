@@ -8,6 +8,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "SkinWeight.h"
+namespace NifLib {
+
 
 /*!
  * Skinning data component.
@@ -35,15 +37,16 @@ struct NIFLIB_API SkinData {
 	 * may not be related to each other so their specification as an array of
 	 * 4 floats may be misleading.
 	 */
-	float unknown4Floats[4];
+	array<float,4> unknown4Floats;
 	/*!
 	 * Number of weighted vertices.
 	 */
-	ushort numVertices;
+	mutable ushort numVertices;
 	/*!
 	 * The vertex weights.
 	 */
 	vector<SkinWeight > vertexWeights;
 };
 
+}
 #endif

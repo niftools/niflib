@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "nif_math.h"
 #include <iomanip>
+using namespace NifLib;
 
 //Constants
 
@@ -188,7 +189,16 @@ float Matrix33::Determinant() const {
 		  + (*this)[0][2] * ( (*this)[1][0] * (*this)[2][1] - (*this)[1][1] * (*this)[2][0] );
 }
 
-
+Matrix33 Matrix33::operator*( const Matrix33 & m ) const
+{
+   Matrix33 m3;
+   for ( int r = 0; r < 3; r++ ){
+      for ( int c = 0; c < 3; c++ ){
+         m3[r][c] = (*this)[r][0]*m[0][c] + (*this)[r][1]*m[1][c] + (*this)[r][2]*m[2][c];
+      }
+   }
+   return m3;
+}
 
 /*
  * Matrix44 Methods
@@ -383,6 +393,23 @@ float Matrix44::Determinant() const {
 	      - t[0][3] * Submatrix(0, 3).Determinant();
 }
 
+void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, Float3 & scale ) const {
+   translate = Vector3( (*this)[3][0], (*this)[3][1], (*this)[3][2] );
+   Matrix33 rotT;
+   for ( int i = 0; i < 3; i++ ){
+      for ( int j = 0; j < 3; j++ ){
+         rotation[j][i] = (*this)[i][j];
+         rotT[i][j] = (*this)[i][j];
+      }
+   }
+   Matrix33 mtx = rotation * rotT;
+   scale = Float3( sqrt(mtx[0][0]), sqrt(mtx[1][1]), sqrt(mtx[2][2]) );
+   for ( int i = 0; i < 3; i++ ){
+      for ( int j = 0; j < 3; j++ ){
+         rotation[i][j] /= scale[i];
+      }
+   }
+}
 /*
  * Quaternion Methods
  */
@@ -448,7 +475,7 @@ Matrix33 Quaternion::AsMatrix() {
 /*
  * ostream functions for printing with cout
  */
-
+namespace NifLib {
 ostream & operator<<( ostream & out, TexCoord const & val ) {
 	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
 }
@@ -507,4 +534,5 @@ ostream & operator<<( ostream & out, Color4 const & val ) {
 
 ostream & operator<<( ostream & out, Quaternion const & val ) {
 	return out << "[" << setw(6) << val.w << ",(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")]";
+}
 }

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiParticleMeshesData.h"
 #include "NiAVObject.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiParticleMeshesData::TYPE("NiParticleMeshesData", &NI_PARTICLE_MESHES_DATA_PARENT::TypeConst() );

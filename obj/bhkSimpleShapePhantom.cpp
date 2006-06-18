@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkSimpleShapePhantom.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkSimpleShapePhantom::TYPE("bhkSimpleShapePhantom", &BHK_SIMPLE_SHAPE_PHANTOM_PARENT::TypeConst() );

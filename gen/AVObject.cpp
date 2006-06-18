@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "AVObject.h"
 #include "../obj/NiAVObject.h"
+using namespace NifLib;
 
 //Constructor
 AVObject::AVObject() : object(NULL) {};

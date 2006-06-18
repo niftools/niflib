@@ -11,6 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <sstream>
 #include <vector>
 #include "nif_math.h"
+namespace NifLib {
 using namespace std;
 
 #ifndef NULL
@@ -70,18 +71,150 @@ struct Key {
 	float continuity; /*!< The amount of continuity to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
 };
 
-/*! Used to enable static arrays to be members of vectors */
-template<class T, int size>
-struct array {
-	T data[size];
-	T & operator[]( uint index ) {
-		return data[index];
-	}
-	T operator[]( uint index ) const {
-		return data[index];
-	}
+
+//! NVector Traits:  Class overridable alloc/release methods
+template<typename T>
+class array_Traits
+{
+public:	
+   //! Default Initialization method
+   //! @param[in] v Vector of types to initialize
+   //! @param[in] length  Length in bytes of memory to allocate
+   static void Initialize( T* v, int length )   { 
+      memset(v, 0, sizeof(v[0]) * length);
+   }
+   //! Default Finalization method
+   //! @param[in] v Vector of types to initialize
+   //! @param[in] length  Length in bytes of memory to allocate
+   static void Finalize( T* v, int length )   { 
+      memset(v, 0, sizeof(v[0]) * length);
+   }
+   //! Default Initialization method
+   //! @param[in] s Vector of types to copy from
+   //! @param[in/out] d Vector of types to copy to
+   //! @param[in] length  Length in bytes of memory to allocate
+   static void Copy(T const* s, T* d, int length )   { 
+      for (int i=0; i<length; ++i)
+         d[i] = s[i];
+   }
 };
 
+//! A fixed length vector of type T.
+//!  Data is allocated into a vector portion and the data section.
+//!  The vector simply points to appropriate places in the data section.
+//! @param  T   Type of Vector
+template<typename T, size_t len_>
+class array
+{
+   typedef typename T * RawData;
+   typedef typename T const* ConstRawData;
+public:
+   //! Default Constructor:  Allocates empty vector
+   array() {
+      array_Traits<T>::Initialize(v_, len_);
+   }
+
+   //! Copy Constructor
+   array(const array& other) {
+      array_Traits<T>::Copy(other.v_, v_, len_);
+   }
+
+   //! Copy Constructor
+   array(const RawData& other) {
+      array_Traits<T>::Copy(other, v_, len_);
+   }
+
+   //! Copy Constructor
+   array(RawData& other) {
+      array_Traits<T>::Copy(other, v_, len_);
+   }
+
+   //! Default Destructor
+   ~array() { 
+      array_Traits<T>::Finalize(v_, len_);
+   }
+
+   //! Copy Assignment
+   array& operator=(const array& other) {
+      array tmp( other );
+      swap( tmp );
+      return *this;
+   }
+
+   //! Copy Assignment
+   array& operator=(const ConstRawData& other) {
+      array tmp( other );
+      swap( tmp );
+      return *this;
+   }
+
+   T& operator[](int index) {
+      // assert( index >= 0 && index < len_ )
+      return v_[index];
+   } 
+
+   const T& operator[](int index) const {
+      // assert( index >= 0 && index < len_ )
+      return v_[index];
+   } 
+
+   T& operator[](uint index) {
+      // assert( index >= 0 && index < len_ )
+      return v_[index];
+   } 
+
+   const T& operator[](uint index) const {
+      // assert( index >= 0 && index < len_ )
+      return v_[index];
+   } 
+
+   operator T*() const {
+      return v_;
+   }
+
+   //! Number of items in the vector.
+   size_t size() const { return len_; }
+   size_t count() const { return len_; }
+
+   T* begin() { 
+      return v_; 
+   }
+
+   T* end() { 
+      return v_ + len_; 
+   }
+
+   const T* begin() const { 
+      return v_; 
+   }
+
+   const T* end() const { 
+      return v_ + len_; 
+   }
+
+   //! Assign an element to vector at specified index
+   //! @param[in]   index  Index in array to assign
+   //! @param[in]   value  Value to copy into string
+   void assign(int index, T value) {
+      v_[index] = value;
+   }
+
+   //! Reset vector back to zero size
+   void clear() {
+      array_Traits<T>::Finalize(v_, len_);
+   }
+
+   //! Swap contents with another array
+   //! @param[in,out]   other  Other vector to swap with
+   void swap( array &other ) {
+      array tmp(other);
+      array_Traits<T>::Copy(v_, other.v_, len_);
+      array_Traits<T>::Copy(tmp.v_, v_, len_);
+   }
+
+private:
+   T v_[len_]; //! Vector data
+};
 
 struct HeaderString {
 	string header;
@@ -465,4 +598,5 @@ string HexString( const byte * src, uint len );
 //Byte
 ostream & operator<<( ostream & out, byte const & val );
 
+}
 #endif

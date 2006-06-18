@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
 class NiSourceTexture;
@@ -74,4 +75,5 @@ struct NIFLIB_API TexDesc {
 	TexCoord centerOffset;
 };
 
+}
 #endif

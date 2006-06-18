@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysAgeDeathModifier.h"
 #include "NiPSysSpawnModifier.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysAgeDeathModifier::TYPE("NiPSysAgeDeathModifier", &NI_P_SYS_AGE_DEATH_MODIFIER_PARENT::TypeConst() );

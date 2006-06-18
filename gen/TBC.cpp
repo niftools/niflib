@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "TBC.h"
+using namespace NifLib;
 
 //Constructor
 TBC::TBC() : t(0.0f), b(0.0f), c(0.0f) {};

@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObjectNET.h"
 #include "NiExtraData.h"
 #include "NiTimeController.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TypeConst() );

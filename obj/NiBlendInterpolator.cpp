@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBlendInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiBlendInterpolator::TYPE("NiBlendInterpolator", &NI_BLEND_INTERPOLATOR_PARENT::TypeConst() );

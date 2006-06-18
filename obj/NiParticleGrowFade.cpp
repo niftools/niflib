@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiParticleGrowFade.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiParticleGrowFade::TYPE("NiParticleGrowFade", &NI_PARTICLE_GROW_FADE_PARENT::TypeConst() );

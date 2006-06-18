@@ -16,6 +16,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 #include "../Type.h"
 #include "../gen/obj_defines.h"
+namespace NifLib {
 
 using namespace std;
 
@@ -143,6 +144,7 @@ private:
 	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
+	STANDARD_INTERNAL_METHODS
 };
 
 
@@ -173,8 +175,23 @@ template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
 		return NULL;
 	}
 }
-
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
+template <typename T, typename U> Ref<T> StaticCast( Ref<U>& object ) {
+   return object;
+}
+
+template <typename T, typename U> Ref<T> DynamicCast( Ref<U>& object ) {
+   return object;
+}
+
+template <typename T, typename U> Ref<T> StaticCast( const Ref<U>& object ) {
+   return Ref<T>(object);
+}
+
+template <typename T, typename U> Ref<T> DynamicCast( const Ref<U>& object ) {
+   return Ref<T>(object);
+}
+
 /*!
  * Dynamically cast from a collection of objects to another collection
  * \param objs A collection of object references to be dynamically casted to the specified type.
@@ -205,5 +222,5 @@ inline list<Ref<U> > DynamicCast( list<Ref<T> > const & objs ) {
    return retval;
 }
 #endif
-
+}
 #endif

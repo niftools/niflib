@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "SkinData.h"
 #include "SkinWeight.h"
+using namespace NifLib;
 
 //Constructor
 SkinData::SkinData() : scale(0.0f), numVertices((ushort)0) {};

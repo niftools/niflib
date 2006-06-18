@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPALETTE_H_
 
 #include "NiObject.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -44,6 +45,8 @@ public:
 	void SetPalette( const vector<Color4> & new_pal );
 protected:
 	NI_PALETTE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiDitherProperty.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiDitherProperty::TYPE("NiDitherProperty", &NI_DITHER_PROPERTY_PARENT::TypeConst() );

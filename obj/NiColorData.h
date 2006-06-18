@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AKeyedData.h"
 // Include structures
 #include "../gen/KeyGroup.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -58,6 +59,8 @@ public:
 	void SetKeys( vector< Key<Color4> > const & keys );
 protected:
 	NI_COLOR_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

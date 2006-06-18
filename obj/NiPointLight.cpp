@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPointLight.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPointLight::TYPE("NiPointLight", &NI_POINT_LIGHT_PARENT::TypeConst() );

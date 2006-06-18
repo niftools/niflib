@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiAVObject.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiTriBasedGeomData;
 class NiSkinInstance;
 class NiObject;
@@ -53,6 +56,8 @@ public:
 	
 protected:
 	NI_TRI_BASED_GEOM_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

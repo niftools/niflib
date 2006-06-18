@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiMultiTargetTransformController.h"
 #include "NiNode.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiMultiTargetTransformController::TYPE("NiMultiTargetTransformController", &NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT::TypeConst() );

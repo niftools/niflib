@@ -5,6 +5,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIVECTOREXTRADATA_H_
 
 #include "NiExtraData.h"
+namespace NifLib {
+
 
 #include "../gen/obj_defines.h"
 
@@ -21,7 +23,7 @@ public:
 	~NiVectorExtraData();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -37,6 +39,8 @@ public:
 	//TODO:  There is an unknown member in this class
 protected:
 	NI_VECTOR_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

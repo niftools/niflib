@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITRISTRIPSDATA_H_
 
 #include "NiTriBasedGeomData.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -74,6 +75,8 @@ private:
 
 protected:
 	NI_TRI_STRIPS_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

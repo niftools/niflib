@@ -6,11 +6,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 // Include structures
+#include "../Ref.h"
 #include "../gen/MipMap.h"
 #include "../gen/ByteArray.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiPalette;
 
 #include "../gen/obj_defines.h"
@@ -79,6 +80,8 @@ public:
 
 protected:
 	NI_PIXEL_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

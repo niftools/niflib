@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysData::TYPE("NiPSysData", &NI_P_SYS_DATA_PARENT::TypeConst() );

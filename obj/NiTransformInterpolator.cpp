@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTransformInterpolator.h"
 #include "NiTransformData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiTransformInterpolator::TYPE("NiTransformInterpolator", &NI_TRANSFORM_INTERPOLATOR_PARENT::TypeConst() );

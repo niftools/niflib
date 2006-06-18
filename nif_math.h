@@ -10,6 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "dll_export.h"
 
 using namespace std;
+namespace NifLib {
 
 #ifndef PI
 #define PI 3.14159265358979323846f  //Probably more accurate than a float can be, but it will just be rounded off anyway
@@ -19,6 +20,7 @@ using namespace std;
 struct TexCoord;
 struct Triangle;
 struct Vector3;
+struct Color3;
 struct Color4;
 struct Quaternion;
 struct Float2;
@@ -478,6 +480,8 @@ struct Matrix33 {
 		out[2][0] = rows[2][0]; out[2][1] = rows[2][1]; out[2][2] = rows[2][2];
 	}
 
+   NIFLIB_API Matrix33 operator*( const Matrix33 & m ) const;
+
 	//Python Operator Overloads
 	NIFLIB_API Float3 & __getitem__(int n) {
 		if (n > 2 || n < 0)
@@ -739,6 +743,9 @@ struct Matrix44 {
 		out[3][0] = rows[3][0]; out[3][1] = rows[3][1]; out[3][2] = rows[3][2]; out[3][3] = rows[3][3];
 	}
 
+   // undocumented
+   NIFLIB_API void Decompose( Vector3 & translate, Matrix33 & rotation, Float3 & scale ) const;
+
 	//Python Operator Overloads
 	NIFLIB_API Float4 & __getitem__(int n) {
 		if (n > 3 || n < 0)
@@ -880,4 +887,5 @@ ostream & operator<<( ostream & out, Color3 const & val );
 ostream & operator<<( ostream & out, Color4 const & val );
 ostream & operator<<( ostream & out, Quaternion const & val );
 
+}
 #endif

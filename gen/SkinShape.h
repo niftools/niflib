@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
 class NiTriShape;
@@ -31,4 +32,5 @@ struct NIFLIB_API SkinShape {
 	Ref<NiSkinInstance > skinInstance;
 };
 
+}
 #endif

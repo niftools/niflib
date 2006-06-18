@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTextKeyExtraData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiTextKeyExtraData::TYPE("NiTextKeyExtraData", &NI_TEXT_KEY_EXTRA_DATA_PARENT::TypeConst() );

@@ -5,6 +5,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIBSPLINEINTERPOLATOR_H_
 
 #include "NiInterpolator.h"
+namespace NifLib {
+
 
 #include "../gen/obj_defines.h"
 
@@ -21,7 +23,7 @@ public:
 	~NiBSplineInterpolator();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -30,8 +32,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
 protected:
 	NI_B_SPLINE_INTERPOLATOR_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

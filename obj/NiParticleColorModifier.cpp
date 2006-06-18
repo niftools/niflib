@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiParticleColorModifier.h"
 #include "NiColorData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &NI_PARTICLE_COLOR_MODIFIER_PARENT::TypeConst() );

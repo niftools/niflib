@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "QuaternionXYZW.h"
+using namespace NifLib;
 
 //Constructor
 QuaternionXYZW::QuaternionXYZW() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {};

@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriBasedGeomData.h"
 // Include structures
 #include "../gen/MatchGroup.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -32,8 +33,6 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
-protected:
-	NI_TRI_SHAPE_DATA_MEMBERS
 public:
 
 	//--Match Detection--//
@@ -73,6 +72,10 @@ public:
 	 * \sa ITriShapeData::GetTriangles
 	 */
 	void SetTriangles( const vector<Triangle> & in );
+protected:
+	NI_TRI_SHAPE_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

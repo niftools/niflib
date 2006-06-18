@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 // Include structures
 #include "../gen/Morph.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -100,6 +101,8 @@ public:
 
 protected:
 	NI_MORPH_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Tension, bias, continuity.
@@ -29,4 +31,5 @@ struct NIFLIB_API TBC {
 	float c;
 };
 
+}
 #endif

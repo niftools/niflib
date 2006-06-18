@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "hkTriangle.h"
+using namespace NifLib;
 
 //Constructor
 hkTriangle::hkTriangle() : unknownShort((ushort)0) {};

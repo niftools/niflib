@@ -5,13 +5,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _FOOTER_H_
 
 #include "../NIF_IO.h"
+#include "../obj/NiObject.h"
 
 // Include structures
 #include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
 class NiAVObject;
-#include "../obj/NiObject.h"
 
 /*!
  * The NIF file footer.
@@ -24,7 +25,7 @@ struct NIFLIB_API Footer {
 	/*!
 	 * The number of root references.
 	 */
-	uint numRoots;
+	mutable uint numRoots;
 	/*!
 	 * List of root blocks. If there is a camera, for 1st person view, then
 	 * this block is referred to as well in this list, even if it is not a
@@ -37,4 +38,5 @@ struct NIFLIB_API Footer {
 	string asString( bool verbose = false ) const;
 };
 
+}
 #endif

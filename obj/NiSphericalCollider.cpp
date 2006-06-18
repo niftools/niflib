@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSphericalCollider.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiSphericalCollider::TYPE("NiSphericalCollider", &NI_SPHERICAL_COLLIDER_PARENT::TypeConst() );

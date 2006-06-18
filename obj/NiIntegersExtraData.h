@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIINTEGERSEXTRADATA_H_
 
 #include "NiExtraData.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -31,11 +32,16 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	vector<uint> GetData() const;
-	void SetData( const vector<uint> & n );
+	/*!
+	 * Integers.
+	 */
+	vector<uint > GetData() const;
+	void SetData( const vector<uint >& value );
 
 protected:
 	NI_INTEGERS_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

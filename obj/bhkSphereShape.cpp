@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkSphereShape.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkSphereShape::TYPE("bhkSphereShape", &BHK_SPHERE_SHAPE_PARENT::TypeConst() );

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBooleanExtraData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiBooleanExtraData::TYPE("NiBooleanExtraData", &NI_BOOLEAN_EXTRA_DATA_PARENT::TypeConst() );

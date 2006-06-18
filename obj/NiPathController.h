@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTimeController.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class NiPosData;
 class NiFloatData;
 
@@ -26,7 +29,7 @@ public:
 	~NiPathController();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -44,6 +47,8 @@ public:
 	void SetPosData( const Ref<NiPosData> & n );
 protected:
 	NI_PATH_CONTROLLER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

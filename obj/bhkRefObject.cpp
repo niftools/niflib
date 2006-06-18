@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkRefObject.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type bhkRefObject::TYPE("bhkRefObject", &BHK_REF_OBJECT_PARENT::TypeConst() );

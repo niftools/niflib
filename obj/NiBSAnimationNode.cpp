@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSAnimationNode.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiBSAnimationNode::TYPE("NiBSAnimationNode", &NI_B_S_ANIMATION_NODE_PARENT::TypeConst() );

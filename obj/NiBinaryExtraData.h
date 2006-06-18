@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiExtraData.h"
 // Include structures
 #include "../gen/ByteArray.h"
+namespace NifLib {
 
 #include "../gen/obj_defines.h"
 
@@ -39,6 +40,8 @@ public:
 
 protected:
 	NI_BINARY_EXTRA_DATA_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

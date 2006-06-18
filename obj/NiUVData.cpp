@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiUVData.h"
 #include "../gen/KeyGroup.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiUVData::TYPE("NiUVData", &NI_U_V_DATA_PARENT::TypeConst() );

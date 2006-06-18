@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
 class NiNode;
@@ -23,11 +24,12 @@ struct NIFLIB_API NodeGroup {
 	/*!
 	 * Number of node references that follow.
 	 */
-	uint numNodes;
+	mutable uint numNodes;
 	/*!
 	 * The list of NiNode references.
 	 */
 	vector<Ref<NiNode > > nodes;
 };
 
+}
 #endif

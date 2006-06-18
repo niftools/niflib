@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysMeshUpdateModifier.h"
 #include "NiNode.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysMeshUpdateModifier::TYPE("NiPSysMeshUpdateModifier", &NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT::TypeConst() );

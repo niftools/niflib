@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * A list of \\0 terminated strings.
@@ -25,4 +27,5 @@ struct NIFLIB_API StringPalette {
 	uint length;
 };
 
+}
 #endif

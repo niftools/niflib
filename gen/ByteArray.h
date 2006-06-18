@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * An array of bytes.
@@ -18,11 +20,12 @@ struct NIFLIB_API ByteArray {
 	/*!
 	 * The number of bytes in this array
 	 */
-	uint dataSize;
+	mutable uint dataSize;
 	/*!
 	 * The bytes which make up the array
 	 */
 	vector<byte > data;
 };
 
+}
 #endif

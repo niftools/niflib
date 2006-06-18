@@ -5,11 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPARTICLESYSTEMCONTROLLER_H_
 
 #include "NiTimeController.h"
+
 // Include structures
+#include "../Ref.h"
 #include "../gen/Particle.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiObject;
 class AParticleModifier;
 
@@ -29,7 +31,7 @@ public:
 	~NiParticleSystemController();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -41,6 +43,8 @@ public:
 	//TODO:  This controller is not a priority and it has a lot of unknown data.
 protected:
 	NI_PARTICLE_SYSTEM_CONTROLLER_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

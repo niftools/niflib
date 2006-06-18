@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "RootCollisionNode.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type RootCollisionNode::TYPE("RootCollisionNode", &ROOT_COLLISION_NODE_PARENT::TypeConst() );

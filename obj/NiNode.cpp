@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSkinInstance.h"
 #include "NiSkinData.h"
 #include "NiTriBasedGeom.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TypeConst() );
@@ -56,7 +57,7 @@ const Type & NiNode::GetType() const {
 	return TYPE;
 };
 
-void NiNode::AddChild( Ref<NiAVObject> & obj ) {
+void NiNode::AddChild( Ref<NiAVObject> obj ) {
 	if ( obj->GetParent() != NULL ) {
 		throw runtime_error( "You have attempted to add a child to a NiNode which already is the child of another NiNode." );
 	}
@@ -90,6 +91,35 @@ void NiNode::ClearChildren() {
 
 vector< Ref<NiAVObject> > NiNode::GetChildren() const {
 	return children;
+}
+
+
+void NiNode::AddEffect( Ref<NiDynamicEffect> obj ) {
+   obj->SetParent( this );
+   effects.push_back( obj );
+}
+
+void NiNode::RemoveEffect( Ref<NiDynamicEffect> obj ) {
+   //Search Effect list for the one to remove
+   for ( vector< NiDynamicEffectRef >::iterator it = effects.begin(); it != effects.end(); ) {
+      if ( *it == obj ) {
+         (*it)->SetParent(NULL);
+         it = effects.erase( it );
+      } else {
+         ++it;
+      }
+   }
+}
+
+void NiNode::ClearEffects() {
+   for ( vector< NiDynamicEffectRef >::iterator it = effects.begin(); it != effects.end(); ++it) {
+      if (*it) (*it)->SetParent(NULL);
+   }
+   effects.clear();
+}
+
+vector< Ref<NiDynamicEffect> > NiNode::GetEffects() const {
+   return effects;
 }
 
 bool NiNode::IsSkeletonRoot() const {

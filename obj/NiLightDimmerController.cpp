@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiLightDimmerController.h"
 #include "NiInterpolator.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiLightDimmerController::TYPE("NiLightDimmerController", &NI_LIGHT_DIMMER_CONTROLLER_PARENT::TypeConst() );

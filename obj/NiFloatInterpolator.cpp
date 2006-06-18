@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiFloatInterpolator.h"
 #include "NiFloatData.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiFloatInterpolator::TYPE("NiFloatInterpolator", &NI_FLOAT_INTERPOLATOR_PARENT::TypeConst() );

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSequenceStreamHelper.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiSequenceStreamHelper::TYPE("NiSequenceStreamHelper", &NI_SEQUENCE_STREAM_HELPER_PARENT::TypeConst() );

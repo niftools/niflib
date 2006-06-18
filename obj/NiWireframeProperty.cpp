@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiWireframeProperty.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiWireframeProperty::TYPE("NiWireframeProperty", &NI_WIREFRAME_PROPERTY_PARENT::TypeConst() );

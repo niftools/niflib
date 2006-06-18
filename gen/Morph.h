@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Geometry morphing data component.
@@ -22,7 +24,7 @@ struct NIFLIB_API Morph {
 	/*!
 	 * The number of morph keys that follow.
 	 */
-	uint numMorphKeys;
+	mutable uint numMorphKeys;
 	/*!
 	 * Unlike most blocks, the presense of this value is not conditional on
 	 * there being keys.
@@ -42,4 +44,5 @@ struct NIFLIB_API Morph {
 	vector<Vector3 > vectors;
 };
 
+}
 #endif

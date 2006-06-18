@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * Array of vector keys (anything that can be interpolated, except
@@ -16,7 +18,7 @@ struct NIFLIB_API KeyGroup {
 	/*!
 	 * Number of keys in the array.
 	 */
-	uint numKeys;
+	mutable uint numKeys;
 	/*!
 	 * The key type.
 	 */
@@ -27,4 +29,5 @@ struct NIFLIB_API KeyGroup {
 	vector<Key<T > > keys;
 };
 
+}
 #endif

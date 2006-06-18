@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * 
@@ -57,4 +59,5 @@ struct NIFLIB_API LimitedHingeDescriptor {
 	float maxFriction;
 };
 
+}
 #endif

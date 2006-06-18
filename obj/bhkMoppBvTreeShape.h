@@ -6,8 +6,11 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkShape.h"
 
-// Forward define of referenced blocks
+// Include structures
 #include "../Ref.h"
+namespace NifLib {
+
+// Forward define of referenced blocks
 class bhkShape;
 
 #include "../gen/obj_defines.h"
@@ -26,7 +29,7 @@ public:
 	~bhkMoppBvTreeShape();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -35,8 +38,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
 protected:
 	BHK_MOPP_BV_TREE_SHAPE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiRangeLODData.h"
 #include "../gen/LODRange.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiRangeLODData::TYPE("NiRangeLODData", &NI_RANGE_L_O_D_DATA_PARENT::TypeConst() );

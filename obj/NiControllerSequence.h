@@ -7,9 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 // Include structures
 #include "../gen/ControllerLink.h"
+#include "../Ref.h"
+namespace NifLib {
 
 // Forward define of referenced blocks
-#include "../Ref.h"
 class NiTextKeyExtraData;
 class NiControllerManager;
 class NiStringPalette;
@@ -31,7 +32,7 @@ public:
 	~NiControllerSequence();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
-private:	
+private:
 	static const Type TYPE;
 public:
 	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
@@ -73,6 +74,8 @@ private:
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
 	NI_CONTROLLER_SEQUENCE_MEMBERS
+	STANDARD_INTERNAL_METHODS
 };
 
+}
 #endif

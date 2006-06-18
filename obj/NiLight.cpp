@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiLight.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiLight::TYPE("NiLight", &NI_LIGHT_PARENT::TypeConst() );

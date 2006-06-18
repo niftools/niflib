@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "Footer.h"
 #include "../obj/NiAVObject.h"
+using namespace NifLib;
 
 //Constructor
 Footer::Footer() : numRoots((uint)0) {};
@@ -21,6 +22,7 @@ void Footer::Read( istream& in, list<uint> & link_stack, unsigned int version, u
 }
 
 void Footer::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	numRoots = uint(roots.size());
 	NifStream( numRoots, out, version );
 	for (uint i1 = 0; i1 < roots.size(); i1++) {
 		if ( roots[i1] != NULL )
@@ -32,6 +34,7 @@ void Footer::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int v
 
 string Footer::asString( bool verbose ) const {
 	stringstream out;
+	numRoots = uint(roots.size());
 	out << "  Num Roots:  " << numRoots << endl;
 	for (uint i1 = 0; i1 < roots.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {

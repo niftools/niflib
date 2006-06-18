@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../NIF_IO.h"
 
+namespace NifLib {
+
 
 /*!
  * A triangle with extra data used for physics.
@@ -30,4 +32,5 @@ struct NIFLIB_API hkTriangle {
 	Vector3 normal;
 };
 
+}
 #endif

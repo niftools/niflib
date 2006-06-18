@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysEmitterDeclinationCtlr.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPSysEmitterDeclinationCtlr::TYPE("NiPSysEmitterDeclinationCtlr", &NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT::TypeConst() );

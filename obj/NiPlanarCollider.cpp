@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPlanarCollider.h"
+using namespace NifLib;
 
 //Definition of TYPE constant
 const Type NiPlanarCollider::TYPE("NiPlanarCollider", &NI_PLANAR_COLLIDER_PARENT::TypeConst() );
