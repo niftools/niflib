@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSplineCompFloatInterpolator.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiBSplineCompFloatInterpolator::TYPE("NiBSplineCompFloatInterpolator", &NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT::TypeConst() );

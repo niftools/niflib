@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTransformData.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiTransformData::TYPE("NiTransformData", &NI_TRANSFORM_DATA_PARENT::TypeConst() );

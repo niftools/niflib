@@ -54,10 +54,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "obj/NiNode.h"
 #include "obj/NiAVObject.h"
 //#include "gen/obj_defines.h"
-#include "kfm.h"
+//#include "kfm.h"
 
 using namespace std;
-namespace NifLib {
+namespace Niflib {
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
@@ -180,16 +180,18 @@ NIFLIB_API void WriteNifTree( string const & file_name, NiObjectRef const & root
  */
 NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
-/*!
- * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
- * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
- * \param root The root block to start from when writing out the NIF file.
- * \param version The version of the NIF format to use when writing a file.
- * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
- * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
- */
-NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
+//TODO:  This was written by Amorilia.  Figure out how to fix it.
+///*!
+// * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
+// * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
+// * \param root The root block to start from when writing out the NIF file.
+// * \param version The version of the NIF format to use when writing a file.
+// * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
+// * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
+// */
+//NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
+//TODO:  Figure out how to fix this to work with the new system
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
  * \param target The root block of the first Nif tree to merge.
@@ -238,7 +240,7 @@ NIFLIB_API bool IsVersionSupported(unsigned int ver);
  */
 NIFLIB_API unsigned int GetVersion(string version);
 
-
+//TODO:  This is planned functionality but is unfinished
 //struct ComplexVertex {
 //	ComplexVertex() : has_color(false), has_normal(false), vertex_index(0), normal_index(0), color_index(0) {}
 //	~ComplexVertex();

@@ -21,7 +21,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/ShaderTexDesc.h"
 #include "../gen/TexDesc.h"
 #include "NiSourceTexture.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TypeConst() );

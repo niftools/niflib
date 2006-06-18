@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiExtraData.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiExtraData::TYPE("NiExtraData", &NI_EXTRA_DATA_PARENT::TypeConst() );

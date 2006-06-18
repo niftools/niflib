@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysDragModifier.h"
 #include "NiObject.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPSysDragModifier::TYPE("NiPSysDragModifier", &NI_P_SYS_DRAG_MODIFIER_PARENT::TypeConst() );

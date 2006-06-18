@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "Morph.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 Morph::Morph() : numMorphKeys((uint)0), morphInterpolation((KeyType)0), unknownInt((uint)0) {};

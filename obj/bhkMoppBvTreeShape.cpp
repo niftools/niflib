@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkMoppBvTreeShape.h"
 #include "bhkShape.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &BHK_MOPP_BV_TREE_SHAPE_PARENT::TypeConst() );

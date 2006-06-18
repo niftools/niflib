@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _REF_H_
 #include <ostream>
 #include "dll_export.h"
-namespace NifLib {
+namespace Niflib {
 
 /**
  * Smart Pointer Template

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "SkinShape.h"
 #include "../obj/NiTriShape.h"
 #include "../obj/NiSkinInstance.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 SkinShape::SkinShape() : shape(NULL), skinInstance(NULL) {};

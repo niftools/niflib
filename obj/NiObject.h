@@ -16,7 +16,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 #include "../Type.h"
 #include "../gen/obj_defines.h"
-namespace NifLib {
+namespace Niflib {
 
 using namespace std;
 

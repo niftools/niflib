@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiDynamicEffect.h"
 #include "NiAVObject.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiDynamicEffect::TYPE("NiDynamicEffect", &NI_DYNAMIC_EFFECT_PARENT::TypeConst() );

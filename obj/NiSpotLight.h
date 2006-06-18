@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NISPOTLIGHT_H_
 
 #include "NiPointLight.h"
-namespace NifLib {
+namespace Niflib {
 
 
 #include "../gen/obj_defines.h"

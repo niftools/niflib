@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "BSBound.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSBound::TYPE("BSBound", &B_S_BOUND_PARENT::TypeConst() );

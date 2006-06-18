@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiPSysVolumeEmitter.h"
 #include "NiNode.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPSysVolumeEmitter::TYPE("NiPSysVolumeEmitter", &NI_P_SYS_VOLUME_EMITTER_PARENT::TypeConst() );

@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../gen/LimitedHingeDescriptor.h"
-namespace NifLib {
+namespace Niflib {
 
 
 #include "../gen/obj_defines.h"

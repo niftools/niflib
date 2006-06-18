@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiParticles.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiParticles::TYPE("NiParticles", &NI_PARTICLES_PARENT::TypeConst() );

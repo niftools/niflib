@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKHINGECONSTRAINT_H_
 
 #include "AbhkConstraint.h"
-namespace NifLib {
+namespace Niflib {
 
 #include "../gen/obj_defines.h"
 

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIVISDATA_H_
 
 #include "AKeyedData.h"
-namespace NifLib {
+namespace Niflib {
 
 
 #include "../gen/obj_defines.h"

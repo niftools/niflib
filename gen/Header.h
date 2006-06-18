@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "ShortString.h"
-namespace NifLib {
+namespace Niflib {
 
 
 /*!

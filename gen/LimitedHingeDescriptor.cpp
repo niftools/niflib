@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "LimitedHingeDescriptor.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 LimitedHingeDescriptor::LimitedHingeDescriptor() : minAngle(0.0f), maxAngle(0.0f), maxFriction(0.0f) {};

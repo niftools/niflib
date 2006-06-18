@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _ABHKCONSTRAINT_H_
 
 #include "bhkSerializable.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class bhkShape;

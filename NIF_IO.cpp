@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NIF_IO.h"
-namespace NifLib {
+namespace Niflib {
 
 int BlockSearch( istream& in ) {
 

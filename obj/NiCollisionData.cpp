@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiCollisionData.h"
 #include "NiNode.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TypeConst() );

@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "AKeyedData.h"
 // Include structures
 #include "../gen/KeyGroup.h"
-namespace NifLib {
+namespace Niflib {
 
 #include "../gen/obj_defines.h"
 

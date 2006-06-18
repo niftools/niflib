@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "../Ref.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiSkinData;

@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "FurniturePosition.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 FurniturePosition::FurniturePosition() : orientation((ushort)0), positionRef1((byte)0), positionRef2((byte)0) {};

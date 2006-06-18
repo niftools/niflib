@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "StringPalette.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 StringPalette::StringPalette() : length((uint)0) {};

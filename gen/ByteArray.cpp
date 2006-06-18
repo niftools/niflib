@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "ByteArray.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 ByteArray::ByteArray() : dataSize((uint)0) {};

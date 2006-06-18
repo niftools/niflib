@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "ShortString.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 ShortString::ShortString() : length((byte)0) {};

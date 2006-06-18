@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 #include "../gen/MipMap.h"
 #include "../gen/ByteArray.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiPalette;

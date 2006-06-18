@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 
 #include NI_OBJECT_N_E_T_INCLUDE
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiExtraData;

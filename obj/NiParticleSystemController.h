@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 // Include structures
 #include "../Ref.h"
 #include "../gen/Particle.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiObject;

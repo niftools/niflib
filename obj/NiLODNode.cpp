@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiLODNode.h"
 #include "../gen/LODRange.h"
 #include "NiRangeLODData.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TypeConst() );

@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "SkinShape.h"
-namespace NifLib {
+namespace Niflib {
 
 
 /*!

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "ShortString.h"
 #include "ShortString.h"
 #include "ShortString.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)0), unknownInt3((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};

@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiGravity.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiGravity::TYPE("NiGravity", &NI_GRAVITY_PARENT::TypeConst() );

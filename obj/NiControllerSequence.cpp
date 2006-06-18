@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiControllerManager.h"
 #include "NiStringPalette.h"
 #include "NiTimeController.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TypeConst() );

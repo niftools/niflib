@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "../obj/NiObject.h"
-using namespace NifLib;
+using namespace Niflib;
 using namespace std;
 
 #include "../obj/bhkBlendCollisionObject.h"

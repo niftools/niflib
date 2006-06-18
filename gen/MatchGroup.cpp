@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "MatchGroup.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 MatchGroup::MatchGroup() : numVertices((ushort)0) {};

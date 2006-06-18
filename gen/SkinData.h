@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Include structures
 #include "SkinWeight.h"
-namespace NifLib {
+namespace Niflib {
 
 
 /*!

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPSYSMODIFIER_H_
 
 #include "NiObject.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiParticleSystem;

@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "dll_export.h"
 
 using namespace std;
-namespace NifLib {
+namespace Niflib {
 
 /**
  * Run Time Type Inforamtion Class

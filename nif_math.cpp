@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "nif_math.h"
 #include <iomanip>
-using namespace NifLib;
+using namespace Niflib;
 
 //Constants
 
@@ -475,7 +475,7 @@ Matrix33 Quaternion::AsMatrix() {
 /*
  * ostream functions for printing with cout
  */
-namespace NifLib {
+namespace Niflib {
 ostream & operator<<( ostream & out, TexCoord const & val ) {
 	return out << "(" << setw(6) << val.u << "," << setw(6) << val.v << ")";
 }

@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiMorphData.h"
 #include "../gen/Morph.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TypeConst() );

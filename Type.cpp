@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "Type.h"
-using namespace NifLib;
+using namespace Niflib;
 
 Type::Type (const string & type_name, const Type * par_type ) : name(type_name), base_type(par_type) {} 
 

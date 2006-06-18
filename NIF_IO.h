@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <sstream>
 #include <vector>
 #include "nif_math.h"
-namespace NifLib {
+namespace Niflib {
 using namespace std;
 
 #ifndef NULL

@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "Footer.h"
 #include "../obj/NiAVObject.h"
-using namespace NifLib;
+using namespace Niflib;
 
 //Constructor
 Footer::Footer() : numRoots((uint)0) {};

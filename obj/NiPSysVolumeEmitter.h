@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPSYSVOLUMEEMITTER_H_
 
 #include "NiPSysEmitter.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiNode;

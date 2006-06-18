@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIPSYSDRAGMODIFIER_H_
 
 #include "NiPSysModifier.h"
-namespace NifLib {
+namespace Niflib {
 
 // Forward define of referenced blocks
 class NiObject;
