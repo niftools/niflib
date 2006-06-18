@@ -401,6 +401,26 @@ There are now separate include files for each object type in a NIF file.  To inc
 
 You will have one such line in your source code for each NIF object that your program needs access to.
 
+Niflib also wraps all its functions in the "Niflib" namespace.  So, depending on your needs, you can either gain access to all Niflib symbols with a using directive like this:
+
+\code
+using namespace Niflib;
+\endcode
+
+Gain access to specific symbols but not others with specific using directives like this:
+
+\code
+using Niflib::NiNodeRef;
+using Niflib::NiObjectRef;
+using Niflib::ReadNifTree;
+\endcode
+
+Or simply prepend all of your Niflib symbols with "Niflib::" like this:
+
+\code
+Niflib::NiObjectRef niObj = Niflib::ReadNifTree( "test.nif" );
+\endcode
+
 \subsection py Python
 
 If you are using the pre-compiled version of the Python SWIG wrapper for Windows, you should follow the instructions in the readme file that is included. Briefly, you will place the _niflib.dll and the niflib.py files in your Python 2.4 install location. If you want to compile them yourself you will need to get SWIG 1.3.25 or higher. There there are two build methods, Scons and a Visual Studio 2005 project, provided for this purpose.
