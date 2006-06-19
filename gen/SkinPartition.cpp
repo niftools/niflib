@@ -17,8 +17,7 @@ ushort SkinPartition::CalcNumTriangles() const {
       size = (ushort)triangles.size();
    } else {
       for (size_t i=0; i<stripLengths.size(); ++i)
-         size += (ushort)stripLengths[i];
-      size -= 2;
+         size += ((ushort)stripLengths[i] - 2);
    }
    return size;
 }
