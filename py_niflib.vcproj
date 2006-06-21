@@ -139,7 +139,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="niflib.lib"
-				OutputFile="../bin/_niflib.dll"
+				OutputFile="../bin/_new_niflib.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
