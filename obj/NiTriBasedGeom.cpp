@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiTriBasedGeomData.h"
 #include "NiSkinInstance.h"
 #include "NiObject.h"
+#include "NiSkinData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -67,11 +68,25 @@ void NiTriBasedGeom::SetShader( const string & n ) {
 		shaderName = n;
 	}
 }
-	
-void NiTriBasedGeom::SetSkinInstance( Ref<NiSkinInstance> & n ) {
-	skinInstance = n;
-}
 
 Ref<NiSkinInstance> NiTriBasedGeom::GetSkinInstance() const {
 	return skinInstance;
+}
+
+void NiTriBasedGeom::BindSkin( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
+	//Ensure skin is not aleady bound
+	if ( skinInstance != 0 ) {
+		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
+	}
+
+	//Create a skin instance using the bone and root data
+	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
+
+	//Create a NiSkinData object based on this mesh
+	skinInstance->SetSkinData( new NiSkinData( this ) );
+};
+
+void NiTriBasedGeom::UnbindSkin() {
+	//Clear skin instance
+	skinInstance = NULL;
 }

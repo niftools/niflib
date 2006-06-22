@@ -12,6 +12,7 @@ namespace Niflib {
 
 // Forward define of referenced blocks
 class NiSkinPartition;
+class NiTriBasedGeom;
 
 #include "../gen/obj_defines.h"
 
@@ -25,7 +26,15 @@ typedef Ref<NiSkinData> NiSkinDataRef;
 class NIFLIB_API NiSkinData : public NI_SKIN_DATA_PARENT {
 public:
 	NiSkinData();
+
+	/*!
+	 * This constructor is called by NiTriBasedGeom when it creates a new skin
+	 * instance using the BindSkin function.
+	 */
+	NiSkinData( const Ref<NiTriBasedGeom> & owner );
+
 	~NiSkinData();
+
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
 private:	
@@ -38,11 +47,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	void SetOverallTransform( const Matrix44 & n );
 	Matrix44 GetOverallTransform() const;
+	uint GetBoneCount() const;
+	Matrix44 GetBoneTransform( uint bone_index ) const;
+	vector<SkinWeight> GetBoneWeights( uint bone_index ) const;
+	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n );
 
-	void SetBoneData( const vector<SkinData> & n );
-	vector<SkinData> GetBoneData() const;
 protected:
 	NI_SKIN_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS

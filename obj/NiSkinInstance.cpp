@@ -13,7 +13,43 @@ const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::Type
 
 NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
-NiSkinInstance::~NiSkinInstance() {}
+NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) NI_SKIN_INSTANCE_CONSTRUCT {
+	//Ensure that all bones are below the skeleton root node on the scene graph
+	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+		bool is_decended = false;
+		NiNodeRef node = bone_nodes[i];
+		while ( node != NULL ) {
+			if ( node == skeleton_root ) {
+				is_decended = true;
+				break;
+			}
+			node = node->GetParent();
+		}
+		if ( is_decended == false ) {
+			throw runtime_error( "All bones must be lower than the skeleton root in the scene graph." );
+		}
+	}
+
+	//Add the bones to the internal list
+	bones.resize( bone_nodes.size() );
+	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+		bones[i] = bone_nodes[i];
+	}
+
+	//Flag any bones that are part of this skin instance
+	for ( uint i = 0; i < bones.size(); ++i ) {
+		bones[i]->SetSkinFlag(true);
+	}
+
+	//Store skeleton root and inform it of this attachment
+	skeletonRoot = skeleton_root;
+	skeletonRoot->AddSkin( this );
+}
+
+NiSkinInstance::~NiSkinInstance() {
+	//Inform Skeleton Root of detatchment and clear it.
+	skeletonRoot->RemoveSkin( this );
+}
 
 void NiSkinInstance::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SKIN_INSTANCE_READ
@@ -52,61 +88,6 @@ vector< Ref<NiNode> > NiSkinInstance::GetBones() const {
 	return ref_bones;
 }
 
-void NiSkinInstance::Bind( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
-	//Ensure skin is not aleady bound
-	if ( bones.size() != 0 ) {
-		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
-	}
-
-	//Ensure that all bones are below the skeleton root node on the scene graph
-	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
-		bool is_decended = false;
-		NiNodeRef node = bone_nodes[i];
-		while ( node != NULL ) {
-			if ( node == skeleton_root ) {
-				is_decended = true;
-				break;
-			}
-			node = node->GetParent();
-		}
-		if ( is_decended == false ) {
-			throw runtime_error( "All bones must be lower than the skeleton root in the scene graph." );
-		}
-	}
-
-	//Add the bones to the internal list
-	bones.resize( bone_nodes.size() );
-	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
-		bones[i] = bone_nodes[i];
-	}
-
-	//Flag any bones that are part of this skin instance
-	for ( uint i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(true);
-	}
-
-	//Store skeleton root and inform it of this attachment
-	skeletonRoot = skeleton_root;
-	skeletonRoot->AddSkin( this );
-};
-
-void NiSkinInstance::Unbind() {
-	//Inform Skeleton Root of detatchment and clear it.
-	skeletonRoot->RemoveSkin( this );
-	skeletonRoot = NULL;
-
-	//Clear bone list
-	bones.clear();
-
-	//Destroy skin data
-	data = NULL;
-	skinPartition = NULL;
-}
-
-void NiSkinInstance::CalcHardwareSkinningData () {
-
-}
-
 Ref<NiSkinData> NiSkinInstance::GetSkinData() const {
 	return data;
 }
@@ -132,4 +113,12 @@ void NiSkinInstance::SkeletonLost() {
 	//Destroy skin data
 	data = NULL;
 	skinPartition = NULL;
+}
+
+uint NiSkinInstance::GetBoneCount() const {
+	return uint(bones.size());
+}
+
+Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {
+	return skeletonRoot;
 }

@@ -103,6 +103,11 @@ Ref<T> & Ref<T>::operator=( T * object ) {
 		return *this; //Do nothing
 	}
 
+	//Increment reference count on new object if it is not NULL
+	if ( object != NULL ) {
+		object->AddRef();
+	}
+
 	//Decriment reference count on previously referenced object, if any
 	if ( _object != NULL ) {
 		_object->SubtractRef();
@@ -110,11 +115,6 @@ Ref<T> & Ref<T>::operator=( T * object ) {
 
 	//Change reference to new object
 	_object = object;
-
-	//Increment reference count on new object if it is not NULL
-	if ( _object != NULL ) {
-		_object->AddRef();
-	}
 
 	return *this;
 }
@@ -127,6 +127,11 @@ Ref<T> & Ref<T>::operator=( const Ref & ref ) {
 		return *this; //Do nothing
 	}
 
+	//Increment reference count on new object if it is not NULL
+	if ( ref._object != NULL ) {
+		ref._object->AddRef();
+	}
+
 	//Decriment reference count on previously referenced object, if any
 	if ( _object != NULL ) {
 		_object->SubtractRef();
@@ -134,11 +139,6 @@ Ref<T> & Ref<T>::operator=( const Ref & ref ) {
 
 	//Change reference to new object
 	_object = ref._object;
-
-	//Increment reference count on new object if it is not NULL
-	if ( _object != NULL ) {
-		_object->AddRef();
-	}
 
 	return *this;
 }

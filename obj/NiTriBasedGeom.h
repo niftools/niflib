@@ -40,7 +40,14 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	//TODO:  Handle attatchment of SkinInstance with new skinning API
+	/*!
+	 * Binds this geometry to a list of bones.  Creates and attatches a
+	 * NiSkinInstance and NiSkinData class. The bones must have a common
+	 * ancestor in the scenegraph.  This becomes the skeleton root.
+	 */
+	void BindSkin( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+	void UnbindSkin();
+	Ref<NiSkinInstance> GetSkinInstance() const;
 
 	Ref<NiTriBasedGeomData> GetData() const;
 	void SetData( const Ref<NiTriBasedGeomData> & n );
@@ -51,8 +58,7 @@ public:
 	string GetShader() const;
 	void SetShader( const string & n );
 
-	void SetSkinInstance( Ref<NiSkinInstance> & n );
-	Ref<NiSkinInstance> GetSkinInstance() const;
+	
 	
 protected:
 	NI_TRI_BASED_GEOM_MEMBERS

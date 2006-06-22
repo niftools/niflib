@@ -34,7 +34,7 @@ void NiObject::AddRef() const {
 }
 
 void NiObject::SubtractRef() const {
-	if ( --_ref_count == 0 ) {
+	if ( _ref_count-- == 0 ) {
 		delete this;
 	}
 }

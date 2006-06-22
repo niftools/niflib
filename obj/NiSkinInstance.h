@@ -27,6 +27,13 @@ typedef Ref<NiSkinInstance> NiSkinInstanceRef;
 class NIFLIB_API NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
 public:
 	NiSkinInstance();
+
+	/*!
+	 * This constructor is called by NiTriBasedGeom when it creates a new skin
+	 * instance using the BindSkin function.
+	 */
+	NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+
 	~NiSkinInstance();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
@@ -40,27 +47,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	uint GetBoneCount() const;
 	vector< Ref<NiNode> > GetBones() const;
-
-	/*!
-	 * Binds any geometry that uses this skin instance to a list of bones.
-	 * The bones must have a common ancestor in the scenegraph.  This becomes
-	 * the skeleton root.
-	 */
-	void Bind( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
-
-	/*! 
-	 * Detatches this skin instance from any bones it was previously bound to.
-	 */
-	void Unbind();
-
-	/*! 
-	 * Calculates a NiSkinPartition and attaches it to both pointers, the one
-	 * used in later versions in this class, and the one in the attached
-	 * NiSkinData class.  This way it will be written regardless of the
-	 * version.  SkinData must be set before this can be calculated.
-	 */
-	void CalcHardwareSkinningData ();
+	Ref<NiNode> GetSkeletonRoot() const;
 
 	Ref<NiSkinData> GetSkinData() const;
 	void SetSkinData( const Ref<NiSkinData> & n );

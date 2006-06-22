@@ -170,7 +170,7 @@ void NiNode::GoToSkeletonBindPosition() {
 	//Loop through all attached skins, straightening the skeleton on each
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
 		//Get Bone list and Skin Data
-		vector<NiNodeRef> bones = (*it)->GetBones();
+		vector<NiNodeRef> bone_nodes = (*it)->GetBones();
 		NiSkinDataRef skin_data = (*it)->GetSkinData();
 
 		if ( skin_data == NULL ) {
@@ -178,59 +178,32 @@ void NiNode::GoToSkeletonBindPosition() {
 			continue;
 		}
 
-		//Get bone data from NiSkinData class
-		vector<SkinData> bone_data = skin_data->GetBoneData();
-
 		//Make sure the counts match
-		if ( bones.size() != bone_data.size() ) {
+		if ( bone_nodes.size() != skin_data->GetBoneCount() ) {
 			throw runtime_error( "Bone counts in NiSkinInstance and attached NiSkinData must match" );
 		}
 
 		//Loop through all bones influencing this skin
-		for ( uint i = 0; i < bones.size(); ++i ) {
+		for ( uint i = 0; i < bone_nodes.size(); ++i ) {
 			//Get current offset Matrix for this bone
-			//Matrix44 parent_offset( bone_data[i].translation,
-			//	                    bone_data[i].rotation,
-			//						bone_data[i].scale );
-			Matrix44 parent_offset(
-				bone_data[i].rotation[0][0], bone_data[i].rotation[0][1], bone_data[i].rotation[0][2], 0.0f,
-				bone_data[i].rotation[1][0], bone_data[i].rotation[1][1], bone_data[i].rotation[1][2], 0.0f,
-				bone_data[i].rotation[2][0], bone_data[i].rotation[2][1], bone_data[i].rotation[2][2], 0.0f,
-				bone_data[i].translation.x, bone_data[i].translation.y, bone_data[i].translation.z, 1.0f
-			); 
+			Matrix44 parent_offset = skin_data->GetBoneTransform(i);
 
 			//Loop through all bones again, checking for any that have this bone as a parent
-			for ( uint j = 0; j < bones.size(); ++j ) {
-				if ( bones[j]->GetParent() == bones[i] ) {
+			for ( uint j = 0; j < bone_nodes.size(); ++j ) {
+				if ( bone_nodes[j]->GetParent() == bone_nodes[i] ) {
 					//cout << "Bone " << bones[j] << " has bone " << bones[i] << " as parent." << endl;
 					//Node 2 has node 1 as a parent
 
 					//Get child offset Matrix33
-					/*Matrix44 child_offset( bone_data[j].translation,
-										   bone_data[j].rotation,
-										   bone_data[j].scale );*/
-					Matrix44 child_offset(
-						bone_data[j].rotation[0][0], bone_data[j].rotation[0][1], bone_data[j].rotation[0][2], 0.0f,
-						bone_data[j].rotation[1][0], bone_data[j].rotation[1][1], bone_data[j].rotation[1][2], 0.0f,
-						bone_data[j].rotation[2][0], bone_data[j].rotation[2][1], bone_data[j].rotation[2][2], 0.0f,
-						bone_data[j].translation.x, bone_data[j].translation.y, bone_data[j].translation.z, 1.0f
-					);
+					Matrix44 child_offset = skin_data->GetBoneTransform(j);
 
 					//Do calculation to get correct bone postion in relation to parent
-					//Matrix44 inverse_co = child_offset.Inverse();
-					//world_positions[bones[j]] = inverse_co * parent_offset;
-					Matrix44 inverse_co = child_offset.Inverse();
-					Matrix44 child_pos = inverse_co * parent_offset;
+					Matrix44 child_pos = child_offset.Inverse() * parent_offset;
 
 					//bones[j]->SetWorldBindPos( child_pos );
-					bones[j]->SetLocalRotation( child_pos.GetRotation() );
-					bones[j]->SetLocalScale( 1.0f );
-					bones[j]->SetLocalTranslation( child_pos.GetTranslation() );
-
-					//cout << "Matrix:  " << cout << "Translation:  " << world_positions[bones[j]] << endl;
-					//cout << "Translation:  " << world_positions[bones[j]].GetTranslation() << endl;
-					//cout << "Rotation:  " << world_positions[bones[j]].GetRotation() << endl;
-					//cout << "Scale:  " << world_positions[bones[j]].GetScale() << endl;
+					bone_nodes[j]->SetLocalRotation( child_pos.GetRotation() );
+					bone_nodes[j]->SetLocalScale( 1.0f );
+					bone_nodes[j]->SetLocalTranslation( child_pos.GetTranslation() );
 				}
 			}
 		}
@@ -261,30 +234,24 @@ void NiNode::RepositionGeom( NiAVObjectRef root ) {
 			return;
 		}
 
-		//Get bone info
-		vector<NiNodeRef> bones = skin_inst->GetBones();
-		vector<SkinData> bone_data = skin_data->GetBoneData();
+		//Get bone nodes
+		vector<NiNodeRef> bone_nodes = skin_inst->GetBones();
 
 		//Make sure the counts match
-		if ( bones.size() != bone_data.size() ) {
+		if ( bone_nodes.size() != skin_data->GetBoneCount() ) {
 			throw runtime_error( "Bone counts in NiSkinInstance and attached NiSkinData must match" );
 		}
 
 		//There must be at least one bone to do anything
-		if ( bones.size() == 0 ) {
+		if ( bone_nodes.size() == 0 ) {
 			return;
 		}
 
 		//Use first bone (arbitrary choice)
-		Matrix44 offset_mat(
-			bone_data[0].rotation[0][0], bone_data[0].rotation[0][1], bone_data[0].rotation[0][2], 0.0f,
-			bone_data[0].rotation[1][0], bone_data[0].rotation[1][1], bone_data[0].rotation[1][2], 0.0f,
-			bone_data[0].rotation[2][0], bone_data[0].rotation[2][1], bone_data[0].rotation[2][2], 0.0f,
-			bone_data[0].translation.x, bone_data[0].translation.y, bone_data[0].translation.z, 1.0f
-		);
+		Matrix44 offset_mat = skin_data->GetBoneTransform(0);
 			
 		//Get built up rotations to the root of the skeleton from this bone
-		Matrix44 bone_mat = bones[0]->GetWorldTransform();
+		Matrix44 bone_mat = bone_nodes[0]->GetWorldTransform();
 
 		Matrix44 world_mat = offset_mat * bone_mat;
 

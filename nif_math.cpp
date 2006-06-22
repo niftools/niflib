@@ -393,7 +393,7 @@ float Matrix44::Determinant() const {
 	      - t[0][3] * Submatrix(0, 3).Determinant();
 }
 
-void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, Float3 & scale ) const {
+void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, float & scale ) const {
    translate = Vector3( (*this)[3][0], (*this)[3][1], (*this)[3][2] );
    Matrix33 rotT;
    for ( int i = 0; i < 3; i++ ){
@@ -403,12 +403,15 @@ void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, Float3 & sca
       }
    }
    Matrix33 mtx = rotation * rotT;
-   scale = Float3( sqrt(mtx[0][0]), sqrt(mtx[1][1]), sqrt(mtx[2][2]) );
+   Float3 scale3( sqrt(mtx[0][0]), sqrt(mtx[1][1]), sqrt(mtx[2][2]) );
    for ( int i = 0; i < 3; i++ ){
       for ( int j = 0; j < 3; j++ ){
-         rotation[i][j] /= scale[i];
+         rotation[i][j] /= scale3[i];
       }
    }
+
+   //averate the scale since NIF doesn't support discreet scaling
+   scale = scale3[0] + scale3[1] + scale3[2] / 3.0f;
 }
 /*
  * Quaternion Methods

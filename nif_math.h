@@ -744,7 +744,7 @@ struct Matrix44 {
 	}
 
    // undocumented
-   NIFLIB_API void Decompose( Vector3 & translate, Matrix33 & rotation, Float3 & scale ) const;
+   NIFLIB_API void Decompose( Vector3 & translate, Matrix33 & rotation, float & scale ) const;
 
 	//Python Operator Overloads
 	NIFLIB_API Float4 & __getitem__(int n) {
