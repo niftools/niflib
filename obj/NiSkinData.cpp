@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSkinData.h"
+#include "NiNode.h"
 #include "../gen/SkinData.h"
 #include "../gen/SkinWeight.h"
 #include "NiSkinPartition.h"
@@ -81,7 +82,7 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) {
 	}
 
 	boneList.resize( skinInst->GetBoneCount() );
-	vector<NiNodeRef> bone_nodes = skinInst->GetBones();
+	vector< Ref<NiNode> > bone_nodes = skinInst->GetBones();
 	
 	//--Calculate Overall Offset--//
 

@@ -34,25 +34,6 @@ const unsigned int VER_20_0_0_5    = 0x14000005; /*!< Nif Version 20.0.0.4 */
 const unsigned int VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported Nif Version */
 const unsigned int VER_INVALID     = 0xFFFFFFFE; /*!< Not a Nif file */
 
-
-
-/*! Keyframe trees are game dependent, so here we define a few games. */
-enum NifGame {
-	KF_MW = 0, /*!< keyframe files: NiSequenceStreamHelper header, .kf extension */
-	KF_DAOC = 1, /*!< keyframe files: NiNode header, .kfa extension */
-	KF_CIV4 = 2 /*!< keyframe files: NiControllerSequence header, .kf extension */
-};
-
-/*! Export options. */
-enum ExportOptions { 
-	EXPORT_NIF = 0, /*!< NIF */
-	EXPORT_NIF_KF = 1, /*!< NIF + single KF + KFM */
-	EXPORT_NIF_KF_MULTI = 2, /*!< NIF + multiple KF + KFM */
-	EXPORT_KF = 3, /*!< single KF */
-	EXPORT_KF_MULTI = 4 /*!< multiple KF */
-};
-
-
 //--Non-mathematical Basic Types--//
 
 typedef unsigned char	byte;

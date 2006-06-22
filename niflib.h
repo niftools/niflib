@@ -49,19 +49,35 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include "dll_export.h"
 #include "nif_math.h"
-#include "NIF_IO.h"
-#include "obj/NiObject.h"
-#include "obj/NiNode.h"
-#include "obj/NiAVObject.h"
-//#include "gen/obj_defines.h"
-//#include "kfm.h"
+#include "Ref.h"
 
 using namespace std;
 namespace Niflib {
 
+//Classes used
+class NiObject;
+class NiNode;
+class NiAVObject;
+
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
 #endif
+
+/*! Keyframe trees are game dependent, so here we define a few games. */
+enum NifGame {
+	KF_MW = 0, /*!< keyframe files: NiSequenceStreamHelper header, .kf extension */
+	KF_DAOC = 1, /*!< keyframe files: NiNode header, .kfa extension */
+	KF_CIV4 = 2 /*!< keyframe files: NiControllerSequence header, .kf extension */
+};
+
+/*! Export options. */
+enum ExportOptions { 
+	EXPORT_NIF = 0, /*!< NIF */
+	EXPORT_NIF_KF = 1, /*!< NIF + single KF + KFM */
+	EXPORT_NIF_KF_MULTI = 2, /*!< NIF + multiple KF + KFM */
+	EXPORT_KF = 3, /*!< single KF */
+	EXPORT_KF_MULTI = 4 /*!< multiple KF */
+};
 
 //--Main Functions--//
 
@@ -114,14 +130,14 @@ NIFLIB_API unsigned int CheckNifHeader( string const & file_name );
  * 
  * \sa ReadNifTree, WriteNifTree
  */
-NIFLIB_API vector<NiObjectRef> ReadNifList( string const & file_name );
+NIFLIB_API vector< Ref<NiObject> > ReadNifList( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a vector of block references
  * \param stream The input stream to read NIF data from.
  * \return A vector of block references that point to all the blocks read from the stream.
  */
-NIFLIB_API vector<NiObjectRef> ReadNifList( istream & in );
+NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in );
 
 /*!
  * Reads the given file by file name and returns a reference to the root block.
@@ -140,14 +156,14 @@ NIFLIB_API vector<NiObjectRef> ReadNifList( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API NiObjectRef ReadNifTree( string const & file_name );
+NIFLIB_API Ref<NiObject> ReadNifTree( string const & file_name );
 
 /*!
  * Reads the given input stream and returns a reference to the root block.
  * \param stream The input stream to read NIF data from.
  * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
  */
-NIFLIB_API NiObjectRef ReadNifTree( istream & in );
+NIFLIB_API Ref<NiObject> ReadNifTree( istream & in );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
@@ -170,7 +186,7 @@ NIFLIB_API NiObjectRef ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API void WriteNifTree( string const & file_name, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -178,7 +194,7 @@ NIFLIB_API void WriteNifTree( string const & file_name, NiObjectRef const & root
  * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  */
-NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
 /*!
@@ -189,7 +205,7 @@ NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsign
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-//NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
+NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, unsigned int version, ExportOptions export_files, NifGame kf_type );
 
 //TODO:  Figure out how to fix this to work with the new system
 /*!
@@ -224,7 +240,7 @@ NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsign
  * 
  * sa BlocksInMemory
  */
-NIFLIB_API NiObjectRef CreateBlock( string block_type );
+NIFLIB_API Ref<NiObject> CreateBlock( string block_type );
 
 /*!
  * Returns whether the requested version is supported.

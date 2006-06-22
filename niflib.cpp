@@ -8,14 +8,23 @@ All rights reserved.  Please see niflib.h for licence. */
 //#define DEBUG_HEADER_FOOTER
 
 #include "niflib.h"
-#include "obj/NiAVObject.h"
+#include "NIF_IO.h"
+#include "kfm.h"
+#include "obj/NiObject.h"
 #include "obj/NiNode.h"
+#include "obj/NiAVObject.h"
 #include "obj/NiTextKeyExtraData.h"
+#include "obj/NiSequenceStreamHelper.h"
+#include "obj/NiTimeController.h"
+#include "obj/NiKeyframeController.h"
+#include "obj/NiKeyframeData.h"
+#include "obj/NiStringExtraData.h"
 #include "gen/header.h"
+
 namespace Niflib {
 
 //Stores the mapping between block names and factory function pointers to create them
-typedef IBlock * (*blk_factory_func)();
+typedef NiObject * (*blk_factory_func)();
 bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
 
@@ -35,7 +44,7 @@ NiObjectRef CreateBlock( string block_type ) {
 		global_block_map_init = true;
 	}
 
-	IBlock * block = NULL;
+	NiObject * block = NULL;
 
 	map<string, blk_factory_func>::iterator it;
 	it = global_block_map.find(block_type);
@@ -460,91 +469,103 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
  * \param kfm The KFM structure (if required by style).
  * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
  */
-//void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiObjectRef & xkf_root, Kfm & kfm, int kf_type ) {
-//	// Do we have animation groups (a NiTextKeyExtraData block)?
-//	// If so, create XNif and XKf trees.
-//	NiObjectRef txtkey_block = GetObjectByType( root_block, NiTextKeyExtraData::TypeConst() ); 
-//	if ( txtkey_block != NULL ) {
-//		if ( kf_type == KF_MW ) {
-//			// Construct the XNif file...
-//			// We are lazy. (TODO: clone & remove keyframe controllers & keyframe data)
-//			xnif_root = root_block;
-//			
-//			// Now the XKf file...
-//			// Create xkf root header.
-//			xkf_root = CreateBlock("NiSequenceStreamHelper");
-//			
-//			// Add a copy of the NiTextKeyExtraData block to the XKf header.
-//			NiObjectRef xkf_txtkey_block = CreateBlock("NiTextKeyExtraData");
-//			//TODO: Have Amorilia fix this
-//			//xkf_root["Extra Data"] = xkf_txtkey_block;
-//			
-//			/*ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
-//			ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
-//			ixkf_txtkey_block->SetKeys(itxtkey_block->GetKeys());*/
-//			
-//			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
-//			list<NiObjectRef> nodes = GetAllObjectsByType( root_block, NiNode::TypeConst() );
-//			for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ) {
-//				//TODO: Have Amorilia Fix this
-//				/*if ( (*it)->GetAttr("Controller")->asLink().is_null() || (*it)->GetAttr("Controller")->asLink()->GetBlockType() != "NiKeyframeController" )
-//					it = nodes.erase( it );
-//				else
-//					it++;*/
-//			};
-//			
-//			NiObjectRef last_block = xkf_txtkey_block;
-//			for ( list<NiObjectRef>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-//				NiObjectRef nodextra = CreateBlock("NiStringExtraData");
-//				//TODO: Implement NiStringEtraData along with functions/member variables to cover these data items
-//				//nodextra["String Data"] = (*it)["Name"]->asString();
-//				//last_block["Next Extra Data"] = nodextra;
-//				last_block = nodextra;
-//			};
-//			
-//			// Add controllers & controller data.
-//			last_block = xkf_root;
-//			for ( list<NiObjectRef>::const_iterator it = nodes.begin(); it != nodes.end(); ++it ) {
-//				//TODO:  Implement NiTimeController class functions/variables
-//				//NiObjectRef controller = (*it)->GetAttr("Controller")->asLink();
-//				//NiObjectRef xkf_controller = CreateBlock("NiKeyframeController");
-//				//xkf_controller["Flags"] = controller["Flags"]->asInt();
-//				//xkf_controller["Frequency"] = controller["Frequency"]->asFloat();
-//				//xkf_controller["Phase"] = controller["Phase"]->asFloat();
-//				//xkf_controller["Start Time"] = controller["Start Time"]->asFloat();
-//				//xkf_controller["Stop Time"] = controller["Stop Time"]->asFloat();
-//				//
-//				//NiObjectRef xkf_data = CreateBlock("NiKeyframeData");
-//				//xkf_controller["Data"] = xkf_data;
-//				//IKeyframeData const *ikfdata = QueryKeyframeData(controller["Data"]->asLink());
-//				//IKeyframeData *ixkfdata = QueryKeyframeData(xkf_data);
-//				//ixkfdata->SetRotateType(ikfdata->GetRotateType());
-//				//ixkfdata->SetTranslateType(ikfdata->GetTranslateType());
-//				//ixkfdata->SetScaleType(ikfdata->GetScaleType());
-//				//ixkfdata->SetRotateKeys(ikfdata->GetRotateKeys());
-//				//ixkfdata->SetTranslateKeys(ikfdata->GetTranslateKeys());
-//				//ixkfdata->SetScaleKeys(ikfdata->GetScaleKeys());
-//	
-//				//if ( last_block == xkf_root ) {
-//				//	if ( ! last_block["Controller"]->asLink().is_null() )
-//				//		throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-//				//	last_block["Controller"] = xkf_controller;
-//				//} else {
-//				//	if ( ! last_block["Next Controller"]->asLink().is_null() )
-//				//		throw runtime_error("Cannot create .kf file for multicontrolled nodes."); // not sure 'bout this one...
-//				//	last_block["Next Controller"] = xkf_controller;
-//				//};
-//				//last_block = xkf_controller;
-//				//// note: targets are automatically calculated, we don't need to reset them
-//			};
-//		} else // TODO other games
-//			throw runtime_error("Not yet implemented.");
-//	} else {
-//		// no animation groups: nothing to do
-//		xnif_root = NULL;
-//		xkf_root = NULL;
-//	};
-//}
+void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, NiObjectRef & xkf_root, Kfm & kfm, int kf_type ) {
+	// Do we have animation groups (a NiTextKeyExtraData block)?
+	// If so, create XNif and XKf trees.
+	NiObjectRef txtkey = GetObjectByType( root_block, NiTextKeyExtraData::TypeConst() );
+	NiTextKeyExtraDataRef txtkey_block;
+	if ( txtkey != NULL ) {
+		txtkey_block = DynamicCast<NiTextKeyExtraData>(txtkey);
+	}
+	if ( txtkey_block != NULL ) {
+		if ( kf_type == KF_MW ) {
+			// Construct the XNif file...
+			// We are lazy. (TODO: clone & remove keyframe controllers & keyframe data)
+			xnif_root = root_block;
+			
+			// Now the XKf file...
+			// Create xkf root header.
+			NiSequenceStreamHelperRef xkf_stream_helper = new NiSequenceStreamHelper;
+			xkf_root = xkf_stream_helper;
+			
+			// Add a copy of the NiTextKeyExtraData block to the XKf header.
+			NiTextKeyExtraDataRef xkf_txtkey_block = new NiTextKeyExtraData;
+
+			//TODO: Have Amorilia fix this
+			xkf_stream_helper->AddExtraData( StaticCast<NiExtraData>(xkf_txtkey_block) );
+			
+			//ITextKeyExtraData const *itxtkey_block = QueryTextKeyExtraData(txtkey_block);
+			//ITextKeyExtraData *ixkf_txtkey_block = QueryTextKeyExtraData(xkf_txtkey_block);
+			
+			xkf_txtkey_block->SetKeys( txtkey_block->GetKeys() );
+			
+			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
+			list< pair< NiNodeRef, NiKeyframeControllerRef> > node_controllers;
+
+			list<NiObjectRef> nodes = GetAllObjectsByType( root_block, NiNode::TypeConst() );
+			for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ++it) {
+				NiNodeRef node = DynamicCast<NiNode>(*it);
+				if ( node == NULL ) {
+					continue;
+				}
+
+				//Find the first NiKeyframeController in the controller list, if any
+				list<NiTimeControllerRef> controllers = node->GetControllers();
+				NiKeyframeControllerRef key_controller;
+				for ( list<NiTimeControllerRef>::iterator controller = controllers.begin(); controller != controllers.end(); ++controller ) {
+					key_controller = DynamicCast<NiKeyframeController>(*it);
+					if ( key_controller != NULL ) {
+						break;
+					}
+				}
+
+				//If this node has no keyframe controller, put it in the list
+				if ( key_controller != NULL ) {
+					node_controllers.push_back( pair<NiNodeRef,NiKeyframeControllerRef>( node, key_controller ) );
+				}
+			};
+			
+			
+			for ( list< pair< NiNodeRef, NiKeyframeControllerRef> >::iterator it = node_controllers.begin(); it != node_controllers.end(); ++it ) {
+				//Add string data				
+				NiStringExtraDataRef nodextra = new NiStringExtraData;
+				nodextra->SetData( it->first->GetName() );
+				xkf_stream_helper->AddExtraData( StaticCast<NiExtraData>(nodextra) );
+
+				// Add controllers & controller data.
+				NiKeyframeControllerRef controller = it->second;
+				NiKeyframeControllerRef xkf_controller =  new NiKeyframeController;
+
+				xkf_controller->SetFlags( controller->GetFlags() );
+				xkf_controller->SetFrequency( controller->GetFrequency() );
+				xkf_controller->SetPhase( controller->GetPhase() );
+				xkf_controller->SetStartTime( controller->GetStartTime() );
+				xkf_controller->SetStopTime( controller->GetStopTime() );
+				
+				NiKeyframeDataRef xkf_data = new NiKeyframeData;
+				NiKeyframeDataRef kfdata = controller->GetData();
+				xkf_controller->SetData( xkf_data );
+
+				xkf_data->SetRotateType( kfdata->GetRotateType() );
+				xkf_data->SetTranslateType( kfdata->GetTranslateType() );
+				xkf_data->SetScaleType( kfdata->GetScaleType() );
+				xkf_data->SetQuatRotateKeys( kfdata->GetQuatRotateKeys() );
+				xkf_data->SetXRotateKeys( kfdata->GetXRotateKeys() );
+				xkf_data->SetYRotateKeys( kfdata->GetYRotateKeys() );
+				xkf_data->SetZRotateKeys( kfdata->GetZRotateKeys() );
+				xkf_data->SetTranslateKeys( kfdata->GetTranslateKeys() );
+				xkf_data->SetScaleKeys( kfdata->GetScaleKeys() );
+	
+				xkf_stream_helper->AddController( StaticCast<NiTimeController>(controller) );
+			};
+		} else // TODO other games
+			throw runtime_error("KF splitting for the requested game is not yet implemented.");
+	} else {
+		// no animation groups: nothing to do
+		xnif_root = NULL;
+		xkf_root = NULL;
+	};
+}
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
 ///*!
@@ -557,35 +578,35 @@ list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & ty
 //};
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-//void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, unsigned int version, unsigned int export_files, unsigned int kf_type ) {
-//	// Get base filename.
-//	uint file_name_slash = uint(file_name.rfind("\\") + 1);
-//	string file_name_path = file_name.substr(0, file_name_slash);
-//	string file_name_base = file_name.substr(file_name_slash, file_name.length());
-//	uint file_name_dot = uint(file_name_base.rfind("."));
-//	file_name_base = file_name_base.substr(0, file_name_dot);
-//	
-//	// Deal with the simple case first
-//	if ( export_files == EXPORT_NIF )
-//		WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
-//	// Now consider all other cases
-//	else if ( kf_type == KF_MW ) {
-//		if ( export_files == EXPORT_NIF_KF ) {
-//			// for Morrowind we must also write the full NIF file
-//			WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
-//			NiObjectRef xnif_root;
-//			NiObjectRef xkf_root;
-//			Kfm kfm; // dummy
-//			SplitNifTree( root_block, xnif_root, xkf_root, kfm, KF_MW );
-//			if ( xnif_root != NULL ) {
-//				WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version );
-//				WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version );
-//			};
-//		} else
-//			throw runtime_error("Invalid export option.");
-//	} else
-//		throw runtime_error("Not yet implemented.");
-//};
+void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, unsigned int version, ExportOptions export_files, NifGame kf_type ) {
+	// Get base filename.
+	uint file_name_slash = uint(file_name.rfind("\\") + 1);
+	string file_name_path = file_name.substr(0, file_name_slash);
+	string file_name_base = file_name.substr(file_name_slash, file_name.length());
+	uint file_name_dot = uint(file_name_base.rfind("."));
+	file_name_base = file_name_base.substr(0, file_name_dot);
+	
+	// Deal with the simple case first
+	if ( export_files == EXPORT_NIF )
+		WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
+	// Now consider all other cases
+	else if ( kf_type == KF_MW ) {
+		if ( export_files == EXPORT_NIF_KF ) {
+			// for Morrowind we must also write the full NIF file
+			WriteNifTree( file_name_path + file_name_base + ".nif", root_block, version ); // simply export the NIF file!
+			NiObjectRef xnif_root;
+			NiObjectRef xkf_root;
+			Kfm kfm; // dummy
+			SplitNifTree( root_block, xnif_root, xkf_root, kfm, KF_MW );
+			if ( xnif_root != NULL ) {
+				WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, version );
+				WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_root, version );
+			};
+		} else
+			throw runtime_error("Invalid export option.");
+	} else
+		throw runtime_error("Not yet implemented.");
+};
 
 
 //Returns the total number of blocks in memory

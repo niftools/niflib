@@ -1,10 +1,16 @@
 #ifndef _KFM_H
 #define _KFM_H
 
-#include "niflib.h"
-namespace NifLib {
+#include <iostream>
+#include <string>
+#include <vector>
+#include "Ref.h"
+namespace Niflib {
 
 using namespace std;
+
+//Classes used
+class NiObject;
 
 //--KFM File Format--//
 
@@ -60,11 +66,11 @@ struct Kfm {
 	vector<KfmAction> actions;
 	
 	// Reads the given file and returns the KFM version.
-	unsigned int Read( string const & file_name ); // returns Kfm version
+	unsigned int Read( const string & file_name ); // returns Kfm version
 	unsigned int Read( istream & in ); // returns Kfm version
 
 	// Reads the NIF file and all KF files referred to in this KFM, and returns the root block of the resulting NIF tree.
-	blk_ref Kfm::MergeActions( string const & path );
+	Ref<NiObject> MergeActions( const string & path );
 	//void Write( string const & file_name, unsigned int version );
 	//void Write( ostream & out, unsigned int version );
 };

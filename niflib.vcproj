@@ -356,6 +356,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\kfm.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NIF_IO.cpp"
 				>
 			</File>
@@ -1396,6 +1400,10 @@
 			>
 			<File
 				RelativePath=".\dll_export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\kfm.h"
 				>
 			</File>
 			<File

@@ -1,7 +1,11 @@
 //--Kfm Functions--//
 
 #include "kfm.h"
+#include "niflib.h"
 #include "NIF_IO.h"
+#include "obj/NiObject.h"
+
+namespace Niflib {
 
 void KfmEventString::Read( istream & in, unsigned int version ) {
 	unk_int = ReadUInt(in);
@@ -115,13 +119,13 @@ void Kfm::Write( ostream & out, uint version ) {
 };
 */
 
-blk_ref Kfm::MergeActions( string const & path ) {
+Ref<NiObject> Kfm::MergeActions( string const & path ) {
 	// Read NIF file
 	cout << path + '\\' + nif_filename << endl;
-	blk_ref nif = ReadNifTree( path + '\\' + nif_filename);
+	NiObjectRef nif = ReadNifTree( path + '\\' + nif_filename);
 	
 	// Read Kf files
-	vector<blk_ref> kf;
+	vector<NiObjectRef> kf;
 	for ( vector<KfmAction>::iterator it = actions.begin(); it != actions.end(); it++ ) {
 		string action_filename = path + '\\' + it->action_filename;
 		// Check if the file exists.
@@ -137,4 +141,6 @@ blk_ref Kfm::MergeActions( string const & path ) {
 	
 	// TODO: merge everything into the nif file
 	return nif;
+}
+
 }
