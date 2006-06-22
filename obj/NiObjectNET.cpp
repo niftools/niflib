@@ -104,7 +104,7 @@ void NiObjectNET::ShiftExtraData( uint version ) {
 		//In earlier versions, extra data is a singly linked list
 		//Insert at begining of list
 		//Empty the list into the linked list
-		for ( vector< NiExtraDataRef >::iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
+		for ( vector< NiExtraDataRef >::iterator it = extraDataList.begin(); it != extraDataList.end(); ++it) {
 			(*it)->SetNextExtraData( extraData );
 			extraData = (*it);
 		}
@@ -119,7 +119,7 @@ void NiObjectNET::ClearExtraData() {
 
 list< Ref<NiExtraData> > NiObjectNET::GetExtraData() const {
 	list< Ref<NiExtraData> > extras;
-	for ( vector< NiExtraDataRef >::const_iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
+	for ( vector< NiExtraDataRef >::const_iterator it = extraDataList.begin(); it != extraDataList.end(); ++it) {
 		extras.push_back( *it );
 	}
 
