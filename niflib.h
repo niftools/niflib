@@ -181,14 +181,14 @@ NIFLIB_API void WriteNifTree( string const & file_name, NiObjectRef const & root
 NIFLIB_API void WriteNifTree( ostream & stream, NiObjectRef const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-///*!
-// * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
-// * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
-// * \param root The root block to start from when writing out the NIF file.
-// * \param version The version of the NIF format to use when writing a file.
-// * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
-// * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
-// */
+/*!
+ * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
+ * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
+ * \param root The root block to start from when writing out the NIF file.
+ * \param version The version of the NIF format to use when writing a file.
+ * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
+ * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
+ */
 //NIFLIB_API void WriteFileGroup( string const & file_name, NiObjectRef const & root, unsigned int version, unsigned int export_files, unsigned int kf_type );
 
 //TODO:  Figure out how to fix this to work with the new system

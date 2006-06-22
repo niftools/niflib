@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 //#define PRINT_OBJECT_NAMES
 //#define PRINT_OBJECT_CONTENTS
 //#define DEBUG_LINK_PHASE
+//#define DEBUG_HEADER_FOOTER
 
 #include "niflib.h"
 #include "obj/NiAVObject.h"
@@ -138,102 +139,10 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	//Read header.
 	header.Read( in );
 
-//	char header_string[64];
-//	in.getline( header_string, 64 );
-//	string headerstr(header_string);
-//
-//	// make sure this is a NIF file
-//	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
-//	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
-//		throw runtime_error("Not a NIF file.");
-//
-//	// detect old versions
-//	if ( ( headerstr == "NetImmerse File Format, Version 3.1" )
-//	|| ( headerstr == "NetImmerse File Format, Version 3.03" )
-//	|| ( headerstr == "NetImmerse File Format, Version 3.0" )
-//	|| ( headerstr == "NetImmerse File Format, Version 2.3" ) )
-//		throw runtime_error("Unsupported: " + headerstr);
-//
-//	uint version = ReadUInt( in );
-//
-//	//There is an unknown Byte here from version 20.0.0.4 on
-//	byte endianType;
-//	if ( version >= VER_20_0_0_4 ) {
-//		endianType = ReadByte( in );
-//	}
-//
-//	//There is an Unknown Int here from version 10.1.0.0 on
-//	uint userVersion = 0;
-//	if ( version >= VER_10_1_0_0 ) {
-//		userVersion = ReadUInt( in );
-//	}
-//
-//	uint numBlocks = ReadUInt( in );
-//
-//	if ( userVersion != 0 ) {
-//		uint len;
-//		ReadUInt( in );
-//		len = ReadByte( in );
-//		for (uint i = 0; i < len; i++) ReadByte( in );
-//		len = ReadByte( in );
-//		for (uint i = 0; i < len; i++) ReadByte( in );
-//		len = ReadByte( in );
-//		for (uint i = 0; i < len; i++) ReadByte( in );
-//	}
-//	
-//	vector<string> blockTypes;
-//	vector<short> blockTypeIndex;
-//	//New header data exists from version 5.0.0.1 on
-//	if ( version >= 0x05000001 ) {
-//		short numBlockTypes = ReadUShort( in );
-//		blockTypes.resize(numBlockTypes);
-//		for ( uint i = 0; i < blockTypes.size(); ++i ) {
-//			blockTypes[i] = ReadString( in );
-//		}
-//
-//		blockTypeIndex.resize(numBlocks);
-//		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-//			blockTypeIndex[i] = ReadUShort( in );
-//		}
-//
-//		uint unknownInt2 =
-//		ReadUInt( in );
-//
-//		//Output
-//#ifdef DEBUG
-//		cout << endl << endl 
-//			 << "====[ " << "File Header ]====" << endl
-//			 << "Header:  " << header_string << endl
-//			 << "Version:  " << version << endl
-//			 << "Endian Type:  " << endianType << endl
-//			 << "User Version:  " << userVersion << endl
-//			 << "Number of Blocks: " << numBlocks << endl
-//			 << "Block Types:  " << uint(blockTypes.size()) << endl;
-//
-//		for ( uint i = 0; i < blockTypes.size(); ++i ) {
-//			cout << "   " << i << ":  " << blockTypes[i] << endl;
-//		}
-//
-//		cout << "Block Type Indices:  " << numBlocks << endl;
-//		for ( uint i = 0; i < blockTypeIndex.size(); ++i ) {
-//			cout << "   " << i + 1 << ":  " << blockTypeIndex[i] << "(" << blockTypes[blockTypeIndex[i]] << ")" << endl;
-//		}
-//
-//		cout << "Unknown Int 2:  " << unknownInt2 << endl;
-//#endif
-//	} else {
-//#ifdef DEBUG
-//		//Output
-//		cout << endl << endl 
-//			<< "====[ " << "File Header ]====" << endl
-//			<< "Header:  " << header_string << endl
-//			<< "Version:  " << version << endl
-//			<< "Number of Blocks: " << numBlocks << endl;
-//#endif
-//	}
-//
-//	//TODO:  Actually read the user_version from the right place
-//	uint user_version = 0;
+#ifdef DEBUG_HEADER_FOOTER
+	//Print debug output for header
+	cout << header.asString();
+#endif
 
 	//--Read Blocks--//
    size_t numBlocks = header.numBlocks;
@@ -316,15 +225,19 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	//cout << endl;
 
 	//--Read Footer--//
-	uint unknownCount = ReadUInt( in );
-	for (uint i=0; i < unknownCount; i++) ReadUInt( in ); // throw away
-	//Output
-	//cout << "====[ NiFooter ]====" << endl <<
-	//	"Unknown Count:  " << Hex(unknownCount) << endl;
+	Footer footer;
+	footer.Read( in, link_stack, header.version, header.userVersion );
 
-	ReadByte( in ); // this should fail, and trigger the in.eof() flag
-	if ( ! in.eof() )
+#ifdef DEBUG_HEADER_FOOTER
+	//Print footer debug output
+	footer.asString();
+#endif
+	
+	//This should fail, and trigger the in.eof() flag
+	ReadByte( in ); 
+	if ( ! in.eof() ) {
 		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
+	}
 
 #ifdef DEBUG_LINK_PHASE
 	cout << "Link Stack:" << endl;
@@ -346,15 +259,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		blocks[i]->FixLinks( blocks, link_stack, header.version, header.userVersion );
 	}
 
-
-
-	////TODO:  Make this an optional step?
-	////Build up the bind pose matricies into their world-space equivalents
-	//NiAVObjectRef av_root = DynamicCast<NiAVObject>( FindRoot(blocks) );
-	//if ( av_root != NULL ) {
-	//	BuildUpBindPositions( av_root );
-	//}
-
+	//TODO:  Make this an optional step?
 	//Send all skeleton roots to bind position
 	for (uint i = 0; i < blocks.size(); ++i) {
 		NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
@@ -362,36 +267,6 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			node->GoToSkeletonBindPosition();
 		}
 	}
-
-	//TODO: Evaluate this and see if it can be moved to NiTriBasedGeom::FixLinks()
-	//// Re-position any TriShapes with a SkinInstance
-	//for (uint i = 0; i < blocks.size(); ++i) {
-	//	
-	//	attr_ref si_attr = blocks[i]->GetAttr("Skin Instance");
-	//	if ( si_attr.is_null() == true ) {
-	//		continue;
-	//	}
-
-	//	NiObjectRef si_blk = si_attr->asLink();
-
-	//	if ( si_blk.is_null() == true ) {
-	//		continue;
-	//	}
-
-	//	NiObjectRef sd_blk = si_blk->GetAttr("Data")->asLink();
-
-	//	if ( sd_blk.is_null() == true ) {
-	//		continue;
-	//	}
-
-	//	ISkinDataInternal * skin_data;
-	//	skin_data = (ISkinDataInternal *)sd_blk->QueryInterface( SkinDataInternal );
-	//	if ( skin_data != NULL ) {
-	//		skin_data->RepositionTriShape( blocks[i] );
-	//	}	
-
-	//	//cout << i + 1 << ":  " << blocks[i] << endl;
-	//}
 
 	//Return completed block list
 	return blocks;
@@ -417,14 +292,11 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	map<Type*,uint> type_map;
 	map<NiObjectRef, uint> link_map;
 
-	//cout << "Enumerating Objects..." << endl;
 	EnumerateObjects( root, type_map, link_map );
 
-	//cout << "Building vectors for reverse look-up..." << endl;
 	//Build vectors for reverse look-up
 	vector<NiObjectRef> objects(link_map.size());
 	for ( map<NiObjectRef, uint>::iterator it = link_map.begin(); it != link_map.end(); ++it ) {
-		//cout << "Objects[" << it->second << "] = " << it->first << endl;
 		objects[it->second] = it->first;
 	}
 
@@ -433,57 +305,26 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 		types[it->second] = it->first;
 	}
 
-	//cout << "Writing Header..." << endl;
 	//--Write Header--//
-	//Version 10.0.1.0 is the last known to use the name NetImmerse
-	stringstream header_string;
-	if ( version <= VER_10_0_1_0 ) {
-		header_string << "NetImmerse File Format, Version ";
-	} else {
-		header_string << "Gamebryo File Format, Version ";
-	}
-	char * byte_ver = (char*)&version;
-	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
-
-	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
-
-	out << header_string.str();
-	WriteByte( 10, out ); // Unknown Byte = 10
-	WriteUInt( version, out );
-
-	//There is an unknown Byte here from version 20.0.0.4 on
-	if ( version >= VER_20_0_0_4 ) {
-		WriteByte( 1, out );
-	}
-
-	//There is an Unknown Int here from version 10.1.0.0 on
-	if ( version >= VER_10_1_0_0 ) {
-		WriteUInt( 0, out );
-	}
+	Header header;
+	header.version = version;
+	header.userVersion = user_version;
 	
-	WriteUInt( uint(objects.size()), out ); //Number of objects
+	//Set Type Names
+	header.blockTypes.resize( types.size() );
+	for ( uint i = 0; i < types.size(); ++i ) {
+		header.blockTypes[i] = types[i]->GetTypeName();
 
-	//New header data exists from version 5.0.0.1 on
-	if ( version >= 0x05000001 ) {
-		WriteUShort( ushort(type_map.size()), out );
-		
-		//Write Type Names
-		for ( uint i = 0; i < types.size(); ++i ) {
-			WriteString( types[i]->GetTypeName(), out );
-
-		}
-
-		//Write type number of each block
-		for ( uint i = 0; i < objects.size(); ++i ) {
-			WriteUShort( type_map[(Type*)&(objects[i]->GetType())], out );
-
-		}
-
-		//Unknown Int 2
-		WriteUInt( 0, out );
 	}
 
-	//cout << "Writing objects..." << endl;
+	//Set type number of each block
+	header.blockTypeIndex.resize( objects.size() );
+	for ( uint i = 0; i < objects.size(); ++i ) {
+		header.blockTypeIndex[i] = type_map[(Type*)&(objects[i]->GetType())];
+	}
+
+	//Write header to file
+	header.Write( out );
 
 	//--Write Objects--//
 	for (uint i = 0; i < objects.size(); ++i) {
@@ -499,11 +340,13 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 		objects[i]->Write( out, link_map, version, user_version );
 	}
 
-	//cout << "Writing footer.." << endl;
-
 	//--Write Footer--//
-	WriteUInt( 1, out ); // Unknown Int = 1 (usually)
-	WriteUInt( 0, out ); // Unknown Int = 0 (usually)
+	Footer footer;
+	footer.numRoots = 1;
+	footer.roots.resize(1);
+	footer.roots[0] = DynamicCast<NiAVObject>(root);
+
+	footer.Write( out, link_map, version, user_version );
 }
 
 void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map ) {

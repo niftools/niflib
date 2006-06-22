@@ -1,7 +1,5 @@
 //Headers to pre-compile
 
-
-
 #include "dll_export.h"
 #include "NIF_IO.h"
 #include "nif_math.h"

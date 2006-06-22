@@ -265,6 +265,7 @@ void NifStream( HeaderString const & val, ostream& out, uint version ) {
 	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 
 	out << header_string.str() << "\n";
+	WriteByte( 10, out ); // Unknown Byte = 10
 };
 
 ostream & operator<<( ostream & out, HeaderString const & val ) {
