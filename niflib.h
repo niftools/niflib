@@ -49,6 +49,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include <map>
 #include "dll_export.h"
 #include "nif_math.h"
+#include "nif_versions.h"
 #include "Ref.h"
 
 using namespace std;
@@ -62,6 +63,8 @@ class NiAVObject;
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
 #endif
+
+//--Constants--//
 
 /*! Keyframe trees are game dependent, so here we define a few games. */
 enum NifGame {

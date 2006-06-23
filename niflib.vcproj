@@ -1415,6 +1415,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\nif_versions.h"
+				>
+			</File>
+			<File
 				RelativePath=".\niflib.h"
 				>
 			</File>
