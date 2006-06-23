@@ -40,6 +40,30 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Refers to a Node to focus on.
+	 */
+	Ref<NiNode > GetLookAt() const;
+	void SetLookAt( Ref<NiNode > value );
+
+	/*!
+	 * Translate.
+	 */
+	Vector3 GetTranslation() const;
+	void SetTranslation( Vector3 value );
+
+	/*!
+	 * Rotation.
+	 */
+	Quaternion GetRotation() const;
+	void SetRotation( Quaternion value );
+
+	/*!
+	 * Scale.
+	 */
+	float GetScale() const;
+	void SetScale( float value );
+
 protected:
 	NI_LOOK_AT_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

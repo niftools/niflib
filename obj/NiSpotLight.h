@@ -33,6 +33,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The opening angle of the spot.
+	 */
+	float GetCutoffAngle() const;
+	void SetCutoffAngle( float value );
+
+	/*!
+	 * Describes the distribution of light. (see: glLight)
+	 */
+	float GetExponent() const;
+	void SetExponent( float value );
+
 protected:
 	NI_SPOT_LIGHT_MEMBERS
 	STANDARD_INTERNAL_METHODS

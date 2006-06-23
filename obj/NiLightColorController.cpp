@@ -37,18 +37,19 @@ const Type & NiLightColorController::GetType() const {
 	return TYPE;
 };
 
-Ref<NiPoint3Interpolator> NiLightColorController::GetInterpolator() const {
-	return interpolator;
-}
-
-void NiLightColorController::SetInterpolator( const Ref<NiPoint3Interpolator> & n ) {
-	interpolator = n;
-}
-
-Ref<NiPosData> NiLightColorController::GetData() const {
+Ref<NiPosData > NiLightColorController::GetData() const {
 	return data;
 }
 
-void NiLightColorController::SetData( const Ref<NiPosData> & n ) {
-	data = n;
+void NiLightColorController::SetData( Ref<NiPosData > value ) {
+	data = value;
 }
+
+Ref<NiPoint3Interpolator > NiLightColorController::GetInterpolator() const {
+	return interpolator;
+}
+
+void NiLightColorController::SetInterpolator( Ref<NiPoint3Interpolator > value ) {
+	interpolator = value;
+}
+

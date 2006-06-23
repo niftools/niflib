@@ -38,6 +38,79 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Frustrum left.
+	 */
+	float GetFrustumLeft() const;
+	void SetFrustumLeft( float value );
+
+	/*!
+	 * Frustrum right.
+	 */
+	float GetFrustumRight() const;
+	void SetFrustumRight( float value );
+
+	/*!
+	 * Frustrum top.
+	 */
+	float GetFrustumTop() const;
+	void SetFrustumTop( float value );
+
+	/*!
+	 * Frustrum bottom.
+	 */
+	float GetFrustumBottom() const;
+	void SetFrustumBottom( float value );
+
+	/*!
+	 * Frustrum near.
+	 */
+	float GetFrustumNear() const;
+	void SetFrustumNear( float value );
+
+	/*!
+	 * Frustrum far.
+	 */
+	float GetFrustumFar() const;
+	void SetFrustumFar( float value );
+
+	/*!
+	 * Determines whether perspective is used.  Orthographic means no
+	 * perspective.
+	 */
+	bool GetUseOrthographicProjection() const;
+	void SetUseOrthographicProjection( bool value );
+
+	/*!
+	 * Viewport left.
+	 */
+	float GetViewportLeft() const;
+	void SetViewportLeft( float value );
+
+	/*!
+	 * Viewport right.
+	 */
+	float GetViewportRight() const;
+	void SetViewportRight( float value );
+
+	/*!
+	 * Viewport top.
+	 */
+	float GetViewportTop() const;
+	void SetViewportTop( float value );
+
+	/*!
+	 * Viewport bottom.
+	 */
+	float GetViewportBottom() const;
+	void SetViewportBottom( float value );
+
+	/*!
+	 * Level of detail adjust.
+	 */
+	float GetLodAdjust() const;
+	void SetLodAdjust( float value );
+
 protected:
 	NI_CAMERA_MEMBERS
 	STANDARD_INTERNAL_METHODS

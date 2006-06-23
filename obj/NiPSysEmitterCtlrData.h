@@ -36,6 +36,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Unknown.
+	 */
+	KeyGroup<float > GetFloatKeys_() const;
+	void SetFloatKeys_( KeyGroup<float > value );
+
+	/*!
+	 * Unknown.
+	 */
+	vector<Key<byte > > GetVisibilityKeys_() const;
+	void SetVisibilityKeys_( const vector<Key<byte > >& value );
+
 protected:
 	NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS

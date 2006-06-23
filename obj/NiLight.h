@@ -33,6 +33,30 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Dimmer.
+	 */
+	float GetDimmer() const;
+	void SetDimmer( float value );
+
+	/*!
+	 * Ambient color.
+	 */
+	Color3 GetAmbientColor() const;
+	void SetAmbientColor( Color3 value );
+
+	/*!
+	 * Diffuse color.
+	 */
+	Color3 GetDiffuseColor() const;
+	void SetDiffuseColor( Color3 value );
+
+	/*!
+	 * Specular color.
+	 */
+	Color3 GetSpecularColor() const;
+	void SetSpecularColor( Color3 value );
+
 protected:
 	NI_LIGHT_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The interpolated point?
+	 */
+	Vector3 GetPointValue() const;
+	void SetPointValue( Vector3 value );
+
 protected:
 	NI_BLEND_POINT3_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

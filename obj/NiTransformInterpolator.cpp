@@ -36,3 +36,35 @@ const Type & NiTransformInterpolator::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiTransformInterpolator::GetTranslation() const {
+	return translation;
+}
+
+void NiTransformInterpolator::SetTranslation( Vector3 value ) {
+	translation = value;
+}
+
+Quaternion NiTransformInterpolator::GetRotation() const {
+	return rotation;
+}
+
+void NiTransformInterpolator::SetRotation( Quaternion value ) {
+	rotation = value;
+}
+
+float NiTransformInterpolator::GetScale() const {
+	return scale;
+}
+
+void NiTransformInterpolator::SetScale( float value ) {
+	scale = value;
+}
+
+Ref<NiTransformData > NiTransformInterpolator::GetData() const {
+	return data;
+}
+
+void NiTransformInterpolator::SetData( Ref<NiTransformData > value ) {
+	data = value;
+}
+

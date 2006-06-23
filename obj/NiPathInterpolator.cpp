@@ -37,3 +37,19 @@ const Type & NiPathInterpolator::GetType() const {
 	return TYPE;
 };
 
+Ref<NiPosData > NiPathInterpolator::GetPosData() const {
+	return posData;
+}
+
+void NiPathInterpolator::SetPosData( Ref<NiPosData > value ) {
+	posData = value;
+}
+
+Ref<NiFloatData > NiPathInterpolator::GetFloatData() const {
+	return floatData;
+}
+
+void NiPathInterpolator::SetFloatData( Ref<NiFloatData > value ) {
+	floatData = value;
+}
+

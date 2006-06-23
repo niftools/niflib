@@ -33,6 +33,24 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Constant Attenuation
+	 */
+	float GetConstantAttenuation() const;
+	void SetConstantAttenuation( float value );
+
+	/*!
+	 * Linear Attenuation
+	 */
+	float GetLinearAttenuation() const;
+	void SetLinearAttenuation( float value );
+
+	/*!
+	 * Quadratic Attenuation (see glLight)
+	 */
+	float GetQuadraticAttenuation() const;
+	void SetQuadraticAttenuation( float value );
+
 protected:
 	NI_POINT_LIGHT_MEMBERS
 	STANDARD_INTERNAL_METHODS

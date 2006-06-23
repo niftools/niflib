@@ -37,8 +37,9 @@ const Type & BSXFlags::GetType() const {
 
 uint BSXFlags::GetFlags() const {
 	return flags;
-};
+}
 
-void BSXFlags::SetFlags( uint n ) {
-	flags = n;
-};
+void BSXFlags::SetFlags( uint value ) {
+	flags = value;
+}
+

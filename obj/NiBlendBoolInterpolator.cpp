@@ -35,3 +35,11 @@ const Type & NiBlendBoolInterpolator::GetType() const {
 	return TYPE;
 };
 
+byte NiBlendBoolInterpolator::GetBoolValue() const {
+	return boolValue;
+}
+
+void NiBlendBoolInterpolator::SetBoolValue( byte value ) {
+	boolValue = value;
+}
+

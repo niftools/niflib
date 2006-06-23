@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The interpolated float?
+	 */
+	float GetFloatValue() const;
+	void SetFloatValue( float value );
+
 protected:
 	NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

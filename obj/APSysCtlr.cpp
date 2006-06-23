@@ -35,3 +35,11 @@ const Type & APSysCtlr::GetType() const {
 	return TYPE;
 };
 
+string APSysCtlr::GetModifierName() const {
+	return modifierName;
+}
+
+void APSysCtlr::SetModifierName( string value ) {
+	modifierName = value;
+}
+

@@ -35,3 +35,19 @@ const Type & NiBSplineInterpolator::GetType() const {
 	return TYPE;
 };
 
+float NiBSplineInterpolator::GetStartTime() const {
+	return startTime;
+}
+
+void NiBSplineInterpolator::SetStartTime( float value ) {
+	startTime = value;
+}
+
+float NiBSplineInterpolator::GetStopTime() const {
+	return stopTime;
+}
+
+void NiBSplineInterpolator::SetStopTime( float value ) {
+	stopTime = value;
+}
+

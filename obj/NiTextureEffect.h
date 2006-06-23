@@ -41,6 +41,71 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Model projection matrix.  Always identity?
+	 */
+	Matrix33 GetModelProjectionMatrix() const;
+	void SetModelProjectionMatrix( Matrix33 value );
+
+	/*!
+	 * Model projection transform.  Always (0,0,0)?
+	 */
+	Vector3 GetModelProjectionTransform() const;
+	void SetModelProjectionTransform( Vector3 value );
+
+	/*!
+	 * 0: FILTER_NEAREST 1: FILTER_BILERP 2: FILTER_TRILERP (Usual value) 3:
+	 * FILTER_NEAREST_MIPNEAREST 4: FILTER_NEAREST_MIPLERP 5:
+	 * FILTER_BILERP_MIPNAREST
+	 */
+	uint GetTextureFiltering() const;
+	void SetTextureFiltering( uint value );
+
+	/*!
+	 * 0: CLAMP_S_CLAMP (Common value) 1: CLAMP_S_WRAP 2: WRAP_S_CLAMP_T 3:
+	 * WRAP_S_WRAP_T (Common value)
+	 */
+	uint GetTextureClamping() const;
+	void SetTextureClamping( uint value );
+
+	/*!
+	 * 0: PROJECTED_LIGHT 1: PROJECTED_SHADOW 2: ENVIRONMENT_MAP (Usual
+	 * value) 3: FOG_MAP
+	 */
+	uint GetTextureType() const;
+	void SetTextureType( uint value );
+
+	/*!
+	 * 0: WORLD_PARALLEL 1: WORLD_PERSPECTIVE 2: SPHERE_MAP (Usual value) 3:
+	 * SPECULAR_CUBE_MAP 4: DIFFUSE_CUBE_MAP
+	 */
+	uint GetCoordinateGenerationType() const;
+	void SetCoordinateGenerationType( uint value );
+
+	/*!
+	 * Source texture index.
+	 */
+	Ref<NiSourceTexture > GetSourceTexture() const;
+	void SetSourceTexture( Ref<NiSourceTexture > value );
+
+	/*!
+	 * 0: Disabled (Usual value) 1: Enabled
+	 */
+	byte GetClippingPlane() const;
+	void SetClippingPlane( byte value );
+
+	/*!
+	 * 0?
+	 */
+	ushort GetPs2L() const;
+	void SetPs2L( ushort value );
+
+	/*!
+	 * 0xFFB5?
+	 */
+	ushort GetPs2K() const;
+	void SetPs2K( ushort value );
+
 protected:
 	NI_TEXTURE_EFFECT_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -36,3 +36,19 @@ const Type & NiBoolInterpolator::GetType() const {
 	return TYPE;
 };
 
+bool NiBoolInterpolator::GetBoolValue() const {
+	return boolValue;
+}
+
+void NiBoolInterpolator::SetBoolValue( bool value ) {
+	boolValue = value;
+}
+
+Ref<NiBoolData > NiBoolInterpolator::GetData() const {
+	return data;
+}
+
+void NiBoolInterpolator::SetData( Ref<NiBoolData > value ) {
+	data = value;
+}
+

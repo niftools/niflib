@@ -37,3 +37,11 @@ const Type & NiBSplineCompPoint3Interpolator::GetType() const {
 	return TYPE;
 };
 
+Ref<NiBSplineData > NiBSplineCompPoint3Interpolator::GetData() const {
+	return data;
+}
+
+void NiBSplineCompPoint3Interpolator::SetData( Ref<NiBSplineData > value ) {
+	data = value;
+}
+

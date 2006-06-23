@@ -38,6 +38,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Value when posed?  Value at time 0?
+	 */
+	Vector3 GetPoint3Value() const;
+	void SetPoint3Value( Vector3 value );
+
+	/*!
+	 * Reference to NiPosData.
+	 */
+	Ref<NiPosData > GetData() const;
+	void SetData( Ref<NiPosData > value );
+
 protected:
 	NI_POINT3_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

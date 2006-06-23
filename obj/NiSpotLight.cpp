@@ -35,3 +35,19 @@ const Type & NiSpotLight::GetType() const {
 	return TYPE;
 };
 
+float NiSpotLight::GetCutoffAngle() const {
+	return cutoffAngle;
+}
+
+void NiSpotLight::SetCutoffAngle( float value ) {
+	cutoffAngle = value;
+}
+
+float NiSpotLight::GetExponent() const {
+	return exponent;
+}
+
+void NiSpotLight::SetExponent( float value ) {
+	exponent = value;
+}
+

@@ -38,3 +38,35 @@ const Type & NiLookAtInterpolator::GetType() const {
 	return TYPE;
 };
 
+Ref<NiNode > NiLookAtInterpolator::GetLookAt() const {
+	return lookAt;
+}
+
+void NiLookAtInterpolator::SetLookAt( Ref<NiNode > value ) {
+	lookAt = value;
+}
+
+Vector3 NiLookAtInterpolator::GetTranslation() const {
+	return translation;
+}
+
+void NiLookAtInterpolator::SetTranslation( Vector3 value ) {
+	translation = value;
+}
+
+Quaternion NiLookAtInterpolator::GetRotation() const {
+	return rotation;
+}
+
+void NiLookAtInterpolator::SetRotation( Quaternion value ) {
+	rotation = value;
+}
+
+float NiLookAtInterpolator::GetScale() const {
+	return scale;
+}
+
+void NiLookAtInterpolator::SetScale( float value ) {
+	scale = value;
+}
+

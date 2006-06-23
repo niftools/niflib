@@ -38,6 +38,30 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Translate.
+	 */
+	Vector3 GetTranslation() const;
+	void SetTranslation( Vector3 value );
+
+	/*!
+	 * Rotation.
+	 */
+	Quaternion GetRotation() const;
+	void SetRotation( Quaternion value );
+
+	/*!
+	 * Scale.
+	 */
+	float GetScale() const;
+	void SetScale( float value );
+
+	/*!
+	 * Refers to NiTransformData.
+	 */
+	Ref<NiTransformData > GetData() const;
+	void SetData( Ref<NiTransformData > value );
+
 protected:
 	NI_TRANSFORM_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

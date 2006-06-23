@@ -39,8 +39,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	Ref<NiInterpolator> GetInterpolator() const;
-	void SetInterpolator( const Ref<NiInterpolator> & n );
+	/*!
+	 * Link to interpolator.
+	 */
+	Ref<NiInterpolator > GetInterpolator() const;
+	void SetInterpolator( Ref<NiInterpolator > value );
+
 protected:
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
 	STANDARD_INTERNAL_METHODS

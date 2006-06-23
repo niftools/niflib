@@ -36,3 +36,19 @@ const Type & NiPoint3Interpolator::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiPoint3Interpolator::GetPoint3Value() const {
+	return point3Value;
+}
+
+void NiPoint3Interpolator::SetPoint3Value( Vector3 value ) {
+	point3Value = value;
+}
+
+Ref<NiPosData > NiPoint3Interpolator::GetData() const {
+	return data;
+}
+
+void NiPoint3Interpolator::SetData( Ref<NiPosData > value ) {
+	data = value;
+}
+

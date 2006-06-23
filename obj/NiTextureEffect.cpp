@@ -36,3 +36,83 @@ const Type & NiTextureEffect::GetType() const {
 	return TYPE;
 };
 
+Matrix33 NiTextureEffect::GetModelProjectionMatrix() const {
+	return modelProjectionMatrix;
+}
+
+void NiTextureEffect::SetModelProjectionMatrix( Matrix33 value ) {
+	modelProjectionMatrix = value;
+}
+
+Vector3 NiTextureEffect::GetModelProjectionTransform() const {
+	return modelProjectionTransform;
+}
+
+void NiTextureEffect::SetModelProjectionTransform( Vector3 value ) {
+	modelProjectionTransform = value;
+}
+
+uint NiTextureEffect::GetTextureFiltering() const {
+	return textureFiltering;
+}
+
+void NiTextureEffect::SetTextureFiltering( uint value ) {
+	textureFiltering = value;
+}
+
+uint NiTextureEffect::GetTextureClamping() const {
+	return textureClamping;
+}
+
+void NiTextureEffect::SetTextureClamping( uint value ) {
+	textureClamping = value;
+}
+
+uint NiTextureEffect::GetTextureType() const {
+	return textureType;
+}
+
+void NiTextureEffect::SetTextureType( uint value ) {
+	textureType = value;
+}
+
+uint NiTextureEffect::GetCoordinateGenerationType() const {
+	return coordinateGenerationType;
+}
+
+void NiTextureEffect::SetCoordinateGenerationType( uint value ) {
+	coordinateGenerationType = value;
+}
+
+Ref<NiSourceTexture > NiTextureEffect::GetSourceTexture() const {
+	return sourceTexture;
+}
+
+void NiTextureEffect::SetSourceTexture( Ref<NiSourceTexture > value ) {
+	sourceTexture = value;
+}
+
+byte NiTextureEffect::GetClippingPlane() const {
+	return clippingPlane;
+}
+
+void NiTextureEffect::SetClippingPlane( byte value ) {
+	clippingPlane = value;
+}
+
+ushort NiTextureEffect::GetPs2L() const {
+	return ps2L;
+}
+
+void NiTextureEffect::SetPs2L( ushort value ) {
+	ps2L = value;
+}
+
+ushort NiTextureEffect::GetPs2K() const {
+	return ps2K;
+}
+
+void NiTextureEffect::SetPs2K( ushort value ) {
+	ps2K = value;
+}
+

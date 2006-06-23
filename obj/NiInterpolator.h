@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 namespace Niflib {
 
+
 #include "../gen/obj_defines.h"
 
 class NiInterpolator;

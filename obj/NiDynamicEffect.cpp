@@ -36,3 +36,35 @@ const Type & NiDynamicEffect::GetType() const {
 	return TYPE;
 };
 
+bool NiDynamicEffect::GetHasAffectedNodeList_() const {
+	return hasAffectedNodeList_;
+}
+
+void NiDynamicEffect::SetHasAffectedNodeList_( bool value ) {
+	hasAffectedNodeList_ = value;
+}
+
+uint NiDynamicEffect::GetAffectedNodeList_() const {
+	return affectedNodeList_;
+}
+
+void NiDynamicEffect::SetAffectedNodeList_( uint value ) {
+	affectedNodeList_ = value;
+}
+
+bool NiDynamicEffect::GetSwitchState() const {
+	return switchState;
+}
+
+void NiDynamicEffect::SetSwitchState( bool value ) {
+	switchState = value;
+}
+
+vector<Ref<NiAVObject > > NiDynamicEffect::GetAffectedNodes() const {
+	return affectedNodes;
+}
+
+void NiDynamicEffect::SetAffectedNodes( const vector<Ref<NiAVObject > >& value ) {
+	affectedNodes = value;
+}
+

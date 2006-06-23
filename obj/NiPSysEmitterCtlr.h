@@ -39,6 +39,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * This controller's data
+	 */
+	Ref<NiPSysEmitterCtlrData > GetData() const;
+	void SetData( Ref<NiPSysEmitterCtlrData > value );
+
+	/*!
+	 * Links to a bool interpolator. Controls emitter's visibility status?
+	 */
+	Ref<NiInterpolator > GetVisibilityInterpolator() const;
+	void SetVisibilityInterpolator( Ref<NiInterpolator > value );
+
 protected:
 	NI_P_SYS_EMITTER_CTLR_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -36,3 +36,19 @@ const Type & NiBoolTimelineInterpolator::GetType() const {
 	return TYPE;
 };
 
+byte NiBoolTimelineInterpolator::GetBoolValue() const {
+	return boolValue;
+}
+
+void NiBoolTimelineInterpolator::SetBoolValue( byte value ) {
+	boolValue = value;
+}
+
+Ref<NiBoolData > NiBoolTimelineInterpolator::GetData() const {
+	return data;
+}
+
+void NiBoolTimelineInterpolator::SetData( Ref<NiBoolData > value ) {
+	data = value;
+}
+

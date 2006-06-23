@@ -33,6 +33,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Animation start time.
+	 */
+	float GetStartTime() const;
+	void SetStartTime( float value );
+
+	/*!
+	 * Animation stop time.
+	 */
+	float GetStopTime() const;
+	void SetStopTime( float value );
+
 protected:
 	NI_B_SPLINE_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

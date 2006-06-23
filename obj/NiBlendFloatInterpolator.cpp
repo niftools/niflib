@@ -35,3 +35,11 @@ const Type & NiBlendFloatInterpolator::GetType() const {
 	return TYPE;
 };
 
+float NiBlendFloatInterpolator::GetFloatValue() const {
+	return floatValue;
+}
+
+void NiBlendFloatInterpolator::SetFloatValue( float value ) {
+	floatValue = value;
+}
+

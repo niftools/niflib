@@ -38,13 +38,18 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
-	//TODO: There is an item of unknown data in this class
 
-	Ref<NiPoint3Interpolator> GetInterpolator() const;
-	void SetInterpolator( const Ref<NiPoint3Interpolator> & n );
+	/*!
+	 * Link to NiPosData
+	 */
+	Ref<NiPosData > GetData() const;
+	void SetData( Ref<NiPosData > value );
 
-	Ref<NiPosData> GetData() const;
-	void SetData( const Ref<NiPosData> & n );
+	/*!
+	 * Link to NiPoint3Interpolator.
+	 */
+	Ref<NiPoint3Interpolator > GetInterpolator() const;
+	void SetInterpolator( Ref<NiPoint3Interpolator > value );
 
 protected:
 	NI_LIGHT_COLOR_CONTROLLER_MEMBERS

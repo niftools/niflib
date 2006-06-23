@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The interpolated bool?
+	 */
+	byte GetBoolValue() const;
+	void SetBoolValue( byte value );
+
 protected:
 	NI_BLEND_BOOL_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -36,10 +36,11 @@ const Type & NiSingleInterpolatorController::GetType() const {
 	return TYPE;
 };
 
-Ref<NiInterpolator> NiSingleInterpolatorController::GetInterpolator() const {
+Ref<NiInterpolator > NiSingleInterpolatorController::GetInterpolator() const {
 	return interpolator;
 }
 
-void NiSingleInterpolatorController::SetInterpolator( const Ref<NiInterpolator> & n ) {
-	interpolator = n;
+void NiSingleInterpolatorController::SetInterpolator( Ref<NiInterpolator > value ) {
+	interpolator = value;
 }
+

@@ -38,6 +38,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Value when posed?  At time 0?
+	 */
+	float GetFloatValue() const;
+	void SetFloatValue( float value );
+
+	/*!
+	 * Float data?
+	 */
+	Ref<NiFloatData > GetData() const;
+	void SetData( Ref<NiFloatData > value );
+
 protected:
 	NI_FLOAT_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

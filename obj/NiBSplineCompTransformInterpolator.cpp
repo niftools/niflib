@@ -37,3 +37,19 @@ const Type & NiBSplineCompTransformInterpolator::GetType() const {
 	return TYPE;
 };
 
+Ref<NiBSplineData > NiBSplineCompTransformInterpolator::GetData() const {
+	return data;
+}
+
+void NiBSplineCompTransformInterpolator::SetData( Ref<NiBSplineData > value ) {
+	data = value;
+}
+
+Ref<NiBSplineBasisData > NiBSplineCompTransformInterpolator::GetBasisData() const {
+	return basisData;
+}
+
+void NiBSplineCompTransformInterpolator::SetBasisData( Ref<NiBSplineBasisData > value ) {
+	basisData = value;
+}
+

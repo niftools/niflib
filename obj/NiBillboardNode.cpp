@@ -35,3 +35,11 @@ const Type & NiBillboardNode::GetType() const {
 	return TYPE;
 };
 
+ushort NiBillboardNode::GetBillboardMode() const {
+	return billboardMode;
+}
+
+void NiBillboardNode::SetBillboardMode( ushort value ) {
+	billboardMode = value;
+}
+

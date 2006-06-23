@@ -33,8 +33,11 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The flags.
+	 */
 	uint GetFlags() const;
-	void SetFlags( uint n );
+	void SetFlags( uint value );
 
 protected:
 	B_S_X_FLAGS_MEMBERS

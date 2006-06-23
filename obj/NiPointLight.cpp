@@ -35,3 +35,27 @@ const Type & NiPointLight::GetType() const {
 	return TYPE;
 };
 
+float NiPointLight::GetConstantAttenuation() const {
+	return constantAttenuation;
+}
+
+void NiPointLight::SetConstantAttenuation( float value ) {
+	constantAttenuation = value;
+}
+
+float NiPointLight::GetLinearAttenuation() const {
+	return linearAttenuation;
+}
+
+void NiPointLight::SetLinearAttenuation( float value ) {
+	linearAttenuation = value;
+}
+
+float NiPointLight::GetQuadraticAttenuation() const {
+	return quadraticAttenuation;
+}
+
+void NiPointLight::SetQuadraticAttenuation( float value ) {
+	quadraticAttenuation = value;
+}
+

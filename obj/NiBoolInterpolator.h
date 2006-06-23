@@ -38,6 +38,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Value when posed?  At time 0?
+	 */
+	bool GetBoolValue() const;
+	void SetBoolValue( bool value );
+
+	/*!
+	 * Refers to a NiBoolData block.
+	 */
+	Ref<NiBoolData > GetData() const;
+	void SetData( Ref<NiBoolData > value );
+
 protected:
 	NI_BOOL_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -37,3 +37,19 @@ const Type & NiPSysEmitterCtlr::GetType() const {
 	return TYPE;
 };
 
+Ref<NiPSysEmitterCtlrData > NiPSysEmitterCtlr::GetData() const {
+	return data;
+}
+
+void NiPSysEmitterCtlr::SetData( Ref<NiPSysEmitterCtlrData > value ) {
+	data = value;
+}
+
+Ref<NiInterpolator > NiPSysEmitterCtlr::GetVisibilityInterpolator() const {
+	return visibilityInterpolator;
+}
+
+void NiPSysEmitterCtlr::SetVisibilityInterpolator( Ref<NiInterpolator > value ) {
+	visibilityInterpolator = value;
+}
+

@@ -36,3 +36,99 @@ const Type & NiCamera::GetType() const {
 	return TYPE;
 };
 
+float NiCamera::GetFrustumLeft() const {
+	return frustumLeft;
+}
+
+void NiCamera::SetFrustumLeft( float value ) {
+	frustumLeft = value;
+}
+
+float NiCamera::GetFrustumRight() const {
+	return frustumRight;
+}
+
+void NiCamera::SetFrustumRight( float value ) {
+	frustumRight = value;
+}
+
+float NiCamera::GetFrustumTop() const {
+	return frustumTop;
+}
+
+void NiCamera::SetFrustumTop( float value ) {
+	frustumTop = value;
+}
+
+float NiCamera::GetFrustumBottom() const {
+	return frustumBottom;
+}
+
+void NiCamera::SetFrustumBottom( float value ) {
+	frustumBottom = value;
+}
+
+float NiCamera::GetFrustumNear() const {
+	return frustumNear;
+}
+
+void NiCamera::SetFrustumNear( float value ) {
+	frustumNear = value;
+}
+
+float NiCamera::GetFrustumFar() const {
+	return frustumFar;
+}
+
+void NiCamera::SetFrustumFar( float value ) {
+	frustumFar = value;
+}
+
+bool NiCamera::GetUseOrthographicProjection() const {
+	return useOrthographicProjection;
+}
+
+void NiCamera::SetUseOrthographicProjection( bool value ) {
+	useOrthographicProjection = value;
+}
+
+float NiCamera::GetViewportLeft() const {
+	return viewportLeft;
+}
+
+void NiCamera::SetViewportLeft( float value ) {
+	viewportLeft = value;
+}
+
+float NiCamera::GetViewportRight() const {
+	return viewportRight;
+}
+
+void NiCamera::SetViewportRight( float value ) {
+	viewportRight = value;
+}
+
+float NiCamera::GetViewportTop() const {
+	return viewportTop;
+}
+
+void NiCamera::SetViewportTop( float value ) {
+	viewportTop = value;
+}
+
+float NiCamera::GetViewportBottom() const {
+	return viewportBottom;
+}
+
+void NiCamera::SetViewportBottom( float value ) {
+	viewportBottom = value;
+}
+
+float NiCamera::GetLodAdjust() const {
+	return lodAdjust;
+}
+
+void NiCamera::SetLodAdjust( float value ) {
+	lodAdjust = value;
+}
+

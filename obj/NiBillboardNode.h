@@ -34,6 +34,13 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * 0: ALWAYS_FACE_CAMERA 1: ROTATE_ABOUT_UP 2: RIGID_FACE_CAMERA 3:
+	 * ALWAYS_FACE_CENTER 4: RIGID_FACE_CENTER
+	 */
+	ushort GetBillboardMode() const;
+	void SetBillboardMode( ushort value );
+
 protected:
 	NI_BILLBOARD_NODE_MEMBERS
 	STANDARD_INTERNAL_METHODS

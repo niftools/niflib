@@ -39,6 +39,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Refers to NiBSplineData.
+	 */
+	Ref<NiBSplineData > GetData() const;
+	void SetData( Ref<NiBSplineData > value );
+
 protected:
 	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

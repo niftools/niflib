@@ -36,3 +36,19 @@ const Type & NiPSysEmitterCtlrData::GetType() const {
 	return TYPE;
 };
 
+KeyGroup<float > NiPSysEmitterCtlrData::GetFloatKeys_() const {
+	return floatKeys_;
+}
+
+void NiPSysEmitterCtlrData::SetFloatKeys_( KeyGroup<float > value ) {
+	floatKeys_ = value;
+}
+
+vector<Key<byte > > NiPSysEmitterCtlrData::GetVisibilityKeys_() const {
+	return visibilityKeys_;
+}
+
+void NiPSysEmitterCtlrData::SetVisibilityKeys_( const vector<Key<byte > >& value ) {
+	visibilityKeys_ = value;
+}
+

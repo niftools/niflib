@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Refers to modifier block by its name?
+	 */
+	string GetModifierName() const;
+	void SetModifierName( string value );
+
 protected:
 	A_P_SYS_CTLR_MEMBERS
 	STANDARD_INTERNAL_METHODS

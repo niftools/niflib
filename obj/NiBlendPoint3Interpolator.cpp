@@ -35,3 +35,11 @@ const Type & NiBlendPoint3Interpolator::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiBlendPoint3Interpolator::GetPointValue() const {
+	return pointValue;
+}
+
+void NiBlendPoint3Interpolator::SetPointValue( Vector3 value ) {
+	pointValue = value;
+}
+

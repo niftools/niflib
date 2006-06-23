@@ -38,6 +38,33 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Determines whether or not an unknown integer follows.
+	 */
+	bool GetHasAffectedNodeList_() const;
+	void SetHasAffectedNodeList_( bool value );
+
+	/*!
+	 * This is probably the list of affected nodes. For some reason i do not
+	 * know the max exporter seems to write pointers instead of links. But it
+	 * doesn't matter because at least in version 4.0.0.2 the list is
+	 * automagically updated by the engine during the load stage.
+	 */
+	uint GetAffectedNodeList_() const;
+	void SetAffectedNodeList_( uint value );
+
+	/*!
+	 * Turns effect on and off?  Switches list to list of unaffected nodes?
+	 */
+	bool GetSwitchState() const;
+	void SetSwitchState( bool value );
+
+	/*!
+	 * The list of affected nodes?
+	 */
+	vector<Ref<NiAVObject > > GetAffectedNodes() const;
+	void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
+
 protected:
 	NI_DYNAMIC_EFFECT_MEMBERS
 	STANDARD_INTERNAL_METHODS

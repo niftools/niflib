@@ -38,6 +38,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The interpolated bool?
+	 */
+	byte GetBoolValue() const;
+	void SetBoolValue( byte value );
+
+	/*!
+	 * The bool data.
+	 */
+	Ref<NiBoolData > GetData() const;
+	void SetData( Ref<NiBoolData > value );
+
 protected:
 	NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

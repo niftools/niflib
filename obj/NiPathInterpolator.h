@@ -39,6 +39,18 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Links to NiPosData.
+	 */
+	Ref<NiPosData > GetPosData() const;
+	void SetPosData( Ref<NiPosData > value );
+
+	/*!
+	 * Links to NiFloatData.
+	 */
+	Ref<NiFloatData > GetFloatData() const;
+	void SetFloatData( Ref<NiFloatData > value );
+
 protected:
 	NI_PATH_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

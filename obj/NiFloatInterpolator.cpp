@@ -36,3 +36,19 @@ const Type & NiFloatInterpolator::GetType() const {
 	return TYPE;
 };
 
+float NiFloatInterpolator::GetFloatValue() const {
+	return floatValue;
+}
+
+void NiFloatInterpolator::SetFloatValue( float value ) {
+	floatValue = value;
+}
+
+Ref<NiFloatData > NiFloatInterpolator::GetData() const {
+	return data;
+}
+
+void NiFloatInterpolator::SetData( Ref<NiFloatData > value ) {
+	data = value;
+}
+
