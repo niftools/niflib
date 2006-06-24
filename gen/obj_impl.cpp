@@ -6261,11 +6261,6 @@ void NiKeyframeData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 
 void NiKeyframeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	if ( rotationType == XYZ_ROTATION_KEY ) {
-		numRotationKeys = 1;
-	} else {
-		numRotationKeys = uint(quaternionKeys.size());
-	}
 	NifStream( numRotationKeys, out, version );
 	if ( (numRotationKeys != 0) ) {
 		NifStream( rotationType, out, version );
@@ -6313,11 +6308,6 @@ void NiKeyframeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << AKeyedData::asString();
-	if ( rotationType == XYZ_ROTATION_KEY ) {
-		numRotationKeys = 1;
-	} else {
-		numRotationKeys = uint(quaternionKeys.size());
-	}
 	out << "  Num Rotation Keys:  " << numRotationKeys << endl;
 	if ( (numRotationKeys != 0) ) {
 		out << "    Rotation Type:  " << rotationType << endl;

@@ -44,14 +44,24 @@ KeyType NiKeyframeData::GetRotateType() const {
 
 void NiKeyframeData::SetRotateType( KeyType t ) {
 	rotationType = t;
+	UpdateRotationKeyCount();
 }
 
 vector< Key<Quaternion> > NiKeyframeData::GetQuatRotateKeys() const {
 	return quaternionKeys;
 }
 
+void NiKeyframeData::UpdateRotationKeyCount() {
+	if ( rotationType == XYZ_ROTATION_KEY ) {
+		numRotationKeys = 1;
+	} else {
+		numRotationKeys = uint(quaternionKeys.size());
+	}
+};
+
 void NiKeyframeData::SetQuatRotateKeys( const vector< Key<Quaternion> > & keys ) {
 	quaternionKeys = keys;
+	UpdateRotationKeyCount();
 }
 
 KeyType NiKeyframeData::GetXRotateType() const {

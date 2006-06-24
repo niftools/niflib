@@ -185,6 +185,7 @@ public:
 	void SetScaleKeys( vector< Key<float> > const & keys );
 
 protected:
+	void UpdateRotationKeyCount();
 	NI_KEYFRAME_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };
