@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NITRIBASEDGEOM_H_
 
 #include "NiAVObject.h"
+#include "NiNode.h"
 
 // Include structures
 #include "../Ref.h"

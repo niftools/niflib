@@ -20,6 +20,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiKeyframeData.h"
 #include "obj/NiStringExtraData.h"
 #include "gen/header.h"
+#include "gen/footer.h"
 
 namespace Niflib {
 
