@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#ifndef _REF_H_
-#define _REF_H_
+#ifndef _NIFLIB_REF_H_
+#define _NIFLIB_REF_H_
 
 #include <ostream>
 namespace Niflib {
@@ -12,12 +12,25 @@ namespace Niflib {
  */
 
 template<class T> class Ref;
-template<class T> ostream & operator<<(ostream &, const Ref<T> &);
+template<class T> std::ostream & operator<<(std::ostream &, const Ref<T> &);
 
 template <class T> class Ref {
 public:
 	Ref( T * object = NULL );
 	Ref(const Ref & ref_to_copy );
+
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+   template<typename U> Ref( const Ref<U>& other ) { 
+      if ( (NULL != other._object) && other._object->IsDerivedType(T::TypeConst()) ) {
+         _object = static_cast<T*>(other._object);
+         if ( _object != NULL )
+            _object->AddRef();
+      } else {
+         _object = NULL;
+      }
+   }
+#endif
+
 	~Ref();
 
 	T& operator*() const;
@@ -33,7 +46,7 @@ public:
 
 	//These operators generate problems in SWIG
 #ifndef SWIG
-	friend ostream & operator<< <T>(ostream & os, const Ref & ref);
+   friend std::ostream & operator<< <T>(std::ostream & os, const Ref & ref);
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
 	operator T*() const;
@@ -41,6 +54,9 @@ public:
 #endif
 
 protected:
+#ifdef USE_NIFLIB_TEMPLATE_HELPERS
+   template<typename U> friend class Ref;
+#endif
 	//The shared object
 	T* _object;
 };
@@ -176,7 +192,7 @@ bool Ref<T>::operator!=(const Ref & ref) const {
 
 #ifndef SWIG
 template <class T>
-ostream & operator<<(ostream & os, const Ref<T> & ref) {
+std::ostream & operator<<(std::ostream & os, const Ref<T> & ref) {
 	if (ref._object)
 		os << ref->GetIDString();
 	else
