@@ -281,9 +281,9 @@ void NifStream( ShortString & val, istream& in, uint version ) {
 };
 
 void NifStream( ShortString const & val, ostream& out, uint version ) {
-	byte len = byte( std::streamsize(val.str.size()) + 1 );
-	WriteByte( len, out );
-	out.write( val.str.c_str(), std::streamsize(val.str.size()) + 1 );
+	WriteByte( byte(val.str.size() + 1), out );
+	out.write( val.str.c_str(), std::streamsize(val.str.size()) );
+	WriteByte( 0, out );
 };
 
 ostream & operator<<( ostream & out, ShortString const & val ) {
