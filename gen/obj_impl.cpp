@@ -5127,6 +5127,7 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	if ( version >= 0x0A01006A ) {
 		NifStream( weight, in, version );
 		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
 		NifStream( cycleType, in, version );
 	};
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
@@ -5392,6 +5393,15 @@ void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects
 		};
 	};
 	if ( version >= 0x0A01006A ) {
+		if (link_stack.empty())
+			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
+		if (link_stack.front() != 0xffffffff) {
+			textKeys = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]);
+			if ( textKeys == NULL )
+				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
+		} else
+			textKeys = NULL;
+		link_stack.pop_front();
 		if (link_stack.empty())
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 		if (link_stack.front() != 0xffffffff) {
