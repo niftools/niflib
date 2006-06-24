@@ -1352,10 +1352,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ShortString.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\gen\SkinData.cpp"
 					>
 				</File>
@@ -2375,10 +2371,6 @@
 				</File>
 				<File
 					RelativePath=".\gen\ShaderTexDesc.h"
-					>
-				</File>
-				<File
-					RelativePath=".\gen\ShortString.h"
 					>
 				</File>
 				<File

@@ -265,11 +265,29 @@ void NifStream( HeaderString const & val, ostream& out, uint version ) {
 	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 
 	out << header_string.str() << "\n";
-	WriteByte( 10, out ); // Unknown Byte = 10
 };
 
 ostream & operator<<( ostream & out, HeaderString const & val ) {
 	return out << val.header;
+}
+
+//ShortString
+void NifStream( ShortString & val, istream& in, uint version ) {
+	byte len = ReadByte( in );
+	char * buffer = new char[len];
+	in.read( buffer, len );
+	val.str = buffer;
+	delete [] buffer;
+};
+
+void NifStream( ShortString const & val, ostream& out, uint version ) {
+	byte len = byte( std::streamsize(val.str.size()) );
+	WriteByte( len, out );
+	out.write( val.str.c_str(), std::streamsize(val.str.size()) );
+};
+
+ostream & operator<<( ostream & out, ShortString const & val ) {
+	return out << val.str;
 }
 
 //TexCoord

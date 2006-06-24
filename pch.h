@@ -27,7 +27,6 @@
 #include "gen/RagDollDescriptor.h"
 #include "gen/RotationKeyArray.h"
 #include "gen/ShaderTexDesc.h"
-#include "gen/ShortString.h"
 #include "gen/SkinData.h"
 #include "gen/SkinPartition.h"
 #include "gen/SkinShape.h"

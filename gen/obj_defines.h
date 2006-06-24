@@ -2395,12 +2395,12 @@ return InternalGetRefs(); \
 
 #define NI_CONTROLLER_SEQUENCE_MEMBERS \
 string name; \
-ControllerLink textKeys; \
+string textKeysName; \
+Ref<NiTextKeyExtraData > textKeys; \
 mutable uint numControlledBlocks; \
 uint unknownInt1; \
 vector<ControllerLink > controlledBlocks; \
 float weight; \
-Ref<NiTextKeyExtraData > textKeys2; \
 uint cycleType; \
 uint unknownInt0; \
 float frequency; \
@@ -2417,7 +2417,7 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_PARENT NiObject \
 
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT \
- : numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), textKeys2(NULL), cycleType((uint)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
+ : textKeys(NULL), numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), cycleType((uint)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 InternalRead( in, link_stack, version, user_version ); \

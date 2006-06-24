@@ -11,6 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 
 // Forward define of referenced blocks
+class NiTimeController;
 class NiInterpolator;
 class NiObject;
 class NiStringPalette;
@@ -27,9 +28,13 @@ struct NIFLIB_API ControllerLink {
 	/*! Default Destructor */
 	~ControllerLink();
 	/*!
-	 * Name of a controllable block in another NIF file.
+	 * Name of a controllable object in another NIF file.
 	 */
-	string name;
+	string targetName;
+	/*!
+	 * Link to a controller.
+	 */
+	Ref<NiTimeController > controller;
 	/*!
 	 * Link to an interpolator.
 	 */

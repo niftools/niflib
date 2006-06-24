@@ -186,6 +186,10 @@ struct HeaderString {
 	string header;
 };
 
+struct ShortString {
+	string str;
+};
+
 //TODO:  This is temporary to make it compile.  Should eventually be adjusted to display 1's and 0's insted of as an int.
 typedef ushort Flags;
 
@@ -361,11 +365,6 @@ void NifStream( string const & val, ostream& out, uint version = 0  );
 
 //--Structs--//
 
-////HeaderString
-//void NifStream( HeaderString & val, istream& in, uint version = 0 );
-//void NifStream( HeaderString const & val, ostream& out, uint version = 0 );
-//ostream & operator<<( ostream & out, HeaderString const & val );
-
 //TexCoord
 void NifStream( TexCoord & val, istream& in, uint version = 0 );
 void NifStream( TexCoord const & val, ostream& out, uint version = 0 );
@@ -475,6 +474,11 @@ ostream & operator<<( ostream & out, LightMode const & val );
 void NifStream( HeaderString & val, istream& in, uint version = 0 );
 void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, HeaderString const & val );
+
+//ShortString
+void NifStream( ShortString & val, istream& in, uint version = 0 );
+void NifStream( ShortString const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, ShortString const & val );
 
 //--Templates--//
 

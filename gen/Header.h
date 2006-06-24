@@ -7,8 +7,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../NIF_IO.h"
 #include "../obj/NiObject.h"
 
-// Include structures
-#include "ShortString.h"
 namespace Niflib {
 
 

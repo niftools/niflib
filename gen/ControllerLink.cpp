@@ -2,13 +2,14 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "ControllerLink.h"
+#include "../obj/NiTimeController.h"
 #include "../obj/NiInterpolator.h"
 #include "../obj/NiObject.h"
 #include "../obj/NiStringPalette.h"
 using namespace Niflib;
 
 //Constructor
-ControllerLink::ControllerLink() : interpolator(NULL), unknownLink1(NULL), unknownLink2(NULL), unknownShort0((ushort)0), priority_((byte)0), stringPalette(NULL), nodeNameOffset((uint)0), propertyTypeOffset((uint)0), controllerTypeOffset((uint)0), variableOffset1((uint)0), variableOffset2((uint)0) {};
+ControllerLink::ControllerLink() : controller(NULL), interpolator(NULL), unknownLink1(NULL), unknownLink2(NULL), unknownShort0((ushort)0), priority_((byte)0), stringPalette(NULL), nodeNameOffset((uint)0), propertyTypeOffset((uint)0), controllerTypeOffset((uint)0), variableOffset1((uint)0), variableOffset2((uint)0) {};
 
 //Destructor
 ControllerLink::~ControllerLink() {};

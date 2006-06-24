@@ -5053,60 +5053,9 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	NiObject::Read( in, link_stack, version, user_version );
 	NifStream( name, in, version );
 	if ( version <= 0x0A010000 ) {
-		if ( version <= 0x0A010000 ) {
-			NifStream( textKeys.name, in, version );
-		};
+		NifStream( textKeysName, in, version );
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
-		if ( version >= 0x0A01006A ) {
-			NifStream( block_num, in, version );
-			link_stack.push_back( block_num );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( block_num, in, version );
-			link_stack.push_back( block_num );
-			NifStream( textKeys.unknownShort0, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) {
-			NifStream( textKeys.priority_, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) {
-			NifStream( textKeys.priority_, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( block_num, in, version );
-			link_stack.push_back( block_num );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.nodeName, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.nodeNameOffset, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.propertyType, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.propertyTypeOffset, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.controllerType, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.controllerTypeOffset, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.variable1, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.variableOffset1, in, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.variable2, in, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.variableOffset2, in, version );
-		};
 	};
 	NifStream( numControlledBlocks, in, version );
 	if ( version >= 0x0A01006A ) {
@@ -5115,10 +5064,16 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	controlledBlocks.resize(numControlledBlocks);
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( version <= 0x0A010000 ) {
-			NifStream( controlledBlocks[i1].name, in, version );
+			NifStream( controlledBlocks[i1].targetName, in, version );
 		};
-		NifStream( block_num, in, version );
-		link_stack.push_back( block_num );
+		if ( version <= 0x0A01006A ) {
+			NifStream( block_num, in, version );
+			link_stack.push_back( block_num );
+		};
+		if ( version >= 0x0A020000 ) {
+			NifStream( block_num, in, version );
+			link_stack.push_back( block_num );
+		};
 		if ( version >= 0x0A01006A ) {
 			NifStream( block_num, in, version );
 			link_stack.push_back( block_num );
@@ -5172,7 +5127,6 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	if ( version >= 0x0A01006A ) {
 		NifStream( weight, in, version );
 		NifStream( block_num, in, version );
-		link_stack.push_back( block_num );
 		NifStream( cycleType, in, version );
 	};
 	if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
@@ -5205,68 +5159,11 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	numControlledBlocks = uint(controlledBlocks.size());
 	NifStream( name, out, version );
 	if ( version <= 0x0A010000 ) {
-		if ( version <= 0x0A010000 ) {
-			NifStream( textKeys.name, out, version );
-		};
-		if ( textKeys.interpolator != NULL )
-			NifStream( link_map[StaticCast<NiObject>(textKeys.interpolator)], out, version );
+		NifStream( textKeysName, out, version );
+		if ( textKeys != NULL )
+			NifStream( link_map[StaticCast<NiObject>(textKeys)], out, version );
 		else
 			NifStream( 0xffffffff, out, version );
-		if ( version >= 0x0A01006A ) {
-			if ( textKeys.unknownLink1 != NULL )
-				NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink1)], out, version );
-			else
-				NifStream( 0xffffffff, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			if ( textKeys.unknownLink2 != NULL )
-				NifStream( link_map[StaticCast<NiObject>(textKeys.unknownLink2)], out, version );
-			else
-				NifStream( 0xffffffff, out, version );
-			NifStream( textKeys.unknownShort0, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( user_version == 10 ) ) {
-			NifStream( textKeys.priority_, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( user_version == 11 ) ) {
-			NifStream( textKeys.priority_, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			if ( textKeys.stringPalette != NULL )
-				NifStream( link_map[StaticCast<NiObject>(textKeys.stringPalette)], out, version );
-			else
-				NifStream( 0xffffffff, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.nodeName, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.nodeNameOffset, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.propertyType, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.propertyTypeOffset, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.controllerType, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.controllerTypeOffset, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.variable1, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.variableOffset1, out, version );
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			NifStream( textKeys.variable2, out, version );
-		};
-		if ( version >= 0x0A020000 ) {
-			NifStream( textKeys.variableOffset2, out, version );
-		};
 	};
 	NifStream( numControlledBlocks, out, version );
 	if ( version >= 0x0A01006A ) {
@@ -5274,12 +5171,20 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	};
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( version <= 0x0A010000 ) {
-			NifStream( controlledBlocks[i1].name, out, version );
+			NifStream( controlledBlocks[i1].targetName, out, version );
 		};
-		if ( controlledBlocks[i1].interpolator != NULL )
-			NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].interpolator)], out, version );
-		else
-			NifStream( 0xffffffff, out, version );
+		if ( version <= 0x0A01006A ) {
+			if ( controlledBlocks[i1].controller != NULL )
+				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
+			else
+				NifStream( 0xffffffff, out, version );
+		};
+		if ( version >= 0x0A020000 ) {
+			if ( controlledBlocks[i1].interpolator != NULL )
+				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].interpolator)], out, version );
+			else
+				NifStream( 0xffffffff, out, version );
+		};
 		if ( version >= 0x0A01006A ) {
 			if ( controlledBlocks[i1].unknownLink1 != NULL )
 				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].unknownLink1)], out, version );
@@ -5338,8 +5243,8 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	};
 	if ( version >= 0x0A01006A ) {
 		NifStream( weight, out, version );
-		if ( textKeys2 != NULL )
-			NifStream( link_map[StaticCast<NiObject>(textKeys2)], out, version );
+		if ( textKeys != NULL )
+			NifStream( link_map[StaticCast<NiObject>(textKeys)], out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( cycleType, out, version );
@@ -5378,27 +5283,13 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	out << NiObject::asString();
 	numControlledBlocks = uint(controlledBlocks.size());
 	out << "  Name:  " << name << endl;
-	out << "  Name:  " << textKeys.name << endl;
-	out << "  Interpolator:  " << textKeys.interpolator << endl;
-	out << "  Unknown Link 1:  " << textKeys.unknownLink1 << endl;
-	out << "  Unknown Link 2:  " << textKeys.unknownLink2 << endl;
-	out << "  Unknown Short 0:  " << textKeys.unknownShort0 << endl;
-	out << "  Priority?:  " << textKeys.priority_ << endl;
-	out << "  String Palette:  " << textKeys.stringPalette << endl;
-	out << "  Node Name:  " << textKeys.nodeName << endl;
-	out << "  Node Name Offset:  " << textKeys.nodeNameOffset << endl;
-	out << "  Property Type:  " << textKeys.propertyType << endl;
-	out << "  Property Type Offset:  " << textKeys.propertyTypeOffset << endl;
-	out << "  Controller Type:  " << textKeys.controllerType << endl;
-	out << "  Controller Type Offset:  " << textKeys.controllerTypeOffset << endl;
-	out << "  Variable 1:  " << textKeys.variable1 << endl;
-	out << "  Variable Offset 1:  " << textKeys.variableOffset1 << endl;
-	out << "  Variable 2:  " << textKeys.variable2 << endl;
-	out << "  Variable Offset 2:  " << textKeys.variableOffset2 << endl;
+	out << "  Text Keys Name:  " << textKeysName << endl;
+	out << "  Text Keys:  " << textKeys << endl;
 	out << "  Num Controlled Blocks:  " << numControlledBlocks << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		out << "    Name:  " << controlledBlocks[i1].name << endl;
+		out << "    Target Name:  " << controlledBlocks[i1].targetName << endl;
+		out << "    Controller:  " << controlledBlocks[i1].controller << endl;
 		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
 		out << "    Unknown Link 1:  " << controlledBlocks[i1].unknownLink1 << endl;
 		out << "    Unknown Link 2:  " << controlledBlocks[i1].unknownLink2 << endl;
@@ -5417,7 +5308,6 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 		out << "    Variable Offset 2:  " << controlledBlocks[i1].variableOffset2 << endl;
 	};
 	out << "  Weight:  " << weight << endl;
-	out << "  Text Keys 2:  " << textKeys2 << endl;
 	out << "  Cycle Type:  " << cycleType << endl;
 	out << "  Unknown Int 0:  " << unknownInt0 << endl;
 	out << "  Frequency:  " << frequency << endl;
@@ -5437,56 +5327,36 @@ void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects
 		if (link_stack.empty())
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 		if (link_stack.front() != 0xffffffff) {
-			textKeys.interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-			if ( textKeys.interpolator == NULL )
+			textKeys = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]);
+			if ( textKeys == NULL )
 				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
 		} else
-			textKeys.interpolator = NULL;
+			textKeys = NULL;
 		link_stack.pop_front();
-		if ( version >= 0x0A01006A ) {
+	};
+	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( version <= 0x0A01006A ) {
 			if (link_stack.empty())
 				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 			if (link_stack.front() != 0xffffffff) {
-				textKeys.unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( textKeys.unknownLink1 == NULL )
+				controlledBlocks[i1].controller = DynamicCast<NiTimeController>(objects[link_stack.front()]);
+				if ( controlledBlocks[i1].controller == NULL )
 					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
 			} else
-				textKeys.unknownLink1 = NULL;
-			link_stack.pop_front();
-		};
-		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				textKeys.unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( textKeys.unknownLink2 == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				textKeys.unknownLink2 = NULL;
+				controlledBlocks[i1].controller = NULL;
 			link_stack.pop_front();
 		};
 		if ( version >= 0x0A020000 ) {
 			if (link_stack.empty())
 				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 			if (link_stack.front() != 0xffffffff) {
-				textKeys.stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]);
-				if ( textKeys.stringPalette == NULL )
+				controlledBlocks[i1].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
+				if ( controlledBlocks[i1].interpolator == NULL )
 					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
 			} else
-				textKeys.stringPalette = NULL;
+				controlledBlocks[i1].interpolator = NULL;
 			link_stack.pop_front();
 		};
-	};
-	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			controlledBlocks[i1].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-			if ( controlledBlocks[i1].interpolator == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			controlledBlocks[i1].interpolator = NULL;
-		link_stack.pop_front();
 		if ( version >= 0x0A01006A ) {
 			if (link_stack.empty())
 				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
@@ -5525,15 +5395,6 @@ void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects
 		if (link_stack.empty())
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 		if (link_stack.front() != 0xffffffff) {
-			textKeys2 = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]);
-			if ( textKeys2 == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			textKeys2 = NULL;
-		link_stack.pop_front();
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
 			manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]);
 			if ( manager == NULL )
 				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
@@ -5557,15 +5418,11 @@ void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects
 std::list<NiObjectRef> NiControllerSequence::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
-	if ( textKeys.interpolator != NULL )
-		refs.push_back(StaticCast<NiObject>(textKeys.interpolator));
-	if ( textKeys.unknownLink1 != NULL )
-		refs.push_back(StaticCast<NiObject>(textKeys.unknownLink1));
-	if ( textKeys.unknownLink2 != NULL )
-		refs.push_back(StaticCast<NiObject>(textKeys.unknownLink2));
-	if ( textKeys.stringPalette != NULL )
-		refs.push_back(StaticCast<NiObject>(textKeys.stringPalette));
+	if ( textKeys != NULL )
+		refs.push_back(StaticCast<NiObject>(textKeys));
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( controlledBlocks[i1].controller != NULL )
+			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].controller));
 		if ( controlledBlocks[i1].interpolator != NULL )
 			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].interpolator));
 		if ( controlledBlocks[i1].unknownLink1 != NULL )
@@ -5575,8 +5432,6 @@ std::list<NiObjectRef> NiControllerSequence::InternalGetRefs() const {
 		if ( controlledBlocks[i1].stringPalette != NULL )
 			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].stringPalette));
 	};
-	if ( textKeys2 != NULL )
-		refs.push_back(StaticCast<NiObject>(textKeys2));
 	if ( stringPalette != NULL )
 		refs.push_back(StaticCast<NiObject>(stringPalette));
 	return refs;
@@ -10929,7 +10784,7 @@ void NiSkinPartition::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
+		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		NifStream( skinPartitionBlocks[i1].numVertices, out, version );
 		NifStream( skinPartitionBlocks[i1].numTriangles, out, version );
@@ -11020,7 +10875,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
+		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;

@@ -51,10 +51,8 @@ NiControllerManager * NiControllerSequence::Parent() const { return NULL; }
 
 void NiControllerSequence::SetTextKey( const string new_name, const Ref<NiTextKeyExtraData> & txt_key ) {
 	//Set new name
-	textKeys.name = new_name;
-	throw runtime_error("The SetTextKey function cannot be implemented until prolems in the XML are solved.");
-	//TODO: "ControllerLink" can only link to Interpolators.  This is incorrect.  Must be fixed in XML.
-	//Need to set txt_key reference to a variable in textKeys
+	textKeysName = new_name;
+	textKeys = txt_key;
 }
 
 void NiControllerSequence::AddController( const string target_name, const Ref<NiTimeController> & obj ) {

@@ -2,9 +2,6 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "Header.h"
-#include "ShortString.h"
-#include "ShortString.h"
-#include "ShortString.h"
 using namespace Niflib;
 
 //Constructor
@@ -32,21 +29,9 @@ void Header::Read( istream& in ) {
 	};
 	if ( version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( creator_.length, in, version );
-			creator_.value.resize(creator_.length);
-			for (uint i3 = 0; i3 < creator_.value.size(); i3++) {
-				NifStream( creator_.value[i3], in, version );
-			};
-			NifStream( exportType_.length, in, version );
-			exportType_.value.resize(exportType_.length);
-			for (uint i3 = 0; i3 < exportType_.value.size(); i3++) {
-				NifStream( exportType_.value[i3], in, version );
-			};
-			NifStream( exportScript_.length, in, version );
-			exportScript_.value.resize(exportScript_.length);
-			for (uint i3 = 0; i3 < exportScript_.value.size(); i3++) {
-				NifStream( exportScript_.value[i3], in, version );
-			};
+			NifStream( creator_, in, version );
+			NifStream( exportType_, in, version );
+			NifStream( exportScript_, in, version );
 		};
 	};
 	if ( version >= 0x0A000100 ) {
@@ -85,21 +70,9 @@ void Header::Write( ostream& out ) const {
 	};
 	if ( version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			creator_.length = byte(creator_.value.size());
-			NifStream( creator_.length, out, version );
-			for (uint i3 = 0; i3 < creator_.value.size(); i3++) {
-				NifStream( creator_.value[i3], out, version );
-			};
-			exportType_.length = byte(exportType_.value.size());
-			NifStream( exportType_.length, out, version );
-			for (uint i3 = 0; i3 < exportType_.value.size(); i3++) {
-				NifStream( exportType_.value[i3], out, version );
-			};
-			exportScript_.length = byte(exportScript_.value.size());
-			NifStream( exportScript_.length, out, version );
-			for (uint i3 = 0; i3 < exportScript_.value.size(); i3++) {
-				NifStream( exportScript_.value[i3], out, version );
-			};
+			NifStream( creator_, out, version );
+			NifStream( exportType_, out, version );
+			NifStream( exportScript_, out, version );
 		};
 	};
 	if ( version >= 0x0A000100 ) {
@@ -126,33 +99,9 @@ string Header::asString( bool verbose ) const {
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	if ( (userVersion != 0) ) {
 		out << "    Unknown Int 3:  " << unknownInt3 << endl;
-		creator_.length = byte(creator_.value.size());
-		out << "    Length:  " << creator_.length << endl;
-		for (uint i2 = 0; i2 < creator_.value.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Value[" << i2 << "]:  " << creator_.value[i2] << endl;
-		};
-		exportType_.length = byte(exportType_.value.size());
-		out << "    Length:  " << exportType_.length << endl;
-		for (uint i2 = 0; i2 < exportType_.value.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Value[" << i2 << "]:  " << exportType_.value[i2] << endl;
-		};
-		exportScript_.length = byte(exportScript_.value.size());
-		out << "    Length:  " << exportScript_.length << endl;
-		for (uint i2 = 0; i2 < exportScript_.value.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Value[" << i2 << "]:  " << exportScript_.value[i2] << endl;
-		};
+		out << "    Creator?:  " << creator_ << endl;
+		out << "    Export Type?:  " << exportType_ << endl;
+		out << "    Export Script?:  " << exportScript_ << endl;
 	};
 	out << "  Num Block Types:  " << numBlockTypes << endl;
 	for (uint i1 = 0; i1 < blockTypes.size(); i1++) {
