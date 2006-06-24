@@ -237,8 +237,6 @@ struct NIFLIB_API Vector3 {
 	// * \return This vector is returned.
 	// */
 	//Vector3 & operator*=( const Matrix44 & rh );
-
-	friend ostream & operator<<( ostream & out, const Vector3 & rh );
 };
 
 /* Stores two floating point numbers.  Used as a row of a Matrix22 */
@@ -878,6 +876,7 @@ struct NIFLIB_API Quaternion {
 
 ostream & operator<<( ostream & out, TexCoord const & val );
 ostream & operator<<( ostream & out, Triangle const & val );
+ostream & operator<<( ostream & out, Vector3 const & val );
 ostream & operator<<( ostream & out, Float2 const & val );
 ostream & operator<<( ostream & out, Matrix22 const & val );
 ostream & operator<<( ostream & out, Float3 const & val );

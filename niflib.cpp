@@ -153,8 +153,12 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	cout << header.asString();
 #endif
 
-	//--Read Blocks--//
-   size_t numBlocks = header.numBlocks;
+#ifdef PRINT_OBJECT_NAMES
+	cout << endl << "Reading Objects:";
+#endif
+
+	//--Read Objects--//
+	size_t numBlocks = header.numBlocks;
 	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
 	string objectType;
@@ -335,8 +339,16 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	//Write header to file
 	header.Write( out );
 
+#ifdef PRINT_OBJECT_NAMES
+	cout << endl << "Writing Objects:";
+#endif
+
 	//--Write Objects--//
 	for (uint i = 0; i < objects.size(); ++i) {
+
+#ifdef PRINT_OBJECT_NAMES
+		cout << endl << i << ":  " << objects[i]->GetType().GetTypeName();
+#endif
 
 		if (version < 0x05000001) {
 			//cout << i << ":  " << objects[i]->GetType().GetTypeName() << endl;
