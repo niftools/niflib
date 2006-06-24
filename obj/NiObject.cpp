@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
+#include "niflib.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -64,6 +65,28 @@ string NiObject::GetIDString() {
 	return out.str();
 }
 
-NiObjectRef NiObject::Clone( unsigned int version ) {
-	throw runtime_error("Cloning not yet implemented.");
+NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
+	//Create a string stream to temporarily hold the state-save of this block
+	stringstream tmp;
+
+	//Create a new object of the same type
+	NiObjectRef clone = CreateBlock( this->GetType().GetTypeName() );
+
+	//Dummy map
+	map<NiObjectRef,uint> link_map;
+
+	//Write this object's data to the stream
+	this->Write( tmp, link_map, version, user_version );
+
+	//Dummy stack
+	list<uint> link_stack;
+
+	//Read the data back from the stream into the clone
+	clone->Read( tmp, link_stack, version, user_version );
+
+	//We don't fix the links, causing the clone to be a copy of all
+	//data but have none of the linkage of the original.
+
+	//return new object
+	return clone;
 };

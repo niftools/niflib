@@ -79,7 +79,7 @@ public:
 	 * \return A cloned copy of this block as a new block.
 	 * \sa CreateBlock
 	 */
-	NIFLIB_API NiObjectRef Clone( unsigned int version = 0xFFFFFFFF );
+	NIFLIB_API NiObjectRef Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 
 	/*!
 	 * Summarizes the information contained in this block in English.
