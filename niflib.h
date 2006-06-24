@@ -199,7 +199,6 @@ NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & ro
  */
 NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
 
-//TODO:  This was written by Amorilia.  Figure out how to fix it.
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
  * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
@@ -209,6 +208,16 @@ NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, unsi
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
 NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, unsigned int version, ExportOptions export_files, NifGame kf_type );
+
+/*!
+ * Creates a clone of an entire tree of objects.
+ * \param root The root block to start from when cloning the NIF data.  All referenced objects will be included in the new tree.
+ * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * \param user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
+ * \return The root of the new cloned tree.
+ */
+NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+
 
 //TODO:  Figure out how to fix this to work with the new system
 /*!

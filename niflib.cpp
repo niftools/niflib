@@ -786,4 +786,15 @@ unsigned int GetVersion(string version){
    return outver;
 }
 
+Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int version, unsigned int user_version ) {
+	//Create a string stream to temporarily hold the state-save of this tree
+	stringstream tmp;
+
+	//Write the existing tree into the stringstream
+	WriteNifTree( tmp, root, version, user_version );
+
+	//Read the data back out of the stringstream, returning the new tree
+	return ReadNifTree( tmp );
+}
+
 } // namespace NifLib
