@@ -41,7 +41,7 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 
 	string GetName();
-	void SetName( string & new_name );
+	void SetName( const string & new_name );
 	/*!
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type) {name}

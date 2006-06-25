@@ -39,6 +39,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void 	SetParent(NiAVObject *);
+	void 	SetBody(const Ref<NiObject> &);
+
 protected:
 	NiAVObject * NiCollisionObject::Parent() const;
 	NI_COLLISION_OBJECT_MEMBERS

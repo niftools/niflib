@@ -145,3 +145,8 @@ Vector3 NiAVObject::GetVelocity() const {
 void NiAVObject::SetVelocity( const Vector3 & n ) {
 	velocity = n;
 }
+
+void NiAVObject::SetCollisionObject(Ref<NiCollisionObject> &obj)
+{
+	collisionObject = obj;
+}

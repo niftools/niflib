@@ -2809,15 +2809,9 @@ std::list<NiObjectRef> bhkMultiSphereShape::InternalGetRefs() const {
 void bhkNiTriStripsShape::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	uint block_num;
 	bhkSphereRepShape::Read( in, link_stack, version, user_version );
-	for (uint i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownFloats1[i1], in, version );
-	};
-	for (uint i1 = 0; i1 < 5; i1++) {
-		NifStream( unknownInts1[i1], in, version );
-	};
-	for (uint i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], in, version );
-	};
+	NifStream( unknownFloat1, in, version );
+	NifStream( unknownInt1, in, version );
+	NifStream( scale, in, version );
 	NifStream( unknownInt2, in, version );
 	NifStream( numStripsData, in, version );
 	stripsData.resize(numStripsData);
@@ -2836,15 +2830,9 @@ void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
 	numUnknownInts3 = uint(unknownInts3.size());
 	numStripsData = uint(stripsData.size());
-	for (uint i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownFloats1[i1], out, version );
-	};
-	for (uint i1 = 0; i1 < 5; i1++) {
-		NifStream( unknownInts1[i1], out, version );
-	};
-	for (uint i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], out, version );
-	};
+	NifStream( unknownFloat1, out, version );
+	NifStream( unknownInt1, out, version );
+	NifStream( scale, out, version );
 	NifStream( unknownInt2, out, version );
 	NifStream( numStripsData, out, version );
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
@@ -2864,27 +2852,9 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	out << bhkSphereRepShape::asString();
 	numUnknownInts3 = uint(unknownInts3.size());
 	numStripsData = uint(stripsData.size());
-	for (uint i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl;
-	};
-	for (uint i1 = 0; i1 < 5; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
-	};
-	for (uint i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl;
-	};
+	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Scale:  " << scale << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Num Strips Data:  " << numStripsData << endl;
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
@@ -10792,7 +10762,7 @@ void NiSkinPartition::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
+		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		NifStream( skinPartitionBlocks[i1].numVertices, out, version );
 		NifStream( skinPartitionBlocks[i1].numTriangles, out, version );
@@ -10883,7 +10853,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
+		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;

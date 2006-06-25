@@ -37,3 +37,18 @@ const Type & bhkRigidBody::GetType() const {
 	return TYPE;
 };
 
+void bhkRigidBody::SetTranslation(const Vector3 &v)
+{
+	translation = v;
+}
+
+void bhkRigidBody::SetRotation(const QuaternionXYZW &q)
+{
+	rotation = q;
+}
+
+void bhkRigidBody::SetLayerCopy(int l)
+{
+	layerCopy_ = l;
+}
+

@@ -60,7 +60,7 @@ public:
 	 * version NIF files.
 	 * \param new_name The new name for this NiExtraData object.
 	 */
-	void SetName( string & new_name );
+	void SetName( const string & new_name );
 
 	/*!
 	 * Formats a human readable string that includes the type of the object

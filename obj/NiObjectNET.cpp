@@ -41,7 +41,7 @@ string NiObjectNET::GetName() {
 	return name;
 }
 
-void NiObjectNET::SetName( string & new_name ) {
+void NiObjectNET::SetName( const string & new_name ) {
 	name = new_name;
 }
 

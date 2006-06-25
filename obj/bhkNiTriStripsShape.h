@@ -38,6 +38,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void	SetNumStripsData(int i);
+	void	SetStripsData(int i, Ref<NiTriStripsData> &);
+
 protected:
 	BHK_NI_TRI_STRIPS_SHAPE_MEMBERS
 	STANDARD_INTERNAL_METHODS

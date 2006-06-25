@@ -82,6 +82,8 @@ public:
 	Vector3 GetVelocity() const;
 	void SetVelocity( const Vector3 & n );
 
+	void SetCollisionObject(Ref<NiCollisionObject> &);
+
 protected:
 	NiNode * parent;
 	NI_A_V_OBJECT_MEMBERS

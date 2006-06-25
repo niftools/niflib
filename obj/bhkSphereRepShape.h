@@ -34,6 +34,8 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void SetMaterial(int m);
+
 protected:
 	BHK_SPHERE_REP_SHAPE_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -39,6 +39,10 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void SetTranslation(const Vector3 &v);
+	void SetRotation(const QuaternionXYZW &q);
+	void SetLayerCopy(int l);
+
 protected:
 	BHK_RIGID_BODY_MEMBERS
 	STANDARD_INTERNAL_METHODS

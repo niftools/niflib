@@ -39,7 +39,7 @@ string NiExtraData::GetName() {
 	return name;
 }
 
-void NiExtraData::SetName( string & new_name ) {
+void NiExtraData::SetName( const string & new_name ) {
 	name = new_name;
 }
 

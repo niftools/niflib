@@ -36,3 +36,12 @@ const Type & bhkEntity::GetType() const {
 	return TYPE;
 };
 
+void bhkEntity::SetShape(const Ref<bhkShape> &s)
+{
+	shape = s;
+}
+
+void bhkEntity::SetLayer(int l)
+{
+	layer = l;
+}

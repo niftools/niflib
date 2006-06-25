@@ -38,6 +38,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void SetShape(const Ref<bhkShape> &);
+	void SetLayer(int layer);
+
 protected:
 	BHK_ENTITY_MEMBERS
 	STANDARD_INTERNAL_METHODS

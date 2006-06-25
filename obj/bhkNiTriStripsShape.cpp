@@ -36,3 +36,14 @@ const Type & bhkNiTriStripsShape::GetType() const {
 	return TYPE;
 };
 
+void bhkNiTriStripsShape::SetNumStripsData(int n)
+{
+	numStripsData = n;
+	stripsData.resize(n);
+}
+
+void bhkNiTriStripsShape::SetStripsData(int i, Ref<NiTriStripsData> &strips)
+{
+	stripsData[i] = strips;
+}
+
