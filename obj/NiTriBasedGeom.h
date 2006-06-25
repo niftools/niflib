@@ -59,8 +59,8 @@ public:
 	string GetShader() const;
 	void SetShader( const string & n );
 
-	
-	
+	vector<Vector3> GetSkinInfluencedVertices() const;
+
 protected:
 	NI_TRI_BASED_GEOM_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -274,13 +274,13 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	}
 
 	//TODO:  Make this an optional step?
-	//Send all skeleton roots to bind position
-	for (uint i = 0; i < blocks.size(); ++i) {
-		NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
-		if ( node != NULL && node->IsSkeletonRoot() ) {
-			node->GoToSkeletonBindPosition();
-		}
-	}
+	////Send all skeleton roots to bind position
+	//for (uint i = 0; i < blocks.size(); ++i) {
+	//	NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
+	//	if ( node != NULL && node->IsSkeletonRoot() ) {
+	//		node->GoToSkeletonBindPosition();
+	//	}
+	//}
 
 	//Return completed block list
 	return blocks;

@@ -90,3 +90,66 @@ void NiTriBasedGeom::UnbindSkin() {
 	//Clear skin instance
 	skinInstance = NULL;
 }
+
+vector<Vector3> NiTriBasedGeom::GetSkinInfluencedVertices() const {
+	//--Get required data & insure validity--//
+
+	NiTriBasedGeomDataRef geom_data = GetData();
+
+	if ( geom_data == NULL ) {
+		throw runtime_error("This NiTriBasedGeom has no NiTriBasedGeomData so there are no vertices to get.");
+	}
+
+	NiSkinInstanceRef skin_inst = GetSkinInstance();
+	
+
+	if ( skin_inst == NULL ) {
+		throw runtime_error("This NiTriBasedGeom is not influenced by a skin.");
+	}
+
+	NiSkinDataRef skin_data = skin_inst->GetSkinData();
+
+	if ( skin_data == NULL ) {
+		throw runtime_error("Skin Data is missing, cannot calculate skin influenced vertex position.");
+	}
+
+	//Ensure that skin instance bone count & skin data bone count match
+	if ( skin_inst->GetBoneCount() != skin_data->GetBoneCount() ) {
+		throw runtime_error("Skin Instance and Skin Data bone count do not match.");
+	}
+
+	//Get skeleton root
+	NiNodeRef skel_root = skin_inst->GetSkeletonRoot();
+	if ( skel_root == NULL ) {
+		throw runtime_error("Skin Instance is not bound to a skeleton root.");
+	}
+
+	//Get the vertices & bone nodes
+	vector<Vector3> vertices = geom_data->GetVertices();
+	vector<NiNodeRef> bone_nodes = skin_inst->GetBones();
+
+	//Set up an aray to hold the transformed vertices
+	vector<Vector3> skin_verts( vertices.size());
+
+	//Transform vertices into position based on skin data
+	Matrix44 root_world = skel_root->GetWorldTransform();
+	Matrix44 geom_world = GetWorldTransform();
+	for ( uint i = 0; i < skin_data->GetBoneCount(); ++i ) {
+		Matrix44 bone_world = bone_nodes[i]->GetWorldTransform();
+		Matrix44 bone_offset = skin_data->GetBoneTransform(i);
+		vector<SkinWeight> weights = skin_data->GetBoneWeights(i);
+		Matrix44 vert_trans =  bone_offset * bone_world;
+		for ( uint j = 0; j < weights.size(); ++j ) {
+			uint index = weights[j].index;
+			float weight = weights[j].weight;
+			skin_verts[index] += (vert_trans * vertices[index] ) * weight;
+		}
+	}
+
+	//Transform all vertices to final position
+	for ( uint i = 0; i < skin_verts.size(); ++i ) {
+		skin_verts[i] = geom_world.Inverse() * skin_verts[i];
+	}
+
+	return skin_verts;
+}
