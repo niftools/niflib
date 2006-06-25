@@ -66,7 +66,13 @@ public:
 	/*! Removes all controllers and interpolators from this Kf file root object.
 	 * \sa NiControllerSequence::AddController, NiControllersequence::AddInterpolator
 	 */
-	void ClearChildren();
+	void ClearControllerData();
+
+	/*! Retrieves the data for the controllers or interpolators which are attached to this controller sequence.
+	 * \return A vector containing the data for all controllers.
+	 * \sa NiControllerSequence::AddController, NiControllersequence::AddInterpolator, ClearKfChildren
+	 */
+	vector<ControllerLink> GetControllerData() const;
 
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;

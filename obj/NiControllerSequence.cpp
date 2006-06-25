@@ -130,7 +130,7 @@ void NiControllerSequence::AddInterpolator( const Ref<NiSingleInterpolatorContro
 	controlledBlocks.push_back( cl );
 }
 
-void NiControllerSequence::ClearChildren() {
+void NiControllerSequence::ClearControllerData() {
 	
 	throw runtime_error("The AddInterpolator function cannot be implemented until prolems in the XML are solved.");
 
@@ -138,4 +138,7 @@ void NiControllerSequence::ClearChildren() {
 	controlledBlocks.clear();
 }
 
+vector<ControllerLink> NiControllerSequence::GetControllerData() const {
+	return controlledBlocks;
+}
 
