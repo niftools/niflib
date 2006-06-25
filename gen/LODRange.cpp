@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-LODRange::LODRange() : near(0.0f), far(0.0f) {};
+LODRange::LODRange() : nearExtent(0.0f), farExtent(0.0f) {};
 
 //Destructor
 LODRange::~LODRange() {};

@@ -7490,8 +7490,8 @@ void NiLODNode::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 		NifStream( numLodLevels, in, version );
 		lodLevels.resize(numLodLevels);
 		for (uint i2 = 0; i2 < lodLevels.size(); i2++) {
-			NifStream( lodLevels[i2].near, in, version );
-			NifStream( lodLevels[i2].far, in, version );
+			NifStream( lodLevels[i2].nearExtent, in, version );
+			NifStream( lodLevels[i2].farExtent, in, version );
 		};
 	};
 	if ( (lodType == 1) ) {
@@ -7509,8 +7509,8 @@ void NiLODNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 		NifStream( lodCenter, out, version );
 		NifStream( numLodLevels, out, version );
 		for (uint i2 = 0; i2 < lodLevels.size(); i2++) {
-			NifStream( lodLevels[i2].near, out, version );
-			NifStream( lodLevels[i2].far, out, version );
+			NifStream( lodLevels[i2].nearExtent, out, version );
+			NifStream( lodLevels[i2].farExtent, out, version );
 		};
 	};
 	if ( (lodType == 1) ) {
@@ -7531,8 +7531,8 @@ std::string NiLODNode::InternalAsString( bool verbose ) const {
 		out << "    LOD Center:  " << lodCenter << endl;
 		out << "    Num LOD Levels:  " << numLodLevels << endl;
 		for (uint i2 = 0; i2 < lodLevels.size(); i2++) {
-			out << "      Near:  " << lodLevels[i2].near << endl;
-			out << "      Far:  " << lodLevels[i2].far << endl;
+			out << "      Near Extent:  " << lodLevels[i2].nearExtent << endl;
+			out << "      Far Extent:  " << lodLevels[i2].farExtent << endl;
 		};
 	};
 	if ( (lodType == 1) ) {
@@ -10254,8 +10254,8 @@ void NiRangeLODData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NifStream( numLodLevels, in, version );
 	lodLevels.resize(numLodLevels);
 	for (uint i1 = 0; i1 < lodLevels.size(); i1++) {
-		NifStream( lodLevels[i1].near, in, version );
-		NifStream( lodLevels[i1].far, in, version );
+		NifStream( lodLevels[i1].nearExtent, in, version );
+		NifStream( lodLevels[i1].farExtent, in, version );
 	};
 }
 
@@ -10265,8 +10265,8 @@ void NiRangeLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 	NifStream( lodCenter, out, version );
 	NifStream( numLodLevels, out, version );
 	for (uint i1 = 0; i1 < lodLevels.size(); i1++) {
-		NifStream( lodLevels[i1].near, out, version );
-		NifStream( lodLevels[i1].far, out, version );
+		NifStream( lodLevels[i1].nearExtent, out, version );
+		NifStream( lodLevels[i1].farExtent, out, version );
 	};
 }
 
@@ -10277,8 +10277,8 @@ std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 	out << "  LOD Center:  " << lodCenter << endl;
 	out << "  Num LOD Levels:  " << numLodLevels << endl;
 	for (uint i1 = 0; i1 < lodLevels.size(); i1++) {
-		out << "    Near:  " << lodLevels[i1].near << endl;
-		out << "    Far:  " << lodLevels[i1].far << endl;
+		out << "    Near Extent:  " << lodLevels[i1].nearExtent << endl;
+		out << "    Far Extent:  " << lodLevels[i1].farExtent << endl;
 	};
 	return out.str();
 }
