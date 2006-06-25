@@ -15,6 +15,7 @@ class NiTextKeyExtraData;
 class NiControllerManager;
 class NiStringPalette;
 class NiTimeController;
+class NiSingleInterpolatorController;
 
 #include "../gen/obj_defines.h"
 
@@ -47,30 +48,26 @@ public:
 	 * \param txt_key A reference to the NiTextKeyExtraData object to use.
 	 * \sa NiTextKeyExtraData
 	 */
-	void SetTextKey( const string new_name, const Ref<NiTextKeyExtraData> & txt_key );
+	void SetTextKey( const Ref<NiTextKeyExtraData> & txt_key );
 
 	/*! Attatches a controler to this KF file for a KF file of version 10.2.0.0 or below.  Versions above this use interpolators.
-	 * \param target_name The name to re-link this controller with when it is merged with a Nif file.
 	 * \param obj A reference to the new NiTimeController to attach.
 	 * \sa NiControllerSequence::ClearChildren, NiControllersequence::AddInterpolator
 	 */
-	void AddController( const string target_name, const Ref<NiTimeController> & obj );
+	void AddController( const Ref<NiTimeController> & obj );
 
 	/*! Attatches an interpolator to this KF file for a KF file of version greater than 10.2.0.0.  Versions below this use controllers.
-	 * \param target_name The name to re-link this interpolator with when it is merged with a Nif file.
-	 * \param obj A reference to the new NiInterpolator to attach.
-	 * \param controller_type The original controller type that this interpolator was connected to.
+	 * \param obj A reference to the new controller which has an interpolator to attach.
+	 * \param priority Used only in Oblivion to set the priority of one controller over another when the two are merged.
 	 * \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddController
 	 */
-	void AddInterpolator( const string target_name, const Ref<NiInterpolator> & obj, string controller_type );
+	void AddInterpolator( const Ref<NiSingleInterpolatorController> & obj, byte priority = 0 );
 
 	/*! Removes all controllers and interpolators from this Kf file root object.
 	 * \sa NiControllerSequence::AddController, NiControllersequence::AddInterpolator
 	 */
 	void ClearChildren();
 
-private:
-	string GetSubStr( const string & pal, short offset ) const;
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
 	NI_CONTROLLER_SEQUENCE_MEMBERS

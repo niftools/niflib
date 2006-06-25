@@ -36,3 +36,42 @@ const Type & NiStringPalette::GetType() const {
 	return TYPE;
 };
 
+string NiStringPalette::GetPaletteString() const {
+	return palette.palette;
+}
+	
+void NiStringPalette::SetPaletteString( const string & n ) {
+	palette.palette = n;
+}
+
+string NiStringPalette::GetSubStr( short offset ) const {
+	string out;
+	
+	// -1 is a null offset
+	if ( offset == -1 ) {
+		return out;
+	}
+
+	for ( uint i = offset; i < palette.palette.size(); ++i ) {
+		if ( palette.palette[i] == '\0' ) {
+			break;
+		}
+		out.push_back( palette.palette[i] );
+	}
+
+	return out;
+}
+
+unsigned int NiStringPalette::AddSubStr( const string & n ) {
+	//Search for the string
+	uint offset = (uint)palette.palette.find( n );
+	
+	//If string was not found, append it
+	if ( offset == 0xFFFFFFFF ) {
+		offset = (uint)palette.palette.size();
+		palette.palette.append( n + '\0' );
+	}
+
+	//Return the offset where the string was found or appended
+	return offset;
+}

@@ -38,6 +38,11 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	string GetPaletteString() const;
+	void SetPaletteString( const string & n );
+	string GetSubStr( short offset ) const;
+	unsigned int AddSubStr( const string & n );
+
 protected:
 	NI_STRING_PALETTE_MEMBERS
 	STANDARD_INTERNAL_METHODS
