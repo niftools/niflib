@@ -541,7 +541,15 @@ NiNode * node = new NiNode;
 
 All NIF objects inherit from \ref NiObject so a good place to start would be understanding the methods of that class.
 
-You can access the member functions of any class through a Ref smart pointer of the right type by using the -> operator.  In Python you can simply use the dot (.) operator.
+You can access the member functions of any class through a Ref smart pointer of the right type by using the -> operator.  In Python you will need to use the Ptr() function as an intermediary between a smart reference and the object that it holds, like so:
+
+\code
+//C++
+niNode->GetChildren;
+
+#Python
+niNode.Ptr().GetChildren()
+\endcode
 
 If you have a Ref of one type, such as a generic NiObjectRef, and you want to know if the object it points to also inherits from the NiNode class, you use the \ref DynamicCast template function.  To cast from a NiObjectRef to a NiNodeRef, you would do the following:
 
