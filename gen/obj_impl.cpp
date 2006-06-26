@@ -2811,29 +2811,37 @@ void bhkNiTriStripsShape::InternalRead( istream& in, list<uint> & link_stack, un
 	bhkSphereRepShape::Read( in, link_stack, version, user_version );
 	NifStream( unknownFloat1, in, version );
 	NifStream( unknownInt1, in, version );
-	NifStream( scale, in, version );
+	for (uint i1 = 0; i1 < 4; i1++) {
+		NifStream( unknownInts1[i1], in, version );
+	};
 	NifStream( unknownInt2, in, version );
+	NifStream( scale, in, version );
+	NifStream( unknownInt3, in, version );
 	NifStream( numStripsData, in, version );
 	stripsData.resize(numStripsData);
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
 	};
-	NifStream( numUnknownInts3, in, version );
-	unknownInts3.resize(numUnknownInts3);
-	for (uint i1 = 0; i1 < unknownInts3.size(); i1++) {
-		NifStream( unknownInts3[i1], in, version );
+	NifStream( numUnknownInts2, in, version );
+	unknownInts2.resize(numUnknownInts2);
+	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
+		NifStream( unknownInts2[i1], in, version );
 	};
 }
 
 void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	numUnknownInts3 = uint(unknownInts3.size());
+	numUnknownInts2 = uint(unknownInts2.size());
 	numStripsData = uint(stripsData.size());
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownInt1, out, version );
-	NifStream( scale, out, version );
+	for (uint i1 = 0; i1 < 4; i1++) {
+		NifStream( unknownInts1[i1], out, version );
+	};
 	NifStream( unknownInt2, out, version );
+	NifStream( scale, out, version );
+	NifStream( unknownInt3, out, version );
 	NifStream( numStripsData, out, version );
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
 		if ( stripsData[i1] != NULL )
@@ -2841,21 +2849,29 @@ void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 		else
 			NifStream( 0xffffffff, out, version );
 	};
-	NifStream( numUnknownInts3, out, version );
-	for (uint i1 = 0; i1 < unknownInts3.size(); i1++) {
-		NifStream( unknownInts3[i1], out, version );
+	NifStream( numUnknownInts2, out, version );
+	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
+		NifStream( unknownInts2[i1], out, version );
 	};
 }
 
 std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << bhkSphereRepShape::asString();
-	numUnknownInts3 = uint(unknownInts3.size());
+	numUnknownInts2 = uint(unknownInts2.size());
 	numStripsData = uint(stripsData.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Scale:  " << scale << endl;
+	for (uint i1 = 0; i1 < 4; i1++) {
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
+	};
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Scale:  " << scale << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Num Strips Data:  " << numStripsData << endl;
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
@@ -2864,13 +2880,13 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 		};
 		out << "    Strips Data[" << i1 << "]:  " << stripsData[i1] << endl;
 	};
-	out << "  Num Unknown Ints 3:  " << numUnknownInts3 << endl;
-	for (uint i1 = 0; i1 < unknownInts3.size(); i1++) {
+	out << "  Num Unknown Ints 2:  " << numUnknownInts2 << endl;
+	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Ints 3[" << i1 << "]:  " << unknownInts3[i1] << endl;
+		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
 	};
 	return out.str();
 }

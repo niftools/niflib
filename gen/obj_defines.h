@@ -1250,19 +1250,21 @@ return InternalGetRefs(); \
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
 float unknownFloat1; \
 uint unknownInt1; \
-Vector3 scale; \
+array<uint,4> unknownInts1; \
 uint unknownInt2; \
+Vector3 scale; \
+uint unknownInt3; \
 mutable uint numStripsData; \
 vector<Ref<NiTriStripsData > > stripsData; \
-mutable uint numUnknownInts3; \
-vector<uint > unknownInts3; \
+mutable uint numUnknownInts2; \
+vector<uint > unknownInts2; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_INCLUDE "bhkSphereRepShape.h" \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_PARENT bhkSphereRepShape \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT \
- : unknownFloat1(0.1f), unknownInt1((uint)0x004ABE60), scale(1.0f, 1.0f, 1.0f), unknownInt2((uint)0), numStripsData((uint)0), numUnknownInts3((uint)0) \
+ : unknownFloat1(0.1f), unknownInt1((uint)0x004ABE60), unknownInt2((uint)1), scale(1.0f, 1.0f, 1.0f), unknownInt3((uint)0), numStripsData((uint)0), numUnknownInts2((uint)0) \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
