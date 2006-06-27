@@ -88,6 +88,8 @@ struct NIFLIB_API Triangle {
 		this->v3 = v3;
 	}
 
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -108,6 +110,7 @@ struct NIFLIB_API Triangle {
 			default: throw std::out_of_range("Index out of range for Triangle");
 		};
 	}
+#endif
 };
 
 /*!Represents a position or direction in 3D space*/
@@ -203,10 +206,13 @@ struct NIFLIB_API Vector3 {
 	 */
 	Vector3 & operator/=( const float & rh );
 
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/* Sets the components of this Vector3 to those of another Vector3 
 	 * \return This vector is returned.
 	 */
 	Vector3 & operator=( const Vector3 & v ) { x = v.x; y = v.y; z = v.z;  return *this; }
+#endif
 
 	/* Tests the equality of two Vector3 structures.  Vectors are considered equal if all
 	 * three components are equal.
@@ -243,6 +249,8 @@ struct NIFLIB_API Vector3 {
 struct NIFLIB_API Float2 {
 	float data[2]; /*!< The two floating point numbers stored as an array. */ 
 	
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param n The index into the data array.  Should be 0 or 1.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -253,6 +261,7 @@ struct NIFLIB_API Float2 {
 	float operator[](int n) const {
 		return data[n];
 	}
+#endif
 
 	/*! Default constructor. */
 	Float2() {}
@@ -294,7 +303,9 @@ struct Matrix22 {
 	static const Matrix22 IDENTITY;
 
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
-	
+
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
 	 * \param n The index into the row array.  Should be 0 or 1.
 	 * \return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -305,6 +316,7 @@ struct Matrix22 {
 	NIFLIB_API const Float2 & operator[](int n) const {
 		return rows[n];
 	}
+#endif
 
 	/*! Default Constructor */
 	NIFLIB_API Matrix22();
@@ -349,6 +361,8 @@ struct Matrix22 {
 struct NIFLIB_API Float3 {
 	float data[3]; /*!< The three floating point numbers stored as an array. */ 
 
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -359,6 +373,7 @@ struct NIFLIB_API Float3 {
 	float operator[](int n) const {
 		return data[n];
 	}
+#endif
 
 	/*!Default constructor.*/
 	Float3() {}
@@ -405,6 +420,8 @@ struct Matrix33 {
 
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
 	 * \param n The index into the row array.  Should be 0, 1, or 2.
 	 * \return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -415,6 +432,7 @@ struct Matrix33 {
 	NIFLIB_API const Float3 & operator[](int n) const {
 		return rows[n];
 	}
+#endif
 
 	/*! Default constructor.   Initializes matrix to identity.  */
 	NIFLIB_API Matrix33();
@@ -488,10 +506,13 @@ struct Matrix33 {
     }
 };
 
+
 /* Stores four floating point numbers.  Used as a row of a Matrix44. */
 struct NIFLIB_API Float4 {
 	float data[4]; /*!< The four floating point numbers stored as an array. */ 
 
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param n The index into the data array.  Should be 0, 1, 2, or 3.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -502,6 +523,7 @@ struct NIFLIB_API Float4 {
 	float operator[](int n) const {
 		return data[n];
 	}
+#endif
 
 	/*! Default Constructor.*/
 	Float4() {}
@@ -552,6 +574,8 @@ struct Matrix44 {
 	
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
 	 * \param n The index into the row array.  Should be 0, 1, 2, or 3.
 	 * \return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -562,6 +586,7 @@ struct Matrix44 {
 	NIFLIB_API Float4 const & operator[](int n) const {
 		return rows[n];
 	}
+#endif
 
 	/*! Default constructor. Initializes Matrix to Identity. */
 	NIFLIB_API Matrix44();
@@ -681,17 +706,13 @@ struct Matrix44 {
 	 */
 	NIFLIB_API Matrix44 & operator+=( const Matrix44 & rh );
 
+//These operators cause SWIG warnings
+#ifndef SWIG
 	/* Sets the values of this matrix to those of the given matrix.
 	 * \param rh The matrix to copy values from.
 	 * \return This matrix is returned.
 	 */
 	NIFLIB_API Matrix44 & operator=( const Matrix44 & rh );
-
-	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
-	 * \param rh The matrix to compare this one with.
-	 * \return true if the matricies are equal, false otherwise.
-	 */
-	NIFLIB_API bool operator==( const Matrix44 & rh ) const;
 
 	/* Allows the contents of the matrix to be printed to an ostream.
 	 * \param lh The ostream to insert the text into.
@@ -699,6 +720,13 @@ struct Matrix44 {
 	 * \return The given ostream is returned.
 	 */
 	NIFLIB_API friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
+#endif
+
+	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
+	 * \param rh The matrix to compare this one with.
+	 * \return true if the matricies are equal, false otherwise.
+	 */
+	NIFLIB_API bool operator==( const Matrix44 & rh ) const;
 
 	/*! Calculates the transpose of this matrix.
 	 * \return The transpose of this matrix.
@@ -874,6 +902,9 @@ struct NIFLIB_API Quaternion {
 
 //--ostream functions for printing with cout--//
 
+//These operators cause SWIG warnings
+#ifndef SWIG
+
 ostream & operator<<( ostream & out, TexCoord const & val );
 ostream & operator<<( ostream & out, Triangle const & val );
 ostream & operator<<( ostream & out, Vector3 const & val );
@@ -885,6 +916,8 @@ ostream & operator<<( ostream & out, Float4 const & val );
 ostream & operator<<( ostream & out, Color3 const & val );
 ostream & operator<<( ostream & out, Color4 const & val );
 ostream & operator<<( ostream & out, Quaternion const & val );
+
+#endif
 
 }
 #endif

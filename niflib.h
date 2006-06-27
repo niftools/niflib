@@ -59,6 +59,7 @@ namespace Niflib {
 class NiObject;
 class NiNode;
 class NiAVObject;
+class NiControllerSequence;
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
@@ -226,7 +227,8 @@ NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int 
  * \param right The root block of the second Nif tree to merge.
  * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
  */
-//NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xffffffff );
+//NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xFFFFFFFF );
+NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 
 
 //// Returns list of all blocks in the tree rooted by root block.

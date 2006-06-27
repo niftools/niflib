@@ -63,15 +63,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 }
 #endif
 
-//Ignore the const versions of these functions
-%ignore DynamicCast( const NiObject * object );
-%ignore StaticCast ( const NiObject * object );
-
-//Do not use smart pointer support as it doubles the size of the library
-//and makes it take twice as long to be imported
-%ignore Niflib::Ref::operator->;
-%ignore Niflib::Ref::operator=;
-
 //Import the symbols from these but do not include them in the wrapper
 %import "gen/obj_defines.h"
 %import "NIF_IO.h"
@@ -355,7 +346,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(pair_int_float) std::pair<int, float>;
 %template(map_int_float) std::map<int, float>;
 
-%include "niflib.h"
 %include "Ref.h"
 %include "Type.h"
 %include "nif_math.h"
@@ -1240,5 +1230,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "gen/SkinData.h"
 %include "gen/RagDollDescriptor.h"
 %include "gen/LimitedHingeDescriptor.h"
+%include "niflib.h"
 
 %template(vector_NiAVObjectRef) std::vector<Niflib::NiAVObjectRef>;

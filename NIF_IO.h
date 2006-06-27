@@ -100,6 +100,8 @@ public:
       array_Traits<T>::Finalize(v_, len_);
    }
 
+//These operators cause SWIG warnings
+#ifndef SWIG
    //! Copy Assignment
    array& operator=(const array& other) {
       array tmp( other );
@@ -134,6 +136,7 @@ public:
       return v_[index];
    } 
 
+#endif
    operator T*() const {
       return v_;
    }
@@ -546,7 +549,8 @@ void NifStream( Key<T> const & key, ostream & file, uint version, int type ) {
 	NifStream( key, file, version, (KeyType)type );
 }
 
-ostream & operator<<( ostream & out, PixelLayout const & val );
+//These operators cause SWIG warnings
+#ifndef SWIG
 template <class T> 
 ostream & operator<<( ostream & out, Key<T> const & val ) {
 	return out << "Time:  " << val.time << endl
@@ -556,6 +560,7 @@ ostream & operator<<( ostream & out, Key<T> const & val ) {
 			   << "Bias:  " << val.bias << endl
 			   << "Continuity:  " << val.continuity << endl;
 }
+#endif
 
 //Key<Quaternion>
 //void StreamQuatKey( Key<Quaternion> & key, istream& file, uint version, KeyType type );

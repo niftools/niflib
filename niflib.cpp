@@ -15,7 +15,12 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiAVObject.h"
 #include "obj/NiTextKeyExtraData.h"
 #include "obj/NiSequenceStreamHelper.h"
+#include "obj/NiControllerSequence.h"
+#include "obj/NiStringPalette.h"
+#include "obj/NiSkinPartition.h"
 #include "obj/NiTimeController.h"
+#include "obj/NiSingleInterpolatorController.h"
+#include "obj/NiInterpolator.h"
 #include "obj/NiKeyframeController.h"
 #include "obj/NiKeyframeData.h"
 #include "obj/NiStringExtraData.h"
@@ -627,23 +632,21 @@ unsigned int BlocksInMemory() {
 	return NiObject::NumObjectsInMemory();
 }
 
-void MapParentNodeNames( map<string,NiAVObjectRef> & name_map, NiNodeRef & par ) {
-
-
+void MapNodeNames( map<string,NiNodeRef> & name_map, const Ref<NiNode> & par ) {
 	//Add the par node to the map, and then call this function for each of its children
-	name_map[par->GetName()] = StaticCast<NiAVObject>(par);
+	name_map[par->GetName()] = par;
 
 	
 	vector<NiAVObjectRef> links = par->GetChildren();
 	for (vector<NiAVObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
 		NiNodeRef child_node = DynamicCast<NiNode>(*it);
 		if ( child_node != NULL ) {
-			MapParentNodeNames( name_map, child_node );
+			MapNodeNames( name_map, child_node );
 		};
 	};
 }
 
-void ReassignTreeCrossRefs( map<string,NiAVObjectRef> & name_map, NiAVObjectRef par ) {
+void ReassignTreeCrossRefs( map<string,NiNodeRef> & name_map, NiAVObjectRef par ) {
 	//TODO: Decide how cross refs are going to work
 	////Reassign any cross references on this block
 	//((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
@@ -662,7 +665,7 @@ void ReassignTreeCrossRefs( map<string,NiAVObjectRef> & name_map, NiAVObjectRef 
 //This function will merge two scene graphs by attatching new objects to the correct position
 //on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
 //existing nodes by changing their data or attatched properties
-void MergeSceneGraph( map<string,NiAVObjectRef> & name_map, const NiNodeRef & root, NiAVObjectRef par ) {
+void MergeSceneGraph( map<string,NiNodeRef> & name_map, const NiNodeRef & root, NiAVObjectRef par ) {
 	//Check if this block's name exists in the block map
 	string name = par->GetName();
 
@@ -734,8 +737,8 @@ void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version 
 	NiAVObjectRef new_tree = right;// ReadNifTree( tmp ); TODO: Figure out why this doesn't work
 
 	//Create a list of names in the target
-	map<string,NiAVObjectRef> name_map;
-	MapParentNodeNames( name_map, target );
+	map<string,NiNodeRef> name_map;
+	MapNodeNames( name_map, target );
 
 	//Reassign any cross references in the new tree to point to blocks in the
 	//target tree with the same names
@@ -743,6 +746,66 @@ void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version 
 
 	//Use the name map to merge the Scene Graphs
 	MergeSceneGraph( name_map, target, new_tree );
+}
+
+//Version for merging KF Trees rooted by a NiControllerSequence
+void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned int version, unsigned int user_version ) {
+	//Map the node names
+	map<string,NiNodeRef> name_map;
+	MapNodeNames( name_map, target );
+
+	//Get the controller data
+	vector<ControllerLink> data = right->GetControllerData();
+
+	//Connect a clone of all the interpolators/controllers to the named node
+	for ( uint i = 0; i < data.size(); ++i ) {
+		//Get strings
+		//TODO: Find out if other strings are needed
+		string node_name, ctlr_type;
+		NiStringPaletteRef str_pal = data[i].stringPalette;
+		if ( str_pal == NULL ) {
+			node_name = data[i].nodeName;
+			ctlr_type = data[i].controllerType;
+		} else {
+			node_name = str_pal->GetSubStr( data[i].nodeNameOffset );
+			ctlr_type = str_pal->GetSubStr( data[i].controllerTypeOffset );
+		}
+		//Make sure there is a node with this name in the target tree
+		if ( name_map.find( node_name ) != name_map.end() ) {
+			//See if we're dealing with an interpolator or a controller
+			if ( data[i].controller != NULL ) {
+				//Clone the controller and attached data and
+				//add it to the named node
+				NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].controller) );
+				NiTimeControllerRef ctlr = DynamicCast<NiTimeController>(clone);
+				if ( ctlr != NULL ) {
+					name_map[node_name]->AddController( ctlr );
+				}
+			} else if ( data[i].interpolator != NULL ) {
+				//Clone the interpolator and attached data and
+				//attach it to the specific type of controller that's
+				//connected to the named node
+				NiNodeRef node = name_map[node_name];
+				list<NiTimeControllerRef> ctlrs = node->GetControllers();
+				for ( list<NiTimeControllerRef>::iterator it = ctlrs.begin(); it != ctlrs.end(); ++it ) {
+					if ( *it != NULL && (*it)->GetType().GetTypeName() == ctlr_type ) {
+						NiSingleInterpolatorControllerRef ctlr = DynamicCast<NiSingleInterpolatorController>(*it);
+						if ( ctlr != NULL ) {
+							//Clone the interpolator and attached data and
+							//add it to controller of matching type that was
+							//found
+							NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].interpolator) );
+							NiInterpolatorRef interp = DynamicCast<NiInterpolator>(clone);
+							if ( interp != NULL ) {
+								ctlr->SetInterpolator( interp );
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 
