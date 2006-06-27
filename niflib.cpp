@@ -24,6 +24,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiKeyframeController.h"
 #include "obj/NiKeyframeData.h"
 #include "obj/NiStringExtraData.h"
+#include "obj/NiExtraData.h"
 #include "gen/header.h"
 #include "gen/footer.h"
 
@@ -754,6 +755,22 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 	map<string,NiNodeRef> name_map;
 	MapNodeNames( name_map, target );
 
+	//TODO:  Allow this to merge a KF sequence into a file that already has
+	//sequences in it by appending all the keyframe data to the end of
+	//existing controllers
+
+	//Get the NiTextKeyExtraData, clone it, and attach it to the target node
+	NiTextKeyExtraDataRef txt_key = right->GetTextKeyExtraData();
+	if ( txt_key != NULL ) {
+		NiObjectRef tx_clone = txt_key->Clone( version, user_version );
+		NiExtraDataRef ext_dat = DynamicCast<NiExtraData>(tx_clone);
+		if ( ext_dat != NULL ) {
+			target->AddExtraData( ext_dat );
+		}
+	}
+
+	//Atach it to
+
 	//Get the controller data
 	vector<ControllerLink> data = right->GetControllerData();
 
@@ -776,7 +793,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 			if ( data[i].controller != NULL ) {
 				//Clone the controller and attached data and
 				//add it to the named node
-				NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].controller) );
+				NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].controller), version, user_version );
 				NiTimeControllerRef ctlr = DynamicCast<NiTimeController>(clone);
 				if ( ctlr != NULL ) {
 					name_map[node_name]->AddController( ctlr );
@@ -794,7 +811,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 							//Clone the interpolator and attached data and
 							//add it to controller of matching type that was
 							//found
-							NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].interpolator) );
+							NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].interpolator), version, user_version );
 							NiInterpolatorRef interp = DynamicCast<NiInterpolator>(clone);
 							if ( interp != NULL ) {
 								ctlr->SetInterpolator( interp );
@@ -806,6 +823,16 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 			}
 		}
 	}
+}
+
+//Version for merging KF Trees rooted by a NiSequenceStreamHelper
+void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiSequenceStreamHelper> & right, unsigned int version, unsigned int user_version ) {
+	//Map the node names
+	map<string,NiNodeRef> name_map;
+	MapNodeNames( name_map, target );
+
+	//TODO: Implement this
+
 }
 
 

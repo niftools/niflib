@@ -142,3 +142,7 @@ vector<ControllerLink> NiControllerSequence::GetControllerData() const {
 	return controlledBlocks;
 }
 
+Ref<NiTextKeyExtraData> NiControllerSequence::GetTextKeyExtraData() const {
+	return textKeys;
+}
+

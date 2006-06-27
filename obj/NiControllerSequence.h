@@ -74,6 +74,8 @@ public:
 	 */
 	vector<ControllerLink> GetControllerData() const;
 
+	Ref<NiTextKeyExtraData> GetTextKeyExtraData() const;
+
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
 	NI_CONTROLLER_SEQUENCE_MEMBERS
