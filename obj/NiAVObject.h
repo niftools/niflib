@@ -84,6 +84,16 @@ public:
 
 	void SetCollisionObject(Ref<NiCollisionObject> &);
 
+   typedef enum CollisionType
+   {
+      ctNone, ctTriangles, ctBoundingBox, ctContinue
+   } CollisionType;
+   CollisionType GetCollision();
+   bool GetHidden();
+
+   void SetHidden(bool value);
+   void SetCollsion(CollisionType value);
+
 protected:
 	NiNode * parent;
 	NI_A_V_OBJECT_MEMBERS

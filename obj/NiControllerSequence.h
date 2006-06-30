@@ -76,6 +76,24 @@ public:
 
 	Ref<NiTextKeyExtraData> GetTextKeyExtraData() const;
 
+	/*!
+	 * The animation frequency.
+	 */
+	float GetFrequency() const;
+	void SetFrequency( float value );
+
+	/*!
+	 * The controller sequence start time
+	 */
+	float GetStartTime() const;
+	void SetStartTime( float value );
+
+	/*!
+	 * The controller sequence stop time
+	 */
+	float GetStopTime() const;
+	void SetStopTime( float value );
+
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
 	NI_CONTROLLER_SEQUENCE_MEMBERS

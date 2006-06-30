@@ -5,11 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NODEGROUP_H_
 
 #include "../NIF_IO.h"
-#include "../obj/NiNode.h"
 
 // Include structures
 #include "../Ref.h"
 namespace Niflib {
+
+// Forward define of referenced blocks
+class NiNode;
 
 /*!
  * A group of NiNodes references.

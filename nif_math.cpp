@@ -398,8 +398,8 @@ void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, float & scal
    Matrix33 rotT;
    for ( int i = 0; i < 3; i++ ){
       for ( int j = 0; j < 3; j++ ){
-         rotation[j][i] = (*this)[i][j];
-         rotT[i][j] = (*this)[i][j];
+         rotation[i][j] = (*this)[i][j];
+         rotT[j][i] = (*this)[i][j];
       }
    }
    Matrix33 mtx = rotation * rotT;
@@ -411,7 +411,7 @@ void Matrix44::Decompose( Vector3 & translate, Matrix33 & rotation, float & scal
    }
 
    //averate the scale since NIF doesn't support discreet scaling
-   scale = scale3[0] + scale3[1] + scale3[2] / 3.0f;
+   scale = (scale3[0] + scale3[1] + scale3[2]) / 3.0f;
 }
 /*
  * Quaternion Methods

@@ -146,3 +146,27 @@ Ref<NiTextKeyExtraData> NiControllerSequence::GetTextKeyExtraData() const {
 	return textKeys;
 }
 
+
+float NiControllerSequence::GetFrequency() const {
+	return frequency;
+}
+
+void NiControllerSequence::SetFrequency( float value ) {
+	frequency = value;
+}
+
+float NiControllerSequence::GetStartTime() const {
+	return startTime;
+}
+
+void NiControllerSequence::SetStartTime( float value ) {
+	startTime = value;
+}
+
+float NiControllerSequence::GetStopTime() const {
+	return stopTime;
+}
+
+void NiControllerSequence::SetStopTime( float value ) {
+	stopTime = value;
+}

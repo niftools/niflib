@@ -8,6 +8,13 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiCollisionObject.h"
 using namespace Niflib;
 
+
+#define NIFLIB_GET_FLAG(value, shift, mask) \
+   (( value >> shift ) & mask)
+
+#define NIFLIB_MASK_FLAG(flag, value, shift, mask) \
+   ((flag ^ ~(mask << shift)) | ((value & mask) << shift))
+
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TypeConst() );
 
@@ -149,4 +156,24 @@ void NiAVObject::SetVelocity( const Vector3 & n ) {
 void NiAVObject::SetCollisionObject(Ref<NiCollisionObject> &obj)
 {
 	collisionObject = obj;
+}
+
+NiAVObject::CollisionType NiAVObject::GetCollision()
+{
+   return (NiAVObject::CollisionType)NIFLIB_GET_FLAG(flags, 1, 0x03);
+}
+
+void NiAVObject::SetCollsion(NiAVObject::CollisionType value)
+{
+   flags = NIFLIB_MASK_FLAG(flags, value, 1, 0x03);
+}
+
+bool NiAVObject::GetHidden()
+{
+   return (bool)NIFLIB_GET_FLAG(flags, 0, 0x01);
+}
+
+void NiAVObject::SetHidden(bool value)
+{
+   flags = NIFLIB_MASK_FLAG(flags, value, 0, 0x01);
 }
