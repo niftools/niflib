@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIMULTITARGETTRANSFORMCONTROLLER_H_
 
 #include "NiTimeController.h"
+
 namespace Niflib {
 
 // Forward define of referenced blocks
@@ -34,6 +35,12 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*!
+	 * NiNode Targets to be controlled.
+	 */
+	vector<Ref<NiNode> > GetExtraTargets() const;
+	void SetExtraTargets( const vector< Ref<NiNode> >& value );
 
 protected:
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS
