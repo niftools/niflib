@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
-#include "niflib.h"
+#include "../niflib.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
