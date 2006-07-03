@@ -803,22 +803,43 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 				//attach it to the specific type of controller that's
 				//connected to the named node
 				NiNodeRef node = name_map[node_name];
+				cout << "Attaching interpolator to " << node << endl;
 				list<NiTimeControllerRef> ctlrs = node->GetControllers();
+				NiSingleInterpolatorControllerRef ctlr;
 				for ( list<NiTimeControllerRef>::iterator it = ctlrs.begin(); it != ctlrs.end(); ++it ) {
 					if ( *it != NULL && (*it)->GetType().GetTypeName() == ctlr_type ) {
-						NiSingleInterpolatorControllerRef ctlr = DynamicCast<NiSingleInterpolatorController>(*it);
+						ctlr = DynamicCast<NiSingleInterpolatorController>(*it);
 						if ( ctlr != NULL ) {
-							//Clone the interpolator and attached data and
-							//add it to controller of matching type that was
-							//found
-							NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].interpolator), version, user_version );
-							NiInterpolatorRef interp = DynamicCast<NiInterpolator>(clone);
-							if ( interp != NULL ) {
-								ctlr->SetInterpolator( interp );
-								break;
-							}
+							break;
 						}
 					}
+				}
+
+				//If the controller wasn't found, create one of the right type and attach it
+				if ( ctlr == NULL ) {
+					NiObjectRef new_ctlr = CreateBlock( ctlr_type );
+					ctlr = DynamicCast<NiSingleInterpolatorController>( new_ctlr );
+					if ( ctlr == NULL ) {
+						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");
+					}
+					node->AddController( StaticCast<NiTimeController>(ctlr) );
+				}
+
+				cout << "Controller is " << ctlr << endl;
+
+				//Clone the interpolator and attached data and
+				//add it to controller of matching type that was
+				//found
+				NiObjectRef clone = CloneNifTree( StaticCast<NiObject>(data[i].interpolator), version, user_version );
+				NiInterpolatorRef interp = DynamicCast<NiInterpolator>(clone);
+				if ( interp != NULL ) {
+					ctlr->SetInterpolator( interp );
+
+					//Set the start/stop time and frequency of this controller
+					ctlr->SetStartTime( right->GetStartTime() );
+					ctlr->SetStopTime( right->GetStopTime() );
+					ctlr->SetFrequency( right->GetFrequency() );
+					ctlr->SetPhase( 1.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
 				}
 			}
 		}
