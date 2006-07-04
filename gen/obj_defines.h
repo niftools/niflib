@@ -2118,14 +2118,14 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_BASIS_DATA_MEMBERS \
-uint unknownInt; \
+uint numControlPt; \
 
 #define NI_B_SPLINE_BASIS_DATA_INCLUDE "NiObject.h" \
 
 #define NI_B_SPLINE_BASIS_DATA_PARENT NiObject \
 
 #define NI_B_SPLINE_BASIS_DATA_CONSTRUCT \
- : unknownInt((uint)0) \
+ : numControlPt((uint)0) \
 
 #define NI_B_SPLINE_BASIS_DATA_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2196,14 +2196,23 @@ return InternalGetRefs(); \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
 Ref<NiBSplineData > data; \
 Ref<NiBSplineBasisData > basisData; \
-array<float,17> unknown4; \
+Vector3 translation; \
+Quaternion rotation; \
+float scale; \
+Vector3 unkVector1; \
+float translateBias; \
+float translateMultiplier; \
+float rotationBias; \
+float rotationMultiplier; \
+float scaleBias; \
+float scaleMultiplier; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_INCLUDE "NiBSplineInterpolator.h" \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT \
- : data(NULL), basisData(NULL) \
+ : data(NULL), basisData(NULL), scale(0.0f), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2223,7 +2232,7 @@ return InternalGetRefs(); \
 #define NI_B_SPLINE_DATA_MEMBERS \
 uint unknownInt; \
 mutable uint count; \
-vector< array<byte,2> > unknownData; \
+vector<short > controlPoints; \
 
 #define NI_B_SPLINE_DATA_INCLUDE "NiObject.h" \
 
@@ -2411,7 +2420,7 @@ float stopTime; \
 float unknownFloat2; \
 byte unknownByte; \
 NiControllerManager * manager; \
-string unknownString; \
+string targetName; \
 Ref<NiStringPalette > stringPalette; \
 
 #define NI_CONTROLLER_SEQUENCE_INCLUDE "NiObject.h" \

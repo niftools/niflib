@@ -316,7 +316,8 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "gen/LimitedHingeDescriptor.h"
 	using namespace Niflib;
 %}
-
+%include "Key.h"
+%include "nif_basic_types.h"
 %template(vector_byte) std::vector<Niflib::byte>;
 %template(vector_ushort) std::vector<Niflib::ushort>;
 %template(vector_SkinShape) std::vector<Niflib::SkinShape>;

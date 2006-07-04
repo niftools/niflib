@@ -26,7 +26,7 @@ struct NIFLIB_API AVObject {
 	/*!
 	 * Object reference.
 	 */
-	NiAVObject * object;
+	NiAVObject * avObject;
 };
 
 }

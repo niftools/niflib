@@ -4409,18 +4409,18 @@ std::list<NiObjectRef> NiBSBoneLODController::InternalGetRefs() const {
 
 void NiBSplineBasisData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::Read( in, link_stack, version, user_version );
-	NifStream( unknownInt, in, version );
+	NifStream( numControlPt, in, version );
 }
 
 void NiBSplineBasisData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	NifStream( unknownInt, out, version );
+	NifStream( numControlPt, out, version );
 }
 
 std::string NiBSplineBasisData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiObject::asString();
-	out << "  Unknown Int:  " << unknownInt << endl;
+	out << "  Num Control Pt:  " << numControlPt << endl;
 	return out.str();
 }
 
@@ -4552,9 +4552,16 @@ void NiBSplineCompTransformInterpolator::InternalRead( istream& in, list<uint> &
 	link_stack.push_back( block_num );
 	NifStream( block_num, in, version );
 	link_stack.push_back( block_num );
-	for (uint i1 = 0; i1 < 17; i1++) {
-		NifStream( unknown4[i1], in, version );
-	};
+	NifStream( translation, in, version );
+	NifStream( rotation, in, version );
+	NifStream( scale, in, version );
+	NifStream( unkVector1, in, version );
+	NifStream( translateBias, in, version );
+	NifStream( translateMultiplier, in, version );
+	NifStream( rotationBias, in, version );
+	NifStream( rotationMultiplier, in, version );
+	NifStream( scaleBias, in, version );
+	NifStream( scaleMultiplier, in, version );
 }
 
 void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
@@ -4567,9 +4574,16 @@ void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObje
 		NifStream( link_map[StaticCast<NiObject>(basisData)], out, version );
 	else
 		NifStream( 0xffffffff, out, version );
-	for (uint i1 = 0; i1 < 17; i1++) {
-		NifStream( unknown4[i1], out, version );
-	};
+	NifStream( translation, out, version );
+	NifStream( rotation, out, version );
+	NifStream( scale, out, version );
+	NifStream( unkVector1, out, version );
+	NifStream( translateBias, out, version );
+	NifStream( translateMultiplier, out, version );
+	NifStream( rotationBias, out, version );
+	NifStream( rotationMultiplier, out, version );
+	NifStream( scaleBias, out, version );
+	NifStream( scaleMultiplier, out, version );
 }
 
 std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose ) const {
@@ -4577,13 +4591,16 @@ std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose )
 	out << NiBSplineInterpolator::asString();
 	out << "  Data:  " << data << endl;
 	out << "  Basis Data:  " << basisData << endl;
-	for (uint i1 = 0; i1 < 17; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown4[" << i1 << "]:  " << unknown4[i1] << endl;
-	};
+	out << "  Translation:  " << translation << endl;
+	out << "  Rotation:  " << rotation << endl;
+	out << "  Scale:  " << scale << endl;
+	out << "  Unk Vector 1:  " << unkVector1 << endl;
+	out << "  Translate Bias:  " << translateBias << endl;
+	out << "  Translate Multiplier:  " << translateMultiplier << endl;
+	out << "  Rotation Bias:  " << rotationBias << endl;
+	out << "  Rotation Multiplier:  " << rotationMultiplier << endl;
+	out << "  Scale Bias:  " << scaleBias << endl;
+	out << "  Scale Multiplier:  " << scaleMultiplier << endl;
 	return out.str();
 }
 
@@ -4623,40 +4640,34 @@ void NiBSplineData::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	NiObject::Read( in, link_stack, version, user_version );
 	NifStream( unknownInt, in, version );
 	NifStream( count, in, version );
-	unknownData.resize(count);
-	for (uint i1 = 0; i1 < unknownData.size(); i1++) {
-		for (uint i2 = 0; i2 < 2; i2++) {
-			NifStream( unknownData[i1][i2], in, version );
-		};
+	controlPoints.resize(count);
+	for (uint i1 = 0; i1 < controlPoints.size(); i1++) {
+		NifStream( controlPoints[i1], in, version );
 	};
 }
 
 void NiBSplineData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	count = uint(unknownData.size());
+	count = uint(controlPoints.size());
 	NifStream( unknownInt, out, version );
 	NifStream( count, out, version );
-	for (uint i1 = 0; i1 < unknownData.size(); i1++) {
-		for (uint i2 = 0; i2 < 2; i2++) {
-			NifStream( unknownData[i1][i2], out, version );
-		};
+	for (uint i1 = 0; i1 < controlPoints.size(); i1++) {
+		NifStream( controlPoints[i1], out, version );
 	};
 }
 
 std::string NiBSplineData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiObject::asString();
-	count = uint(unknownData.size());
+	count = uint(controlPoints.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Count:  " << count << endl;
-	for (uint i1 = 0; i1 < unknownData.size(); i1++) {
-		for (uint i2 = 0; i2 < 2; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Data[" << i1 << "][" << i2 << "]:  " << unknownData[i1][i2] << endl;
+	for (uint i1 = 0; i1 < controlPoints.size(); i1++) {
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
 		};
+		out << "    Control Points[" << i1 << "]:  " << controlPoints[i1] << endl;
 	};
 	return out.str();
 }
@@ -5133,7 +5144,7 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	if ( version >= 0x0A01006A ) {
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
-		NifStream( unknownString, in, version );
+		NifStream( targetName, in, version );
 	};
 	if ( version >= 0x0A020000 ) {
 		NifStream( block_num, in, version );
@@ -5255,7 +5266,7 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 			NifStream( link_map[StaticCast<NiObject>(manager)], out, version );
 		else
 			NifStream( 0xffffffff, out, version );
-		NifStream( unknownString, out, version );
+		NifStream( targetName, out, version );
 	};
 	if ( version >= 0x0A020000 ) {
 		if ( stringPalette != NULL )
@@ -5303,7 +5314,7 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Manager:  " << manager << endl;
-	out << "  Unknown String:  " << unknownString << endl;
+	out << "  Target Name:  " << targetName << endl;
 	out << "  String Palette:  " << stringPalette << endl;
 	return out.str();
 }
@@ -5453,8 +5464,8 @@ void NiDefaultAVObjectPalette::InternalWrite( ostream& out, map<NiObjectRef,uint
 	NifStream( numObjs, out, version );
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
 		NifStream( objs[i1].name, out, version );
-		if ( objs[i1].object != NULL )
-			NifStream( link_map[StaticCast<NiObject>(objs[i1].object)], out, version );
+		if ( objs[i1].avObject != NULL )
+			NifStream( link_map[StaticCast<NiObject>(objs[i1].avObject)], out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -5468,7 +5479,7 @@ std::string NiDefaultAVObjectPalette::InternalAsString( bool verbose ) const {
 	out << "  Num Objs:  " << numObjs << endl;
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
 		out << "    Name:  " << objs[i1].name << endl;
-		out << "    Object:  " << objs[i1].object << endl;
+		out << "    AV Object:  " << objs[i1].avObject << endl;
 	};
 	return out.str();
 }
@@ -5479,11 +5490,11 @@ void NiDefaultAVObjectPalette::InternalFixLinks( const vector<NiObjectRef> & obj
 		if (link_stack.empty())
 			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 		if (link_stack.front() != 0xffffffff) {
-			objs[i1].object = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-			if ( objs[i1].object == NULL )
+			objs[i1].avObject = DynamicCast<NiAVObject>(objects[link_stack.front()]);
+			if ( objs[i1].avObject == NULL )
 				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
 		} else
-			objs[i1].object = NULL;
+			objs[i1].avObject = NULL;
 		link_stack.pop_front();
 	};
 }

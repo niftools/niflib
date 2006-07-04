@@ -9,15 +9,3 @@ SkinPartition::SkinPartition() : numVertices((ushort)0), numTriangles((ushort)0)
 
 //Destructor
 SkinPartition::~SkinPartition() {};
-
-// needs to be moved elsewhere but this will work for now
-ushort SkinPartition::CalcNumTriangles() const {
-   ushort size = 0;
-   if (stripLengths.empty()) {
-      size = (ushort)triangles.size();
-   } else {
-      for (size_t i=0; i<stripLengths.size(); ++i)
-         size += ((ushort)stripLengths[i] - 2);
-   }
-   return size;
-}

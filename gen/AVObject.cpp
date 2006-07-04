@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-AVObject::AVObject() : object(NULL) {};
+AVObject::AVObject() : avObject(NULL) {};
 
 //Destructor
 AVObject::~AVObject() {};

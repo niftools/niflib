@@ -1399,7 +1399,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Key.h"
+				>
+			</File>
+			<File
 				RelativePath=".\kfm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\nif_basic_types.h"
 				>
 			</File>
 			<File
