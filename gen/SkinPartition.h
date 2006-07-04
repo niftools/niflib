@@ -27,10 +27,6 @@ struct NIFLIB_API SkinPartition {
 	 */
 	mutable ushort numTriangles;
 	/*!
-	 * Number of triangles in this submesh.
-	 */
-	ushort CalcNumTriangles() const;
-	/*!
 	 * Number of bones influencing this submesh.
 	 */
 	mutable ushort numBones;

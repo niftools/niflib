@@ -10789,7 +10789,7 @@ void NiSkinPartition::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
+		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		NifStream( skinPartitionBlocks[i1].numVertices, out, version );
 		NifStream( skinPartitionBlocks[i1].numTriangles, out, version );
@@ -10880,7 +10880,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = ushort(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = ushort(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].CalcNumTriangles();
+		skinPartitionBlocks[i1].numTriangles = ushort(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = ushort(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;
