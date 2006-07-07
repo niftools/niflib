@@ -10,10 +10,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
-class NiBSplineData;
-class NiBSplineBasisData;
-
 #include "../gen/obj_defines.h"
 
 class NiBSplineCompTransformInterpolator;
@@ -38,18 +34,6 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
-
-	/*!
-	 * Refers to NiBSplineData.
-	 */
-	Ref<NiBSplineData > GetData() const;
-	void SetData( Ref<NiBSplineData > value );
-
-	/*!
-	 * Refers to NiBSPlineBasisData.
-	 */
-	Ref<NiBSplineBasisData > GetBasisData() const;
-	void SetBasisData( Ref<NiBSplineBasisData > value );
 
 protected:
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS

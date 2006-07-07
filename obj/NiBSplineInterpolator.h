@@ -7,6 +7,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiInterpolator.h"
 namespace Niflib {
 
+// Forward define of referenced blocks
+class NiBSplineData;
+class NiBSplineBasisData;
 
 #include "../gen/obj_defines.h"
 
@@ -44,6 +47,18 @@ public:
 	 */
 	float GetStopTime() const;
 	void SetStopTime( float value );
+
+	/*!
+	 * Refers to NiBSplineData.
+	 */
+	Ref<NiBSplineData > GetSplineData() const;
+	void SetSplineData( Ref<NiBSplineData > value );
+
+	/*!
+	 * Refers to NiBSPlineBasisData.
+	 */
+	Ref<NiBSplineBasisData > GetBasisData() const;
+	void SetBasisData( Ref<NiBSplineBasisData > value );
 
 protected:
 	NI_B_SPLINE_INTERPOLATOR_MEMBERS

@@ -2,8 +2,6 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSplineCompPoint3Interpolator.h"
-#include "NiBSplineData.h"
-#include "NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -36,12 +34,3 @@ list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
 const Type & NiBSplineCompPoint3Interpolator::GetType() const {
 	return TYPE;
 };
-
-Ref<NiBSplineData > NiBSplineCompPoint3Interpolator::GetData() const {
-	return data;
-}
-
-void NiBSplineCompPoint3Interpolator::SetData( Ref<NiBSplineData > value ) {
-	data = value;
-}
-

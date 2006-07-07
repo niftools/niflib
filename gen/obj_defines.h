@@ -442,13 +442,15 @@ return InternalGetRefs(); \
 #define NI_B_SPLINE_INTERPOLATOR_MEMBERS \
 float startTime; \
 float stopTime; \
+Ref<NiBSplineData > splineData; \
+Ref<NiBSplineBasisData > basisData; \
 
 #define NI_B_SPLINE_INTERPOLATOR_INCLUDE "NiInterpolator.h" \
 
 #define NI_B_SPLINE_INTERPOLATOR_PARENT NiInterpolator \
 
 #define NI_B_SPLINE_INTERPOLATOR_CONSTRUCT \
- : startTime(0.0f), stopTime(0.0f) \
+ : startTime(0.0f), stopTime(0.0f), splineData(NULL), basisData(NULL) \
 
 #define NI_B_SPLINE_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2143,7 +2145,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS \
-array<float,6> unknownFloats; \
+array<float,4> unknownFloats; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_INCLUDE "NiBSplineInterpolator.h" \
 
@@ -2167,8 +2169,6 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
-Ref<NiBSplineData > data; \
-Ref<NiObject > unknownLink; \
 array<float,6> unknownFloats; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_INCLUDE "NiBSplineInterpolator.h" \
@@ -2176,7 +2176,6 @@ array<float,6> unknownFloats; \
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_CONSTRUCT \
- : data(NULL), unknownLink(NULL) \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2194,8 +2193,6 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
-Ref<NiBSplineData > data; \
-Ref<NiBSplineBasisData > basisData; \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
@@ -2212,7 +2209,7 @@ float scaleMultiplier; \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT \
- : data(NULL), basisData(NULL), scale(0.0f), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
+ : scale(0.0f), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \

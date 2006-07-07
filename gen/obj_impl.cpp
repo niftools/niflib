@@ -802,15 +802,28 @@ std::list<NiObjectRef> NiBlendInterpolator::InternalGetRefs() const {
 }
 
 void NiBSplineInterpolator::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	uint block_num;
 	NiInterpolator::Read( in, link_stack, version, user_version );
 	NifStream( startTime, in, version );
 	NifStream( stopTime, in, version );
+	NifStream( block_num, in, version );
+	link_stack.push_back( block_num );
+	NifStream( block_num, in, version );
+	link_stack.push_back( block_num );
 }
 
 void NiBSplineInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( startTime, out, version );
 	NifStream( stopTime, out, version );
+	if ( splineData != NULL )
+		NifStream( link_map[StaticCast<NiObject>(splineData)], out, version );
+	else
+		NifStream( 0xffffffff, out, version );
+	if ( basisData != NULL )
+		NifStream( link_map[StaticCast<NiObject>(basisData)], out, version );
+	else
+		NifStream( 0xffffffff, out, version );
 }
 
 std::string NiBSplineInterpolator::InternalAsString( bool verbose ) const {
@@ -818,16 +831,40 @@ std::string NiBSplineInterpolator::InternalAsString( bool verbose ) const {
 	out << NiInterpolator::asString();
 	out << "  Start Time:  " << startTime << endl;
 	out << "  Stop Time:  " << stopTime << endl;
+	out << "  Spline Data:  " << splineData << endl;
+	out << "  Basis Data:  " << basisData << endl;
 	return out.str();
 }
 
 void NiBSplineInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
+	if (link_stack.empty())
+		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
+	if (link_stack.front() != 0xffffffff) {
+		splineData = DynamicCast<NiBSplineData>(objects[link_stack.front()]);
+		if ( splineData == NULL )
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
+	} else
+		splineData = NULL;
+	link_stack.pop_front();
+	if (link_stack.empty())
+		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
+	if (link_stack.front() != 0xffffffff) {
+		basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]);
+		if ( basisData == NULL )
+			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
+	} else
+		basisData = NULL;
+	link_stack.pop_front();
 }
 
 std::list<NiObjectRef> NiBSplineInterpolator::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiInterpolator::GetRefs();
+	if ( splineData != NULL )
+		refs.push_back(StaticCast<NiObject>(splineData));
+	if ( basisData != NULL )
+		refs.push_back(StaticCast<NiObject>(basisData));
 	return refs;
 }
 
@@ -4436,14 +4473,14 @@ std::list<NiObjectRef> NiBSplineBasisData::InternalGetRefs() const {
 
 void NiBSplineCompFloatInterpolator::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::Read( in, link_stack, version, user_version );
-	for (uint i1 = 0; i1 < 6; i1++) {
+	for (uint i1 = 0; i1 < 4; i1++) {
 		NifStream( unknownFloats[i1], in, version );
 	};
 }
 
 void NiBSplineCompFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
-	for (uint i1 = 0; i1 < 6; i1++) {
+	for (uint i1 = 0; i1 < 4; i1++) {
 		NifStream( unknownFloats[i1], out, version );
 	};
 }
@@ -4451,7 +4488,7 @@ void NiBSplineCompFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRe
 std::string NiBSplineCompFloatInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiBSplineInterpolator::asString();
-	for (uint i1 = 0; i1 < 6; i1++) {
+	for (uint i1 = 0; i1 < 4; i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -4472,12 +4509,7 @@ std::list<NiObjectRef> NiBSplineCompFloatInterpolator::InternalGetRefs() const {
 }
 
 void NiBSplineCompPoint3Interpolator::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	uint block_num;
 	NiBSplineInterpolator::Read( in, link_stack, version, user_version );
-	NifStream( block_num, in, version );
-	link_stack.push_back( block_num );
-	NifStream( block_num, in, version );
-	link_stack.push_back( block_num );
 	for (uint i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats[i1], in, version );
 	};
@@ -4485,14 +4517,6 @@ void NiBSplineCompPoint3Interpolator::InternalRead( istream& in, list<uint> & li
 
 void NiBSplineCompPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
-	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
-	else
-		NifStream( 0xffffffff, out, version );
-	if ( unknownLink != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
-	else
-		NifStream( 0xffffffff, out, version );
 	for (uint i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats[i1], out, version );
 	};
@@ -4501,8 +4525,6 @@ void NiBSplineCompPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectR
 std::string NiBSplineCompPoint3Interpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiBSplineInterpolator::asString();
-	out << "  Data:  " << data << endl;
-	out << "  Unknown Link:  " << unknownLink << endl;
 	for (uint i1 = 0; i1 < 6; i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
@@ -4515,43 +4537,16 @@ std::string NiBSplineCompPoint3Interpolator::InternalAsString( bool verbose ) co
 
 void NiBSplineCompPoint3Interpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiBSplineData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink = NULL;
-	link_stack.pop_front();
 }
 
 std::list<NiObjectRef> NiBSplineCompPoint3Interpolator::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiBSplineInterpolator::GetRefs();
-	if ( data != NULL )
-		refs.push_back(StaticCast<NiObject>(data));
-	if ( unknownLink != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 
 void NiBSplineCompTransformInterpolator::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	uint block_num;
 	NiBSplineInterpolator::Read( in, link_stack, version, user_version );
-	NifStream( block_num, in, version );
-	link_stack.push_back( block_num );
-	NifStream( block_num, in, version );
-	link_stack.push_back( block_num );
 	NifStream( translation, in, version );
 	NifStream( rotation, in, version );
 	NifStream( scale, in, version );
@@ -4566,14 +4561,6 @@ void NiBSplineCompTransformInterpolator::InternalRead( istream& in, list<uint> &
 
 void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
-	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
-	else
-		NifStream( 0xffffffff, out, version );
-	if ( basisData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(basisData)], out, version );
-	else
-		NifStream( 0xffffffff, out, version );
 	NifStream( translation, out, version );
 	NifStream( rotation, out, version );
 	NifStream( scale, out, version );
@@ -4589,8 +4576,6 @@ void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObje
 std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiBSplineInterpolator::asString();
-	out << "  Data:  " << data << endl;
-	out << "  Basis Data:  " << basisData << endl;
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Scale:  " << scale << endl;
@@ -4606,33 +4591,11 @@ std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose )
 
 void NiBSplineCompTransformInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiBSplineData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]);
-		if ( basisData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		basisData = NULL;
-	link_stack.pop_front();
 }
 
 std::list<NiObjectRef> NiBSplineCompTransformInterpolator::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiBSplineInterpolator::GetRefs();
-	if ( data != NULL )
-		refs.push_back(StaticCast<NiObject>(data));
-	if ( basisData != NULL )
-		refs.push_back(StaticCast<NiObject>(basisData));
 	return refs;
 }
 

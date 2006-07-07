@@ -2,8 +2,6 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSplineCompTransformInterpolator.h"
-#include "NiBSplineData.h"
-#include "NiBSplineBasisData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -36,20 +34,4 @@ list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
 const Type & NiBSplineCompTransformInterpolator::GetType() const {
 	return TYPE;
 };
-
-Ref<NiBSplineData > NiBSplineCompTransformInterpolator::GetData() const {
-	return data;
-}
-
-void NiBSplineCompTransformInterpolator::SetData( Ref<NiBSplineData > value ) {
-	data = value;
-}
-
-Ref<NiBSplineBasisData > NiBSplineCompTransformInterpolator::GetBasisData() const {
-	return basisData;
-}
-
-void NiBSplineCompTransformInterpolator::SetBasisData( Ref<NiBSplineBasisData > value ) {
-	basisData = value;
-}
 

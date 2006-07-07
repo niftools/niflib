@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiBSplineInterpolator.h"
+#include "NiBSplineData.h"
+#include "NiBSplineBasisData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -51,3 +53,18 @@ void NiBSplineInterpolator::SetStopTime( float value ) {
 	stopTime = value;
 }
 
+Ref<NiBSplineData > NiBSplineInterpolator::GetSplineData() const {
+	return splineData;
+}
+
+void NiBSplineInterpolator::SetSplineData( Ref<NiBSplineData > value ) {
+	splineData = value;
+}
+
+Ref<NiBSplineBasisData > NiBSplineInterpolator::GetBasisData() const {
+	return basisData;
+}
+
+void NiBSplineInterpolator::SetBasisData( Ref<NiBSplineBasisData > value ) {
+	basisData = value;
+}
