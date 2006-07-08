@@ -822,7 +822,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					if ( ctlr == NULL ) {
 						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");
 					}
-					ctlr->SetFlags(8);  // at least make the controller active
+					ctlr->SetFlags( 12 );  //TODO:  This should be set from real data in the NiControllerSequence.  This default is for clamp/active.
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}
 
