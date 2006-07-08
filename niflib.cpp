@@ -822,7 +822,6 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					if ( ctlr == NULL ) {
 						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");
 					}
-					ctlr->SetFlags( 12 );  //TODO:  This should be set from real data in the NiControllerSequence.  This default is for clamp/active.
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}
 
@@ -841,6 +840,19 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					ctlr->SetStopTime( right->GetStopTime() );
 					ctlr->SetFrequency( right->GetFrequency() );
 					ctlr->SetPhase( 0.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
+
+					//Set cycle type as well
+					switch ( right->GetCycleType() ) {
+						case NiControllerSequence::CYCLE_LOOP:
+							ctlr->SetFlags( 8 ); //Active
+							break;
+						case NiControllerSequence::CYCLE_CLAMP:
+							ctlr->SetFlags( 12 ); //Active+Clamp
+							break;
+						case NiControllerSequence::CYCLE_REVERSE:
+							ctlr->SetFlags( 10 ); //Active+Reverse
+							break;
+					}
 				}
 			}
 		}

@@ -43,6 +43,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	enum CycleType {
+		CYCLE_LOOP = 0,
+		CYCLE_REVERSE = 1,
+		CYCLE_CLAMP = 2
+	};
+
 	/*! Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
 	 * \param new_name The name of the NiTextKeyExtraData block to use.
 	 * \param txt_key A reference to the NiTextKeyExtraData object to use.
@@ -93,6 +99,9 @@ public:
 	 */
 	float GetStopTime() const;
 	void SetStopTime( float value );
+
+	CycleType GetCycleType() const;
+	void SetCycleType( CycleType n );
 
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
