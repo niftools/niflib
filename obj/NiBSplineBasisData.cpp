@@ -35,3 +35,11 @@ const Type & NiBSplineBasisData::GetType() const {
 	return TYPE;
 };
 
+uint NiBSplineBasisData::GetNumControlPt() const {
+	return numControlPt;
+}
+
+void NiBSplineBasisData::SetNumControlPt( uint value ) {
+	numControlPt = value;
+}
+

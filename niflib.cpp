@@ -839,7 +839,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					ctlr->SetStartTime( right->GetStartTime() );
 					ctlr->SetStopTime( right->GetStopTime() );
 					ctlr->SetFrequency( right->GetFrequency() );
-					ctlr->SetPhase( 1.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
+               ctlr->SetPhase( 0.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
 				}
 			}
 		}

@@ -35,3 +35,18 @@ const Type & NiBSplineData::GetType() const {
 	return TYPE;
 };
 
+vector<short > NiBSplineData::GetControlPoints() const 
+{
+	return controlPoints;
+}
+
+vector<short > NiBSplineData::GetControlPointRange(int offset, int count) const
+{
+   vector<short> value;
+   if (offset < 0 || count < 0 || ((offset + count) > int(controlPoints.size())))
+      throw runtime_error("Invalid offset or count.");
+   vector<short>::const_iterator srcbeg = controlPoints.begin(), srcend = controlPoints.begin(); 
+   std::advance(srcbeg, offset);
+   std::advance(srcend, offset + count);
+   return vector<short>(srcbeg, srcend);
+}

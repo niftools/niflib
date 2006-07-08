@@ -2196,7 +2196,12 @@ return InternalGetRefs(); \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-Vector3 unkVector1; \
+ushort translateOffset; \
+ushort unkInt1; \
+ushort rotateOffset; \
+ushort unkInt2; \
+ushort scaleOffset; \
+ushort unkInt3; \
 float translateBias; \
 float translateMultiplier; \
 float rotationBias; \
@@ -2209,7 +2214,7 @@ float scaleMultiplier; \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT \
- : scale(0.0f), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
+ : scale(0.0f), translateOffset((ushort)0), unkInt1((ushort)0), rotateOffset((ushort)0), unkInt2((ushort)0), scaleOffset((ushort)0), unkInt3((ushort)0), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \

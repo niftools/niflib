@@ -61,6 +61,11 @@ public:
 	void SetBasisData( Ref<NiBSplineBasisData > value );
 
 protected:
+
+   // internal method for bspline calculation in child classes
+   static void bspline(int n, int t, int l, float *control, float *output, int num_output);
+
+protected:
 	NI_B_SPLINE_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };

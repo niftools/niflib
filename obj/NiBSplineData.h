@@ -32,6 +32,16 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+   /*!
+   * Get Signed shorts representing the data scaled by SHRT_MAX.
+   */
+   vector<short > GetControlPoints() const;
+
+   /*!
+   * Get Range of signed shorts representing the data scaled by SHRT_MAX.
+   */
+   vector<short > GetControlPointRange(int offset, int count) const;
+
 protected:
 	NI_B_SPLINE_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -32,6 +32,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * The number of control points (Usually number of frames for animation).
+	 */
+	uint GetNumControlPt() const;
+	void SetNumControlPt( uint value );
+
 protected:
 	NI_B_SPLINE_BASIS_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS
