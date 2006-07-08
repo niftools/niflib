@@ -822,6 +822,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					if ( ctlr == NULL ) {
 						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");
 					}
+					ctlr->SetFlags(8);  // at least make the controller active
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}
 
@@ -839,7 +840,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					ctlr->SetStartTime( right->GetStartTime() );
 					ctlr->SetStopTime( right->GetStopTime() );
 					ctlr->SetFrequency( right->GetFrequency() );
-               ctlr->SetPhase( 0.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
+					ctlr->SetPhase( 0.0f ); //TODO:  Is phase somewhere in NiControllerSequence?
 				}
 			}
 		}
