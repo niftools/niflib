@@ -6969,7 +6969,7 @@ void NiMorphData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 		if ( version >= 0x0A01006A ) {
 			NifStream( morphs[i1].frameName, in, version );
 		};
-		if ( version <= 0x0A000102 ) {
+		if ( version <= 0x0A010000 ) {
 			NifStream( morphs[i1].numMorphKeys, in, version );
 			NifStream( morphs[i1].morphInterpolation, in, version );
 			morphs[i1].morphKeys.resize(morphs[i1].numMorphKeys);
@@ -6998,7 +6998,7 @@ void NiMorphData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 		if ( version >= 0x0A01006A ) {
 			NifStream( morphs[i1].frameName, out, version );
 		};
-		if ( version <= 0x0A000102 ) {
+		if ( version <= 0x0A010000 ) {
 			NifStream( morphs[i1].numMorphKeys, out, version );
 			NifStream( morphs[i1].morphInterpolation, out, version );
 			for (uint i3 = 0; i3 < morphs[i1].morphKeys.size(); i3++) {
