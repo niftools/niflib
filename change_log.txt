@@ -319,3 +319,46 @@
     - All symbols are now enclosed in the Niflib namespace
     - Most old interfaces transitioned directly to new equivalents to reduce
       code re-writing when upgrading from previous versions.
+      
+==Version 0.5.4==
+
+2005/07/15
+  * Added a != operator to Vector3.
+  * Initialized TexCoord values to 0.0f.
+  * Added Visibility flag functions to NiAVObject.cpp
+  * Fixed NiTexturingProperty::SetTexture to set the internal hasXTexture
+    variables correctly.
+  * Fix DAoC bug with kob_m_head01.nif
+  * Cycle type is now set correctly on controllers created or modified by
+    MergeNifTrees function.
+  * Changed default for new controllers to 12; Active/Clamped.  Should get
+    cycle type from NiControllerSequence.
+  * Add a default value for the new controller so that its active.
+    1.  Update niflib with bspline interpolation abilities
+    2.  Change mergeniftrees to default phase to 0.0f instead of 1.0f as its
+        a better default value.
+  * Determined that there are references to NiBSplineData and
+    NiBSplineBasisData in all NiBSplineInterpolator derived classes.
+    Consolidated the various references from the derived classes to the
+    NiBSplineInterpolator class in the XML and in Niflib.
+  * We can't have functions on compounds as all files for them are generated.  Removed CalcNumTriangles so Niflib programs will link.
+  * Applied latest XML changes.
+  * Split some things that were previously part of NIF_IO.h into their own
+    files to make SWIG wrapping work better.
+  * Made the MergeNifTree function set the start time, stop time, and
+    frequency of the controller it attaches an interpolator to.
+  * Made the MergeNifTree function create a controller of the right type and
+    attach it to the specified node if one does not already exist.
+  * Fixed an include statement to be relative.
+  * Add extra targets getter/setter for multitargeter controller.  Probably
+    need to fix GetRefs() at some point get return weak pointer references as
+    well as strong ones.
+  * Fix Math so that it decomposes rotations back to stored rotation and not
+    the inverse.  Fix Scale so that it returns the correct value rather than
+    x+y + (z/3).
+  * Add helper methods for useful flags for importing data in avobject and
+    controller sequence.
+  * Suppressed most SWIG warnings.
+  * Tried to implement MergeNifTrees for KF files with a NiControllerSequence
+    root.  Untested.
+  * Minor change to Python wrapper file.
