@@ -177,3 +177,19 @@ void NiAVObject::SetHidden(bool value)
 {
    flags = NIFLIB_MASK_FLAG(flags, value, 0, 0x01);
 }
+
+void NiAVObject::SetLocalTransform( const Matrix44 & n ) {
+	n.Decompose( translation, rotation, scale );
+}
+
+bool NiAVObject::GetVisibility() const {
+	return !( flags & 1 );
+}
+
+void NiAVObject::SetVisibility( bool n ) {
+	//Only do anything if the value is different from what it already is
+	if ( GetVisibility() != n ) {
+		//Flip the bit
+		flags ^= 1;
+	}
+}

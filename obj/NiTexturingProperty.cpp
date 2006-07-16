@@ -159,27 +159,35 @@ void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
 	//Copy the values to the right texture
 	switch (n) {
 		case BASE_MAP:
+			hasBaseTexture = true;
 			baseTexture = new_val;
 			break;
 		case DARK_MAP:
+			hasDarkTexture = true;
 			darkTexture = new_val;
 			break;
 		case DETAIL_MAP:
+			hasDetailTexture = true;
 			detailTexture = new_val;
 			break;
 		case GLOSS_MAP:
+			hasGlossTexture = true;
 			glossTexture = new_val;
 			break;
 		case GLOW_MAP:
+			hasGlowTexture = true;
 			glowTexture = new_val;
 			break;
 		case BUMP_MAP:
+			hasBumpMapTexture = true;
 			bumpMapTexture = new_val;
 			break;
 		case DECAL_0_MAP:
+			hasDecal0Texture = true;
 			decal0Texture = new_val;
 			break;
 		case DECAL_1_MAP:
+			hasDecal1Texture = true;
 			decal1Texture = new_val;
 			break;
 	};

@@ -50,6 +50,13 @@ public:
 	Matrix44 GetLocalTransform() const;
 
 	/*! 
+	 * This is a conveniance function that allows you to set the rotation, scale, and translation of an AV object with a 4x4 matrix transform.
+	 * \n A 4x4 transformation matrix to set the AVObject's transform attributes with.
+	 * \sa INode::GetLocalTransform
+	 */
+	void SetLocalTransform( const Matrix44 & n );
+
+	/*! 
 	 * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
 	 * \return The 4x4 world transform matrix of this node.
 	 * \sa INode::GetLocalTransform
@@ -81,6 +88,9 @@ public:
 
 	Vector3 GetVelocity() const;
 	void SetVelocity( const Vector3 & n );
+
+	bool GetVisibility() const;
+	void SetVisibility( bool n );
 
 	void SetCollisionObject(Ref<NiCollisionObject> &);
 

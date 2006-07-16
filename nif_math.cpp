@@ -100,6 +100,13 @@ bool Vector3::operator==( const Vector3 & rh) const {
 		return false;
 }
 
+bool Vector3::operator!=( const Vector3 & rh) const {
+	if (rh.x == x && rh.y == y && rh.z == z)
+		return false;
+	else
+		return true;
+}
+
 float Vector3::DotProduct( const Vector3 & rh) const {
 	return x * rh.x + y * rh.y + z * rh.z;
 }
@@ -251,14 +258,16 @@ Matrix33 Matrix44::GetRotation() const {
 	return m;
 }
 
-Vector3 Matrix44::GetScale() const {
+float Matrix44::GetScale() const {
 	const Matrix44 & m = *this;
 	float scale[3];
 	for (int r = 0; r < 3; ++r) {
 		//Get scale for this row
 		scale[r] = Vector3( m[r][0], m[r][1], m[r][2] ).Magnitude();
 	}
-	return Vector3( scale[0], scale[1], scale[2] );
+	 
+	//averate the scale since NIF doesn't support discreet scaling
+	return (scale[0] + scale[1] + scale[2]) / 3.0f;
 }
 
 

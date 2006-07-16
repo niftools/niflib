@@ -36,7 +36,7 @@ struct NIFLIB_API TexCoord {
 	float v; /*!< The V value in this coordinate pair. */ 
 
 	/*! Default constructor	*/
-	TexCoord() {}
+	TexCoord() : u(0.0f), v(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param u The value to set U to.
@@ -218,6 +218,11 @@ struct NIFLIB_API Vector3 {
 	 * three components are equal.
 	 */
 	bool operator==( const Vector3 & rh ) const;
+
+	/* Tests the inequality of two Vector3 structures.  Vectors are considered equal if all
+	 * three components are equal.
+	 */
+	bool operator!=( const Vector3 & rh ) const;
 
 	/* Computes the dot product of two vectors; the angle between two vectors.
 	 * \param rh The vector to perform the dot product with
@@ -758,7 +763,7 @@ struct Matrix44 {
 	NIFLIB_API float Adjoint( int skip_r, int skip_c ) const;
 
 	NIFLIB_API Matrix33 GetRotation() const;
-	NIFLIB_API Vector3 GetScale() const;
+	NIFLIB_API float GetScale() const;
 	NIFLIB_API Vector3 GetTranslation() const;
 
 	//undocumented, may be removed
