@@ -68,7 +68,7 @@ public:
 
 	Ref<NiNode> GetParent() const;
 
-	void AddProperty( Ref<NiProperty> & obj );
+	void AddProperty( const Ref<NiProperty> & obj );
 	void RemoveProperty( Ref<NiProperty> obj );
 	void ClearProperties();
 	vector< Ref<NiProperty> > GetProperties() const;

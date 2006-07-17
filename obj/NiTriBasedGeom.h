@@ -46,7 +46,7 @@ public:
 	 * NiSkinInstance and NiSkinData class. The bones must have a common
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
-	void BindSkin( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+	void BindSkin( vector< Ref<NiNode> > bone_nodes );
 	void UnbindSkin();
 	Ref<NiSkinInstance> GetSkinInstance() const;
 
@@ -62,6 +62,9 @@ public:
 	vector<Vector3> GetSkinInfluencedVertices() const;
 
 protected:
+	Ref<NiAVObject> ListAncestors( const Ref<NiAVObject> & leaf, list< Ref<NiAVObject> > & ancestors ) const;
+	Ref<NiNode> FindFirstCommonAncestor( const Ref<NiAVObject> & avObj, const list< Ref<NiAVObject> > & ancestors ) const;
+
 	NI_TRI_BASED_GEOM_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };

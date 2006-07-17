@@ -80,7 +80,7 @@ Ref<NiNode> NiAVObject::GetParent() const {
 	return parent;
 }
 
-void NiAVObject::AddProperty( Ref<NiProperty> & obj ) {
+void NiAVObject::AddProperty( const Ref<NiProperty> & obj ) {
 	properties.push_back( obj );
 }
 

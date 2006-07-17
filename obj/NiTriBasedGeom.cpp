@@ -73,11 +73,30 @@ Ref<NiSkinInstance> NiTriBasedGeom::GetSkinInstance() const {
 	return skinInstance;
 }
 
-void NiTriBasedGeom::BindSkin( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
+void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 	//Ensure skin is not aleady bound
 	if ( skinInstance != 0 ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
 	}
+
+	//--Find a suitable skeleton root--//
+
+	//create a list of nodes that have an influence or this TriBasedGeom
+	//as decendents
+	list<NiAVObjectRef> ancestors;
+
+	NiAVObjectRef shape_tree_top = ListAncestors( StaticCast<NiAVObject>(this), ancestors );
+	NiAVObjectRef bone_tree_top;
+
+	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
+		bone_tree_top = ListAncestors( StaticCast<NiAVObject>(bone_nodes[i]), ancestors );
+		//Make sure bone and shapre are part of the same tree
+		if ( bone_tree_top != shape_tree_top ) {
+			throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+		}
+	}
+
+	NiNodeRef skeleton_root = FindFirstCommonAncestor( shape_tree_top, ancestors );
 
 	//Create a skin instance using the bone and root data
 	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
@@ -85,6 +104,38 @@ void NiTriBasedGeom::BindSkin( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > 
 	//Create a NiSkinData object based on this mesh
 	skinInstance->SetSkinData( new NiSkinData( this ) );
 };
+
+Ref<NiAVObject> NiTriBasedGeom::ListAncestors( const Ref<NiAVObject> & leaf, list< Ref<NiAVObject> > & ancestors ) const {
+	NiAVObjectRef avObj = leaf;
+	while ( avObj->GetParent() != NULL ) {
+		ancestors.push_back(avObj);
+		avObj = avObj->GetParent();
+	}
+
+	//Return top of tree
+	return avObj;
+}
+
+Ref<NiNode> NiTriBasedGeom::FindFirstCommonAncestor( const Ref<NiAVObject> & avObj, const list< Ref<NiAVObject> > & ancestors ) const {
+	//See if we've found the common ancestor yet
+	for ( list<NiAVObjectRef>::const_iterator ancestor = ancestors.begin(); ancestor != ancestors.end(); ++ancestor ) {
+		if ( *ancestor == avObj ) {
+			//We found the common ancestor, return it.
+			return DynamicCast<NiNode>(avObj);
+		}
+	}
+	
+	//Call this function on any children
+	NiNodeRef niNode = DynamicCast<NiNode>(avObj);
+	if ( niNode != NULL ) {
+		vector<NiAVObjectRef> children = niNode->GetChildren();
+		for ( uint i = 0; i < children.size(); ++i ) {
+			return FindFirstCommonAncestor( children[i], ancestors );
+		}
+	} else {
+		return NULL;
+	}
+}
 
 void NiTriBasedGeom::UnbindSkin() {
 	//Clear skin instance

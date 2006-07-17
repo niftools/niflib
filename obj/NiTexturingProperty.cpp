@@ -222,7 +222,7 @@ bool NiTexturingProperty::HasTexture( int n ) const {
 		case DECAL_1_MAP:
 			return hasDecal1Texture;
 		default:
-			throw("You have specified an invalid texture type.");
+			throw runtime_error("You have specified an invalid texture type.");
 	};
 }
 

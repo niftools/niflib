@@ -55,13 +55,15 @@ struct NIFLIB_API TexCoord {
 		this->u = u;
 		this->v = v;
 	}
+
+	bool operator==( const TexCoord & n ) const;
 };
 
 /*! Represents a triangle face formed between three vertices referenced by number */
 struct NIFLIB_API Triangle {
-	short v1; /*!< The index of the first vertex. */ 
-	short v2; /*!< The index of the second vertex. */ 
-	short v3; /*!< The index of the third vertex. */ 
+	unsigned short v1; /*!< The index of the first vertex. */ 
+	unsigned short v2; /*!< The index of the second vertex. */ 
+	unsigned short v3; /*!< The index of the third vertex. */ 
 
 	/*! Default constructor */
 	Triangle() {}
@@ -71,7 +73,7 @@ struct NIFLIB_API Triangle {
 	 * \param v2 The index of the second vertex.
 	 * \param v3 The index of the third vertex.
 	 */
-	Triangle(short v1, short v2, short v3) {
+	Triangle(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
@@ -82,7 +84,7 @@ struct NIFLIB_API Triangle {
 	 * \param v2 The index of the second vertex.
 	 * \param v3 The index of the third vertex.
 	 */
-	void Set(short v1, short v2, short v3) {
+	void Set(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
@@ -94,7 +96,7 @@ struct NIFLIB_API Triangle {
 	 * \param n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
-	short & operator[](int n) {
+	unsigned short & operator[](int n) {
 		switch (n) {
 			case 0: return v1; break;
 			case 1: return v2; break;
@@ -102,7 +104,7 @@ struct NIFLIB_API Triangle {
 			default: throw std::out_of_range("Index out of range for Triangle");
 		};
 	}
-	short operator[](int n) const {
+	unsigned short operator[](int n) const {
 		switch (n) {
 			case 0: return v1; break;
 			case 1: return v2; break;
@@ -827,7 +829,7 @@ struct NIFLIB_API Color4 {
 	float a; /*!< The alpha translucency component of this color.  Should be between 0.0f and 1.0f. */ 
 
 	/*! Default constructor */
-	Color4() {}
+	Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
