@@ -129,7 +129,6 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 
 	while(true) {
 		bool all_same = true;
-		cout << "Ancestors[0].size():  " << int(ancestors[0].size()) << endl;
 		if ( ancestors[0].size() == 0 ) {
 			//This list is over, so the last top is the common ancestor
 			//break out of the loop
@@ -137,7 +136,6 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 		}
 		NiNodeRef first_ancestor = ancestors[0].front();
 		for ( int i = 1; i < num_lists; ++i ) {
-			cout << "Ancestors[" << i << "].size():  " << int(ancestors[i].size()) << endl;
 			if ( ancestors[i].size() == 0 ) {
 				//This list is over, so the last top is the common ancestor
 				//break out of the loop
@@ -154,7 +152,6 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 			//and look again
 			
 			skeleton_root = ancestors[0].front();
-			cout << "New common stack top:  " << skeleton_root << endl;
 			for ( int i = 0; i < num_lists; ++i ) {
 				ancestors[i].pop_front();
 			}
@@ -169,8 +166,6 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 		throw runtime_error("Failed to find suitable skeleton root.");
 	}
 
-	cout << "Skeleton Root Selected:  " << skeleton_root << endl;
-
 	//Create a skin instance using the bone and root data
 	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
 
@@ -179,8 +174,6 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 };
 
 list< Ref<NiNode> > NiTriBasedGeom::ListAncestors( const Ref<NiNode> & leaf ) const {
-	cout << "Listing ancestors for " << leaf << endl;
-	
 	if ( leaf == NULL ) {
 		throw runtime_error("ListAncestors called with a NULL leaf NiNode Ref");
 	}
@@ -195,10 +188,6 @@ list< Ref<NiNode> > NiTriBasedGeom::ListAncestors( const Ref<NiNode> & leaf ) co
 		} else {
 			niNode = niNode->GetParent();
 		}
-	}
-
-	for ( list<NiNodeRef>::iterator it = ancestors.begin(); it != ancestors.end(); ++it ) {
-		cout << "   " << *it << endl;
 	}
 
 	return ancestors;

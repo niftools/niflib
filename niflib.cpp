@@ -71,7 +71,7 @@ NiObjectRef CreateBlock( string block_type ) {
 //Reads the given file by file name and returns a reference to the root block
 NiObjectRef ReadNifTree( string const & file_name ) {
 	//Read block list
-	cout << "File name:  " << file_name << endl;
+	//cout << "File name:  " << file_name << endl;
 	vector<NiObjectRef> blocks = ReadNifList( file_name );
 	return FindRoot( blocks );
 }
@@ -169,6 +169,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 	vector<NiObjectRef> blocks( numBlocks ); //List to hold the blocks
 	list<uint> link_stack; //List to add link values to as they're read in from the file
 	string objectType;
+	stringstream errStream;
 	for (uint i = 0; i < numBlocks; i++) {
 
 		//Check for EOF
@@ -184,10 +185,10 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 				uint checkValue = ReadUInt( in );
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
-					cout << "ERROR!  Bad object position.  Invalid check value\a" << endl;
-					cout << "====[ " << "Object " << i << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
-					cout << blocks[i - 1]->asString();
-					throw runtime_error("Read failue - Bad object position");
+					errStream << "Read failue - Bad object position.  Invalid check value" << endl;
+					errStream << "====[ " << "Object " << i << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+					errStream << blocks[i - 1]->asString();
+					throw runtime_error( errStream.str() );
 				}
 			}
 
@@ -197,10 +198,10 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			// Find which block type this is by reading the string at this location
 			uint objectTypeLength = ReadUInt( in );
 			if (objectTypeLength > 30 || objectTypeLength < 6) {
-				cout << "ERROR!  Bad object position.  Invalid Type Name Length:  " << objectTypeLength << "\a" << endl;
-				cout << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
-				cout << blocks[i - 1]->asString();
-				throw runtime_error("Read failue - Bad object position");
+				errStream << "Read failue - Bad object position.  Invalid Type Name Length:  " << objectTypeLength  << endl;
+				errStream << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+				errStream << blocks[i - 1]->asString();
+				throw runtime_error( errStream.str() );
 			}
 			char* charobjectType = new char[objectTypeLength + 1];
 			in.read( charobjectType, objectTypeLength );
@@ -208,10 +209,10 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 			objectType = string(charobjectType);
 			delete [] charobjectType;
 			if ( (objectType[0] != 'N' || objectType[1] != 'i') && (objectType[0] != 'R' || objectType[1] != 'o') && (objectType[0] != 'A' || objectType[1] != 'v')) {
-				cout << "ERROR!  Bad object position.  Invalid Type Name:  " << objectType << "\a" << endl;
-				cout << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
-				cout << blocks[i - 1]->asString();
-				throw runtime_error("Read failue - Bad object position");
+				errStream << "Read failue - Bad object position.  Invalid Type Name:  " << objectType << endl;
+				errStream << "====[ " << "Object " << i - 1 << " | " << blocks[i - 1]->GetType().GetTypeName() << " ]====" << endl;
+				errStream << blocks[i - 1]->asString();
+				throw runtime_error( errStream.str() );
 			}
 		}
 
@@ -226,9 +227,8 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		if ( blocks[i] == NULL ) {
 			//For version 5.0.0.1 and up, throw an exception - there's nothing we can do
 			//if ( version >= 0x05000001 ) {
-				stringstream str;
-				str << "Unknown object type encountered during file read:  " << objectType;
-				throw runtime_error( str.str() );
+				errStream << "Unknown object type encountered during file read:  " << objectType;
+				throw runtime_error( errStream.str() );
 			//} else {
 				//We can skip over this block in older versions
 				//blocks[i] = new UnknownBlock(objectType);
@@ -803,7 +803,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 				//attach it to the specific type of controller that's
 				//connected to the named node
 				NiNodeRef node = name_map[node_name];
-				cout << "Attaching interpolator to " << node << endl;
+				//cout << "Attaching interpolator to " << node << endl;
 				list<NiTimeControllerRef> ctlrs = node->GetControllers();
 				NiSingleInterpolatorControllerRef ctlr;
 				for ( list<NiTimeControllerRef>::iterator it = ctlrs.begin(); it != ctlrs.end(); ++it ) {
@@ -825,7 +825,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}
 
-				cout << "Controller is " << ctlr << endl;
+				//cout << "Controller is " << ctlr << endl;
 
 				//Clone the interpolator and attached data and
 				//add it to controller of matching type that was
