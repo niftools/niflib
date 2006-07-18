@@ -38,7 +38,7 @@ const Type & NiTriBasedGeomData::GetType() const {
 
 void NiTriBasedGeomData::SetUVSetCount(int n) {
 	uvSets.resize(n);
-	hasUv = ( vertexColors.size() != 0 );
+	hasUv = ( uvSets.size() != 0 );
 }
 
 //--Setters--//

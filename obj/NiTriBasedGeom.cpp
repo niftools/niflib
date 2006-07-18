@@ -79,24 +79,97 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
 	}
 
+	//Ensure that some bones are given
+	if ( bone_nodes.size() == 0 ) {
+		throw runtime_error("You must specify at least one bone node.");
+	}
+
 	//--Find a suitable skeleton root--//
 
-	//create a list of nodes that have an influence or this TriBasedGeom
+	//create lists of nodes that have an influence and this TriBasedGeom
 	//as decendents
-	list<NiAVObjectRef> ancestors;
+	int num_lists = int(bone_nodes.size()) + 1;
+	vector< list<NiNodeRef> > ancestors( num_lists );
 
-	NiAVObjectRef shape_tree_top = ListAncestors( StaticCast<NiAVObject>(this), ancestors );
-	NiAVObjectRef bone_tree_top;
+	if ( GetParent() == NULL ) {
+		throw runtime_error("Attempted to bind skin on a shape with no parent.");
+	}
 
+	ancestors[bone_nodes.size()] = ListAncestors( GetParent() );
+	
 	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
-		bone_tree_top = ListAncestors( StaticCast<NiAVObject>(bone_nodes[i]), ancestors );
-		//Make sure bone and shapre are part of the same tree
-		if ( bone_tree_top != shape_tree_top ) {
+		NiNodeRef bonePar = bone_nodes[i]->GetParent();
+		if ( bonePar == NULL ) {
+			throw runtime_error("Attempted to bind skin to a bone with no parent.  A skeleton root cannot be a bone so all bones must have at least one parent.");
+		}
+		ancestors[i] = ListAncestors( bonePar );
+	}
+
+	if ( ancestors[0].size() == 0 ) {
+		throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+	}
+
+	NiNodeRef skeleton_root = ancestors[0].front();
+	//Make sure bone and shapes are part of the same tree
+	for ( int i = 1; i < num_lists; ++i ) {
+		if ( ancestors[i].size() == 0 ) {
+			throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+		}
+		if ( ancestors[i].front() != skeleton_root ) {
 			throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
 		}
 	}
 
-	NiNodeRef skeleton_root = FindFirstCommonAncestor( shape_tree_top, ancestors );
+	//Since the first items have been shown to match, pop all the stacks
+	for ( int i = 0; i < num_lists; ++i ) {
+		ancestors[i].pop_front();
+	}
+
+	//Now search for the common ancestor
+
+	while(true) {
+		bool all_same = true;
+		cout << "Ancestors[0].size():  " << int(ancestors[0].size()) << endl;
+		if ( ancestors[0].size() == 0 ) {
+			//This list is over, so the last top is the common ancestor
+			//break out of the loop
+			break;
+		}
+		NiNodeRef first_ancestor = ancestors[0].front();
+		for ( int i = 1; i < num_lists; ++i ) {
+			cout << "Ancestors[" << i << "].size():  " << int(ancestors[i].size()) << endl;
+			if ( ancestors[i].size() == 0 ) {
+				//This list is over, so the last top is the common ancestor
+				//break out of the loop
+				all_same = false;
+				break;
+			}
+			if ( ancestors[i].front() != first_ancestor ) {
+				all_same = false;
+			}
+		}
+
+		if ( all_same == true ) {
+			//They're all the same, so set the top, pop all the stacks
+			//and look again
+			
+			skeleton_root = ancestors[0].front();
+			cout << "New common stack top:  " << skeleton_root << endl;
+			for ( int i = 0; i < num_lists; ++i ) {
+				ancestors[i].pop_front();
+			}
+		} else {
+			//One is different, so the last top is the common ancestor.
+			//break out of the loop
+			break;
+		}
+	}
+
+	if ( skeleton_root == NULL ) {
+		throw runtime_error("Failed to find suitable skeleton root.");
+	}
+
+	cout << "Skeleton Root Selected:  " << skeleton_root << endl;
 
 	//Create a skin instance using the bone and root data
 	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
@@ -105,36 +178,30 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 	skinInstance->SetSkinData( new NiSkinData( this ) );
 };
 
-Ref<NiAVObject> NiTriBasedGeom::ListAncestors( const Ref<NiAVObject> & leaf, list< Ref<NiAVObject> > & ancestors ) const {
-	NiAVObjectRef avObj = leaf;
-	while ( avObj->GetParent() != NULL ) {
-		ancestors.push_back(avObj);
-		avObj = avObj->GetParent();
-	}
-
-	//Return top of tree
-	return avObj;
-}
-
-Ref<NiNode> NiTriBasedGeom::FindFirstCommonAncestor( const Ref<NiAVObject> & avObj, const list< Ref<NiAVObject> > & ancestors ) const {
-	//See if we've found the common ancestor yet
-	for ( list<NiAVObjectRef>::const_iterator ancestor = ancestors.begin(); ancestor != ancestors.end(); ++ancestor ) {
-		if ( *ancestor == avObj ) {
-			//We found the common ancestor, return it.
-			return DynamicCast<NiNode>(avObj);
-		}
+list< Ref<NiNode> > NiTriBasedGeom::ListAncestors( const Ref<NiNode> & leaf ) const {
+	cout << "Listing ancestors for " << leaf << endl;
+	
+	if ( leaf == NULL ) {
+		throw runtime_error("ListAncestors called with a NULL leaf NiNode Ref");
 	}
 	
-	//Call this function on any children
-	NiNodeRef niNode = DynamicCast<NiNode>(avObj);
-	if ( niNode != NULL ) {
-		vector<NiAVObjectRef> children = niNode->GetChildren();
-		for ( uint i = 0; i < children.size(); ++i ) {
-			return FindFirstCommonAncestor( children[i], ancestors );
+	list<NiNodeRef> ancestors;
+
+	NiNodeRef niNode = leaf;
+	while (true) {
+		ancestors.push_front(niNode);
+		if ( niNode->GetParent() == NULL ) {
+			break;
+		} else {
+			niNode = niNode->GetParent();
 		}
-	} else {
-		return NULL;
 	}
+
+	for ( list<NiNodeRef>::iterator it = ancestors.begin(); it != ancestors.end(); ++it ) {
+		cout << "   " << *it << endl;
+	}
+
+	return ancestors;
 }
 
 void NiTriBasedGeom::UnbindSkin() {

@@ -62,8 +62,7 @@ public:
 	vector<Vector3> GetSkinInfluencedVertices() const;
 
 protected:
-	Ref<NiAVObject> ListAncestors( const Ref<NiAVObject> & leaf, list< Ref<NiAVObject> > & ancestors ) const;
-	Ref<NiNode> FindFirstCommonAncestor( const Ref<NiAVObject> & avObj, const list< Ref<NiAVObject> > & ancestors ) const;
+	list< Ref<NiNode> > NiTriBasedGeom::ListAncestors( const Ref<NiNode> & leaf ) const;
 
 	NI_TRI_BASED_GEOM_MEMBERS
 	STANDARD_INTERNAL_METHODS

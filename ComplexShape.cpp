@@ -407,9 +407,12 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 			SkinWeight sk;
 			for ( map<NiNodeRef, float>::iterator wt = cv->weights.begin(); wt != cv->weights.end(); ++wt ) {
 				//Only record influences that make a noticable contribution
-				if ( wt->second > 0.001f ) {
+				if ( wt->second > 0.0f ) {
 					sk.index = vert_index;
 					sk.weight = wt->second;
+					if ( shapeWeights.find( wt->first ) == shapeWeights.end() ) {
+						shapeWeights[wt->first] = vector<SkinWeight>();
+					}
 					shapeWeights[wt->first].push_back( sk );
 				}
 			}
@@ -444,10 +447,16 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 
 			shapes[shape_num]->BindSkin( shapeInfluences );
 
-			NiSkinDataRef skinData = shapes[shape_num]->GetSkinInstance()->GetSkinData();
+			NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();
 
-			for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
-				skinData->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
+			if ( skinInst != NULL ) {
+				NiSkinDataRef skinData = skinInst->GetSkinData();
+
+				if ( skinData != NULL ) {
+					for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
+						skinData->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
+					}
+				}
 			}
 		}
 		

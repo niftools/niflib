@@ -12,7 +12,10 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TypeConst() );
 
-NiNode::NiNode() NI_NODE_CONSTRUCT {}
+NiNode::NiNode() NI_NODE_CONSTRUCT {
+	//Set flag to default of 8: not a skin influence
+	flags = 8;
+}
 
 NiNode::~NiNode() {
 	//Clear Children
