@@ -260,3 +260,73 @@ vector<Vector3> NiTriBasedGeom::GetSkinInfluencedVertices() const {
 
 	return skin_verts;
 }
+
+void NiTriBasedGeom::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n ) {
+	
+	if ( n.size() == 0 ) {
+		throw runtime_error( "You must specify at least one weight value." );
+	}
+
+	NiSkinInstanceRef skinInst = GetSkinInstance();
+
+	if ( skinInst == NULL ) {
+		throw runtime_error( "You must bind a skin before setting vertex weights.  No NiSkinInstance found." );
+	}
+
+	NiSkinDataRef skinData = skinInst->GetSkinData();
+
+	if ( skinData == NULL ) {
+		throw runtime_error( "You must bind a skin before setting vertex weights.  No NiSkinData found." );
+	}
+
+	NiTriBasedGeomDataRef geomData = GetData();
+
+	if ( geomData == NULL ) {
+		throw runtime_error( "Attempted to set weights on a mesh with no geometry data." );
+	}
+
+	//Get vertex array
+	vector<Vector3> vertices = geomData->GetVertices();
+
+	//--Calculate center & radius--//
+	
+	//Set lows and highs to first vertex
+	Vector3 lows = vertices[ n[0].index ];
+	Vector3 highs = vertices[ n[0].index ];
+
+	//Iterate through the vertices, adjusting the stored values
+	//if a vertex with lower or higher values is found
+	for ( unsigned int i = 0; i < n.size(); ++i ) {
+		const Vector3 & v = vertices[ n[i].index ];
+		
+		if ( v.x > highs.x ) highs.x = v.x;
+		else if ( v.x < lows.x ) lows.x = v.x;
+
+		if ( v.y > highs.y ) highs.y = v.y;
+		else if ( v.y < lows.y ) lows.y = v.y;
+
+		if ( v.z > highs.z ) highs.z = v.z;
+		else if ( v.z < lows.z ) lows.z = v.z;
+	}
+
+	//Now we know the extent of the shape, so the center will be the average
+	//of the lows and highs
+	Vector3 center = highs + lows / 2.0f;
+
+	//The radius will be the largest distance from the center
+	Vector3 diff;
+	float dist2(0.0f), maxdist2(0.0f);
+	for ( unsigned int i = 0; i < n.size(); ++i ) {
+		const Vector3 & v = vertices[ n[i].index ];
+
+		diff = center - v;
+		dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+		if ( dist2 > maxdist2 ) maxdist2 = dist2;
+	};
+	float radius = sqrt(maxdist2);
+
+	//Translate center by bone matrix
+	center = skinData->GetBoneTransform( bone_index ) * center;
+
+	skinData->SetBoneWeights( bone_index, n, center, radius );
+}

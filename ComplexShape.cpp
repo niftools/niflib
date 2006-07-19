@@ -447,17 +447,21 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 
 			shapes[shape_num]->BindSkin( shapeInfluences );
 
-			NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();
-
-			if ( skinInst != NULL ) {
-				NiSkinDataRef skinData = skinInst->GetSkinData();
-
-				if ( skinData != NULL ) {
-					for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
-						skinData->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
-					}
-				}
+			for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
+				shapes[shape_num]->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
 			}
+
+			//NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();
+
+			//if ( skinInst != NULL ) {
+			//	NiSkinDataRef skinData = skinInst->GetSkinData();
+
+			//	if ( skinData != NULL ) {
+			//		for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
+			//			skinData->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
+			//		}
+			//	}
+			//}
 		}
 		
 		//Next Shape

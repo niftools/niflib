@@ -61,12 +61,16 @@ vector<SkinWeight> NiSkinData::GetBoneWeights( uint bone_index ) const {
 	return boneList[bone_index].vertexWeights;
 }
 
-void NiSkinData::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n ) {
+void NiSkinData::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius ) {
 	if ( bone_index > boneList.size() ) {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
 
 	boneList[bone_index].vertexWeights = n;
+	boneList[bone_index].unknown4Floats[0] = center.x;
+	boneList[bone_index].unknown4Floats[1] = center.y;
+	boneList[bone_index].unknown4Floats[2] = center.z;
+	boneList[bone_index].unknown4Floats[3] = radius;
 }
 
 Matrix44 NiSkinData::GetOverallTransform() const {

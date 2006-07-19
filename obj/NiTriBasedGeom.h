@@ -48,6 +48,13 @@ public:
 	 */
 	void BindSkin( vector< Ref<NiNode> > bone_nodes );
 	void UnbindSkin();
+	/*!
+	 * Sets the skin weights in the attached NiSkinData object.
+	 * The version on this class calculates the center and radius of
+	 * each set of affected vertices automatically.
+	 */
+	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n );
+
 	Ref<NiSkinInstance> GetSkinInstance() const;
 
 	Ref<NiTriBasedGeomData> GetData() const;
