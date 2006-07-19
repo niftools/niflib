@@ -54,14 +54,20 @@ vector<ushort> NiTriStripsData::GetStrip( int index ) const {
 vector<Triangle> NiTriStripsData::GetTriangles() const {
 
 	//Create a vector to hold the triangles
-	vector<Triangle> triangles( numTriangles );
+	vector<Triangle> triangles;
 	int n = 0; // Current triangle
 
 	//Cycle through all strips
 	vector< vector<ushort> >::const_iterator it;
+	Triangle t;
 	for (it = points.begin(); it != points.end(); ++it ) {
 		//The first three values in the strip are the first triangle
-		triangles[n].Set( (*it)[0], (*it)[1], (*it)[2] );
+		t.Set( (*it)[0], (*it)[1], (*it)[2] );
+
+		//Only add triangles to the list if none of the vertices match
+		if ( t[0] != t[1] && t[0] != t[2] && t[1] != t[2] ) {
+			triangles.push_back(t);
+		}
 
 		//Move to the next triangle
 		++n;
@@ -71,10 +77,15 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 			//Odd numbered triangles need to be reversed to keep the vertices in counter-clockwise order
 			if ( i % 2 == 0 ) {
 				//cout << (*it)[i - 2] << ", " << (*it)[i - 1] << ", " << (*it)[i] << endl;
-				triangles[n].Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
+				t.Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
 			} else {
 				//cout << (*it)[i] << ", " << (*it)[i - 1] << ", " << (*it)[i - 2] << endl;
-				triangles[n].Set( (*it)[i], (*it)[i - 1], (*it)[i - 2] );
+				t.Set( (*it)[i], (*it)[i - 1], (*it)[i - 2] );
+			}
+
+			//Only add triangles to the list if none of the vertices match
+			if ( t[0] != t[1] && t[0] != t[2] && t[1] != t[2] ) {
+				triangles.push_back(t);
 			}
 
 			//Move to the next triangle
