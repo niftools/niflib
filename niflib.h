@@ -230,6 +230,14 @@ NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int 
 //NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xFFFFFFFF );
 NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 
+/*! 
+ * Traverses a tree of NIF objects, attempting to move each skeleton root
+ * to the natural bind position where no meshes are distorted by skin
+ * influences.  This is not always successful and only affects nodes that
+ * are skin influences.
+ * \param root The root NiNode of the tree.
+ */
+NIFLIB_API void SendNifTreeToBindPos( const Ref<NiNode> & root );
 
 //// Returns list of all blocks in the tree rooted by root block.
 //list<NiObjectRef> GetNifTree( NiObjectRef const & root_block );

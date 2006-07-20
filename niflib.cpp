@@ -37,7 +37,6 @@ map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
 void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map );
-//void BuildUpBindPositions( const NiAVObjectRef & root );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
@@ -278,15 +277,6 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 		//Fix links & other pre-processing
 		blocks[i]->FixLinks( blocks, link_stack, header.version, header.userVersion );
 	}
-
-	//TODO:  Make this an optional step?
-	////Send all skeleton roots to bind position
-	//for (uint i = 0; i < blocks.size(); ++i) {
-	//	NiNodeRef node = DynamicCast<NiNode>(blocks[i]);
-	//	if ( node != NULL && node->IsSkeletonRoot() ) {
-	//		node->GoToSkeletonBindPosition();
-	//	}
-	//}
 
 	//Return completed block list
 	return blocks;
@@ -920,6 +910,28 @@ Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int version, un
 
 	//Read the data back out of the stringstream, returning the new tree
 	return ReadNifTree( tmp );
+}
+
+void SendNifTreeToBindPos( const Ref<NiNode> & root ) {
+	//If this node is a skeleton root, send its children to the bind
+	//position
+
+	if ( root == NULL ) {
+		throw runtime_error( "Attempted to call SendNifTreeToBindPos on a null reference." );
+	}
+
+	if ( root->IsSkeletonRoot() ) {
+		root->GoToSkeletonBindPosition();
+	}
+
+	//Call this function on any NiNode children
+	vector<NiAVObjectRef> children = root->GetChildren();
+	for ( uint i = 0; i < children.size(); ++i ) {
+		NiNodeRef child = DynamicCast<NiNode>(children[i]);
+		if ( child != NULL ) {
+			SendNifTreeToBindPos( child );
+		}
+	}
 }
 
 } // namespace NifLib
