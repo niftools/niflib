@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiAVObject.h"
 #include "NiNode.h"
+#include "../gen/SkinWeight.h"
 
 // Include structures
 #include "../Ref.h"

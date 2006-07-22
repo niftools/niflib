@@ -7,8 +7,11 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "Ref.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
+#include <vector>
 
 namespace Niflib {
+
+using namespace std;
 
 // Forward define of referenced classes
 class NiProperty;
