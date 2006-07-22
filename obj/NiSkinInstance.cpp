@@ -70,6 +70,11 @@ void NiSkinInstance::FixLinks( const vector<NiObjectRef> & objects, list<uint> &
 	if ( skeletonRoot != NULL ) {
 		skeletonRoot->AddSkin( this );
 	}
+
+	//Ensure that bones have the flag set properly
+	for ( uint i = 0; i < bones.size(); ++i ) {
+		bones[i]->SetSkinFlag(true);
+	}
 }
 
 list<NiObjectRef> NiSkinInstance::GetRefs() const {
