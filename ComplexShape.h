@@ -17,11 +17,16 @@ using namespace std;
 class NiProperty;
 class NiNode;
 class NiAVObject;
+class NiTriBasedGeom;
+
+const unsigned CS_NO_INDEX = 0xFFFFFFFF;
 
 class ComplexShape {
 public:
 
 	struct SkinInfluence {
+		SkinInfluence() : influenceIndex(CS_NO_INDEX) {}
+		~SkinInfluence() {}
 		unsigned int influenceIndex;
 		float weight;
 	};
@@ -32,11 +37,15 @@ public:
 	};
 
 	struct TexCoordIndex {
+		TexCoordIndex() : texCoordSetIndex(CS_NO_INDEX), texCoordIndex(CS_NO_INDEX) {}
+		~TexCoordIndex() {}
 		unsigned int texCoordSetIndex;
 		unsigned int texCoordIndex;
 	};
 
 	struct ComplexPoint {
+		ComplexPoint() : vertexIndex(CS_NO_INDEX), normalIndex(CS_NO_INDEX), colorIndex(CS_NO_INDEX) {}
+		~ComplexPoint() {}
 		unsigned int vertexIndex;
 		unsigned int normalIndex;
 		unsigned int colorIndex;
@@ -44,6 +53,8 @@ public:
 	};
 
 	struct ComplexFace {
+		ComplexFace() : propGroupIndex(CS_NO_INDEX) {}
+		~ComplexFace() {}
 		vector<ComplexPoint> points;
 		unsigned int propGroupIndex; 
 	};
@@ -54,6 +65,8 @@ public:
 	};
 
 	Ref<NiAVObject> Split( Ref<NiNode> & parent ) const;
+	void Merge( const Ref<NiAVObject> & root );
+	void Clear();
 
 	//Setters
 	void SetName( const string & n );

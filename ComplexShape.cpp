@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiNode.h"
 #include "obj/NiProperty.h"
 #include "obj/NiAVObject.h"
+#include "obj/NiTriBasedGeom.h"
 #include "obj/NiTriShape.h"
 #include "obj/NiTriShapeData.h"
 #include "obj/NiTexturingProperty.h"
@@ -14,6 +15,38 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <stdlib.h>
 
 using namespace Niflib;
+
+struct VertNorm {
+	Vector3 position;
+	Vector3 normal;
+	map<NiNodeRef, float> weights;
+
+	VertNorm() {}
+	~VertNorm() {}
+	VertNorm( const VertNorm & n ) {
+		*this = n;
+	}
+	VertNorm & operator=( const VertNorm & n ) {
+		position = n.position;
+		normal = n.normal;
+		weights = n.weights;
+		return *this;
+	}
+	bool operator==( const VertNorm & n ) {
+		if ( abs(position.x - n.position.x) > 0.001 || abs(position.y - n.position.y) > 0.001 || abs(position.z - n.position.z) > 0.001 ) {
+			return false;
+		}
+		if ( abs(normal.x - n.normal.x) > 0.001 || abs(normal.y - n.normal.y) > 0.001 || abs(normal.z - n.normal.z) > 0.001 ) {
+			return false;
+		}
+		//if ( weights != n.weights ) {
+		//	return false;
+		//}
+
+		return true;
+	}
+};
+
 
 struct CompoundVertex {
 	Vector3 position;
@@ -42,7 +75,7 @@ struct CompoundVertex {
 		if ( normal != n.normal ) {
 			return false;
 		}
-		if ( color.r != n.color.r && color.g != n.color.g && color.b != n.color.b && color.a != n.color.a ) {
+		if ( color != n.color ) {
 			return false;
 		}
 		if ( texCoords != n.texCoords ) {
@@ -119,6 +152,372 @@ vector< vector< Ref<NiProperty > > > ComplexShape::GetPropGroups() const {
 
 vector< Ref<NiNode> > ComplexShape::GetSkinInfluences() const {
 	return skinInfluences;
+}
+
+void ComplexShape::Clear() {
+	vertices.clear();
+	colors.clear();
+	normals.clear();
+	texCoordSets.clear();
+	faces.clear();
+	propGroups.clear();
+	skinInfluences.clear();
+	name.clear();
+}
+
+struct MergeLookUp {
+	unsigned vertIndex;
+	unsigned normIndex;
+	unsigned colorIndex;
+	map<unsigned, unsigned> uvIndices; //TexCoordSet Index, TexCoord Index
+};
+
+void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
+
+	if ( root == NULL ) {
+		throw runtime_error("Called ComplexShape::Merge with a null root reference.");
+	}
+
+	vector<NiTriBasedGeomRef> shapes;
+
+	//cout << "Determine root type" << endl;
+	if ( root->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
+		//The function was called on a single shape.
+		//Add it to the list
+		shapes.push_back( DynamicCast<NiTriBasedGeom>(root) );
+	} else if ( root->IsDerivedType( NiNode::TypeConst() ) ) {
+		//The function was called on a NiNOde.  Search for
+		//shape children
+		NiNodeRef nodeRoot = DynamicCast<NiNode>(root);
+		vector<NiAVObjectRef> children = nodeRoot->GetChildren();
+		for ( unsigned child = 0; child < children.size(); ++child ) {
+			if ( children[child]->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
+				shapes.push_back( DynamicCast<NiTriBasedGeom>(children[child]) );
+			}
+		}
+
+		if ( shapes.size() == 0 ) {
+			throw runtime_error("The NiNode passed to ComplexShape::Merge has no shape children.");
+		}
+	} else {
+		throw runtime_error(" The ComplexShape::Merge function requies either a NiNode or a NiTriBasedGeom AVObject.");
+	}
+
+	//The vector of VertNorm struts allows us to to refuse
+	//to merge vertices that have different normals.
+	vector<VertNorm> vns;
+
+	//cout << "Clear all existing data" << endl;
+	//Clear all existing data
+	Clear();
+
+	//cout << "Merge in data from each shape" << endl;
+	//Merge in data from each shape
+	bool has_any_verts = false;
+	bool has_any_norms = false;
+	propGroups.resize( shapes.size() );
+	unsigned prop_group_index = 0;
+	for ( vector<NiTriBasedGeomRef>::iterator geom = shapes.begin(); geom != shapes.end(); ++geom ) {
+	
+		//cout << "Merging in " << *geom << endl;
+		//Get properties of this shape
+		propGroups[prop_group_index] = (*geom)->GetProperties();
+		
+		
+		NiTriBasedGeomDataRef geomData = (*geom)->GetData();
+
+		if ( geomData == NULL ) {
+			throw runtime_error("One of the NiTriBasedGeom found by ComplexShape::Merge with a NiTriBasedGeom has no NiTriBasedGeomData attached.");
+		}
+
+		//cout << "Get Data" << endl;
+		//Get Data
+		vector<Vector3> shapeVerts;		
+		//If this is a skin influenced mesh, get vertices from niGeom
+		if ( (*geom)->GetSkinInstance() != NULL ) {
+			shapeVerts = (*geom)->GetSkinInfluencedVertices();
+		} else {
+			shapeVerts = geomData->GetVertices();
+		}
+
+		vector<Vector3> shapeNorms = geomData->GetNormals();
+		vector<Color4> shapeColors = geomData->GetColors();
+		vector< vector<TexCoord> > shapeUVs( geomData->GetUVSetCount() );
+		for ( unsigned i = 0; i < shapeUVs.size(); ++i ) {
+			shapeUVs[i] = geomData->GetUVSet(i);
+		}
+		vector<Triangle> shapeTris= geomData->GetTriangles();
+
+		//Lookup table
+		vector<MergeLookUp> lookUp( geomData->GetVertexCount() );
+
+		//cout << "Vertices and normals" << endl;
+		//Vertices and normals
+		if ( shapeVerts.size() != 0 ) {
+			has_any_verts = true;
+		}
+
+		bool shape_has_norms = ( shapeNorms.size() == shapeVerts.size() );
+
+		if ( shape_has_norms ) {
+			has_any_norms = true;
+		}
+		for ( unsigned v = 0; v < shapeVerts.size(); ++v ) {
+			VertNorm newVert;
+
+			newVert.position = shapeVerts[v];
+			if ( shape_has_norms ) {
+				newVert.normal = shapeNorms[v];
+			}
+
+			//Search for matching vert/norm
+			bool match_found = false;
+			for ( unsigned vn_index = 0; vn_index < vns.size(); ++vn_index ) {
+				if ( vns[vn_index] == newVert ) {
+					//Match found, use existing index
+					lookUp[v].vertIndex = vn_index;
+					if ( shapeNorms.size() != 0 ) {
+						lookUp[v].normIndex = vn_index;
+					}
+					match_found = true;
+					//Stop searching
+					break;
+				}
+			}
+
+			if ( match_found == false ) {
+				//No match found, add this vert/norm to the list
+				vns.push_back(newVert);
+				//Record new index
+				lookUp[v].vertIndex = unsigned(vns.size()) - 1;
+				if ( shapeNorms.size() != 0 ) {
+					lookUp[v].normIndex = unsigned(vns.size()) - 1;
+				}
+			}
+		}
+
+		//cout << "Colors" << endl;
+		//Colors
+		for ( unsigned c = 0; c < shapeColors.size(); ++c ) {
+			Color4 newColor;
+
+			newColor = shapeColors[c];
+
+			//Search for matching color
+			bool match_found = false;
+			for ( unsigned c_index = 0; c_index < colors.size(); ++c_index ) {
+				if ( colors[c_index].r == newColor.r && colors[c_index].g == newColor.g && colors[c_index].b == newColor.b && colors[c_index].a == newColor.a ) {
+					//Match found, use existing index
+					//cout << "Color match found:  " << colors[c_index] << " and " << newColor << " at index " << c_index << endl;
+					lookUp[c].colorIndex = c_index;
+					match_found = true;
+					//Stop searching
+					break;
+				}
+			}
+
+			if ( match_found == false ) {
+				//No match found, add this color to the list
+				colors.push_back(newColor);
+				//Record new index
+				lookUp[c].colorIndex = unsigned(colors.size()) - 1;
+				//cout << "No Match found.  Placed new color " << newColor << " at lookUp[" << c << "].colorIndex:  " << lookUp[c].colorIndex << endl;
+			}
+		}
+
+		//cout << "Texture Coordinates" << endl;
+		//Texture Coordinates
+
+		//Create UV set list
+		vector<TexType> uvSetList;
+		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TypeConst() );
+		NiTexturingPropertyRef niTexProp;
+		if ( niProp != NULL ) {
+			niTexProp = DynamicCast<NiTexturingProperty>(niProp);
+		}
+		if ( niTexProp != NULL ) {
+			for ( int tex = 0; tex < 8; ++tex ) {
+				if ( niTexProp->HasTexture(tex) == true ) {
+					////cout << "Adding texture type to list:  " << TexType(tex) << endl;
+					uvSetList.push_back( TexType(tex) );
+				}
+			}
+		}
+
+		for ( unsigned set = 0; set < shapeUVs.size(); ++set ) {
+			TexType newType = BASE_MAP;
+			if ( uvSetList.size() > set ) {
+				 newType = uvSetList[set];
+			}
+
+			//Search for matching UV set
+			bool match_found = false;
+			unsigned uvSetIndex;
+			for ( unsigned set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
+				if ( texCoordSets[set_index].texType  == newType ) {
+					////cout << "Match found, use existing texture set index" << endl;
+					//Match found, use existing index
+					uvSetIndex = set_index;
+					match_found = true;
+					//Stop searching
+					break;
+				}
+			}
+
+			if ( match_found == false ) {
+				////cout << "No match found, add this texture set to the list" << endl;
+				//No match found, add this UV set to the list
+				TexCoordSet newTCS;
+				newTCS.texType = newType;
+				texCoordSets.push_back( newTCS );
+				//Record new index
+				uvSetIndex = unsigned(texCoordSets.size()) - 1;
+			}
+
+			////cout << "Loop through texture cooridnates in this set" << endl;
+			for ( unsigned v = 0; v < shapeUVs[set].size(); ++v ) {
+				TexCoord newCoord;
+
+				newCoord = shapeUVs[set][v];
+
+				//cout << "Search for matching texture coordinate" << endl;
+				//cout << "uvSetIndex:  " << uvSetIndex << endl;
+				//cout << "set:  " << set << endl;
+				//cout << "texCoordSets.size():  " << unsigned(texCoordSets.size()) << endl;
+				//cout << "v:  " << v << endl;
+				//cout << "lookUp.size():  " << unsigned(lookUp.size()) << endl;
+				//cout << "texCoordSets[uvSetIndex].texCoords.size():  " << unsigned(texCoordSets[uvSetIndex].texCoords.size()) << endl;
+				//Search for matching texture cooridnate
+				bool match_found = false;
+				for ( unsigned tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
+					if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
+						////cout << " Match found, using existing index" << endl;;
+						//Match found, use existing index
+						lookUp[v].uvIndices[uvSetIndex] = tc_index;
+						match_found = true;
+						////cout << "Stop searching" << endl;
+						//Stop searching
+						break;
+					}
+				}
+
+				////cout << "Done with loop, check if match was found" << endl;
+				if ( match_found == false ) {
+					////cout << "No match found" << endl;
+					//No match found, add this texture coordinate to the list
+					texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
+					////cout << "Record new index" << endl;
+					//Record new index
+					lookUp[v].uvIndices[uvSetIndex] = unsigned(texCoordSets[uvSetIndex].texCoords.size()) - 1;
+				}
+			}
+		}
+
+		//cout << "Look up table colors:" << endl;
+		for ( unsigned z = 0; z < lookUp.size(); ++z ) {
+			//cout << z << ":  " << colors[lookUp[z].colorIndex] << endl;
+		}
+
+		//cout << "Use look up table to build list of faces" << endl;
+		//Use look up table to build list of faces
+		for ( unsigned t = 0; t < shapeTris.size(); ++t ) {
+			ComplexFace newFace;
+			newFace.propGroupIndex = prop_group_index;
+			newFace.points.resize(3);
+			const Triangle & tri = shapeTris[t];
+			for ( unsigned p = 0; p < 3; ++p ) {
+				if ( shapeVerts.size() != 0 ) {
+					newFace.points[p].vertexIndex = lookUp[ tri[p] ].vertIndex;
+				}
+				if ( shapeNorms.size() != 0 ) {
+					newFace.points[p].normalIndex = lookUp[ tri[p] ].normIndex;
+				}
+				if ( shapeColors.size() != 0 ) {
+					newFace.points[p].colorIndex = lookUp[ tri[p] ].colorIndex;
+				}
+				for ( map<unsigned,unsigned>::iterator set = lookUp[ tri[p] ].uvIndices.begin(); set != lookUp[ tri[p] ].uvIndices.end(); ++set ) {
+					TexCoordIndex tci;
+					tci.texCoordSetIndex = set->first;
+					tci.texCoordIndex = set->second;
+					newFace.points[p].texCoordIndices.push_back(tci);
+				}
+			}
+			faces.push_back(newFace);
+		}
+
+		//cout << "Use look up table to set vertex wights, if any" << endl;
+		//Use look up table to set vertex weights, if any
+		NiSkinInstanceRef skinInst = (*geom)->GetSkinInstance();
+
+		if ( skinInst != NULL ) {
+
+			NiSkinDataRef skinData = skinInst->GetSkinData();
+
+			if ( skinData !=NULL ) {
+				//Get influence list
+				vector<NiNodeRef> shapeBones = skinInst->GetBones();
+
+				//Get weights
+				vector<SkinWeight> shapeWeights;
+				for ( unsigned b = 0; b < shapeBones.size(); ++b ) {
+					shapeWeights = skinData->GetBoneWeights(b);
+					for ( unsigned w = 0; w < shapeWeights.size(); ++w ) {
+						unsigned vn_index = lookUp[ shapeWeights[w].index ].vertIndex;
+						NiNodeRef boneRef = shapeBones[b];
+						float weight = shapeWeights[w].weight;
+
+						vns[vn_index].weights[boneRef] = weight;
+					}
+				}
+			}
+		}
+
+		//Next Shape
+		++prop_group_index;
+	}
+
+	//cout << "Finished with all shapes.  Build up a list of influences" << endl;
+	//Finished with all shapes.  Build up a list of influences
+	map<NiNodeRef,unsigned> boneLookUp;
+	for ( unsigned v = 0; v < vns.size(); ++v ) {
+		for ( map<NiNodeRef,float>::iterator w = vns[v].weights.begin(); w != vns[v].weights.end(); ++w ) {
+			boneLookUp[w->first] = 0; //will change later
+		}
+	}
+
+	skinInfluences.resize( boneLookUp.size() );
+	unsigned si_index = 0;
+	for ( map<NiNodeRef,unsigned>::iterator si = boneLookUp.begin(); si != boneLookUp.end(); ++si ) {
+		si->second = si_index;
+		skinInfluences[si_index] = si->first;
+		++si_index;
+	}
+	
+	//cout << "Copy vns data to vertices and normals" << endl;
+	//Copy vns data to vertices and normals
+	if ( has_any_verts ) {
+		vertices.resize( vns.size() );
+	}
+	if ( has_any_norms ) {
+		normals.resize( vns.size() );
+	}
+
+	for ( unsigned v = 0; v < vns.size(); ++v ) {
+		if ( has_any_verts ) {
+			vertices[v].position = vns[v].position;
+			vertices[v].weights.resize( vns[v].weights.size() );
+			unsigned weight_index = 0;
+			for ( map<NiNodeRef,float>::iterator w = vns[v].weights.begin(); w != vns[v].weights.end(); ++w ) {
+				vertices[v].weights[weight_index].influenceIndex = boneLookUp[w->first];
+				vertices[v].weights[weight_index].weight = w->second;
+				++weight_index;
+			}
+		}
+		if ( has_any_norms ) {
+			normals[v] = vns[v].normal;
+		}
+	}
+	//cout << "Done Merging" << endl;
 }
 
 //void ComplexShape::CombineTriShapes( list<blk_ref> & tri_shapes ) {

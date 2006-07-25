@@ -735,6 +735,13 @@ struct Matrix44 {
 	 */
 	NIFLIB_API bool operator==( const Matrix44 & rh ) const;
 
+	/* Compares two 4x4 matricies.  They are considered inequal if any corresponding
+	 * components are inequal.
+	 * \param rh The matrix to compare this one with.
+	 * \return true if the matricies are inequal, false otherwise.
+	 */
+	NIFLIB_API bool operator!=( const Matrix44 & rh ) const;
+
 	/*! Calculates the transpose of this matrix.
 	 * \return The transpose of this matrix.
 	 */
@@ -855,6 +862,14 @@ struct NIFLIB_API Color4 {
 		this->g = g;
 		this->b = b;
 		this->a = a;
+	}
+
+	bool operator==( const Color4 & n ) const {
+		return ( r == n.r && g == n.g && b == n.b && a == n.a );
+	}
+
+	bool operator!=( const Color4 & n ) const {
+		return ( r != n.r || g != n.g || b != n.b || a != n.a );
 	}
 };
 

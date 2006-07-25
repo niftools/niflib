@@ -212,3 +212,31 @@ void NiNode::GoToSkeletonBindPosition() {
 		}
 	}
 }
+
+bool NiNode::IsSplitMeshProxy() const {
+	//Let us guess that a node is a split mesh proxy if:
+	// 1)  All its children are NiTriBasedGeom derived objects.
+	// 2)  All its children have identity transforms.
+	// 3)  It has more than one child
+	// 4)  All meshes are visible
+	// 5)  ????  May need more criteria as time goes on.
+
+	if ( children.size() < 2 ) {
+		return false;
+	}
+
+	for ( unsigned i = 0; i < children.size(); ++i ) {
+		if ( children[i]->IsDerivedType( NiTriBasedGeom::TypeConst() ) == false ) {
+			return false;
+		}
+		if ( children[i]->GetLocalTransform() != Matrix44::IDENTITY ) {
+			return false;
+		}
+		if ( children[i]->GetVisibility() == false ) {
+			return false;
+		}
+	}
+
+	//Made it all the way through the loop without returning false
+	return true;
+}

@@ -63,6 +63,15 @@ public:
 	/*! Checks if this node influences the vertices in any skins. */
 	bool IsSkinInfluence() const;
 
+	/*! 
+	 * Applies a huristic to guess whether this node was created as a proxy
+	 * when a mesh which had more than one material in the original model
+	 * was split in an exporter.
+	 * /return Whether or not this node is probably a split mesh proxy
+	 */
+	bool IsSplitMeshProxy() const;
+	   
+
 	/*! Causes all children's transforms to be changed so that all the skin
 	 * pieces line up without any vertex transformations.
 	 */

@@ -359,6 +359,16 @@ bool Matrix44::operator==( const Matrix44 & rh ) const {
 	return true;
 }
 
+bool Matrix44::operator!=( const Matrix44 & rh ) const {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			if ( (*this)[i][j] == rh[i][j] )
+				return false;
+		}
+	}
+	return true;
+}
+
 Matrix44 Matrix44::Transpose() const {
 	const Matrix44 & t = *this;
 	return Matrix44( t[0][0], t[0][1], t[0][2], t[0][3],
