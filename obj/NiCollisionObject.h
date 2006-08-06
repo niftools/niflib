@@ -39,11 +39,19 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	void 	SetParent(NiAVObject *);
-	void 	SetBody(const Ref<NiObject> &);
+	/*!
+	 * Links to the node parent.
+	 */
+   Ref<NiAVObject> GetParent() const;
+	void SetParent( NiAVObject * value );
+
+	/*!
+	 * Links to the collision object data
+	 */
+	Ref<NiObject > GetBody() const;
+	void SetBody( Ref<NiObject > value );
 
 protected:
-	NiAVObject * NiCollisionObject::Parent() const;
 	NI_COLLISION_OBJECT_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };

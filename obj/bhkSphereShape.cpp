@@ -35,3 +35,11 @@ const Type & bhkSphereShape::GetType() const {
 	return TYPE;
 };
 
+float bhkSphereShape::GetRadius() const {
+	return radius;
+}
+
+void bhkSphereShape::SetRadius( float value ) {
+	radius = value;
+}
+

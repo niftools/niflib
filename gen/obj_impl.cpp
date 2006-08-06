@@ -3133,7 +3133,7 @@ void bhkRigidBody::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	for (uint i1 = 0; i1 < 4; i1++) {
 		NifStream( unknownShorts1[i1], in, version );
 	};
-	NifStream( layerCopy_, in, version );
+	NifStream( layerCopy, in, version );
 	for (uint i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownShorts2[i1], in, version );
 	};
@@ -3148,7 +3148,7 @@ void bhkRigidBody::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	NifStream( angularVelocity, in, version );
 	NifStream( unknownFloat02, in, version );
 	for (uint i1 = 0; i1 < 12; i1++) {
-		NifStream( transform_[i1], in, version );
+		NifStream( transform[i1], in, version );
 	};
 	NifStream( center, in, version );
 	NifStream( unknownFloat03, in, version );
@@ -3159,8 +3159,8 @@ void bhkRigidBody::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	NifStream( restitution, in, version );
 	NifStream( maxLinearVelocity, in, version );
 	NifStream( maxAngularVelocity, in, version );
-	NifStream( penDepth, in, version );
-	NifStream( motionSystem_, in, version );
+	NifStream( penetrationDepth, in, version );
+	NifStream( motionSystem, in, version );
 	NifStream( unknownByte1, in, version );
 	NifStream( unknownByte2, in, version );
 	NifStream( qualityType, in, version );
@@ -3185,7 +3185,7 @@ void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 	for (uint i1 = 0; i1 < 4; i1++) {
 		NifStream( unknownShorts1[i1], out, version );
 	};
-	NifStream( layerCopy_, out, version );
+	NifStream( layerCopy, out, version );
 	for (uint i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownShorts2[i1], out, version );
 	};
@@ -3200,7 +3200,7 @@ void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 	NifStream( angularVelocity, out, version );
 	NifStream( unknownFloat02, out, version );
 	for (uint i1 = 0; i1 < 12; i1++) {
-		NifStream( transform_[i1], out, version );
+		NifStream( transform[i1], out, version );
 	};
 	NifStream( center, out, version );
 	NifStream( unknownFloat03, out, version );
@@ -3211,8 +3211,8 @@ void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 	NifStream( restitution, out, version );
 	NifStream( maxLinearVelocity, out, version );
 	NifStream( maxAngularVelocity, out, version );
-	NifStream( penDepth, out, version );
-	NifStream( motionSystem_, out, version );
+	NifStream( penetrationDepth, out, version );
+	NifStream( motionSystem, out, version );
 	NifStream( unknownByte1, out, version );
 	NifStream( unknownByte2, out, version );
 	NifStream( qualityType, out, version );
@@ -3247,7 +3247,7 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 		};
 		out << "    Unknown Shorts 1[" << i1 << "]:  " << unknownShorts1[i1] << endl;
 	};
-	out << "  Layer Copy?:  " << layerCopy_ << endl;
+	out << "  Layer Copy:  " << layerCopy << endl;
 	for (uint i1 = 0; i1 < 6; i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
@@ -3270,7 +3270,7 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Transform?[" << i1 << "]:  " << transform_[i1] << endl;
+		out << "    Transform[" << i1 << "]:  " << transform[i1] << endl;
 	};
 	out << "  Center:  " << center << endl;
 	out << "  Unknown Float 03:  " << unknownFloat03 << endl;
@@ -3281,8 +3281,8 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	out << "  Restitution:  " << restitution << endl;
 	out << "  Max Linear Velocity:  " << maxLinearVelocity << endl;
 	out << "  Max Angular Velocity:  " << maxAngularVelocity << endl;
-	out << "  Pen Depth:  " << penDepth << endl;
-	out << "  Motion System?:  " << motionSystem_ << endl;
+	out << "  Penetration Depth:  " << penetrationDepth << endl;
+	out << "  Motion System:  " << motionSystem << endl;
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
 	out << "  Quality Type:  " << qualityType << endl;

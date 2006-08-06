@@ -41,6 +41,8 @@ ushort NiTriStripsData::GetStripCount() const {
 
 void NiTriStripsData::SetStripCount(int n) {
 	points.resize( n );
+   stripLengths.resize( n );
+   hasPoints = (n != 0);
 
 	//Recalculate Triangle Count
 	numTriangles = CalcTriangleCount();

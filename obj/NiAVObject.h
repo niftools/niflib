@@ -92,16 +92,46 @@ public:
 	bool GetVisibility() const;
 	void SetVisibility( bool n );
 
-	void SetCollisionObject(Ref<NiCollisionObject> &);
+	/*!
+	 * Gets whether there is a bounding box associated with this object.
+    * \return True if there is a bounding box.
+    * \sa NiAVObject::SetHasBoundingBox
+	 */
+	bool GetHasBoundingBox() const;
+
+   /*!
+   * Assigns whether there is a bounding box associated with this object.
+   * \sa NiAVObject::GetHasBoundingBox
+   */
+	void SetHasBoundingBox( bool value );
+
+	/*!
+	 * The bounding box.
+	 */
+	BoundingBox GetBoundingBox() const;
+	void SetBoundingBox( const BoundingBox & value );
+
+	/*!
+	 * Bounding box: refers to NiCollisionData
+	 */
+	Ref<NiCollisionData > GetCollisionData() const;
+	void SetCollisionData( Ref<NiCollisionData> value );
+
+	/*!
+	 * In Oblivion this links the havok objects.
+	 */
+	Ref<NiCollisionObject > GetCollisionObject() const;
+	void SetCollisionObject( Ref<NiCollisionObject> value );
+
+   bool GetHidden();
+   void SetHidden(bool value);
 
    typedef enum CollisionType
    {
-      ctNone, ctTriangles, ctBoundingBox, ctContinue
+      CT_NONE, CT_TRIANGLES, CT_BOUNDINGBOX, CT_CONTINUE
    } CollisionType;
-   CollisionType GetCollision();
-   bool GetHidden();
 
-   void SetHidden(bool value);
+   CollisionType GetCollision();
    void SetCollsion(CollisionType value);
 
 protected:

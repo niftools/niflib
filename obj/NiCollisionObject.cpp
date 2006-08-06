@@ -33,18 +33,22 @@ list<NiObjectRef> NiCollisionObject::GetRefs() const {
 	NI_COLLISION_OBJECT_GETREFS
 }
 
-void NiCollisionObject::SetParent(NiAVObject *obj)
-{
-	parent = obj;
-}
-
-void NiCollisionObject::SetBody(const Ref<NiObject> &obj)
-{
-	body = obj;
-}
-
 const Type & NiCollisionObject::GetType() const {
 	return TYPE;
 };
 
-NiAVObject * NiCollisionObject::Parent() const { return NULL; }
+Ref<NiAVObject> NiCollisionObject::GetParent() const {
+	return Ref<NiAVObject>(parent);
+}
+
+void NiCollisionObject::SetParent( NiAVObject * value ) {
+	parent = value;
+}
+
+Ref<NiObject > NiCollisionObject::GetBody() const {
+	return body;
+}
+
+void NiCollisionObject::SetBody( Ref<NiObject > value ) {
+	body = value;
+}

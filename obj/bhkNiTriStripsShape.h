@@ -38,6 +38,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Scale. Usually (1.0, 1.0, 1.0).
+	 */
+	Vector3 GetScale() const;
+	void SetScale( const Vector3 & value );
+
 	void	SetNumStripsData(int i);
 	void	SetStripsData(int i, Ref<NiTriStripsData> &);
 

@@ -153,11 +153,6 @@ void NiAVObject::SetVelocity( const Vector3 & n ) {
 	velocity = n;
 }
 
-void NiAVObject::SetCollisionObject(Ref<NiCollisionObject> &obj)
-{
-	collisionObject = obj;
-}
-
 NiAVObject::CollisionType NiAVObject::GetCollision()
 {
    return (NiAVObject::CollisionType)NIFLIB_GET_FLAG(flags, 1, 0x03);
@@ -192,4 +187,36 @@ void NiAVObject::SetVisibility( bool n ) {
 		//Flip the bit
 		flags ^= 1;
 	}
+}
+
+bool NiAVObject::GetHasBoundingBox() const {
+	return hasBoundingBox;
+}
+
+void NiAVObject::SetHasBoundingBox( bool value ) {
+	hasBoundingBox = value;
+}
+
+BoundingBox NiAVObject::GetBoundingBox() const {
+	return boundingBox;
+}
+
+void NiAVObject::SetBoundingBox( const BoundingBox & value ) {
+	boundingBox = value;
+}
+
+Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
+	return collisionData;
+}
+
+void NiAVObject::SetCollisionData( Ref<NiCollisionData > value ) {
+	collisionData = value;
+}
+
+Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
+	return collisionObject;
+}
+
+void NiAVObject::SetCollisionObject( Ref<NiCollisionObject > value ) {
+	collisionObject = value;
 }

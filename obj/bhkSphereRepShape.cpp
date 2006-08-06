@@ -35,7 +35,11 @@ const Type & bhkSphereRepShape::GetType() const {
 	return TYPE;
 };
 
-void bhkSphereRepShape::SetMaterial(int m)
-{
-	material = m;
+uint bhkSphereRepShape::GetMaterial() const {
+	return material;
 }
+
+void bhkSphereRepShape::SetMaterial( uint value ) {
+	material = value;
+}
+

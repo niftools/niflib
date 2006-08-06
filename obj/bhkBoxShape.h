@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Looks like this could be the box size.
+	 */
+	Vector3 GetDimensions() const;
+	void SetDimensions( const Vector3& value );
+
 protected:
 	BHK_BOX_SHAPE_MEMBERS
 	STANDARD_INTERNAL_METHODS

@@ -33,6 +33,36 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Apparently the capsule's radius.
+	 */
+	float GetRadius() const;
+	void SetRadius( float value );
+
+	/*!
+	 * First point on the capsule's axis.
+	 */
+	Vector3 GetFirstPoint() const;
+	void SetFirstPoint( const Vector3 & value );
+
+	/*!
+	 * Matches first capsule radius.
+	 */
+	float GetRadius1() const;
+	void SetRadius1( float value );
+
+	/*!
+	 * Second point on the capsule's axis.
+	 */
+	Vector3 GetSecondPoint() const;
+	void SetSecondPoint( const Vector3 & value );
+
+	/*!
+	 * Matches second capsule radius.
+	 */
+	float GetRadius2() const;
+	void SetRadius2( float value );
+
 protected:
 	BHK_CAPSULE_SHAPE_MEMBERS
 	STANDARD_INTERNAL_METHODS

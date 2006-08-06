@@ -37,18 +37,138 @@ const Type & bhkRigidBody::GetType() const {
 	return TYPE;
 };
 
-void bhkRigidBody::SetTranslation(const Vector3 &v)
-{
-	translation = v;
+uint bhkRigidBody::GetLayerCopy() const {
+	return layerCopy;
 }
 
-void bhkRigidBody::SetRotation(const QuaternionXYZW &q)
-{
-	rotation = q;
+void bhkRigidBody::SetLayerCopy( uint value ) {
+	layerCopy = value;
 }
 
-void bhkRigidBody::SetLayerCopy(int l)
-{
-	layerCopy_ = l;
+Vector3 bhkRigidBody::GetTranslation() const {
+	return translation;
 }
 
+void bhkRigidBody::SetTranslation( const Vector3 & value ) {
+	translation = value;
+}
+
+QuaternionXYZW bhkRigidBody::GetRotation() const {
+	return rotation;
+}
+
+void bhkRigidBody::SetRotation( const QuaternionXYZW & value ) {
+	rotation = value;
+}
+
+Vector3 bhkRigidBody::GetLinearVelocity() const {
+	return linearVelocity;
+}
+
+void bhkRigidBody::SetLinearVelocity( const Vector3 & value ) {
+	linearVelocity = value;
+}
+
+Vector3 bhkRigidBody::GetAngularVelocity() const {
+	return angularVelocity;
+}
+
+void bhkRigidBody::SetAngularVelocity( const Vector3 & value ) {
+	angularVelocity = value;
+}
+
+array<float,12>  bhkRigidBody::GetTransform() const {
+	return transform;
+}
+
+void bhkRigidBody::SetTransform( const array<float,12>&  value ) {
+	transform = value;
+}
+
+Vector3 bhkRigidBody::GetCenter() const {
+	return center;
+}
+
+void bhkRigidBody::SetCenter( const Vector3 & value ) {
+	center = value;
+}
+
+float bhkRigidBody::GetMass() const {
+	return mass;
+}
+
+void bhkRigidBody::SetMass( float value ) {
+	mass = value;
+}
+
+float bhkRigidBody::GetLinearDamping() const {
+	return linearDamping;
+}
+
+void bhkRigidBody::SetLinearDamping( float value ) {
+	linearDamping = value;
+}
+
+float bhkRigidBody::GetAngularDamping() const {
+	return angularDamping;
+}
+
+void bhkRigidBody::SetAngularDamping( float value ) {
+	angularDamping = value;
+}
+
+float bhkRigidBody::GetFriction() const {
+	return friction;
+}
+
+void bhkRigidBody::SetFriction( float value ) {
+	friction = value;
+}
+
+float bhkRigidBody::GetRestitution() const {
+	return restitution;
+}
+
+void bhkRigidBody::SetRestitution( float value ) {
+	restitution = value;
+}
+
+float bhkRigidBody::GetMaxLinearVelocity() const {
+	return maxLinearVelocity;
+}
+
+void bhkRigidBody::SetMaxLinearVelocity( float value ) {
+	maxLinearVelocity = value;
+}
+
+float bhkRigidBody::GetMaxAngularVelocity() const {
+	return maxAngularVelocity;
+}
+
+void bhkRigidBody::SetMaxAngularVelocity( float value ) {
+	maxAngularVelocity = value;
+}
+
+float bhkRigidBody::GetPenetrationDepth() const {
+	return penetrationDepth;
+}
+
+void bhkRigidBody::SetPenetrationDepth( float value ) {
+	penetrationDepth = value;
+}
+
+byte bhkRigidBody::GetMotionSystem() const {
+	return motionSystem;
+}
+
+void bhkRigidBody::SetMotionSystem( byte value ) {
+	motionSystem = value;
+}
+
+byte bhkRigidBody::GetQualityType() const {
+	return qualityType;
+}
+
+void bhkRigidBody::SetQualityType( byte value ) {
+	qualityType = value;
+}

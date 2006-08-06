@@ -33,6 +33,12 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * This denotes the radius of the sphere.
+	 */
+	float GetRadius() const;
+	void SetRadius( float value );
+
 protected:
 	BHK_SPHERE_SHAPE_MEMBERS
 	STANDARD_INTERNAL_METHODS

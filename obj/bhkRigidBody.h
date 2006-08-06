@@ -39,9 +39,125 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	void SetTranslation(const Vector3 &v);
-	void SetRotation(const QuaternionXYZW &q);
-	void SetLayerCopy(int l);
+	/*!
+	 * Copy of layer value?
+	 */
+	uint GetLayerCopy() const;
+	void SetLayerCopy( uint value );
+
+	/*!
+	 * Translation.
+	 */
+	Vector3 GetTranslation() const;
+	void SetTranslation( const Vector3 & value );
+
+	/*!
+	 * Rotation.
+	 */
+	QuaternionXYZW GetRotation() const;
+	void SetRotation( const QuaternionXYZW & value );
+
+	/*!
+	 * Linear velocity.
+	 */
+	Vector3 GetLinearVelocity() const;
+	void SetLinearVelocity( const Vector3 & value );
+
+	/*!
+	 * Angular velocity.
+	 */
+	Vector3 GetAngularVelocity() const;
+	void SetAngularVelocity( const Vector3 & value );
+
+	/*!
+	 * Seems to be some kind of transformation matrix, scale or translation?
+	 */
+	array<float,12>  GetTransform() const;
+	void SetTransform( const array<float,12>&  value );
+
+	/*!
+	 * The object's center.
+	 */
+	Vector3 GetCenter() const;
+	void SetCenter( const Vector3 & value );
+
+	/*!
+	 * Object mass.
+	 */
+	float GetMass() const;
+	void SetMass( float value );
+
+	/*!
+	 * Linear damping level.
+	 */
+	float GetLinearDamping() const;
+	void SetLinearDamping( float value );
+
+	/*!
+	 * Angular Dampling level.
+	 */
+	float GetAngularDamping() const;
+	void SetAngularDamping( float value );
+
+	/*!
+	 * The object's friction.
+	 */
+	float GetFriction() const;
+	void SetFriction( float value );
+
+	/*!
+	 * The object's restitution (elasticity).
+	 */
+	float GetRestitution() const;
+	void SetRestitution( float value );
+
+	/*!
+	 * Maximal linear velocity.
+	 */
+	float GetMaxLinearVelocity() const;
+	void SetMaxLinearVelocity( float value );
+
+	/*!
+	 * Maximal angular velocity. Pi x 10?
+	 */
+	float GetMaxAngularVelocity() const;
+	void SetMaxAngularVelocity( float value );
+
+	/*!
+	 * Penetration depth.
+	 */
+	float GetPenetrationDepth() const;
+	void SetPenetrationDepth( float value );
+
+	/*!
+	 * Motion system? Overrides Quality when on Keyframed?
+    * 0: Keyframed
+    * 1: Box
+    * 2: Sphere
+    * 3: Sphere
+    * 4: Box
+    * 5: Box
+    * 6: Keyframed
+	 * 7: Keyframed
+    * 8: Box
+    * 9+: Keyframed?
+	 */
+	byte GetMotionSystem() const;
+	void SetMotionSystem( byte value );
+
+	/*!
+	 * The motion type. Determines quality of motion?
+    * 0: Moving
+	 * 1: Fixed
+    * 2: Keyframed
+    * 3-4: Moving(?)
+	 * 5: Critical
+    * 6: Bullet
+    * 7: User
+    * 8+: Null
+	 */
+	byte GetQualityType() const;
+	void SetQualityType( byte value );
 
 protected:
 	BHK_RIGID_BODY_MEMBERS

@@ -1364,7 +1364,7 @@ return InternalGetRefs(); \
 #define BHK_RIGID_BODY_MEMBERS \
 array<float,5> unknownFloats1; \
 array<ushort,4> unknownShorts1; \
-uint layerCopy_; \
+uint layerCopy; \
 array<ushort,6> unknownShorts2; \
 Vector3 translation; \
 float unknownFloat00; \
@@ -1373,7 +1373,7 @@ Vector3 linearVelocity; \
 float unknownFloat01; \
 Vector3 angularVelocity; \
 float unknownFloat02; \
-array<float,12> transform_; \
+array<float,12> transform; \
 Vector3 center; \
 float unknownFloat03; \
 float mass; \
@@ -1383,8 +1383,8 @@ float friction; \
 float restitution; \
 float maxLinearVelocity; \
 float maxAngularVelocity; \
-float penDepth; \
-byte motionSystem_; \
+float penetrationDepth; \
+byte motionSystem; \
 byte unknownByte1; \
 byte unknownByte2; \
 byte qualityType; \
@@ -1399,7 +1399,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : layerCopy_((uint)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penDepth(0.0f), motionSystem_((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
+ : layerCopy((uint)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 InternalRead( in, link_stack, version, user_version ); \
