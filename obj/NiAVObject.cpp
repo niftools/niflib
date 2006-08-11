@@ -189,34 +189,23 @@ void NiAVObject::SetVisibility( bool n ) {
 	}
 }
 
-bool NiAVObject::GetHasBoundingBox() const {
+bool NiAVObject::HasBoundingBox() const {
 	return hasBoundingBox;
 }
 
-void NiAVObject::SetHasBoundingBox( bool value ) {
-	hasBoundingBox = value;
+void NiAVObject::ClearBoundingBox() {
+	hasBoundingBox = false;
 }
 
 BoundingBox NiAVObject::GetBoundingBox() const {
-	return boundingBox;
+	if ( hasBoundingBox == true ) {
+		return boundingBox;
+	} else {
+		throw runtime_error("This NIAVObject has no Bounding Box.");
+	}
 }
 
-void NiAVObject::SetBoundingBox( const BoundingBox & value ) {
-	boundingBox = value;
-}
-
-Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
-	return collisionData;
-}
-
-void NiAVObject::SetCollisionData( Ref<NiCollisionData > value ) {
-	collisionData = value;
-}
-
-Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
-	return collisionObject;
-}
-
-void NiAVObject::SetCollisionObject( Ref<NiCollisionObject > value ) {
-	collisionObject = value;
+void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
+	boundingBox = n;
+	hasBoundingBox = true;
 }

@@ -40,7 +40,11 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 
-	//TODO:  Bounding Box.  What to do with newer files that have a link?  Wrap this in a function and translate?
+	//TODO:  What to do with newer files that have a link for a bounding box?  Wrap this in a function and translate?
+	void ClearBoundingBox();
+	BoundingBox GetBoundingBox() const;
+	void SetBoundingBox( const BoundingBox & n );
+	bool HasBoundingBox() const;
 	
 	/*! 
 	 * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
@@ -91,31 +95,6 @@ public:
 
 	bool GetVisibility() const;
 	void SetVisibility( bool n );
-
-	/*!
-	 * Gets whether there is a bounding box associated with this object.
-    * \return True if there is a bounding box.
-    * \sa NiAVObject::SetHasBoundingBox
-	 */
-	bool GetHasBoundingBox() const;
-
-   /*!
-   * Assigns whether there is a bounding box associated with this object.
-   * \sa NiAVObject::GetHasBoundingBox
-   */
-	void SetHasBoundingBox( bool value );
-
-	/*!
-	 * The bounding box.
-	 */
-	BoundingBox GetBoundingBox() const;
-	void SetBoundingBox( const BoundingBox & value );
-
-	/*!
-	 * Bounding box: refers to NiCollisionData
-	 */
-	Ref<NiCollisionData > GetCollisionData() const;
-	void SetCollisionData( Ref<NiCollisionData> value );
 
 	/*!
 	 * In Oblivion this links the havok objects.
