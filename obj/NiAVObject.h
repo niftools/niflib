@@ -102,6 +102,12 @@ public:
 	Ref<NiCollisionObject > GetCollisionObject() const;
 	void SetCollisionObject( Ref<NiCollisionObject> value );
 
+   /*!
+   * Bounding box: refers to NiCollisionData
+   */
+   Ref<NiCollisionData > GetCollisionData() const;
+   void SetCollisionData( Ref<NiCollisionData> value );
+
    bool GetHidden();
    void SetHidden(bool value);
 
@@ -112,6 +118,7 @@ public:
 
    CollisionType GetCollision();
    void SetCollsion(CollisionType value);
+
 
 protected:
 	NiNode * parent;

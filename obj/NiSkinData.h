@@ -51,7 +51,7 @@ public:
 	uint GetBoneCount() const;
 	Matrix44 GetBoneTransform( uint bone_index ) const;
 	vector<SkinWeight> GetBoneWeights( uint bone_index ) const;
-	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
+   void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
 
 protected:
 	NI_SKIN_DATA_MEMBERS

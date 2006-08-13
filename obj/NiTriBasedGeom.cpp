@@ -261,6 +261,65 @@ vector<Vector3> NiTriBasedGeom::GetSkinInfluencedVertices() const {
 	return skin_verts;
 }
 
+// Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.
+static void CalcAxisAlignedBox(const vector<SkinWeight> & n, const vector<Vector3>& vertices, Vector3& center, float& radius)
+{
+   //--Calculate center & radius--//
+
+   //Set lows and highs to first vertex
+   Vector3 lows = vertices[ n[0].index ];
+   Vector3 highs = vertices[ n[0].index ];
+
+   //Iterate through the vertices, adjusting the stored values
+   //if a vertex with lower or higher values is found
+   for ( unsigned int i = 0; i < n.size(); ++i ) {
+      const Vector3 & v = vertices[ n[i].index ];
+
+      if ( v.x > highs.x ) highs.x = v.x;
+      else if ( v.x < lows.x ) lows.x = v.x;
+
+      if ( v.y > highs.y ) highs.y = v.y;
+      else if ( v.y < lows.y ) lows.y = v.y;
+
+      if ( v.z > highs.z ) highs.z = v.z;
+      else if ( v.z < lows.z ) lows.z = v.z;
+   }
+
+   //Now we know the extent of the shape, so the center will be the average
+   //of the lows and highs
+   center = (highs + lows) / 2.0f;
+
+   //The radius will be the largest distance from the center
+   Vector3 diff;
+   float dist2(0.0f), maxdist2(0.0f);
+   for ( unsigned int i = 0; i < n.size(); ++i ) {
+      const Vector3 & v = vertices[ n[i].index ];
+
+      diff = center - v;
+      dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+      if ( dist2 > maxdist2 ) maxdist2 = dist2;
+   };
+   radius = sqrt(maxdist2);
+}
+
+// Calculate bounding sphere using average position of the points.  Better fit but slower.
+static void CalcCenteredSphere(const vector<SkinWeight> & n, const vector<Vector3>& vertices, Vector3& center, float& radius)
+{
+   size_t nv = n.size();
+   Vector3 sum;
+   for (size_t i=0; i<nv; ++i)
+      sum += vertices[ n[i].index ];
+   center = sum / float(nv);
+   radius = 0.0f;
+   for (size_t i=0; i<nv; ++i){
+      Vector3 diff = vertices[ n[i].index ] - center;
+      float mag = diff.Magnitude();
+      radius = max(radius, mag);
+   }
+}
+
+
+
 void NiTriBasedGeom::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n ) {
 	
 	if ( n.size() == 0 ) {
@@ -288,42 +347,9 @@ void NiTriBasedGeom::SetBoneWeights( uint bone_index, const vector<SkinWeight> &
 	//Get vertex array
 	vector<Vector3> vertices = geomData->GetVertices();
 
-	//--Calculate center & radius--//
-	
-	//Set lows and highs to first vertex
-	Vector3 lows = vertices[ n[0].index ];
-	Vector3 highs = vertices[ n[0].index ];
-
-	//Iterate through the vertices, adjusting the stored values
-	//if a vertex with lower or higher values is found
-	for ( unsigned int i = 0; i < n.size(); ++i ) {
-		const Vector3 & v = vertices[ n[i].index ];
-		
-		if ( v.x > highs.x ) highs.x = v.x;
-		else if ( v.x < lows.x ) lows.x = v.x;
-
-		if ( v.y > highs.y ) highs.y = v.y;
-		else if ( v.y < lows.y ) lows.y = v.y;
-
-		if ( v.z > highs.z ) highs.z = v.z;
-		else if ( v.z < lows.z ) lows.z = v.z;
-	}
-
-	//Now we know the extent of the shape, so the center will be the average
-	//of the lows and highs
-	Vector3 center = highs + lows / 2.0f;
-
-	//The radius will be the largest distance from the center
-	Vector3 diff;
-	float dist2(0.0f), maxdist2(0.0f);
-	for ( unsigned int i = 0; i < n.size(); ++i ) {
-		const Vector3 & v = vertices[ n[i].index ];
-
-		diff = center - v;
-		dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
-		if ( dist2 > maxdist2 ) maxdist2 = dist2;
-	};
-	float radius = sqrt(maxdist2);
+   Vector3 center; float radius;
+   //CalcCenteredSphere(n, vertices, center, radius);
+   CalcAxisAlignedBox(n, vertices, center, radius);
 
 	//Translate center by bone matrix
 	center = skinData->GetBoneTransform( bone_index ) * center;

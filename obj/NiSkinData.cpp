@@ -67,10 +67,8 @@ void NiSkinData::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, 
 	}
 
 	boneList[bone_index].vertexWeights = n;
-	boneList[bone_index].unknown4Floats[0] = center.x;
-	boneList[bone_index].unknown4Floats[1] = center.y;
-	boneList[bone_index].unknown4Floats[2] = center.z;
-	boneList[bone_index].unknown4Floats[3] = radius;
+   boneList[bone_index].boundingSphereOffset = center;
+   boneList[bone_index].boundingSphereRadius = radius;
 }
 
 Matrix44 NiSkinData::GetOverallTransform() const {

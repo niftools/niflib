@@ -168,6 +168,24 @@ bool NiAVObject::GetHidden()
    return (bool)NIFLIB_GET_FLAG(flags, 0, 0x01);
 }
 
+Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
+   return collisionData;
+}
+
+void NiAVObject::SetCollisionData( Ref<NiCollisionData > value ) {
+   collisionData = value;
+}
+
+
+ef<NiCollisionObject > NiAVObject::GetCollisionObject() const {
+
+  return collisionObject;
+}
+
+void NiAVObject::SetCollisionObject( Ref<NiCollisionObject > value ) {
+   collisionObject = value;
+}
+
 void NiAVObject::SetHidden(bool value)
 {
    flags = NIFLIB_MASK_FLAG(flags, value, 0, 0x01);

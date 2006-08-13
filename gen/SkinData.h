@@ -33,11 +33,15 @@ struct NIFLIB_API SkinData {
 	 */
 	float scale;
 	/*!
-	 * This has been verified not to be a normalized quaternion.  They may or
-	 * may not be related to each other so their specification as an array of
-	 * 4 floats may be misleading.
+	 * Translation offset of a bounding sphere holding all vertices. (Note
+	 * that its a Sphere Containing Axis Aligned Box not a minimum volume
+	 * Sphere)
 	 */
-	array<float,4> unknown4Floats;
+	Vector3 boundingSphereOffset;
+	/*!
+	 * Radius for bounding sphere holding all vertices.
+	 */
+	float boundingSphereRadius;
 	/*!
 	 * Number of weighted vertices.
 	 */

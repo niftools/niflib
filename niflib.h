@@ -264,6 +264,27 @@ NIFLIB_API void SendNifTreeToBindPos( const Ref<NiNode> & root );
  */
 NIFLIB_API Ref<NiObject> CreateBlock( string block_type );
 
+
+/*!
+* Creates a new block of the given type and returns a reference to it
+* \param T – The type of block you want to create.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
+* \return This function will return a newly created block of the requested type.
+* 
+* <b>Example:</b> 
+* \code
+* NiNodeRef my_block = CreateNiObject<NiNode>();
+* \endcode
+* 
+* sa BlocksInMemory
+*/
+#ifndef SWIG
+template<typename T>
+inline Ref<T> CreateNiObject() {
+   return DynamicCast<T>(CreateBlock(T::TypeConst().GetTypeName()));
+}
+#endif
+
+
 /*!
  * Returns whether the requested version is supported.
  * \param version The version of the nif format to test for availablity.

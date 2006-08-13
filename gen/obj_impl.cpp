@@ -10442,9 +10442,8 @@ void NiSkinData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 		NifStream( boneList[i1].rotation, in, version );
 		NifStream( boneList[i1].translation, in, version );
 		NifStream( boneList[i1].scale, in, version );
-		for (uint i2 = 0; i2 < 4; i2++) {
-			NifStream( boneList[i1].unknown4Floats[i2], in, version );
-		};
+		NifStream( boneList[i1].boundingSphereOffset, in, version );
+		NifStream( boneList[i1].boundingSphereRadius, in, version );
 		NifStream( boneList[i1].numVertices, in, version );
 		boneList[i1].vertexWeights.resize(boneList[i1].numVertices);
 		for (uint i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {
@@ -10475,9 +10474,8 @@ void NiSkinData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 		NifStream( boneList[i1].rotation, out, version );
 		NifStream( boneList[i1].translation, out, version );
 		NifStream( boneList[i1].scale, out, version );
-		for (uint i2 = 0; i2 < 4; i2++) {
-			NifStream( boneList[i1].unknown4Floats[i2], out, version );
-		};
+		NifStream( boneList[i1].boundingSphereOffset, out, version );
+		NifStream( boneList[i1].boundingSphereRadius, out, version );
 		NifStream( boneList[i1].numVertices, out, version );
 		for (uint i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {
 			NifStream( boneList[i1].vertexWeights[i2].index, out, version );
@@ -10501,13 +10499,8 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 		out << "    Rotation:  " << boneList[i1].rotation << endl;
 		out << "    Translation:  " << boneList[i1].translation << endl;
 		out << "    Scale:  " << boneList[i1].scale << endl;
-		for (uint i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown 4 Floats[" << i2 << "]:  " << boneList[i1].unknown4Floats[i2] << endl;
-		};
+		out << "    Bounding Sphere Offset:  " << boneList[i1].boundingSphereOffset << endl;
+		out << "    Bounding Sphere Radius:  " << boneList[i1].boundingSphereRadius << endl;
 		out << "    Num Vertices:  " << boneList[i1].numVertices << endl;
 		for (uint i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {
 			out << "      Index:  " << boneList[i1].vertexWeights[i2].index << endl;
