@@ -75,7 +75,7 @@ Matrix44 NiSkinData::GetOverallTransform() const {
 	return Matrix44( translation, rotation, scale );
 }
 
-NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) {
+NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRUCT {
 	//Get skin instance
 	NiSkinInstanceRef skinInst = owner->GetSkinInstance();
 

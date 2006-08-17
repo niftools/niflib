@@ -4956,7 +4956,7 @@ vector<SkinData > boneList; \
 #define NI_SKIN_DATA_PARENT NiObject \
 
 #define NI_SKIN_DATA_CONSTRUCT \
- : scale(0.0f), numBones((uint)0), skinPartition(NULL), unknownByte((byte)0) \
+ : scale(0.0f), numBones((uint)0), skinPartition(NULL), unknownByte((byte)1) \
 
 #define NI_SKIN_DATA_READ \
 InternalRead( in, link_stack, version, user_version ); \

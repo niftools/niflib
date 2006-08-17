@@ -177,8 +177,7 @@ void NiAVObject::SetCollisionData( Ref<NiCollisionData > value ) {
 }
 
 
-ef<NiCollisionObject > NiAVObject::GetCollisionObject() const {
-
+Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
   return collisionObject;
 }
 
