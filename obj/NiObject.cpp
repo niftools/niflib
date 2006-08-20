@@ -70,7 +70,7 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	stringstream tmp;
 
 	//Create a new object of the same type
-	NiObjectRef clone = CreateBlock( this->GetType().GetTypeName() );
+	NiObjectRef clone = CreateObject( this->GetType().GetTypeName() );
 
 	//Dummy map
 	map<NiObjectRef,uint> link_map;

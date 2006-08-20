@@ -344,8 +344,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(vector_SkinPartition) std::vector<Niflib::SkinPartition>;
 %template(vector_ShaderTexDesc) std::vector<Niflib::ShaderTexDesc>;
 %template(vector_MatchGroup) std::vector<Niflib::MatchGroup>;
-%template(pair_int_float) std::pair<int, float>;
-%template(map_int_float) std::map<int, float>;
+
+%template(Key_float) Niflib::Key<float>;
+%template(Key_Quaternion) Niflib::Key<Quaternion>;
+%template(Key_byte) Niflib::Key<unsigned char>;
+%template(Key_Vector3) Niflib::Key<Vector3>;
+%template(Key_Color4) Niflib::Key<Color4>;
+
+%template(vector_Key_float) std::vector<Niflib::Key<float> >;
+%template(vector_Key_Quaternion) std::vector<Niflib::Key<Quaternion> >;
+%template(vector_Key_byte) std::vector<Niflib::Key<unsigned char> >;
+%template(vector_Key_Vector3) std::vector<Niflib::Key<Vector3> >;
+%template(vector_Key_Color4) std::vector<Niflib::Key<Color4> >;
 
 %include "Ref.h"
 %include "Type.h"

@@ -42,7 +42,7 @@ public:
 	 * Scale. Usually (1.0, 1.0, 1.0).
 	 */
 	Vector3 GetScale() const;
-	void SetScale( const Vector3 & value );
+	void SetScale( const Vector3 & n );
 
 	void	SetNumStripsData(int i);
 	void	SetStripsData(int i, Ref<NiTriStripsData> &);

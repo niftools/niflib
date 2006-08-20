@@ -52,3 +52,11 @@ void bhkNiTriStripsShape::SetStripsData(int i, Ref<NiTriStripsData> &strips)
 	stripsData[i] = strips;
 }
 
+Vector3 bhkNiTriStripsShape::GetScale() const {
+	return scale;
+}
+
+void bhkNiTriStripsShape::SetScale( const Vector3 & n ) {
+	scale = n;	
+}
+

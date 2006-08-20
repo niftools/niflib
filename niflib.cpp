@@ -42,8 +42,9 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
 
+
 //--Function Bodies--//
-NiObjectRef CreateBlock( string block_type ) {
+NiObjectRef CreateObject( string block_type ) {
 	
 	//Initialize the global block list if it hasn't been done yet
 	if ( global_block_map_init == false ) {
@@ -221,7 +222,7 @@ vector<NiObjectRef> ReadNifList( istream & in ) {
 #endif
 
 		//Create Block of the type that was found
-		blocks[i] = CreateBlock(objectType);
+		blocks[i] = CreateObject(objectType);
 
 		//Check for an unknown block type
 		if ( blocks[i] == NULL ) {
@@ -637,12 +638,6 @@ void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, u
 		throw runtime_error("Not yet implemented.");
 };
 
-
-//Returns the total number of blocks in memory
-unsigned int BlocksInMemory() {
-	return NiObject::NumObjectsInMemory();
-}
-
 void MapNodeNames( map<string,NiNodeRef> & name_map, const Ref<NiNode> & par ) {
 	//Add the par node to the map, and then call this function for each of its children
 	name_map[par->GetName()] = par;
@@ -827,7 +822,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 
 				//If the controller wasn't found, create one of the right type and attach it
 				if ( ctlr == NULL ) {
-					NiObjectRef new_ctlr = CreateBlock( ctlr_type );
+					NiObjectRef new_ctlr = CreateObject( ctlr_type );
 					ctlr = DynamicCast<NiSingleInterpolatorController>( new_ctlr );
 					if ( ctlr == NULL ) {
 						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");

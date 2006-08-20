@@ -371,7 +371,7 @@ NiObject * CreateNiZBufferProperty() { return new NiZBufferProperty; }
 NiObject * CreateRootCollisionNode() { return new RootCollisionNode; }
 
 namespace Niflib {
-//This function registers the factory functions with global_block_map which is used by CreateBlock
+//This function registers the factory functions with global_block_map which is used by CreateNiObject
 void RegisterBlockFactories() {
 	global_block_map["bhkBlendCollisionObject"] = CreatebhkBlendCollisionObject;
 	global_block_map["bhkBlendController"] = CreatebhkBlendController;

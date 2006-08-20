@@ -246,44 +246,21 @@ NIFLIB_API void SendNifTreeToBindPos( const Ref<NiNode> & root );
 //string GetFileVersion(string file_name);
 
 /*!
- * Creates a new block of the given type and returns a reference to it
+ * Creates a new block of the given type and returns a reference to it.
+ * In C++, it is not necessary to call this function as you can create
+ * objects with the new keyword.  In Python, however, this is the only
+ * way to create new objects for now.
+ * This is 
  * \param block_type – The type of block you want to create.  This value is case sensitive and spelling is important.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
  * \return This function will return a newly created block of the requested type.  Beware, if the block type is unrecognized, this function will return a featureless block with whatever you sent it as the type.
- * 
- * <b>Example:</b> 
- * \code
- * NiObjectRef my_block = CreateBlock("NiNode");
- * \endcode
- * 
- * <b>In Python:</b>
- * \code
- * my_block = CreateBlock("NiNode")
- * \endcode
- * 
- * sa BlocksInMemory
+ *
+ * sa NiObject::NumObjectsInMemory
  */
-NIFLIB_API Ref<NiObject> CreateBlock( string block_type );
-
-
-/*!
-* Creates a new block of the given type and returns a reference to it
-* \param T – The type of block you want to create.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
-* \return This function will return a newly created block of the requested type.
-* 
-* <b>Example:</b> 
-* \code
-* NiNodeRef my_block = CreateNiObject<NiNode>();
-* \endcode
-* 
-* sa BlocksInMemory
-*/
-#ifndef SWIG
-template<typename T>
-inline Ref<T> CreateNiObject() {
-   return DynamicCast<T>(CreateBlock(T::TypeConst().GetTypeName()));
-}
+#ifdef SWIG
+NIFLIB_API Ref<NiObject> CreateObject( string block_type );
+#else
+NIFLIB_HIDDEN Ref<NiObject> CreateObject( string block_type );
 #endif
-
 
 /*!
  * Returns whether the requested version is supported.

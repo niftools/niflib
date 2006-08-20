@@ -54,8 +54,6 @@ public:
 	 * my_block = ReadNifTree("test_in.nif")
 	 * print block.GetType()
 	 * \endcode
-	 * 
-	 * \sa CreateBlock
 	 */
 	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
 
@@ -77,7 +75,6 @@ public:
 	/*! Returns A new block that contains all the same data that this block does, but occupies a different part of memory.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
 	 * \param version The version number to use in the memory streaming operation.  Default is the highest version availiable.
 	 * \return A cloned copy of this block as a new block.
-	 * \sa CreateBlock
 	 */
 	NIFLIB_API NiObjectRef Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 
