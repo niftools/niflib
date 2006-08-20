@@ -318,6 +318,35 @@ POSSIBILITY OF SUCH DAMAGE. */
 %}
 %include "Key.h"
 %include "nif_basic_types.h"
+%include "gen/ByteArray.h"
+%include "gen/Footer.h"
+%include "gen/LODRange.h"
+%include "gen/MatchGroup.h"
+%include "gen/MipMap.h"
+%include "gen/NodeGroup.h"
+%include "gen/QuaternionXYZW.h"
+%include "gen/SkinShape.h"
+%include "gen/SkinShapeGroup.h"
+%include "gen/SkinWeight.h"
+%include "gen/AVObject.h"
+%include "gen/ControllerLink.h"
+%include "gen/Header.h"
+%include "gen/StringPalette.h"
+%include "gen/TBC.h"
+%include "gen/KeyGroup.h"
+%include "gen/RotationKeyArray.h"
+%include "gen/TexDesc.h"
+%include "gen/ShaderTexDesc.h"
+%include "gen/TexSource.h"
+%include "gen/SkinPartition.h"
+%include "gen/BoundingBox.h"
+%include "gen/FurniturePosition.h"
+%include "gen/hkTriangle.h"
+%include "gen/Morph.h"
+%include "gen/Particle.h"
+%include "gen/SkinData.h"
+%include "gen/RagDollDescriptor.h"
+%include "gen/LimitedHingeDescriptor.h"
 %template(vector_byte) std::vector<Niflib::byte>;
 %template(vector_ushort) std::vector<Niflib::ushort>;
 %template(vector_SkinShape) std::vector<Niflib::SkinShape>;
@@ -346,16 +375,16 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(vector_MatchGroup) std::vector<Niflib::MatchGroup>;
 
 %template(Key_float) Niflib::Key<float>;
-%template(Key_Quaternion) Niflib::Key<Quaternion>;
+%template(Key_Quaternion) Niflib::Key<Niflib::Quaternion>;
 %template(Key_byte) Niflib::Key<unsigned char>;
-%template(Key_Vector3) Niflib::Key<Vector3>;
-%template(Key_Color4) Niflib::Key<Color4>;
+%template(Key_Vector3) Niflib::Key<Niflib::Vector3>;
+%template(Key_Color4) Niflib::Key<Niflib::Color4>;
 
 %template(vector_Key_float) std::vector<Niflib::Key<float> >;
-%template(vector_Key_Quaternion) std::vector<Niflib::Key<Quaternion> >;
+%template(vector_Key_Quaternion) std::vector<Niflib::Key<Niflib::Quaternion> >;
 %template(vector_Key_byte) std::vector<Niflib::Key<unsigned char> >;
-%template(vector_Key_Vector3) std::vector<Niflib::Key<Vector3> >;
-%template(vector_Key_Color4) std::vector<Niflib::Key<Color4> >;
+%template(vector_Key_Vector3) std::vector<Niflib::Key<Niflib::Vector3> >;
+%template(vector_Key_Color4) std::vector<Niflib::Key<Niflib::Color4> >;
 
 %include "Ref.h"
 %include "Type.h"
@@ -1212,35 +1241,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(RootCollisionNodeRef) Niflib::Ref<Niflib::RootCollisionNode>;
 %template(DynamicCastToRootCollisionNode) Niflib::DynamicCast<Niflib::RootCollisionNode>;
 %template(StaticCastToRootCollisionNode) Niflib::StaticCast<Niflib::RootCollisionNode>;
-%include "gen/ByteArray.h"
-%include "gen/Footer.h"
-%include "gen/LODRange.h"
-%include "gen/MatchGroup.h"
-%include "gen/MipMap.h"
-%include "gen/NodeGroup.h"
-%include "gen/QuaternionXYZW.h"
-%include "gen/SkinShape.h"
-%include "gen/SkinShapeGroup.h"
-%include "gen/SkinWeight.h"
-%include "gen/AVObject.h"
-%include "gen/ControllerLink.h"
-%include "gen/Header.h"
-%include "gen/StringPalette.h"
-%include "gen/TBC.h"
-%include "gen/KeyGroup.h"
-%include "gen/RotationKeyArray.h"
-%include "gen/TexDesc.h"
-%include "gen/ShaderTexDesc.h"
-%include "gen/TexSource.h"
-%include "gen/SkinPartition.h"
-%include "gen/BoundingBox.h"
-%include "gen/FurniturePosition.h"
-%include "gen/hkTriangle.h"
-%include "gen/Morph.h"
-%include "gen/Particle.h"
-%include "gen/SkinData.h"
-%include "gen/RagDollDescriptor.h"
-%include "gen/LimitedHingeDescriptor.h"
 %include "niflib.h"
 
 %template(vector_NiAVObjectRef) std::vector<Niflib::NiAVObjectRef>;
