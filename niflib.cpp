@@ -363,10 +363,20 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 
 	//--Write Footer--//
 	Footer footer;
-	footer.numRoots = 1;
-	footer.roots.resize(1);
-	footer.roots[0] = DynamicCast<NiAVObject>(root);
-
+   footer.numRoots = 0;
+   if (root->IsDerivedType(NiAVObject::TypeConst())) {
+      // Handle most NIF file formats
+      footer.numRoots = 1;
+      footer.roots.resize(1);
+	   footer.roots[0] = StaticCast<NiAVObject>(root);
+   } else if (root->IsDerivedType(NiControllerSequence::TypeConst())) {
+      // KF animation files allow for multiple roots of type NiControllerSequence
+      for ( uint i = 0; i < objects.size(); ++i ) {
+         if (objects[i]->IsDerivedType(NiControllerSequence::TypeConst())) {
+            footer.roots.push_back(objects[i]);
+         }
+      }
+   }
 	footer.Write( out, link_map, version, user_version );
 }
 

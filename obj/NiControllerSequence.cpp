@@ -178,3 +178,24 @@ NiControllerSequence::CycleType NiControllerSequence::GetCycleType() const {
 void NiControllerSequence::SetCycleType( NiControllerSequence::CycleType n ) {
 	cycleType = n;
 }
+
+int NiControllerSequence::GetNumControllers() const {
+   return int(controlledBlocks.size());
+}
+
+int NiControllerSequence::GetControllerPriority( int controller ) const {
+   if (controller < 0 && controller < int(controlledBlocks.size())) {
+      throw runtime_error("Invalid controller index.");
+   }   
+   return int(controlledBlocks[controller].priority_);
+}
+
+void NiControllerSequence::SetControllerPriority( int controller, int priority ) {
+   if (controller < 0 && controller < int(controlledBlocks.size())) {
+      throw runtime_error("Invalid controller index.");
+   }   
+   if (priority < 0 || priority > int(0xFF)) {
+      throw runtime_error("Invalid priority must be between 0 and 255.");
+   }
+   controlledBlocks[controller].priority_ = priority;
+}

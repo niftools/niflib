@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 
 // Forward define of referenced blocks
-class NiAVObject;
+class NiObject;
 
 /*!
  * The NIF file footer.
@@ -32,7 +32,7 @@ struct NIFLIB_API Footer {
 	 * root block (usually we want the camera to be attached to the Bip Head
 	 * node).
 	 */
-	vector<Ref<NiAVObject > > roots;
+	vector<Ref<NiObject > > roots;
 	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
 	string asString( bool verbose = false ) const;

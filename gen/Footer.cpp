@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "Footer.h"
-#include "../obj/NiAVObject.h"
+#include "../obj/NiObject.h"
 using namespace Niflib;
 
 //Constructor
