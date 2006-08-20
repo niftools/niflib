@@ -49,9 +49,10 @@ struct NIFLIB_API Header {
 	 */
 	uint unknownInt1;
 	/*!
-	 * Unknown.
+	 * This also appears to be the extra user version number and must be set
+	 * in some circumstances.
 	 */
-	uint unknownInt3;
+	uint userVersion2;
 	/*!
 	 * Could be the name of the creator of the NIF file?
 	 */

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)1), unknownInt3((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
+Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)1), userVersion2((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
 
 //Destructor
 Header::~Header() {};
@@ -24,7 +24,7 @@ void Header::Read( istream& in ) {
 	};
 	if ( version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( unknownInt3, in, version );
+			NifStream( userVersion2, in, version );
 		};
 	};
 	if ( version >= 0x0A000102 ) {
@@ -65,7 +65,7 @@ void Header::Write( ostream& out ) const {
 	};
 	if ( version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( unknownInt3, out, version );
+			NifStream( userVersion2, out, version );
 		};
 	};
 	if ( version >= 0x0A000102 ) {
@@ -98,7 +98,7 @@ string Header::asString( bool verbose ) const {
 	out << "  Num Blocks:  " << numBlocks << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	if ( (userVersion != 0) ) {
-		out << "    Unknown Int 3:  " << unknownInt3 << endl;
+		out << "    User Version 2:  " << userVersion2 << endl;
 		out << "    Creator?:  " << creator_ << endl;
 		out << "    Export Type?:  " << exportType_ << endl;
 		out << "    Export Script?:  " << exportScript_ << endl;
