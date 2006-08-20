@@ -55,7 +55,7 @@ void NiAlphaProperty::SetAlphaTestThreshold( byte n ) {
    (( value >> shift ) & mask)
 
 #define NIFLIB_MASK_FLAG(flag, value, shift, mask) \
-   ((flag ^ ~(mask << shift)) | ((value & mask) << shift))
+   ((flag & ~(mask << shift)) | ((value & mask) << shift))
 
 NiAlphaProperty::BlendMode NiAlphaProperty::GetSourceBlendMode() const {
    return (NiAlphaProperty::BlendMode)NIFLIB_GET_FLAG(flags, 1, 0x0f);

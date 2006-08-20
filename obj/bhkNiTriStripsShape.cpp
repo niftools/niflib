@@ -40,6 +40,11 @@ void bhkNiTriStripsShape::SetNumStripsData(int n)
 {
 	numStripsData = n;
 	stripsData.resize(n);
+
+   // This is currently a kludge for compatibility with the max NifExporter as we dont know what this 
+   //   does but its always same number of strips and usually 1 or 4
+   numUnknownInts2 = n;
+   unknownInts2.assign(n, 1);
 }
 
 void bhkNiTriStripsShape::SetStripsData(int i, Ref<NiTriStripsData> &strips)

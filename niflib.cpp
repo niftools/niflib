@@ -25,6 +25,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiKeyframeData.h"
 #include "obj/NiStringExtraData.h"
 #include "obj/NiExtraData.h"
+#include "obj/bhkRigidBody.h"
 #include "gen/header.h"
 #include "gen/footer.h"
 
@@ -319,6 +320,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	Header header;
 	header.version = version;
 	header.userVersion = user_version;
+   header.userVersion2 = user_version;
 	
 	//Set Type Names
 	header.blockTypes.resize( types.size() );
@@ -374,9 +376,6 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 		return;
 	}
 
-	//Add object to link map
-	link_map[root] = uint(link_map.size());
-
 	//Add this object type to the map if it isn't there already
 	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
@@ -384,14 +383,35 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 		type_map[ (Type*)&(root->GetType()) ] = uint(type_map.size());
 	}
 
-	//Call this function on all links of this object
-	
-	list<NiObjectRef> links = root->GetRefs();
-	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-		if ( *it != NULL ) {
-			EnumerateObjects( *it, type_map, link_map );
-		}
-	}
+   // Oblivion has very rigid requirements about block ordering and the bhkRigidBody 
+   //   must be after its children. Hopefully this can be removed and replaced with 
+   //   a more generic mechanism in the future.
+	Type *t = (Type*)&(root->GetType());
+   if (t->IsDerivedType(bhkRigidBody::TypeConst()))
+   {
+      //Call this function on all links of this object
+      list<NiObjectRef> links = root->GetRefs();
+      for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
+         if ( *it != NULL ) {
+            EnumerateObjects( *it, type_map, link_map );
+         }
+      }
+      //Add object to link map
+      link_map[root] = uint(link_map.size());
+   } 
+   else
+   {
+      //Add object to link map
+      link_map[root] = uint(link_map.size());
+
+      //Call this function on all links of this object	
+      list<NiObjectRef> links = root->GetRefs();
+      for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
+         if ( *it != NULL ) {
+            EnumerateObjects( *it, type_map, link_map );
+         }
+      }
+   }
 }
 
 //void BuildUpBindPositions( const NiAVObjectRef & root ) {
