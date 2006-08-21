@@ -103,6 +103,24 @@ public:
 	CycleType GetCycleType() const;
 	void SetCycleType( CycleType n );
 
+   /*! Get Number of Controllers
+   * \return Number of total controllers in this sequence
+   * \sa GetControllerData
+   */
+   int GetNumControllers() const;
+
+   /*! Get Controller Priority
+   * \return Priority of a specific controller
+   * \sa GetControllerData, GetNumControllers, SetControllerPriority
+   */
+   int GetControllerPriority( int controller ) const;
+
+   /*! Get Controller Priority
+   * \return Priority of a specific controller
+   * \sa GetControllerData, GetNumControllers, GetControllerPriority
+   */
+   void SetControllerPriority( int controller, int priority );
+
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;
 	NI_CONTROLLER_SEQUENCE_MEMBERS
