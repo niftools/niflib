@@ -133,3 +133,7 @@ Vector3 NiTriBasedGeomData::GetCenter() const {
 float NiTriBasedGeomData::GetRadius() const {
 	return radius;
 }
+
+void NiTriBasedGeomData::SetTriangles( const vector<Triangle> & in ) {
+   throw runtime_error("SetTriangles is a must be implemented in the derived class.");
+}

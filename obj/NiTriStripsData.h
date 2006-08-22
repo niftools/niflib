@@ -70,6 +70,12 @@ public:
 	 */
 	void SetStrip( int index, const vector<ushort> & in );
 
+   /*! Replaces the triangle face data in this mesh with new data.
+   * \param in A vector containing the new face data.  Maximum size is 65,535.
+   * \sa GetTriangles
+   */
+   virtual void SetTriangles( const vector<Triangle> & in );
+
 private:
 	ushort CalcTriangleCount() const;
 

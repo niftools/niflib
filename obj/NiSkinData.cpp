@@ -120,3 +120,10 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 		res_mat.Decompose( boneList[i].translation, boneList[i].rotation, boneList[i].scale );
 	}
 }
+
+Ref<NiSkinPartition> NiSkinData::GetSkinPartition() const {
+   return skinPartition;
+}
+void NiSkinData::SetSkinPartition(Ref<NiSkinPartition> value) {
+   skinPartition = value;
+}

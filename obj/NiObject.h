@@ -159,7 +159,7 @@ template <class T> Ref<const T> StaticCast (const NiObject * object) {
 #endif
 
 template <class T> Ref<T> DynamicCast( NiObject * object ) {
-	if ( object->IsDerivedType(T::TypeConst()) ) {
+	if ( object && object->IsDerivedType(T::TypeConst()) ) {
 		return (T*)object;
 	} else {
 		return NULL;
@@ -169,7 +169,7 @@ template <class T> Ref<T> DynamicCast( NiObject * object ) {
 //SWIG doesn't want two versions of the same thing
 #ifndef SWIG
 template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
-	if ( object->IsDerivedType(T::TypeConst()) ) {
+	if ( object && object->IsDerivedType(T::TypeConst()) ) {
 		return (const T*)object;
 	} else {
 		return NULL;

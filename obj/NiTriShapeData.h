@@ -71,7 +71,8 @@ public:
 	 * \param in A vector containing the new face data.  Maximum size is 65,535.
 	 * \sa ITriShapeData::GetTriangles
 	 */
-	void SetTriangles( const vector<Triangle> & in );
+	virtual void SetTriangles( const vector<Triangle> & in );
+
 protected:
 	NI_TRI_SHAPE_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS

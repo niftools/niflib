@@ -73,9 +73,15 @@ public:
 
 	/*! Returns the triangle faces that make up this mesh.
 	 * \return A vector containing the triangle faces that make up this mesh.
-	 * \sa ITriShapeData::SetTriangles
+	 * \sa SetTriangles
 	 */
 	virtual vector<Triangle> GetTriangles() const { return vector<Triangle>(); }  //TODO:  Make this pure virtual?
+
+   /*! Replaces the triangle face data in this mesh with new data.
+   * \param in A vector containing the new face data.  Maximum size is 65,535.
+   * \sa GetTriangles
+   */
+   virtual void SetTriangles( const vector<Triangle> & in );
 
 	/*! Used to retrive the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
 	 * \return A vector cntaining the vertices used by this mesh.

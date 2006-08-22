@@ -56,6 +56,8 @@ public:
 	 */
 	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n );
 
+   void GenHardwareSkinInfo( );
+
 	Ref<NiSkinInstance> GetSkinInstance() const;
 
 	Ref<NiTriBasedGeomData> GetData() const;

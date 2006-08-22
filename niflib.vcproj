@@ -48,7 +48,6 @@
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -114,7 +113,6 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -175,7 +173,6 @@
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -239,7 +236,6 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -314,7 +310,6 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -1392,6 +1387,38 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="NvTriStrip"
+				>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStrip.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStripObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\VertexCache.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="TriStripper"
+				>
+				<File
+					RelativePath=".\TriStripper\connectivity_graph.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TriStripper\policy.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\TriStripper\tri_stripper.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -2423,6 +2450,62 @@
 				</File>
 				<File
 					RelativePath=".\gen\TexSource.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="TriStripper"
+				>
+				<File
+					RelativePath=".\TriStripper\public_types.h"
+					>
+				</File>
+				<File
+					RelativePath=".\TriStripper\tri_stripper.h"
+					>
+				</File>
+				<Filter
+					Name="detail"
+					>
+					<File
+						RelativePath=".\TriStripper\detail\cache_simulator.h"
+						>
+					</File>
+					<File
+						RelativePath=".\TriStripper\detail\connectivity_graph.h"
+						>
+					</File>
+					<File
+						RelativePath=".\TriStripper\detail\graph_array.h"
+						>
+					</File>
+					<File
+						RelativePath=".\TriStripper\detail\heap_array.h"
+						>
+					</File>
+					<File
+						RelativePath=".\TriStripper\detail\policy.h"
+						>
+					</File>
+					<File
+						RelativePath=".\TriStripper\detail\types.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="NvTriStrip"
+				>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStrip.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStripObjects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\VertexCache.h"
 					>
 				</File>
 			</Filter>

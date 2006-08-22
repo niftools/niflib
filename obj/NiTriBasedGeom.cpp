@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiSkinInstance.h"
 #include "NiObject.h"
 #include "NiSkinData.h"
+#include "NiSkinPartition.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -355,4 +356,19 @@ void NiTriBasedGeom::SetBoneWeights( uint bone_index, const vector<SkinWeight> &
 	center = skinData->GetBoneTransform( bone_index ) * center;
 
 	skinData->SetBoneWeights( bone_index, n, center, radius );
+}
+
+void NiTriBasedGeom::GenHardwareSkinInfo( ) {
+   NiSkinPartitionRef skinPart = new NiSkinPartition( this );
+
+   // Set the partition info in both places and it will be handled when exported.
+   NiSkinInstanceRef skinInst = GetSkinInstance();
+   if ( skinInst != NULL ) {
+      skinInst->SetSkinPartition( skinPart );
+
+      NiSkinDataRef skinData = skinInst->GetSkinData();
+      if (skinData != NULL) {
+         skinData->SetSkinPartition( skinPart );
+      }
+   }
 }

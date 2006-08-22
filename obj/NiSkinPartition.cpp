@@ -3,7 +3,22 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiSkinPartition.h"
 #include "../gen/SkinPartition.h"
+#include "NiSkinInstance.h"
+#include "NiSkinData.h"
+#include "NiTriBasedGeom.h"
+#include "NiTriBasedGeomData.h"
+#include "NiTriStripsData.h"
+#include "../gen/SkinWeight.h"
+#include "../NvTriStrip/NvTriStrip.h"
 using namespace Niflib;
+
+typedef vector<SkinWeight> SkinWeightList;
+typedef vector<SkinWeightList> BoneWeightList;
+typedef vector<float> WeightList;
+typedef vector<ushort> BoneList;
+typedef vector<ushort> Strip;
+typedef vector<Strip> Strips;
+typedef vector<Triangle> Triangles;
 
 //Definition of TYPE constant
 const Type NiSkinPartition::TYPE("NiSkinPartition", &NI_SKIN_PARTITION_PARENT::TypeConst() );
@@ -160,9 +175,10 @@ ushort NiSkinPartition::GetStripCount( int partition ) const {
 }
 
 void NiSkinPartition::SetStripCount( int partition, int n ) {
-   skinPartitionBlocks[partition].strips.resize(n);
-   skinPartitionBlocks[partition].stripLengths.resize(n);
-   skinPartitionBlocks[partition].hasStrips = (n!=0);
+   SkinPartition& part = skinPartitionBlocks[partition];
+   part.strips.resize(n);
+   part.stripLengths.resize(n);
+   part.hasStrips = (n!=0);
 }
 
 vector<ushort> NiSkinPartition::GetStrip( int partition, int index ) const {
@@ -196,3 +212,121 @@ void NiSkinPartition::SetTriangles( int partition, const vector<Triangle> & in )
    part.numTriangles = uint(in.size()) * 3;
 }
 
+NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
+   NiSkinInstanceRef skinInst = shape->GetSkinInstance();
+   if ( skinInst == NULL ) {
+      throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinInstance found." );
+   }
+   NiSkinDataRef skinData = skinInst->GetSkinData();
+   if ( skinData == NULL ) {
+      throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinData found." );
+   }
+   NiTriBasedGeomDataRef geomData = shape->GetData();
+   if ( geomData == NULL ) {
+      throw runtime_error( "Attempted to generate a skin partition on a mesh with no geometry data." );
+   }
+
+   int nWeightsPerVertex = 0;
+   vector<WeightList> vertexWeights;
+   BoneList boneMap;
+   vector<ushort> vertexMap;
+   Strips strips;
+   vector<BoneList> boneIndexList;
+   Triangles triangles;
+
+   int totalBones = skinInst->GetBoneCount();
+   boneMap.resize(totalBones);
+
+   int nv = geomData->GetVertexCount();
+   vertexMap.resize(nv);
+   vertexWeights.resize(nv);
+   boneIndexList.resize(nv);
+
+   for (int i=0; i<totalBones; ++i) {
+      boneMap[i] = i;
+
+      vector<SkinWeight> skinWeights = skinData->GetBoneWeights(i);
+      for (vector<SkinWeight>::const_iterator skinWeight = skinWeights.begin(); skinWeight != skinWeights.end(); ++skinWeight) {
+         WeightList& vertexWeight = vertexWeights[skinWeight->index];
+         BoneList& boneIndex = boneIndexList[skinWeight->index];
+
+         vertexWeight.push_back(skinWeight->weight);
+         boneIndex.push_back(i);
+
+         // Adjust upper limit on number of weights per vertex if necessary.
+         int nWeights = vertexWeight.size();
+         if (nWeights > nWeightsPerVertex)
+            nWeightsPerVertex = nWeights;
+      }
+   }
+   if (nWeightsPerVertex == 0) {
+      throw runtime_error( "Attempted to generate a skin partition on a mesh with no weights specified." );
+   }
+   for (int i=0; i<nv; ++i) {
+      vertexMap[i] = i;
+
+      WeightList& vertexWeight = vertexWeights[i];
+      BoneList& boneIndex = boneIndexList[i];
+      vertexWeight.reserve(nWeightsPerVertex);
+      boneIndex.reserve(nWeightsPerVertex);
+      for (int j = nWeightsPerVertex - vertexWeight.size(); j>0; --j) {
+         vertexWeight.push_back(0.0f);
+         boneIndex.push_back(0);
+      }
+   }
+
+   SetNumPartitions(1);
+   SetWeightsPerVertex(0, nWeightsPerVertex);
+   SetBoneMap(0, boneMap);
+   SetNumVertices(0, ushort(vertexMap.size()) );
+   SetVertexMap(0, vertexMap);
+   EnableVertexWeights(0, true);
+   EnableVertexBoneIndices(0, true);
+   for (int i=0; i<nv; ++i) {
+      SetVertexWeights(0, i, vertexWeights[i]);
+      SetVertexBoneIndices(0, i, boneIndexList[i]);
+   }
+
+   // Special case for pre-stripped data
+   if (NiTriStripsDataRef stripData = DynamicCast<NiTriStripsData>(geomData)) {
+      ushort nstrips = stripData->GetStripCount();
+      SetStripCount(0, nstrips);
+      for (int i=0; i<int(nstrips); ++i) {
+         SetStrip(0, i, stripData->GetStrip(i));
+      }
+   } else {
+
+      SetTriangles(0, geomData->GetTriangles());
+
+      unsigned short *data = new unsigned short[triangles.size() * 3 * 2];
+      for (size_t i=0; i< triangles.size(); i++) {
+         data[i * 3 + 0] = triangles[i][0];
+         data[i * 3 + 1] = triangles[i][1];
+         data[i * 3 + 2] = triangles[i][2];
+      }
+      PrimitiveGroup * groups = 0;
+      unsigned short numGroups = 0;
+
+      // GF 3+
+      SetCacheSize(CACHESIZE_GEFORCE3);
+      // don't generate hundreds of strips
+      SetStitchStrips(true);
+      GenerateStrips(data, triangles.size()*3, &groups, &numGroups);
+
+      delete [] data;
+
+      if (groups) {
+         SetStripCount(0, numGroups);
+         for (int g=0; g<numGroups; g++) {
+            if (groups[g].type == PT_STRIP) {
+               vector<Niflib::ushort> strip(groups[g].numIndices);
+               for (size_t s=0; s<groups[g].numIndices; s++)
+                  strip[s] = groups[g].indices[s];
+               SetStrip(0, g, strip);
+            }
+         }
+         delete [] groups;
+      }
+   }
+  
+}

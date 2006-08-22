@@ -2,6 +2,8 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiTriStripsData.h"
+#include "../NvTriStrip/NvTriStrip.h"
+
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -116,5 +118,48 @@ ushort NiTriStripsData::CalcTriangleCount() const {
 	}
 
 	return numTriangles;
+}
+
+void NiTriStripsData::SetTriangles( const vector<Triangle> & in ) {
+   if ( in.size() > 65535 || in.size() < 0 ) {
+      throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
+   }
+   points.clear();
+   numTriangles = 0;
+
+   unsigned short *data = new unsigned short[in.size() * 3 * 2];
+   for (size_t i=0; i< in.size(); i++) {
+      data[i * 3 + 0] = in[i][0];
+      data[i * 3 + 1] = in[i][1];
+      data[i * 3 + 2] = in[i][2];
+   }
+
+   PrimitiveGroup * groups = 0;
+   unsigned short numGroups = 0;
+
+   // GF 3+
+   SetCacheSize(CACHESIZE_GEFORCE3);
+   // don't generate hundreds of strips
+   SetStitchStrips(true);
+   GenerateStrips(data, in.size()*3, &groups, &numGroups);
+
+   delete [] data;
+
+   if (!groups)
+      return;
+
+   SetStripCount(numGroups);
+   for (int g=0; g<numGroups; g++) {
+      if (groups[g].type == PT_STRIP) {
+         vector<Niflib::ushort> strip(groups[g].numIndices);
+         for (size_t s=0; s<groups[g].numIndices; s++)
+            strip[s] = groups[g].indices[s];
+         SetStrip(g, strip);
+      }
+   }
+   delete [] groups;
+
+   //Recalculate Triangle Count
+   numTriangles = CalcTriangleCount();
 }
 
