@@ -7,6 +7,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "obj/NiAVObject.h"
 #include "obj/NiTriBasedGeom.h"
 #include "obj/NiTriShape.h"
+#include "obj/NiTriStrips.h"
+#include "obj/NiTriStripsData.h"
 #include "obj/NiTriShapeData.h"
 #include "obj/NiTexturingProperty.h"
 #include "obj/NiSkinInstance.h"
@@ -604,7 +606,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 //	}
 //}
 
-Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
+Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, bool hw_skin_data, bool stripify ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
@@ -618,11 +620,15 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 		num_shapes = 1;
 	}
 
-	vector<NiTriShapeRef> shapes(num_shapes);
+	vector<NiTriBasedGeomRef> shapes(num_shapes);
 
 	//Loop through each shape slot and create a NiTriShape
 	for ( unsigned int shape_num = 0; shape_num < shapes.size(); ++shape_num ) {
-		shapes[shape_num] = new NiTriShape;
+		if ( stripify ) {
+			shapes[shape_num] = new NiTriStrips;
+		} else {
+			shapes[shape_num] = new NiTriShape;
+		}
 	}
 
 	NiAVObjectRef root;
@@ -655,7 +661,13 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 	//to this shape based on the material.
 	for ( unsigned int shape_num = 0; shape_num < shapes.size(); ++shape_num ) {
 
-		NiTriShapeDataRef niData = new NiTriShapeData;
+		NiTriBasedGeomDataRef niData;
+		
+		if ( stripify ) {
+			niData = new NiTriStripsData;
+		} else {
+			niData = new NiTriShapeData;
+		}
 		shapes[shape_num]->SetData( StaticCast<NiTriBasedGeomData>(niData) );
 
 		//Create a list of CompoundVertex to make it easier to
@@ -848,6 +860,10 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent ) const {
 
 			for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
 				shapes[shape_num]->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
+			}
+
+			if ( hw_skin_data ) {
+				shapes[shape_num]->GenHardwareSkinInfo();
 			}
 
 			//NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();

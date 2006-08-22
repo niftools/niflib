@@ -64,7 +64,7 @@ public:
 		vector<TexCoord> texCoords;
 	};
 
-	Ref<NiAVObject> Split( Ref<NiNode> & parent ) const;
+	Ref<NiAVObject> Split( Ref<NiNode> & parent, bool hw_skin_data = false, bool stripify = false ) const;
 	void Merge( const Ref<NiAVObject> & root );
 	void Clear();
 
