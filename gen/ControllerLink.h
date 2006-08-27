@@ -40,10 +40,6 @@ struct NIFLIB_API ControllerLink {
 	 */
 	Ref<NiInterpolator > interpolator;
 	/*!
-	 * Unknown link. Usually -1.
-	 */
-	Ref<NiObject > unknownLink1;
-	/*!
 	 * Unknown.
 	 */
 	Ref<NiObject > unknownLink2;

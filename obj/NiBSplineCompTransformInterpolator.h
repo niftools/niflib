@@ -124,6 +124,11 @@ public:
    */
    vector< Key<float> > SampleScaleKeys(int npoints, int degree) const;
 
+   /*! Retrieves the number of control points used in the spline curve.
+   * \return The number of control points used in the spline curve.
+   */
+   int GetNumControlPt() const;
+
 protected:
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS
 	STANDARD_INTERNAL_METHODS

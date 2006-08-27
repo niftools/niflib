@@ -43,6 +43,16 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Name of this block. This is also the name of the action associated
+	 * with this file. For instance, if the original NIF file is called
+	 * "demon.nif" and this animation file contains an attack sequence, then
+	 * the file would be called "demon_attack1.kf" and this field would
+	 * contain the string "attack1".
+	 */
+	string GetName() const;
+	void SetName( const string & value );
+
 	enum CycleType {
 		CYCLE_LOOP = 0,
 		CYCLE_REVERSE = 1,
@@ -120,6 +130,19 @@ public:
    * \sa GetControllerData, GetNumControllers, GetControllerPriority
    */
    void SetControllerPriority( int controller, int priority );
+
+
+	/*!
+	 * Weight/priority of animation?
+	 */
+	float GetWeight() const;
+	void SetWeight( float value );
+
+	/*!
+	 * Name of target node Controller acts on.
+	 */
+	string GetTargetName() const;
+	void SetTargetName( const string & value );
 
 protected:
 	NiControllerManager * NiControllerSequence::Parent() const;

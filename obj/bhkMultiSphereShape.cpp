@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "bhkMultiSphereShape.h"
+#include "../gen/Sphere.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -34,4 +35,12 @@ list<NiObjectRef> bhkMultiSphereShape::GetRefs() const {
 const Type & bhkMultiSphereShape::GetType() const {
 	return TYPE;
 };
+
+vector<Sphere > bhkMultiSphereShape::GetSpheres() const {
+	return spheres;
+}
+
+void bhkMultiSphereShape::SetSpheres( const vector<Sphere >& value ) {
+	spheres = value;
+}
 

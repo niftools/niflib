@@ -199,3 +199,19 @@ void NiControllerSequence::SetControllerPriority( int controller, int priority )
    }
    controlledBlocks[controller].priority_ = priority;
 }
+
+string NiControllerSequence::GetName() const {
+	return name;
+}
+
+void NiControllerSequence::SetName( const string & value ) {
+	name = value;
+}
+
+string NiControllerSequence::GetTargetName() const {
+	return targetName;
+}
+
+void NiControllerSequence::SetTargetName( const string & value ) {
+	targetName = value;
+}

@@ -181,6 +181,8 @@ vector< Key<Quaternion> > NiBSplineCompTransformInterpolator::SampleQuatRotateKe
          for (int k=0; k<SizeofQuat; ++k)
             control[i*SizeofQuat + k] = float(points[j++]) / float (32767);
       }
+      if (degree>=nctrl)
+         degree = nctrl - 1;
       // fit data
       bspline(nctrl-1, degree+1, SizeofQuat, &control[0], &output[0], npoints);
 
@@ -270,4 +272,13 @@ vector< Key<float> > NiBSplineCompTransformInterpolator::SampleScaleKeys(int npo
       }
    }
    return value;
+}
+
+int NiBSplineCompTransformInterpolator::GetNumControlPt() const
+{
+   if (basisData)
+   {
+      return basisData->GetNumControlPt();
+   }
+   return 0;
 }

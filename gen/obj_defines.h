@@ -1224,15 +1224,15 @@ return InternalGetRefs(); \
 float unknownFloat1; \
 float unknownFloat2; \
 float unknownFloat3; \
-uint unknownInt2; \
-array<float,8> unknownFloats; \
+mutable uint numSpheres; \
+vector<Sphere > spheres; \
 
 #define BHK_MULTI_SPHERE_SHAPE_INCLUDE "bhkSphereRepShape.h" \
 
 #define BHK_MULTI_SPHERE_SHAPE_PARENT bhkSphereRepShape \
 
 #define BHK_MULTI_SPHERE_SHAPE_CONSTRUCT \
- : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownInt2((uint)0) \
+ : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), numSpheres((uint)0) \
 
 #define BHK_MULTI_SPHERE_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3010,7 +3010,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS \
-ushort unknown; \
+ushort targetColor; \
 Ref<NiPosData > data; \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h" \
@@ -3018,7 +3018,7 @@ Ref<NiPosData > data; \
 #define NI_MATERIAL_COLOR_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_CONSTRUCT \
- : unknown((ushort)0), data(NULL) \
+ : targetColor((ushort)0), data(NULL) \
 
 #define NI_MATERIAL_COLOR_CONTROLLER_READ \
 InternalRead( in, link_stack, version, user_version ); \

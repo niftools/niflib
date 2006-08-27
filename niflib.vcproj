@@ -1371,6 +1371,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gen\Sphere.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gen\StringPalette.cpp"
 					>
 				</File>
@@ -2434,6 +2438,10 @@
 				</File>
 				<File
 					RelativePath=".\gen\SkinWeight.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gen\Sphere.h"
 					>
 				</File>
 				<File

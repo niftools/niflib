@@ -2799,36 +2799,38 @@ void bhkMultiSphereShape::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( unknownFloat1, in, version );
 	NifStream( unknownFloat2, in, version );
 	NifStream( unknownFloat3, in, version );
-	NifStream( unknownInt2, in, version );
-	for (uint i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownFloats[i1], in, version );
+	NifStream( numSpheres, in, version );
+	spheres.resize(numSpheres);
+	for (uint i1 = 0; i1 < spheres.size(); i1++) {
+		NifStream( spheres[i1].center, in, version );
+		NifStream( spheres[i1].radius, in, version );
 	};
 }
 
 void bhkMultiSphereShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
+	numSpheres = uint(spheres.size());
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
 	NifStream( unknownFloat3, out, version );
-	NifStream( unknownInt2, out, version );
-	for (uint i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownFloats[i1], out, version );
+	NifStream( numSpheres, out, version );
+	for (uint i1 = 0; i1 < spheres.size(); i1++) {
+		NifStream( spheres[i1].center, out, version );
+		NifStream( spheres[i1].radius, out, version );
 	};
 }
 
 std::string bhkMultiSphereShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << bhkSphereRepShape::asString();
+	numSpheres = uint(spheres.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	for (uint i1 = 0; i1 < 8; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+	out << "  Num Spheres:  " << numSpheres << endl;
+	for (uint i1 = 0; i1 < spheres.size(); i1++) {
+		out << "    Center:  " << spheres[i1].center << endl;
+		out << "    Radius:  " << spheres[i1].radius << endl;
 	};
 	return out.str();
 }
@@ -5162,8 +5164,8 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 				NifStream( 0xffffffff, out, version );
 		};
 		if ( version >= 0x0A01006A ) {
-			if ( controlledBlocks[i1].unknownLink1 != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].unknownLink1)], out, version );
+			if ( controlledBlocks[i1].controller != NULL )
+				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -5267,7 +5269,6 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 		out << "    Target Name:  " << controlledBlocks[i1].targetName << endl;
 		out << "    Controller:  " << controlledBlocks[i1].controller << endl;
 		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
-		out << "    Unknown Link 1:  " << controlledBlocks[i1].unknownLink1 << endl;
 		out << "    Unknown Link 2:  " << controlledBlocks[i1].unknownLink2 << endl;
 		out << "    Unknown Short 0:  " << controlledBlocks[i1].unknownShort0 << endl;
 		out << "    Priority?:  " << controlledBlocks[i1].priority_ << endl;
@@ -5337,11 +5338,11 @@ void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects
 			if (link_stack.empty())
 				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
 			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].unknownLink1 == NULL )
+				controlledBlocks[i1].controller = DynamicCast<NiTimeController>(objects[link_stack.front()]);
+				if ( controlledBlocks[i1].controller == NULL )
 					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
 			} else
-				controlledBlocks[i1].unknownLink1 = NULL;
+				controlledBlocks[i1].controller = NULL;
 			link_stack.pop_front();
 		};
 		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
@@ -5410,8 +5411,6 @@ std::list<NiObjectRef> NiControllerSequence::InternalGetRefs() const {
 			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].controller));
 		if ( controlledBlocks[i1].interpolator != NULL )
 			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].interpolator));
-		if ( controlledBlocks[i1].unknownLink1 != NULL )
-			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].unknownLink1));
 		if ( controlledBlocks[i1].unknownLink2 != NULL )
 			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].unknownLink2));
 		if ( controlledBlocks[i1].stringPalette != NULL )
@@ -6641,7 +6640,7 @@ void NiMaterialColorController::InternalRead( istream& in, list<uint> & link_sta
 	uint block_num;
 	NiSingleInterpolatorController::Read( in, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
-		NifStream( unknown, in, version );
+		NifStream( targetColor, in, version );
 	};
 	if ( version <= 0x0A010000 ) {
 		NifStream( block_num, in, version );
@@ -6652,7 +6651,7 @@ void NiMaterialColorController::InternalRead( istream& in, list<uint> & link_sta
 void NiMaterialColorController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
-		NifStream( unknown, out, version );
+		NifStream( targetColor, out, version );
 	};
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
@@ -6665,7 +6664,7 @@ void NiMaterialColorController::InternalWrite( ostream& out, map<NiObjectRef,uin
 std::string NiMaterialColorController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiSingleInterpolatorController::asString();
-	out << "  Unknown:  " << unknown << endl;
+	out << "  Target Color:  " << targetColor << endl;
 	out << "  Data:  " << data << endl;
 	return out.str();
 }

@@ -5,6 +5,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _BHKMULTISPHERESHAPE_H_
 
 #include "bhkSphereRepShape.h"
+
+// Include structures
+#include "../gen/Sphere.h"
 namespace Niflib {
 
 #include "../gen/obj_defines.h"
@@ -31,6 +34,12 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*!
+	 * This array holds the spheres which make up the multi sphere shape.
+	 */
+	vector<Sphere > GetSpheres() const;
+	void SetSpheres( const vector<Sphere >& value );
 
 protected:
 	BHK_MULTI_SPHERE_SHAPE_MEMBERS
