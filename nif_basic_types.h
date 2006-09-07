@@ -77,7 +77,7 @@ enum KeyType {
 };
 
 /*!
- * Specifies the pixel format used by the NiPixelData block to store a texture.
+ * Specifies the pixel format used by the NiPixelData object to store a texture.
  */
 enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
@@ -112,7 +112,7 @@ enum PixelLayout {
 enum VertMode {
 	VERT_MODE_SRC_IGNORE = 0, /*!< Source Ignore. */
 	VERT_MODE_SRC_EMISSIVE = 1, /*!< Source Emissive. */
-	VERT_MODE_SRC_AMB_DIF = 2, /*!< Source Ambient/Diffuse. */
+	VERT_MODE_SRC_AMB_DIF = 2, /*!< Source Ambient/Diffuse. (Default) */
 };
 
 /*!
@@ -120,7 +120,7 @@ enum VertMode {
  */
 enum LightMode {
 	LIGHT_MODE_EMISSIVE = 0, /*!< Emissive. */
-	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. */
+	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. (Default) */
 };
 
 }
