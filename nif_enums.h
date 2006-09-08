@@ -7,10 +7,6 @@ All rights reserved.  Please see niflib.h for licence. */
 
 namespace Niflib {
 
-/* Template converters for Enum Data Types */
-template <typename T> std::string EnumToString(T value);
-template <typename T> T StringToEnum(const std::string& value);
-
 /*!
  * The type of force?  May be more valid values.
  */
@@ -20,8 +16,6 @@ typedef enum ForceType : uint {
 	FORCE_UNKNOWN = 2, /*!< FORCE_UNKNOWN */
 } ForceType;
 
-template <> std::string EnumToString<ForceType>(ForceType value);
-template <> ForceType StringToEnum<ForceType>(const std::string& value);
 void NifStream( ForceType & val, istream& in, uint version = 0 );
 void NifStream( ForceType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, ForceType const & val );
@@ -38,8 +32,6 @@ typedef enum PixelLayout : uint {
 	PIX_LAY_DEFAULT = 5, /*!< Use default setting. */
 } PixelLayout;
 
-template <> std::string EnumToString<PixelLayout>(PixelLayout value);
-template <> PixelLayout StringToEnum<PixelLayout>(const std::string& value);
 void NifStream( PixelLayout & val, istream& in, uint version = 0 );
 void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelLayout const & val );
@@ -53,8 +45,6 @@ typedef enum LightMode : uint {
 	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. (Default) */
 } LightMode;
 
-template <> std::string EnumToString<LightMode>(LightMode value);
-template <> LightMode StringToEnum<LightMode>(const std::string& value);
 void NifStream( LightMode & val, istream& in, uint version = 0 );
 void NifStream( LightMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, LightMode const & val );
@@ -69,8 +59,6 @@ typedef enum MipMapFormat : uint {
 	MIP_FMT_DEFAULT = 2, /*!< Use default setting. */
 } MipMapFormat;
 
-template <> std::string EnumToString<MipMapFormat>(MipMapFormat value);
-template <> MipMapFormat StringToEnum<MipMapFormat>(const std::string& value);
 void NifStream( MipMapFormat & val, istream& in, uint version = 0 );
 void NifStream( MipMapFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, MipMapFormat const & val );
@@ -86,8 +74,6 @@ typedef enum AlphaFormat : uint {
 	ALPHA_DEFAULT = 3, /*!< Use default setting. */
 } AlphaFormat;
 
-template <> std::string EnumToString<AlphaFormat>(AlphaFormat value);
-template <> AlphaFormat StringToEnum<AlphaFormat>(const std::string& value);
 void NifStream( AlphaFormat & val, istream& in, uint version = 0 );
 void NifStream( AlphaFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, AlphaFormat const & val );
@@ -107,8 +93,6 @@ typedef enum TexFilterMode : uint {
 	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */
 } TexFilterMode;
 
-template <> std::string EnumToString<TexFilterMode>(TexFilterMode value);
-template <> TexFilterMode StringToEnum<TexFilterMode>(const std::string& value);
 void NifStream( TexFilterMode & val, istream& in, uint version = 0 );
 void NifStream( TexFilterMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexFilterMode const & val );
@@ -128,8 +112,6 @@ typedef enum MotionQuality : byte {
 	MO_QUAL_NULL = 8, /*!< Null */
 } MotionQuality;
 
-template <> std::string EnumToString<MotionQuality>(MotionQuality value);
-template <> MotionQuality StringToEnum<MotionQuality>(const std::string& value);
 void NifStream( MotionQuality & val, istream& in, uint version = 0 );
 void NifStream( MotionQuality const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, MotionQuality const & val );
@@ -199,8 +181,6 @@ typedef enum OblivionLayer : uint {
 	OL_NULL = 57, /*!< Null */
 } OblivionLayer;
 
-template <> std::string EnumToString<OblivionLayer>(OblivionLayer value);
-template <> OblivionLayer StringToEnum<OblivionLayer>(const std::string& value);
 void NifStream( OblivionLayer & val, istream& in, uint version = 0 );
 void NifStream( OblivionLayer const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, OblivionLayer const & val );
@@ -217,8 +197,6 @@ typedef enum KeyType : uint {
 	UNKNOWN_KEY = 5, /*!< Unknown.  Step function? */
 } KeyType;
 
-template <> std::string EnumToString<KeyType>(KeyType value);
-template <> KeyType StringToEnum<KeyType>(const std::string& value);
 void NifStream( KeyType & val, istream& in, uint version = 0 );
 void NifStream( KeyType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, KeyType const & val );
@@ -233,8 +211,6 @@ typedef enum VertMode : uint {
 	VERT_MODE_SRC_AMB_DIF = 2, /*!< Source Ambient/Diffuse. (Default) */
 } VertMode;
 
-template <> std::string EnumToString<VertMode>(VertMode value);
-template <> VertMode StringToEnum<VertMode>(const std::string& value);
 void NifStream( VertMode & val, istream& in, uint version = 0 );
 void NifStream( VertMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, VertMode const & val );
@@ -276,8 +252,6 @@ typedef enum HavokMaterial : uint {
 	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
 } HavokMaterial;
 
-template <> std::string EnumToString<HavokMaterial>(HavokMaterial value);
-template <> HavokMaterial StringToEnum<HavokMaterial>(const std::string& value);
 void NifStream( HavokMaterial & val, istream& in, uint version = 0 );
 void NifStream( HavokMaterial const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, HavokMaterial const & val );
@@ -292,8 +266,6 @@ typedef enum PixelFormat : uint {
 	PX_FMT_PAL8 = 2, /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete object. */
 } PixelFormat;
 
-template <> std::string EnumToString<PixelFormat>(PixelFormat value);
-template <> PixelFormat StringToEnum<PixelFormat>(const std::string& value);
 void NifStream( PixelFormat & val, istream& in, uint version = 0 );
 void NifStream( PixelFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelFormat const & val );
@@ -307,8 +279,6 @@ typedef enum CycleType : uint {
 	CYCLE_CLAMP = 2, /*!< Clamp */
 } CycleType;
 
-template <> std::string EnumToString<CycleType>(CycleType value);
-template <> CycleType StringToEnum<CycleType>(const std::string& value);
 void NifStream( CycleType & val, istream& in, uint version = 0 );
 void NifStream( CycleType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, CycleType const & val );
@@ -324,8 +294,6 @@ typedef enum ApplyMode : uint {
 	APPLY_HILIGHT2 = 4, /*!< PS2 Only.  Function Unknown. */
 } ApplyMode;
 
-template <> std::string EnumToString<ApplyMode>(ApplyMode value);
-template <> ApplyMode StringToEnum<ApplyMode>(const std::string& value);
 void NifStream( ApplyMode & val, istream& in, uint version = 0 );
 void NifStream( ApplyMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, ApplyMode const & val );
@@ -338,8 +306,6 @@ typedef enum FieldType : uint {
 	FIELD_POINT = 1, /*!< Point (fixed origin) */
 } FieldType;
 
-template <> std::string EnumToString<FieldType>(FieldType value);
-template <> FieldType StringToEnum<FieldType>(const std::string& value);
 void NifStream( FieldType & val, istream& in, uint version = 0 );
 void NifStream( FieldType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, FieldType const & val );
@@ -355,8 +321,6 @@ typedef enum BillboardMode : ushort {
 	RIGID_FACE_CENTER = 4, /*!< Rigid Face Center. */
 } BillboardMode;
 
-template <> std::string EnumToString<BillboardMode>(BillboardMode value);
-template <> BillboardMode StringToEnum<BillboardMode>(const std::string& value);
 void NifStream( BillboardMode & val, istream& in, uint version = 0 );
 void NifStream( BillboardMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, BillboardMode const & val );
@@ -375,8 +339,6 @@ typedef enum TexType : uint {
 	DECAL_1_MAP = 7, /*!< For placing images on the object like stickers. */
 } TexType;
 
-template <> std::string EnumToString<TexType>(TexType value);
-template <> TexType StringToEnum<TexType>(const std::string& value);
 void NifStream( TexType & val, istream& in, uint version = 0 );
 void NifStream( TexType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexType const & val );
@@ -392,8 +354,6 @@ typedef enum TexClampMode : uint {
 	WRAP_S_WRAP_T = 3, /*!< Wrap in both directions. */
 } TexClampMode;
 
-template <> std::string EnumToString<TexClampMode>(TexClampMode value);
-template <> TexClampMode StringToEnum<TexClampMode>(const std::string& value);
 void NifStream( TexClampMode & val, istream& in, uint version = 0 );
 void NifStream( TexClampMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexClampMode const & val );

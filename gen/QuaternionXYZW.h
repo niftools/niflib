@@ -10,7 +10,7 @@ namespace Niflib {
 
 
 /*!
- * A quaternion as it appears in the havok blocks.
+ * A quaternion as it appears in the havok objects.
  */
 struct NIFLIB_API QuaternionXYZW {
 	/*! Default Constructor */

@@ -22,7 +22,7 @@ struct NIFLIB_API TexDesc {
 	/*! Default Destructor */
 	~TexDesc();
 	/*!
-	 * NiSourceTexture block index.
+	 * NiSourceTexture object index.
 	 */
 	Ref<NiSourceTexture > source;
 	/*!

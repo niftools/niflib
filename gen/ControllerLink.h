@@ -17,10 +17,10 @@ class NiObject;
 class NiStringPalette;
 
 /*!
- * In a .kf file, this links to a controllable block, via its name (or
+ * In a .kf file, this links to a controllable object, via its name (or
  * for version 10.2.0.0 and up, a link and offset to a NiStringPalette
  * that contains the name), and a sequence of interpolators that apply to
- * this controllable block, via links.
+ * this controllable object, via links.
  */
 struct NIFLIB_API ControllerLink {
 	/*! Default Constructor */
@@ -48,14 +48,14 @@ struct NIFLIB_API ControllerLink {
 	 */
 	ushort unknownShort0;
 	/*!
-	 * Idle animations tend to have low values for this, and blocks that have
-	 * high values tend to correspond with the important parts of the
+	 * Idle animations tend to have low values for this, and NIF objects that
+	 * have high values tend to correspond with the important parts of the
 	 * animation.
 	 */
 	byte priority_;
 	/*!
 	 * Refers to the NiStringPalette which contains the name of the
-	 * controlled block.
+	 * controlled NIF object.
 	 */
 	Ref<NiStringPalette > stringPalette;
 	/*!
@@ -78,8 +78,8 @@ struct NIFLIB_API ControllerLink {
 	 */
 	uint propertyTypeOffset;
 	/*!
-	 * Probably the block type name of the controller in the NIF file that is
-	 * child of the controlled block.
+	 * Probably the object type name of the controller in the NIF file that
+	 * is child of the controlled object.
 	 */
 	string controllerType;
 	/*!
@@ -87,7 +87,7 @@ struct NIFLIB_API ControllerLink {
 	 * related to Interpolator (for example, a 'NiTransformInterpolator' will
 	 * have here a 'NiTransformController', etc.). Sometimes the type of
 	 * controller that links to the interpolator. Probably it refers to the
-	 * controller in the NIF file that is child of the controlled block, via
+	 * controller in the NIF file that is child of the controlled object, via
 	 * its type name.
 	 */
 	uint controllerTypeOffset;

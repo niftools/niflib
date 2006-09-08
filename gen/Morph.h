@@ -26,7 +26,7 @@ struct NIFLIB_API Morph {
 	 */
 	mutable uint numMorphKeys;
 	/*!
-	 * Unlike most blocks, the presense of this value is not conditional on
+	 * Unlike most objects, the presense of this value is not conditional on
 	 * there being keys.
 	 */
 	KeyType morphInterpolation;

@@ -41,7 +41,7 @@ struct NIFLIB_API Header {
 	 */
 	uint userVersion;
 	/*!
-	 * Number of file blocks.
+	 * Number of file objects.
 	 */
 	mutable uint numBlocks;
 	/*!
@@ -67,17 +67,17 @@ struct NIFLIB_API Header {
 	 */
 	ShortString exportScript_;
 	/*!
-	 * Number of block types in this NIF file.
+	 * Number of object types in this NIF file.
 	 */
 	mutable ushort numBlockTypes;
 	/*!
-	 * List of all block types used in this NIF file.
+	 * List of all object types used in this NIF file.
 	 */
 	vector<string > blockTypes;
 	/*!
-	 * Maps file blocks on their corresponding type: first file block is of
-	 * type block_types[block_type_index[0]], the second of
-	 * block_types[block_type_index[1]], etc.
+	 * Maps file objects on their corresponding type: first file object is of
+	 * type object_types[object_type_index[0]], the second of
+	 * object_types[object_type_index[1]], etc.
 	 */
 	vector<ushort > blockTypeIndex;
 	/*!

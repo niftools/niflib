@@ -44,11 +44,11 @@ struct NIFLIB_API TexSource {
 	byte unknownByte;
 	/*!
 	 * The original source filename of the image embedded by the referred
-	 * NiPixelData block.
+	 * NiPixelData object.
 	 */
 	string originalFileName_;
 	/*!
-	 * Pixel data block index.
+	 * Pixel data object index.
 	 */
 	Ref<NiPixelData > pixelData;
 };

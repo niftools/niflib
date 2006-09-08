@@ -3,67 +3,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include <string>
 #include <iostream>
-#include <strstream>
 #include "nif_enums.h"
-
-#ifndef _countof
-#  define _countof(x) (sizeof(x)/sizeof(x[0]))
-#endif
 
 namespace Niflib {
 
-typedef struct EnumLookupType {
-	uint value;
-	const char *name;
-	const char *desc;
-} EnumLookupType;
-
-static std::string EnumToString(uint value, EnumLookupType *table) {
-	for (EnumLookupType *itr = table; itr->name != NULL; ++itr) {
-		if (itr->value == value) return std::string(itr->name);
-	}
-	std::stringstream sstr;
-	sstr << value;
-	return sstr.str();
-}
-
-static uint StringToEnum(std::string value, EnumLookupType *table) {
-	for (EnumLookupType *itr = table; itr->name != NULL; ++itr) {
-		if (0 == value.compare(itr->name)) return itr->value;
-	}
-	uint retval = 0;
-	std::stringstream sstr(value);
-	sstr >> retval;
-	return retval;
-}
-
-static std::string FlagsToString(uint value, EnumLookupType *table) {
-	std::strstream sstr;
-	for (EnumLookupType *itr = table; itr->name != NULL; ++itr) {
-		if (itr->value && (itr->value & value) == itr->value) {
-			if (sstr.rdbuf()->pcount() > 0) sstr << "|";
-			sstr << itr->name;
-			value ^= itr->value;
-		}
-	}
-	if (value == 0 && sstr.rdbuf()->pcount() == 0) {
-		return EnumToString(value, table);
-	}
-	if (value != 0) sstr << value;
-	return string(sstr.str(), sstr.rdbuf()->pcount());
-}
-
-static uint StringToFlags(std::string value, EnumLookupType *table) {
-	uint retval = 0;
-	std::string::size_type start = 0;
-	while(start < value.length()) {
-		std::string::size_type end = value.find_first_of("|", start);
-		std::string::size_type len = (end == string.npos) ? end : end-start;
-		std::string subval = value.substr(start, len);
-		retval |= StringToEnum(subval, table);
-	}
-	return retval;
-}
 /* Template wrappers around Nif IO routines */
 template <typename T> inline T ReadValue(istream& in);
 template <typename T> inline void WriteValue( T val, ostream& out);
@@ -81,503 +24,359 @@ template <> inline void WriteValue<byte>  ( byte val,   ostream& out) { WriteByt
 /*!
  * ForceType
  */
-static EnumLookupType ForceTypeTable[] = {
-	{0, "FORCE_PLANAR", "FORCE_PLANAR"},
-	{1, "FORCE_SPHERICAL", "FORCE_SPHERICAL"},
-	{2, "FORCE_UNKNOWN", "FORCE_UNKNOWN"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<ForceType>(ForceType value) {
-	return EnumToString(uint(value), ForceTypeTable);
-}
-
-template <> ForceType StringToEnum<ForceType>(const std::string& value) {
-	return ForceType(StringToEnum(value, ForceTypeTable));
-}
-
 void NifStream( ForceType & val, istream& in, uint version ) { val = ForceType(ReadValue<uint>( in )); }
 void NifStream( ForceType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, ForceType const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, ForceType const & val ) {
+	switch ( val ) {
+		case FORCE_PLANAR: return out << "FORCE_PLANAR";
+		case FORCE_SPHERICAL: return out << "FORCE_SPHERICAL";
+		case FORCE_UNKNOWN: return out << "FORCE_UNKNOWN";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * PixelLayout
  */
-static EnumLookupType PixelLayoutTable[] = {
-	{0, "PIX_LAY_PALETTISED", "Texture is in 8-bit paletized format."},
-	{1, "PIX_LAY_HIGH_COLOR_16", "Texture is in 16-bit high color format."},
-	{2, "PIX_LAY_TRUE_COLOR_32", "Texture is in 32-bit true color format."},
-	{3, "PIX_LAY_COMPRESSED", "Texture is compressed."},
-	{4, "PIX_LAY_BUMPMAP", "Texture is a grayscale bump map."},
-	{5, "PIX_LAY_DEFAULT", "Use default setting."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<PixelLayout>(PixelLayout value) {
-	return EnumToString(uint(value), PixelLayoutTable);
-}
-
-template <> PixelLayout StringToEnum<PixelLayout>(const std::string& value) {
-	return PixelLayout(StringToEnum(value, PixelLayoutTable));
-}
-
 void NifStream( PixelLayout & val, istream& in, uint version ) { val = PixelLayout(ReadValue<uint>( in )); }
 void NifStream( PixelLayout const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, PixelLayout const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, PixelLayout const & val ) {
+	switch ( val ) {
+		case PIX_LAY_PALETTISED: return out << "PIX_LAY_PALETTISED";
+		case PIX_LAY_HIGH_COLOR_16: return out << "PIX_LAY_HIGH_COLOR_16";
+		case PIX_LAY_TRUE_COLOR_32: return out << "PIX_LAY_TRUE_COLOR_32";
+		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
+		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
+		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * LightMode
  */
-static EnumLookupType LightModeTable[] = {
-	{0, "LIGHT_MODE_EMISSIVE", "Emissive."},
-	{1, "LIGHT_MODE_EMI_AMB_DIF", "Emissive + Ambient + Diffuse. (Default)"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<LightMode>(LightMode value) {
-	return EnumToString(uint(value), LightModeTable);
-}
-
-template <> LightMode StringToEnum<LightMode>(const std::string& value) {
-	return LightMode(StringToEnum(value, LightModeTable));
-}
-
 void NifStream( LightMode & val, istream& in, uint version ) { val = LightMode(ReadValue<uint>( in )); }
 void NifStream( LightMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, LightMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, LightMode const & val ) {
+	switch ( val ) {
+		case LIGHT_MODE_EMISSIVE: return out << "LIGHT_MODE_EMISSIVE";
+		case LIGHT_MODE_EMI_AMB_DIF: return out << "LIGHT_MODE_EMI_AMB_DIF";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * MipMapFormat
  */
-static EnumLookupType MipMapFormatTable[] = {
-	{0, "MIP_FMT_NO", "Texture does not use mip maps."},
-	{1, "MIP_FMT_YES", "Texture uses mip maps."},
-	{2, "MIP_FMT_DEFAULT", "Use default setting."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<MipMapFormat>(MipMapFormat value) {
-	return EnumToString(uint(value), MipMapFormatTable);
-}
-
-template <> MipMapFormat StringToEnum<MipMapFormat>(const std::string& value) {
-	return MipMapFormat(StringToEnum(value, MipMapFormatTable));
-}
-
 void NifStream( MipMapFormat & val, istream& in, uint version ) { val = MipMapFormat(ReadValue<uint>( in )); }
 void NifStream( MipMapFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, MipMapFormat const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, MipMapFormat const & val ) {
+	switch ( val ) {
+		case MIP_FMT_NO: return out << "MIP_FMT_NO";
+		case MIP_FMT_YES: return out << "MIP_FMT_YES";
+		case MIP_FMT_DEFAULT: return out << "MIP_FMT_DEFAULT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * AlphaFormat
  */
-static EnumLookupType AlphaFormatTable[] = {
-	{0, "ALPHA_NONE", "No alpha blending; the texture is fully opaque."},
-	{1, "ALPHA_BINARY", "Texture is either fully transparent or fully opaque.  There are no partially transparent areas."},
-	{2, "ALPHA_SMOOTH", "Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between."},
-	{3, "ALPHA_DEFAULT", "Use default setting."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<AlphaFormat>(AlphaFormat value) {
-	return EnumToString(uint(value), AlphaFormatTable);
-}
-
-template <> AlphaFormat StringToEnum<AlphaFormat>(const std::string& value) {
-	return AlphaFormat(StringToEnum(value, AlphaFormatTable));
-}
-
 void NifStream( AlphaFormat & val, istream& in, uint version ) { val = AlphaFormat(ReadValue<uint>( in )); }
 void NifStream( AlphaFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, AlphaFormat const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, AlphaFormat const & val ) {
+	switch ( val ) {
+		case ALPHA_NONE: return out << "ALPHA_NONE";
+		case ALPHA_BINARY: return out << "ALPHA_BINARY";
+		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
+		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * TexFilterMode
  */
-static EnumLookupType TexFilterModeTable[] = {
-	{0, "FILTER_NEAREST", "Simply uses the nearest pixel.  Very grainy."},
-	{1, "FILTER_BILERP", "Uses bilinear filtering."},
-	{2, "FILTER_TRILERP", "Uses trilinear filtering."},
-	{3, "FILTER_NEAREST_MIPNEAREST", "Uses the nearest pixel from the mipmap that is closest to the display size."},
-	{4, "FILTER_NEAREST_MIPLERP", "Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result."},
-	{5, "FILTER_BILERP_MIPNEAREST", "Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<TexFilterMode>(TexFilterMode value) {
-	return EnumToString(uint(value), TexFilterModeTable);
-}
-
-template <> TexFilterMode StringToEnum<TexFilterMode>(const std::string& value) {
-	return TexFilterMode(StringToEnum(value, TexFilterModeTable));
-}
-
 void NifStream( TexFilterMode & val, istream& in, uint version ) { val = TexFilterMode(ReadValue<uint>( in )); }
 void NifStream( TexFilterMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, TexFilterMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, TexFilterMode const & val ) {
+	switch ( val ) {
+		case FILTER_NEAREST: return out << "FILTER_NEAREST";
+		case FILTER_BILERP: return out << "FILTER_BILERP";
+		case FILTER_TRILERP: return out << "FILTER_TRILERP";
+		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
+		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
+		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * MotionQuality
  */
-static EnumLookupType MotionQualityTable[] = {
-	{0, "MO_QUAL_MOVING", "Moving"},
-	{1, "MO_QUAL_FIXED", "Fixed"},
-	{2, "MO_QUAL_KEYFRAMED", "Keyframed"},
-	{3, "MO_QUAL_MOVING2", "Moving(?)"},
-	{4, "MO_QUAL_MOVING3", "Moving(?)"},
-	{5, "MO_QUAL_CRITICAL", "Critical"},
-	{6, "MO_QUAL_BULLET", "Bullet"},
-	{7, "MO_QUAL_USER", "User"},
-	{8, "MO_QUAL_NULL", "Null"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<MotionQuality>(MotionQuality value) {
-	return EnumToString(uint(value), MotionQualityTable);
-}
-
-template <> MotionQuality StringToEnum<MotionQuality>(const std::string& value) {
-	return MotionQuality(StringToEnum(value, MotionQualityTable));
-}
-
 void NifStream( MotionQuality & val, istream& in, uint version ) { val = MotionQuality(ReadValue<byte>( in )); }
 void NifStream( MotionQuality const & val, ostream& out, uint version ) { WriteValue<byte>( val, out ); }
-ostream & operator<<( ostream & out, MotionQuality const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, MotionQuality const & val ) {
+	switch ( val ) {
+		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
+		case MO_QUAL_FIXED: return out << "MO_QUAL_FIXED";
+		case MO_QUAL_KEYFRAMED: return out << "MO_QUAL_KEYFRAMED";
+		case MO_QUAL_MOVING2: return out << "MO_QUAL_MOVING2";
+		case MO_QUAL_MOVING3: return out << "MO_QUAL_MOVING3";
+		case MO_QUAL_CRITICAL: return out << "MO_QUAL_CRITICAL";
+		case MO_QUAL_BULLET: return out << "MO_QUAL_BULLET";
+		case MO_QUAL_USER: return out << "MO_QUAL_USER";
+		case MO_QUAL_NULL: return out << "MO_QUAL_NULL";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * OblivionLayer
  */
-static EnumLookupType OblivionLayerTable[] = {
-	{0, "OL_UNIDENTIFIED", "Unidentified (white)"},
-	{1, "OL_STATIC", "Static (red)"},
-	{2, "OL_ANIM_STATIC", "AnimStatic (magenta)"},
-	{3, "OL_TRANSPARENT", "Transparent (light pink)"},
-	{4, "OL_CLUTTER", "Clutter (light blue)"},
-	{5, "OL_WEAPON", "Weapon (orange)"},
-	{6, "OL_PROJECTILE", "Projectile (light orange)"},
-	{7, "OL_SPELL", "Spell (cyan)"},
-	{8, "OL_BIPED", "Biped (green) Seems to apply to all creatures/NPCs"},
-	{9, "OL_TREES", "Trees (light brown)"},
-	{10, "OL_PROPS", "Props (magenta)"},
-	{11, "OL_WATER", "Water (cyan)"},
-	{12, "OL_TRIGGER", "Trigger (light grey)"},
-	{13, "OL_TERRAIN", "Terrain (light yellow)"},
-	{14, "OL_TRAP", "Trap (light grey)"},
-	{15, "OL_NONCOLLIDABLE", "NonCollidable (white)"},
-	{16, "OL_CLOUD_TRAP", "CloudTrap (greenish grey)"},
-	{17, "OL_GROUND", "Ground (none)"},
-	{18, "OL_PORTAL", "Portal (green)"},
-	{19, "OL_STAIRS", "Stairs (white)"},
-	{20, "OL_CHAR_CONTROLLER", "CharController (yellow)"},
-	{21, "OL_AVOID_BOX", "AvoidBox (dark yellow)"},
-	{22, "OL_UNKNOWN1", "? (white)"},
-	{23, "OL_UNKNOWN2", "? (white)"},
-	{24, "OL_CAMERA_PICK", "CameraPick (white)"},
-	{25, "OL_ITEM_PICK", "ItemPick (white)"},
-	{26, "OL_LINE_OF_SIGHT", "LineOfSight (white)"},
-	{27, "OL_PATH_PICK", "PathPick (white)"},
-	{28, "OL_CUSTOM_PICK_1", "CustomPick1 (white)"},
-	{29, "OL_CUSTOM_PICK_2", "CustomPick2 (white)"},
-	{30, "OL_SPELL_EXPLOSION", "SpellExplosion (white)"},
-	{31, "OL_DROPPING_PICK", "DroppingPick (white)"},
-	{32, "OL_OTHER", "Other (white)"},
-	{33, "OL_HEAD", "Head"},
-	{34, "OL_BODY", "Body"},
-	{35, "OL_SPINE1", "Spine1"},
-	{36, "OL_SPINE2", "Spine2"},
-	{37, "OL_L_UPPER_ARM", "LUpperArm"},
-	{38, "OL_L_FOREARM", "LForeArm"},
-	{39, "OL_L_HAND", "LHand"},
-	{40, "OL_L_THIGH", "LThigh"},
-	{41, "OL_L_CALF", "LCalf"},
-	{42, "OL_L_FOOT", "LFoot"},
-	{43, "OL_R_UPPER_ARM", "RUpperArm"},
-	{44, "OL_R_FOREARM", "RForeArm"},
-	{45, "OL_R_HAND", "RHand"},
-	{46, "OL_R_THIGH", "RThigh"},
-	{47, "OL_R_CALF", "RCalf"},
-	{48, "OL_R_FOOT", "RFoot"},
-	{49, "OL_TAIL", "Tail"},
-	{50, "OL_SIDE_WEAPON", "SideWeapon"},
-	{51, "OL_SHEILD", "Shield"},
-	{52, "OL_QUIVER", "Quiver"},
-	{53, "OL_BACK_WEAPON", "BackWeapon"},
-	{54, "OL_BACK_WEAPON2", "BackWeapon (?)"},
-	{55, "OL_PONYTAIL", "PonyTail"},
-	{56, "OL_WING", "Wing"},
-	{57, "OL_NULL", "Null"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<OblivionLayer>(OblivionLayer value) {
-	return EnumToString(uint(value), OblivionLayerTable);
-}
-
-template <> OblivionLayer StringToEnum<OblivionLayer>(const std::string& value) {
-	return OblivionLayer(StringToEnum(value, OblivionLayerTable));
-}
-
 void NifStream( OblivionLayer & val, istream& in, uint version ) { val = OblivionLayer(ReadValue<uint>( in )); }
 void NifStream( OblivionLayer const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, OblivionLayer const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, OblivionLayer const & val ) {
+	switch ( val ) {
+		case OL_UNIDENTIFIED: return out << "OL_UNIDENTIFIED";
+		case OL_STATIC: return out << "OL_STATIC";
+		case OL_ANIM_STATIC: return out << "OL_ANIM_STATIC";
+		case OL_TRANSPARENT: return out << "OL_TRANSPARENT";
+		case OL_CLUTTER: return out << "OL_CLUTTER";
+		case OL_WEAPON: return out << "OL_WEAPON";
+		case OL_PROJECTILE: return out << "OL_PROJECTILE";
+		case OL_SPELL: return out << "OL_SPELL";
+		case OL_BIPED: return out << "OL_BIPED";
+		case OL_TREES: return out << "OL_TREES";
+		case OL_PROPS: return out << "OL_PROPS";
+		case OL_WATER: return out << "OL_WATER";
+		case OL_TRIGGER: return out << "OL_TRIGGER";
+		case OL_TERRAIN: return out << "OL_TERRAIN";
+		case OL_TRAP: return out << "OL_TRAP";
+		case OL_NONCOLLIDABLE: return out << "OL_NONCOLLIDABLE";
+		case OL_CLOUD_TRAP: return out << "OL_CLOUD_TRAP";
+		case OL_GROUND: return out << "OL_GROUND";
+		case OL_PORTAL: return out << "OL_PORTAL";
+		case OL_STAIRS: return out << "OL_STAIRS";
+		case OL_CHAR_CONTROLLER: return out << "OL_CHAR_CONTROLLER";
+		case OL_AVOID_BOX: return out << "OL_AVOID_BOX";
+		case OL_UNKNOWN1: return out << "OL_UNKNOWN1";
+		case OL_UNKNOWN2: return out << "OL_UNKNOWN2";
+		case OL_CAMERA_PICK: return out << "OL_CAMERA_PICK";
+		case OL_ITEM_PICK: return out << "OL_ITEM_PICK";
+		case OL_LINE_OF_SIGHT: return out << "OL_LINE_OF_SIGHT";
+		case OL_PATH_PICK: return out << "OL_PATH_PICK";
+		case OL_CUSTOM_PICK_1: return out << "OL_CUSTOM_PICK_1";
+		case OL_CUSTOM_PICK_2: return out << "OL_CUSTOM_PICK_2";
+		case OL_SPELL_EXPLOSION: return out << "OL_SPELL_EXPLOSION";
+		case OL_DROPPING_PICK: return out << "OL_DROPPING_PICK";
+		case OL_OTHER: return out << "OL_OTHER";
+		case OL_HEAD: return out << "OL_HEAD";
+		case OL_BODY: return out << "OL_BODY";
+		case OL_SPINE1: return out << "OL_SPINE1";
+		case OL_SPINE2: return out << "OL_SPINE2";
+		case OL_L_UPPER_ARM: return out << "OL_L_UPPER_ARM";
+		case OL_L_FOREARM: return out << "OL_L_FOREARM";
+		case OL_L_HAND: return out << "OL_L_HAND";
+		case OL_L_THIGH: return out << "OL_L_THIGH";
+		case OL_L_CALF: return out << "OL_L_CALF";
+		case OL_L_FOOT: return out << "OL_L_FOOT";
+		case OL_R_UPPER_ARM: return out << "OL_R_UPPER_ARM";
+		case OL_R_FOREARM: return out << "OL_R_FOREARM";
+		case OL_R_HAND: return out << "OL_R_HAND";
+		case OL_R_THIGH: return out << "OL_R_THIGH";
+		case OL_R_CALF: return out << "OL_R_CALF";
+		case OL_R_FOOT: return out << "OL_R_FOOT";
+		case OL_TAIL: return out << "OL_TAIL";
+		case OL_SIDE_WEAPON: return out << "OL_SIDE_WEAPON";
+		case OL_SHEILD: return out << "OL_SHEILD";
+		case OL_QUIVER: return out << "OL_QUIVER";
+		case OL_BACK_WEAPON: return out << "OL_BACK_WEAPON";
+		case OL_BACK_WEAPON2: return out << "OL_BACK_WEAPON2";
+		case OL_PONYTAIL: return out << "OL_PONYTAIL";
+		case OL_WING: return out << "OL_WING";
+		case OL_NULL: return out << "OL_NULL";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * KeyType
  */
-static EnumLookupType KeyTypeTable[] = {
-	{1, "LINEAR_KEY", "Use linear interpolation."},
-	{2, "QUADRATIC_KEY", "Use quadratic interpolation.  Forward and back tangents will be stored."},
-	{3, "TBC_KEY", "Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored."},
-	{4, "XYZ_ROTATION_KEY", "For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions."},
-	{5, "UNKNOWN_KEY", "Unknown.  Step function?"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<KeyType>(KeyType value) {
-	return EnumToString(uint(value), KeyTypeTable);
-}
-
-template <> KeyType StringToEnum<KeyType>(const std::string& value) {
-	return KeyType(StringToEnum(value, KeyTypeTable));
-}
-
 void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadValue<uint>( in )); }
 void NifStream( KeyType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, KeyType const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, KeyType const & val ) {
+	switch ( val ) {
+		case LINEAR_KEY: return out << "LINEAR_KEY";
+		case QUADRATIC_KEY: return out << "QUADRATIC_KEY";
+		case TBC_KEY: return out << "TBC_KEY";
+		case XYZ_ROTATION_KEY: return out << "XYZ_ROTATION_KEY";
+		case UNKNOWN_KEY: return out << "UNKNOWN_KEY";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * VertMode
  */
-static EnumLookupType VertModeTable[] = {
-	{0, "VERT_MODE_SRC_IGNORE", "Source Ignore."},
-	{1, "VERT_MODE_SRC_EMISSIVE", "Source Emissive."},
-	{2, "VERT_MODE_SRC_AMB_DIF", "Source Ambient/Diffuse. (Default)"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<VertMode>(VertMode value) {
-	return EnumToString(uint(value), VertModeTable);
-}
-
-template <> VertMode StringToEnum<VertMode>(const std::string& value) {
-	return VertMode(StringToEnum(value, VertModeTable));
-}
-
 void NifStream( VertMode & val, istream& in, uint version ) { val = VertMode(ReadValue<uint>( in )); }
 void NifStream( VertMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, VertMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, VertMode const & val ) {
+	switch ( val ) {
+		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
+		case VERT_MODE_SRC_EMISSIVE: return out << "VERT_MODE_SRC_EMISSIVE";
+		case VERT_MODE_SRC_AMB_DIF: return out << "VERT_MODE_SRC_AMB_DIF";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * HavokMaterial
  */
-static EnumLookupType HavokMaterialTable[] = {
-	{0, "HAV_MAT_STONE", "Stone"},
-	{1, "HAV_MAT_CLOTH", "Cloth"},
-	{2, "HAV_MAT_DIRT", "Dirt"},
-	{3, "HAV_MAT_GLASS", "Glass"},
-	{4, "HAV_MAT_GRASS", "Grass"},
-	{5, "HAV_MAT_METAL", "Metal"},
-	{6, "HAV_MAT_ORGANIC", "Organic"},
-	{7, "HAV_MAT_SKIN", "Skin"},
-	{8, "HAV_MAT_WATER", "Water"},
-	{9, "HAV_MAT_WOOD", "Wood"},
-	{10, "HAV_MAT_HEAVY_STONE", "Heavy Stone"},
-	{11, "HAV_MAT_HEAVY_METAL", "Heavy Metal"},
-	{12, "HAV_MAT_HEAVY_WOOD", "Heavy Wood"},
-	{13, "HAV_MAT_CHAIN", "Chain"},
-	{14, "HAV_MAT_SNOW", "Snow"},
-	{15, "HAV_MAT_STONE_STAIRS", "Stone Stairs"},
-	{16, "HAV_MAT_CLOTH_STAIRS", "Cloth Stairs"},
-	{17, "HAV_MAT_DIRT_STAIRS", "Dirt Stairs"},
-	{18, "HAV_MAT_GLASS_STAIRS", "Glass Stairs"},
-	{19, "HAV_MAT_GRASS_STAIRS", "Grass Stairs"},
-	{20, "HAV_MAT_METAL_STAIRS", "Metal Stairs"},
-	{21, "HAV_MAT_ORGANIC_STAIRS", "Organic Stairs"},
-	{22, "HAV_MAT_SKIN_STAIRS", "Skin Stairs"},
-	{23, "HAV_MAT_WATER_STAIRS", "Water Stairs"},
-	{24, "HAV_MAT_WOOD_STAIRS", "Wood Stairs"},
-	{25, "HAV_MAT_HEAVY_STONE_STAIRS", "Heavy Stone Stairs"},
-	{26, "HAV_MAT_HEAVY_METAL_STAIRS", "Heavy Metal Stairs"},
-	{27, "HAV_MAT_HEAVY_WOOD_STAIRS", "Heavy Wood Stairs"},
-	{28, "HAV_MAT_CHAIN_STAIRS", "Chain Stairs"},
-	{29, "HAV_MAT_SNOW_STAIRS", "Snow Stairs"},
-	{30, "HAV_MAT_ELEVATOR", "Elevator"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<HavokMaterial>(HavokMaterial value) {
-	return EnumToString(uint(value), HavokMaterialTable);
-}
-
-template <> HavokMaterial StringToEnum<HavokMaterial>(const std::string& value) {
-	return HavokMaterial(StringToEnum(value, HavokMaterialTable));
-}
-
 void NifStream( HavokMaterial & val, istream& in, uint version ) { val = HavokMaterial(ReadValue<uint>( in )); }
 void NifStream( HavokMaterial const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, HavokMaterial const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, HavokMaterial const & val ) {
+	switch ( val ) {
+		case HAV_MAT_STONE: return out << "HAV_MAT_STONE";
+		case HAV_MAT_CLOTH: return out << "HAV_MAT_CLOTH";
+		case HAV_MAT_DIRT: return out << "HAV_MAT_DIRT";
+		case HAV_MAT_GLASS: return out << "HAV_MAT_GLASS";
+		case HAV_MAT_GRASS: return out << "HAV_MAT_GRASS";
+		case HAV_MAT_METAL: return out << "HAV_MAT_METAL";
+		case HAV_MAT_ORGANIC: return out << "HAV_MAT_ORGANIC";
+		case HAV_MAT_SKIN: return out << "HAV_MAT_SKIN";
+		case HAV_MAT_WATER: return out << "HAV_MAT_WATER";
+		case HAV_MAT_WOOD: return out << "HAV_MAT_WOOD";
+		case HAV_MAT_HEAVY_STONE: return out << "HAV_MAT_HEAVY_STONE";
+		case HAV_MAT_HEAVY_METAL: return out << "HAV_MAT_HEAVY_METAL";
+		case HAV_MAT_HEAVY_WOOD: return out << "HAV_MAT_HEAVY_WOOD";
+		case HAV_MAT_CHAIN: return out << "HAV_MAT_CHAIN";
+		case HAV_MAT_SNOW: return out << "HAV_MAT_SNOW";
+		case HAV_MAT_STONE_STAIRS: return out << "HAV_MAT_STONE_STAIRS";
+		case HAV_MAT_CLOTH_STAIRS: return out << "HAV_MAT_CLOTH_STAIRS";
+		case HAV_MAT_DIRT_STAIRS: return out << "HAV_MAT_DIRT_STAIRS";
+		case HAV_MAT_GLASS_STAIRS: return out << "HAV_MAT_GLASS_STAIRS";
+		case HAV_MAT_GRASS_STAIRS: return out << "HAV_MAT_GRASS_STAIRS";
+		case HAV_MAT_METAL_STAIRS: return out << "HAV_MAT_METAL_STAIRS";
+		case HAV_MAT_ORGANIC_STAIRS: return out << "HAV_MAT_ORGANIC_STAIRS";
+		case HAV_MAT_SKIN_STAIRS: return out << "HAV_MAT_SKIN_STAIRS";
+		case HAV_MAT_WATER_STAIRS: return out << "HAV_MAT_WATER_STAIRS";
+		case HAV_MAT_WOOD_STAIRS: return out << "HAV_MAT_WOOD_STAIRS";
+		case HAV_MAT_HEAVY_STONE_STAIRS: return out << "HAV_MAT_HEAVY_STONE_STAIRS";
+		case HAV_MAT_HEAVY_METAL_STAIRS: return out << "HAV_MAT_HEAVY_METAL_STAIRS";
+		case HAV_MAT_HEAVY_WOOD_STAIRS: return out << "HAV_MAT_HEAVY_WOOD_STAIRS";
+		case HAV_MAT_CHAIN_STAIRS: return out << "HAV_MAT_CHAIN_STAIRS";
+		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
+		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * PixelFormat
  */
-static EnumLookupType PixelFormatTable[] = {
-	{0, "PX_FMT_RGB8", "24-bit color: uses 8 bit to store each red, blue, and green component."},
-	{1, "PX_FMT_RGBA8", "32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component."},
-	{2, "PX_FMT_PAL8", "8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete object."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<PixelFormat>(PixelFormat value) {
-	return EnumToString(uint(value), PixelFormatTable);
-}
-
-template <> PixelFormat StringToEnum<PixelFormat>(const std::string& value) {
-	return PixelFormat(StringToEnum(value, PixelFormatTable));
-}
-
 void NifStream( PixelFormat & val, istream& in, uint version ) { val = PixelFormat(ReadValue<uint>( in )); }
 void NifStream( PixelFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, PixelFormat const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, PixelFormat const & val ) {
+	switch ( val ) {
+		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
+		case PX_FMT_RGBA8: return out << "PX_FMT_RGBA8";
+		case PX_FMT_PAL8: return out << "PX_FMT_PAL8";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * CycleType
  */
-static EnumLookupType CycleTypeTable[] = {
-	{0, "CYCLE_LOOP", "Loop"},
-	{1, "CYCLE_REVERSE", "Reverse"},
-	{2, "CYCLE_CLAMP", "Clamp"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<CycleType>(CycleType value) {
-	return EnumToString(uint(value), CycleTypeTable);
-}
-
-template <> CycleType StringToEnum<CycleType>(const std::string& value) {
-	return CycleType(StringToEnum(value, CycleTypeTable));
-}
-
 void NifStream( CycleType & val, istream& in, uint version ) { val = CycleType(ReadValue<uint>( in )); }
 void NifStream( CycleType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, CycleType const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, CycleType const & val ) {
+	switch ( val ) {
+		case CYCLE_LOOP: return out << "CYCLE_LOOP";
+		case CYCLE_REVERSE: return out << "CYCLE_REVERSE";
+		case CYCLE_CLAMP: return out << "CYCLE_CLAMP";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * ApplyMode
  */
-static EnumLookupType ApplyModeTable[] = {
-	{0, "APPLY_REPLACE", "Replaces existing color"},
-	{1, "APPLY_DECAL", "For placing images on the object like stickers."},
-	{2, "APPLY_MODULATE", "Modulates existing color. (Default)"},
-	{3, "APPLY_HILIGHT", "PS2 Only.  Function Unknown."},
-	{4, "APPLY_HILIGHT2", "PS2 Only.  Function Unknown."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<ApplyMode>(ApplyMode value) {
-	return EnumToString(uint(value), ApplyModeTable);
-}
-
-template <> ApplyMode StringToEnum<ApplyMode>(const std::string& value) {
-	return ApplyMode(StringToEnum(value, ApplyModeTable));
-}
-
 void NifStream( ApplyMode & val, istream& in, uint version ) { val = ApplyMode(ReadValue<uint>( in )); }
 void NifStream( ApplyMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, ApplyMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, ApplyMode const & val ) {
+	switch ( val ) {
+		case APPLY_REPLACE: return out << "APPLY_REPLACE";
+		case APPLY_DECAL: return out << "APPLY_DECAL";
+		case APPLY_MODULATE: return out << "APPLY_MODULATE";
+		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
+		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * FieldType
  */
-static EnumLookupType FieldTypeTable[] = {
-	{0, "FIELD_WIND", "Wind (fixed direction)"},
-	{1, "FIELD_POINT", "Point (fixed origin)"},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<FieldType>(FieldType value) {
-	return EnumToString(uint(value), FieldTypeTable);
-}
-
-template <> FieldType StringToEnum<FieldType>(const std::string& value) {
-	return FieldType(StringToEnum(value, FieldTypeTable));
-}
-
 void NifStream( FieldType & val, istream& in, uint version ) { val = FieldType(ReadValue<uint>( in )); }
 void NifStream( FieldType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, FieldType const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, FieldType const & val ) {
+	switch ( val ) {
+		case FIELD_WIND: return out << "FIELD_WIND";
+		case FIELD_POINT: return out << "FIELD_POINT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * BillboardMode
  */
-static EnumLookupType BillboardModeTable[] = {
-	{0, "ALWAYS_FACE_CAMERA", "The billboard will always face the camera."},
-	{1, "ROTATE_ABOUT_UP", "The billboard will only rotate around the up axis."},
-	{2, "RIGID_FACE_CAMERA", "Rigid Face Camera."},
-	{3, "ALWAYS_FACE_CENTER", "Always Face Center."},
-	{4, "RIGID_FACE_CENTER", "Rigid Face Center."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<BillboardMode>(BillboardMode value) {
-	return EnumToString(uint(value), BillboardModeTable);
-}
-
-template <> BillboardMode StringToEnum<BillboardMode>(const std::string& value) {
-	return BillboardMode(StringToEnum(value, BillboardModeTable));
-}
-
 void NifStream( BillboardMode & val, istream& in, uint version ) { val = BillboardMode(ReadValue<ushort>( in )); }
 void NifStream( BillboardMode const & val, ostream& out, uint version ) { WriteValue<ushort>( val, out ); }
-ostream & operator<<( ostream & out, BillboardMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, BillboardMode const & val ) {
+	switch ( val ) {
+		case ALWAYS_FACE_CAMERA: return out << "ALWAYS_FACE_CAMERA";
+		case ROTATE_ABOUT_UP: return out << "ROTATE_ABOUT_UP";
+		case RIGID_FACE_CAMERA: return out << "RIGID_FACE_CAMERA";
+		case ALWAYS_FACE_CENTER: return out << "ALWAYS_FACE_CENTER";
+		case RIGID_FACE_CENTER: return out << "RIGID_FACE_CENTER";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * TexType
  */
-static EnumLookupType TexTypeTable[] = {
-	{0, "BASE_MAP", "The basic texture used by most meshes."},
-	{1, "DARK_MAP", "Used to darken the model with false lighting."},
-	{2, "DETAIL_MAP", "Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view."},
-	{3, "GLOSS_MAP", "Allows the specularity (glossyness) of an object to differ across its surface."},
-	{4, "GLOW_MAP", "Creates a glowing effect.  Basically an incandescence map."},
-	{5, "BUMP_MAP", "Used to make the object appear to have more detail than it really does."},
-	{6, "DECAL_0_MAP", "For placing images on the object like stickers."},
-	{7, "DECAL_1_MAP", "For placing images on the object like stickers."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<TexType>(TexType value) {
-	return EnumToString(uint(value), TexTypeTable);
-}
-
-template <> TexType StringToEnum<TexType>(const std::string& value) {
-	return TexType(StringToEnum(value, TexTypeTable));
-}
-
 void NifStream( TexType & val, istream& in, uint version ) { val = TexType(ReadValue<uint>( in )); }
 void NifStream( TexType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, TexType const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, TexType const & val ) {
+	switch ( val ) {
+		case BASE_MAP: return out << "BASE_MAP";
+		case DARK_MAP: return out << "DARK_MAP";
+		case DETAIL_MAP: return out << "DETAIL_MAP";
+		case GLOSS_MAP: return out << "GLOSS_MAP";
+		case GLOW_MAP: return out << "GLOW_MAP";
+		case BUMP_MAP: return out << "BUMP_MAP";
+		case DECAL_0_MAP: return out << "DECAL_0_MAP";
+		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 /*!
  * TexClampMode
  */
-static EnumLookupType TexClampModeTable[] = {
-	{0, "CLAMP_S_CLAMP_T", "Clamp in both directions."},
-	{1, "CLAMP_S_WRAP_T", "Clamp in the S(U) direction but wrap in the T(V) direction."},
-	{2, "WRAP_S_CLAMP_T", "Wrap in the S(U) direction but clamp in the T(V) direction."},
-	{3, "WRAP_S_WRAP_T", "Wrap in both directions."},
-	{0, NULL, NULL},
-};
-
-template <> std::string EnumToString<TexClampMode>(TexClampMode value) {
-	return EnumToString(uint(value), TexClampModeTable);
-}
-
-template <> TexClampMode StringToEnum<TexClampMode>(const std::string& value) {
-	return TexClampMode(StringToEnum(value, TexClampModeTable));
-}
-
 void NifStream( TexClampMode & val, istream& in, uint version ) { val = TexClampMode(ReadValue<uint>( in )); }
 void NifStream( TexClampMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
-ostream & operator<<( ostream & out, TexClampMode const & val ) { return out << EnumToString(val); }
+ostream & operator<<( ostream & out, TexClampMode const & val ) {
+	switch ( val ) {
+		case CLAMP_S_CLAMP_T: return out << "CLAMP_S_CLAMP_T";
+		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
+		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
+		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
 
 }

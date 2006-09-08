@@ -10,7 +10,7 @@ namespace Niflib {
 
 
 /*!
- * Description of a MipMap within a NiPixelData block.
+ * Description of a MipMap within a NiPixelData object.
  */
 struct NIFLIB_API MipMap {
 	/*! Default Constructor */
