@@ -36,6 +36,8 @@
 #include "gen/TBC.h"
 #include "gen/TexDesc.h"
 #include "gen/TexSource.h"
+#include "gen/enums.h"
+#include "gen/enums_intl.h"
 
 //Only pre-compile generated headers
 //#include "obj/AbhkConstraint.h"

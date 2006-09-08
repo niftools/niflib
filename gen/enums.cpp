@@ -3,29 +3,25 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include <string>
 #include <iostream>
-#include "nif_enums.h"
+#include "enums.h"
+#include "enums_intl.h"
 
 namespace Niflib {
 
-/* Template wrappers around Nif IO routines */
-template <typename T> inline T ReadValue(istream& in);
-template <typename T> inline void WriteValue( T val, ostream& out);
-template <> inline int    ReadValue<int>   (istream& in) { return ReadInt( in ); }
-template <> inline uint   ReadValue<uint>  (istream& in) { return ReadUInt( in ); }
-template <> inline ushort ReadValue<ushort>(istream& in) { return ReadUShort( in ); }
-template <> inline short  ReadValue<short> (istream& in) { return ReadShort( in ); }
-template <> inline byte   ReadValue<byte>  (istream& in) { return ReadByte( in ); }
-template <> inline void WriteValue<int>   ( int val,    ostream& out) { WriteInt( val, out ); }
-template <> inline void WriteValue<uint>  ( uint val,   ostream& out) { WriteUInt( val, out ); }
-template <> inline void WriteValue<ushort>( ushort val, ostream& out) { WriteUShort( val, out ); }
-template <> inline void WriteValue<short> ( short val,  ostream& out) { WriteShort( val, out ); }
-template <> inline void WriteValue<byte>  ( byte val,   ostream& out) { WriteByte( val, out ); }
 
 /*!
  * ForceType
  */
-void NifStream( ForceType & val, istream& in, uint version ) { val = ForceType(ReadValue<uint>( in )); }
-void NifStream( ForceType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( ForceType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = ForceType(temp);
+}
+
+void NifStream( ForceType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, ForceType const & val ) {
 	switch ( val ) {
 		case FORCE_PLANAR: return out << "FORCE_PLANAR";
@@ -38,8 +34,16 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 /*!
  * PixelLayout
  */
-void NifStream( PixelLayout & val, istream& in, uint version ) { val = PixelLayout(ReadValue<uint>( in )); }
-void NifStream( PixelLayout const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( PixelLayout & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = PixelLayout(temp);
+}
+
+void NifStream( PixelLayout const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, PixelLayout const & val ) {
 	switch ( val ) {
 		case PIX_LAY_PALETTISED: return out << "PIX_LAY_PALETTISED";
@@ -55,8 +59,16 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 /*!
  * LightMode
  */
-void NifStream( LightMode & val, istream& in, uint version ) { val = LightMode(ReadValue<uint>( in )); }
-void NifStream( LightMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( LightMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = LightMode(temp);
+}
+
+void NifStream( LightMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, LightMode const & val ) {
 	switch ( val ) {
 		case LIGHT_MODE_EMISSIVE: return out << "LIGHT_MODE_EMISSIVE";
@@ -68,8 +80,16 @@ ostream & operator<<( ostream & out, LightMode const & val ) {
 /*!
  * MipMapFormat
  */
-void NifStream( MipMapFormat & val, istream& in, uint version ) { val = MipMapFormat(ReadValue<uint>( in )); }
-void NifStream( MipMapFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( MipMapFormat & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = MipMapFormat(temp);
+}
+
+void NifStream( MipMapFormat const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 	switch ( val ) {
 		case MIP_FMT_NO: return out << "MIP_FMT_NO";
@@ -82,8 +102,16 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 /*!
  * AlphaFormat
  */
-void NifStream( AlphaFormat & val, istream& in, uint version ) { val = AlphaFormat(ReadValue<uint>( in )); }
-void NifStream( AlphaFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( AlphaFormat & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = AlphaFormat(temp);
+}
+
+void NifStream( AlphaFormat const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 	switch ( val ) {
 		case ALPHA_NONE: return out << "ALPHA_NONE";
@@ -97,8 +125,16 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 /*!
  * TexFilterMode
  */
-void NifStream( TexFilterMode & val, istream& in, uint version ) { val = TexFilterMode(ReadValue<uint>( in )); }
-void NifStream( TexFilterMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( TexFilterMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexFilterMode(temp);
+}
+
+void NifStream( TexFilterMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 	switch ( val ) {
 		case FILTER_NEAREST: return out << "FILTER_NEAREST";
@@ -114,8 +150,16 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 /*!
  * MotionQuality
  */
-void NifStream( MotionQuality & val, istream& in, uint version ) { val = MotionQuality(ReadValue<byte>( in )); }
-void NifStream( MotionQuality const & val, ostream& out, uint version ) { WriteValue<byte>( val, out ); }
+void NifStream( MotionQuality & val, istream& in, uint version ) {
+	byte temp;
+	NifStream( temp, in, version );
+	val = MotionQuality(temp);
+}
+
+void NifStream( MotionQuality const & val, ostream& out, uint version ) {
+	NifStream( byte(val), out, version );
+}
+
 ostream & operator<<( ostream & out, MotionQuality const & val ) {
 	switch ( val ) {
 		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
@@ -134,8 +178,16 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 /*!
  * OblivionLayer
  */
-void NifStream( OblivionLayer & val, istream& in, uint version ) { val = OblivionLayer(ReadValue<uint>( in )); }
-void NifStream( OblivionLayer const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( OblivionLayer & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = OblivionLayer(temp);
+}
+
+void NifStream( OblivionLayer const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 	switch ( val ) {
 		case OL_UNIDENTIFIED: return out << "OL_UNIDENTIFIED";
@@ -203,8 +255,16 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 /*!
  * KeyType
  */
-void NifStream( KeyType & val, istream& in, uint version ) { val = KeyType(ReadValue<uint>( in )); }
-void NifStream( KeyType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( KeyType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = KeyType(temp);
+}
+
+void NifStream( KeyType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, KeyType const & val ) {
 	switch ( val ) {
 		case LINEAR_KEY: return out << "LINEAR_KEY";
@@ -219,8 +279,16 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 /*!
  * VertMode
  */
-void NifStream( VertMode & val, istream& in, uint version ) { val = VertMode(ReadValue<uint>( in )); }
-void NifStream( VertMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( VertMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = VertMode(temp);
+}
+
+void NifStream( VertMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, VertMode const & val ) {
 	switch ( val ) {
 		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
@@ -233,8 +301,16 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 /*!
  * HavokMaterial
  */
-void NifStream( HavokMaterial & val, istream& in, uint version ) { val = HavokMaterial(ReadValue<uint>( in )); }
-void NifStream( HavokMaterial const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( HavokMaterial & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = HavokMaterial(temp);
+}
+
+void NifStream( HavokMaterial const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 	switch ( val ) {
 		case HAV_MAT_STONE: return out << "HAV_MAT_STONE";
@@ -275,8 +351,16 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 /*!
  * PixelFormat
  */
-void NifStream( PixelFormat & val, istream& in, uint version ) { val = PixelFormat(ReadValue<uint>( in )); }
-void NifStream( PixelFormat const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( PixelFormat & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = PixelFormat(temp);
+}
+
+void NifStream( PixelFormat const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, PixelFormat const & val ) {
 	switch ( val ) {
 		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
@@ -289,8 +373,16 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 /*!
  * CycleType
  */
-void NifStream( CycleType & val, istream& in, uint version ) { val = CycleType(ReadValue<uint>( in )); }
-void NifStream( CycleType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( CycleType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = CycleType(temp);
+}
+
+void NifStream( CycleType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, CycleType const & val ) {
 	switch ( val ) {
 		case CYCLE_LOOP: return out << "CYCLE_LOOP";
@@ -303,8 +395,16 @@ ostream & operator<<( ostream & out, CycleType const & val ) {
 /*!
  * ApplyMode
  */
-void NifStream( ApplyMode & val, istream& in, uint version ) { val = ApplyMode(ReadValue<uint>( in )); }
-void NifStream( ApplyMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( ApplyMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = ApplyMode(temp);
+}
+
+void NifStream( ApplyMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, ApplyMode const & val ) {
 	switch ( val ) {
 		case APPLY_REPLACE: return out << "APPLY_REPLACE";
@@ -319,8 +419,16 @@ ostream & operator<<( ostream & out, ApplyMode const & val ) {
 /*!
  * FieldType
  */
-void NifStream( FieldType & val, istream& in, uint version ) { val = FieldType(ReadValue<uint>( in )); }
-void NifStream( FieldType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( FieldType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = FieldType(temp);
+}
+
+void NifStream( FieldType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, FieldType const & val ) {
 	switch ( val ) {
 		case FIELD_WIND: return out << "FIELD_WIND";
@@ -332,8 +440,16 @@ ostream & operator<<( ostream & out, FieldType const & val ) {
 /*!
  * BillboardMode
  */
-void NifStream( BillboardMode & val, istream& in, uint version ) { val = BillboardMode(ReadValue<ushort>( in )); }
-void NifStream( BillboardMode const & val, ostream& out, uint version ) { WriteValue<ushort>( val, out ); }
+void NifStream( BillboardMode & val, istream& in, uint version ) {
+	ushort temp;
+	NifStream( temp, in, version );
+	val = BillboardMode(temp);
+}
+
+void NifStream( BillboardMode const & val, ostream& out, uint version ) {
+	NifStream( ushort(val), out, version );
+}
+
 ostream & operator<<( ostream & out, BillboardMode const & val ) {
 	switch ( val ) {
 		case ALWAYS_FACE_CAMERA: return out << "ALWAYS_FACE_CAMERA";
@@ -348,8 +464,16 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 /*!
  * TexType
  */
-void NifStream( TexType & val, istream& in, uint version ) { val = TexType(ReadValue<uint>( in )); }
-void NifStream( TexType const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( TexType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexType(temp);
+}
+
+void NifStream( TexType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, TexType const & val ) {
 	switch ( val ) {
 		case BASE_MAP: return out << "BASE_MAP";
@@ -367,8 +491,16 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 /*!
  * TexClampMode
  */
-void NifStream( TexClampMode & val, istream& in, uint version ) { val = TexClampMode(ReadValue<uint>( in )); }
-void NifStream( TexClampMode const & val, ostream& out, uint version ) { WriteValue<uint>( val, out ); }
+void NifStream( TexClampMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexClampMode(temp);
+}
+
+void NifStream( TexClampMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
 ostream & operator<<( ostream & out, TexClampMode const & val ) {
 	switch ( val ) {
 		case CLAMP_S_CLAMP_T: return out << "CLAMP_S_CLAMP_T";

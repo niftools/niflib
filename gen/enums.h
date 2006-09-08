@@ -3,79 +3,67 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIF_ENUMS_H_
 #define _NIF_ENUMS_H_
 
-#include "nif_basic_types.h"
-
 namespace Niflib {
 
 /*!
  * The type of force?  May be more valid values.
  */
-typedef enum ForceType : uint {
+enum ForceType {
 	FORCE_PLANAR = 0, /*!< FORCE_PLANAR */
 	FORCE_SPHERICAL = 1, /*!< FORCE_SPHERICAL */
 	FORCE_UNKNOWN = 2, /*!< FORCE_UNKNOWN */
-} ForceType;
+};
 
-void NifStream( ForceType & val, istream& in, uint version = 0 );
-void NifStream( ForceType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, ForceType const & val );
 
 /*!
  * An unsigned 32-bit integer, describing the color depth of a texture.
  */
-typedef enum PixelLayout : uint {
+enum PixelLayout {
 	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
 	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
 	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
 	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
 	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
 	PIX_LAY_DEFAULT = 5, /*!< Use default setting. */
-} PixelLayout;
+};
 
-void NifStream( PixelLayout & val, istream& in, uint version = 0 );
-void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelLayout const & val );
 
 /*!
  * An unsigned 32-bit integer, describing how vertex colors influence
  * lighting.
  */
-typedef enum LightMode : uint {
+enum LightMode {
 	LIGHT_MODE_EMISSIVE = 0, /*!< Emissive. */
 	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. (Default) */
-} LightMode;
+};
 
-void NifStream( LightMode & val, istream& in, uint version = 0 );
-void NifStream( LightMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, LightMode const & val );
 
 /*!
  * An unsigned 32-bit integer, describing how mipmaps are handled in a
  * texture.
  */
-typedef enum MipMapFormat : uint {
+enum MipMapFormat {
 	MIP_FMT_NO = 0, /*!< Texture does not use mip maps. */
 	MIP_FMT_YES = 1, /*!< Texture uses mip maps. */
 	MIP_FMT_DEFAULT = 2, /*!< Use default setting. */
-} MipMapFormat;
+};
 
-void NifStream( MipMapFormat & val, istream& in, uint version = 0 );
-void NifStream( MipMapFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, MipMapFormat const & val );
 
 /*!
  * An unsigned 32-bit integer, describing how transparency is handled in
  * a texture.
  */
-typedef enum AlphaFormat : uint {
+enum AlphaFormat {
 	ALPHA_NONE = 0, /*!< No alpha blending; the texture is fully opaque. */
 	ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */
 	ALPHA_SMOOTH = 2, /*!< Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between. */
 	ALPHA_DEFAULT = 3, /*!< Use default setting. */
-} AlphaFormat;
+};
 
-void NifStream( AlphaFormat & val, istream& in, uint version = 0 );
-void NifStream( AlphaFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, AlphaFormat const & val );
 
 /*!
@@ -84,23 +72,21 @@ ostream & operator<<( ostream & out, AlphaFormat const & val );
  * displayed on the screen at a size other than their original
  * dimentions.
  */
-typedef enum TexFilterMode : uint {
+enum TexFilterMode {
 	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */
 	FILTER_BILERP = 1, /*!< Uses bilinear filtering. */
 	FILTER_TRILERP = 2, /*!< Uses trilinear filtering. */
 	FILTER_NEAREST_MIPNEAREST = 3, /*!< Uses the nearest pixel from the mipmap that is closest to the display size. */
 	FILTER_NEAREST_MIPLERP = 4, /*!< Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result. */
 	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */
-} TexFilterMode;
+};
 
-void NifStream( TexFilterMode & val, istream& in, uint version = 0 );
-void NifStream( TexFilterMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexFilterMode const & val );
 
 /*!
  * The motion type. Determines quality of motion?
  */
-typedef enum MotionQuality : byte {
+enum MotionQuality {
 	MO_QUAL_MOVING = 0, /*!< Moving */
 	MO_QUAL_FIXED = 1, /*!< Fixed */
 	MO_QUAL_KEYFRAMED = 2, /*!< Keyframed */
@@ -110,17 +96,15 @@ typedef enum MotionQuality : byte {
 	MO_QUAL_BULLET = 6, /*!< Bullet */
 	MO_QUAL_USER = 7, /*!< User */
 	MO_QUAL_NULL = 8, /*!< Null */
-} MotionQuality;
+};
 
-void NifStream( MotionQuality & val, istream& in, uint version = 0 );
-void NifStream( MotionQuality const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, MotionQuality const & val );
 
 /*!
  * Sets mesh color in Oblivion Construction Set.  Anything higher than 57
  * is also null.
  */
-typedef enum OblivionLayer : uint {
+enum OblivionLayer {
 	OL_UNIDENTIFIED = 0, /*!< Unidentified (white) */
 	OL_STATIC = 1, /*!< Static (red) */
 	OL_ANIM_STATIC = 2, /*!< AnimStatic (magenta) */
@@ -179,46 +163,40 @@ typedef enum OblivionLayer : uint {
 	OL_PONYTAIL = 55, /*!< PonyTail */
 	OL_WING = 56, /*!< Wing */
 	OL_NULL = 57, /*!< Null */
-} OblivionLayer;
+};
 
-void NifStream( OblivionLayer & val, istream& in, uint version = 0 );
-void NifStream( OblivionLayer const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, OblivionLayer const & val );
 
 /*!
  * The type of animation interpolation (blending) that will be used on
  * the associated key frames.
  */
-typedef enum KeyType : uint {
+enum KeyType {
 	LINEAR_KEY = 1, /*!< Use linear interpolation. */
 	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored. */
 	TBC_KEY = 3, /*!< Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored. */
 	XYZ_ROTATION_KEY = 4, /*!< For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions. */
 	UNKNOWN_KEY = 5, /*!< Unknown.  Step function? */
-} KeyType;
+};
 
-void NifStream( KeyType & val, istream& in, uint version = 0 );
-void NifStream( KeyType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, KeyType const & val );
 
 /*!
  * An unsigned 32-bit integer, which describes how to apply vertex
  * colors.
  */
-typedef enum VertMode : uint {
+enum VertMode {
 	VERT_MODE_SRC_IGNORE = 0, /*!< Source Ignore. */
 	VERT_MODE_SRC_EMISSIVE = 1, /*!< Source Emissive. */
 	VERT_MODE_SRC_AMB_DIF = 2, /*!< Source Ambient/Diffuse. (Default) */
-} VertMode;
+};
 
-void NifStream( VertMode & val, istream& in, uint version = 0 );
-void NifStream( VertMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, VertMode const & val );
 
 /*!
  * A material, used by havok shape objects.
  */
-typedef enum HavokMaterial : uint {
+enum HavokMaterial {
 	HAV_MAT_STONE = 0, /*!< Stone */
 	HAV_MAT_CLOTH = 1, /*!< Cloth */
 	HAV_MAT_DIRT = 2, /*!< Dirt */
@@ -250,85 +228,73 @@ typedef enum HavokMaterial : uint {
 	HAV_MAT_CHAIN_STAIRS = 28, /*!< Chain Stairs */
 	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
 	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
-} HavokMaterial;
+};
 
-void NifStream( HavokMaterial & val, istream& in, uint version = 0 );
-void NifStream( HavokMaterial const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, HavokMaterial const & val );
 
 /*!
  * Specifies the pixel format used by the NiPixelData object to store a
  * texture.
  */
-typedef enum PixelFormat : uint {
+enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
 	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
 	PX_FMT_PAL8 = 2, /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete object. */
-} PixelFormat;
+};
 
-void NifStream( PixelFormat & val, istream& in, uint version = 0 );
-void NifStream( PixelFormat const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, PixelFormat const & val );
 
 /*!
  * The animation cyle behavior.
  */
-typedef enum CycleType : uint {
+enum CycleType {
 	CYCLE_LOOP = 0, /*!< Loop */
 	CYCLE_REVERSE = 1, /*!< Reverse */
 	CYCLE_CLAMP = 2, /*!< Clamp */
-} CycleType;
+};
 
-void NifStream( CycleType & val, istream& in, uint version = 0 );
-void NifStream( CycleType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, CycleType const & val );
 
 /*!
  * An unsigned 32-bit integer, describing the apply mode of a texture.
  */
-typedef enum ApplyMode : uint {
+enum ApplyMode {
 	APPLY_REPLACE = 0, /*!< Replaces existing color */
 	APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */
 	APPLY_MODULATE = 2, /*!< Modulates existing color. (Default) */
 	APPLY_HILIGHT = 3, /*!< PS2 Only.  Function Unknown. */
 	APPLY_HILIGHT2 = 4, /*!< PS2 Only.  Function Unknown. */
-} ApplyMode;
+};
 
-void NifStream( ApplyMode & val, istream& in, uint version = 0 );
-void NifStream( ApplyMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, ApplyMode const & val );
 
 /*!
  * The force field's type.
  */
-typedef enum FieldType : uint {
+enum FieldType {
 	FIELD_WIND = 0, /*!< Wind (fixed direction) */
 	FIELD_POINT = 1, /*!< Point (fixed origin) */
-} FieldType;
+};
 
-void NifStream( FieldType & val, istream& in, uint version = 0 );
-void NifStream( FieldType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, FieldType const & val );
 
 /*!
  * Determines the way the billboard will react to the camera.
  */
-typedef enum BillboardMode : ushort {
+enum BillboardMode {
 	ALWAYS_FACE_CAMERA = 0, /*!< The billboard will always face the camera. */
 	ROTATE_ABOUT_UP = 1, /*!< The billboard will only rotate around the up axis. */
 	RIGID_FACE_CAMERA = 2, /*!< Rigid Face Camera. */
 	ALWAYS_FACE_CENTER = 3, /*!< Always Face Center. */
 	RIGID_FACE_CENTER = 4, /*!< Rigid Face Center. */
-} BillboardMode;
+};
 
-void NifStream( BillboardMode & val, istream& in, uint version = 0 );
-void NifStream( BillboardMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, BillboardMode const & val );
 
 /*!
  * The type of texture.
  */
-typedef enum TexType : uint {
+enum TexType {
 	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
 	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
 	DETAIL_MAP = 2, /*!< Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view. */
@@ -337,25 +303,21 @@ typedef enum TexType : uint {
 	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
 	DECAL_0_MAP = 6, /*!< For placing images on the object like stickers. */
 	DECAL_1_MAP = 7, /*!< For placing images on the object like stickers. */
-} TexType;
+};
 
-void NifStream( TexType & val, istream& in, uint version = 0 );
-void NifStream( TexType const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexType const & val );
 
 /*!
  * Specifies the availiable texture clamp modes.  That is, the behavior
  * of pixels outside the range of the texture.
  */
-typedef enum TexClampMode : uint {
+enum TexClampMode {
 	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */
 	CLAMP_S_WRAP_T = 1, /*!< Clamp in the S(U) direction but wrap in the T(V) direction. */
 	WRAP_S_CLAMP_T = 2, /*!< Wrap in the S(U) direction but clamp in the T(V) direction. */
 	WRAP_S_WRAP_T = 3, /*!< Wrap in both directions. */
-} TexClampMode;
+};
 
-void NifStream( TexClampMode & val, istream& in, uint version = 0 );
-void NifStream( TexClampMode const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, TexClampMode const & val );
 
 }

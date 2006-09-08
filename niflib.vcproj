@@ -359,10 +359,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\nif_enums.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\NIF_IO.cpp"
 				>
 			</File>
@@ -1291,6 +1287,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gen\enums.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gen\Footer.cpp"
 					>
 				</File>
@@ -1451,10 +1451,6 @@
 			</File>
 			<File
 				RelativePath=".\nif_basic_types.h"
-				>
-			</File>
-			<File
-				RelativePath=".\nif_enums.h"
 				>
 			</File>
 			<File
@@ -2358,6 +2354,14 @@
 				</File>
 				<File
 					RelativePath=".\gen\ControllerLink.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gen\enums.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gen\enums_intl.h"
 					>
 				</File>
 				<File

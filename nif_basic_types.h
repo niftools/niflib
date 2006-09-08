@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIF_BASIC_TYPES_H_
 
 #include <string>
+#include "gen/enums.h"
 namespace Niflib {
 using namespace std;
 
