@@ -37,8 +37,8 @@ public:
 	/*!
 	 * The shape's material.
 	 */
-	uint GetMaterial() const;
-	void SetMaterial( uint value );
+	HavokMaterial GetMaterial() const;
+	void SetMaterial( HavokMaterial value );
 
 protected:
 	BHK_SPHERE_REP_SHAPE_MEMBERS

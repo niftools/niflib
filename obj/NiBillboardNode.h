@@ -38,8 +38,8 @@ public:
 	 * 0: ALWAYS_FACE_CAMERA 1: ROTATE_ABOUT_UP 2: RIGID_FACE_CAMERA 3:
 	 * ALWAYS_FACE_CENTER 4: RIGID_FACE_CENTER
 	 */
-	ushort GetBillboardMode() const;
-	void SetBillboardMode( ushort value );
+	BillboardMode GetBillboardMode() const;
+	void SetBillboardMode( BillboardMode value );
 
 protected:
 	NI_BILLBOARD_NODE_MEMBERS

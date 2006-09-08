@@ -44,11 +44,11 @@ void bhkEntity::SetShape( Ref<bhkShape > value ) {
 	shape = value;
 }
 
-uint bhkEntity::GetLayer() const {
+OblivionLayer bhkEntity::GetLayer() const {
 	return layer;
 }
 
-void bhkEntity::SetLayer( uint value ) {
+void bhkEntity::SetLayer( OblivionLayer value ) {
 	layer = value;
 }
 

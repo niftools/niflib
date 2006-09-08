@@ -60,11 +60,11 @@ void NiTextureEffect::SetTextureFiltering( uint value ) {
 	textureFiltering = value;
 }
 
-uint NiTextureEffect::GetTextureClamping() const {
+TexClampMode NiTextureEffect::GetTextureClamping() const {
 	return textureClamping;
 }
 
-void NiTextureEffect::SetTextureClamping( uint value ) {
+void NiTextureEffect::SetTextureClamping( TexClampMode value ) {
 	textureClamping = value;
 }
 

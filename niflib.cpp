@@ -858,13 +858,13 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 
 					//Set cycle type as well
 					switch ( right->GetCycleType() ) {
-						case NiControllerSequence::CYCLE_LOOP:
+						case CYCLE_LOOP:
 							ctlr->SetFlags( 8 ); //Active
 							break;
-						case NiControllerSequence::CYCLE_CLAMP:
+						case CYCLE_CLAMP:
 							ctlr->SetFlags( 12 ); //Active+Clamp
 							break;
-						case NiControllerSequence::CYCLE_REVERSE:
+						case CYCLE_REVERSE:
 							ctlr->SetFlags( 10 ); //Active+Reverse
 							break;
 					}

@@ -65,8 +65,8 @@ public:
 	 * 0: CLAMP_S_CLAMP (Common value) 1: CLAMP_S_WRAP 2: WRAP_S_CLAMP_T 3:
 	 * WRAP_S_WRAP_T (Common value)
 	 */
-	uint GetTextureClamping() const;
-	void SetTextureClamping( uint value );
+	TexClampMode GetTextureClamping() const;
+	void SetTextureClamping( TexClampMode value );
 
 	/*!
 	 * 0: PROJECTED_LIGHT 1: PROJECTED_SHADOW 2: ENVIRONMENT_MAP (Usual

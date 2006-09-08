@@ -171,11 +171,11 @@ void NiControllerSequence::SetStopTime( float value ) {
 	stopTime = value;
 }
 
-NiControllerSequence::CycleType NiControllerSequence::GetCycleType() const {
+CycleType NiControllerSequence::GetCycleType() const {
 	return CycleType(cycleType);
 }
 
-void NiControllerSequence::SetCycleType( NiControllerSequence::CycleType n ) {
+void NiControllerSequence::SetCycleType( CycleType n ) {
 	cycleType = n;
 }
 

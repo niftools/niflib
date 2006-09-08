@@ -42,8 +42,8 @@ public:
 	/*!
 	 * Copy of layer value?
 	 */
-	uint GetLayerCopy() const;
-	void SetLayerCopy( uint value );
+	OblivionLayer GetLayerCopy() const;
+	void SetLayerCopy( OblivionLayer value );
 
 	/*!
 	 * Translation.
@@ -156,8 +156,8 @@ public:
     * 7: User
     * 8+: Null
 	 */
-	byte GetQualityType() const;
-	void SetQualityType( byte value );
+	MotionQuality GetQualityType() const;
+	void SetQualityType( MotionQuality value );
 
 protected:
 	BHK_RIGID_BODY_MEMBERS

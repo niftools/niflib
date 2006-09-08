@@ -37,11 +37,11 @@ const Type & bhkRigidBody::GetType() const {
 	return TYPE;
 };
 
-uint bhkRigidBody::GetLayerCopy() const {
+OblivionLayer bhkRigidBody::GetLayerCopy() const {
 	return layerCopy;
 }
 
-void bhkRigidBody::SetLayerCopy( uint value ) {
+void bhkRigidBody::SetLayerCopy( OblivionLayer value ) {
 	layerCopy = value;
 }
 
@@ -165,10 +165,10 @@ void bhkRigidBody::SetMotionSystem( byte value ) {
 	motionSystem = value;
 }
 
-byte bhkRigidBody::GetQualityType() const {
+MotionQuality bhkRigidBody::GetQualityType() const {
 	return qualityType;
 }
 
-void bhkRigidBody::SetQualityType( byte value ) {
+void bhkRigidBody::SetQualityType( MotionQuality value ) {
 	qualityType = value;
 }

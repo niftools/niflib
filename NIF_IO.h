@@ -10,6 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <vector>
 #include "Key.h"
 #include "nif_basic_types.h"
+#include "nif_enums.h"
 #include "nif_math.h"
 #include "nif_versions.h"
 namespace Niflib {
@@ -18,12 +19,6 @@ using namespace std;
 #ifndef NULL
 #define NULL 0
 #endif
-
-//--Non-mathematical Basic Types--//
-
-typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
 
 //! NVector Traits:  Class overridable alloc/release methods
 template<typename T>
@@ -288,63 +283,6 @@ void NifStream( Color4 const & val, ostream& out, uint version = 0  );
 void NifStream( Quaternion & val, istream& in, uint version = 0 );
 void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
 
-//--Enums--//
-
-//TexType
-void NifStream( TexType & val, istream& in, uint version = 0 );
-void NifStream( TexType const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, TexType const & val );
-
-//ApplyMode
-void NifStream( ApplyMode & val, istream& in, uint version = 0 );
-void NifStream( ApplyMode const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, ApplyMode const & val );
-
-//TexClampMode
-void NifStream( TexClampMode & val, istream& in, uint version = 0 );
-void NifStream( TexClampMode const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, TexClampMode const & val );
-
-//TexFilterMode
-void NifStream( TexFilterMode & val, istream& in, uint version = 0 );
-void NifStream( TexFilterMode const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, TexFilterMode const & val );
-
-//AlphaFormat
-void NifStream( AlphaFormat & val, istream& in, uint version = 0 );
-void NifStream( AlphaFormat const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, AlphaFormat const & val );
-
-//KeyType
-void NifStream( KeyType & val, istream& in, uint version = 0 );
-void NifStream( KeyType const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, KeyType const & val );
-
-//PixelFormat
-void NifStream( PixelFormat & val, istream& in, uint version = 0 );
-void NifStream( PixelFormat const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, PixelFormat const & val );
-
-//MipMapFormat
-void NifStream( MipMapFormat & val, istream& in, uint version = 0 );
-void NifStream( MipMapFormat const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, MipMapFormat const & val );
-
-//PixelLayout
-void NifStream( PixelLayout & val, istream& in, uint version = 0 );
-void NifStream( PixelLayout const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, PixelLayout const & val );
-
-//VertMode
-void NifStream( VertMode & val, istream& in, uint version = 0 );
-void NifStream( VertMode const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, VertMode const & val );
-
-//LightMode
-void NifStream( LightMode & val, istream& in, uint version = 0 );
-void NifStream( LightMode const & val, ostream& out, uint version = 0  );
-ostream & operator<<( ostream & out, LightMode const & val );
-
 //HeaderString
 void NifStream( HeaderString & val, istream& in, uint version = 0 );
 void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
@@ -358,8 +296,6 @@ ostream & operator<<( ostream & out, ShortString const & val );
 //--Templates--//
 
 void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type );
-
-
 void NifStream( Key<Quaternion> const & key, ostream& file, uint version,  KeyType type );
 
 //Key<T>

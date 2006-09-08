@@ -241,14 +241,14 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_SPHERE_REP_SHAPE_MEMBERS \
-uint material; \
+HavokMaterial material; \
 
 #define BHK_SPHERE_REP_SHAPE_INCLUDE "bhkShape.h" \
 
 #define BHK_SPHERE_REP_SHAPE_PARENT bhkShape \
 
 #define BHK_SPHERE_REP_SHAPE_CONSTRUCT \
- : material((uint)0) \
+ : material((HavokMaterial)0) \
 
 #define BHK_SPHERE_REP_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -313,14 +313,14 @@ return InternalGetRefs(); \
 
 #define BHK_ENTITY_MEMBERS \
 Ref<bhkShape > shape; \
-uint layer; \
+OblivionLayer layer; \
 
 #define BHK_ENTITY_INCLUDE "bhkWorldObject.h" \
 
 #define BHK_ENTITY_PARENT bhkWorldObject \
 
 #define BHK_ENTITY_CONSTRUCT \
- : shape(NULL), layer((uint)0) \
+ : shape(NULL), layer((OblivionLayer)0) \
 
 #define BHK_ENTITY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1128,7 +1128,7 @@ return InternalGetRefs(); \
 #define BHK_LIST_SHAPE_MEMBERS \
 mutable uint numSubShapes; \
 vector<Ref<bhkShape > > subShapes; \
-uint material; \
+HavokMaterial material; \
 array<float,6> unknownFloats; \
 mutable uint numUnknownInts; \
 vector<uint > unknownInts; \
@@ -1138,7 +1138,7 @@ vector<uint > unknownInts; \
 #define BHK_LIST_SHAPE_PARENT AbhkShapeCollection \
 
 #define BHK_LIST_SHAPE_CONSTRUCT \
- : numSubShapes((uint)0), material((uint)0), numUnknownInts((uint)0) \
+ : numSubShapes((uint)0), material((HavokMaterial)0), numUnknownInts((uint)0) \
 
 #define BHK_LIST_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1190,7 +1190,7 @@ return InternalGetRefs(); \
 
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
-uint material; \
+HavokMaterial material; \
 array<byte,8> unknownBytes1; \
 float unknownFloat; \
 mutable uint numUnknownBytes2; \
@@ -1203,7 +1203,7 @@ float unknownFloat2; \
 #define BHK_MOPP_BV_TREE_SHAPE_PARENT bhkShape \
 
 #define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT \
- : shape(NULL), material((uint)0), unknownFloat(0.0f), numUnknownBytes2((uint)0), unknownFloat2(0.0f) \
+ : shape(NULL), material((HavokMaterial)0), unknownFloat(0.0f), numUnknownBytes2((uint)0), unknownFloat2(0.0f) \
 
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1364,7 +1364,7 @@ return InternalGetRefs(); \
 #define BHK_RIGID_BODY_MEMBERS \
 array<float,5> unknownFloats1; \
 array<ushort,4> unknownShorts1; \
-uint layerCopy; \
+OblivionLayer layerCopy; \
 array<ushort,6> unknownShorts2; \
 Vector3 translation; \
 float unknownFloat00; \
@@ -1387,7 +1387,7 @@ float penetrationDepth; \
 byte motionSystem; \
 byte unknownByte1; \
 byte unknownByte2; \
-byte qualityType; \
+MotionQuality qualityType; \
 uint unknownInt6; \
 uint unknownInt7; \
 uint unknownInt8; \
@@ -1399,7 +1399,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : layerCopy((uint)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
+ : layerCopy((OblivionLayer)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((MotionQuality)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2414,7 +2414,7 @@ mutable uint numControlledBlocks; \
 uint unknownInt1; \
 vector<ControllerLink > controlledBlocks; \
 float weight; \
-uint cycleType; \
+CycleType cycleType; \
 uint unknownInt0; \
 float frequency; \
 float startTime; \
@@ -2430,7 +2430,7 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_PARENT NiObject \
 
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT \
- : textKeys(NULL), numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), cycleType((uint)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
+ : textKeys(NULL), numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), cycleType((CycleType)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2740,7 +2740,7 @@ return InternalGetRefs(); \
 #define NI_GRAVITY_MEMBERS \
 float unknownFloat1; \
 float force; \
-uint type; \
+FieldType type; \
 Vector3 position; \
 Vector3 direction; \
 
@@ -2749,7 +2749,7 @@ Vector3 direction; \
 #define NI_GRAVITY_PARENT AParticleModifier \
 
 #define NI_GRAVITY_CONSTRUCT \
- : unknownFloat1(0.0f), force(0.0f), type((uint)0) \
+ : unknownFloat1(0.0f), force(0.0f), type((FieldType)0) \
 
 #define NI_GRAVITY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3289,14 +3289,14 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_BILLBOARD_NODE_MEMBERS \
-ushort billboardMode; \
+BillboardMode billboardMode; \
 
 #define NI_BILLBOARD_NODE_INCLUDE "NiNode.h" \
 
 #define NI_BILLBOARD_NODE_PARENT NiNode \
 
 #define NI_BILLBOARD_NODE_CONSTRUCT \
- : billboardMode((ushort)0) \
+ : billboardMode((BillboardMode)0) \
 
 #define NI_BILLBOARD_NODE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -4447,7 +4447,7 @@ NiNode * gravityObject; \
 Vector3 gravityAxis; \
 float decay; \
 float strength; \
-uint forceType; \
+ForceType forceType; \
 float turbulence; \
 float turbulenceScale; \
 
@@ -4456,7 +4456,7 @@ float turbulenceScale; \
 #define NI_P_SYS_GRAVITY_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_CONSTRUCT \
- : gravityObject(NULL), decay(0.0f), strength(0.0f), forceType((uint)0), turbulence(0.0f), turbulenceScale(1.0f) \
+ : gravityObject(NULL), decay(0.0f), strength(0.0f), forceType((ForceType)0), turbulence(0.0f), turbulenceScale(1.0f) \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5283,7 +5283,7 @@ return InternalGetRefs(); \
 Matrix33 modelProjectionMatrix; \
 Vector3 modelProjectionTransform; \
 uint textureFiltering; \
-uint textureClamping; \
+TexClampMode textureClamping; \
 uint textureType; \
 uint coordinateGenerationType; \
 Ref<NiSourceTexture > sourceTexture; \
@@ -5299,7 +5299,7 @@ ushort unknownShort; \
 #define NI_TEXTURE_EFFECT_PARENT NiDynamicEffect \
 
 #define NI_TEXTURE_EFFECT_CONSTRUCT \
- : textureFiltering((uint)0), textureClamping((uint)0), textureType((uint)0), coordinateGenerationType((uint)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((ushort)0), ps2K((ushort)0), unknownShort((ushort)0) \
+ : textureFiltering((uint)0), textureClamping((TexClampMode)0), textureType((uint)0), coordinateGenerationType((uint)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((ushort)0), ps2K((ushort)0), unknownShort((ushort)0) \
 
 #define NI_TEXTURE_EFFECT_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5318,7 +5318,7 @@ return InternalGetRefs(); \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS \
 byte unknown2; \
-uint textureSlot; \
+TexType textureSlot; \
 uint operation; \
 Ref<NiFloatData > data; \
 
@@ -5327,7 +5327,7 @@ Ref<NiFloatData > data; \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT \
- : unknown2((byte)0), textureSlot((uint)0), operation((uint)0), data(NULL) \
+ : unknown2((byte)0), textureSlot((TexType)0), operation((uint)0), data(NULL) \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 InternalRead( in, link_stack, version, user_version ); \

@@ -105,8 +105,8 @@ public:
 	 * 56: Wing
     * 57+: Null
 	 */
-	uint GetLayer() const;
-	void SetLayer( uint value );
+	OblivionLayer GetLayer() const;
+	void SetLayer( OblivionLayer value );
 
 protected:
 	BHK_ENTITY_MEMBERS

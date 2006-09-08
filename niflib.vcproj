@@ -359,6 +359,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\nif_enums.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\NIF_IO.cpp"
 				>
 			</File>
@@ -1447,6 +1451,10 @@
 			</File>
 			<File
 				RelativePath=".\nif_basic_types.h"
+				>
+			</File>
+			<File
+				RelativePath=".\nif_enums.h"
 				>
 			</File>
 			<File

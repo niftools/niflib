@@ -51,6 +51,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "nif_math.h"
 #include "nif_versions.h"
 #include "Ref.h"
+#include "nif_enums.h"
 
 using namespace std;
 namespace Niflib {

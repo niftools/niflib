@@ -35,11 +35,11 @@ const Type & bhkSphereRepShape::GetType() const {
 	return TYPE;
 };
 
-uint bhkSphereRepShape::GetMaterial() const {
+HavokMaterial bhkSphereRepShape::GetMaterial() const {
 	return material;
 }
 
-void bhkSphereRepShape::SetMaterial( uint value ) {
+void bhkSphereRepShape::SetMaterial( HavokMaterial value ) {
 	material = value;
 }
 
