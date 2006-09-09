@@ -358,7 +358,7 @@ void NiTriBasedGeom::SetBoneWeights( uint bone_index, const vector<SkinWeight> &
 	skinData->SetBoneWeights( bone_index, n, center, radius );
 }
 
-void NiTriBasedGeom::GenHardwareSkinInfo( ) {
+void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition ) {
    NiSkinPartitionRef skinPart = new NiSkinPartition( this );
 
    // Set the partition info in both places and it will be handled when exported.

@@ -606,7 +606,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 //	}
 //}
 
-Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, bool hw_skin_data, bool stripify ) const {
+Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, int max_bones_per_partition, bool stripify ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
@@ -862,8 +862,8 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, bool hw_skin_data, bo
 				shapes[shape_num]->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
 			}
 
-			if ( hw_skin_data ) {
-				shapes[shape_num]->GenHardwareSkinInfo();
+			if ( max_bones_per_partition > 0 ) {
+				shapes[shape_num]->GenHardwareSkinInfo( max_bones_per_partition );
 			}
 
 			//NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();
