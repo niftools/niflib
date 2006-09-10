@@ -157,11 +157,11 @@ void bhkRigidBody::SetPenetrationDepth( float value ) {
 	penetrationDepth = value;
 }
 
-byte bhkRigidBody::GetMotionSystem() const {
+MotionSystem bhkRigidBody::GetMotionSystem() const {
 	return motionSystem;
 }
 
-void bhkRigidBody::SetMotionSystem( byte value ) {
+void bhkRigidBody::SetMotionSystem( MotionSystem value ) {
 	motionSystem = value;
 }
 

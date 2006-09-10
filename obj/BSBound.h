@@ -7,13 +7,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiExtraData.h"
 namespace Niflib {
 
+
 #include "../gen/obj_defines.h"
 
 class BSBound;
 typedef Ref<BSBound> BSBoundRef;
 
 /*!
- * BSBound - Unknown.
+ * BSBound - Bethesda-specific collision bounding box for skeletons.
  */
 
 class NIFLIB_API BSBound : public B_S_BOUND_PARENT {
@@ -31,6 +32,18 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*!
+	 * Center of the bounding box.
+	 */
+	Vector3 GetCenter() const;
+	void SetCenter( const Vector3 & value );
+
+	/*!
+	 * Dimensions of the bounding box from center.
+	 */
+	Vector3 GetDimensions() const;
+	void SetDimensions( const Vector3 & value );
 
 protected:
 	B_S_BOUND_MEMBERS

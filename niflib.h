@@ -291,7 +291,7 @@ NIFLIB_API unsigned int GetVersion(string version);
 
 \section compile Compiling the Library
 
-Starting with version 0.5, Niflib creates a lib file that is too large to distribute directly, so to use it through C++ you must first compile it.  If you need help to do this, there is information about it on our main website here:  <a href="http://niftools.sourceforge.net/wiki/index.php/Niflib/Compile">Compiling Niflib</a>.
+Starting with version 0.5, Niflib creates a lib file that is too large to distribute directly, so to use it through C++ you must first compile it.  If you need help to do this, there is information about it on our main website here:  <a href="http://www.niftools.org/wiki/index.php/Niflib/Compile">Compiling Niflib</a>.
 
 A Python compile of the library will still be available for Windows, but for other platforms you will need to compile the library yourself.
 

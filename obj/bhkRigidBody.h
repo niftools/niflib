@@ -142,8 +142,8 @@ public:
     * 8: Box
     * 9+: Keyframed?
 	 */
-	byte GetMotionSystem() const;
-	void SetMotionSystem( byte value );
+	MotionSystem GetMotionSystem() const;
+	void SetMotionSystem( MotionSystem value );
 
 	/*!
 	 * The motion type. Determines quality of motion?

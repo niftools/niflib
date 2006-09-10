@@ -733,7 +733,7 @@ return InternalGetRefs(); \
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS \
 uint unknownInt1; \
 mutable uint numNodeGroups; \
-uint unknownInt2; \
+uint numNodeGroups2; \
 vector<NodeGroup > nodeGroups; \
 
 #define A_BONE_L_O_D_CONTROLLER_INCLUDE "NiTimeController.h" \
@@ -741,7 +741,7 @@ vector<NodeGroup > nodeGroups; \
 #define A_BONE_L_O_D_CONTROLLER_PARENT NiTimeController \
 
 #define A_BONE_L_O_D_CONTROLLER_CONSTRUCT \
- : unknownInt1((uint)0), numNodeGroups((uint)0), unknownInt2((uint)0) \
+ : unknownInt1((uint)0), numNodeGroups((uint)0), numNodeGroups2((uint)0) \
 
 #define A_BONE_L_O_D_CONTROLLER_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1384,7 +1384,7 @@ float restitution; \
 float maxLinearVelocity; \
 float maxAngularVelocity; \
 float penetrationDepth; \
-byte motionSystem; \
+MotionSystem motionSystem; \
 byte unknownByte1; \
 byte unknownByte2; \
 MotionQuality qualityType; \
@@ -1399,7 +1399,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : layerCopy((OblivionLayer)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((byte)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((MotionQuality)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
+ : layerCopy((OblivionLayer)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((MotionSystem)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((MotionQuality)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1592,7 +1592,8 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define B_S_BOUND_MEMBERS \
-array<float,6> unknownFloats; \
+Vector3 center; \
+Vector3 dimensions; \
 
 #define B_S_BOUND_INCLUDE "NiExtraData.h" \
 

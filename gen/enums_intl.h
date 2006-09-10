@@ -114,6 +114,13 @@ void NifStream( BillboardMode & val, istream& in, uint version = 0 );
 void NifStream( BillboardMode const & val, ostream& out, uint version = 0  );
 
 /*!
+ * The motion system. 4 (Box) is used for everything movable. 7
+ * (Keyframed) is used on statics and animated stuff.
+ */
+void NifStream( MotionSystem & val, istream& in, uint version = 0 );
+void NifStream( MotionSystem const & val, ostream& out, uint version = 0  );
+
+/*!
  * The type of texture.
  */
 void NifStream( TexType & val, istream& in, uint version = 0 );

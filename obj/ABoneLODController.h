@@ -36,7 +36,42 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	//TODO:  This is not a priority but needs to be implemented eventually
+	/*!
+	 * Returns the number of node groups (each group a sequence of bones).
+	 */
+   int GetNodeGroupCount() const;
+
+   /*!
+    * Returns a specific node group (each group a sequence of bones).
+    */
+	vector<Ref<NiNode> > GetNodeGroup( int index ) const;
+
+   /*!
+    * Add a single node to the specified group. The Group list will expand if necessary.
+    */
+   void AddNodeToGroup( int index, Ref<NiNode> node );
+
+   /*!
+    * Remove a single node from the specified group. 
+    */
+   void RemoveNodeFromGroup( int index, Ref<NiNode> node );
+
+   /*!
+    * Assign an entire node group. 
+    */
+	void SetNodeGroup( int index, const vector<Ref<NiNode> >& group );
+
+
+   /*!
+   * Remove an entire node group. 
+   */
+   void RemoveNodeGroup( int index );
+
+   /*!
+   * Clear all node groups.
+   */
+   void ClearNodeGroups();
+
 protected:
 	A_BONE_L_O_D_CONTROLLER_MEMBERS
 	STANDARD_INTERNAL_METHODS

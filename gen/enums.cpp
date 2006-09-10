@@ -462,6 +462,27 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 }
 
 /*!
+ * MotionSystem
+ */
+void NifStream( MotionSystem & val, istream& in, uint version ) {
+	byte temp;
+	NifStream( temp, in, version );
+	val = MotionSystem(temp);
+}
+
+void NifStream( MotionSystem const & val, ostream& out, uint version ) {
+	NifStream( byte(val), out, version );
+}
+
+ostream & operator<<( ostream & out, MotionSystem const & val ) {
+	switch ( val ) {
+		case MO_SYS_BOX: return out << "MO_SYS_BOX";
+		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
  * TexType
  */
 void NifStream( TexType & val, istream& in, uint version ) {

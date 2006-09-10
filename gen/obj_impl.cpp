@@ -1522,7 +1522,7 @@ void ABoneLODController::InternalRead( istream& in, list<uint> & link_stack, uns
 	NiTimeController::Read( in, link_stack, version, user_version );
 	NifStream( unknownInt1, in, version );
 	NifStream( numNodeGroups, in, version );
-	NifStream( unknownInt2, in, version );
+	NifStream( numNodeGroups2, in, version );
 	nodeGroups.resize(numNodeGroups);
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		NifStream( nodeGroups[i1].numNodes, in, version );
@@ -1539,7 +1539,7 @@ void ABoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 	numNodeGroups = uint(nodeGroups.size());
 	NifStream( unknownInt1, out, version );
 	NifStream( numNodeGroups, out, version );
-	NifStream( unknownInt2, out, version );
+	NifStream( numNodeGroups2, out, version );
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		nodeGroups[i1].numNodes = uint(nodeGroups[i1].nodes.size());
 		NifStream( nodeGroups[i1].numNodes, out, version );
@@ -1558,7 +1558,7 @@ std::string ABoneLODController::InternalAsString( bool verbose ) const {
 	numNodeGroups = uint(nodeGroups.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Node Groups:  " << numNodeGroups << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Num Node Groups 2:  " << numNodeGroups2 << endl;
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		nodeGroups[i1].numNodes = uint(nodeGroups[i1].nodes.size());
 		out << "    Num Nodes:  " << nodeGroups[i1].numNodes << endl;
@@ -2404,12 +2404,12 @@ std::list<NiObjectRef> bhkHingeConstraint::InternalGetRefs() const {
 void bhkLimitedHingeConstraint::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::Read( in, link_stack, version, user_version );
 	NifStream( limitedHinge.pivotA, in, version );
-	NifStream( limitedHinge.axleA_, in, version );
+	NifStream( limitedHinge.axleA, in, version );
 	NifStream( limitedHinge.perp2axleina1, in, version );
 	NifStream( limitedHinge.perp2axleina2, in, version );
 	NifStream( limitedHinge.pivotB, in, version );
 	NifStream( limitedHinge.axleB, in, version );
-	NifStream( limitedHinge.unknownVector, in, version );
+	NifStream( limitedHinge.perp2axleinb2, in, version );
 	NifStream( limitedHinge.minAngle, in, version );
 	NifStream( limitedHinge.maxAngle, in, version );
 	NifStream( limitedHinge.maxFriction, in, version );
@@ -2418,12 +2418,12 @@ void bhkLimitedHingeConstraint::InternalRead( istream& in, list<uint> & link_sta
 void bhkLimitedHingeConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	NifStream( limitedHinge.pivotA, out, version );
-	NifStream( limitedHinge.axleA_, out, version );
+	NifStream( limitedHinge.axleA, out, version );
 	NifStream( limitedHinge.perp2axleina1, out, version );
 	NifStream( limitedHinge.perp2axleina2, out, version );
 	NifStream( limitedHinge.pivotB, out, version );
 	NifStream( limitedHinge.axleB, out, version );
-	NifStream( limitedHinge.unknownVector, out, version );
+	NifStream( limitedHinge.perp2axleinb2, out, version );
 	NifStream( limitedHinge.minAngle, out, version );
 	NifStream( limitedHinge.maxAngle, out, version );
 	NifStream( limitedHinge.maxFriction, out, version );
@@ -2433,12 +2433,12 @@ std::string bhkLimitedHingeConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << AbhkConstraint::asString();
 	out << "  Pivot A:  " << limitedHinge.pivotA << endl;
-	out << "  Axle A ?:  " << limitedHinge.axleA_ << endl;
+	out << "  Axle A:  " << limitedHinge.axleA << endl;
 	out << "  Perp2AxleInA1:  " << limitedHinge.perp2axleina1 << endl;
 	out << "  Perp2AxleInA2:  " << limitedHinge.perp2axleina2 << endl;
 	out << "  Pivot B:  " << limitedHinge.pivotB << endl;
 	out << "  Axle B:  " << limitedHinge.axleB << endl;
-	out << "  Unknown Vector:  " << limitedHinge.unknownVector << endl;
+	out << "  Perp2AxleInB2:  " << limitedHinge.perp2axleinb2 << endl;
 	out << "  Min Angle:  " << limitedHinge.minAngle << endl;
 	out << "  Max Angle:  " << limitedHinge.maxAngle << endl;
 	out << "  Max Friction:  " << limitedHinge.maxFriction << endl;
@@ -2579,12 +2579,12 @@ void bhkMalleableConstraint::InternalRead( istream& in, list<uint> & link_stack,
 	};
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, in, version );
-		NifStream( limitedHinge.axleA_, in, version );
+		NifStream( limitedHinge.axleA, in, version );
 		NifStream( limitedHinge.perp2axleina1, in, version );
 		NifStream( limitedHinge.perp2axleina2, in, version );
 		NifStream( limitedHinge.pivotB, in, version );
 		NifStream( limitedHinge.axleB, in, version );
-		NifStream( limitedHinge.unknownVector, in, version );
+		NifStream( limitedHinge.perp2axleinb2, in, version );
 		NifStream( limitedHinge.minAngle, in, version );
 		NifStream( limitedHinge.maxAngle, in, version );
 		NifStream( limitedHinge.maxFriction, in, version );
@@ -2622,12 +2622,12 @@ void bhkMalleableConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 	};
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, out, version );
-		NifStream( limitedHinge.axleA_, out, version );
+		NifStream( limitedHinge.axleA, out, version );
 		NifStream( limitedHinge.perp2axleina1, out, version );
 		NifStream( limitedHinge.perp2axleina2, out, version );
 		NifStream( limitedHinge.pivotB, out, version );
 		NifStream( limitedHinge.axleB, out, version );
-		NifStream( limitedHinge.unknownVector, out, version );
+		NifStream( limitedHinge.perp2axleinb2, out, version );
 		NifStream( limitedHinge.minAngle, out, version );
 		NifStream( limitedHinge.maxAngle, out, version );
 		NifStream( limitedHinge.maxFriction, out, version );
@@ -2660,12 +2660,12 @@ std::string bhkMalleableConstraint::InternalAsString( bool verbose ) const {
 	};
 	if ( (type == 2) ) {
 		out << "    Pivot A:  " << limitedHinge.pivotA << endl;
-		out << "    Axle A ?:  " << limitedHinge.axleA_ << endl;
+		out << "    Axle A:  " << limitedHinge.axleA << endl;
 		out << "    Perp2AxleInA1:  " << limitedHinge.perp2axleina1 << endl;
 		out << "    Perp2AxleInA2:  " << limitedHinge.perp2axleina2 << endl;
 		out << "    Pivot B:  " << limitedHinge.pivotB << endl;
 		out << "    Axle B:  " << limitedHinge.axleB << endl;
-		out << "    Unknown Vector:  " << limitedHinge.unknownVector << endl;
+		out << "    Perp2AxleInB2:  " << limitedHinge.perp2axleinb2 << endl;
 		out << "    Min Angle:  " << limitedHinge.minAngle << endl;
 		out << "    Max Angle:  " << limitedHinge.maxAngle << endl;
 		out << "    Max Friction:  " << limitedHinge.maxFriction << endl;
@@ -3569,28 +3569,21 @@ std::list<NiObjectRef> bhkConvexTransformShape::InternalGetRefs() const {
 
 void BSBound::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::Read( in, link_stack, version, user_version );
-	for (uint i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats[i1], in, version );
-	};
+	NifStream( center, in, version );
+	NifStream( dimensions, in, version );
 }
 
 void BSBound::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	for (uint i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats[i1], out, version );
-	};
+	NifStream( center, out, version );
+	NifStream( dimensions, out, version );
 }
 
 std::string BSBound::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiExtraData::asString();
-	for (uint i1 = 0; i1 < 6; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
-	};
+	out << "  Center:  " << center << endl;
+	out << "  Dimensions:  " << dimensions << endl;
 	return out.str();
 }
 

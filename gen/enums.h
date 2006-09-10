@@ -292,6 +292,28 @@ enum BillboardMode {
 ostream & operator<<( ostream & out, BillboardMode const & val );
 
 /*!
+ * The motion system. 4 (Box) is used for everything movable. 7
+ * (Keyframed) is used on statics and animated stuff.
+ * Oblivion's ssg commando reveals even more values:
+ * 0: Keyframed
+ * 1: Box
+ * 2: Sphere
+ * 3: Sphere
+ * 4: Box
+ * 5: Box         
+ * 6: Keyframed
+ * 7: Keyframed
+ * 8: Box
+ * 9+: Keyframed?
+ */
+enum MotionSystem {
+	MO_SYS_BOX = 4, /*!< Box */
+	MO_SYS_KEYFRAMED = 7, /*!< Keyframed */
+};
+
+ostream & operator<<( ostream & out, MotionSystem const & val );
+
+/*!
  * The type of texture.
  */
 enum TexType {

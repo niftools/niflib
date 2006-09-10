@@ -40,7 +40,7 @@ private:
 public:
 
 	/*!
-	 * Used to determine an object's type.  These type strings are the same as the class names of the blocks in the <a href = "http://niftools.sourceforge.net/docsys/">NIF File Format Browser</a>.
+	 * Used to determine an object's type.  These type strings are the same as the class names of the blocks in the <a href = "http://www.niftools.org/docsys/">NIF File Format Browser</a>.
 	 * \return A string containing the type of the object.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
 	 * 
 	 * <b>Example:</b> 

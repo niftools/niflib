@@ -194,6 +194,8 @@ void NiSkinPartition::SetStrip( int partition, int index, const vector<ushort> &
    for (vector<ushort>::iterator itr = part.stripLengths.begin(); itr != part.stripLengths.end(); ++itr) {
       len += ((*itr) - 2);
    }
+   if (len < 0)
+      len = 0;
    part.numTriangles = len;
    part.triangles.resize(len);
 }

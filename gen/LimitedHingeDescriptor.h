@@ -24,7 +24,7 @@ struct NIFLIB_API LimitedHingeDescriptor {
 	/*!
 	 * Unknown.
 	 */
-	Float4 axleA_;
+	Float4 axleA;
 	/*!
 	 * Unknown.
 	 */
@@ -44,7 +44,7 @@ struct NIFLIB_API LimitedHingeDescriptor {
 	/*!
 	 * Unknown.
 	 */
-	Float4 unknownVector;
+	Float4 perp2axleinb2;
 	/*!
 	 * Unknown.
 	 */
