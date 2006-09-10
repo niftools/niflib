@@ -58,8 +58,8 @@ public:
 	 * FILTER_NEAREST_MIPNEAREST 4: FILTER_NEAREST_MIPLERP 5:
 	 * FILTER_BILERP_MIPNAREST
 	 */
-	uint GetTextureFiltering() const;
-	void SetTextureFiltering( uint value );
+	TexFilterMode GetTextureFiltering() const;
+	void SetTextureFiltering( TexFilterMode value );
 
 	/*!
 	 * 0: CLAMP_S_CLAMP (Common value) 1: CLAMP_S_WRAP 2: WRAP_S_CLAMP_T 3:

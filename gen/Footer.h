@@ -27,10 +27,10 @@ struct NIFLIB_API Footer {
 	 */
 	mutable uint numRoots;
 	/*!
-	 * List of root blocks. If there is a camera, for 1st person view, then
-	 * this block is referred to as well in this list, even if it is not a
-	 * root block (usually we want the camera to be attached to the Bip Head
-	 * node).
+	 * List of root NIF objects. If there is a camera, for 1st person view,
+	 * then this NIF object is referred to as well in this list, even if it
+	 * is not a root object (usually we want the camera to be attached to the
+	 * Bip Head node).
 	 */
 	vector<Ref<NiObject > > roots;
 	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );

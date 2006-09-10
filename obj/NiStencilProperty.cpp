@@ -51,11 +51,11 @@ void NiStencilProperty::SetStencilEnabled(bool value) {
    stencilEnabled = value;
 }
 
-uint NiStencilProperty::GetStencilFunction() const {
+CompareMode NiStencilProperty::GetStencilFunction() const {
    return stencilFunction;
 }
 
-void NiStencilProperty::SetStencilFunction(uint value) {
+void NiStencilProperty::SetStencilFunction(CompareMode value) {
    stencilFunction = value;
 }
 
@@ -75,34 +75,34 @@ void NiStencilProperty::SetStencilMask(uint value) {
    stencilMask = value;
 }
 
-uint NiStencilProperty::GetFailAction() const {
+StencilAction NiStencilProperty::GetFailAction() const {
    return failAction;
 }
 
-void NiStencilProperty::SetFailAction(uint value) {
+void NiStencilProperty::SetFailAction(StencilAction value) {
    failAction = value;
 }
 
-uint NiStencilProperty::GetZFailAction() const {
+StencilAction NiStencilProperty::GetZFailAction() const {
    return zFailAction;
 }
 
-void NiStencilProperty::SetZFailAction(uint value) {
+void NiStencilProperty::SetZFailAction(StencilAction value) {
    zFailAction = value;
 }
 
-uint NiStencilProperty::GetPassAction() const {
+StencilAction NiStencilProperty::GetPassAction() const {
    return passAction;
 }
 
-void NiStencilProperty::SetPassAction(uint value) {
+void NiStencilProperty::SetPassAction(StencilAction value) {
    passAction = value;
 }
 
-uint NiStencilProperty::GetDrawMode() const {
+FaceDrawMode NiStencilProperty::GetDrawMode() const {
    return drawMode;
 }
 
-void NiStencilProperty::SetDrawMode(uint value) {
+void NiStencilProperty::SetDrawMode(FaceDrawMode value) {
    drawMode = value;
 }

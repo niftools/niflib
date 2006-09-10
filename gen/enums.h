@@ -17,18 +17,76 @@ enum ForceType {
 ostream & operator<<( ostream & out, ForceType const & val );
 
 /*!
- * An unsigned 32-bit integer, describing the color depth of a texture.
+ * A material, used by havok shape objects.
  */
-enum PixelLayout {
-	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
-	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
-	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
-	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
-	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
-	PIX_LAY_DEFAULT = 5, /*!< Use default setting. */
+enum HavokMaterial {
+	HAV_MAT_STONE = 0, /*!< Stone */
+	HAV_MAT_CLOTH = 1, /*!< Cloth */
+	HAV_MAT_DIRT = 2, /*!< Dirt */
+	HAV_MAT_GLASS = 3, /*!< Glass */
+	HAV_MAT_GRASS = 4, /*!< Grass */
+	HAV_MAT_METAL = 5, /*!< Metal */
+	HAV_MAT_ORGANIC = 6, /*!< Organic */
+	HAV_MAT_SKIN = 7, /*!< Skin */
+	HAV_MAT_WATER = 8, /*!< Water */
+	HAV_MAT_WOOD = 9, /*!< Wood */
+	HAV_MAT_HEAVY_STONE = 10, /*!< Heavy Stone */
+	HAV_MAT_HEAVY_METAL = 11, /*!< Heavy Metal */
+	HAV_MAT_HEAVY_WOOD = 12, /*!< Heavy Wood */
+	HAV_MAT_CHAIN = 13, /*!< Chain */
+	HAV_MAT_SNOW = 14, /*!< Snow */
+	HAV_MAT_STONE_STAIRS = 15, /*!< Stone Stairs */
+	HAV_MAT_CLOTH_STAIRS = 16, /*!< Cloth Stairs */
+	HAV_MAT_DIRT_STAIRS = 17, /*!< Dirt Stairs */
+	HAV_MAT_GLASS_STAIRS = 18, /*!< Glass Stairs */
+	HAV_MAT_GRASS_STAIRS = 19, /*!< Grass Stairs */
+	HAV_MAT_METAL_STAIRS = 20, /*!< Metal Stairs */
+	HAV_MAT_ORGANIC_STAIRS = 21, /*!< Organic Stairs */
+	HAV_MAT_SKIN_STAIRS = 22, /*!< Skin Stairs */
+	HAV_MAT_WATER_STAIRS = 23, /*!< Water Stairs */
+	HAV_MAT_WOOD_STAIRS = 24, /*!< Wood Stairs */
+	HAV_MAT_HEAVY_STONE_STAIRS = 25, /*!< Heavy Stone Stairs */
+	HAV_MAT_HEAVY_METAL_STAIRS = 26, /*!< Heavy Metal Stairs */
+	HAV_MAT_HEAVY_WOOD_STAIRS = 27, /*!< Heavy Wood Stairs */
+	HAV_MAT_CHAIN_STAIRS = 28, /*!< Chain Stairs */
+	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
+	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
 };
 
-ostream & operator<<( ostream & out, PixelLayout const & val );
+ostream & operator<<( ostream & out, HavokMaterial const & val );
+
+/*!
+ * This enum contains the options for doing z buffer or stecil buffer
+ * tests.
+ */
+enum CompareMode {
+	TEST_NEVER = 0, /*!< Test will allways return false. Nothing is drawn at all. */
+	TEST_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
+	TEST_EQUAL = 2, /*!< Test will only succeed if the z value of the pixel to be drawn is equal to the value of the previous drawn pixel. */
+	TEST_LESSEQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer. */
+	TEST_GREATER = 4, /*!< Opposite of TEST_LESS. */
+	TEST_GREATEREQUAL = 5, /*!< Opposite of TEST_LESSEQUAL. */
+	TEST_ALWAYS = 6, /*!< Test will allways succeed. The Z Buffer value is ignored. */
+};
+
+ostream & operator<<( ostream & out, CompareMode const & val );
+
+/*!
+ * Specifies the availiable texture filter modes.  That is, the way
+ * pixels within a texture are blended together when textures are
+ * displayed on the screen at a size other than their original
+ * dimentions.
+ */
+enum TexFilterMode {
+	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */
+	FILTER_BILERP = 1, /*!< Uses bilinear filtering. */
+	FILTER_TRILERP = 2, /*!< Uses trilinear filtering. */
+	FILTER_NEAREST_MIPNEAREST = 3, /*!< Uses the nearest pixel from the mipmap that is closest to the display size. */
+	FILTER_NEAREST_MIPLERP = 4, /*!< Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result. */
+	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */
+};
+
+ostream & operator<<( ostream & out, TexFilterMode const & val );
 
 /*!
  * An unsigned 32-bit integer, describing how vertex colors influence
@@ -54,51 +112,20 @@ enum MipMapFormat {
 ostream & operator<<( ostream & out, MipMapFormat const & val );
 
 /*!
- * An unsigned 32-bit integer, describing how transparency is handled in
- * a texture.
+ * This enum defines the various actions used in conjunction with the
+ * stencil buffer.                 For a detailed description of the
+ * individual options please refer to the OpenGL docs.
  */
-enum AlphaFormat {
-	ALPHA_NONE = 0, /*!< No alpha blending; the texture is fully opaque. */
-	ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */
-	ALPHA_SMOOTH = 2, /*!< Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between. */
-	ALPHA_DEFAULT = 3, /*!< Use default setting. */
+enum StencilAction {
+	ACTION_KEEP = 0, /*!< ACTION_KEEP */
+	ACTION_ZERO = 1, /*!< ACTION_ZERO */
+	ACTION_REPLACE = 2, /*!< ACTION_REPLACE */
+	ACTION_INCREMENT = 3, /*!< ACTION_INCREMENT */
+	ACTION_DECREMENT = 4, /*!< ACTION_DECREMENT */
+	ACTION_INVERT = 5, /*!< ACTION_INVERT */
 };
 
-ostream & operator<<( ostream & out, AlphaFormat const & val );
-
-/*!
- * Specifies the availiable texture filter modes.  That is, the way
- * pixels within a texture are blended together when textures are
- * displayed on the screen at a size other than their original
- * dimentions.
- */
-enum TexFilterMode {
-	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */
-	FILTER_BILERP = 1, /*!< Uses bilinear filtering. */
-	FILTER_TRILERP = 2, /*!< Uses trilinear filtering. */
-	FILTER_NEAREST_MIPNEAREST = 3, /*!< Uses the nearest pixel from the mipmap that is closest to the display size. */
-	FILTER_NEAREST_MIPLERP = 4, /*!< Blends the two mipmaps closest to the display size linearly, and then uses the nearest pixel from the result. */
-	FILTER_BILERP_MIPNEAREST = 5, /*!< Uses the closest mipmap to the display size and then uses bilinear filtering on the pixels. */
-};
-
-ostream & operator<<( ostream & out, TexFilterMode const & val );
-
-/*!
- * The motion type. Determines quality of motion?
- */
-enum MotionQuality {
-	MO_QUAL_MOVING = 0, /*!< Moving */
-	MO_QUAL_FIXED = 1, /*!< Fixed */
-	MO_QUAL_KEYFRAMED = 2, /*!< Keyframed */
-	MO_QUAL_MOVING2 = 3, /*!< Moving(?) */
-	MO_QUAL_MOVING3 = 4, /*!< Moving(?) */
-	MO_QUAL_CRITICAL = 5, /*!< Critical */
-	MO_QUAL_BULLET = 6, /*!< Bullet */
-	MO_QUAL_USER = 7, /*!< User */
-	MO_QUAL_NULL = 8, /*!< Null */
-};
-
-ostream & operator<<( ostream & out, MotionQuality const & val );
+ostream & operator<<( ostream & out, StencilAction const & val );
 
 /*!
  * Sets mesh color in Oblivion Construction Set.  Anything higher than 57
@@ -168,6 +195,31 @@ enum OblivionLayer {
 ostream & operator<<( ostream & out, OblivionLayer const & val );
 
 /*!
+ * This enum lists the different face culling options.
+ */
+enum FaceDrawMode {
+	DRAW_CCW_OR_BOTH = 0, /*!< use application defaults? */
+	DRAW_CCW = 1, /*!< Draw counter clock wise faces, cull clock wise faces. This is the default for most (all?) Nif Games so far. */
+	DRAW_CW = 2, /*!< Draw clock wise faces, cull counter clock wise faces. This will flip all the faces. */
+	DRAW_BOTH = 3, /*!< Draw double sided faces. */
+};
+
+ostream & operator<<( ostream & out, FaceDrawMode const & val );
+
+/*!
+ * An unsigned 32-bit integer, describing how transparency is handled in
+ * a texture.
+ */
+enum AlphaFormat {
+	ALPHA_NONE = 0, /*!< No alpha blending; the texture is fully opaque. */
+	ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */
+	ALPHA_SMOOTH = 2, /*!< Full range of alpha values can be used from fully transparent to fully opaque including all partially transparent values in between. */
+	ALPHA_DEFAULT = 3, /*!< Use default setting. */
+};
+
+ostream & operator<<( ostream & out, AlphaFormat const & val );
+
+/*!
  * The type of animation interpolation (blending) that will be used on
  * the associated key frames.
  */
@@ -194,43 +246,112 @@ enum VertMode {
 ostream & operator<<( ostream & out, VertMode const & val );
 
 /*!
- * A material, used by havok shape objects.
+ * An unsigned 32-bit integer, describing the apply mode of a texture.
  */
-enum HavokMaterial {
-	HAV_MAT_STONE = 0, /*!< Stone */
-	HAV_MAT_CLOTH = 1, /*!< Cloth */
-	HAV_MAT_DIRT = 2, /*!< Dirt */
-	HAV_MAT_GLASS = 3, /*!< Glass */
-	HAV_MAT_GRASS = 4, /*!< Grass */
-	HAV_MAT_METAL = 5, /*!< Metal */
-	HAV_MAT_ORGANIC = 6, /*!< Organic */
-	HAV_MAT_SKIN = 7, /*!< Skin */
-	HAV_MAT_WATER = 8, /*!< Water */
-	HAV_MAT_WOOD = 9, /*!< Wood */
-	HAV_MAT_HEAVY_STONE = 10, /*!< Heavy Stone */
-	HAV_MAT_HEAVY_METAL = 11, /*!< Heavy Metal */
-	HAV_MAT_HEAVY_WOOD = 12, /*!< Heavy Wood */
-	HAV_MAT_CHAIN = 13, /*!< Chain */
-	HAV_MAT_SNOW = 14, /*!< Snow */
-	HAV_MAT_STONE_STAIRS = 15, /*!< Stone Stairs */
-	HAV_MAT_CLOTH_STAIRS = 16, /*!< Cloth Stairs */
-	HAV_MAT_DIRT_STAIRS = 17, /*!< Dirt Stairs */
-	HAV_MAT_GLASS_STAIRS = 18, /*!< Glass Stairs */
-	HAV_MAT_GRASS_STAIRS = 19, /*!< Grass Stairs */
-	HAV_MAT_METAL_STAIRS = 20, /*!< Metal Stairs */
-	HAV_MAT_ORGANIC_STAIRS = 21, /*!< Organic Stairs */
-	HAV_MAT_SKIN_STAIRS = 22, /*!< Skin Stairs */
-	HAV_MAT_WATER_STAIRS = 23, /*!< Water Stairs */
-	HAV_MAT_WOOD_STAIRS = 24, /*!< Wood Stairs */
-	HAV_MAT_HEAVY_STONE_STAIRS = 25, /*!< Heavy Stone Stairs */
-	HAV_MAT_HEAVY_METAL_STAIRS = 26, /*!< Heavy Metal Stairs */
-	HAV_MAT_HEAVY_WOOD_STAIRS = 27, /*!< Heavy Wood Stairs */
-	HAV_MAT_CHAIN_STAIRS = 28, /*!< Chain Stairs */
-	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
-	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
+enum ApplyMode {
+	APPLY_REPLACE = 0, /*!< Replaces existing color */
+	APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */
+	APPLY_MODULATE = 2, /*!< Modulates existing color. (Default) */
+	APPLY_HILIGHT = 3, /*!< PS2 Only.  Function Unknown. */
+	APPLY_HILIGHT2 = 4, /*!< PS2 Only.  Function Unknown. */
 };
 
-ostream & operator<<( ostream & out, HavokMaterial const & val );
+ostream & operator<<( ostream & out, ApplyMode const & val );
+
+/*!
+ * The motion system. 4 (Box) is used for everything movable. 7
+ * (Keyframed) is used on statics and animated stuff.
+ * Oblivion's ssg commando reveals even more values:
+ * 0: Keyframed
+ * 1: Box
+ * 2: Sphere
+ * 3: Sphere
+ * 4: Box
+ * 5: Box         
+ * 6: Keyframed
+ * 7: Keyframed
+ * 8: Box
+ * 9+: Keyframed?
+ */
+enum MotionSystem {
+	MO_SYS_BOX = 4, /*!< Box */
+	MO_SYS_KEYFRAMED = 7, /*!< Keyframed */
+};
+
+ostream & operator<<( ostream & out, MotionSystem const & val );
+
+/*!
+ * Determines the way the billboard will react to the camera.
+ */
+enum BillboardMode {
+	ALWAYS_FACE_CAMERA = 0, /*!< The billboard will always face the camera. */
+	ROTATE_ABOUT_UP = 1, /*!< The billboard will only rotate around the up axis. */
+	RIGID_FACE_CAMERA = 2, /*!< Rigid Face Camera. */
+	ALWAYS_FACE_CENTER = 3, /*!< Always Face Center. */
+	RIGID_FACE_CENTER = 4, /*!< Rigid Face Center. */
+};
+
+ostream & operator<<( ostream & out, BillboardMode const & val );
+
+/*!
+ * The type of texture.
+ */
+enum TexType {
+	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
+	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
+	DETAIL_MAP = 2, /*!< Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view. */
+	GLOSS_MAP = 3, /*!< Allows the specularity (glossyness) of an object to differ across its surface. */
+	GLOW_MAP = 4, /*!< Creates a glowing effect.  Basically an incandescence map. */
+	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
+	DECAL_0_MAP = 6, /*!< For placing images on the object like stickers. */
+	DECAL_1_MAP = 7, /*!< For placing images on the object like stickers. */
+};
+
+ostream & operator<<( ostream & out, TexType const & val );
+
+/*!
+ * An unsigned 32-bit integer, describing the color depth of a texture.
+ */
+enum PixelLayout {
+	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
+	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
+	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
+	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
+	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
+	PIX_LAY_DEFAULT = 5, /*!< Use default setting. */
+};
+
+ostream & operator<<( ostream & out, PixelLayout const & val );
+
+/*!
+ * Specifies the availiable texture clamp modes.  That is, the behavior
+ * of pixels outside the range of the texture.
+ */
+enum TexClampMode {
+	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */
+	CLAMP_S_WRAP_T = 1, /*!< Clamp in the S(U) direction but wrap in the T(V) direction. */
+	WRAP_S_CLAMP_T = 2, /*!< Wrap in the S(U) direction but clamp in the T(V) direction. */
+	WRAP_S_WRAP_T = 3, /*!< Wrap in both directions. */
+};
+
+ostream & operator<<( ostream & out, TexClampMode const & val );
+
+/*!
+ * The motion type. Determines quality of motion?
+ */
+enum MotionQuality {
+	MO_QUAL_MOVING = 0, /*!< Moving */
+	MO_QUAL_FIXED = 1, /*!< Fixed */
+	MO_QUAL_KEYFRAMED = 2, /*!< Keyframed */
+	MO_QUAL_MOVING2 = 3, /*!< Moving(?) */
+	MO_QUAL_MOVING3 = 4, /*!< Moving(?) */
+	MO_QUAL_CRITICAL = 5, /*!< Critical */
+	MO_QUAL_BULLET = 6, /*!< Bullet */
+	MO_QUAL_USER = 7, /*!< User */
+	MO_QUAL_NULL = 8, /*!< Null */
+};
+
+ostream & operator<<( ostream & out, MotionQuality const & val );
 
 /*!
  * Specifies the pixel format used by the NiPixelData object to store a
@@ -256,19 +377,6 @@ enum CycleType {
 ostream & operator<<( ostream & out, CycleType const & val );
 
 /*!
- * An unsigned 32-bit integer, describing the apply mode of a texture.
- */
-enum ApplyMode {
-	APPLY_REPLACE = 0, /*!< Replaces existing color */
-	APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */
-	APPLY_MODULATE = 2, /*!< Modulates existing color. (Default) */
-	APPLY_HILIGHT = 3, /*!< PS2 Only.  Function Unknown. */
-	APPLY_HILIGHT2 = 4, /*!< PS2 Only.  Function Unknown. */
-};
-
-ostream & operator<<( ostream & out, ApplyMode const & val );
-
-/*!
  * The force field's type.
  */
 enum FieldType {
@@ -277,70 +385,6 @@ enum FieldType {
 };
 
 ostream & operator<<( ostream & out, FieldType const & val );
-
-/*!
- * Determines the way the billboard will react to the camera.
- */
-enum BillboardMode {
-	ALWAYS_FACE_CAMERA = 0, /*!< The billboard will always face the camera. */
-	ROTATE_ABOUT_UP = 1, /*!< The billboard will only rotate around the up axis. */
-	RIGID_FACE_CAMERA = 2, /*!< Rigid Face Camera. */
-	ALWAYS_FACE_CENTER = 3, /*!< Always Face Center. */
-	RIGID_FACE_CENTER = 4, /*!< Rigid Face Center. */
-};
-
-ostream & operator<<( ostream & out, BillboardMode const & val );
-
-/*!
- * The motion system. 4 (Box) is used for everything movable. 7
- * (Keyframed) is used on statics and animated stuff.
- * Oblivion's ssg commando reveals even more values:
- * 0: Keyframed
- * 1: Box
- * 2: Sphere
- * 3: Sphere
- * 4: Box
- * 5: Box         
- * 6: Keyframed
- * 7: Keyframed
- * 8: Box
- * 9+: Keyframed?
- */
-enum MotionSystem {
-	MO_SYS_BOX = 4, /*!< Box */
-	MO_SYS_KEYFRAMED = 7, /*!< Keyframed */
-};
-
-ostream & operator<<( ostream & out, MotionSystem const & val );
-
-/*!
- * The type of texture.
- */
-enum TexType {
-	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
-	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
-	DETAIL_MAP = 2, /*!< Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view. */
-	GLOSS_MAP = 3, /*!< Allows the specularity (glossyness) of an object to differ across its surface. */
-	GLOW_MAP = 4, /*!< Creates a glowing effect.  Basically an incandescence map. */
-	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
-	DECAL_0_MAP = 6, /*!< For placing images on the object like stickers. */
-	DECAL_1_MAP = 7, /*!< For placing images on the object like stickers. */
-};
-
-ostream & operator<<( ostream & out, TexType const & val );
-
-/*!
- * Specifies the availiable texture clamp modes.  That is, the behavior
- * of pixels outside the range of the texture.
- */
-enum TexClampMode {
-	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */
-	CLAMP_S_WRAP_T = 1, /*!< Clamp in the S(U) direction but wrap in the T(V) direction. */
-	WRAP_S_CLAMP_T = 2, /*!< Wrap in the S(U) direction but clamp in the T(V) direction. */
-	WRAP_S_WRAP_T = 3, /*!< Wrap in both directions. */
-};
-
-ostream & operator<<( ostream & out, TexClampMode const & val );
 
 }
 #endif

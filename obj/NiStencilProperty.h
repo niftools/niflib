@@ -33,33 +33,59 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Property flags.
+	 */
    ushort GetFlags() const;
    void SetFlags(ushort value);
 
+	/*!
+	 * Enables or disables the stencil test.
+	 */
    bool GetStencilEnabled() const;
    void SetStencilEnabled(bool value);
 
-   uint GetStencilFunction() const;
-   void SetStencilFunction(uint value);
+	/*!
+	 * Selects the compare mode function.
+	 */
+	CompareMode GetStencilFunction() const;
+	void SetStencilFunction( CompareMode value );
 
+	/*!
+	 * Unknown.  Default is 0.
+	 */
    uint GetStencilRef() const;
    void SetStencilRef(uint value);
 
+	/*!
+	 * A bit mask. The default is 0xffffffff.
+	 */
    uint GetStencilMask() const;
    void SetStencilMask(uint value);
 
-   uint GetFailAction() const;
-   void SetFailAction(uint value);
+	/*!
+	 * Unknown.
+	 */
+	StencilAction GetFailAction() const;
+	void SetFailAction( StencilAction value );
 
-   uint GetZFailAction() const;
-   void SetZFailAction(uint value);
+	/*!
+	 * Unknown.
+	 */
+	StencilAction GetZFailAction() const;
+	void SetZFailAction( StencilAction  value );
 
-   uint GetPassAction() const;
-   void SetPassAction(uint value);
+	/*!
+	 * Unknown.
+	 */
+	StencilAction GetPassAction() const;
+	void SetPassAction( StencilAction value );
 
-   uint GetDrawMode() const;
-   void SetDrawMode(uint value);
-
+	/*!
+	 * Used to enabled double sided faces.
+	 */
+	FaceDrawMode GetDrawMode() const;
+	void SetDrawMode( FaceDrawMode value );
 
 protected:
 	NI_STENCIL_PROPERTY_MEMBERS

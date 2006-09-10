@@ -4546,11 +4546,8 @@ void NiBSplineCompTransformInterpolator::InternalRead( istream& in, list<uint> &
 	NifStream( rotation, in, version );
 	NifStream( scale, in, version );
 	NifStream( translateOffset, in, version );
-	NifStream( unkInt1, in, version );
 	NifStream( rotateOffset, in, version );
-	NifStream( unkInt2, in, version );
 	NifStream( scaleOffset, in, version );
-	NifStream( unkInt3, in, version );
 	NifStream( translateBias, in, version );
 	NifStream( translateMultiplier, in, version );
 	NifStream( rotationBias, in, version );
@@ -4565,11 +4562,8 @@ void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObje
 	NifStream( rotation, out, version );
 	NifStream( scale, out, version );
 	NifStream( translateOffset, out, version );
-	NifStream( unkInt1, out, version );
 	NifStream( rotateOffset, out, version );
-	NifStream( unkInt2, out, version );
 	NifStream( scaleOffset, out, version );
-	NifStream( unkInt3, out, version );
 	NifStream( translateBias, out, version );
 	NifStream( translateMultiplier, out, version );
 	NifStream( rotationBias, out, version );
@@ -4585,11 +4579,8 @@ std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose )
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Scale:  " << scale << endl;
 	out << "  Translate Offset:  " << translateOffset << endl;
-	out << "  Unk Int 1:  " << unkInt1 << endl;
 	out << "  Rotate Offset:  " << rotateOffset << endl;
-	out << "  Unk Int 2:  " << unkInt2 << endl;
 	out << "  Scale Offset:  " << scaleOffset << endl;
-	out << "  Unk Int 3:  " << unkInt3 << endl;
 	out << "  Translate Bias:  " << translateBias << endl;
 	out << "  Translate Multiplier:  " << translateMultiplier << endl;
 	out << "  Rotation Bias:  " << rotationBias << endl;

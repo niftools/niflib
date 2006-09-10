@@ -37,8 +37,8 @@ public:
    ushort GetFlags() const;
    void SetFlags(ushort value);
 
-   uint GetFunction() const;
-   void SetFunction(uint value);
+   CompareMode GetFunction() const;
+   void SetFunction(CompareMode value);
 
 protected:
 	NI_Z_BUFFER_PROPERTY_MEMBERS

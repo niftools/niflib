@@ -117,6 +117,7 @@ void NiControllerSequence::AddInterpolator( const Ref<NiSingleInterpolatorContro
 
 	cl.interpolator = interp;
 	cl.priority_ = priority;
+   cl.stringPalette = str_pal;
 	cl.nodeNameOffset = str_pal->AddSubStr( target->GetName() );
 
 	NiPropertyRef prop = DynamicCast<NiProperty>(target);

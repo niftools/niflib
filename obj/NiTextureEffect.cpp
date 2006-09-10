@@ -52,11 +52,11 @@ void NiTextureEffect::SetModelProjectionTransform( Vector3 value ) {
 	modelProjectionTransform = value;
 }
 
-uint NiTextureEffect::GetTextureFiltering() const {
+TexFilterMode NiTextureEffect::GetTextureFiltering() const {
 	return textureFiltering;
 }
 
-void NiTextureEffect::SetTextureFiltering( uint value ) {
+void NiTextureEffect::SetTextureFiltering( TexFilterMode value ) {
 	textureFiltering = value;
 }
 

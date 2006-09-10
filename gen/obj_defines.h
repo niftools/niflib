@@ -248,7 +248,6 @@ HavokMaterial material; \
 #define BHK_SPHERE_REP_SHAPE_PARENT bhkShape \
 
 #define BHK_SPHERE_REP_SHAPE_CONSTRUCT \
- : material((HavokMaterial)0) \
 
 #define BHK_SPHERE_REP_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -320,7 +319,7 @@ OblivionLayer layer; \
 #define BHK_ENTITY_PARENT bhkWorldObject \
 
 #define BHK_ENTITY_CONSTRUCT \
- : shape(NULL), layer((OblivionLayer)0) \
+ : shape(NULL) \
 
 #define BHK_ENTITY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1138,7 +1137,7 @@ vector<uint > unknownInts; \
 #define BHK_LIST_SHAPE_PARENT AbhkShapeCollection \
 
 #define BHK_LIST_SHAPE_CONSTRUCT \
- : numSubShapes((uint)0), material((HavokMaterial)0), numUnknownInts((uint)0) \
+ : numSubShapes((uint)0), numUnknownInts((uint)0) \
 
 #define BHK_LIST_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1203,7 +1202,7 @@ float unknownFloat2; \
 #define BHK_MOPP_BV_TREE_SHAPE_PARENT bhkShape \
 
 #define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT \
- : shape(NULL), material((HavokMaterial)0), unknownFloat(0.0f), numUnknownBytes2((uint)0), unknownFloat2(0.0f) \
+ : shape(NULL), unknownFloat(0.0f), numUnknownBytes2((uint)0), unknownFloat2(0.0f) \
 
 #define BHK_MOPP_BV_TREE_SHAPE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1399,7 +1398,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : layerCopy((OblivionLayer)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), motionSystem((MotionSystem)0), unknownByte1((byte)0), unknownByte2((byte)0), qualityType((MotionQuality)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
+ : unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2197,12 +2196,9 @@ return InternalGetRefs(); \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-ushort translateOffset; \
-ushort unkInt1; \
-ushort rotateOffset; \
-ushort unkInt2; \
-ushort scaleOffset; \
-ushort unkInt3; \
+uint translateOffset; \
+uint rotateOffset; \
+uint scaleOffset; \
 float translateBias; \
 float translateMultiplier; \
 float rotationBias; \
@@ -2215,7 +2211,7 @@ float scaleMultiplier; \
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT NiBSplineInterpolator \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT \
- : scale(0.0f), translateOffset((ushort)0), unkInt1((ushort)0), rotateOffset((ushort)0), unkInt2((ushort)0), scaleOffset((ushort)0), unkInt3((ushort)0), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
+ : scale(0.0f), translateOffset((uint)0), rotateOffset((uint)0), scaleOffset((uint)0), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2431,7 +2427,7 @@ Ref<NiStringPalette > stringPalette; \
 #define NI_CONTROLLER_SEQUENCE_PARENT NiObject \
 
 #define NI_CONTROLLER_SEQUENCE_CONSTRUCT \
- : textKeys(NULL), numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), cycleType((CycleType)0), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
+ : textKeys(NULL), numControlledBlocks((uint)0), unknownInt1((uint)0), weight(1.0f), unknownInt0((uint)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) \
 
 #define NI_CONTROLLER_SEQUENCE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2750,7 +2746,7 @@ Vector3 direction; \
 #define NI_GRAVITY_PARENT AParticleModifier \
 
 #define NI_GRAVITY_CONSTRUCT \
- : unknownFloat1(0.0f), force(0.0f), type((FieldType)0) \
+ : unknownFloat1(0.0f), force(0.0f) \
 
 #define NI_GRAVITY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -2882,7 +2878,7 @@ KeyGroup<float > scales; \
 #define NI_KEYFRAME_DATA_PARENT AKeyedData \
 
 #define NI_KEYFRAME_DATA_CONSTRUCT \
- : numRotationKeys((uint)0), rotationType((KeyType)0), unknownFloat(0.0f) \
+ : numRotationKeys((uint)0), unknownFloat(0.0f) \
 
 #define NI_KEYFRAME_DATA_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3297,7 +3293,6 @@ BillboardMode billboardMode; \
 #define NI_BILLBOARD_NODE_PARENT NiNode \
 
 #define NI_BILLBOARD_NODE_CONSTRUCT \
- : billboardMode((BillboardMode)0) \
 
 #define NI_BILLBOARD_NODE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3896,7 +3891,7 @@ uint unknownInt2; \
 #define NI_PIXEL_DATA_PARENT NiObject \
 
 #define NI_PIXEL_DATA_CONSTRUCT \
- : pixelFormat((PixelFormat)0), redMask((uint)0), greenMask((uint)0), blueMask((uint)0), alphaMask((uint)0), bitsPerPixel((uint)0), unknownInt((uint)0), palette(NULL), numMipmaps((uint)0), bytesPerPixel((uint)0), unknownInt2((uint)0) \
+ : redMask((uint)0), greenMask((uint)0), blueMask((uint)0), alphaMask((uint)0), bitsPerPixel((uint)0), unknownInt((uint)0), palette(NULL), numMipmaps((uint)0), bytesPerPixel((uint)0), unknownInt2((uint)0) \
 
 #define NI_PIXEL_DATA_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -4457,7 +4452,7 @@ float turbulenceScale; \
 #define NI_P_SYS_GRAVITY_MODIFIER_PARENT NiPSysModifier \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_CONSTRUCT \
- : gravityObject(NULL), decay(0.0f), strength(0.0f), forceType((ForceType)0), turbulence(0.0f), turbulenceScale(1.0f) \
+ : gravityObject(NULL), decay(0.0f), strength(0.0f), turbulence(0.0f), turbulenceScale(1.0f) \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5147,20 +5142,20 @@ return InternalGetRefs(); \
 #define NI_STENCIL_PROPERTY_MEMBERS \
 ushort flags; \
 bool stencilEnabled; \
-uint stencilFunction; \
+CompareMode stencilFunction; \
 uint stencilRef; \
 uint stencilMask; \
-uint failAction; \
-uint zFailAction; \
-uint passAction; \
-uint drawMode; \
+StencilAction failAction; \
+StencilAction zFailAction; \
+StencilAction passAction; \
+FaceDrawMode drawMode; \
 
 #define NI_STENCIL_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
- : flags((ushort)0), stencilEnabled(false), stencilFunction((uint)0), stencilRef((uint)0), stencilMask((uint)4294967295), failAction((uint)0), zFailAction((uint)0), passAction((uint)0), drawMode((uint)0) \
+ : flags((ushort)0), stencilEnabled(false), stencilRef((uint)0), stencilMask((uint)4294967295) \
 
 #define NI_STENCIL_PROPERTY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5283,7 +5278,7 @@ return InternalGetRefs(); \
 #define NI_TEXTURE_EFFECT_MEMBERS \
 Matrix33 modelProjectionMatrix; \
 Vector3 modelProjectionTransform; \
-uint textureFiltering; \
+TexFilterMode textureFiltering; \
 TexClampMode textureClamping; \
 uint textureType; \
 uint coordinateGenerationType; \
@@ -5300,7 +5295,7 @@ ushort unknownShort; \
 #define NI_TEXTURE_EFFECT_PARENT NiDynamicEffect \
 
 #define NI_TEXTURE_EFFECT_CONSTRUCT \
- : textureFiltering((uint)0), textureClamping((TexClampMode)0), textureType((uint)0), coordinateGenerationType((uint)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((ushort)0), ps2K((ushort)0), unknownShort((ushort)0) \
+ : textureType((uint)0), coordinateGenerationType((uint)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((ushort)0), ps2K((ushort)0), unknownShort((ushort)0) \
 
 #define NI_TEXTURE_EFFECT_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5328,7 +5323,7 @@ Ref<NiFloatData > data; \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT \
- : unknown2((byte)0), textureSlot((TexType)0), operation((uint)0), data(NULL) \
+ : unknown2((byte)0), operation((uint)0), data(NULL) \
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5659,7 +5654,7 @@ LightMode lightingMode; \
 #define NI_VERTEX_COLOR_PROPERTY_PARENT NiProperty \
 
 #define NI_VERTEX_COLOR_PROPERTY_CONSTRUCT \
- : flags((ushort)0), vertexMode((VertMode)0), lightingMode((LightMode)0) \
+ : flags((ushort)0) \
 
 #define NI_VERTEX_COLOR_PROPERTY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -5781,14 +5776,14 @@ return InternalGetRefs(); \
 
 #define NI_Z_BUFFER_PROPERTY_MEMBERS \
 ushort flags; \
-uint function; \
+CompareMode function; \
 
 #define NI_Z_BUFFER_PROPERTY_INCLUDE "NiProperty.h" \
 
 #define NI_Z_BUFFER_PROPERTY_PARENT NiProperty \
 
 #define NI_Z_BUFFER_PROPERTY_CONSTRUCT \
- : flags((ushort)3), function((uint)3) \
+ : flags((ushort)3), function((CompareMode)3) \
 
 #define NI_Z_BUFFER_PROPERTY_READ \
 InternalRead( in, link_stack, version, user_version ); \

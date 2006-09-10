@@ -32,26 +32,102 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 }
 
 /*!
- * PixelLayout
+ * HavokMaterial
  */
-void NifStream( PixelLayout & val, istream& in, uint version ) {
+void NifStream( HavokMaterial & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
-	val = PixelLayout(temp);
+	val = HavokMaterial(temp);
 }
 
-void NifStream( PixelLayout const & val, ostream& out, uint version ) {
+void NifStream( HavokMaterial const & val, ostream& out, uint version ) {
 	NifStream( uint(val), out, version );
 }
 
-ostream & operator<<( ostream & out, PixelLayout const & val ) {
+ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 	switch ( val ) {
-		case PIX_LAY_PALETTISED: return out << "PIX_LAY_PALETTISED";
-		case PIX_LAY_HIGH_COLOR_16: return out << "PIX_LAY_HIGH_COLOR_16";
-		case PIX_LAY_TRUE_COLOR_32: return out << "PIX_LAY_TRUE_COLOR_32";
-		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
-		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
-		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
+		case HAV_MAT_STONE: return out << "HAV_MAT_STONE";
+		case HAV_MAT_CLOTH: return out << "HAV_MAT_CLOTH";
+		case HAV_MAT_DIRT: return out << "HAV_MAT_DIRT";
+		case HAV_MAT_GLASS: return out << "HAV_MAT_GLASS";
+		case HAV_MAT_GRASS: return out << "HAV_MAT_GRASS";
+		case HAV_MAT_METAL: return out << "HAV_MAT_METAL";
+		case HAV_MAT_ORGANIC: return out << "HAV_MAT_ORGANIC";
+		case HAV_MAT_SKIN: return out << "HAV_MAT_SKIN";
+		case HAV_MAT_WATER: return out << "HAV_MAT_WATER";
+		case HAV_MAT_WOOD: return out << "HAV_MAT_WOOD";
+		case HAV_MAT_HEAVY_STONE: return out << "HAV_MAT_HEAVY_STONE";
+		case HAV_MAT_HEAVY_METAL: return out << "HAV_MAT_HEAVY_METAL";
+		case HAV_MAT_HEAVY_WOOD: return out << "HAV_MAT_HEAVY_WOOD";
+		case HAV_MAT_CHAIN: return out << "HAV_MAT_CHAIN";
+		case HAV_MAT_SNOW: return out << "HAV_MAT_SNOW";
+		case HAV_MAT_STONE_STAIRS: return out << "HAV_MAT_STONE_STAIRS";
+		case HAV_MAT_CLOTH_STAIRS: return out << "HAV_MAT_CLOTH_STAIRS";
+		case HAV_MAT_DIRT_STAIRS: return out << "HAV_MAT_DIRT_STAIRS";
+		case HAV_MAT_GLASS_STAIRS: return out << "HAV_MAT_GLASS_STAIRS";
+		case HAV_MAT_GRASS_STAIRS: return out << "HAV_MAT_GRASS_STAIRS";
+		case HAV_MAT_METAL_STAIRS: return out << "HAV_MAT_METAL_STAIRS";
+		case HAV_MAT_ORGANIC_STAIRS: return out << "HAV_MAT_ORGANIC_STAIRS";
+		case HAV_MAT_SKIN_STAIRS: return out << "HAV_MAT_SKIN_STAIRS";
+		case HAV_MAT_WATER_STAIRS: return out << "HAV_MAT_WATER_STAIRS";
+		case HAV_MAT_WOOD_STAIRS: return out << "HAV_MAT_WOOD_STAIRS";
+		case HAV_MAT_HEAVY_STONE_STAIRS: return out << "HAV_MAT_HEAVY_STONE_STAIRS";
+		case HAV_MAT_HEAVY_METAL_STAIRS: return out << "HAV_MAT_HEAVY_METAL_STAIRS";
+		case HAV_MAT_HEAVY_WOOD_STAIRS: return out << "HAV_MAT_HEAVY_WOOD_STAIRS";
+		case HAV_MAT_CHAIN_STAIRS: return out << "HAV_MAT_CHAIN_STAIRS";
+		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
+		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * CompareMode
+ */
+void NifStream( CompareMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = CompareMode(temp);
+}
+
+void NifStream( CompareMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, CompareMode const & val ) {
+	switch ( val ) {
+		case TEST_NEVER: return out << "TEST_NEVER";
+		case TEST_LESS: return out << "TEST_LESS";
+		case TEST_EQUAL: return out << "TEST_EQUAL";
+		case TEST_LESSEQUAL: return out << "TEST_LESSEQUAL";
+		case TEST_GREATER: return out << "TEST_GREATER";
+		case TEST_GREATEREQUAL: return out << "TEST_GREATEREQUAL";
+		case TEST_ALWAYS: return out << "TEST_ALWAYS";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * TexFilterMode
+ */
+void NifStream( TexFilterMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexFilterMode(temp);
+}
+
+void NifStream( TexFilterMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, TexFilterMode const & val ) {
+	switch ( val ) {
+		case FILTER_NEAREST: return out << "FILTER_NEAREST";
+		case FILTER_BILERP: return out << "FILTER_BILERP";
+		case FILTER_TRILERP: return out << "FILTER_TRILERP";
+		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
+		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
+		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
 		default: return out << "Invalid Value! - " << uint(val);
 	}
 }
@@ -100,77 +176,26 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 }
 
 /*!
- * AlphaFormat
+ * StencilAction
  */
-void NifStream( AlphaFormat & val, istream& in, uint version ) {
+void NifStream( StencilAction & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
-	val = AlphaFormat(temp);
+	val = StencilAction(temp);
 }
 
-void NifStream( AlphaFormat const & val, ostream& out, uint version ) {
+void NifStream( StencilAction const & val, ostream& out, uint version ) {
 	NifStream( uint(val), out, version );
 }
 
-ostream & operator<<( ostream & out, AlphaFormat const & val ) {
+ostream & operator<<( ostream & out, StencilAction const & val ) {
 	switch ( val ) {
-		case ALPHA_NONE: return out << "ALPHA_NONE";
-		case ALPHA_BINARY: return out << "ALPHA_BINARY";
-		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
-		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * TexFilterMode
- */
-void NifStream( TexFilterMode & val, istream& in, uint version ) {
-	uint temp;
-	NifStream( temp, in, version );
-	val = TexFilterMode(temp);
-}
-
-void NifStream( TexFilterMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
-}
-
-ostream & operator<<( ostream & out, TexFilterMode const & val ) {
-	switch ( val ) {
-		case FILTER_NEAREST: return out << "FILTER_NEAREST";
-		case FILTER_BILERP: return out << "FILTER_BILERP";
-		case FILTER_TRILERP: return out << "FILTER_TRILERP";
-		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
-		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
-		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * MotionQuality
- */
-void NifStream( MotionQuality & val, istream& in, uint version ) {
-	byte temp;
-	NifStream( temp, in, version );
-	val = MotionQuality(temp);
-}
-
-void NifStream( MotionQuality const & val, ostream& out, uint version ) {
-	NifStream( byte(val), out, version );
-}
-
-ostream & operator<<( ostream & out, MotionQuality const & val ) {
-	switch ( val ) {
-		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
-		case MO_QUAL_FIXED: return out << "MO_QUAL_FIXED";
-		case MO_QUAL_KEYFRAMED: return out << "MO_QUAL_KEYFRAMED";
-		case MO_QUAL_MOVING2: return out << "MO_QUAL_MOVING2";
-		case MO_QUAL_MOVING3: return out << "MO_QUAL_MOVING3";
-		case MO_QUAL_CRITICAL: return out << "MO_QUAL_CRITICAL";
-		case MO_QUAL_BULLET: return out << "MO_QUAL_BULLET";
-		case MO_QUAL_USER: return out << "MO_QUAL_USER";
-		case MO_QUAL_NULL: return out << "MO_QUAL_NULL";
+		case ACTION_KEEP: return out << "ACTION_KEEP";
+		case ACTION_ZERO: return out << "ACTION_ZERO";
+		case ACTION_REPLACE: return out << "ACTION_REPLACE";
+		case ACTION_INCREMENT: return out << "ACTION_INCREMENT";
+		case ACTION_DECREMENT: return out << "ACTION_DECREMENT";
+		case ACTION_INVERT: return out << "ACTION_INVERT";
 		default: return out << "Invalid Value! - " << uint(val);
 	}
 }
@@ -253,6 +278,52 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 }
 
 /*!
+ * FaceDrawMode
+ */
+void NifStream( FaceDrawMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = FaceDrawMode(temp);
+}
+
+void NifStream( FaceDrawMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
+	switch ( val ) {
+		case DRAW_CCW_OR_BOTH: return out << "DRAW_CCW_OR_BOTH";
+		case DRAW_CCW: return out << "DRAW_CCW";
+		case DRAW_CW: return out << "DRAW_CW";
+		case DRAW_BOTH: return out << "DRAW_BOTH";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * AlphaFormat
+ */
+void NifStream( AlphaFormat & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = AlphaFormat(temp);
+}
+
+void NifStream( AlphaFormat const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, AlphaFormat const & val ) {
+	switch ( val ) {
+		case ALPHA_NONE: return out << "ALPHA_NONE";
+		case ALPHA_BINARY: return out << "ALPHA_BINARY";
+		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
+		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
  * KeyType
  */
 void NifStream( KeyType & val, istream& in, uint version ) {
@@ -299,51 +370,173 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 }
 
 /*!
- * HavokMaterial
+ * ApplyMode
  */
-void NifStream( HavokMaterial & val, istream& in, uint version ) {
+void NifStream( ApplyMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
-	val = HavokMaterial(temp);
+	val = ApplyMode(temp);
 }
 
-void NifStream( HavokMaterial const & val, ostream& out, uint version ) {
+void NifStream( ApplyMode const & val, ostream& out, uint version ) {
 	NifStream( uint(val), out, version );
 }
 
-ostream & operator<<( ostream & out, HavokMaterial const & val ) {
+ostream & operator<<( ostream & out, ApplyMode const & val ) {
 	switch ( val ) {
-		case HAV_MAT_STONE: return out << "HAV_MAT_STONE";
-		case HAV_MAT_CLOTH: return out << "HAV_MAT_CLOTH";
-		case HAV_MAT_DIRT: return out << "HAV_MAT_DIRT";
-		case HAV_MAT_GLASS: return out << "HAV_MAT_GLASS";
-		case HAV_MAT_GRASS: return out << "HAV_MAT_GRASS";
-		case HAV_MAT_METAL: return out << "HAV_MAT_METAL";
-		case HAV_MAT_ORGANIC: return out << "HAV_MAT_ORGANIC";
-		case HAV_MAT_SKIN: return out << "HAV_MAT_SKIN";
-		case HAV_MAT_WATER: return out << "HAV_MAT_WATER";
-		case HAV_MAT_WOOD: return out << "HAV_MAT_WOOD";
-		case HAV_MAT_HEAVY_STONE: return out << "HAV_MAT_HEAVY_STONE";
-		case HAV_MAT_HEAVY_METAL: return out << "HAV_MAT_HEAVY_METAL";
-		case HAV_MAT_HEAVY_WOOD: return out << "HAV_MAT_HEAVY_WOOD";
-		case HAV_MAT_CHAIN: return out << "HAV_MAT_CHAIN";
-		case HAV_MAT_SNOW: return out << "HAV_MAT_SNOW";
-		case HAV_MAT_STONE_STAIRS: return out << "HAV_MAT_STONE_STAIRS";
-		case HAV_MAT_CLOTH_STAIRS: return out << "HAV_MAT_CLOTH_STAIRS";
-		case HAV_MAT_DIRT_STAIRS: return out << "HAV_MAT_DIRT_STAIRS";
-		case HAV_MAT_GLASS_STAIRS: return out << "HAV_MAT_GLASS_STAIRS";
-		case HAV_MAT_GRASS_STAIRS: return out << "HAV_MAT_GRASS_STAIRS";
-		case HAV_MAT_METAL_STAIRS: return out << "HAV_MAT_METAL_STAIRS";
-		case HAV_MAT_ORGANIC_STAIRS: return out << "HAV_MAT_ORGANIC_STAIRS";
-		case HAV_MAT_SKIN_STAIRS: return out << "HAV_MAT_SKIN_STAIRS";
-		case HAV_MAT_WATER_STAIRS: return out << "HAV_MAT_WATER_STAIRS";
-		case HAV_MAT_WOOD_STAIRS: return out << "HAV_MAT_WOOD_STAIRS";
-		case HAV_MAT_HEAVY_STONE_STAIRS: return out << "HAV_MAT_HEAVY_STONE_STAIRS";
-		case HAV_MAT_HEAVY_METAL_STAIRS: return out << "HAV_MAT_HEAVY_METAL_STAIRS";
-		case HAV_MAT_HEAVY_WOOD_STAIRS: return out << "HAV_MAT_HEAVY_WOOD_STAIRS";
-		case HAV_MAT_CHAIN_STAIRS: return out << "HAV_MAT_CHAIN_STAIRS";
-		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
-		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
+		case APPLY_REPLACE: return out << "APPLY_REPLACE";
+		case APPLY_DECAL: return out << "APPLY_DECAL";
+		case APPLY_MODULATE: return out << "APPLY_MODULATE";
+		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
+		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * MotionSystem
+ */
+void NifStream( MotionSystem & val, istream& in, uint version ) {
+	byte temp;
+	NifStream( temp, in, version );
+	val = MotionSystem(temp);
+}
+
+void NifStream( MotionSystem const & val, ostream& out, uint version ) {
+	NifStream( byte(val), out, version );
+}
+
+ostream & operator<<( ostream & out, MotionSystem const & val ) {
+	switch ( val ) {
+		case MO_SYS_BOX: return out << "MO_SYS_BOX";
+		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * BillboardMode
+ */
+void NifStream( BillboardMode & val, istream& in, uint version ) {
+	ushort temp;
+	NifStream( temp, in, version );
+	val = BillboardMode(temp);
+}
+
+void NifStream( BillboardMode const & val, ostream& out, uint version ) {
+	NifStream( ushort(val), out, version );
+}
+
+ostream & operator<<( ostream & out, BillboardMode const & val ) {
+	switch ( val ) {
+		case ALWAYS_FACE_CAMERA: return out << "ALWAYS_FACE_CAMERA";
+		case ROTATE_ABOUT_UP: return out << "ROTATE_ABOUT_UP";
+		case RIGID_FACE_CAMERA: return out << "RIGID_FACE_CAMERA";
+		case ALWAYS_FACE_CENTER: return out << "ALWAYS_FACE_CENTER";
+		case RIGID_FACE_CENTER: return out << "RIGID_FACE_CENTER";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * TexType
+ */
+void NifStream( TexType & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexType(temp);
+}
+
+void NifStream( TexType const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, TexType const & val ) {
+	switch ( val ) {
+		case BASE_MAP: return out << "BASE_MAP";
+		case DARK_MAP: return out << "DARK_MAP";
+		case DETAIL_MAP: return out << "DETAIL_MAP";
+		case GLOSS_MAP: return out << "GLOSS_MAP";
+		case GLOW_MAP: return out << "GLOW_MAP";
+		case BUMP_MAP: return out << "BUMP_MAP";
+		case DECAL_0_MAP: return out << "DECAL_0_MAP";
+		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * PixelLayout
+ */
+void NifStream( PixelLayout & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = PixelLayout(temp);
+}
+
+void NifStream( PixelLayout const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, PixelLayout const & val ) {
+	switch ( val ) {
+		case PIX_LAY_PALETTISED: return out << "PIX_LAY_PALETTISED";
+		case PIX_LAY_HIGH_COLOR_16: return out << "PIX_LAY_HIGH_COLOR_16";
+		case PIX_LAY_TRUE_COLOR_32: return out << "PIX_LAY_TRUE_COLOR_32";
+		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
+		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
+		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * TexClampMode
+ */
+void NifStream( TexClampMode & val, istream& in, uint version ) {
+	uint temp;
+	NifStream( temp, in, version );
+	val = TexClampMode(temp);
+}
+
+void NifStream( TexClampMode const & val, ostream& out, uint version ) {
+	NifStream( uint(val), out, version );
+}
+
+ostream & operator<<( ostream & out, TexClampMode const & val ) {
+	switch ( val ) {
+		case CLAMP_S_CLAMP_T: return out << "CLAMP_S_CLAMP_T";
+		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
+		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
+		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
+		default: return out << "Invalid Value! - " << uint(val);
+	}
+}
+
+/*!
+ * MotionQuality
+ */
+void NifStream( MotionQuality & val, istream& in, uint version ) {
+	byte temp;
+	NifStream( temp, in, version );
+	val = MotionQuality(temp);
+}
+
+void NifStream( MotionQuality const & val, ostream& out, uint version ) {
+	NifStream( byte(val), out, version );
+}
+
+ostream & operator<<( ostream & out, MotionQuality const & val ) {
+	switch ( val ) {
+		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
+		case MO_QUAL_FIXED: return out << "MO_QUAL_FIXED";
+		case MO_QUAL_KEYFRAMED: return out << "MO_QUAL_KEYFRAMED";
+		case MO_QUAL_MOVING2: return out << "MO_QUAL_MOVING2";
+		case MO_QUAL_MOVING3: return out << "MO_QUAL_MOVING3";
+		case MO_QUAL_CRITICAL: return out << "MO_QUAL_CRITICAL";
+		case MO_QUAL_BULLET: return out << "MO_QUAL_BULLET";
+		case MO_QUAL_USER: return out << "MO_QUAL_USER";
+		case MO_QUAL_NULL: return out << "MO_QUAL_NULL";
 		default: return out << "Invalid Value! - " << uint(val);
 	}
 }
@@ -393,30 +586,6 @@ ostream & operator<<( ostream & out, CycleType const & val ) {
 }
 
 /*!
- * ApplyMode
- */
-void NifStream( ApplyMode & val, istream& in, uint version ) {
-	uint temp;
-	NifStream( temp, in, version );
-	val = ApplyMode(temp);
-}
-
-void NifStream( ApplyMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
-}
-
-ostream & operator<<( ostream & out, ApplyMode const & val ) {
-	switch ( val ) {
-		case APPLY_REPLACE: return out << "APPLY_REPLACE";
-		case APPLY_DECAL: return out << "APPLY_DECAL";
-		case APPLY_MODULATE: return out << "APPLY_MODULATE";
-		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
-		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
  * FieldType
  */
 void NifStream( FieldType & val, istream& in, uint version ) {
@@ -433,101 +602,6 @@ ostream & operator<<( ostream & out, FieldType const & val ) {
 	switch ( val ) {
 		case FIELD_WIND: return out << "FIELD_WIND";
 		case FIELD_POINT: return out << "FIELD_POINT";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * BillboardMode
- */
-void NifStream( BillboardMode & val, istream& in, uint version ) {
-	ushort temp;
-	NifStream( temp, in, version );
-	val = BillboardMode(temp);
-}
-
-void NifStream( BillboardMode const & val, ostream& out, uint version ) {
-	NifStream( ushort(val), out, version );
-}
-
-ostream & operator<<( ostream & out, BillboardMode const & val ) {
-	switch ( val ) {
-		case ALWAYS_FACE_CAMERA: return out << "ALWAYS_FACE_CAMERA";
-		case ROTATE_ABOUT_UP: return out << "ROTATE_ABOUT_UP";
-		case RIGID_FACE_CAMERA: return out << "RIGID_FACE_CAMERA";
-		case ALWAYS_FACE_CENTER: return out << "ALWAYS_FACE_CENTER";
-		case RIGID_FACE_CENTER: return out << "RIGID_FACE_CENTER";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * MotionSystem
- */
-void NifStream( MotionSystem & val, istream& in, uint version ) {
-	byte temp;
-	NifStream( temp, in, version );
-	val = MotionSystem(temp);
-}
-
-void NifStream( MotionSystem const & val, ostream& out, uint version ) {
-	NifStream( byte(val), out, version );
-}
-
-ostream & operator<<( ostream & out, MotionSystem const & val ) {
-	switch ( val ) {
-		case MO_SYS_BOX: return out << "MO_SYS_BOX";
-		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * TexType
- */
-void NifStream( TexType & val, istream& in, uint version ) {
-	uint temp;
-	NifStream( temp, in, version );
-	val = TexType(temp);
-}
-
-void NifStream( TexType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
-}
-
-ostream & operator<<( ostream & out, TexType const & val ) {
-	switch ( val ) {
-		case BASE_MAP: return out << "BASE_MAP";
-		case DARK_MAP: return out << "DARK_MAP";
-		case DETAIL_MAP: return out << "DETAIL_MAP";
-		case GLOSS_MAP: return out << "GLOSS_MAP";
-		case GLOW_MAP: return out << "GLOW_MAP";
-		case BUMP_MAP: return out << "BUMP_MAP";
-		case DECAL_0_MAP: return out << "DECAL_0_MAP";
-		case DECAL_1_MAP: return out << "DECAL_1_MAP";
-		default: return out << "Invalid Value! - " << uint(val);
-	}
-}
-
-/*!
- * TexClampMode
- */
-void NifStream( TexClampMode & val, istream& in, uint version ) {
-	uint temp;
-	NifStream( temp, in, version );
-	val = TexClampMode(temp);
-}
-
-void NifStream( TexClampMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
-}
-
-ostream & operator<<( ostream & out, TexClampMode const & val ) {
-	switch ( val ) {
-		case CLAMP_S_CLAMP_T: return out << "CLAMP_S_CLAMP_T";
-		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
-		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
-		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
 		default: return out << "Invalid Value! - " << uint(val);
 	}
 }
