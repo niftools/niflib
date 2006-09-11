@@ -212,3 +212,11 @@ string NiControllerSequence::GetTargetName() const {
 void NiControllerSequence::SetTargetName( const string & value ) {
 	targetName = value;
 }
+
+float NiControllerSequence::GetWeight() const {
+	return weight;
+}
+
+void NiControllerSequence::SetWeight( const float value ) {
+	weight = value;
+}
