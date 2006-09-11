@@ -104,12 +104,8 @@ void NiControllerSequence::AddInterpolator( const Ref<NiSingleInterpolatorContro
 	}
 
 	//If there are existing ControllerLinks, use the same StringPalette they're using
-	NiStringPaletteRef str_pal;
-	if ( controlledBlocks.size() > 0 ) {
-		str_pal = controlledBlocks[0].stringPalette;
-	} else {
-		//No existing ones, so make a new one
-		str_pal = new NiStringPalette;
+   if ( stringPalette == NULL ) {
+      stringPalette = new NiStringPalette;
 	}
 
 	//Make a new ControllerLink and fill out necessary data
@@ -117,15 +113,15 @@ void NiControllerSequence::AddInterpolator( const Ref<NiSingleInterpolatorContro
 
 	cl.interpolator = interp;
 	cl.priority_ = priority;
-   cl.stringPalette = str_pal;
-	cl.nodeNameOffset = str_pal->AddSubStr( target->GetName() );
+   cl.stringPalette = stringPalette;
+	cl.nodeNameOffset = stringPalette->AddSubStr( target->GetName() );
 
 	NiPropertyRef prop = DynamicCast<NiProperty>(target);
 	if ( prop != NULL ) {
-		cl.propertyTypeOffset = str_pal->AddSubStr( prop->GetType().GetTypeName() );
+		cl.propertyTypeOffset = stringPalette->AddSubStr( prop->GetType().GetTypeName() );
 	}
 
-	cl.controllerTypeOffset = str_pal->AddSubStr( obj->GetType().GetTypeName() );
+	cl.controllerTypeOffset = stringPalette->AddSubStr( obj->GetType().GetTypeName() );
 
 	//Add finished ControllerLink to list
 	controlledBlocks.push_back( cl );

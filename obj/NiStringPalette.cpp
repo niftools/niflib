@@ -64,7 +64,8 @@ string NiStringPalette::GetSubStr( short offset ) const {
 
 unsigned int NiStringPalette::AddSubStr( const string & n ) {
 	//Search for the string
-	uint offset = (uint)palette.palette.find( n );
+   //  When searching for strings also search for ending null.
+	uint offset = (uint)palette.palette.find( n.c_str(), 0, n.size()+1 );
 	
 	//If string was not found, append it
 	if ( offset == 0xFFFFFFFF ) {
