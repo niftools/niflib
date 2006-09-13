@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIRANGELODDATA_H_
 #define _NIRANGELODDATA_H_
 
-#include "NiObject.h"
+#include "NiLODData.h"
 
 // Include structures
 #include "../gen/LODRange.h"

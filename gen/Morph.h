@@ -24,16 +24,16 @@ struct NIFLIB_API Morph {
 	/*!
 	 * The number of morph keys that follow.
 	 */
-	mutable uint numMorphKeys;
+	mutable uint numKeys;
 	/*!
 	 * Unlike most objects, the presense of this value is not conditional on
 	 * there being keys.
 	 */
-	KeyType morphInterpolation;
+	KeyType interpolation;
 	/*!
 	 * The morph key frames.
 	 */
-	vector<Key<float > > morphKeys;
+	vector<Key<float > > keys;
 	/*!
 	 * Unknown.
 	 */

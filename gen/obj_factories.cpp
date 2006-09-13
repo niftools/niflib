@@ -295,12 +295,12 @@ NiObject * CreateNiPSysSphereEmitter() { return new NiPSysSphereEmitter; }
 NiObject * CreateNiPSysUpdateCtlr() { return new NiPSysUpdateCtlr; }
 #include "../obj/NiRangeLODData.h"
 NiObject * CreateNiRangeLODData() { return new NiRangeLODData; }
+#include "../obj/NiScreenLODData.h"
+NiObject * CreateNiScreenLODData() { return new NiScreenLODData; }
 #include "../obj/NiRotatingParticles.h"
 NiObject * CreateNiRotatingParticles() { return new NiRotatingParticles; }
 #include "../obj/NiRotatingParticlesData.h"
 NiObject * CreateNiRotatingParticlesData() { return new NiRotatingParticlesData; }
-#include "../obj/NiScreenLODData.h"
-NiObject * CreateNiScreenLODData() { return new NiScreenLODData; }
 #include "../obj/NiSequenceStreamHelper.h"
 NiObject * CreateNiSequenceStreamHelper() { return new NiSequenceStreamHelper; }
 #include "../obj/NiShadeProperty.h"
@@ -516,9 +516,9 @@ void RegisterBlockFactories() {
 	global_block_map["NiPSysSphereEmitter"] = CreateNiPSysSphereEmitter;
 	global_block_map["NiPSysUpdateCtlr"] = CreateNiPSysUpdateCtlr;
 	global_block_map["NiRangeLODData"] = CreateNiRangeLODData;
+	global_block_map["NiScreenLODData"] = CreateNiScreenLODData;
 	global_block_map["NiRotatingParticles"] = CreateNiRotatingParticles;
 	global_block_map["NiRotatingParticlesData"] = CreateNiRotatingParticlesData;
-	global_block_map["NiScreenLODData"] = CreateNiScreenLODData;
 	global_block_map["NiSequenceStreamHelper"] = CreateNiSequenceStreamHelper;
 	global_block_map["NiShadeProperty"] = CreateNiShadeProperty;
 	global_block_map["NiSkinData"] = CreateNiSkinData;

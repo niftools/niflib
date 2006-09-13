@@ -313,13 +313,15 @@ return InternalGetRefs(); \
 #define BHK_ENTITY_MEMBERS \
 Ref<bhkShape > shape; \
 OblivionLayer layer; \
+byte colFilter; \
+ushort unknownShort; \
 
 #define BHK_ENTITY_INCLUDE "bhkWorldObject.h" \
 
 #define BHK_ENTITY_PARENT bhkWorldObject \
 
 #define BHK_ENTITY_CONSTRUCT \
- : shape(NULL) \
+ : shape(NULL), colFilter((byte)0), unknownShort((ushort)0) \
 
 #define BHK_ENTITY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -346,7 +348,7 @@ Ref<NiObject > body; \
 #define NI_COLLISION_OBJECT_PARENT NiObject \
 
 #define NI_COLLISION_OBJECT_CONSTRUCT \
- : parent(NULL), unknownShort((ushort)0), body(NULL) \
+ : parent(NULL), unknownShort((ushort)1), body(NULL) \
 
 #define NI_COLLISION_OBJECT_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -1361,10 +1363,11 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_RIGID_BODY_MEMBERS \
-array<float,5> unknownFloats1; \
-array<ushort,4> unknownShorts1; \
+array<float,5> unknown5Floats; \
+array<ushort,4> unknown4Shorts; \
 OblivionLayer layerCopy; \
-array<ushort,6> unknownShorts2; \
+byte colFilterCopy; \
+array<ushort,7> unknown7Shorts; \
 Vector3 translation; \
 float unknownFloat00; \
 QuaternionXYZW rotation; \
@@ -1398,7 +1401,7 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_PARENT bhkEntity \
 
 #define BHK_RIGID_BODY_CONSTRUCT \
- : unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
+ : colFilterCopy((byte)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.0f), angularDamping(0.0f), friction(0.0f), restitution(0.0f), maxLinearVelocity(0.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.0f), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((uint)0), unknownInt7((uint)0), unknownInt8((uint)0), numConstraints((uint)0) \
 
 #define BHK_RIGID_BODY_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3356,19 +3359,19 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_L_O_D_NODE_MEMBERS \
-uint lodType; \
+array<byte,4> unknown4Bytes; \
 Vector3 lodCenter; \
 mutable uint numLodLevels; \
 vector<LODRange > lodLevels; \
 ushort unknownShort; \
-Ref<NiRangeLODData > rangeData; \
+Ref<NiLODData > rangeData; \
 
 #define NI_L_O_D_NODE_INCLUDE "NiNode.h" \
 
 #define NI_L_O_D_NODE_PARENT NiNode \
 
 #define NI_L_O_D_NODE_CONSTRUCT \
- : lodType((uint)0), numLodLevels((uint)0), unknownShort((ushort)0), rangeData(NULL) \
+ : numLodLevels((uint)0), unknownShort((ushort)0), rangeData(NULL) \
 
 #define NI_L_O_D_NODE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -4790,14 +4793,37 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 #define NI_P_SYS_UPDATE_CTLR_GETREFS \
 return InternalGetRefs(); \
 
+#define NI_L_O_D_DATA_MEMBERS \
+
+#define NI_L_O_D_DATA_INCLUDE "NiObject.h" \
+
+#define NI_L_O_D_DATA_PARENT NiObject \
+
+#define NI_L_O_D_DATA_CONSTRUCT \
+
+#define NI_L_O_D_DATA_READ \
+InternalRead( in, link_stack, version, user_version ); \
+
+#define NI_L_O_D_DATA_WRITE \
+InternalWrite( out, link_map, version, user_version ); \
+
+#define NI_L_O_D_DATA_STRING \
+return InternalAsString( verbose ); \
+
+#define NI_L_O_D_DATA_FIXLINKS \
+InternalFixLinks( objects, link_stack, version, user_version ); \
+
+#define NI_L_O_D_DATA_GETREFS \
+return InternalGetRefs(); \
+
 #define NI_RANGE_L_O_D_DATA_MEMBERS \
 Vector3 lodCenter; \
 mutable uint numLodLevels; \
 vector<LODRange > lodLevels; \
 
-#define NI_RANGE_L_O_D_DATA_INCLUDE "NiObject.h" \
+#define NI_RANGE_L_O_D_DATA_INCLUDE "NiLODData.h" \
 
-#define NI_RANGE_L_O_D_DATA_PARENT NiObject \
+#define NI_RANGE_L_O_D_DATA_PARENT NiLODData \
 
 #define NI_RANGE_L_O_D_DATA_CONSTRUCT \
  : numLodLevels((uint)0) \
@@ -4815,6 +4841,36 @@ return InternalAsString( verbose ); \
 InternalFixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_RANGE_L_O_D_DATA_GETREFS \
+return InternalGetRefs(); \
+
+#define NI_SCREEN_L_O_D_DATA_MEMBERS \
+Vector3 boundCenter; \
+float boundRadius; \
+Vector3 worldCenter; \
+float worldRadius; \
+mutable uint proportionCount; \
+vector<float > proportion; \
+
+#define NI_SCREEN_L_O_D_DATA_INCLUDE "NiLODData.h" \
+
+#define NI_SCREEN_L_O_D_DATA_PARENT NiLODData \
+
+#define NI_SCREEN_L_O_D_DATA_CONSTRUCT \
+ : boundRadius(0.0f), worldRadius(0.0f), proportionCount((uint)0) \
+
+#define NI_SCREEN_L_O_D_DATA_READ \
+InternalRead( in, link_stack, version, user_version ); \
+
+#define NI_SCREEN_L_O_D_DATA_WRITE \
+InternalWrite( out, link_map, version, user_version ); \
+
+#define NI_SCREEN_L_O_D_DATA_STRING \
+return InternalAsString( verbose ); \
+
+#define NI_SCREEN_L_O_D_DATA_FIXLINKS \
+InternalFixLinks( objects, link_stack, version, user_version ); \
+
+#define NI_SCREEN_L_O_D_DATA_GETREFS \
 return InternalGetRefs(); \
 
 #define NI_ROTATING_PARTICLES_MEMBERS \
@@ -4861,33 +4917,6 @@ return InternalAsString( verbose ); \
 InternalFixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_ROTATING_PARTICLES_DATA_GETREFS \
-return InternalGetRefs(); \
-
-#define NI_SCREEN_L_O_D_DATA_MEMBERS \
-array<float,8> unknownFloats; \
-mutable uint unknownCount; \
-vector<float > unknownFloats2; \
-
-#define NI_SCREEN_L_O_D_DATA_INCLUDE "NiObject.h" \
-
-#define NI_SCREEN_L_O_D_DATA_PARENT NiObject \
-
-#define NI_SCREEN_L_O_D_DATA_CONSTRUCT \
- : unknownCount((uint)0) \
-
-#define NI_SCREEN_L_O_D_DATA_READ \
-InternalRead( in, link_stack, version, user_version ); \
-
-#define NI_SCREEN_L_O_D_DATA_WRITE \
-InternalWrite( out, link_map, version, user_version ); \
-
-#define NI_SCREEN_L_O_D_DATA_STRING \
-return InternalAsString( verbose ); \
-
-#define NI_SCREEN_L_O_D_DATA_FIXLINKS \
-InternalFixLinks( objects, link_stack, version, user_version ); \
-
-#define NI_SCREEN_L_O_D_DATA_GETREFS \
 return InternalGetRefs(); \
 
 #define NI_SEQUENCE_STREAM_HELPER_MEMBERS \

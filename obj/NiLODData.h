@@ -1,25 +1,26 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#ifndef _NISCREENLODDATA_H_
-#define _NISCREENLODDATA_H_
+#ifndef _NILODDATA_H_
+#define _NILODDATA_H_
 
-#include "NiLODData.h"
+#include "NiObject.h"
 namespace Niflib {
+
 
 #include "../gen/obj_defines.h"
 
-class NiScreenLODData;
-typedef Ref<NiScreenLODData> NiScreenLODDataRef;
+class NiLODData;
+typedef Ref<NiLODData> NiLODDataRef;
 
 /*!
- * NiScreenLODData - Unknown.
+ * NiLODData - Abstract class used for different types of LOD selections.
  */
 
-class NIFLIB_API NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
+class NIFLIB_API NiLODData : public NI_L_O_D_DATA_PARENT {
 public:
-	NiScreenLODData();
-	~NiScreenLODData();
+	NiLODData();
+	~NiLODData();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
 private:
@@ -33,7 +34,7 @@ public:
 	virtual const Type & GetType() const;
 
 protected:
-	NI_SCREEN_L_O_D_DATA_MEMBERS
+	NI_L_O_D_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };
 

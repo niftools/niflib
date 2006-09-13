@@ -1913,6 +1913,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\obj\NiLODData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\obj\NiLODNode.h"
 					>
 				</File>

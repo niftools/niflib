@@ -204,13 +204,13 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
  * OblivionLayer
  */
 void NifStream( OblivionLayer & val, istream& in, uint version ) {
-	uint temp;
+	byte temp;
 	NifStream( temp, in, version );
 	val = OblivionLayer(temp);
 }
 
 void NifStream( OblivionLayer const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+	NifStream( byte(val), out, version );
 }
 
 ostream & operator<<( ostream & out, OblivionLayer const & val ) {

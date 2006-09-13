@@ -31,8 +31,8 @@ struct NIFLIB_API Header {
 	 */
 	uint version;
 	/*!
-	 * Determines the endian-ness of the data.  1 = little endian (default) 0
-	 * = big endian
+	 * Determines the endian-ness of the data.              1 = little endian
+	 * (default)             0 = big endian
 	 */
 	byte endianType;
 	/*!

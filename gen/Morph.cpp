@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-Morph::Morph() : numMorphKeys((uint)0), unknownInt((uint)0) {};
+Morph::Morph() : numKeys((uint)0), unknownInt((uint)0) {};
 
 //Destructor
 Morph::~Morph() {};

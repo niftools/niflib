@@ -63,19 +63,19 @@ void NiMorphData::SetMorphCount( int n ) {
 }
 
 KeyType NiMorphData::GetMorphKeyType( int n ) const {
-	return morphs[n].morphInterpolation;
+	return morphs[n].interpolation;
 }
 
 void NiMorphData::SetMorphKeyType( int n, KeyType t ) {
-	morphs[n].morphInterpolation = t;
+	morphs[n].interpolation = t;
 }
 
 vector< Key<float> > NiMorphData::GetMorphKeys( int n ) const {
-	return morphs[n].morphKeys;
+	return morphs[n].keys;
 }
 
 void NiMorphData::SetMorphKeys( int n, vector< Key<float> > const & keys ) {
-	morphs[n].morphKeys = keys;
+	morphs[n].keys = keys;
 }
 
 vector<Vector3> NiMorphData::GetMorphVerts( int n) const {

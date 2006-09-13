@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 
 // Forward define of referenced blocks
-class NiRangeLODData;
+class NiLODData;
 
 #include "../gen/obj_defines.h"
 
