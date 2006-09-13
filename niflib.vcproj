@@ -843,6 +843,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\obj\NiLODData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\obj\NiLODNode.cpp"
 					>
 				</File>
