@@ -13,7 +13,8 @@ class NiScreenLODData;
 typedef Ref<NiScreenLODData> NiScreenLODDataRef;
 
 /*!
- * NiScreenLODData - Unknown.
+ * NiScreenLODData - Describes levels of detail based on size of object
+ * on screen?
  */
 
 class NIFLIB_API NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
@@ -31,6 +32,36 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*!
+	 * The center of the bounding sphere?
+	 */
+	Vector3 GetBoundCenter() const;
+	void SetBoundCenter( const Vector3 & value );
+
+	/*!
+	 * The radius of the bounding sphere?
+	 */
+	float GetBoundRadius() const;
+	void SetBoundRadius( float value );
+
+	/*!
+	 * The center of the bounding sphere in world space?
+	 */
+	Vector3 GetWorldCenter() const;
+	void SetWorldCenter( const Vector3 & value );
+
+	/*!
+	 * The radius of the bounding sphere in world space?
+	 */
+	float GetWorldRadius() const;
+	void SetWorldRadius( float value );
+
+	/*!
+	 * The LOD levels based on proportion of screen size?
+	 */
+	vector<float > GetProportionLevels() const;
+	void SetProportionLevels( const vector<float >& value );
 
 protected:
 	NI_SCREEN_L_O_D_DATA_MEMBERS

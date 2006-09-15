@@ -37,3 +37,27 @@ const Type & NiLODNode::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiLODNode::GetLodCenter() const {
+	return lodCenter;
+}
+
+void NiLODNode::SetLodCenter( const Vector3 & value ) {
+	lodCenter = value;
+}
+
+vector<LODRange > NiLODNode::GetLodLevels() const {
+	return lodLevels;
+}
+
+void NiLODNode::SetLodLevels( const vector<LODRange >& value ) {
+	lodLevels = value;
+}
+
+Ref<NiLODData > NiLODNode::GetRangeData() const {
+	return rangeData;
+}
+
+void NiLODNode::SetRangeData( Ref<NiLODData > value ) {
+	rangeData = value;
+}
+

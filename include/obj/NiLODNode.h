@@ -41,6 +41,24 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	/*!
+	 * Point to calculate distance from for switching?
+	 */
+	Vector3 GetLodCenter() const;
+	void SetLodCenter( const Vector3 & value );
+
+	/*!
+	 * The ranges of distance that each level of detail applies in.
+	 */
+	vector<LODRange > GetLodLevels() const;
+	void SetLodLevels( const vector<LODRange >& value );
+
+	/*!
+	 * Refers to LOD level information, either distance or screen size based.
+	 */
+	Ref<NiLODData > GetRangeData() const;
+	void SetRangeData( Ref<NiLODData > value );
+
 protected:
 	NI_L_O_D_NODE_MEMBERS
 	STANDARD_INTERNAL_METHODS

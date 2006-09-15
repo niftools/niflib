@@ -17,7 +17,8 @@ class NiRangeLODData;
 typedef Ref<NiRangeLODData> NiRangeLODDataRef;
 
 /*!
- * NiRangeLODData - Describes levels of detail.
+ * NiRangeLODData - Describes levels of detail based on distance of
+ * object from camera.
  */
 
 class NIFLIB_API NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
@@ -35,6 +36,18 @@ public:
 	virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
+
+	/*!
+	 * ?
+	 */
+	Vector3 GetLodCenter() const;
+	void SetLodCenter( const Vector3 & value );
+
+	/*!
+	 * The ranges of distance that each level of detail applies in.
+	 */
+	vector<LODRange > GetLodLevels() const;
+	void SetLodLevels( const vector<LODRange >& value );
 
 protected:
 	NI_RANGE_L_O_D_DATA_MEMBERS

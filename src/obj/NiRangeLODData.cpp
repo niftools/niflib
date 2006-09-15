@@ -36,3 +36,19 @@ const Type & NiRangeLODData::GetType() const {
 	return TYPE;
 };
 
+Vector3 NiRangeLODData::GetLodCenter() const {
+	return lodCenter;
+}
+
+void NiRangeLODData::SetLodCenter( const Vector3 & value ) {
+	lodCenter = value;
+}
+
+vector<LODRange > NiRangeLODData::GetLodLevels() const {
+	return lodLevels;
+}
+
+void NiRangeLODData::SetLodLevels( const vector<LODRange >& value ) {
+	lodLevels = value;
+}
+
