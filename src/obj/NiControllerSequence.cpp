@@ -1,23 +1,19 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiControllerSequence.h"
-#include "../gen/ControllerLink.h"
-#include "NiInterpolator.h"
-#include "NiObject.h"
-#include "NiStringPalette.h"
-#include "../gen/ControllerLink.h"
-#include "NiInterpolator.h"
-#include "NiObject.h"
-#include "NiStringPalette.h"
-#include "NiTextKeyExtraData.h"
-#include "NiControllerManager.h"
-#include "NiStringPalette.h"
-#include "NiTimeController.h"
-#include "NiSingleInterpolatorController.h"
-#include "NiObjectNET.h"
-#include "NiProperty.h"
-#include "NiStringPalette.h"
+#include "../../include/obj/NiControllerSequence.h"
+#include "../../include/gen/ControllerLink.h"
+#include "../../include/obj/NiInterpolator.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiStringPalette.h"
+#include "../../include/gen/ControllerLink.h"
+#include "../../include/obj/NiTextKeyExtraData.h"
+#include "../../include/obj/NiControllerManager.h"
+#include "../../include/obj/NiTimeController.h"
+#include "../../include/obj/NiSingleInterpolatorController.h"
+#include "../../include/obj/NiObjectNET.h"
+#include "../../include/obj/NiProperty.h"
+
 using namespace Niflib;
 
 //Definition of TYPE constant

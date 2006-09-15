@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiDefaultAVObjectPalette.h"
-#include "../gen/AVObject.h"
-#include "NiAVObject.h"
+#include "../../include/obj/NiDefaultAVObjectPalette.h"
+#include "../../include/gen/AVObject.h"
+#include "../../include/obj/NiAVObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

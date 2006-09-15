@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NIF_IO.h"
+#include "../include/NIF_IO.h"
 namespace Niflib {
 
 int BlockSearch( istream& in ) {

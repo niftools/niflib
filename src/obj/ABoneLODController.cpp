@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "ABoneLODController.h"
-#include "../gen/NodeGroup.h"
-#include "NiNode.h"
+#include "../../include/obj/ABoneLODController.h"
+#include "../../include/gen/NodeGroup.h"
+#include "../../include/obj/NiNode.h"
 #include <algorithm>
 using namespace Niflib;
 

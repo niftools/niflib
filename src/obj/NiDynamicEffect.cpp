@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiDynamicEffect.h"
-#include "NiAVObject.h"
+#include "../../include/obj/NiDynamicEffect.h"
+#include "../../include/obj/NiAVObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

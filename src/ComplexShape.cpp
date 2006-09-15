@@ -1,19 +1,19 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "ComplexShape.h"
-#include "obj/NiNode.h"
-#include "obj/NiProperty.h"
-#include "obj/NiAVObject.h"
-#include "obj/NiTriBasedGeom.h"
-#include "obj/NiTriShape.h"
-#include "obj/NiTriStrips.h"
-#include "obj/NiTriStripsData.h"
-#include "obj/NiTriShapeData.h"
-#include "obj/NiTexturingProperty.h"
-#include "obj/NiSkinInstance.h"
-#include "obj/NiSkinData.h"
-#include "gen/SkinWeight.h"
+#include "../include/ComplexShape.h"
+#include "../include/obj/NiNode.h"
+#include "../include/obj/NiProperty.h"
+#include "../include/obj/NiAVObject.h"
+#include "../include/obj/NiTriBasedGeom.h"
+#include "../include/obj/NiTriShape.h"
+#include "../include/obj/NiTriStrips.h"
+#include "../include/obj/NiTriStripsData.h"
+#include "../include/obj/NiTriShapeData.h"
+#include "../include/obj/NiTexturingProperty.h"
+#include "../include/obj/NiSkinInstance.h"
+#include "../include/obj/NiSkinData.h"
+#include "../include/gen/SkinWeight.h"
 #include <stdlib.h>
 
 using namespace Niflib;

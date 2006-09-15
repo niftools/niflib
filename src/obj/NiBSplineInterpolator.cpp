@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiBSplineInterpolator.h"
-#include "NiBSplineData.h"
-#include "NiBSplineBasisData.h"
+#include "../../include/obj/NiBSplineInterpolator.h"
+#include "../../include/obj/NiBSplineData.h"
+#include "../../include/obj/NiBSplineBasisData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

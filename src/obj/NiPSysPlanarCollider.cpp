@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysPlanarCollider.h"
-#include "NiPSysSpawnModifier.h"
-#include "NiObject.h"
-#include "NiNode.h"
+#include "../../include/obj/NiPSysPlanarCollider.h"
+#include "../../include/obj/NiPSysSpawnModifier.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

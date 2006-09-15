@@ -1,12 +1,12 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTriBasedGeom.h"
-#include "NiTriBasedGeomData.h"
-#include "NiSkinInstance.h"
-#include "NiObject.h"
-#include "NiSkinData.h"
-#include "NiSkinPartition.h"
+#include "../../include/obj/NiTriBasedGeom.h"
+#include "../../include/obj/NiTriBasedGeomData.h"
+#include "../../include/obj/NiSkinInstance.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiSkinData.h"
+#include "../../include/obj/NiSkinPartition.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

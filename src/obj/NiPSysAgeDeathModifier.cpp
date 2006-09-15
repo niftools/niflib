@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPSysAgeDeathModifier.h"
-#include "NiPSysSpawnModifier.h"
+#include "../../include/obj/NiPSysAgeDeathModifier.h"
+#include "../../include/obj/NiPSysSpawnModifier.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

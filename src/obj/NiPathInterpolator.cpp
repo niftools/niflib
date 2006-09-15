@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPathInterpolator.h"
-#include "NiPosData.h"
-#include "NiFloatData.h"
+#include "../../include/obj/NiPathInterpolator.h"
+#include "../../include/obj/NiPosData.h"
+#include "../../include/obj/NiFloatData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

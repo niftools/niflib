@@ -1,9 +1,9 @@
 //--Kfm Functions--//
 
-#include "kfm.h"
-#include "niflib.h"
-#include "NIF_IO.h"
-#include "obj/NiObject.h"
+#include "../include/kfm.h"
+#include "../include/niflib.h"
+#include "../include/NIF_IO.h"
+#include "../include/obj/NiObject.h"
 
 namespace Niflib {
 

@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiBSplineCompTransformInterpolator.h"
-#include "NiBSplineBasisData.h"
-#include "NiBSplineData.h"
+#include "../../include/obj/NiBSplineCompTransformInterpolator.h"
+#include "../../include/obj/NiBSplineBasisData.h"
+#include "../../include/obj/NiBSplineData.h"
 using namespace Niflib;
 
 static const int SizeofQuat = 4;

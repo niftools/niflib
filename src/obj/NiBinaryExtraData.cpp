@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiBinaryExtraData.h"
-#include "../gen/ByteArray.h"
+#include "../../include/obj/NiBinaryExtraData.h"
+#include "../../include/gen/ByteArray.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

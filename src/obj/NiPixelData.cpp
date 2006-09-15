@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiPixelData.h"
-#include "../gen/MipMap.h"
-#include "../gen/ByteArray.h"
-#include "NiPalette.h"
+#include "../../include/obj/NiPixelData.h"
+#include "../../include/gen/MipMap.h"
+#include "../../include/gen/ByteArray.h"
+#include "../../include/obj/NiPalette.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

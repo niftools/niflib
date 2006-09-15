@@ -1,11 +1,11 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSkinInstance.h"
-#include "NiNode.h"
-#include "NiSkinData.h"
-#include "NiSkinPartition.h"
-#include "NiNode.h"
+#include "../../include/obj/NiSkinInstance.h"
+#include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiSkinData.h"
+#include "../../include/obj/NiSkinPartition.h"
+#include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

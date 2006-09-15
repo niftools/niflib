@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiParticleSystemController.h"
-#include "../gen/Particle.h"
-#include "NiObject.h"
-#include "AParticleModifier.h"
+#include "../../include/obj/NiParticleSystemController.h"
+#include "../../include/gen/Particle.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/AParticleModifier.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

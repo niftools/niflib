@@ -1,11 +1,11 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "ControllerLink.h"
-#include "../obj/NiTimeController.h"
-#include "../obj/NiInterpolator.h"
-#include "../obj/NiObject.h"
-#include "../obj/NiStringPalette.h"
+#include "../../include/gen/ControllerLink.h"
+#include "../../include/obj/NiTimeController.h"
+#include "../../include/obj/NiInterpolator.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiStringPalette.h"
 using namespace Niflib;
 
 //Constructor

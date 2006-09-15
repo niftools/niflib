@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "bhkTransformShape.h"
+#include "../../include/obj/bhkTransformShape.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

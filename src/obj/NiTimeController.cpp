@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTimeController.h"
-#include "NiObjectNET.h"
+#include "../../include/obj/NiTimeController.h"
+#include "../../include/obj/NiObjectNET.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

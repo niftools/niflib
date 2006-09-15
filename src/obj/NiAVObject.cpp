@@ -1,11 +1,11 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiAVObject.h"
-#include "NiNode.h"
-#include "NiProperty.h"
-#include "NiCollisionData.h"
-#include "NiCollisionObject.h"
+#include "../../include/obj/NiAVObject.h"
+#include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiProperty.h"
+#include "../../include/obj/NiCollisionData.h"
+#include "../../include/obj/NiCollisionObject.h"
 using namespace Niflib;
 
 

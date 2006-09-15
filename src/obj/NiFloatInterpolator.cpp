@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiFloatInterpolator.h"
-#include "NiFloatData.h"
+#include "../../include/obj/NiFloatInterpolator.h"
+#include "../../include/obj/NiFloatData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

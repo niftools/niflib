@@ -1,26 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiTexturingProperty.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
-#include "../gen/ShaderTexDesc.h"
-#include "../gen/TexDesc.h"
-#include "NiSourceTexture.h"
+#include "../../include/obj/NiTexturingProperty.h"
+#include "../../include/gen/TexDesc.h"
+#include "../../include/obj/NiSourceTexture.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

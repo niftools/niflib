@@ -1,15 +1,15 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSkinPartition.h"
-#include "../gen/SkinPartition.h"
-#include "NiSkinInstance.h"
-#include "NiSkinData.h"
-#include "NiTriBasedGeom.h"
-#include "NiTriBasedGeomData.h"
-#include "NiTriStripsData.h"
-#include "../gen/SkinWeight.h"
-#include "../NvTriStrip/NvTriStrip.h"
+#include "../../include/obj/NiSkinPartition.h"
+#include "../../include/gen/SkinPartition.h"
+#include "../../include/obj/NiSkinInstance.h"
+#include "../../include/obj/NiSkinData.h"
+#include "../../include/obj/NiTriBasedGeom.h"
+#include "../../include/obj/NiTriBasedGeomData.h"
+#include "../../include/obj/NiTriStripsData.h"
+#include "../../include/gen/SkinWeight.h"
+#include "../../NvTriStrip/NvTriStrip.h"
 using namespace Niflib;
 
 typedef vector<SkinWeight> SkinWeightList;

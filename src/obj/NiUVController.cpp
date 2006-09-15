@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiUVController.h"
-#include "NiUVData.h"
+#include "../../include/obj/NiUVController.h"
+#include "../../include/obj/NiUVData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

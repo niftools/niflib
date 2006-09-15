@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiLODNode.h"
-#include "../gen/LODRange.h"
-#include "NiRangeLODData.h"
+#include "../../include/obj/NiLODNode.h"
+#include "../../include/gen/LODRange.h"
+#include "../../include/obj/NiRangeLODData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

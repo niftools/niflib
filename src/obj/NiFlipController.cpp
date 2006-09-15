@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiFlipController.h"
-#include "NiSourceTexture.h"
+#include "../../include/obj/NiFlipController.h"
+#include "../../include/obj/NiSourceTexture.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

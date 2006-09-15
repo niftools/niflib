@@ -1,7 +1,7 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "../obj/NiObject.h"
+#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 using namespace std;
 namespace Niflib {
@@ -9,365 +9,365 @@ typedef NiObject*(*blk_factory_func)();
 extern map<string, blk_factory_func> global_block_map;
 }
 
-#include "../obj/bhkBlendCollisionObject.h"
+#include "../../include/obj/bhkBlendCollisionObject.h"
 NiObject * CreatebhkBlendCollisionObject() { return new bhkBlendCollisionObject; }
-#include "../obj/bhkBlendController.h"
+#include "../../include/obj/bhkBlendController.h"
 NiObject * CreatebhkBlendController() { return new bhkBlendController; }
-#include "../obj/bhkBoxShape.h"
+#include "../../include/obj/bhkBoxShape.h"
 NiObject * CreatebhkBoxShape() { return new bhkBoxShape; }
-#include "../obj/bhkCapsuleShape.h"
+#include "../../include/obj/bhkCapsuleShape.h"
 NiObject * CreatebhkCapsuleShape() { return new bhkCapsuleShape; }
-#include "../obj/bhkCollisionObject.h"
+#include "../../include/obj/bhkCollisionObject.h"
 NiObject * CreatebhkCollisionObject() { return new bhkCollisionObject; }
-#include "../obj/bhkConvexVerticesShape.h"
+#include "../../include/obj/bhkConvexVerticesShape.h"
 NiObject * CreatebhkConvexVerticesShape() { return new bhkConvexVerticesShape; }
-#include "../obj/bhkHingeConstraint.h"
+#include "../../include/obj/bhkHingeConstraint.h"
 NiObject * CreatebhkHingeConstraint() { return new bhkHingeConstraint; }
-#include "../obj/bhkLimitedHingeConstraint.h"
+#include "../../include/obj/bhkLimitedHingeConstraint.h"
 NiObject * CreatebhkLimitedHingeConstraint() { return new bhkLimitedHingeConstraint; }
-#include "../obj/bhkListShape.h"
+#include "../../include/obj/bhkListShape.h"
 NiObject * CreatebhkListShape() { return new bhkListShape; }
-#include "../obj/bhkMalleableConstraint.h"
+#include "../../include/obj/bhkMalleableConstraint.h"
 NiObject * CreatebhkMalleableConstraint() { return new bhkMalleableConstraint; }
-#include "../obj/bhkMoppBvTreeShape.h"
+#include "../../include/obj/bhkMoppBvTreeShape.h"
 NiObject * CreatebhkMoppBvTreeShape() { return new bhkMoppBvTreeShape; }
-#include "../obj/bhkMultiSphereShape.h"
+#include "../../include/obj/bhkMultiSphereShape.h"
 NiObject * CreatebhkMultiSphereShape() { return new bhkMultiSphereShape; }
-#include "../obj/bhkNiTriStripsShape.h"
+#include "../../include/obj/bhkNiTriStripsShape.h"
 NiObject * CreatebhkNiTriStripsShape() { return new bhkNiTriStripsShape; }
-#include "../obj/bhkPackedNiTriStripsShape.h"
+#include "../../include/obj/bhkPackedNiTriStripsShape.h"
 NiObject * CreatebhkPackedNiTriStripsShape() { return new bhkPackedNiTriStripsShape; }
-#include "../obj/bhkPrismaticConstraint.h"
+#include "../../include/obj/bhkPrismaticConstraint.h"
 NiObject * CreatebhkPrismaticConstraint() { return new bhkPrismaticConstraint; }
-#include "../obj/bhkRagdollConstraint.h"
+#include "../../include/obj/bhkRagdollConstraint.h"
 NiObject * CreatebhkRagdollConstraint() { return new bhkRagdollConstraint; }
-#include "../obj/bhkRigidBody.h"
+#include "../../include/obj/bhkRigidBody.h"
 NiObject * CreatebhkRigidBody() { return new bhkRigidBody; }
-#include "../obj/bhkRigidBodyT.h"
+#include "../../include/obj/bhkRigidBodyT.h"
 NiObject * CreatebhkRigidBodyT() { return new bhkRigidBodyT; }
-#include "../obj/bhkSimpleShapePhantom.h"
+#include "../../include/obj/bhkSimpleShapePhantom.h"
 NiObject * CreatebhkSimpleShapePhantom() { return new bhkSimpleShapePhantom; }
-#include "../obj/bhkSPCollisionObject.h"
+#include "../../include/obj/bhkSPCollisionObject.h"
 NiObject * CreatebhkSPCollisionObject() { return new bhkSPCollisionObject; }
-#include "../obj/bhkSphereShape.h"
+#include "../../include/obj/bhkSphereShape.h"
 NiObject * CreatebhkSphereShape() { return new bhkSphereShape; }
-#include "../obj/bhkStiffSpringConstraint.h"
+#include "../../include/obj/bhkStiffSpringConstraint.h"
 NiObject * CreatebhkStiffSpringConstraint() { return new bhkStiffSpringConstraint; }
-#include "../obj/bhkTransformShape.h"
+#include "../../include/obj/bhkTransformShape.h"
 NiObject * CreatebhkTransformShape() { return new bhkTransformShape; }
-#include "../obj/bhkConvexTransformShape.h"
+#include "../../include/obj/bhkConvexTransformShape.h"
 NiObject * CreatebhkConvexTransformShape() { return new bhkConvexTransformShape; }
-#include "../obj/BSBound.h"
+#include "../../include/obj/BSBound.h"
 NiObject * CreateBSBound() { return new BSBound; }
-#include "../obj/BSFurnitureMarker.h"
+#include "../../include/obj/BSFurnitureMarker.h"
 NiObject * CreateBSFurnitureMarker() { return new BSFurnitureMarker; }
-#include "../obj/BSParentVelocityModifier.h"
+#include "../../include/obj/BSParentVelocityModifier.h"
 NiObject * CreateBSParentVelocityModifier() { return new BSParentVelocityModifier; }
-#include "../obj/BSPSysArrayEmitter.h"
+#include "../../include/obj/BSPSysArrayEmitter.h"
 NiObject * CreateBSPSysArrayEmitter() { return new BSPSysArrayEmitter; }
-#include "../obj/BSXFlags.h"
+#include "../../include/obj/BSXFlags.h"
 NiObject * CreateBSXFlags() { return new BSXFlags; }
-#include "../obj/hkPackedNiTriStripsData.h"
+#include "../../include/obj/hkPackedNiTriStripsData.h"
 NiObject * CreatehkPackedNiTriStripsData() { return new hkPackedNiTriStripsData; }
-#include "../obj/NiAlphaController.h"
+#include "../../include/obj/NiAlphaController.h"
 NiObject * CreateNiAlphaController() { return new NiAlphaController; }
-#include "../obj/NiAlphaProperty.h"
+#include "../../include/obj/NiAlphaProperty.h"
 NiObject * CreateNiAlphaProperty() { return new NiAlphaProperty; }
-#include "../obj/NiAmbientLight.h"
+#include "../../include/obj/NiAmbientLight.h"
 NiObject * CreateNiAmbientLight() { return new NiAmbientLight; }
-#include "../obj/NiAutoNormalParticlesData.h"
+#include "../../include/obj/NiAutoNormalParticlesData.h"
 NiObject * CreateNiAutoNormalParticlesData() { return new NiAutoNormalParticlesData; }
-#include "../obj/NiBinaryExtraData.h"
+#include "../../include/obj/NiBinaryExtraData.h"
 NiObject * CreateNiBinaryExtraData() { return new NiBinaryExtraData; }
-#include "../obj/NiBlendBoolInterpolator.h"
+#include "../../include/obj/NiBlendBoolInterpolator.h"
 NiObject * CreateNiBlendBoolInterpolator() { return new NiBlendBoolInterpolator; }
-#include "../obj/NiBlendFloatInterpolator.h"
+#include "../../include/obj/NiBlendFloatInterpolator.h"
 NiObject * CreateNiBlendFloatInterpolator() { return new NiBlendFloatInterpolator; }
-#include "../obj/NiBlendPoint3Interpolator.h"
+#include "../../include/obj/NiBlendPoint3Interpolator.h"
 NiObject * CreateNiBlendPoint3Interpolator() { return new NiBlendPoint3Interpolator; }
-#include "../obj/NiBlendTransformInterpolator.h"
+#include "../../include/obj/NiBlendTransformInterpolator.h"
 NiObject * CreateNiBlendTransformInterpolator() { return new NiBlendTransformInterpolator; }
-#include "../obj/NiBoneLODController.h"
+#include "../../include/obj/NiBoneLODController.h"
 NiObject * CreateNiBoneLODController() { return new NiBoneLODController; }
-#include "../obj/NiBoolData.h"
+#include "../../include/obj/NiBoolData.h"
 NiObject * CreateNiBoolData() { return new NiBoolData; }
-#include "../obj/NiBooleanExtraData.h"
+#include "../../include/obj/NiBooleanExtraData.h"
 NiObject * CreateNiBooleanExtraData() { return new NiBooleanExtraData; }
-#include "../obj/NiBoolInterpolator.h"
+#include "../../include/obj/NiBoolInterpolator.h"
 NiObject * CreateNiBoolInterpolator() { return new NiBoolInterpolator; }
-#include "../obj/NiBoolTimelineInterpolator.h"
+#include "../../include/obj/NiBoolTimelineInterpolator.h"
 NiObject * CreateNiBoolTimelineInterpolator() { return new NiBoolTimelineInterpolator; }
-#include "../obj/NiBSBoneLODController.h"
+#include "../../include/obj/NiBSBoneLODController.h"
 NiObject * CreateNiBSBoneLODController() { return new NiBSBoneLODController; }
-#include "../obj/NiBSplineBasisData.h"
+#include "../../include/obj/NiBSplineBasisData.h"
 NiObject * CreateNiBSplineBasisData() { return new NiBSplineBasisData; }
-#include "../obj/NiBSplineCompFloatInterpolator.h"
+#include "../../include/obj/NiBSplineCompFloatInterpolator.h"
 NiObject * CreateNiBSplineCompFloatInterpolator() { return new NiBSplineCompFloatInterpolator; }
-#include "../obj/NiBSplineCompPoint3Interpolator.h"
+#include "../../include/obj/NiBSplineCompPoint3Interpolator.h"
 NiObject * CreateNiBSplineCompPoint3Interpolator() { return new NiBSplineCompPoint3Interpolator; }
-#include "../obj/NiBSplineCompTransformInterpolator.h"
+#include "../../include/obj/NiBSplineCompTransformInterpolator.h"
 NiObject * CreateNiBSplineCompTransformInterpolator() { return new NiBSplineCompTransformInterpolator; }
-#include "../obj/NiBSplineData.h"
+#include "../../include/obj/NiBSplineData.h"
 NiObject * CreateNiBSplineData() { return new NiBSplineData; }
-#include "../obj/NiCamera.h"
+#include "../../include/obj/NiCamera.h"
 NiObject * CreateNiCamera() { return new NiCamera; }
-#include "../obj/NiCollisionData.h"
+#include "../../include/obj/NiCollisionData.h"
 NiObject * CreateNiCollisionData() { return new NiCollisionData; }
-#include "../obj/NiColorData.h"
+#include "../../include/obj/NiColorData.h"
 NiObject * CreateNiColorData() { return new NiColorData; }
-#include "../obj/NiColorExtraData.h"
+#include "../../include/obj/NiColorExtraData.h"
 NiObject * CreateNiColorExtraData() { return new NiColorExtraData; }
-#include "../obj/NiControllerManager.h"
+#include "../../include/obj/NiControllerManager.h"
 NiObject * CreateNiControllerManager() { return new NiControllerManager; }
-#include "../obj/NiControllerSequence.h"
+#include "../../include/obj/NiControllerSequence.h"
 NiObject * CreateNiControllerSequence() { return new NiControllerSequence; }
-#include "../obj/NiDefaultAVObjectPalette.h"
+#include "../../include/obj/NiDefaultAVObjectPalette.h"
 NiObject * CreateNiDefaultAVObjectPalette() { return new NiDefaultAVObjectPalette; }
-#include "../obj/NiDirectionalLight.h"
+#include "../../include/obj/NiDirectionalLight.h"
 NiObject * CreateNiDirectionalLight() { return new NiDirectionalLight; }
-#include "../obj/NiDitherProperty.h"
+#include "../../include/obj/NiDitherProperty.h"
 NiObject * CreateNiDitherProperty() { return new NiDitherProperty; }
-#include "../obj/NiFlipController.h"
+#include "../../include/obj/NiFlipController.h"
 NiObject * CreateNiFlipController() { return new NiFlipController; }
-#include "../obj/NiFloatData.h"
+#include "../../include/obj/NiFloatData.h"
 NiObject * CreateNiFloatData() { return new NiFloatData; }
-#include "../obj/NiFloatExtraData.h"
+#include "../../include/obj/NiFloatExtraData.h"
 NiObject * CreateNiFloatExtraData() { return new NiFloatExtraData; }
-#include "../obj/NiFloatExtraDataController.h"
+#include "../../include/obj/NiFloatExtraDataController.h"
 NiObject * CreateNiFloatExtraDataController() { return new NiFloatExtraDataController; }
-#include "../obj/NiFloatInterpolator.h"
+#include "../../include/obj/NiFloatInterpolator.h"
 NiObject * CreateNiFloatInterpolator() { return new NiFloatInterpolator; }
-#include "../obj/NiFloatsExtraData.h"
+#include "../../include/obj/NiFloatsExtraData.h"
 NiObject * CreateNiFloatsExtraData() { return new NiFloatsExtraData; }
-#include "../obj/NiFogProperty.h"
+#include "../../include/obj/NiFogProperty.h"
 NiObject * CreateNiFogProperty() { return new NiFogProperty; }
-#include "../obj/NiGeomMorpherController.h"
+#include "../../include/obj/NiGeomMorpherController.h"
 NiObject * CreateNiGeomMorpherController() { return new NiGeomMorpherController; }
-#include "../obj/NiGravity.h"
+#include "../../include/obj/NiGravity.h"
 NiObject * CreateNiGravity() { return new NiGravity; }
-#include "../obj/NiIntegerExtraData.h"
+#include "../../include/obj/NiIntegerExtraData.h"
 NiObject * CreateNiIntegerExtraData() { return new NiIntegerExtraData; }
-#include "../obj/NiIntegersExtraData.h"
+#include "../../include/obj/NiIntegersExtraData.h"
 NiObject * CreateNiIntegersExtraData() { return new NiIntegersExtraData; }
-#include "../obj/NiKeyframeController.h"
+#include "../../include/obj/NiKeyframeController.h"
 NiObject * CreateNiKeyframeController() { return new NiKeyframeController; }
-#include "../obj/BSKeyframeController.h"
+#include "../../include/obj/BSKeyframeController.h"
 NiObject * CreateBSKeyframeController() { return new BSKeyframeController; }
-#include "../obj/NiKeyframeData.h"
+#include "../../include/obj/NiKeyframeData.h"
 NiObject * CreateNiKeyframeData() { return new NiKeyframeData; }
-#include "../obj/NiLightColorController.h"
+#include "../../include/obj/NiLightColorController.h"
 NiObject * CreateNiLightColorController() { return new NiLightColorController; }
-#include "../obj/NiLightDimmerController.h"
+#include "../../include/obj/NiLightDimmerController.h"
 NiObject * CreateNiLightDimmerController() { return new NiLightDimmerController; }
-#include "../obj/NiLookAtController.h"
+#include "../../include/obj/NiLookAtController.h"
 NiObject * CreateNiLookAtController() { return new NiLookAtController; }
-#include "../obj/NiLookAtInterpolator.h"
+#include "../../include/obj/NiLookAtInterpolator.h"
 NiObject * CreateNiLookAtInterpolator() { return new NiLookAtInterpolator; }
-#include "../obj/NiMaterialColorController.h"
+#include "../../include/obj/NiMaterialColorController.h"
 NiObject * CreateNiMaterialColorController() { return new NiMaterialColorController; }
-#include "../obj/NiMaterialProperty.h"
+#include "../../include/obj/NiMaterialProperty.h"
 NiObject * CreateNiMaterialProperty() { return new NiMaterialProperty; }
-#include "../obj/NiMeshPSysData.h"
+#include "../../include/obj/NiMeshPSysData.h"
 NiObject * CreateNiMeshPSysData() { return new NiMeshPSysData; }
-#include "../obj/NiMorphData.h"
+#include "../../include/obj/NiMorphData.h"
 NiObject * CreateNiMorphData() { return new NiMorphData; }
-#include "../obj/NiMultiTargetTransformController.h"
+#include "../../include/obj/NiMultiTargetTransformController.h"
 NiObject * CreateNiMultiTargetTransformController() { return new NiMultiTargetTransformController; }
-#include "../obj/NiNode.h"
+#include "../../include/obj/NiNode.h"
 NiObject * CreateNiNode() { return new NiNode; }
-#include "../obj/AvoidNode.h"
+#include "../../include/obj/AvoidNode.h"
 NiObject * CreateAvoidNode() { return new AvoidNode; }
-#include "../obj/FxWidget.h"
+#include "../../include/obj/FxWidget.h"
 NiObject * CreateFxWidget() { return new FxWidget; }
-#include "../obj/FxButton.h"
+#include "../../include/obj/FxButton.h"
 NiObject * CreateFxButton() { return new FxButton; }
-#include "../obj/FxRadioButton.h"
+#include "../../include/obj/FxRadioButton.h"
 NiObject * CreateFxRadioButton() { return new FxRadioButton; }
-#include "../obj/NiBillboardNode.h"
+#include "../../include/obj/NiBillboardNode.h"
 NiObject * CreateNiBillboardNode() { return new NiBillboardNode; }
-#include "../obj/NiBSAnimationNode.h"
+#include "../../include/obj/NiBSAnimationNode.h"
 NiObject * CreateNiBSAnimationNode() { return new NiBSAnimationNode; }
-#include "../obj/NiBSParticleNode.h"
+#include "../../include/obj/NiBSParticleNode.h"
 NiObject * CreateNiBSParticleNode() { return new NiBSParticleNode; }
-#include "../obj/NiLODNode.h"
+#include "../../include/obj/NiLODNode.h"
 NiObject * CreateNiLODNode() { return new NiLODNode; }
-#include "../obj/NiPalette.h"
+#include "../../include/obj/NiPalette.h"
 NiObject * CreateNiPalette() { return new NiPalette; }
-#include "../obj/NiParticleBomb.h"
+#include "../../include/obj/NiParticleBomb.h"
 NiObject * CreateNiParticleBomb() { return new NiParticleBomb; }
-#include "../obj/NiParticleColorModifier.h"
+#include "../../include/obj/NiParticleColorModifier.h"
 NiObject * CreateNiParticleColorModifier() { return new NiParticleColorModifier; }
-#include "../obj/NiParticleGrowFade.h"
+#include "../../include/obj/NiParticleGrowFade.h"
 NiObject * CreateNiParticleGrowFade() { return new NiParticleGrowFade; }
-#include "../obj/NiParticleMeshModifier.h"
+#include "../../include/obj/NiParticleMeshModifier.h"
 NiObject * CreateNiParticleMeshModifier() { return new NiParticleMeshModifier; }
-#include "../obj/NiParticleRotation.h"
+#include "../../include/obj/NiParticleRotation.h"
 NiObject * CreateNiParticleRotation() { return new NiParticleRotation; }
-#include "../obj/NiParticles.h"
+#include "../../include/obj/NiParticles.h"
 NiObject * CreateNiParticles() { return new NiParticles; }
-#include "../obj/NiAutoNormalParticles.h"
+#include "../../include/obj/NiAutoNormalParticles.h"
 NiObject * CreateNiAutoNormalParticles() { return new NiAutoNormalParticles; }
-#include "../obj/NiParticleMeshes.h"
+#include "../../include/obj/NiParticleMeshes.h"
 NiObject * CreateNiParticleMeshes() { return new NiParticleMeshes; }
-#include "../obj/NiParticlesData.h"
+#include "../../include/obj/NiParticlesData.h"
 NiObject * CreateNiParticlesData() { return new NiParticlesData; }
-#include "../obj/NiParticleMeshesData.h"
+#include "../../include/obj/NiParticleMeshesData.h"
 NiObject * CreateNiParticleMeshesData() { return new NiParticleMeshesData; }
-#include "../obj/NiParticleSystem.h"
+#include "../../include/obj/NiParticleSystem.h"
 NiObject * CreateNiParticleSystem() { return new NiParticleSystem; }
-#include "../obj/NiMeshParticleSystem.h"
+#include "../../include/obj/NiMeshParticleSystem.h"
 NiObject * CreateNiMeshParticleSystem() { return new NiMeshParticleSystem; }
-#include "../obj/NiParticleSystemController.h"
+#include "../../include/obj/NiParticleSystemController.h"
 NiObject * CreateNiParticleSystemController() { return new NiParticleSystemController; }
-#include "../obj/NiBSPArrayController.h"
+#include "../../include/obj/NiBSPArrayController.h"
 NiObject * CreateNiBSPArrayController() { return new NiBSPArrayController; }
-#include "../obj/NiPathController.h"
+#include "../../include/obj/NiPathController.h"
 NiObject * CreateNiPathController() { return new NiPathController; }
-#include "../obj/NiPathInterpolator.h"
+#include "../../include/obj/NiPathInterpolator.h"
 NiObject * CreateNiPathInterpolator() { return new NiPathInterpolator; }
-#include "../obj/NiPixelData.h"
+#include "../../include/obj/NiPixelData.h"
 NiObject * CreateNiPixelData() { return new NiPixelData; }
-#include "../obj/NiPlanarCollider.h"
+#include "../../include/obj/NiPlanarCollider.h"
 NiObject * CreateNiPlanarCollider() { return new NiPlanarCollider; }
-#include "../obj/NiPoint3Interpolator.h"
+#include "../../include/obj/NiPoint3Interpolator.h"
 NiObject * CreateNiPoint3Interpolator() { return new NiPoint3Interpolator; }
-#include "../obj/NiPointLight.h"
+#include "../../include/obj/NiPointLight.h"
 NiObject * CreateNiPointLight() { return new NiPointLight; }
-#include "../obj/NiPosData.h"
+#include "../../include/obj/NiPosData.h"
 NiObject * CreateNiPosData() { return new NiPosData; }
-#include "../obj/NiPSysAgeDeathModifier.h"
+#include "../../include/obj/NiPSysAgeDeathModifier.h"
 NiObject * CreateNiPSysAgeDeathModifier() { return new NiPSysAgeDeathModifier; }
-#include "../obj/NiPSysBombModifier.h"
+#include "../../include/obj/NiPSysBombModifier.h"
 NiObject * CreateNiPSysBombModifier() { return new NiPSysBombModifier; }
-#include "../obj/NiPSysBoundUpdateModifier.h"
+#include "../../include/obj/NiPSysBoundUpdateModifier.h"
 NiObject * CreateNiPSysBoundUpdateModifier() { return new NiPSysBoundUpdateModifier; }
-#include "../obj/NiPSysBoxEmitter.h"
+#include "../../include/obj/NiPSysBoxEmitter.h"
 NiObject * CreateNiPSysBoxEmitter() { return new NiPSysBoxEmitter; }
-#include "../obj/NiPSysColliderManager.h"
+#include "../../include/obj/NiPSysColliderManager.h"
 NiObject * CreateNiPSysColliderManager() { return new NiPSysColliderManager; }
-#include "../obj/NiPSysColorModifier.h"
+#include "../../include/obj/NiPSysColorModifier.h"
 NiObject * CreateNiPSysColorModifier() { return new NiPSysColorModifier; }
-#include "../obj/NiPSysCylinderEmitter.h"
+#include "../../include/obj/NiPSysCylinderEmitter.h"
 NiObject * CreateNiPSysCylinderEmitter() { return new NiPSysCylinderEmitter; }
-#include "../obj/NiPSysData.h"
+#include "../../include/obj/NiPSysData.h"
 NiObject * CreateNiPSysData() { return new NiPSysData; }
-#include "../obj/NiPSysDragModifier.h"
+#include "../../include/obj/NiPSysDragModifier.h"
 NiObject * CreateNiPSysDragModifier() { return new NiPSysDragModifier; }
-#include "../obj/NiPSysEmitterCtlr.h"
+#include "../../include/obj/NiPSysEmitterCtlr.h"
 NiObject * CreateNiPSysEmitterCtlr() { return new NiPSysEmitterCtlr; }
-#include "../obj/NiPSysEmitterCtlrData.h"
+#include "../../include/obj/NiPSysEmitterCtlrData.h"
 NiObject * CreateNiPSysEmitterCtlrData() { return new NiPSysEmitterCtlrData; }
-#include "../obj/NiPSysEmitterDeclinationCtlr.h"
+#include "../../include/obj/NiPSysEmitterDeclinationCtlr.h"
 NiObject * CreateNiPSysEmitterDeclinationCtlr() { return new NiPSysEmitterDeclinationCtlr; }
-#include "../obj/NiPSysEmitterDeclinationVarCtlr.h"
+#include "../../include/obj/NiPSysEmitterDeclinationVarCtlr.h"
 NiObject * CreateNiPSysEmitterDeclinationVarCtlr() { return new NiPSysEmitterDeclinationVarCtlr; }
-#include "../obj/NiPSysEmitterInitialRadiusCtlr.h"
+#include "../../include/obj/NiPSysEmitterInitialRadiusCtlr.h"
 NiObject * CreateNiPSysEmitterInitialRadiusCtlr() { return new NiPSysEmitterInitialRadiusCtlr; }
-#include "../obj/NiPSysEmitterLifeSpanCtlr.h"
+#include "../../include/obj/NiPSysEmitterLifeSpanCtlr.h"
 NiObject * CreateNiPSysEmitterLifeSpanCtlr() { return new NiPSysEmitterLifeSpanCtlr; }
-#include "../obj/NiPSysEmitterSpeedCtlr.h"
+#include "../../include/obj/NiPSysEmitterSpeedCtlr.h"
 NiObject * CreateNiPSysEmitterSpeedCtlr() { return new NiPSysEmitterSpeedCtlr; }
-#include "../obj/NiPSysGravityModifier.h"
+#include "../../include/obj/NiPSysGravityModifier.h"
 NiObject * CreateNiPSysGravityModifier() { return new NiPSysGravityModifier; }
-#include "../obj/NiPSysGravityStrengthCtlr.h"
+#include "../../include/obj/NiPSysGravityStrengthCtlr.h"
 NiObject * CreateNiPSysGravityStrengthCtlr() { return new NiPSysGravityStrengthCtlr; }
-#include "../obj/NiPSysGrowFadeModifier.h"
+#include "../../include/obj/NiPSysGrowFadeModifier.h"
 NiObject * CreateNiPSysGrowFadeModifier() { return new NiPSysGrowFadeModifier; }
-#include "../obj/NiPSysMeshEmitter.h"
+#include "../../include/obj/NiPSysMeshEmitter.h"
 NiObject * CreateNiPSysMeshEmitter() { return new NiPSysMeshEmitter; }
-#include "../obj/NiPSysMeshUpdateModifier.h"
+#include "../../include/obj/NiPSysMeshUpdateModifier.h"
 NiObject * CreateNiPSysMeshUpdateModifier() { return new NiPSysMeshUpdateModifier; }
-#include "../obj/NiPSysModifierActiveCtlr.h"
+#include "../../include/obj/NiPSysModifierActiveCtlr.h"
 NiObject * CreateNiPSysModifierActiveCtlr() { return new NiPSysModifierActiveCtlr; }
-#include "../obj/NiPSysPlanarCollider.h"
+#include "../../include/obj/NiPSysPlanarCollider.h"
 NiObject * CreateNiPSysPlanarCollider() { return new NiPSysPlanarCollider; }
-#include "../obj/NiPSysPositionModifier.h"
+#include "../../include/obj/NiPSysPositionModifier.h"
 NiObject * CreateNiPSysPositionModifier() { return new NiPSysPositionModifier; }
-#include "../obj/NiPSysResetOnLoopCtlr.h"
+#include "../../include/obj/NiPSysResetOnLoopCtlr.h"
 NiObject * CreateNiPSysResetOnLoopCtlr() { return new NiPSysResetOnLoopCtlr; }
-#include "../obj/NiPSysRotationModifier.h"
+#include "../../include/obj/NiPSysRotationModifier.h"
 NiObject * CreateNiPSysRotationModifier() { return new NiPSysRotationModifier; }
-#include "../obj/NiPSysSpawnModifier.h"
+#include "../../include/obj/NiPSysSpawnModifier.h"
 NiObject * CreateNiPSysSpawnModifier() { return new NiPSysSpawnModifier; }
-#include "../obj/NiPSysSphereEmitter.h"
+#include "../../include/obj/NiPSysSphereEmitter.h"
 NiObject * CreateNiPSysSphereEmitter() { return new NiPSysSphereEmitter; }
-#include "../obj/NiPSysUpdateCtlr.h"
+#include "../../include/obj/NiPSysUpdateCtlr.h"
 NiObject * CreateNiPSysUpdateCtlr() { return new NiPSysUpdateCtlr; }
-#include "../obj/NiRangeLODData.h"
+#include "../../include/obj/NiRangeLODData.h"
 NiObject * CreateNiRangeLODData() { return new NiRangeLODData; }
-#include "../obj/NiScreenLODData.h"
+#include "../../include/obj/NiScreenLODData.h"
 NiObject * CreateNiScreenLODData() { return new NiScreenLODData; }
-#include "../obj/NiRotatingParticles.h"
+#include "../../include/obj/NiRotatingParticles.h"
 NiObject * CreateNiRotatingParticles() { return new NiRotatingParticles; }
-#include "../obj/NiRotatingParticlesData.h"
+#include "../../include/obj/NiRotatingParticlesData.h"
 NiObject * CreateNiRotatingParticlesData() { return new NiRotatingParticlesData; }
-#include "../obj/NiSequenceStreamHelper.h"
+#include "../../include/obj/NiSequenceStreamHelper.h"
 NiObject * CreateNiSequenceStreamHelper() { return new NiSequenceStreamHelper; }
-#include "../obj/NiShadeProperty.h"
+#include "../../include/obj/NiShadeProperty.h"
 NiObject * CreateNiShadeProperty() { return new NiShadeProperty; }
-#include "../obj/NiSkinData.h"
+#include "../../include/obj/NiSkinData.h"
 NiObject * CreateNiSkinData() { return new NiSkinData; }
-#include "../obj/NiSkinInstance.h"
+#include "../../include/obj/NiSkinInstance.h"
 NiObject * CreateNiSkinInstance() { return new NiSkinInstance; }
-#include "../obj/NiSkinPartition.h"
+#include "../../include/obj/NiSkinPartition.h"
 NiObject * CreateNiSkinPartition() { return new NiSkinPartition; }
-#include "../obj/NiSourceTexture.h"
+#include "../../include/obj/NiSourceTexture.h"
 NiObject * CreateNiSourceTexture() { return new NiSourceTexture; }
-#include "../obj/NiSpecularProperty.h"
+#include "../../include/obj/NiSpecularProperty.h"
 NiObject * CreateNiSpecularProperty() { return new NiSpecularProperty; }
-#include "../obj/NiSphericalCollider.h"
+#include "../../include/obj/NiSphericalCollider.h"
 NiObject * CreateNiSphericalCollider() { return new NiSphericalCollider; }
-#include "../obj/NiSpotLight.h"
+#include "../../include/obj/NiSpotLight.h"
 NiObject * CreateNiSpotLight() { return new NiSpotLight; }
-#include "../obj/NiStencilProperty.h"
+#include "../../include/obj/NiStencilProperty.h"
 NiObject * CreateNiStencilProperty() { return new NiStencilProperty; }
-#include "../obj/NiStringExtraData.h"
+#include "../../include/obj/NiStringExtraData.h"
 NiObject * CreateNiStringExtraData() { return new NiStringExtraData; }
-#include "../obj/NiStringPalette.h"
+#include "../../include/obj/NiStringPalette.h"
 NiObject * CreateNiStringPalette() { return new NiStringPalette; }
-#include "../obj/NiStringsExtraData.h"
+#include "../../include/obj/NiStringsExtraData.h"
 NiObject * CreateNiStringsExtraData() { return new NiStringsExtraData; }
-#include "../obj/NiTextKeyExtraData.h"
+#include "../../include/obj/NiTextKeyExtraData.h"
 NiObject * CreateNiTextKeyExtraData() { return new NiTextKeyExtraData; }
-#include "../obj/NiTextureEffect.h"
+#include "../../include/obj/NiTextureEffect.h"
 NiObject * CreateNiTextureEffect() { return new NiTextureEffect; }
-#include "../obj/NiTextureTransformController.h"
+#include "../../include/obj/NiTextureTransformController.h"
 NiObject * CreateNiTextureTransformController() { return new NiTextureTransformController; }
-#include "../obj/NiTexturingProperty.h"
+#include "../../include/obj/NiTexturingProperty.h"
 NiObject * CreateNiTexturingProperty() { return new NiTexturingProperty; }
-#include "../obj/NiTransformController.h"
+#include "../../include/obj/NiTransformController.h"
 NiObject * CreateNiTransformController() { return new NiTransformController; }
-#include "../obj/NiTransformData.h"
+#include "../../include/obj/NiTransformData.h"
 NiObject * CreateNiTransformData() { return new NiTransformData; }
-#include "../obj/NiTransformInterpolator.h"
+#include "../../include/obj/NiTransformInterpolator.h"
 NiObject * CreateNiTransformInterpolator() { return new NiTransformInterpolator; }
-#include "../obj/NiTriShape.h"
+#include "../../include/obj/NiTriShape.h"
 NiObject * CreateNiTriShape() { return new NiTriShape; }
-#include "../obj/NiTriShapeData.h"
+#include "../../include/obj/NiTriShapeData.h"
 NiObject * CreateNiTriShapeData() { return new NiTriShapeData; }
-#include "../obj/NiTriStrips.h"
+#include "../../include/obj/NiTriStrips.h"
 NiObject * CreateNiTriStrips() { return new NiTriStrips; }
-#include "../obj/NiTriStripsData.h"
+#include "../../include/obj/NiTriStripsData.h"
 NiObject * CreateNiTriStripsData() { return new NiTriStripsData; }
-#include "../obj/NiUVController.h"
+#include "../../include/obj/NiUVController.h"
 NiObject * CreateNiUVController() { return new NiUVController; }
-#include "../obj/NiUVData.h"
+#include "../../include/obj/NiUVData.h"
 NiObject * CreateNiUVData() { return new NiUVData; }
-#include "../obj/NiVectorExtraData.h"
+#include "../../include/obj/NiVectorExtraData.h"
 NiObject * CreateNiVectorExtraData() { return new NiVectorExtraData; }
-#include "../obj/NiVertexColorProperty.h"
+#include "../../include/obj/NiVertexColorProperty.h"
 NiObject * CreateNiVertexColorProperty() { return new NiVertexColorProperty; }
-#include "../obj/NiVertWeightsExtraData.h"
+#include "../../include/obj/NiVertWeightsExtraData.h"
 NiObject * CreateNiVertWeightsExtraData() { return new NiVertWeightsExtraData; }
-#include "../obj/NiVisController.h"
+#include "../../include/obj/NiVisController.h"
 NiObject * CreateNiVisController() { return new NiVisController; }
-#include "../obj/NiVisData.h"
+#include "../../include/obj/NiVisData.h"
 NiObject * CreateNiVisData() { return new NiVisData; }
-#include "../obj/NiWireframeProperty.h"
+#include "../../include/obj/NiWireframeProperty.h"
 NiObject * CreateNiWireframeProperty() { return new NiWireframeProperty; }
-#include "../obj/NiZBufferProperty.h"
+#include "../../include/obj/NiZBufferProperty.h"
 NiObject * CreateNiZBufferProperty() { return new NiZBufferProperty; }
-#include "../obj/RootCollisionNode.h"
+#include "../../include/obj/RootCollisionNode.h"
 NiObject * CreateRootCollisionNode() { return new RootCollisionNode; }
 
 namespace Niflib {

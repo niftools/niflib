@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "bhkMalleableConstraint.h"
-#include "../gen/RagDollDescriptor.h"
-#include "../gen/LimitedHingeDescriptor.h"
-#include "NiObject.h"
+#include "../../include/obj/bhkMalleableConstraint.h"
+#include "../../include/gen/RagDollDescriptor.h"
+#include "../../include/gen/LimitedHingeDescriptor.h"
+#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

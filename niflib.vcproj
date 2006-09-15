@@ -45,8 +45,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(ProjectDir)../bin/niflibd.lib"
+				OutputFile="lib/niflib_debug.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -105,13 +105,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/FI&quot;$(ProjectDir)pch.h&quot;"
 				Optimization="0"
 				WholeProgramOptimization="false"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
+				PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -126,7 +125,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../bin/niflib.lib"
+				OutputFile="lib/niflib.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -171,7 +170,8 @@
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -234,7 +234,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BUILDING_NIFLIB_DLL;USE_NIFLIB_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -308,7 +308,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="$(ProjectDir)pch.h"
+				PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -351,35 +351,43 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\ComplexShape.cpp"
+				RelativePath=".\src\ComplexShape.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\kfm.cpp"
+				RelativePath=".\src\kfm.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\NIF_IO.cpp"
+				RelativePath=".\src\NIF_IO.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\nif_math.cpp"
+				RelativePath=".\src\nif_math.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\niflib.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\pch.cpp"
+				RelativePath=".\src\niflib.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
+						PrecompiledHeaderThrough=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\src\pch.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -388,6 +396,16 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="PyNiflib|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -396,6 +414,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -404,870 +423,871 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Type.cpp"
+				RelativePath=".\src\Type.cpp"
 				>
 			</File>
 			<Filter
 				Name="obj"
 				>
 				<File
-					RelativePath=".\obj\AbhkConstraint.cpp"
+					RelativePath=".\src\obj\AbhkConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AbhkRagdollConstraint.cpp"
+					RelativePath=".\src\obj\AbhkRagdollConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AbhkShapeCollection.cpp"
+					RelativePath=".\src\obj\AbhkShapeCollection.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\ABoneLODController.cpp"
+					RelativePath=".\src\obj\ABoneLODController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AKeyedData.cpp"
+					RelativePath=".\src\obj\AKeyedData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AParticleModifier.cpp"
+					RelativePath=".\src\obj\AParticleModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\APSysCtlr.cpp"
+					RelativePath=".\src\obj\APSysCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\APSysData.cpp"
+					RelativePath=".\src\obj\APSysData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AvoidNode.cpp"
+					RelativePath=".\src\obj\AvoidNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBlendCollisionObject.cpp"
+					RelativePath=".\src\obj\bhkBlendCollisionObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBlendController.cpp"
+					RelativePath=".\src\obj\bhkBlendController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBoxShape.cpp"
+					RelativePath=".\src\obj\bhkBoxShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkCapsuleShape.cpp"
+					RelativePath=".\src\obj\bhkCapsuleShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkCollisionObject.cpp"
+					RelativePath=".\src\obj\bhkCollisionObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexShape.cpp"
+					RelativePath=".\src\obj\bhkConvexShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexTransformShape.cpp"
+					RelativePath=".\src\obj\bhkConvexTransformShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexVerticesShape.cpp"
+					RelativePath=".\src\obj\bhkConvexVerticesShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkEntity.cpp"
+					RelativePath=".\src\obj\bhkEntity.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkHingeConstraint.cpp"
+					RelativePath=".\src\obj\bhkHingeConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkLimitedHingeConstraint.cpp"
+					RelativePath=".\src\obj\bhkLimitedHingeConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkListShape.cpp"
+					RelativePath=".\src\obj\bhkListShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMalleableConstraint.cpp"
+					RelativePath=".\src\obj\bhkMalleableConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMoppBvTreeShape.cpp"
+					RelativePath=".\src\obj\bhkMoppBvTreeShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMultiSphereShape.cpp"
+					RelativePath=".\src\obj\bhkMultiSphereShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkNiTriStripsShape.cpp"
+					RelativePath=".\src\obj\bhkNiTriStripsShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkPackedNiTriStripsShape.cpp"
+					RelativePath=".\src\obj\bhkPackedNiTriStripsShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkPrismaticConstraint.cpp"
+					RelativePath=".\src\obj\bhkPrismaticConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRagdollConstraint.cpp"
+					RelativePath=".\src\obj\bhkRagdollConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRefObject.cpp"
+					RelativePath=".\src\obj\bhkRefObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRigidBody.cpp"
+					RelativePath=".\src\obj\bhkRigidBody.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRigidBodyT.cpp"
+					RelativePath=".\src\obj\bhkRigidBodyT.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSerializable.cpp"
+					RelativePath=".\src\obj\bhkSerializable.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkShape.cpp"
+					RelativePath=".\src\obj\bhkShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSimpleShapePhantom.cpp"
+					RelativePath=".\src\obj\bhkSimpleShapePhantom.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSPCollisionObject.cpp"
+					RelativePath=".\src\obj\bhkSPCollisionObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSphereRepShape.cpp"
+					RelativePath=".\src\obj\bhkSphereRepShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSphereShape.cpp"
+					RelativePath=".\src\obj\bhkSphereShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkStiffSpringConstraint.cpp"
+					RelativePath=".\src\obj\bhkStiffSpringConstraint.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkTransformShape.cpp"
+					RelativePath=".\src\obj\bhkTransformShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkWorldObject.cpp"
+					RelativePath=".\src\obj\bhkWorldObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSBound.cpp"
+					RelativePath=".\src\obj\BSBound.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSFurnitureMarker.cpp"
+					RelativePath=".\src\obj\BSFurnitureMarker.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSKeyframeController.cpp"
+					RelativePath=".\src\obj\BSKeyframeController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSParentVelocityModifier.cpp"
+					RelativePath=".\src\obj\BSParentVelocityModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSPSysArrayEmitter.cpp"
+					RelativePath=".\src\obj\BSPSysArrayEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSXFlags.cpp"
+					RelativePath=".\src\obj\BSXFlags.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxButton.cpp"
+					RelativePath=".\src\obj\FxButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxRadioButton.cpp"
+					RelativePath=".\src\obj\FxRadioButton.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxWidget.cpp"
+					RelativePath=".\src\obj\FxWidget.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\hkPackedNiTriStripsData.cpp"
+					RelativePath=".\src\obj\hkPackedNiTriStripsData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAlphaController.cpp"
+					RelativePath=".\src\obj\NiAlphaController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAlphaProperty.cpp"
+					RelativePath=".\src\obj\NiAlphaProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAmbientLight.cpp"
+					RelativePath=".\src\obj\NiAmbientLight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAutoNormalParticles.cpp"
+					RelativePath=".\src\obj\NiAutoNormalParticles.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAutoNormalParticlesData.cpp"
+					RelativePath=".\src\obj\NiAutoNormalParticlesData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAVObject.cpp"
+					RelativePath=".\src\obj\NiAVObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBillboardNode.cpp"
+					RelativePath=".\src\obj\NiBillboardNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBinaryExtraData.cpp"
+					RelativePath=".\src\obj\NiBinaryExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendBoolInterpolator.cpp"
+					RelativePath=".\src\obj\NiBlendBoolInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendFloatInterpolator.cpp"
+					RelativePath=".\src\obj\NiBlendFloatInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendInterpolator.cpp"
+					RelativePath=".\src\obj\NiBlendInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendPoint3Interpolator.cpp"
+					RelativePath=".\src\obj\NiBlendPoint3Interpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendTransformInterpolator.cpp"
+					RelativePath=".\src\obj\NiBlendTransformInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoneLODController.cpp"
+					RelativePath=".\src\obj\NiBoneLODController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolData.cpp"
+					RelativePath=".\src\obj\NiBoolData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBooleanExtraData.cpp"
+					RelativePath=".\src\obj\NiBooleanExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolInterpolator.cpp"
+					RelativePath=".\src\obj\NiBoolInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolTimelineInterpolator.cpp"
+					RelativePath=".\src\obj\NiBoolTimelineInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSAnimationNode.cpp"
+					RelativePath=".\src\obj\NiBSAnimationNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSBoneLODController.cpp"
+					RelativePath=".\src\obj\NiBSBoneLODController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSPArrayController.cpp"
+					RelativePath=".\src\obj\NiBSPArrayController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSParticleNode.cpp"
+					RelativePath=".\src\obj\NiBSParticleNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineBasisData.cpp"
+					RelativePath=".\src\obj\NiBSplineBasisData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompFloatInterpolator.cpp"
+					RelativePath=".\src\obj\NiBSplineCompFloatInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompPoint3Interpolator.cpp"
+					RelativePath=".\src\obj\NiBSplineCompPoint3Interpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompTransformInterpolator.cpp"
+					RelativePath=".\src\obj\NiBSplineCompTransformInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineData.cpp"
+					RelativePath=".\src\obj\NiBSplineData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineInterpolator.cpp"
+					RelativePath=".\src\obj\NiBSplineInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCamera.cpp"
+					RelativePath=".\src\obj\NiCamera.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCollisionData.cpp"
+					RelativePath=".\src\obj\NiCollisionData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCollisionObject.cpp"
+					RelativePath=".\src\obj\NiCollisionObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiColorData.cpp"
+					RelativePath=".\src\obj\NiColorData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiColorExtraData.cpp"
+					RelativePath=".\src\obj\NiColorExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiControllerManager.cpp"
+					RelativePath=".\src\obj\NiControllerManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiControllerSequence.cpp"
+					RelativePath=".\src\obj\NiControllerSequence.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDefaultAVObjectPalette.cpp"
+					RelativePath=".\src\obj\NiDefaultAVObjectPalette.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDirectionalLight.cpp"
+					RelativePath=".\src\obj\NiDirectionalLight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDitherProperty.cpp"
+					RelativePath=".\src\obj\NiDitherProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDynamicEffect.cpp"
+					RelativePath=".\src\obj\NiDynamicEffect.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiExtraData.cpp"
+					RelativePath=".\src\obj\NiExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFlipController.cpp"
+					RelativePath=".\src\obj\NiFlipController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatData.cpp"
+					RelativePath=".\src\obj\NiFloatData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatExtraData.cpp"
+					RelativePath=".\src\obj\NiFloatExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatExtraDataController.cpp"
+					RelativePath=".\src\obj\NiFloatExtraDataController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatInterpolator.cpp"
+					RelativePath=".\src\obj\NiFloatInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatsExtraData.cpp"
+					RelativePath=".\src\obj\NiFloatsExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFogProperty.cpp"
+					RelativePath=".\src\obj\NiFogProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiGeomMorpherController.cpp"
+					RelativePath=".\src\obj\NiGeomMorpherController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiGravity.cpp"
+					RelativePath=".\src\obj\NiGravity.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiIntegerExtraData.cpp"
+					RelativePath=".\src\obj\NiIntegerExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiIntegersExtraData.cpp"
+					RelativePath=".\src\obj\NiIntegersExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiInterpolator.cpp"
+					RelativePath=".\src\obj\NiInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiKeyframeController.cpp"
+					RelativePath=".\src\obj\NiKeyframeController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiKeyframeData.cpp"
+					RelativePath=".\src\obj\NiKeyframeData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLight.cpp"
+					RelativePath=".\src\obj\NiLight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLightColorController.cpp"
+					RelativePath=".\src\obj\NiLightColorController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLightDimmerController.cpp"
+					RelativePath=".\src\obj\NiLightDimmerController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLODData.cpp"
+					RelativePath=".\src\obj\NiLODData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLODNode.cpp"
+					RelativePath=".\src\obj\NiLODNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLookAtController.cpp"
+					RelativePath=".\src\obj\NiLookAtController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLookAtInterpolator.cpp"
+					RelativePath=".\src\obj\NiLookAtInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMaterialColorController.cpp"
+					RelativePath=".\src\obj\NiMaterialColorController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMaterialProperty.cpp"
+					RelativePath=".\src\obj\NiMaterialProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMeshParticleSystem.cpp"
+					RelativePath=".\src\obj\NiMeshParticleSystem.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMeshPSysData.cpp"
+					RelativePath=".\src\obj\NiMeshPSysData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMorphData.cpp"
+					RelativePath=".\src\obj\NiMorphData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMultiTargetTransformController.cpp"
+					RelativePath=".\src\obj\NiMultiTargetTransformController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiNode.cpp"
+					RelativePath=".\src\obj\NiNode.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiObject.cpp"
+					RelativePath=".\src\obj\NiObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiObjectNET.cpp"
+					RelativePath=".\src\obj\NiObjectNET.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPalette.cpp"
+					RelativePath=".\src\obj\NiPalette.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleBomb.cpp"
+					RelativePath=".\src\obj\NiParticleBomb.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleColorModifier.cpp"
+					RelativePath=".\src\obj\NiParticleColorModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleGrowFade.cpp"
+					RelativePath=".\src\obj\NiParticleGrowFade.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshes.cpp"
+					RelativePath=".\src\obj\NiParticleMeshes.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshesData.cpp"
+					RelativePath=".\src\obj\NiParticleMeshesData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshModifier.cpp"
+					RelativePath=".\src\obj\NiParticleMeshModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleRotation.cpp"
+					RelativePath=".\src\obj\NiParticleRotation.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticles.cpp"
+					RelativePath=".\src\obj\NiParticles.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticlesData.cpp"
+					RelativePath=".\src\obj\NiParticlesData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleSystem.cpp"
+					RelativePath=".\src\obj\NiParticleSystem.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleSystemController.cpp"
+					RelativePath=".\src\obj\NiParticleSystemController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPathController.cpp"
+					RelativePath=".\src\obj\NiPathController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPathInterpolator.cpp"
+					RelativePath=".\src\obj\NiPathInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPixelData.cpp"
+					RelativePath=".\src\obj\NiPixelData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPlanarCollider.cpp"
+					RelativePath=".\src\obj\NiPlanarCollider.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPoint3Interpolator.cpp"
+					RelativePath=".\src\obj\NiPoint3Interpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPointLight.cpp"
+					RelativePath=".\src\obj\NiPointLight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPosData.cpp"
+					RelativePath=".\src\obj\NiPosData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiProperty.cpp"
+					RelativePath=".\src\obj\NiProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysAgeDeathModifier.cpp"
+					RelativePath=".\src\obj\NiPSysAgeDeathModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBombModifier.cpp"
+					RelativePath=".\src\obj\NiPSysBombModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBoundUpdateModifier.cpp"
+					RelativePath=".\src\obj\NiPSysBoundUpdateModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBoxEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysBoxEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysColliderManager.cpp"
+					RelativePath=".\src\obj\NiPSysColliderManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysColorModifier.cpp"
+					RelativePath=".\src\obj\NiPSysColorModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysCylinderEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysCylinderEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysData.cpp"
+					RelativePath=".\src\obj\NiPSysData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysDragModifier.cpp"
+					RelativePath=".\src\obj\NiPSysDragModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterCtlrData.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterCtlrData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterDeclinationCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterDeclinationCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterDeclinationVarCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterDeclinationVarCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterInitialRadiusCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterInitialRadiusCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterLifeSpanCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterLifeSpanCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterSpeedCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysEmitterSpeedCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGravityModifier.cpp"
+					RelativePath=".\src\obj\NiPSysGravityModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGravityStrengthCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysGravityStrengthCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGrowFadeModifier.cpp"
+					RelativePath=".\src\obj\NiPSysGrowFadeModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysMeshEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysMeshEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysMeshUpdateModifier.cpp"
+					RelativePath=".\src\obj\NiPSysMeshUpdateModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysModifier.cpp"
+					RelativePath=".\src\obj\NiPSysModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysModifierActiveCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysModifierActiveCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysPlanarCollider.cpp"
+					RelativePath=".\src\obj\NiPSysPlanarCollider.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysPositionModifier.cpp"
+					RelativePath=".\src\obj\NiPSysPositionModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysResetOnLoopCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysResetOnLoopCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysRotationModifier.cpp"
+					RelativePath=".\src\obj\NiPSysRotationModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysSpawnModifier.cpp"
+					RelativePath=".\src\obj\NiPSysSpawnModifier.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysSphereEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysSphereEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysUpdateCtlr.cpp"
+					RelativePath=".\src\obj\NiPSysUpdateCtlr.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysVolumeEmitter.cpp"
+					RelativePath=".\src\obj\NiPSysVolumeEmitter.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRangeLODData.cpp"
+					RelativePath=".\src\obj\NiRangeLODData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRotatingParticles.cpp"
+					RelativePath=".\src\obj\NiRotatingParticles.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRotatingParticlesData.cpp"
+					RelativePath=".\src\obj\NiRotatingParticlesData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiScreenLODData.cpp"
+					RelativePath=".\src\obj\NiScreenLODData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSequenceStreamHelper.cpp"
+					RelativePath=".\src\obj\NiSequenceStreamHelper.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiShadeProperty.cpp"
+					RelativePath=".\src\obj\NiShadeProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSingleInterpolatorController.cpp"
+					RelativePath=".\src\obj\NiSingleInterpolatorController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinData.cpp"
+					RelativePath=".\src\obj\NiSkinData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinInstance.cpp"
+					RelativePath=".\src\obj\NiSkinInstance.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinPartition.cpp"
+					RelativePath=".\src\obj\NiSkinPartition.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSourceTexture.cpp"
+					RelativePath=".\src\obj\NiSourceTexture.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSpecularProperty.cpp"
+					RelativePath=".\src\obj\NiSpecularProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSphericalCollider.cpp"
+					RelativePath=".\src\obj\NiSphericalCollider.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSpotLight.cpp"
+					RelativePath=".\src\obj\NiSpotLight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStencilProperty.cpp"
+					RelativePath=".\src\obj\NiStencilProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringExtraData.cpp"
+					RelativePath=".\src\obj\NiStringExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringPalette.cpp"
+					RelativePath=".\src\obj\NiStringPalette.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringsExtraData.cpp"
+					RelativePath=".\src\obj\NiStringsExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextKeyExtraData.cpp"
+					RelativePath=".\src\obj\NiTextKeyExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextureEffect.cpp"
+					RelativePath=".\src\obj\NiTextureEffect.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextureTransformController.cpp"
+					RelativePath=".\src\obj\NiTextureTransformController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTexturingProperty.cpp"
+					RelativePath=".\src\obj\NiTexturingProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTimeController.cpp"
+					RelativePath=".\src\obj\NiTimeController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformController.cpp"
+					RelativePath=".\src\obj\NiTransformController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformData.cpp"
+					RelativePath=".\src\obj\NiTransformData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformInterpolator.cpp"
+					RelativePath=".\src\obj\NiTransformInterpolator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriBasedGeom.cpp"
+					RelativePath=".\src\obj\NiTriBasedGeom.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriBasedGeomData.cpp"
+					RelativePath=".\src\obj\NiTriBasedGeomData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriShape.cpp"
+					RelativePath=".\src\obj\NiTriShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriShapeData.cpp"
+					RelativePath=".\src\obj\NiTriShapeData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriStrips.cpp"
+					RelativePath=".\src\obj\NiTriStrips.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriStripsData.cpp"
+					RelativePath=".\src\obj\NiTriStripsData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiUVController.cpp"
+					RelativePath=".\src\obj\NiUVController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiUVData.cpp"
+					RelativePath=".\src\obj\NiUVData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVectorExtraData.cpp"
+					RelativePath=".\src\obj\NiVectorExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVertexColorProperty.cpp"
+					RelativePath=".\src\obj\NiVertexColorProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVertWeightsExtraData.cpp"
+					RelativePath=".\src\obj\NiVertWeightsExtraData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVisController.cpp"
+					RelativePath=".\src\obj\NiVisController.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVisData.cpp"
+					RelativePath=".\src\obj\NiVisData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiWireframeProperty.cpp"
+					RelativePath=".\src\obj\NiWireframeProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiZBufferProperty.cpp"
+					RelativePath=".\src\obj\NiZBufferProperty.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\RootCollisionNode.cpp"
+					RelativePath=".\src\obj\RootCollisionNode.cpp"
 					>
 				</File>
 			</Filter>
@@ -1275,145 +1295,133 @@
 				Name="gen"
 				>
 				<File
-					RelativePath=".\gen\AVObject.cpp"
+					RelativePath=".\src\gen\AVObject.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\BoundingBox.cpp"
+					RelativePath=".\src\gen\BoundingBox.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ByteArray.cpp"
+					RelativePath=".\src\gen\ByteArray.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ControllerLink.cpp"
+					RelativePath=".\src\gen\ControllerLink.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\enums.cpp"
+					RelativePath=".\src\gen\enums.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Footer.cpp"
+					RelativePath=".\src\gen\Footer.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\FurniturePosition.cpp"
+					RelativePath=".\src\gen\FurniturePosition.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Header.cpp"
+					RelativePath=".\src\gen\Header.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\hkTriangle.cpp"
+					RelativePath=".\src\gen\hkTriangle.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\LimitedHingeDescriptor.cpp"
+					RelativePath=".\src\gen\LimitedHingeDescriptor.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\LODRange.cpp"
+					RelativePath=".\src\gen\LODRange.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\MatchGroup.cpp"
+					RelativePath=".\src\gen\MatchGroup.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\MipMap.cpp"
+					RelativePath=".\src\gen\MipMap.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Morph.cpp"
+					RelativePath=".\src\gen\Morph.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\NodeGroup.cpp"
+					RelativePath=".\src\gen\NodeGroup.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\obj_factories.cpp"
+					RelativePath=".\src\gen\obj_factories.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\obj_impl.cpp"
+					RelativePath=".\src\gen\obj_impl.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Particle.cpp"
+					RelativePath=".\src\gen\Particle.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\QuaternionXYZW.cpp"
+					RelativePath=".\src\gen\QuaternionXYZW.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\RagDollDescriptor.cpp"
+					RelativePath=".\src\gen\RagDollDescriptor.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ShaderTexDesc.cpp"
+					RelativePath=".\src\gen\ShaderTexDesc.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinData.cpp"
+					RelativePath=".\src\gen\SkinData.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinPartition.cpp"
+					RelativePath=".\src\gen\SkinPartition.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinShape.cpp"
+					RelativePath=".\src\gen\SkinShape.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinShapeGroup.cpp"
+					RelativePath=".\src\gen\SkinShapeGroup.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinWeight.cpp"
+					RelativePath=".\src\gen\SkinWeight.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Sphere.cpp"
+					RelativePath=".\src\gen\Sphere.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\StringPalette.cpp"
+					RelativePath=".\src\gen\StringPalette.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TBC.cpp"
+					RelativePath=".\src\gen\TBC.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TexDesc.cpp"
+					RelativePath=".\src\gen\TexDesc.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TexSource.cpp"
+					RelativePath=".\src\gen\TexSource.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
 				Name="NvTriStrip"
 				>
-				<File
-					RelativePath=".\NvTriStrip\NvTriStrip.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\NvTriStrip\NvTriStripObjects.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\NvTriStrip\VertexCache.cpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="TriStripper"
@@ -1438,910 +1446,910 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\ComplexShape.h"
+				RelativePath=".\include\ComplexShape.h"
 				>
 			</File>
 			<File
-				RelativePath=".\dll_export.h"
+				RelativePath=".\include\dll_export.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Key.h"
+				RelativePath=".\include\Key.h"
 				>
 			</File>
 			<File
-				RelativePath=".\kfm.h"
+				RelativePath=".\include\kfm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\nif_basic_types.h"
+				RelativePath=".\include\nif_basic_types.h"
 				>
 			</File>
 			<File
-				RelativePath=".\NIF_IO.h"
+				RelativePath=".\include\NIF_IO.h"
 				>
 			</File>
 			<File
-				RelativePath=".\nif_math.h"
+				RelativePath=".\include\nif_math.h"
 				>
 			</File>
 			<File
-				RelativePath=".\nif_versions.h"
+				RelativePath=".\include\nif_versions.h"
 				>
 			</File>
 			<File
-				RelativePath=".\niflib.h"
+				RelativePath=".\include\niflib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\pch.h"
+				RelativePath=".\include\pch.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Ref.h"
+				RelativePath=".\include\Ref.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Type.h"
+				RelativePath=".\include\Type.h"
 				>
 			</File>
 			<Filter
 				Name="obj"
 				>
 				<File
-					RelativePath=".\obj\AbhkConstraint.h"
+					RelativePath=".\include\obj\AbhkConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AbhkRagdollConstraint.h"
+					RelativePath=".\include\obj\AbhkRagdollConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AbhkShapeCollection.h"
+					RelativePath=".\include\obj\AbhkShapeCollection.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\ABoneLODController.h"
+					RelativePath=".\include\obj\ABoneLODController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AKeyedData.h"
+					RelativePath=".\include\obj\AKeyedData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AParticleModifier.h"
+					RelativePath=".\include\obj\AParticleModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\APSysCtlr.h"
+					RelativePath=".\include\obj\APSysCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\APSysData.h"
+					RelativePath=".\include\obj\APSysData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\AvoidNode.h"
+					RelativePath=".\include\obj\AvoidNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBlendCollisionObject.h"
+					RelativePath=".\include\obj\bhkBlendCollisionObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBlendController.h"
+					RelativePath=".\include\obj\bhkBlendController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkBoxShape.h"
+					RelativePath=".\include\obj\bhkBoxShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkCapsuleShape.h"
+					RelativePath=".\include\obj\bhkCapsuleShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkCollisionObject.h"
+					RelativePath=".\include\obj\bhkCollisionObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexShape.h"
+					RelativePath=".\include\obj\bhkConvexShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexTransformShape.h"
+					RelativePath=".\include\obj\bhkConvexTransformShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkConvexVerticesShape.h"
+					RelativePath=".\include\obj\bhkConvexVerticesShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkEntity.h"
+					RelativePath=".\include\obj\bhkEntity.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkHingeConstraint.h"
+					RelativePath=".\include\obj\bhkHingeConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkLimitedHingeConstraint.h"
+					RelativePath=".\include\obj\bhkLimitedHingeConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkListShape.h"
+					RelativePath=".\include\obj\bhkListShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMalleableConstraint.h"
+					RelativePath=".\include\obj\bhkMalleableConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMoppBvTreeShape.h"
+					RelativePath=".\include\obj\bhkMoppBvTreeShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkMultiSphereShape.h"
+					RelativePath=".\include\obj\bhkMultiSphereShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkNiTriStripsShape.h"
+					RelativePath=".\include\obj\bhkNiTriStripsShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkPackedNiTriStripsShape.h"
+					RelativePath=".\include\obj\bhkPackedNiTriStripsShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkPrismaticConstraint.h"
+					RelativePath=".\include\obj\bhkPrismaticConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRagdollConstraint.h"
+					RelativePath=".\include\obj\bhkRagdollConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRefObject.h"
+					RelativePath=".\include\obj\bhkRefObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRigidBody.h"
+					RelativePath=".\include\obj\bhkRigidBody.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkRigidBodyT.h"
+					RelativePath=".\include\obj\bhkRigidBodyT.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSerializable.h"
+					RelativePath=".\include\obj\bhkSerializable.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkShape.h"
+					RelativePath=".\include\obj\bhkShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSimpleShapePhantom.h"
+					RelativePath=".\include\obj\bhkSimpleShapePhantom.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSPCollisionObject.h"
+					RelativePath=".\include\obj\bhkSPCollisionObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSphereRepShape.h"
+					RelativePath=".\include\obj\bhkSphereRepShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkSphereShape.h"
+					RelativePath=".\include\obj\bhkSphereShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkStiffSpringConstraint.h"
+					RelativePath=".\include\obj\bhkStiffSpringConstraint.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkTransformShape.h"
+					RelativePath=".\include\obj\bhkTransformShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\bhkWorldObject.h"
+					RelativePath=".\include\obj\bhkWorldObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSBound.h"
+					RelativePath=".\include\obj\BSBound.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSFurnitureMarker.h"
+					RelativePath=".\include\obj\BSFurnitureMarker.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSKeyframeController.h"
+					RelativePath=".\include\obj\BSKeyframeController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSParentVelocityModifier.h"
+					RelativePath=".\include\obj\BSParentVelocityModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSPSysArrayEmitter.h"
+					RelativePath=".\include\obj\BSPSysArrayEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\BSXFlags.h"
+					RelativePath=".\include\obj\BSXFlags.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxButton.h"
+					RelativePath=".\include\obj\FxButton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxRadioButton.h"
+					RelativePath=".\include\obj\FxRadioButton.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\FxWidget.h"
+					RelativePath=".\include\obj\FxWidget.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\hkPackedNiTriStripsData.h"
+					RelativePath=".\include\obj\hkPackedNiTriStripsData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAlphaController.h"
+					RelativePath=".\include\obj\NiAlphaController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAlphaProperty.h"
+					RelativePath=".\include\obj\NiAlphaProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAmbientLight.h"
+					RelativePath=".\include\obj\NiAmbientLight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAutoNormalParticles.h"
+					RelativePath=".\include\obj\NiAutoNormalParticles.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAutoNormalParticlesData.h"
+					RelativePath=".\include\obj\NiAutoNormalParticlesData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiAVObject.h"
+					RelativePath=".\include\obj\NiAVObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBillboardNode.h"
+					RelativePath=".\include\obj\NiBillboardNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBinaryExtraData.h"
+					RelativePath=".\include\obj\NiBinaryExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendBoolInterpolator.h"
+					RelativePath=".\include\obj\NiBlendBoolInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendFloatInterpolator.h"
+					RelativePath=".\include\obj\NiBlendFloatInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendInterpolator.h"
+					RelativePath=".\include\obj\NiBlendInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendPoint3Interpolator.h"
+					RelativePath=".\include\obj\NiBlendPoint3Interpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBlendTransformInterpolator.h"
+					RelativePath=".\include\obj\NiBlendTransformInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoneLODController.h"
+					RelativePath=".\include\obj\NiBoneLODController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolData.h"
+					RelativePath=".\include\obj\NiBoolData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBooleanExtraData.h"
+					RelativePath=".\include\obj\NiBooleanExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolInterpolator.h"
+					RelativePath=".\include\obj\NiBoolInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBoolTimelineInterpolator.h"
+					RelativePath=".\include\obj\NiBoolTimelineInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSAnimationNode.h"
+					RelativePath=".\include\obj\NiBSAnimationNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSBoneLODController.h"
+					RelativePath=".\include\obj\NiBSBoneLODController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSPArrayController.h"
+					RelativePath=".\include\obj\NiBSPArrayController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSParticleNode.h"
+					RelativePath=".\include\obj\NiBSParticleNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineBasisData.h"
+					RelativePath=".\include\obj\NiBSplineBasisData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompFloatInterpolator.h"
+					RelativePath=".\include\obj\NiBSplineCompFloatInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompPoint3Interpolator.h"
+					RelativePath=".\include\obj\NiBSplineCompPoint3Interpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineCompTransformInterpolator.h"
+					RelativePath=".\include\obj\NiBSplineCompTransformInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineData.h"
+					RelativePath=".\include\obj\NiBSplineData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiBSplineInterpolator.h"
+					RelativePath=".\include\obj\NiBSplineInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCamera.h"
+					RelativePath=".\include\obj\NiCamera.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCollisionData.h"
+					RelativePath=".\include\obj\NiCollisionData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiCollisionObject.h"
+					RelativePath=".\include\obj\NiCollisionObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiColorData.h"
+					RelativePath=".\include\obj\NiColorData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiColorExtraData.h"
+					RelativePath=".\include\obj\NiColorExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiControllerManager.h"
+					RelativePath=".\include\obj\NiControllerManager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiControllerSequence.h"
+					RelativePath=".\include\obj\NiControllerSequence.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDefaultAVObjectPalette.h"
+					RelativePath=".\include\obj\NiDefaultAVObjectPalette.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDirectionalLight.h"
+					RelativePath=".\include\obj\NiDirectionalLight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDitherProperty.h"
+					RelativePath=".\include\obj\NiDitherProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiDynamicEffect.h"
+					RelativePath=".\include\obj\NiDynamicEffect.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiExtraData.h"
+					RelativePath=".\include\obj\NiExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFlipController.h"
+					RelativePath=".\include\obj\NiFlipController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatData.h"
+					RelativePath=".\include\obj\NiFloatData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatExtraData.h"
+					RelativePath=".\include\obj\NiFloatExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatExtraDataController.h"
+					RelativePath=".\include\obj\NiFloatExtraDataController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatInterpolator.h"
+					RelativePath=".\include\obj\NiFloatInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFloatsExtraData.h"
+					RelativePath=".\include\obj\NiFloatsExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiFogProperty.h"
+					RelativePath=".\include\obj\NiFogProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiGeomMorpherController.h"
+					RelativePath=".\include\obj\NiGeomMorpherController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiGravity.h"
+					RelativePath=".\include\obj\NiGravity.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiIntegerExtraData.h"
+					RelativePath=".\include\obj\NiIntegerExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiIntegersExtraData.h"
+					RelativePath=".\include\obj\NiIntegersExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiInterpolator.h"
+					RelativePath=".\include\obj\NiInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiKeyframeController.h"
+					RelativePath=".\include\obj\NiKeyframeController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiKeyframeData.h"
+					RelativePath=".\include\obj\NiKeyframeData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLight.h"
+					RelativePath=".\include\obj\NiLight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLightColorController.h"
+					RelativePath=".\include\obj\NiLightColorController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLightDimmerController.h"
+					RelativePath=".\include\obj\NiLightDimmerController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLODData.h"
+					RelativePath=".\include\obj\NiLODData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLODNode.h"
+					RelativePath=".\include\obj\NiLODNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLookAtController.h"
+					RelativePath=".\include\obj\NiLookAtController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiLookAtInterpolator.h"
+					RelativePath=".\include\obj\NiLookAtInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMaterialColorController.h"
+					RelativePath=".\include\obj\NiMaterialColorController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMaterialProperty.h"
+					RelativePath=".\include\obj\NiMaterialProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMeshParticleSystem.h"
+					RelativePath=".\include\obj\NiMeshParticleSystem.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMeshPSysData.h"
+					RelativePath=".\include\obj\NiMeshPSysData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMorphData.h"
+					RelativePath=".\include\obj\NiMorphData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiMultiTargetTransformController.h"
+					RelativePath=".\include\obj\NiMultiTargetTransformController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiNode.h"
+					RelativePath=".\include\obj\NiNode.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiObject.h"
+					RelativePath=".\include\obj\NiObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiObjectNET.h"
+					RelativePath=".\include\obj\NiObjectNET.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPalette.h"
+					RelativePath=".\include\obj\NiPalette.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleBomb.h"
+					RelativePath=".\include\obj\NiParticleBomb.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleColorModifier.h"
+					RelativePath=".\include\obj\NiParticleColorModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleGrowFade.h"
+					RelativePath=".\include\obj\NiParticleGrowFade.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshes.h"
+					RelativePath=".\include\obj\NiParticleMeshes.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshesData.h"
+					RelativePath=".\include\obj\NiParticleMeshesData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleMeshModifier.h"
+					RelativePath=".\include\obj\NiParticleMeshModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleRotation.h"
+					RelativePath=".\include\obj\NiParticleRotation.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticles.h"
+					RelativePath=".\include\obj\NiParticles.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticlesData.h"
+					RelativePath=".\include\obj\NiParticlesData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleSystem.h"
+					RelativePath=".\include\obj\NiParticleSystem.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiParticleSystemController.h"
+					RelativePath=".\include\obj\NiParticleSystemController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPathController.h"
+					RelativePath=".\include\obj\NiPathController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPathInterpolator.h"
+					RelativePath=".\include\obj\NiPathInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPixelData.h"
+					RelativePath=".\include\obj\NiPixelData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPlanarCollider.h"
+					RelativePath=".\include\obj\NiPlanarCollider.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPoint3Interpolator.h"
+					RelativePath=".\include\obj\NiPoint3Interpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPointLight.h"
+					RelativePath=".\include\obj\NiPointLight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPosData.h"
+					RelativePath=".\include\obj\NiPosData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiProperty.h"
+					RelativePath=".\include\obj\NiProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysAgeDeathModifier.h"
+					RelativePath=".\include\obj\NiPSysAgeDeathModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBombModifier.h"
+					RelativePath=".\include\obj\NiPSysBombModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBoundUpdateModifier.h"
+					RelativePath=".\include\obj\NiPSysBoundUpdateModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysBoxEmitter.h"
+					RelativePath=".\include\obj\NiPSysBoxEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysColliderManager.h"
+					RelativePath=".\include\obj\NiPSysColliderManager.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysColorModifier.h"
+					RelativePath=".\include\obj\NiPSysColorModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysCylinderEmitter.h"
+					RelativePath=".\include\obj\NiPSysCylinderEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysData.h"
+					RelativePath=".\include\obj\NiPSysData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysDragModifier.h"
+					RelativePath=".\include\obj\NiPSysDragModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitter.h"
+					RelativePath=".\include\obj\NiPSysEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterCtlrData.h"
+					RelativePath=".\include\obj\NiPSysEmitterCtlrData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterDeclinationCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterDeclinationCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterDeclinationVarCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterDeclinationVarCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterInitialRadiusCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterInitialRadiusCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterLifeSpanCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterLifeSpanCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysEmitterSpeedCtlr.h"
+					RelativePath=".\include\obj\NiPSysEmitterSpeedCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGravityModifier.h"
+					RelativePath=".\include\obj\NiPSysGravityModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGravityStrengthCtlr.h"
+					RelativePath=".\include\obj\NiPSysGravityStrengthCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysGrowFadeModifier.h"
+					RelativePath=".\include\obj\NiPSysGrowFadeModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysMeshEmitter.h"
+					RelativePath=".\include\obj\NiPSysMeshEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysMeshUpdateModifier.h"
+					RelativePath=".\include\obj\NiPSysMeshUpdateModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysModifier.h"
+					RelativePath=".\include\obj\NiPSysModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysModifierActiveCtlr.h"
+					RelativePath=".\include\obj\NiPSysModifierActiveCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysPlanarCollider.h"
+					RelativePath=".\include\obj\NiPSysPlanarCollider.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysPositionModifier.h"
+					RelativePath=".\include\obj\NiPSysPositionModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysResetOnLoopCtlr.h"
+					RelativePath=".\include\obj\NiPSysResetOnLoopCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysRotationModifier.h"
+					RelativePath=".\include\obj\NiPSysRotationModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysSpawnModifier.h"
+					RelativePath=".\include\obj\NiPSysSpawnModifier.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysSphereEmitter.h"
+					RelativePath=".\include\obj\NiPSysSphereEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysUpdateCtlr.h"
+					RelativePath=".\include\obj\NiPSysUpdateCtlr.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiPSysVolumeEmitter.h"
+					RelativePath=".\include\obj\NiPSysVolumeEmitter.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRangeLODData.h"
+					RelativePath=".\include\obj\NiRangeLODData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRotatingParticles.h"
+					RelativePath=".\include\obj\NiRotatingParticles.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiRotatingParticlesData.h"
+					RelativePath=".\include\obj\NiRotatingParticlesData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiScreenLODData.h"
+					RelativePath=".\include\obj\NiScreenLODData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSequenceStreamHelper.h"
+					RelativePath=".\include\obj\NiSequenceStreamHelper.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiShadeProperty.h"
+					RelativePath=".\include\obj\NiShadeProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSingleInterpolatorController.h"
+					RelativePath=".\include\obj\NiSingleInterpolatorController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinData.h"
+					RelativePath=".\include\obj\NiSkinData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinInstance.h"
+					RelativePath=".\include\obj\NiSkinInstance.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSkinPartition.h"
+					RelativePath=".\include\obj\NiSkinPartition.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSourceTexture.h"
+					RelativePath=".\include\obj\NiSourceTexture.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSpecularProperty.h"
+					RelativePath=".\include\obj\NiSpecularProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSphericalCollider.h"
+					RelativePath=".\include\obj\NiSphericalCollider.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiSpotLight.h"
+					RelativePath=".\include\obj\NiSpotLight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStencilProperty.h"
+					RelativePath=".\include\obj\NiStencilProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringExtraData.h"
+					RelativePath=".\include\obj\NiStringExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringPalette.h"
+					RelativePath=".\include\obj\NiStringPalette.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiStringsExtraData.h"
+					RelativePath=".\include\obj\NiStringsExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextKeyExtraData.h"
+					RelativePath=".\include\obj\NiTextKeyExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextureEffect.h"
+					RelativePath=".\include\obj\NiTextureEffect.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTextureTransformController.h"
+					RelativePath=".\include\obj\NiTextureTransformController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTexturingProperty.h"
+					RelativePath=".\include\obj\NiTexturingProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTimeController.h"
+					RelativePath=".\include\obj\NiTimeController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformController.h"
+					RelativePath=".\include\obj\NiTransformController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformData.h"
+					RelativePath=".\include\obj\NiTransformData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTransformInterpolator.h"
+					RelativePath=".\include\obj\NiTransformInterpolator.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriBasedGeom.h"
+					RelativePath=".\include\obj\NiTriBasedGeom.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriBasedGeomData.h"
+					RelativePath=".\include\obj\NiTriBasedGeomData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriShape.h"
+					RelativePath=".\include\obj\NiTriShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriShapeData.h"
+					RelativePath=".\include\obj\NiTriShapeData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriStrips.h"
+					RelativePath=".\include\obj\NiTriStrips.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiTriStripsData.h"
+					RelativePath=".\include\obj\NiTriStripsData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiUVController.h"
+					RelativePath=".\include\obj\NiUVController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiUVData.h"
+					RelativePath=".\include\obj\NiUVData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVectorExtraData.h"
+					RelativePath=".\include\obj\NiVectorExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVertexColorProperty.h"
+					RelativePath=".\include\obj\NiVertexColorProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVertWeightsExtraData.h"
+					RelativePath=".\include\obj\NiVertWeightsExtraData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVisController.h"
+					RelativePath=".\include\obj\NiVisController.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiVisData.h"
+					RelativePath=".\include\obj\NiVisData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiWireframeProperty.h"
+					RelativePath=".\include\obj\NiWireframeProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\NiZBufferProperty.h"
+					RelativePath=".\include\obj\NiZBufferProperty.h"
 					>
 				</File>
 				<File
-					RelativePath=".\obj\RootCollisionNode.h"
+					RelativePath=".\include\obj\RootCollisionNode.h"
 					>
 				</File>
 			</Filter>
@@ -2349,135 +2357,135 @@
 				Name="gen"
 				>
 				<File
-					RelativePath=".\gen\AVObject.h"
+					RelativePath=".\include\gen\AVObject.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\BoundingBox.h"
+					RelativePath=".\include\gen\BoundingBox.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ByteArray.h"
+					RelativePath=".\include\gen\ByteArray.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ControllerLink.h"
+					RelativePath=".\include\gen\ControllerLink.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\enums.h"
+					RelativePath=".\include\gen\enums.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\enums_intl.h"
+					RelativePath=".\include\gen\enums_intl.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Footer.h"
+					RelativePath=".\include\gen\Footer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\FurniturePosition.h"
+					RelativePath=".\include\gen\FurniturePosition.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Header.h"
+					RelativePath=".\include\gen\Header.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\hkTriangle.h"
+					RelativePath=".\include\gen\hkTriangle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\KeyGroup.h"
+					RelativePath=".\include\gen\KeyGroup.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\LimitedHingeDescriptor.h"
+					RelativePath=".\include\gen\LimitedHingeDescriptor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\LODRange.h"
+					RelativePath=".\include\gen\LODRange.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\MatchGroup.h"
+					RelativePath=".\include\gen\MatchGroup.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\MipMap.h"
+					RelativePath=".\include\gen\MipMap.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Morph.h"
+					RelativePath=".\include\gen\Morph.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\NodeGroup.h"
+					RelativePath=".\include\gen\NodeGroup.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\obj_defines.h"
+					RelativePath=".\include\gen\obj_defines.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Particle.h"
+					RelativePath=".\include\gen\Particle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\QuaternionXYZW.h"
+					RelativePath=".\include\gen\QuaternionXYZW.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\RagDollDescriptor.h"
+					RelativePath=".\include\gen\RagDollDescriptor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\RotationKeyArray.h"
+					RelativePath=".\include\gen\RotationKeyArray.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\ShaderTexDesc.h"
+					RelativePath=".\include\gen\ShaderTexDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinData.h"
+					RelativePath=".\include\gen\SkinData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinPartition.h"
+					RelativePath=".\include\gen\SkinPartition.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinShape.h"
+					RelativePath=".\include\gen\SkinShape.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinShapeGroup.h"
+					RelativePath=".\include\gen\SkinShapeGroup.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\SkinWeight.h"
+					RelativePath=".\include\gen\SkinWeight.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\Sphere.h"
+					RelativePath=".\include\gen\Sphere.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\StringPalette.h"
+					RelativePath=".\include\gen\StringPalette.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TBC.h"
+					RelativePath=".\include\gen\TBC.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TexDesc.h"
+					RelativePath=".\include\gen\TexDesc.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gen\TexSource.h"
+					RelativePath=".\include\gen\TexSource.h"
 					>
 				</File>
 			</Filter>

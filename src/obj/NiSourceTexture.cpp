@@ -1,9 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSourceTexture.h"
-#include "NiObject.h"
-#include "NiPixelData.h"
+#include "../../include/obj/NiSourceTexture.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiPixelData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

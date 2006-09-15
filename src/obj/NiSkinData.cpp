@@ -1,13 +1,13 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiSkinData.h"
-#include "NiNode.h"
-#include "../gen/SkinData.h"
-#include "../gen/SkinWeight.h"
-#include "NiSkinPartition.h"
-#include "NiTriBasedGeom.h"
-#include "NiSkinInstance.h"
+#include "../../include/obj/NiSkinData.h"
+#include "../../include/obj/NiNode.h"
+#include "../../include/gen/SkinData.h"
+#include "../../include/gen/SkinWeight.h"
+#include "../../include/obj/NiSkinPartition.h"
+#include "../../include/obj/NiTriBasedGeom.h"
+#include "../../include/obj/NiSkinInstance.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#include "NiLightDimmerController.h"
-#include "NiInterpolator.h"
+#include "../../include/obj/NiLightDimmerController.h"
+#include "../../include/obj/NiInterpolator.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
