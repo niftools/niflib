@@ -3,6 +3,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #ifndef _NIF_ENUMS_H_
 #define _NIF_ENUMS_H_
 
+#include <iostream>
+using namespace std;
+
 namespace Niflib {
 
 /*!

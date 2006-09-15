@@ -1422,6 +1422,18 @@
 			<Filter
 				Name="NvTriStrip"
 				>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStrip.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\NvTriStripObjects.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NvTriStrip\VertexCache.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="TriStripper"

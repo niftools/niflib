@@ -3,8 +3,12 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include <string>
 #include <iostream>
+
+#include "../../include/NIF_IO.h"
 #include "../../include/gen/enums.h"
 #include "../../include/gen/enums_intl.h"
+
+using namespace std;
 
 namespace Niflib {
 
