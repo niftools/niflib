@@ -42,22 +42,34 @@ public:
 	virtual const Type & GetType() const;
 
 	/*!
-	 * Point to calculate distance from for switching?
+	 * Get the point to calculate distance from for switching?
 	 */
-	Vector3 GetLodCenter() const;
-	void SetLodCenter( const Vector3 & value );
+	Vector3 GetLODCenter() const;
 
 	/*!
-	 * The ranges of distance that each level of detail applies in.
+	 * Set the point to calculate distance from for switching?
 	 */
-	vector<LODRange > GetLodLevels() const;
-	void SetLodLevels( const vector<LODRange >& value );
+	void SetLODCenter( const Vector3 & value );
 
 	/*!
-	 * Refers to LOD level information, either distance or screen size based.
+	 * Get the ranges of distance that each level of detail applies in.
 	 */
-	Ref<NiLODData > GetRangeData() const;
-	void SetRangeData( Ref<NiLODData > value );
+	vector<LODRange > GetLODLevels() const;
+
+	/*!
+	 * Set the ranges of distance that each level of detail applies in.
+	 */
+	void SetLODLevels( const vector<LODRange >& value );
+
+	/*!
+	 * Get the data object that refers to LOD level information
+	 */
+	Ref<NiLODData > GetLODLevelData() const;
+	
+	/*!
+	 * Set the data object that refers to LOD level information
+	 */
+	void SetLODLevelData( Ref<NiLODData > value );
 
 protected:
 	NI_L_O_D_NODE_MEMBERS

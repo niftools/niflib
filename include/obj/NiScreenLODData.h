@@ -34,33 +34,53 @@ public:
 	virtual const Type & GetType() const;
 
 	/*!
-	 * The center of the bounding sphere?
+	 * Get the center of the bounding sphere?
 	 */
 	Vector3 GetBoundCenter() const;
-	void SetBoundCenter( const Vector3 & value );
 
 	/*!
-	 * The radius of the bounding sphere?
+	 * Set the center of the bounding sphere?
+	 */
+	void SetBoundCenter( const Vector3 & bound_center );
+
+	/*!
+	 * Get the radius of the bounding sphere?
 	 */
 	float GetBoundRadius() const;
+
+	/*!
+	 * Set the radius of the bounding sphere?
+	 */
 	void SetBoundRadius( float value );
 
 	/*!
-	 * The center of the bounding sphere in world space?
+	 * Get the center of the bounding sphere in world space?
 	 */
 	Vector3 GetWorldCenter() const;
+
+	/*!
+	 * Set the center of the bounding sphere in world space?
+	 */
 	void SetWorldCenter( const Vector3 & value );
 
 	/*!
-	 * The radius of the bounding sphere in world space?
+	 * Get the radius of the bounding sphere in world space?
 	 */
 	float GetWorldRadius() const;
+
+	/*!
+	 * Set the radius of the bounding sphere in world space?
+	 */
 	void SetWorldRadius( float value );
 
 	/*!
-	 * The LOD levels based on proportion of screen size?
+	 * Get the LOD levels based on proportion of screen size?
 	 */
 	vector<float > GetProportionLevels() const;
+
+	/*!
+	 * Set the LOD levels based on proportion of screen size?
+	 */
 	void SetProportionLevels( const vector<float >& value );
 
 protected:
