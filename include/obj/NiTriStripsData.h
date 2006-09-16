@@ -32,6 +32,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+
+   NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips = true);
+
 	//--Counts--//
 
 	/*! Used to get the number of triangle strips that this mesh is divided into.
@@ -77,6 +80,8 @@ public:
    virtual void SetTriangles( const vector<Triangle> & in );
 
 private:
+   void SetNvTriangles( const vector<Triangle> & in );
+   void SetTSTriangles( const vector<Triangle> & in );
 	ushort CalcTriangleCount() const;
 
 protected:

@@ -39,7 +39,24 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	//TODO:  This is not a priority but needs to be implemented eventually
+	/*!
+	 * Designates whether animation sequences are cumulative?
+	 */
+	bool GetCumulative() const;
+	void SetCumulative( bool value );
+
+	/*!
+	 * Refers to a list of NiControllerSequence object.
+	 */
+	vector<Ref<NiControllerSequence > > GetControllerSequences() const;
+	void SetControllerSequences( const vector<Ref<NiControllerSequence > >& value );
+
+	/*!
+	 * Refers to a NiDefaultAVObjectPalette.
+	 */
+	Ref<NiDefaultAVObjectPalette > GetObjectPalette() const;
+	void SetObjectPalette( Ref<NiDefaultAVObjectPalette > value );
+
 protected:
 	NI_CONTROLLER_MANAGER_MEMBERS
 	STANDARD_INTERNAL_METHODS

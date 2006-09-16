@@ -37,3 +37,21 @@ const Type & NiDefaultAVObjectPalette::GetType() const {
 	return TYPE;
 };
 
+vector<Ref<NiAVObject> > NiDefaultAVObjectPalette::GetObjs() const {
+   vector<NiAVObjectRef> objRefs;
+   for (vector<AVObject>::const_iterator itr = objs.begin(); itr != objs.end(); ++itr) {
+      objRefs.push_back(itr->avObject);
+   }
+	return objRefs;
+}
+
+void NiDefaultAVObjectPalette::SetObjs( const vector<Ref<NiAVObject> >& value ) {
+   objs.clear();
+   for (vector<NiAVObjectRef>::const_iterator itr = value.begin(); itr != value.end(); ++itr) {
+      AVObject obj;
+      obj.name = (*itr)->GetName();
+      obj.avObject = (*itr).Ptr();
+      objs.push_back(obj);
+   }
+}
+

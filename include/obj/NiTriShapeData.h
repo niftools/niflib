@@ -35,6 +35,8 @@ public:
 	virtual const Type & GetType() const;
 public:
 
+   NiTriShapeData(const vector<Triangle>& verts);
+
 	//--Match Detection--//
 	
 	//Re-implemented only to casue match detection data to be cleared

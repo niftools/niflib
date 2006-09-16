@@ -3,8 +3,15 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "../../include/obj/NiTriStripsData.h"
 #include "../../NvTriStrip/NvTriStrip.h"
+#include "../../TriStripper/tri_stripper.h"
 
 using namespace Niflib;
+using namespace triangle_stripper;
+
+// Helper methods
+typedef vector<unsigned short> TriStrip;
+typedef	list<TriStrip> TriStrips;
+
 
 //Definition of TYPE constant
 const Type NiTriStripsData::TYPE("NiTriStripsData", &NI_TRI_STRIPS_DATA_PARENT::TypeConst() );
@@ -36,6 +43,13 @@ list<NiObjectRef> NiTriStripsData::GetRefs() const {
 const Type & NiTriStripsData::GetType() const {
 	return TYPE;
 };
+
+NiTriStripsData::NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips) {
+   if (nvtristrips)
+      SetNvTriangles(tris);
+   else
+      SetTSTriangles(tris);
+}
 
 ushort NiTriStripsData::GetStripCount() const {
 	return ushort(points.size());
@@ -121,6 +135,10 @@ ushort NiTriStripsData::CalcTriangleCount() const {
 }
 
 void NiTriStripsData::SetTriangles( const vector<Triangle> & in ) {
+   SetNvTriangles(in);
+}
+
+void NiTriStripsData::SetNvTriangles( const vector<Triangle> & in ) {
    if ( in.size() > 65535 || in.size() < 0 ) {
       throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
    }
@@ -163,3 +181,90 @@ void NiTriStripsData::SetTriangles( const vector<Triangle> & in ) {
    numTriangles = CalcTriangleCount();
 }
 
+void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
+   if ( in.size() > 65535 || in.size() < 0 ) {
+      throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
+   }
+
+   points.clear();
+   numTriangles = 0;
+
+   TriStrips strips;
+   vector<unsigned int> idcs(in.size()*3);
+   size_t i, j;
+   for (i=0; i<in.size(); i++)
+   {
+      idcs[i * 3 + 0] = in[i][0];
+      idcs[i * 3 + 1] = in[i][1];
+      idcs[i * 3 + 2] = in[i][2];
+   }
+
+   tri_stripper stripper(idcs);
+
+   primitive_vector groups;
+   stripper.Strip(&groups);
+
+   // triangles left over
+   vector<Triangle> stris;
+
+   for (i=0; i<groups.size(); i++)
+   {
+      if (groups[i].Type == TRIANGLE_STRIP)
+      {			
+         strips.push_back(TriStrip(groups[i].Indices.size()));
+         TriStrip &strip = strips.back();
+
+         for (j=0; j<groups[i].Indices.size(); j++)
+            strip[j] = groups[i].Indices[j];
+      } else
+      {
+         int size = stris.size();
+         stris.resize(size + groups[i].Indices.size()/3);
+         for (j=(size>0)?(size-1):0; j<stris.size(); j++)
+         {
+            stris[j][0] = groups[i].Indices[j*3+0];
+            stris[j][1] = groups[i].Indices[j*3+1];
+            stris[j][2] = groups[i].Indices[j*3+2];
+         }
+      }
+   }
+
+   if (stris.size())
+   {
+      // stitch em
+      TriStrip strip;
+      if (strips.size() > 0)
+      {
+         strip.push_back(strips.back()[strips.back().size()-1]);
+         strip.push_back(stris[0][0]);
+      }
+      for (i=0; i<stris.size(); i++)
+      {
+         if (i > 0)
+         {
+            strip.push_back(stris[i][0]);
+            strip.push_back(stris[i][0]);
+         }
+
+         strip.push_back(stris[i][0]);
+         strip.push_back(stris[i][1]);
+         strip.push_back(stris[i][2]);
+         if (i < stris.size()-1)
+            strip.push_back(stris[i][2]);
+      }
+      strips.push_back(strip);
+   }
+
+   if (strips.size() > 0)
+   {
+      SetStripCount(strips.size());
+
+      int i = 0;
+      TriStrips::const_iterator it;
+      for (it=strips.begin(); it!=strips.end(); ++it)
+         SetStrip(i++, *it);
+   }
+
+   //Recalculate Triangle Count
+   numTriangles = CalcTriangleCount();
+}

@@ -54,10 +54,10 @@ void NiLODNode::SetLODLevels( const vector<LODRange >& value ) {
 }
 
 Ref<NiLODData > NiLODNode::GetLODLevelData() const {
-	return rangeData;
+	return lodLevelData;
 }
 
 void NiLODNode::SetLODLevelData( Ref<NiLODData > value ) {
-	rangeData = value;
+	lodLevelData = value;
 }
 

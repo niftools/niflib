@@ -1,30 +1,26 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for licence. */
 
-#ifndef _NIDEFAULTAVOBJECTPALETTE_H_
-#define _NIDEFAULTAVOBJECTPALETTE_H_
+#ifndef _NICLODDATA_H_
+#define _NICLODDATA_H_
 
-#include "NiObject.h"
-
-// Include structures
-#include "../gen/AVObject.h"
+#include "NiTriBasedGeomData.h"
 namespace Niflib {
 
 
 #include "../gen/obj_defines.h"
 
-class NiDefaultAVObjectPalette;
-typedef Ref<NiDefaultAVObjectPalette> NiDefaultAVObjectPaletteRef;
+class NiClodData;
+typedef Ref<NiClodData> NiClodDataRef;
 
 /*!
- * NiDefaultAVObjectPalette - Unknown. Refers to a list of objects. Used
- * by NiControllerManager.
+ * NiClodData - A shape node that refers to singular triangle data.
  */
 
-class NIFLIB_API NiDefaultAVObjectPalette : public NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT {
+class NIFLIB_API NiClodData : public NI_CLOD_DATA_PARENT {
 public:
-	NiDefaultAVObjectPalette();
-	~NiDefaultAVObjectPalette();
+	NiClodData();
+	~NiClodData();
 	//Run-Time Type Information
 	static const Type & TypeConst() { return TYPE; }
 private:
@@ -37,14 +33,8 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
-	/*!
-	 * The objects.
-	 */
-	vector<Ref<NiAVObject> > GetObjs() const;
-	void SetObjs( const vector<Ref<NiAVObject> >& value );
-
 protected:
-	NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS
+	NI_CLOD_DATA_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };
 

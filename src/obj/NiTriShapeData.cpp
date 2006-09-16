@@ -36,6 +36,10 @@ const Type & NiTriShapeData::GetType() const {
 	return TYPE;
 };
 
+NiTriShapeData::NiTriShapeData(const vector<Triangle> &tris) {
+   SetTriangles(tris);
+}
+
 void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
 	//Take normal action
 	NiTriBasedGeomData::SetVertices( in );

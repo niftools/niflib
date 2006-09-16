@@ -533,18 +533,17 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_DYNAMIC_EFFECT_MEMBERS \
-bool hasAffectedNodeList_; \
-uint affectedNodeList_; \
 bool switchState; \
 mutable uint numAffectedNodes; \
 vector<Ref<NiAVObject > > affectedNodes; \
+vector<uint > affectedNodeListPointers; \
 
 #define NI_DYNAMIC_EFFECT_INCLUDE "NiAVObject.h" \
 
 #define NI_DYNAMIC_EFFECT_PARENT NiAVObject \
 
 #define NI_DYNAMIC_EFFECT_CONSTRUCT \
- : hasAffectedNodeList_(false), affectedNodeList_((uint)0), switchState(false), numAffectedNodes((uint)0) \
+ : switchState(false), numAffectedNodes((uint)0) \
 
 #define NI_DYNAMIC_EFFECT_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -3364,14 +3363,14 @@ Vector3 lodCenter; \
 mutable uint numLodLevels; \
 vector<LODRange > lodLevels; \
 ushort unknownShort; \
-Ref<NiLODData > rangeData; \
+Ref<NiLODData > lodLevelData; \
 
 #define NI_L_O_D_NODE_INCLUDE "NiNode.h" \
 
 #define NI_L_O_D_NODE_PARENT NiNode \
 
 #define NI_L_O_D_NODE_CONSTRUCT \
- : numLodLevels((uint)0), unknownShort((ushort)0), rangeData(NULL) \
+ : numLodLevels((uint)0), unknownShort((ushort)0), lodLevelData(NULL) \
 
 #define NI_L_O_D_NODE_READ \
 InternalRead( in, link_stack, version, user_version ); \
@@ -4849,7 +4848,7 @@ float boundRadius; \
 Vector3 worldCenter; \
 float worldRadius; \
 mutable uint proportionCount; \
-vector<float > proportion; \
+vector<float > proportionLevels; \
 
 #define NI_SCREEN_L_O_D_DATA_INCLUDE "NiLODData.h" \
 
@@ -5595,6 +5594,57 @@ return InternalAsString( verbose ); \
 InternalFixLinks( objects, link_stack, version, user_version ); \
 
 #define NI_TRI_STRIPS_DATA_GETREFS \
+return InternalGetRefs(); \
+
+#define NI_CLOD_MEMBERS \
+
+#define NI_CLOD_INCLUDE "NiTriBasedGeom.h" \
+
+#define NI_CLOD_PARENT NiTriBasedGeom \
+
+#define NI_CLOD_CONSTRUCT \
+
+#define NI_CLOD_READ \
+InternalRead( in, link_stack, version, user_version ); \
+
+#define NI_CLOD_WRITE \
+InternalWrite( out, link_map, version, user_version ); \
+
+#define NI_CLOD_STRING \
+return InternalAsString( verbose ); \
+
+#define NI_CLOD_FIXLINKS \
+InternalFixLinks( objects, link_stack, version, user_version ); \
+
+#define NI_CLOD_GETREFS \
+return InternalGetRefs(); \
+
+#define NI_CLOD_DATA_MEMBERS \
+array<ushort,5> unknown5Shorts; \
+float unknownFloat; \
+uint unknownInt; \
+array<ushort,44> unknownClodShorts; \
+
+#define NI_CLOD_DATA_INCLUDE "NiTriBasedGeomData.h" \
+
+#define NI_CLOD_DATA_PARENT NiTriBasedGeomData \
+
+#define NI_CLOD_DATA_CONSTRUCT \
+ : unknownFloat(0.0f), unknownInt((uint)0) \
+
+#define NI_CLOD_DATA_READ \
+InternalRead( in, link_stack, version, user_version ); \
+
+#define NI_CLOD_DATA_WRITE \
+InternalWrite( out, link_map, version, user_version ); \
+
+#define NI_CLOD_DATA_STRING \
+return InternalAsString( verbose ); \
+
+#define NI_CLOD_DATA_FIXLINKS \
+InternalFixLinks( objects, link_stack, version, user_version ); \
+
+#define NI_CLOD_DATA_GETREFS \
 return InternalGetRefs(); \
 
 #define NI_U_V_CONTROLLER_MEMBERS \

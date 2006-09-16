@@ -68,10 +68,10 @@ void NiScreenLODData::SetWorldRadius( float value ) {
 }
 
 vector<float > NiScreenLODData::GetProportionLevels() const {
-	return proportion;
+	return proportionLevels;
 }
 
 void NiScreenLODData::SetProportionLevels( const vector<float >& value ) {
-	proportion = value;
+	proportionLevels = value;
 }
 

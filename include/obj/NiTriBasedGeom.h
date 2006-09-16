@@ -56,7 +56,7 @@ public:
 	 */
 	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n );
 
-   void GenHardwareSkinInfo( int max_bones_per_partition = 4 );
+   void GenHardwareSkinInfo( int max_bones_per_partition = 4, int max_bones_per_vertex = 4 );
 
 	Ref<NiSkinInstance> GetSkinInstance() const;
 

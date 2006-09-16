@@ -349,6 +349,10 @@ NiObject * CreateNiTriShapeData() { return new NiTriShapeData; }
 NiObject * CreateNiTriStrips() { return new NiTriStrips; }
 #include "../../include/obj/NiTriStripsData.h"
 NiObject * CreateNiTriStripsData() { return new NiTriStripsData; }
+#include "../../include/obj/NiClod.h"
+NiObject * CreateNiClod() { return new NiClod; }
+#include "../../include/obj/NiClodData.h"
+NiObject * CreateNiClodData() { return new NiClodData; }
 #include "../../include/obj/NiUVController.h"
 NiObject * CreateNiUVController() { return new NiUVController; }
 #include "../../include/obj/NiUVData.h"
@@ -543,6 +547,8 @@ void RegisterBlockFactories() {
 	global_block_map["NiTriShapeData"] = CreateNiTriShapeData;
 	global_block_map["NiTriStrips"] = CreateNiTriStrips;
 	global_block_map["NiTriStripsData"] = CreateNiTriStripsData;
+	global_block_map["NiClod"] = CreateNiClod;
+	global_block_map["NiClodData"] = CreateNiClodData;
 	global_block_map["NiUVController"] = CreateNiUVController;
 	global_block_map["NiUVData"] = CreateNiUVData;
 	global_block_map["NiVectorExtraData"] = CreateNiVectorExtraData;

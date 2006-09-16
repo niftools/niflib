@@ -36,22 +36,6 @@ const Type & NiDynamicEffect::GetType() const {
 	return TYPE;
 };
 
-bool NiDynamicEffect::GetHasAffectedNodeList_() const {
-	return hasAffectedNodeList_;
-}
-
-void NiDynamicEffect::SetHasAffectedNodeList_( bool value ) {
-	hasAffectedNodeList_ = value;
-}
-
-uint NiDynamicEffect::GetAffectedNodeList_() const {
-	return affectedNodeList_;
-}
-
-void NiDynamicEffect::SetAffectedNodeList_( uint value ) {
-	affectedNodeList_ = value;
-}
-
 bool NiDynamicEffect::GetSwitchState() const {
 	return switchState;
 }
@@ -66,5 +50,13 @@ vector<Ref<NiAVObject > > NiDynamicEffect::GetAffectedNodes() const {
 
 void NiDynamicEffect::SetAffectedNodes( const vector<Ref<NiAVObject > >& value ) {
 	affectedNodes = value;
+}
+
+vector<uint > NiDynamicEffect::GetAffectedNodeListPointers() const {
+	return affectedNodeListPointers;
+}
+
+void NiDynamicEffect::SetAffectedNodeListPointers( const vector<uint >& value ) {
+	affectedNodeListPointers = value;
 }
 

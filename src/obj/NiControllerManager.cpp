@@ -37,3 +37,27 @@ const Type & NiControllerManager::GetType() const {
 	return TYPE;
 };
 
+bool NiControllerManager::GetCumulative() const {
+	return cumulative;
+}
+
+void NiControllerManager::SetCumulative( bool value ) {
+	cumulative = value;
+}
+
+vector<Ref<NiControllerSequence > > NiControllerManager::GetControllerSequences() const {
+	return controllerSequences;
+}
+
+void NiControllerManager::SetControllerSequences( const vector<Ref<NiControllerSequence > >& value ) {
+	controllerSequences = value;
+}
+
+Ref<NiDefaultAVObjectPalette > NiControllerManager::GetObjectPalette() const {
+	return objectPalette;
+}
+
+void NiControllerManager::SetObjectPalette( Ref<NiDefaultAVObjectPalette > value ) {
+	objectPalette = value;
+}
+
