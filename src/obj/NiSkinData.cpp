@@ -109,11 +109,8 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 		//Get bone world position
 		bone_mat = bone_nodes[i]->GetWorldTransform();
 
-		//bone_mat = bone_mat * sr_world;
-
 		//Multiply NiTriBasedGeom matrix with inversed bone matrix
 		res_mat = owner_mat * bone_mat.Inverse();
-
 
 		//Store result
 		res_mat.Decompose( boneList[i].translation, boneList[i].rotation, boneList[i].scale );
