@@ -95,14 +95,13 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 	Matrix44 sr_world = skinInst->GetSkeletonRoot()->GetWorldTransform();
 
 	//Inverse owner NiTriBasedGeom matrix & multiply with skeleton root matrix
-	//Matrix44 res_mat = owner_mat.Inverse() * sr_world;
-	Matrix44 res_mat = (sr_world.Inverse() * owner_mat).Inverse() * sr_world;
+	Matrix44 overall_mat = owner_mat.Inverse() * sr_world;
 
 	//Store result
-	res_mat.Decompose( translation, rotation, scale );
+	overall_mat.Decompose( translation, rotation, scale );
 
 	//--Calculate Bone Offsets--//
-
+	Matrix44 res_mat;
 	Matrix44 bone_mat;
 	for (uint i = 0; i < boneList.size(); ++i ) {
 		//--Get Bone Bind Pose--//
@@ -110,7 +109,7 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 		//Get bone world position
 		bone_mat = bone_nodes[i]->GetWorldTransform();
 
-		bone_mat = bone_mat * sr_world;
+		//bone_mat = bone_mat * sr_world;
 
 		//Multiply NiTriBasedGeom matrix with inversed bone matrix
 		res_mat = owner_mat * bone_mat.Inverse();

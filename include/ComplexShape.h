@@ -64,7 +64,7 @@ public:
 		vector<TexCoord> texCoords;
 	};
 
-	Ref<NiAVObject> Split( Ref<NiNode> & parent, int max_bones_per_partition = 4, bool stripify = false ) const;
+	Ref<NiAVObject> Split( Ref<NiNode> & parent, Matrix44 & transform, int max_bones_per_partition = 4, bool stripify = false ) const;
 	void Merge( const Ref<NiAVObject> & root );
 	void Clear();
 

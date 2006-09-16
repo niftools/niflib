@@ -606,7 +606,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 //	}
 //}
 
-Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, int max_bones_per_partition, bool stripify ) const {
+Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform, int max_bones_per_partition, bool stripify ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
@@ -656,6 +656,9 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, int max_bones_per_par
 	}
 
 	parent->AddChild( root );
+
+	//Set transfrm of root
+	root->SetLocalTransform( transform );
 
 	//Create NiTriShapeData and fill it out with all data that is relevant
 	//to this shape based on the material.
