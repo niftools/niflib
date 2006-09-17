@@ -26,6 +26,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../include/obj/NiStringExtraData.h"
 #include "../include/obj/NiExtraData.h"
 #include "../include/obj/bhkRigidBody.h"
+#include "../include/obj/bhkCollisionObject.h"
 #include "../include/gen/header.h"
 #include "../include/gen/footer.h"
 
@@ -37,7 +38,7 @@ bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
-void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map );
+void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
@@ -380,7 +381,7 @@ void WriteNifTree( ostream & out, NiObjectRef const & root, unsigned int version
 	footer.Write( out, link_map, version, user_version );
 }
 
-void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map ) {
+void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse ) {
 	//Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
@@ -398,30 +399,29 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
    //   must be after its children. Hopefully this can be removed and replaced with 
    //   a more generic mechanism in the future.
 	Type *t = (Type*)&(root->GetType());
-   if (t->IsDerivedType(bhkRigidBody::TypeConst()))
+   if (  reverse
+      || t->IsDerivedType(bhkRigidBody::TypeConst()) 
+      || t->IsDerivedType(bhkCollisionObject::TypeConst())
+      )
    {
-      //Call this function on all links of this object
-      list<NiObjectRef> links = root->GetRefs();
-      for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-         if ( *it != NULL ) {
-            EnumerateObjects( *it, type_map, link_map );
-         }
-      }
-      //Add object to link map
-      link_map[root] = uint(link_map.size());
-   } 
-   else
-   {
-      //Add object to link map
-      link_map[root] = uint(link_map.size());
+      reverse = true;
+   }
 
-      //Call this function on all links of this object	
-      list<NiObjectRef> links = root->GetRefs();
-      for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-         if ( *it != NULL ) {
-            EnumerateObjects( *it, type_map, link_map );
-         }
+   // If reverse is set then add the link after children otherwise add it before
+   if (!reverse) {
+      link_map[root] = uint(link_map.size());
+   }
+
+   //Call this function on all links of this object	
+   list<NiObjectRef> links = root->GetRefs();
+   for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
+      if ( *it != NULL ) {
+         EnumerateObjects( *it, type_map, link_map, reverse );
       }
+   }
+
+   if (reverse) {
+      link_map[root] = uint(link_map.size());
    }
 }
 
