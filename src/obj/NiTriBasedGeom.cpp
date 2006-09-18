@@ -393,35 +393,45 @@ void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, i
 
 void NiTriBasedGeom::UpdateTangentSpace() {
 	/* No data, no tangent space */
-	if(this->data == NULL) {
+	if( this->data == NULL ) {
+		throw runtime_error("There is no NiTriBasedGeomData attached the NiTriBasedGeom upon which UpdateTangentSpace was called.");
+	}
+
+	//Check if there are any UVs or Vertices before trying to retrive them
+	if ( this->data->GetUVSetCount() == 0 ) {
+		//There are no UVs, do nothing
 		return;
 	}
 
+	if ( this->data->GetVertexCount() == 0 ) {
+		//There are no Vertices, do nothing
+		return;
+	}
+
+	//Get mesh data from data object
 	vector<Vector3> verts = this->data->GetVertices();
 	vector<Vector3> norms = this->data->GetNormals();
-	vector<TexCoord> uvs = this->data->GetUVSet(0);
-	vector<Color4> colors = this->data->GetColors();
 	vector<Triangle> tris = this->data->GetTriangles();
+	vector<TexCoord> uvs = this->data->GetUVSet(0);
 
 	/* check for data validity */
 	if(
-		verts.empty() ||
 		verts.size() != norms.size() ||
 		verts.size() != uvs.size() ||
 		tris.empty()
-	)
-	{
+	) {
+		//Do nothing, there is no shape in this data.
 		return;
 	}
 
-	vector<Vector3> tangents(verts.size());
-	vector<Vector3> binormals(verts.size());
+	vector<Vector3> tangents( verts.size() );
+	vector<Vector3> binormals( verts.size() );
 
 	int dups = 0;
 
 	multimap<int, int> vmap;
 
-	for(int t = 0; t < (int)tris.size(); t++) {
+	for( int t = 0; t < (int)tris.size(); t++ ) {
 		Triangle & tri = tris[t];
 
 		int i1 = tri[0];
@@ -461,9 +471,9 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 			( w2w1.u * v3v1.y - w3w1.u * v2v1.y ) * r,
 			( w2w1.u * v3v1.z - w3w1.u * v2v1.z ) * r
 		);
-		
-		for ( int j = 0; j < 3; j++ )
-		{	// no duplication, just smoothing
+
+		// no duplication, just smoothing
+		for ( int j = 0; j < 3; j++ ) {	
 			int i = tri[j];
 			
 			tangents[i] += sdir.Normalized();
@@ -471,23 +481,19 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 		}
 	}
 
-	for ( int i = 0; i < (int)verts.size(); i++ )
-	{	// for each vertex calculate tangent and binormal
+	// for each vertex calculate tangent and binormal
+	for ( unsigned i = 0; i < verts.size(); i++ ) {	
 		const Vector3 & n = norms[i];
 		
 		Vector3 & t = tangents[i];
 		Vector3 & b = binormals[i];
 		
-		if ( t == Vector3() || b == Vector3() )
-		{
+		if ( t == Vector3() || b == Vector3() ) {
 			t.x = n.y;
 			t.y = n.z;
 			t.z = n.x;
 			b = n.CrossProduct(t);
-		}
-		
-		else
-		{
+		} else {
 			t = ( t - n * n.DotProduct(t) );
 			t = t.Normalized();
 			b = ( b - n * n.DotProduct(b) );
@@ -496,11 +502,11 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 	}
 
 	// generate the byte data
-	int vCount = (int)verts.size();
+	unsigned vCount = verts.size();
 	int fSize = sizeof(float[3]);
-	vector<byte> binData(2 * vCount * fSize);
+	vector<byte> binData( 2 * vCount * fSize );
 
-	for(int i = 0; i < (int)verts.size(); i++) {
+	for( unsigned i = 0; i < verts.size(); i++ ) {
 		float tan_xyz[3], bin_xyz[3];
 
 		tan_xyz[0] = tangents[i].x;
@@ -511,11 +517,10 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 		bin_xyz[1] = binormals[i].y;
 		bin_xyz[2] = binormals[i].z;
 
-		char * tan_Bytes = (char *) tan_xyz;
-		char * bin_Bytes = (char *) bin_xyz;
+		char * tan_Bytes = (char*)tan_xyz;
+		char * bin_Bytes = (char*)bin_xyz;
 
-		for(int j = 0; j < fSize; j++)
-		{
+		for( int j = 0; j < fSize; j++ ) {
 			binData[ i           * fSize + j] = tan_Bytes[j];
 			binData[(i + vCount) * fSize + j] = bin_Bytes[j];
 		}
@@ -527,19 +532,16 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 	std::list<NiExtraDataRef> props = this->GetExtraData();
 	std::list<NiExtraDataRef>::iterator prop;
 
-	for(prop = props.begin();
-		prop != props.end();
-		prop++)
-	{
+	for( prop = props.begin(); prop != props.end(); ++prop ){
 		if((*prop)->GetName() == "Tangent space (binormal & tangent vectors)") {
 			TSpaceRef = DynamicCast<NiBinaryExtraData>(*prop);
 			break;
 		}
 	}
 
-	if(TSpaceRef == NULL) {
+	if( TSpaceRef == NULL ) {
 		TSpaceRef = new NiBinaryExtraData();
-		this->AddExtraData(DynamicCast<NiExtraData>(TSpaceRef));
+		this->AddExtraData( StaticCast<NiExtraData>(TSpaceRef) );
 	}
 
 	TSpaceRef->SetData(binData);

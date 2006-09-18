@@ -44,7 +44,7 @@ void NiStencilProperty::SetFlags(ushort value) {
 }
 
 bool NiStencilProperty::GetStencilEnabled() const {
-   return stencilEnabled;
+   return (stencilEnabled != 0);
 }
 
 void NiStencilProperty::SetStencilEnabled(bool value) {
