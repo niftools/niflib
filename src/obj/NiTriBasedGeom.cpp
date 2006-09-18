@@ -7,6 +7,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiSkinData.h"
 #include "../../include/obj/NiSkinPartition.h"
+#include "../../include/obj/NiExtraData.h"
+#include "../../include/obj/NiBinaryExtraData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -387,4 +389,158 @@ void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, i
          skinData->SetSkinPartition( skinPart );
       }
    }
+}
+
+void NiTriBasedGeom::UpdateTangentSpace() {
+	/* No data, no tangent space */
+	if(this->data == NULL) {
+		return;
+	}
+
+	vector<Vector3> verts = this->data->GetVertices();
+	vector<Vector3> norms = this->data->GetNormals();
+	vector<TexCoord> uvs = this->data->GetUVSet(0);
+	vector<Color4> colors = this->data->GetColors();
+	vector<Triangle> tris = this->data->GetTriangles();
+
+	/* check for data validity */
+	if(
+		verts.empty() ||
+		verts.size() != norms.size() ||
+		verts.size() != uvs.size() ||
+		tris.empty()
+	)
+	{
+		return;
+	}
+
+	vector<Vector3> tangents(verts.size());
+	vector<Vector3> binormals(verts.size());
+
+	int dups = 0;
+
+	multimap<int, int> vmap;
+
+	for(int t = 0; t < (int)tris.size(); t++) {
+		Triangle & tri = tris[t];
+
+		int i1 = tri[0];
+		int i2 = tri[1];
+		int i3 = tri[2];
+		
+		const Vector3 v1 = verts[i1];
+		const Vector3 v2 = verts[i2];
+		const Vector3 v3 = verts[i3];
+		
+		const TexCoord w1 = uvs[i1];
+		const TexCoord w2 = uvs[i2];
+		const TexCoord w3 = uvs[i3];
+		
+		Vector3 v2v1 = v2 - v1;
+		Vector3 v3v1 = v3 - v1;
+		
+		TexCoord w2w1(w2.u - w1.u, w2.v - w1.v);
+		TexCoord w3w1(w3.u - w1.u, w3.v - w1.v);
+		
+		float r = w2w1.u * w3w1.v - w3w1.u * w2w1.v;
+		
+		if ( abs( r ) <= 10e-5 ){
+			continue;
+		}
+		
+		r = 1.0f / r;
+		
+		Vector3 sdir( 
+			( w3w1.v * v2v1.x - w2w1.v * v3v1.x ) * r,
+			( w3w1.v * v2v1.y - w2w1.v * v3v1.y ) * r,
+			( w3w1.v * v2v1.z - w2w1.v * v3v1.z ) * r
+		);
+		
+		Vector3 tdir( 
+			( w2w1.u * v3v1.x - w3w1.u * v2v1.x ) * r,
+			( w2w1.u * v3v1.y - w3w1.u * v2v1.y ) * r,
+			( w2w1.u * v3v1.z - w3w1.u * v2v1.z ) * r
+		);
+		
+		for ( int j = 0; j < 3; j++ )
+		{	// no duplication, just smoothing
+			int i = tri[j];
+			
+			tangents[i] += sdir.Normalized();
+			binormals[i] += tdir.Normalized();
+		}
+	}
+
+	for ( int i = 0; i < (int)verts.size(); i++ )
+	{	// for each vertex calculate tangent and binormal
+		const Vector3 & n = norms[i];
+		
+		Vector3 & t = tangents[i];
+		Vector3 & b = binormals[i];
+		
+		if ( t == Vector3() || b == Vector3() )
+		{
+			t.x = n.y;
+			t.y = n.z;
+			t.z = n.x;
+			b = n.CrossProduct(t);
+		}
+		
+		else
+		{
+			t = ( t - n * n.DotProduct(t) );
+			t = t.Normalized();
+			b = ( b - n * n.DotProduct(b) );
+			b = b.Normalized();
+		}
+	}
+
+	// generate the byte data
+	int vCount = (int)verts.size();
+	int fSize = sizeof(float[3]);
+	vector<byte> binData(2 * vCount * fSize);
+
+	for(int i = 0; i < (int)verts.size(); i++) {
+		float tan_xyz[3], bin_xyz[3];
+
+		tan_xyz[0] = tangents[i].x;
+		tan_xyz[1] = tangents[i].y;
+		tan_xyz[2] = tangents[i].z;
+
+		bin_xyz[0] = binormals[i].x;
+		bin_xyz[1] = binormals[i].y;
+		bin_xyz[2] = binormals[i].z;
+
+		char * tan_Bytes = (char *) tan_xyz;
+		char * bin_Bytes = (char *) bin_xyz;
+
+		for(int j = 0; j < fSize; j++)
+		{
+			binData[ i           * fSize + j] = tan_Bytes[j];
+			binData[(i + vCount) * fSize + j] = bin_Bytes[j];
+		}
+	}
+
+	// update or create the tangent space extra data
+	NiBinaryExtraDataRef TSpaceRef;
+
+	std::list<NiExtraDataRef> props = this->GetExtraData();
+	std::list<NiExtraDataRef>::iterator prop;
+
+	for(prop = props.begin();
+		prop != props.end();
+		prop++)
+	{
+		if((*prop)->GetName() == "Tangent space (binormal & tangent vectors)") {
+			TSpaceRef = DynamicCast<NiBinaryExtraData>(*prop);
+			break;
+		}
+	}
+
+	if(TSpaceRef == NULL) {
+		TSpaceRef = new NiBinaryExtraData();
+		this->AddExtraData(DynamicCast<NiExtraData>(TSpaceRef));
+	}
+
+	TSpaceRef->SetData(binData);
 }

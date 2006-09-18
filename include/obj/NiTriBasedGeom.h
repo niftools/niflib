@@ -71,6 +71,12 @@ public:
 
 	vector<Vector3> GetSkinInfluencedVertices() const;
 
+	/*!
+	 * Generate or update a NiStringExtraData block with precalculated
+	 * tangent and binormal data (Oblivion specific)
+	 */
+	void UpdateTangentSpace();
+
 protected:
 	list< Ref<NiNode> > NiTriBasedGeom::ListAncestors( const Ref<NiNode> & leaf ) const;
 
