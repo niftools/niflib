@@ -47,7 +47,7 @@ public:
 	 * NiSkinInstance and NiSkinData class. The bones must have a common
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
-	void BindSkin( vector< Ref<NiNode> > bone_nodes );
+	void BindSkin( vector< Ref<NiNode> > bone_nodes, bool bind_to_scene = false );
 	void UnbindSkin();
 	/*!
 	 * Sets the skin weights in the attached NiSkinData object.

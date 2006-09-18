@@ -140,15 +140,19 @@ void NiObjectNET::AddController( Ref<NiTimeController> & obj ) {
 }
 
 void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
-	NiTimeControllerRef * cont = &controller;
-	while ( (*cont) != NULL ) {
-		if ( (*cont) == obj ) {
+	for(NiTimeControllerRef last = controller, cont = last, next; cont != NULL; cont = next ) {
+      next = cont->GetNextController();
+		if ( cont == obj ) {
 			//Cut this reference out of the list
-			(*cont)->SetTarget( NULL );
-			(*cont) = (*cont)->GetNextController();
+			cont->SetTarget( NULL );
+         cont->SetNextController( NiTimeControllerRef() );
+         if (cont == controller)
+            controller = next;
+         else
+            last->SetNextController(next);
 		} else {
-			//Advance to the next controller
-			cont = &((*cont)->GetNextController());
+			//Advance last to current controller
+         last = cont;
 		}
 	}
 }

@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../include/obj/NiControllerManager.h"
 #include "../../include/obj/NiControllerSequence.h"
 #include "../../include/obj/NiDefaultAVObjectPalette.h"
+#include <algorithm>
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -50,8 +51,40 @@ vector<Ref<NiControllerSequence > > NiControllerManager::GetControllerSequences(
 }
 
 void NiControllerManager::SetControllerSequences( const vector<Ref<NiControllerSequence > >& value ) {
+   ClearSequences();
 	controllerSequences = value;
+   for (vector<NiControllerSequenceRef>::iterator it = controllerSequences.begin(); it != controllerSequences.end(); ++it) {
+      (*it)->SetParent(this);
+   }
 }
+
+void NiControllerManager::AddSequence( Ref<NiControllerSequence > & obj ) {
+   vector<NiControllerSequenceRef>::iterator begin = controllerSequences.begin();
+   vector<NiControllerSequenceRef>::iterator end = controllerSequences.end();
+   vector<NiControllerSequenceRef>::iterator it = std::find(begin, end, obj);
+   if (it == end) {
+      controllerSequences.insert(end, obj);  
+      obj->SetParent(this);
+   }
+}
+
+void NiControllerManager::RemoveSequence( Ref<NiControllerSequence > obj ) {
+   vector<NiControllerSequenceRef>::iterator begin = controllerSequences.begin();
+   vector<NiControllerSequenceRef>::iterator end = controllerSequences.end();
+   vector<NiControllerSequenceRef>::iterator it = std::find(begin, end, obj);
+   if (it != end) {
+      (*it)->SetParent(NULL);
+      controllerSequences.erase(it);  
+   }
+}
+
+void NiControllerManager::ClearSequences() {
+   for (vector<NiControllerSequenceRef>::iterator it = controllerSequences.begin(); it != controllerSequences.end(); ++it) {
+      (*it)->SetParent(NULL);
+   }
+   controllerSequences.clear();
+}
+
 
 Ref<NiDefaultAVObjectPalette > NiControllerManager::GetObjectPalette() const {
 	return objectPalette;

@@ -139,7 +139,10 @@ public:
 	void SetTargetName( const string & value );
 
 protected:
-	NiControllerManager * NiControllerSequence::Parent() const;
+   friend class NiControllerManager;
+   NiControllerManager * GetParent() const;
+   void SetParent(NiControllerManager *parent);
+
 	NI_CONTROLLER_SEQUENCE_MEMBERS
 	STANDARD_INTERNAL_METHODS
 };

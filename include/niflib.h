@@ -209,7 +209,7 @@ NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, unsi
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, unsigned int version, ExportOptions export_files, NifGame kf_type );
+NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
 
 /*!
  * Creates a clone of an entire tree of objects.

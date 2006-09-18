@@ -50,6 +50,9 @@ public:
 	 */
 	vector<Ref<NiControllerSequence > > GetControllerSequences() const;
 	void SetControllerSequences( const vector<Ref<NiControllerSequence > >& value );
+   void AddSequence( Ref<NiControllerSequence > & obj );
+   void RemoveSequence( Ref<NiControllerSequence > obj );
+   void ClearSequences();
 
 	/*!
 	 * Refers to a NiDefaultAVObjectPalette.

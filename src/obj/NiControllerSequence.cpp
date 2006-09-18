@@ -47,7 +47,14 @@ const Type & NiControllerSequence::GetType() const {
 	return TYPE;
 };
 
-NiControllerManager * NiControllerSequence::Parent() const { return NULL; }
+NiControllerManager * NiControllerSequence::GetParent() const { 
+   return manager; 
+}
+
+void NiControllerSequence::SetParent(NiControllerManager * parent) { 
+   manager = parent; 
+}
+
 
 void NiControllerSequence::SetTextKey( const Ref<NiTextKeyExtraData> & txt_key ) {
 	//Set new name

@@ -74,7 +74,7 @@ Ref<NiSkinInstance> NiTriBasedGeom::GetSkinInstance() const {
 	return skinInstance;
 }
 
-void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
+void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes, bool bind_to_scene ) {
 	//Ensure skin is not aleady bound
 	if ( skinInstance != 0 ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
@@ -110,58 +110,70 @@ void NiTriBasedGeom::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 		throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
 	}
 
-	NiNodeRef skeleton_root = ancestors[0].front();
-	//Make sure bone and shapes are part of the same tree
-	for ( int i = 1; i < num_lists; ++i ) {
-		if ( ancestors[i].size() == 0 ) {
-			throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-		}
-		if ( ancestors[i].front() != skeleton_root ) {
-			throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-		}
-	}
+	NiNodeRef skeleton_root;
+   if (bind_to_scene) {
+      // Just parent to the scene
+      NiNodeRef parent = GetParent();
+      while (parent != NULL) {
+         skeleton_root = parent;
+         parent = parent->GetParent();
+      }
 
-	//Since the first items have been shown to match, pop all the stacks
-	for ( int i = 0; i < num_lists; ++i ) {
-		ancestors[i].pop_front();
-	}
+   } else {
+      skeleton_root = ancestors[0].front();
 
-	//Now search for the common ancestor
+	   //Make sure bone and shapes are part of the same tree
+	   for ( int i = 1; i < num_lists; ++i ) {
+		   if ( ancestors[i].size() == 0 ) {
+			   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+		   }
+		   if ( ancestors[i].front() != skeleton_root ) {
+			   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+		   }
+	   }
 
-	while(true) {
-		bool all_same = true;
-		if ( ancestors[0].size() == 0 ) {
-			//This list is over, so the last top is the common ancestor
-			//break out of the loop
-			break;
-		}
-		NiNodeRef first_ancestor = ancestors[0].front();
-		for ( int i = 1; i < num_lists; ++i ) {
-			if ( ancestors[i].size() == 0 ) {
-				//This list is over, so the last top is the common ancestor
-				//break out of the loop
-				all_same = false;
-				break;
-			}
-			if ( ancestors[i].front() != first_ancestor ) {
-				all_same = false;
-			}
-		}
+	   //Since the first items have been shown to match, pop all the stacks
+	   for ( int i = 0; i < num_lists; ++i ) {
+		   ancestors[i].pop_front();
+	   }
 
-		if ( all_same == true ) {
-			//They're all the same, so set the top, pop all the stacks
-			//and look again
-			
-			skeleton_root = ancestors[0].front();
-			for ( int i = 0; i < num_lists; ++i ) {
-				ancestors[i].pop_front();
-			}
-		} else {
-			//One is different, so the last top is the common ancestor.
-			//break out of the loop
-			break;
-		}
-	}
+	   //Now search for the common ancestor
+
+	   while(true) {
+		   bool all_same = true;
+		   if ( ancestors[0].size() == 0 ) {
+			   //This list is over, so the last top is the common ancestor
+			   //break out of the loop
+			   break;
+		   }
+		   NiNodeRef first_ancestor = ancestors[0].front();
+		   for ( int i = 1; i < num_lists; ++i ) {
+			   if ( ancestors[i].size() == 0 ) {
+				   //This list is over, so the last top is the common ancestor
+				   //break out of the loop
+				   all_same = false;
+				   break;
+			   }
+			   if ( ancestors[i].front() != first_ancestor ) {
+				   all_same = false;
+			   }
+		   }
+
+		   if ( all_same == true ) {
+			   //They're all the same, so set the top, pop all the stacks
+			   //and look again
+   			
+			   skeleton_root = ancestors[0].front();
+			   for ( int i = 0; i < num_lists; ++i ) {
+				   ancestors[i].pop_front();
+			   }
+		   } else {
+			   //One is different, so the last top is the common ancestor.
+			   //break out of the loop
+			   break;
+		   }
+	   }
+   }
 
 	if ( skeleton_root == NULL ) {
 		throw runtime_error("Failed to find suitable skeleton root.");
