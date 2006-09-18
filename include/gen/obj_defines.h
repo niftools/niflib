@@ -5169,7 +5169,7 @@ return InternalGetRefs(); \
 
 #define NI_STENCIL_PROPERTY_MEMBERS \
 ushort flags; \
-bool stencilEnabled; \
+byte stencilEnabled; \
 CompareMode stencilFunction; \
 uint stencilRef; \
 uint stencilMask; \
@@ -5183,7 +5183,7 @@ FaceDrawMode drawMode; \
 #define NI_STENCIL_PROPERTY_PARENT NiProperty \
 
 #define NI_STENCIL_PROPERTY_CONSTRUCT \
- : flags((ushort)0), stencilEnabled(false), stencilRef((uint)0), stencilMask((uint)4294967295) \
+ : flags((ushort)0), stencilEnabled((byte)0), stencilRef((uint)0), stencilMask((uint)4294967295) \
 
 #define NI_STENCIL_PROPERTY_READ \
 InternalRead( in, link_stack, version, user_version ); \
