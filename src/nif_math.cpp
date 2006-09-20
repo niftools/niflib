@@ -88,6 +88,14 @@ Vector3 & Vector3::operator*=( const float & rh) {
 	return *this;
 }
 
+float Vector3::operator*( const Vector3 & v ) const {
+	return DotProduct(v);
+}
+
+Vector3 Vector3::operator^( const Vector3 & v ) const {
+	return CrossProduct(v);
+}
+
 Vector3 Vector3::operator/( const float & rh ) const {
 	Vector3 v(*this);
 	v /= rh;

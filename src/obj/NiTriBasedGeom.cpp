@@ -431,10 +431,6 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 	vector<Vector3> tangents( verts.size() );
 	vector<Vector3> binormals( verts.size() );
 
-	int dups = 0;
-
-	multimap<int, int> vmap;
-
 	for( int t = 0; t < (int)tris.size(); t++ ) {
 		Triangle & tri = tris[t];
 

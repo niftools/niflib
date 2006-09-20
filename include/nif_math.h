@@ -197,6 +197,16 @@ struct NIFLIB_API Vector3 {
 	 */
 	Vector3 & operator*=( const float & rh );
 
+	/* Multiplies a vector by a vector using the dot product
+	 * \return The dot product of the two vectors.
+	 */
+	float operator*( const Vector3 & v ) const;
+
+	/* Multiplies a vector by a vector using the cross product
+	 * \return The cross product of the two vectors.
+	 */
+	Vector3 operator^( const Vector3 & v ) const;
+
 	/* Allows scaler division, that is dividing all components of the
 	 * vector, x, y and z, by the same number.
 	 * \return The result of the division.
