@@ -56,16 +56,16 @@ struct NIFLIB_API Header {
 	/*!
 	 * Could be the name of the creator of the NIF file?
 	 */
-	ShortString creator_;
+	ShortString creator;
 	/*!
 	 * Unknown. Can be something like 'TriStrip Process Script'.
 	 */
-	ShortString exportType_;
+	ShortString exportInfo1;
 	/*!
 	 * Unknown. Possibly the selected option of the export script. Can be
 	 * something like 'Default Export Script'.
 	 */
-	ShortString exportScript_;
+	ShortString exportInfo2;
 	/*!
 	 * Number of object types in this NIF file.
 	 */

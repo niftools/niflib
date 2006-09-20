@@ -84,6 +84,34 @@ enum ExportOptions {
 	EXPORT_KF_MULTI = 4 /*!< multiple KF */
 };
 
+//--Structures--//
+
+struct NifInfo {
+	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(INFO_BIG_ENDIAN) {}
+	NifInfo( unsigned version, unsigned userVersion = 0, unsigned userVersion2 = 0) {
+		this->version = version;
+		this->userVersion = userVersion;
+		this->userVersion2 = userVersion2;
+		endian = INFO_BIG_ENDIAN;
+	}
+	//TODO: Implement endian support
+	enum EndianType {
+		INFO_BIG_ENDIAN = 0,
+		INFO_LITTLE_ENDIAN = 1
+	}; 
+	unsigned version;
+	unsigned userVersion;
+	unsigned  userVersion2;
+	/*! This is not yet supported. */
+	EndianType endian;
+	/*! This is only supported in Oblivion.  It contains the name of the person who created the NIF file. */
+	string creator;
+	/*! This is only supported in Oblivion.  It seems to contiain the type of script or program used to export the file. */
+	string exportInfo1;
+	/*! This is only supported in Oblivion.  It seems to contain the more specific script or options of the above. */
+	string exportInfo2;
+};
+
 //--Main Functions--//
 
 /*!
@@ -121,6 +149,7 @@ NIFLIB_API unsigned int CheckNifHeader( string const & file_name );
 /*!
  * Reads the given file by file name and returns a vector of block references
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
+ * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A vector of block references that point to all the blocks read from the Nif file.
  * 
  * <b>Example:</b> 
@@ -135,18 +164,20 @@ NIFLIB_API unsigned int CheckNifHeader( string const & file_name );
  * 
  * \sa ReadNifTree, WriteNifTree
  */
-NIFLIB_API vector< Ref<NiObject> > ReadNifList( string const & file_name );
+NIFLIB_API vector< Ref<NiObject> > ReadNifList( string const & file_name, NifInfo * info = NULL );
 
 /*!
  * Reads the given input stream and returns a vector of block references
  * \param stream The input stream to read NIF data from.
+ * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A vector of block references that point to all the blocks read from the stream.
  */
-NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in );
+NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in, NifInfo * info = NULL );
 
 /*!
  * Reads the given file by file name and returns a reference to the root block.
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
+ * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A block reference that points to the root of tree of data blocks contained in the NIF file.
  * 
  * <b>Example:</b> 
@@ -161,21 +192,21 @@ NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API Ref<NiObject> ReadNifTree( string const & file_name );
+NIFLIB_API Ref<NiObject> ReadNifTree( string const & file_name, NifInfo * info = NULL );
 
 /*!
  * Reads the given input stream and returns a reference to the root block.
  * \param stream The input stream to read NIF data from.
+ * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
  */
-NIFLIB_API Ref<NiObject> ReadNifTree( istream & in );
+NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
  * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
  * \param root The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
- * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
- * \param user_version Some companies implement special extentions to the format which can be specified here.
+ * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  * 
  * <b>Example:</b> 
  * \code
@@ -191,25 +222,25 @@ NIFLIB_API Ref<NiObject> ReadNifTree( istream & in );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & root, NifInfo & info );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
  * \param stream The output stream to write the NIF data to.
  * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
- * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, NifInfo & info );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
  * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
  * \param root The root block to start from when writing out the NIF file.
- * \param version The version of the NIF format to use when writing a file.
+ * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
+NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, NifInfo & info, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
 
 /*!
  * Creates a clone of an entire tree of objects.
@@ -218,7 +249,7 @@ NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & 
  * \param user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
  * \return The root of the new cloned tree.
  */
-NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int version = VER_4_0_0_2, unsigned int user_version = 0 );
+NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0 );
 
 
 //TODO:  Figure out how to fix this to work with the new system
@@ -227,9 +258,10 @@ NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned int 
  * \param target The root block of the first Nif tree to merge.
  * \param right The root block of the second Nif tree to merge.
  * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
+ * \param user_version The user version to use during the clone operation.
  */
 //NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xFFFFFFFF );
-NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
+NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned version = 0xFFFFFFFF, unsigned user_version = 0  );
 
 /*! 
  * Traverses a tree of NIF objects, attempting to move each skeleton root

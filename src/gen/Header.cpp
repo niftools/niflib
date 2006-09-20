@@ -29,9 +29,9 @@ void Header::Read( istream& in ) {
 	};
 	if ( version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( creator_, in, version );
-			NifStream( exportType_, in, version );
-			NifStream( exportScript_, in, version );
+			NifStream( creator, in, version );
+			NifStream( exportInfo1, in, version );
+			NifStream( exportInfo2, in, version );
 		};
 	};
 	if ( version >= 0x0A000100 ) {
@@ -70,9 +70,9 @@ void Header::Write( ostream& out ) const {
 	};
 	if ( version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( creator_, out, version );
-			NifStream( exportType_, out, version );
-			NifStream( exportScript_, out, version );
+			NifStream( creator, out, version );
+			NifStream( exportInfo1, out, version );
+			NifStream( exportInfo2, out, version );
 		};
 	};
 	if ( version >= 0x0A000100 ) {
@@ -99,9 +99,9 @@ string Header::asString( bool verbose ) const {
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	if ( (userVersion != 0) ) {
 		out << "    User Version 2:  " << userVersion2 << endl;
-		out << "    Creator?:  " << creator_ << endl;
-		out << "    Export Type?:  " << exportType_ << endl;
-		out << "    Export Script?:  " << exportScript_ << endl;
+		out << "    Creator:  " << creator << endl;
+		out << "    Export Info 1:  " << exportInfo1 << endl;
+		out << "    Export Info 2:  " << exportInfo2 << endl;
 	};
 	out << "  Num Block Types:  " << numBlockTypes << endl;
 	for (uint i1 = 0; i1 < blockTypes.size(); i1++) {
