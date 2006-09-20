@@ -545,6 +545,7 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 
 	if( TSpaceRef == NULL ) {
 		TSpaceRef = new NiBinaryExtraData();
+		TSpaceRef->SetName( "Tangent space (binormal & tangent vectors)" );
 		this->AddExtraData( StaticCast<NiExtraData>(TSpaceRef) );
 	}
 
