@@ -95,7 +95,7 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 	Matrix44 sr_world = skinInst->GetSkeletonRoot()->GetWorldTransform();
 
 	//Inverse owner NiTriBasedGeom matrix & multiply with skeleton root matrix
-	Matrix44 overall_mat = owner_mat.Inverse() * sr_world;
+	Matrix44 overall_mat = (owner_mat * sr_world.Inverse()).Inverse();
 
 	//Store result
 	overall_mat.Decompose( translation, rotation, scale );

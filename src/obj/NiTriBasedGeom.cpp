@@ -254,13 +254,17 @@ vector<Vector3> NiTriBasedGeom::GetSkinInfluencedVertices() const {
 	vector<Vector3> skin_verts( vertices.size());
 
 	//Transform vertices into position based on skin data
-	Matrix44 root_world = skel_root->GetWorldTransform();
+	Matrix44 skel_root_inv = skel_root->GetWorldTransform().Inverse();
 	Matrix44 geom_world = GetWorldTransform();
+	Matrix44 overall_offset = skin_data->GetOverallTransform();
+
 	for ( uint i = 0; i < skin_data->GetBoneCount(); ++i ) {
 		Matrix44 bone_world = bone_nodes[i]->GetWorldTransform();
 		Matrix44 bone_offset = skin_data->GetBoneTransform(i);
 		vector<SkinWeight> weights = skin_data->GetBoneWeights(i);
-		Matrix44 vert_trans =  bone_offset * bone_world;
+		//Matrix44 vert_trans =  bone_offset * skel_root_inv * bone_world * overall_offset * geom_world;
+		Matrix44 vert_trans = geom_world * bone_world * skel_root_inv * overall_offset * bone_offset;
+
 		for ( uint j = 0; j < weights.size(); ++j ) {
 			uint index = weights[j].index;
 			float weight = weights[j].weight;
