@@ -535,8 +535,8 @@ return InternalGetRefs(); \
 #define NI_DYNAMIC_EFFECT_MEMBERS \
 bool switchState; \
 mutable uint numAffectedNodes; \
-vector<Ref<NiAVObject > > affectedNodes; \
 vector<uint > affectedNodeListPointers; \
+vector<Ref<NiAVObject > > affectedNodes; \
 
 #define NI_DYNAMIC_EFFECT_INCLUDE "NiAVObject.h" \
 
@@ -3262,15 +3262,15 @@ return InternalGetRefs(); \
 uint unknownInt1; \
 uint unknownInt2; \
 uint unknownInt3; \
-mutable uint numUnknownLinks; \
-vector<Ref<NiObject > > unknownLinks; \
+mutable uint numButtons; \
+vector<FxRadioButton * > buttons; \
 
 #define FX_RADIO_BUTTON_INCLUDE "FxWidget.h" \
 
 #define FX_RADIO_BUTTON_PARENT FxWidget \
 
 #define FX_RADIO_BUTTON_CONSTRUCT \
- : unknownInt1((uint)0), unknownInt2((uint)0), unknownInt3((uint)0), numUnknownLinks((uint)0) \
+ : unknownInt1((uint)0), unknownInt2((uint)0), unknownInt3((uint)0), numButtons((uint)0) \
 
 #define FX_RADIO_BUTTON_READ \
 InternalRead( in, link_stack, version, user_version ); \

@@ -1061,30 +1061,37 @@ void NiDynamicEffect::InternalRead( istream& in, list<uint> & link_stack, unsign
 	if ( version >= 0x0A020000 ) {
 		NifStream( switchState, in, version );
 	};
-	NifStream( numAffectedNodes, in, version );
+	if ( version <= 0x04000002 ) {
+		NifStream( numAffectedNodes, in, version );
+		affectedNodeListPointers.resize(numAffectedNodes);
+		for (uint i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
+			NifStream( affectedNodeListPointers[i2], in, version );
+		};
+	};
 	if ( version >= 0x0A010000 ) {
+		NifStream( numAffectedNodes, in, version );
 		affectedNodes.resize(numAffectedNodes);
 		for (uint i2 = 0; i2 < affectedNodes.size(); i2++) {
 			NifStream( block_num, in, version );
 			link_stack.push_back( block_num );
 		};
 	};
-	if ( version <= 0x0A000102 ) {
-		affectedNodeListPointers.resize(numAffectedNodes);
-		for (uint i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
-			NifStream( affectedNodeListPointers[i2], in, version );
-		};
-	};
 }
 
 void NiDynamicEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
-	numAffectedNodes = uint(affectedNodes.size());
+	numAffectedNodes = uint(affectedNodeListPointers.size());
 	if ( version >= 0x0A020000 ) {
 		NifStream( switchState, out, version );
 	};
-	NifStream( numAffectedNodes, out, version );
+	if ( version <= 0x04000002 ) {
+		NifStream( numAffectedNodes, out, version );
+		for (uint i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
+			NifStream( affectedNodeListPointers[i2], out, version );
+		};
+	};
 	if ( version >= 0x0A010000 ) {
+		NifStream( numAffectedNodes, out, version );
 		for (uint i2 = 0; i2 < affectedNodes.size(); i2++) {
 			if ( affectedNodes[i2] != NULL )
 				NifStream( link_map[StaticCast<NiObject>(affectedNodes[i2])], out, version );
@@ -1092,32 +1099,27 @@ void NiDynamicEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 				NifStream( 0xffffffff, out, version );
 		};
 	};
-	if ( version <= 0x0A000102 ) {
-		for (uint i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
-			NifStream( affectedNodeListPointers[i2], out, version );
-		};
-	};
 }
 
 std::string NiDynamicEffect::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiAVObject::asString();
-	numAffectedNodes = uint(affectedNodes.size());
+	numAffectedNodes = uint(affectedNodeListPointers.size());
 	out << "  Switch State:  " << switchState << endl;
 	out << "  Num Affected Nodes:  " << numAffectedNodes << endl;
-	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Affected Nodes[" << i1 << "]:  " << affectedNodes[i1] << endl;
-	};
 	for (uint i1 = 0; i1 < affectedNodeListPointers.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
 		out << "    Affected Node List Pointers[" << i1 << "]:  " << affectedNodeListPointers[i1] << endl;
+	};
+	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) {
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		out << "    Affected Nodes[" << i1 << "]:  " << affectedNodes[i1] << endl;
 	};
 	return out.str();
 }
@@ -6737,9 +6739,9 @@ void FxRadioButton::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	NifStream( unknownInt1, in, version );
 	NifStream( unknownInt2, in, version );
 	NifStream( unknownInt3, in, version );
-	NifStream( numUnknownLinks, in, version );
-	unknownLinks.resize(numUnknownLinks);
-	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
+	NifStream( numButtons, in, version );
+	buttons.resize(numButtons);
+	for (uint i1 = 0; i1 < buttons.size(); i1++) {
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
 	};
@@ -6747,14 +6749,14 @@ void FxRadioButton::InternalRead( istream& in, list<uint> & link_stack, unsigned
 
 void FxRadioButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	FxWidget::Write( out, link_map, version, user_version );
-	numUnknownLinks = uint(unknownLinks.size());
+	numButtons = uint(buttons.size());
 	NifStream( unknownInt1, out, version );
 	NifStream( unknownInt2, out, version );
 	NifStream( unknownInt3, out, version );
-	NifStream( numUnknownLinks, out, version );
-	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
-		if ( unknownLinks[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLinks[i1])], out, version );
+	NifStream( numButtons, out, version );
+	for (uint i1 = 0; i1 < buttons.size(); i1++) {
+		if ( buttons[i1] != NULL )
+			NifStream( link_map[StaticCast<NiObject>(buttons[i1])], out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -6763,34 +6765,32 @@ void FxRadioButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 std::string FxRadioButton::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << FxWidget::asString();
-	numUnknownLinks = uint(unknownLinks.size());
+	numButtons = uint(buttons.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int  2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Num Unknown Links:  " << numUnknownLinks << endl;
-	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
+	out << "  Num Buttons:  " << numButtons << endl;
+	for (uint i1 = 0; i1 < buttons.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Links[" << i1 << "]:  " << unknownLinks[i1] << endl;
+		out << "    Buttons[" << i1 << "]:  " << buttons[i1] << endl;
 	};
 	return out.str();
 }
 
 void FxRadioButton::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FxWidget::FixLinks( objects, link_stack, version, user_version );
-	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
-		unknownLinks[i1] = FixLink<NiObject>( objects, link_stack, version );
+	for (uint i1 = 0; i1 < buttons.size(); i1++) {
+		buttons[i1] = FixLink<FxRadioButton>( objects, link_stack, version );
 	};
 }
 
 std::list<NiObjectRef> FxRadioButton::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = FxWidget::GetRefs();
-	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
-		if ( unknownLinks[i1] != NULL )
-			refs.push_back(StaticCast<NiObject>(unknownLinks[i1]));
+	for (uint i1 = 0; i1 < buttons.size(); i1++) {
 	};
 	return refs;
 }
@@ -12261,3 +12261,4 @@ std::list<NiObjectRef> RootCollisionNode::InternalGetRefs() const {
 	refs = NiNode::GetRefs();
 	return refs;
 }
+
