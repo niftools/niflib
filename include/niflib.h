@@ -115,36 +115,33 @@ struct NifInfo {
 //--Main Functions--//
 
 /*!
- * Reads the header of the given file by file name and returns the NIF version. Call this
- * function prior to calling ReadNifList or ReadNifTree, if you need to make sure that the NIF file is supported.
+ * Reads the header of the given file by file name and returns the NIF version
+ * if it is a valid NIF file. Call this function prior to calling ReadNifList
+ * or ReadNifTree, if you want to make sure that its NIF version is supported
+ * before trying to read it.
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
- * \return The NIF version of the file, in hexadecimal format. If the file is not a NIF file, it returns VER_INVALID. If it is a NIF file, but its version is not supported by the library, it returns VER_UNSUPPORTED.
+ * \return The NIF version of the file, in hexadecimal format. If the file is not a NIF file, it returns VER_INVALID.
  * 
  * <b>Example:</b> 
  * \code
- * unsigned int ver = CheckNifHeader("test_in.nif");
- * if ( ver == VER_UNSUPPORTED ) cout << "unsupported" << endl;
- * else if ( ver == VER_INVALID ) cout << "invalid" << endl;
- * else {
- *   vector<NiObjectRef> blocks = ReadNifList( "test_in.nif" );
- *   cout << blocks[0] << endl;
- * };
- *
+ * unsigned ver = GetNifVersion("test_in.nif");
+ * if ( IsSupportedVersion(ver) == false ) {
+ *    cout << "Unsupported.\n" << endl;
+ * } else if ( ver == VER_INVALID ) {
+ *    cout << "Not a NIF file.\n" << endl;
+ * }
  * \endcode
  * 
  * <b>In Python:</b>
  * \code
  * ver = CheckNifHeader("test_in.nif")
- * if ( ver == VER_UNSUPPORTED ):
- *     print "unsupported"
+ * if ( IsSupportedVersion(ver) == false ):
+ *     print "Unsupported."
  * elif ( ver == VER_INVALID ):
- *     print "invalid"
- * else:
- *      blocks = ReadNifList( "test_in.nif" )
- *      print blocks[0]
+ *     print "Not a NIF file."
  * \endcode
  */
-NIFLIB_API unsigned int CheckNifHeader( string const & file_name );
+NIFLIB_API unsigned int GetNifVersion( string const & file_name );
 
 /*!
  * Reads the given file by file name and returns a vector of block references
@@ -296,18 +293,28 @@ NIFLIB_HIDDEN Ref<NiObject> CreateObject( string block_type );
 #endif
 
 /*!
- * Returns whether the requested version is supported.
- * \param version The version of the nif format to test for availablity.
+ * Returns whether the requested version is explicitly supported.  This does
+ * not mean that the file will not open, rather it means that we have not
+ * encountered files with this version in our tests yet.
+ * \param version The version of the NIF format to test for the support level of.
  * \return Whether the requested version is supported.
  */
-NIFLIB_API bool IsVersionSupported(unsigned int ver);
+NIFLIB_API bool IsSupportedVersion( unsigned int version );
 
 /*!
- * Parses the version string and returns in the equivalent version as integer
- * \param version The version of the nif format to parse.
- * \return The version in integer format. Returns VER_INVALID for invalid version strings.
+ * Parses a version string and returns the equivalent version as a byte-packed integer.
+ * \param version The version number of the NIF format to parse in string format.
+ * \return The version in integer format or VER_INVALID if the version string is not in the correct format.
  */
-NIFLIB_API unsigned int GetVersion(string version);
+NIFLIB_API unsigned ParseVersionString( string version );
+
+/*!
+ * Takes a NIF version in byte-packed integer format and returns a formatted human-
+ * readable string.  For example, 0x04000002 returns the string "4.0.0.2"
+ * \param version The NIF version in integer form.
+ * \return The equivalent string representation of the version number.
+ */
+NIFLIB_API string FormatVersionString( unsigned version );
 
 //--USER GUIDE DOCUMENTATION--//
 

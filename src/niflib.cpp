@@ -113,7 +113,7 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
 	return StaticCast<NiObject>(root);
 }
 
-unsigned int CheckNifHeader( string const & file_name ) {
+unsigned int GetNifVersion( string const & file_name ) {
 	//--Open File--//
 	ifstream in( file_name.c_str(), ifstream::binary );
 
@@ -123,24 +123,18 @@ unsigned int CheckNifHeader( string const & file_name ) {
 	string headerstr(header_string);
 
 	// make sure this is a NIF file
-	if ( ( headerstr.substr(0, 22) != "NetImmerse File Format" )
-	&& ( headerstr.substr(0, 20) != "Gamebryo File Format" ) )
+	unsigned ver_start = 0;
+	if ( headerstr.substr(0, 22) == "NetImmerse File Format" ) {
+		ver_start = 32;
+	} else if ( headerstr.substr(0, 20) == "Gamebryo File Format" ) {
+		ver_start = 30;
+	} else {
+		//Not a NIF file
 		return VER_INVALID;
+	}
 
-	// supported versions
-	if ( headerstr == "NetImmerse File Format, Version 4.0.0.2" ) return VER_4_0_0_2;
-	if ( headerstr == "NetImmerse File Format, Version 4.1.0.12" ) return VER_4_1_0_12;
-	if ( headerstr == "NetImmerse File Format, Version 4.2.0.2" ) return VER_4_2_0_2;
-	if ( headerstr == "NetImmerse File Format, Version 4.2.1.0" ) return VER_4_2_1_0;
-	if ( headerstr == "NetImmerse File Format, Version 4.2.2.0" ) return VER_4_2_2_0;
-	if ( headerstr == "NetImmerse File Format, Version 10.0.1.0" ) return VER_10_0_1_0;
-	if ( headerstr == "Gamebryo File Format, Version 10.1.0.0" ) return VER_10_1_0_0;
-	if ( headerstr == "Gamebryo File Format, Version 10.2.0.0" ) return VER_10_2_0_0;
-	if ( headerstr == "Gamebryo File Format, Version 20.0.0.4" ) return VER_20_0_0_4;
-	if ( headerstr == "Gamebryo File Format, Version 20.0.0.5" ) return VER_20_0_0_5;
-
-	// anything else: unsupported
-	return VER_UNSUPPORTED;
+	//Parse version string and return result.
+	return ParseVersionString( headerstr.substr( ver_start ) );
 }
 
 //Reads the given file by file name and returns a vector of block references
@@ -1009,9 +1003,10 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiSequenceStreamHelper
 }
 
 
-bool IsVersionSupported(unsigned int ver) {
-   switch (ver)
+bool IsSupportedVersion( unsigned int version ) {
+   switch (version)
    {
+   case VER_4_0_0_0:
    case VER_4_0_0_2:
    case VER_4_1_0_12:
    case VER_4_2_0_2:
@@ -1019,6 +1014,7 @@ bool IsVersionSupported(unsigned int ver) {
    case VER_4_2_2_0:
    case VER_10_0_1_0:
    case VER_10_1_0_0:
+   case VER_10_1_0_106:
    case VER_10_2_0_0:
    case VER_20_0_0_4:
    case VER_20_0_0_5:
@@ -1027,28 +1023,61 @@ bool IsVersionSupported(unsigned int ver) {
    return false;
 }
 
-unsigned int GetVersion(string version){
-   unsigned int outver = 0;
-   string::size_type start = 0;
-   for(int offset = 3; offset >= 0 && start < version.length(); --offset) {
-      string::size_type end = version.find_first_of(".", start);
-      string::size_type len = (end == string.npos) ? end : end-start;
-      int num = 0;
-      stringstream sstr(version.substr(start, len));
-      sstr >> num;
-      if (num > 0xFF) {
-         outver = VER_INVALID;
-         break;
-      }
-      outver |= (num << (offset * 8));
-      if (len == string::npos) 
-         break;
-      start = start + len + 1;
-   }
-   if (outver == 0)
-      outver = VER_INVALID;
-   return outver;
+unsigned int ParseVersionString(string version) {
+	
+	unsigned int outver = 0;
+
+	string::size_type start = 0, len, end;
+	for( int offset = 3; offset >= 0 && start < version.length(); --offset ) {
+		end = version.find_first_of( ".", start );
+		
+		if ( end == string.npos ) {
+			len = end;
+		} else {
+			len = end-start;
+		}
+
+		int num = 0;
+		stringstream sstr( version.substr(start, len) );
+		sstr >> num;
+		if ( num > 0xFF ) {
+			return VER_INVALID;
+		}
+		outver |= ( num << (offset * 8) );
+		if ( len == string::npos ) {
+			break;
+		}
+		start = start + len + 1;
+	}
+
+	if ( outver == 0 ) {
+		return VER_INVALID;
+	} else {
+		return outver;
+	}
 }
+
+string FormatVersionString(unsigned version) {
+	//Cast the version to an array of 4 bytes
+	char * byte_ver = (char*)&version;
+
+	//Put the version parts into an integer array, reversing their order
+	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
+	
+	//Format the version string and return it
+	stringstream out;
+
+	if ( int_ver[0] >= 4 ) {
+		//Version 4+ is in x.x.x.x format.
+		out << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
+	} else {
+		//Versions before 4 are in x.x format.
+		out << int_ver[0] << "." << int_ver[1];
+	}
+
+	return out.str();
+}
+
 
 Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version, unsigned user_version ) {
 	//Create a string stream to temporarily hold the state-save of this tree
