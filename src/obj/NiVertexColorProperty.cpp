@@ -23,7 +23,7 @@ string NiVertexColorProperty::asString( bool verbose ) const {
 	NI_VERTEX_COLOR_PROPERTY_STRING
 }
 
-void NiVertexColorProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertexColorProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VERTEX_COLOR_PROPERTY_FIXLINKS
 }
 

@@ -23,7 +23,7 @@ string NiDitherProperty::asString( bool verbose ) const {
 	NI_DITHER_PROPERTY_STRING
 }
 
-void NiDitherProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDitherProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_DITHER_PROPERTY_FIXLINKS
 }
 

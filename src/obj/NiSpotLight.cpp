@@ -23,7 +23,7 @@ string NiSpotLight::asString( bool verbose ) const {
 	NI_SPOT_LIGHT_STRING
 }
 
-void NiSpotLight::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpotLight::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SPOT_LIGHT_FIXLINKS
 }
 

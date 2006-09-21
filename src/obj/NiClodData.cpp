@@ -23,7 +23,7 @@ string NiClodData::asString( bool verbose ) const {
 	NI_CLOD_DATA_STRING
 }
 
-void NiClodData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_CLOD_DATA_FIXLINKS
 }
 

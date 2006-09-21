@@ -24,7 +24,7 @@ string bhkEntity::asString( bool verbose ) const {
 	BHK_ENTITY_STRING
 }
 
-void bhkEntity::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkEntity::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_ENTITY_FIXLINKS
 }
 

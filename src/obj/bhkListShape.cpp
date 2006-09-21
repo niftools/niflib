@@ -24,7 +24,7 @@ string bhkListShape::asString( bool verbose ) const {
 	BHK_LIST_SHAPE_STRING
 }
 
-void bhkListShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkListShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_LIST_SHAPE_FIXLINKS
 }
 

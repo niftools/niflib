@@ -23,7 +23,7 @@ string NiPSysResetOnLoopCtlr::asString( bool verbose ) const {
 	NI_P_SYS_RESET_ON_LOOP_CTLR_STRING
 }
 
-void NiPSysResetOnLoopCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysResetOnLoopCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_RESET_ON_LOOP_CTLR_FIXLINKS
 }
 

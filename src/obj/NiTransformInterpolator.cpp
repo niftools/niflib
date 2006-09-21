@@ -24,7 +24,7 @@ string NiTransformInterpolator::asString( bool verbose ) const {
 	NI_TRANSFORM_INTERPOLATOR_STRING
 }
 
-void NiTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 

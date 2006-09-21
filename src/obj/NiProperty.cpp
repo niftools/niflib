@@ -23,7 +23,7 @@ string NiProperty::asString( bool verbose ) const {
 	NI_PROPERTY_STRING
 }
 
-void NiProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PROPERTY_FIXLINKS
 }
 

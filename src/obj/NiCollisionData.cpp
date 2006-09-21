@@ -24,7 +24,7 @@ string NiCollisionData::asString( bool verbose ) const {
 	NI_COLLISION_DATA_STRING
 }
 
-void NiCollisionData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCollisionData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_COLLISION_DATA_FIXLINKS
 }
 

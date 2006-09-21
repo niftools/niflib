@@ -23,7 +23,7 @@ string NiTriShape::asString( bool verbose ) const {
 	NI_TRI_SHAPE_STRING
 }
 
-void NiTriShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_SHAPE_FIXLINKS
 }
 

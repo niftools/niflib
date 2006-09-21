@@ -284,7 +284,7 @@ void NifStream( Quaternion & val, istream& in, uint version = 0 );
 void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
 
 //HeaderString
-void NifStream( HeaderString & val, istream& in, uint version = 0 );
+void NifStream( HeaderString & val, istream& in, uint & version ); //Sets the passed in version varible
 void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, HeaderString const & val );
 

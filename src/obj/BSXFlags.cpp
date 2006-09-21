@@ -23,7 +23,7 @@ string BSXFlags::asString( bool verbose ) const {
 	B_S_X_FLAGS_STRING
 }
 
-void BSXFlags::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSXFlags::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_X_FLAGS_FIXLINKS
 }
 

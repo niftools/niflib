@@ -25,7 +25,7 @@ string NiBSplineInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_INTERPOLATOR_STRING
 }
 
-void NiBSplineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_INTERPOLATOR_FIXLINKS
 }
 

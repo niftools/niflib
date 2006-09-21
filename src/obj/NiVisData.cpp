@@ -23,7 +23,7 @@ string NiVisData::asString( bool verbose ) const {
 	NI_VIS_DATA_STRING
 }
 
-void NiVisData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VIS_DATA_FIXLINKS
 }
 

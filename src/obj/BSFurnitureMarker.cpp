@@ -24,7 +24,7 @@ string BSFurnitureMarker::asString( bool verbose ) const {
 	B_S_FURNITURE_MARKER_STRING
 }
 
-void BSFurnitureMarker::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSFurnitureMarker::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_FURNITURE_MARKER_FIXLINKS
 }
 

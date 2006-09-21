@@ -35,7 +35,7 @@ string NiControllerSequence::asString( bool verbose ) const {
 	NI_CONTROLLER_SEQUENCE_STRING
 }
 
-void NiControllerSequence::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerSequence::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_CONTROLLER_SEQUENCE_FIXLINKS
 }
 

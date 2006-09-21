@@ -24,7 +24,7 @@ string NiPSysVolumeEmitter::asString( bool verbose ) const {
 	NI_P_SYS_VOLUME_EMITTER_STRING
 }
 
-void NiPSysVolumeEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysVolumeEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_VOLUME_EMITTER_FIXLINKS
 }
 

@@ -23,7 +23,7 @@ string NiInterpolator::asString( bool verbose ) const {
 	NI_INTERPOLATOR_STRING
 }
 
-void NiInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_INTERPOLATOR_FIXLINKS
 }
 

@@ -26,7 +26,7 @@ string bhkMalleableConstraint::asString( bool verbose ) const {
 	BHK_MALLEABLE_CONSTRAINT_STRING
 }
 
-void bhkMalleableConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMalleableConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_MALLEABLE_CONSTRAINT_FIXLINKS
 }
 

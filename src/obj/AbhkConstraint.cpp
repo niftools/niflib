@@ -24,7 +24,7 @@ string AbhkConstraint::asString( bool verbose ) const {
 	ABHK_CONSTRAINT_STRING
 }
 
-void AbhkConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABHK_CONSTRAINT_FIXLINKS
 }
 

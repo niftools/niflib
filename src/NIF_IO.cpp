@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "../include/NIF_IO.h"
+#include "../include/niflib.h"
 namespace Niflib {
 
 int BlockSearch( istream& in ) {
@@ -233,22 +234,35 @@ void NifStream( string const & val, ostream& out, uint version ) { WriteString( 
 //--Structs--//
 
 //HeaderString
-void NifStream( HeaderString & val, istream& in, uint version ) {
-	char tmp[64];
-	in.getline( tmp, 64 );
+void NifStream( HeaderString & val, istream& in, uint & version ) {
+	char tmp[256];
+	in.getline( tmp, 256 );
 	val.header = tmp;
 
-        // make sure this is a NIF file
-        if ( ( val.header.substr(0, 22) != "NetImmerse File Format" )
-        && ( val.header.substr(0, 20) != "Gamebryo File Format" ) )
-                throw runtime_error("Not a NIF file.");
+	// make sure this is a NIF file
+	unsigned ver_start = 0;
+	if ( val.header.substr(0, 22) == "NetImmerse File Format" ) {
+		ver_start = 32;
+	} else if ( val.header.substr(0, 20) == "Gamebryo File Format" ) {
+		ver_start = 30;
+	} else {
+		//Not a NIF file
+		version = VER_INVALID;
+	}
 
-        // detect old versions
-        if ( ( val.header == "NetImmerse File Format, Version 3.1" )
-        || ( val.header == "NetImmerse File Format, Version 3.03" )
-        || ( val.header == "NetImmerse File Format, Version 3.0" )
-        || ( val.header == "NetImmerse File Format, Version 2.3" ) )
-                throw runtime_error("Unsupported: " + val.header);
+	//Parse version string and return result.
+	version = ParseVersionString( val.header.substr( ver_start ) );
+
+	//Temporarily read the next 3 strings if this is a < 4 file
+	if ( version < VER_4_0_0_0 ) {
+		in.getline( tmp, 256 );
+		in.getline( tmp, 256 );
+		in.getline( tmp, 256 );
+	}
+
+	//if ( version < VER_4_0_0_0 ) {
+	//	throw runtime_error("NIF Versions below 4.0.0.0 are not yet supported");
+	//}
 };
 
 void NifStream( HeaderString const & val, ostream& out, uint version ) {

@@ -23,7 +23,7 @@ string NiPSysEmitterLifeSpanCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING
 }
 
-void NiPSysEmitterLifeSpanCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterLifeSpanCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS
 }
 

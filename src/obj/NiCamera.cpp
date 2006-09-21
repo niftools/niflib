@@ -24,7 +24,7 @@ string NiCamera::asString( bool verbose ) const {
 	NI_CAMERA_STRING
 }
 
-void NiCamera::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCamera::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_CAMERA_FIXLINKS
 }
 

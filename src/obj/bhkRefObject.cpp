@@ -23,7 +23,7 @@ string bhkRefObject::asString( bool verbose ) const {
 	BHK_REF_OBJECT_STRING
 }
 
-void bhkRefObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRefObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_REF_OBJECT_FIXLINKS
 }
 

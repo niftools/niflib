@@ -11,14 +11,18 @@ Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((
 Header::~Header() {};
 void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
-	NifStream( version, in, version );
+	if ( version >= 0x04000000 ) {
+		NifStream( version, in, version );
+	};
 	if ( version >= 0x14000004 ) {
 		NifStream( endianType, in, version );
 	};
 	if ( version >= 0x0A010000 ) {
 		NifStream( userVersion, in, version );
 	};
-	NifStream( numBlocks, in, version );
+	if ( version >= 0x04000000 ) {
+		NifStream( numBlocks, in, version );
+	};
 	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
 		NifStream( unknownInt1, in, version );
 	};
@@ -52,14 +56,18 @@ void Header::Write( ostream& out ) const {
 	numBlockTypes = ushort(blockTypes.size());
 	numBlocks = uint(blockTypeIndex.size());
 	NifStream( headerString, out, version );
-	NifStream( version, out, version );
+	if ( version >= 0x04000000 ) {
+		NifStream( version, out, version );
+	};
 	if ( version >= 0x14000004 ) {
 		NifStream( endianType, out, version );
 	};
 	if ( version >= 0x0A010000 ) {
 		NifStream( userVersion, out, version );
 	};
-	NifStream( numBlocks, out, version );
+	if ( version >= 0x04000000 ) {
+		NifStream( numBlocks, out, version );
+	};
 	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
 		NifStream( unknownInt1, out, version );
 	};

@@ -24,7 +24,7 @@ string NiFlipController::asString( bool verbose ) const {
 	NI_FLIP_CONTROLLER_STRING
 }
 
-void NiFlipController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFlipController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_FLIP_CONTROLLER_FIXLINKS
 }
 

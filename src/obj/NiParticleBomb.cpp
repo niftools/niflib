@@ -23,7 +23,7 @@ string NiParticleBomb::asString( bool verbose ) const {
 	NI_PARTICLE_BOMB_STRING
 }
 
-void NiParticleBomb::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleBomb::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PARTICLE_BOMB_FIXLINKS
 }
 

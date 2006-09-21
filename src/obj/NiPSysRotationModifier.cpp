@@ -23,7 +23,7 @@ string NiPSysRotationModifier::asString( bool verbose ) const {
 	NI_P_SYS_ROTATION_MODIFIER_STRING
 }
 
-void NiPSysRotationModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysRotationModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_ROTATION_MODIFIER_FIXLINKS
 }
 

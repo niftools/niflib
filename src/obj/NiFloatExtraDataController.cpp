@@ -24,7 +24,7 @@ string NiFloatExtraDataController::asString( bool verbose ) const {
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING
 }
 
-void NiFloatExtraDataController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatExtraDataController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiParticleMeshesData::asString( bool verbose ) const {
 	NI_PARTICLE_MESHES_DATA_STRING
 }
 
-void NiParticleMeshesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshesData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PARTICLE_MESHES_DATA_FIXLINKS
 }
 

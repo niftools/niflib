@@ -25,7 +25,7 @@ string bhkRigidBody::asString( bool verbose ) const {
 	BHK_RIGID_BODY_STRING
 }
 
-void bhkRigidBody::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBody::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_RIGID_BODY_FIXLINKS
 }
 

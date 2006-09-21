@@ -26,7 +26,7 @@ string NiControllerManager::asString( bool verbose ) const {
 	NI_CONTROLLER_MANAGER_STRING
 }
 
-void NiControllerManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerManager::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_CONTROLLER_MANAGER_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiBinaryExtraData::asString( bool verbose ) const {
 	NI_BINARY_EXTRA_DATA_STRING
 }
 
-void NiBinaryExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBinaryExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BINARY_EXTRA_DATA_FIXLINKS
 }
 

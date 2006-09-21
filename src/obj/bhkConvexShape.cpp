@@ -23,7 +23,7 @@ string bhkConvexShape::asString( bool verbose ) const {
 	BHK_CONVEX_SHAPE_STRING
 }
 
-void bhkConvexShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_CONVEX_SHAPE_FIXLINKS
 }
 

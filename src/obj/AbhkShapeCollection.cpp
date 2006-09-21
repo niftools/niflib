@@ -23,7 +23,7 @@ string AbhkShapeCollection::asString( bool verbose ) const {
 	ABHK_SHAPE_COLLECTION_STRING
 }
 
-void AbhkShapeCollection::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkShapeCollection::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABHK_SHAPE_COLLECTION_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiPSysBombModifier::asString( bool verbose ) const {
 	NI_P_SYS_BOMB_MODIFIER_STRING
 }
 
-void NiPSysBombModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBombModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOMB_MODIFIER_FIXLINKS
 }
 

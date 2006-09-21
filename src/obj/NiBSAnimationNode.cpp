@@ -23,7 +23,7 @@ string NiBSAnimationNode::asString( bool verbose ) const {
 	NI_B_S_ANIMATION_NODE_STRING
 }
 
-void NiBSAnimationNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSAnimationNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_S_ANIMATION_NODE_FIXLINKS
 }
 

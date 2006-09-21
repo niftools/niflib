@@ -24,7 +24,7 @@ string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	BHK_MOPP_BV_TREE_SHAPE_STRING
 }
 
-void bhkMoppBvTreeShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMoppBvTreeShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_MOPP_BV_TREE_SHAPE_FIXLINKS
 }
 

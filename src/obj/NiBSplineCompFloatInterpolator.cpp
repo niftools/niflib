@@ -23,7 +23,7 @@ string NiBSplineCompFloatInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_STRING
 }
 
-void NiBSplineCompFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompFloatInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_FIXLINKS
 }
 

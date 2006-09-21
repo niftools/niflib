@@ -24,7 +24,7 @@ string NiBoolTimelineInterpolator::asString( bool verbose ) const {
 	NI_BOOL_TIMELINE_INTERPOLATOR_STRING
 }
 
-void NiBoolTimelineInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolTimelineInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BOOL_TIMELINE_INTERPOLATOR_FIXLINKS
 }
 

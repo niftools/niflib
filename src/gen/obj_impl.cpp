@@ -188,6 +188,36 @@ using namespace std;
 #include "../../include/obj/NiZBufferProperty.h"
 #include "../../include/obj/RootCollisionNode.h"
 
+const char FIX_LINK_POP_ERROR[] = "Trying to pop a link from empty stack. This is probably a bug.";
+const char FIX_LINK_INDEX_ERROR[] = "Object index was not found in object map.  This NIF file may be invalid or imporperly supported.";
+const char FIX_LINK_CAST_ERROR[] = "Link could not be cast to required type during file read. This NIF file may be invalid or improperly supported.";
+
+template <class T>
+Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned version ) {
+	if (link_stack.empty()) {
+		throw runtime_error(FIX_LINK_POP_ERROR);
+	}
+	unsigned index = link_stack.front();
+	link_stack.pop_front();
+
+	//Check if link is NULL
+	if ( index == 0xFFFFFFFF) {
+		return NULL;
+	}
+
+	map<unsigned,NiObjectRef>::const_iterator it = objects.find(index);
+	if ( it == objects.end() ) {
+		throw runtime_error(FIX_LINK_INDEX_ERROR);
+	}
+		
+	Ref<T> object = DynamicCast<T>(it->second);
+	if ( object == NULL ) {
+		throw runtime_error(FIX_LINK_CAST_ERROR);
+	}
+
+	return object;
+}
+
 void NiObject::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 }
 
@@ -199,7 +229,7 @@ std::string NiObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 }
 
 std::list<NiObjectRef> NiObject::InternalGetRefs() const {
@@ -221,7 +251,7 @@ std::string AKeyedData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AKeyedData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AKeyedData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -260,26 +290,10 @@ std::string AParticleModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AParticleModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AParticleModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		nextModifier = DynamicCast<AParticleModifier>(objects[link_stack.front()]);
-		if ( nextModifier == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		nextModifier = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		controller = DynamicCast<NiParticleSystemController>(objects[link_stack.front()]);
-		if ( controller == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		controller = NULL;
-	link_stack.pop_front();
+	nextModifier = FixLink<AParticleModifier>( objects, link_stack, version );
+	controller = FixLink<NiParticleSystemController>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> AParticleModifier::InternalGetRefs() const {
@@ -304,7 +318,7 @@ std::string bhkRefObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRefObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRefObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -328,7 +342,7 @@ std::string bhkSerializable::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSerializable::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSerializable::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkRefObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -379,18 +393,10 @@ std::string AbhkConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSerializable::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < bodies.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			bodies[i1] = DynamicCast<bhkShape>(objects[link_stack.front()]);
-			if ( bodies[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			bodies[i1] = NULL;
-		link_stack.pop_front();
+		bodies[i1] = FixLink<bhkShape>( objects, link_stack, version );
 	};
 }
 
@@ -452,7 +458,7 @@ std::string AbhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkRagdollConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkRagdollConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -476,7 +482,7 @@ std::string bhkShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSerializable::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -500,7 +506,7 @@ std::string AbhkShapeCollection::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkShapeCollection::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkShapeCollection::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -527,7 +533,7 @@ std::string bhkSphereRepShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSphereRepShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSphereRepShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -551,7 +557,7 @@ std::string bhkConvexShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -575,7 +581,7 @@ std::string bhkWorldObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkWorldObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkWorldObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -616,17 +622,9 @@ std::string bhkEntity::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkEntity::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkEntity::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkWorldObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		shape = DynamicCast<bhkShape>(objects[link_stack.front()]);
-		if ( shape == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		shape = NULL;
-	link_stack.pop_front();
+	shape = FixLink<bhkShape>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> bhkEntity::InternalGetRefs() const {
@@ -669,26 +667,10 @@ std::string NiCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCollisionObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		parent = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-		if ( parent == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		parent = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		body = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( body == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		body = NULL;
-	link_stack.pop_front();
+	parent = FixLink<NiAVObject>( objects, link_stack, version );
+	body = FixLink<NiObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiCollisionObject::InternalGetRefs() const {
@@ -732,18 +714,10 @@ std::string NiExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x04020200 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			nextExtraData = DynamicCast<NiExtraData>(objects[link_stack.front()]);
-			if ( nextExtraData == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			nextExtraData = NULL;
-		link_stack.pop_front();
+		nextExtraData = FixLink<NiExtraData>( objects, link_stack, version );
 	};
 }
 
@@ -769,7 +743,7 @@ std::string NiInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -799,7 +773,7 @@ std::string NiBlendInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -844,26 +818,10 @@ std::string NiBSplineInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		splineData = DynamicCast<NiBSplineData>(objects[link_stack.front()]);
-		if ( splineData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		splineData = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		basisData = DynamicCast<NiBSplineBasisData>(objects[link_stack.front()]);
-		if ( basisData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		basisData = NULL;
-	link_stack.pop_front();
+	splineData = FixLink<NiBSplineData>( objects, link_stack, version );
+	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiBSplineInterpolator::InternalGetRefs() const {
@@ -939,41 +897,17 @@ std::string NiObjectNET::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiObjectNET::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObjectNET::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x04020200 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			extraData = DynamicCast<NiExtraData>(objects[link_stack.front()]);
-			if ( extraData == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			extraData = NULL;
-		link_stack.pop_front();
+		extraData = FixLink<NiExtraData>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A000100 ) {
 		for (uint i2 = 0; i2 < extraDataList.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				extraDataList[i2] = DynamicCast<NiExtraData>(objects[link_stack.front()]);
-				if ( extraDataList[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				extraDataList[i2] = NULL;
-			link_stack.pop_front();
+			extraDataList[i2] = FixLink<NiExtraData>( objects, link_stack, version );
 		};
 	};
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		controller = DynamicCast<NiTimeController>(objects[link_stack.front()]);
-		if ( controller == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		controller = NULL;
-	link_stack.pop_front();
+	controller = FixLink<NiTimeController>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiObjectNET::InternalGetRefs() const {
@@ -1094,40 +1028,16 @@ std::string NiAVObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAVObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAVObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < properties.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			properties[i1] = DynamicCast<NiProperty>(objects[link_stack.front()]);
-			if ( properties[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			properties[i1] = NULL;
-		link_stack.pop_front();
+		properties[i1] = FixLink<NiProperty>( objects, link_stack, version );
 	};
 	if ( ( version >= 0x0A000100 ) && ( version <= 0x0A020000 ) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			collisionData = DynamicCast<NiCollisionData>(objects[link_stack.front()]);
-			if ( collisionData == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			collisionData = NULL;
-		link_stack.pop_front();
+		collisionData = FixLink<NiCollisionData>( objects, link_stack, version );
 	};
 	if ( version >= 0x14000004 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			collisionObject = DynamicCast<NiCollisionObject>(objects[link_stack.front()]);
-			if ( collisionObject == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			collisionObject = NULL;
-		link_stack.pop_front();
+		collisionObject = FixLink<NiCollisionObject>( objects, link_stack, version );
 	};
 }
 
@@ -1212,19 +1122,11 @@ std::string NiDynamicEffect::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDynamicEffect::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDynamicEffect::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		for (uint i2 = 0; i2 < affectedNodes.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				affectedNodes[i2] = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-				if ( affectedNodes[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				affectedNodes[i2] = NULL;
-			link_stack.pop_front();
+			affectedNodes[i2] = FixLink<NiAVObject>( objects, link_stack, version );
 		};
 	};
 }
@@ -1265,7 +1167,7 @@ std::string NiLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLight::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiDynamicEffect::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1289,7 +1191,7 @@ std::string NiProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1330,17 +1232,9 @@ std::string NiPSysModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		target = DynamicCast<NiParticleSystem>(objects[link_stack.front()]);
-		if ( target == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		target = NULL;
-	link_stack.pop_front();
+	target = FixLink<NiParticleSystem>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysModifier::InternalGetRefs() const {
@@ -1396,7 +1290,7 @@ std::string NiPSysEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1432,18 +1326,10 @@ std::string NiPSysVolumeEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysVolumeEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysVolumeEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysEmitter::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			emitterObject = DynamicCast<NiNode>(objects[link_stack.front()]);
-			if ( emitterObject == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			emitterObject = NULL;
-		link_stack.pop_front();
+		emitterObject = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
 
@@ -1497,26 +1383,10 @@ std::string NiTimeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTimeController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTimeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		nextController = DynamicCast<NiTimeController>(objects[link_stack.front()]);
-		if ( nextController == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		nextController = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		target = DynamicCast<NiObjectNET>(objects[link_stack.front()]);
-		if ( target == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		target = NULL;
-	link_stack.pop_front();
+	nextController = FixLink<NiTimeController>( objects, link_stack, version );
+	target = FixLink<NiObjectNET>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiTimeController::InternalGetRefs() const {
@@ -1583,19 +1453,11 @@ std::string ABoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void ABoneLODController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void ABoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		for (uint i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				nodeGroups[i1].nodes[i2] = DynamicCast<NiNode>(objects[link_stack.front()]);
-				if ( nodeGroups[i1].nodes[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				nodeGroups[i1].nodes[i2] = NULL;
-			link_stack.pop_front();
+			nodeGroups[i1].nodes[i2] = FixLink<NiNode>( objects, link_stack, version );
 		};
 	};
 }
@@ -1638,18 +1500,10 @@ std::string NiSingleInterpolatorController::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiSingleInterpolatorController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSingleInterpolatorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-			if ( interpolator == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			interpolator = NULL;
-		link_stack.pop_front();
+		interpolator = FixLink<NiInterpolator>( objects, link_stack, version );
 	};
 }
 
@@ -1678,7 +1532,7 @@ std::string APSysCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void APSysCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void APSysCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1740,37 +1594,13 @@ std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeom::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiTriBasedGeomData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]);
-		if ( skinInstance == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		skinInstance = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiTriBasedGeomData>( objects, link_stack, version );
+	skinInstance = FixLink<NiSkinInstance>( objects, link_stack, version );
 	if ( version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( unknownLink == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				unknownLink = NULL;
-			link_stack.pop_front();
+			unknownLink = FixLink<NiObject>( objects, link_stack, version );
 		};
 	};
 }
@@ -2017,18 +1847,10 @@ std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeomData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeomData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-			if ( unknownLink == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			unknownLink = NULL;
-		link_stack.pop_front();
+		unknownLink = FixLink<NiObject>( objects, link_stack, version );
 	};
 }
 
@@ -2106,7 +1928,7 @@ std::string APSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void APSysData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void APSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2136,7 +1958,7 @@ std::string bhkBlendCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBlendCollisionObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBlendCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2163,7 +1985,7 @@ std::string bhkBlendController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBlendController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBlendController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2208,7 +2030,7 @@ std::string bhkBoxShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBoxShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBoxShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2259,7 +2081,7 @@ std::string bhkCapsuleShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkCapsuleShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkCapsuleShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2283,7 +2105,7 @@ std::string bhkCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkCollisionObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2358,7 +2180,7 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexVerticesShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexVerticesShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2401,7 +2223,7 @@ std::string bhkHingeConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkHingeConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkHingeConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2455,7 +2277,7 @@ std::string bhkLimitedHingeConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkLimitedHingeConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkLimitedHingeConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2538,18 +2360,10 @@ std::string bhkListShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkListShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkListShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			subShapes[i1] = DynamicCast<bhkShape>(objects[link_stack.front()]);
-			if ( subShapes[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			subShapes[i1] = NULL;
-		link_stack.pop_front();
+		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, version );
 	};
 }
 
@@ -2685,26 +2499,10 @@ std::string bhkMalleableConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMalleableConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMalleableConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink1 = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink1 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink1 = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink2 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink2 = NULL;
-	link_stack.pop_front();
+	unknownLink1 = FixLink<NiObject>( objects, link_stack, version );
+	unknownLink2 = FixLink<NiObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> bhkMalleableConstraint::InternalGetRefs() const {
@@ -2783,17 +2581,9 @@ std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMoppBvTreeShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMoppBvTreeShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		shape = DynamicCast<bhkShape>(objects[link_stack.front()]);
-		if ( shape == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		shape = NULL;
-	link_stack.pop_front();
+	shape = FixLink<bhkShape>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> bhkMoppBvTreeShape::InternalGetRefs() const {
@@ -2845,7 +2635,7 @@ std::string bhkMultiSphereShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMultiSphereShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMultiSphereShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2940,18 +2730,10 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkNiTriStripsShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkNiTriStripsShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			stripsData[i1] = DynamicCast<NiTriStripsData>(objects[link_stack.front()]);
-			if ( stripsData[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			stripsData[i1] = NULL;
-		link_stack.pop_front();
+		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, version );
 	};
 }
 
@@ -3041,17 +2823,9 @@ std::string bhkPackedNiTriStripsShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkPackedNiTriStripsShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPackedNiTriStripsShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<hkPackedNiTriStripsData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<hkPackedNiTriStripsData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> bhkPackedNiTriStripsShape::InternalGetRefs() const {
@@ -3102,7 +2876,7 @@ std::string bhkPrismaticConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkPrismaticConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPrismaticConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3126,7 +2900,7 @@ std::string bhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRagdollConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRagdollConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkRagdollConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3315,18 +3089,10 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRigidBody::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBody::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < constraints.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			constraints[i1] = DynamicCast<AbhkConstraint>(objects[link_stack.front()]);
-			if ( constraints[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			constraints[i1] = NULL;
-		link_stack.pop_front();
+		constraints[i1] = FixLink<AbhkConstraint>( objects, link_stack, version );
 	};
 }
 
@@ -3354,7 +3120,7 @@ std::string bhkRigidBodyT::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRigidBodyT::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBodyT::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkRigidBody::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3413,7 +3179,7 @@ std::string bhkSimpleShapePhantom::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSimpleShapePhantom::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSimpleShapePhantom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3437,7 +3203,7 @@ std::string bhkSPCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSPCollisionObject::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSPCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3464,7 +3230,7 @@ std::string bhkSphereShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSphereShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSphereShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3510,7 +3276,7 @@ std::string bhkStiffSpringConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkStiffSpringConstraint::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkStiffSpringConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3546,7 +3312,7 @@ std::string bhkTransformShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkTransformShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkTransformShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3570,7 +3336,7 @@ std::string bhkConvexTransformShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexTransformShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexTransformShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkTransformShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3600,7 +3366,7 @@ std::string BSBound::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSBound::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSBound::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3648,7 +3414,7 @@ std::string BSFurnitureMarker::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSFurnitureMarker::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSFurnitureMarker::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3675,7 +3441,7 @@ std::string BSParentVelocityModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSParentVelocityModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSParentVelocityModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3699,7 +3465,7 @@ std::string BSPSysArrayEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSPSysArrayEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSPSysArrayEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3726,7 +3492,7 @@ std::string BSXFlags::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSXFlags::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSXFlags::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3790,7 +3556,7 @@ std::string hkPackedNiTriStripsData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void hkPackedNiTriStripsData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void hkPackedNiTriStripsData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3826,18 +3592,10 @@ std::string NiAlphaController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAlphaController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiFloatData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiFloatData>( objects, link_stack, version );
 	};
 }
 
@@ -3869,7 +3627,7 @@ std::string NiAlphaProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAlphaProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3893,7 +3651,7 @@ std::string NiAmbientLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAmbientLight::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAmbientLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3968,7 +3726,7 @@ std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAutoNormalParticlesData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAutoNormalParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4011,7 +3769,7 @@ std::string NiBinaryExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBinaryExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBinaryExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4038,7 +3796,7 @@ std::string NiBlendBoolInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendBoolInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendBoolInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4065,7 +3823,7 @@ std::string NiBlendFloatInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendFloatInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4092,7 +3850,7 @@ std::string NiBlendPoint3Interpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendPoint3Interpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4116,7 +3874,7 @@ std::string NiBlendTransformInterpolator::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiBlendTransformInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4202,40 +3960,16 @@ std::string NiBoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoneLODController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABoneLODController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < shapeGroups1.size(); i1++) {
 		for (uint i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				shapeGroups1[i1].linkPairs[i2].shape = DynamicCast<NiTriShape>(objects[link_stack.front()]);
-				if ( shapeGroups1[i1].linkPairs[i2].shape == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				shapeGroups1[i1].linkPairs[i2].shape = NULL;
-			link_stack.pop_front();
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				shapeGroups1[i1].linkPairs[i2].skinInstance = DynamicCast<NiSkinInstance>(objects[link_stack.front()]);
-				if ( shapeGroups1[i1].linkPairs[i2].skinInstance == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				shapeGroups1[i1].linkPairs[i2].skinInstance = NULL;
-			link_stack.pop_front();
+			shapeGroups1[i1].linkPairs[i2].shape = FixLink<NiTriShape>( objects, link_stack, version );
+			shapeGroups1[i1].linkPairs[i2].skinInstance = FixLink<NiSkinInstance>( objects, link_stack, version );
 		};
 	};
 	for (uint i1 = 0; i1 < shapeGroups2.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			shapeGroups2[i1] = DynamicCast<NiTriShape>(objects[link_stack.front()]);
-			if ( shapeGroups2[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			shapeGroups2[i1] = NULL;
-		link_stack.pop_front();
+		shapeGroups2[i1] = FixLink<NiTriShape>( objects, link_stack, version );
 	};
 }
 
@@ -4299,7 +4033,7 @@ std::string NiBoolData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4326,7 +4060,7 @@ std::string NiBooleanExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBooleanExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBooleanExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4361,17 +4095,9 @@ std::string NiBoolInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiBoolData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiBoolData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiBoolInterpolator::InternalGetRefs() const {
@@ -4407,17 +4133,9 @@ std::string NiBoolTimelineInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolTimelineInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolTimelineInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiBoolData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiBoolData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiBoolTimelineInterpolator::InternalGetRefs() const {
@@ -4442,7 +4160,7 @@ std::string NiBSBoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSBoneLODController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSBoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABoneLODController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4469,7 +4187,7 @@ std::string NiBSplineBasisData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineBasisData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineBasisData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4506,7 +4224,7 @@ std::string NiBSplineCompFloatInterpolator::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiBSplineCompFloatInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4543,7 +4261,7 @@ std::string NiBSplineCompPoint3Interpolator::InternalAsString( bool verbose ) co
 	return out.str();
 }
 
-void NiBSplineCompPoint3Interpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4603,7 +4321,7 @@ std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose )
 	return out.str();
 }
 
-void NiBSplineCompTransformInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4649,7 +4367,7 @@ std::string NiBSplineData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4738,17 +4456,9 @@ std::string NiCamera::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCamera::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCamera::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink_ == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink_ = NULL;
-	link_stack.pop_front();
+	unknownLink_ = FixLink<NiObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiCamera::InternalGetRefs() const {
@@ -4840,17 +4550,9 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCollisionData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCollisionData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		targetNode = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( targetNode == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		targetNode = NULL;
-	link_stack.pop_front();
+	targetNode = FixLink<NiNode>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiCollisionData::InternalGetRefs() const {
@@ -4901,7 +4603,7 @@ std::string NiColorData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiColorData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiColorData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4928,7 +4630,7 @@ std::string NiColorExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiColorExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiColorExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4986,28 +4688,12 @@ std::string NiControllerManager::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiControllerManager::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerManager::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < controllerSequences.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			controllerSequences[i1] = DynamicCast<NiControllerSequence>(objects[link_stack.front()]);
-			if ( controllerSequences[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			controllerSequences[i1] = NULL;
-		link_stack.pop_front();
+		controllerSequences[i1] = FixLink<NiControllerSequence>( objects, link_stack, version );
 	};
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		objectPalette = DynamicCast<NiDefaultAVObjectPalette>(objects[link_stack.front()]);
-		if ( objectPalette == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		objectPalette = NULL;
-	link_stack.pop_front();
+	objectPalette = FixLink<NiDefaultAVObjectPalette>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiControllerManager::InternalGetRefs() const {
@@ -5295,106 +4981,34 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiControllerSequence::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerSequence::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			textKeys = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]);
-			if ( textKeys == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			textKeys = NULL;
-		link_stack.pop_front();
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, version );
 	};
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( version <= 0x0A01006A ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].controller = DynamicCast<NiTimeController>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].controller == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				controlledBlocks[i1].controller = NULL;
-			link_stack.pop_front();
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, version );
 		};
 		if ( version >= 0x0A020000 ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].interpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].interpolator == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				controlledBlocks[i1].interpolator = NULL;
-			link_stack.pop_front();
+			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, version );
 		};
 		if ( version >= 0x0A01006A ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].controller = DynamicCast<NiTimeController>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].controller == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				controlledBlocks[i1].controller = NULL;
-			link_stack.pop_front();
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, version );
 		};
 		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].unknownLink2 == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				controlledBlocks[i1].unknownLink2 = NULL;
-			link_stack.pop_front();
+			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, version );
 		};
 		if ( version >= 0x0A020000 ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				controlledBlocks[i1].stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]);
-				if ( controlledBlocks[i1].stringPalette == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				controlledBlocks[i1].stringPalette = NULL;
-			link_stack.pop_front();
+			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, version );
 		};
 	};
 	if ( version >= 0x0A01006A ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			textKeys = DynamicCast<NiTextKeyExtraData>(objects[link_stack.front()]);
-			if ( textKeys == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			textKeys = NULL;
-		link_stack.pop_front();
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			manager = DynamicCast<NiControllerManager>(objects[link_stack.front()]);
-			if ( manager == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			manager = NULL;
-		link_stack.pop_front();
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, version );
+		manager = FixLink<NiControllerManager>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			stringPalette = DynamicCast<NiStringPalette>(objects[link_stack.front()]);
-			if ( stringPalette == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			stringPalette = NULL;
-		link_stack.pop_front();
+		stringPalette = FixLink<NiStringPalette>( objects, link_stack, version );
 	};
 }
 
@@ -5458,18 +5072,10 @@ std::string NiDefaultAVObjectPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDefaultAVObjectPalette::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDefaultAVObjectPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			objs[i1].avObject = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-			if ( objs[i1].avObject == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			objs[i1].avObject = NULL;
-		link_stack.pop_front();
+		objs[i1].avObject = FixLink<NiAVObject>( objects, link_stack, version );
 	};
 }
 
@@ -5495,7 +5101,7 @@ std::string NiDirectionalLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDirectionalLight::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDirectionalLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5522,7 +5128,7 @@ std::string NiDitherProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDitherProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDitherProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5583,18 +5189,10 @@ std::string NiFlipController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFlipController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFlipController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < sources.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			sources[i1] = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( sources[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			sources[i1] = NULL;
-		link_stack.pop_front();
+		sources[i1] = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 }
 
@@ -5650,7 +5248,7 @@ std::string NiFloatData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5677,7 +5275,7 @@ std::string NiFloatExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5716,18 +5314,10 @@ std::string NiFloatExtraDataController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatExtraDataController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatExtraDataController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-			if ( unknownLink == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			unknownLink = NULL;
-		link_stack.pop_front();
+		unknownLink = FixLink<NiObject>( objects, link_stack, version );
 	};
 }
 
@@ -5764,17 +5354,9 @@ std::string NiFloatInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiFloatData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiFloatData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiFloatInterpolator::InternalGetRefs() const {
@@ -5818,7 +5400,7 @@ std::string NiFloatsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatsExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5851,7 +5433,7 @@ std::string NiFogProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFogProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFogProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5950,28 +5532,12 @@ std::string NiGeomMorpherController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGeomMorpherController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeomMorpherController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiMorphData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiMorphData>( objects, link_stack, version );
 	if ( version >= 0x0A01006A ) {
 		for (uint i2 = 0; i2 < interpolators.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				interpolators[i2] = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-				if ( interpolators[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				interpolators[i2] = NULL;
-			link_stack.pop_front();
+			interpolators[i2] = FixLink<NiInterpolator>( objects, link_stack, version );
 		};
 	};
 }
@@ -6017,7 +5583,7 @@ std::string NiGravity::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGravity::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGravity::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6044,7 +5610,7 @@ std::string NiIntegerExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiIntegerExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegerExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6087,7 +5653,7 @@ std::string NiIntegersExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiIntegersExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegersExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6119,17 +5685,9 @@ std::string NiKeyframeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiKeyframeController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiKeyframeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiKeyframeData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiKeyframeData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiKeyframeController::InternalGetRefs() const {
@@ -6162,17 +5720,9 @@ std::string BSKeyframeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSKeyframeController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSKeyframeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiKeyframeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data2 = DynamicCast<NiKeyframeData>(objects[link_stack.front()]);
-		if ( data2 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data2 = NULL;
-	link_stack.pop_front();
+	data2 = FixLink<NiKeyframeData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> BSKeyframeController::InternalGetRefs() const {
@@ -6336,7 +5886,7 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiKeyframeData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiKeyframeData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6392,29 +5942,13 @@ std::string NiLightColorController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLightColorController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightColorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiPosData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiPosData>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			interpolator = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]);
-			if ( interpolator == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			interpolator = NULL;
-		link_stack.pop_front();
+		interpolator = FixLink<NiPoint3Interpolator>( objects, link_stack, version );
 	};
 }
 
@@ -6450,17 +5984,9 @@ std::string NiLightDimmerController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLightDimmerController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightDimmerController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-		if ( unknownLink == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink = NULL;
-	link_stack.pop_front();
+	unknownLink = FixLink<NiInterpolator>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiLightDimmerController::InternalGetRefs() const {
@@ -6500,17 +6026,9 @@ std::string NiLookAtController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLookAtController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLookAtController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		lookAtNode = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( lookAtNode == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		lookAtNode = NULL;
-	link_stack.pop_front();
+	lookAtNode = FixLink<NiNode>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiLookAtController::InternalGetRefs() const {
@@ -6579,44 +6097,12 @@ std::string NiLookAtInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLookAtInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLookAtInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		lookAt = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( lookAt == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		lookAt = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink1 = DynamicCast<NiPoint3Interpolator>(objects[link_stack.front()]);
-		if ( unknownLink1 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink1 = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink2 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]);
-		if ( unknownLink2 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink2 = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink3 = DynamicCast<NiFloatInterpolator>(objects[link_stack.front()]);
-		if ( unknownLink3 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink3 = NULL;
-	link_stack.pop_front();
+	lookAt = FixLink<NiNode>( objects, link_stack, version );
+	unknownLink1 = FixLink<NiPoint3Interpolator>( objects, link_stack, version );
+	unknownLink2 = FixLink<NiFloatInterpolator>( objects, link_stack, version );
+	unknownLink3 = FixLink<NiFloatInterpolator>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiLookAtInterpolator::InternalGetRefs() const {
@@ -6666,18 +6152,10 @@ std::string NiMaterialColorController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMaterialColorController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialColorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiPosData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiPosData>( objects, link_stack, version );
 	};
 }
 
@@ -6728,7 +6206,7 @@ std::string NiMaterialProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMaterialProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6902,42 +6380,18 @@ std::string NiMeshPSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMeshPSysData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMeshPSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysData::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x14000004 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			modifier = DynamicCast<NiPSysModifier>(objects[link_stack.front()]);
-			if ( modifier == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			modifier = NULL;
-		link_stack.pop_front();
+		modifier = FixLink<NiPSysModifier>( objects, link_stack, version );
 	};
 	if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) {
 		for (uint i2 = 0; i2 < unknownLinks.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				unknownLinks[i2] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]);
-				if ( unknownLinks[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				unknownLinks[i2] = NULL;
-			link_stack.pop_front();
+			unknownLinks[i2] = FixLink<NiPSysModifier>( objects, link_stack, version );
 		};
 	};
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			unknownLink2 = DynamicCast<NiNode>(objects[link_stack.front()]);
-			if ( unknownLink2 == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			unknownLink2 = NULL;
-		link_stack.pop_front();
+		unknownLink2 = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
 
@@ -7041,7 +6495,7 @@ std::string NiMorphData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMorphData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMorphData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7089,18 +6543,10 @@ std::string NiMultiTargetTransformController::InternalAsString( bool verbose ) c
 	return out.str();
 }
 
-void NiMultiTargetTransformController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMultiTargetTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < extraTargets.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			extraTargets[i1] = DynamicCast<NiNode>(objects[link_stack.front()]);
-			if ( extraTargets[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			extraTargets[i1] = NULL;
-		link_stack.pop_front();
+		extraTargets[i1] = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
 
@@ -7173,29 +6619,13 @@ std::string NiNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < children.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			children[i1] = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-			if ( children[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			children[i1] = NULL;
-		link_stack.pop_front();
+		children[i1] = FixLink<NiAVObject>( objects, link_stack, version );
 	};
 	for (uint i1 = 0; i1 < effects.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			effects[i1] = DynamicCast<NiDynamicEffect>(objects[link_stack.front()]);
-			if ( effects[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			effects[i1] = NULL;
-		link_stack.pop_front();
+		effects[i1] = FixLink<NiDynamicEffect>( objects, link_stack, version );
 	};
 }
 
@@ -7227,7 +6657,7 @@ std::string AvoidNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AvoidNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AvoidNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7267,7 +6697,7 @@ std::string FxWidget::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxWidget::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxWidget::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7291,7 +6721,7 @@ std::string FxButton::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxButton::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxButton::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FxWidget::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7348,18 +6778,10 @@ std::string FxRadioButton::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxRadioButton::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxRadioButton::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FxWidget::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			unknownLinks[i1] = DynamicCast<NiObject>(objects[link_stack.front()]);
-			if ( unknownLinks[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			unknownLinks[i1] = NULL;
-		link_stack.pop_front();
+		unknownLinks[i1] = FixLink<NiObject>( objects, link_stack, version );
 	};
 }
 
@@ -7394,7 +6816,7 @@ std::string NiBillboardNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBillboardNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBillboardNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7418,7 +6840,7 @@ std::string NiBSAnimationNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSAnimationNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSAnimationNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7442,7 +6864,7 @@ std::string NiBSParticleNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSParticleNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSParticleNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7519,18 +6941,10 @@ std::string NiLODNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLODNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			lodLevelData = DynamicCast<NiLODData>(objects[link_stack.front()]);
-			if ( lodLevelData == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			lodLevelData = NULL;
-		link_stack.pop_front();
+		lodLevelData = FixLink<NiLODData>( objects, link_stack, version );
 	};
 }
 
@@ -7581,7 +6995,7 @@ std::string NiPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPalette::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7641,7 +7055,7 @@ std::string NiParticleBomb::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleBomb::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleBomb::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7673,17 +7087,9 @@ std::string NiParticleColorModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleColorModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleColorModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		colorData = DynamicCast<NiColorData>(objects[link_stack.front()]);
-		if ( colorData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		colorData = NULL;
-	link_stack.pop_front();
+	colorData = FixLink<NiColorData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiParticleColorModifier::InternalGetRefs() const {
@@ -7714,7 +7120,7 @@ std::string NiParticleGrowFade::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleGrowFade::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleGrowFade::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7762,18 +7168,10 @@ std::string NiParticleMeshModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < particleMeshes.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			particleMeshes[i1] = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-			if ( particleMeshes[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			particleMeshes[i1] = NULL;
-		link_stack.pop_front();
+		particleMeshes[i1] = FixLink<NiAVObject>( objects, link_stack, version );
 	};
 }
 
@@ -7816,7 +7214,7 @@ std::string NiParticleRotation::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleRotation::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleRotation::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7840,7 +7238,7 @@ std::string NiParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticles::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7864,7 +7262,7 @@ std::string NiAutoNormalParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAutoNormalParticles::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAutoNormalParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7888,7 +7286,7 @@ std::string NiParticleMeshes::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshes::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshes::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7965,7 +7363,7 @@ std::string NiParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticlesData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAutoNormalParticlesData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7997,17 +7395,9 @@ std::string NiParticleMeshesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshesData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticlesData::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink2 = DynamicCast<NiAVObject>(objects[link_stack.front()]);
-		if ( unknownLink2 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink2 = NULL;
-	link_stack.pop_front();
+	unknownLink2 = FixLink<NiAVObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiParticleMeshesData::InternalGetRefs() const {
@@ -8063,19 +7453,11 @@ std::string NiParticleSystem::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleSystem::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleSystem::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		for (uint i2 = 0; i2 < modifiers.size(); i2++) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				modifiers[i2] = DynamicCast<NiPSysModifier>(objects[link_stack.front()]);
-				if ( modifiers[i2] == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				modifiers[i2] = NULL;
-			link_stack.pop_front();
+			modifiers[i2] = FixLink<NiPSysModifier>( objects, link_stack, version );
 		};
 	};
 }
@@ -8104,7 +7486,7 @@ std::string NiMeshParticleSystem::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMeshParticleSystem::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMeshParticleSystem::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticleSystem::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8277,44 +7659,12 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleSystemController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleSystemController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		emitter = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( emitter == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		emitter = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		particleExtra = DynamicCast<AParticleModifier>(objects[link_stack.front()]);
-		if ( particleExtra == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		particleExtra = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink2 = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink2 == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink2 = NULL;
-	link_stack.pop_front();
+	emitter = FixLink<NiObject>( objects, link_stack, version );
+	unknownLink = FixLink<NiObject>( objects, link_stack, version );
+	particleExtra = FixLink<AParticleModifier>( objects, link_stack, version );
+	unknownLink2 = FixLink<NiObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiParticleSystemController::InternalGetRefs() const {
@@ -8345,7 +7695,7 @@ std::string NiBSPArrayController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSPArrayController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSPArrayController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticleSystemController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8403,26 +7753,10 @@ std::string NiPathController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPathController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPathController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		posData = DynamicCast<NiPosData>(objects[link_stack.front()]);
-		if ( posData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		posData = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]);
-		if ( floatData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		floatData = NULL;
-	link_stack.pop_front();
+	posData = FixLink<NiPosData>( objects, link_stack, version );
+	floatData = FixLink<NiFloatData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPathController::InternalGetRefs() const {
@@ -8473,26 +7807,10 @@ std::string NiPathInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPathInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPathInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		posData = DynamicCast<NiPosData>(objects[link_stack.front()]);
-		if ( posData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		posData = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		floatData = DynamicCast<NiFloatData>(objects[link_stack.front()]);
-		if ( floatData == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		floatData = NULL;
-	link_stack.pop_front();
+	posData = FixLink<NiPosData>( objects, link_stack, version );
+	floatData = FixLink<NiFloatData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPathInterpolator::InternalGetRefs() const {
@@ -8636,17 +7954,9 @@ std::string NiPixelData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPixelData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPixelData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		palette = DynamicCast<NiPalette>(objects[link_stack.front()]);
-		if ( palette == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		palette = NULL;
-	link_stack.pop_front();
+	palette = FixLink<NiPalette>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPixelData::InternalGetRefs() const {
@@ -8733,7 +8043,7 @@ std::string NiPlanarCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPlanarCollider::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPlanarCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8768,17 +8078,9 @@ std::string NiPoint3Interpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPoint3Interpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiPosData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiPosData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPoint3Interpolator::InternalGetRefs() const {
@@ -8812,7 +8114,7 @@ std::string NiPointLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPointLight::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPointLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8864,7 +8166,7 @@ std::string NiPosData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPosData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPosData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8899,17 +8201,9 @@ std::string NiPSysAgeDeathModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysAgeDeathModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysAgeDeathModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]);
-		if ( spawnModifier == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		spawnModifier = NULL;
-	link_stack.pop_front();
+	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysAgeDeathModifier::InternalGetRefs() const {
@@ -8981,17 +8275,9 @@ std::string NiPSysBombModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBombModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBombModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( unknownLink == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink = NULL;
-	link_stack.pop_front();
+	unknownLink = FixLink<NiNode>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysBombModifier::InternalGetRefs() const {
@@ -9017,7 +8303,7 @@ std::string NiPSysBoundUpdateModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBoundUpdateModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoundUpdateModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9050,7 +8336,7 @@ std::string NiPSysBoxEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBoxEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoxEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9082,17 +8368,9 @@ std::string NiPSysColliderManager::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysColliderManager::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysColliderManager::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		collider = DynamicCast<NiPSysPlanarCollider>(objects[link_stack.front()]);
-		if ( collider == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		collider = NULL;
-	link_stack.pop_front();
+	collider = FixLink<NiPSysPlanarCollider>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysColliderManager::InternalGetRefs() const {
@@ -9125,17 +8403,9 @@ std::string NiPSysColorModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysColorModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysColorModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiColorData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiColorData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysColorModifier::InternalGetRefs() const {
@@ -9166,7 +8436,7 @@ std::string NiPSysCylinderEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysCylinderEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysCylinderEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9308,7 +8578,7 @@ std::string NiPSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9352,17 +8622,9 @@ std::string NiPSysDragModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysDragModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysDragModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		parent = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( parent == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		parent = NULL;
-	link_stack.pop_front();
+	parent = FixLink<NiObject>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysDragModifier::InternalGetRefs() const {
@@ -9408,29 +8670,13 @@ std::string NiPSysEmitterCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiPSysEmitterCtlrData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiPSysEmitterCtlrData>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			visibilityInterpolator = DynamicCast<NiInterpolator>(objects[link_stack.front()]);
-			if ( visibilityInterpolator == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			visibilityInterpolator = NULL;
-		link_stack.pop_front();
+		visibilityInterpolator = FixLink<NiInterpolator>( objects, link_stack, version );
 	};
 }
 
@@ -9505,7 +8751,7 @@ std::string NiPSysEmitterCtlrData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterCtlrData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterCtlrData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9529,7 +8775,7 @@ std::string NiPSysEmitterDeclinationCtlr::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiPSysEmitterDeclinationCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterDeclinationCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9553,7 +8799,7 @@ std::string NiPSysEmitterDeclinationVarCtlr::InternalAsString( bool verbose ) co
 	return out.str();
 }
 
-void NiPSysEmitterDeclinationVarCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterDeclinationVarCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9577,7 +8823,7 @@ std::string NiPSysEmitterInitialRadiusCtlr::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiPSysEmitterInitialRadiusCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterInitialRadiusCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9601,7 +8847,7 @@ std::string NiPSysEmitterLifeSpanCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterLifeSpanCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterLifeSpanCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9625,7 +8871,7 @@ std::string NiPSysEmitterSpeedCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterSpeedCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterSpeedCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9675,17 +8921,9 @@ std::string NiPSysGravityModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGravityModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		gravityObject = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( gravityObject == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		gravityObject = NULL;
-	link_stack.pop_front();
+	gravityObject = FixLink<NiNode>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysGravityModifier::InternalGetRefs() const {
@@ -9708,7 +8946,7 @@ std::string NiPSysGravityStrengthCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGravityStrengthCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityStrengthCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9744,7 +8982,7 @@ std::string NiPSysGrowFadeModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGrowFadeModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGrowFadeModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9801,18 +9039,10 @@ std::string NiPSysMeshEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysMeshEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysMeshEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysEmitter::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < emitterMeshes.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			emitterMeshes[i1] = DynamicCast<NiTriBasedGeom>(objects[link_stack.front()]);
-			if ( emitterMeshes[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			emitterMeshes[i1] = NULL;
-		link_stack.pop_front();
+		emitterMeshes[i1] = FixLink<NiTriBasedGeom>( objects, link_stack, version );
 	};
 }
 
@@ -9864,18 +9094,10 @@ std::string NiPSysMeshUpdateModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysMeshUpdateModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysMeshUpdateModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < meshes.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			meshes[i1] = DynamicCast<NiNode>(objects[link_stack.front()]);
-			if ( meshes[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			meshes[i1] = NULL;
-		link_stack.pop_front();
+		meshes[i1] = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
 
@@ -9903,7 +9125,7 @@ std::string NiPSysModifierActiveCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysModifierActiveCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysModifierActiveCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9977,44 +9199,12 @@ std::string NiPSysPlanarCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysPlanarCollider::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysPlanarCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		spawnModifier = DynamicCast<NiPSysSpawnModifier>(objects[link_stack.front()]);
-		if ( spawnModifier == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		spawnModifier = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		parent = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( parent == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		parent = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		unknownLink_ = DynamicCast<NiObject>(objects[link_stack.front()]);
-		if ( unknownLink_ == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		unknownLink_ = NULL;
-	link_stack.pop_front();
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		colliderObject = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( colliderObject == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		colliderObject = NULL;
-	link_stack.pop_front();
+	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, version );
+	parent = FixLink<NiObject>( objects, link_stack, version );
+	unknownLink_ = FixLink<NiObject>( objects, link_stack, version );
+	colliderObject = FixLink<NiNode>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiPSysPlanarCollider::InternalGetRefs() const {
@@ -10043,7 +9233,7 @@ std::string NiPSysPositionModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysPositionModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysPositionModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10067,7 +9257,7 @@ std::string NiPSysResetOnLoopCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysResetOnLoopCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysResetOnLoopCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10116,7 +9306,7 @@ std::string NiPSysRotationModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysRotationModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysRotationModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10164,7 +9354,7 @@ std::string NiPSysSpawnModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysSpawnModifier::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSpawnModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10191,7 +9381,7 @@ std::string NiPSysSphereEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysSphereEmitter::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSphereEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10215,7 +9405,7 @@ std::string NiPSysUpdateCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysUpdateCtlr::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysUpdateCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10239,7 +9429,7 @@ std::string NiLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLODData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10284,7 +9474,7 @@ std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRangeLODData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRangeLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLODData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10339,7 +9529,7 @@ std::string NiScreenLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiScreenLODData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiScreenLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLODData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10363,7 +9553,7 @@ std::string NiRotatingParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRotatingParticles::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRotatingParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10387,7 +9577,7 @@ std::string NiRotatingParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRotatingParticlesData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRotatingParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticlesData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10411,7 +9601,7 @@ std::string NiSequenceStreamHelper::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSequenceStreamHelper::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSequenceStreamHelper::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10438,7 +9628,7 @@ std::string NiShadeProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiShadeProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiShadeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10535,18 +9725,10 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]);
-			if ( skinPartition == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			skinPartition = NULL;
-		link_stack.pop_front();
+		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, version );
 	};
 }
 
@@ -10621,47 +9803,15 @@ std::string NiSkinInstance::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinInstance::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinInstance::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiSkinData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiSkinData>( objects, link_stack, version );
 	if ( version >= 0x0A020000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			skinPartition = DynamicCast<NiSkinPartition>(objects[link_stack.front()]);
-			if ( skinPartition == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			skinPartition = NULL;
-		link_stack.pop_front();
+		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, version );
 	};
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		skeletonRoot = DynamicCast<NiNode>(objects[link_stack.front()]);
-		if ( skeletonRoot == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		skeletonRoot = NULL;
-	link_stack.pop_front();
+	skeletonRoot = FixLink<NiNode>( objects, link_stack, version );
 	for (uint i1 = 0; i1 < bones.size(); i1++) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			bones[i1] = DynamicCast<NiNode>(objects[link_stack.front()]);
-			if ( bones[i1] == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			bones[i1] = NULL;
-		link_stack.pop_front();
+		bones[i1] = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
 
@@ -10950,7 +10100,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinPartition::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinPartition::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11055,31 +10205,15 @@ std::string NiSourceTexture::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSourceTexture::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSourceTexture::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
-			if (link_stack.empty())
-				throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-			if (link_stack.front() != 0xffffffff) {
-				unknownLink = DynamicCast<NiObject>(objects[link_stack.front()]);
-				if ( unknownLink == NULL )
-					throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-			} else
-				unknownLink = NULL;
-			link_stack.pop_front();
+			unknownLink = FixLink<NiObject>( objects, link_stack, version );
 		};
 	};
 	if ( (useExternal == 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			pixelData = DynamicCast<NiPixelData>(objects[link_stack.front()]);
-			if ( pixelData == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			pixelData = NULL;
-		link_stack.pop_front();
+		pixelData = FixLink<NiPixelData>( objects, link_stack, version );
 	};
 }
 
@@ -11110,7 +10244,7 @@ std::string NiSpecularProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSpecularProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpecularProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11152,7 +10286,7 @@ std::string NiSphericalCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSphericalCollider::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSphericalCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11182,7 +10316,7 @@ std::string NiSpotLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSpotLight::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpotLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPointLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11237,7 +10371,7 @@ std::string NiStencilProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStencilProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStencilProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11271,7 +10405,7 @@ std::string NiStringExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11301,7 +10435,7 @@ std::string NiStringPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringPalette::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11344,7 +10478,7 @@ std::string NiStringsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringsExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11394,7 +10528,7 @@ std::string NiTextKeyExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextKeyExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextKeyExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11470,17 +10604,9 @@ std::string NiTextureEffect::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextureEffect::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureEffect::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiDynamicEffect::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		sourceTexture = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-		if ( sourceTexture == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		sourceTexture = NULL;
-	link_stack.pop_front();
+	sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiTextureEffect::InternalGetRefs() const {
@@ -11526,18 +10652,10 @@ std::string NiTextureTransformController::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiTextureTransformController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiFloatData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiFloatData>( objects, link_stack, version );
 	};
 }
 
@@ -12241,108 +11359,36 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTexturingProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTexturingProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 	if ( (hasBaseTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			baseTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( baseTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			baseTexture.source = NULL;
-		link_stack.pop_front();
+		baseTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasDarkTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			darkTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( darkTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			darkTexture.source = NULL;
-		link_stack.pop_front();
+		darkTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasDetailTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			detailTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( detailTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			detailTexture.source = NULL;
-		link_stack.pop_front();
+		detailTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasGlossTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			glossTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( glossTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			glossTexture.source = NULL;
-		link_stack.pop_front();
+		glossTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasGlowTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			glowTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( glowTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			glowTexture.source = NULL;
-		link_stack.pop_front();
+		glowTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasBumpMapTexture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			bumpMapTexture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( bumpMapTexture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			bumpMapTexture.source = NULL;
-		link_stack.pop_front();
+		bumpMapTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (hasDecal0Texture != 0) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			decal0Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( decal0Texture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			decal0Texture.source = NULL;
-		link_stack.pop_front();
+		decal0Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			decal1Texture.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-			if ( decal1Texture.source == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			decal1Texture.source = NULL;
-		link_stack.pop_front();
+		decal1Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A000100 ) {
 		for (uint i2 = 0; i2 < shaderTextures.size(); i2++) {
 			if ( (shaderTextures[i2].isUsed != 0) ) {
-				if (link_stack.empty())
-					throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-				if (link_stack.front() != 0xffffffff) {
-					shaderTextures[i2].textureData.source = DynamicCast<NiSourceTexture>(objects[link_stack.front()]);
-					if ( shaderTextures[i2].textureData.source == NULL )
-						throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-				} else
-					shaderTextures[i2].textureData.source = NULL;
-				link_stack.pop_front();
+				shaderTextures[i2].textureData.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 			};
 		};
 	};
@@ -12388,7 +11434,7 @@ std::string NiTransformController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12412,7 +11458,7 @@ std::string NiTransformData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiKeyframeData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12470,17 +11516,9 @@ std::string NiTransformInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformInterpolator::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiTransformData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiTransformData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiTransformInterpolator::InternalGetRefs() const {
@@ -12505,7 +11543,7 @@ std::string NiTriShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriShape::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12608,7 +11646,7 @@ std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriShapeData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShapeData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12632,7 +11670,7 @@ std::string NiTriStrips::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriStrips::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStrips::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12734,7 +11772,7 @@ std::string NiTriStripsData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriStripsData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStripsData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12758,7 +11796,7 @@ std::string NiClod::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiClod::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClod::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12840,7 +11878,7 @@ std::string NiClodData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiClodData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12875,17 +11913,9 @@ std::string NiUVController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiUVController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
-	if (link_stack.empty())
-		throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-	if (link_stack.front() != 0xffffffff) {
-		data = DynamicCast<NiUVData>(objects[link_stack.front()]);
-		if ( data == NULL )
-			throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-	} else
-		data = NULL;
-	link_stack.pop_front();
+	data = FixLink<NiUVData>( objects, link_stack, version );
 }
 
 std::list<NiObjectRef> NiUVController::InternalGetRefs() const {
@@ -12944,7 +11974,7 @@ std::string NiUVData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiUVData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12974,7 +12004,7 @@ std::string NiVectorExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVectorExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVectorExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13007,7 +12037,7 @@ std::string NiVertexColorProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVertexColorProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertexColorProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13053,7 +12083,7 @@ std::string NiVertWeightsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVertWeightsExtraData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertWeightsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13089,18 +12119,10 @@ std::string NiVisController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVisController::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
-		if (link_stack.empty())
-			throw runtime_error("Trying to pop a link from empty stack. This is probably a bug.");
-		if (link_stack.front() != 0xffffffff) {
-			data = DynamicCast<NiVisData>(objects[link_stack.front()]);
-			if ( data == NULL )
-				throw runtime_error("Link could not be cast to required type during file read. This NIF file may be invalid or improperly understood.");
-		} else
-			data = NULL;
-		link_stack.pop_front();
+		data = FixLink<NiVisData>( objects, link_stack, version );
 	};
 }
 
@@ -13145,7 +12167,7 @@ std::string NiVisData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVisData::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13172,7 +12194,7 @@ std::string NiWireframeProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiWireframeProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiWireframeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13206,7 +12228,7 @@ std::string NiZBufferProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiZBufferProperty::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiZBufferProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13230,7 +12252,7 @@ std::string RootCollisionNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void RootCollisionNode::InternalFixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void RootCollisionNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13239,4 +12261,3 @@ std::list<NiObjectRef> RootCollisionNode::InternalGetRefs() const {
 	refs = NiNode::GetRefs();
 	return refs;
 }
-

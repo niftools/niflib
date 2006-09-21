@@ -24,7 +24,7 @@ string BSKeyframeController::asString( bool verbose ) const {
 	B_S_KEYFRAME_CONTROLLER_STRING
 }
 
-void BSKeyframeController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSKeyframeController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_KEYFRAME_CONTROLLER_FIXLINKS
 }
 

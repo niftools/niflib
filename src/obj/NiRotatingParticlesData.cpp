@@ -23,7 +23,7 @@ string NiRotatingParticlesData::asString( bool verbose ) const {
 	NI_ROTATING_PARTICLES_DATA_STRING
 }
 
-void NiRotatingParticlesData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRotatingParticlesData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_ROTATING_PARTICLES_DATA_FIXLINKS
 }
 

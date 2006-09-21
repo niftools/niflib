@@ -24,7 +24,7 @@ string bhkPackedNiTriStripsShape::asString( bool verbose ) const {
 	BHK_PACKED_NI_TRI_STRIPS_SHAPE_STRING
 }
 
-void bhkPackedNiTriStripsShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPackedNiTriStripsShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_PACKED_NI_TRI_STRIPS_SHAPE_FIXLINKS
 }
 

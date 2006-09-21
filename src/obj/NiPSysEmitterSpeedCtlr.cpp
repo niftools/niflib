@@ -23,7 +23,7 @@ string NiPSysEmitterSpeedCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_SPEED_CTLR_STRING
 }
 
-void NiPSysEmitterSpeedCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterSpeedCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS
 }
 

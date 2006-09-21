@@ -23,7 +23,7 @@ string AvoidNode::asString( bool verbose ) const {
 	AVOID_NODE_STRING
 }
 
-void AvoidNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AvoidNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AVOID_NODE_FIXLINKS
 }
 

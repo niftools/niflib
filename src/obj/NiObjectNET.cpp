@@ -29,7 +29,7 @@ string NiObjectNET::asString( bool verbose ) const {
 	NI_OBJECT_N_E_T_STRING
 }
 
-void NiObjectNET::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObjectNET::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_OBJECT_N_E_T_FIXLINKS
 }
 

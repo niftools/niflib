@@ -23,7 +23,7 @@ string NiPSysSphereEmitter::asString( bool verbose ) const {
 	NI_P_SYS_SPHERE_EMITTER_STRING
 }
 
-void NiPSysSphereEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSphereEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_SPHERE_EMITTER_FIXLINKS
 }
 

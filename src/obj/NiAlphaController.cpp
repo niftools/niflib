@@ -24,7 +24,7 @@ string NiAlphaController::asString( bool verbose ) const {
 	NI_ALPHA_CONTROLLER_STRING
 }
 
-void NiAlphaController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_ALPHA_CONTROLLER_FIXLINKS
 }
 

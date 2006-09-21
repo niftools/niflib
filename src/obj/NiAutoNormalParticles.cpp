@@ -23,7 +23,7 @@ string NiAutoNormalParticles::asString( bool verbose ) const {
 	NI_AUTO_NORMAL_PARTICLES_STRING
 }
 
-void NiAutoNormalParticles::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAutoNormalParticles::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_AUTO_NORMAL_PARTICLES_FIXLINKS
 }
 

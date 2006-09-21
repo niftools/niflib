@@ -24,7 +24,7 @@ string NiUVData::asString( bool verbose ) const {
 	NI_U_V_DATA_STRING
 }
 
-void NiUVData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_U_V_DATA_FIXLINKS
 }
 

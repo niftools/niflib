@@ -24,7 +24,7 @@ string NiParticleColorModifier::asString( bool verbose ) const {
 	NI_PARTICLE_COLOR_MODIFIER_STRING
 }
 
-void NiParticleColorModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleColorModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PARTICLE_COLOR_MODIFIER_FIXLINKS
 }
 

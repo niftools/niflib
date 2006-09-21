@@ -24,7 +24,7 @@ string NiPSysGravityModifier::asString( bool verbose ) const {
 	NI_P_SYS_GRAVITY_MODIFIER_STRING
 }
 
-void NiPSysGravityModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS
 }
 

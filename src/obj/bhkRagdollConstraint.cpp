@@ -23,7 +23,7 @@ string bhkRagdollConstraint::asString( bool verbose ) const {
 	BHK_RAGDOLL_CONSTRAINT_STRING
 }
 
-void bhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRagdollConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 

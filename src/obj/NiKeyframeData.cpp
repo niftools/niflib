@@ -24,7 +24,7 @@ string NiKeyframeData::asString( bool verbose ) const {
 	NI_KEYFRAME_DATA_STRING
 }
 
-void NiKeyframeData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiKeyframeData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_KEYFRAME_DATA_FIXLINKS
 }
 

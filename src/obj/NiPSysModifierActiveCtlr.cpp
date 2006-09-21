@@ -23,7 +23,7 @@ string NiPSysModifierActiveCtlr::asString( bool verbose ) const {
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_STRING
 }
 
-void NiPSysModifierActiveCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysModifierActiveCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_MODIFIER_ACTIVE_CTLR_FIXLINKS
 }
 

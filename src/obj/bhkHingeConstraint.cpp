@@ -23,7 +23,7 @@ string bhkHingeConstraint::asString( bool verbose ) const {
 	BHK_HINGE_CONSTRAINT_STRING
 }
 
-void bhkHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkHingeConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_HINGE_CONSTRAINT_FIXLINKS
 }
 

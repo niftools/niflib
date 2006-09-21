@@ -23,7 +23,7 @@ string BSBound::asString( bool verbose ) const {
 	B_S_BOUND_STRING
 }
 
-void BSBound::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSBound::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_BOUND_FIXLINKS
 }
 

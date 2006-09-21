@@ -24,7 +24,7 @@ string NiRangeLODData::asString( bool verbose ) const {
 	NI_RANGE_L_O_D_DATA_STRING
 }
 
-void NiRangeLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRangeLODData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_RANGE_L_O_D_DATA_FIXLINKS
 }
 

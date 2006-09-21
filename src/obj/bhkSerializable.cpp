@@ -23,7 +23,7 @@ string bhkSerializable::asString( bool verbose ) const {
 	BHK_SERIALIZABLE_STRING
 }
 
-void bhkSerializable::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSerializable::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_SERIALIZABLE_FIXLINKS
 }
 

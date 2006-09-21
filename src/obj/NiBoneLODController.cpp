@@ -27,7 +27,7 @@ string NiBoneLODController::asString( bool verbose ) const {
 	NI_BONE_L_O_D_CONTROLLER_STRING
 }
 
-void NiBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoneLODController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 

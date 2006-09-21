@@ -23,7 +23,7 @@ string NiTransformController::asString( bool verbose ) const {
 	NI_TRANSFORM_CONTROLLER_STRING
 }
 
-void NiTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRANSFORM_CONTROLLER_FIXLINKS
 }
 

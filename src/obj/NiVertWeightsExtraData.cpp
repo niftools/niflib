@@ -23,7 +23,7 @@ string NiVertWeightsExtraData::asString( bool verbose ) const {
 	NI_VERT_WEIGHTS_EXTRA_DATA_STRING
 }
 
-void NiVertWeightsExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertWeightsExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VERT_WEIGHTS_EXTRA_DATA_FIXLINKS
 }
 

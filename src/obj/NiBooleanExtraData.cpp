@@ -23,7 +23,7 @@ string NiBooleanExtraData::asString( bool verbose ) const {
 	NI_BOOLEAN_EXTRA_DATA_STRING
 }
 
-void NiBooleanExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBooleanExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BOOLEAN_EXTRA_DATA_FIXLINKS
 }
 

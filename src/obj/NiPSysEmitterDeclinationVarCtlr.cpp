@@ -23,7 +23,7 @@ string NiPSysEmitterDeclinationVarCtlr::asString( bool verbose ) const {
 	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_STRING
 }
 
-void NiPSysEmitterDeclinationVarCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterDeclinationVarCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS
 }
 

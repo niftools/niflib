@@ -24,7 +24,7 @@ string NiPSysColliderManager::asString( bool verbose ) const {
 	NI_P_SYS_COLLIDER_MANAGER_STRING
 }
 
-void NiPSysColliderManager::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysColliderManager::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_COLLIDER_MANAGER_FIXLINKS
 }
 

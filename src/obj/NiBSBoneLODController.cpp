@@ -23,7 +23,7 @@ string NiBSBoneLODController::asString( bool verbose ) const {
 	NI_B_S_BONE_L_O_D_CONTROLLER_STRING
 }
 
-void NiBSBoneLODController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSBoneLODController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS
 }
 

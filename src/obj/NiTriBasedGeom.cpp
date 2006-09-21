@@ -30,7 +30,7 @@ string NiTriBasedGeom::asString( bool verbose ) const {
 	NI_TRI_BASED_GEOM_STRING
 }
 
-void NiTriBasedGeom::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeom::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRI_BASED_GEOM_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiPSysAgeDeathModifier::asString( bool verbose ) const {
 	NI_P_SYS_AGE_DEATH_MODIFIER_STRING
 }
 
-void NiPSysAgeDeathModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysAgeDeathModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_AGE_DEATH_MODIFIER_FIXLINKS
 }
 

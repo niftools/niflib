@@ -23,7 +23,7 @@ string NiBlendFloatInterpolator::asString( bool verbose ) const {
 	NI_BLEND_FLOAT_INTERPOLATOR_STRING
 }
 
-void NiBlendFloatInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendFloatInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_FLOAT_INTERPOLATOR_FIXLINKS
 }
 

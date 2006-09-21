@@ -23,7 +23,7 @@ string bhkSphereShape::asString( bool verbose ) const {
 	BHK_SPHERE_SHAPE_STRING
 }
 
-void bhkSphereShape::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSphereShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_SPHERE_SHAPE_FIXLINKS
 }
 

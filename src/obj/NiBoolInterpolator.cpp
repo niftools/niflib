@@ -24,7 +24,7 @@ string NiBoolInterpolator::asString( bool verbose ) const {
 	NI_BOOL_INTERPOLATOR_STRING
 }
 
-void NiBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BOOL_INTERPOLATOR_FIXLINKS
 }
 

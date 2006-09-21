@@ -25,7 +25,7 @@ string NiSourceTexture::asString( bool verbose ) const {
 	NI_SOURCE_TEXTURE_STRING
 }
 
-void NiSourceTexture::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSourceTexture::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SOURCE_TEXTURE_FIXLINKS
 }
 

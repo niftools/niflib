@@ -23,7 +23,7 @@ string NiPSysUpdateCtlr::asString( bool verbose ) const {
 	NI_P_SYS_UPDATE_CTLR_STRING
 }
 
-void NiPSysUpdateCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysUpdateCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_UPDATE_CTLR_FIXLINKS
 }
 

@@ -23,7 +23,7 @@ string NiColorExtraData::asString( bool verbose ) const {
 	NI_COLOR_EXTRA_DATA_STRING
 }
 
-void NiColorExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiColorExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_COLOR_EXTRA_DATA_FIXLINKS
 }
 

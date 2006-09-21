@@ -23,7 +23,7 @@ string NiPSysCylinderEmitter::asString( bool verbose ) const {
 	NI_P_SYS_CYLINDER_EMITTER_STRING
 }
 
-void NiPSysCylinderEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysCylinderEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_CYLINDER_EMITTER_FIXLINKS
 }
 

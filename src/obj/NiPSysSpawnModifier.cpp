@@ -23,7 +23,7 @@ string NiPSysSpawnModifier::asString( bool verbose ) const {
 	NI_P_SYS_SPAWN_MODIFIER_STRING
 }
 
-void NiPSysSpawnModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSpawnModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_SPAWN_MODIFIER_FIXLINKS
 }
 

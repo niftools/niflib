@@ -24,7 +24,7 @@ string NiMorphData::asString( bool verbose ) const {
 	NI_MORPH_DATA_STRING
 }
 
-void NiMorphData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMorphData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MORPH_DATA_FIXLINKS
 }
 

@@ -23,7 +23,7 @@ string BSParentVelocityModifier::asString( bool verbose ) const {
 	B_S_PARENT_VELOCITY_MODIFIER_STRING
 }
 
-void BSParentVelocityModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSParentVelocityModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiLookAtController::asString( bool verbose ) const {
 	NI_LOOK_AT_CONTROLLER_STRING
 }
 
-void NiLookAtController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLookAtController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_LOOK_AT_CONTROLLER_FIXLINKS
 }
 

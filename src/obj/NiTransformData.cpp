@@ -23,7 +23,7 @@ string NiTransformData::asString( bool verbose ) const {
 	NI_TRANSFORM_DATA_STRING
 }
 
-void NiTransformData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TRANSFORM_DATA_FIXLINKS
 }
 

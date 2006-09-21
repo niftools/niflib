@@ -65,7 +65,7 @@ public:
 	//Streaming Functions
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
 	NIFLIB_HIDDEN virtual void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {}
-	NIFLIB_HIDDEN virtual void FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {}
 
 	//Reference Counting
 	NIFLIB_API void AddRef() const; //Should not be called directly

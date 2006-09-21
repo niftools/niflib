@@ -25,7 +25,7 @@ string NiLODNode::asString( bool verbose ) const {
 	NI_L_O_D_NODE_STRING
 }
 
-void NiLODNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_L_O_D_NODE_FIXLINKS
 }
 

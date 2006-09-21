@@ -23,7 +23,7 @@ string NiAlphaProperty::asString( bool verbose ) const {
 	NI_ALPHA_PROPERTY_STRING
 }
 
-void NiAlphaProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_ALPHA_PROPERTY_FIXLINKS
 }
 

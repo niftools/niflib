@@ -24,7 +24,7 @@ string NiTextureEffect::asString( bool verbose ) const {
 	NI_TEXTURE_EFFECT_STRING
 }
 
-void NiTextureEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureEffect::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURE_EFFECT_FIXLINKS
 }
 

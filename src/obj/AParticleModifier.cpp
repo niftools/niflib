@@ -24,7 +24,7 @@ string AParticleModifier::asString( bool verbose ) const {
 	A_PARTICLE_MODIFIER_STRING
 }
 
-void AParticleModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AParticleModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	A_PARTICLE_MODIFIER_FIXLINKS
 }
 

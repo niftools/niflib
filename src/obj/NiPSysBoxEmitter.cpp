@@ -23,7 +23,7 @@ string NiPSysBoxEmitter::asString( bool verbose ) const {
 	NI_P_SYS_BOX_EMITTER_STRING
 }
 
-void NiPSysBoxEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoxEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOX_EMITTER_FIXLINKS
 }
 

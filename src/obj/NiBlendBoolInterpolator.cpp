@@ -23,7 +23,7 @@ string NiBlendBoolInterpolator::asString( bool verbose ) const {
 	NI_BLEND_BOOL_INTERPOLATOR_STRING
 }
 
-void NiBlendBoolInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendBoolInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_BOOL_INTERPOLATOR_FIXLINKS
 }
 

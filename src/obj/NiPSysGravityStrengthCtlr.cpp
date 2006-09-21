@@ -23,7 +23,7 @@ string NiPSysGravityStrengthCtlr::asString( bool verbose ) const {
 	NI_P_SYS_GRAVITY_STRENGTH_CTLR_STRING
 }
 
-void NiPSysGravityStrengthCtlr::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityStrengthCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS
 }
 

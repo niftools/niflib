@@ -23,7 +23,7 @@ string APSysData::asString( bool verbose ) const {
 	A_P_SYS_DATA_STRING
 }
 
-void APSysData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void APSysData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	A_P_SYS_DATA_FIXLINKS
 }
 

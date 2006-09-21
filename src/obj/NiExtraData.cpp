@@ -23,7 +23,7 @@ string NiExtraData::asString( bool verbose ) const {
 	NI_EXTRA_DATA_STRING
 }
 
-void NiExtraData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_EXTRA_DATA_FIXLINKS
 }
 

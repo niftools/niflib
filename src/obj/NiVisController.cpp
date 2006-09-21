@@ -24,7 +24,7 @@ string NiVisController::asString( bool verbose ) const {
 	NI_VIS_CONTROLLER_STRING
 }
 
-void NiVisController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_VIS_CONTROLLER_FIXLINKS
 }
 

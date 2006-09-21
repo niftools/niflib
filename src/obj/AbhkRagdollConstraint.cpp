@@ -23,7 +23,7 @@ string AbhkRagdollConstraint::asString( bool verbose ) const {
 	ABHK_RAGDOLL_CONSTRAINT_STRING
 }
 
-void AbhkRagdollConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkRagdollConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABHK_RAGDOLL_CONSTRAINT_FIXLINKS
 }
 

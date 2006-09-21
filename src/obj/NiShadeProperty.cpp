@@ -23,7 +23,7 @@ string NiShadeProperty::asString( bool verbose ) const {
 	NI_SHADE_PROPERTY_STRING
 }
 
-void NiShadeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiShadeProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SHADE_PROPERTY_FIXLINKS
 }
 

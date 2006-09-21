@@ -23,7 +23,7 @@ string bhkWorldObject::asString( bool verbose ) const {
 	BHK_WORLD_OBJECT_STRING
 }
 
-void bhkWorldObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkWorldObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_WORLD_OBJECT_FIXLINKS
 }
 

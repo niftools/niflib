@@ -23,7 +23,7 @@ string NiBlendPoint3Interpolator::asString( bool verbose ) const {
 	NI_BLEND_POINT3_INTERPOLATOR_STRING
 }
 
-void NiBlendPoint3Interpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendPoint3Interpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS
 }
 

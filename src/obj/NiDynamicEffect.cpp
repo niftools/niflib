@@ -24,7 +24,7 @@ string NiDynamicEffect::asString( bool verbose ) const {
 	NI_DYNAMIC_EFFECT_STRING
 }
 
-void NiDynamicEffect::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDynamicEffect::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_DYNAMIC_EFFECT_FIXLINKS
 }
 

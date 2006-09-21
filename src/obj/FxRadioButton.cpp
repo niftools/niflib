@@ -24,7 +24,7 @@ string FxRadioButton::asString( bool verbose ) const {
 	FX_RADIO_BUTTON_STRING
 }
 
-void FxRadioButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxRadioButton::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FX_RADIO_BUTTON_FIXLINKS
 }
 

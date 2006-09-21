@@ -23,7 +23,7 @@ string bhkRigidBodyT::asString( bool verbose ) const {
 	BHK_RIGID_BODY_T_STRING
 }
 
-void bhkRigidBodyT::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBodyT::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_RIGID_BODY_T_FIXLINKS
 }
 

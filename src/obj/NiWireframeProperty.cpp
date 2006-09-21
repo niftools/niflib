@@ -23,7 +23,7 @@ string NiWireframeProperty::asString( bool verbose ) const {
 	NI_WIREFRAME_PROPERTY_STRING
 }
 
-void NiWireframeProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiWireframeProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_WIREFRAME_PROPERTY_FIXLINKS
 }
 

@@ -24,7 +24,7 @@ string NiMaterialColorController::asString( bool verbose ) const {
 	NI_MATERIAL_COLOR_CONTROLLER_STRING
 }
 
-void NiMaterialColorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialColorController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MATERIAL_COLOR_CONTROLLER_FIXLINKS
 }
 

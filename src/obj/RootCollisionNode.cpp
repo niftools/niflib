@@ -23,7 +23,7 @@ string RootCollisionNode::asString( bool verbose ) const {
 	ROOT_COLLISION_NODE_STRING
 }
 
-void RootCollisionNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void RootCollisionNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ROOT_COLLISION_NODE_FIXLINKS
 }
 

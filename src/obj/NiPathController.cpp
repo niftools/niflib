@@ -25,7 +25,7 @@ string NiPathController::asString( bool verbose ) const {
 	NI_PATH_CONTROLLER_STRING
 }
 
-void NiPathController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPathController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PATH_CONTROLLER_FIXLINKS
 }
 

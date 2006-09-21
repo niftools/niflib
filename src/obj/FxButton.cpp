@@ -23,7 +23,7 @@ string FxButton::asString( bool verbose ) const {
 	FX_BUTTON_STRING
 }
 
-void FxButton::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxButton::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FX_BUTTON_FIXLINKS
 }
 

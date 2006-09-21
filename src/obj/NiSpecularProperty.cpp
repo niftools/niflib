@@ -23,7 +23,7 @@ string NiSpecularProperty::asString( bool verbose ) const {
 	NI_SPECULAR_PROPERTY_STRING
 }
 
-void NiSpecularProperty::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpecularProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SPECULAR_PROPERTY_FIXLINKS
 }
 

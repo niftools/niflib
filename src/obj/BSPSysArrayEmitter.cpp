@@ -23,7 +23,7 @@ string BSPSysArrayEmitter::asString( bool verbose ) const {
 	B_S_P_SYS_ARRAY_EMITTER_STRING
 }
 
-void BSPSysArrayEmitter::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSPSysArrayEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	B_S_P_SYS_ARRAY_EMITTER_FIXLINKS
 }
 

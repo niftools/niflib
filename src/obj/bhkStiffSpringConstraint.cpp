@@ -23,7 +23,7 @@ string bhkStiffSpringConstraint::asString( bool verbose ) const {
 	BHK_STIFF_SPRING_CONSTRAINT_STRING
 }
 
-void bhkStiffSpringConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkStiffSpringConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS
 }
 

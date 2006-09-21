@@ -23,7 +23,7 @@ string NiBSParticleNode::asString( bool verbose ) const {
 	NI_B_S_PARTICLE_NODE_STRING
 }
 
-void NiBSParticleNode::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSParticleNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_S_PARTICLE_NODE_FIXLINKS
 }
 

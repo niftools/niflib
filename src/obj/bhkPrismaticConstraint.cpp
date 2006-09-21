@@ -23,7 +23,7 @@ string bhkPrismaticConstraint::asString( bool verbose ) const {
 	BHK_PRISMATIC_CONSTRAINT_STRING
 }
 
-void bhkPrismaticConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPrismaticConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_PRISMATIC_CONSTRAINT_FIXLINKS
 }
 

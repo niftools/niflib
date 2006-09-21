@@ -23,7 +23,7 @@ string NiPalette::asString( bool verbose ) const {
 	NI_PALETTE_STRING
 }
 
-void NiPalette::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPalette::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_PALETTE_FIXLINKS
 }
 

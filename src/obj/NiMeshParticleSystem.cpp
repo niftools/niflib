@@ -23,7 +23,7 @@ string NiMeshParticleSystem::asString( bool verbose ) const {
 	NI_MESH_PARTICLE_SYSTEM_STRING
 }
 
-void NiMeshParticleSystem::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMeshParticleSystem::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_MESH_PARTICLE_SYSTEM_FIXLINKS
 }
 

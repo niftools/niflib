@@ -24,7 +24,7 @@ string NiSingleInterpolatorController::asString( bool verbose ) const {
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING
 }
 
-void NiSingleInterpolatorController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSingleInterpolatorController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS
 }
 

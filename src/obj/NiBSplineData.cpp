@@ -23,7 +23,7 @@ string NiBSplineData::asString( bool verbose ) const {
 	NI_B_SPLINE_DATA_STRING
 }
 
-void NiBSplineData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_DATA_FIXLINKS
 }
 

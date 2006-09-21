@@ -23,7 +23,7 @@ string NiBSPArrayController::asString( bool verbose ) const {
 	NI_B_S_P_ARRAY_CONTROLLER_STRING
 }
 
-void NiBSPArrayController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSPArrayController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_S_P_ARRAY_CONTROLLER_FIXLINKS
 }
 

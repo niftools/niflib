@@ -23,7 +23,7 @@ string NiScreenLODData::asString( bool verbose ) const {
 	NI_SCREEN_L_O_D_DATA_STRING
 }
 
-void NiScreenLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiScreenLODData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SCREEN_L_O_D_DATA_FIXLINKS
 }
 

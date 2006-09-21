@@ -23,7 +23,7 @@ string NiLODData::asString( bool verbose ) const {
 	NI_L_O_D_DATA_STRING
 }
 
-void NiLODData::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_L_O_D_DATA_FIXLINKS
 }
 

@@ -23,7 +23,7 @@ string bhkCollisionObject::asString( bool verbose ) const {
 	BHK_COLLISION_OBJECT_STRING
 }
 
-void bhkCollisionObject::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkCollisionObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_COLLISION_OBJECT_FIXLINKS
 }
 

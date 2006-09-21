@@ -24,7 +24,7 @@ string bhkLimitedHingeConstraint::asString( bool verbose ) const {
 	BHK_LIMITED_HINGE_CONSTRAINT_STRING
 }
 
-void bhkLimitedHingeConstraint::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkLimitedHingeConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS
 }
 

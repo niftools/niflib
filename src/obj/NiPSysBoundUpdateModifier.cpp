@@ -23,7 +23,7 @@ string NiPSysBoundUpdateModifier::asString( bool verbose ) const {
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING
 }
 
-void NiPSysBoundUpdateModifier::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoundUpdateModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS
 }
 

@@ -29,7 +29,7 @@ string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_STRING
 }
 
-void NiBSplineCompTransformInterpolator::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompTransformInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_FIXLINKS
 }
 

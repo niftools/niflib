@@ -24,7 +24,7 @@ string NiTextureTransformController::asString( bool verbose ) const {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_STRING
 }
 
-void NiTextureTransformController::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureTransformController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_TEXTURE_TRANSFORM_CONTROLLER_FIXLINKS
 }
 

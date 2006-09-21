@@ -23,7 +23,7 @@ string FxWidget::asString( bool verbose ) const {
 	FX_WIDGET_STRING
 }
 
-void FxWidget::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxWidget::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FX_WIDGET_FIXLINKS
 }
 

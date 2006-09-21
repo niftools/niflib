@@ -23,7 +23,7 @@ string NiSequenceStreamHelper::asString( bool verbose ) const {
 	NI_SEQUENCE_STREAM_HELPER_STRING
 }
 
-void NiSequenceStreamHelper::FixLinks( const vector<NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSequenceStreamHelper::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NI_SEQUENCE_STREAM_HELPER_FIXLINKS
 }
 
