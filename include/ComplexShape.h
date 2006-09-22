@@ -7,6 +7,10 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "Ref.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
+#include "obj/NiProperty.h"
+#include "obj/NiNode.h"
+#include "obj/NiAVObject.h"
+#include "obj/NiTriBasedGeom.h"
 #include <vector>
 
 namespace Niflib {
