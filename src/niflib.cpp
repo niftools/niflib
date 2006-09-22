@@ -78,14 +78,14 @@ NiObjectRef CreateObject( string block_type ) {
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	//Read block list
 	//cout << "File name:  " << file_name << endl;
-	vector<NiObjectRef> blocks = ReadNifList( file_name );
+	vector<NiObjectRef> blocks = ReadNifList( file_name, info );
 	return FindRoot( blocks );
 }
 
 //Reads the given input stream and returns a reference to the root block
 NiObjectRef ReadNifTree( istream & in, NifInfo * info ) {
 	//Read block list
-	vector<NiObjectRef> blocks = ReadNifList( in );
+	vector<NiObjectRef> blocks = ReadNifList( in, info );
 	return FindRoot( blocks );
 }
 
@@ -132,7 +132,7 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 	//--Open File--//
 	ifstream in( file_name.c_str(), ifstream::binary );
 
-	return ReadNifList( in );
+	return ReadNifList( in, info );
 
 	in.close();
 }
