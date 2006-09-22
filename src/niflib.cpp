@@ -133,6 +133,8 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 	ifstream in( file_name.c_str(), ifstream::binary );
 
 	return ReadNifList( in );
+
+	in.close();
 }
 
 //Reads the given input stream and returns a vector of block references
@@ -195,9 +197,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		//There are two main ways to read objects
 		//One before version 5.0.0.1 and one after
 		if ( header.version >= 0x05000001 ) {
-			//From version 5.0.0.1 to version 10.0.1.0  there is a zero byte at the begining of each object
+			//From version 5.0.0.1 to version 10.0.1.106  there is a zero byte at the begining of each object
 			
-			if ( header.version <= VER_10_1_0_0 ) {
+			if ( header.version <= VER_10_1_0_106 ) {
 				uint checkValue = ReadUInt( in );
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
@@ -215,6 +217,10 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 			// Find which block type this is by using the header arrays
 			objectType = header.blockTypes[ header.blockTypeIndex[i] ];
+
+#ifdef PRINT_OBJECT_NAMES
+			cout << endl << i << ":  " << objectType;
+#endif
 		} else {
 			// Find which object type this is by reading the string at this location
 			uint objectTypeLength = ReadUInt( in );
@@ -239,7 +245,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 			cout << endl << i << ":  " << objectType;
 #endif
 
-			if ( header.version < VER_4_0_0_0 ) {
+			if ( header.version < VER_3_3_0_13 ) {
 				//There can be special commands instead of object names
 				//in these versions
 
@@ -284,7 +290,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		}
 
 		uint index;
-		if ( header.version < VER_4_0_0_0 ) {
+		if ( header.version < VER_3_3_0_13 ) {
 			//These old versions have a pointer value after the name
 			//which is used as the index
 			index = ReadUInt(in);
@@ -301,7 +307,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		cout << endl << new_obj->asString() << endl;
 #endif
 
-		if ( header.version >= VER_4_0_0_0 ) {
+		if ( header.version >= VER_3_3_0_13 ) {
 			//We know the number of objects, so increment the count
 			//and break if we've finished
 			++i;
@@ -340,10 +346,6 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	cout << "Fixing Links:"  << endl;
 #endif
 	//--Now that all blocks are read, go back and fix the links--//
-	if ( header.version < VER_4_0_0_0 ) {
-		//First wen
-	}
-
 	vector<NiObjectRef> obj_list;
 
 	for ( map<unsigned,NiObjectRef>::iterator it = objects.begin(); it != objects.end(); ++it ) {
@@ -1069,6 +1071,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiSequenceStreamHelper
 bool IsSupportedVersion( unsigned int version ) {
    switch (version)
    {
+   case VER_3_3_0_13:
    case VER_4_0_0_0:
    case VER_4_0_0_2:
    case VER_4_1_0_12:
@@ -1130,11 +1133,11 @@ string FormatVersionString(unsigned version) {
 	//Format the version string and return it
 	stringstream out;
 
-	if ( int_ver[0] >= 4 ) {
-		//Version 4+ is in x.x.x.x format.
+	if ( version >= VER_3_3_0_13 ) {
+		//Version 3.3.0.13+ is in x.x.x.x format.
 		out << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 	} else {
-		//Versions before 4 are in x.x format.
+		//Versions before 3.3.0.13 are in x.x format.
 		out << int_ver[0] << "." << int_ver[1];
 	}
 

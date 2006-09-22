@@ -3071,10 +3071,10 @@ vector< array<4,float> > unknownFloats3; \
 vector< array<10,float> > unknownFloats4; \
 vector< array<12,float> > unknownFloats5; \
 uint unknownInt1; \
-Ref<NiPSysModifier > modifier; \
+Ref<NiObject > modifier; \
 byte unknownByte2; \
 mutable uint numUnknownLinks; \
-vector<Ref<NiPSysModifier > > unknownLinks; \
+vector<Ref<NiObject > > unknownLinks; \
 ushort unknownShort4; \
 uint unknownInt2; \
 byte unknownByte12; \

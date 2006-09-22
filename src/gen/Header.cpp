@@ -5,13 +5,13 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), unknownInt1((uint)1), userVersion2((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
+Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), userVersion2((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
 
 //Destructor
 Header::~Header() {};
 void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
-	if ( version >= 0x04000000 ) {
+	if ( version >= 0x0303000D ) {
 		NifStream( version, in, version );
 	};
 	if ( version >= 0x14000004 ) {
@@ -20,11 +20,11 @@ void Header::Read( istream& in ) {
 	if ( version >= 0x0A010000 ) {
 		NifStream( userVersion, in, version );
 	};
-	if ( version >= 0x04000000 ) {
+	if ( version >= 0x0303000D ) {
 		NifStream( numBlocks, in, version );
 	};
 	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-		NifStream( unknownInt1, in, version );
+		NifStream( userVersion, in, version );
 	};
 	if ( version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
@@ -56,7 +56,7 @@ void Header::Write( ostream& out ) const {
 	numBlockTypes = ushort(blockTypes.size());
 	numBlocks = uint(blockTypeIndex.size());
 	NifStream( headerString, out, version );
-	if ( version >= 0x04000000 ) {
+	if ( version >= 0x0303000D ) {
 		NifStream( version, out, version );
 	};
 	if ( version >= 0x14000004 ) {
@@ -65,11 +65,11 @@ void Header::Write( ostream& out ) const {
 	if ( version >= 0x0A010000 ) {
 		NifStream( userVersion, out, version );
 	};
-	if ( version >= 0x04000000 ) {
+	if ( version >= 0x0303000D ) {
 		NifStream( numBlocks, out, version );
 	};
 	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-		NifStream( unknownInt1, out, version );
+		NifStream( userVersion, out, version );
 	};
 	if ( version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
@@ -104,7 +104,6 @@ string Header::asString( bool verbose ) const {
 	out << "  Endian Type:  " << endianType << endl;
 	out << "  User Version:  " << userVersion << endl;
 	out << "  Num Blocks:  " << numBlocks << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	if ( (userVersion != 0) ) {
 		out << "    User Version 2:  " << userVersion2 << endl;
 		out << "    Creator:  " << creator << endl;

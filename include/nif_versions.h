@@ -5,7 +5,9 @@ All rights reserved.  Please see niflib.h for licence. */
 #define _NIF_VERSIONS_H_
 
 //NIF Version Constants
-const unsigned VER_4_0_0_0     = 0X04000000; /*!< NIF Version 4.0.0.0 */
+
+const unsigned VER_3_3_0_13    = 0x0303000D; /*!< NIF Version 3.3.0.13 */
+const unsigned VER_4_0_0_0     = 0x04000000; /*!< NIF Version 4.0.0.0 */
 const unsigned VER_4_0_0_2     = 0x04000002; /*!< NIF Version 4.0.0.2 */ 
 const unsigned VER_4_1_0_12    = 0x0401000C; /*!< NIF Version 4.1.0.12 */ 
 const unsigned VER_4_2_0_2     = 0x04020002; /*!< NIF Version 4.2.0.2 */ 

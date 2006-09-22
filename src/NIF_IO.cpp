@@ -5,74 +5,74 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../include/niflib.h"
 namespace Niflib {
 
-int BlockSearch( istream& in ) {
-
-	//Get current file pos
-	int data_start = in.tellg();
-
-	//cout << "Current File Pos: " << data_start << endl;
-	//cout << "Searching for next block..." << endl;
-
-	//Find Next Block
-	char tmp1 = 0, tmp2 = 0;
-	uint next_name_len = 0;
-	while (!in.eof()) {
-		while (!in.eof() && !((tmp1 == 'N' && tmp2 == 'i') || (tmp1 == 'R' && tmp2 == 'o') || (tmp1 == 'A' && tmp2 == 'v')) ) {
-			tmp1 = tmp2;
-			in.read(&tmp2, 1);
-		}
-		if (in.eof())
-			break;
-		
-		//Move back to before the uint that holds the length of the string
-		in.seekg(-6, ios_base::cur);
-
-		//Read the length of the string
-		next_name_len = ReadUInt( in );
-
-		//cout << "Matching Data:  " << tmp1 << tmp2 << endl;
-
-		//if name length is > 40, then this is unlikley to be a real node. 
-		if (next_name_len <= 40 && next_name_len >= 5) {
-			//Read the string
-			char* next_name = new char[next_name_len];
-			in.read( next_name, next_name_len );
-			
-			//cout << "Found Match:  " << Str(next_name, next_name_len) << endl;
-
-			//Move back to where we were before we read anything
-			in.seekg( -(int(next_name_len) - 2), ios_base::cur);
-
-			break;
-		}
-		else {
-			//Move back to where we were before we read anything
-			in.seekg(2, ios_base::cur);
-
-			tmp1 = tmp2 = 0;
-			//cout << "Found possible block at:  " << int(in.tellg()) - 6 << endl;
-		}
-	}
-
-	//Note length of data
-	int data_length = 0;
-	if (in.eof()) {
-		//cout << "Reached End of File.  Assuming no more blocks to find." << endl;
-		in.clear();
-		in.seekg(-8, ios_base::end);
-		data_length = int(in.tellg()) - data_start;
-		in.seekg(data_start, ios_base::beg);
-	}
-	else {
-		in.seekg(-6, ios_base::cur);
-		data_length = int(in.tellg()) - data_start;
-		in.seekg(data_start, ios_base::beg);
-	}
-
-	//cout << "Unknown area (" << data_length << " bytes):" << endl;
-
-	return data_length;
-}
+//int BlockSearch( istream& in ) {
+//
+//	//Get current file pos
+//	int data_start = in.tellg();
+//
+//	//cout << "Current File Pos: " << data_start << endl;
+//	//cout << "Searching for next block..." << endl;
+//
+//	//Find Next Block
+//	char tmp1 = 0, tmp2 = 0;
+//	uint next_name_len = 0;
+//	while (!in.eof()) {
+//		while (!in.eof() && !((tmp1 == 'N' && tmp2 == 'i') || (tmp1 == 'R' && tmp2 == 'o') || (tmp1 == 'A' && tmp2 == 'v')) ) {
+//			tmp1 = tmp2;
+//			in.read(&tmp2, 1);
+//		}
+//		if (in.eof())
+//			break;
+//		
+//		//Move back to before the uint that holds the length of the string
+//		in.seekg(-6, ios_base::cur);
+//
+//		//Read the length of the string
+//		next_name_len = ReadUInt( in );
+//
+//		//cout << "Matching Data:  " << tmp1 << tmp2 << endl;
+//
+//		//if name length is > 40, then this is unlikley to be a real node. 
+//		if (next_name_len <= 40 && next_name_len >= 5) {
+//			//Read the string
+//			char* next_name = new char[next_name_len];
+//			in.read( next_name, next_name_len );
+//			
+//			//cout << "Found Match:  " << Str(next_name, next_name_len) << endl;
+//
+//			//Move back to where we were before we read anything
+//			in.seekg( -(int(next_name_len) - 2), ios_base::cur);
+//
+//			break;
+//		}
+//		else {
+//			//Move back to where we were before we read anything
+//			in.seekg(2, ios_base::cur);
+//
+//			tmp1 = tmp2 = 0;
+//			//cout << "Found possible block at:  " << int(in.tellg()) - 6 << endl;
+//		}
+//	}
+//
+//	//Note length of data
+//	int data_length = 0;
+//	if (in.eof()) {
+//		//cout << "Reached End of File.  Assuming no more blocks to find." << endl;
+//		in.clear();
+//		in.seekg(-8, ios_base::end);
+//		data_length = int(in.tellg()) - data_start;
+//		in.seekg(data_start, ios_base::beg);
+//	}
+//	else {
+//		in.seekg(-6, ios_base::cur);
+//		data_length = int(in.tellg()) - data_start;
+//		in.seekg(data_start, ios_base::beg);
+//	}
+//
+//	//cout << "Unknown area (" << data_length << " bytes):" << endl;
+//
+//	return data_length;
+//}
 
 /**
  * Read utility functions
@@ -254,7 +254,7 @@ void NifStream( HeaderString & val, istream& in, uint & version ) {
 	version = ParseVersionString( val.header.substr( ver_start ) );
 
 	//Temporarily read the next 3 strings if this is a < 4 file
-	if ( version < VER_4_0_0_0 ) {
+	if ( version < VER_3_3_0_13 ) {
 		in.getline( tmp, 256 );
 		in.getline( tmp, 256 );
 		in.getline( tmp, 256 );

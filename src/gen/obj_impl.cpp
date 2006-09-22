@@ -6385,11 +6385,11 @@ std::string NiMeshPSysData::InternalAsString( bool verbose ) const {
 void NiMeshPSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysData::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x14000004 ) {
-		modifier = FixLink<NiPSysModifier>( objects, link_stack, version );
+		modifier = FixLink<NiObject>( objects, link_stack, version );
 	};
 	if ( ( version >= 0x0A020000 ) && ( version <= 0x14000004 ) ) {
 		for (uint i2 = 0; i2 < unknownLinks.size(); i2++) {
-			unknownLinks[i2] = FixLink<NiPSysModifier>( objects, link_stack, version );
+			unknownLinks[i2] = FixLink<NiObject>( objects, link_stack, version );
 		};
 	};
 	if ( version >= 0x0A020000 ) {

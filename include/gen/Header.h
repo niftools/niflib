@@ -45,10 +45,6 @@ struct NIFLIB_API Header {
 	 */
 	mutable uint numBlocks;
 	/*!
-	 * Unknown.
-	 */
-	uint unknownInt1;
-	/*!
 	 * This also appears to be the extra user version number and must be set
 	 * in some circumstances.
 	 */
