@@ -77,11 +77,11 @@ void bhkRigidBody::SetAngularVelocity( const Vector3 & value ) {
 	angularVelocity = value;
 }
 
-array<float,12>  bhkRigidBody::GetTransform() const {
+array<12,float>  bhkRigidBody::GetTransform() const {
 	return transform;
 }
 
-void bhkRigidBody::SetTransform( const array<float,12>&  value ) {
+void bhkRigidBody::SetTransform( const array<12,float>&  value ) {
 	transform = value;
 }
 

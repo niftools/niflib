@@ -58,7 +58,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * The vertex weights.
 	 */
-	vector<vector<float > > vertexWeights;
+	vector< vector<float > > vertexWeights;
 	/*!
 	 * The strip lengths.
 	 */
@@ -70,7 +70,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * The strips.
 	 */
-	vector<vector<ushort > > strips;
+	vector< vector<ushort > > strips;
 	/*!
 	 * The triangles.
 	 */
@@ -82,7 +82,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * Bone indices, they index into 'Bones'.
 	 */
-	vector<vector<byte > > boneIndices;
+	vector< vector<byte > > boneIndices;
 };
 
 }

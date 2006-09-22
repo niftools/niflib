@@ -72,8 +72,8 @@ public:
 	/*!
 	 * Seems to be some kind of transformation matrix, scale or translation?
 	 */
-	array<float,12>  GetTransform() const;
-	void SetTransform( const array<float,12>&  value );
+	array<12,float>  GetTransform() const;
+	void SetTransform( const array<12,float>&  value );
 
 	/*!
 	 * The object's center.

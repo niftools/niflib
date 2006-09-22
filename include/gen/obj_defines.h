@@ -854,7 +854,7 @@ bool hasVertexColors; \
 vector<Color4 > vertexColors; \
 mutable ushort numUvSets; \
 bool hasUv; \
-vector<vector<TexCoord > > uvSets; \
+vector< vector<TexCoord > > uvSets; \
 ushort unknownShort2; \
 Ref<NiObject > unknownLink; \
 
@@ -1049,7 +1049,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
-array<float,7> unknownFloats1; \
+array<7,float> unknownFloats1; \
 mutable uint num1; \
 vector<Float4 > unknownVectors1; \
 mutable uint num2; \
@@ -1078,7 +1078,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
-array<array<float,5>,4> unknownFloats; \
+array< 5, array<4,float> > unknownFloats; \
 
 #define BHK_HINGE_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
 
@@ -1129,7 +1129,7 @@ return InternalGetRefs(); \
 mutable uint numSubShapes; \
 vector<Ref<bhkShape > > subShapes; \
 HavokMaterial material; \
-array<float,6> unknownFloats; \
+array<6,float> unknownFloats; \
 mutable uint numUnknownInts; \
 vector<uint > unknownInts; \
 
@@ -1191,7 +1191,7 @@ return InternalGetRefs(); \
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
 HavokMaterial material; \
-array<byte,8> unknownBytes1; \
+array<8,byte> unknownBytes1; \
 float unknownFloat; \
 mutable uint numUnknownBytes2; \
 vector<byte > unknownBytes2; \
@@ -1252,7 +1252,7 @@ return InternalGetRefs(); \
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
 float unknownFloat1; \
 uint unknownInt1; \
-array<uint,4> unknownInts1; \
+array<4,uint> unknownInts1; \
 uint unknownInt2; \
 Vector3 scale; \
 uint unknownInt3; \
@@ -1285,10 +1285,10 @@ return InternalGetRefs(); \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 mutable ushort numSubparts; \
-vector< array<uint,3> > subparts; \
-array<float,9> unknownFloats; \
+vector< array<3,uint> > subparts; \
+array<9,float> unknownFloats; \
 float scale; \
-array<float,3> unknownFloats2; \
+array<3,float> unknownFloats2; \
 Ref<hkPackedNiTriStripsData > data; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_INCLUDE "AbhkShapeCollection.h" \
@@ -1314,8 +1314,8 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
-array<Float4,8> unknownVectors; \
-array<float,3> unknownFloats2; \
+array<8,Float4> unknownVectors; \
+array<3,float> unknownFloats2; \
 
 #define BHK_PRISMATIC_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
 
@@ -1362,11 +1362,11 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_RIGID_BODY_MEMBERS \
-array<float,5> unknown5Floats; \
-array<ushort,4> unknown4Shorts; \
+array<5,float> unknown5Floats; \
+array<4,ushort> unknown4Shorts; \
 OblivionLayer layerCopy; \
 byte colFilterCopy; \
-array<ushort,7> unknown7Shorts; \
+array<7,ushort> unknown7Shorts; \
 Vector3 translation; \
 float unknownFloat00; \
 QuaternionXYZW rotation; \
@@ -1374,7 +1374,7 @@ Vector3 linearVelocity; \
 float unknownFloat01; \
 Vector3 angularVelocity; \
 float unknownFloat02; \
-array<float,12> transform; \
+array<12,float> transform; \
 Vector3 center; \
 float unknownFloat03; \
 float mass; \
@@ -1441,8 +1441,8 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS \
-array<float,7> unkownFloats; \
-array<array<float,3>,5> unknownFloats2; \
+array<7,float> unkownFloats; \
+array< 3, array<5,float> > unknownFloats2; \
 float unknownFloat; \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_INCLUDE "bhkEntity.h" \
@@ -1516,7 +1516,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS \
-array<array<float,2>,4> unknownFloats; \
+array< 2, array<4,float> > unknownFloats; \
 float unknownFloat; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_INCLUDE "AbhkConstraint.h" \
@@ -2147,7 +2147,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS \
-array<float,4> unknownFloats; \
+array<4,float> unknownFloats; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_INCLUDE "NiBSplineInterpolator.h" \
 
@@ -2171,7 +2171,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
-array<float,6> unknownFloats; \
+array<6,float> unknownFloats; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_INCLUDE "NiBSplineInterpolator.h" \
 
@@ -2304,8 +2304,8 @@ byte unknown3; \
 uint collisionType; \
 uint unknown5; \
 Vector3 unknown7; \
-array<float,8> unknown6; \
-array<float,15> unknown8; \
+array<8,float> unknown6; \
+array<15,float> unknown8; \
 
 #define NI_COLLISION_DATA_INCLUDE "NiObject.h" \
 
@@ -2871,7 +2871,7 @@ mutable uint numRotationKeys; \
 KeyType rotationType; \
 vector<Key<Quaternion > > quaternionKeys; \
 float unknownFloat; \
-array<KeyGroup<float >,3> xyzRotations; \
+array<3,KeyGroup<float >> xyzRotations; \
 KeyGroup<Vector3 > translations; \
 KeyGroup<float > scales; \
 
@@ -3067,9 +3067,9 @@ return InternalGetRefs(); \
 
 #define NI_MESH_P_SYS_DATA_MEMBERS \
 byte unknownByte11; \
-vector< array<float,4> > unknownFloats3; \
-vector< array<float,10> > unknownFloats4; \
-vector< array<float,12> > unknownFloats5; \
+vector< array<4,float> > unknownFloats3; \
+vector< array<10,float> > unknownFloats4; \
+vector< array<12,float> > unknownFloats5; \
 uint unknownInt1; \
 Ref<NiPSysModifier > modifier; \
 byte unknownByte2; \
@@ -3211,7 +3211,7 @@ return InternalGetRefs(); \
 
 #define FX_WIDGET_MEMBERS \
 byte unknown1; \
-array<byte,292> unknown292Bytes; \
+array<292,byte> unknown292Bytes; \
 
 #define FX_WIDGET_INCLUDE "NiNode.h" \
 
@@ -3358,7 +3358,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_L_O_D_NODE_MEMBERS \
-array<byte,4> unknown4Bytes; \
+array<4,byte> unknown4Bytes; \
 Vector3 lodCenter; \
 mutable uint numLodLevels; \
 vector<LODRange > lodLevels; \
@@ -3390,7 +3390,7 @@ return InternalGetRefs(); \
 #define NI_PALETTE_MEMBERS \
 byte unknownByte; \
 uint numEntries_; \
-array<array<byte,256>,4> palette; \
+array< 256, array<4,byte> > palette; \
 
 #define NI_PALETTE_INCLUDE "NiObject.h" \
 
@@ -3878,9 +3878,9 @@ uint greenMask; \
 uint blueMask; \
 uint alphaMask; \
 uint bitsPerPixel; \
-array<byte,8> unknown8Bytes; \
+array<8,byte> unknown8Bytes; \
 uint unknownInt; \
-array<byte,54> unknown54Bytes; \
+array<54,byte> unknown54Bytes; \
 Ref<NiPalette > palette; \
 mutable uint numMipmaps; \
 uint bytesPerPixel; \
@@ -4057,9 +4057,9 @@ return InternalGetRefs(); \
 
 #define NI_P_SYS_BOMB_MODIFIER_MEMBERS \
 NiNode * unknownLink; \
-array<uint,2> unknownInts1; \
-array<float,3> unknownFloats; \
-array<uint,2> unknownInts2; \
+array<2,uint> unknownInts1; \
+array<3,float> unknownFloats; \
+array<2,uint> unknownInts2; \
 
 #define NI_P_SYS_BOMB_MODIFIER_INCLUDE "NiPSysModifier.h" \
 
@@ -4212,13 +4212,13 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_P_SYS_DATA_MEMBERS \
-vector< array<float,10> > unknownFloats4; \
+vector< array<10,float> > unknownFloats4; \
 bool unknownBool1; \
-vector< array<byte,32> > unknownBytes; \
-vector< array<byte,28> > unknownBytesAlt; \
+vector< array<32,byte> > unknownBytes; \
+vector< array<28,byte> > unknownBytesAlt; \
 byte unknownByte3; \
 bool unknownBool2; \
-vector< array<byte,4> > unknownBytes2; \
+vector< array<4,byte> > unknownBytes2; \
 uint unknownInt1; \
 
 #define NI_P_SYS_DATA_INCLUDE "APSysData.h" \
@@ -5466,7 +5466,7 @@ return InternalGetRefs(); \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-array<byte,3> unknownBytes; \
+array<3,byte> unknownBytes; \
 Ref<NiTransformData > data; \
 
 #define NI_TRANSFORM_INTERPOLATOR_INCLUDE "NiInterpolator.h" \
@@ -5572,7 +5572,7 @@ ushort numTriangles; \
 mutable ushort numStrips; \
 mutable vector<ushort > stripLengths; \
 bool hasPoints; \
-vector<vector<ushort > > points; \
+vector< vector<ushort > > points; \
 
 #define NI_TRI_STRIPS_DATA_INCLUDE "NiTriBasedGeomData.h" \
 
@@ -5620,10 +5620,10 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_CLOD_DATA_MEMBERS \
-array<ushort,5> unknown5Shorts; \
+array<5,ushort> unknown5Shorts; \
 float unknownFloat; \
 uint unknownInt; \
-array<ushort,44> unknownClodShorts; \
+array<44,ushort> unknownClodShorts; \
 
 #define NI_CLOD_DATA_INCLUDE "NiTriBasedGeomData.h" \
 
@@ -5674,7 +5674,7 @@ InternalFixLinks( objects, link_stack, version, user_version ); \
 return InternalGetRefs(); \
 
 #define NI_U_V_DATA_MEMBERS \
-array<KeyGroup<float >,4> uvGroups; \
+array<4,KeyGroup<float >> uvGroups; \
 
 #define NI_U_V_DATA_INCLUDE "NiObject.h" \
 

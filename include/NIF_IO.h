@@ -51,7 +51,7 @@ public:
 //!  Data is allocated into a vector portion and the data section.
 //!  The vector simply points to appropriate places in the data section.
 //! @param  T   Type of Vector
-template<typename T, size_t len_>
+template<size_t len_, typename T>
 class array
 {
    typedef typename T * RawData;
