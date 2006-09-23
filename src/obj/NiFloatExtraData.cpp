@@ -12,23 +12,23 @@ NiFloatExtraData::NiFloatExtraData() NI_FLOAT_EXTRA_DATA_CONSTRUCT {}
 NiFloatExtraData::~NiFloatExtraData() {}
 
 void NiFloatExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLOAT_EXTRA_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiFloatExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_FLOAT_EXTRA_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiFloatExtraData::asString( bool verbose ) const {
-	NI_FLOAT_EXTRA_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiFloatExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLOAT_EXTRA_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiFloatExtraData::GetRefs() const {
-	NI_FLOAT_EXTRA_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiFloatExtraData::GetType() const {

@@ -13,23 +13,23 @@ BSFurnitureMarker::BSFurnitureMarker() B_S_FURNITURE_MARKER_CONSTRUCT {}
 BSFurnitureMarker::~BSFurnitureMarker() {}
 
 void BSFurnitureMarker::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_FURNITURE_MARKER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSFurnitureMarker::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_FURNITURE_MARKER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSFurnitureMarker::asString( bool verbose ) const {
-	B_S_FURNITURE_MARKER_STRING
+	return InternalAsString( verbose );
 }
 
 void BSFurnitureMarker::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_FURNITURE_MARKER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSFurnitureMarker::GetRefs() const {
-	B_S_FURNITURE_MARKER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSFurnitureMarker::GetType() const {

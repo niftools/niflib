@@ -12,23 +12,23 @@ bhkCollisionObject::bhkCollisionObject() BHK_COLLISION_OBJECT_CONSTRUCT {}
 bhkCollisionObject::~bhkCollisionObject() {}
 
 void bhkCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_COLLISION_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkCollisionObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_COLLISION_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkCollisionObject::asString( bool verbose ) const {
-	BHK_COLLISION_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkCollisionObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_COLLISION_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkCollisionObject::GetRefs() const {
-//	BHK_COLLISION_OBJECT_GETREFS
+//	return InternalGetRefs();
 	list<NiObjectRef> refs =  InternalGetRefs();
 	refs.reverse();
 	return refs;

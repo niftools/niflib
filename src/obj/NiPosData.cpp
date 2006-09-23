@@ -13,23 +13,23 @@ NiPosData::NiPosData() NI_POS_DATA_CONSTRUCT {}
 NiPosData::~NiPosData() {}
 
 void NiPosData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_POS_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPosData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_POS_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPosData::asString( bool verbose ) const {
-	NI_POS_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPosData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_POS_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPosData::GetRefs() const {
-	NI_POS_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPosData::GetType() const {

@@ -12,23 +12,23 @@ NiDirectionalLight::NiDirectionalLight() NI_DIRECTIONAL_LIGHT_CONSTRUCT {}
 NiDirectionalLight::~NiDirectionalLight() {}
 
 void NiDirectionalLight::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DIRECTIONAL_LIGHT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiDirectionalLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_DIRECTIONAL_LIGHT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiDirectionalLight::asString( bool verbose ) const {
-	NI_DIRECTIONAL_LIGHT_STRING
+	return InternalAsString( verbose );
 }
 
 void NiDirectionalLight::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DIRECTIONAL_LIGHT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiDirectionalLight::GetRefs() const {
-	NI_DIRECTIONAL_LIGHT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiDirectionalLight::GetType() const {

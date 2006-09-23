@@ -32,23 +32,23 @@ NiSkinPartition::NiSkinPartition() NI_SKIN_PARTITION_CONSTRUCT {}
 NiSkinPartition::~NiSkinPartition() {}
 
 void NiSkinPartition::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SKIN_PARTITION_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSkinPartition::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SKIN_PARTITION_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSkinPartition::asString( bool verbose ) const {
-	NI_SKIN_PARTITION_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSkinPartition::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SKIN_PARTITION_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSkinPartition::GetRefs() const {
-	NI_SKIN_PARTITION_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSkinPartition::GetType() const {

@@ -13,23 +13,23 @@ FxRadioButton::FxRadioButton() FX_RADIO_BUTTON_CONSTRUCT {}
 FxRadioButton::~FxRadioButton() {}
 
 void FxRadioButton::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_RADIO_BUTTON_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void FxRadioButton::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	FX_RADIO_BUTTON_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string FxRadioButton::asString( bool verbose ) const {
-	FX_RADIO_BUTTON_STRING
+	return InternalAsString( verbose );
 }
 
 void FxRadioButton::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_RADIO_BUTTON_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> FxRadioButton::GetRefs() const {
-	FX_RADIO_BUTTON_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & FxRadioButton::GetType() const {

@@ -14,23 +14,23 @@ NiBSplineInterpolator::NiBSplineInterpolator() NI_B_SPLINE_INTERPOLATOR_CONSTRUC
 NiBSplineInterpolator::~NiBSplineInterpolator() {}
 
 void NiBSplineInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_SPLINE_INTERPOLATOR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBSplineInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_B_SPLINE_INTERPOLATOR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBSplineInterpolator::asString( bool verbose ) const {
-	NI_B_SPLINE_INTERPOLATOR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBSplineInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_SPLINE_INTERPOLATOR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBSplineInterpolator::GetRefs() const {
-	NI_B_SPLINE_INTERPOLATOR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBSplineInterpolator::GetType() const {

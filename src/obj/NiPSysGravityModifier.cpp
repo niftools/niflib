@@ -13,23 +13,23 @@ NiPSysGravityModifier::NiPSysGravityModifier() NI_P_SYS_GRAVITY_MODIFIER_CONSTRU
 NiPSysGravityModifier::~NiPSysGravityModifier() {}
 
 void NiPSysGravityModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_GRAVITY_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysGravityModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_GRAVITY_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysGravityModifier::asString( bool verbose ) const {
-	NI_P_SYS_GRAVITY_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysGravityModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_GRAVITY_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysGravityModifier::GetRefs() const {
-	NI_P_SYS_GRAVITY_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysGravityModifier::GetType() const {

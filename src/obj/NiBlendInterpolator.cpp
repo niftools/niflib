@@ -12,23 +12,23 @@ NiBlendInterpolator::NiBlendInterpolator() NI_BLEND_INTERPOLATOR_CONSTRUCT {}
 NiBlendInterpolator::~NiBlendInterpolator() {}
 
 void NiBlendInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BLEND_INTERPOLATOR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBlendInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_BLEND_INTERPOLATOR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBlendInterpolator::asString( bool verbose ) const {
-	NI_BLEND_INTERPOLATOR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBlendInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BLEND_INTERPOLATOR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBlendInterpolator::GetRefs() const {
-	NI_BLEND_INTERPOLATOR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBlendInterpolator::GetType() const {

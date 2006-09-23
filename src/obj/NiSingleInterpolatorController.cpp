@@ -13,23 +13,23 @@ NiSingleInterpolatorController::NiSingleInterpolatorController() NI_SINGLE_INTER
 NiSingleInterpolatorController::~NiSingleInterpolatorController() {}
 
 void NiSingleInterpolatorController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSingleInterpolatorController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSingleInterpolatorController::asString( bool verbose ) const {
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSingleInterpolatorController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSingleInterpolatorController::GetRefs() const {
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSingleInterpolatorController::GetType() const {

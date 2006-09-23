@@ -12,23 +12,23 @@ RootCollisionNode::RootCollisionNode() ROOT_COLLISION_NODE_CONSTRUCT {}
 RootCollisionNode::~RootCollisionNode() {}
 
 void RootCollisionNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	ROOT_COLLISION_NODE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void RootCollisionNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	ROOT_COLLISION_NODE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string RootCollisionNode::asString( bool verbose ) const {
-	ROOT_COLLISION_NODE_STRING
+	return InternalAsString( verbose );
 }
 
 void RootCollisionNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	ROOT_COLLISION_NODE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> RootCollisionNode::GetRefs() const {
-	ROOT_COLLISION_NODE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & RootCollisionNode::GetType() const {

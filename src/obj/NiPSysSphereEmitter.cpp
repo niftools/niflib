@@ -12,23 +12,23 @@ NiPSysSphereEmitter::NiPSysSphereEmitter() NI_P_SYS_SPHERE_EMITTER_CONSTRUCT {}
 NiPSysSphereEmitter::~NiPSysSphereEmitter() {}
 
 void NiPSysSphereEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_SPHERE_EMITTER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysSphereEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_SPHERE_EMITTER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysSphereEmitter::asString( bool verbose ) const {
-	NI_P_SYS_SPHERE_EMITTER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysSphereEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_SPHERE_EMITTER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysSphereEmitter::GetRefs() const {
-	NI_P_SYS_SPHERE_EMITTER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysSphereEmitter::GetType() const {

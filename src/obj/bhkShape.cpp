@@ -12,23 +12,23 @@ bhkShape::bhkShape() BHK_SHAPE_CONSTRUCT {}
 bhkShape::~bhkShape() {}
 
 void bhkShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_SHAPE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_SHAPE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkShape::asString( bool verbose ) const {
-	BHK_SHAPE_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_SHAPE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkShape::GetRefs() const {
-	BHK_SHAPE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkShape::GetType() const {

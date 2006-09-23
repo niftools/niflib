@@ -12,23 +12,23 @@ NiSpecularProperty::NiSpecularProperty() NI_SPECULAR_PROPERTY_CONSTRUCT {}
 NiSpecularProperty::~NiSpecularProperty() {}
 
 void NiSpecularProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPECULAR_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSpecularProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SPECULAR_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSpecularProperty::asString( bool verbose ) const {
-	NI_SPECULAR_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSpecularProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPECULAR_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSpecularProperty::GetRefs() const {
-	NI_SPECULAR_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSpecularProperty::GetType() const {

@@ -15,23 +15,23 @@ NiPSysPlanarCollider::NiPSysPlanarCollider() NI_P_SYS_PLANAR_COLLIDER_CONSTRUCT 
 NiPSysPlanarCollider::~NiPSysPlanarCollider() {}
 
 void NiPSysPlanarCollider::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_PLANAR_COLLIDER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysPlanarCollider::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_PLANAR_COLLIDER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysPlanarCollider::asString( bool verbose ) const {
-	NI_P_SYS_PLANAR_COLLIDER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysPlanarCollider::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_PLANAR_COLLIDER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysPlanarCollider::GetRefs() const {
-	NI_P_SYS_PLANAR_COLLIDER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysPlanarCollider::GetType() const {

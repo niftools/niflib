@@ -12,23 +12,23 @@ AbhkRagdollConstraint::AbhkRagdollConstraint() ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT
 AbhkRagdollConstraint::~AbhkRagdollConstraint() {}
 
 void AbhkRagdollConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	ABHK_RAGDOLL_CONSTRAINT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void AbhkRagdollConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	ABHK_RAGDOLL_CONSTRAINT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string AbhkRagdollConstraint::asString( bool verbose ) const {
-	ABHK_RAGDOLL_CONSTRAINT_STRING
+	return InternalAsString( verbose );
 }
 
 void AbhkRagdollConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	ABHK_RAGDOLL_CONSTRAINT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> AbhkRagdollConstraint::GetRefs() const {
-	ABHK_RAGDOLL_CONSTRAINT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & AbhkRagdollConstraint::GetType() const {

@@ -12,23 +12,23 @@ BSBound::BSBound() B_S_BOUND_CONSTRUCT {}
 BSBound::~BSBound() {}
 
 void BSBound::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_BOUND_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSBound::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_BOUND_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSBound::asString( bool verbose ) const {
-	B_S_BOUND_STRING
+	return InternalAsString( verbose );
 }
 
 void BSBound::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_BOUND_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSBound::GetRefs() const {
-	B_S_BOUND_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSBound::GetType() const {

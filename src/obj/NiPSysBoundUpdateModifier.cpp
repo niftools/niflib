@@ -12,23 +12,23 @@ NiPSysBoundUpdateModifier::NiPSysBoundUpdateModifier() NI_P_SYS_BOUND_UPDATE_MOD
 NiPSysBoundUpdateModifier::~NiPSysBoundUpdateModifier() {}
 
 void NiPSysBoundUpdateModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_BOUND_UPDATE_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysBoundUpdateModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_BOUND_UPDATE_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysBoundUpdateModifier::asString( bool verbose ) const {
-	NI_P_SYS_BOUND_UPDATE_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysBoundUpdateModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_BOUND_UPDATE_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysBoundUpdateModifier::GetRefs() const {
-	NI_P_SYS_BOUND_UPDATE_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysBoundUpdateModifier::GetType() const {

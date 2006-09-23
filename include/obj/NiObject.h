@@ -72,15 +72,20 @@ public:
 	NIFLIB_API void SubtractRef() const; //Should not be called directly
 	NIFLIB_API unsigned int GetNumRefs() { return _ref_count; }
 
-	/*! Returns A new block that contains all the same data that this block does, but occupies a different part of memory.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
-	 * \param version The version number to use in the memory streaming operation.  Default is the highest version availiable.
-	 * \return A cloned copy of this block as a new block.
+	/*! Returns A new object that contains all the same data that this object does,
+	 * but occupies a different part of memory.  The data stored in a NIF file varies
+	 * from version to version.  Usually you are safe with the default option
+	 * (the highest availiable version) but you may need to use an earlier version
+	 * if you need to clone an obsolete piece of information.
+	 * \param[in] version The version number to use in the memory streaming operation.  Default is the highest version availiable.
+	 * \param[in] user_version The game-specific version number extention.
+	 * \return A cloned copy of this object as a new object.
 	 */
 	NIFLIB_API NiObjectRef Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 
 	/*!
-	 * Summarizes the information contained in this block in English.
-	 * \param verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
 	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
 	 * 
 	 * <b>Example:</b> 
@@ -139,7 +144,12 @@ private:
 	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
-	STANDARD_INTERNAL_METHODS
+private:
+	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	string InternalAsString( bool verbose ) const;
+	void InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	list<NiObjectRef> InternalGetRefs() const;
 };
 
 

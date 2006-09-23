@@ -134,7 +134,7 @@ struct NifInfo {
  * 
  * <b>In Python:</b>
  * \code
- * ver = CheckNifHeader("test_in.nif")
+ * ver = CheckNifVersion("test_in.nif")
  * if ( IsSupportedVersion(ver) == false ):
  *     print "Unsupported."
  * elif ( ver == VER_INVALID ):
@@ -165,7 +165,7 @@ NIFLIB_API vector< Ref<NiObject> > ReadNifList( string const & file_name, NifInf
 
 /*!
  * Reads the given input stream and returns a vector of block references
- * \param stream The input stream to read NIF data from.
+ * \param in The input stream to read NIF data from.
  * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A vector of block references that point to all the blocks read from the stream.
  */
@@ -193,17 +193,17 @@ NIFLIB_API Ref<NiObject> ReadNifTree( string const & file_name, NifInfo * info =
 
 /*!
  * Reads the given input stream and returns a reference to the root block.
- * \param stream The input stream to read NIF data from.
- * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
+ * \param[in] in The input stream to read NIF data from.
+ * \param[out] info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return A block reference that points to the root of the tree of data blocks contained in the NIF file.
  */
 NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root block given.
- * \param file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
- * \param root The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
- * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
+ * \param[in] file_name The desired file name for the new NIF file.  The path is relative to the working directory unless a full path is specified.
+ * \param[in] root The root block to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
+ * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  * 
  * <b>Example:</b> 
  * \code
@@ -223,27 +223,27 @@ NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & ro
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
- * \param stream The output stream to write the NIF data to.
- * \param root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
- * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
+ * \param[in] in The output stream to write the NIF data to.
+ * \param[in] root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
+ * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-NIFLIB_API void WriteNifTree( ostream & stream, Ref<NiObject> const & root, NifInfo & info );
+NIFLIB_API void WriteNifTree( ostream & in, Ref<NiObject> const & root, NifInfo & info );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
- * \param file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
- * \param root The root block to start from when writing out the NIF file.
- * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
- * \param export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
- * \param kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
+ * \param[in] file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
+ * \param[in] root The root block to start from when writing out the NIF file.
+ * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
+ * \param[in] export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
+ * \param[in] kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
 NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, NifInfo & info, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
 
 /*!
  * Creates a clone of an entire tree of objects.
- * \param root The root block to start from when cloning the NIF data.  All referenced objects will be included in the new tree.
- * \param version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
- * \param user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
+ * \param[in] root The root block to start from when cloning the NIF data.  All referenced objects will be included in the new tree.
+ * \param[in] version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
+ * \param[in] user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
  * \return The root of the new cloned tree.
  */
 NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0 );
@@ -252,10 +252,10 @@ NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned vers
 //TODO:  Figure out how to fix this to work with the new system
 /*!
  * Merges two Nif trees into one.  For standard Nif files, any blocks with the same name are merged.  For Kf files, blocks are attatched to those that match the name specified in the KF root block.  The data stored in a NIF file varies from version to version.  Usually you are safe with the default option (the highest availiable version) but you may need to use an earlier version if you need to clone an obsolete piece of information.
- * \param target The root block of the first Nif tree to merge.
- * \param right The root block of the second Nif tree to merge.
- * \param version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
- * \param user_version The user version to use during the clone operation.
+ * \param[in,out] target The root block of the first Nif tree to merge.
+ * \param[in] right The root block of the second Nif tree to merge.
+ * \param[in] version The version of the nif format to use during the clone operation on the right-hand tree.  The default is the highest version availiable.
+ * \param[in] user_version The user version to use during the clone operation.
  */
 //NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xFFFFFFFF );
 NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned version = 0xFFFFFFFF, unsigned user_version = 0  );
@@ -265,7 +265,7 @@ NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControlle
  * to the natural bind position where no meshes are distorted by skin
  * influences.  This is not always successful and only affects nodes that
  * are skin influences.
- * \param root The root NiNode of the tree.
+ * \param[in] root The root NiNode of the tree.
  */
 NIFLIB_API void SendNifTreeToBindPos( const Ref<NiNode> & root );
 
@@ -296,14 +296,14 @@ NIFLIB_HIDDEN Ref<NiObject> CreateObject( string block_type );
  * Returns whether the requested version is explicitly supported.  This does
  * not mean that the file will not open, rather it means that we have not
  * encountered files with this version in our tests yet.
- * \param version The version of the NIF format to test for the support level of.
+ * \param[in] version The version of the NIF format to test for the support level of.
  * \return Whether the requested version is supported.
  */
 NIFLIB_API bool IsSupportedVersion( unsigned int version );
 
 /*!
  * Parses a version string and returns the equivalent version as a byte-packed integer.
- * \param version The version number of the NIF format to parse in string format.
+ * \param[in] version The version number of the NIF format to parse in string format.
  * \return The version in integer format or VER_INVALID if the version string is not in the correct format.
  */
 NIFLIB_API unsigned ParseVersionString( string version );
@@ -311,7 +311,7 @@ NIFLIB_API unsigned ParseVersionString( string version );
 /*!
  * Takes a NIF version in byte-packed integer format and returns a formatted human-
  * readable string.  For example, 0x04000002 returns the string "4.0.0.2"
- * \param version The NIF version in integer form.
+ * \param[in] version The NIF version in integer form.
  * \return The equivalent string representation of the version number.
  */
 NIFLIB_API string FormatVersionString( unsigned version );
@@ -442,15 +442,15 @@ Objects use Ref smart pointers internally as well, so you don’t have to worry ab
 
 \section rw_files Reading and Writing NIF Files
 
-To check whether a NIF file has a valid header, and to make sure that its version is supported, call the \ref CheckNifHeader function. There are two ways to read in a NIF file – as a list of objects in the order they appear in the file and as a single Ref pointing to the root of the scene graph tree from which all other objects can be found by following the links between objects.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all objects, regardless of whether we fully understand the links that keep them from destroying themselves.  Un-supported blocks may not be included in the tree representation if no other blocks reference them.  So most of the time, you’re going to want to call the \ref ReadNifTree function.
+To check whether a file is really a NIF file, call the CheckNifVersion() function. You can then call the IsSupportedVersion() function to determine whether the data in the file may not be well understood.  There are two ways to read in a NIF file – as a list of objects in the order they appear in the file and as a single Ref pointing to the root of the scene graph tree from which all other objects can be found by following the links between objects.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all objects, regardless of whether we fully understand the links that keep them from destroying themselves.  Unsupported objects may not be included in the tree representation if no other objects reference them.  So most of the time, you’re going to want to call the ReadNifTree() function.
 
-That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one NIF object in memory – the root block of the tree.  You can pass this same block to the \ref WriteNifTree function to create a new NIF file from the representation in memory.
+That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one NIF object in memory – the root object of the tree.  You can pass this same object to the WriteNifTree() function to create a new NIF file from the representation in memory.
 
 WARNING:  Some features of the NIF format are still unsupported by Niflib, therefore in some cases the exported NIF may either be different from the original, or completely unusable.  DO NOT OVERWRITE THE ORIGINAL NIF FILE.
 
 \section work_blk Working with NIF Objects
 
-New class objects don’t have to just come from loaded NIF files.  To create an object block yourself, you can do so by using the C++ new keyword like so:
+New class objects don’t have to just come from loaded NIF files.  To create an object yourself, you can do so by using the C++ new keyword like so:
 
 \code
 RefNiNode node = new NiNode;
@@ -462,9 +462,9 @@ It is recommended to always use smart pointers, rather than plain pointers, to e
 NiNode * node = new NiNode;
 \endcode
 
-All NIF objects inherit from \ref NiObject so a good place to start would be understanding the methods of that class.
+All NIF objects inherit from NiObject so a good place to start would be understanding the methods of that class.
 
-You can access the member functions of any class through a Ref smart pointer of the right type by using the -> operator.  In Python you will need to use the Ptr() function as an intermediary between a smart reference and the object that it holds, like so:
+You can access the member functions of any class through a Ref smart pointer of the right type by using the -> operator.  In Python you will need to use the Ref::Ptr() function as an intermediary between a smart reference and the object that it holds, like so:
 
 \code
 //C++
@@ -474,7 +474,7 @@ niNode->GetChildren;
 niNode.Ptr().GetChildren()
 \endcode
 
-If you have a Ref of one type, such as a generic NiObjectRef, and you want to know if the object it points to also inherits from the NiNode class, you use the \ref DynamicCast template function.  To cast from a NiObjectRef to a NiNodeRef, you would do the following:
+If you have a Ref of one type, such as a generic NiObjectRef, and you want to know if the object it points to also inherits from the NiNode class, you use the DynamicCast() template function.  To cast from a NiObjectRef to a NiNodeRef, you would do the following:
 
 \code
 NiObjectRef root = ReadNifTree( “test.nif” );
@@ -483,7 +483,7 @@ if ( node != NULL ) {
    ...
 \endcode
 
-Note the template syntax of the \ref DynamicCast function.  In Python these tempates are mapped to functions named DynamicCastTo[object type].  For example, DynamicCastToNiNode.  To use them you must use the \ref Ref::Ptr() function as they expect pointers rather than references.  For example:
+Note the template syntax of the DynamicCast() function.  In Python these tempates are mapped to functions named DynamicCastTo[object type]().  For example, DynamicCastToNiNode().  To use them you must use the Ref::Ptr() function as they expect pointers rather than references.  For example:
 
 \code
 root = ReadNifTree( “test.nif” );
@@ -492,13 +492,13 @@ if root != NULL:
    ...
 \endcode
 
-Notice also that you must always check the value returned by \ref DynamicCast.  If the cast is not successful, i.e. the object is not a derived type of the one you’re trying to cast it to, the function will return NULL.
+Notice also that you must always check the value returned by DynamicCast().  If the cast is not successful, i.e. the object is not a derived type of the one you’re trying to cast it to, the function will return NULL.
 
-Casting down the inheritance tree should be automatic in C++, but you can also explicitly call the \ref StaticCast function.  You will need to use this function in Python to cast a Ref to the type expected by some member functions which take Ref arguments.
+Casting down the inheritance tree should be automatic in C++, but you can also explicitly call the StaticCast() function.  You will need to use this function to cast a Ref to the type expected by some member functions which take Ref arguments.
 
-One useful function of all NIF objects is the \ref NiObject::asString function.  You can use it to get an English summary of the contents of that object.  You can also call the \ref NiObject::GetIDString function to get a short read out that includes the memory address, type, and name, if any, of the object.
+One useful function of all NIF objects is the NiObject::asString() function.  You can use it to get an English summary of the contents of that object.  You can also call the NiObject::GetIDString() function to get a short readout that includes the memory address, type, and name, if any, of the object.
 
-You will probably also want to know the type of a block at some point.  You can retrieve this with the \ref NiObject::GetType function.  This returns a reference to the Type value that uniquly identifies this class.  You can get its name by calling the \ref Type::GetTypeName function.
+You will probably also want to know the type of a block at some point.  You can retrieve this with the NiObject::GetType() function.  This returns a reference to the Type value that uniquly identifies this class.  You can get its name by calling the Type::GetTypeName() function.
 
 <center>\ref intro_page "<< Previous Section"</center>
 

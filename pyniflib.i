@@ -63,6 +63,15 @@ POSSIBILITY OF SUCH DAMAGE. */
 }
 #endif
 
+//Ignore the const versions of these functions
+%ignore DynamicCast( const NiObject * object );
+%ignore StaticCast ( const NiObject * object );
+
+//Do not use smart pointer support as it doubles the size of the library
+//and makes it take twice as long to be imported
+%ignore Niflib::Ref::operator->;
+%ignore Niflib::Ref::operator=;
+
 //Import the symbols from these but do not include them in the wrapper
 %import "gen/obj_defines.h"
 %import "NIF_IO.h"
@@ -247,10 +256,11 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/NiPSysSpawnModifier.h"
 		#include "obj/NiPSysSphereEmitter.h"
 		#include "obj/NiPSysUpdateCtlr.h"
+		#include "obj/NiLODData.h"
 		#include "obj/NiRangeLODData.h"
+		#include "obj/NiScreenLODData.h"
 		#include "obj/NiRotatingParticles.h"
 		#include "obj/NiRotatingParticlesData.h"
-		#include "obj/NiScreenLODData.h"
 		#include "obj/NiSequenceStreamHelper.h"
 		#include "obj/NiShadeProperty.h"
 		#include "obj/NiSkinData.h"
@@ -275,6 +285,8 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/NiTriShapeData.h"
 		#include "obj/NiTriStrips.h"
 		#include "obj/NiTriStripsData.h"
+		#include "obj/NiClod.h"
+		#include "obj/NiClodData.h"
 		#include "obj/NiUVController.h"
 		#include "obj/NiUVData.h"
 		#include "obj/NiVectorExtraData.h"
@@ -312,56 +324,29 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "gen/Morph.h"
 		#include "gen/Particle.h"
 		#include "gen/SkinData.h"
+		#include "gen/Sphere.h"
 		#include "gen/RagDollDescriptor.h"
 		#include "gen/LimitedHingeDescriptor.h"
 	using namespace Niflib;
 %}
-%include "Key.h"
-%include "nif_basic_types.h"
-%include "gen/ByteArray.h"
-%include "gen/Footer.h"
-%include "gen/LODRange.h"
-%include "gen/MatchGroup.h"
-%include "gen/MipMap.h"
-%include "gen/NodeGroup.h"
-%include "gen/QuaternionXYZW.h"
-%include "gen/SkinShape.h"
-%include "gen/SkinShapeGroup.h"
-%include "gen/SkinWeight.h"
-%include "gen/AVObject.h"
-%include "gen/ControllerLink.h"
-%include "gen/Header.h"
-%include "gen/StringPalette.h"
-%include "gen/TBC.h"
-%include "gen/KeyGroup.h"
-%include "gen/RotationKeyArray.h"
-%include "gen/TexDesc.h"
-%include "gen/ShaderTexDesc.h"
-%include "gen/TexSource.h"
-%include "gen/SkinPartition.h"
-%include "gen/BoundingBox.h"
-%include "gen/FurniturePosition.h"
-%include "gen/hkTriangle.h"
-%include "gen/Morph.h"
-%include "gen/Particle.h"
-%include "gen/SkinData.h"
-%include "gen/RagDollDescriptor.h"
-%include "gen/LimitedHingeDescriptor.h"
+
 %template(vector_byte) std::vector<Niflib::byte>;
 %template(vector_ushort) std::vector<Niflib::ushort>;
 %template(vector_SkinShape) std::vector<Niflib::SkinShape>;
 %template(vector_string) std::vector<std::string>;
 %template(vector_Triangle) std::vector<Niflib::Triangle>;
 %template(vector_Vector3) std::vector<Niflib::Vector3>;
-%template(vector_float) std::vector<float>;
 %template(vector_SkinWeight) std::vector<Niflib::SkinWeight>;
+%template(vector_uint) std::vector<Niflib::uint>;
 %template(vector_NodeGroup) std::vector<Niflib::NodeGroup>;
 %template(vector_Color4) std::vector<Niflib::Color4>;
+%template(vector_float) std::vector<float>;
 %template(vector_Float4) std::vector<Niflib::Float4>;
-%template(vector_uint) std::vector<Niflib::uint>;
+%template(vector_Sphere) std::vector<Niflib::Sphere>;
 %template(vector_FurniturePosition) std::vector<Niflib::FurniturePosition>;
 %template(vector_hkTriangle) std::vector<Niflib::hkTriangle>;
 %template(vector_SkinShapeGroup) std::vector<Niflib::SkinShapeGroup>;
+%template(vector_short) std::vector<short>;
 %template(vector_ControllerLink) std::vector<Niflib::ControllerLink>;
 %template(vector_AVObject) std::vector<Niflib::AVObject>;
 %template(vector_Morph) std::vector<Niflib::Morph>;
@@ -373,19 +358,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(vector_SkinPartition) std::vector<Niflib::SkinPartition>;
 %template(vector_ShaderTexDesc) std::vector<Niflib::ShaderTexDesc>;
 %template(vector_MatchGroup) std::vector<Niflib::MatchGroup>;
+%template(pair_int_float) std::pair<int, float>;
+%template(map_int_float) std::map<int, float>;
 
-%template(Key_float) Niflib::Key<float>;
-%template(Key_Quaternion) Niflib::Key<Niflib::Quaternion>;
-%template(Key_byte) Niflib::Key<unsigned char>;
-%template(Key_Vector3) Niflib::Key<Niflib::Vector3>;
-%template(Key_Color4) Niflib::Key<Niflib::Color4>;
-
-%template(vector_Key_float) std::vector<Niflib::Key<float> >;
-%template(vector_Key_Quaternion) std::vector<Niflib::Key<Niflib::Quaternion> >;
-%template(vector_Key_byte) std::vector<Niflib::Key<unsigned char> >;
-%template(vector_Key_Vector3) std::vector<Niflib::Key<Niflib::Vector3> >;
-%template(vector_Key_Color4) std::vector<Niflib::Key<Niflib::Color4> >;
-
+%include "niflib.h"
 %include "Ref.h"
 %include "Type.h"
 %include "nif_math.h"
@@ -1089,10 +1065,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiPSysUpdateCtlrRef) Niflib::Ref<Niflib::NiPSysUpdateCtlr>;
 %template(DynamicCastToNiPSysUpdateCtlr) Niflib::DynamicCast<Niflib::NiPSysUpdateCtlr>;
 %template(StaticCastToNiPSysUpdateCtlr) Niflib::StaticCast<Niflib::NiPSysUpdateCtlr>;
+%include "obj/NiLODData.h"
+%template(NiLODDataRef) Niflib::Ref<Niflib::NiLODData>;
+%template(DynamicCastToNiLODData) Niflib::DynamicCast<Niflib::NiLODData>;
+%template(StaticCastToNiLODData) Niflib::StaticCast<Niflib::NiLODData>;
 %include "obj/NiRangeLODData.h"
 %template(NiRangeLODDataRef) Niflib::Ref<Niflib::NiRangeLODData>;
 %template(DynamicCastToNiRangeLODData) Niflib::DynamicCast<Niflib::NiRangeLODData>;
 %template(StaticCastToNiRangeLODData) Niflib::StaticCast<Niflib::NiRangeLODData>;
+%include "obj/NiScreenLODData.h"
+%template(NiScreenLODDataRef) Niflib::Ref<Niflib::NiScreenLODData>;
+%template(DynamicCastToNiScreenLODData) Niflib::DynamicCast<Niflib::NiScreenLODData>;
+%template(StaticCastToNiScreenLODData) Niflib::StaticCast<Niflib::NiScreenLODData>;
 %include "obj/NiRotatingParticles.h"
 %template(NiRotatingParticlesRef) Niflib::Ref<Niflib::NiRotatingParticles>;
 %template(DynamicCastToNiRotatingParticles) Niflib::DynamicCast<Niflib::NiRotatingParticles>;
@@ -1101,10 +1085,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiRotatingParticlesDataRef) Niflib::Ref<Niflib::NiRotatingParticlesData>;
 %template(DynamicCastToNiRotatingParticlesData) Niflib::DynamicCast<Niflib::NiRotatingParticlesData>;
 %template(StaticCastToNiRotatingParticlesData) Niflib::StaticCast<Niflib::NiRotatingParticlesData>;
-%include "obj/NiScreenLODData.h"
-%template(NiScreenLODDataRef) Niflib::Ref<Niflib::NiScreenLODData>;
-%template(DynamicCastToNiScreenLODData) Niflib::DynamicCast<Niflib::NiScreenLODData>;
-%template(StaticCastToNiScreenLODData) Niflib::StaticCast<Niflib::NiScreenLODData>;
 %include "obj/NiSequenceStreamHelper.h"
 %template(NiSequenceStreamHelperRef) Niflib::Ref<Niflib::NiSequenceStreamHelper>;
 %template(DynamicCastToNiSequenceStreamHelper) Niflib::DynamicCast<Niflib::NiSequenceStreamHelper>;
@@ -1201,6 +1181,14 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiTriStripsDataRef) Niflib::Ref<Niflib::NiTriStripsData>;
 %template(DynamicCastToNiTriStripsData) Niflib::DynamicCast<Niflib::NiTriStripsData>;
 %template(StaticCastToNiTriStripsData) Niflib::StaticCast<Niflib::NiTriStripsData>;
+%include "obj/NiClod.h"
+%template(NiClodRef) Niflib::Ref<Niflib::NiClod>;
+%template(DynamicCastToNiClod) Niflib::DynamicCast<Niflib::NiClod>;
+%template(StaticCastToNiClod) Niflib::StaticCast<Niflib::NiClod>;
+%include "obj/NiClodData.h"
+%template(NiClodDataRef) Niflib::Ref<Niflib::NiClodData>;
+%template(DynamicCastToNiClodData) Niflib::DynamicCast<Niflib::NiClodData>;
+%template(StaticCastToNiClodData) Niflib::StaticCast<Niflib::NiClodData>;
 %include "obj/NiUVController.h"
 %template(NiUVControllerRef) Niflib::Ref<Niflib::NiUVController>;
 %template(DynamicCastToNiUVController) Niflib::DynamicCast<Niflib::NiUVController>;
@@ -1241,6 +1229,35 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(RootCollisionNodeRef) Niflib::Ref<Niflib::RootCollisionNode>;
 %template(DynamicCastToRootCollisionNode) Niflib::DynamicCast<Niflib::RootCollisionNode>;
 %template(StaticCastToRootCollisionNode) Niflib::StaticCast<Niflib::RootCollisionNode>;
-%include "niflib.h"
+%include "gen/ByteArray.h"
+%include "gen/Footer.h"
+%include "gen/LODRange.h"
+%include "gen/MatchGroup.h"
+%include "gen/MipMap.h"
+%include "gen/NodeGroup.h"
+%include "gen/QuaternionXYZW.h"
+%include "gen/SkinShape.h"
+%include "gen/SkinShapeGroup.h"
+%include "gen/SkinWeight.h"
+%include "gen/AVObject.h"
+%include "gen/ControllerLink.h"
+%include "gen/Header.h"
+%include "gen/StringPalette.h"
+%include "gen/TBC.h"
+%include "gen/KeyGroup.h"
+%include "gen/RotationKeyArray.h"
+%include "gen/TexDesc.h"
+%include "gen/ShaderTexDesc.h"
+%include "gen/TexSource.h"
+%include "gen/SkinPartition.h"
+%include "gen/BoundingBox.h"
+%include "gen/FurniturePosition.h"
+%include "gen/hkTriangle.h"
+%include "gen/Morph.h"
+%include "gen/Particle.h"
+%include "gen/SkinData.h"
+%include "gen/Sphere.h"
+%include "gen/RagDollDescriptor.h"
+%include "gen/LimitedHingeDescriptor.h"
 
 %template(vector_NiAVObjectRef) std::vector<Niflib::NiAVObjectRef>;

@@ -13,23 +13,23 @@ NiVisController::NiVisController() NI_VIS_CONTROLLER_CONSTRUCT {}
 NiVisController::~NiVisController() {}
 
 void NiVisController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_VIS_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiVisController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_VIS_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiVisController::asString( bool verbose ) const {
-	NI_VIS_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiVisController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_VIS_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiVisController::GetRefs() const {
-	NI_VIS_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiVisController::GetType() const {

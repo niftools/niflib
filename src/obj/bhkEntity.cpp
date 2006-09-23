@@ -13,23 +13,23 @@ bhkEntity::bhkEntity() BHK_ENTITY_CONSTRUCT {}
 bhkEntity::~bhkEntity() {}
 
 void bhkEntity::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_ENTITY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkEntity::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_ENTITY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkEntity::asString( bool verbose ) const {
-	BHK_ENTITY_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkEntity::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_ENTITY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkEntity::GetRefs() const {
-	BHK_ENTITY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkEntity::GetType() const {

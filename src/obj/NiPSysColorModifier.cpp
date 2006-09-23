@@ -13,23 +13,23 @@ NiPSysColorModifier::NiPSysColorModifier() NI_P_SYS_COLOR_MODIFIER_CONSTRUCT {}
 NiPSysColorModifier::~NiPSysColorModifier() {}
 
 void NiPSysColorModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_COLOR_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysColorModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_COLOR_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysColorModifier::asString( bool verbose ) const {
-	NI_P_SYS_COLOR_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysColorModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_COLOR_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysColorModifier::GetRefs() const {
-	NI_P_SYS_COLOR_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysColorModifier::GetType() const {

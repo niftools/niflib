@@ -12,23 +12,23 @@ NiBSplineCompPoint3Interpolator::NiBSplineCompPoint3Interpolator() NI_B_SPLINE_C
 NiBSplineCompPoint3Interpolator::~NiBSplineCompPoint3Interpolator() {}
 
 void NiBSplineCompPoint3Interpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBSplineCompPoint3Interpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBSplineCompPoint3Interpolator::asString( bool verbose ) const {
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBSplineCompPoint3Interpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
-	NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBSplineCompPoint3Interpolator::GetType() const {

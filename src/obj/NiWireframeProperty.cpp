@@ -12,23 +12,23 @@ NiWireframeProperty::NiWireframeProperty() NI_WIREFRAME_PROPERTY_CONSTRUCT {}
 NiWireframeProperty::~NiWireframeProperty() {}
 
 void NiWireframeProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_WIREFRAME_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiWireframeProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_WIREFRAME_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiWireframeProperty::asString( bool verbose ) const {
-	NI_WIREFRAME_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiWireframeProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_WIREFRAME_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiWireframeProperty::GetRefs() const {
-	NI_WIREFRAME_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiWireframeProperty::GetType() const {

@@ -36,7 +36,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 namespace Niflib {
 
-//Stores the mapping between block names and factory function pointers to create them
+//Stores the mapping between object names and factory function pointers to create them
 typedef NiObject * (*blk_factory_func)();
 bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
@@ -47,8 +47,20 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
 
+/*!
+ * Helper function to split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
+ * \param root_block The root block of the full tree.
+ * \param xnif_root The root object of the tree without animation.
+ * \param xkf_roots The root objects of the animation trees.
+ * \param kfm The KFM structure (if required by style).
+ * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
+ * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
+ */
+static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, NifInfo & info );
+
 
 //--Function Bodies--//
+
 NiObjectRef CreateObject( string block_type ) {
 	
 	//Initialize the global block list if it hasn't been done yet
@@ -74,7 +86,6 @@ NiObjectRef CreateObject( string block_type ) {
 	return NiObjectRef(block);
 }
 
-//Reads the given file by file name and returns a reference to the root block
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	//Read block list
 	//cout << "File name:  " << file_name << endl;
@@ -82,7 +93,6 @@ NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	return FindRoot( blocks );
 }
 
-//Reads the given input stream and returns a reference to the root block
 NiObjectRef ReadNifTree( istream & in, NifInfo * info ) {
 	//Read block list
 	vector<NiObjectRef> blocks = ReadNifList( in, info );
@@ -126,7 +136,6 @@ unsigned int GetNifVersion( string const & file_name ) {
 	return version;
 }
 
-//Reads the given file by file name and returns a vector of block references
 vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 
 	//--Open File--//
@@ -137,7 +146,6 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 	in.close();
 }
 
-//Reads the given input stream and returns a vector of block references
 vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 	//--Read Header--//
@@ -628,14 +636,6 @@ static std::string CreateFileName(std::string name) {
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-/*!
- * Helper function to split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
- * \param root_block The root block of the full tree.
- * \param xnif_root The root object of the tree without animation.
- * \param xkf_roots The root objects of the animation trees.
- * \param kfm The KFM structure (if required by style).
- * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
- */
 static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, NifInfo & info ) {
 	// Do we have animation groups (a NiTextKeyExtraData block)?
 	// If so, create XNif and XKf trees.
@@ -769,16 +769,6 @@ static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_roo
 		xnif_root = root_block;
 	};
 }
-
-//TODO:  This was written by Amorilia.  Figure out how to fix it.
-///*!
-// * Helper function to split an animation tree into multiple animation trees (one per animation group) and a kfm block.
-// * \param root_block The root block of the full tree.
-// * \param kf Vector of root blocks of the new animation trees.
-// */
-//void SplitKfTree( NiObjectRef const & root_block, vector<NiObjectRef> & kf ) {
-//	throw runtime_error("Not yet implemented.");
-//};
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
 void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, NifInfo & info, ExportOptions export_files, NifGame kf_type ) {

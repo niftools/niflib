@@ -13,23 +13,23 @@ NiFlipController::NiFlipController() NI_FLIP_CONTROLLER_CONSTRUCT {}
 NiFlipController::~NiFlipController() {}
 
 void NiFlipController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLIP_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiFlipController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_FLIP_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiFlipController::asString( bool verbose ) const {
-	NI_FLIP_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiFlipController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLIP_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiFlipController::GetRefs() const {
-	NI_FLIP_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiFlipController::GetType() const {

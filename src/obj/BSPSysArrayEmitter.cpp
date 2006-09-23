@@ -12,23 +12,23 @@ BSPSysArrayEmitter::BSPSysArrayEmitter() B_S_P_SYS_ARRAY_EMITTER_CONSTRUCT {}
 BSPSysArrayEmitter::~BSPSysArrayEmitter() {}
 
 void BSPSysArrayEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_P_SYS_ARRAY_EMITTER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSPSysArrayEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_P_SYS_ARRAY_EMITTER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSPSysArrayEmitter::asString( bool verbose ) const {
-	B_S_P_SYS_ARRAY_EMITTER_STRING
+	return InternalAsString( verbose );
 }
 
 void BSPSysArrayEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_P_SYS_ARRAY_EMITTER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSPSysArrayEmitter::GetRefs() const {
-	B_S_P_SYS_ARRAY_EMITTER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSPSysArrayEmitter::GetType() const {

@@ -12,23 +12,23 @@ bhkTransformShape::bhkTransformShape() BHK_TRANSFORM_SHAPE_CONSTRUCT {}
 bhkTransformShape::~bhkTransformShape() {}
 
 void bhkTransformShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_TRANSFORM_SHAPE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkTransformShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_TRANSFORM_SHAPE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkTransformShape::asString( bool verbose ) const {
-	BHK_TRANSFORM_SHAPE_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkTransformShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_TRANSFORM_SHAPE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkTransformShape::GetRefs() const {
-	BHK_TRANSFORM_SHAPE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkTransformShape::GetType() const {

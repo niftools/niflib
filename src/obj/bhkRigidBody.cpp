@@ -14,23 +14,23 @@ bhkRigidBody::bhkRigidBody() BHK_RIGID_BODY_CONSTRUCT {}
 bhkRigidBody::~bhkRigidBody() {}
 
 void bhkRigidBody::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_RIGID_BODY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkRigidBody::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_RIGID_BODY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkRigidBody::asString( bool verbose ) const {
-	BHK_RIGID_BODY_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkRigidBody::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_RIGID_BODY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkRigidBody::GetRefs() const {
-	BHK_RIGID_BODY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkRigidBody::GetType() const {

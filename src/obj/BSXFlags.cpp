@@ -12,23 +12,23 @@ BSXFlags::BSXFlags() B_S_X_FLAGS_CONSTRUCT {}
 BSXFlags::~BSXFlags() {}
 
 void BSXFlags::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_X_FLAGS_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSXFlags::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_X_FLAGS_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSXFlags::asString( bool verbose ) const {
-	B_S_X_FLAGS_STRING
+	return InternalAsString( verbose );
 }
 
 void BSXFlags::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_X_FLAGS_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSXFlags::GetRefs() const {
-	B_S_X_FLAGS_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSXFlags::GetType() const {

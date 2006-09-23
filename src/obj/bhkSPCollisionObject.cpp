@@ -12,23 +12,23 @@ bhkSPCollisionObject::bhkSPCollisionObject() BHK_S_P_COLLISION_OBJECT_CONSTRUCT 
 bhkSPCollisionObject::~bhkSPCollisionObject() {}
 
 void bhkSPCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_S_P_COLLISION_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkSPCollisionObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_S_P_COLLISION_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkSPCollisionObject::asString( bool verbose ) const {
-	BHK_S_P_COLLISION_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkSPCollisionObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_S_P_COLLISION_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkSPCollisionObject::GetRefs() const {
-	BHK_S_P_COLLISION_OBJECT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkSPCollisionObject::GetType() const {

@@ -13,23 +13,23 @@ BSKeyframeController::BSKeyframeController() B_S_KEYFRAME_CONTROLLER_CONSTRUCT {
 BSKeyframeController::~BSKeyframeController() {}
 
 void BSKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_KEYFRAME_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSKeyframeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_KEYFRAME_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSKeyframeController::asString( bool verbose ) const {
-	B_S_KEYFRAME_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void BSKeyframeController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_KEYFRAME_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSKeyframeController::GetRefs() const {
-	B_S_KEYFRAME_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSKeyframeController::GetType() const {

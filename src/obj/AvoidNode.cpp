@@ -12,23 +12,23 @@ AvoidNode::AvoidNode() AVOID_NODE_CONSTRUCT {}
 AvoidNode::~AvoidNode() {}
 
 void AvoidNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	AVOID_NODE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void AvoidNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	AVOID_NODE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string AvoidNode::asString( bool verbose ) const {
-	AVOID_NODE_STRING
+	return InternalAsString( verbose );
 }
 
 void AvoidNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	AVOID_NODE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> AvoidNode::GetRefs() const {
-	AVOID_NODE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & AvoidNode::GetType() const {

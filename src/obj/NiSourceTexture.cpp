@@ -14,23 +14,23 @@ NiSourceTexture::NiSourceTexture() NI_SOURCE_TEXTURE_CONSTRUCT {}
 NiSourceTexture::~NiSourceTexture() {}
 
 void NiSourceTexture::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SOURCE_TEXTURE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSourceTexture::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SOURCE_TEXTURE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSourceTexture::asString( bool verbose ) const {
-	NI_SOURCE_TEXTURE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSourceTexture::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SOURCE_TEXTURE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSourceTexture::GetRefs() const {
-	NI_SOURCE_TEXTURE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSourceTexture::GetType() const {

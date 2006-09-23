@@ -14,23 +14,23 @@ NiGeomMorpherController::NiGeomMorpherController() NI_GEOM_MORPHER_CONTROLLER_CO
 NiGeomMorpherController::~NiGeomMorpherController() {}
 
 void NiGeomMorpherController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_GEOM_MORPHER_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiGeomMorpherController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_GEOM_MORPHER_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiGeomMorpherController::asString( bool verbose ) const {
-	NI_GEOM_MORPHER_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiGeomMorpherController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_GEOM_MORPHER_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiGeomMorpherController::GetRefs() const {
-	NI_GEOM_MORPHER_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiGeomMorpherController::GetType() const {

@@ -12,23 +12,23 @@ NiClod::NiClod() NI_CLOD_CONSTRUCT {}
 NiClod::~NiClod() {}
 
 void NiClod::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_CLOD_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiClod::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_CLOD_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiClod::asString( bool verbose ) const {
-	NI_CLOD_STRING
+	return InternalAsString( verbose );
 }
 
 void NiClod::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_CLOD_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiClod::GetRefs() const {
-	NI_CLOD_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiClod::GetType() const {

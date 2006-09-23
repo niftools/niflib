@@ -14,23 +14,23 @@ NiDefaultAVObjectPalette::NiDefaultAVObjectPalette() NI_DEFAULT_A_V_OBJECT_PALET
 NiDefaultAVObjectPalette::~NiDefaultAVObjectPalette() {}
 
 void NiDefaultAVObjectPalette::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiDefaultAVObjectPalette::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiDefaultAVObjectPalette::asString( bool verbose ) const {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiDefaultAVObjectPalette::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiDefaultAVObjectPalette::GetRefs() const {
-	NI_DEFAULT_A_V_OBJECT_PALETTE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiDefaultAVObjectPalette::GetType() const {

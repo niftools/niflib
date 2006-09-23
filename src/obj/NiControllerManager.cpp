@@ -15,23 +15,23 @@ NiControllerManager::NiControllerManager() NI_CONTROLLER_MANAGER_CONSTRUCT {}
 NiControllerManager::~NiControllerManager() {}
 
 void NiControllerManager::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_CONTROLLER_MANAGER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiControllerManager::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_CONTROLLER_MANAGER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiControllerManager::asString( bool verbose ) const {
-	NI_CONTROLLER_MANAGER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiControllerManager::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_CONTROLLER_MANAGER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiControllerManager::GetRefs() const {
-	NI_CONTROLLER_MANAGER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiControllerManager::GetType() const {

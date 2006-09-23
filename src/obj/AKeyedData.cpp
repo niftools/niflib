@@ -12,23 +12,23 @@ AKeyedData::AKeyedData() A_KEYED_DATA_CONSTRUCT {}
 AKeyedData::~AKeyedData() {}
 
 void AKeyedData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_KEYED_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void AKeyedData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	A_KEYED_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string AKeyedData::asString( bool verbose ) const {
-	A_KEYED_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void AKeyedData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_KEYED_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> AKeyedData::GetRefs() const {
-	A_KEYED_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & AKeyedData::GetType() const {

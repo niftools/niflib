@@ -13,23 +13,23 @@ hkPackedNiTriStripsData::hkPackedNiTriStripsData() HK_PACKED_NI_TRI_STRIPS_DATA_
 hkPackedNiTriStripsData::~hkPackedNiTriStripsData() {}
 
 void hkPackedNiTriStripsData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	HK_PACKED_NI_TRI_STRIPS_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void hkPackedNiTriStripsData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	HK_PACKED_NI_TRI_STRIPS_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string hkPackedNiTriStripsData::asString( bool verbose ) const {
-	HK_PACKED_NI_TRI_STRIPS_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void hkPackedNiTriStripsData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	HK_PACKED_NI_TRI_STRIPS_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> hkPackedNiTriStripsData::GetRefs() const {
-	HK_PACKED_NI_TRI_STRIPS_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & hkPackedNiTriStripsData::GetType() const {

@@ -13,23 +13,23 @@ NiParticleSystem::NiParticleSystem() NI_PARTICLE_SYSTEM_CONSTRUCT {}
 NiParticleSystem::~NiParticleSystem() {}
 
 void NiParticleSystem::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_SYSTEM_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiParticleSystem::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PARTICLE_SYSTEM_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiParticleSystem::asString( bool verbose ) const {
-	NI_PARTICLE_SYSTEM_STRING
+	return InternalAsString( verbose );
 }
 
 void NiParticleSystem::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_SYSTEM_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiParticleSystem::GetRefs() const {
-	NI_PARTICLE_SYSTEM_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiParticleSystem::GetType() const {

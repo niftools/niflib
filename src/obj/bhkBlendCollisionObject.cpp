@@ -12,23 +12,23 @@ bhkBlendCollisionObject::bhkBlendCollisionObject() BHK_BLEND_COLLISION_OBJECT_CO
 bhkBlendCollisionObject::~bhkBlendCollisionObject() {}
 
 void bhkBlendCollisionObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_BLEND_COLLISION_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkBlendCollisionObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_BLEND_COLLISION_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkBlendCollisionObject::asString( bool verbose ) const {
-	BHK_BLEND_COLLISION_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkBlendCollisionObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_BLEND_COLLISION_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkBlendCollisionObject::GetRefs() const {
-	BHK_BLEND_COLLISION_OBJECT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkBlendCollisionObject::GetType() const {

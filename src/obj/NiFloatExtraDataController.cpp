@@ -13,23 +13,23 @@ NiFloatExtraDataController::NiFloatExtraDataController() NI_FLOAT_EXTRA_DATA_CON
 NiFloatExtraDataController::~NiFloatExtraDataController() {}
 
 void NiFloatExtraDataController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLOAT_EXTRA_DATA_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiFloatExtraDataController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_FLOAT_EXTRA_DATA_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiFloatExtraDataController::asString( bool verbose ) const {
-	NI_FLOAT_EXTRA_DATA_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiFloatExtraDataController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FLOAT_EXTRA_DATA_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiFloatExtraDataController::GetRefs() const {
-	NI_FLOAT_EXTRA_DATA_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiFloatExtraDataController::GetType() const {

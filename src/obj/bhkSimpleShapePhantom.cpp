@@ -12,23 +12,23 @@ bhkSimpleShapePhantom::bhkSimpleShapePhantom() BHK_SIMPLE_SHAPE_PHANTOM_CONSTRUC
 bhkSimpleShapePhantom::~bhkSimpleShapePhantom() {}
 
 void bhkSimpleShapePhantom::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_SIMPLE_SHAPE_PHANTOM_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkSimpleShapePhantom::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_SIMPLE_SHAPE_PHANTOM_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkSimpleShapePhantom::asString( bool verbose ) const {
-	BHK_SIMPLE_SHAPE_PHANTOM_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkSimpleShapePhantom::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_SIMPLE_SHAPE_PHANTOM_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkSimpleShapePhantom::GetRefs() const {
-	BHK_SIMPLE_SHAPE_PHANTOM_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkSimpleShapePhantom::GetType() const {

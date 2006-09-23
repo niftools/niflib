@@ -15,23 +15,23 @@ bhkMalleableConstraint::bhkMalleableConstraint() BHK_MALLEABLE_CONSTRAINT_CONSTR
 bhkMalleableConstraint::~bhkMalleableConstraint() {}
 
 void bhkMalleableConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_MALLEABLE_CONSTRAINT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkMalleableConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_MALLEABLE_CONSTRAINT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkMalleableConstraint::asString( bool verbose ) const {
-	BHK_MALLEABLE_CONSTRAINT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkMalleableConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_MALLEABLE_CONSTRAINT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkMalleableConstraint::GetRefs() const {
-	BHK_MALLEABLE_CONSTRAINT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkMalleableConstraint::GetType() const {

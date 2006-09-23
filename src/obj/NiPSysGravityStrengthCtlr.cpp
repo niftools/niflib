@@ -12,23 +12,23 @@ NiPSysGravityStrengthCtlr::NiPSysGravityStrengthCtlr() NI_P_SYS_GRAVITY_STRENGTH
 NiPSysGravityStrengthCtlr::~NiPSysGravityStrengthCtlr() {}
 
 void NiPSysGravityStrengthCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_GRAVITY_STRENGTH_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysGravityStrengthCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_GRAVITY_STRENGTH_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysGravityStrengthCtlr::asString( bool verbose ) const {
-	NI_P_SYS_GRAVITY_STRENGTH_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysGravityStrengthCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_GRAVITY_STRENGTH_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysGravityStrengthCtlr::GetRefs() const {
-	NI_P_SYS_GRAVITY_STRENGTH_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysGravityStrengthCtlr::GetType() const {

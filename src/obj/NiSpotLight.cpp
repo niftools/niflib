@@ -12,23 +12,23 @@ NiSpotLight::NiSpotLight() NI_SPOT_LIGHT_CONSTRUCT {}
 NiSpotLight::~NiSpotLight() {}
 
 void NiSpotLight::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPOT_LIGHT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSpotLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SPOT_LIGHT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSpotLight::asString( bool verbose ) const {
-	NI_SPOT_LIGHT_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSpotLight::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPOT_LIGHT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSpotLight::GetRefs() const {
-	NI_SPOT_LIGHT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSpotLight::GetType() const {

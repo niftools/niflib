@@ -12,23 +12,23 @@ NiInterpolator::NiInterpolator() NI_INTERPOLATOR_CONSTRUCT {}
 NiInterpolator::~NiInterpolator() {}
 
 void NiInterpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_INTERPOLATOR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_INTERPOLATOR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiInterpolator::asString( bool verbose ) const {
-	NI_INTERPOLATOR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiInterpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_INTERPOLATOR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiInterpolator::GetRefs() const {
-	NI_INTERPOLATOR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiInterpolator::GetType() const {

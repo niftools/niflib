@@ -374,7 +374,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Running SWIG..."
-						CommandLine="swig -c++ -python -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i&#x0D;&#x0A;"
+						CommandLine="swig -c++ -python -Iinclude -fvirtual -outdir &quot;..\bin&quot; -o py_wrap.cpp pyniflib.i&#x0D;&#x0A;"
 						AdditionalDependencies="niflib.h"
 						Outputs="py_wrap.cpp"
 					/>

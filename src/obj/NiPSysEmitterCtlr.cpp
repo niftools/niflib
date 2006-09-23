@@ -14,23 +14,23 @@ NiPSysEmitterCtlr::NiPSysEmitterCtlr() NI_P_SYS_EMITTER_CTLR_CONSTRUCT {}
 NiPSysEmitterCtlr::~NiPSysEmitterCtlr() {}
 
 void NiPSysEmitterCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_EMITTER_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysEmitterCtlr::asString( bool verbose ) const {
-	NI_P_SYS_EMITTER_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysEmitterCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysEmitterCtlr::GetRefs() const {
-	NI_P_SYS_EMITTER_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysEmitterCtlr::GetType() const {

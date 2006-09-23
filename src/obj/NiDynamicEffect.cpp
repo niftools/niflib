@@ -13,23 +13,23 @@ NiDynamicEffect::NiDynamicEffect() NI_DYNAMIC_EFFECT_CONSTRUCT {}
 NiDynamicEffect::~NiDynamicEffect() {}
 
 void NiDynamicEffect::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DYNAMIC_EFFECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiDynamicEffect::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_DYNAMIC_EFFECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiDynamicEffect::asString( bool verbose ) const {
-	NI_DYNAMIC_EFFECT_STRING
+	return InternalAsString( verbose );
 }
 
 void NiDynamicEffect::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DYNAMIC_EFFECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiDynamicEffect::GetRefs() const {
-	NI_DYNAMIC_EFFECT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiDynamicEffect::GetType() const {

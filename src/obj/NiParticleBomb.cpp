@@ -12,23 +12,23 @@ NiParticleBomb::NiParticleBomb() NI_PARTICLE_BOMB_CONSTRUCT {}
 NiParticleBomb::~NiParticleBomb() {}
 
 void NiParticleBomb::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_BOMB_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiParticleBomb::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PARTICLE_BOMB_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiParticleBomb::asString( bool verbose ) const {
-	NI_PARTICLE_BOMB_STRING
+	return InternalAsString( verbose );
 }
 
 void NiParticleBomb::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_BOMB_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiParticleBomb::GetRefs() const {
-	NI_PARTICLE_BOMB_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiParticleBomb::GetType() const {

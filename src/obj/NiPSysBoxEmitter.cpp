@@ -12,23 +12,23 @@ NiPSysBoxEmitter::NiPSysBoxEmitter() NI_P_SYS_BOX_EMITTER_CONSTRUCT {}
 NiPSysBoxEmitter::~NiPSysBoxEmitter() {}
 
 void NiPSysBoxEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_BOX_EMITTER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysBoxEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_BOX_EMITTER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysBoxEmitter::asString( bool verbose ) const {
-	NI_P_SYS_BOX_EMITTER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysBoxEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_BOX_EMITTER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysBoxEmitter::GetRefs() const {
-	NI_P_SYS_BOX_EMITTER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysBoxEmitter::GetType() const {

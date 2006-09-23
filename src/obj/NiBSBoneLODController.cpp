@@ -12,23 +12,23 @@ NiBSBoneLODController::NiBSBoneLODController() NI_B_S_BONE_L_O_D_CONTROLLER_CONS
 NiBSBoneLODController::~NiBSBoneLODController() {}
 
 void NiBSBoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_S_BONE_L_O_D_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBSBoneLODController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_B_S_BONE_L_O_D_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBSBoneLODController::asString( bool verbose ) const {
-	NI_B_S_BONE_L_O_D_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBSBoneLODController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_B_S_BONE_L_O_D_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBSBoneLODController::GetRefs() const {
-	NI_B_S_BONE_L_O_D_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBSBoneLODController::GetType() const {

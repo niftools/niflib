@@ -15,23 +15,23 @@ ABoneLODController::ABoneLODController() A_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 ABoneLODController::~ABoneLODController() {}
 
 void ABoneLODController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_BONE_L_O_D_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void ABoneLODController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	A_BONE_L_O_D_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string ABoneLODController::asString( bool verbose ) const {
-	A_BONE_L_O_D_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void ABoneLODController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_BONE_L_O_D_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> ABoneLODController::GetRefs() const {
-	A_BONE_L_O_D_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & ABoneLODController::GetType() const {

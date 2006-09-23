@@ -23,8 +23,7 @@ class NiControllerSequence;
 typedef Ref<NiControllerSequence> NiControllerSequenceRef;
 
 /*!
- * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and
- * up).
+ * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and up).
  */
 
 class NIFLIB_API NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
@@ -44,8 +43,8 @@ public:
 	virtual const Type & GetType() const;
 
 	/*!
-	 * Name of this block. This is also the name of the action associated
-	 * with this file. For instance, if the original NIF file is called
+	 * Name of this NiControllerSequence object. This is also the name of the action
+	 * associated with this file. For instance, if the original NIF file is called
 	 * "demon.nif" and this animation file contains an attack sequence, then
 	 * the file would be called "demon_attack1.kf" and this field would
 	 * contain the string "attack1".
@@ -54,21 +53,20 @@ public:
 	void SetName( const string & value );
 
 	/*! Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
-	 * \param new_name The name of the NiTextKeyExtraData block to use.
-	 * \param txt_key A reference to the NiTextKeyExtraData object to use.
+	 * \param[in] txt_key A reference to the NiTextKeyExtraData object to use.
 	 * \sa NiTextKeyExtraData
 	 */
 	void SetTextKey( const Ref<NiTextKeyExtraData> & txt_key );
 
 	/*! Attatches a controler to this KF file for a KF file of version 10.2.0.0 or below.  Versions above this use interpolators.
-	 * \param obj A reference to the new NiTimeController to attach.
+	 * \param[in] obj A reference to the new NiTimeController to attach.
 	 * \sa NiControllerSequence::ClearChildren, NiControllersequence::AddInterpolator
 	 */
 	void AddController( const Ref<NiTimeController> & obj );
 
 	/*! Attatches an interpolator to this KF file for a KF file of version greater than 10.2.0.0.  Versions below this use controllers.
-	 * \param obj A reference to the new controller which has an interpolator to attach.
-	 * \param priority Used only in Oblivion to set the priority of one controller over another when the two are merged.
+	 * \param[in] obj A reference to the new controller which has an interpolator to attach.
+	 * \param[in] priority Used only in Oblivion to set the priority of one controller over another when the two are merged.
 	 * \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddController
 	 */
 	void AddInterpolator( const Ref<NiSingleInterpolatorController> & obj, byte priority = 0 );
@@ -87,19 +85,32 @@ public:
 	Ref<NiTextKeyExtraData> GetTextKeyExtraData() const;
 
 	/*!
-	 * The animation frequency.
+	 * Gets the animation frequency.
+	 * \return The animation frequency.
 	 */
 	float GetFrequency() const;
+
+	/*!
+	 * Sets the animation frequency.
+	 * \param[in] value The animation frequency.
+	 */
 	void SetFrequency( float value );
 
 	/*!
-	 * The controller sequence start time
+	 * Gets the controller sequence start time.
+	 * \return The controller sequence start time.
 	 */
 	float GetStartTime() const;
+
+	/*!
+	 * Sets the controller sequence start time.
+	 * \param[in] value The controller sequence start time.
+	 */
 	void SetStartTime( float value );
 
 	/*!
-	 * The controller sequence stop time
+	 * Gets the controller sequence stop time.
+	 * \return The conroller sequence stop time.
 	 */
 	float GetStopTime() const;
 	void SetStopTime( float value );
@@ -107,35 +118,52 @@ public:
 	CycleType GetCycleType() const;
 	void SetCycleType( CycleType n );
 
-   /*! Get Number of Controllers
-   * \return Number of total controllers in this sequence
-   * \sa GetControllerData
-   */
+   /*! 
+    * Gets the  number of controllers.
+	* \return Number of total controllers in this sequence
+	* \sa GetControllerData
+	*/
    int GetNumControllers() const;
 
-   /*! Get Controller Priority
-   * \return Priority of a specific controller
-   * \sa GetControllerData, GetNumControllers, SetControllerPriority
-   */
+   /*! 
+    * Gets controller priority.  Oblivion Specific.
+	* \return Priority of a specific controller.
+	* \param[in] controller The index of the controller to get the priority for.
+	* \sa GetControllerData, GetNumControllers, SetControllerPriority
+	*/
    int GetControllerPriority( int controller ) const;
 
-   /*! Get Controller Priority
-   * \return Priority of a specific controller
-   * \sa GetControllerData, GetNumControllers, GetControllerPriority
-   */
+   /*! 
+    * Sets controller priority.  Oblivion Specific.
+    * \param[in] controller The index of the controller to set the priority for.
+	* \param[in] priority The amount of priority the controller should have.
+    * \sa GetControllerData, GetNumControllers, GetControllerPriority
+    */
    void SetControllerPriority( int controller, int priority );
 
 
 	/*!
-	 * Weight/priority of animation?
+	 * Gets weight/priority of animation?
+	 * \return The weight/priority of the animation?
 	 */
 	float GetWeight() const;
+
+	/*!
+	 * Sets weight/priority of animation?
+	 * \param[in] value The weight/priority of the animation?
+	 */
 	void SetWeight( float value );
 
 	/*!
-	 * Name of target node Controller acts on.
+	 * Gets the name of target node this controller acts on.
+	 * \return The target node name.
 	 */
 	string GetTargetName() const;
+
+	/*!
+	 * Sets the name of target node this controller acts on.
+	 * \param[in] value The target node name.
+	 */
 	void SetTargetName( const string & value );
 
 protected:
@@ -144,7 +172,12 @@ protected:
    void SetParent(NiControllerManager *parent);
 
 	NI_CONTROLLER_SEQUENCE_MEMBERS
-	STANDARD_INTERNAL_METHODS
+private:
+	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	string InternalAsString( bool verbose ) const;
+	void InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	list<NiObjectRef> InternalGetRefs() const;
 };
 
 }

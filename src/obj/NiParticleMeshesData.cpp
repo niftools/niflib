@@ -13,23 +13,23 @@ NiParticleMeshesData::NiParticleMeshesData() NI_PARTICLE_MESHES_DATA_CONSTRUCT {
 NiParticleMeshesData::~NiParticleMeshesData() {}
 
 void NiParticleMeshesData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_MESHES_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiParticleMeshesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PARTICLE_MESHES_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiParticleMeshesData::asString( bool verbose ) const {
-	NI_PARTICLE_MESHES_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiParticleMeshesData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_MESHES_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiParticleMeshesData::GetRefs() const {
-	NI_PARTICLE_MESHES_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiParticleMeshesData::GetType() const {

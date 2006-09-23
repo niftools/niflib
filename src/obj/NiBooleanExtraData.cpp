@@ -12,23 +12,23 @@ NiBooleanExtraData::NiBooleanExtraData() NI_BOOLEAN_EXTRA_DATA_CONSTRUCT {}
 NiBooleanExtraData::~NiBooleanExtraData() {}
 
 void NiBooleanExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BOOLEAN_EXTRA_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBooleanExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_BOOLEAN_EXTRA_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBooleanExtraData::asString( bool verbose ) const {
-	NI_BOOLEAN_EXTRA_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBooleanExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BOOLEAN_EXTRA_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBooleanExtraData::GetRefs() const {
-	NI_BOOLEAN_EXTRA_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBooleanExtraData::GetType() const {

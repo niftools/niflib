@@ -12,23 +12,23 @@ NiBlendPoint3Interpolator::NiBlendPoint3Interpolator() NI_BLEND_POINT3_INTERPOLA
 NiBlendPoint3Interpolator::~NiBlendPoint3Interpolator() {}
 
 void NiBlendPoint3Interpolator::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BLEND_POINT3_INTERPOLATOR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBlendPoint3Interpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_BLEND_POINT3_INTERPOLATOR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBlendPoint3Interpolator::asString( bool verbose ) const {
-	NI_BLEND_POINT3_INTERPOLATOR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBlendPoint3Interpolator::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BLEND_POINT3_INTERPOLATOR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBlendPoint3Interpolator::GetRefs() const {
-	NI_BLEND_POINT3_INTERPOLATOR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBlendPoint3Interpolator::GetType() const {

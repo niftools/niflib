@@ -13,23 +13,23 @@ bhkNiTriStripsShape::bhkNiTriStripsShape() BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT {}
 bhkNiTriStripsShape::~bhkNiTriStripsShape() {}
 
 void bhkNiTriStripsShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_NI_TRI_STRIPS_SHAPE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkNiTriStripsShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_NI_TRI_STRIPS_SHAPE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkNiTriStripsShape::asString( bool verbose ) const {
-	BHK_NI_TRI_STRIPS_SHAPE_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkNiTriStripsShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_NI_TRI_STRIPS_SHAPE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkNiTriStripsShape::GetRefs() const {
-	BHK_NI_TRI_STRIPS_SHAPE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkNiTriStripsShape::GetType() const {

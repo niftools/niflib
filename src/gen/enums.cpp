@@ -12,9 +12,9 @@ using namespace std;
 namespace Niflib {
 
 
-/*!
- * ForceType
- */
+
+//--ForceType--//
+
 void NifStream( ForceType & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -34,9 +34,9 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 	}
 }
 
-/*!
- * HavokMaterial
- */
+
+//--HavokMaterial--//
+
 void NifStream( HavokMaterial & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -84,9 +84,9 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 	}
 }
 
-/*!
- * CompareMode
- */
+
+//--CompareMode--//
+
 void NifStream( CompareMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -110,9 +110,9 @@ ostream & operator<<( ostream & out, CompareMode const & val ) {
 	}
 }
 
-/*!
- * TexFilterMode
- */
+
+//--TexFilterMode--//
+
 void NifStream( TexFilterMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -135,9 +135,9 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 	}
 }
 
-/*!
- * LightMode
- */
+
+//--LightMode--//
+
 void NifStream( LightMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -156,9 +156,9 @@ ostream & operator<<( ostream & out, LightMode const & val ) {
 	}
 }
 
-/*!
- * MipMapFormat
- */
+
+//--MipMapFormat--//
+
 void NifStream( MipMapFormat & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -178,9 +178,9 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 	}
 }
 
-/*!
- * StencilAction
- */
+
+//--StencilAction--//
+
 void NifStream( StencilAction & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -203,9 +203,9 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 	}
 }
 
-/*!
- * OblivionLayer
- */
+
+//--OblivionLayer--//
+
 void NifStream( OblivionLayer & val, istream& in, uint version ) {
 	byte temp;
 	NifStream( temp, in, version );
@@ -280,9 +280,9 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 	}
 }
 
-/*!
- * FaceDrawMode
- */
+
+//--FaceDrawMode--//
+
 void NifStream( FaceDrawMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -303,9 +303,9 @@ ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
 	}
 }
 
-/*!
- * AlphaFormat
- */
+
+//--AlphaFormat--//
+
 void NifStream( AlphaFormat & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -326,9 +326,9 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 	}
 }
 
-/*!
- * KeyType
- */
+
+//--KeyType--//
+
 void NifStream( KeyType & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -350,9 +350,9 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 	}
 }
 
-/*!
- * VertMode
- */
+
+//--VertMode--//
+
 void NifStream( VertMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -372,9 +372,9 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 	}
 }
 
-/*!
- * ApplyMode
- */
+
+//--ApplyMode--//
+
 void NifStream( ApplyMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -396,9 +396,9 @@ ostream & operator<<( ostream & out, ApplyMode const & val ) {
 	}
 }
 
-/*!
- * MotionSystem
- */
+
+//--MotionSystem--//
+
 void NifStream( MotionSystem & val, istream& in, uint version ) {
 	byte temp;
 	NifStream( temp, in, version );
@@ -417,9 +417,9 @@ ostream & operator<<( ostream & out, MotionSystem const & val ) {
 	}
 }
 
-/*!
- * BillboardMode
- */
+
+//--BillboardMode--//
+
 void NifStream( BillboardMode & val, istream& in, uint version ) {
 	ushort temp;
 	NifStream( temp, in, version );
@@ -441,9 +441,9 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 	}
 }
 
-/*!
- * TexType
- */
+
+//--TexType--//
+
 void NifStream( TexType & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -468,9 +468,9 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 	}
 }
 
-/*!
- * PixelLayout
- */
+
+//--PixelLayout--//
+
 void NifStream( PixelLayout & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -493,9 +493,9 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 	}
 }
 
-/*!
- * TexClampMode
- */
+
+//--TexClampMode--//
+
 void NifStream( TexClampMode & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -516,9 +516,9 @@ ostream & operator<<( ostream & out, TexClampMode const & val ) {
 	}
 }
 
-/*!
- * MotionQuality
- */
+
+//--MotionQuality--//
+
 void NifStream( MotionQuality & val, istream& in, uint version ) {
 	byte temp;
 	NifStream( temp, in, version );
@@ -544,9 +544,9 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 	}
 }
 
-/*!
- * PixelFormat
- */
+
+//--PixelFormat--//
+
 void NifStream( PixelFormat & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -566,9 +566,9 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 	}
 }
 
-/*!
- * CycleType
- */
+
+//--CycleType--//
+
 void NifStream( CycleType & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );
@@ -588,9 +588,9 @@ ostream & operator<<( ostream & out, CycleType const & val ) {
 	}
 }
 
-/*!
- * FieldType
- */
+
+//--FieldType--//
+
 void NifStream( FieldType & val, istream& in, uint version ) {
 	uint temp;
 	NifStream( temp, in, version );

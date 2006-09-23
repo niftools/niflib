@@ -13,23 +13,23 @@ NiKeyframeController::NiKeyframeController() NI_KEYFRAME_CONTROLLER_CONSTRUCT {}
 NiKeyframeController::~NiKeyframeController() {}
 
 void NiKeyframeController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_KEYFRAME_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiKeyframeController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_KEYFRAME_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiKeyframeController::asString( bool verbose ) const {
-	NI_KEYFRAME_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiKeyframeController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_KEYFRAME_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiKeyframeController::GetRefs() const {
-	NI_KEYFRAME_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiKeyframeController::GetType() const {

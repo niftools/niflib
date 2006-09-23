@@ -12,23 +12,23 @@ NiPSysEmitterInitialRadiusCtlr::NiPSysEmitterInitialRadiusCtlr() NI_P_SYS_EMITTE
 NiPSysEmitterInitialRadiusCtlr::~NiPSysEmitterInitialRadiusCtlr() {}
 
 void NiPSysEmitterInitialRadiusCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterInitialRadiusCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysEmitterInitialRadiusCtlr::asString( bool verbose ) const {
-	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysEmitterInitialRadiusCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysEmitterInitialRadiusCtlr::GetRefs() const {
-	NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysEmitterInitialRadiusCtlr::GetType() const {

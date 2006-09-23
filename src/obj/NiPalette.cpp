@@ -12,23 +12,23 @@ NiPalette::NiPalette() NI_PALETTE_CONSTRUCT {}
 NiPalette::~NiPalette() {}
 
 void NiPalette::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PALETTE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPalette::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PALETTE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPalette::asString( bool verbose ) const {
-	NI_PALETTE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPalette::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PALETTE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPalette::GetRefs() const {
-	NI_PALETTE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPalette::GetType() const {

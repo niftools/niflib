@@ -12,23 +12,23 @@ FxButton::FxButton() FX_BUTTON_CONSTRUCT {}
 FxButton::~FxButton() {}
 
 void FxButton::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_BUTTON_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void FxButton::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	FX_BUTTON_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string FxButton::asString( bool verbose ) const {
-	FX_BUTTON_STRING
+	return InternalAsString( verbose );
 }
 
 void FxButton::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_BUTTON_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> FxButton::GetRefs() const {
-	FX_BUTTON_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & FxButton::GetType() const {

@@ -12,23 +12,23 @@ NiGravity::NiGravity() NI_GRAVITY_CONSTRUCT {}
 NiGravity::~NiGravity() {}
 
 void NiGravity::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_GRAVITY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiGravity::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_GRAVITY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiGravity::asString( bool verbose ) const {
-	NI_GRAVITY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiGravity::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_GRAVITY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiGravity::GetRefs() const {
-	NI_GRAVITY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiGravity::GetType() const {

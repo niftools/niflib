@@ -13,23 +13,23 @@ AParticleModifier::AParticleModifier() A_PARTICLE_MODIFIER_CONSTRUCT {}
 AParticleModifier::~AParticleModifier() {}
 
 void AParticleModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_PARTICLE_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void AParticleModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	A_PARTICLE_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string AParticleModifier::asString( bool verbose ) const {
-	A_PARTICLE_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void AParticleModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_PARTICLE_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> AParticleModifier::GetRefs() const {
-	A_PARTICLE_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & AParticleModifier::GetType() const {

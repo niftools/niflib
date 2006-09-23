@@ -12,23 +12,23 @@ NiParticleGrowFade::NiParticleGrowFade() NI_PARTICLE_GROW_FADE_CONSTRUCT {}
 NiParticleGrowFade::~NiParticleGrowFade() {}
 
 void NiParticleGrowFade::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_GROW_FADE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiParticleGrowFade::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PARTICLE_GROW_FADE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiParticleGrowFade::asString( bool verbose ) const {
-	NI_PARTICLE_GROW_FADE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiParticleGrowFade::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_GROW_FADE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiParticleGrowFade::GetRefs() const {
-	NI_PARTICLE_GROW_FADE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiParticleGrowFade::GetType() const {

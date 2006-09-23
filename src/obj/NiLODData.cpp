@@ -12,23 +12,23 @@ NiLODData::NiLODData() NI_L_O_D_DATA_CONSTRUCT {}
 NiLODData::~NiLODData() {}
 
 void NiLODData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_L_O_D_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiLODData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_L_O_D_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiLODData::asString( bool verbose ) const {
-	NI_L_O_D_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiLODData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_L_O_D_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiLODData::GetRefs() const {
-	NI_L_O_D_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiLODData::GetType() const {

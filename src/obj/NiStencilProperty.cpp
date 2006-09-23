@@ -12,23 +12,23 @@ NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
 NiStencilProperty::~NiStencilProperty() {}
 
 void NiStencilProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_STENCIL_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiStencilProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_STENCIL_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiStencilProperty::asString( bool verbose ) const {
-	NI_STENCIL_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiStencilProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_STENCIL_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiStencilProperty::GetRefs() const {
-	NI_STENCIL_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiStencilProperty::GetType() const {

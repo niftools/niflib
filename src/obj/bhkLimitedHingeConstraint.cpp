@@ -13,23 +13,23 @@ bhkLimitedHingeConstraint::bhkLimitedHingeConstraint() BHK_LIMITED_HINGE_CONSTRA
 bhkLimitedHingeConstraint::~bhkLimitedHingeConstraint() {}
 
 void bhkLimitedHingeConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_LIMITED_HINGE_CONSTRAINT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkLimitedHingeConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_LIMITED_HINGE_CONSTRAINT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkLimitedHingeConstraint::asString( bool verbose ) const {
-	BHK_LIMITED_HINGE_CONSTRAINT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkLimitedHingeConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_LIMITED_HINGE_CONSTRAINT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkLimitedHingeConstraint::GetRefs() const {
-	BHK_LIMITED_HINGE_CONSTRAINT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkLimitedHingeConstraint::GetType() const {

@@ -74,9 +74,8 @@ namespace Niflib {
 //	return data_length;
 //}
 
-/**
- * Read utility functions
- */
+//--Read utility functions--//
+
 int ReadInt( istream& in ){
 
 	int tmp;
@@ -140,9 +139,8 @@ bool ReadBool( istream &in, unsigned int version ) {
 	}
 }
 
-/**
- * Write utility functions.
- */
+//-- Write utility functions--//
+
 void WriteInt( int val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
@@ -194,6 +192,7 @@ void WriteBool( bool val, ostream& out, unsigned int version ) {
 }
 
 //-- NifStream And ostream Functions --//
+
 // The NifStream functions allow each built-in type to be streamed to and from a file.
 // The ostream functions are for writing out a debug string.
 

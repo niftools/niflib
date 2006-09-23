@@ -12,23 +12,23 @@ APSysCtlr::APSysCtlr() A_P_SYS_CTLR_CONSTRUCT {}
 APSysCtlr::~APSysCtlr() {}
 
 void APSysCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_P_SYS_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void APSysCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	A_P_SYS_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string APSysCtlr::asString( bool verbose ) const {
-	A_P_SYS_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void APSysCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	A_P_SYS_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> APSysCtlr::GetRefs() const {
-	A_P_SYS_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & APSysCtlr::GetType() const {

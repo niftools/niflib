@@ -35,7 +35,12 @@ public:
 
 protected:
 	NI_P_SYS_CYLINDER_EMITTER_MEMBERS
-	STANDARD_INTERNAL_METHODS
+private:
+	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	string InternalAsString( bool verbose ) const;
+	void InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	list<NiObjectRef> InternalGetRefs() const;
 };
 
 }

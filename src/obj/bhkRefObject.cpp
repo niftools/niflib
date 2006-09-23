@@ -12,23 +12,23 @@ bhkRefObject::bhkRefObject() BHK_REF_OBJECT_CONSTRUCT {}
 bhkRefObject::~bhkRefObject() {}
 
 void bhkRefObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_REF_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkRefObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_REF_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkRefObject::asString( bool verbose ) const {
-	BHK_REF_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkRefObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_REF_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkRefObject::GetRefs() const {
-	BHK_REF_OBJECT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkRefObject::GetType() const {

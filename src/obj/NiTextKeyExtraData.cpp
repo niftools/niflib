@@ -12,23 +12,23 @@ NiTextKeyExtraData::NiTextKeyExtraData() NI_TEXT_KEY_EXTRA_DATA_CONSTRUCT {}
 NiTextKeyExtraData::~NiTextKeyExtraData() {}
 
 void NiTextKeyExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_TEXT_KEY_EXTRA_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiTextKeyExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_TEXT_KEY_EXTRA_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiTextKeyExtraData::asString( bool verbose ) const {
-	NI_TEXT_KEY_EXTRA_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiTextKeyExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_TEXT_KEY_EXTRA_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiTextKeyExtraData::GetRefs() const {
-	NI_TEXT_KEY_EXTRA_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiTextKeyExtraData::GetType() const {

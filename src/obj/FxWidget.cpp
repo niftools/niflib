@@ -12,23 +12,23 @@ FxWidget::FxWidget() FX_WIDGET_CONSTRUCT {}
 FxWidget::~FxWidget() {}
 
 void FxWidget::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_WIDGET_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void FxWidget::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	FX_WIDGET_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string FxWidget::asString( bool verbose ) const {
-	FX_WIDGET_STRING
+	return InternalAsString( verbose );
 }
 
 void FxWidget::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	FX_WIDGET_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> FxWidget::GetRefs() const {
-	FX_WIDGET_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & FxWidget::GetType() const {

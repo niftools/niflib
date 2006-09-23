@@ -12,23 +12,23 @@ BSParentVelocityModifier::BSParentVelocityModifier() B_S_PARENT_VELOCITY_MODIFIE
 BSParentVelocityModifier::~BSParentVelocityModifier() {}
 
 void BSParentVelocityModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_PARENT_VELOCITY_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void BSParentVelocityModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	B_S_PARENT_VELOCITY_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string BSParentVelocityModifier::asString( bool verbose ) const {
-	B_S_PARENT_VELOCITY_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void BSParentVelocityModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	B_S_PARENT_VELOCITY_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> BSParentVelocityModifier::GetRefs() const {
-	B_S_PARENT_VELOCITY_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & BSParentVelocityModifier::GetType() const {

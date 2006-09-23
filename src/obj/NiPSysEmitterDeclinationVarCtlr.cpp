@@ -12,23 +12,23 @@ NiPSysEmitterDeclinationVarCtlr::NiPSysEmitterDeclinationVarCtlr() NI_P_SYS_EMIT
 NiPSysEmitterDeclinationVarCtlr::~NiPSysEmitterDeclinationVarCtlr() {}
 
 void NiPSysEmitterDeclinationVarCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterDeclinationVarCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysEmitterDeclinationVarCtlr::asString( bool verbose ) const {
-	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysEmitterDeclinationVarCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysEmitterDeclinationVarCtlr::GetRefs() const {
-	NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysEmitterDeclinationVarCtlr::GetType() const {

@@ -12,23 +12,23 @@ NiVertexColorProperty::NiVertexColorProperty() NI_VERTEX_COLOR_PROPERTY_CONSTRUC
 NiVertexColorProperty::~NiVertexColorProperty() {}
 
 void NiVertexColorProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_VERTEX_COLOR_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiVertexColorProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_VERTEX_COLOR_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiVertexColorProperty::asString( bool verbose ) const {
-	NI_VERTEX_COLOR_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiVertexColorProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_VERTEX_COLOR_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiVertexColorProperty::GetRefs() const {
-	NI_VERTEX_COLOR_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiVertexColorProperty::GetType() const {

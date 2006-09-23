@@ -12,23 +12,23 @@ bhkConvexTransformShape::bhkConvexTransformShape() BHK_CONVEX_TRANSFORM_SHAPE_CO
 bhkConvexTransformShape::~bhkConvexTransformShape() {}
 
 void bhkConvexTransformShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_CONVEX_TRANSFORM_SHAPE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkConvexTransformShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_CONVEX_TRANSFORM_SHAPE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkConvexTransformShape::asString( bool verbose ) const {
-	BHK_CONVEX_TRANSFORM_SHAPE_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkConvexTransformShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_CONVEX_TRANSFORM_SHAPE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkConvexTransformShape::GetRefs() const {
-	BHK_CONVEX_TRANSFORM_SHAPE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkConvexTransformShape::GetType() const {

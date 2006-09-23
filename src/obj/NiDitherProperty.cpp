@@ -12,23 +12,23 @@ NiDitherProperty::NiDitherProperty() NI_DITHER_PROPERTY_CONSTRUCT {}
 NiDitherProperty::~NiDitherProperty() {}
 
 void NiDitherProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DITHER_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiDitherProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_DITHER_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiDitherProperty::asString( bool verbose ) const {
-	NI_DITHER_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiDitherProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_DITHER_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiDitherProperty::GetRefs() const {
-	NI_DITHER_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiDitherProperty::GetType() const {

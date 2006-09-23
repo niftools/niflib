@@ -12,23 +12,23 @@ NiPSysSpawnModifier::NiPSysSpawnModifier() NI_P_SYS_SPAWN_MODIFIER_CONSTRUCT {}
 NiPSysSpawnModifier::~NiPSysSpawnModifier() {}
 
 void NiPSysSpawnModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_SPAWN_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysSpawnModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_SPAWN_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysSpawnModifier::asString( bool verbose ) const {
-	NI_P_SYS_SPAWN_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysSpawnModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_SPAWN_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysSpawnModifier::GetRefs() const {
-	NI_P_SYS_SPAWN_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysSpawnModifier::GetType() const {

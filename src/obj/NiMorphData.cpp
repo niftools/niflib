@@ -13,23 +13,23 @@ NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
 NiMorphData::~NiMorphData() {}
 
 void NiMorphData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_MORPH_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiMorphData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_MORPH_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiMorphData::asString( bool verbose ) const {
-	NI_MORPH_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiMorphData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_MORPH_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiMorphData::GetRefs() const {
-	NI_MORPH_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiMorphData::GetType() const {

@@ -12,23 +12,23 @@ NiZBufferProperty::NiZBufferProperty() NI_Z_BUFFER_PROPERTY_CONSTRUCT {}
 NiZBufferProperty::~NiZBufferProperty() {}
 
 void NiZBufferProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_Z_BUFFER_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiZBufferProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_Z_BUFFER_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiZBufferProperty::asString( bool verbose ) const {
-	NI_Z_BUFFER_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiZBufferProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_Z_BUFFER_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiZBufferProperty::GetRefs() const {
-	NI_Z_BUFFER_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiZBufferProperty::GetType() const {

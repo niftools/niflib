@@ -13,23 +13,23 @@ NiParticleColorModifier::NiParticleColorModifier() NI_PARTICLE_COLOR_MODIFIER_CO
 NiParticleColorModifier::~NiParticleColorModifier() {}
 
 void NiParticleColorModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_COLOR_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiParticleColorModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PARTICLE_COLOR_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiParticleColorModifier::asString( bool verbose ) const {
-	NI_PARTICLE_COLOR_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiParticleColorModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PARTICLE_COLOR_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiParticleColorModifier::GetRefs() const {
-	NI_PARTICLE_COLOR_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiParticleColorModifier::GetType() const {

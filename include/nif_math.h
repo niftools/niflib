@@ -39,8 +39,8 @@ struct NIFLIB_API TexCoord {
 	TexCoord() : u(0.0f), v(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param u The value to set U to.
-	 * \param v The value to set V to.
+	 * \param[in] u The value to set U to.
+	 * \param[in] v The value to set V to.
 	 */
 	TexCoord(float u, float v) {
 		this->u = u;
@@ -48,8 +48,8 @@ struct NIFLIB_API TexCoord {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param u The value to set U to.
-	 * \param v The value to set V to.
+	 * \param[in] u The value to set U to.
+	 * \param[in] v The value to set V to.
 	 */
 	void Set(float u, float v) {
 		this->u = u;
@@ -69,9 +69,9 @@ struct NIFLIB_API Triangle {
 	Triangle() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param v1 The index of the first vertex.
-	 * \param v2 The index of the second vertex.
-	 * \param v3 The index of the third vertex.
+	 * \param[in] v1 The index of the first vertex.
+	 * \param[in] v2 The index of the second vertex.
+	 * \param[in] v3 The index of the third vertex.
 	 */
 	Triangle(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
@@ -80,9 +80,9 @@ struct NIFLIB_API Triangle {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param v1 The index of the first vertex.
-	 * \param v2 The index of the second vertex.
-	 * \param v3 The index of the third vertex.
+	 * \param[in] v1 The index of the first vertex.
+	 * \param[in] v2 The index of the second vertex.
+	 * \param[in] v3 The index of the third vertex.
 	 */
 	void Set(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
@@ -93,7 +93,7 @@ struct NIFLIB_API Triangle {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	 * \param n The index into the data array.  Should be 0, 1, or 2.
+	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
 	unsigned short & operator[](int n) {
@@ -125,9 +125,9 @@ struct NIFLIB_API Vector3 {
 	Vector3() { x = y = z = 0.0f; }
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param x The value to set X to.
-	 * \param y The value to set Y to.
-	 * \param z The value to set Z to.
+	 * \param[in] x The value to set X to.
+	 * \param[in] y The value to set Y to.
+	 * \param[in] z The value to set Z to.
 	 */
 	Vector3(float x, float y, float z) {
 		this->x = x;
@@ -136,7 +136,7 @@ struct NIFLIB_API Vector3 {
 	}
 
 	/*! This constructor can be used to initialize this Vector3 with another Vector3
-	 * \param v The Vector3 to construct this one from
+	 * \param[in] v The Vector3 to construct this one from
 	 */
 	Vector3( const Vector3 & v) { x = v.x; y = v.y; z = v.z; }
 	
@@ -144,9 +144,9 @@ struct NIFLIB_API Vector3 {
 	~Vector3() {}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param x The value to set X to.
-	 * \param y The value to set Y to.
-	 * \param z The value to set Z to.
+	 * \param[in] x The value to set X to.
+	 * \param[in] y The value to set Y to.
+	 * \param[in] z The value to set Z to.
 	 */
 	void Set(float x, float y, float z) {
 		this->x = x;
@@ -237,26 +237,26 @@ struct NIFLIB_API Vector3 {
 	bool operator!=( const Vector3 & rh ) const;
 
 	/* Computes the dot product of two vectors; the angle between two vectors.
-	 * \param rh The vector to perform the dot product with
+	 * \param[in] rh The vector to perform the dot product with
 	 * \return The angle in radians between this vector and the one given
 	 */
 	float DotProduct( const Vector3 & rh ) const;
 
 	/* Computes the cross product of two vectors; a vector perpendicular to both of them.
-	 * \param The vector to perform the cross product with
+	 * \param[in] The vector to perform the cross product with
 	 * \return A vector perpendicular to this vector and the one given
 	 */
 	Vector3 CrossProduct( const Vector3 & rh) const; //Cross Product
 
 
 	///* Multiplies this Vector with a 4x4 matrix
-	// * \param The 4x4 matrix to multiply this vector with. 
+	// * \param[in] The 4x4 matrix to multiply this vector with. 
 	// * \return The new vector resulting from the multiplication.
 	// */
 	//Vector3 operator*( const Matrix44 & rh ) const;
 
 	///* Multiplies this Vector with a 4x4 matrix and sets the result to itself
-	// * \param The 4x4 matrix to multiply this vector with.
+	// * \param[in] The 4x4 matrix to multiply this vector with.
 	// * \return This vector is returned.
 	// */
 	//Vector3 & operator*=( const Matrix44 & rh );
@@ -269,7 +269,7 @@ struct NIFLIB_API Float2 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	 * \param n The index into the data array.  Should be 0 or 1.
+	 * \param[in] n The index into the data array.  Should be 0 or 1.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
 	float & operator[](int n) {
@@ -284,8 +284,8 @@ struct NIFLIB_API Float2 {
 	Float2() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
 	 */
 	Float2( float f1, float f2 ) {
 		data[0] = f1;
@@ -293,8 +293,8 @@ struct NIFLIB_API Float2 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
 	 */
 	void Set( float f1, float f2 ) {
 		data[0] = f1;
@@ -324,7 +324,7 @@ struct Matrix22 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
-	 * \param n The index into the row array.  Should be 0 or 1.
+	 * \param[in] n The index into the row array.  Should be 0 or 1.
 	 * \return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
 	NIFLIB_API Float2 & operator[](int n) {
@@ -339,10 +339,10 @@ struct Matrix22 {
 	NIFLIB_API Matrix22();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
 	 */
 	NIFLIB_API Matrix22(
 		float m11, float m12,
@@ -353,10 +353,10 @@ struct Matrix22 {
 	}
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
 	 */
 	NIFLIB_API void Set(
 		float m11, float m12,
@@ -381,7 +381,7 @@ struct NIFLIB_API Float3 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	 * \param n The index into the data array.  Should be 0, 1, or 2.
+	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
 	float & operator[](int n) {
@@ -396,9 +396,9 @@ struct NIFLIB_API Float3 {
 	Float3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
-	 * \param f3 The value to set the third floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
+	 * \param[in] f3 The value to set the third floating point number to.
 	 */
 	Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
@@ -407,9 +407,9 @@ struct NIFLIB_API Float3 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
-	 * \param f3 The value to set the third floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
+	 * \param[in] f3 The value to set the third floating point number to.
 	 */
 	void Set( float f1, float f2, float f3 ) {
 		data[0] = f1;
@@ -440,7 +440,7 @@ struct Matrix33 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
-	 * \param n The index into the row array.  Should be 0, 1, or 2.
+	 * \param[in] n The index into the row array.  Should be 0, 1, or 2.
 	 * \return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
 	NIFLIB_API Float3 & operator[](int n) {
@@ -455,15 +455,15 @@ struct Matrix33 {
 	NIFLIB_API Matrix33();
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m13 The value to set at row 1, column 3.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
-	 * \param m23 The value to set at row 2, column 3.
-	 * \param m31 The value to set at row 3, column 1.
-	 * \param m32 The value to set at row 3, column 2.
-	 * \param m33 The value to set at row 3, column 3.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m13 The value to set at row 1, column 3.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
+	 * \param[in] m23 The value to set at row 2, column 3.
+	 * \param[in] m31 The value to set at row 3, column 1.
+	 * \param[in] m32 The value to set at row 3, column 2.
+	 * \param[in] m33 The value to set at row 3, column 3.
 	 */
 	NIFLIB_API Matrix33(
 		float m11, float m12, float m13,
@@ -476,15 +476,15 @@ struct Matrix33 {
 	}
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m13 The value to set at row 1, column 3.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
-	 * \param m23 The value to set at row 2, column 3.
-	 * \param m31 The value to set at row 3, column 1.
-	 * \param m32 The value to set at row 3, column 2.
-	 * \param m33 The value to set at row 3, column 3.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m13 The value to set at row 1, column 3.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
+	 * \param[in] m23 The value to set at row 2, column 3.
+	 * \param[in] m31 The value to set at row 3, column 1.
+	 * \param[in] m32 The value to set at row 3, column 2.
+	 * \param[in] m33 The value to set at row 3, column 3.
 	 */
 	NIFLIB_API void Set(
 		float m11, float m12, float m13,
@@ -531,7 +531,7 @@ struct NIFLIB_API Float4 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
-	 * \param n The index into the data array.  Should be 0, 1, 2, or 3.
+	 * \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
 	float & operator[](int n) {
@@ -546,10 +546,10 @@ struct NIFLIB_API Float4 {
 	Float4() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
-	 * \param f3 The value to set the third floating point number to.
-	 * \param f4 The value to set the fourth floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
+	 * \param[in] f3 The value to set the third floating point number to.
+	 * \param[in] f4 The value to set the fourth floating point number to.
 	 */
 	Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
@@ -559,10 +559,10 @@ struct NIFLIB_API Float4 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param f1 The value to set the first floating point number to.
-	 * \param f2 The value to set the second floating point number to.
-	 * \param f3 The value to set the third floating point number to.
-	 * \param f4 The value to set the fourth floating point number to.
+	 * \param[in] f1 The value to set the first floating point number to.
+	 * \param[in] f2 The value to set the second floating point number to.
+	 * \param[in] f3 The value to set the third floating point number to.
+	 * \param[in] f4 The value to set the fourth floating point number to.
 	 */
 	void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
@@ -594,7 +594,7 @@ struct Matrix44 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
-	 * \param n The index into the row array.  Should be 0, 1, 2, or 3.
+	 * \param[in] n The index into the row array.  Should be 0, 1, 2, or 3.
 	 * \return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
 	 */
 	NIFLIB_API Float4 & operator[](int n) {
@@ -609,27 +609,27 @@ struct Matrix44 {
 	NIFLIB_API Matrix44();
 
 	/*! Copy constructor.  Initializes Matrix to another Matrix44.
-	 * \param The matrix to initialize this one to. 
+	 * \param[in] m The matrix to initialize this one to. 
 	 */
 	NIFLIB_API Matrix44( const Matrix44 & m ) { memcpy(rows, m.rows, sizeof(Float4) * 4); }
 
 	/*! This constructor can be used to set all values in this matrix during initialization
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m13 The value to set at row 1, column 3.
-	 * \param m14 The value to set at row 1, column 4.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
-	 * \param m23 The value to set at row 2, column 3.
-	 * \param m24 The value to set at row 2, column 4.
-	 * \param m31 The value to set at row 3, column 1.
-	 * \param m32 The value to set at row 3, column 2.
-	 * \param m33 The value to set at row 3, column 3.
-	 * \param m34 The value to set at row 3, column 4.
-	 * \param m41 The value to set at row 4, column 1.
-	 * \param m42 The value to set at row 4, column 2.
-	 * \param m43 The value to set at row 4, column 3.
-	 * \param m44 The value to set at row 4, column 4.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m13 The value to set at row 1, column 3.
+	 * \param[in] m14 The value to set at row 1, column 4.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
+	 * \param[in] m23 The value to set at row 2, column 3.
+	 * \param[in] m24 The value to set at row 2, column 4.
+	 * \param[in] m31 The value to set at row 3, column 1.
+	 * \param[in] m32 The value to set at row 3, column 2.
+	 * \param[in] m33 The value to set at row 3, column 3.
+	 * \param[in] m34 The value to set at row 3, column 4.
+	 * \param[in] m41 The value to set at row 4, column 1.
+	 * \param[in] m42 The value to set at row 4, column 2.
+	 * \param[in] m43 The value to set at row 4, column 3.
+	 * \param[in] m44 The value to set at row 4, column 4.
 	 */
 	NIFLIB_API Matrix44(
 		float m11, float m12, float m13, float m14,
@@ -645,29 +645,29 @@ struct Matrix44 {
 
 	/*! This constructor allows a 4x4 transform matrix to be initalized from a
 	 * translate vector, a 3x3 rotation matrix, and a scale factor.
-	 * \param translate The translation vector that specifies the new x, y, and z coordinates.
-	 * \param rotation The 3x3 rotation matrix.
-	 * \param scale The scale factor.
+	 * \param[in] translate The translation vector that specifies the new x, y, and z coordinates.
+	 * \param[in] rotation The 3x3 rotation matrix.
+	 * \param[in] scale The scale factor.
 	 */
 	NIFLIB_API Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
 
 	/*! This function can be used to set all values in this matrix at the same time.
-	 * \param m11 The value to set at row 1, column 1.
-	 * \param m12 The value to set at row 1, column 2.
-	 * \param m13 The value to set at row 1, column 3.
-	 * \param m14 The value to set at row 1, column 4.
-	 * \param m21 The value to set at row 2, column 1.
-	 * \param m22 The value to set at row 2, column 2.
-	 * \param m23 The value to set at row 2, column 3.
-	 * \param m24 The value to set at row 2, column 4.
-	 * \param m31 The value to set at row 3, column 1.
-	 * \param m32 The value to set at row 3, column 2.
-	 * \param m33 The value to set at row 3, column 3.
-	 * \param m34 The value to set at row 3, column 4.
-	 * \param m41 The value to set at row 4, column 1.
-	 * \param m42 The value to set at row 4, column 2.
-	 * \param m43 The value to set at row 4, column 3.
-	 * \param m44 The value to set at row 4, column 4.
+	 * \param[in] m11 The value to set at row 1, column 1.
+	 * \param[in] m12 The value to set at row 1, column 2.
+	 * \param[in] m13 The value to set at row 1, column 3.
+	 * \param[in] m14 The value to set at row 1, column 4.
+	 * \param[in] m21 The value to set at row 2, column 1.
+	 * \param[in] m22 The value to set at row 2, column 2.
+	 * \param[in] m23 The value to set at row 2, column 3.
+	 * \param[in] m24 The value to set at row 2, column 4.
+	 * \param[in] m31 The value to set at row 3, column 1.
+	 * \param[in] m32 The value to set at row 3, column 2.
+	 * \param[in] m33 The value to set at row 3, column 3.
+	 * \param[in] m34 The value to set at row 3, column 4.
+	 * \param[in] m41 The value to set at row 4, column 1.
+	 * \param[in] m42 The value to set at row 4, column 2.
+	 * \param[in] m43 The value to set at row 4, column 3.
+	 * \param[in] m44 The value to set at row 4, column 4.
 	 */
 	void Set(
 		float m11, float m12, float m13, float m14,
@@ -682,43 +682,43 @@ struct Matrix44 {
 	}
 
 	/* Multiplies this matrix by another.
-	 * \param rh The matrix to multiply this one with.
+	 * \param[in] rh The matrix to multiply this one with.
 	 * \return The result of the multiplication.
 	 */
 	NIFLIB_API Matrix44 operator*( const Matrix44 & rh ) const;
 
 	/* Multiplies this matrix by another and sets the result to itself.
-	 * \param rh The matrix to multiply this one with.
+	 * \param[in] rh The matrix to multiply this one with.
 	 * \return This matrix is returned.
 	 */
 	NIFLIB_API Matrix44 & operator*=( const Matrix44 & rh );
 
 	/* Multiplies this matrix by a scalar value.
-	 * \param rh The scalar value to multiply each component of this matrix by.
+	 * \param[in] rh The scalar value to multiply each component of this matrix by.
 	 * \return The result of the multiplication.
 	 */
 	NIFLIB_API Matrix44 operator*( float rh ) const;
 
 	/* Multiplies this matrix by a scalar value and sets the resutl to itself.
-	 * \param rh The scalar value to multiply each component of this matrix by.
+	 * \param[in] rh The scalar value to multiply each component of this matrix by.
 	 * \return This matrix is returned.
 	 */
 	NIFLIB_API Matrix44 & operator*=( float rh );
 
 	/* Multiplies this matrix by a vector with x, y, and z components.
-	 * \param rh The vector to multiply this matrix with.
+	 * \param[in] rh The vector to multiply this matrix with.
 	 * \return The result of the multiplication.
 	 */
 	NIFLIB_API Vector3 operator*( const Vector3 & rh ) const;
 
 	/* Adds this matrix to another.
-	 * \param rh The matrix to be added to this one.
+	 * \param[in] rh The matrix to be added to this one.
 	 * \return The result of the addition.
 	 */
 	NIFLIB_API Matrix44 operator+( const Matrix44 & rh ) const;
 
 	/* Adds this matrix to another and sets the result to itself.
-	 * \param rh The matrix to be added to this one.
+	 * \param[in] rh The matrix to be added to this one.
 	 * \return This matrix is returned.
 	 */
 	NIFLIB_API Matrix44 & operator+=( const Matrix44 & rh );
@@ -726,28 +726,28 @@ struct Matrix44 {
 //These operators cause SWIG warnings
 #ifndef SWIG
 	/* Sets the values of this matrix to those of the given matrix.
-	 * \param rh The matrix to copy values from.
+	 * \param[in] rh The matrix to copy values from.
 	 * \return This matrix is returned.
 	 */
 	NIFLIB_API Matrix44 & operator=( const Matrix44 & rh );
 
 	/* Allows the contents of the matrix to be printed to an ostream.
-	 * \param lh The ostream to insert the text into.
-	 * \param rh The matrix to insert into the stream.
+	 * \param[in] lh The ostream to insert the text into.
+	 * \param[in] rh The matrix to insert into the stream.
 	 * \return The given ostream is returned.
 	 */
 	NIFLIB_API friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
 #endif
 
 	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
-	 * \param rh The matrix to compare this one with.
+	 * \param[in] rh The matrix to compare this one with.
 	 * \return true if the matricies are equal, false otherwise.
 	 */
 	NIFLIB_API bool operator==( const Matrix44 & rh ) const;
 
 	/* Compares two 4x4 matricies.  They are considered inequal if any corresponding
 	 * components are inequal.
-	 * \param rh The matrix to compare this one with.
+	 * \param[in] rh The matrix to compare this one with.
 	 * \return true if the matricies are inequal, false otherwise.
 	 */
 	NIFLIB_API bool operator!=( const Matrix44 & rh ) const;
@@ -768,15 +768,15 @@ struct Matrix44 {
 	NIFLIB_API Matrix44 Inverse() const;
 
 	/*! Returns a 3x3 submatrix of this matrix created by skipping the indicated row and column.
-	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
-	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
+	 * \param[in] skip_r The row to skip.  Must be a value between 0 and 3.
+	 * \param[in] skip_c The colum to skip.  Must be a value between 0 and 3.
 	 * \return The 3x3 submatrix obtained by skipping the indicated row and column.
 	 */
 	NIFLIB_API Matrix33 Submatrix( int skip_r, int skip_c ) const;
 
 	/*! Calculates the adjunct of this matrix created by skipping the indicated row and column.
-	 * \param skip_r The row to skip.  Must be a value between 0 and 3.
-	 * \param skip_c The colum to skip.  Must be a value between 0 and 3.
+	 * \param[in] skip_r The row to skip.  Must be a value between 0 and 3.
+	 * \param[in] skip_c The colum to skip.  Must be a value between 0 and 3.
 	 * \return The adjunct obtained by skipping the indicated row and column.
 	 */
 	NIFLIB_API float Adjoint( int skip_r, int skip_c ) const;
@@ -814,10 +814,9 @@ struct NIFLIB_API Color3 {
 	Color3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 */
 	Color3(float r, float g, float b) {
 		this->r = r;
@@ -826,10 +825,9 @@ struct NIFLIB_API Color3 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 */
 	void Set(float r, float g, float b) {
 		this->r = r;
@@ -849,10 +847,10 @@ struct NIFLIB_API Color4 {
 	Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
 	 */
 	Color4(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
@@ -862,10 +860,10 @@ struct NIFLIB_API Color4 {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
-	 * \param b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
-	 * \param a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
+	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
+	 * \param[in] a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
 	 */
 	void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
@@ -894,10 +892,10 @@ struct NIFLIB_API Quaternion {
 	Quaternion() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
-	 * \param w The value to set the W scalar component of this quaternion to.
-	 * \param x The value to set the X vector component of this quaternion to.
-	 * \param y The value to set the Y vector component of this quaternion to.
-	 * \param z The value to set the Z vector component of this quaternion to.
+	 * \param[in] w The value to set the W scalar component of this quaternion to.
+	 * \param[in] x The value to set the X vector component of this quaternion to.
+	 * \param[in] y The value to set the Y vector component of this quaternion to.
+	 * \param[in] z The value to set the Z vector component of this quaternion to.
 	 */
 	Quaternion(float w, float x, float y, float z) {
 		this->w = w;
@@ -907,10 +905,10 @@ struct NIFLIB_API Quaternion {
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.
-	 * \param w The value to set the W scalar component of this quaternion to.
-	 * \param x The value to set the X vector component of this quaternion to.
-	 * \param y The value to set the Y vector component of this quaternion to.
-	 * \param z The value to set the Z vector component of this quaternion to.
+	 * \param[in] w The value to set the W scalar component of this quaternion to.
+	 * \param[in] x The value to set the X vector component of this quaternion to.
+	 * \param[in] y The value to set the Y vector component of this quaternion to.
+	 * \param[in] z The value to set the Z vector component of this quaternion to.
 	 */
 	void Set(float w, float x, float y, float z) {
 		this->w = w;

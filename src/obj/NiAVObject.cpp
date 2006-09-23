@@ -26,23 +26,23 @@ NiAVObject::~NiAVObject() {
 }
 
 void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_A_V_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiAVObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_A_V_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiAVObject::asString( bool verbose ) const {
-	NI_A_V_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void NiAVObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_A_V_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiAVObject::GetRefs() const {
-	NI_A_V_OBJECT_GETREFS
+	return InternalGetRefs();
 }
 
 /*! 

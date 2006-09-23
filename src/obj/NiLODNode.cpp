@@ -14,23 +14,23 @@ NiLODNode::NiLODNode() NI_L_O_D_NODE_CONSTRUCT {}
 NiLODNode::~NiLODNode() {}
 
 void NiLODNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_L_O_D_NODE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiLODNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_L_O_D_NODE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiLODNode::asString( bool verbose ) const {
-	NI_L_O_D_NODE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiLODNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_L_O_D_NODE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiLODNode::GetRefs() const {
-	NI_L_O_D_NODE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiLODNode::GetType() const {

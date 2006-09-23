@@ -12,23 +12,23 @@ NiIntegersExtraData::NiIntegersExtraData() NI_INTEGERS_EXTRA_DATA_CONSTRUCT {}
 NiIntegersExtraData::~NiIntegersExtraData() {}
 
 void NiIntegersExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_INTEGERS_EXTRA_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiIntegersExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_INTEGERS_EXTRA_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiIntegersExtraData::asString( bool verbose ) const {
-	NI_INTEGERS_EXTRA_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiIntegersExtraData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_INTEGERS_EXTRA_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiIntegersExtraData::GetRefs() const {
-	NI_INTEGERS_EXTRA_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiIntegersExtraData::GetType() const {

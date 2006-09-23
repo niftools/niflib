@@ -13,23 +13,23 @@ NiUVData::NiUVData() NI_U_V_DATA_CONSTRUCT {}
 NiUVData::~NiUVData() {}
 
 void NiUVData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_U_V_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiUVData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_U_V_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiUVData::asString( bool verbose ) const {
-	NI_U_V_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiUVData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_U_V_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiUVData::GetRefs() const {
-	NI_U_V_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiUVData::GetType() const {

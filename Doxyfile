@@ -1,0 +1,476 @@
+# Doxyfile 1.4.7
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = Niflib
+PROJECT_NUMBER         = 0.5.6
+OUTPUT_DIRECTORY       = doc
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+USE_WINDOWS_ENCODING   = YES
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = "The $name class" \
+                         "The $name widget" \
+                         "The $name file" \
+                         is \
+                         provides \
+                         specifies \
+                         contains \
+                         represents \
+                         a \
+                         an \
+                         the
+ALWAYS_DETAILED_SEC    = NO
+INLINE_INHERITED_MEMB  = NO
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = 
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+MULTILINE_CPP_IS_BRIEF = NO
+DETAILS_AT_TOP         = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 8
+ALIASES                = 
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+BUILTIN_STL_SUPPORT    = YES
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = NO
+EXTRACT_LOCAL_METHODS  = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_IN_BODY_DOCS      = NO
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = YES
+HIDE_SCOPE_NAMES       = NO
+SHOW_INCLUDE_FILES     = YES
+INLINE_INFO            = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = NO
+SORT_BY_SCOPE_NAME     = NO
+GENERATE_TODOLIST      = YES
+GENERATE_TESTLIST      = YES
+GENERATE_BUGLIST       = YES
+GENERATE_DEPRECATEDLIST= YES
+ENABLED_SECTIONS       = 
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = YES
+SHOW_DIRECTORIES       = NO
+FILE_VERSION_FILTER    = 
+#---------------------------------------------------------------------------
+# configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = 
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = include
+FILE_PATTERNS          = *.c \
+                         *.cc \
+                         *.cxx \
+                         *.cpp \
+                         *.c++ \
+                         *.d \
+                         *.java \
+                         *.ii \
+                         *.ixx \
+                         *.ipp \
+                         *.i++ \
+                         *.inl \
+                         *.h \
+                         *.hh \
+                         *.hxx \
+                         *.hpp \
+                         *.h++ \
+                         *.idl \
+                         *.odl \
+                         *.cs \
+                         *.php \
+                         *.php3 \
+                         *.inc \
+                         *.m \
+                         *.mm \
+                         *.dox \
+                         *.py
+RECURSIVE              = YES
+EXCLUDE                = 
+EXCLUDE_SYMLINKS       = NO
+EXCLUDE_PATTERNS       = 
+EXAMPLE_PATH           = 
+EXAMPLE_PATTERNS       = *
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = 
+INPUT_FILTER           = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+#---------------------------------------------------------------------------
+# configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = YES
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = NO
+#---------------------------------------------------------------------------
+# configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = NO
+COLS_IN_ALPHA_INDEX    = 5
+IGNORE_PREFIX          = 
+#---------------------------------------------------------------------------
+# configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = 
+HTML_STYLESHEET        = 
+HTML_ALIGN_MEMBERS     = YES
+GENERATE_HTMLHELP      = NO
+CHM_FILE               = 
+HHC_LOCATION           = 
+GENERATE_CHI           = NO
+BINARY_TOC             = NO
+TOC_EXPAND             = NO
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 4
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+#---------------------------------------------------------------------------
+# configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = NO
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4wide
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+PDF_HYPERLINKS         = NO
+USE_PDFLATEX           = NO
+LATEX_BATCHMODE        = NO
+LATEX_HIDE_INDICES     = NO
+#---------------------------------------------------------------------------
+# configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    = 
+RTF_EXTENSIONS_FILE    = 
+#---------------------------------------------------------------------------
+# configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = NO
+#---------------------------------------------------------------------------
+# configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = NO
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX = 
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor   
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = 
+INCLUDE_FILE_PATTERNS  = 
+PREDEFINED             = NI_OBJECT_PARENT= \
+                         A_KEYED_DATA_PARENT=NiObject \
+                         A_PARTICLE_MODIFIER_PARENT=NiObject \
+                         BHK_REF_OBJECT_PARENT=NiObject \
+                         BHK_SERIALIZABLE_PARENT=bhkRefObject \
+                         ABHK_CONSTRAINT_PARENT=bhkSerializable \
+                         ABHK_RAGDOLL_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_SHAPE_PARENT=bhkSerializable \
+                         ABHK_SHAPE_COLLECTION_PARENT=bhkShape \
+                         BHK_SPHERE_REP_SHAPE_PARENT=bhkShape \
+                         BHK_CONVEX_SHAPE_PARENT=bhkSphereRepShape \
+                         BHK_WORLD_OBJECT_PARENT=bhkShape \
+                         BHK_ENTITY_PARENT=bhkWorldObject \
+                         NI_COLLISION_OBJECT_PARENT=NiObject \
+                         NI_EXTRA_DATA_PARENT=NiObject \
+                         NI_INTERPOLATOR_PARENT=NiObject \
+                         NI_BLEND_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_B_SPLINE_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_OBJECT_N_E_T_PARENT=NiObject \
+                         NI_A_V_OBJECT_PARENT=NiObjectNET \
+                         NI_DYNAMIC_EFFECT_PARENT=NiAVObject \
+                         NI_LIGHT_PARENT=NiDynamicEffect \
+                         NI_PROPERTY_PARENT=NiObjectNET \
+                         NI_P_SYS_MODIFIER_PARENT=NiObject \
+                         NI_P_SYS_EMITTER_PARENT=NiPSysModifier \
+                         NI_P_SYS_VOLUME_EMITTER_PARENT=NiPSysEmitter \
+                         NI_TIME_CONTROLLER_PARENT=NiObject \
+                         A_BONE_L_O_D_CONTROLLER_PARENT=NiTimeController \
+                         NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT=NiTimeController \
+                         A_P_SYS_CTLR_PARENT=NiSingleInterpolatorController \
+                         NI_TRI_BASED_GEOM_PARENT=NiAVObject \
+                         NI_TRI_BASED_GEOM_DATA_PARENT=NiObject \
+                         A_P_SYS_DATA_PARENT=NiTriBasedGeomData \
+                         BHK_BLEND_COLLISION_OBJECT_PARENT=NiCollisionObject \
+                         BHK_BLEND_CONTROLLER_PARENT=NiTimeController \
+                         BHK_BOX_SHAPE_PARENT=bhkConvexShape \
+                         BHK_CAPSULE_SHAPE_PARENT=bhkConvexShape \
+                         BHK_COLLISION_OBJECT_PARENT=NiCollisionObject \
+                         BHK_CONVEX_VERTICES_SHAPE_PARENT=bhkSphereRepShape \
+                         BHK_HINGE_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_LIMITED_HINGE_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_LIST_SHAPE_PARENT=AbhkShapeCollection \
+                         BHK_MALLEABLE_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_MOPP_BV_TREE_SHAPE_PARENT=bhkShape \
+                         BHK_MULTI_SPHERE_SHAPE_PARENT=bhkSphereRepShape \
+                         BHK_NI_TRI_STRIPS_SHAPE_PARENT=bhkSphereRepShape \
+                         BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT=AbhkShapeCollection \
+                         BHK_PRISMATIC_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_RAGDOLL_CONSTRAINT_PARENT=AbhkRagdollConstraint \
+                         BHK_RIGID_BODY_PARENT=bhkEntity \
+                         BHK_RIGID_BODY_T_PARENT=bhkRigidBody \
+                         BHK_SIMPLE_SHAPE_PHANTOM_PARENT=bhkEntity \
+                         BHK_S_P_COLLISION_OBJECT_PARENT=NiCollisionObject \
+                         BHK_SPHERE_SHAPE_PARENT=bhkConvexShape \
+                         BHK_STIFF_SPRING_CONSTRAINT_PARENT=AbhkConstraint \
+                         BHK_TRANSFORM_SHAPE_PARENT=bhkEntity \
+                         BHK_CONVEX_TRANSFORM_SHAPE_PARENT=bhkTransformShape \
+                         B_S_BOUND_PARENT=NiExtraData \
+                         B_S_FURNITURE_MARKER_PARENT=NiExtraData \
+                         B_S_PARENT_VELOCITY_MODIFIER_PARENT=NiPSysModifier \
+                         B_S_P_SYS_ARRAY_EMITTER_PARENT=NiPSysVolumeEmitter \
+                         B_S_X_FLAGS_PARENT=NiExtraData \
+                         HK_PACKED_NI_TRI_STRIPS_DATA_PARENT=AbhkShapeCollection \
+                         NI_ALPHA_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_ALPHA_PROPERTY_PARENT=NiProperty \
+                         NI_AMBIENT_LIGHT_PARENT=NiLight \
+                         NI_AUTO_NORMAL_PARTICLES_DATA_PARENT=NiTriBasedGeomData \
+                         NI_BINARY_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_BLEND_BOOL_INTERPOLATOR_PARENT=NiBlendInterpolator \
+                         NI_BLEND_FLOAT_INTERPOLATOR_PARENT=NiBlendInterpolator \
+                         NI_BLEND_POINT3_INTERPOLATOR_PARENT=NiBlendInterpolator \
+                         NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT=NiBlendInterpolator \
+                         NI_BONE_L_O_D_CONTROLLER_PARENT=ABoneLODController \
+                         NI_BOOL_DATA_PARENT=AKeyedData \
+                         NI_BOOLEAN_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_BOOL_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_BOOL_TIMELINE_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_B_S_BONE_L_O_D_CONTROLLER_PARENT=ABoneLODController \
+                         NI_B_SPLINE_BASIS_DATA_PARENT=NiObject \
+                         NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT=NiBSplineInterpolator \
+                         NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT=NiBSplineInterpolator \
+                         NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT=NiBSplineInterpolator \
+                         NI_B_SPLINE_DATA_PARENT=NiObject \
+                         NI_CAMERA_PARENT=NiAVObject \
+                         NI_COLLISION_DATA_PARENT=NiObject \
+                         NI_COLOR_DATA_PARENT=AKeyedData \
+                         NI_COLOR_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_CONTROLLER_MANAGER_PARENT=NiTimeController \
+                         NI_CONTROLLER_SEQUENCE_PARENT=NiObject \
+                         NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT=NiObject \
+                         NI_DIRECTIONAL_LIGHT_PARENT=NiLight \
+                         NI_DITHER_PROPERTY_PARENT=NiProperty \
+                         NI_FLIP_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_FLOAT_DATA_PARENT=AKeyedData \
+                         NI_FLOAT_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_FLOAT_EXTRA_DATA_CONTROLLER_PARENT=NiTimeController \
+                         NI_FLOAT_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_FLOATS_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_FOG_PROPERTY_PARENT=NiProperty \
+                         NI_GEOM_MORPHER_CONTROLLER_PARENT=NiTimeController \
+                         NI_GRAVITY_PARENT=AParticleModifier \
+                         NI_INTEGER_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_INTEGERS_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_KEYFRAME_CONTROLLER_PARENT=NiTimeController \
+                         B_S_KEYFRAME_CONTROLLER_PARENT=NiKeyframeController \
+                         NI_KEYFRAME_DATA_PARENT=AKeyedData \
+                         NI_LIGHT_COLOR_CONTROLLER_PARENT=NiTimeController \
+                         NI_LIGHT_DIMMER_CONTROLLER_PARENT=NiTimeController \
+                         NI_LOOK_AT_CONTROLLER_PARENT=NiTimeController \
+                         NI_LOOK_AT_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_MATERIAL_COLOR_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_MATERIAL_PROPERTY_PARENT=NiProperty \
+                         NI_MESH_P_SYS_DATA_PARENT=APSysData \
+                         NI_MORPH_DATA_PARENT=NiObject \
+                         NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT=NiTimeController \
+                         NI_NODE_PARENT=NiAVObject \
+                         AVOID_NODE_PARENT=NiNode \
+                         FX_WIDGET_PARENT=NiNode \
+                         FX_BUTTON_PARENT=FxWidget \
+                         FX_RADIO_BUTTON_PARENT=FxWidget \
+                         NI_BILLBOARD_NODE_PARENT=NiNode \
+                         NI_B_S_ANIMATION_NODE_PARENT=NiNode \
+                         NI_B_S_PARTICLE_NODE_PARENT=NiNode \
+                         NI_L_O_D_NODE_PARENT=NiNode \
+                         NI_PALETTE_PARENT=NiObject \
+                         NI_PARTICLE_BOMB_PARENT=AParticleModifier \
+                         NI_PARTICLE_COLOR_MODIFIER_PARENT=AParticleModifier \
+                         NI_PARTICLE_GROW_FADE_PARENT=AParticleModifier \
+                         NI_PARTICLE_MESH_MODIFIER_PARENT=AParticleModifier \
+                         NI_PARTICLE_ROTATION_PARENT=AParticleModifier \
+                         NI_PARTICLES_PARENT=NiTriBasedGeom \
+                         NI_AUTO_NORMAL_PARTICLES_PARENT=NiParticles \
+                         NI_PARTICLE_MESHES_PARENT=NiParticles \
+                         NI_PARTICLES_DATA_PARENT=NiAutoNormalParticlesData \
+                         NI_PARTICLE_MESHES_DATA_PARENT=NiParticlesData \
+                         NI_PARTICLE_SYSTEM_PARENT=NiParticles \
+                         NI_MESH_PARTICLE_SYSTEM_PARENT=NiParticleSystem \
+                         NI_PARTICLE_SYSTEM_CONTROLLER_PARENT=NiTimeController \
+                         NI_B_S_P_ARRAY_CONTROLLER_PARENT=NiParticleSystemController \
+                         NI_PATH_CONTROLLER_PARENT=NiTimeController \
+                         NI_PATH_INTERPOLATOR_PARENT=NiBlendInterpolator \
+                         NI_PIXEL_DATA_PARENT=NiObject \
+                         NI_PLANAR_COLLIDER_PARENT=AParticleModifier \
+                         NI_POINT3_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_POINT_LIGHT_PARENT=NiLight \
+                         NI_POS_DATA_PARENT=AKeyedData \
+                         NI_P_SYS_AGE_DEATH_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_BOMB_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_BOUND_UPDATE_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_BOX_EMITTER_PARENT=NiPSysVolumeEmitter \
+                         NI_P_SYS_COLLIDER_MANAGER_PARENT=NiPSysModifier \
+                         NI_P_SYS_COLOR_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_CYLINDER_EMITTER_PARENT=NiPSysVolumeEmitter \
+                         NI_P_SYS_DATA_PARENT=APSysData \
+                         NI_P_SYS_DRAG_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_EMITTER_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_EMITTER_CTLR_DATA_PARENT=NiObject \
+                         NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_EMITTER_SPEED_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_GRAVITY_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_GRAVITY_STRENGTH_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_GROW_FADE_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_MESH_EMITTER_PARENT=NiPSysEmitter \
+                         NI_P_SYS_MESH_UPDATE_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT=APSysCtlr \
+                         NI_P_SYS_PLANAR_COLLIDER_PARENT=NiObject \
+                         NI_P_SYS_POSITION_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT=NiTimeController \
+                         NI_P_SYS_ROTATION_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_SPAWN_MODIFIER_PARENT=NiPSysModifier \
+                         NI_P_SYS_SPHERE_EMITTER_PARENT=NiPSysVolumeEmitter \
+                         NI_P_SYS_UPDATE_CTLR_PARENT=NiTimeController \
+                         NI_L_O_D_DATA_PARENT=NiObject \
+                         NI_RANGE_L_O_D_DATA_PARENT=NiLODData \
+                         NI_SCREEN_L_O_D_DATA_PARENT=NiLODData \
+                         NI_ROTATING_PARTICLES_PARENT=NiParticles \
+                         NI_ROTATING_PARTICLES_DATA_PARENT=NiParticlesData \
+                         NI_SEQUENCE_STREAM_HELPER_PARENT=NiObjectNET \
+                         NI_SHADE_PROPERTY_PARENT=NiProperty \
+                         NI_SKIN_DATA_PARENT=NiObject \
+                         NI_SKIN_INSTANCE_PARENT=NiObject \
+                         NI_SKIN_PARTITION_PARENT=NiObject \
+                         NI_SOURCE_TEXTURE_PARENT=NiObjectNET \
+                         NI_SPECULAR_PROPERTY_PARENT=NiProperty \
+                         NI_SPHERICAL_COLLIDER_PARENT=AParticleModifier \
+                         NI_SPOT_LIGHT_PARENT=NiPointLight \
+                         NI_STENCIL_PROPERTY_PARENT=NiProperty \
+                         NI_STRING_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_STRING_PALETTE_PARENT=NiObject \
+                         NI_STRINGS_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_TEXT_KEY_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_TEXTURE_EFFECT_PARENT=NiDynamicEffect \
+                         NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_TEXTURING_PROPERTY_PARENT=NiProperty \
+                         NI_TRANSFORM_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_TRANSFORM_DATA_PARENT=NiKeyframeData \
+                         NI_TRANSFORM_INTERPOLATOR_PARENT=NiInterpolator \
+                         NI_TRI_SHAPE_PARENT=NiTriBasedGeom \
+                         NI_TRI_SHAPE_DATA_PARENT=NiTriBasedGeomData \
+                         NI_TRI_STRIPS_PARENT=NiTriBasedGeom \
+                         NI_TRI_STRIPS_DATA_PARENT=NiTriBasedGeomData \
+                         NI_CLOD_PARENT=NiTriBasedGeom \
+                         NI_CLOD_DATA_PARENT=NiTriBasedGeomData \
+                         NI_U_V_CONTROLLER_PARENT=NiTimeController \
+                         NI_U_V_DATA_PARENT=NiObject \
+                         NI_VECTOR_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_VERTEX_COLOR_PROPERTY_PARENT=NiProperty \
+                         NI_VERT_WEIGHTS_EXTRA_DATA_PARENT=NiExtraData \
+                         NI_VIS_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_VIS_DATA_PARENT=AKeyedData \
+                         NI_WIREFRAME_PROPERTY_PARENT=NiProperty \
+                         NI_Z_BUFFER_PROPERTY_PARENT=NiProperty \
+                         ROOT_COLLISION_NODE_PARENT=NiNode
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = NO
+#---------------------------------------------------------------------------
+# Configuration::additions related to external references   
+#---------------------------------------------------------------------------
+TAGFILES               = 
+GENERATE_TAGFILE       = 
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = YES
+PERL_PATH              = /usr/bin/perl
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool   
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = YES
+HIDE_UNDOC_RELATIONS   = YES
+HAVE_DOT               = NO
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+GROUP_GRAPHS           = YES
+UML_LOOK               = NO
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = 
+DOTFILE_DIRS           = 
+MAX_DOT_GRAPH_WIDTH    = 1024
+MAX_DOT_GRAPH_HEIGHT   = 1024
+MAX_DOT_GRAPH_DEPTH    = 1000
+DOT_TRANSPARENT        = NO
+DOT_MULTI_TARGETS      = NO
+GENERATE_LEGEND        = YES
+DOT_CLEANUP            = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to the search engine   
+#---------------------------------------------------------------------------
+SEARCHENGINE           = YES

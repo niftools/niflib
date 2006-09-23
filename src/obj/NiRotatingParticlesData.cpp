@@ -12,23 +12,23 @@ NiRotatingParticlesData::NiRotatingParticlesData() NI_ROTATING_PARTICLES_DATA_CO
 NiRotatingParticlesData::~NiRotatingParticlesData() {}
 
 void NiRotatingParticlesData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_ROTATING_PARTICLES_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiRotatingParticlesData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_ROTATING_PARTICLES_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiRotatingParticlesData::asString( bool verbose ) const {
-	NI_ROTATING_PARTICLES_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiRotatingParticlesData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_ROTATING_PARTICLES_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiRotatingParticlesData::GetRefs() const {
-	NI_ROTATING_PARTICLES_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiRotatingParticlesData::GetType() const {

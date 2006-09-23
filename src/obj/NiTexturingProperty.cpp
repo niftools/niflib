@@ -14,23 +14,23 @@ NiTexturingProperty::NiTexturingProperty() NI_TEXTURING_PROPERTY_CONSTRUCT {}
 NiTexturingProperty::~NiTexturingProperty() {}
 
 void NiTexturingProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_TEXTURING_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiTexturingProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_TEXTURING_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiTexturingProperty::asString( bool verbose ) const {
-	NI_TEXTURING_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiTexturingProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_TEXTURING_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiTexturingProperty::GetRefs() const {
-	NI_TEXTURING_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiTexturingProperty::GetType() const {

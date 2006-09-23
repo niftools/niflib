@@ -13,23 +13,23 @@ bhkMoppBvTreeShape::bhkMoppBvTreeShape() BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT {}
 bhkMoppBvTreeShape::~bhkMoppBvTreeShape() {}
 
 void bhkMoppBvTreeShape::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_MOPP_BV_TREE_SHAPE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkMoppBvTreeShape::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_MOPP_BV_TREE_SHAPE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkMoppBvTreeShape::asString( bool verbose ) const {
-	BHK_MOPP_BV_TREE_SHAPE_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkMoppBvTreeShape::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_MOPP_BV_TREE_SHAPE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkMoppBvTreeShape::GetRefs() const {
-	BHK_MOPP_BV_TREE_SHAPE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkMoppBvTreeShape::GetType() const {

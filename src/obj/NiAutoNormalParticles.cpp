@@ -12,23 +12,23 @@ NiAutoNormalParticles::NiAutoNormalParticles() NI_AUTO_NORMAL_PARTICLES_CONSTRUC
 NiAutoNormalParticles::~NiAutoNormalParticles() {}
 
 void NiAutoNormalParticles::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_AUTO_NORMAL_PARTICLES_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiAutoNormalParticles::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_AUTO_NORMAL_PARTICLES_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiAutoNormalParticles::asString( bool verbose ) const {
-	NI_AUTO_NORMAL_PARTICLES_STRING
+	return InternalAsString( verbose );
 }
 
 void NiAutoNormalParticles::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_AUTO_NORMAL_PARTICLES_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiAutoNormalParticles::GetRefs() const {
-	NI_AUTO_NORMAL_PARTICLES_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiAutoNormalParticles::GetType() const {

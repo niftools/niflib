@@ -13,23 +13,23 @@ NiPSysDragModifier::NiPSysDragModifier() NI_P_SYS_DRAG_MODIFIER_CONSTRUCT {}
 NiPSysDragModifier::~NiPSysDragModifier() {}
 
 void NiPSysDragModifier::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_DRAG_MODIFIER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysDragModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_DRAG_MODIFIER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysDragModifier::asString( bool verbose ) const {
-	NI_P_SYS_DRAG_MODIFIER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysDragModifier::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_DRAG_MODIFIER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysDragModifier::GetRefs() const {
-	NI_P_SYS_DRAG_MODIFIER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysDragModifier::GetType() const {

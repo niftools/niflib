@@ -12,23 +12,23 @@ bhkStiffSpringConstraint::bhkStiffSpringConstraint() BHK_STIFF_SPRING_CONSTRAINT
 bhkStiffSpringConstraint::~bhkStiffSpringConstraint() {}
 
 void bhkStiffSpringConstraint::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_STIFF_SPRING_CONSTRAINT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkStiffSpringConstraint::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_STIFF_SPRING_CONSTRAINT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkStiffSpringConstraint::asString( bool verbose ) const {
-	BHK_STIFF_SPRING_CONSTRAINT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkStiffSpringConstraint::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_STIFF_SPRING_CONSTRAINT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkStiffSpringConstraint::GetRefs() const {
-	BHK_STIFF_SPRING_CONSTRAINT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkStiffSpringConstraint::GetType() const {

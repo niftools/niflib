@@ -12,23 +12,23 @@ NiPlanarCollider::NiPlanarCollider() NI_PLANAR_COLLIDER_CONSTRUCT {}
 NiPlanarCollider::~NiPlanarCollider() {}
 
 void NiPlanarCollider::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PLANAR_COLLIDER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPlanarCollider::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_PLANAR_COLLIDER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPlanarCollider::asString( bool verbose ) const {
-	NI_PLANAR_COLLIDER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPlanarCollider::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_PLANAR_COLLIDER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPlanarCollider::GetRefs() const {
-	NI_PLANAR_COLLIDER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPlanarCollider::GetType() const {

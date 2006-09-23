@@ -12,23 +12,23 @@ NiPSysEmitterSpeedCtlr::NiPSysEmitterSpeedCtlr() NI_P_SYS_EMITTER_SPEED_CTLR_CON
 NiPSysEmitterSpeedCtlr::~NiPSysEmitterSpeedCtlr() {}
 
 void NiPSysEmitterSpeedCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_SPEED_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterSpeedCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_EMITTER_SPEED_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysEmitterSpeedCtlr::asString( bool verbose ) const {
-	NI_P_SYS_EMITTER_SPEED_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysEmitterSpeedCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_SPEED_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysEmitterSpeedCtlr::GetRefs() const {
-	NI_P_SYS_EMITTER_SPEED_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysEmitterSpeedCtlr::GetType() const {

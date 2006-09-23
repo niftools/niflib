@@ -59,7 +59,12 @@ public:
 	void SetKeys( vector< Key<Color4> > const & keys );
 protected:
 	NI_COLOR_DATA_MEMBERS
-	STANDARD_INTERNAL_METHODS
+private:
+	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	string InternalAsString( bool verbose ) const;
+	void InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	list<NiObjectRef> InternalGetRefs() const;
 };
 
 }

@@ -12,23 +12,23 @@ NiPSysEmitterLifeSpanCtlr::NiPSysEmitterLifeSpanCtlr() NI_P_SYS_EMITTER_LIFE_SPA
 NiPSysEmitterLifeSpanCtlr::~NiPSysEmitterLifeSpanCtlr() {}
 
 void NiPSysEmitterLifeSpanCtlr::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterLifeSpanCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysEmitterLifeSpanCtlr::asString( bool verbose ) const {
-	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysEmitterLifeSpanCtlr::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysEmitterLifeSpanCtlr::GetRefs() const {
-	NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysEmitterLifeSpanCtlr::GetType() const {

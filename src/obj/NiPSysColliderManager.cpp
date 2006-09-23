@@ -13,23 +13,23 @@ NiPSysColliderManager::NiPSysColliderManager() NI_P_SYS_COLLIDER_MANAGER_CONSTRU
 NiPSysColliderManager::~NiPSysColliderManager() {}
 
 void NiPSysColliderManager::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_COLLIDER_MANAGER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysColliderManager::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_COLLIDER_MANAGER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysColliderManager::asString( bool verbose ) const {
-	NI_P_SYS_COLLIDER_MANAGER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysColliderManager::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_COLLIDER_MANAGER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysColliderManager::GetRefs() const {
-	NI_P_SYS_COLLIDER_MANAGER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysColliderManager::GetType() const {

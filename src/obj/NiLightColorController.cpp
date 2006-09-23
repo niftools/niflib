@@ -14,23 +14,23 @@ NiLightColorController::NiLightColorController() NI_LIGHT_COLOR_CONTROLLER_CONST
 NiLightColorController::~NiLightColorController() {}
 
 void NiLightColorController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_LIGHT_COLOR_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiLightColorController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_LIGHT_COLOR_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiLightColorController::asString( bool verbose ) const {
-	NI_LIGHT_COLOR_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiLightColorController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_LIGHT_COLOR_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiLightColorController::GetRefs() const {
-	NI_LIGHT_COLOR_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiLightColorController::GetType() const {

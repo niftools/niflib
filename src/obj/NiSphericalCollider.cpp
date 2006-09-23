@@ -12,23 +12,23 @@ NiSphericalCollider::NiSphericalCollider() NI_SPHERICAL_COLLIDER_CONSTRUCT {}
 NiSphericalCollider::~NiSphericalCollider() {}
 
 void NiSphericalCollider::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPHERICAL_COLLIDER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiSphericalCollider::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_SPHERICAL_COLLIDER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiSphericalCollider::asString( bool verbose ) const {
-	NI_SPHERICAL_COLLIDER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiSphericalCollider::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_SPHERICAL_COLLIDER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiSphericalCollider::GetRefs() const {
-	NI_SPHERICAL_COLLIDER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiSphericalCollider::GetType() const {

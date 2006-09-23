@@ -13,23 +13,23 @@ NiCollisionData::NiCollisionData() NI_COLLISION_DATA_CONSTRUCT {}
 NiCollisionData::~NiCollisionData() {}
 
 void NiCollisionData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_COLLISION_DATA_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiCollisionData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_COLLISION_DATA_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiCollisionData::asString( bool verbose ) const {
-	NI_COLLISION_DATA_STRING
+	return InternalAsString( verbose );
 }
 
 void NiCollisionData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_COLLISION_DATA_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiCollisionData::GetRefs() const {
-	NI_COLLISION_DATA_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiCollisionData::GetType() const {

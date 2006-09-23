@@ -12,23 +12,23 @@ NiFogProperty::NiFogProperty() NI_FOG_PROPERTY_CONSTRUCT {}
 NiFogProperty::~NiFogProperty() {}
 
 void NiFogProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FOG_PROPERTY_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiFogProperty::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_FOG_PROPERTY_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiFogProperty::asString( bool verbose ) const {
-	NI_FOG_PROPERTY_STRING
+	return InternalAsString( verbose );
 }
 
 void NiFogProperty::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_FOG_PROPERTY_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiFogProperty::GetRefs() const {
-	NI_FOG_PROPERTY_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiFogProperty::GetType() const {

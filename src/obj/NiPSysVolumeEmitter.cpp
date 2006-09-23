@@ -13,23 +13,23 @@ NiPSysVolumeEmitter::NiPSysVolumeEmitter() NI_P_SYS_VOLUME_EMITTER_CONSTRUCT {}
 NiPSysVolumeEmitter::~NiPSysVolumeEmitter() {}
 
 void NiPSysVolumeEmitter::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_VOLUME_EMITTER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysVolumeEmitter::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_P_SYS_VOLUME_EMITTER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiPSysVolumeEmitter::asString( bool verbose ) const {
-	NI_P_SYS_VOLUME_EMITTER_STRING
+	return InternalAsString( verbose );
 }
 
 void NiPSysVolumeEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_P_SYS_VOLUME_EMITTER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiPSysVolumeEmitter::GetRefs() const {
-	NI_P_SYS_VOLUME_EMITTER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiPSysVolumeEmitter::GetType() const {

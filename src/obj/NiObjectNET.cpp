@@ -18,23 +18,23 @@ NiObjectNET::~NiObjectNET() {
 }
 
 void NiObjectNET::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_OBJECT_N_E_T_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiObjectNET::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_OBJECT_N_E_T_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiObjectNET::asString( bool verbose ) const {
-	NI_OBJECT_N_E_T_STRING
+	return InternalAsString( verbose );
 }
 
 void NiObjectNET::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_OBJECT_N_E_T_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiObjectNET::GetRefs() const {
-	NI_OBJECT_N_E_T_GETREFS
+	return InternalGetRefs();
 }
 
 string NiObjectNET::GetName() {

@@ -28,19 +28,19 @@ NiNode::~NiNode() {
 }
 
 void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_NODE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_NODE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiNode::asString( bool verbose ) const {
-	NI_NODE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_NODE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 	//Connect children to their parents and remove any NULL ones
 	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
 		if ( *it == NULL) {
@@ -53,7 +53,7 @@ void NiNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & l
 }
 
 list<NiObjectRef> NiNode::GetRefs() const {
-	NI_NODE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiNode::GetType() const {

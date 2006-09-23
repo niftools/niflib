@@ -12,23 +12,23 @@ NiBillboardNode::NiBillboardNode() NI_BILLBOARD_NODE_CONSTRUCT {}
 NiBillboardNode::~NiBillboardNode() {}
 
 void NiBillboardNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BILLBOARD_NODE_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiBillboardNode::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_BILLBOARD_NODE_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiBillboardNode::asString( bool verbose ) const {
-	NI_BILLBOARD_NODE_STRING
+	return InternalAsString( verbose );
 }
 
 void NiBillboardNode::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_BILLBOARD_NODE_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiBillboardNode::GetRefs() const {
-	NI_BILLBOARD_NODE_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiBillboardNode::GetType() const {

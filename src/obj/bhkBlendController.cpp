@@ -12,23 +12,23 @@ bhkBlendController::bhkBlendController() BHK_BLEND_CONTROLLER_CONSTRUCT {}
 bhkBlendController::~bhkBlendController() {}
 
 void bhkBlendController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_BLEND_CONTROLLER_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkBlendController::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_BLEND_CONTROLLER_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkBlendController::asString( bool verbose ) const {
-	BHK_BLEND_CONTROLLER_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkBlendController::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_BLEND_CONTROLLER_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkBlendController::GetRefs() const {
-	BHK_BLEND_CONTROLLER_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkBlendController::GetType() const {

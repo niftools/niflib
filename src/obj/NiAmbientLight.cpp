@@ -12,23 +12,23 @@ NiAmbientLight::NiAmbientLight() NI_AMBIENT_LIGHT_CONSTRUCT {}
 NiAmbientLight::~NiAmbientLight() {}
 
 void NiAmbientLight::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_AMBIENT_LIGHT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiAmbientLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NI_AMBIENT_LIGHT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string NiAmbientLight::asString( bool verbose ) const {
-	NI_AMBIENT_LIGHT_STRING
+	return InternalAsString( verbose );
 }
 
 void NiAmbientLight::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NI_AMBIENT_LIGHT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> NiAmbientLight::GetRefs() const {
-	NI_AMBIENT_LIGHT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & NiAmbientLight::GetType() const {

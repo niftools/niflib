@@ -12,23 +12,23 @@ bhkWorldObject::bhkWorldObject() BHK_WORLD_OBJECT_CONSTRUCT {}
 bhkWorldObject::~bhkWorldObject() {}
 
 void bhkWorldObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_WORLD_OBJECT_READ
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void bhkWorldObject::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	BHK_WORLD_OBJECT_WRITE
+	InternalWrite( out, link_map, version, user_version );
 }
 
 string bhkWorldObject::asString( bool verbose ) const {
-	BHK_WORLD_OBJECT_STRING
+	return InternalAsString( verbose );
 }
 
 void bhkWorldObject::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	BHK_WORLD_OBJECT_FIXLINKS
+	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
 list<NiObjectRef> bhkWorldObject::GetRefs() const {
-	BHK_WORLD_OBJECT_GETREFS
+	return InternalGetRefs();
 }
 
 const Type & bhkWorldObject::GetType() const {
