@@ -331,86 +331,87 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		//Texture Coordinates
 
 		//Create UV set list
-		vector<TexType> uvSetList;
+		vector<TexType> uvSetList( shapeUVs.size() );
+		//Initialize to base
+		for ( unsigned tex = 0; tex < uvSetList.size(); ++tex ) {
+			uvSetList[tex] = BASE_MAP;
+		}
 		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TypeConst() );
 		NiTexturingPropertyRef niTexProp;
 		if ( niProp != NULL ) {
 			niTexProp = DynamicCast<NiTexturingProperty>(niProp);
 		}
+
 		if ( niTexProp != NULL ) {
+			//Add the UV set to the list for every type of texture slot that uses it
 			for ( int tex = 0; tex < 8; ++tex ) {
 				if ( niTexProp->HasTexture(tex) == true ) {
-					////cout << "Adding texture type to list:  " << TexType(tex) << endl;
-					uvSetList.push_back( TexType(tex) );
-				}
-			}
-		}
+					TexDesc td = niTexProp->GetTexture(tex);
+					
+					unsigned set = td.uvSet;
+					TexType newType = TexType(tex);
 
-		for ( unsigned set = 0; set < shapeUVs.size(); ++set ) {
-			TexType newType = BASE_MAP;
-			if ( uvSetList.size() > set ) {
-				 newType = uvSetList[set];
-			}
-
-			//Search for matching UV set
-			bool match_found = false;
-			unsigned uvSetIndex;
-			for ( unsigned set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
-				if ( texCoordSets[set_index].texType  == newType ) {
-					////cout << "Match found, use existing texture set index" << endl;
-					//Match found, use existing index
-					uvSetIndex = set_index;
-					match_found = true;
-					//Stop searching
-					break;
-				}
-			}
-
-			if ( match_found == false ) {
-				////cout << "No match found, add this texture set to the list" << endl;
-				//No match found, add this UV set to the list
-				TexCoordSet newTCS;
-				newTCS.texType = newType;
-				texCoordSets.push_back( newTCS );
-				//Record new index
-				uvSetIndex = unsigned(texCoordSets.size()) - 1;
-			}
-
-			////cout << "Loop through texture cooridnates in this set" << endl;
-			for ( unsigned v = 0; v < shapeUVs[set].size(); ++v ) {
-				TexCoord newCoord;
-
-				newCoord = shapeUVs[set][v];
-
-				//cout << "Search for matching texture coordinate" << endl;
-				//cout << "uvSetIndex:  " << uvSetIndex << endl;
-				//cout << "set:  " << set << endl;
-				//cout << "texCoordSets.size():  " << unsigned(texCoordSets.size()) << endl;
-				//cout << "v:  " << v << endl;
-				//cout << "lookUp.size():  " << unsigned(lookUp.size()) << endl;
-				//cout << "texCoordSets[uvSetIndex].texCoords.size():  " << unsigned(texCoordSets[uvSetIndex].texCoords.size()) << endl;
-				//Search for matching texture cooridnate
-				bool match_found = false;
-				for ( unsigned tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
-					if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
-						////cout << " Match found, using existing index" << endl;;
-						//Match found, use existing index
-						lookUp[v].uvIndices[uvSetIndex] = tc_index;
-						match_found = true;
-						////cout << "Stop searching" << endl;
-						//Stop searching
-						break;
+					//Search for matching UV set
+					bool match_found = false;
+					unsigned uvSetIndex;
+					for ( unsigned set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
+						if ( texCoordSets[set_index].texType  == newType ) {
+							////cout << "Match found, use existing texture set index" << endl;
+							//Match found, use existing index
+							uvSetIndex = set_index;
+							match_found = true;
+							//Stop searching
+							break;
+						}
 					}
-				}
 
-				////cout << "Done with loop, check if match was found" << endl;
-				if ( match_found == false ) {
-					////cout << "No match found" << endl;
-					//No match found, add this texture coordinate to the list
-					texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
-					////cout << "Record new index" << endl;
-					//Record new index
-					lookUp[v].uvIndices[uvSetIndex] = unsigned(texCoordSets[uvSetIndex].texCoords.size()) - 1;
+					if ( match_found == false ) {
+						////cout << "No match found, add this texture set to the list" << endl;
+						//No match found, add this UV set to the list
+						TexCoordSet newTCS;
+						newTCS.texType = newType;
+						texCoordSets.push_back( newTCS );
+						//Record new index
+						uvSetIndex = unsigned(texCoordSets.size()) - 1;
+					}
+
+					////cout << "Loop through texture cooridnates in this set" << endl;
+					for ( unsigned v = 0; v < shapeUVs[set].size(); ++v ) {
+						TexCoord newCoord;
+
+						newCoord = shapeUVs[set][v];
+
+						//cout << "Search for matching texture coordinate" << endl;
+						//cout << "uvSetIndex:  " << uvSetIndex << endl;
+						//cout << "set:  " << set << endl;
+						//cout << "texCoordSets.size():  " << unsigned(texCoordSets.size()) << endl;
+						//cout << "v:  " << v << endl;
+						//cout << "lookUp.size():  " << unsigned(lookUp.size()) << endl;
+						//cout << "texCoordSets[uvSetIndex].texCoords.size():  " << unsigned(texCoordSets[uvSetIndex].texCoords.size()) << endl;
+						//Search for matching texture cooridnate
+						bool match_found = false;
+						for ( unsigned tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
+							if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
+								////cout << " Match found, using existing index" << endl;;
+								//Match found, use existing index
+								lookUp[v].uvIndices[uvSetIndex] = tc_index;
+								match_found = true;
+								////cout << "Stop searching" << endl;
+								//Stop searching
+								break;
+							}
+						}
+
+						////cout << "Done with loop, check if match was found" << endl;
+						if ( match_found == false ) {
+							////cout << "No match found" << endl;
+							//No match found, add this texture coordinate to the list
+							texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
+							////cout << "Record new index" << endl;
+							//Record new index
+							lookUp[v].uvIndices[uvSetIndex] = unsigned(texCoordSets[uvSetIndex].texCoords.size()) - 1;
+						}
+					}
 				}
 			}
 		}
@@ -791,6 +792,9 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 			for ( int tex_num = 0; tex_num < 8; ++tex_num ) {
 				if (niTexProp->HasTexture(tex_num)) {
 					shapeTexCoordSets.push_back(tex_num);
+					TexDesc td = niTexProp->GetTexture(tex_num);
+					td.uvSet = shapeTexCoordSets.size() - 1;
+					niTexProp->SetTexture(tex_num, td);
 				}
 			}
 		} else {

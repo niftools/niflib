@@ -34,9 +34,10 @@ struct NIFLIB_API TexDesc {
 	 */
 	TexFilterMode filterMode;
 	/*!
-	 * Texture set? Usually 0.
+	 * The texture coordinate set in NiTriBasedGeomData that this texture
+	 * slot will use.
 	 */
-	uint textureSet;
+	uint uvSet;
 	/*!
 	 * 0?
 	 */
