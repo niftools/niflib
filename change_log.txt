@@ -249,9 +249,9 @@
  * Changed default for new controllers to 12; Active/Clamped.  Should get
    cycle type from NiControllerSequence.
  * Add a default value for the new controller so that its active.
-   1.  Update niflib with bspline interpolation abilities
-   2.  Change mergeniftrees to default phase to 0.0f instead of 1.0f as its
-       a better default value.
+ * Update niflib with bspline interpolation abilities
+ * Change mergeniftrees to default phase to 0.0f instead of 1.0f as its a
+   better default value.
  * Determined that there are references to NiBSplineData and
    NiBSplineBasisData in all NiBSplineInterpolator derived classes.
    Consolidated the various references from the derived classes to the
@@ -297,7 +297,7 @@
    same skeleton root as real NIF files.
  * The NiTriBasedGeomData::SetUVSetCount function now sets the hasUVs bool
    value correctly.
- * Fixed some skin related bugs in ComplexSh::Split.
+ * Fixed some skin related bugs in ComplexShape::Split.
  * Created a new ComplexShape class which can currently be used to
    automatically split the sort of complicated mesh that contains
    per-point-per-face attributes into NiTriShape classes.  Should support
@@ -310,3 +310,130 @@
    a string.
  * NiTriBasedGeom::BindSkin should now automatically finds the skeleton root
    by itself.  The skeleton_root argument has been removed.
+   
+==Version 0.6.0==
+
+ * Fixed ComplexShape::Merge and ComplexShape::Split to properly take new uvSet
+   member of TexDesc into account.
+ * Cleared up all Doxygen and SWIG warnings.
+ * Replaced _WRITE, _READ, _STRING, AND _FIXLINKS defines with the
+   corresponding internal function call.
+ * Replaced STANDARD_INTERNAL_FUNCTIONS with the internal function signatures.
+ * Made my Doxygen config file use relative paths and added it to SVN so
+   everyone can generate the same documentation for themselves.
+ * Added missing NifInfo arguments to ReadNifList calls.
+ * Several fixes to XML and Niflib to enable all my files from Freedom Force
+   (except with NiClodData), Oblivion, CivIV, Morrowind, Zoo Tycoon 2, and
+   DAoC to load in Niflib and NifSkope. Includes the two strange Oblivion files with version 3.3.0.13 and version
+   10.0.1.2.
+ * Fixed the array bug by reversing the template arguments and re-doing the
+   declarations in the Python script.
+ * Added support for sub version 4 headers, object storage, and link method.
+   Some objects like NiNodes already read correctly.
+ * Renamed the following functions:
+   CheckNifHeader -> GetNifVersion
+   GetVersion -> ParseVersionString
+   IsVersionSupported -> IsSupportedVersion
+ * Added new function, FormatVersionString, to format integer version numbers
+   as a "#.#.#.#" string.
+ * Changed GetNifVersion so it no longer returns VER_UNSUPPORTED.  It now
+   always returns the actual version value, if possible, which can be passed
+   to IsSupportedVersion if desired.
+ * GetNifVersion now supports version numbers lower than 4.
+ * Added versions 4.0.0.0 and 10.1.0.106 to version constants and
+   IsSupportedVersion function.
+ * Fix iterator problem with skin partition.
+ * Changed WriteNifTree, and WriteFileGroup functions to take NifInfo
+   structures instead of version and user_version arguments.
+ * Changed ReadNifList and ReadNifTree to optionally fill a passed in NifInfo
+   structure with information from the header of the NIF file they read.
+ * Fixed some tabs that were done with spaces instead of actual tab characters.
+ * Added * dot product and ^ cross product aliases.
+ * Removed unused vars from UpdateTangentSpace().
+ * Made UpdateTangentSpace set the name of newly created NiBinaryExtraData
+   objects.
+ * Added option to ComplexShape::Split to request the generation of tangent
+   space.
+ * Fixed NiSkinData overall offset transform calculation.
+ * Added an exception and some extra checks to
+   NiTriBasedGeomData::UpdateTangentSpace.  Also made minor style changes.
+ * Fixed warning created by changing NiStencilProperty's enabled value to a
+   byte.
+ * Added UpdateTangentSpace() to NiTriBasedGeom class.
+ * Rewrote large chunks of WriteFileGroup related routines.
+ * Added a WriteNifTree which allows for multiple roots (not exposed
+   publically)
+ * Added option to BindSkin to scene instead of skeleton root.
+ * Fixed bug in RemoveController
+ * Added helpers to NiControllerManager for sequence management
+ * Propegated user_version in routines which take a version
+ * Add more rigorous recursive block reordering for Oblivion collision objects.
+ * Add NiClod and NiClodData.
+ * Add NifSkope base partitioning algorithm
+ * Add ability to use TriStripper instead of NvStripper for tristripdata
+ * Changed XML Name of NiLODNode's data ref.
+ * Updated method names to use 'LOD'.
+ * Really put the skin calculations back the way they were this time.  Helps,
+   but the hands of better bodies meshes still end up in the wrong place.
+ * Added transform parameter to ComplexShape::Split because changing the
+   transforms after the fact ruins the skin binds.
+ * Fixed missing includes in enum files to work without PCH.
+ * Added missing NvTriStripper files back into solution.
+ * Created accessors for LOD type nodes.
+ * Fixed the relative include paths and tried to update solution, but havn't
+   got the precompiled header working right.
+ * Removed gen and obj folder and added lib folder.
+ * Restructured folder hierarchy.  Now with separate include, src, and lib
+   folders.
+ * Reverted a previous change to the skin calculations which turned out to be
+   incorrect.
+ * Forgot to include NiLODData.cpp in project file.
+ * Included missing implementation of Weight methods.
+ * Fix issues with NiControllerSequence in niflib.
+ * StringOffset now defaults to -1
+ * Search in StringPalette now finds exact matches rather than partial matches.
+ * Reuse same StringPalette for Controller and all child blocks
+ * Convert bspline controller offsets from ushort to uint
+ * fix bug in nicontrollersequence with string palette
+ * Add LOD Bone Controller handler
+ * Added a max_bones_per_partition parameter to ComplexShape::Split and
+   NiTriBasedGeom::GenHardwareSkinInfo in anticipation of Tazpn adding that
+   capability.
+ * Modify so that niflib compiles as it points to the correct enum file.
+ * Changed around XML enum support a bit.
+ * Remove enum value maps and update comments in generated files.
+ * Update niflib with Enumerations generated from nif.xml.
+ * Fixed problems I created in nif.xml
+ * Some simple updates to Niflib documentation.
+ * Updated ComplexShape::Split to optionally support stripification and skin
+   partition generation.
+ * Altered exception message for NiTriBasedGeomData::SetTriangles
+ * Casting functions now check for NULL as of last commit.
+ * First pass at strippifier in niflib.
+ * Adding some helpers on to access priority on controllers.
+ * Changed the order of file includes so that ControllerLink vectors would be
+   recognized by Swig.
+ * Added some end lines to make Swig 1.3.29 work.
+ * Fix issues with writing out KF files related to footer
+ * Add support for changing the priority on NiSequenceControllers
+ * Added Key templates to Python wrapper.
+ * Renamed CreateBlock to CreateObject and made it clear that it is not
+   necessary for the user to call this function unless s/he is working through
+   Python.
+ * Removed BlocksInMemory function.  Call NiObject::NumObjectsInMemory instead.
+ * Implemented GetScale and SetScale functions of bhkNiTriStripsShape to fix
+   linker errors when compiling Python wrapper.
+ * Initial changes for skin partition access.  Needs more work around
+   protecting the user from inconsistencies.
+ * Update bounding sphere info. on skin so not unknown anymore
+ * Fixed Matrix44 != operator
+ * Added bounding box related functions to NiAVObject.
+ * Hopefully fixed the skin calculations.  Results in skin files that always
+   seem to look correct in Morrowind but do not always look correct in
+   NifSkope.
+ * Merged in changes required by 3ds Max Exporter as I try to remove the
+   cloned copy of niflib completely from svn.
+ * Added Merge function to ComplexShape.
+ * Added != operator to Matrix44.
+ * Added IsSplitMeshProxy function to NiNode.
+ * Fixed some include problems.
