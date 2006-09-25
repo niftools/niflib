@@ -185,6 +185,7 @@ ushort unknownShort2; \
 Ref<NiObject > unknownLink; \
 
 #define NI_TRI_BASED_GEOM_DATA_MEMBERS \
+ushort numTriangles; \
 
 #define A_P_SYS_DATA_MEMBERS \
 bool hasUnknownFloats1; \
@@ -1035,6 +1036,8 @@ NiNode * skeletonRoot; \
 mutable uint numBones; \
 vector<NiNode * > bones; \
 
+#define NI_CLOD_SKIN_INSTANCE_MEMBERS \
+
 #define NI_SKIN_PARTITION_MEMBERS \
 mutable uint numSkinPartitionBlocks; \
 vector<SkinPartition > skinPartitionBlocks; \
@@ -1154,7 +1157,6 @@ Ref<NiTransformData > data; \
 #define NI_TRI_SHAPE_MEMBERS \
 
 #define NI_TRI_SHAPE_DATA_MEMBERS \
-mutable ushort numTriangles; \
 uint numTrianglePoints; \
 bool hasTriangles; \
 vector<Triangle > triangles; \
@@ -1164,7 +1166,6 @@ vector<MatchGroup > matchGroups; \
 #define NI_TRI_STRIPS_MEMBERS \
 
 #define NI_TRI_STRIPS_DATA_MEMBERS \
-ushort numTriangles; \
 mutable ushort numStrips; \
 mutable vector<ushort > stripLengths; \
 bool hasPoints; \
@@ -1173,10 +1174,15 @@ vector< vector<ushort > > points; \
 #define NI_CLOD_MEMBERS \
 
 #define NI_CLOD_DATA_MEMBERS \
-array<5,ushort> unknown5Shorts; \
+ushort unknownShorts; \
+mutable ushort unknownCount1; \
+mutable ushort unknownCount2; \
+mutable ushort unknownCount3; \
 float unknownFloat; \
-uint unknownInt; \
-array<44,ushort> unknownClodShorts; \
+ushort unknownShort; \
+vector< array<6,ushort> > unknownClodShorts1; \
+vector<ushort > unknownClodShorts2; \
+vector< array<6,ushort> > unknownClodShorts3; \
 
 #define NI_U_V_CONTROLLER_MEMBERS \
 ushort unknownShort; \
@@ -1402,6 +1408,7 @@ CompareMode function; \
 #define NI_SHADE_PROPERTY_MEMBERS
 #define NI_SKIN_DATA_MEMBERS
 #define NI_SKIN_INSTANCE_MEMBERS
+#define NI_CLOD_SKIN_INSTANCE_MEMBERS
 #define NI_SKIN_PARTITION_MEMBERS
 #define NI_SOURCE_TEXTURE_MEMBERS
 #define NI_SPECULAR_PROPERTY_MEMBERS
@@ -1624,7 +1631,8 @@ CompareMode function; \
 
 #define NI_TRI_BASED_GEOM_DATA_PARENT NiGeometryData
 
-#define NI_TRI_BASED_GEOM_DATA_CONSTRUCT 
+#define NI_TRI_BASED_GEOM_DATA_CONSTRUCT  : numTriangles((ushort)0)
+
 #define A_P_SYS_DATA_INCLUDE "NiGeometryData.h"
 
 #define A_P_SYS_DATA_PARENT NiGeometryData
@@ -2490,6 +2498,11 @@ CompareMode function; \
 
 #define NI_SKIN_INSTANCE_CONSTRUCT  : data(NULL), skinPartition(NULL), skeletonRoot(NULL), numBones((uint)0)
 
+#define NI_CLOD_SKIN_INSTANCE_INCLUDE "NiSkinInstance.h"
+
+#define NI_CLOD_SKIN_INSTANCE_PARENT NiSkinInstance
+
+#define NI_CLOD_SKIN_INSTANCE_CONSTRUCT 
 #define NI_SKIN_PARTITION_INCLUDE "NiObject.h"
 
 #define NI_SKIN_PARTITION_PARENT NiObject
@@ -2592,7 +2605,7 @@ CompareMode function; \
 
 #define NI_TRI_SHAPE_DATA_PARENT NiTriBasedGeomData
 
-#define NI_TRI_SHAPE_DATA_CONSTRUCT  : numTriangles((ushort)0), numTrianglePoints((uint)0), hasTriangles(false), numMatchGroups((ushort)0)
+#define NI_TRI_SHAPE_DATA_CONSTRUCT  : numTrianglePoints((uint)0), hasTriangles(false), numMatchGroups((ushort)0)
 
 #define NI_TRI_STRIPS_INCLUDE "NiTriBasedGeom.h"
 
@@ -2603,7 +2616,7 @@ CompareMode function; \
 
 #define NI_TRI_STRIPS_DATA_PARENT NiTriBasedGeomData
 
-#define NI_TRI_STRIPS_DATA_CONSTRUCT  : numTriangles((ushort)0), numStrips((ushort)0), hasPoints(false)
+#define NI_TRI_STRIPS_DATA_CONSTRUCT  : numStrips((ushort)0), hasPoints(false)
 
 #define NI_CLOD_INCLUDE "NiTriBasedGeom.h"
 
@@ -2614,7 +2627,7 @@ CompareMode function; \
 
 #define NI_CLOD_DATA_PARENT NiTriBasedGeomData
 
-#define NI_CLOD_DATA_CONSTRUCT  : unknownFloat(0.0f), unknownInt((uint)0)
+#define NI_CLOD_DATA_CONSTRUCT  : unknownShorts((ushort)0), unknownCount1((ushort)0), unknownCount2((ushort)0), unknownCount3((ushort)0), unknownFloat(0.0f), unknownShort((ushort)0)
 
 #define NI_U_V_CONTROLLER_INCLUDE "NiTimeController.h"
 

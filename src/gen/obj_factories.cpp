@@ -309,6 +309,8 @@ NiObject * CreateNiShadeProperty() { return new NiShadeProperty; }
 NiObject * CreateNiSkinData() { return new NiSkinData; }
 #include "../../include/obj/NiSkinInstance.h"
 NiObject * CreateNiSkinInstance() { return new NiSkinInstance; }
+#include "../../include/obj/NiClodSkinInstance.h"
+NiObject * CreateNiClodSkinInstance() { return new NiClodSkinInstance; }
 #include "../../include/obj/NiSkinPartition.h"
 NiObject * CreateNiSkinPartition() { return new NiSkinPartition; }
 #include "../../include/obj/NiSourceTexture.h"
@@ -527,6 +529,7 @@ void RegisterBlockFactories() {
 	global_block_map["NiShadeProperty"] = CreateNiShadeProperty;
 	global_block_map["NiSkinData"] = CreateNiSkinData;
 	global_block_map["NiSkinInstance"] = CreateNiSkinInstance;
+	global_block_map["NiClodSkinInstance"] = CreateNiClodSkinInstance;
 	global_block_map["NiSkinPartition"] = CreateNiSkinPartition;
 	global_block_map["NiSourceTexture"] = CreateNiSourceTexture;
 	global_block_map["NiSpecularProperty"] = CreateNiSpecularProperty;

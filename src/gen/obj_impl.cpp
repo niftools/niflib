@@ -155,6 +155,7 @@ using namespace std;
 #include "../../include/obj/NiShadeProperty.h"
 #include "../../include/obj/NiSkinData.h"
 #include "../../include/obj/NiSkinInstance.h"
+#include "../../include/obj/NiClodSkinInstance.h"
 #include "../../include/obj/NiSkinPartition.h"
 #include "../../include/obj/NiSourceTexture.h"
 #include "../../include/obj/NiSpecularProperty.h"
@@ -1890,15 +1891,18 @@ std::list<NiObjectRef> NiGeometryData::InternalGetRefs() const {
 
 void NiTriBasedGeomData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometryData::Read( in, link_stack, version, user_version );
+	NifStream( numTriangles, in, version );
 }
 
 void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometryData::Write( out, link_map, version, user_version );
+	NifStream( numTriangles, out, version );
 }
 
 std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiGeometryData::asString();
+	out << "  Num Triangles:  " << numTriangles << endl;
 	return out.str();
 }
 
@@ -9875,6 +9879,30 @@ std::list<NiObjectRef> NiSkinInstance::InternalGetRefs() const {
 	return refs;
 }
 
+void NiClodSkinInstance::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiSkinInstance::Read( in, link_stack, version, user_version );
+}
+
+void NiClodSkinInstance::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiSkinInstance::Write( out, link_map, version, user_version );
+}
+
+std::string NiClodSkinInstance::InternalAsString( bool verbose ) const {
+	stringstream out;
+	out << NiSkinInstance::asString();
+	return out.str();
+}
+
+void NiClodSkinInstance::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiSkinInstance::FixLinks( objects, link_stack, version, user_version );
+}
+
+std::list<NiObjectRef> NiClodSkinInstance::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiSkinInstance::GetRefs();
+	return refs;
+}
+
 void NiSkinPartition::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::Read( in, link_stack, version, user_version );
 	NifStream( numSkinPartitionBlocks, in, version );
@@ -11603,7 +11631,6 @@ std::list<NiObjectRef> NiTriShape::InternalGetRefs() const {
 
 void NiTriShapeData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::Read( in, link_stack, version, user_version );
-	NifStream( numTriangles, in, version );
 	NifStream( numTrianglePoints, in, version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( hasTriangles, in, version );
@@ -11636,8 +11663,6 @@ void NiTriShapeData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 void NiTriShapeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
 	numMatchGroups = ushort(matchGroups.size());
-	numTriangles = ushort(triangles.size());
-	NifStream( numTriangles, out, version );
 	NifStream( numTrianglePoints, out, version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( hasTriangles, out, version );
@@ -11668,8 +11693,6 @@ std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiTriBasedGeomData::asString();
 	numMatchGroups = ushort(matchGroups.size());
-	numTriangles = ushort(triangles.size());
-	out << "  Num Triangles:  " << numTriangles << endl;
 	out << "  Num Triangle Points:  " << numTrianglePoints << endl;
 	out << "  Has Triangles:  " << hasTriangles << endl;
 	for (uint i1 = 0; i1 < triangles.size(); i1++) {
@@ -11730,7 +11753,6 @@ std::list<NiObjectRef> NiTriStrips::InternalGetRefs() const {
 
 void NiTriStripsData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::Read( in, link_stack, version, user_version );
-	NifStream( numTriangles, in, version );
 	NifStream( numStrips, in, version );
 	stripLengths.resize(numStrips);
 	for (uint i1 = 0; i1 < stripLengths.size(); i1++) {
@@ -11766,7 +11788,6 @@ void NiTriStripsData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 	for (uint i1 = 0; i1 < points.size(); i1++)
 		stripLengths[i1] = ushort(points[i1].size());
 	numStrips = ushort(stripLengths.size());
-	NifStream( numTriangles, out, version );
 	NifStream( numStrips, out, version );
 	for (uint i1 = 0; i1 < stripLengths.size(); i1++) {
 		NifStream( stripLengths[i1], out, version );
@@ -11798,7 +11819,6 @@ std::string NiTriStripsData::InternalAsString( bool verbose ) const {
 	for (uint i1 = 0; i1 < points.size(); i1++)
 		stripLengths[i1] = ushort(points[i1].size());
 	numStrips = ushort(stripLengths.size());
-	out << "  Num Triangles:  " << numTriangles << endl;
 	out << "  Num Strips:  " << numStrips << endl;
 	for (uint i1 = 0; i1 < stripLengths.size(); i1++) {
 		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
@@ -11856,48 +11876,52 @@ std::list<NiObjectRef> NiClod::InternalGetRefs() const {
 
 void NiClodData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::Read( in, link_stack, version, user_version );
-	for (uint i1 = 0; i1 < 5; i1++) {
-		NifStream( unknown5Shorts[i1], in, version );
-	};
+	NifStream( unknownShorts, in, version );
+	NifStream( unknownCount1, in, version );
+	NifStream( unknownCount2, in, version );
+	NifStream( unknownCount3, in, version );
 	NifStream( unknownFloat, in, version );
-	NifStream( unknownInt, in, version );
-	if ( (unknownInt == 9) ) {
-		for (uint i2 = 0; i2 < 44; i2++) {
-			NifStream( unknownClodShorts[i2], in, version );
+	NifStream( unknownShort, in, version );
+	unknownClodShorts1.resize(unknownCount1);
+	for (uint i1 = 0; i1 < unknownClodShorts1.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownClodShorts1[i1][i2], in, version );
 		};
 	};
-	if ( (unknownInt == 199) ) {
-		for (uint i2 = 0; i2 < 233; i2++) {
-			NifStream( unknownClodShorts[i2], in, version );
-		};
+	unknownClodShorts2.resize(unknownCount2);
+	for (uint i1 = 0; i1 < unknownClodShorts2.size(); i1++) {
+		NifStream( unknownClodShorts2[i1], in, version );
 	};
-	if ( (unknownInt == 24) ) {
-		for (uint i2 = 0; i2 < 57; i2++) {
-			NifStream( unknownClodShorts[i2], in, version );
+	unknownClodShorts3.resize(unknownCount3);
+	for (uint i1 = 0; i1 < unknownClodShorts3.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownClodShorts3[i1][i2], in, version );
 		};
 	};
 }
 
 void NiClodData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
-	for (uint i1 = 0; i1 < 5; i1++) {
-		NifStream( unknown5Shorts[i1], out, version );
-	};
+	unknownCount3 = ushort(unknownClodShorts3.size());
+	unknownCount2 = ushort(unknownClodShorts2.size());
+	unknownCount1 = ushort(unknownClodShorts1.size());
+	NifStream( unknownShorts, out, version );
+	NifStream( unknownCount1, out, version );
+	NifStream( unknownCount2, out, version );
+	NifStream( unknownCount3, out, version );
 	NifStream( unknownFloat, out, version );
-	NifStream( unknownInt, out, version );
-	if ( (unknownInt == 9) ) {
-		for (uint i2 = 0; i2 < 44; i2++) {
-			NifStream( unknownClodShorts[i2], out, version );
+	NifStream( unknownShort, out, version );
+	for (uint i1 = 0; i1 < unknownClodShorts1.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownClodShorts1[i1][i2], out, version );
 		};
 	};
-	if ( (unknownInt == 199) ) {
-		for (uint i2 = 0; i2 < 233; i2++) {
-			NifStream( unknownClodShorts[i2], out, version );
-		};
+	for (uint i1 = 0; i1 < unknownClodShorts2.size(); i1++) {
+		NifStream( unknownClodShorts2[i1], out, version );
 	};
-	if ( (unknownInt == 24) ) {
-		for (uint i2 = 0; i2 < 57; i2++) {
-			NifStream( unknownClodShorts[i2], out, version );
+	for (uint i1 = 0; i1 < unknownClodShorts3.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownClodShorts3[i1][i2], out, version );
 		};
 	};
 }
@@ -11905,22 +11929,38 @@ void NiClodData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 std::string NiClodData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiTriBasedGeomData::asString();
-	for (uint i1 = 0; i1 < 5; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Unknown 5 Shorts[" << i1 << "]:  " << unknown5Shorts[i1] << endl;
-	};
+	unknownCount3 = ushort(unknownClodShorts3.size());
+	unknownCount2 = ushort(unknownClodShorts2.size());
+	unknownCount1 = ushort(unknownClodShorts1.size());
+	out << "  Unknown Shorts:  " << unknownShorts << endl;
+	out << "  Unknown Count 1:  " << unknownCount1 << endl;
+	out << "  Unknown Count 2:  " << unknownCount2 << endl;
+	out << "  Unknown Count 3:  " << unknownCount3 << endl;
 	out << "  Unknown Float:  " << unknownFloat << endl;
-	out << "  Unknown Int:  " << unknownInt << endl;
-	if ( (unknownInt == 9) ) {
-		for (uint i2 = 0; i2 < 44; i2++) {
+	out << "  Unknown Short:  " << unknownShort << endl;
+	for (uint i1 = 0; i1 < unknownClodShorts1.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
 			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Unknown Clod Shorts[" << i2 << "]:  " << unknownClodShorts[i2] << endl;
+			out << "      Unknown Clod Shorts 1[" << i1 << "][" << i2 << "]:  " << unknownClodShorts1[i1][i2] << endl;
+		};
+	};
+	for (uint i1 = 0; i1 < unknownClodShorts2.size(); i1++) {
+		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		out << "    Unknown Clod Shorts 2[" << i1 << "]:  " << unknownClodShorts2[i1] << endl;
+	};
+	for (uint i1 = 0; i1 < unknownClodShorts3.size(); i1++) {
+		for (uint i2 = 0; i2 < 6; i2++) {
+			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			out << "      Unknown Clod Shorts 3[" << i1 << "][" << i2 << "]:  " << unknownClodShorts3[i1][i2] << endl;
 		};
 	};
 	return out.str();

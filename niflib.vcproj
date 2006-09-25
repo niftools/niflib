@@ -839,6 +839,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiClodSkinInstance.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiCollisionData.cpp"
 					>
 				</File>
@@ -1926,6 +1930,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiClodData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiClodSkinInstance.h"
 					>
 				</File>
 				<File
