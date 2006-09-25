@@ -1544,7 +1544,7 @@ std::list<NiObjectRef> APSysCtlr::InternalGetRefs() const {
 	return refs;
 }
 
-void NiTriBasedGeom::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometry::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	uint block_num;
 	NiAVObject::Read( in, link_stack, version, user_version );
 	NifStream( block_num, in, version );
@@ -1561,7 +1561,7 @@ void NiTriBasedGeom::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiTriBasedGeom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometry::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
 	if ( data != NULL )
 		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
@@ -1583,7 +1583,7 @@ void NiTriBasedGeom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 	};
 }
 
-std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
+std::string NiGeometry::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiAVObject::asString();
 	out << "  Data:  " << data << endl;
@@ -1596,9 +1596,9 @@ std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometry::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
-	data = FixLink<NiTriBasedGeomData>( objects, link_stack, version );
+	data = FixLink<NiGeometryData>( objects, link_stack, version );
 	skinInstance = FixLink<NiSkinInstance>( objects, link_stack, version );
 	if ( version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
@@ -1607,7 +1607,7 @@ void NiTriBasedGeom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects
 	};
 }
 
-std::list<NiObjectRef> NiTriBasedGeom::InternalGetRefs() const {
+std::list<NiObjectRef> NiGeometry::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiAVObject::GetRefs();
 	if ( data != NULL )
@@ -1619,7 +1619,31 @@ std::list<NiObjectRef> NiTriBasedGeom::InternalGetRefs() const {
 	return refs;
 }
 
-void NiTriBasedGeomData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeom::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiGeometry::Read( in, link_stack, version, user_version );
+}
+
+void NiTriBasedGeom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiGeometry::Write( out, link_map, version, user_version );
+}
+
+std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
+	stringstream out;
+	out << NiGeometry::asString();
+	return out.str();
+}
+
+void NiTriBasedGeom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiGeometry::FixLinks( objects, link_stack, version, user_version );
+}
+
+std::list<NiObjectRef> NiTriBasedGeom::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiGeometry::GetRefs();
+	return refs;
+}
+
+void NiGeometryData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	uint block_num;
 	NiObject::Read( in, link_stack, version, user_version );
 	if ( version >= 0x0A020000 ) {
@@ -1699,7 +1723,7 @@ void NiTriBasedGeomData::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometryData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numUvSets = ushort(uvSets.size());
 	numUvSets2 = byte(uvSets.size());
@@ -1774,7 +1798,7 @@ void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 	};
 }
 
-std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
+std::string NiGeometryData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiObject::asString();
 	numUvSets = ushort(uvSets.size());
@@ -1849,14 +1873,14 @@ std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeomData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometryData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
 		unknownLink = FixLink<NiObject>( objects, link_stack, version );
 	};
 }
 
-std::list<NiObjectRef> NiTriBasedGeomData::InternalGetRefs() const {
+std::list<NiObjectRef> NiGeometryData::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
 	if ( unknownLink != NULL )
@@ -1864,8 +1888,32 @@ std::list<NiObjectRef> NiTriBasedGeomData::InternalGetRefs() const {
 	return refs;
 }
 
+void NiTriBasedGeomData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiGeometryData::Read( in, link_stack, version, user_version );
+}
+
+void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiGeometryData::Write( out, link_map, version, user_version );
+}
+
+std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
+	stringstream out;
+	out << NiGeometryData::asString();
+	return out.str();
+}
+
+void NiTriBasedGeomData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
+}
+
+std::list<NiObjectRef> NiTriBasedGeomData::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiGeometryData::GetRefs();
+	return refs;
+}
+
 void APSysData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeomData::Read( in, link_stack, version, user_version );
+	NiGeometryData::Read( in, link_stack, version, user_version );
 	NifStream( hasUnknownFloats1, in, version );
 	if ( (hasUnknownFloats1 != 0) ) {
 		unknownFloats1.resize(numVertices);
@@ -1885,7 +1933,7 @@ void APSysData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 }
 
 void APSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NiTriBasedGeomData::Write( out, link_map, version, user_version );
+	NiGeometryData::Write( out, link_map, version, user_version );
 	NifStream( hasUnknownFloats1, out, version );
 	if ( (hasUnknownFloats1 != 0) ) {
 		for (uint i2 = 0; i2 < unknownFloats1.size(); i2++) {
@@ -1904,7 +1952,7 @@ void APSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string APSysData::InternalAsString( bool verbose ) const {
 	stringstream out;
-	out << NiTriBasedGeomData::asString();
+	out << NiGeometryData::asString();
 	out << "  Has Unknown Floats 1:  " << hasUnknownFloats1 << endl;
 	if ( (hasUnknownFloats1 != 0) ) {
 		for (uint i2 = 0; i2 < unknownFloats1.size(); i2++) {
@@ -1931,12 +1979,12 @@ std::string APSysData::InternalAsString( bool verbose ) const {
 }
 
 void APSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
+	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
 }
 
 std::list<NiObjectRef> APSysData::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiTriBasedGeomData::GetRefs();
+	refs = NiGeometryData::GetRefs();
 	return refs;
 }
 
@@ -3664,7 +3712,7 @@ std::list<NiObjectRef> NiAmbientLight::InternalGetRefs() const {
 }
 
 void NiAutoNormalParticlesData::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeomData::Read( in, link_stack, version, user_version );
+	NiGeometryData::Read( in, link_stack, version, user_version );
 	if ( version <= 0x04000002 ) {
 		NifStream( numParticles, in, version );
 	};
@@ -3687,7 +3735,7 @@ void NiAutoNormalParticlesData::InternalRead( istream& in, list<uint> & link_sta
 }
 
 void NiAutoNormalParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NiTriBasedGeomData::Write( out, link_map, version, user_version );
+	NiGeometryData::Write( out, link_map, version, user_version );
 	if ( version <= 0x04000002 ) {
 		NifStream( numParticles, out, version );
 	};
@@ -3710,7 +3758,7 @@ void NiAutoNormalParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 	stringstream out;
-	out << NiTriBasedGeomData::asString();
+	out << NiGeometryData::asString();
 	out << "  Num Particles:  " << numParticles << endl;
 	out << "  Size:  " << size << endl;
 	out << "  Num Active:  " << numActive << endl;
@@ -3729,12 +3777,12 @@ std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 }
 
 void NiAutoNormalParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
+	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
 }
 
 std::list<NiObjectRef> NiAutoNormalParticlesData::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiTriBasedGeomData::GetRefs();
+	refs = NiGeometryData::GetRefs();
 	return refs;
 }
 
@@ -7225,26 +7273,26 @@ std::list<NiObjectRef> NiParticleRotation::InternalGetRefs() const {
 }
 
 void NiParticles::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeom::Read( in, link_stack, version, user_version );
+	NiGeometry::Read( in, link_stack, version, user_version );
 }
 
 void NiParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
-	NiTriBasedGeom::Write( out, link_map, version, user_version );
+	NiGeometry::Write( out, link_map, version, user_version );
 }
 
 std::string NiParticles::InternalAsString( bool verbose ) const {
 	stringstream out;
-	out << NiTriBasedGeom::asString();
+	out << NiGeometry::asString();
 	return out.str();
 }
 
 void NiParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
+	NiGeometry::FixLinks( objects, link_stack, version, user_version );
 }
 
 std::list<NiObjectRef> NiParticles::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiTriBasedGeom::GetRefs();
+	refs = NiGeometry::GetRefs();
 	return refs;
 }
 

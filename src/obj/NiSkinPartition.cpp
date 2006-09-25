@@ -227,7 +227,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
    if ( skinData == NULL ) {
       throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinData found." );
    }
-   NiTriBasedGeomDataRef geomData = shape->GetData();
+   NiTriBasedGeomDataRef geomData = DynamicCast<NiTriBasedGeomData>( shape->GetData() );
    if ( geomData == NULL ) {
       throw runtime_error( "Attempted to generate a skin partition on a mesh with no geometry data." );
    }
@@ -376,7 +376,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
    if ( skinData == NULL ) {
       throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinData found." );
    }
-   NiTriBasedGeomDataRef geomData = shape->GetData();
+   NiTriBasedGeomDataRef geomData = DynamicCast<NiTriBasedGeomData>(shape->GetData() );
    if ( geomData == NULL ) {
       throw runtime_error( "Attempted to generate a skin partition on a mesh with no geometry data." );
    }

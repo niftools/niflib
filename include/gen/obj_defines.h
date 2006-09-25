@@ -153,14 +153,16 @@ Ref<NiInterpolator > interpolator; \
 #define A_P_SYS_CTLR_MEMBERS \
 string modifierName; \
 
-#define NI_TRI_BASED_GEOM_MEMBERS \
-Ref<NiTriBasedGeomData > data; \
+#define NI_GEOMETRY_MEMBERS \
+Ref<NiGeometryData > data; \
 Ref<NiSkinInstance > skinInstance; \
 bool hasShader; \
 string shaderName; \
 Ref<NiObject > unknownLink; \
 
-#define NI_TRI_BASED_GEOM_DATA_MEMBERS \
+#define NI_TRI_BASED_GEOM_MEMBERS \
+
+#define NI_GEOMETRY_DATA_MEMBERS \
 string name; \
 mutable ushort numVertices; \
 ushort unknownShort1; \
@@ -181,6 +183,8 @@ bool hasUv; \
 vector< vector<TexCoord > > uvSets; \
 ushort unknownShort2; \
 Ref<NiObject > unknownLink; \
+
+#define NI_TRI_BASED_GEOM_DATA_MEMBERS \
 
 #define A_P_SYS_DATA_MEMBERS \
 bool hasUnknownFloats1; \
@@ -1242,7 +1246,9 @@ CompareMode function; \
 #define A_BONE_L_O_D_CONTROLLER_MEMBERS
 #define NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
 #define A_P_SYS_CTLR_MEMBERS
+#define NI_GEOMETRY_MEMBERS
 #define NI_TRI_BASED_GEOM_MEMBERS
+#define NI_GEOMETRY_DATA_MEMBERS
 #define NI_TRI_BASED_GEOM_DATA_MEMBERS
 #define A_P_SYS_DATA_MEMBERS
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS
@@ -1597,21 +1603,31 @@ CompareMode function; \
 #define A_P_SYS_CTLR_PARENT NiSingleInterpolatorController
 
 #define A_P_SYS_CTLR_CONSTRUCT 
-#define NI_TRI_BASED_GEOM_INCLUDE "NiAVObject.h"
+#define NI_GEOMETRY_INCLUDE "NiAVObject.h"
 
-#define NI_TRI_BASED_GEOM_PARENT NiAVObject
+#define NI_GEOMETRY_PARENT NiAVObject
 
-#define NI_TRI_BASED_GEOM_CONSTRUCT  : data(NULL), skinInstance(NULL), hasShader(false), unknownLink(NULL)
+#define NI_GEOMETRY_CONSTRUCT  : data(NULL), skinInstance(NULL), hasShader(false), unknownLink(NULL)
 
-#define NI_TRI_BASED_GEOM_DATA_INCLUDE "NiObject.h"
+#define NI_TRI_BASED_GEOM_INCLUDE "NiGeometry.h"
 
-#define NI_TRI_BASED_GEOM_DATA_PARENT NiObject
+#define NI_TRI_BASED_GEOM_PARENT NiGeometry
 
-#define NI_TRI_BASED_GEOM_DATA_CONSTRUCT  : numVertices((ushort)0), unknownShort1((ushort)0), hasVertices(false), numUvSets2((byte)0), unknownByte((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((ushort)0), hasUv(false), unknownShort2((ushort)0), unknownLink(NULL)
+#define NI_TRI_BASED_GEOM_CONSTRUCT 
+#define NI_GEOMETRY_DATA_INCLUDE "NiObject.h"
 
-#define A_P_SYS_DATA_INCLUDE "NiTriBasedGeomData.h"
+#define NI_GEOMETRY_DATA_PARENT NiObject
 
-#define A_P_SYS_DATA_PARENT NiTriBasedGeomData
+#define NI_GEOMETRY_DATA_CONSTRUCT  : numVertices((ushort)0), unknownShort1((ushort)0), hasVertices(false), numUvSets2((byte)0), unknownByte((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((ushort)0), hasUv(false), unknownShort2((ushort)0), unknownLink(NULL)
+
+#define NI_TRI_BASED_GEOM_DATA_INCLUDE "NiGeometryData.h"
+
+#define NI_TRI_BASED_GEOM_DATA_PARENT NiGeometryData
+
+#define NI_TRI_BASED_GEOM_DATA_CONSTRUCT 
+#define A_P_SYS_DATA_INCLUDE "NiGeometryData.h"
+
+#define A_P_SYS_DATA_PARENT NiGeometryData
 
 #define A_P_SYS_DATA_CONSTRUCT  : hasUnknownFloats1(false), unknownShort3((ushort)0), hasUnknownFloats2(false), unknownByte1((byte)0)
 
@@ -1802,9 +1818,9 @@ CompareMode function; \
 #define NI_AMBIENT_LIGHT_PARENT NiLight
 
 #define NI_AMBIENT_LIGHT_CONSTRUCT 
-#define NI_AUTO_NORMAL_PARTICLES_DATA_INCLUDE "NiTriBasedGeomData.h"
+#define NI_AUTO_NORMAL_PARTICLES_DATA_INCLUDE "NiGeometryData.h"
 
-#define NI_AUTO_NORMAL_PARTICLES_DATA_PARENT NiTriBasedGeomData
+#define NI_AUTO_NORMAL_PARTICLES_DATA_PARENT NiGeometryData
 
 #define NI_AUTO_NORMAL_PARTICLES_DATA_CONSTRUCT  : numParticles((ushort)0), size(0.0f), numActive((ushort)0), unknownShort((ushort)0), hasSizes(false)
 
@@ -2170,9 +2186,9 @@ CompareMode function; \
 
 #define NI_PARTICLE_ROTATION_CONSTRUCT  : unknownByte((byte)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f)
 
-#define NI_PARTICLES_INCLUDE "NiTriBasedGeom.h"
+#define NI_PARTICLES_INCLUDE "NiGeometry.h"
 
-#define NI_PARTICLES_PARENT NiTriBasedGeom
+#define NI_PARTICLES_PARENT NiGeometry
 
 #define NI_PARTICLES_CONSTRUCT 
 #define NI_AUTO_NORMAL_PARTICLES_INCLUDE "NiParticles.h"

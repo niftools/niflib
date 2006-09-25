@@ -12,7 +12,7 @@ namespace Niflib {
 
 // Forward define of referenced blocks
 class NiSkinPartition;
-class NiTriBasedGeom;
+class NiGeometry;
 
 #include "../gen/obj_defines.h"
 
@@ -28,10 +28,10 @@ public:
 	NiSkinData();
 
 	/*!
-	 * This constructor is called by NiTriBasedGeom when it creates a new skin
+	 * This constructor is called by NiGeometry when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
-	NiSkinData( const Ref<NiTriBasedGeom> & owner );
+	NiSkinData( const Ref<NiGeometry> & owner );
 
 	~NiSkinData();
 

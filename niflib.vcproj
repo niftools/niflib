@@ -312,7 +312,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="$(ProjectDir)include\pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -378,7 +378,7 @@
 				AdditionalIncludeDirectories="$(ProjectDir)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="$(ProjectDir)include\pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -457,7 +457,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
+						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
@@ -475,7 +475,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
+						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
@@ -484,7 +484,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
+						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
@@ -493,7 +493,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
+						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
 					/>
 				</FileConfiguration>
@@ -502,7 +502,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
+						UsePrecompiledHeader="0"
 						PrecompiledHeaderThrough="$(ProjectDir)include\pch.h"
 					/>
 				</FileConfiguration>
@@ -908,6 +908,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiFogProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiGeometryData.cpp"
 					>
 				</File>
 				<File
@@ -1990,6 +1998,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiFogProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiGeometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiGeometryData.h"
 					>
 				</File>
 				<File

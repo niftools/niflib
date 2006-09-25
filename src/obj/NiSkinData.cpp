@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../include/gen/SkinData.h"
 #include "../../include/gen/SkinWeight.h"
 #include "../../include/obj/NiSkinPartition.h"
-#include "../../include/obj/NiTriBasedGeom.h"
+#include "../../include/obj/NiGeometry.h"
 #include "../../include/obj/NiSkinInstance.h"
 using namespace Niflib;
 
@@ -75,7 +75,7 @@ Matrix44 NiSkinData::GetOverallTransform() const {
 	return Matrix44( translation, rotation, scale );
 }
 
-NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRUCT {
+NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
 	//Get skin instance
 	NiSkinInstanceRef skinInst = owner->GetSkinInstance();
 
@@ -94,7 +94,7 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 	//Get Skeleton root world transform
 	Matrix44 sr_world = skinInst->GetSkeletonRoot()->GetWorldTransform();
 
-	//Inverse owner NiTriBasedGeom matrix & multiply with skeleton root matrix
+	//Inverse owner NiGeometry matrix & multiply with skeleton root matrix
 	Matrix44 overall_mat = (owner_mat * sr_world.Inverse()).Inverse();
 
 	//Store result
@@ -109,7 +109,7 @@ NiSkinData::NiSkinData( const Ref<NiTriBasedGeom> & owner ) NI_SKIN_DATA_CONSTRU
 		//Get bone world position
 		bone_mat = bone_nodes[i]->GetWorldTransform();
 
-		//Multiply NiTriBasedGeom matrix with inversed bone matrix
+		//Multiply NiGeometry matrix with inversed bone matrix
 		res_mat = owner_mat * bone_mat.Inverse();
 
 		//Store result

@@ -148,7 +148,7 @@ void NvStripifier::BuildStripifyInfo(NvFaceInfoVec &faceInfos, NvEdgeInfoVec &ed
 		{
 			if (edgeInfo01->m_face1 != NULL)
 			{
-				printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
+				//printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
 			}
 			else
 			{
@@ -179,7 +179,7 @@ void NvStripifier::BuildStripifyInfo(NvFaceInfoVec &faceInfos, NvEdgeInfoVec &ed
 		{
 			if (edgeInfo12->m_face1 != NULL)
 			{
-				printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
+				//printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
 			}
 			else
 			{
@@ -210,7 +210,7 @@ void NvStripifier::BuildStripifyInfo(NvFaceInfoVec &faceInfos, NvEdgeInfoVec &ed
 		{
 			if (edgeInfo20->m_face1 != NULL)
 			{
-				printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
+				//printf("BuildStripifyInfo: > 2 triangles on an edge... uncertain consequences\n");
 			}
 			else
 			{
@@ -449,22 +449,22 @@ inline int NvStripifier::GetNextIndex(const WordVec &indices, NvFaceInfo *face){
 	
 	if (fv0 != v0 && fv0 != v1){
 		if ((fv1 != v0 && fv1 != v1) || (fv2 != v0 && fv2 != v1)){
-			printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
-			printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
+			//printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
+			//printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
 		}
 		return fv0;
 	}
 	if (fv1 != v0 && fv1 != v1){
 		if ((fv0 != v0 && fv0 != v1) || (fv2 != v0 && fv2 != v1)){
-			printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
-			printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
+			//printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
+			//printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
 		}
 		return fv1;
 	}
 	if (fv2 != v0 && fv2 != v1){
 		if ((fv0 != v0 && fv0 != v1) || (fv1 != v0 && fv1 != v1)){
-			printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
-			printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
+			//printf("GetNextIndex: Triangle doesn't have all of its vertices\n");
+			//printf("GetNextIndex: Duplicate triangle probably got us derailed\n");
 		}
 		return fv2;
 	}

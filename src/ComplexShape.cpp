@@ -226,7 +226,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		propGroups[prop_group_index] = (*geom)->GetProperties();
 		
 		
-		NiTriBasedGeomDataRef geomData = (*geom)->GetData();
+		NiTriBasedGeomDataRef geomData = DynamicCast<NiTriBasedGeomData>( (*geom)->GetData() );
 
 		if ( geomData == NULL ) {
 			throw runtime_error("One of the NiTriBasedGeom found by ComplexShape::Merge with a NiTriBasedGeom has no NiTriBasedGeomData attached.");
@@ -672,7 +672,7 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 		} else {
 			niData = new NiTriShapeData;
 		}
-		shapes[shape_num]->SetData( StaticCast<NiTriBasedGeomData>(niData) );
+		shapes[shape_num]->SetData( StaticCast<NiGeometryData>(niData) );
 
 		//Create a list of CompoundVertex to make it easier to
 		//test for the need to clone a vertex
