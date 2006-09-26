@@ -7,6 +7,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "APSysCtlr.h"
 namespace Niflib {
 
+// Forward define of referenced blocks
+class NiFloatData;
 
 #include "../gen/obj_defines.h"
 

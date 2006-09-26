@@ -480,13 +480,13 @@ uint unknownInt2; \
 
 #define NI_COLLISION_DATA_MEMBERS \
 NiNode * targetNode; \
-uint unknown2; \
-byte unknown3; \
+uint unknownInt1; \
+uint unknownInt2; \
+byte unknownByte; \
 uint collisionType; \
-uint unknown5; \
-Vector3 unknown7; \
-array<8,float> unknown6; \
-array<15,float> unknown8; \
+Vector3 unknownVector; \
+array<8,float> unknownFloat1; \
+array<15,float> unknownFloat2; \
 
 #define NI_COLOR_DATA_MEMBERS \
 KeyGroup<Color4 > data; \
@@ -924,6 +924,7 @@ vector<Key<byte > > visibilityKeys_; \
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_MEMBERS \
+Ref<NiFloatData > unknownLink; \
 
 #define NI_P_SYS_GRAVITY_MODIFIER_MEMBERS \
 NiNode * gravityObject; \
@@ -935,6 +936,7 @@ float turbulence; \
 float turbulenceScale; \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_MEMBERS \
+Ref<NiFloatData > unknownLink; \
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_MEMBERS \
 float growTime; \
@@ -954,6 +956,7 @@ mutable uint numMeshes; \
 vector<Ref<NiNode > > meshes; \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_MEMBERS \
+uint unknownInt; \
 
 #define NI_P_SYS_PLANAR_COLLIDER_MEMBERS \
 float bounce; \
@@ -1931,7 +1934,7 @@ CompareMode function; \
 
 #define NI_COLLISION_DATA_PARENT NiObject
 
-#define NI_COLLISION_DATA_CONSTRUCT  : targetNode(NULL), unknown2((uint)0), unknown3((byte)0), collisionType((uint)0), unknown5((uint)0)
+#define NI_COLLISION_DATA_CONSTRUCT  : targetNode(NULL), unknownInt1((uint)0), unknownInt2((uint)0), unknownByte((byte)0), collisionType((uint)0)
 
 #define NI_COLOR_DATA_INCLUDE "AKeyedData.h"
 
@@ -2374,7 +2377,8 @@ CompareMode function; \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_EMITTER_SPEED_CTLR_CONSTRUCT 
+#define NI_P_SYS_EMITTER_SPEED_CTLR_CONSTRUCT  : unknownLink(NULL)
+
 #define NI_P_SYS_GRAVITY_MODIFIER_INCLUDE "NiPSysModifier.h"
 
 #define NI_P_SYS_GRAVITY_MODIFIER_PARENT NiPSysModifier
@@ -2385,7 +2389,8 @@ CompareMode function; \
 
 #define NI_P_SYS_GRAVITY_STRENGTH_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_GRAVITY_STRENGTH_CTLR_CONSTRUCT 
+#define NI_P_SYS_GRAVITY_STRENGTH_CTLR_CONSTRUCT  : unknownLink(NULL)
+
 #define NI_P_SYS_GROW_FADE_MODIFIER_INCLUDE "NiPSysModifier.h"
 
 #define NI_P_SYS_GROW_FADE_MODIFIER_PARENT NiPSysModifier
@@ -2408,7 +2413,8 @@ CompareMode function; \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_MODIFIER_ACTIVE_CTLR_CONSTRUCT 
+#define NI_P_SYS_MODIFIER_ACTIVE_CTLR_CONSTRUCT  : unknownInt((uint)0)
+
 #define NI_P_SYS_PLANAR_COLLIDER_INCLUDE "NiObject.h"
 
 #define NI_P_SYS_PLANAR_COLLIDER_PARENT NiObject

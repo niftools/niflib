@@ -1256,7 +1256,9 @@ void NiPSysEmitter::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	NifStream( planarAngleVariation, in, version );
 	NifStream( initialColor, in, version );
 	NifStream( initialRadius, in, version );
-	NifStream( radiusVariation, in, version );
+	if ( version >= 0x14000004 ) {
+		NifStream( radiusVariation, in, version );
+	};
 	NifStream( lifeSpan, in, version );
 	NifStream( lifeSpanVariation, in, version );
 }
@@ -1271,7 +1273,9 @@ void NiPSysEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 	NifStream( planarAngleVariation, out, version );
 	NifStream( initialColor, out, version );
 	NifStream( initialRadius, out, version );
-	NifStream( radiusVariation, out, version );
+	if ( version >= 0x14000004 ) {
+		NifStream( radiusVariation, out, version );
+	};
 	NifStream( lifeSpan, out, version );
 	NifStream( lifeSpanVariation, out, version );
 }
@@ -1306,7 +1310,7 @@ std::list<NiObjectRef> NiPSysEmitter::InternalGetRefs() const {
 void NiPSysVolumeEmitter::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	uint block_num;
 	NiPSysEmitter::Read( in, link_stack, version, user_version );
-	if ( version >= 0x14000004 ) {
+	if ( version >= 0x0A010000 ) {
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
 	};
@@ -1314,7 +1318,7 @@ void NiPSysVolumeEmitter::InternalRead( istream& in, list<uint> & link_stack, un
 
 void NiPSysVolumeEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysEmitter::Write( out, link_map, version, user_version );
-	if ( version >= 0x14000004 ) {
+	if ( version >= 0x0A010000 ) {
 		if ( emitterObject != NULL )
 			NifStream( link_map[StaticCast<NiObject>(emitterObject)], out, version );
 		else
@@ -1331,7 +1335,7 @@ std::string NiPSysVolumeEmitter::InternalAsString( bool verbose ) const {
 
 void NiPSysVolumeEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysEmitter::FixLinks( objects, link_stack, version, user_version );
-	if ( version >= 0x14000004 ) {
+	if ( version >= 0x0A010000 ) {
 		emitterObject = FixLink<NiNode>( objects, link_stack, version );
 	};
 }
@@ -4528,21 +4532,24 @@ void NiCollisionData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NiObject::Read( in, link_stack, version, user_version );
 	NifStream( block_num, in, version );
 	link_stack.push_back( block_num );
-	NifStream( unknown2, in, version );
-	NifStream( unknown3, in, version );
+	NifStream( unknownInt1, in, version );
+	if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) {
+		NifStream( unknownInt2, in, version );
+	};
+	NifStream( unknownByte, in, version );
 	NifStream( collisionType, in, version );
 	if ( (collisionType == 0) ) {
-		NifStream( unknown5, in, version );
-		NifStream( unknown7, in, version );
+		NifStream( unknownInt2, in, version );
+		NifStream( unknownVector, in, version );
 	};
 	if ( (collisionType == 2) ) {
 		for (uint i2 = 0; i2 < 8; i2++) {
-			NifStream( unknown6[i2], in, version );
+			NifStream( unknownFloat1[i2], in, version );
 		};
 	};
 	if ( (collisionType == 1) ) {
 		for (uint i2 = 0; i2 < 15; i2++) {
-			NifStream( unknown8[i2], in, version );
+			NifStream( unknownFloat2[i2], in, version );
 		};
 	};
 }
@@ -4553,21 +4560,24 @@ void NiCollisionData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 		NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version );
 	else
 		NifStream( 0xffffffff, out, version );
-	NifStream( unknown2, out, version );
-	NifStream( unknown3, out, version );
+	NifStream( unknownInt1, out, version );
+	if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) {
+		NifStream( unknownInt2, out, version );
+	};
+	NifStream( unknownByte, out, version );
 	NifStream( collisionType, out, version );
 	if ( (collisionType == 0) ) {
-		NifStream( unknown5, out, version );
-		NifStream( unknown7, out, version );
+		NifStream( unknownInt2, out, version );
+		NifStream( unknownVector, out, version );
 	};
 	if ( (collisionType == 2) ) {
 		for (uint i2 = 0; i2 < 8; i2++) {
-			NifStream( unknown6[i2], out, version );
+			NifStream( unknownFloat1[i2], out, version );
 		};
 	};
 	if ( (collisionType == 1) ) {
 		for (uint i2 = 0; i2 < 15; i2++) {
-			NifStream( unknown8[i2], out, version );
+			NifStream( unknownFloat2[i2], out, version );
 		};
 	};
 }
@@ -4576,12 +4586,12 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << NiObject::asString();
 	out << "  Target Node:  " << targetNode << endl;
-	out << "  Unknown2:  " << unknown2 << endl;
-	out << "  Unknown3:  " << unknown3 << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Collision Type:  " << collisionType << endl;
 	if ( (collisionType == 0) ) {
-		out << "    Unknown5:  " << unknown5 << endl;
-		out << "    Unknown7:  " << unknown7 << endl;
+		out << "    Unknown Vector:  " << unknownVector << endl;
 	};
 	if ( (collisionType == 2) ) {
 		for (uint i2 = 0; i2 < 8; i2++) {
@@ -4589,7 +4599,7 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Unknown6[" << i2 << "]:  " << unknown6[i2] << endl;
+			out << "      Unknown Float 1[" << i2 << "]:  " << unknownFloat1[i2] << endl;
 		};
 	};
 	if ( (collisionType == 1) ) {
@@ -4598,7 +4608,7 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Unknown8[" << i2 << "]:  " << unknown8[i2] << endl;
+			out << "      Unknown Float 2[" << i2 << "]:  " << unknownFloat2[i2] << endl;
 		};
 	};
 	return out.str();
@@ -8910,26 +8920,43 @@ std::list<NiObjectRef> NiPSysEmitterLifeSpanCtlr::InternalGetRefs() const {
 }
 
 void NiPSysEmitterSpeedCtlr::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	uint block_num;
 	APSysCtlr::Read( in, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+	};
 }
 
 void NiPSysEmitterSpeedCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		if ( unknownLink != NULL )
+			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+	};
 }
 
 std::string NiPSysEmitterSpeedCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << APSysCtlr::asString();
+	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
 }
 
 void NiPSysEmitterSpeedCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
+	};
 }
 
 std::list<NiObjectRef> NiPSysEmitterSpeedCtlr::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = APSysCtlr::GetRefs();
+	if ( unknownLink != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 
@@ -8985,26 +9012,43 @@ std::list<NiObjectRef> NiPSysGravityModifier::InternalGetRefs() const {
 }
 
 void NiPSysGravityStrengthCtlr::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	uint block_num;
 	APSysCtlr::Read( in, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+	};
 }
 
 void NiPSysGravityStrengthCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		if ( unknownLink != NULL )
+			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+	};
 }
 
 std::string NiPSysGravityStrengthCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << APSysCtlr::asString();
+	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
 }
 
 void NiPSysGravityStrengthCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
+	};
 }
 
 std::list<NiObjectRef> NiPSysGravityStrengthCtlr::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = APSysCtlr::GetRefs();
+	if ( unknownLink != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 
@@ -9165,15 +9209,22 @@ std::list<NiObjectRef> NiPSysMeshUpdateModifier::InternalGetRefs() const {
 
 void NiPSysModifierActiveCtlr::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::Read( in, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		NifStream( unknownInt, in, version );
+	};
 }
 
 void NiPSysModifierActiveCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		NifStream( unknownInt, out, version );
+	};
 }
 
 std::string NiPSysModifierActiveCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
 	out << APSysCtlr::asString();
+	out << "  Unknown Int:  " << unknownInt << endl;
 	return out.str();
 }
 
