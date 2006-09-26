@@ -87,12 +87,12 @@ enum ExportOptions {
 //--Structures--//
 
 struct NifInfo {
-	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(INFO_BIG_ENDIAN) {}
+	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(INFO_LITTLE_ENDIAN) {}
 	NifInfo( unsigned version, unsigned userVersion = 0, unsigned userVersion2 = 0) {
 		this->version = version;
 		this->userVersion = userVersion;
 		this->userVersion2 = userVersion2;
-		endian = INFO_BIG_ENDIAN;
+		endian = INFO_LITTLE_ENDIAN;
 	}
 	//TODO: Implement endian support
 	enum EndianType {
