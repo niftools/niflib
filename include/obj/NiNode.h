@@ -72,10 +72,17 @@ public:
 	bool IsSplitMeshProxy() const;
 	   
 
-	/*! Causes all children's transforms to be changed so that all the skin
+	/*! 
+	 * Causes all children's transforms to be changed so that all the skin
 	 * pieces line up without any vertex transformations.
 	 */
 	void GoToSkeletonBindPosition();
+
+	/*!
+	 * Applies the local transforms of this node to its children,
+	 * causing itself to be cleared to identity transforms.
+	 */
+	void PropagateTransform();
 
 	/*! 
 	 * Should only be called by NiTriBasedGeom

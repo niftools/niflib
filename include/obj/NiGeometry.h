@@ -49,7 +49,7 @@ public:
 	 * NiSkinInstance and NiSkinData class. The bones must have a common
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
-	void BindSkin( vector< Ref<NiNode> > bone_nodes, bool bind_to_scene = false );
+	void BindSkin( vector< Ref<NiNode> > bone_nodes );
 	void UnbindSkin();
 	/*!
 	 * Sets the skin weights in the attached NiSkinData object.
@@ -69,7 +69,19 @@ public:
 	string GetShader() const;
 	void SetShader( const string & n );
 
+	/*
+	 * Returns the position of the verticies and values of the normals after they
+	 * have been deformed by the positions of their skin influences.
+	 * \param[out] vertices A vector that will be filled with the skin deformed position of the verticies.
+	 * \param[out] normals A vector thta will be filled with the skin deformed normal values.
+	 */
 	void GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3> & normals ) const;
+
+	/*
+	 * Applies the local transform values to the vertices of the geometry and
+	 * zeros them out to the identity.
+	 */
+	void ApplyTransforms();
 
 protected:
 	list< Ref<NiNode> > ListAncestors( const Ref<NiNode> & leaf ) const;

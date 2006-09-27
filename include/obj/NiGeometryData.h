@@ -127,6 +127,13 @@ public:
 	 */
 	void SetUVSet( int index, const vector<TexCoord> & in );
 
+	/*!
+	 * Used to apply a transformation directly to all the vertices and normals in
+	 * this mesh.
+	 * \param[in] transform The 4x4 transformation matrix to apply to the vertices and normals in this mesh.  Normals are only affected by the rotation portion of this matrix.
+	 */
+	void Transform( Matrix44 & transform );
+
 protected:
 	NI_GEOMETRY_DATA_MEMBERS
 private:

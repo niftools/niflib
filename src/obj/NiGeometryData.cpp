@@ -119,17 +119,22 @@ void NiGeometryData::SetUVSet( int index, const vector<TexCoord> & in ) {
 	uvSets[index] = in;
 }
 
-/*! Returns the 3D center of the mesh.
- * \return The center of this mesh.
- */
 Vector3 NiGeometryData::GetCenter() const {
 	return center;
 }
 
-/*! Returns the radius of the mesh.  That is the distance from the center to
- * the farthest point from the center.
- * \return The radius of this mesh.
- */
 float NiGeometryData::GetRadius() const {
 	return radius;
+}
+
+void NiGeometryData::Transform( Matrix44 & transform ) {
+	Matrix44 rotation = Matrix44( transform.GetRotation() );
+
+	//Apply the transformations
+	for ( uint i = 0; i < vertices.size(); ++i ) {
+		vertices[i] = transform * vertices[i];
+	}
+	for ( uint i = 0; i < normals.size(); ++i ) {
+		normals[i] = rotation * normals[i];
+	}
 }

@@ -74,7 +74,7 @@ Ref<NiSkinInstance> NiGeometry::GetSkinInstance() const {
 	return skinInstance;
 }
 
-void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes, bool bind_to_scene ) {
+void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 	//Ensure skin is not aleady bound
 	if ( skinInstance != 0 ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
@@ -110,74 +110,70 @@ void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes, bool bind_to_scene 
 		throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
 	}
 
-	NiNodeRef skeleton_root;
-   if (bind_to_scene) {
-      // Just parent to the scene
-      NiNodeRef parent = GetParent();
-      while (parent != NULL) {
-         skeleton_root = parent;
-         parent = parent->GetParent();
-      }
+	NiNodeRef skeleton_root = ancestors[0].front();
+   //Make sure bone and shapes are part of the same tree
+   for ( int i = 1; i < num_lists; ++i ) {
+	   if ( ancestors[i].size() == 0 ) {
+		   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+	   }
+	   if ( ancestors[i].front() != skeleton_root ) {
+		   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
+	   }
+   }
 
-   } else {
-      skeleton_root = ancestors[0].front();
+   //Since the first items have been shown to match, pop all the stacks
+   for ( int i = 0; i < num_lists; ++i ) {
+	   ancestors[i].pop_front();
+   }
 
-	   //Make sure bone and shapes are part of the same tree
+   //Now search for the common ancestor
+   while(true) {
+	   bool all_same = true;
+	   if ( ancestors[0].size() == 0 ) {
+		   //This list is over, so the last top is the common ancestor
+		   //break out of the loop
+		   break;
+	   }
+	   NiNodeRef first_ancestor = ancestors[0].front();
 	   for ( int i = 1; i < num_lists; ++i ) {
 		   if ( ancestors[i].size() == 0 ) {
-			   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-		   }
-		   if ( ancestors[i].front() != skeleton_root ) {
-			   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-		   }
-	   }
-
-	   //Since the first items have been shown to match, pop all the stacks
-	   for ( int i = 0; i < num_lists; ++i ) {
-		   ancestors[i].pop_front();
-	   }
-
-	   //Now search for the common ancestor
-
-	   while(true) {
-		   bool all_same = true;
-		   if ( ancestors[0].size() == 0 ) {
 			   //This list is over, so the last top is the common ancestor
 			   //break out of the loop
+			   all_same = false;
 			   break;
 		   }
-		   NiNodeRef first_ancestor = ancestors[0].front();
-		   for ( int i = 1; i < num_lists; ++i ) {
-			   if ( ancestors[i].size() == 0 ) {
-				   //This list is over, so the last top is the common ancestor
-				   //break out of the loop
-				   all_same = false;
-				   break;
-			   }
-			   if ( ancestors[i].front() != first_ancestor ) {
-				   all_same = false;
-			   }
+		   if ( ancestors[i].front() != first_ancestor ) {
+			   all_same = false;
 		   }
+	   }
 
-		   if ( all_same == true ) {
-			   //They're all the same, so set the top, pop all the stacks
-			   //and look again
-   			
-			   skeleton_root = ancestors[0].front();
-			   for ( int i = 0; i < num_lists; ++i ) {
-				   ancestors[i].pop_front();
-			   }
-		   } else {
-			   //One is different, so the last top is the common ancestor.
-			   //break out of the loop
-			   break;
+	   if ( all_same == true ) {
+		   //They're all the same, so set the top, pop all the stacks
+		   //and look again
+		
+		   skeleton_root = ancestors[0].front();
+		   for ( int i = 0; i < num_lists; ++i ) {
+			   ancestors[i].pop_front();
 		   }
+	   } else {
+		   //One is different, so the last top is the common ancestor.
+		   //break out of the loop
+		   break;
 	   }
    }
 
 	if ( skeleton_root == NULL ) {
 		throw runtime_error("Failed to find suitable skeleton root.");
 	}
+
+	//Ancestors[bone_nodes.size()] should now hold all nodes between (but not including) the
+	//skeleton root and this mesh.  Cycle through and propogate their transforms
+	for ( list<NiNodeRef>::iterator it = ancestors[bone_nodes.size()].begin(); it != ancestors[bone_nodes.size()].end(); ++it ) {
+		(*it)->PropagateTransform();
+	}
+
+	//Now apply the transforms to the vertices and normals of this mesh
+	this->ApplyTransforms();
 
 	//Create a skin instance using the bone and root data
 	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
@@ -285,6 +281,20 @@ void NiGeometry::GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3>
 		normals[i] = geom_world_inv_rot * normals[i];
 		//normals[i] = normals[i].Normalized();
 	}
+}
+
+void NiGeometry::ApplyTransforms() {
+	//Get Data
+	NiGeometryDataRef geom_data = this->GetData();
+	if ( geom_data == NULL ) {
+		throw runtime_error( "Called ApplyTransform on a NiGeometry object that has no NiGeometryData attached.");
+	}
+
+	//Transform the vertices by the local transform of this mesh
+	geom_data->Transform( this->GetLocalTransform() );
+
+	//Now that the transforms have been applied, clear them to the identity
+	this->SetLocalTransform( Matrix44::IDENTITY );
 }
 
 // Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.

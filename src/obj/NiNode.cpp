@@ -213,6 +213,21 @@ void NiNode::GoToSkeletonBindPosition() {
 	}
 }
 
+void NiNode::PropagateTransform() {
+
+	Matrix44 par_trans = this->GetLocalTransform();
+
+	//Loop through each child and apply this node's transform to it
+	for ( unsigned i = 0; i < children.size(); ++i ) {
+		children[i]->SetLocalTransform(
+			children[i]->GetLocalTransform() * par_trans
+		);
+	}
+
+	//Nowthat the transforms have been propogated, clear them out
+	this->SetLocalTransform( Matrix44::IDENTITY );
+}
+
 bool NiNode::IsSplitMeshProxy() const {
 	//Let us guess that a node is a split mesh proxy if:
 	// 1)  All its children are NiTriBasedGeom derived objects.

@@ -78,7 +78,10 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 
 	hasTriangles = ( triangles.size() != 0 );
 
+	//Set nuber of triangles
+	numTriangles = uint(triangles.size());
+
 	//Set number of trianble points to the number of triangles times 3
-	numTrianglePoints = uint(triangles.size()) * 3;
+	numTrianglePoints = numTriangles * 3;
 }
 
