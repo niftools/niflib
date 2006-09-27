@@ -651,6 +651,12 @@ struct Matrix44 {
 	 */
 	NIFLIB_API Matrix44( const Vector3 & translate, const Matrix33 & rotation, float scale );
 
+	/*! This constructor allows a 4x4 transform matrix to be initalized from a
+	 * a 3x3 rotation matrix.
+	 * \param[in] rotation The 3x3 rotation matrix.
+	 */
+	NIFLIB_API Matrix44( const Matrix33 & rotation );
+
 	/*! This function can be used to set all values in this matrix at the same time.
 	 * \param[in] m11 The value to set at row 1, column 1.
 	 * \param[in] m12 The value to set at row 1, column 2.

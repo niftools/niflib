@@ -211,7 +211,7 @@ void NiGeometry::UnbindSkin() {
 	skinInstance = NULL;
 }
 
-vector<Vector3> NiGeometry::GetSkinInfluencedVertices() const {
+void NiGeometry::GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3> & normals ) const{
 	//--Get required data & insure validity--//
 
 	NiGeometryDataRef geom_data = GetData();
@@ -245,11 +245,14 @@ vector<Vector3> NiGeometry::GetSkinInfluencedVertices() const {
 	}
 
 	//Get the vertices & bone nodes
-	vector<Vector3> vertices = geom_data->GetVertices();
+	vector<Vector3> in_verts = geom_data->GetVertices();
+	vector<Vector3> in_norms = geom_data->GetNormals();
+
 	vector<NiNodeRef> bone_nodes = skin_inst->GetBones();
 
-	//Set up an aray to hold the transformed vertices
-	vector<Vector3> skin_verts( vertices.size());
+	//Set up output arrays to hold the transformed vertices and normals
+	vertices.resize( in_verts.size() );
+	normals.resize( in_norms.size() );
 
 	//Transform vertices into position based on skin data
 	Matrix44 root_world = skel_root->GetWorldTransform();
@@ -259,19 +262,29 @@ vector<Vector3> NiGeometry::GetSkinInfluencedVertices() const {
 		Matrix44 bone_offset = skin_data->GetBoneTransform(i);
 		vector<SkinWeight> weights = skin_data->GetBoneWeights(i);
 		Matrix44 vert_trans =  bone_offset * bone_world;
+		Matrix44 norm_trans = Matrix44( vert_trans.GetRotation() );
 		for ( uint j = 0; j < weights.size(); ++j ) {
 			uint index = weights[j].index;
 			float weight = weights[j].weight;
-			skin_verts[index] += (vert_trans * vertices[index] ) * weight;
+			if ( index < vertices.size() ) {
+				vertices[index] += (vert_trans * in_verts[index] ) * weight;
+			}
+			if ( index < normals.size() ) {
+				normals[index] += (norm_trans * in_norms[index] ) * weight;
+			}
 		}
 	}
 
 	//Transform all vertices to final position
-	for ( uint i = 0; i < skin_verts.size(); ++i ) {
-		skin_verts[i] = geom_world.Inverse() * skin_verts[i];
+	Matrix44 geom_world_inv = geom_world.Inverse();
+	Matrix44 geom_world_inv_rot = Matrix44( geom_world_inv.GetRotation() );
+	for ( uint i = 0; i < vertices.size(); ++i ) {
+		vertices[i] = geom_world_inv * vertices[i];
 	}
-
-	return skin_verts;
+	for ( uint i = 0; i < normals.size(); ++i ) {
+		normals[i] = geom_world_inv_rot * normals[i];
+		//normals[i] = normals[i].Normalized();
+	}
 }
 
 // Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.

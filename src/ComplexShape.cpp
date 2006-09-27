@@ -234,15 +234,17 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 
 		//cout << "Get Data" << endl;
 		//Get Data
-		vector<Vector3> shapeVerts;		
+		vector<Vector3> shapeVerts;	
+		vector<Vector3> shapeNorms;
 		//If this is a skin influenced mesh, get vertices from niGeom
 		if ( (*geom)->GetSkinInstance() != NULL ) {
-			shapeVerts = (*geom)->GetSkinInfluencedVertices();
+			(*geom)->GetSkinDeformation( shapeVerts, shapeNorms );
 		} else {
 			shapeVerts = geomData->GetVertices();
+			shapeNorms = geomData->GetNormals();
 		}
 
-		vector<Vector3> shapeNorms = geomData->GetNormals();
+		
 		vector<Color4> shapeColors = geomData->GetColors();
 		vector< vector<TexCoord> > shapeUVs( geomData->GetUVSetCount() );
 		for ( unsigned i = 0; i < shapeUVs.size(); ++i ) {

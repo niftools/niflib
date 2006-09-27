@@ -69,7 +69,7 @@ public:
 	string GetShader() const;
 	void SetShader( const string & n );
 
-	vector<Vector3> GetSkinInfluencedVertices() const;
+	void GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3> & normals ) const;
 
 protected:
 	list< Ref<NiNode> > ListAncestors( const Ref<NiNode> & leaf ) const;
