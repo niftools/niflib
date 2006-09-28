@@ -11,8 +11,12 @@ const Type NiObject::TYPE("NiObject", NULL );
 //Static to track total number of objects in memory.  Initialize to zero.
 unsigned int NiObject::objectsInMemory = 0;
 
-NiObject::NiObject() : _ref_count(0) {}
-NiObject::~NiObject() {}
+NiObject::NiObject() : _ref_count(0) {
+	objectsInMemory++;
+}
+NiObject::~NiObject() {
+	objectsInMemory--;
+}
 
 bool NiObject::IsSameType( const Type & compare_to) const {
 	return GetType().IsSameType( compare_to );
@@ -35,7 +39,9 @@ void NiObject::AddRef() const {
 }
 
 void NiObject::SubtractRef() const {
-	if ( _ref_count-- == 0 ) {
+	_ref_count--;
+	if ( _ref_count < 1 ) {
+		//cout << this->GetIDString() << " died." << endl;
 		delete this;
 	}
 }
@@ -59,7 +65,7 @@ list<NiObjectRef> NiObject::GetRefs() const {
 }
 
 /*! Used to format a human readable string that includes the type of the object */
-string NiObject::GetIDString() {
+string NiObject::GetIDString() const {
 	stringstream out;
 	out << this << "(" << this->GetType().GetTypeName() << ")";
 	return out.str();

@@ -87,7 +87,9 @@ void NiNode::RemoveChild( Ref<NiAVObject> obj ) {
 
 void NiNode::ClearChildren() {
 	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ++it) {
-      if (*it) (*it)->SetParent(NULL);
+		if ( *it != NULL ) {
+			(*it)->SetParent(NULL);
+		}
 	}
 	children.clear();
 }
@@ -138,17 +140,12 @@ void NiNode::AddSkin( NiSkinInstance * skin_inst ) {
 }
 
 void NiNode::RemoveSkin( NiSkinInstance * skin_inst ) {
-	//Unflag any bones that were part of this skin instance
-	vector<NiNodeRef> bones = skin_inst->GetBones();
-	for ( uint i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(false);
-	}
-	
 	//Remove the reference
 	skins.remove( skin_inst);
 
 	//Ensure that any multiply referenced bone nodes still
 	//have their skin flag set
+	vector<NiNodeRef> bones;
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
 		bones = (*it)->GetBones();
 		for ( uint i = 0; i < bones.size(); ++i ) {

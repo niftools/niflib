@@ -108,7 +108,7 @@ public:
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type)
 	 */
-	NIFLIB_API virtual string GetIDString();
+	NIFLIB_API virtual string GetIDString() const;
 
 	/*!
 	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
