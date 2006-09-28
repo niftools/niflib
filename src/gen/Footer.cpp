@@ -34,14 +34,20 @@ void Footer::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int v
 
 string Footer::asString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	numRoots = uint(roots.size());
 	out << "  Num Roots:  " << numRoots << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < roots.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Roots[" << i1 << "]:  " << roots[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }

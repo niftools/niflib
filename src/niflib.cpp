@@ -2,7 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 //#define DEBUG // this will produce lots of output
-#define PRINT_OBJECT_NAMES
+//#define PRINT_OBJECT_NAMES
 //#define PRINT_OBJECT_CONTENTS
 //#define DEBUG_LINK_PHASE
 //#define DEBUG_HEADER_FOOTER

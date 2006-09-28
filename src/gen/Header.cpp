@@ -97,6 +97,7 @@ void Header::Write( ostream& out ) const {
 
 string Header::asString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	numBlockTypes = ushort(blockTypes.size());
 	numBlocks = uint(blockTypeIndex.size());
 	out << "  Header String:  " << headerString << endl;
@@ -111,19 +112,29 @@ string Header::asString( bool verbose ) const {
 		out << "    Export Info 2:  " << exportInfo2 << endl;
 	};
 	out << "  Num Block Types:  " << numBlockTypes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < blockTypes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Block Types[" << i1 << "]:  " << blockTypes[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < blockTypeIndex.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Block Type Index[" << i1 << "]:  " << blockTypeIndex[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	return out.str();

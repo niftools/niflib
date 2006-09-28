@@ -2057,7 +2057,7 @@ CompareMode function; \
 
 #define NI_KEYFRAME_DATA_PARENT AKeyedData
 
-#define NI_KEYFRAME_DATA_CONSTRUCT  : numRotationKeys((uint)0), unknownFloat(0.0f)
+#define NI_KEYFRAME_DATA_CONSTRUCT  : numRotationKeys((uint)0), rotationType((KeyType)0), unknownFloat(0.0f)
 
 #define NI_LIGHT_COLOR_CONTROLLER_INCLUDE "NiTimeController.h"
 
