@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for licence. */
 
 #include "../../include/obj/NiPSysEmitterLifeSpanCtlr.h"
+#include "../../include/obj/NiFloatData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

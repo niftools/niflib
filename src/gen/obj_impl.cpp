@@ -227,6 +227,7 @@ void NiObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string NiObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	return out.str();
 }
 
@@ -248,6 +249,7 @@ void AKeyedData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string AKeyedData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	return out.str();
 }
@@ -285,6 +287,7 @@ void AParticleModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string AParticleModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Next Modifier:  " << nextModifier << endl;
 	out << "  Controller:  " << controller << endl;
@@ -315,6 +318,7 @@ void bhkRefObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 
 std::string bhkRefObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	return out.str();
 }
@@ -339,6 +343,7 @@ void bhkSerializable::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string bhkSerializable::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkRefObject::asString();
 	return out.str();
 }
@@ -380,15 +385,21 @@ void AbhkConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string AbhkConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSerializable::asString();
 	numBodies = uint(bodies.size());
 	out << "  Num Bodies:  " << numBodies << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < bodies.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Bodies[" << i1 << "]:  " << bodies[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Priority:  " << priority << endl;
 	return out.str();
@@ -443,6 +454,7 @@ void AbhkRagdollConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string AbhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
 	out << "  Pivot A:  " << pivotA << endl;
 	out << "  Plane A:  " << planeA << endl;
@@ -479,6 +491,7 @@ void bhkShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string bhkShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSerializable::asString();
 	return out.str();
 }
@@ -503,6 +516,7 @@ void AbhkShapeCollection::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string AbhkShapeCollection::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkShape::asString();
 	return out.str();
 }
@@ -529,6 +543,7 @@ void bhkSphereRepShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string bhkSphereRepShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkShape::asString();
 	out << "  Material:  " << material << endl;
 	return out.str();
@@ -554,6 +569,7 @@ void bhkConvexShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string bhkConvexShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
 	return out.str();
 }
@@ -578,6 +594,7 @@ void bhkWorldObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string bhkWorldObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkShape::asString();
 	return out.str();
 }
@@ -615,6 +632,7 @@ void bhkEntity::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string bhkEntity::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkWorldObject::asString();
 	out << "  Shape:  " << shape << endl;
 	out << "  Layer:  " << layer << endl;
@@ -661,6 +679,7 @@ void NiCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiCollisionObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Parent:  " << parent << endl;
 	out << "  Unknown Short:  " << unknownShort << endl;
@@ -709,6 +728,7 @@ void NiExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Name:  " << name << endl;
 	out << "  Next Extra Data:  " << nextExtraData << endl;
@@ -740,6 +760,7 @@ void NiInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	return out.str();
 }
@@ -768,6 +789,7 @@ void NiBlendInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiBlendInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Unknown Int:  " << unknownInt << endl;
@@ -811,6 +833,7 @@ void NiBSplineInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiBSplineInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Start Time:  " << startTime << endl;
 	out << "  Stop Time:  " << stopTime << endl;
@@ -882,17 +905,23 @@ void NiObjectNET::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiObjectNET::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numExtraDataList = uint(extraDataList.size());
 	out << "  Name:  " << name << endl;
 	out << "  Extra Data:  " << extraData << endl;
 	out << "  Num Extra Data List:  " << numExtraDataList << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < extraDataList.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Extra Data List[" << i1 << "]:  " << extraDataList[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Controller:  " << controller << endl;
 	return out.str();
@@ -1002,6 +1031,7 @@ void NiAVObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiAVObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObjectNET::asString();
 	numProperties = uint(properties.size());
 	out << "  Flags:  " << flags << endl;
@@ -1010,12 +1040,17 @@ std::string NiAVObject::InternalAsString( bool verbose ) const {
 	out << "  Scale:  " << scale << endl;
 	out << "  Velocity:  " << velocity << endl;
 	out << "  Num Properties:  " << numProperties << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < properties.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Properties[" << i1 << "]:  " << properties[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Has Bounding Box:  " << hasBoundingBox << endl;
 	if ( (hasBoundingBox != 0) ) {
@@ -1104,23 +1139,34 @@ void NiDynamicEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiDynamicEffect::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiAVObject::asString();
 	numAffectedNodes = uint(affectedNodeListPointers.size());
 	out << "  Switch State:  " << switchState << endl;
 	out << "  Num Affected Nodes:  " << numAffectedNodes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < affectedNodeListPointers.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Affected Node List Pointers[" << i1 << "]:  " << affectedNodeListPointers[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < affectedNodes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Affected Nodes[" << i1 << "]:  " << affectedNodes[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -1162,6 +1208,7 @@ void NiLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsig
 
 std::string NiLight::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiDynamicEffect::asString();
 	out << "  Dimmer:  " << dimmer << endl;
 	out << "  Ambient Color:  " << ambientColor << endl;
@@ -1190,6 +1237,7 @@ void NiProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObjectNET::asString();
 	return out.str();
 }
@@ -1227,6 +1275,7 @@ void NiPSysModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiPSysModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Name:  " << name << endl;
 	out << "  Order:  " << order << endl;
@@ -1282,6 +1331,7 @@ void NiPSysEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 
 std::string NiPSysEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Speed:  " << speed << endl;
 	out << "  Speed Variation:  " << speedVariation << endl;
@@ -1328,6 +1378,7 @@ void NiPSysVolumeEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiPSysVolumeEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysEmitter::asString();
 	out << "  Emitter Object:  " << emitterObject << endl;
 	return out.str();
@@ -1379,6 +1430,7 @@ void NiTimeController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiTimeController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Next Controller:  " << nextController << endl;
 	out << "  Flags:  " << flags << endl;
@@ -1441,20 +1493,31 @@ void ABoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string ABoneLODController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	numNodeGroups = uint(nodeGroups.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Node Groups:  " << numNodeGroups << endl;
 	out << "  Num Node Groups 2:  " << numNodeGroups2 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		nodeGroups[i1].numNodes = uint(nodeGroups[i1].nodes.size());
 		out << "    Num Nodes:  " << nodeGroups[i1].numNodes << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Nodes[" << i2 << "]:  " << nodeGroups[i1].nodes[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -1502,6 +1565,7 @@ void NiSingleInterpolatorController::InternalWrite( ostream& out, map<NiObjectRe
 
 std::string NiSingleInterpolatorController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Interpolator:  " << interpolator << endl;
 	return out.str();
@@ -1534,6 +1598,7 @@ void APSysCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string APSysCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	out << "  Modifier Name:  " << modifierName << endl;
 	return out.str();
@@ -1590,6 +1655,7 @@ void NiGeometry::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiGeometry::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiAVObject::asString();
 	out << "  Data:  " << data << endl;
 	out << "  Skin Instance:  " << skinInstance << endl;
@@ -1634,6 +1700,7 @@ void NiTriBasedGeom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiGeometry::asString();
 	return out.str();
 }
@@ -1805,6 +1872,7 @@ void NiGeometryData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiGeometryData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numUvSets = ushort(uvSets.size());
 	numUvSets2 = byte(uvSets.size());
@@ -1814,63 +1882,93 @@ std::string NiGeometryData::InternalAsString( bool verbose ) const {
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Has Vertices:  " << hasVertices << endl;
 	if ( (hasVertices != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < vertices.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Vertices[" << i2 << "]:  " << vertices[i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Num UV Sets 2:  " << numUvSets2 << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Has Normals:  " << hasNormals << endl;
 	if ( (hasNormals != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < normals.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Normals[" << i2 << "]:  " << normals[i2] << endl;
+			array_output_count++;
 		};
 	};
 	if ( (((hasNormals != 0)) && ((unknownByte & 16))) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownVectors1.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Unknown Vectors 1[" << i2 << "]:  " << unknownVectors1[i2] << endl;
+			array_output_count++;
 		};
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownVectors2.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Unknown Vectors 2[" << i2 << "]:  " << unknownVectors2[i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Center:  " << center << endl;
 	out << "  Radius:  " << radius << endl;
 	out << "  Has Vertex Colors:  " << hasVertexColors << endl;
 	if ( (hasVertexColors != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < vertexColors.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Vertex Colors[" << i2 << "]:  " << vertexColors[i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Num UV Sets:  " << numUvSets << endl;
 	out << "  Has UV:  " << hasUv << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < uvSets.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < uvSets[i1].size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      UV Sets[" << i1 << "][" << i2 << "]:  " << uvSets[i1][i2] << endl;
+			out << "      UV Sets[" << i2 << "]:  " << uvSets[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Short 2:  " << unknownShort2 << endl;
@@ -1905,6 +2003,7 @@ void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiGeometryData::asString();
 	out << "  Num Triangles:  " << numTriangles << endl;
 	return out.str();
@@ -1937,7 +2036,15 @@ void APSysData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 			NifStream( unknownFloats2[i2], in, version );
 		};
 	};
-	NifStream( unknownByte1, in, version );
+	NifStream( hasUnknownFloats3, in, version );
+	if ( (hasUnknownFloats3 != 0) ) {
+		unknownFloats3.resize(numVertices);
+		for (uint i2 = 0; i2 < unknownFloats3.size(); i2++) {
+			for (uint i3 = 0; i3 < 4; i3++) {
+				NifStream( unknownFloats3[i2][i3], in, version );
+			};
+		};
+	};
 }
 
 void APSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
@@ -1955,34 +2062,68 @@ void APSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 			NifStream( unknownFloats2[i2], out, version );
 		};
 	};
-	NifStream( unknownByte1, out, version );
+	NifStream( hasUnknownFloats3, out, version );
+	if ( (hasUnknownFloats3 != 0) ) {
+		for (uint i2 = 0; i2 < unknownFloats3.size(); i2++) {
+			for (uint i3 = 0; i3 < 4; i3++) {
+				NifStream( unknownFloats3[i2][i3], out, version );
+			};
+		};
+	};
 }
 
 std::string APSysData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiGeometryData::asString();
 	out << "  Has Unknown Floats 1:  " << hasUnknownFloats1 << endl;
 	if ( (hasUnknownFloats1 != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownFloats1.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Unknown Floats 1[" << i2 << "]:  " << unknownFloats1[i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Short 3:  " << unknownShort3 << endl;
 	out << "  Has Unknown Floats 2:  " << hasUnknownFloats2 << endl;
 	if ( (hasUnknownFloats2 != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownFloats2.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Unknown Floats 2[" << i2 << "]:  " << unknownFloats2[i2] << endl;
+			array_output_count++;
 		};
 	};
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Has Unknown Floats 3:  " << hasUnknownFloats3 << endl;
+	if ( (hasUnknownFloats3 != 0) ) {
+		array_output_count = 0;
+		for (uint i2 = 0; i2 < unknownFloats3.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			for (uint i3 = 0; i3 < 4; i3++) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+					break;
+				};
+				out << "        Unknown Floats 3[" << i3 << "]:  " << unknownFloats3[i2][i3] << endl;
+				array_output_count++;
+			};
+		};
+	};
 	return out.str();
 }
 
@@ -2010,6 +2151,7 @@ void bhkBlendCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string bhkBlendCollisionObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiCollisionObject::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -2038,6 +2180,7 @@ void bhkBlendController::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string bhkBlendController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Int:  " << unknownInt << endl;
 	return out.str();
@@ -2077,6 +2220,7 @@ void bhkBoxShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string bhkBoxShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkConvexShape::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
@@ -2126,6 +2270,7 @@ void bhkCapsuleShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string bhkCapsuleShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkConvexShape::asString();
 	out << "  Radius:  " << radius << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
@@ -2159,6 +2304,7 @@ void bhkCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string bhkCollisionObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiCollisionObject::asString();
 	return out.str();
 }
@@ -2209,31 +2355,47 @@ void bhkConvexVerticesShape::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
 	num2 = uint(unknownVectors2.size());
 	num1 = uint(unknownVectors1.size());
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 7; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num 1:  " << num1 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownVectors1.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num 2:  " << num2 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownVectors2.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Vectors 2[" << i1 << "]:  " << unknownVectors2[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -2268,14 +2430,20 @@ void bhkHingeConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string bhkHingeConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 5; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats[" << i1 << "][" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
+			out << "      Unknown Floats[" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -2321,6 +2489,7 @@ void bhkLimitedHingeConstraint::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string bhkLimitedHingeConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
 	out << "  Pivot A:  " << limitedHinge.pivotA << endl;
 	out << "  Axle A:  " << limitedHinge.axleA << endl;
@@ -2388,32 +2557,48 @@ void bhkListShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 
 std::string bhkListShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkShapeCollection::asString();
 	numUnknownInts = uint(unknownInts.size());
 	numSubShapes = uint(subShapes.size());
 	out << "  Num Sub Shapes:  " << numSubShapes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Sub Shapes[" << i1 << "]:  " << subShapes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Material:  " << material << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 6; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Unknown Ints:  " << numUnknownInts << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownInts.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Ints[" << i1 << "]:  " << unknownInts[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -2520,6 +2705,7 @@ void bhkMalleableConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string bhkMalleableConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
 	out << "  Type:  " << type << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
@@ -2614,25 +2800,36 @@ void bhkMoppBvTreeShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkShape::asString();
 	numUnknownBytes2 = uint(unknownBytes2.size());
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 8; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Bytes 1[" << i1 << "]:  " << unknownBytes1[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Float:  " << unknownFloat << endl;
 	out << "  Num Unknown Bytes 2:  " << numUnknownBytes2 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownBytes2.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Bytes 2[" << i1 << "]:  " << unknownBytes2[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Vector:  " << unknownVector << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -2680,13 +2877,19 @@ void bhkMultiSphereShape::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string bhkMultiSphereShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
 	numSpheres = uint(spheres.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
 	out << "  Num Spheres:  " << numSpheres << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < spheres.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Center:  " << spheres[i1].center << endl;
 		out << "    Radius:  " << spheres[i1].radius << endl;
 	};
@@ -2754,36 +2957,52 @@ void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
 	numUnknownInts2 = uint(unknownInts2.size());
 	numStripsData = uint(stripsData.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 4; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Scale:  " << scale << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Num Strips Data:  " << numStripsData << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Strips Data[" << i1 << "]:  " << stripsData[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Unknown Ints 2:  " << numUnknownInts2 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -2850,32 +3069,48 @@ void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string bhkPackedNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkShapeCollection::asString();
 	numSubparts = ushort(subparts.size());
 	out << "  Num Subparts:  " << numSubparts << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < subparts.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 3; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Subparts[" << i1 << "][" << i2 << "]:  " << subparts[i1][i2] << endl;
+			out << "      Subparts[" << i2 << "]:  " << subparts[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 9; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Scale:  " << scale << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -2916,20 +3151,31 @@ void bhkPrismaticConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string bhkPrismaticConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 8; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Vectors[" << i1 << "]:  " << unknownVectors[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -2954,6 +3200,7 @@ void bhkRagdollConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string bhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkRagdollConstraint::asString();
 	return out.str();
 }
@@ -3077,30 +3324,46 @@ void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 
 std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkEntity::asString();
 	numConstraints = uint(constraints.size());
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 5; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown 5 Floats[" << i1 << "]:  " << unknown5Floats[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 4; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown 4 Shorts[" << i1 << "]:  " << unknown4Shorts[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Layer Copy:  " << layerCopy << endl;
 	out << "  Col Filter Copy:  " << colFilterCopy << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 7; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown 7 Shorts[" << i1 << "]:  " << unknown7Shorts[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Translation:  " << translation << endl;
 	out << "  Unknown Float 00:  " << unknownFloat00 << endl;
@@ -3112,12 +3375,17 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	out << "  Unknown Float 01:  " << unknownFloat01 << endl;
 	out << "  Angular Velocity:  " << angularVelocity << endl;
 	out << "  Unknown Float 02:  " << unknownFloat02 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 12; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Transform[" << i1 << "]:  " << transform[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Center:  " << center << endl;
 	out << "  Unknown Float 03:  " << unknownFloat03 << endl;
@@ -3137,12 +3405,17 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	out << "  Unknown Int 7:  " << unknownInt7 << endl;
 	out << "  Unknown Int 8:  " << unknownInt8 << endl;
 	out << "  Num Constraints:  " << numConstraints << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < constraints.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Constraints[" << i1 << "]:  " << constraints[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -3174,6 +3447,7 @@ void bhkRigidBodyT::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 
 std::string bhkRigidBodyT::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkRigidBody::asString();
 	return out.str();
 }
@@ -3216,21 +3490,32 @@ void bhkSimpleShapePhantom::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string bhkSimpleShapePhantom::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkEntity::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 7; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unkown Floats[" << i1 << "]:  " << unkownFloats[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 5; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats 2[" << i1 << "][" << i2 << "]:  " << unknownFloats2[i1][i2] << endl;
+			out << "      Unknown Floats 2[" << i2 << "]:  " << unknownFloats2[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Float:  " << unknownFloat << endl;
@@ -3257,6 +3542,7 @@ void bhkSPCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string bhkSPCollisionObject::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiCollisionObject::asString();
 	return out.str();
 }
@@ -3283,6 +3569,7 @@ void bhkSphereShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string bhkSphereShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkConvexShape::asString();
 	out << "  Radius:  " << radius << endl;
 	return out.str();
@@ -3320,14 +3607,20 @@ void bhkStiffSpringConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string bhkStiffSpringConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkConstraint::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 2; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats[" << i1 << "][" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
+			out << "      Unknown Floats[" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Float:  " << unknownFloat << endl;
@@ -3362,6 +3655,7 @@ void bhkTransformShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string bhkTransformShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkEntity::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -3390,6 +3684,7 @@ void bhkConvexTransformShape::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string bhkConvexTransformShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << bhkTransformShape::asString();
 	return out.str();
 }
@@ -3418,6 +3713,7 @@ void BSBound::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsig
 
 std::string BSBound::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Center:  " << center << endl;
 	out << "  Dimensions:  " << dimensions << endl;
@@ -3460,10 +3756,16 @@ void BSFurnitureMarker::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string BSFurnitureMarker::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numPositions = uint(positions.size());
 	out << "  Num Positions:  " << numPositions << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < positions.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Offset:  " << positions[i1].offset << endl;
 		out << "    Orientation:  " << positions[i1].orientation << endl;
 		out << "    Position Ref 1:  " << positions[i1].positionRef1 << endl;
@@ -3494,6 +3796,7 @@ void BSParentVelocityModifier::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string BSParentVelocityModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Unknown Float:  " << unknownFloat << endl;
 	return out.str();
@@ -3519,6 +3822,7 @@ void BSPSysArrayEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string BSPSysArrayEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	return out.str();
 }
@@ -3545,6 +3849,7 @@ void BSXFlags::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string BSXFlags::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Flags:  " << flags << endl;
 	return out.str();
@@ -3594,22 +3899,33 @@ void hkPackedNiTriStripsData::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string hkPackedNiTriStripsData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AbhkShapeCollection::asString();
 	numVertices = uint(vertices.size());
 	numTriangles = uint(triangles.size());
 	out << "  Num Triangles:  " << numTriangles << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < triangles.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Triangle:  " << triangles[i1].triangle << endl;
 		out << "    Unknown Short:  " << triangles[i1].unknownShort << endl;
 		out << "    Normal:  " << triangles[i1].normal << endl;
 	};
 	out << "  Num Vertices:  " << numVertices << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < vertices.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -3645,6 +3961,7 @@ void NiAlphaController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiAlphaController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -3679,6 +3996,7 @@ void NiAlphaProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiAlphaProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Threshold:  " << threshold << endl;
@@ -3705,6 +4023,7 @@ void NiAmbientLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiAmbientLight::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiLight::asString();
 	return out.str();
 }
@@ -3766,6 +4085,7 @@ void NiAutoNormalParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiGeometryData::asString();
 	out << "  Num Particles:  " << numParticles << endl;
 	out << "  Size:  " << size << endl;
@@ -3773,12 +4093,17 @@ std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Has Sizes:  " << hasSizes << endl;
 	if ( (hasSizes != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < sizes.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Sizes[" << i2 << "]:  " << sizes[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -3814,15 +4139,21 @@ void NiBinaryExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiBinaryExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	binaryData.dataSize = uint(binaryData.data.size());
 	out << "  Data Size:  " << binaryData.dataSize << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < binaryData.data.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Data[" << i1 << "]:  " << binaryData.data[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -3849,6 +4180,7 @@ void NiBlendBoolInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiBlendBoolInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	out << "  Bool Value:  " << boolValue << endl;
 	return out.str();
@@ -3876,6 +4208,7 @@ void NiBlendFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string NiBlendFloatInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	out << "  Float Value:  " << floatValue << endl;
 	return out.str();
@@ -3903,6 +4236,7 @@ void NiBlendPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiBlendPoint3Interpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	out << "  Point Value:  " << pointValue << endl;
 	return out.str();
@@ -3928,6 +4262,7 @@ void NiBlendTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,
 
 std::string NiBlendTransformInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	return out.str();
 }
@@ -3995,25 +4330,41 @@ void NiBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiBoneLODController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << ABoneLODController::asString();
 	numShapeGroups2 = uint(shapeGroups2.size());
 	numShapeGroups = uint(shapeGroups1.size());
 	out << "  Num Shape Groups:  " << numShapeGroups << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < shapeGroups1.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		shapeGroups1[i1].numLinkPairs = uint(shapeGroups1[i1].linkPairs.size());
 		out << "    Num Link Pairs:  " << shapeGroups1[i1].numLinkPairs << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			out << "      Shape:  " << shapeGroups1[i1].linkPairs[i2].shape << endl;
 			out << "      Skin Instance:  " << shapeGroups1[i1].linkPairs[i2].skinInstance << endl;
 		};
 	};
 	out << "  Num Shape Groups 2:  " << numShapeGroups2 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < shapeGroups2.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Shape Groups 2[" << i1 << "]:  " << shapeGroups2[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4075,18 +4426,24 @@ void NiBoolData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiBoolData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	data.numKeys = uint(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << data.keys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4113,6 +4470,7 @@ void NiBooleanExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiBooleanExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Boolean Data:  " << booleanData << endl;
 	return out.str();
@@ -4147,6 +4505,7 @@ void NiBoolInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiBoolInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Bool Value:  " << boolValue << endl;
 	out << "  Data:  " << data << endl;
@@ -4185,6 +4544,7 @@ void NiBoolTimelineInterpolator::InternalWrite( ostream& out, map<NiObjectRef,ui
 
 std::string NiBoolTimelineInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Bool Value:  " << boolValue << endl;
 	out << "  Data:  " << data << endl;
@@ -4214,6 +4574,7 @@ void NiBSBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiBSBoneLODController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << ABoneLODController::asString();
 	return out.str();
 }
@@ -4240,6 +4601,7 @@ void NiBSplineBasisData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiBSplineBasisData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Num Control Pt:  " << numControlPt << endl;
 	return out.str();
@@ -4271,13 +4633,19 @@ void NiBSplineCompFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRe
 
 std::string NiBSplineCompFloatInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBSplineInterpolator::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 4; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4308,13 +4676,19 @@ void NiBSplineCompPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectR
 
 std::string NiBSplineCompPoint3Interpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBSplineInterpolator::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 6; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4363,6 +4737,7 @@ void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObje
 
 std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBSplineInterpolator::asString();
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
@@ -4411,16 +4786,22 @@ void NiBSplineData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 
 std::string NiBSplineData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	count = uint(controlPoints.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Count:  " << count << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < controlPoints.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Control Points[" << i1 << "]:  " << controlPoints[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4494,6 +4875,7 @@ void NiCamera::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string NiCamera::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiAVObject::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Frustum Left:  " << frustumLeft << endl;
@@ -4584,6 +4966,7 @@ void NiCollisionData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiCollisionData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Target Node:  " << targetNode << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
@@ -4594,21 +4977,31 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 		out << "    Unknown Vector:  " << unknownVector << endl;
 	};
 	if ( (collisionType == 2) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < 8; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Unknown Float 1[" << i2 << "]:  " << unknownFloat1[i2] << endl;
+			array_output_count++;
 		};
 	};
 	if ( (collisionType == 1) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < 15; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Unknown Float 2[" << i2 << "]:  " << unknownFloat2[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -4651,18 +5044,24 @@ void NiColorData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiColorData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	data.numKeys = uint(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << data.keys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -4689,6 +5088,7 @@ void NiColorExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiColorExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -4737,16 +5137,22 @@ void NiControllerManager::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiControllerManager::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	numControllerSequences = uint(controllerSequences.size());
 	out << "  Cumulative:  " << cumulative << endl;
 	out << "  Num Controller Sequences:  " << numControllerSequences << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < controllerSequences.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Controller Sequences[" << i1 << "]:  " << controllerSequences[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Object Palette:  " << objectPalette << endl;
 	return out.str();
@@ -5005,6 +5411,7 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numControlledBlocks = uint(controlledBlocks.size());
 	out << "  Name:  " << name << endl;
@@ -5012,7 +5419,12 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	out << "  Text Keys:  " << textKeys << endl;
 	out << "  Num Controlled Blocks:  " << numControlledBlocks << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Target Name:  " << controlledBlocks[i1].targetName << endl;
 		out << "    Controller:  " << controlledBlocks[i1].controller << endl;
 		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
@@ -5125,11 +5537,17 @@ void NiDefaultAVObjectPalette::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string NiDefaultAVObjectPalette::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numObjs = uint(objs.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Num Objs:  " << numObjs << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Name:  " << objs[i1].name << endl;
 		out << "    AV Object:  " << objs[i1].avObject << endl;
 	};
@@ -5161,6 +5579,7 @@ void NiDirectionalLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiDirectionalLight::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiLight::asString();
 	return out.str();
 }
@@ -5187,6 +5606,7 @@ void NiDitherProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiDitherProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	return out.str();
@@ -5237,18 +5657,24 @@ void NiFlipController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiFlipController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	numSources = uint(sources.size());
 	out << "  Texture Slot:  " << textureSlot << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Delta:  " << delta << endl;
 	out << "  Num Sources:  " << numSources << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < sources.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Sources[" << i1 << "]:  " << sources[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5296,18 +5722,24 @@ void NiFloatData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiFloatData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	data.numKeys = uint(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << data.keys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5334,6 +5766,7 @@ void NiFloatExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiFloatExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Float Data:  " << floatData << endl;
 	return out.str();
@@ -5372,6 +5805,7 @@ void NiFloatExtraDataController::InternalWrite( ostream& out, map<NiObjectRef,ui
 
 std::string NiFloatExtraDataController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Link:  " << unknownLink << endl;
 	out << "  Unknown String:  " << unknownString << endl;
@@ -5412,6 +5846,7 @@ void NiFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiFloatInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Float Value:  " << floatValue << endl;
 	out << "  Data:  " << data << endl;
@@ -5451,15 +5886,21 @@ void NiFloatsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiFloatsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numFloats = uint(data.size());
 	out << "  Num Floats:  " << numFloats << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Data[" << i1 << "]:  " << data[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5490,6 +5931,7 @@ void NiFogProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 
 std::string NiFogProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Fog Depth:  " << fogDepth << endl;
@@ -5570,6 +6012,7 @@ void NiGeomMorpherController::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiGeomMorpherController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	numUnknownInts = uint(unknownInts.size());
 	numInterpolators = uint(interpolators.size());
@@ -5578,20 +6021,30 @@ std::string NiGeomMorpherController::InternalAsString( bool verbose ) const {
 	out << "  Data:  " << data << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Num Interpolators:  " << numInterpolators << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < interpolators.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Interpolators[" << i1 << "]:  " << interpolators[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Unknown Ints:  " << numUnknownInts << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownInts.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Ints[" << i1 << "]:  " << unknownInts[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5638,6 +6091,7 @@ void NiGravity::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiGravity::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Force:  " << force << endl;
@@ -5669,6 +6123,7 @@ void NiIntegerExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiIntegerExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Integer Data:  " << integerData << endl;
 	return out.str();
@@ -5704,15 +6159,21 @@ void NiIntegersExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiIntegersExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numIntegers = uint(data.size());
 	out << "  Num Integers:  " << numIntegers << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Data[" << i1 << "]:  " << data[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5744,6 +6205,7 @@ void NiKeyframeController::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiKeyframeController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -5779,6 +6241,7 @@ void BSKeyframeController::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string BSKeyframeController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiKeyframeController::asString();
 	out << "  Data 2:  " << data2 << endl;
 	return out.str();
@@ -5892,34 +6355,50 @@ void NiKeyframeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	out << "  Num Rotation Keys:  " << numRotationKeys << endl;
 	if ( (numRotationKeys != 0) ) {
 		out << "    Rotation Type:  " << rotationType << endl;
 	};
 	if ( (rotationType != 4) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < quaternionKeys.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Quaternion Keys[" << i2 << "]:  " << quaternionKeys[i2] << endl;
+			array_output_count++;
 		};
 	};
 	if ( (rotationType == 4) ) {
 		out << "    Unknown Float:  " << unknownFloat << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < 3; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			xyzRotations[i2].numKeys = uint(xyzRotations[i2].keys.size());
 			out << "      Num Keys:  " << xyzRotations[i2].numKeys << endl;
 			if ( (xyzRotations[i2].numKeys != 0) ) {
 				out << "        Interpolation:  " << xyzRotations[i2].interpolation << endl;
 			};
+			array_output_count = 0;
 			for (uint i3 = 0; i3 < xyzRotations[i2].keys.size(); i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 					break;
 				};
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+					break;
+				};
 				out << "        Keys[" << i3 << "]:  " << xyzRotations[i2].keys[i3] << endl;
+				array_output_count++;
 			};
 		};
 	};
@@ -5928,24 +6407,34 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 	if ( (translations.numKeys != 0) ) {
 		out << "    Interpolation:  " << translations.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < translations.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << translations.keys[i1] << endl;
+		array_output_count++;
 	};
 	scales.numKeys = uint(scales.keys.size());
 	out << "  Num Keys:  " << scales.numKeys << endl;
 	if ( (scales.numKeys != 0) ) {
 		out << "    Interpolation:  " << scales.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < scales.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << scales.keys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -5999,6 +6488,7 @@ void NiLightColorController::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiLightColorController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Data:  " << data << endl;
@@ -6043,6 +6533,7 @@ void NiLightDimmerController::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiLightDimmerController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
@@ -6084,6 +6575,7 @@ void NiLookAtController::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiLookAtController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown1:  " << unknown1 << endl;
 	out << "  Look At Node:  " << lookAtNode << endl;
@@ -6148,6 +6640,7 @@ void NiLookAtInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiLookAtInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Look At:  " << lookAt << endl;
@@ -6210,6 +6703,7 @@ void NiMaterialColorController::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiMaterialColorController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	out << "  Target Color:  " << targetColor << endl;
 	out << "  Data:  " << data << endl;
@@ -6259,6 +6753,7 @@ void NiMaterialProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiMaterialProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Ambient Color:  " << ambientColor << endl;
@@ -6287,12 +6782,6 @@ void NiMeshPSysData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 		NifStream( unknownByte11, in, version );
 	};
 	if ( version <= 0x14000004 ) {
-		unknownFloats3.resize(numVertices);
-		for (uint i2 = 0; i2 < unknownFloats3.size(); i2++) {
-			for (uint i3 = 0; i3 < 4; i3++) {
-				NifStream( unknownFloats3[i2][i3], in, version );
-			};
-		};
 		unknownFloats4.resize(numVertices);
 		for (uint i2 = 0; i2 < unknownFloats4.size(); i2++) {
 			for (uint i3 = 0; i3 < 10; i3++) {
@@ -6342,11 +6831,6 @@ void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 		NifStream( unknownByte11, out, version );
 	};
 	if ( version <= 0x14000004 ) {
-		for (uint i2 = 0; i2 < unknownFloats3.size(); i2++) {
-			for (uint i3 = 0; i3 < 4; i3++) {
-				NifStream( unknownFloats3[i2][i3], out, version );
-			};
-		};
 		for (uint i2 = 0; i2 < unknownFloats4.size(); i2++) {
 			for (uint i3 = 0; i3 < 10; i3++) {
 				NifStream( unknownFloats4[i2][i3], out, version );
@@ -6394,46 +6878,53 @@ void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiMeshPSysData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysData::asString();
 	numUnknownLinks = uint(unknownLinks.size());
 	out << "  Unknown Byte 11:  " << unknownByte11 << endl;
-	for (uint i1 = 0; i1 < unknownFloats3.size(); i1++) {
-		for (uint i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Floats 3[" << i1 << "][" << i2 << "]:  " << unknownFloats3[i1][i2] << endl;
-		};
-	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownFloats4.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 10; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats 4[" << i1 << "][" << i2 << "]:  " << unknownFloats4[i1][i2] << endl;
+			out << "      Unknown Floats 4[" << i2 << "]:  " << unknownFloats4[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownFloats5.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 12; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats 5[" << i1 << "][" << i2 << "]:  " << unknownFloats5[i1][i2] << endl;
+			out << "      Unknown Floats 5[" << i2 << "]:  " << unknownFloats5[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Modifier:  " << modifier << endl;
 	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
 	out << "  Num Unknown Links:  " << numUnknownLinks << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownLinks.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Links[" << i1 << "]:  " << unknownLinks[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Short 4:  " << unknownShort4 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
@@ -6530,30 +7021,46 @@ void NiMorphData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiMorphData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numMorphs = uint(morphs.size());
 	out << "  Num Morphs:  " << numMorphs << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < morphs.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		morphs[i1].numKeys = uint(morphs[i1].keys.size());
 		out << "    Frame Name:  " << morphs[i1].frameName << endl;
 		out << "    Num Keys:  " << morphs[i1].numKeys << endl;
 		out << "    Interpolation:  " << morphs[i1].interpolation << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < morphs[i1].keys.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Keys[" << i2 << "]:  " << morphs[i1].keys[i2] << endl;
+			array_output_count++;
 		};
 		out << "    Unknown Int:  " << morphs[i1].unknownInt << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Vectors[" << i2 << "]:  " << morphs[i1].vectors[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -6594,15 +7101,21 @@ void NiMultiTargetTransformController::InternalWrite( ostream& out, map<NiObject
 
 std::string NiMultiTargetTransformController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	numExtraTargets = ushort(extraTargets.size());
 	out << "  Num Extra Targets:  " << numExtraTargets << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < extraTargets.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Extra Targets[" << i1 << "]:  " << extraTargets[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -6661,24 +7174,35 @@ void NiNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsign
 
 std::string NiNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiAVObject::asString();
 	numEffects = uint(effects.size());
 	numChildren = uint(children.size());
 	out << "  Num Children:  " << numChildren << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < children.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Children[" << i1 << "]:  " << children[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Effects:  " << numEffects << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < effects.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Effects[" << i1 << "]:  " << effects[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -6717,6 +7241,7 @@ void AvoidNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string AvoidNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	return out.str();
 }
@@ -6749,14 +7274,20 @@ void FxWidget::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string FxWidget::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	out << "  Unknown1:  " << unknown1 << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 292; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown 292 Bytes[" << i1 << "]:  " << unknown292Bytes[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -6781,6 +7312,7 @@ void FxButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string FxButton::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << FxWidget::asString();
 	return out.str();
 }
@@ -6826,18 +7358,24 @@ void FxRadioButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 
 std::string FxRadioButton::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << FxWidget::asString();
 	numButtons = uint(buttons.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int  2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Num Buttons:  " << numButtons << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < buttons.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Buttons[" << i1 << "]:  " << buttons[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -6873,6 +7411,7 @@ void NiBillboardNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiBillboardNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	out << "  Billboard Mode:  " << billboardMode << endl;
 	return out.str();
@@ -6898,6 +7437,7 @@ void NiBSAnimationNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiBSAnimationNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	return out.str();
 }
@@ -6922,6 +7462,7 @@ void NiBSParticleNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiBSParticleNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	return out.str();
 }
@@ -6983,18 +7524,29 @@ void NiLODNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiLODNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	numLodLevels = uint(lodLevels.size());
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 4; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown 4 Bytes[" << i1 << "]:  " << unknown4Bytes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  LOD Center:  " << lodCenter << endl;
 	out << "  Num LOD Levels:  " << numLodLevels << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < lodLevels.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Near Extent:  " << lodLevels[i1].nearExtent << endl;
 		out << "    Far Extent:  " << lodLevels[i1].farExtent << endl;
 	};
@@ -7042,16 +7594,22 @@ void NiPalette::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiPalette::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Num Entries?:  " << numEntries_ << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 256; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Palette[" << i1 << "][" << i2 << "]:  " << palette[i1][i2] << endl;
+			out << "      Palette[" << i2 << "]:  " << palette[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -7101,6 +7659,7 @@ void NiParticleBomb::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiParticleBomb::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -7144,6 +7703,7 @@ void NiParticleColorModifier::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiParticleColorModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Color Data:  " << colorData << endl;
 	return out.str();
@@ -7176,6 +7736,7 @@ void NiParticleGrowFade::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiParticleGrowFade::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Grow:  " << grow << endl;
 	out << "  Fade:  " << fade << endl;
@@ -7217,15 +7778,21 @@ void NiParticleMeshModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiParticleMeshModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	numParticleMeshes = uint(particleMeshes.size());
 	out << "  Num Particle Meshes:  " << numParticleMeshes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < particleMeshes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Particle Meshes[" << i1 << "]:  " << particleMeshes[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -7267,6 +7834,7 @@ void NiParticleRotation::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiParticleRotation::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
@@ -7296,6 +7864,7 @@ void NiParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiParticles::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiGeometry::asString();
 	return out.str();
 }
@@ -7320,6 +7889,7 @@ void NiAutoNormalParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiAutoNormalParticles::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticles::asString();
 	return out.str();
 }
@@ -7344,6 +7914,7 @@ void NiParticleMeshes::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiParticleMeshes::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticles::asString();
 	return out.str();
 }
@@ -7400,26 +7971,37 @@ void NiParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiParticlesData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiAutoNormalParticlesData::asString();
 	out << "  Num Active:  " << numActive << endl;
 	out << "  Has Unknown Floats:  " << hasUnknownFloats << endl;
 	if ( (hasUnknownFloats != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownFloats.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Unknown Floats[" << i2 << "]:  " << unknownFloats[i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Has Rotations:  " << hasRotations << endl;
 	if ( (hasRotations != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < rotations.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Rotations[" << i2 << "]:  " << rotations[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -7452,6 +8034,7 @@ void NiParticleMeshesData::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiParticleMeshesData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticlesData::asString();
 	out << "  Unknown Link 2:  " << unknownLink2 << endl;
 	return out.str();
@@ -7501,16 +8084,22 @@ void NiParticleSystem::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiParticleSystem::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticles::asString();
 	numModifiers = uint(modifiers.size());
 	out << "  Unknown Bool:  " << unknownBool << endl;
 	out << "  Num Modifiers:  " << numModifiers << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < modifiers.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Modifiers[" << i1 << "]:  " << modifiers[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -7544,6 +8133,7 @@ void NiMeshParticleSystem::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiMeshParticleSystem::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticleSystem::asString();
 	return out.str();
 }
@@ -7673,6 +8263,7 @@ void NiParticleSystemController::InternalWrite( ostream& out, map<NiObjectRef,ui
 
 std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	numParticles = ushort(particles.size());
 	out << "  Speed:  " << speed << endl;
@@ -7705,7 +8296,12 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	out << "  Unknown Short 3?:  " << unknownShort3_ << endl;
 	out << "  Num Particles:  " << numParticles << endl;
 	out << "  Num Valid:  " << numValid << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < particles.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Velocity:  " << particles[i1].velocity << endl;
 		out << "    Unknown Vector:  " << particles[i1].unknownVector << endl;
 		out << "    Lifetime:  " << particles[i1].lifetime << endl;
@@ -7732,8 +8328,6 @@ void NiParticleSystemController::InternalFixLinks( const map<unsigned,NiObjectRe
 std::list<NiObjectRef> NiParticleSystemController::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiTimeController::GetRefs();
-	if ( emitter != NULL )
-		refs.push_back(StaticCast<NiObject>(emitter));
 	if ( unknownLink != NULL )
 		refs.push_back(StaticCast<NiObject>(unknownLink));
 	if ( particleExtra != NULL )
@@ -7753,6 +8347,7 @@ void NiBSPArrayController::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiBSPArrayController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticleSystemController::asString();
 	return out.str();
 }
@@ -7804,6 +8399,7 @@ void NiPathController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiPathController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
@@ -7860,6 +8456,7 @@ void NiPathInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiPathInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -7972,6 +8569,7 @@ void NiPixelData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiPixelData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numMipmaps = uint(mipmaps.size());
 	out << "  Pixel Format:  " << pixelFormat << endl;
@@ -7980,37 +8578,57 @@ std::string NiPixelData::InternalAsString( bool verbose ) const {
 	out << "  Blue Mask:  " << blueMask << endl;
 	out << "  Alpha Mask:  " << alphaMask << endl;
 	out << "  Bits Per Pixel:  " << bitsPerPixel << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 8; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown 8 Bytes[" << i1 << "]:  " << unknown8Bytes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Int:  " << unknownInt << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 54; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown 54 Bytes[" << i1 << "]:  " << unknown54Bytes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Palette:  " << palette << endl;
 	out << "  Num Mipmaps:  " << numMipmaps << endl;
 	out << "  Bytes Per Pixel:  " << bytesPerPixel << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < mipmaps.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Width:  " << mipmaps[i1].width << endl;
 		out << "    Height:  " << mipmaps[i1].height << endl;
 		out << "    Offset:  " << mipmaps[i1].offset << endl;
 	};
 	pixelData.dataSize = uint(pixelData.data.size());
 	out << "  Data Size:  " << pixelData.dataSize << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < pixelData.data.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Data[" << i1 << "]:  " << pixelData.data[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	return out.str();
@@ -8083,6 +8701,7 @@ void NiPlanarCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiPlanarCollider::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
@@ -8134,6 +8753,7 @@ void NiPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiPoint3Interpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Point 3 Value:  " << point3Value << endl;
 	out << "  Data:  " << data << endl;
@@ -8169,6 +8789,7 @@ void NiPointLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 
 std::string NiPointLight::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiLight::asString();
 	out << "  Constant Attenuation:  " << constantAttenuation << endl;
 	out << "  Linear Attenuation:  " << linearAttenuation << endl;
@@ -8212,18 +8833,24 @@ void NiPosData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiPosData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	data.numKeys = uint(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Keys[" << i1 << "]:  " << data.keys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -8257,6 +8884,7 @@ void NiPSysAgeDeathModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiPSysAgeDeathModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Spawn on Death:  " << spawnOnDeath << endl;
 	out << "  Spawn Modifier:  " << spawnModifier << endl;
@@ -8311,28 +8939,44 @@ void NiPSysBombModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiPSysBombModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Unknown Link:  " << unknownLink << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
+		array_output_count++;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -8360,6 +9004,7 @@ void NiPSysBoundUpdateModifier::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiPSysBoundUpdateModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Update Skip:  " << updateSkip << endl;
 	return out.str();
@@ -8391,6 +9036,7 @@ void NiPSysBoxEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiPSysBoxEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	out << "  Width:  " << width << endl;
 	out << "  Height:  " << height << endl;
@@ -8425,6 +9071,7 @@ void NiPSysColliderManager::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiPSysColliderManager::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Collider:  " << collider << endl;
 	return out.str();
@@ -8460,6 +9107,7 @@ void NiPSysColorModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiPSysColorModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -8492,6 +9140,7 @@ void NiPSysCylinderEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiPSysCylinderEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	out << "  Radius:  " << radius << endl;
 	out << "  Height:  " << height << endl;
@@ -8590,49 +9239,70 @@ void NiPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiPSysData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysData::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownFloats4.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < 10; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats 4[" << i1 << "][" << i2 << "]:  " << unknownFloats4[i1][i2] << endl;
+			out << "      Unknown Floats 4[" << i2 << "]:  " << unknownFloats4[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	out << "  Unknown Bool 1:  " << unknownBool1 << endl;
 	if ( (unknownBool1 != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownBytes.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			for (uint i3 = 0; i3 < 32; i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					break;
 				};
-				out << "        Unknown Bytes[" << i2 << "][" << i3 << "]:  " << unknownBytes[i2][i3] << endl;
+				out << "        Unknown Bytes[" << i3 << "]:  " << unknownBytes[i2][i3] << endl;
+				array_output_count++;
 			};
 		};
 	};
 	if ( (unknownBool1 == 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownBytesAlt.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			for (uint i3 = 0; i3 < 28; i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					break;
 				};
-				out << "        Unknown Bytes Alt[" << i2 << "][" << i3 << "]:  " << unknownBytesAlt[i2][i3] << endl;
+				out << "        Unknown Bytes Alt[" << i3 << "]:  " << unknownBytesAlt[i2][i3] << endl;
+				array_output_count++;
 			};
 		};
 	};
 	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
 	out << "  Unknown Bool 2:  " << unknownBool2 << endl;
 	if ( (unknownBool2 != 0) ) {
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < unknownBytes2.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			for (uint i3 = 0; i3 < 4; i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					break;
 				};
-				out << "        Unknown Bytes 2[" << i2 << "][" << i3 << "]:  " << unknownBytes2[i2][i3] << endl;
+				out << "        Unknown Bytes 2[" << i3 << "]:  " << unknownBytes2[i2][i3] << endl;
+				array_output_count++;
 			};
 		};
 	};
@@ -8675,6 +9345,7 @@ void NiPSysDragModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiPSysDragModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Parent:  " << parent << endl;
 	out << "  Drag Axis:  " << dragAxis << endl;
@@ -8726,6 +9397,7 @@ void NiPSysEmitterCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiPSysEmitterCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	out << "  Data:  " << data << endl;
 	out << "  Visibility Interpolator:  " << visibilityInterpolator << endl;
@@ -8788,6 +9460,7 @@ void NiPSysEmitterCtlrData::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiPSysEmitterCtlrData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numVisibilityKeys_ = uint(visibilityKeys_.size());
 	floatKeys_.numKeys = uint(floatKeys_.keys.size());
@@ -8795,20 +9468,30 @@ std::string NiPSysEmitterCtlrData::InternalAsString( bool verbose ) const {
 	if ( (floatKeys_.numKeys != 0) ) {
 		out << "    Interpolation:  " << floatKeys_.interpolation << endl;
 	};
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < floatKeys_.keys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
 		out << "    Keys[" << i1 << "]:  " << floatKeys_.keys[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Visibility Keys?:  " << numVisibilityKeys_ << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < visibilityKeys_.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Visibility Keys?[" << i1 << "]:  " << visibilityKeys_[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -8833,6 +9516,7 @@ void NiPSysEmitterDeclinationCtlr::InternalWrite( ostream& out, map<NiObjectRef,
 
 std::string NiPSysEmitterDeclinationCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	return out.str();
 }
@@ -8857,6 +9541,7 @@ void NiPSysEmitterDeclinationVarCtlr::InternalWrite( ostream& out, map<NiObjectR
 
 std::string NiPSysEmitterDeclinationVarCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	return out.str();
 }
@@ -8881,6 +9566,7 @@ void NiPSysEmitterInitialRadiusCtlr::InternalWrite( ostream& out, map<NiObjectRe
 
 std::string NiPSysEmitterInitialRadiusCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	return out.str();
 }
@@ -8896,26 +9582,44 @@ std::list<NiObjectRef> NiPSysEmitterInitialRadiusCtlr::InternalGetRefs() const {
 }
 
 void NiPSysEmitterLifeSpanCtlr::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	uint block_num;
 	APSysCtlr::Read( in, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+	};
 }
 
 void NiPSysEmitterLifeSpanCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		if ( unknownLink != NULL )
+			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+	};
 }
 
 std::string NiPSysEmitterLifeSpanCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
+	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
 }
 
 void NiPSysEmitterLifeSpanCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
+	if ( version <= 0x0A010000 ) {
+		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
+	};
 }
 
 std::list<NiObjectRef> NiPSysEmitterLifeSpanCtlr::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = APSysCtlr::GetRefs();
+	if ( unknownLink != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 
@@ -8940,6 +9644,7 @@ void NiPSysEmitterSpeedCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiPSysEmitterSpeedCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
@@ -8989,6 +9694,7 @@ void NiPSysGravityModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiPSysGravityModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Gravity Object:  " << gravityObject << endl;
 	out << "  Gravity Axis:  " << gravityAxis << endl;
@@ -9032,6 +9738,7 @@ void NiPSysGravityStrengthCtlr::InternalWrite( ostream& out, map<NiObjectRef,uin
 
 std::string NiPSysGravityStrengthCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	out << "  Unknown Link:  " << unknownLink << endl;
 	return out.str();
@@ -9070,6 +9777,7 @@ void NiPSysGrowFadeModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiPSysGrowFadeModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Grow Time:  " << growTime << endl;
 	out << "  Grow Generation:  " << growGeneration << endl;
@@ -9119,15 +9827,21 @@ void NiPSysMeshEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiPSysMeshEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysEmitter::asString();
 	numEmitterMeshes = uint(emitterMeshes.size());
 	out << "  Num Emitter Meshes:  " << numEmitterMeshes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < emitterMeshes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Emitter Meshes[" << i1 << "]:  " << emitterMeshes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Initial Velocity Type:  " << initialVelocityType << endl;
 	out << "  Emission Type:  " << emissionType << endl;
@@ -9177,15 +9891,21 @@ void NiPSysMeshUpdateModifier::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string NiPSysMeshUpdateModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	numMeshes = uint(meshes.size());
 	out << "  Num Meshes:  " << numMeshes << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < meshes.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Meshes[" << i1 << "]:  " << meshes[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -9223,6 +9943,7 @@ void NiPSysModifierActiveCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint
 
 std::string NiPSysModifierActiveCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << APSysCtlr::asString();
 	out << "  Unknown Int:  " << unknownInt << endl;
 	return out.str();
@@ -9287,6 +10008,7 @@ void NiPSysPlanarCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 
 std::string NiPSysPlanarCollider::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Bounce:  " << bounce << endl;
 	out << "  Spawn on Collide:  " << spawnOnCollide << endl;
@@ -9332,6 +10054,7 @@ void NiPSysPositionModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiPSysPositionModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	return out.str();
 }
@@ -9356,6 +10079,7 @@ void NiPSysResetOnLoopCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiPSysResetOnLoopCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	return out.str();
 }
@@ -9398,6 +10122,7 @@ void NiPSysRotationModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiPSysRotationModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Initial Rotation Speed:  " << initialRotationSpeed << endl;
 	out << "  Initial Rotation Speed Variation:  " << initialRotationSpeedVariation << endl;
@@ -9445,6 +10170,7 @@ void NiPSysSpawnModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiPSysSpawnModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Num Spawn Generations:  " << numSpawnGenerations << endl;
 	out << "  Percentage Spawned:  " << percentageSpawned << endl;
@@ -9479,6 +10205,7 @@ void NiPSysSphereEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiPSysSphereEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	out << "  Radius:  " << radius << endl;
 	return out.str();
@@ -9504,6 +10231,7 @@ void NiPSysUpdateCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 
 std::string NiPSysUpdateCtlr::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	return out.str();
 }
@@ -9528,6 +10256,7 @@ void NiLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiLODData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	return out.str();
 }
@@ -9566,11 +10295,17 @@ void NiRangeLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiLODData::asString();
 	numLodLevels = uint(lodLevels.size());
 	out << "  LOD Center:  " << lodCenter << endl;
 	out << "  Num LOD Levels:  " << numLodLevels << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < lodLevels.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Near Extent:  " << lodLevels[i1].nearExtent << endl;
 		out << "    Far Extent:  " << lodLevels[i1].farExtent << endl;
 	};
@@ -9615,6 +10350,7 @@ void NiScreenLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiScreenLODData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiLODData::asString();
 	proportionCount = uint(proportionLevels.size());
 	out << "  Bound Center:  " << boundCenter << endl;
@@ -9622,12 +10358,17 @@ std::string NiScreenLODData::InternalAsString( bool verbose ) const {
 	out << "  World Center:  " << worldCenter << endl;
 	out << "  World Radius:  " << worldRadius << endl;
 	out << "  Proportion Count:  " << proportionCount << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < proportionLevels.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Proportion Levels[" << i1 << "]:  " << proportionLevels[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -9652,6 +10393,7 @@ void NiRotatingParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiRotatingParticles::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticles::asString();
 	return out.str();
 }
@@ -9676,6 +10418,7 @@ void NiRotatingParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiRotatingParticlesData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiParticlesData::asString();
 	return out.str();
 }
@@ -9700,6 +10443,7 @@ void NiSequenceStreamHelper::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiSequenceStreamHelper::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObjectNET::asString();
 	return out.str();
 }
@@ -9726,6 +10470,7 @@ void NiShadeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiShadeProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	return out.str();
@@ -9804,6 +10549,7 @@ void NiSkinData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiSkinData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numBones = uint(boneList.size());
 	out << "  Rotation:  " << rotation << endl;
@@ -9812,7 +10558,12 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 	out << "  Num Bones:  " << numBones << endl;
 	out << "  Skin Partition:  " << skinPartition << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < boneList.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		boneList[i1].numVertices = ushort(boneList[i1].vertexWeights.size());
 		out << "    Rotation:  " << boneList[i1].rotation << endl;
 		out << "    Translation:  " << boneList[i1].translation << endl;
@@ -9820,7 +10571,12 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 		out << "    Bounding Sphere Offset:  " << boneList[i1].boundingSphereOffset << endl;
 		out << "    Bounding Sphere Radius:  " << boneList[i1].boundingSphereRadius << endl;
 		out << "    Num Vertices:  " << boneList[i1].numVertices << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
 			out << "      Index:  " << boneList[i1].vertexWeights[i2].index << endl;
 			out << "      Weight:  " << boneList[i1].vertexWeights[i2].weight << endl;
 		};
@@ -9890,18 +10646,24 @@ void NiSkinInstance::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiSkinInstance::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numBones = uint(bones.size());
 	out << "  Data:  " << data << endl;
 	out << "  Skin Partition:  " << skinPartition << endl;
 	out << "  Skeleton Root:  " << skeletonRoot << endl;
 	out << "  Num Bones:  " << numBones << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < bones.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Bones[" << i1 << "]:  " << bones[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -9940,6 +10702,7 @@ void NiClodSkinInstance::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiClodSkinInstance::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSkinInstance::asString();
 	return out.str();
 }
@@ -10144,10 +10907,16 @@ void NiSkinPartition::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	numSkinPartitionBlocks = uint(skinPartitionBlocks.size());
 	out << "  Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < skinPartitionBlocks.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++)
 			skinPartitionBlocks[i1].stripLengths[i2] = ushort(skinPartitionBlocks[i1].strips[i2].size());
 		skinPartitionBlocks[i1].numWeightsPerVertex = ushort((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
@@ -10160,66 +10929,101 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 		out << "    Num Bones:  " << skinPartitionBlocks[i1].numBones << endl;
 		out << "    Num Strips:  " << skinPartitionBlocks[i1].numStrips << endl;
 		out << "    Num Weights Per Vertex:  " << skinPartitionBlocks[i1].numWeightsPerVertex << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].bones.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Bones[" << i2 << "]:  " << skinPartitionBlocks[i1].bones[i2] << endl;
+			array_output_count++;
 		};
 		out << "    Has Vertex Map:  " << skinPartitionBlocks[i1].hasVertexMap << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].vertexMap.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
 			out << "      Vertex Map[" << i2 << "]:  " << skinPartitionBlocks[i1].vertexMap[i2] << endl;
+			array_output_count++;
 		};
 		out << "    Has Vertex Weights:  " << skinPartitionBlocks[i1].hasVertexWeights << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].vertexWeights.size(); i2++) {
-			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].vertexWeights[i2].size(); i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-					break;
-				};
-				out << "        Vertex Weights[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i1].vertexWeights[i2][i3] << endl;
-			};
-		};
-		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].stripLengths.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Strip Lengths[" << i2 << "]:  " << skinPartitionBlocks[i1].stripLengths[i2] << endl;
-		};
-		out << "    Has Strips:  " << skinPartitionBlocks[i1].hasStrips << endl;
-		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++) {
-			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].stripLengths[i2]; i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].vertexWeights[i2].size(); i3++) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					break;
 				};
-				out << "        Strips[" << i2 << "][" << i3 << "]:  " << skinPartitionBlocks[i1].strips[i2][i3] << endl;
+				out << "        Vertex Weights[" << i3 << "]:  " << skinPartitionBlocks[i1].vertexWeights[i2][i3] << endl;
+				array_output_count++;
+			};
+		};
+		array_output_count = 0;
+		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].stripLengths.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Strip Lengths[" << i2 << "]:  " << skinPartitionBlocks[i1].stripLengths[i2] << endl;
+			array_output_count++;
+		};
+		out << "    Has Strips:  " << skinPartitionBlocks[i1].hasStrips << endl;
+		array_output_count = 0;
+		for (uint i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].stripLengths[i2]; i3++) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+					break;
+				};
+				out << "        Strips[" << i3 << "]:  " << skinPartitionBlocks[i1].strips[i2][i3] << endl;
+				array_output_count++;
 			};
 		};
 		if ( (skinPartitionBlocks[i1].numStrips == 0) ) {
+			array_output_count = 0;
 			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].triangles.size(); i3++) {
-				if ( !verbose && ( i3 > MAXARRAYDUMP ) ) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 					break;
 				};
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+					break;
+				};
 				out << "        Triangles[" << i3 << "]:  " << skinPartitionBlocks[i1].triangles[i3] << endl;
+				array_output_count++;
 			};
 		};
 		out << "    Has Bone Indices:  " << skinPartitionBlocks[i1].hasBoneIndices << endl;
 		if ( (skinPartitionBlocks[i1].hasBoneIndices != 0) ) {
+			array_output_count = 0;
 			for (uint i3 = 0; i3 < skinPartitionBlocks[i1].boneIndices.size(); i3++) {
+				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+					break;
+				};
 				for (uint i4 = 0; i4 < skinPartitionBlocks[i1].boneIndices[i3].size(); i4++) {
-					if ( !verbose && ( i4 > MAXARRAYDUMP ) ) {
-						out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 						break;
 					};
-					out << "          Bone Indices[" << i3 << "][" << i4 << "]:  " << skinPartitionBlocks[i1].boneIndices[i3][i4] << endl;
+					out << "          Bone Indices[" << i4 << "]:  " << skinPartitionBlocks[i1].boneIndices[i3][i4] << endl;
+					array_output_count++;
 				};
 			};
 		};
@@ -10314,6 +11118,7 @@ void NiSourceTexture::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiSourceTexture::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObjectNET::asString();
 	out << "  Use External:  " << useExternal << endl;
 	if ( (useExternal == 1) ) {
@@ -10366,6 +11171,7 @@ void NiSpecularProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiSpecularProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	return out.str();
@@ -10403,6 +11209,7 @@ void NiSphericalCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiSphericalCollider::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Short:  " << unknownShort << endl;
@@ -10437,6 +11244,7 @@ void NiSpotLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiSpotLight::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiPointLight::asString();
 	out << "  Cutoff Angle:  " << cutoffAngle << endl;
 	out << "  Exponent:  " << exponent << endl;
@@ -10485,6 +11293,7 @@ void NiStencilProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiStencilProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Stencil Enabled:  " << stencilEnabled << endl;
@@ -10526,6 +11335,7 @@ void NiStringExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiStringExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Bytes Remaining:  " << bytesRemaining << endl;
 	out << "  String Data:  " << stringData << endl;
@@ -10556,6 +11366,7 @@ void NiStringPalette::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiStringPalette::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Palette:  " << palette.palette << endl;
 	out << "  Length:  " << palette.length << endl;
@@ -10592,15 +11403,21 @@ void NiStringsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiStringsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numStrings = uint(data.size());
 	out << "  Num Strings:  " << numStrings << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < data.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Data[" << i1 << "]:  " << data[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -10641,16 +11458,22 @@ void NiTextKeyExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 
 std::string NiTextKeyExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numTextKeys = uint(textKeys.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Text Keys:  " << numTextKeys << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < textKeys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Text Keys[" << i1 << "]:  " << textKeys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -10714,6 +11537,7 @@ void NiTextureEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiTextureEffect::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiDynamicEffect::asString();
 	out << "  Model Projection Matrix:  " << modelProjectionMatrix << endl;
 	out << "  Model Projection Transform:  " << modelProjectionTransform << endl;
@@ -10771,6 +11595,7 @@ void NiTextureTransformController::InternalWrite( ostream& out, map<NiObjectRef,
 
 std::string NiTextureTransformController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	out << "  Unknown2:  " << unknown2 << endl;
 	out << "  Texture Slot:  " << textureSlot << endl;
@@ -11307,6 +12132,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	numShaderTextures = uint(shaderTextures.size());
 	out << "  Flags:  " << flags << endl;
@@ -11462,7 +12288,12 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 		};
 	};
 	out << "  Num Shader Textures:  " << numShaderTextures << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < shaderTextures.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		out << "    Is Used:  " << shaderTextures[i1].isUsed << endl;
 		if ( (shaderTextures[i1].isUsed != 0) ) {
 			out << "      Source:  " << shaderTextures[i1].textureData.source << endl;
@@ -11557,6 +12388,7 @@ void NiTransformController::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiTransformController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	return out.str();
 }
@@ -11581,6 +12413,7 @@ void NiTransformData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiTransformData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiKeyframeData::asString();
 	return out.str();
 }
@@ -11628,16 +12461,22 @@ void NiTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint>
 
 std::string NiTransformInterpolator::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Scale:  " << scale << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Unknown Bytes[" << i1 << "]:  " << unknownBytes[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -11666,6 +12505,7 @@ void NiTriShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiTriShape::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeom::asString();
 	return out.str();
 }
@@ -11742,27 +12582,43 @@ void NiTriShapeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
 	numMatchGroups = ushort(matchGroups.size());
 	out << "  Num Triangle Points:  " << numTrianglePoints << endl;
 	out << "  Has Triangles:  " << hasTriangles << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < triangles.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Triangles[" << i1 << "]:  " << triangles[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Match Groups:  " << numMatchGroups << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < matchGroups.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		matchGroups[i1].numVertices = ushort(matchGroups[i1].vertexIndices.size());
 		out << "    Num Vertices:  " << matchGroups[i1].numVertices << endl;
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < matchGroups[i1].vertexIndices.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Vertex Indices[" << i2 << "]:  " << matchGroups[i1].vertexIndices[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -11788,6 +12644,7 @@ void NiTriStrips::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 
 std::string NiTriStrips::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeom::asString();
 	return out.str();
 }
@@ -11866,26 +12723,37 @@ void NiTriStripsData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiTriStripsData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
 	for (uint i1 = 0; i1 < points.size(); i1++)
 		stripLengths[i1] = ushort(points[i1].size());
 	numStrips = ushort(stripLengths.size());
 	out << "  Num Strips:  " << numStrips << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < stripLengths.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Strip Lengths[" << i1 << "]:  " << stripLengths[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Has Points:  " << hasPoints << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < points.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		for (uint i2 = 0; i2 < stripLengths[i1]; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Points[" << i1 << "][" << i2 << "]:  " << points[i1][i2] << endl;
+			out << "      Points[" << i2 << "]:  " << points[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -11911,6 +12779,7 @@ void NiClod::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsign
 
 std::string NiClod::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeom::asString();
 	return out.str();
 }
@@ -11979,6 +12848,7 @@ void NiClodData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 
 std::string NiClodData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
 	unknownCount3 = ushort(unknownClodShorts3.size());
 	unknownCount2 = ushort(unknownClodShorts2.size());
@@ -11989,29 +12859,44 @@ std::string NiClodData::InternalAsString( bool verbose ) const {
 	out << "  Unknown Count 3:  " << unknownCount3 << endl;
 	out << "  Unknown Float:  " << unknownFloat << endl;
 	out << "  Unknown Short:  " << unknownShort << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < unknownClodShorts1.size(); i1++) {
-		for (uint i2 = 0; i2 < 6; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Clod Shorts 1[" << i1 << "][" << i2 << "]:  " << unknownClodShorts1[i1][i2] << endl;
-		};
-	};
-	for (uint i1 = 0; i1 < unknownClodShorts2.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Clod Shorts 2[" << i1 << "]:  " << unknownClodShorts2[i1] << endl;
-	};
-	for (uint i1 = 0; i1 < unknownClodShorts3.size(); i1++) {
 		for (uint i2 = 0; i2 < 6; i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Clod Shorts 3[" << i1 << "][" << i2 << "]:  " << unknownClodShorts3[i1][i2] << endl;
+			out << "      Unknown Clod Shorts 1[" << i2 << "]:  " << unknownClodShorts1[i1][i2] << endl;
+			array_output_count++;
+		};
+	};
+	array_output_count = 0;
+	for (uint i1 = 0; i1 < unknownClodShorts2.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Clod Shorts 2[" << i1 << "]:  " << unknownClodShorts2[i1] << endl;
+		array_output_count++;
+	};
+	array_output_count = 0;
+	for (uint i1 = 0; i1 < unknownClodShorts3.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (uint i2 = 0; i2 < 6; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Clod Shorts 3[" << i2 << "]:  " << unknownClodShorts3[i1][i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -12046,6 +12931,7 @@ void NiUVController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 
 std::string NiUVController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Data:  " << data << endl;
@@ -12095,19 +12981,30 @@ void NiUVData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 
 std::string NiUVData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiObject::asString();
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < 4; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
 		uvGroups[i1].numKeys = uint(uvGroups[i1].keys.size());
 		out << "    Num Keys:  " << uvGroups[i1].numKeys << endl;
 		if ( (uvGroups[i1].numKeys != 0) ) {
 			out << "      Interpolation:  " << uvGroups[i1].interpolation << endl;
 		};
+		array_output_count = 0;
 		for (uint i2 = 0; i2 < uvGroups[i1].keys.size(); i2++) {
-			if ( !verbose && ( i2 > MAXARRAYDUMP ) ) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
 			out << "      Keys[" << i2 << "]:  " << uvGroups[i1].keys[i2] << endl;
+			array_output_count++;
 		};
 	};
 	return out.str();
@@ -12137,6 +13034,7 @@ void NiVectorExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiVectorExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Vector Data:  " << vectorData << endl;
 	out << "  Unknown Float:  " << unknownFloat << endl;
@@ -12169,6 +13067,7 @@ void NiVertexColorProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> l
 
 std::string NiVertexColorProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Vertex Mode:  " << vertexMode << endl;
@@ -12208,16 +13107,22 @@ void NiVertWeightsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> 
 
 std::string NiVertWeightsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiExtraData::asString();
 	numVertices = ushort(weight.size());
 	out << "  Num Bytes:  " << numBytes << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < weight.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Weight[" << i1 << "]:  " << weight[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -12253,6 +13158,7 @@ void NiVisController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 
 std::string NiVisController::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
@@ -12293,15 +13199,21 @@ void NiVisData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 
 std::string NiVisData::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << AKeyedData::asString();
 	numVisKeys = uint(visKeys.size());
 	out << "  Num Vis Keys:  " << numVisKeys << endl;
+	array_output_count = 0;
 	for (uint i1 = 0; i1 < visKeys.size(); i1++) {
-		if ( !verbose && ( i1 > MAXARRAYDUMP ) ) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
 		out << "    Vis Keys[" << i1 << "]:  " << visKeys[i1] << endl;
+		array_output_count++;
 	};
 	return out.str();
 }
@@ -12328,6 +13240,7 @@ void NiWireframeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 
 std::string NiWireframeProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	return out.str();
@@ -12361,6 +13274,7 @@ void NiZBufferProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string NiZBufferProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Function:  " << function << endl;
@@ -12387,6 +13301,7 @@ void RootCollisionNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_
 
 std::string RootCollisionNode::InternalAsString( bool verbose ) const {
 	stringstream out;
+	uint array_output_count = 0;
 	out << NiNode::asString();
 	return out.str();
 }

@@ -13,7 +13,7 @@ NiPSysEmitterCtlrData::NiPSysEmitterCtlrData() NI_P_SYS_EMITTER_CTLR_DATA_CONSTR
 NiPSysEmitterCtlrData::~NiPSysEmitterCtlrData() {}
 
 void NiPSysEmitterCtlrData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );InternalRead( in, link_stack, version, user_version );
+	InternalRead( in, link_stack, version, user_version );
 }
 
 void NiPSysEmitterCtlrData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {

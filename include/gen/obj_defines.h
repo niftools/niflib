@@ -193,7 +193,8 @@ vector<float > unknownFloats1; \
 ushort unknownShort3; \
 bool hasUnknownFloats2; \
 vector<float > unknownFloats2; \
-byte unknownByte1; \
+byte hasUnknownFloats3; \
+vector< array<4,float> > unknownFloats3; \
 
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS \
 float unknownFloat1; \
@@ -636,7 +637,6 @@ float alpha; \
 
 #define NI_MESH_P_SYS_DATA_MEMBERS \
 byte unknownByte11; \
-vector< array<4,float> > unknownFloats3; \
 vector< array<10,float> > unknownFloats4; \
 vector< array<12,float> > unknownFloats5; \
 uint unknownInt1; \
@@ -780,7 +780,7 @@ float lifetime; \
 float lifetimeRandom; \
 ushort emitFlags; \
 Vector3 startRandom; \
-Ref<NiObject > emitter; \
+NiObject * emitter; \
 ushort unknownShort2_; \
 float unknownFloat13_; \
 uint unknownInt1_; \
@@ -922,6 +922,7 @@ vector<Key<byte > > visibilityKeys_; \
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_MEMBERS \
+Ref<NiFloatData > unknownLink; \
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_MEMBERS \
 Ref<NiFloatData > unknownLink; \
@@ -1640,7 +1641,7 @@ CompareMode function; \
 
 #define A_P_SYS_DATA_PARENT NiGeometryData
 
-#define A_P_SYS_DATA_CONSTRUCT  : hasUnknownFloats1(false), unknownShort3((ushort)0), hasUnknownFloats2(false), unknownByte1((byte)0)
+#define A_P_SYS_DATA_CONSTRUCT  : hasUnknownFloats1(false), unknownShort3((ushort)0), hasUnknownFloats2(false), hasUnknownFloats3((byte)0)
 
 #define BHK_BLEND_COLLISION_OBJECT_INCLUDE "NiCollisionObject.h"
 
@@ -2372,7 +2373,8 @@ CompareMode function; \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_CONSTRUCT 
+#define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_CONSTRUCT  : unknownLink(NULL)
+
 #define NI_P_SYS_EMITTER_SPEED_CTLR_INCLUDE "APSysCtlr.h"
 
 #define NI_P_SYS_EMITTER_SPEED_CTLR_PARENT APSysCtlr
