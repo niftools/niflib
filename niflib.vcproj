@@ -931,6 +931,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiImage.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiIntegerExtraData.cpp"
 					>
 				</File>
@@ -1300,6 +1304,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiTextureEffect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiTextureModeProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiTextureProperty.cpp"
 					>
 				</File>
 				<File
@@ -2025,6 +2037,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiImage.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiIntegerExtraData.h"
 					>
 				</File>
@@ -2394,6 +2410,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiTextureEffect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiTextureModeProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiTextureProperty.h"
 					>
 				</File>
 				<File

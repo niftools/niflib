@@ -284,6 +284,21 @@ ostream & operator<<( ostream & out, HeaderString const & val ) {
 	return out << val.header;
 }
 
+//LineString
+void NifStream( LineString & val, istream& in, uint version ) {
+	char tmp[256];
+	in.getline( tmp, 256 );
+	val.line = tmp;
+};
+
+void NifStream( LineString const & val, ostream& out, uint version ) {
+	out << val.line << "\n";
+};
+
+ostream & operator<<( ostream & out, LineString const & val ) {
+	return out << val.line;
+}
+
 //ShortString
 void NifStream( ShortString & val, istream& in, uint version ) {
 	byte len = ReadByte( in );

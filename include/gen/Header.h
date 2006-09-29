@@ -25,6 +25,10 @@ struct NIFLIB_API Header {
 	 */
 	HeaderString headerString;
 	/*!
+	 * Unknown.
+	 */
+	array<3,LineString> copyright;
+	/*!
 	 * The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C,
 	 * 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000,
 	 * 0x0A020000, 0x14000004, ...

@@ -11,6 +11,11 @@ Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((
 Header::~Header() {};
 void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
+	if ( version <= 0x03010000 ) {
+		for (uint i2 = 0; i2 < 3; i2++) {
+			NifStream( copyright[i2], in, version );
+		};
+	};
 	if ( version >= 0x0303000D ) {
 		NifStream( version, in, version );
 	};
@@ -56,6 +61,11 @@ void Header::Write( ostream& out ) const {
 	numBlockTypes = ushort(blockTypes.size());
 	numBlocks = uint(blockTypeIndex.size());
 	NifStream( headerString, out, version );
+	if ( version <= 0x03010000 ) {
+		for (uint i2 = 0; i2 < 3; i2++) {
+			NifStream( copyright[i2], out, version );
+		};
+	};
 	if ( version >= 0x0303000D ) {
 		NifStream( version, out, version );
 	};
@@ -101,6 +111,18 @@ string Header::asString( bool verbose ) const {
 	numBlockTypes = ushort(blockTypes.size());
 	numBlocks = uint(blockTypeIndex.size());
 	out << "  Header String:  " << headerString << endl;
+	array_output_count = 0;
+	for (uint i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Copyright[" << i1 << "]:  " << copyright[i1] << endl;
+		array_output_count++;
+	};
 	out << "  Version:  " << version << endl;
 	out << "  Endian Type:  " << endianType << endl;
 	out << "  User Version:  " << userVersion << endl;

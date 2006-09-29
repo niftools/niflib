@@ -325,6 +325,11 @@ void NifStream( HeaderString & val, istream& in, uint & version ); //Sets the pa
 void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
 ostream & operator<<( ostream & out, HeaderString const & val );
 
+//LineString
+void NifStream( LineString & val, istream& in, uint version );
+void NifStream( LineString const & val, ostream& out, uint version = 0  );
+ostream & operator<<( ostream & out, LineString const & val );
+
 //ShortString
 void NifStream( ShortString & val, istream& in, uint version = 0 );
 void NifStream( ShortString const & val, ostream& out, uint version = 0  );

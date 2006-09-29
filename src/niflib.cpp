@@ -1059,22 +1059,22 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiSequenceStreamHelper
 
 
 bool IsSupportedVersion( unsigned int version ) {
-   switch (version)
-   {
-   case VER_3_3_0_13:
-   case VER_4_0_0_0:
-   case VER_4_0_0_2:
-   case VER_4_1_0_12:
-   case VER_4_2_0_2:
-   case VER_4_2_1_0:
-   case VER_4_2_2_0:
-   case VER_10_0_1_0:
-   case VER_10_1_0_0:
-   case VER_10_1_0_106:
-   case VER_10_2_0_0:
-   case VER_20_0_0_4:
-   case VER_20_0_0_5:
-      return true;
+	switch (version) {
+		//case VER_3_1:
+		case VER_3_3_0_13:
+		case VER_4_0_0_0:
+		case VER_4_0_0_2:
+		case VER_4_1_0_12:
+		case VER_4_2_0_2:
+		case VER_4_2_1_0:
+		case VER_4_2_2_0:
+		case VER_10_0_1_0:
+		case VER_10_1_0_0:
+		case VER_10_1_0_106:
+		case VER_10_2_0_0:
+		case VER_20_0_0_4:
+		case VER_20_0_0_5:
+			return true;
    }
    return false;
 }

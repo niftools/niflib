@@ -168,6 +168,9 @@ using namespace std;
 #include "../../include/obj/NiTextKeyExtraData.h"
 #include "../../include/obj/NiTextureEffect.h"
 #include "../../include/obj/NiTextureTransformController.h"
+#include "../../include/obj/NiTextureModeProperty.h"
+#include "../../include/obj/NiImage.h"
+#include "../../include/obj/NiTextureProperty.h"
 #include "../../include/obj/NiTexturingProperty.h"
 #include "../../include/obj/NiTransformController.h"
 #include "../../include/obj/NiTransformData.h"
@@ -1619,8 +1622,10 @@ void NiGeometry::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	NiAVObject::Read( in, link_stack, version, user_version );
 	NifStream( block_num, in, version );
 	link_stack.push_back( block_num );
-	NifStream( block_num, in, version );
-	link_stack.push_back( block_num );
+	if ( version >= 0x0303000D ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+	};
 	if ( version >= 0x0A000100 ) {
 		NifStream( hasShader, in, version );
 		if ( (hasShader != 0) ) {
@@ -1637,10 +1642,12 @@ void NiGeometry::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
 	else
 		NifStream( 0xffffffff, out, version );
-	if ( skinInstance != NULL )
-		NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version );
-	else
-		NifStream( 0xffffffff, out, version );
+	if ( version >= 0x0303000D ) {
+		if ( skinInstance != NULL )
+			NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+	};
 	if ( version >= 0x0A000100 ) {
 		NifStream( hasShader, out, version );
 		if ( (hasShader != 0) ) {
@@ -1670,7 +1677,9 @@ std::string NiGeometry::InternalAsString( bool verbose ) const {
 void NiGeometry::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiGeometryData>( objects, link_stack, version );
-	skinInstance = FixLink<NiSkinInstance>( objects, link_stack, version );
+	if ( version >= 0x0303000D ) {
+		skinInstance = FixLink<NiSkinInstance>( objects, link_stack, version );
+	};
 	if ( version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
 			unknownLink = FixLink<NiObject>( objects, link_stack, version );
@@ -5195,16 +5204,12 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( version <= 0x0A010000 ) {
 			NifStream( controlledBlocks[i1].targetName, in, version );
-		};
-		if ( version <= 0x0A01006A ) {
-			NifStream( block_num, in, version );
-			link_stack.push_back( block_num );
-		};
-		if ( version >= 0x0A020000 ) {
 			NifStream( block_num, in, version );
 			link_stack.push_back( block_num );
 		};
 		if ( version >= 0x0A01006A ) {
+			NifStream( block_num, in, version );
+			link_stack.push_back( block_num );
 			NifStream( block_num, in, version );
 			link_stack.push_back( block_num );
 		};
@@ -5303,20 +5308,16 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( version <= 0x0A010000 ) {
 			NifStream( controlledBlocks[i1].targetName, out, version );
-		};
-		if ( version <= 0x0A01006A ) {
 			if ( controlledBlocks[i1].controller != NULL )
 				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
-		if ( version >= 0x0A020000 ) {
+		if ( version >= 0x0A01006A ) {
 			if ( controlledBlocks[i1].interpolator != NULL )
 				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].interpolator)], out, version );
 			else
 				NifStream( 0xffffffff, out, version );
-		};
-		if ( version >= 0x0A01006A ) {
 			if ( controlledBlocks[i1].controller != NULL )
 				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
 			else
@@ -5463,13 +5464,11 @@ void NiControllerSequence::InternalFixLinks( const map<unsigned,NiObjectRef> & o
 		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, version );
 	};
 	for (uint i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		if ( version <= 0x0A01006A ) {
+		if ( version <= 0x0A010000 ) {
 			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, version );
 		};
-		if ( version >= 0x0A020000 ) {
-			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, version );
-		};
 		if ( version >= 0x0A01006A ) {
+			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, version );
 			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, version );
 		};
 		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
@@ -11616,6 +11615,137 @@ std::list<NiObjectRef> NiTextureTransformController::InternalGetRefs() const {
 	refs = NiSingleInterpolatorController::GetRefs();
 	if ( data != NULL )
 		refs.push_back(StaticCast<NiObject>(data));
+	return refs;
+}
+
+void NiTextureModeProperty::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiProperty::Read( in, link_stack, version, user_version );
+	for (uint i1 = 0; i1 < 3; i1++) {
+		NifStream( unknown3Shorts[i1], in, version );
+	};
+}
+
+void NiTextureModeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiProperty::Write( out, link_map, version, user_version );
+	for (uint i1 = 0; i1 < 3; i1++) {
+		NifStream( unknown3Shorts[i1], out, version );
+	};
+}
+
+std::string NiTextureModeProperty::InternalAsString( bool verbose ) const {
+	stringstream out;
+	uint array_output_count = 0;
+	out << NiProperty::asString();
+	array_output_count = 0;
+	for (uint i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 3 Shorts[" << i1 << "]:  " << unknown3Shorts[i1] << endl;
+		array_output_count++;
+	};
+	return out.str();
+}
+
+void NiTextureModeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiProperty::FixLinks( objects, link_stack, version, user_version );
+}
+
+std::list<NiObjectRef> NiTextureModeProperty::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiProperty::GetRefs();
+	return refs;
+}
+
+void NiImage::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiObject::Read( in, link_stack, version, user_version );
+	NifStream( external_, in, version );
+	NifStream( file, in, version );
+	for (uint i1 = 0; i1 < 4; i1++) {
+		NifStream( unknown4Shorts[i1], in, version );
+	};
+}
+
+void NiImage::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiObject::Write( out, link_map, version, user_version );
+	NifStream( external_, out, version );
+	NifStream( file, out, version );
+	for (uint i1 = 0; i1 < 4; i1++) {
+		NifStream( unknown4Shorts[i1], out, version );
+	};
+}
+
+std::string NiImage::InternalAsString( bool verbose ) const {
+	stringstream out;
+	uint array_output_count = 0;
+	out << NiObject::asString();
+	out << "  External ?:  " << external_ << endl;
+	out << "  File:  " << file << endl;
+	array_output_count = 0;
+	for (uint i1 = 0; i1 < 4; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 4 Shorts[" << i1 << "]:  " << unknown4Shorts[i1] << endl;
+		array_output_count++;
+	};
+	return out.str();
+}
+
+void NiImage::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiObject::FixLinks( objects, link_stack, version, user_version );
+}
+
+std::list<NiObjectRef> NiImage::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	return refs;
+}
+
+void NiTextureProperty::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	uint block_num;
+	NiProperty::Read( in, link_stack, version, user_version );
+	NifStream( flags, in, version );
+	NifStream( block_num, in, version );
+	link_stack.push_back( block_num );
+}
+
+void NiTextureProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+	NiProperty::Write( out, link_map, version, user_version );
+	NifStream( flags, out, version );
+	if ( image != NULL )
+		NifStream( link_map[StaticCast<NiObject>(image)], out, version );
+	else
+		NifStream( 0xffffffff, out, version );
+}
+
+std::string NiTextureProperty::InternalAsString( bool verbose ) const {
+	stringstream out;
+	uint array_output_count = 0;
+	out << NiProperty::asString();
+	out << "  Flags:  " << flags << endl;
+	out << "  Image:  " << image << endl;
+	return out.str();
+}
+
+void NiTextureProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+	NiProperty::FixLinks( objects, link_stack, version, user_version );
+	image = FixLink<NiImage>( objects, link_stack, version );
+}
+
+std::list<NiObjectRef> NiTextureProperty::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiProperty::GetRefs();
+	if ( image != NULL )
+		refs.push_back(StaticCast<NiObject>(image));
 	return refs;
 }
 

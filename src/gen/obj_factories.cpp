@@ -335,6 +335,12 @@ NiObject * CreateNiTextKeyExtraData() { return new NiTextKeyExtraData; }
 NiObject * CreateNiTextureEffect() { return new NiTextureEffect; }
 #include "../../include/obj/NiTextureTransformController.h"
 NiObject * CreateNiTextureTransformController() { return new NiTextureTransformController; }
+#include "../../include/obj/NiTextureModeProperty.h"
+NiObject * CreateNiTextureModeProperty() { return new NiTextureModeProperty; }
+#include "../../include/obj/NiImage.h"
+NiObject * CreateNiImage() { return new NiImage; }
+#include "../../include/obj/NiTextureProperty.h"
+NiObject * CreateNiTextureProperty() { return new NiTextureProperty; }
 #include "../../include/obj/NiTexturingProperty.h"
 NiObject * CreateNiTexturingProperty() { return new NiTexturingProperty; }
 #include "../../include/obj/NiTransformController.h"
@@ -542,6 +548,9 @@ void RegisterBlockFactories() {
 	global_block_map["NiTextKeyExtraData"] = CreateNiTextKeyExtraData;
 	global_block_map["NiTextureEffect"] = CreateNiTextureEffect;
 	global_block_map["NiTextureTransformController"] = CreateNiTextureTransformController;
+	global_block_map["NiTextureModeProperty"] = CreateNiTextureModeProperty;
+	global_block_map["NiImage"] = CreateNiImage;
+	global_block_map["NiTextureProperty"] = CreateNiTextureProperty;
 	global_block_map["NiTexturingProperty"] = CreateNiTexturingProperty;
 	global_block_map["NiTransformController"] = CreateNiTransformController;
 	global_block_map["NiTransformData"] = CreateNiTransformData;

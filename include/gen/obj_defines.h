@@ -1121,6 +1121,18 @@ TexType textureSlot; \
 uint operation; \
 Ref<NiFloatData > data; \
 
+#define NI_TEXTURE_MODE_PROPERTY_MEMBERS \
+array<3,short> unknown3Shorts; \
+
+#define NI_IMAGE_MEMBERS \
+byte external_; \
+string file; \
+array<4,short> unknown4Shorts; \
+
+#define NI_TEXTURE_PROPERTY_MEMBERS \
+ushort flags; \
+Ref<NiImage > image; \
+
 #define NI_TEXTURING_PROPERTY_MEMBERS \
 ushort flags; \
 ApplyMode applyMode; \
@@ -1425,6 +1437,9 @@ CompareMode function; \
 #define NI_TEXT_KEY_EXTRA_DATA_MEMBERS
 #define NI_TEXTURE_EFFECT_MEMBERS
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS
+#define NI_TEXTURE_MODE_PROPERTY_MEMBERS
+#define NI_IMAGE_MEMBERS
+#define NI_TEXTURE_PROPERTY_MEMBERS
 #define NI_TEXTURING_PROPERTY_MEMBERS
 #define NI_TRANSFORM_CONTROLLER_MEMBERS
 #define NI_TRANSFORM_DATA_MEMBERS
@@ -2581,6 +2596,23 @@ CompareMode function; \
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT NiSingleInterpolatorController
 
 #define NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT  : unknown2((byte)0), operation((uint)0), data(NULL)
+
+#define NI_TEXTURE_MODE_PROPERTY_INCLUDE "NiProperty.h"
+
+#define NI_TEXTURE_MODE_PROPERTY_PARENT NiProperty
+
+#define NI_TEXTURE_MODE_PROPERTY_CONSTRUCT 
+#define NI_IMAGE_INCLUDE "NiObject.h"
+
+#define NI_IMAGE_PARENT NiObject
+
+#define NI_IMAGE_CONSTRUCT  : external_((byte)0)
+
+#define NI_TEXTURE_PROPERTY_INCLUDE "NiProperty.h"
+
+#define NI_TEXTURE_PROPERTY_PARENT NiProperty
+
+#define NI_TEXTURE_PROPERTY_CONSTRUCT  : flags((ushort)0), image(NULL)
 
 #define NI_TEXTURING_PROPERTY_INCLUDE "NiProperty.h"
 

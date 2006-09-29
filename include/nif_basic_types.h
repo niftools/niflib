@@ -17,6 +17,10 @@ struct ShortString {
 	string str;
 };
 
+struct LineString {
+	string line;
+};
+
 //--Non-mathematical Basic Types--//
 
 typedef unsigned char	byte;
