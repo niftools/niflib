@@ -241,8 +241,6 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 	//Pack pixel data
 	for (uint i = 0; i < mipmaps.size(); ++i ) {
-		cout << "Width:  " << mipmaps[i].width << "  Height:  " << mipmaps[i].height << "  Offset:  " << mipmaps[i].offset << endl;
-
 		if ( i > 0 ) {
 			//Allocate space to store re-sized image.
 			Color4 * resized = new Color4[ mipmaps[i].width * mipmaps[i].height ];
@@ -250,7 +248,6 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 			//Visit every other pixel in each row and column of the previous image
 			for ( uint w = 0; w < mipmaps[i-1].width; w+=2 ) {
 				for ( uint h = 0; h < mipmaps[i-1].height; h+=2 ) {
-					//cout << "w:  " << w << "  h:  " << h << endl;
 					Color4 & av = resized[(h/2) * mipmaps[i].width + (w/2)];
 
 					//Start with the value of the current pixel

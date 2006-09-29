@@ -827,7 +827,7 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 			SkinWeight sk;
 			for ( map<NiNodeRef, float>::iterator wt = cv->weights.begin(); wt != cv->weights.end(); ++wt ) {
 				//Only record influences that make a noticable contribution
-				if ( wt->second > 0.0f ) {
+				if ( wt->second > 0.1f ) {
 					sk.index = vert_index;
 					sk.weight = wt->second;
 					if ( shapeWeights.find( wt->first ) == shapeWeights.end() ) {
@@ -870,6 +870,8 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 			for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
 				shapes[shape_num]->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
 			}
+
+			shapes[shape_num]->NormalizeSkinWeights();
 
 			if ( max_bones_per_partition > 0 ) {
 				shapes[shape_num]->GenHardwareSkinInfo( max_bones_per_partition );

@@ -92,6 +92,8 @@ public:
 	 */
 	void NiGeometry::ApplySkinOffset();
 
+	void NormalizeSkinWeights();
+
 	/*
 	 * Used to determine whether this mesh is influenced by bones as a skin.
 	 * \return true if this mesh is a skin, false otherwise.

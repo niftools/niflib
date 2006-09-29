@@ -199,7 +199,6 @@ void NiGeometry::ApplySkinOffset() {
 			continue;
 		}
 		if ( below_root ) {
-			cout << "Propogating transform of " << *it << endl;
 			(*it)->PropagateTransform();
 		}
 	}
@@ -212,6 +211,20 @@ void NiGeometry::ApplySkinOffset() {
 
 	//Reset skin offsets
 	skinInstance->GetSkinData()->ResetOffsets( this );
+}
+
+void NiGeometry::NormalizeSkinWeights() {
+	if ( IsSkin() == false ) {
+		throw runtime_error( "NormalizeSkinWeights called on a mesh that is not a skin." );
+	}
+	NiSkinDataRef niSkinData = this->GetSkinInstance()->GetSkinData();
+
+	NiGeometryDataRef niGeomData = this->GetData();
+	if ( niGeomData == NULL ) {
+		throw runtime_error( "NormalizeSkinWeights called on a mesh with no geometry data." );
+	}
+
+	niSkinData->NormalizeWeights( niGeomData->GetVertexCount() );
 }
 
 bool NiGeometry::IsSkin() {

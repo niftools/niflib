@@ -53,10 +53,12 @@ public:
 	uint GetBoneCount() const;
 	Matrix44 GetBoneTransform( uint bone_index ) const;
 	vector<SkinWeight> GetBoneWeights( uint bone_index ) const;
-   void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
+	void SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
 
-   Ref<NiSkinPartition> GetSkinPartition() const;
-   void SetSkinPartition(Ref<NiSkinPartition> skinPartition);
+	void NormalizeWeights( unsigned numVertices );
+	
+	Ref<NiSkinPartition> GetSkinPartition() const;
+	void SetSkinPartition(Ref<NiSkinPartition> skinPartition);
 
 protected:
 	NI_SKIN_DATA_MEMBERS

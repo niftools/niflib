@@ -18,13 +18,13 @@ NiNode::NiNode() NI_NODE_CONSTRUCT {
 }
 
 NiNode::~NiNode() {
-	//Clear Children
-	ClearChildren();
-
-	//Unbind any attached skins
+	//Unbind any attached skins - must happen before children are cleared
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
 		(*it)->SkeletonLost();
 	}
+
+	//Clear Children
+	ClearChildren();
 }
 
 void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {

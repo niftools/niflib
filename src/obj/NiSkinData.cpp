@@ -83,6 +83,42 @@ NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
 	ResetOffsets( owner );
 }
 
+void NiSkinData::NormalizeWeights( unsigned numVertices ) {
+	vector<float> totals(numVertices);
+	vector<int> counts(numVertices);
+
+	//Set all totals to 1.0 and all counts to 0
+	for ( unsigned v = 0; v < numVertices; ++v ) {
+		totals[v] = 1.0f;
+		counts[v] = 0;
+	}
+
+	//Calculate the total error for each vertex by subtracting the weight from
+	//each bone from the starting total of 1.0
+	//Also count the number of bones affecting each vertex
+	for ( unsigned b = 0; b < boneList.size(); ++b ) {
+		for ( unsigned w = 0; w < boneList[b].vertexWeights.size(); ++w ) {
+			SkinWeight & sw = boneList[b].vertexWeights[w];
+			totals[sw.index] -= sw.weight;
+			counts[sw.index]++;
+		}
+	}
+
+	//Divide all error amounts by the number of bones affecting that vertex to
+	//get the amount of error that should be distributed to each bone.
+	for ( unsigned v = 0; v < numVertices; ++v ) {
+		totals[v] = totals[v] / float(counts[v]);
+	}
+
+	//Distribute the calculated error to each weight
+	for ( unsigned b = 0; b < boneList.size(); ++b ) {
+		for ( unsigned w = 0; w < boneList[b].vertexWeights.size(); ++w ) {
+			SkinWeight & sw = boneList[b].vertexWeights[w];
+			sw.weight += totals[sw.index];
+		}
+	}	
+}
+
 void NiSkinData::ResetOffsets( const Ref<NiGeometry> & owner ) {
 
 	//Get skin instance

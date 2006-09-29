@@ -47,17 +47,15 @@ NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> >
 }
 
 NiSkinInstance::~NiSkinInstance() {
-	//Probably not necessary, and not very safe
-	////Unflag any bones that were part of this skin instance
-	//for ( uint i = 0; i < bones.size(); ++i ) {
-	//	cout << "Bone " << i << ":";
-	//	cout << bones[i]->GetIDString() << endl;
-	//	bones[i]->SetSkinFlag(false);
-	//}
+	//Unflag any bones that were part of this skin instance
+	for ( uint i = 0; i < bones.size(); ++i ) {
+		bones[i]->SetSkinFlag(false);
+	}
 
 	//Inform Skeleton Root of detatchment and clear it.
 	if ( skeletonRoot != NULL ) {
 		skeletonRoot->RemoveSkin( this );
+		skeletonRoot = NULL;
 	}
 }
 
