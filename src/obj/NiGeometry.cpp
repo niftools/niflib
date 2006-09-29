@@ -166,21 +166,63 @@ void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 		throw runtime_error("Failed to find suitable skeleton root.");
 	}
 
-	//Ancestors[bone_nodes.size()] should now hold all nodes between (but not including) the
-	//skeleton root and this mesh.  Cycle through and propogate their transforms
-	for ( list<NiNodeRef>::iterator it = ancestors[bone_nodes.size()].begin(); it != ancestors[bone_nodes.size()].end(); ++it ) {
-		(*it)->PropagateTransform();
-	}
-
-	//Now apply the transforms to the vertices and normals of this mesh
-	this->ApplyTransforms();
-
 	//Create a skin instance using the bone and root data
 	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
 
 	//Create a NiSkinData object based on this mesh
 	skinInstance->SetSkinData( new NiSkinData( this ) );
 };
+
+void NiGeometry::ApplySkinOffset() {
+	if ( GetParent() == NULL ) {
+		throw runtime_error("Attempted to apply skin transforms on a shape with no parent.");
+	}
+
+	if ( skinInstance == NULL ) {
+		throw runtime_error("Attempted to apply skin transforms on a shape with no skin instance.");
+	}
+
+	if ( skinInstance->GetSkinData() == NULL ) {
+		throw runtime_error("Attempted to apply skin transforms on a shape with no skin data.");
+	}
+	
+	//Get ancestors
+	list<NiNodeRef> ancestors;
+	ancestors = ListAncestors( GetParent() );
+
+	//Propogate transforms on ancestors below skeleton root
+	bool below_root = false;
+
+	for ( list<NiNodeRef>::iterator it = ancestors.begin(); it != ancestors.end(); ++it ) {
+		if ( *it == skinInstance->GetSkeletonRoot() ) {
+			below_root = true;
+			continue;
+		}
+		if ( below_root ) {
+			cout << "Propogating transform of " << *it << endl;
+			(*it)->PropagateTransform();
+		}
+	}
+
+	//Now apply the transforms to the vertices and normals of this mesh
+	this->ApplyTransforms();
+
+	//Set the skin overall transform to the identity
+	skinInstance->GetSkinData()->SetOverallTransform( Matrix44::IDENTITY );	
+
+	//Reset skin offsets
+	skinInstance->GetSkinData()->ResetOffsets( this );
+}
+
+bool NiGeometry::IsSkin() {
+	//Determine whether this is a skin by looking for a skin instance and
+	//skin data
+	if ( skinInstance != NULL && skinInstance->GetSkinData() != NULL ) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 list< Ref<NiNode> > NiGeometry::ListAncestors( const Ref<NiNode> & leaf ) const {
 	if ( leaf == NULL ) {

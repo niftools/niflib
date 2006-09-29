@@ -50,7 +50,9 @@ public:
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
 	void BindSkin( vector< Ref<NiNode> > bone_nodes );
+
 	void UnbindSkin();
+
 	/*!
 	 * Sets the skin weights in the attached NiSkinData object.
 	 * The version on this class calculates the center and radius of
@@ -82,6 +84,19 @@ public:
 	 * zeros them out to the identity.
 	 */
 	void ApplyTransforms();
+
+	/*
+	 * Propogates the transforms between this skin and the skeleton root,
+	 * and then applies them to the verticies of this skin.  Sets the overall
+	 * skin data transform to the identity.
+	 */
+	void NiGeometry::ApplySkinOffset();
+
+	/*
+	 * Used to determine whether this mesh is influenced by bones as a skin.
+	 * \return true if this mesh is a skin, false otherwise.
+	 */
+	bool IsSkin();
 
 protected:
 	list< Ref<NiNode> > ListAncestors( const Ref<NiNode> & leaf ) const;

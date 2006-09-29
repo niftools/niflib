@@ -75,7 +75,16 @@ Matrix44 NiSkinData::GetOverallTransform() const {
 	return Matrix44( translation, rotation, scale );
 }
 
+void NiSkinData::SetOverallTransform( const Matrix44 & transform ) {
+	transform.Decompose( translation, rotation, scale );
+}
+
 NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
+	ResetOffsets( owner );
+}
+
+void NiSkinData::ResetOffsets( const Ref<NiGeometry> & owner ) {
+
 	//Get skin instance
 	NiSkinInstanceRef skinInst = owner->GetSkinInstance();
 
@@ -85,7 +94,7 @@ NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
 
 	boneList.resize( skinInst->GetBoneCount() );
 	vector< Ref<NiNode> > bone_nodes = skinInst->GetBones();
-	
+
 	//--Calculate Overall Offset--//
 
 	//Get TriBasedGeom world transform

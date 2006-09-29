@@ -47,7 +47,9 @@ public:
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
+	void ResetOffsets( const Ref<NiGeometry> & owner );
 	Matrix44 GetOverallTransform() const;
+	void SetOverallTransform( const Matrix44 & transform );
 	uint GetBoneCount() const;
 	Matrix44 GetBoneTransform( uint bone_index ) const;
 	vector<SkinWeight> GetBoneWeights( uint bone_index ) const;
