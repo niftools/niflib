@@ -34,7 +34,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-%module niflib
+%module new_niflib
 %include "stl.i"
 %include "std_map.i"
 %include "exception.i"
