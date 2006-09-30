@@ -84,12 +84,12 @@ NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
 }
 
 void NiSkinData::NormalizeWeights( unsigned numVertices ) {
-	vector<float> totals(numVertices);
+	vector<double> totals(numVertices);
 	vector<int> counts(numVertices);
 
 	//Set all totals to 1.0 and all counts to 0
 	for ( unsigned v = 0; v < numVertices; ++v ) {
-		totals[v] = 1.0f;
+		totals[v] = 1.0;
 		counts[v] = 0;
 	}
 
@@ -107,14 +107,15 @@ void NiSkinData::NormalizeWeights( unsigned numVertices ) {
 	//Divide all error amounts by the number of bones affecting that vertex to
 	//get the amount of error that should be distributed to each bone.
 	for ( unsigned v = 0; v < numVertices; ++v ) {
-		totals[v] = totals[v] / float(counts[v]);
+		totals[v] = totals[v] / double(counts[v]);
 	}
 
 	//Distribute the calculated error to each weight
 	for ( unsigned b = 0; b < boneList.size(); ++b ) {
 		for ( unsigned w = 0; w < boneList[b].vertexWeights.size(); ++w ) {
 			SkinWeight & sw = boneList[b].vertexWeights[w];
-			sw.weight += totals[sw.index];
+			double temp = double(sw.weight) + totals[sw.index];
+			sw.weight = float(temp);
 		}
 	}	
 }

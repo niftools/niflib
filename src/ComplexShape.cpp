@@ -344,7 +344,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			niTexProp = DynamicCast<NiTexturingProperty>(niProp);
 		}
 
-		if ( niTexProp != NULL ) {
+		if ( niTexProp != NULL && shapeUVs.size() != 0 ) {
 			//Add the UV set to the list for every type of texture slot that uses it
 			for ( int tex = 0; tex < 8; ++tex ) {
 				if ( niTexProp->HasTexture(tex) == true ) {
