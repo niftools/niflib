@@ -41,10 +41,7 @@ void NiObject::AddRef() const {
 void NiObject::SubtractRef() const {
 	_ref_count--;
 	if ( _ref_count < 1 ) {
-		//string id = this->GetIDString();
-		//cout << id << " is being destroyed." << endl;
 		delete this;
-		//cout << "Destruction of " << id << " complete." << endl;
 	}
 }
 

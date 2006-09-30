@@ -507,17 +507,6 @@ Matrix33 Quaternion::AsMatrix() {
 	m[2][2] = w2 - x2 - y2 + z2;
 
 	return m;
-
-	//out << endl
-	//	<< "         |" << setw(8) << m[0][0] << "," << setw(8) << m[0][1] << "," << setw(8) << m[0][2] << " |" << endl
-	//	<< "         |" << setw(8) << m[1][0] << "," << setw(8) << m[1][1] << "," << setw(8) << m[1][2] << " |" << endl
-	//	<< "         |" << setw(8) << m[2][0] << "," << setw(8) << m[2][1] << "," << setw(8) << m[2][2] << " |" << endl;
-
-	//float pi = 3.141592653589793f;
-	//out << "      Euler Angles:" << endl
-	//	<< "         X:  " << atan2( m[1][2], m[2][2] ) / pi * 180.0 << endl
-	//	<< "         Y:  " << asin( -m[0][2] ) / pi * 180.0 << endl
-	//	<< "         Z:  " << atan2( m[0][1], m[0][0] ) / pi * 180.0 << endl;
 }
 
 /*

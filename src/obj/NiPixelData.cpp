@@ -211,7 +211,6 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		size = (mipmaps[0].height * mipmaps[0].width * bitsPerPixel) / 8;
 
 		while ( m.width != 1 && m.height != 1 ) {
-			////cout << "Width:  " << m.width << "  Height:  " << m.height << "  Offset:  " << m.offset << endl;
 			m.width /= 2;
 			m.height /= 2;
 			m.offset = size;

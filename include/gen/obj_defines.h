@@ -1063,8 +1063,9 @@ ushort flags; \
 
 #define NI_SPHERICAL_COLLIDER_MEMBERS \
 float unknownFloat1; \
-ushort unknownShort; \
+ushort unknownShort1; \
 float unknownFloat2; \
+ushort unknownShort2; \
 float unknownFloat3; \
 float unknownFloat4; \
 float unknownFloat5; \
@@ -1156,6 +1157,10 @@ bool hasDecal0Texture; \
 TexDesc decal0Texture; \
 bool hasDecal1Texture; \
 TexDesc decal1Texture; \
+bool hasDecal2Texture; \
+TexDesc decal2Texture; \
+bool hasDecal3Texture; \
+TexDesc decal3Texture; \
 mutable uint numShaderTextures; \
 vector<ShaderTexDesc > shaderTextures; \
 
@@ -2548,7 +2553,7 @@ CompareMode function; \
 
 #define NI_SPHERICAL_COLLIDER_PARENT AParticleModifier
 
-#define NI_SPHERICAL_COLLIDER_CONSTRUCT  : unknownFloat1(0.0f), unknownShort((ushort)0), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f)
+#define NI_SPHERICAL_COLLIDER_CONSTRUCT  : unknownFloat1(0.0f), unknownShort1((ushort)0), unknownFloat2(0.0f), unknownShort2((ushort)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f)
 
 #define NI_SPOT_LIGHT_INCLUDE "NiPointLight.h"
 
@@ -2618,7 +2623,7 @@ CompareMode function; \
 
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty
 
-#define NI_TEXTURING_PROPERTY_CONSTRUCT  : flags((ushort)0), applyMode((ApplyMode)2), textureCount((uint)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), numShaderTextures((uint)0)
+#define NI_TEXTURING_PROPERTY_CONSTRUCT  : flags((ushort)0), applyMode((ApplyMode)2), textureCount((uint)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), hasDecal2Texture(false), hasDecal3Texture(false), numShaderTextures((uint)0)
 
 #define NI_TRANSFORM_CONTROLLER_INCLUDE "NiSingleInterpolatorController.h"
 

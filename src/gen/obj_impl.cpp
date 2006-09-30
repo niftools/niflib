@@ -11187,9 +11187,14 @@ std::list<NiObjectRef> NiSpecularProperty::InternalGetRefs() const {
 void NiSphericalCollider::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::Read( in, link_stack, version, user_version );
 	NifStream( unknownFloat1, in, version );
-	NifStream( unknownShort, in, version );
+	NifStream( unknownShort1, in, version );
 	NifStream( unknownFloat2, in, version );
-	NifStream( unknownFloat3, in, version );
+	if ( version <= 0x04020002 ) {
+		NifStream( unknownShort2, in, version );
+	};
+	if ( version >= 0x04020100 ) {
+		NifStream( unknownFloat3, in, version );
+	};
 	NifStream( unknownFloat4, in, version );
 	NifStream( unknownFloat5, in, version );
 }
@@ -11197,9 +11202,14 @@ void NiSphericalCollider::InternalRead( istream& in, list<uint> & link_stack, un
 void NiSphericalCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
-	NifStream( unknownShort, out, version );
+	NifStream( unknownShort1, out, version );
 	NifStream( unknownFloat2, out, version );
-	NifStream( unknownFloat3, out, version );
+	if ( version <= 0x04020002 ) {
+		NifStream( unknownShort2, out, version );
+	};
+	if ( version >= 0x04020100 ) {
+		NifStream( unknownFloat3, out, version );
+	};
 	NifStream( unknownFloat4, out, version );
 	NifStream( unknownFloat5, out, version );
 }
@@ -11209,8 +11219,9 @@ std::string NiSphericalCollider::InternalAsString( bool verbose ) const {
 	uint array_output_count = 0;
 	out << AParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Short:  " << unknownShort << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
 	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
 	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
@@ -11933,10 +11944,10 @@ void NiTexturingProperty::InternalRead( istream& in, list<uint> & link_stack, un
 			};
 		};
 	};
-	if ( (textureCount == 8) ) {
+	if ( (textureCount >= 8) ) {
 		NifStream( hasDecal1Texture, in, version );
 	};
-	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) {
+	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
 		NifStream( decal1Texture.clampMode, in, version );
@@ -11957,6 +11968,60 @@ void NiTexturingProperty::InternalRead( istream& in, list<uint> & link_stack, un
 				NifStream( decal1Texture.wRotation, in, version );
 				NifStream( decal1Texture.transformType_, in, version );
 				NifStream( decal1Texture.centerOffset, in, version );
+			};
+		};
+	};
+	if ( (textureCount >= 9) ) {
+		NifStream( hasDecal2Texture, in, version );
+	};
+	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+		NifStream( decal2Texture.clampMode, in, version );
+		NifStream( decal2Texture.filterMode, in, version );
+		NifStream( decal2Texture.uvSet, in, version );
+		if ( version <= 0x0A020000 ) {
+			NifStream( decal2Texture.ps2L, in, version );
+			NifStream( decal2Texture.ps2K, in, version );
+		};
+		if ( version <= 0x0401000C ) {
+			NifStream( decal2Texture.unknown1, in, version );
+		};
+		if ( version >= 0x0A010000 ) {
+			NifStream( decal2Texture.hasTextureTransform, in, version );
+			if ( (decal2Texture.hasTextureTransform != 0) ) {
+				NifStream( decal2Texture.translation, in, version );
+				NifStream( decal2Texture.tiling, in, version );
+				NifStream( decal2Texture.wRotation, in, version );
+				NifStream( decal2Texture.transformType_, in, version );
+				NifStream( decal2Texture.centerOffset, in, version );
+			};
+		};
+	};
+	if ( (textureCount >= 10) ) {
+		NifStream( hasDecal3Texture, in, version );
+	};
+	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
+		NifStream( block_num, in, version );
+		link_stack.push_back( block_num );
+		NifStream( decal3Texture.clampMode, in, version );
+		NifStream( decal3Texture.filterMode, in, version );
+		NifStream( decal3Texture.uvSet, in, version );
+		if ( version <= 0x0A020000 ) {
+			NifStream( decal3Texture.ps2L, in, version );
+			NifStream( decal3Texture.ps2K, in, version );
+		};
+		if ( version <= 0x0401000C ) {
+			NifStream( decal3Texture.unknown1, in, version );
+		};
+		if ( version >= 0x0A010000 ) {
+			NifStream( decal3Texture.hasTextureTransform, in, version );
+			if ( (decal3Texture.hasTextureTransform != 0) ) {
+				NifStream( decal3Texture.translation, in, version );
+				NifStream( decal3Texture.tiling, in, version );
+				NifStream( decal3Texture.wRotation, in, version );
+				NifStream( decal3Texture.transformType_, in, version );
+				NifStream( decal3Texture.centerOffset, in, version );
 			};
 		};
 	};
@@ -12194,10 +12259,10 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 			};
 		};
 	};
-	if ( (textureCount == 8) ) {
+	if ( (textureCount >= 8) ) {
 		NifStream( hasDecal1Texture, out, version );
 	};
-	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) {
+	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
 		if ( decal1Texture.source != NULL )
 			NifStream( link_map[StaticCast<NiObject>(decal1Texture.source)], out, version );
 		else
@@ -12220,6 +12285,64 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 				NifStream( decal1Texture.wRotation, out, version );
 				NifStream( decal1Texture.transformType_, out, version );
 				NifStream( decal1Texture.centerOffset, out, version );
+			};
+		};
+	};
+	if ( (textureCount >= 9) ) {
+		NifStream( hasDecal2Texture, out, version );
+	};
+	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
+		if ( decal2Texture.source != NULL )
+			NifStream( link_map[StaticCast<NiObject>(decal2Texture.source)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+		NifStream( decal2Texture.clampMode, out, version );
+		NifStream( decal2Texture.filterMode, out, version );
+		NifStream( decal2Texture.uvSet, out, version );
+		if ( version <= 0x0A020000 ) {
+			NifStream( decal2Texture.ps2L, out, version );
+			NifStream( decal2Texture.ps2K, out, version );
+		};
+		if ( version <= 0x0401000C ) {
+			NifStream( decal2Texture.unknown1, out, version );
+		};
+		if ( version >= 0x0A010000 ) {
+			NifStream( decal2Texture.hasTextureTransform, out, version );
+			if ( (decal2Texture.hasTextureTransform != 0) ) {
+				NifStream( decal2Texture.translation, out, version );
+				NifStream( decal2Texture.tiling, out, version );
+				NifStream( decal2Texture.wRotation, out, version );
+				NifStream( decal2Texture.transformType_, out, version );
+				NifStream( decal2Texture.centerOffset, out, version );
+			};
+		};
+	};
+	if ( (textureCount >= 10) ) {
+		NifStream( hasDecal3Texture, out, version );
+	};
+	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
+		if ( decal3Texture.source != NULL )
+			NifStream( link_map[StaticCast<NiObject>(decal3Texture.source)], out, version );
+		else
+			NifStream( 0xffffffff, out, version );
+		NifStream( decal3Texture.clampMode, out, version );
+		NifStream( decal3Texture.filterMode, out, version );
+		NifStream( decal3Texture.uvSet, out, version );
+		if ( version <= 0x0A020000 ) {
+			NifStream( decal3Texture.ps2L, out, version );
+			NifStream( decal3Texture.ps2K, out, version );
+		};
+		if ( version <= 0x0401000C ) {
+			NifStream( decal3Texture.unknown1, out, version );
+		};
+		if ( version >= 0x0A010000 ) {
+			NifStream( decal3Texture.hasTextureTransform, out, version );
+			if ( (decal3Texture.hasTextureTransform != 0) ) {
+				NifStream( decal3Texture.translation, out, version );
+				NifStream( decal3Texture.tiling, out, version );
+				NifStream( decal3Texture.wRotation, out, version );
+				NifStream( decal3Texture.transformType_, out, version );
+				NifStream( decal3Texture.centerOffset, out, version );
 			};
 		};
 	};
@@ -12395,10 +12518,10 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 			out << "      Center Offset:  " << decal0Texture.centerOffset << endl;
 		};
 	};
-	if ( (textureCount == 8) ) {
+	if ( (textureCount >= 8) ) {
 		out << "    Has Decal 1 Texture:  " << hasDecal1Texture << endl;
 	};
-	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) {
+	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
 		out << "    Source:  " << decal1Texture.source << endl;
 		out << "    Clamp Mode:  " << decal1Texture.clampMode << endl;
 		out << "    Filter Mode:  " << decal1Texture.filterMode << endl;
@@ -12413,6 +12536,46 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 			out << "      W Rotation:  " << decal1Texture.wRotation << endl;
 			out << "      Transform Type?:  " << decal1Texture.transformType_ << endl;
 			out << "      Center Offset:  " << decal1Texture.centerOffset << endl;
+		};
+	};
+	if ( (textureCount >= 9) ) {
+		out << "    Has Decal 2 Texture:  " << hasDecal2Texture << endl;
+	};
+	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
+		out << "    Source:  " << decal2Texture.source << endl;
+		out << "    Clamp Mode:  " << decal2Texture.clampMode << endl;
+		out << "    Filter Mode:  " << decal2Texture.filterMode << endl;
+		out << "    UV Set:  " << decal2Texture.uvSet << endl;
+		out << "    PS2 L:  " << decal2Texture.ps2L << endl;
+		out << "    PS2 K:  " << decal2Texture.ps2K << endl;
+		out << "    Unknown1:  " << decal2Texture.unknown1 << endl;
+		out << "    Has Texture Transform:  " << decal2Texture.hasTextureTransform << endl;
+		if ( (decal2Texture.hasTextureTransform != 0) ) {
+			out << "      Translation:  " << decal2Texture.translation << endl;
+			out << "      Tiling:  " << decal2Texture.tiling << endl;
+			out << "      W Rotation:  " << decal2Texture.wRotation << endl;
+			out << "      Transform Type?:  " << decal2Texture.transformType_ << endl;
+			out << "      Center Offset:  " << decal2Texture.centerOffset << endl;
+		};
+	};
+	if ( (textureCount >= 10) ) {
+		out << "    Has Decal 3 Texture:  " << hasDecal3Texture << endl;
+	};
+	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
+		out << "    Source:  " << decal3Texture.source << endl;
+		out << "    Clamp Mode:  " << decal3Texture.clampMode << endl;
+		out << "    Filter Mode:  " << decal3Texture.filterMode << endl;
+		out << "    UV Set:  " << decal3Texture.uvSet << endl;
+		out << "    PS2 L:  " << decal3Texture.ps2L << endl;
+		out << "    PS2 K:  " << decal3Texture.ps2K << endl;
+		out << "    Unknown1:  " << decal3Texture.unknown1 << endl;
+		out << "    Has Texture Transform:  " << decal3Texture.hasTextureTransform << endl;
+		if ( (decal3Texture.hasTextureTransform != 0) ) {
+			out << "      Translation:  " << decal3Texture.translation << endl;
+			out << "      Tiling:  " << decal3Texture.tiling << endl;
+			out << "      W Rotation:  " << decal3Texture.wRotation << endl;
+			out << "      Transform Type?:  " << decal3Texture.transformType_ << endl;
+			out << "      Center Offset:  " << decal3Texture.centerOffset << endl;
 		};
 	};
 	out << "  Num Shader Textures:  " << numShaderTextures << endl;
@@ -12468,8 +12631,14 @@ void NiTexturingProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & ob
 	if ( (hasDecal0Texture != 0) ) {
 		decal0Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
-	if ( (((textureCount == 8)) && ((hasDecal1Texture != 0))) ) {
+	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
 		decal1Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
+	};
+	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
+		decal2Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
+	};
+	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
+		decal3Texture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
 	};
 	if ( version >= 0x0A000100 ) {
 		for (uint i2 = 0; i2 < shaderTextures.size(); i2++) {
@@ -12499,6 +12668,10 @@ std::list<NiObjectRef> NiTexturingProperty::InternalGetRefs() const {
 		refs.push_back(StaticCast<NiObject>(decal0Texture.source));
 	if ( decal1Texture.source != NULL )
 		refs.push_back(StaticCast<NiObject>(decal1Texture.source));
+	if ( decal2Texture.source != NULL )
+		refs.push_back(StaticCast<NiObject>(decal2Texture.source));
+	if ( decal3Texture.source != NULL )
+		refs.push_back(StaticCast<NiObject>(decal3Texture.source));
 	for (uint i1 = 0; i1 < shaderTextures.size(); i1++) {
 		if ( shaderTextures[i1].textureData.source != NULL )
 			refs.push_back(StaticCast<NiObject>(shaderTextures[i1].textureData.source));

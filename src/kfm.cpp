@@ -121,7 +121,6 @@ void Kfm::Write( ostream & out, uint version ) {
 
 Ref<NiObject> Kfm::MergeActions( string const & path ) {
 	// Read NIF file
-	//cout << path + '\\' + nif_filename << endl;
 	NiObjectRef nif = ReadNifTree( path + '\\' + nif_filename);
 	
 	// Read Kf files

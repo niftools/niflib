@@ -88,7 +88,6 @@ NiObjectRef CreateObject( string block_type ) {
 
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	//Read block list
-	//cout << "File name:  " << file_name << endl;
 	vector<NiObjectRef> blocks = ReadNifList( file_name, info );
 	return FindRoot( blocks );
 }
@@ -325,8 +324,6 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		}
 	}
 
-	//cout << endl;
-
 	//--Read Footer--//
 	Footer footer;
 	footer.Read( in, link_stack, header.version, header.userVersion );
@@ -436,8 +433,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, NifInfo & inf
 #endif
 
 		if (version < 0x05000001) {
-			//cout << i << ":  " << objects[i]->GetType().GetTypeName() << endl;
-			//Write Block Type
+			//Write Object Type
 			WriteString( objects[i]->GetType().GetTypeName() , out );
 		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
 			WriteUInt( 0, out );
@@ -511,7 +507,6 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 	//Add this object type to the map if it isn't there already
 	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
-		//cout << "Types[" << uint(type_map.size()) << "] = " << root->GetType().GetTypeName() << endl;
 		type_map[ (Type*)&(root->GetType()) ] = uint(type_map.size());
 	}
 
@@ -888,8 +883,6 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, const NiNodeRef & root, 
 			//This is not a NiNode class, so simply add it as a new child of the
 			//target root node
 			root->AddChild( par );
-
-			//cout << "Added link to " << par << " in " << root << " block.";
 		} else {
 			//This is a NiNode class, so merge its child list with that of the root
 			vector<NiAVObjectRef> children = par_node->GetChildren();
@@ -912,7 +905,6 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, const NiNodeRef & root, 
 		//TODO:  Implement children
 		////Add this block as new child
 		//attatch->GetAttr("Children")->AddLink( par );
-		////cout << "Added link to " << par << " in " << attatch << " block.";
 	}
 }
 
@@ -991,7 +983,6 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 				//attach it to the specific type of controller that's
 				//connected to the named node
 				NiNodeRef node = name_map[node_name];
-				//cout << "Attaching interpolator to " << node << endl;
 				list<NiTimeControllerRef> ctlrs = node->GetControllers();
 				NiSingleInterpolatorControllerRef ctlr;
 				for ( list<NiTimeControllerRef>::iterator it = ctlrs.begin(); it != ctlrs.end(); ++it ) {
@@ -1012,8 +1003,6 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 					}
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}
-
-				//cout << "Controller is " << ctlr << endl;
 
 				//Clone the interpolator and attached data and
 				//add it to controller of matching type that was

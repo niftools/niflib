@@ -191,7 +191,6 @@ void NiNode::GoToSkeletonBindPosition() {
 			//Loop through all bones again, checking for any that have this bone as a parent
 			for ( uint j = 0; j < bone_nodes.size(); ++j ) {
 				if ( bone_nodes[j]->GetParent() == bone_nodes[i] ) {
-					//cout << "Bone " << bones[j] << " has bone " << bones[i] << " as parent." << endl;
 					//Node 2 has node 1 as a parent
 
 					//Get child offset Matrix33

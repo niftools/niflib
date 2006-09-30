@@ -94,10 +94,8 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 		for( uint i = 3; i < it->size(); ++i ) {
 			//Odd numbered triangles need to be reversed to keep the vertices in counter-clockwise order
 			if ( i % 2 == 0 ) {
-				//cout << (*it)[i - 2] << ", " << (*it)[i - 1] << ", " << (*it)[i] << endl;
 				t.Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
 			} else {
-				//cout << (*it)[i] << ", " << (*it)[i - 1] << ", " << (*it)[i - 2] << endl;
 				t.Set( (*it)[i], (*it)[i - 1], (*it)[i - 2] );
 			}
 

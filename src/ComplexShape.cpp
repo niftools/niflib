@@ -182,7 +182,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 
 	vector<NiTriBasedGeomRef> shapes;
 
-	//cout << "Determine root type" << endl;
+	//Determine root type
 	if ( root->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
 		//The function was called on a single shape.
 		//Add it to the list
@@ -209,11 +209,9 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 	//to merge vertices that have different normals.
 	vector<VertNorm> vns;
 
-	//cout << "Clear all existing data" << endl;
 	//Clear all existing data
 	Clear();
 
-	//cout << "Merge in data from each shape" << endl;
 	//Merge in data from each shape
 	bool has_any_verts = false;
 	bool has_any_norms = false;
@@ -221,7 +219,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 	unsigned prop_group_index = 0;
 	for ( vector<NiTriBasedGeomRef>::iterator geom = shapes.begin(); geom != shapes.end(); ++geom ) {
 	
-		//cout << "Merging in " << *geom << endl;
 		//Get properties of this shape
 		propGroups[prop_group_index] = (*geom)->GetProperties();
 		
@@ -232,7 +229,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			throw runtime_error("One of the NiTriBasedGeom found by ComplexShape::Merge with a NiTriBasedGeom has no NiTriBasedGeomData attached.");
 		}
 
-		//cout << "Get Data" << endl;
 		//Get Data
 		vector<Vector3> shapeVerts;	
 		vector<Vector3> shapeNorms;
@@ -255,7 +251,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		//Lookup table
 		vector<MergeLookUp> lookUp( geomData->GetVertexCount() );
 
-		//cout << "Vertices and normals" << endl;
 		//Vertices and normals
 		if ( shapeVerts.size() != 0 ) {
 			has_any_verts = true;
@@ -300,7 +295,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			}
 		}
 
-		//cout << "Colors" << endl;
 		//Colors
 		for ( unsigned c = 0; c < shapeColors.size(); ++c ) {
 			Color4 newColor;
@@ -312,7 +306,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			for ( unsigned c_index = 0; c_index < colors.size(); ++c_index ) {
 				if ( colors[c_index].r == newColor.r && colors[c_index].g == newColor.g && colors[c_index].b == newColor.b && colors[c_index].a == newColor.a ) {
 					//Match found, use existing index
-					//cout << "Color match found:  " << colors[c_index] << " and " << newColor << " at index " << c_index << endl;
 					lookUp[c].colorIndex = c_index;
 					match_found = true;
 					//Stop searching
@@ -325,11 +318,9 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 				colors.push_back(newColor);
 				//Record new index
 				lookUp[c].colorIndex = unsigned(colors.size()) - 1;
-				//cout << "No Match found.  Placed new color " << newColor << " at lookUp[" << c << "].colorIndex:  " << lookUp[c].colorIndex << endl;
 			}
 		}
 
-		//cout << "Texture Coordinates" << endl;
 		//Texture Coordinates
 
 		//Create UV set list
@@ -351,6 +342,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 					TexDesc td = niTexProp->GetTexture(tex);
 					
 					unsigned set = td.uvSet;
+
 					TexType newType = TexType(tex);
 
 					//Search for matching UV set
@@ -358,7 +350,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 					unsigned uvSetIndex;
 					for ( unsigned set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
 						if ( texCoordSets[set_index].texType  == newType ) {
-							////cout << "Match found, use existing texture set index" << endl;
 							//Match found, use existing index
 							uvSetIndex = set_index;
 							match_found = true;
@@ -368,7 +359,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 					}
 
 					if ( match_found == false ) {
-						////cout << "No match found, add this texture set to the list" << endl;
 						//No match found, add this UV set to the list
 						TexCoordSet newTCS;
 						newTCS.texType = newType;
@@ -377,39 +367,31 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 						uvSetIndex = unsigned(texCoordSets.size()) - 1;
 					}
 
-					////cout << "Loop through texture cooridnates in this set" << endl;
+					//Loop through texture cooridnates in this set
+					if ( set >= shapeUVs.size() || set < 0 ) {
+						throw runtime_error("One of the UV sets specified in the NiTexturingProperty did not exist in the NiTriBasedGeomData.");
+					}
 					for ( unsigned v = 0; v < shapeUVs[set].size(); ++v ) {
 						TexCoord newCoord;
 
 						newCoord = shapeUVs[set][v];
 
-						//cout << "Search for matching texture coordinate" << endl;
-						//cout << "uvSetIndex:  " << uvSetIndex << endl;
-						//cout << "set:  " << set << endl;
-						//cout << "texCoordSets.size():  " << unsigned(texCoordSets.size()) << endl;
-						//cout << "v:  " << v << endl;
-						//cout << "lookUp.size():  " << unsigned(lookUp.size()) << endl;
-						//cout << "texCoordSets[uvSetIndex].texCoords.size():  " << unsigned(texCoordSets[uvSetIndex].texCoords.size()) << endl;
 						//Search for matching texture cooridnate
 						bool match_found = false;
 						for ( unsigned tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
 							if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
-								////cout << " Match found, using existing index" << endl;;
 								//Match found, use existing index
 								lookUp[v].uvIndices[uvSetIndex] = tc_index;
 								match_found = true;
-								////cout << "Stop searching" << endl;
 								//Stop searching
 								break;
 							}
 						}
 
-						////cout << "Done with loop, check if match was found" << endl;
+						//Done with loop, check if match was found
 						if ( match_found == false ) {
-							////cout << "No match found" << endl;
 							//No match found, add this texture coordinate to the list
 							texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
-							////cout << "Record new index" << endl;
 							//Record new index
 							lookUp[v].uvIndices[uvSetIndex] = unsigned(texCoordSets[uvSetIndex].texCoords.size()) - 1;
 						}
@@ -418,12 +400,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			}
 		}
 
-		//cout << "Look up table colors:" << endl;
-		for ( unsigned z = 0; z < lookUp.size(); ++z ) {
-			//cout << z << ":  " << colors[lookUp[z].colorIndex] << endl;
-		}
-
-		//cout << "Use look up table to build list of faces" << endl;
 		//Use look up table to build list of faces
 		for ( unsigned t = 0; t < shapeTris.size(); ++t ) {
 			ComplexFace newFace;
@@ -450,7 +426,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			faces.push_back(newFace);
 		}
 
-		//cout << "Use look up table to set vertex wights, if any" << endl;
 		//Use look up table to set vertex weights, if any
 		NiSkinInstanceRef skinInst = (*geom)->GetSkinInstance();
 
@@ -481,7 +456,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		++prop_group_index;
 	}
 
-	//cout << "Finished with all shapes.  Build up a list of influences" << endl;
 	//Finished with all shapes.  Build up a list of influences
 	map<NiNodeRef,unsigned> boneLookUp;
 	for ( unsigned v = 0; v < vns.size(); ++v ) {
@@ -498,7 +472,6 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		++si_index;
 	}
 	
-	//cout << "Copy vns data to vertices and normals" << endl;
 	//Copy vns data to vertices and normals
 	if ( has_any_verts ) {
 		vertices.resize( vns.size() );
@@ -522,7 +495,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			normals[v] = vns[v].normal;
 		}
 	}
-	//cout << "Done Merging" << endl;
+	//Done Merging
 }
 
 //void ComplexShape::CombineTriShapes( list<blk_ref> & tri_shapes ) {
