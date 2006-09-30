@@ -4,7 +4,7 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Niflib
-PROJECT_NUMBER         = 0.6.0
+PROJECT_NUMBER         = 0.6.2
 OUTPUT_DIRECTORY       = doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
@@ -247,9 +247,11 @@ PREDEFINED             = NI_OBJECT_PARENT= \
                          A_BONE_L_O_D_CONTROLLER_PARENT=NiTimeController \
                          NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT=NiTimeController \
                          A_P_SYS_CTLR_PARENT=NiSingleInterpolatorController \
-                         NI_TRI_BASED_GEOM_PARENT=NiAVObject \
-                         NI_TRI_BASED_GEOM_DATA_PARENT=NiObject \
-                         A_P_SYS_DATA_PARENT=NiTriBasedGeomData \
+                         NI_GEOMETRY_PARENT=NiAVObject \
+                         NI_TRI_BASED_GEOM_PARENT=NiGeometry \
+                         NI_GEOMETRY_DATA_PARENT=NiObject \
+                         NI_TRI_BASED_GEOM_DATA_PARENT=NiGeometryData \
+                         A_P_SYS_DATA_PARENT=NiGeometryData \
                          BHK_BLEND_COLLISION_OBJECT_PARENT=NiCollisionObject \
                          BHK_BLEND_CONTROLLER_PARENT=NiTimeController \
                          BHK_BOX_SHAPE_PARENT=bhkConvexShape \
@@ -283,7 +285,7 @@ PREDEFINED             = NI_OBJECT_PARENT= \
                          NI_ALPHA_CONTROLLER_PARENT=NiSingleInterpolatorController \
                          NI_ALPHA_PROPERTY_PARENT=NiProperty \
                          NI_AMBIENT_LIGHT_PARENT=NiLight \
-                         NI_AUTO_NORMAL_PARTICLES_DATA_PARENT=NiTriBasedGeomData \
+                         NI_AUTO_NORMAL_PARTICLES_DATA_PARENT=NiGeometryData \
                          NI_BINARY_EXTRA_DATA_PARENT=NiExtraData \
                          NI_BLEND_BOOL_INTERPOLATOR_PARENT=NiBlendInterpolator \
                          NI_BLEND_FLOAT_INTERPOLATOR_PARENT=NiBlendInterpolator \
@@ -347,7 +349,7 @@ PREDEFINED             = NI_OBJECT_PARENT= \
                          NI_PARTICLE_GROW_FADE_PARENT=AParticleModifier \
                          NI_PARTICLE_MESH_MODIFIER_PARENT=AParticleModifier \
                          NI_PARTICLE_ROTATION_PARENT=AParticleModifier \
-                         NI_PARTICLES_PARENT=NiTriBasedGeom \
+                         NI_PARTICLES_PARENT=NiGeometry \
                          NI_AUTO_NORMAL_PARTICLES_PARENT=NiParticles \
                          NI_PARTICLE_MESHES_PARENT=NiParticles \
                          NI_PARTICLES_DATA_PARENT=NiAutoNormalParticlesData \
@@ -401,6 +403,7 @@ PREDEFINED             = NI_OBJECT_PARENT= \
                          NI_SHADE_PROPERTY_PARENT=NiProperty \
                          NI_SKIN_DATA_PARENT=NiObject \
                          NI_SKIN_INSTANCE_PARENT=NiObject \
+                         NI_CLOD_SKIN_INSTANCE_PARENT=NiSkinInstance \
                          NI_SKIN_PARTITION_PARENT=NiObject \
                          NI_SOURCE_TEXTURE_PARENT=NiObjectNET \
                          NI_SPECULAR_PROPERTY_PARENT=NiProperty \
@@ -413,6 +416,9 @@ PREDEFINED             = NI_OBJECT_PARENT= \
                          NI_TEXT_KEY_EXTRA_DATA_PARENT=NiExtraData \
                          NI_TEXTURE_EFFECT_PARENT=NiDynamicEffect \
                          NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT=NiSingleInterpolatorController \
+                         NI_TEXTURE_MODE_PROPERTY_PARENT=NiProperty \
+                         NI_IMAGE_PARENT=NiObject \
+                         NI_TEXTURE_PROPERTY_PARENT=NiProperty \
                          NI_TEXTURING_PROPERTY_PARENT=NiProperty \
                          NI_TRANSFORM_CONTROLLER_PARENT=NiSingleInterpolatorController \
                          NI_TRANSFORM_DATA_PARENT=NiKeyframeData \

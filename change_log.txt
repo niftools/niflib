@@ -437,3 +437,47 @@
  * Added != operator to Matrix44.
  * Added IsSplitMeshProxy function to NiNode.
  * Fixed some include problems.
+ 
+ ==Version 0.6.2==
+ 
+ * Improved support for Freedom Force games thanks to Symon.
+ * Change NodeGroup to use pointers instead of Refs.
+ * NiGeometry::BindSkin now throws an exception if one of the passed in bone
+   references is NULL.
+ * NiNode::IsSplitMeshProxy now returns false if it is a skin influence.
+ * NiTriShapeData::GetTriangles now only returns valid triangles.
+ * Fixed a bug in ComplexShape::Merge that occurred when a shape had no UV set,
+   but, for some reason, had a texture referencing UV set zero.
+ * Added NiGeometry::NormalizeSkinWeights function to ensure all skin weights
+   add up to 1.0 on export.
+ * ComplexShape::Split now cuts out weights below 0.1 and normalizes the
+   result.
+ * Fixed a bug which could cause NiSkinInstance to try to call a function on a
+   NiNode that was in the midst of destruction.
+ * Added NiGeometry::ApplySkinOffset function to clear nodes between skins and
+   the skeleton root.
+ * Added some new object types for NIF version 3.1, but most files still can't
+   be opened.
+ * Fixed object auto-destruct.  Niflib is now destroying objects properly and
+   reporting the right number of Objects from NiObject::NumObjectsInMemory.
+ * Generated array code now prints 20 items per 2D array in total when verbose
+   is off.
+ * Fixed duplicated Read call.  All FFvt3R demo files can now be read by
+   Niflib.
+ * Added NiGeometry::ApplyTransforms function to automatically zero out the
+   transforms of a mesh and apply them to its vertices.
+ * Added NiGeometryData::Transform function to apply an arbitrary transform
+   to all vertices and normals of a mesh (used by above).
+ * Added NiNode::PropagateTransform function to apply a NiNode's local
+   transform to its children and then zero it out.
+ * Fixed NiTriShapeData to properly set numTriangles when SetTriangles is
+   called.
+ * Removed "set root to scene root" option from NiGeometry::BindSkin.
+ * Replaced GetSkinInfluencedVertices function with GetSkinDeformation
+   function which takes in references to two vectors and fills them with the
+   skin deformed vertices and normals
+ * Added constructor to Matrix44 to convert from Matrix33.
+ * Change default to little endian instead of big endian.
+ * Added NiClodSkinInstance and fixed NiClodData.  Niflib can now open all
+   Freedom Force demo NIF files.
+ * Corrected Shape/particle hierarchy by adding NiGeometry and NiGeometryData.

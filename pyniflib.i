@@ -34,7 +34,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-%module new_niflib
+%module niflib
 %include "stl.i"
 %include "std_map.i"
 %include "exception.i"
@@ -111,7 +111,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/ABoneLODController.h"
 		#include "obj/NiSingleInterpolatorController.h"
 		#include "obj/APSysCtlr.h"
+		#include "obj/NiGeometry.h"
 		#include "obj/NiTriBasedGeom.h"
+		#include "obj/NiGeometryData.h"
 		#include "obj/NiTriBasedGeomData.h"
 		#include "obj/APSysData.h"
 		#include "obj/bhkBlendCollisionObject.h"
@@ -265,6 +267,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/NiShadeProperty.h"
 		#include "obj/NiSkinData.h"
 		#include "obj/NiSkinInstance.h"
+		#include "obj/NiClodSkinInstance.h"
 		#include "obj/NiSkinPartition.h"
 		#include "obj/NiSourceTexture.h"
 		#include "obj/NiSpecularProperty.h"
@@ -277,6 +280,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "obj/NiTextKeyExtraData.h"
 		#include "obj/NiTextureEffect.h"
 		#include "obj/NiTextureTransformController.h"
+		#include "obj/NiTextureModeProperty.h"
+		#include "obj/NiImage.h"
+		#include "obj/NiTextureProperty.h"
 		#include "obj/NiTexturingProperty.h"
 		#include "obj/NiTransformController.h"
 		#include "obj/NiTransformData.h"
@@ -333,6 +339,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(vector_byte) std::vector<Niflib::byte>;
 %template(vector_ushort) std::vector<Niflib::ushort>;
 %template(vector_SkinShape) std::vector<Niflib::SkinShape>;
+%template(vector_LineString) std::vector<Niflib::LineString>;
 %template(vector_string) std::vector<std::string>;
 %template(vector_Triangle) std::vector<Niflib::Triangle>;
 %template(vector_Vector3) std::vector<Niflib::Vector3>;
@@ -485,10 +492,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(APSysCtlrRef) Niflib::Ref<Niflib::APSysCtlr>;
 %template(DynamicCastToAPSysCtlr) Niflib::DynamicCast<Niflib::APSysCtlr>;
 %template(StaticCastToAPSysCtlr) Niflib::StaticCast<Niflib::APSysCtlr>;
+%include "obj/NiGeometry.h"
+%template(NiGeometryRef) Niflib::Ref<Niflib::NiGeometry>;
+%template(DynamicCastToNiGeometry) Niflib::DynamicCast<Niflib::NiGeometry>;
+%template(StaticCastToNiGeometry) Niflib::StaticCast<Niflib::NiGeometry>;
 %include "obj/NiTriBasedGeom.h"
 %template(NiTriBasedGeomRef) Niflib::Ref<Niflib::NiTriBasedGeom>;
 %template(DynamicCastToNiTriBasedGeom) Niflib::DynamicCast<Niflib::NiTriBasedGeom>;
 %template(StaticCastToNiTriBasedGeom) Niflib::StaticCast<Niflib::NiTriBasedGeom>;
+%include "obj/NiGeometryData.h"
+%template(NiGeometryDataRef) Niflib::Ref<Niflib::NiGeometryData>;
+%template(DynamicCastToNiGeometryData) Niflib::DynamicCast<Niflib::NiGeometryData>;
+%template(StaticCastToNiGeometryData) Niflib::StaticCast<Niflib::NiGeometryData>;
 %include "obj/NiTriBasedGeomData.h"
 %template(NiTriBasedGeomDataRef) Niflib::Ref<Niflib::NiTriBasedGeomData>;
 %template(DynamicCastToNiTriBasedGeomData) Niflib::DynamicCast<Niflib::NiTriBasedGeomData>;
@@ -1101,6 +1116,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiSkinInstanceRef) Niflib::Ref<Niflib::NiSkinInstance>;
 %template(DynamicCastToNiSkinInstance) Niflib::DynamicCast<Niflib::NiSkinInstance>;
 %template(StaticCastToNiSkinInstance) Niflib::StaticCast<Niflib::NiSkinInstance>;
+%include "obj/NiClodSkinInstance.h"
+%template(NiClodSkinInstanceRef) Niflib::Ref<Niflib::NiClodSkinInstance>;
+%template(DynamicCastToNiClodSkinInstance) Niflib::DynamicCast<Niflib::NiClodSkinInstance>;
+%template(StaticCastToNiClodSkinInstance) Niflib::StaticCast<Niflib::NiClodSkinInstance>;
 %include "obj/NiSkinPartition.h"
 %template(NiSkinPartitionRef) Niflib::Ref<Niflib::NiSkinPartition>;
 %template(DynamicCastToNiSkinPartition) Niflib::DynamicCast<Niflib::NiSkinPartition>;
@@ -1149,6 +1168,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiTextureTransformControllerRef) Niflib::Ref<Niflib::NiTextureTransformController>;
 %template(DynamicCastToNiTextureTransformController) Niflib::DynamicCast<Niflib::NiTextureTransformController>;
 %template(StaticCastToNiTextureTransformController) Niflib::StaticCast<Niflib::NiTextureTransformController>;
+%include "obj/NiTextureModeProperty.h"
+%template(NiTextureModePropertyRef) Niflib::Ref<Niflib::NiTextureModeProperty>;
+%template(DynamicCastToNiTextureModeProperty) Niflib::DynamicCast<Niflib::NiTextureModeProperty>;
+%template(StaticCastToNiTextureModeProperty) Niflib::StaticCast<Niflib::NiTextureModeProperty>;
+%include "obj/NiImage.h"
+%template(NiImageRef) Niflib::Ref<Niflib::NiImage>;
+%template(DynamicCastToNiImage) Niflib::DynamicCast<Niflib::NiImage>;
+%template(StaticCastToNiImage) Niflib::StaticCast<Niflib::NiImage>;
+%include "obj/NiTextureProperty.h"
+%template(NiTexturePropertyRef) Niflib::Ref<Niflib::NiTextureProperty>;
+%template(DynamicCastToNiTextureProperty) Niflib::DynamicCast<Niflib::NiTextureProperty>;
+%template(StaticCastToNiTextureProperty) Niflib::StaticCast<Niflib::NiTextureProperty>;
 %include "obj/NiTexturingProperty.h"
 %template(NiTexturingPropertyRef) Niflib::Ref<Niflib::NiTexturingProperty>;
 %template(DynamicCastToNiTexturingProperty) Niflib::DynamicCast<Niflib::NiTexturingProperty>;
