@@ -227,11 +227,16 @@ void NiNode::PropagateTransform() {
 
 bool NiNode::IsSplitMeshProxy() const {
 	//Let us guess that a node is a split mesh proxy if:
-	// 1)  All its children are NiTriBasedGeom derived objects.
-	// 2)  All its children have identity transforms.
-	// 3)  It has more than one child
-	// 4)  All meshes are visible
-	// 5)  ????  May need more criteria as time goes on.
+	// 1)  It is not a skin influence
+	// 2)  All its children are NiTriBasedGeom derived objects.
+	// 3)  All its children have identity transforms.
+	// 4)  It has more than one child
+	// 5)  All meshes are visible
+	// 6)  ????  May need more criteria as time goes on.
+
+	if ( this->IsSkinInfluence() ) {
+		return false;
+	}
 
 	if ( children.size() < 2 ) {
 		return false;

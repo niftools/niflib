@@ -99,6 +99,9 @@ void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 	ancestors[bone_nodes.size()] = ListAncestors( GetParent() );
 	
 	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
+		if ( bone_nodes[i] == NULL ) {
+			throw runtime_error("Attempted to bind skin to a NULL bone reference.");
+		}
 		NiNodeRef bonePar = bone_nodes[i]->GetParent();
 		if ( bonePar == NULL ) {
 			throw runtime_error("Attempted to bind skin to a bone with no parent.  A skeleton root cannot be a bone so all bones must have at least one parent.");

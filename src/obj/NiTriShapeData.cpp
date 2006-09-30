@@ -66,7 +66,15 @@ bool NiTriShapeData::HasMatchData() {
 }
 
 vector<Triangle> NiTriShapeData::GetTriangles() const {
-	return triangles;
+	//Remove any bad triangles
+	vector<Triangle> good_triangles;
+	for ( unsigned i = 0; i < triangles.size(); ++i ) {
+		const Triangle & t = triangles[i];
+		if ( t.v1 != t.v2 && t.v2 != t.v3 && t.v1 != t.v3 ) {
+			good_triangles.push_back(t);
+		}
+	}
+	return good_triangles;
 }
 
 void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
