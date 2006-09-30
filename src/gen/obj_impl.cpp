@@ -1540,8 +1540,6 @@ std::list<NiObjectRef> ABoneLODController::InternalGetRefs() const {
 	refs = NiTimeController::GetRefs();
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		for (uint i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
-			if ( nodeGroups[i1].nodes[i2] != NULL )
-				refs.push_back(StaticCast<NiObject>(nodeGroups[i1].nodes[i2]));
 		};
 	};
 	return refs;
