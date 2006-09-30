@@ -49,7 +49,11 @@ vector<Ref<NiNode> > ABoneLODController::GetNodeGroup( int index ) const {
    if (index < 0 || index >= int(nodeGroups.size()) ) {
       throw runtime_error("Invalid index referenced.");
    }
-   return nodeGroups[index].nodes;   
+   vector<NiNodeRef> value;
+   const vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   for (vector<NiNode*>::const_iterator itr = nodes.begin(); itr != nodes.end(); ++itr)
+      value.push_back(*itr);
+   return value;
 }
 
 void ABoneLODController::AddNodeToGroup( int index, Ref<NiNode> node ) {
@@ -57,8 +61,8 @@ void ABoneLODController::AddNodeToGroup( int index, Ref<NiNode> node ) {
       nodeGroups.insert(nodeGroups.end(), NodeGroup() );
    numNodeGroups2 = nodeGroups.size();
 
-   vector<NiNodeRef>& nodes = nodeGroups[index].nodes;
-   vector<NiNodeRef>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
+   vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   vector<NiNode*>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
    if (itr == nodes.end())
       nodes.push_back(node);
 }
@@ -67,8 +71,8 @@ void ABoneLODController::RemoveNodeFromGroup( int index, Ref<NiNode> node ) {
    if (index < 0 || index >= int(nodeGroups.size()) ) {
       throw runtime_error("Invalid index referenced.");
    }
-   vector<NiNodeRef>& nodes = nodeGroups[index].nodes;
-   vector<NiNodeRef>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
+   vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   vector<NiNode*>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
    if (itr == nodes.end())
       return;
    nodes.erase(itr);
