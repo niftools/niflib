@@ -15,7 +15,7 @@ void NiIntegersExtraData::Read( istream& in, list<uint> & link_stack, unsigned i
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiIntegersExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiIntegersExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

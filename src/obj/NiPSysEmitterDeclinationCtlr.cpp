@@ -15,7 +15,7 @@ void NiPSysEmitterDeclinationCtlr::Read( istream& in, list<uint> & link_stack, u
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiPSysEmitterDeclinationCtlr::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterDeclinationCtlr::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

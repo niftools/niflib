@@ -15,7 +15,7 @@ void NiBooleanExtraData::Read( istream& in, list<uint> & link_stack, unsigned in
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiBooleanExtraData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBooleanExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

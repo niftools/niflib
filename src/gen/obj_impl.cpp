@@ -225,7 +225,7 @@ Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<uint> & link_sta
 void NiObject::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 }
 
-void NiObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 }
 
 std::string NiObject::InternalAsString( bool verbose ) const {
@@ -246,7 +246,7 @@ void AKeyedData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	NiObject::Read( in, link_stack, version, user_version );
 }
 
-void AKeyedData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AKeyedData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 }
 
@@ -276,14 +276,14 @@ void AParticleModifier::InternalRead( istream& in, list<uint> & link_stack, unsi
 	link_stack.push_back( block_num );
 }
 
-void AParticleModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AParticleModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	if ( nextModifier != NULL )
-		NifStream( link_map[StaticCast<NiObject>(nextModifier)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(nextModifier) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( controller != NULL )
-		NifStream( link_map[StaticCast<NiObject>(controller)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -315,7 +315,7 @@ void bhkRefObject::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	NiObject::Read( in, link_stack, version, user_version );
 }
 
-void bhkRefObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkRefObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 }
 
@@ -340,7 +340,7 @@ void bhkSerializable::InternalRead( istream& in, list<uint> & link_stack, unsign
 	bhkRefObject::Read( in, link_stack, version, user_version );
 }
 
-void bhkSerializable::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSerializable::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkRefObject::Write( out, link_map, version, user_version );
 }
 
@@ -373,13 +373,13 @@ void AbhkConstraint::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NifStream( priority, in, version );
 }
 
-void AbhkConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AbhkConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSerializable::Write( out, link_map, version, user_version );
 	numBodies = uint(bodies.size());
 	NifStream( numBodies, out, version );
 	for (uint i1 = 0; i1 < bodies.size(); i1++) {
 		if ( bodies[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(bodies[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(bodies[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -439,7 +439,7 @@ void AbhkRagdollConstraint::InternalRead( istream& in, list<uint> & link_stack, 
 	NifStream( maxFriction, in, version );
 }
 
-void AbhkRagdollConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AbhkRagdollConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	NifStream( pivotA, out, version );
 	NifStream( planeA, out, version );
@@ -488,7 +488,7 @@ void bhkShape::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	bhkSerializable::Read( in, link_stack, version, user_version );
 }
 
-void bhkShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSerializable::Write( out, link_map, version, user_version );
 }
 
@@ -513,7 +513,7 @@ void AbhkShapeCollection::InternalRead( istream& in, list<uint> & link_stack, un
 	bhkShape::Read( in, link_stack, version, user_version );
 }
 
-void AbhkShapeCollection::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AbhkShapeCollection::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
 }
 
@@ -539,7 +539,7 @@ void bhkSphereRepShape::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( material, in, version );
 }
 
-void bhkSphereRepShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSphereRepShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
 	NifStream( material, out, version );
 }
@@ -566,7 +566,7 @@ void bhkConvexShape::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	bhkSphereRepShape::Read( in, link_stack, version, user_version );
 }
 
-void bhkConvexShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkConvexShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
 }
 
@@ -591,7 +591,7 @@ void bhkWorldObject::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	bhkShape::Read( in, link_stack, version, user_version );
 }
 
-void bhkWorldObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkWorldObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
 }
 
@@ -622,10 +622,10 @@ void bhkEntity::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	NifStream( unknownShort, in, version );
 }
 
-void bhkEntity::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkEntity::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkWorldObject::Write( out, link_map, version, user_version );
 	if ( shape != NULL )
-		NifStream( link_map[StaticCast<NiObject>(shape)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( layer, out, version );
@@ -667,15 +667,15 @@ void NiCollisionObject::InternalRead( istream& in, list<uint> & link_stack, unsi
 	link_stack.push_back( block_num );
 }
 
-void NiCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiCollisionObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	if ( parent != NULL )
-		NifStream( link_map[StaticCast<NiObject>(parent)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownShort, out, version );
 	if ( body != NULL )
-		NifStream( link_map[StaticCast<NiObject>(body)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -716,14 +716,14 @@ void NiExtraData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	};
 }
 
-void NiExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A000100 ) {
 		NifStream( name, out, version );
 	};
 	if ( version <= 0x04020200 ) {
 		if ( nextExtraData != NULL )
-			NifStream( link_map[StaticCast<NiObject>(nextExtraData)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(nextExtraData) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -757,7 +757,7 @@ void NiInterpolator::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NiObject::Read( in, link_stack, version, user_version );
 }
 
-void NiInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 }
 
@@ -784,7 +784,7 @@ void NiBlendInterpolator::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( unknownInt, in, version );
 }
 
-void NiBlendInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( unknownShort, out, version );
 	NifStream( unknownInt, out, version );
@@ -820,16 +820,16 @@ void NiBSplineInterpolator::InternalRead( istream& in, list<uint> & link_stack, 
 	link_stack.push_back( block_num );
 }
 
-void NiBSplineInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( startTime, out, version );
 	NifStream( stopTime, out, version );
 	if ( splineData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(splineData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(splineData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( basisData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(basisData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(basisData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -881,13 +881,13 @@ void NiObjectNET::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	link_stack.push_back( block_num );
 }
 
-void NiObjectNET::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiObjectNET::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numExtraDataList = uint(extraDataList.size());
 	NifStream( name, out, version );
 	if ( version <= 0x04020200 ) {
 		if ( extraData != NULL )
-			NifStream( link_map[StaticCast<NiObject>(extraData)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(extraData) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -895,13 +895,13 @@ void NiObjectNET::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 		NifStream( numExtraDataList, out, version );
 		for (uint i2 = 0; i2 < extraDataList.size(); i2++) {
 			if ( extraDataList[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(extraDataList[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(extraDataList[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
 	};
 	if ( controller != NULL )
-		NifStream( link_map[StaticCast<NiObject>(controller)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -992,7 +992,7 @@ void NiAVObject::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	};
 }
 
-void NiAVObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAVObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObjectNET::Write( out, link_map, version, user_version );
 	numProperties = uint(properties.size());
 	NifStream( flags, out, version );
@@ -1005,7 +1005,7 @@ void NiAVObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 	NifStream( numProperties, out, version );
 	for (uint i1 = 0; i1 < properties.size(); i1++) {
 		if ( properties[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(properties[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -1020,13 +1020,13 @@ void NiAVObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 	};
 	if ( ( version >= 0x0A000100 ) && ( version <= 0x0A020000 ) ) {
 		if ( collisionData != NULL )
-			NifStream( link_map[StaticCast<NiObject>(collisionData)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(collisionData) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	if ( version >= 0x14000004 ) {
 		if ( collisionObject != NULL )
-			NifStream( link_map[StaticCast<NiObject>(collisionObject)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -1117,7 +1117,7 @@ void NiDynamicEffect::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiDynamicEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiDynamicEffect::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
 	numAffectedNodes = uint(affectedNodeListPointers.size());
 	if ( version >= 0x0A020000 ) {
@@ -1133,7 +1133,7 @@ void NiDynamicEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 		NifStream( numAffectedNodes, out, version );
 		for (uint i2 = 0; i2 < affectedNodes.size(); i2++) {
 			if ( affectedNodes[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(affectedNodes[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(affectedNodes[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -1201,7 +1201,7 @@ void NiLight::InternalRead( istream& in, list<uint> & link_stack, unsigned int v
 	NifStream( specularColor, in, version );
 }
 
-void NiLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLight::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiDynamicEffect::Write( out, link_map, version, user_version );
 	NifStream( dimmer, out, version );
 	NifStream( ambientColor, out, version );
@@ -1234,7 +1234,7 @@ void NiProperty::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	NiObjectNET::Read( in, link_stack, version, user_version );
 }
 
-void NiProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObjectNET::Write( out, link_map, version, user_version );
 }
 
@@ -1265,12 +1265,12 @@ void NiPSysModifier::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NifStream( active, in, version );
 }
 
-void NiPSysModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( name, out, version );
 	NifStream( order, out, version );
 	if ( target != NULL )
-		NifStream( link_map[StaticCast<NiObject>(target)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( active, out, version );
@@ -1315,7 +1315,7 @@ void NiPSysEmitter::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	NifStream( lifeSpanVariation, in, version );
 }
 
-void NiPSysEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( speed, out, version );
 	NifStream( speedVariation, out, version );
@@ -1369,11 +1369,11 @@ void NiPSysVolumeEmitter::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void NiPSysVolumeEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysVolumeEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysEmitter::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		if ( emitterObject != NULL )
-			NifStream( link_map[StaticCast<NiObject>(emitterObject)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(emitterObject) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -1414,10 +1414,10 @@ void NiTimeController::InternalRead( istream& in, list<uint> & link_stack, unsig
 	link_stack.push_back( block_num );
 }
 
-void NiTimeController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTimeController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	if ( nextController != NULL )
-		NifStream( link_map[StaticCast<NiObject>(nextController)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(nextController) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( flags, out, version );
@@ -1426,7 +1426,7 @@ void NiTimeController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 	NifStream( startTime, out, version );
 	NifStream( stopTime, out, version );
 	if ( target != NULL )
-		NifStream( link_map[StaticCast<NiObject>(target)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -1476,7 +1476,7 @@ void ABoneLODController::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void ABoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void ABoneLODController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	numNodeGroups = uint(nodeGroups.size());
 	NifStream( unknownInt1, out, version );
@@ -1487,7 +1487,7 @@ void ABoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link
 		NifStream( nodeGroups[i1].numNodes, out, version );
 		for (uint i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
 			if ( nodeGroups[i1].nodes[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(nodeGroups[i1].nodes[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(nodeGroups[i1].nodes[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -1554,11 +1554,11 @@ void NiSingleInterpolatorController::InternalRead( istream& in, list<uint> & lin
 	};
 }
 
-void NiSingleInterpolatorController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSingleInterpolatorController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A020000 ) {
 		if ( interpolator != NULL )
-			NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -1592,7 +1592,7 @@ void APSysCtlr::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	NifStream( modifierName, in, version );
 }
 
-void APSysCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void APSysCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	NifStream( modifierName, out, version );
 }
@@ -1634,15 +1634,15 @@ void NiGeometry::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	};
 }
 
-void NiGeometry::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometry::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( version >= 0x0303000D ) {
 		if ( skinInstance != NULL )
-			NifStream( link_map[StaticCast<NiObject>(skinInstance)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -1651,7 +1651,7 @@ void NiGeometry::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, out, version );
 			if ( unknownLink != NULL )
-				NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -1701,7 +1701,7 @@ void NiTriBasedGeom::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NiGeometry::Read( in, link_stack, version, user_version );
 }
 
-void NiTriBasedGeom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriBasedGeom::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometry::Write( out, link_map, version, user_version );
 }
 
@@ -1802,7 +1802,7 @@ void NiGeometryData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiGeometryData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometryData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numUvSets = ushort(uvSets.size());
 	numUvSets2 = byte(uvSets.size());
@@ -1871,7 +1871,7 @@ void NiGeometryData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 	};
 	if ( version >= 0x14000004 ) {
 		if ( unknownLink != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -2003,7 +2003,7 @@ void NiTriBasedGeomData::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( numTriangles, in, version );
 }
 
-void NiTriBasedGeomData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriBasedGeomData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometryData::Write( out, link_map, version, user_version );
 	NifStream( numTriangles, out, version );
 }
@@ -2054,7 +2054,7 @@ void APSysData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	};
 }
 
-void APSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void APSysData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometryData::Write( out, link_map, version, user_version );
 	NifStream( hasUnknownFloats1, out, version );
 	if ( (hasUnknownFloats1 != 0) ) {
@@ -2150,7 +2150,7 @@ void bhkBlendCollisionObject::InternalRead( istream& in, list<uint> & link_stack
 	NifStream( unknownFloat2, in, version );
 }
 
-void bhkBlendCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkBlendCollisionObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiCollisionObject::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
@@ -2180,7 +2180,7 @@ void bhkBlendController::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( unknownInt, in, version );
 }
 
-void bhkBlendController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkBlendController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	NifStream( unknownInt, out, version );
 }
@@ -2214,7 +2214,7 @@ void bhkBoxShape::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	NifStream( unknownFloat2, in, version );
 }
 
-void bhkBoxShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkBoxShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkConvexShape::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownShort1, out, version );
@@ -2262,7 +2262,7 @@ void bhkCapsuleShape::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NifStream( radius2, in, version );
 }
 
-void bhkCapsuleShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkCapsuleShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkConvexShape::Write( out, link_map, version, user_version );
 	NifStream( radius, out, version );
 	NifStream( unknownShort1, out, version );
@@ -2305,7 +2305,7 @@ void bhkCollisionObject::InternalRead( istream& in, list<uint> & link_stack, uns
 	NiCollisionObject::Read( in, link_stack, version, user_version );
 }
 
-void bhkCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkCollisionObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiCollisionObject::Write( out, link_map, version, user_version );
 }
 
@@ -2343,7 +2343,7 @@ void bhkConvexVerticesShape::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void bhkConvexVerticesShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkConvexVerticesShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
 	num2 = uint(unknownVectors2.size());
 	num1 = uint(unknownVectors1.size());
@@ -2426,7 +2426,7 @@ void bhkHingeConstraint::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void bhkHingeConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkHingeConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 5; i1++) {
 		for (uint i2 = 0; i2 < 4; i2++) {
@@ -2480,7 +2480,7 @@ void bhkLimitedHingeConstraint::InternalRead( istream& in, list<uint> & link_sta
 	NifStream( limitedHinge.maxFriction, in, version );
 }
 
-void bhkLimitedHingeConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkLimitedHingeConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	NifStream( limitedHinge.pivotA, out, version );
 	NifStream( limitedHinge.axleA, out, version );
@@ -2541,14 +2541,14 @@ void bhkListShape::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	};
 }
 
-void bhkListShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkListShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
 	numUnknownInts = uint(unknownInts.size());
 	numSubShapes = uint(subShapes.size());
 	NifStream( numSubShapes, out, version );
 	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
 		if ( subShapes[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(subShapes[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(subShapes[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -2667,16 +2667,16 @@ void bhkMalleableConstraint::InternalRead( istream& in, list<uint> & link_stack,
 	NifStream( damping, in, version );
 }
 
-void bhkMalleableConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkMalleableConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	NifStream( type, out, version );
 	NifStream( unknownInt2, out, version );
 	if ( unknownLink1 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( unknownLink2 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownInt3, out, version );
@@ -2785,11 +2785,11 @@ void bhkMoppBvTreeShape::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( unknownFloat2, in, version );
 }
 
-void bhkMoppBvTreeShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkMoppBvTreeShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
 	numUnknownBytes2 = uint(unknownBytes2.size());
 	if ( shape != NULL )
-		NifStream( link_map[StaticCast<NiObject>(shape)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( material, out, version );
@@ -2869,7 +2869,7 @@ void bhkMultiSphereShape::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void bhkMultiSphereShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkMultiSphereShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
 	numSpheres = uint(spheres.size());
 	NifStream( unknownFloat1, out, version );
@@ -2937,7 +2937,7 @@ void bhkNiTriStripsShape::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
 	numUnknownInts2 = uint(unknownInts2.size());
 	numStripsData = uint(stripsData.size());
@@ -2952,7 +2952,7 @@ void bhkNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( numStripsData, out, version );
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
 		if ( stripsData[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(stripsData[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(stripsData[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -3052,7 +3052,7 @@ void bhkPackedNiTriStripsShape::InternalRead( istream& in, list<uint> & link_sta
 	link_stack.push_back( block_num );
 }
 
-void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
 	numSubparts = ushort(subparts.size());
 	NifStream( numSubparts, out, version );
@@ -3069,7 +3069,7 @@ void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, map<NiObjectRef,uin
 		NifStream( unknownFloats2[i1], out, version );
 	};
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -3146,7 +3146,7 @@ void bhkPrismaticConstraint::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void bhkPrismaticConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkPrismaticConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 8; i1++) {
 		NifStream( unknownVectors[i1], out, version );
@@ -3201,7 +3201,7 @@ void bhkRagdollConstraint::InternalRead( istream& in, list<uint> & link_stack, u
 	AbhkRagdollConstraint::Read( in, link_stack, version, user_version );
 }
 
-void bhkRagdollConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkRagdollConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkRagdollConstraint::Write( out, link_map, version, user_version );
 }
 
@@ -3275,7 +3275,7 @@ void bhkRigidBody::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	NifStream( unknownInt6, in, version );
 }
 
-void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkRigidBody::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkEntity::Write( out, link_map, version, user_version );
 	numConstraints = uint(constraints.size());
 	for (uint i1 = 0; i1 < 5; i1++) {
@@ -3322,7 +3322,7 @@ void bhkRigidBody::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, 
 	NifStream( numConstraints, out, version );
 	for (uint i1 = 0; i1 < constraints.size(); i1++) {
 		if ( constraints[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(constraints[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(constraints[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -3448,7 +3448,7 @@ void bhkRigidBodyT::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	bhkRigidBody::Read( in, link_stack, version, user_version );
 }
 
-void bhkRigidBodyT::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkRigidBodyT::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkRigidBody::Write( out, link_map, version, user_version );
 }
 
@@ -3482,7 +3482,7 @@ void bhkSimpleShapePhantom::InternalRead( istream& in, list<uint> & link_stack, 
 	NifStream( unknownFloat, in, version );
 }
 
-void bhkSimpleShapePhantom::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSimpleShapePhantom::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkEntity::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 7; i1++) {
 		NifStream( unkownFloats[i1], out, version );
@@ -3543,7 +3543,7 @@ void bhkSPCollisionObject::InternalRead( istream& in, list<uint> & link_stack, u
 	NiCollisionObject::Read( in, link_stack, version, user_version );
 }
 
-void bhkSPCollisionObject::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSPCollisionObject::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiCollisionObject::Write( out, link_map, version, user_version );
 }
 
@@ -3569,7 +3569,7 @@ void bhkSphereShape::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NifStream( radius, in, version );
 }
 
-void bhkSphereShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSphereShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkConvexShape::Write( out, link_map, version, user_version );
 	NifStream( radius, out, version );
 }
@@ -3602,7 +3602,7 @@ void bhkStiffSpringConstraint::InternalRead( istream& in, list<uint> & link_stac
 	NifStream( unknownFloat, in, version );
 }
 
-void bhkStiffSpringConstraint::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkStiffSpringConstraint::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 2; i1++) {
 		for (uint i2 = 0; i2 < 4; i2++) {
@@ -3652,7 +3652,7 @@ void bhkTransformShape::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( transform, in, version );
 }
 
-void bhkTransformShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkTransformShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkEntity::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
@@ -3685,7 +3685,7 @@ void bhkConvexTransformShape::InternalRead( istream& in, list<uint> & link_stack
 	bhkTransformShape::Read( in, link_stack, version, user_version );
 }
 
-void bhkConvexTransformShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void bhkConvexTransformShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkTransformShape::Write( out, link_map, version, user_version );
 }
 
@@ -3712,7 +3712,7 @@ void BSBound::InternalRead( istream& in, list<uint> & link_stack, unsigned int v
 	NifStream( dimensions, in, version );
 }
 
-void BSBound::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSBound::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( center, out, version );
 	NifStream( dimensions, out, version );
@@ -3749,7 +3749,7 @@ void BSFurnitureMarker::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void BSFurnitureMarker::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSFurnitureMarker::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numPositions = uint(positions.size());
 	NifStream( numPositions, out, version );
@@ -3796,7 +3796,7 @@ void BSParentVelocityModifier::InternalRead( istream& in, list<uint> & link_stac
 	NifStream( unknownFloat, in, version );
 }
 
-void BSParentVelocityModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSParentVelocityModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat, out, version );
 }
@@ -3823,7 +3823,7 @@ void BSPSysArrayEmitter::InternalRead( istream& in, list<uint> & link_stack, uns
 	NiPSysVolumeEmitter::Read( in, link_stack, version, user_version );
 }
 
-void BSPSysArrayEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSPSysArrayEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysVolumeEmitter::Write( out, link_map, version, user_version );
 }
 
@@ -3849,7 +3849,7 @@ void BSXFlags::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	NifStream( flags, in, version );
 }
 
-void BSXFlags::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSXFlags::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 }
@@ -3888,7 +3888,7 @@ void hkPackedNiTriStripsData::InternalRead( istream& in, list<uint> & link_stack
 	};
 }
 
-void hkPackedNiTriStripsData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void hkPackedNiTriStripsData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
 	numVertices = uint(vertices.size());
 	numTriangles = uint(triangles.size());
@@ -3956,11 +3956,11 @@ void NiAlphaController::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void NiAlphaController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAlphaController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -3995,7 +3995,7 @@ void NiAlphaProperty::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NifStream( threshold, in, version );
 }
 
-void NiAlphaProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAlphaProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 	NifStream( threshold, out, version );
@@ -4024,7 +4024,7 @@ void NiAmbientLight::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NiLight::Read( in, link_stack, version, user_version );
 }
 
-void NiAmbientLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAmbientLight::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLight::Write( out, link_map, version, user_version );
 }
 
@@ -4068,7 +4068,7 @@ void NiAutoNormalParticlesData::InternalRead( istream& in, list<uint> & link_sta
 	};
 }
 
-void NiAutoNormalParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAutoNormalParticlesData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometryData::Write( out, link_map, version, user_version );
 	if ( version <= 0x04000002 ) {
 		NifStream( numParticles, out, version );
@@ -4135,7 +4135,7 @@ void NiBinaryExtraData::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void NiBinaryExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBinaryExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	binaryData.dataSize = uint(binaryData.data.size());
 	NifStream( binaryData.dataSize, out, version );
@@ -4180,7 +4180,7 @@ void NiBlendBoolInterpolator::InternalRead( istream& in, list<uint> & link_stack
 	NifStream( boolValue, in, version );
 }
 
-void NiBlendBoolInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendBoolInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBlendInterpolator::Write( out, link_map, version, user_version );
 	NifStream( boolValue, out, version );
 }
@@ -4208,7 +4208,7 @@ void NiBlendFloatInterpolator::InternalRead( istream& in, list<uint> & link_stac
 	NifStream( floatValue, in, version );
 }
 
-void NiBlendFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendFloatInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBlendInterpolator::Write( out, link_map, version, user_version );
 	NifStream( floatValue, out, version );
 }
@@ -4236,7 +4236,7 @@ void NiBlendPoint3Interpolator::InternalRead( istream& in, list<uint> & link_sta
 	NifStream( pointValue, in, version );
 }
 
-void NiBlendPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendPoint3Interpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBlendInterpolator::Write( out, link_map, version, user_version );
 	NifStream( pointValue, out, version );
 }
@@ -4263,7 +4263,7 @@ void NiBlendTransformInterpolator::InternalRead( istream& in, list<uint> & link_
 	NiBlendInterpolator::Read( in, link_stack, version, user_version );
 }
 
-void NiBlendTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendTransformInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBlendInterpolator::Write( out, link_map, version, user_version );
 }
 
@@ -4307,7 +4307,7 @@ void NiBoneLODController::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void NiBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBoneLODController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	ABoneLODController::Write( out, link_map, version, user_version );
 	numShapeGroups2 = uint(shapeGroups2.size());
 	numShapeGroups = uint(shapeGroups1.size());
@@ -4317,11 +4317,11 @@ void NiBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 		NifStream( shapeGroups1[i1].numLinkPairs, out, version );
 		for (uint i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
 			if ( shapeGroups1[i1].linkPairs[i2].shape != NULL )
-				NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].shape)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].shape) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 			if ( shapeGroups1[i1].linkPairs[i2].skinInstance != NULL )
-				NifStream( link_map[StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].skinInstance)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].skinInstance) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -4329,7 +4329,7 @@ void NiBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( numShapeGroups2, out, version );
 	for (uint i1 = 0; i1 < shapeGroups2.size(); i1++) {
 		if ( shapeGroups2[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(shapeGroups2[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(shapeGroups2[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -4419,7 +4419,7 @@ void NiBoolData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	};
 }
 
-void NiBoolData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBoolData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	data.numKeys = uint(data.keys.size());
 	NifStream( data.numKeys, out, version );
@@ -4470,7 +4470,7 @@ void NiBooleanExtraData::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( booleanData, in, version );
 }
 
-void NiBooleanExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBooleanExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( booleanData, out, version );
 }
@@ -4501,11 +4501,11 @@ void NiBoolInterpolator::InternalRead( istream& in, list<uint> & link_stack, uns
 	link_stack.push_back( block_num );
 }
 
-void NiBoolInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBoolInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( boolValue, out, version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -4540,11 +4540,11 @@ void NiBoolTimelineInterpolator::InternalRead( istream& in, list<uint> & link_st
 	link_stack.push_back( block_num );
 }
 
-void NiBoolTimelineInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBoolTimelineInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( boolValue, out, version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -4575,7 +4575,7 @@ void NiBSBoneLODController::InternalRead( istream& in, list<uint> & link_stack, 
 	ABoneLODController::Read( in, link_stack, version, user_version );
 }
 
-void NiBSBoneLODController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSBoneLODController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	ABoneLODController::Write( out, link_map, version, user_version );
 }
 
@@ -4601,7 +4601,7 @@ void NiBSplineBasisData::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( numControlPt, in, version );
 }
 
-void NiBSplineBasisData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineBasisData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( numControlPt, out, version );
 }
@@ -4631,7 +4631,7 @@ void NiBSplineCompFloatInterpolator::InternalRead( istream& in, list<uint> & lin
 	};
 }
 
-void NiBSplineCompFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineCompFloatInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 4; i1++) {
 		NifStream( unknownFloats[i1], out, version );
@@ -4674,7 +4674,7 @@ void NiBSplineCompPoint3Interpolator::InternalRead( istream& in, list<uint> & li
 	};
 }
 
-void NiBSplineCompPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineCompPoint3Interpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats[i1], out, version );
@@ -4726,7 +4726,7 @@ void NiBSplineCompTransformInterpolator::InternalRead( istream& in, list<uint> &
 	NifStream( scaleMultiplier, in, version );
 }
 
-void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineCompTransformInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBSplineInterpolator::Write( out, link_map, version, user_version );
 	NifStream( translation, out, version );
 	NifStream( rotation, out, version );
@@ -4781,7 +4781,7 @@ void NiBSplineData::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	};
 }
 
-void NiBSplineData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSplineData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	count = uint(controlPoints.size());
 	NifStream( unknownInt, out, version );
@@ -4851,7 +4851,7 @@ void NiCamera::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	};
 }
 
-void NiCamera::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiCamera::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknownShort, out, version );
@@ -4871,7 +4871,7 @@ void NiCamera::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsi
 	NifStream( viewportBottom, out, version );
 	NifStream( lodAdjust, out, version );
 	if ( unknownLink_ != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink_) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownInt, out, version );
@@ -4943,10 +4943,10 @@ void NiCollisionData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiCollisionData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiCollisionData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	if ( targetNode != NULL )
-		NifStream( link_map[StaticCast<NiObject>(targetNode)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(targetNode) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownInt1, out, version );
@@ -5037,7 +5037,7 @@ void NiColorData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	};
 }
 
-void NiColorData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiColorData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	data.numKeys = uint(data.keys.size());
 	NifStream( data.numKeys, out, version );
@@ -5088,7 +5088,7 @@ void NiColorExtraData::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NifStream( data, in, version );
 }
 
-void NiColorExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiColorExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( data, out, version );
 }
@@ -5125,19 +5125,19 @@ void NiControllerManager::InternalRead( istream& in, list<uint> & link_stack, un
 	link_stack.push_back( block_num );
 }
 
-void NiControllerManager::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiControllerManager::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	numControllerSequences = uint(controllerSequences.size());
 	NifStream( cumulative, out, version );
 	NifStream( numControllerSequences, out, version );
 	for (uint i1 = 0; i1 < controllerSequences.size(); i1++) {
 		if ( controllerSequences[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(controllerSequences[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(controllerSequences[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	if ( objectPalette != NULL )
-		NifStream( link_map[StaticCast<NiObject>(objectPalette)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(objectPalette) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -5288,14 +5288,14 @@ void NiControllerSequence::InternalRead( istream& in, list<uint> & link_stack, u
 	};
 }
 
-void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numControlledBlocks = uint(controlledBlocks.size());
 	NifStream( name, out, version );
 	if ( version <= 0x0A010000 ) {
 		NifStream( textKeysName, out, version );
 		if ( textKeys != NULL )
-			NifStream( link_map[StaticCast<NiObject>(textKeys)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -5307,23 +5307,23 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 		if ( version <= 0x0A010000 ) {
 			NifStream( controlledBlocks[i1].targetName, out, version );
 			if ( controlledBlocks[i1].controller != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
 		if ( version >= 0x0A01006A ) {
 			if ( controlledBlocks[i1].interpolator != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].interpolator)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].interpolator) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 			if ( controlledBlocks[i1].controller != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].controller)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
 		if ( ( version >= 0x0A01006A ) && ( version <= 0x0A01006A ) ) {
 			if ( controlledBlocks[i1].unknownLink2 != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].unknownLink2)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].unknownLink2) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 			NifStream( controlledBlocks[i1].unknownShort0, out, version );
@@ -5336,7 +5336,7 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 		};
 		if ( version >= 0x0A020000 ) {
 			if ( controlledBlocks[i1].stringPalette != NULL )
-				NifStream( link_map[StaticCast<NiObject>(controlledBlocks[i1].stringPalette)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].stringPalette) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -5374,7 +5374,7 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	if ( version >= 0x0A01006A ) {
 		NifStream( weight, out, version );
 		if ( textKeys != NULL )
-			NifStream( link_map[StaticCast<NiObject>(textKeys)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( cycleType, out, version );
@@ -5395,14 +5395,14 @@ void NiControllerSequence::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	};
 	if ( version >= 0x0A01006A ) {
 		if ( manager != NULL )
-			NifStream( link_map[StaticCast<NiObject>(manager)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( targetName, out, version );
 	};
 	if ( version >= 0x0A020000 ) {
 		if ( stringPalette != NULL )
-			NifStream( link_map[StaticCast<NiObject>(stringPalette)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -5518,7 +5518,7 @@ void NiDefaultAVObjectPalette::InternalRead( istream& in, list<uint> & link_stac
 	};
 }
 
-void NiDefaultAVObjectPalette::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiDefaultAVObjectPalette::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numObjs = uint(objs.size());
 	NifStream( unknownInt, out, version );
@@ -5526,7 +5526,7 @@ void NiDefaultAVObjectPalette::InternalWrite( ostream& out, map<NiObjectRef,uint
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
 		NifStream( objs[i1].name, out, version );
 		if ( objs[i1].avObject != NULL )
-			NifStream( link_map[StaticCast<NiObject>(objs[i1].avObject)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(objs[i1].avObject) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -5570,7 +5570,7 @@ void NiDirectionalLight::InternalRead( istream& in, list<uint> & link_stack, uns
 	NiLight::Read( in, link_stack, version, user_version );
 }
 
-void NiDirectionalLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiDirectionalLight::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLight::Write( out, link_map, version, user_version );
 }
 
@@ -5596,7 +5596,7 @@ void NiDitherProperty::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NifStream( flags, in, version );
 }
 
-void NiDitherProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiDitherProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 }
@@ -5635,7 +5635,7 @@ void NiFlipController::InternalRead( istream& in, list<uint> & link_stack, unsig
 	};
 }
 
-void NiFlipController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFlipController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	numSources = uint(sources.size());
 	NifStream( textureSlot, out, version );
@@ -5646,7 +5646,7 @@ void NiFlipController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 	NifStream( numSources, out, version );
 	for (uint i1 = 0; i1 < sources.size(); i1++) {
 		if ( sources[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(sources[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(sources[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -5705,7 +5705,7 @@ void NiFloatData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	};
 }
 
-void NiFloatData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFloatData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	data.numKeys = uint(data.keys.size());
 	NifStream( data.numKeys, out, version );
@@ -5756,7 +5756,7 @@ void NiFloatExtraData::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NifStream( floatData, in, version );
 }
 
-void NiFloatExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFloatExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( floatData, out, version );
 }
@@ -5789,11 +5789,11 @@ void NiFloatExtraDataController::InternalRead( istream& in, list<uint> & link_st
 	};
 }
 
-void NiFloatExtraDataController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFloatExtraDataController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( version >= 0x14000004 ) {
 		if ( unknownLink != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( unknownString, out, version );
@@ -5832,11 +5832,11 @@ void NiFloatInterpolator::InternalRead( istream& in, list<uint> & link_stack, un
 	link_stack.push_back( block_num );
 }
 
-void NiFloatInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFloatInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( floatValue, out, version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -5872,7 +5872,7 @@ void NiFloatsExtraData::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void NiFloatsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFloatsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numFloats = uint(data.size());
 	NifStream( numFloats, out, version );
@@ -5919,7 +5919,7 @@ void NiFogProperty::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	NifStream( fogColor, in, version );
 }
 
-void NiFogProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiFogProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 	NifStream( fogDepth, out, version );
@@ -5975,7 +5975,7 @@ void NiGeomMorpherController::InternalRead( istream& in, list<uint> & link_stack
 	};
 }
 
-void NiGeomMorpherController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeomMorpherController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	numUnknownInts = uint(unknownInts.size());
 	numInterpolators = uint(interpolators.size());
@@ -5986,7 +5986,7 @@ void NiGeomMorpherController::InternalWrite( ostream& out, map<NiObjectRef,uint>
 		NifStream( unknown2, out, version );
 	};
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownByte, out, version );
@@ -5994,7 +5994,7 @@ void NiGeomMorpherController::InternalWrite( ostream& out, map<NiObjectRef,uint>
 		NifStream( numInterpolators, out, version );
 		for (uint i2 = 0; i2 < interpolators.size(); i2++) {
 			if ( interpolators[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(interpolators[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(interpolators[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -6077,7 +6077,7 @@ void NiGravity::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	NifStream( direction, in, version );
 }
 
-void NiGravity::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiGravity::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( force, out, version );
@@ -6113,7 +6113,7 @@ void NiIntegerExtraData::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( integerData, in, version );
 }
 
-void NiIntegerExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiIntegerExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( integerData, out, version );
 }
@@ -6145,7 +6145,7 @@ void NiIntegersExtraData::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void NiIntegersExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiIntegersExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numIntegers = uint(data.size());
 	NifStream( numIntegers, out, version );
@@ -6192,10 +6192,10 @@ void NiKeyframeController::InternalRead( istream& in, list<uint> & link_stack, u
 	link_stack.push_back( block_num );
 }
 
-void NiKeyframeController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiKeyframeController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -6228,10 +6228,10 @@ void BSKeyframeController::InternalRead( istream& in, list<uint> & link_stack, u
 	link_stack.push_back( block_num );
 }
 
-void BSKeyframeController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void BSKeyframeController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiKeyframeController::Write( out, link_map, version, user_version );
 	if ( data2 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data2)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data2) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -6304,7 +6304,7 @@ void NiKeyframeData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiKeyframeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiKeyframeData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	NifStream( numRotationKeys, out, version );
 	if ( (numRotationKeys != 0) ) {
@@ -6463,20 +6463,20 @@ void NiLightColorController::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void NiLightColorController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLightColorController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( ( version >= 0x0A010000 ) && ( version <= 0x0A010000 ) ) {
 		NifStream( unknownShort, out, version );
 	};
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	if ( version >= 0x0A020000 ) {
 		if ( interpolator != NULL )
-			NifStream( link_map[StaticCast<NiObject>(interpolator)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( unknownShort, out, version );
@@ -6520,10 +6520,10 @@ void NiLightDimmerController::InternalRead( istream& in, list<uint> & link_stack
 	link_stack.push_back( block_num );
 }
 
-void NiLightDimmerController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLightDimmerController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( unknownLink != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -6559,13 +6559,13 @@ void NiLookAtController::InternalRead( istream& in, list<uint> & link_stack, uns
 	link_stack.push_back( block_num );
 }
 
-void NiLookAtController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLookAtController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknown1, out, version );
 	};
 	if ( lookAtNode != NULL )
-		NifStream( link_map[StaticCast<NiObject>(lookAtNode)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(lookAtNode) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -6610,11 +6610,11 @@ void NiLookAtInterpolator::InternalRead( istream& in, list<uint> & link_stack, u
 	link_stack.push_back( block_num );
 }
 
-void NiLookAtInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLookAtInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( unknownShort, out, version );
 	if ( lookAt != NULL )
-		NifStream( link_map[StaticCast<NiObject>(lookAt)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(lookAt) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownFloat, out, version );
@@ -6622,15 +6622,15 @@ void NiLookAtInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> li
 	NifStream( rotation, out, version );
 	NifStream( scale, out, version );
 	if ( unknownLink1 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink1)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( unknownLink2 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( unknownLink3 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink3)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink3) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -6685,14 +6685,14 @@ void NiMaterialColorController::InternalRead( istream& in, list<uint> & link_sta
 	};
 }
 
-void NiMaterialColorController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMaterialColorController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( targetColor, out, version );
 	};
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -6735,7 +6735,7 @@ void NiMaterialProperty::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( alpha, in, version );
 }
 
-void NiMaterialProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMaterialProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A000102 ) {
 		NifStream( flags, out, version );
@@ -6821,7 +6821,7 @@ void NiMeshPSysData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMeshPSysData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysData::Write( out, link_map, version, user_version );
 	numUnknownLinks = uint(unknownLinks.size());
 	if ( version >= 0x14000005 ) {
@@ -6844,7 +6844,7 @@ void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 	NifStream( unknownInt1, out, version );
 	if ( version <= 0x14000004 ) {
 		if ( modifier != NULL )
-			NifStream( link_map[StaticCast<NiObject>(modifier)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(modifier) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -6853,7 +6853,7 @@ void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 		NifStream( numUnknownLinks, out, version );
 		for (uint i2 = 0; i2 < unknownLinks.size(); i2++) {
 			if ( unknownLinks[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(unknownLinks[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLinks[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -6867,7 +6867,7 @@ void NiMeshPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map
 	};
 	if ( version >= 0x0A020000 ) {
 		if ( unknownLink2 != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -6989,7 +6989,7 @@ void NiMorphData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	};
 }
 
-void NiMorphData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMorphData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numMorphs = uint(morphs.size());
 	NifStream( numMorphs, out, version );
@@ -7084,13 +7084,13 @@ void NiMultiTargetTransformController::InternalRead( istream& in, list<uint> & l
 	};
 }
 
-void NiMultiTargetTransformController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMultiTargetTransformController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	numExtraTargets = ushort(extraTargets.size());
 	NifStream( numExtraTargets, out, version );
 	for (uint i1 = 0; i1 < extraTargets.size(); i1++) {
 		if ( extraTargets[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(extraTargets[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(extraTargets[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -7149,21 +7149,21 @@ void NiNode::InternalRead( istream& in, list<uint> & link_stack, unsigned int ve
 	};
 }
 
-void NiNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
 	numEffects = uint(effects.size());
 	numChildren = uint(children.size());
 	NifStream( numChildren, out, version );
 	for (uint i1 = 0; i1 < children.size(); i1++) {
 		if ( children[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(children[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(children[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	NifStream( numEffects, out, version );
 	for (uint i1 = 0; i1 < effects.size(); i1++) {
 		if ( effects[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(effects[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(effects[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -7232,7 +7232,7 @@ void AvoidNode::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	NiNode::Read( in, link_stack, version, user_version );
 }
 
-void AvoidNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AvoidNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 }
 
@@ -7261,7 +7261,7 @@ void FxWidget::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	};
 }
 
-void FxWidget::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void FxWidget::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 	NifStream( unknown1, out, version );
 	for (uint i1 = 0; i1 < 292; i1++) {
@@ -7303,7 +7303,7 @@ void FxButton::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	FxWidget::Read( in, link_stack, version, user_version );
 }
 
-void FxButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void FxButton::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	FxWidget::Write( out, link_map, version, user_version );
 }
 
@@ -7338,7 +7338,7 @@ void FxRadioButton::InternalRead( istream& in, list<uint> & link_stack, unsigned
 	};
 }
 
-void FxRadioButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void FxRadioButton::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	FxWidget::Write( out, link_map, version, user_version );
 	numButtons = uint(buttons.size());
 	NifStream( unknownInt1, out, version );
@@ -7347,7 +7347,7 @@ void FxRadioButton::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map,
 	NifStream( numButtons, out, version );
 	for (uint i1 = 0; i1 < buttons.size(); i1++) {
 		if ( buttons[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(buttons[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(buttons[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -7399,7 +7399,7 @@ void NiBillboardNode::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiBillboardNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBillboardNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( billboardMode, out, version );
@@ -7428,7 +7428,7 @@ void NiBSAnimationNode::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NiNode::Read( in, link_stack, version, user_version );
 }
 
-void NiBSAnimationNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSAnimationNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 }
 
@@ -7453,7 +7453,7 @@ void NiBSParticleNode::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NiNode::Read( in, link_stack, version, user_version );
 }
 
-void NiBSParticleNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSParticleNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 }
 
@@ -7496,7 +7496,7 @@ void NiLODNode::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	};
 }
 
-void NiLODNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLODNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 	numLodLevels = uint(lodLevels.size());
 	for (uint i1 = 0; i1 < 4; i1++) {
@@ -7513,7 +7513,7 @@ void NiLODNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, uns
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknownShort, out, version );
 		if ( lodLevelData != NULL )
-			NifStream( link_map[StaticCast<NiObject>(lodLevelData)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(lodLevelData) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -7578,7 +7578,7 @@ void NiPalette::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	};
 }
 
-void NiPalette::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPalette::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( unknownByte, out, version );
 	NifStream( numEntries_, out, version );
@@ -7638,7 +7638,7 @@ void NiParticleBomb::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	NifStream( unknownFloat10, in, version );
 }
 
-void NiParticleBomb::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleBomb::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
@@ -7690,10 +7690,10 @@ void NiParticleColorModifier::InternalRead( istream& in, list<uint> & link_stack
 	link_stack.push_back( block_num );
 }
 
-void NiParticleColorModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleColorModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	if ( colorData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(colorData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -7725,7 +7725,7 @@ void NiParticleGrowFade::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( fade, in, version );
 }
 
-void NiParticleGrowFade::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleGrowFade::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( grow, out, version );
 	NifStream( fade, out, version );
@@ -7761,13 +7761,13 @@ void NiParticleMeshModifier::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void NiParticleMeshModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleMeshModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	numParticleMeshes = uint(particleMeshes.size());
 	NifStream( numParticleMeshes, out, version );
 	for (uint i1 = 0; i1 < particleMeshes.size(); i1++) {
 		if ( particleMeshes[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(particleMeshes[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(particleMeshes[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -7820,7 +7820,7 @@ void NiParticleRotation::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( unknownFloat4, in, version );
 }
 
-void NiParticleRotation::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleRotation::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownByte, out, version );
 	NifStream( unknownFloat1, out, version );
@@ -7855,7 +7855,7 @@ void NiParticles::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	NiGeometry::Read( in, link_stack, version, user_version );
 }
 
-void NiParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticles::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiGeometry::Write( out, link_map, version, user_version );
 }
 
@@ -7880,7 +7880,7 @@ void NiAutoNormalParticles::InternalRead( istream& in, list<uint> & link_stack, 
 	NiParticles::Read( in, link_stack, version, user_version );
 }
 
-void NiAutoNormalParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiAutoNormalParticles::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticles::Write( out, link_map, version, user_version );
 }
 
@@ -7905,7 +7905,7 @@ void NiParticleMeshes::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NiParticles::Read( in, link_stack, version, user_version );
 }
 
-void NiParticleMeshes::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleMeshes::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticles::Write( out, link_map, version, user_version );
 }
 
@@ -7947,7 +7947,7 @@ void NiParticlesData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticlesData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAutoNormalParticlesData::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( numActive, out, version );
@@ -8021,10 +8021,10 @@ void NiParticleMeshesData::InternalRead( istream& in, list<uint> & link_stack, u
 	link_stack.push_back( block_num );
 }
 
-void NiParticleMeshesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleMeshesData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticlesData::Write( out, link_map, version, user_version );
 	if ( unknownLink2 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -8064,7 +8064,7 @@ void NiParticleSystem::InternalRead( istream& in, list<uint> & link_stack, unsig
 	};
 }
 
-void NiParticleSystem::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleSystem::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticles::Write( out, link_map, version, user_version );
 	numModifiers = uint(modifiers.size());
 	if ( version >= 0x0A010000 ) {
@@ -8072,7 +8072,7 @@ void NiParticleSystem::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 		NifStream( numModifiers, out, version );
 		for (uint i2 = 0; i2 < modifiers.size(); i2++) {
 			if ( modifiers[i2] != NULL )
-				NifStream( link_map[StaticCast<NiObject>(modifiers[i2])], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(modifiers[i2]) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -8124,7 +8124,7 @@ void NiMeshParticleSystem::InternalRead( istream& in, list<uint> & link_stack, u
 	NiParticleSystem::Read( in, link_stack, version, user_version );
 }
 
-void NiMeshParticleSystem::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiMeshParticleSystem::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticleSystem::Write( out, link_map, version, user_version );
 }
 
@@ -8198,7 +8198,7 @@ void NiParticleSystemController::InternalRead( istream& in, list<uint> & link_st
 	NifStream( trailer, in, version );
 }
 
-void NiParticleSystemController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	numParticles = ushort(particles.size());
 	NifStream( speed, out, version );
@@ -8224,7 +8224,7 @@ void NiParticleSystemController::InternalWrite( ostream& out, map<NiObjectRef,ui
 	NifStream( emitFlags, out, version );
 	NifStream( startRandom, out, version );
 	if ( emitter != NULL )
-		NifStream( link_map[StaticCast<NiObject>(emitter)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(emitter) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( unknownShort2_, out, version );
@@ -8244,15 +8244,15 @@ void NiParticleSystemController::InternalWrite( ostream& out, map<NiObjectRef,ui
 		NifStream( particles[i1].vertexId, out, version );
 	};
 	if ( unknownLink != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( particleExtra != NULL )
-		NifStream( link_map[StaticCast<NiObject>(particleExtra)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(particleExtra) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( unknownLink2 != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink2)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( trailer, out, version );
@@ -8338,7 +8338,7 @@ void NiBSPArrayController::InternalRead( istream& in, list<uint> & link_stack, u
 	NiParticleSystemController::Read( in, link_stack, version, user_version );
 }
 
-void NiBSPArrayController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBSPArrayController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticleSystemController::Write( out, link_map, version, user_version );
 }
 
@@ -8375,7 +8375,7 @@ void NiPathController::InternalRead( istream& in, list<uint> & link_stack, unsig
 	link_stack.push_back( block_num );
 }
 
-void NiPathController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPathController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknownShort2, out, version );
@@ -8385,11 +8385,11 @@ void NiPathController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_m
 	NifStream( unknownInt3, out, version );
 	NifStream( unknownShort, out, version );
 	if ( posData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(posData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(posData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( floatData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(floatData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(floatData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -8436,17 +8436,17 @@ void NiPathInterpolator::InternalRead( istream& in, list<uint> & link_stack, uns
 	link_stack.push_back( block_num );
 }
 
-void NiPathInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPathInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiBlendInterpolator::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
 	NifStream( unknownShort2, out, version );
 	if ( posData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(posData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(posData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( floatData != NULL )
-		NifStream( link_map[StaticCast<NiObject>(floatData)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(floatData) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -8521,7 +8521,7 @@ void NiPixelData::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	};
 }
 
-void NiPixelData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPixelData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numMipmaps = uint(mipmaps.size());
 	NifStream( pixelFormat, out, version );
@@ -8544,7 +8544,7 @@ void NiPixelData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, u
 		};
 	};
 	if ( palette != NULL )
-		NifStream( link_map[StaticCast<NiObject>(palette)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(palette) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( numMipmaps, out, version );
@@ -8670,7 +8670,7 @@ void NiPlanarCollider::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NifStream( unknownFloat16, in, version );
 }
 
-void NiPlanarCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPlanarCollider::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	if ( version >= 0x0A000100 ) {
 		NifStream( unknownShort, out, version );
@@ -8739,11 +8739,11 @@ void NiPoint3Interpolator::InternalRead( istream& in, list<uint> & link_stack, u
 	link_stack.push_back( block_num );
 }
 
-void NiPoint3Interpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPoint3Interpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( point3Value, out, version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -8777,7 +8777,7 @@ void NiPointLight::InternalRead( istream& in, list<uint> & link_stack, unsigned 
 	NifStream( quadraticAttenuation, in, version );
 }
 
-void NiPointLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPointLight::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLight::Write( out, link_map, version, user_version );
 	NifStream( constantAttenuation, out, version );
 	NifStream( linearAttenuation, out, version );
@@ -8816,7 +8816,7 @@ void NiPosData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	};
 }
 
-void NiPosData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPosData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	data.numKeys = uint(data.keys.size());
 	NifStream( data.numKeys, out, version );
@@ -8870,11 +8870,11 @@ void NiPSysAgeDeathModifier::InternalRead( istream& in, list<uint> & link_stack,
 	link_stack.push_back( block_num );
 }
 
-void NiPSysAgeDeathModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysAgeDeathModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( spawnOnDeath, out, version );
 	if ( spawnModifier != NULL )
-		NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -8917,10 +8917,10 @@ void NiPSysBombModifier::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void NiPSysBombModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysBombModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	if ( unknownLink != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	for (uint i1 = 0; i1 < 2; i1++) {
@@ -8994,7 +8994,7 @@ void NiPSysBoundUpdateModifier::InternalRead( istream& in, list<uint> & link_sta
 	NifStream( updateSkip, in, version );
 }
 
-void NiPSysBoundUpdateModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysBoundUpdateModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( updateSkip, out, version );
 }
@@ -9024,7 +9024,7 @@ void NiPSysBoxEmitter::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NifStream( depth, in, version );
 }
 
-void NiPSysBoxEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysBoxEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysVolumeEmitter::Write( out, link_map, version, user_version );
 	NifStream( width, out, version );
 	NifStream( height, out, version );
@@ -9058,10 +9058,10 @@ void NiPSysColliderManager::InternalRead( istream& in, list<uint> & link_stack, 
 	link_stack.push_back( block_num );
 }
 
-void NiPSysColliderManager::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysColliderManager::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	if ( collider != NULL )
-		NifStream( link_map[StaticCast<NiObject>(collider)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(collider) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -9094,10 +9094,10 @@ void NiPSysColorModifier::InternalRead( istream& in, list<uint> & link_stack, un
 	link_stack.push_back( block_num );
 }
 
-void NiPSysColorModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysColorModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -9129,7 +9129,7 @@ void NiPSysCylinderEmitter::InternalRead( istream& in, list<uint> & link_stack, 
 	NifStream( height, in, version );
 }
 
-void NiPSysCylinderEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysCylinderEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysVolumeEmitter::Write( out, link_map, version, user_version );
 	NifStream( radius, out, version );
 	NifStream( height, out, version );
@@ -9196,7 +9196,7 @@ void NiPSysData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	NifStream( unknownInt1, in, version );
 }
 
-void NiPSysData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysData::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A020000 ) {
 		for (uint i2 = 0; i2 < unknownFloats4.size(); i2++) {
@@ -9328,10 +9328,10 @@ void NiPSysDragModifier::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( rangeFalloff, in, version );
 }
 
-void NiPSysDragModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysDragModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	if ( parent != NULL )
-		NifStream( link_map[StaticCast<NiObject>(parent)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( dragAxis, out, version );
@@ -9376,17 +9376,17 @@ void NiPSysEmitterCtlr::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void NiPSysEmitterCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	if ( version >= 0x0A020000 ) {
 		if ( visibilityInterpolator != NULL )
-			NifStream( link_map[StaticCast<NiObject>(visibilityInterpolator)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(visibilityInterpolator) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9438,7 +9438,7 @@ void NiPSysEmitterCtlrData::InternalRead( istream& in, list<uint> & link_stack, 
 	};
 }
 
-void NiPSysEmitterCtlrData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterCtlrData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numVisibilityKeys_ = uint(visibilityKeys_.size());
 	floatKeys_.numKeys = uint(floatKeys_.keys.size());
@@ -9507,7 +9507,7 @@ void NiPSysEmitterDeclinationCtlr::InternalRead( istream& in, list<uint> & link_
 	APSysCtlr::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysEmitterDeclinationCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterDeclinationCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 }
 
@@ -9532,7 +9532,7 @@ void NiPSysEmitterDeclinationVarCtlr::InternalRead( istream& in, list<uint> & li
 	APSysCtlr::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysEmitterDeclinationVarCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterDeclinationVarCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 }
 
@@ -9557,7 +9557,7 @@ void NiPSysEmitterInitialRadiusCtlr::InternalRead( istream& in, list<uint> & lin
 	APSysCtlr::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysEmitterInitialRadiusCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterInitialRadiusCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 }
 
@@ -9587,11 +9587,11 @@ void NiPSysEmitterLifeSpanCtlr::InternalRead( istream& in, list<uint> & link_sta
 	};
 }
 
-void NiPSysEmitterLifeSpanCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterLifeSpanCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( unknownLink != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9629,11 +9629,11 @@ void NiPSysEmitterSpeedCtlr::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void NiPSysEmitterSpeedCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysEmitterSpeedCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( unknownLink != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9675,10 +9675,10 @@ void NiPSysGravityModifier::InternalRead( istream& in, list<uint> & link_stack, 
 	NifStream( turbulenceScale, in, version );
 }
 
-void NiPSysGravityModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysGravityModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	if ( gravityObject != NULL )
-		NifStream( link_map[StaticCast<NiObject>(gravityObject)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(gravityObject) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( gravityAxis, out, version );
@@ -9723,11 +9723,11 @@ void NiPSysGravityStrengthCtlr::InternalRead( istream& in, list<uint> & link_sta
 	};
 }
 
-void NiPSysGravityStrengthCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysGravityStrengthCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( unknownLink != NULL )
-			NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9764,7 +9764,7 @@ void NiPSysGrowFadeModifier::InternalRead( istream& in, list<uint> & link_stack,
 	NifStream( fadeGeneration, in, version );
 }
 
-void NiPSysGrowFadeModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysGrowFadeModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( growTime, out, version );
 	NifStream( growGeneration, out, version );
@@ -9807,13 +9807,13 @@ void NiPSysMeshEmitter::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( emissionAxis, in, version );
 }
 
-void NiPSysMeshEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysMeshEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysEmitter::Write( out, link_map, version, user_version );
 	numEmitterMeshes = uint(emitterMeshes.size());
 	NifStream( numEmitterMeshes, out, version );
 	for (uint i1 = 0; i1 < emitterMeshes.size(); i1++) {
 		if ( emitterMeshes[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(emitterMeshes[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(emitterMeshes[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9874,13 +9874,13 @@ void NiPSysMeshUpdateModifier::InternalRead( istream& in, list<uint> & link_stac
 	};
 }
 
-void NiPSysMeshUpdateModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysMeshUpdateModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	numMeshes = uint(meshes.size());
 	NifStream( numMeshes, out, version );
 	for (uint i1 = 0; i1 < meshes.size(); i1++) {
 		if ( meshes[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(meshes[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(meshes[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -9931,7 +9931,7 @@ void NiPSysModifierActiveCtlr::InternalRead( istream& in, list<uint> & link_stac
 	};
 }
 
-void NiPSysModifierActiveCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysModifierActiveCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysCtlr::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		NifStream( unknownInt, out, version );
@@ -9976,25 +9976,25 @@ void NiPSysPlanarCollider::InternalRead( istream& in, list<uint> & link_stack, u
 	NifStream( yAxis, in, version );
 }
 
-void NiPSysPlanarCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysPlanarCollider::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( bounce, out, version );
 	NifStream( spawnOnCollide, out, version );
 	NifStream( dieOnCollide, out, version );
 	if ( spawnModifier != NULL )
-		NifStream( link_map[StaticCast<NiObject>(spawnModifier)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( parent != NULL )
-		NifStream( link_map[StaticCast<NiObject>(parent)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( unknownLink_ != NULL )
-		NifStream( link_map[StaticCast<NiObject>(unknownLink_)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink_) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( colliderObject != NULL )
-		NifStream( link_map[StaticCast<NiObject>(colliderObject)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(colliderObject) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( width, out, version );
@@ -10045,7 +10045,7 @@ void NiPSysPositionModifier::InternalRead( istream& in, list<uint> & link_stack,
 	NiPSysModifier::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysPositionModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysPositionModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 }
 
@@ -10070,7 +10070,7 @@ void NiPSysResetOnLoopCtlr::InternalRead( istream& in, list<uint> & link_stack, 
 	NiTimeController::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysResetOnLoopCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysResetOnLoopCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 }
 
@@ -10104,7 +10104,7 @@ void NiPSysRotationModifier::InternalRead( istream& in, list<uint> & link_stack,
 	NifStream( initialAxis, in, version );
 }
 
-void NiPSysRotationModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysRotationModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( initialRotationSpeed, out, version );
 	if ( version >= 0x14000004 ) {
@@ -10153,7 +10153,7 @@ void NiPSysSpawnModifier::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( lifeSpanVariation, in, version );
 }
 
-void NiPSysSpawnModifier::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysSpawnModifier::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
 	NifStream( numSpawnGenerations, out, version );
 	NifStream( percentageSpawned, out, version );
@@ -10195,7 +10195,7 @@ void NiPSysSphereEmitter::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( radius, in, version );
 }
 
-void NiPSysSphereEmitter::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysSphereEmitter::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysVolumeEmitter::Write( out, link_map, version, user_version );
 	NifStream( radius, out, version );
 }
@@ -10222,7 +10222,7 @@ void NiPSysUpdateCtlr::InternalRead( istream& in, list<uint> & link_stack, unsig
 	NiTimeController::Read( in, link_stack, version, user_version );
 }
 
-void NiPSysUpdateCtlr::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPSysUpdateCtlr::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 }
 
@@ -10247,7 +10247,7 @@ void NiLODData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	NiObject::Read( in, link_stack, version, user_version );
 }
 
-void NiLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiLODData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 }
 
@@ -10279,7 +10279,7 @@ void NiRangeLODData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiRangeLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiRangeLODData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLODData::Write( out, link_map, version, user_version );
 	numLodLevels = uint(lodLevels.size());
 	NifStream( lodCenter, out, version );
@@ -10332,7 +10332,7 @@ void NiScreenLODData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiScreenLODData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiScreenLODData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLODData::Write( out, link_map, version, user_version );
 	proportionCount = uint(proportionLevels.size());
 	NifStream( boundCenter, out, version );
@@ -10384,7 +10384,7 @@ void NiRotatingParticles::InternalRead( istream& in, list<uint> & link_stack, un
 	NiParticles::Read( in, link_stack, version, user_version );
 }
 
-void NiRotatingParticles::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiRotatingParticles::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticles::Write( out, link_map, version, user_version );
 }
 
@@ -10409,7 +10409,7 @@ void NiRotatingParticlesData::InternalRead( istream& in, list<uint> & link_stack
 	NiParticlesData::Read( in, link_stack, version, user_version );
 }
 
-void NiRotatingParticlesData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiRotatingParticlesData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticlesData::Write( out, link_map, version, user_version );
 }
 
@@ -10434,7 +10434,7 @@ void NiSequenceStreamHelper::InternalRead( istream& in, list<uint> & link_stack,
 	NiObjectNET::Read( in, link_stack, version, user_version );
 }
 
-void NiSequenceStreamHelper::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSequenceStreamHelper::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObjectNET::Write( out, link_map, version, user_version );
 }
 
@@ -10460,7 +10460,7 @@ void NiShadeProperty::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NifStream( flags, in, version );
 }
 
-void NiShadeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiShadeProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 }
@@ -10513,7 +10513,7 @@ void NiSkinData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	};
 }
 
-void NiSkinData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numBones = uint(boneList.size());
 	NifStream( rotation, out, version );
@@ -10522,7 +10522,7 @@ void NiSkinData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, un
 	NifStream( numBones, out, version );
 	if ( version <= 0x0A010000 ) {
 		if ( skinPartition != NULL )
-			NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -10615,27 +10615,27 @@ void NiSkinInstance::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiSkinInstance::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinInstance::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numBones = uint(bones.size());
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	if ( version >= 0x0A020000 ) {
 		if ( skinPartition != NULL )
-			NifStream( link_map[StaticCast<NiObject>(skinPartition)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
 	if ( skeletonRoot != NULL )
-		NifStream( link_map[StaticCast<NiObject>(skeletonRoot)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(skeletonRoot) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( numBones, out, version );
 	for (uint i1 = 0; i1 < bones.size(); i1++) {
 		if ( bones[i1] != NULL )
-			NifStream( link_map[StaticCast<NiObject>(bones[i1])], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -10693,7 +10693,7 @@ void NiClodSkinInstance::InternalRead( istream& in, list<uint> & link_stack, uns
 	NiSkinInstance::Read( in, link_stack, version, user_version );
 }
 
-void NiClodSkinInstance::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiClodSkinInstance::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSkinInstance::Write( out, link_map, version, user_version );
 }
 
@@ -10812,7 +10812,7 @@ void NiSkinPartition::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiSkinPartition::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinPartition::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	numSkinPartitionBlocks = uint(skinPartitionBlocks.size());
 	NifStream( numSkinPartitionBlocks, out, version );
@@ -11074,7 +11074,7 @@ void NiSourceTexture::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiSourceTexture::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSourceTexture::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObjectNET::Write( out, link_map, version, user_version );
 	NifStream( useExternal, out, version );
 	if ( (useExternal == 1) ) {
@@ -11083,7 +11083,7 @@ void NiSourceTexture::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 	if ( version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
 			if ( unknownLink != NULL )
-				NifStream( link_map[StaticCast<NiObject>(unknownLink)], out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, version );
 			else
 				NifStream( 0xffffffff, out, version );
 		};
@@ -11100,7 +11100,7 @@ void NiSourceTexture::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 	};
 	if ( (useExternal == 0) ) {
 		if ( pixelData != NULL )
-			NifStream( link_map[StaticCast<NiObject>(pixelData)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(pixelData) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -11161,7 +11161,7 @@ void NiSpecularProperty::InternalRead( istream& in, list<uint> & link_stack, uns
 	NifStream( flags, in, version );
 }
 
-void NiSpecularProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSpecularProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 }
@@ -11199,7 +11199,7 @@ void NiSphericalCollider::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( unknownFloat5, in, version );
 }
 
-void NiSphericalCollider::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSphericalCollider::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownShort1, out, version );
@@ -11244,7 +11244,7 @@ void NiSpotLight::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	NifStream( exponent, in, version );
 }
 
-void NiSpotLight::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiSpotLight::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPointLight::Write( out, link_map, version, user_version );
 	NifStream( cutoffAngle, out, version );
 	NifStream( exponent, out, version );
@@ -11284,7 +11284,7 @@ void NiStencilProperty::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( drawMode, in, version );
 }
 
-void NiStencilProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiStencilProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A000102 ) {
 		NifStream( flags, out, version );
@@ -11333,7 +11333,7 @@ void NiStringExtraData::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( stringData, in, version );
 }
 
-void NiStringExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiStringExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	if ( version <= 0x04020200 ) {
 		NifStream( bytesRemaining, out, version );
@@ -11366,7 +11366,7 @@ void NiStringPalette::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NifStream( palette.length, in, version );
 }
 
-void NiStringPalette::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiStringPalette::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( palette.palette, out, version );
 	NifStream( palette.length, out, version );
@@ -11400,7 +11400,7 @@ void NiStringsExtraData::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void NiStringsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiStringsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numStrings = uint(data.size());
 	NifStream( numStrings, out, version );
@@ -11452,7 +11452,7 @@ void NiTextKeyExtraData::InternalRead( istream& in, list<uint> & link_stack, uns
 	};
 }
 
-void NiTextKeyExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextKeyExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numTextKeys = uint(textKeys.size());
 	if ( version <= 0x04020200 ) {
@@ -11519,7 +11519,7 @@ void NiTextureEffect::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiTextureEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextureEffect::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiDynamicEffect::Write( out, link_map, version, user_version );
 	NifStream( modelProjectionMatrix, out, version );
 	NifStream( modelProjectionTransform, out, version );
@@ -11528,7 +11528,7 @@ void NiTextureEffect::InternalWrite( ostream& out, map<NiObjectRef,uint> link_ma
 	NifStream( textureType, out, version );
 	NifStream( coordinateGenerationType, out, version );
 	if ( sourceTexture != NULL )
-		NifStream( link_map[StaticCast<NiObject>(sourceTexture)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( clippingPlane, out, version );
@@ -11588,14 +11588,14 @@ void NiTextureTransformController::InternalRead( istream& in, list<uint> & link_
 	};
 }
 
-void NiTextureTransformController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextureTransformController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	NifStream( unknown2, out, version );
 	NifStream( textureSlot, out, version );
 	NifStream( operation, out, version );
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -11634,7 +11634,7 @@ void NiTextureModeProperty::InternalRead( istream& in, list<uint> & link_stack, 
 	};
 }
 
-void NiTextureModeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextureModeProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 3; i1++) {
 		NifStream( unknown3Shorts[i1], out, version );
@@ -11679,7 +11679,7 @@ void NiImage::InternalRead( istream& in, list<uint> & link_stack, unsigned int v
 	};
 }
 
-void NiImage::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiImage::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	NifStream( external_, out, version );
 	NifStream( file, out, version );
@@ -11727,11 +11727,11 @@ void NiTextureProperty::InternalRead( istream& in, list<uint> & link_stack, unsi
 	link_stack.push_back( block_num );
 }
 
-void NiTextureProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextureProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 	if ( image != NULL )
-		NifStream( link_map[StaticCast<NiObject>(image)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -12059,7 +12059,7 @@ void NiTexturingProperty::InternalRead( istream& in, list<uint> & link_stack, un
 	};
 }
 
-void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTexturingProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	numShaderTextures = uint(shaderTextures.size());
 	if ( version <= 0x0A000102 ) {
@@ -12070,7 +12070,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasBaseTexture, out, version );
 	if ( (hasBaseTexture != 0) ) {
 		if ( baseTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(baseTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(baseTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( baseTexture.clampMode, out, version );
@@ -12097,7 +12097,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasDarkTexture, out, version );
 	if ( (hasDarkTexture != 0) ) {
 		if ( darkTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(darkTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(darkTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( darkTexture.clampMode, out, version );
@@ -12124,7 +12124,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasDetailTexture, out, version );
 	if ( (hasDetailTexture != 0) ) {
 		if ( detailTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(detailTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(detailTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( detailTexture.clampMode, out, version );
@@ -12151,7 +12151,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasGlossTexture, out, version );
 	if ( (hasGlossTexture != 0) ) {
 		if ( glossTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(glossTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(glossTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( glossTexture.clampMode, out, version );
@@ -12178,7 +12178,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasGlowTexture, out, version );
 	if ( (hasGlowTexture != 0) ) {
 		if ( glowTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(glowTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(glowTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( glowTexture.clampMode, out, version );
@@ -12205,7 +12205,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasBumpMapTexture, out, version );
 	if ( (hasBumpMapTexture != 0) ) {
 		if ( bumpMapTexture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(bumpMapTexture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(bumpMapTexture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( bumpMapTexture.clampMode, out, version );
@@ -12235,7 +12235,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	NifStream( hasDecal0Texture, out, version );
 	if ( (hasDecal0Texture != 0) ) {
 		if ( decal0Texture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(decal0Texture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(decal0Texture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( decal0Texture.clampMode, out, version );
@@ -12264,7 +12264,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	};
 	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
 		if ( decal1Texture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(decal1Texture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(decal1Texture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( decal1Texture.clampMode, out, version );
@@ -12293,7 +12293,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	};
 	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
 		if ( decal2Texture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(decal2Texture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(decal2Texture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( decal2Texture.clampMode, out, version );
@@ -12322,7 +12322,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 	};
 	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
 		if ( decal3Texture.source != NULL )
-			NifStream( link_map[StaticCast<NiObject>(decal3Texture.source)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(decal3Texture.source) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 		NifStream( decal3Texture.clampMode, out, version );
@@ -12352,7 +12352,7 @@ void NiTexturingProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> lin
 			NifStream( shaderTextures[i2].isUsed, out, version );
 			if ( (shaderTextures[i2].isUsed != 0) ) {
 				if ( shaderTextures[i2].textureData.source != NULL )
-					NifStream( link_map[StaticCast<NiObject>(shaderTextures[i2].textureData.source)], out, version );
+					NifStream( link_map.find( StaticCast<NiObject>(shaderTextures[i2].textureData.source) )->second, out, version );
 				else
 					NifStream( 0xffffffff, out, version );
 				NifStream( shaderTextures[i2].textureData.clampMode, out, version );
@@ -12683,7 +12683,7 @@ void NiTransformController::InternalRead( istream& in, list<uint> & link_stack, 
 	NiSingleInterpolatorController::Read( in, link_stack, version, user_version );
 }
 
-void NiTransformController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTransformController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 }
 
@@ -12708,7 +12708,7 @@ void NiTransformData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	NiKeyframeData::Read( in, link_stack, version, user_version );
 }
 
-void NiTransformData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTransformData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiKeyframeData::Write( out, link_map, version, user_version );
 }
 
@@ -12744,7 +12744,7 @@ void NiTransformInterpolator::InternalRead( istream& in, list<uint> & link_stack
 	link_stack.push_back( block_num );
 }
 
-void NiTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTransformInterpolator::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiInterpolator::Write( out, link_map, version, user_version );
 	NifStream( translation, out, version );
 	NifStream( rotation, out, version );
@@ -12755,7 +12755,7 @@ void NiTransformInterpolator::InternalWrite( ostream& out, map<NiObjectRef,uint>
 		};
 	};
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -12800,7 +12800,7 @@ void NiTriShape::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	NiTriBasedGeom::Read( in, link_stack, version, user_version );
 }
 
-void NiTriShape::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeom::Write( out, link_map, version, user_version );
 }
 
@@ -12852,7 +12852,7 @@ void NiTriShapeData::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	};
 }
 
-void NiTriShapeData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriShapeData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
 	numMatchGroups = ushort(matchGroups.size());
 	NifStream( numTrianglePoints, out, version );
@@ -12939,7 +12939,7 @@ void NiTriStrips::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	NiTriBasedGeom::Read( in, link_stack, version, user_version );
 }
 
-void NiTriStrips::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriStrips::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeom::Write( out, link_map, version, user_version );
 }
 
@@ -12992,7 +12992,7 @@ void NiTriStripsData::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiTriStripsData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriStripsData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < points.size(); i1++)
 		stripLengths[i1] = ushort(points[i1].size());
@@ -13074,7 +13074,7 @@ void NiClod::InternalRead( istream& in, list<uint> & link_stack, unsigned int ve
 	NiTriBasedGeom::Read( in, link_stack, version, user_version );
 }
 
-void NiClod::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiClod::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeom::Write( out, link_map, version, user_version );
 }
 
@@ -13121,7 +13121,7 @@ void NiClodData::InternalRead( istream& in, list<uint> & link_stack, unsigned in
 	};
 }
 
-void NiClodData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiClodData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
 	unknownCount3 = ushort(unknownClodShorts3.size());
 	unknownCount2 = ushort(unknownClodShorts2.size());
@@ -13221,11 +13221,11 @@ void NiUVController::InternalRead( istream& in, list<uint> & link_stack, unsigne
 	link_stack.push_back( block_num );
 }
 
-void NiUVController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiUVController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
 	NifStream( unknownShort, out, version );
 	if ( data != NULL )
-		NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 }
@@ -13266,7 +13266,7 @@ void NiUVData::InternalRead( istream& in, list<uint> & link_stack, unsigned int 
 	};
 }
 
-void NiUVData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiUVData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	for (uint i1 = 0; i1 < 4; i1++) {
 		uvGroups[i1].numKeys = uint(uvGroups[i1].keys.size());
@@ -13327,7 +13327,7 @@ void NiVectorExtraData::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NifStream( unknownFloat, in, version );
 }
 
-void NiVectorExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiVectorExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	NifStream( vectorData, out, version );
 	NifStream( unknownFloat, out, version );
@@ -13359,7 +13359,7 @@ void NiVertexColorProperty::InternalRead( istream& in, list<uint> & link_stack, 
 	NifStream( lightingMode, in, version );
 }
 
-void NiVertexColorProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiVertexColorProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 	NifStream( vertexMode, out, version );
@@ -13396,7 +13396,7 @@ void NiVertWeightsExtraData::InternalRead( istream& in, list<uint> & link_stack,
 	};
 }
 
-void NiVertWeightsExtraData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiVertWeightsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
 	numVertices = ushort(weight.size());
 	NifStream( numBytes, out, version );
@@ -13447,11 +13447,11 @@ void NiVisController::InternalRead( istream& in, list<uint> & link_stack, unsign
 	};
 }
 
-void NiVisController::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiVisController::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		if ( data != NULL )
-			NifStream( link_map[StaticCast<NiObject>(data)], out, version );
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 		else
 			NifStream( 0xffffffff, out, version );
 	};
@@ -13489,7 +13489,7 @@ void NiVisData::InternalRead( istream& in, list<uint> & link_stack, unsigned int
 	};
 }
 
-void NiVisData::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiVisData::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
 	numVisKeys = uint(visKeys.size());
 	NifStream( numVisKeys, out, version );
@@ -13534,7 +13534,7 @@ void NiWireframeProperty::InternalRead( istream& in, list<uint> & link_stack, un
 	NifStream( flags, in, version );
 }
 
-void NiWireframeProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiWireframeProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 }
@@ -13565,7 +13565,7 @@ void NiZBufferProperty::InternalRead( istream& in, list<uint> & link_stack, unsi
 	};
 }
 
-void NiZBufferProperty::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiZBufferProperty::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
 	NifStream( flags, out, version );
 	if ( version >= 0x0401000C ) {
@@ -13596,7 +13596,7 @@ void RootCollisionNode::InternalRead( istream& in, list<uint> & link_stack, unsi
 	NiNode::Read( in, link_stack, version, user_version );
 }
 
-void RootCollisionNode::InternalWrite( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void RootCollisionNode::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
 }
 

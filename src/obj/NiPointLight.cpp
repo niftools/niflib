@@ -15,7 +15,7 @@ void NiPointLight::Read( istream& in, list<uint> & link_stack, unsigned int vers
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiPointLight::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiPointLight::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

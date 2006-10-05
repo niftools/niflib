@@ -34,7 +34,7 @@ struct NIFLIB_API Footer {
 	 */
 	vector<Ref<NiObject > > roots;
 	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const;
+	void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
 	string asString( bool verbose = false ) const;
 };
 

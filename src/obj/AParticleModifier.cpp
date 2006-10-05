@@ -16,7 +16,7 @@ void AParticleModifier::Read( istream& in, list<uint> & link_stack, unsigned int
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void AParticleModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void AParticleModifier::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

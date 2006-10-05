@@ -15,7 +15,7 @@ void NiParticleBomb::Read( istream& in, list<uint> & link_stack, unsigned int ve
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiParticleBomb::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleBomb::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

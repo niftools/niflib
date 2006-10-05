@@ -15,7 +15,7 @@ void NiBlendInterpolator::Read( istream& in, list<uint> & link_stack, unsigned i
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiBlendInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiBlendInterpolator::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

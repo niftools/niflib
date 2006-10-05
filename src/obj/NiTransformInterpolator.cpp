@@ -16,7 +16,7 @@ void NiTransformInterpolator::Read( istream& in, list<uint> & link_stack, unsign
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiTransformInterpolator::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiTransformInterpolator::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

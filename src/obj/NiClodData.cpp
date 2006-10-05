@@ -15,7 +15,7 @@ void NiClodData::Read( istream& in, list<uint> & link_stack, unsigned int versio
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiClodData::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiClodData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

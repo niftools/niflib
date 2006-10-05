@@ -16,7 +16,7 @@ void NiParticleColorModifier::Read( istream& in, list<uint> & link_stack, unsign
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiParticleColorModifier::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiParticleColorModifier::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 

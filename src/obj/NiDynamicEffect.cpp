@@ -16,7 +16,7 @@ void NiDynamicEffect::Read( istream& in, list<uint> & link_stack, unsigned int v
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiDynamicEffect::Write( ostream& out, map<NiObjectRef,uint> link_map, unsigned int version, unsigned int user_version ) const {
+void NiDynamicEffect::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
