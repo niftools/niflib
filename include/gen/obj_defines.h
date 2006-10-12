@@ -2541,7 +2541,7 @@ CompareMode function; \
 
 #define NI_SOURCE_TEXTURE_PARENT NiObjectNET
 
-#define NI_SOURCE_TEXTURE_CONSTRUCT  : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1)
+#define NI_SOURCE_TEXTURE_CONSTRUCT  : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)1), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1)
 
 #define NI_SPECULAR_PROPERTY_INCLUDE "NiProperty.h"
 
