@@ -447,18 +447,17 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, NifInfo & inf
    footer.numRoots = 0;
    if (roots.size() == 1) {
       const NiObjectRef& root = roots.front();
-      if (root->IsDerivedType(NiAVObject::TypeConst())) {
-         // Handle most NIF file formats
-         footer.numRoots = 1;
-         footer.roots.resize(1);
-	      footer.roots[0] = StaticCast<NiObject>(root);
-      } else if (root->IsDerivedType(NiControllerSequence::TypeConst())) {
+      if (root->IsDerivedType(NiControllerSequence::TypeConst())) {
          // KF animation files allow for multiple roots of type NiControllerSequence
          for ( uint i = 0; i < objects.size(); ++i ) {
             if (objects[i]->IsDerivedType(NiControllerSequence::TypeConst())) {
                footer.roots.push_back(objects[i]);
             }
          }
+      } else { // just assume its correctly passed in 
+         footer.numRoots = 1;
+         footer.roots.resize(1);
+         footer.roots[0] = root;
       }
    } else {
       footer.numRoots = roots.size();
@@ -716,13 +715,13 @@ static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_roo
 					}
 				}
 
-				//If this node has no keyframe controller, put it in the list
+				//If this node has a keyframe controller, put it in the list
 				if ( key_controller != NULL ) {
 					node_controllers.push_back( pair<NiNodeRef,NiKeyframeControllerRef>( node, key_controller ) );
 				}
 			}
 			
-			for ( list< pair< NiNodeRef, NiKeyframeControllerRef> >::iterator it = node_controllers.begin(); it != node_controllers.end(); ++it ) {
+			for ( list< pair< NiNodeRef, NiKeyframeControllerRef> >::reverse_iterator it = node_controllers.rbegin(); it != node_controllers.rend(); ++it ) {
 				//Add string data				
 				NiStringExtraDataRef nodextra = new NiStringExtraData;
 				nodextra->SetData( it->first->GetName() );
