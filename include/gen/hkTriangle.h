@@ -26,8 +26,7 @@ struct NIFLIB_API hkTriangle {
 	 */
 	ushort unknownShort;
 	/*!
-	 * This appears to be a normalized vector, so probably it is a normal or
-	 * a tangent vector or something like that.
+	 * This is the triangle's normal.
 	 */
 	Vector3 normal;
 };

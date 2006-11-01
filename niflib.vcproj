@@ -1475,6 +1475,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\OblivionColFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\OblivionSubShape.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\Particle.cpp"
 					>
 				</File>
@@ -2582,6 +2590,14 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\obj_defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\OblivionColFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\OblivionSubShape.h"
 					>
 				</File>
 				<File

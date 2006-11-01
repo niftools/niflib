@@ -52,22 +52,23 @@ string NiObjectNET::GetIDString() {
 	return out.str();
 }
 
-void NiObjectNET::AddExtraData( Ref<NiExtraData> & obj, uint version ) {
+void NiObjectNET::AddExtraData( NiExtraData * obj, uint version ) {
 	if ( version >= VER_10_0_1_0 ) {
 		//In later versions, extra data is just stored in a vector
-		extraDataList.push_back( obj );
+		extraDataList.push_back( NiExtraDataRef(obj) );
 	} else {
 		//In earlier versions, extra data is a singly linked list
 		//Insert at begining of list
 		obj->SetNextExtraData( extraData);
-		extraData = obj;
+		extraData = NiExtraDataRef(obj);
 	}
 }
 
-void NiObjectNET::RemoveExtraData( Ref<NiExtraData> obj ) {
+void NiObjectNET::RemoveExtraData( NiExtraData * obj ) {
 	//Search both types of extra data list for the one to remove
+	NiExtraDataRef ref(obj);
 	for ( vector< NiExtraDataRef >::iterator it = extraDataList.begin(); it != extraDataList.end(); ) {
-		if ( *it == obj ) {
+		if ( *it == ref ) {
 			it = extraDataList.erase( it );
 		} else {
 			++it;
@@ -76,7 +77,7 @@ void NiObjectNET::RemoveExtraData( Ref<NiExtraData> obj ) {
 	
 	NiExtraDataRef * extra = &extraData;
 	while ( (*extra) != NULL ) {
-		if ( (*extra) == obj ) {
+		if ( (*extra) == ref ) {
 			//Cut this reference out of the list
 			(*extra) = (*extra)->GetNextExtraData();
 		} else {
@@ -86,7 +87,7 @@ void NiObjectNET::RemoveExtraData( Ref<NiExtraData> obj ) {
 	}
 }
 
-void NiObjectNET::ShiftExtraData( uint version ) {
+void NiObjectNET::ShiftExtraData( unsigned version ) {
 	//Shift any extra data references that are stored in a way that doesn't match
 	//the requested version to the way that does
 	if ( version >= VER_10_0_1_0 ) {
@@ -132,17 +133,18 @@ list< Ref<NiExtraData> > NiObjectNET::GetExtraData() const {
 	return extras;
 }
 
-void NiObjectNET::AddController( Ref<NiTimeController> & obj ) {
+	void NiObjectNET::AddController( NiTimeController * obj ) {
 	//Insert at begining of list
 	obj->SetTarget( this );
 	obj->SetNextController( controller );
 	controller = obj;
 }
 
-void NiObjectNET::RemoveController( Ref<NiTimeController> obj ) {
+void NiObjectNET::RemoveController( NiTimeController * obj ) {
+	NiTimeControllerRef ref(obj);
 	for(NiTimeControllerRef last = controller, cont = last, next; cont != NULL; cont = next ) {
       next = cont->GetNextController();
-		if ( cont == obj ) {
+		if ( cont == ref ) {
 			//Cut this reference out of the list
 			cont->SetTarget( NULL );
          cont->SetNextController( NiTimeControllerRef() );

@@ -48,14 +48,14 @@ public:
 	 */
 	virtual string GetIDString();
 
-	void AddExtraData( Ref<NiExtraData> & obj, uint version = VER_10_0_1_0 );
-	void RemoveExtraData( Ref<NiExtraData> obj );
+	void AddExtraData( NiExtraData * obj, unsigned version = VER_10_0_1_0 );
+	void RemoveExtraData( NiExtraData * obj );
 	void ShiftExtraData( uint version = VER_10_0_1_0 );
 	void ClearExtraData();
 	list< Ref<NiExtraData> > GetExtraData() const;
 
-	void AddController( Ref<NiTimeController> & obj );
-	void RemoveController( Ref<NiTimeController> obj );
+	void AddController( NiTimeController * obj );
+	void RemoveController( NiTimeController * obj );
 	void ClearControllers();
 	list< Ref<NiTimeController> > GetControllers() const;
 

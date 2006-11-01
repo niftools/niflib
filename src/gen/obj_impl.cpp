@@ -2211,7 +2211,7 @@ void bhkBoxShape::InternalRead( istream& in, list<uint> & link_stack, unsigned i
 	NifStream( unknownShort3, in, version );
 	NifStream( unknownShort4, in, version );
 	NifStream( dimensions, in, version );
-	NifStream( unknownFloat2, in, version );
+	NifStream( min_Size, in, version );
 }
 
 void bhkBoxShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
@@ -2222,7 +2222,7 @@ void bhkBoxShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & lin
 	NifStream( unknownShort3, out, version );
 	NifStream( unknownShort4, out, version );
 	NifStream( dimensions, out, version );
-	NifStream( unknownFloat2, out, version );
+	NifStream( min_Size, out, version );
 }
 
 std::string bhkBoxShape::InternalAsString( bool verbose ) const {
@@ -2235,7 +2235,7 @@ std::string bhkBoxShape::InternalAsString( bool verbose ) const {
 	out << "  Unknown Short 3:  " << unknownShort3 << endl;
 	out << "  Unknown Short 4:  " << unknownShort4 << endl;
 	out << "  Dimensions:  " << dimensions << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Min. size:  " << min_Size << endl;
 	return out.str();
 }
 
@@ -2331,32 +2331,32 @@ void bhkConvexVerticesShape::InternalRead( istream& in, list<uint> & link_stack,
 	for (uint i1 = 0; i1 < 7; i1++) {
 		NifStream( unknownFloats1[i1], in, version );
 	};
-	NifStream( num1, in, version );
-	unknownVectors1.resize(num1);
-	for (uint i1 = 0; i1 < unknownVectors1.size(); i1++) {
-		NifStream( unknownVectors1[i1], in, version );
+	NifStream( numVertices, in, version );
+	vertices.resize(numVertices);
+	for (uint i1 = 0; i1 < vertices.size(); i1++) {
+		NifStream( vertices[i1], in, version );
 	};
-	NifStream( num2, in, version );
-	unknownVectors2.resize(num2);
-	for (uint i1 = 0; i1 < unknownVectors2.size(); i1++) {
-		NifStream( unknownVectors2[i1], in, version );
+	NifStream( numNormals, in, version );
+	normals.resize(numNormals);
+	for (uint i1 = 0; i1 < normals.size(); i1++) {
+		NifStream( normals[i1], in, version );
 	};
 }
 
 void bhkConvexVerticesShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	num2 = uint(unknownVectors2.size());
-	num1 = uint(unknownVectors1.size());
+	numNormals = uint(normals.size());
+	numVertices = uint(vertices.size());
 	for (uint i1 = 0; i1 < 7; i1++) {
 		NifStream( unknownFloats1[i1], out, version );
 	};
-	NifStream( num1, out, version );
-	for (uint i1 = 0; i1 < unknownVectors1.size(); i1++) {
-		NifStream( unknownVectors1[i1], out, version );
+	NifStream( numVertices, out, version );
+	for (uint i1 = 0; i1 < vertices.size(); i1++) {
+		NifStream( vertices[i1], out, version );
 	};
-	NifStream( num2, out, version );
-	for (uint i1 = 0; i1 < unknownVectors2.size(); i1++) {
-		NifStream( unknownVectors2[i1], out, version );
+	NifStream( numNormals, out, version );
+	for (uint i1 = 0; i1 < normals.size(); i1++) {
+		NifStream( normals[i1], out, version );
 	};
 }
 
@@ -2364,8 +2364,8 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
-	num2 = uint(unknownVectors2.size());
-	num1 = uint(unknownVectors1.size());
+	numNormals = uint(normals.size());
+	numVertices = uint(vertices.size());
 	array_output_count = 0;
 	for (uint i1 = 0; i1 < 7; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -2378,9 +2378,9 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 		out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Num 1:  " << num1 << endl;
+	out << "  Num Vertices:  " << numVertices << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < unknownVectors1.size(); i1++) {
+	for (uint i1 = 0; i1 < vertices.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -2388,12 +2388,12 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Vectors 1[" << i1 << "]:  " << unknownVectors1[i1] << endl;
+		out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Num 2:  " << num2 << endl;
+	out << "  Num Normals:  " << numNormals << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < unknownVectors2.size(); i1++) {
+	for (uint i1 = 0; i1 < normals.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -2401,7 +2401,7 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Vectors 2[" << i1 << "]:  " << unknownVectors2[i1] << endl;
+		out << "    Normals[" << i1 << "]:  " << normals[i1] << endl;
 		array_output_count++;
 	};
 	return out.str();
@@ -2930,16 +2930,18 @@ void bhkNiTriStripsShape::InternalRead( istream& in, list<uint> & link_stack, un
 		NifStream( block_num, in, version );
 		link_stack.push_back( block_num );
 	};
-	NifStream( numUnknownInts2, in, version );
-	unknownInts2.resize(numUnknownInts2);
-	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
-		NifStream( unknownInts2[i1], in, version );
+	NifStream( numDataLayers, in, version );
+	dataLayers.resize(numDataLayers);
+	for (uint i1 = 0; i1 < dataLayers.size(); i1++) {
+		NifStream( dataLayers[i1].layer, in, version );
+		NifStream( dataLayers[i1].colFilter, in, version );
+		NifStream( dataLayers[i1].unknownShort, in, version );
 	};
 }
 
 void bhkNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	numUnknownInts2 = uint(unknownInts2.size());
+	numDataLayers = uint(dataLayers.size());
 	numStripsData = uint(stripsData.size());
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownInt1, out, version );
@@ -2956,9 +2958,11 @@ void bhkNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,uin
 		else
 			NifStream( 0xffffffff, out, version );
 	};
-	NifStream( numUnknownInts2, out, version );
-	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
-		NifStream( unknownInts2[i1], out, version );
+	NifStream( numDataLayers, out, version );
+	for (uint i1 = 0; i1 < dataLayers.size(); i1++) {
+		NifStream( dataLayers[i1].layer, out, version );
+		NifStream( dataLayers[i1].colFilter, out, version );
+		NifStream( dataLayers[i1].unknownShort, out, version );
 	};
 }
 
@@ -2966,7 +2970,7 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	uint array_output_count = 0;
 	out << bhkSphereRepShape::asString();
-	numUnknownInts2 = uint(unknownInts2.size());
+	numDataLayers = uint(dataLayers.size());
 	numStripsData = uint(stripsData.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
@@ -2998,18 +3002,16 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 		out << "    Strips Data[" << i1 << "]:  " << stripsData[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Num Unknown Ints 2:  " << numUnknownInts2 << endl;
+	out << "  Num Data Layers:  " << numDataLayers << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < unknownInts2.size(); i1++) {
+	for (uint i1 = 0; i1 < dataLayers.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
-		array_output_count++;
+		out << "    Layer:  " << dataLayers[i1].layer << endl;
+		out << "    Col Filter:  " << dataLayers[i1].colFilter << endl;
+		out << "    Unknown Short:  " << dataLayers[i1].unknownShort << endl;
 	};
 	return out.str();
 }
@@ -3034,12 +3036,14 @@ std::list<NiObjectRef> bhkNiTriStripsShape::InternalGetRefs() const {
 void bhkPackedNiTriStripsShape::InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	uint block_num;
 	AbhkShapeCollection::Read( in, link_stack, version, user_version );
-	NifStream( numSubparts, in, version );
-	subparts.resize(numSubparts);
-	for (uint i1 = 0; i1 < subparts.size(); i1++) {
-		for (uint i2 = 0; i2 < 3; i2++) {
-			NifStream( subparts[i1][i2], in, version );
-		};
+	NifStream( numSubShapes, in, version );
+	subShapes.resize(numSubShapes);
+	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
+		NifStream( subShapes[i1].layer, in, version );
+		NifStream( subShapes[i1].colFilter, in, version );
+		NifStream( subShapes[i1].unknownShort, in, version );
+		NifStream( subShapes[i1].vertexCount___, in, version );
+		NifStream( subShapes[i1].material, in, version );
 	};
 	for (uint i1 = 0; i1 < 9; i1++) {
 		NifStream( unknownFloats[i1], in, version );
@@ -3054,12 +3058,14 @@ void bhkPackedNiTriStripsShape::InternalRead( istream& in, list<uint> & link_sta
 
 void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
-	numSubparts = ushort(subparts.size());
-	NifStream( numSubparts, out, version );
-	for (uint i1 = 0; i1 < subparts.size(); i1++) {
-		for (uint i2 = 0; i2 < 3; i2++) {
-			NifStream( subparts[i1][i2], out, version );
-		};
+	numSubShapes = ushort(subShapes.size());
+	NifStream( numSubShapes, out, version );
+	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
+		NifStream( subShapes[i1].layer, out, version );
+		NifStream( subShapes[i1].colFilter, out, version );
+		NifStream( subShapes[i1].unknownShort, out, version );
+		NifStream( subShapes[i1].vertexCount___, out, version );
+		NifStream( subShapes[i1].material, out, version );
 	};
 	for (uint i1 = 0; i1 < 9; i1++) {
 		NifStream( unknownFloats[i1], out, version );
@@ -3078,21 +3084,19 @@ std::string bhkPackedNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	uint array_output_count = 0;
 	out << AbhkShapeCollection::asString();
-	numSubparts = ushort(subparts.size());
-	out << "  Num Subparts:  " << numSubparts << endl;
+	numSubShapes = ushort(subShapes.size());
+	out << "  Num Sub Shapes:  " << numSubShapes << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < subparts.size(); i1++) {
+	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		for (uint i2 = 0; i2 < 3; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Subparts[" << i2 << "]:  " << subparts[i1][i2] << endl;
-			array_output_count++;
-		};
+		out << "    Layer:  " << subShapes[i1].layer << endl;
+		out << "    Col Filter:  " << subShapes[i1].colFilter << endl;
+		out << "    Unknown Short:  " << subShapes[i1].unknownShort << endl;
+		out << "    Vertex Count (?):  " << subShapes[i1].vertexCount___ << endl;
+		out << "    Material:  " << subShapes[i1].material << endl;
 	};
 	array_output_count = 0;
 	for (uint i1 = 0; i1 < 9; i1++) {

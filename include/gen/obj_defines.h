@@ -194,7 +194,7 @@ ushort unknownShort3; \
 bool hasUnknownFloats2; \
 vector<float > unknownFloats2; \
 byte hasUnknownFloats3; \
-vector< array<4,float> > unknownFloats3; \
+vector< array<4,float > > unknownFloats3; \
 
 #define BHK_BLEND_COLLISION_OBJECT_MEMBERS \
 float unknownFloat1; \
@@ -210,7 +210,7 @@ ushort unknownShort2; \
 ushort unknownShort3; \
 ushort unknownShort4; \
 Vector3 dimensions; \
-float unknownFloat2; \
+float min_Size; \
 
 #define BHK_CAPSULE_SHAPE_MEMBERS \
 float radius; \
@@ -226,14 +226,14 @@ float radius2; \
 #define BHK_COLLISION_OBJECT_MEMBERS \
 
 #define BHK_CONVEX_VERTICES_SHAPE_MEMBERS \
-array<7,float> unknownFloats1; \
-mutable uint num1; \
-vector<Float4 > unknownVectors1; \
-mutable uint num2; \
-vector<Float4 > unknownVectors2; \
+array<7,float > unknownFloats1; \
+mutable uint numVertices; \
+vector<Float4 > vertices; \
+mutable uint numNormals; \
+vector<Float4 > normals; \
 
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
-array< 5, array<4,float> > unknownFloats; \
+array< 5, array<4,float > > unknownFloats; \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
 LimitedHingeDescriptor limitedHinge; \
@@ -242,7 +242,7 @@ LimitedHingeDescriptor limitedHinge; \
 mutable uint numSubShapes; \
 vector<Ref<bhkShape > > subShapes; \
 HavokMaterial material; \
-array<6,float> unknownFloats; \
+array<6,float > unknownFloats; \
 mutable uint numUnknownInts; \
 vector<uint > unknownInts; \
 
@@ -260,7 +260,7 @@ float damping; \
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
 HavokMaterial material; \
-array<8,byte> unknownBytes1; \
+array<8,byte > unknownBytes1; \
 float unknownFloat; \
 mutable uint numUnknownBytes2; \
 vector<byte > unknownBytes2; \
@@ -277,35 +277,35 @@ vector<Sphere > spheres; \
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS \
 float unknownFloat1; \
 uint unknownInt1; \
-array<4,uint> unknownInts1; \
+array<4,uint > unknownInts1; \
 uint unknownInt2; \
 Vector3 scale; \
 uint unknownInt3; \
 mutable uint numStripsData; \
 vector<Ref<NiTriStripsData > > stripsData; \
-mutable uint numUnknownInts2; \
-vector<uint > unknownInts2; \
+mutable uint numDataLayers; \
+vector<OblivionColFilter > dataLayers; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
-mutable ushort numSubparts; \
-vector< array<3,uint> > subparts; \
-array<9,float> unknownFloats; \
+mutable ushort numSubShapes; \
+vector<OblivionSubShape > subShapes; \
+array<9,float > unknownFloats; \
 float scale; \
-array<3,float> unknownFloats2; \
+array<3,float > unknownFloats2; \
 Ref<hkPackedNiTriStripsData > data; \
 
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS \
-array<8,Float4> unknownVectors; \
-array<3,float> unknownFloats2; \
+array<8,Float4 > unknownVectors; \
+array<3,float > unknownFloats2; \
 
 #define BHK_RAGDOLL_CONSTRAINT_MEMBERS \
 
 #define BHK_RIGID_BODY_MEMBERS \
-array<5,float> unknown5Floats; \
-array<4,ushort> unknown4Shorts; \
+array<5,float > unknown5Floats; \
+array<4,ushort > unknown4Shorts; \
 OblivionLayer layerCopy; \
 byte colFilterCopy; \
-array<7,ushort> unknown7Shorts; \
+array<7,ushort > unknown7Shorts; \
 Vector3 translation; \
 float unknownFloat00; \
 QuaternionXYZW rotation; \
@@ -313,7 +313,7 @@ Vector3 linearVelocity; \
 float unknownFloat01; \
 Vector3 angularVelocity; \
 float unknownFloat02; \
-array<12,float> transform; \
+array<12,float > transform; \
 Vector3 center; \
 float unknownFloat03; \
 float mass; \
@@ -337,8 +337,8 @@ vector<Ref<AbhkConstraint > > constraints; \
 #define BHK_RIGID_BODY_T_MEMBERS \
 
 #define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS \
-array<7,float> unkownFloats; \
-array< 3, array<5,float> > unknownFloats2; \
+array<7,float > unkownFloats; \
+array< 3, array<5,float > > unknownFloats2; \
 float unknownFloat; \
 
 #define BHK_S_P_COLLISION_OBJECT_MEMBERS \
@@ -347,7 +347,7 @@ float unknownFloat; \
 float radius; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS \
-array< 2, array<4,float> > unknownFloats; \
+array< 2, array<4,float > > unknownFloats; \
 float unknownFloat; \
 
 #define BHK_TRANSFORM_SHAPE_MEMBERS \
@@ -437,10 +437,10 @@ Ref<NiBoolData > data; \
 uint numControlPt; \
 
 #define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS \
-array<4,float> unknownFloats; \
+array<4,float > unknownFloats; \
 
 #define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS \
-array<6,float> unknownFloats; \
+array<6,float > unknownFloats; \
 
 #define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS \
 Vector3 translation; \
@@ -486,8 +486,8 @@ uint unknownInt2; \
 byte unknownByte; \
 uint collisionType; \
 Vector3 unknownVector; \
-array<8,float> unknownFloat1; \
-array<15,float> unknownFloat2; \
+array<8,float > unknownFloat1; \
+array<15,float > unknownFloat2; \
 
 #define NI_COLOR_DATA_MEMBERS \
 KeyGroup<Color4 > data; \
@@ -595,7 +595,7 @@ mutable uint numRotationKeys; \
 KeyType rotationType; \
 vector<Key<Quaternion > > quaternionKeys; \
 float unknownFloat; \
-array<3,KeyGroup<float >> xyzRotations; \
+array<3,KeyGroup<float > > xyzRotations; \
 KeyGroup<Vector3 > translations; \
 KeyGroup<float > scales; \
 
@@ -637,8 +637,8 @@ float alpha; \
 
 #define NI_MESH_P_SYS_DATA_MEMBERS \
 byte unknownByte11; \
-vector< array<10,float> > unknownFloats4; \
-vector< array<12,float> > unknownFloats5; \
+vector< array<10,float > > unknownFloats4; \
+vector< array<12,float > > unknownFloats5; \
 uint unknownInt1; \
 Ref<NiObject > modifier; \
 byte unknownByte2; \
@@ -671,7 +671,7 @@ vector<Ref<NiDynamicEffect > > effects; \
 
 #define FX_WIDGET_MEMBERS \
 byte unknown1; \
-array<292,byte> unknown292Bytes; \
+array<292,byte > unknown292Bytes; \
 
 #define FX_BUTTON_MEMBERS \
 
@@ -690,7 +690,7 @@ BillboardMode billboardMode; \
 #define NI_B_S_PARTICLE_NODE_MEMBERS \
 
 #define NI_L_O_D_NODE_MEMBERS \
-array<4,byte> unknown4Bytes; \
+array<4,byte > unknown4Bytes; \
 Vector3 lodCenter; \
 mutable uint numLodLevels; \
 vector<LODRange > lodLevels; \
@@ -700,7 +700,7 @@ Ref<NiLODData > lodLevelData; \
 #define NI_PALETTE_MEMBERS \
 byte unknownByte; \
 uint numEntries_; \
-array< 256, array<4,byte> > palette; \
+array< 256, array<4,byte > > palette; \
 
 #define NI_PARTICLE_BOMB_MEMBERS \
 float unknownFloat1; \
@@ -819,9 +819,9 @@ uint greenMask; \
 uint blueMask; \
 uint alphaMask; \
 uint bitsPerPixel; \
-array<8,byte> unknown8Bytes; \
+array<8,byte > unknown8Bytes; \
 uint unknownInt; \
-array<54,byte> unknown54Bytes; \
+array<54,byte > unknown54Bytes; \
 Ref<NiPalette > palette; \
 mutable uint numMipmaps; \
 uint bytesPerPixel; \
@@ -867,9 +867,9 @@ Ref<NiPSysSpawnModifier > spawnModifier; \
 
 #define NI_P_SYS_BOMB_MODIFIER_MEMBERS \
 NiNode * unknownLink; \
-array<2,uint> unknownInts1; \
-array<3,float> unknownFloats; \
-array<2,uint> unknownInts2; \
+array<2,uint > unknownInts1; \
+array<3,float > unknownFloats; \
+array<2,uint > unknownInts2; \
 
 #define NI_P_SYS_BOUND_UPDATE_MODIFIER_MEMBERS \
 ushort updateSkip; \
@@ -890,13 +890,13 @@ float radius; \
 float height; \
 
 #define NI_P_SYS_DATA_MEMBERS \
-vector< array<10,float> > unknownFloats4; \
+vector< array<10,float > > unknownFloats4; \
 bool unknownBool1; \
-vector< array<32,byte> > unknownBytes; \
-vector< array<28,byte> > unknownBytesAlt; \
+vector< array<32,byte > > unknownBytes; \
+vector< array<28,byte > > unknownBytesAlt; \
 byte unknownByte3; \
 bool unknownBool2; \
-vector< array<4,byte> > unknownBytes2; \
+vector< array<4,byte > > unknownBytes2; \
 uint unknownInt1; \
 
 #define NI_P_SYS_DRAG_MODIFIER_MEMBERS \
@@ -1123,12 +1123,12 @@ uint operation; \
 Ref<NiFloatData > data; \
 
 #define NI_TEXTURE_MODE_PROPERTY_MEMBERS \
-array<3,short> unknown3Shorts; \
+array<3,short > unknown3Shorts; \
 
 #define NI_IMAGE_MEMBERS \
 byte external_; \
 string file; \
-array<4,short> unknown4Shorts; \
+array<4,short > unknown4Shorts; \
 
 #define NI_TEXTURE_PROPERTY_MEMBERS \
 ushort flags; \
@@ -1172,7 +1172,7 @@ vector<ShaderTexDesc > shaderTextures; \
 Vector3 translation; \
 Quaternion rotation; \
 float scale; \
-array<3,byte> unknownBytes; \
+array<3,byte > unknownBytes; \
 Ref<NiTransformData > data; \
 
 #define NI_TRI_SHAPE_MEMBERS \
@@ -1201,16 +1201,16 @@ mutable ushort unknownCount2; \
 mutable ushort unknownCount3; \
 float unknownFloat; \
 ushort unknownShort; \
-vector< array<6,ushort> > unknownClodShorts1; \
+vector< array<6,ushort > > unknownClodShorts1; \
 vector<ushort > unknownClodShorts2; \
-vector< array<6,ushort> > unknownClodShorts3; \
+vector< array<6,ushort > > unknownClodShorts3; \
 
 #define NI_U_V_CONTROLLER_MEMBERS \
 ushort unknownShort; \
 Ref<NiUVData > data; \
 
 #define NI_U_V_DATA_MEMBERS \
-array<4,KeyGroup<float >> uvGroups; \
+array<4,KeyGroup<float > > uvGroups; \
 
 #define NI_VECTOR_EXTRA_DATA_MEMBERS \
 Vector3 vectorData; \
@@ -1679,7 +1679,7 @@ CompareMode function; \
 
 #define BHK_BOX_SHAPE_PARENT bhkConvexShape
 
-#define BHK_BOX_SHAPE_CONSTRUCT  : unknownFloat1(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), unknownFloat2(0.0f)
+#define BHK_BOX_SHAPE_CONSTRUCT  : unknownFloat1(0.0f), unknownShort1((ushort)0), unknownShort2((ushort)0), unknownShort3((ushort)0), unknownShort4((ushort)0), min_Size(0.0f)
 
 #define BHK_CAPSULE_SHAPE_INCLUDE "bhkConvexShape.h"
 
@@ -1696,7 +1696,7 @@ CompareMode function; \
 
 #define BHK_CONVEX_VERTICES_SHAPE_PARENT bhkSphereRepShape
 
-#define BHK_CONVEX_VERTICES_SHAPE_CONSTRUCT  : num1((uint)0), num2((uint)0)
+#define BHK_CONVEX_VERTICES_SHAPE_CONSTRUCT  : numVertices((uint)0), numNormals((uint)0)
 
 #define BHK_HINGE_CONSTRAINT_INCLUDE "AbhkConstraint.h"
 
@@ -1736,13 +1736,13 @@ CompareMode function; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_PARENT bhkSphereRepShape
 
-#define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : unknownFloat1(0.1f), unknownInt1((uint)0x004ABE60), unknownInt2((uint)1), scale(1.0f, 1.0f, 1.0f), unknownInt3((uint)0), numStripsData((uint)0), numUnknownInts2((uint)0)
+#define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : unknownFloat1(0.1f), unknownInt1((uint)0x004ABE60), unknownInt2((uint)1), scale(1.0f, 1.0f, 1.0f), unknownInt3((uint)0), numStripsData((uint)0), numDataLayers((uint)0)
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_INCLUDE "AbhkShapeCollection.h"
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT AbhkShapeCollection
 
-#define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : numSubparts((ushort)0), scale(1.0f), data(NULL)
+#define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : numSubShapes((ushort)0), scale(1.0f), data(NULL)
 
 #define BHK_PRISMATIC_CONSTRAINT_INCLUDE "AbhkConstraint.h"
 
@@ -2541,7 +2541,7 @@ CompareMode function; \
 
 #define NI_SOURCE_TEXTURE_PARENT NiObjectNET
 
-#define NI_SOURCE_TEXTURE_CONSTRUCT  : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)1), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1)
+#define NI_SOURCE_TEXTURE_CONSTRUCT  : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1)
 
 #define NI_SPECULAR_PROPERTY_INCLUDE "NiProperty.h"
 
