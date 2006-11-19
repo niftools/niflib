@@ -127,7 +127,7 @@ float NiGeometryData::GetRadius() const {
 	return radius;
 }
 
-void NiGeometryData::Transform( Matrix44 & transform ) {
+void NiGeometryData::Transform( const Matrix44 & transform ) {
 	Matrix44 rotation = Matrix44( transform.GetRotation() );
 
 	//Apply the transformations

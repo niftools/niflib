@@ -32,28 +32,28 @@ public:
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
    int GetNumPartitions() const;
 
-   ushort GetWeightsPerVertex( int partition ) const;
+   unsigned short GetWeightsPerVertex( int partition ) const;
 
-   ushort GetNumVertices( int partition ) const;
+   unsigned short GetNumVertices( int partition ) const;
 
-   vector<ushort> GetVertexMap( int partition ) const;
+   vector<unsigned short> GetVertexMap( int partition ) const;
 
-   vector<ushort> GetBoneMap( int partition ) const;
+   vector<unsigned short> GetBoneMap( int partition ) const;
 
    bool HasVertexWeights( int partition ) const;
    vector<float> GetVertexWeights( int partition, int vertex ) const;
 
    bool HasVertexBoneIndices( int partition ) const;
-   vector<ushort> GetVertexBoneIndices( int partition, int vertex ) const;
+   vector<unsigned short> GetVertexBoneIndices( int partition, int vertex ) const;
 
    /*! Used to get the number of triangle strips that a particular skin partition
     * isis divided into.
@@ -61,7 +61,7 @@ public:
     * \return The number of triangle strips used by this mesh.
     * \sa NiSkinPartition::SetStripCount
     */
-   ushort GetStripCount( int partition ) const;
+   unsigned short GetStripCount( int partition ) const;
 
    /*! Used to retrieve all the triangles from a specific triangle strip in a
     * particular skin partition.
@@ -70,7 +70,7 @@ public:
     * \return A vector containing all the triangle faces from the triangle strip specified by index.
     * \sa NiSkinPartition::SetStrip
     */
-   vector<ushort> GetStrip( int partition, int index ) const;
+   vector<unsigned short> GetStrip( int partition, int index ) const;
    
    vector<Triangle> GetTriangles( int partition ) const;
 
@@ -81,16 +81,16 @@ protected:
    NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex);
 
    void SetNumPartitions( int value );
-   void SetWeightsPerVertex( int partition, ushort value );
-   void SetNumVertices( int partition, ushort value );
-   void SetVertexMap( int partition, const vector<ushort>& vertexMap );
-   void SetBoneMap( int partition, const vector<ushort>& boneMap );
+   void SetWeightsPerVertex( int partition, unsigned short value );
+   void SetNumVertices( int partition, unsigned short value );
+   void SetVertexMap( int partition, const vector<unsigned short>& vertexMap );
+   void SetBoneMap( int partition, const vector<unsigned short>& boneMap );
 
    void EnableVertexWeights( int partition, bool enable);
    void SetVertexWeights( int partition, int vertex, const vector<float> & n );
 
    void EnableVertexBoneIndices( int partition, bool enable);
-   void SetVertexBoneIndices( int partition, int vertex, const vector<ushort>& boneList );
+   void SetVertexBoneIndices( int partition, int vertex, const vector<unsigned short>& boneList );
 
    /*! Used to resize the triangle strips array from a particular skin partition.
     * If the new size is smaller, strips at the end of the array will be deleted.
@@ -107,17 +107,17 @@ protected:
     * \param[in] in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
     * \sa NiSkinPartition::GetStrip
     */
-   void SetStrip( int partition, int index, const vector<ushort> & in );
+   void SetStrip( int partition, int index, const vector<unsigned short> & in );
 
    void SetTriangles( int partition, const vector<Triangle> & in );
 
 protected:
 	NI_SKIN_PARTITION_MEMBERS
 private:
-	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	void InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	list<NiObjectRef> InternalGetRefs() const;
 };
 

@@ -20,11 +20,11 @@ NiTriStripsData::NiTriStripsData() NI_TRI_STRIPS_DATA_CONSTRUCT {}
 
 NiTriStripsData::~NiTriStripsData() {}
 
-void NiTriStripsData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -32,7 +32,7 @@ string NiTriStripsData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiTriStripsData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStripsData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -51,8 +51,8 @@ NiTriStripsData::NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips)
       SetTSTriangles(tris);
 }
 
-ushort NiTriStripsData::GetStripCount() const {
-	return ushort(points.size());
+unsigned short NiTriStripsData::GetStripCount() const {
+	return (unsigned short)(points.size());
 }
 
 void NiTriStripsData::SetStripCount(int n) {
@@ -65,7 +65,7 @@ void NiTriStripsData::SetStripCount(int n) {
 }
 
 //Getters
-vector<ushort> NiTriStripsData::GetStrip( int index ) const {
+vector<unsigned short> NiTriStripsData::GetStrip( int index ) const {
 	return points[index];
 }
 
@@ -76,7 +76,7 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 	int n = 0; // Current triangle
 
 	//Cycle through all strips
-	vector< vector<ushort> >::const_iterator it;
+	vector< vector<unsigned short> >::const_iterator it;
 	Triangle t;
 	for (it = points.begin(); it != points.end(); ++it ) {
 		//The first three values in the strip are the first triangle
@@ -91,7 +91,7 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 		++n;
 
 		//The remaining triangles use the previous two indices as their first two indices.
-		for( uint i = 3; i < it->size(); ++i ) {
+		for( unsigned int i = 3; i < it->size(); ++i ) {
 			//Odd numbered triangles need to be reversed to keep the vertices in counter-clockwise order
 			if ( i % 2 == 0 ) {
 				t.Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
@@ -113,20 +113,20 @@ vector<Triangle> NiTriStripsData::GetTriangles() const {
 }
 
 //Setter
-void NiTriStripsData::SetStrip( int index, const vector<ushort> & in ) {
+void NiTriStripsData::SetStrip( int index, const vector<unsigned short> & in ) {
 	points[index] = in;
 
 	//Recalculate Triangle Count
 	numTriangles = CalcTriangleCount();
 }
 
-ushort NiTriStripsData::CalcTriangleCount() const {
+unsigned short NiTriStripsData::CalcTriangleCount() const {
 
 	//Calculate number of triangles
 	//Sum of length of each strip - 2
-	ushort numTriangles = 0;
-	for ( uint i = 0; i < points.size(); ++i ) {
-		numTriangles += ushort(points[i].size() - 2);
+	unsigned short numTriangles = 0;
+	for ( unsigned int i = 0; i < points.size(); ++i ) {
+		numTriangles += (unsigned short)(points[i].size() - 2);
 	}
 
 	return numTriangles;
@@ -167,8 +167,8 @@ void NiTriStripsData::SetNvTriangles( const vector<Triangle> & in ) {
    SetStripCount(numGroups);
    for (int g=0; g<numGroups; g++) {
       if (groups[g].type == PT_STRIP) {
-         vector<Niflib::ushort> strip(groups[g].numIndices);
-         for (size_t s=0; s<groups[g].numIndices; s++)
+         vector<unsigned short> strip(groups[g].numIndices);
+         for (unsigned int s=0; s<groups[g].numIndices; s++)
             strip[s] = groups[g].indices[s];
          SetStrip(g, strip);
       }

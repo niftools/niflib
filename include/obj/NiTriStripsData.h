@@ -25,10 +25,10 @@ public:
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
@@ -41,7 +41,7 @@ public:
 	 * \return The number of triangle strips used by this mesh.
 	 * \sa NiTriStripData::SetStripCount
 	 */
-	ushort GetStripCount() const;
+	unsigned short GetStripCount() const;
 
 	/*! Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
 	 * \param n The new size of the triangle strips array.
@@ -56,7 +56,7 @@ public:
 	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
 	 * \sa NiTriStripData::SetStrip, NiTriStripData::GetTriangles
 	 */
-	vector<ushort> GetStrip( int index ) const;
+	vector<unsigned short> GetStrip( int index ) const;
 
 	/*! This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
 	 * \return A vector containing all the triangle faces from all the triangle strips that make up this mesh.
@@ -71,7 +71,7 @@ public:
 	 * \param in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
 	 * \sa NiTriStripData::GetStrip, NiTriStripData::GetTriangles
 	 */
-	void SetStrip( int index, const vector<ushort> & in );
+	void SetStrip( int index, const vector<unsigned short> & in );
 
    /*! Replaces the triangle face data in this mesh with new data.
    * \param in A vector containing the new face data.  Maximum size is 65,535.
@@ -82,15 +82,15 @@ public:
 private:
    void SetNvTriangles( const vector<Triangle> & in );
    void SetTSTriangles( const vector<Triangle> & in );
-	ushort CalcTriangleCount() const;
+	unsigned short CalcTriangleCount() const;
 
 protected:
 	NI_TRI_STRIPS_DATA_MEMBERS
 private:
-	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	void InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	list<NiObjectRef> InternalGetRefs() const;
 };
 

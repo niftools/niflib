@@ -35,7 +35,7 @@ public:
 	/*!
 	 * Integers.
 	 */
-	vector<uint > GetData() const;
+	vector<unsigned int> GetData() const;
 	void SetData( const vector<uint >& value );
 
 protected:

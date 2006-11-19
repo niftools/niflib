@@ -14,8 +14,8 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 typedef vector<float> WeightList;
-typedef vector<ushort> BoneList;
-typedef vector<ushort> Strip;
+typedef vector<unsigned short> BoneList;
+typedef vector<unsigned short> Strip;
 typedef vector<Strip> Strips;
 typedef vector<Triangle> Triangles;
 
@@ -31,11 +31,11 @@ NiSkinPartition::NiSkinPartition() NI_SKIN_PARTITION_CONSTRUCT {}
 
 NiSkinPartition::~NiSkinPartition() {}
 
-void NiSkinPartition::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -43,7 +43,7 @@ string NiSkinPartition::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiSkinPartition::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinPartition::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -74,36 +74,36 @@ void NiSkinPartition::SetNumPartitions( int value ) {
    numSkinPartitionBlocks = value;
 }
 
-ushort NiSkinPartition::GetWeightsPerVertex( int partition ) const {
+unsigned short NiSkinPartition::GetWeightsPerVertex( int partition ) const {
    return skinPartitionBlocks[partition].numWeightsPerVertex;
 }
 
-void NiSkinPartition::SetWeightsPerVertex( int partition, ushort value ) {
+void NiSkinPartition::SetWeightsPerVertex( int partition, unsigned short value ) {
    skinPartitionBlocks[partition].numWeightsPerVertex = value;
 }
 
-ushort NiSkinPartition::GetNumVertices( int partition ) const {
+unsigned short NiSkinPartition::GetNumVertices( int partition ) const {
    return skinPartitionBlocks[partition].numVertices;
 }
 
-void NiSkinPartition::SetNumVertices( int partition, ushort value ) {
+void NiSkinPartition::SetNumVertices( int partition, unsigned short value ) {
    skinPartitionBlocks[partition].numVertices = value;
 }
 
-vector<ushort> NiSkinPartition::GetBoneMap( int partition ) const {
+vector<unsigned short> NiSkinPartition::GetBoneMap( int partition ) const {
    return skinPartitionBlocks[partition].bones;
 }
 
-void NiSkinPartition::SetBoneMap( int partition, const vector<ushort>& boneMap ) {
+void NiSkinPartition::SetBoneMap( int partition, const vector<unsigned short>& boneMap ) {
    skinPartitionBlocks[partition].bones = boneMap;
-   skinPartitionBlocks[partition].numBones = (ushort)boneMap.size();
+   skinPartitionBlocks[partition].numBones = (unsigned short)boneMap.size();
 }
 
-vector<ushort> NiSkinPartition::GetVertexMap( int partition ) const {
+vector<unsigned short> NiSkinPartition::GetVertexMap( int partition ) const {
    return skinPartitionBlocks[partition].vertexMap;
 }
 
-void NiSkinPartition::SetVertexMap( int partition, const vector<ushort>& vertexMap ) {
+void NiSkinPartition::SetVertexMap( int partition, const vector<unsigned short>& vertexMap ) {
    SkinPartition& part = skinPartitionBlocks[partition];
    if (vertexMap.empty()) {
       part.vertexMap.clear();
@@ -111,7 +111,7 @@ void NiSkinPartition::SetVertexMap( int partition, const vector<ushort>& vertexM
       part.hasVertexMap = false;
    } else {
       part.vertexMap = vertexMap;
-      part.numVertices = ushort(vertexMap.size());
+      part.numVertices = (unsigned short)(vertexMap.size());
       part.hasVertexMap = true;
    }
 }
@@ -156,17 +156,17 @@ void NiSkinPartition::EnableVertexBoneIndices( int partition, bool enable) {
    skinPartitionBlocks[partition].hasBoneIndices = enable;
 }
 
-vector<ushort> NiSkinPartition::GetVertexBoneIndices( int partition, int vertex ) const {
+vector<unsigned short> NiSkinPartition::GetVertexBoneIndices( int partition, int vertex ) const {
    const vector<byte>& bones = skinPartitionBlocks[partition].boneIndices[vertex];
-   vector<ushort> value;
+   vector<unsigned short> value;
    size_t n = bones.size();
    value.resize(bones.size());
    for (size_t i=0; i<n; ++i)
-      value[i] = ushort(bones[i]);
+      value[i] = (unsigned short)(bones[i]);
    return value;
 }
 
-void NiSkinPartition::SetVertexBoneIndices( int partition, int vertex, const vector<ushort>& boneList ) {
+void NiSkinPartition::SetVertexBoneIndices( int partition, int vertex, const vector<unsigned short>& boneList ) {
    vector<byte>& bones = skinPartitionBlocks[partition].boneIndices[vertex];
    size_t n = boneList.size();
    bones.resize(n);
@@ -174,8 +174,8 @@ void NiSkinPartition::SetVertexBoneIndices( int partition, int vertex, const vec
       bones[i] = byte(boneList[i]);
 }
 
-ushort NiSkinPartition::GetStripCount( int partition ) const {
-   return (ushort)skinPartitionBlocks[partition].strips.size();
+unsigned short NiSkinPartition::GetStripCount( int partition ) const {
+   return (unsigned short)skinPartitionBlocks[partition].strips.size();
 }
 
 void NiSkinPartition::SetStripCount( int partition, int n ) {
@@ -185,17 +185,17 @@ void NiSkinPartition::SetStripCount( int partition, int n ) {
    part.hasStrips = (n!=0);
 }
 
-vector<ushort> NiSkinPartition::GetStrip( int partition, int index ) const {
+vector<unsigned short> NiSkinPartition::GetStrip( int partition, int index ) const {
    return skinPartitionBlocks[partition].strips[index];
 }
 
-void NiSkinPartition::SetStrip( int partition, int index, const vector<ushort> & in ) {
+void NiSkinPartition::SetStrip( int partition, int index, const vector<unsigned short> & in ) {
    SkinPartition& part = skinPartitionBlocks[partition];
    part.strips[index] = in;
-   part.stripLengths[index] = ushort(in.size());
+   part.stripLengths[index] = (unsigned short)(in.size());
 
    int len = 0;
-   for (vector<ushort>::iterator itr = part.stripLengths.begin(); itr != part.stripLengths.end(); ++itr) {
+   for (vector<unsigned short>::iterator itr = part.stripLengths.begin(); itr != part.stripLengths.end(); ++itr) {
       len += ((*itr) - 2);
    }
    if (len < 0)
@@ -215,7 +215,7 @@ void NiSkinPartition::SetTriangles( int partition, const vector<Triangle> & in )
    SkinPartition& part = skinPartitionBlocks[partition];
    part.triangles = in;
    part.hasStrips = (in.size() > 0) ? false : (part.strips.size() != 0);
-   part.numTriangles = uint(in.size()) * 3;
+   part.numTriangles = (unsigned int)(in.size()) * 3;
 }
 
 NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
@@ -235,7 +235,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
    int nWeightsPerVertex = 4;
    vector<WeightList> vertexWeights;
    BoneList boneMap;
-   vector<ushort> vertexMap;
+   vector<unsigned short> vertexMap;
    Strips strips;
    vector<BoneList> boneIndexList;
    Triangles triangles;
@@ -284,7 +284,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
    SetNumPartitions(1);
    SetWeightsPerVertex(0, nWeightsPerVertex);
    SetBoneMap(0, boneMap);
-   SetNumVertices(0, ushort(vertexMap.size()) );
+   SetNumVertices(0, (unsigned short)(vertexMap.size()) );
    SetVertexMap(0, vertexMap);
    EnableVertexWeights(0, true);
    EnableVertexBoneIndices(0, true);
@@ -295,7 +295,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
 
    // Special case for pre-stripped data
    if (NiTriStripsDataRef stripData = DynamicCast<NiTriStripsData>(geomData)) {
-      ushort nstrips = stripData->GetStripCount();
+      unsigned short nstrips = stripData->GetStripCount();
       SetStripCount(0, nstrips);
       for (int i=0; i<int(nstrips); ++i) {
          SetStrip(0, i, stripData->GetStrip(i));
@@ -326,8 +326,8 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
          SetStripCount(0, numGroups);
          for (int g=0; g<numGroups; g++) {
             if (groups[g].type == PT_STRIP) {
-               vector<Niflib::ushort> strip(groups[g].numIndices);
-               for (size_t s=0; s<groups[g].numIndices; s++)
+               vector<unsigned short> strip(groups[g].numIndices);
+               for ( unsigned int s = 0; s<groups[g].numIndices; s++ )
                   strip[s] = groups[g].indices[s];
                SetStrip(0, g, strip);
             }
@@ -644,7 +644,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
 
       Triangles& triangles = part.triangles;
 
-      vector<ushort>& vertices = part.vertexMap;
+      vector<unsigned short>& vertices = part.vertexMap;
       for( Triangles::iterator tri = triangles.begin(); tri !=  triangles.end(); ++tri) {
          for ( int t = 0; t < 3; t++ ) {
             if ( vertices.end() == find(vertices.begin(), vertices.end(), (*tri)[t] ) )
@@ -695,7 +695,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       //   SetStripCount(p, numGroups);
       //   for (int g=0; g<numGroups; g++) {
       //      if (groups[g].type == PT_STRIP) {
-      //         vector<Niflib::ushort> strip(groups[g].numIndices);
+      //         vector<Niflib::unsigned short> strip(groups[g].numIndices);
       //         for (size_t s=0; s<groups[g].numIndices; s++)
       //            strip[s] = groups[g].indices[s];
       //         SetStrip(p, g, strip);

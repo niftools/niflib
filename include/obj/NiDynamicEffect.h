@@ -56,7 +56,7 @@ public:
 	 * doesn't matter because at least in version 4.0.0.2 the list is
 	 * automagically updated by the engine during the load stage.
 	 */
-	vector<uint > GetAffectedNodeListPointers() const;
+	vector<unsigned int> GetAffectedNodeListPointers() const;
 	void SetAffectedNodeListPointers( const vector<uint >& value );
 
 protected:

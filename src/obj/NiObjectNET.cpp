@@ -82,7 +82,9 @@ void NiObjectNET::RemoveExtraData( NiExtraData * obj ) {
 			(*extra) = (*extra)->GetNextExtraData();
 		} else {
 			//Advance to the next extra data
-			extra = &((*extra)->GetNextExtraData());
+			NiExtraDataRef temp = (*extra)->GetNextExtraData();
+			extra = &temp;
+			temp = NULL;
 		}
 	}
 }

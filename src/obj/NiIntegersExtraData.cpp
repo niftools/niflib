@@ -35,7 +35,7 @@ const Type & NiIntegersExtraData::GetType() const {
 	return TYPE;
 };
 
-vector<uint> NiIntegersExtraData::GetData() const {
+vector<unsigned int> NiIntegersExtraData::GetData() const {
 	return data;
 };
 	
