@@ -10,7 +10,7 @@
 #ifndef TRI_STRIPPER_HEADER_GUARD_POLICY_H
 #define TRI_STRIPPER_HEADER_GUARD_POLICY_H
 
-#include "public_types.h"
+#include "../public_types.h"
 #include "types.h"
 
 

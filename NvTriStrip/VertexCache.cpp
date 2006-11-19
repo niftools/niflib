@@ -84,5 +84,3 @@ int VertexCache::AddEntry(int entry)
 
   return removed;
 }
-
-  
