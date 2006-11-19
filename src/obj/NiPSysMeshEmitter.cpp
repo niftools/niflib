@@ -24,7 +24,7 @@ string NiPSysMeshEmitter::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiPSysMeshEmitter::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysMeshEmitter::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

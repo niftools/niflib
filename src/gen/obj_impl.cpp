@@ -234,7 +234,7 @@ std::string NiObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 }
 
 std::list<NiObjectRef> NiObject::InternalGetRefs() const {
@@ -257,7 +257,7 @@ std::string AKeyedData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AKeyedData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AKeyedData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -297,7 +297,7 @@ std::string AParticleModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AParticleModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AParticleModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	nextModifier = FixLink<AParticleModifier>( objects, link_stack, version );
 	controller = FixLink<NiParticleSystemController>( objects, link_stack, version );
@@ -326,7 +326,7 @@ std::string bhkRefObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRefObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRefObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -351,7 +351,7 @@ std::string bhkSerializable::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSerializable::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSerializable::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkRefObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -408,7 +408,7 @@ std::string AbhkConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSerializable::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < bodies.size(); i1++) {
 		bodies[i1] = FixLink<bhkShape>( objects, link_stack, version );
@@ -474,7 +474,7 @@ std::string AbhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkRagdollConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkRagdollConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -499,7 +499,7 @@ std::string bhkShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSerializable::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -524,7 +524,7 @@ std::string AbhkShapeCollection::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AbhkShapeCollection::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AbhkShapeCollection::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -552,7 +552,7 @@ std::string bhkSphereRepShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSphereRepShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSphereRepShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -577,7 +577,7 @@ std::string bhkConvexShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -602,7 +602,7 @@ std::string bhkWorldObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkWorldObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkWorldObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -644,7 +644,7 @@ std::string bhkEntity::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkEntity::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkEntity::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkWorldObject::FixLinks( objects, link_stack, version, user_version );
 	shape = FixLink<bhkShape>( objects, link_stack, version );
 }
@@ -690,7 +690,7 @@ std::string NiCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCollisionObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	parent = FixLink<NiAVObject>( objects, link_stack, version );
 	body = FixLink<NiObject>( objects, link_stack, version );
@@ -738,7 +738,7 @@ std::string NiExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x04020200 ) {
 		nextExtraData = FixLink<NiExtraData>( objects, link_stack, version );
@@ -768,7 +768,7 @@ std::string NiInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -799,7 +799,7 @@ std::string NiBlendInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -845,7 +845,7 @@ std::string NiBSplineInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	splineData = FixLink<NiBSplineData>( objects, link_stack, version );
 	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, version );
@@ -930,7 +930,7 @@ std::string NiObjectNET::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiObjectNET::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObjectNET::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x04020200 ) {
 		extraData = FixLink<NiExtraData>( objects, link_stack, version );
@@ -1067,7 +1067,7 @@ std::string NiAVObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAVObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAVObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < properties.size(); i1++) {
 		properties[i1] = FixLink<NiProperty>( objects, link_stack, version );
@@ -1174,7 +1174,7 @@ std::string NiDynamicEffect::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDynamicEffect::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDynamicEffect::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		for (uint i2 = 0; i2 < affectedNodes.size(); i2++) {
@@ -1220,7 +1220,7 @@ std::string NiLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLight::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiDynamicEffect::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1245,7 +1245,7 @@ std::string NiProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1287,7 +1287,7 @@ std::string NiPSysModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	target = FixLink<NiParticleSystem>( objects, link_stack, version );
 }
@@ -1350,7 +1350,7 @@ std::string NiPSysEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1387,7 +1387,7 @@ std::string NiPSysVolumeEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysVolumeEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysVolumeEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysEmitter::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		emitterObject = FixLink<NiNode>( objects, link_stack, version );
@@ -1445,7 +1445,7 @@ std::string NiTimeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTimeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTimeController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	nextController = FixLink<NiTimeController>( objects, link_stack, version );
 	target = FixLink<NiObjectNET>( objects, link_stack, version );
@@ -1526,7 +1526,7 @@ std::string ABoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void ABoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void ABoneLODController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < nodeGroups.size(); i1++) {
 		for (uint i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
@@ -1572,7 +1572,7 @@ std::string NiSingleInterpolatorController::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiSingleInterpolatorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSingleInterpolatorController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A020000 ) {
 		interpolator = FixLink<NiInterpolator>( objects, link_stack, version );
@@ -1605,7 +1605,7 @@ std::string APSysCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void APSysCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void APSysCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1672,7 +1672,7 @@ std::string NiGeometry::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGeometry::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometry::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiGeometryData>( objects, link_stack, version );
 	if ( version >= 0x0303000D ) {
@@ -1712,7 +1712,7 @@ std::string NiTriBasedGeom::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeom::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometry::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -1983,7 +1983,7 @@ std::string NiGeometryData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGeometryData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometryData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
 		unknownLink = FixLink<NiObject>( objects, link_stack, version );
@@ -2016,7 +2016,7 @@ std::string NiTriBasedGeomData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriBasedGeomData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriBasedGeomData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2134,7 +2134,7 @@ std::string APSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void APSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void APSysData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2165,7 +2165,7 @@ std::string bhkBlendCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBlendCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBlendCollisionObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2193,7 +2193,7 @@ std::string bhkBlendController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBlendController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBlendController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2239,7 +2239,7 @@ std::string bhkBoxShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkBoxShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkBoxShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2291,7 +2291,7 @@ std::string bhkCapsuleShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkCapsuleShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkCapsuleShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2316,7 +2316,7 @@ std::string bhkCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkCollisionObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2407,7 +2407,7 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexVerticesShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexVerticesShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2456,7 +2456,7 @@ std::string bhkHingeConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkHingeConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkHingeConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2511,7 +2511,7 @@ std::string bhkLimitedHingeConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkLimitedHingeConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkLimitedHingeConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -2610,7 +2610,7 @@ std::string bhkListShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkListShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkListShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < subShapes.size(); i1++) {
 		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, version );
@@ -2750,7 +2750,7 @@ std::string bhkMalleableConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMalleableConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMalleableConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 	unknownLink1 = FixLink<NiObject>( objects, link_stack, version );
 	unknownLink2 = FixLink<NiObject>( objects, link_stack, version );
@@ -2843,7 +2843,7 @@ std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMoppBvTreeShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMoppBvTreeShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkShape::FixLinks( objects, link_stack, version, user_version );
 	shape = FixLink<bhkShape>( objects, link_stack, version );
 }
@@ -2903,7 +2903,7 @@ std::string bhkMultiSphereShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkMultiSphereShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkMultiSphereShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3016,7 +3016,7 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkNiTriStripsShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkNiTriStripsShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkSphereRepShape::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < stripsData.size(); i1++) {
 		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, version );
@@ -3127,7 +3127,7 @@ std::string bhkPackedNiTriStripsShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkPackedNiTriStripsShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPackedNiTriStripsShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<hkPackedNiTriStripsData>( objects, link_stack, version );
 }
@@ -3191,7 +3191,7 @@ std::string bhkPrismaticConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkPrismaticConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkPrismaticConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3216,7 +3216,7 @@ std::string bhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRagdollConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRagdollConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkRagdollConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3431,7 +3431,7 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRigidBody::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBody::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < constraints.size(); i1++) {
 		constraints[i1] = FixLink<AbhkConstraint>( objects, link_stack, version );
@@ -3463,7 +3463,7 @@ std::string bhkRigidBodyT::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkRigidBodyT::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkRigidBodyT::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkRigidBody::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3533,7 +3533,7 @@ std::string bhkSimpleShapePhantom::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSimpleShapePhantom::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSimpleShapePhantom::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3558,7 +3558,7 @@ std::string bhkSPCollisionObject::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSPCollisionObject::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSPCollisionObject::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiCollisionObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3586,7 +3586,7 @@ std::string bhkSphereShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkSphereShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSphereShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkConvexShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3638,7 +3638,7 @@ std::string bhkStiffSpringConstraint::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkStiffSpringConstraint::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkStiffSpringConstraint::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3675,7 +3675,7 @@ std::string bhkTransformShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkTransformShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkTransformShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkEntity::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3700,7 +3700,7 @@ std::string bhkConvexTransformShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void bhkConvexTransformShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkConvexTransformShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	bhkTransformShape::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3731,7 +3731,7 @@ std::string BSBound::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSBound::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSBound::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3785,7 +3785,7 @@ std::string BSFurnitureMarker::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSFurnitureMarker::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSFurnitureMarker::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3813,7 +3813,7 @@ std::string BSParentVelocityModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSParentVelocityModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSParentVelocityModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3838,7 +3838,7 @@ std::string BSPSysArrayEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSPSysArrayEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSPSysArrayEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3866,7 +3866,7 @@ std::string BSXFlags::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSXFlags::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSXFlags::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3941,7 +3941,7 @@ std::string hkPackedNiTriStripsData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void hkPackedNiTriStripsData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void hkPackedNiTriStripsData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkShapeCollection::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -3978,7 +3978,7 @@ std::string NiAlphaController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAlphaController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiFloatData>( objects, link_stack, version );
@@ -4014,7 +4014,7 @@ std::string NiAlphaProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAlphaProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4039,7 +4039,7 @@ std::string NiAmbientLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAmbientLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAmbientLight::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4120,7 +4120,7 @@ std::string NiAutoNormalParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAutoNormalParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAutoNormalParticlesData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometryData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4169,7 +4169,7 @@ std::string NiBinaryExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBinaryExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBinaryExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4197,7 +4197,7 @@ std::string NiBlendBoolInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendBoolInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendBoolInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4225,7 +4225,7 @@ std::string NiBlendFloatInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendFloatInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4253,7 +4253,7 @@ std::string NiBlendPoint3Interpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBlendPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendPoint3Interpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4278,7 +4278,7 @@ std::string NiBlendTransformInterpolator::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiBlendTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBlendTransformInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4380,7 +4380,7 @@ std::string NiBoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoneLODController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABoneLODController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < shapeGroups1.size(); i1++) {
 		for (uint i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
@@ -4459,7 +4459,7 @@ std::string NiBoolData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4487,7 +4487,7 @@ std::string NiBooleanExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBooleanExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBooleanExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4523,7 +4523,7 @@ std::string NiBoolInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiBoolData>( objects, link_stack, version );
 }
@@ -4562,7 +4562,7 @@ std::string NiBoolTimelineInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBoolTimelineInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBoolTimelineInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiBoolData>( objects, link_stack, version );
 }
@@ -4590,7 +4590,7 @@ std::string NiBSBoneLODController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSBoneLODController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSBoneLODController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	ABoneLODController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4618,7 +4618,7 @@ std::string NiBSplineBasisData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineBasisData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineBasisData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4661,7 +4661,7 @@ std::string NiBSplineCompFloatInterpolator::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiBSplineCompFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompFloatInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4704,7 +4704,7 @@ std::string NiBSplineCompPoint3Interpolator::InternalAsString( bool verbose ) co
 	return out.str();
 }
 
-void NiBSplineCompPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompPoint3Interpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4765,7 +4765,7 @@ std::string NiBSplineCompTransformInterpolator::InternalAsString( bool verbose )
 	return out.str();
 }
 
-void NiBSplineCompTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineCompTransformInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBSplineInterpolator::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4817,7 +4817,7 @@ std::string NiBSplineData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSplineData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSplineData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -4907,7 +4907,7 @@ std::string NiCamera::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCamera::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCamera::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	unknownLink_ = FixLink<NiObject>( objects, link_stack, version );
 }
@@ -5018,7 +5018,7 @@ std::string NiCollisionData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiCollisionData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiCollisionData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	targetNode = FixLink<NiNode>( objects, link_stack, version );
 }
@@ -5077,7 +5077,7 @@ std::string NiColorData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiColorData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiColorData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5105,7 +5105,7 @@ std::string NiColorExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiColorExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiColorExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5169,7 +5169,7 @@ std::string NiControllerManager::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiControllerManager::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerManager::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < controllerSequences.size(); i1++) {
 		controllerSequences[i1] = FixLink<NiControllerSequence>( objects, link_stack, version );
@@ -5460,7 +5460,7 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiControllerSequence::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiControllerSequence::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, version );
@@ -5555,7 +5555,7 @@ std::string NiDefaultAVObjectPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDefaultAVObjectPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDefaultAVObjectPalette::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < objs.size(); i1++) {
 		objs[i1].avObject = FixLink<NiAVObject>( objects, link_stack, version );
@@ -5585,7 +5585,7 @@ std::string NiDirectionalLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDirectionalLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDirectionalLight::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5613,7 +5613,7 @@ std::string NiDitherProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiDitherProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDitherProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5680,7 +5680,7 @@ std::string NiFlipController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFlipController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFlipController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < sources.size(); i1++) {
 		sources[i1] = FixLink<NiSourceTexture>( objects, link_stack, version );
@@ -5745,7 +5745,7 @@ std::string NiFloatData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5773,7 +5773,7 @@ std::string NiFloatExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5813,7 +5813,7 @@ std::string NiFloatExtraDataController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatExtraDataController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatExtraDataController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x14000004 ) {
 		unknownLink = FixLink<NiObject>( objects, link_stack, version );
@@ -5854,7 +5854,7 @@ std::string NiFloatInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiFloatData>( objects, link_stack, version );
 }
@@ -5906,7 +5906,7 @@ std::string NiFloatsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFloatsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatsExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -5940,7 +5940,7 @@ std::string NiFogProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiFogProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFogProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6050,7 +6050,7 @@ std::string NiGeomMorpherController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGeomMorpherController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeomMorpherController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiMorphData>( objects, link_stack, version );
 	if ( version >= 0x0A01006A ) {
@@ -6102,7 +6102,7 @@ std::string NiGravity::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiGravity::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGravity::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6130,7 +6130,7 @@ std::string NiIntegerExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiIntegerExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegerExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6179,7 +6179,7 @@ std::string NiIntegersExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiIntegersExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegersExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6212,7 +6212,7 @@ std::string NiKeyframeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiKeyframeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiKeyframeController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiKeyframeData>( objects, link_stack, version );
 }
@@ -6248,7 +6248,7 @@ std::string BSKeyframeController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void BSKeyframeController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSKeyframeController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiKeyframeController::FixLinks( objects, link_stack, version, user_version );
 	data2 = FixLink<NiKeyframeData>( objects, link_stack, version );
 }
@@ -6440,7 +6440,7 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiKeyframeData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiKeyframeData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6497,7 +6497,7 @@ std::string NiLightColorController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLightColorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightColorController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiPosData>( objects, link_stack, version );
@@ -6540,7 +6540,7 @@ std::string NiLightDimmerController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLightDimmerController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightDimmerController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	unknownLink = FixLink<NiInterpolator>( objects, link_stack, version );
 }
@@ -6583,7 +6583,7 @@ std::string NiLookAtController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLookAtController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLookAtController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	lookAtNode = FixLink<NiNode>( objects, link_stack, version );
 }
@@ -6655,7 +6655,7 @@ std::string NiLookAtInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLookAtInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLookAtInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	lookAt = FixLink<NiNode>( objects, link_stack, version );
 	unknownLink1 = FixLink<NiPoint3Interpolator>( objects, link_stack, version );
@@ -6711,7 +6711,7 @@ std::string NiMaterialColorController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMaterialColorController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialColorController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiPosData>( objects, link_stack, version );
@@ -6766,7 +6766,7 @@ std::string NiMaterialProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMaterialProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -6936,7 +6936,7 @@ std::string NiMeshPSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMeshPSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMeshPSysData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysData::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x14000004 ) {
 		modifier = FixLink<NiObject>( objects, link_stack, version );
@@ -7067,7 +7067,7 @@ std::string NiMorphData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMorphData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMorphData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7121,7 +7121,7 @@ std::string NiMultiTargetTransformController::InternalAsString( bool verbose ) c
 	return out.str();
 }
 
-void NiMultiTargetTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMultiTargetTransformController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < extraTargets.size(); i1++) {
 		extraTargets[i1] = FixLink<NiNode>( objects, link_stack, version );
@@ -7208,7 +7208,7 @@ std::string NiNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAVObject::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < children.size(); i1++) {
 		children[i1] = FixLink<NiAVObject>( objects, link_stack, version );
@@ -7247,7 +7247,7 @@ std::string AvoidNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void AvoidNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void AvoidNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7293,7 +7293,7 @@ std::string FxWidget::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxWidget::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxWidget::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7318,7 +7318,7 @@ std::string FxButton::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxButton::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxButton::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FxWidget::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7381,7 +7381,7 @@ std::string FxRadioButton::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void FxRadioButton::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void FxRadioButton::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	FxWidget::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < buttons.size(); i1++) {
 		buttons[i1] = FixLink<FxRadioButton>( objects, link_stack, version );
@@ -7418,7 +7418,7 @@ std::string NiBillboardNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBillboardNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBillboardNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7443,7 +7443,7 @@ std::string NiBSAnimationNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSAnimationNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSAnimationNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7468,7 +7468,7 @@ std::string NiBSParticleNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSParticleNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSParticleNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7556,7 +7556,7 @@ std::string NiLODNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLODNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		lodLevelData = FixLink<NiLODData>( objects, link_stack, version );
@@ -7616,7 +7616,7 @@ std::string NiPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPalette::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7677,7 +7677,7 @@ std::string NiParticleBomb::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleBomb::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleBomb::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7710,7 +7710,7 @@ std::string NiParticleColorModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleColorModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleColorModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 	colorData = FixLink<NiColorData>( objects, link_stack, version );
 }
@@ -7744,7 +7744,7 @@ std::string NiParticleGrowFade::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleGrowFade::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleGrowFade::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7798,7 +7798,7 @@ std::string NiParticleMeshModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < particleMeshes.size(); i1++) {
 		particleMeshes[i1] = FixLink<NiAVObject>( objects, link_stack, version );
@@ -7845,7 +7845,7 @@ std::string NiParticleRotation::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleRotation::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleRotation::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7870,7 +7870,7 @@ std::string NiParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticles::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiGeometry::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7895,7 +7895,7 @@ std::string NiAutoNormalParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiAutoNormalParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAutoNormalParticles::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -7920,7 +7920,7 @@ std::string NiParticleMeshes::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshes::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshes::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8008,7 +8008,7 @@ std::string NiParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticlesData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiAutoNormalParticlesData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8041,7 +8041,7 @@ std::string NiParticleMeshesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleMeshesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleMeshesData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticlesData::FixLinks( objects, link_stack, version, user_version );
 	unknownLink2 = FixLink<NiAVObject>( objects, link_stack, version );
 }
@@ -8105,7 +8105,7 @@ std::string NiParticleSystem::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleSystem::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleSystem::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		for (uint i2 = 0; i2 < modifiers.size(); i2++) {
@@ -8139,7 +8139,7 @@ std::string NiMeshParticleSystem::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiMeshParticleSystem::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMeshParticleSystem::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticleSystem::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8318,7 +8318,7 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiParticleSystemController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiParticleSystemController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	emitter = FixLink<NiObject>( objects, link_stack, version );
 	unknownLink = FixLink<NiObject>( objects, link_stack, version );
@@ -8353,7 +8353,7 @@ std::string NiBSPArrayController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiBSPArrayController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBSPArrayController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticleSystemController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8412,7 +8412,7 @@ std::string NiPathController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPathController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPathController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	posData = FixLink<NiPosData>( objects, link_stack, version );
 	floatData = FixLink<NiFloatData>( objects, link_stack, version );
@@ -8467,7 +8467,7 @@ std::string NiPathInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPathInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPathInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiBlendInterpolator::FixLinks( objects, link_stack, version, user_version );
 	posData = FixLink<NiPosData>( objects, link_stack, version );
 	floatData = FixLink<NiFloatData>( objects, link_stack, version );
@@ -8635,7 +8635,7 @@ std::string NiPixelData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPixelData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPixelData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	palette = FixLink<NiPalette>( objects, link_stack, version );
 }
@@ -8725,7 +8725,7 @@ std::string NiPlanarCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPlanarCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPlanarCollider::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8761,7 +8761,7 @@ std::string NiPoint3Interpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPoint3Interpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPoint3Interpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiPosData>( objects, link_stack, version );
 }
@@ -8798,7 +8798,7 @@ std::string NiPointLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPointLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPointLight::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8856,7 +8856,7 @@ std::string NiPosData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPosData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPosData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -8892,7 +8892,7 @@ std::string NiPSysAgeDeathModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysAgeDeathModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysAgeDeathModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, version );
 }
@@ -8982,7 +8982,7 @@ std::string NiPSysBombModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBombModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBombModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	unknownLink = FixLink<NiNode>( objects, link_stack, version );
 }
@@ -9011,7 +9011,7 @@ std::string NiPSysBoundUpdateModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBoundUpdateModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoundUpdateModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9045,7 +9045,7 @@ std::string NiPSysBoxEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysBoxEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysBoxEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9078,7 +9078,7 @@ std::string NiPSysColliderManager::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysColliderManager::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysColliderManager::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	collider = FixLink<NiPSysPlanarCollider>( objects, link_stack, version );
 }
@@ -9114,7 +9114,7 @@ std::string NiPSysColorModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysColorModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysColorModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiColorData>( objects, link_stack, version );
 }
@@ -9148,7 +9148,7 @@ std::string NiPSysCylinderEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysCylinderEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysCylinderEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9311,7 +9311,7 @@ std::string NiPSysData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9356,7 +9356,7 @@ std::string NiPSysDragModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysDragModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysDragModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	parent = FixLink<NiObject>( objects, link_stack, version );
 }
@@ -9405,7 +9405,7 @@ std::string NiPSysEmitterCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiPSysEmitterCtlrData>( objects, link_stack, version );
@@ -9497,7 +9497,7 @@ std::string NiPSysEmitterCtlrData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterCtlrData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterCtlrData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9522,7 +9522,7 @@ std::string NiPSysEmitterDeclinationCtlr::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiPSysEmitterDeclinationCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterDeclinationCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9547,7 +9547,7 @@ std::string NiPSysEmitterDeclinationVarCtlr::InternalAsString( bool verbose ) co
 	return out.str();
 }
 
-void NiPSysEmitterDeclinationVarCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterDeclinationVarCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9572,7 +9572,7 @@ std::string NiPSysEmitterInitialRadiusCtlr::InternalAsString( bool verbose ) con
 	return out.str();
 }
 
-void NiPSysEmitterInitialRadiusCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterInitialRadiusCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9609,7 +9609,7 @@ std::string NiPSysEmitterLifeSpanCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterLifeSpanCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterLifeSpanCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
@@ -9651,7 +9651,7 @@ std::string NiPSysEmitterSpeedCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysEmitterSpeedCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysEmitterSpeedCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
@@ -9707,7 +9707,7 @@ std::string NiPSysGravityModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGravityModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	gravityObject = FixLink<NiNode>( objects, link_stack, version );
 }
@@ -9745,7 +9745,7 @@ std::string NiPSysGravityStrengthCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGravityStrengthCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGravityStrengthCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		unknownLink = FixLink<NiFloatData>( objects, link_stack, version );
@@ -9787,7 +9787,7 @@ std::string NiPSysGrowFadeModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysGrowFadeModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysGrowFadeModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -9850,7 +9850,7 @@ std::string NiPSysMeshEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysMeshEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysMeshEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysEmitter::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < emitterMeshes.size(); i1++) {
 		emitterMeshes[i1] = FixLink<NiTriBasedGeom>( objects, link_stack, version );
@@ -9911,7 +9911,7 @@ std::string NiPSysMeshUpdateModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysMeshUpdateModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysMeshUpdateModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 	for (uint i1 = 0; i1 < meshes.size(); i1++) {
 		meshes[i1] = FixLink<NiNode>( objects, link_stack, version );
@@ -9950,7 +9950,7 @@ std::string NiPSysModifierActiveCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysModifierActiveCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysModifierActiveCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	APSysCtlr::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10025,7 +10025,7 @@ std::string NiPSysPlanarCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysPlanarCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysPlanarCollider::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, version );
 	parent = FixLink<NiObject>( objects, link_stack, version );
@@ -10060,7 +10060,7 @@ std::string NiPSysPositionModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysPositionModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysPositionModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10085,7 +10085,7 @@ std::string NiPSysResetOnLoopCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysResetOnLoopCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysResetOnLoopCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10135,7 +10135,7 @@ std::string NiPSysRotationModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysRotationModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysRotationModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10184,7 +10184,7 @@ std::string NiPSysSpawnModifier::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysSpawnModifier::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSpawnModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10212,7 +10212,7 @@ std::string NiPSysSphereEmitter::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysSphereEmitter::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysSphereEmitter::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPSysVolumeEmitter::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10237,7 +10237,7 @@ std::string NiPSysUpdateCtlr::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiPSysUpdateCtlr::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPSysUpdateCtlr::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10262,7 +10262,7 @@ std::string NiLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLODData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10313,7 +10313,7 @@ std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRangeLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRangeLODData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLODData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10374,7 +10374,7 @@ std::string NiScreenLODData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiScreenLODData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiScreenLODData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiLODData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10399,7 +10399,7 @@ std::string NiRotatingParticles::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRotatingParticles::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRotatingParticles::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticles::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10424,7 +10424,7 @@ std::string NiRotatingParticlesData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiRotatingParticlesData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiRotatingParticlesData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiParticlesData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10449,7 +10449,7 @@ std::string NiSequenceStreamHelper::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSequenceStreamHelper::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSequenceStreamHelper::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10477,7 +10477,7 @@ std::string NiShadeProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiShadeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiShadeProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -10585,7 +10585,7 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, version );
@@ -10669,7 +10669,7 @@ std::string NiSkinInstance::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinInstance::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinInstance::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiSkinData>( objects, link_stack, version );
 	if ( version >= 0x0A020000 ) {
@@ -10708,7 +10708,7 @@ std::string NiClodSkinInstance::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiClodSkinInstance::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodSkinInstance::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSkinInstance::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11032,7 +11032,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSkinPartition::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinPartition::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11138,7 +11138,7 @@ std::string NiSourceTexture::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSourceTexture::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSourceTexture::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObjectNET::FixLinks( objects, link_stack, version, user_version );
 	if ( version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
@@ -11178,7 +11178,7 @@ std::string NiSpecularProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSpecularProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpecularProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11232,7 +11232,7 @@ std::string NiSphericalCollider::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSphericalCollider::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSphericalCollider::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AParticleModifier::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11263,7 +11263,7 @@ std::string NiSpotLight::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiSpotLight::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSpotLight::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiPointLight::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11319,7 +11319,7 @@ std::string NiStencilProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStencilProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStencilProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11354,7 +11354,7 @@ std::string NiStringExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11385,7 +11385,7 @@ std::string NiStringPalette::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringPalette::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringPalette::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11434,7 +11434,7 @@ std::string NiStringsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiStringsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringsExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11490,7 +11490,7 @@ std::string NiTextKeyExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextKeyExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextKeyExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11567,7 +11567,7 @@ std::string NiTextureEffect::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextureEffect::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureEffect::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiDynamicEffect::FixLinks( objects, link_stack, version, user_version );
 	sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, version );
 }
@@ -11616,7 +11616,7 @@ std::string NiTextureTransformController::InternalAsString( bool verbose ) const
 	return out.str();
 }
 
-void NiTextureTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureTransformController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiFloatData>( objects, link_stack, version );
@@ -11664,7 +11664,7 @@ std::string NiTextureModeProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextureModeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureModeProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11713,7 +11713,7 @@ std::string NiImage::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiImage::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiImage::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -11749,7 +11749,7 @@ std::string NiTextureProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTextureProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 	image = FixLink<NiImage>( objects, link_stack, version );
 }
@@ -12612,7 +12612,7 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTexturingProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTexturingProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 	if ( (hasBaseTexture != 0) ) {
 		baseTexture.source = FixLink<NiSourceTexture>( objects, link_stack, version );
@@ -12698,7 +12698,7 @@ std::string NiTransformController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12723,7 +12723,7 @@ std::string NiTransformData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiKeyframeData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12787,7 +12787,7 @@ std::string NiTransformInterpolator::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTransformInterpolator::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTransformInterpolator::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiInterpolator::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiTransformData>( objects, link_stack, version );
 }
@@ -12815,7 +12815,7 @@ std::string NiTriShape::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriShape::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12929,7 +12929,7 @@ std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriShapeData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShapeData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -12954,7 +12954,7 @@ std::string NiTriStrips::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriStrips::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStrips::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13064,7 +13064,7 @@ std::string NiTriStripsData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiTriStripsData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriStripsData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13089,7 +13089,7 @@ std::string NiClod::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiClod::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClod::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeom::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13207,7 +13207,7 @@ std::string NiClodData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiClodData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTriBasedGeomData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13243,7 +13243,7 @@ std::string NiUVController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiUVController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiTimeController::FixLinks( objects, link_stack, version, user_version );
 	data = FixLink<NiUVData>( objects, link_stack, version );
 }
@@ -13315,7 +13315,7 @@ std::string NiUVData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiUVData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiObject::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13346,7 +13346,7 @@ std::string NiVectorExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVectorExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVectorExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13380,7 +13380,7 @@ std::string NiVertexColorProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVertexColorProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertexColorProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13432,7 +13432,7 @@ std::string NiVertWeightsExtraData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVertWeightsExtraData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertWeightsExtraData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiExtraData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13469,7 +13469,7 @@ std::string NiVisController::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVisController::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, version, user_version );
 	if ( version <= 0x0A010000 ) {
 		data = FixLink<NiVisData>( objects, link_stack, version );
@@ -13523,7 +13523,7 @@ std::string NiVisData::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiVisData::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVisData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	AKeyedData::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13551,7 +13551,7 @@ std::string NiWireframeProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiWireframeProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiWireframeProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13586,7 +13586,7 @@ std::string NiZBufferProperty::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void NiZBufferProperty::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiZBufferProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiProperty::FixLinks( objects, link_stack, version, user_version );
 }
 
@@ -13611,7 +13611,7 @@ std::string RootCollisionNode::InternalAsString( bool verbose ) const {
 	return out.str();
 }
 
-void RootCollisionNode::InternalFixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void RootCollisionNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	NiNode::FixLinks( objects, link_stack, version, user_version );
 }
 

@@ -24,7 +24,7 @@ string NiUVData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiUVData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

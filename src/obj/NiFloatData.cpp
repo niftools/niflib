@@ -24,7 +24,7 @@ string NiFloatData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiFloatData::FixLinks( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFloatData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
