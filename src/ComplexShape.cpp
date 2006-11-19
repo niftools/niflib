@@ -168,10 +168,10 @@ void ComplexShape::Clear() {
 }
 
 struct MergeLookUp {
-	unsigned vertIndex;
-	unsigned normIndex;
-	unsigned colorIndex;
-	map<unsigned, unsigned> uvIndices; //TexCoordSet Index, TexCoord Index
+	unsigned int vertIndex;
+	unsigned int normIndex;
+	unsigned int colorIndex;
+	map<unsigned int, unsigned int> uvIndices; //TexCoordSet Index, TexCoord Index
 };
 
 void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
@@ -192,7 +192,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		//shape children
 		NiNodeRef nodeRoot = DynamicCast<NiNode>(root);
 		vector<NiAVObjectRef> children = nodeRoot->GetChildren();
-		for ( unsigned child = 0; child < children.size(); ++child ) {
+		for ( unsigned int child = 0; child < children.size(); ++child ) {
 			if ( children[child]->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
 				shapes.push_back( DynamicCast<NiTriBasedGeom>(children[child]) );
 			}
@@ -216,7 +216,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 	bool has_any_verts = false;
 	bool has_any_norms = false;
 	propGroups.resize( shapes.size() );
-	unsigned prop_group_index = 0;
+	unsigned int prop_group_index = 0;
 	for ( vector<NiTriBasedGeomRef>::iterator geom = shapes.begin(); geom != shapes.end(); ++geom ) {
 	
 		//Get properties of this shape
@@ -243,7 +243,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		
 		vector<Color4> shapeColors = geomData->GetColors();
 		vector< vector<TexCoord> > shapeUVs( geomData->GetUVSetCount() );
-		for ( unsigned i = 0; i < shapeUVs.size(); ++i ) {
+		for ( unsigned int i = 0; i < shapeUVs.size(); ++i ) {
 			shapeUVs[i] = geomData->GetUVSet(i);
 		}
 		vector<Triangle> shapeTris= geomData->GetTriangles();
@@ -261,7 +261,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		if ( shape_has_norms ) {
 			has_any_norms = true;
 		}
-		for ( unsigned v = 0; v < shapeVerts.size(); ++v ) {
+		for ( unsigned int v = 0; v < shapeVerts.size(); ++v ) {
 			VertNorm newVert;
 
 			newVert.position = shapeVerts[v];
@@ -271,7 +271,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 
 			//Search for matching vert/norm
 			bool match_found = false;
-			for ( unsigned vn_index = 0; vn_index < vns.size(); ++vn_index ) {
+			for ( unsigned int vn_index = 0; vn_index < vns.size(); ++vn_index ) {
 				if ( vns[vn_index] == newVert ) {
 					//Match found, use existing index
 					lookUp[v].vertIndex = vn_index;
@@ -288,22 +288,22 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 				//No match found, add this vert/norm to the list
 				vns.push_back(newVert);
 				//Record new index
-				lookUp[v].vertIndex = unsigned(vns.size()) - 1;
+				lookUp[v].vertIndex = (unsigned int)(vns.size()) - 1;
 				if ( shapeNorms.size() != 0 ) {
-					lookUp[v].normIndex = unsigned(vns.size()) - 1;
+					lookUp[v].normIndex = (unsigned int)(vns.size()) - 1;
 				}
 			}
 		}
 
 		//Colors
-		for ( unsigned c = 0; c < shapeColors.size(); ++c ) {
+		for ( unsigned int c = 0; c < shapeColors.size(); ++c ) {
 			Color4 newColor;
 
 			newColor = shapeColors[c];
 
 			//Search for matching color
 			bool match_found = false;
-			for ( unsigned c_index = 0; c_index < colors.size(); ++c_index ) {
+			for ( unsigned int c_index = 0; c_index < colors.size(); ++c_index ) {
 				if ( colors[c_index].r == newColor.r && colors[c_index].g == newColor.g && colors[c_index].b == newColor.b && colors[c_index].a == newColor.a ) {
 					//Match found, use existing index
 					lookUp[c].colorIndex = c_index;
@@ -317,7 +317,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 				//No match found, add this color to the list
 				colors.push_back(newColor);
 				//Record new index
-				lookUp[c].colorIndex = unsigned(colors.size()) - 1;
+				lookUp[c].colorIndex = (unsigned int)(colors.size()) - 1;
 			}
 		}
 
@@ -326,7 +326,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		//Create UV set list
 		vector<TexType> uvSetList( shapeUVs.size() );
 		//Initialize to base
-		for ( unsigned tex = 0; tex < uvSetList.size(); ++tex ) {
+		for ( unsigned int tex = 0; tex < uvSetList.size(); ++tex ) {
 			uvSetList[tex] = BASE_MAP;
 		}
 		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TypeConst() );
@@ -339,16 +339,17 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 			//Add the UV set to the list for every type of texture slot that uses it
 			for ( int tex = 0; tex < 8; ++tex ) {
 				if ( niTexProp->HasTexture(tex) == true ) {
-					TexDesc td = niTexProp->GetTexture(tex);
+					TexDesc td;
+					td = niTexProp->GetTexture(tex);
 					
-					unsigned set = td.uvSet;
+					unsigned int set = td.uvSet;
 
 					TexType newType = TexType(tex);
 
 					//Search for matching UV set
 					bool match_found = false;
-					unsigned uvSetIndex;
-					for ( unsigned set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
+					unsigned int uvSetIndex;
+					for ( unsigned int set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
 						if ( texCoordSets[set_index].texType  == newType ) {
 							//Match found, use existing index
 							uvSetIndex = set_index;
@@ -364,21 +365,21 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 						newTCS.texType = newType;
 						texCoordSets.push_back( newTCS );
 						//Record new index
-						uvSetIndex = unsigned(texCoordSets.size()) - 1;
+						uvSetIndex = (unsigned int)(texCoordSets.size()) - 1;
 					}
 
 					//Loop through texture cooridnates in this set
 					if ( set >= shapeUVs.size() || set < 0 ) {
 						throw runtime_error("One of the UV sets specified in the NiTexturingProperty did not exist in the NiTriBasedGeomData.");
 					}
-					for ( unsigned v = 0; v < shapeUVs[set].size(); ++v ) {
+					for ( unsigned int v = 0; v < shapeUVs[set].size(); ++v ) {
 						TexCoord newCoord;
 
 						newCoord = shapeUVs[set][v];
 
 						//Search for matching texture cooridnate
 						bool match_found = false;
-						for ( unsigned tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
+						for ( unsigned int tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
 							if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
 								//Match found, use existing index
 								lookUp[v].uvIndices[uvSetIndex] = tc_index;
@@ -393,7 +394,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 							//No match found, add this texture coordinate to the list
 							texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
 							//Record new index
-							lookUp[v].uvIndices[uvSetIndex] = unsigned(texCoordSets[uvSetIndex].texCoords.size()) - 1;
+							lookUp[v].uvIndices[uvSetIndex] = (unsigned int)(texCoordSets[uvSetIndex].texCoords.size()) - 1;
 						}
 					}
 				}
@@ -401,12 +402,12 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		}
 
 		//Use look up table to build list of faces
-		for ( unsigned t = 0; t < shapeTris.size(); ++t ) {
+		for ( unsigned int t = 0; t < shapeTris.size(); ++t ) {
 			ComplexFace newFace;
 			newFace.propGroupIndex = prop_group_index;
 			newFace.points.resize(3);
 			const Triangle & tri = shapeTris[t];
-			for ( unsigned p = 0; p < 3; ++p ) {
+			for ( unsigned int p = 0; p < 3; ++p ) {
 				if ( shapeVerts.size() != 0 ) {
 					newFace.points[p].vertexIndex = lookUp[ tri[p] ].vertIndex;
 				}
@@ -416,7 +417,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 				if ( shapeColors.size() != 0 ) {
 					newFace.points[p].colorIndex = lookUp[ tri[p] ].colorIndex;
 				}
-				for ( map<unsigned,unsigned>::iterator set = lookUp[ tri[p] ].uvIndices.begin(); set != lookUp[ tri[p] ].uvIndices.end(); ++set ) {
+				for ( map<unsigned int,unsigned int>::iterator set = lookUp[ tri[p] ].uvIndices.begin(); set != lookUp[ tri[p] ].uvIndices.end(); ++set ) {
 					TexCoordIndex tci;
 					tci.texCoordSetIndex = set->first;
 					tci.texCoordIndex = set->second;
@@ -439,10 +440,10 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 
 				//Get weights
 				vector<SkinWeight> shapeWeights;
-				for ( unsigned b = 0; b < shapeBones.size(); ++b ) {
+				for ( unsigned int b = 0; b < shapeBones.size(); ++b ) {
 					shapeWeights = skinData->GetBoneWeights(b);
-					for ( unsigned w = 0; w < shapeWeights.size(); ++w ) {
-						unsigned vn_index = lookUp[ shapeWeights[w].index ].vertIndex;
+					for ( unsigned int w = 0; w < shapeWeights.size(); ++w ) {
+						unsigned int vn_index = lookUp[ shapeWeights[w].index ].vertIndex;
 						NiNodeRef boneRef = shapeBones[b];
 						float weight = shapeWeights[w].weight;
 
@@ -457,16 +458,16 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 	}
 
 	//Finished with all shapes.  Build up a list of influences
-	map<NiNodeRef,unsigned> boneLookUp;
-	for ( unsigned v = 0; v < vns.size(); ++v ) {
+	map<NiNodeRef,unsigned int> boneLookUp;
+	for ( unsigned int v = 0; v < vns.size(); ++v ) {
 		for ( map<NiNodeRef,float>::iterator w = vns[v].weights.begin(); w != vns[v].weights.end(); ++w ) {
 			boneLookUp[w->first] = 0; //will change later
 		}
 	}
 
 	skinInfluences.resize( boneLookUp.size() );
-	unsigned si_index = 0;
-	for ( map<NiNodeRef,unsigned>::iterator si = boneLookUp.begin(); si != boneLookUp.end(); ++si ) {
+	unsigned int si_index = 0;
+	for ( map<NiNodeRef,unsigned int>::iterator si = boneLookUp.begin(); si != boneLookUp.end(); ++si ) {
 		si->second = si_index;
 		skinInfluences[si_index] = si->first;
 		++si_index;
@@ -480,11 +481,11 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 		normals.resize( vns.size() );
 	}
 
-	for ( unsigned v = 0; v < vns.size(); ++v ) {
+	for ( unsigned int v = 0; v < vns.size(); ++v ) {
 		if ( has_any_verts ) {
 			vertices[v].position = vns[v].position;
 			vertices[v].weights.resize( vns[v].weights.size() );
-			unsigned weight_index = 0;
+			unsigned int weight_index = 0;
 			for ( map<NiNodeRef,float>::iterator w = vns[v].weights.begin(); w != vns[v].weights.end(); ++w ) {
 				vertices[v].weights[weight_index].influenceIndex = boneLookUp[w->first];
 				vertices[v].weights[weight_index].weight = w->second;
@@ -591,7 +592,7 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 
 	//There will be one NiTriShape per property group
 	//with a minimum of 1
-	unsigned int num_shapes = unsigned int(propGroups.size());
+	unsigned int num_shapes = (unsigned int)(propGroups.size());
 	if ( num_shapes == 0 ) {
 		num_shapes = 1;
 	}
@@ -718,7 +719,7 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 				if ( found_match == false ) {
 					compVerts.push_back(cv);
 					//put the new vertex into the face point list
-					shapeFacePoints.push_back( unsigned int(compVerts.size()) - 1 );
+					shapeFacePoints.push_back( (unsigned int)(compVerts.size()) - 1 );
 				}
 				
 				//Next Point

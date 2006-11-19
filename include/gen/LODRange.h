@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API LODRange {
 	/*! Default Constructor */
 	LODRange();
+	/*! Copy Constructor */
+	LODRange( const LODRange & src );
+	/*! Copy Operator */
+	LODRange & operator=( const LODRange & src );
 	/*! Default Destructor */
 	~LODRange();
 	/*!

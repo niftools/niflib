@@ -17,7 +17,7 @@ class NiStringPalette;
 class NiTimeController;
 class NiSingleInterpolatorController;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiControllerSequence;
 typedef Ref<NiControllerSequence> NiControllerSequenceRef;

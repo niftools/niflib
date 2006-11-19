@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysModifier.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class BSParentVelocityModifier;
 typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;

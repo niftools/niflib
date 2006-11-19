@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiLODData.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiScreenLODData;
 typedef Ref<NiScreenLODData> NiScreenLODDataRef;

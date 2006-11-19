@@ -14,7 +14,7 @@ namespace Niflib {
 class NiPosData;
 class NiPoint3Interpolator;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiLightColorController;
 typedef Ref<NiLightColorController> NiLightColorControllerRef;

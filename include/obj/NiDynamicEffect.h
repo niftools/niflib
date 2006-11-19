@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiAVObject;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiDynamicEffect;
 typedef Ref<NiDynamicEffect> NiDynamicEffectRef;

@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBSplineCompPoint3Interpolator;
 typedef Ref<NiBSplineCompPoint3Interpolator> NiBSplineCompPoint3InterpolatorRef;

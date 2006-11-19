@@ -14,7 +14,7 @@ namespace Niflib {
 class NiControllerSequence;
 class NiDefaultAVObjectPalette;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiControllerManager;
 typedef Ref<NiControllerManager> NiControllerManagerRef;

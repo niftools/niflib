@@ -15,7 +15,7 @@ class NiNode;
 class NiPoint3Interpolator;
 class NiFloatInterpolator;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiLookAtInterpolator;
 typedef Ref<NiLookAtInterpolator> NiLookAtInterpolatorRef;

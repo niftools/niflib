@@ -15,7 +15,7 @@ class NiSkinData;
 class NiSkinPartition;
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiSkinInstance;
 typedef Ref<NiSkinInstance> NiSkinInstanceRef;

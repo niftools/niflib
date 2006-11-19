@@ -15,7 +15,7 @@ class NiPSysSpawnModifier;
 class NiObject;
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysPlanarCollider;
 typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;

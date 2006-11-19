@@ -9,5 +9,18 @@ using namespace Niflib;
 //Constructor
 ShaderTexDesc::ShaderTexDesc() : isUsed(false), unknownInt((uint)0) {};
 
+//Copy Constructor
+ShaderTexDesc::ShaderTexDesc( const ShaderTexDesc & src ) {
+	*this = src;
+};
+
+//Copy Operator
+ShaderTexDesc & ShaderTexDesc::operator=( const ShaderTexDesc & src ) {
+	this->isUsed = src.isUsed;
+	this->textureData = src.textureData;
+	this->unknownInt = src.unknownInt;
+	return *this;
+};
+
 //Destructor
 ShaderTexDesc::~ShaderTexDesc() {};

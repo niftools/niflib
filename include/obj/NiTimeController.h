@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 class NiObject;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiTimeController;
 class NiObjectNET;

@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 // Forward define of referenced blocks
 class NiFloatData;

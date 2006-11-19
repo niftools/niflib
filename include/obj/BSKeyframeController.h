@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiKeyframeData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class BSKeyframeController;
 typedef Ref<BSKeyframeController> BSKeyframeControllerRef;

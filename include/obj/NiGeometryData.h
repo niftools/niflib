@@ -17,7 +17,7 @@ class NiGeometryData;
 class NiSkinInstance;
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiGeometryData;
 typedef Ref<NiGeometryData> NiGeometryDataRef;

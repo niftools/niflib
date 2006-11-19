@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API SkinWeight {
 	/*! Default Constructor */
 	SkinWeight();
+	/*! Copy Constructor */
+	SkinWeight( const SkinWeight & src );
+	/*! Copy Operator */
+	SkinWeight & operator=( const SkinWeight & src );
 	/*! Default Destructor */
 	~SkinWeight();
 	/*!

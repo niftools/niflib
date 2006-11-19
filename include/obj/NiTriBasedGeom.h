@@ -12,7 +12,7 @@ namespace Niflib {
 
 // Forward define of referenced blocks
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiTriBasedGeom;
 typedef Ref<NiTriBasedGeom> NiTriBasedGeomRef;

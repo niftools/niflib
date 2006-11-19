@@ -17,6 +17,10 @@ namespace Niflib {
 struct NIFLIB_API SkinData {
 	/*! Default Constructor */
 	SkinData();
+	/*! Copy Constructor */
+	SkinData( const SkinData & src );
+	/*! Copy Operator */
+	SkinData & operator=( const SkinData & src );
 	/*! Default Destructor */
 	~SkinData();
 	/*!

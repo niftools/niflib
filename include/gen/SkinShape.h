@@ -20,6 +20,10 @@ class NiSkinInstance;
 struct NIFLIB_API SkinShape {
 	/*! Default Constructor */
 	SkinShape();
+	/*! Copy Constructor */
+	SkinShape( const SkinShape & src );
+	/*! Copy Operator */
+	SkinShape & operator=( const SkinShape & src );
 	/*! Default Destructor */
 	~SkinShape();
 	/*!

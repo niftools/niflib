@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiNode.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBSAnimationNode;
 typedef Ref<NiBSAnimationNode> NiBSAnimationNodeRef;

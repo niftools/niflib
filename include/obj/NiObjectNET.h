@@ -6,14 +6,13 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include "NiObject.h"
 
-#include NI_OBJECT_N_E_T_INCLUDE
 namespace Niflib {
 
 // Forward define of referenced blocks
 class NiExtraData;
 class NiTimeController;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiObjectNET;
 class NiExtraData;

@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiTransformData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiTransformInterpolator;
 typedef Ref<NiTransformInterpolator> NiTransformInterpolatorRef;

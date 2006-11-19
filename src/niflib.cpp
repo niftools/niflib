@@ -42,10 +42,10 @@ bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
-void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse = false );
+void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
-NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type );
+NiObjectRef GetObjectByType( NiObject * root, const Type & type );
 
 /*!
  * Helper function to split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
@@ -56,8 +56,7 @@ NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & block_type )
  * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
  * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, NifInfo & info );
-
+static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
 
 //--Function Bodies--//
 
@@ -369,7 +368,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 }
 
 // Writes a valid Nif File given an ostream, a list to the root objects of a file tree
-void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, NifInfo & info ) {
+void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info ) {
 	// Walk tree, resetting all block numbers
 	//int block_count = ResetBlockNums( 0, root_block );
 	
@@ -467,7 +466,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, NifInfo & inf
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string const & file_name, NiObjectRef const & root_block, NifInfo & info ) {
+void WriteNifTree( string const & file_name, NiObject * root_block, const NifInfo & info ) {
    //Open output file
    ofstream out( file_name.c_str(), ofstream::binary );
 
@@ -479,7 +478,7 @@ void WriteNifTree( string const & file_name, NiObjectRef const & root_block, Nif
    out.close();
 }
 
-void WriteNifTree( string const & file_name, list<NiObjectRef> const & roots, NifInfo & info ) {
+void WriteNifTree( string const & file_name, list<NiObjectRef> const & roots, const NifInfo & info ) {
    //Open output file
    ofstream out( file_name.c_str(), ofstream::binary );
 
@@ -490,13 +489,13 @@ void WriteNifTree( string const & file_name, list<NiObjectRef> const & roots, Ni
 }
 
 // Writes a valid Nif File given an ostream, a pointer to the root object of a file tree
-void WriteNifTree( ostream & out, NiObjectRef const & root, NifInfo & info ) {
+void WriteNifTree( ostream & out, NiObject * root, const NifInfo & info ) {
    list<NiObjectRef> roots;
    roots.push_back(root);
    WriteNifTree( out, roots, info );
 }
 
-void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse ) {
+void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse ) {
 	//Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
@@ -567,7 +566,7 @@ void EnumerateObjects( NiObjectRef const & root, map<Type*,uint> & type_map, map
 
 //TODO: Should this be returning an object of a derived type too?
 // Searches for the first object in the hierarchy of type.
-NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & type ) {
+NiObjectRef GetObjectByType( NiObject * root, const Type & type ) {
 	if ( root->IsSameType( type ) ) {
 		return root;
 	}
@@ -586,7 +585,7 @@ NiObjectRef GetObjectByType( const NiObjectRef & root, const Type & type ) {
 
 //TODO: Should this be returning all objects of a derived type too?
 // Returns all in the in the tree of type.
-list<NiObjectRef> GetAllObjectsByType( NiObjectRef const & root, const Type & type ) {
+list<NiObjectRef> GetAllObjectsByType( NiObject * root, const Type & type ) {
 	list<NiObjectRef> result;
 	if ( root->IsSameType(type) ) {
 		result.push_back( root );
@@ -630,7 +629,7 @@ static std::string CreateFileName(std::string name) {
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, NifInfo & info ) {
+static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
 	// Do we have animation groups (a NiTextKeyExtraData block)?
 	// If so, create XNif and XKf trees.
 	NiObjectRef txtkey = GetObjectByType( root_block, NiTextKeyExtraData::TypeConst() );
@@ -765,7 +764,7 @@ static void SplitNifTree( NiObjectRef const & root_block, NiObjectRef & xnif_roo
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
+void WriteFileGroup( string const & file_name, NiObject * root_block, const NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
 	// Get base filename.
 	uint file_name_slash = uint(file_name.rfind("\\") + 1);
 	string file_name_path = file_name.substr(0, file_name_slash);
@@ -815,7 +814,7 @@ void WriteFileGroup( string const & file_name, NiObjectRef const & root_block, N
 		throw runtime_error("Not yet implemented.");
 };
 
-void MapNodeNames( map<string,NiNodeRef> & name_map, const Ref<NiNode> & par ) {
+void MapNodeNames( map<string,NiNodeRef> & name_map, NiNode * par ) {
 	//Add the par node to the map, and then call this function for each of its children
 	name_map[par->GetName()] = par;
 
@@ -829,7 +828,7 @@ void MapNodeNames( map<string,NiNodeRef> & name_map, const Ref<NiNode> & par ) {
 	};
 }
 
-void ReassignTreeCrossRefs( map<string,NiNodeRef> & name_map, NiAVObjectRef par ) {
+void ReassignTreeCrossRefs( map<string,NiNodeRef> & name_map, NiAVObject * par ) {
 	//TODO: Decide how cross refs are going to work
 	////Reassign any cross references on this block
 	//((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
@@ -848,7 +847,7 @@ void ReassignTreeCrossRefs( map<string,NiNodeRef> & name_map, NiAVObjectRef par 
 //This function will merge two scene graphs by attatching new objects to the correct position
 //on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
 //existing nodes by changing their data or attatched properties
-void MergeSceneGraph( map<string,NiNodeRef> & name_map, const NiNodeRef & root, NiAVObjectRef par ) {
+void MergeSceneGraph( map<string,NiNodeRef> & name_map, NiNode * root, NiAVObject * par ) {
 	//Check if this block's name exists in the block map
 	string name = par->GetName();
 
@@ -907,7 +906,7 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, const NiNodeRef & root, 
 	}
 }
 
-void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned version, unsigned user_version ) {
+void MergeNifTrees( NiNode * target, NiAVObject * right, unsigned version, unsigned user_version ) {
 	//For now assume that both are normal Nif trees just to verify that it works
 
 	//Make a clone of the tree to add
@@ -929,7 +928,7 @@ void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned version, uns
 }
 
 //Version for merging KF Trees rooted by a NiControllerSequence
-void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned version, unsigned user_version ) {
+void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned version, unsigned user_version ) {
 	//Map the node names
 	map<string,NiNodeRef> name_map;
 	MapNodeNames( name_map, target );
@@ -1036,7 +1035,7 @@ void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> 
 }
 
 //Version for merging KF Trees rooted by a NiSequenceStreamHelper
-void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiSequenceStreamHelper> & right, unsigned version, unsigned user_version ) {
+void MergeNifTrees( NiNode * target, NiSequenceStreamHelper * right, unsigned version, unsigned user_version ) {
 	//Map the node names
 	map<string,NiNodeRef> name_map;
 	MapNodeNames( name_map, target );
@@ -1075,7 +1074,7 @@ unsigned int ParseVersionString(string version) {
 	for( int offset = 3; offset >= 0 && start < version.length(); --offset ) {
 		end = version.find_first_of( ".", start );
 		
-		if ( end == string.npos ) {
+		if ( end == string::npos ) {
 			len = end;
 		} else {
 			len = end-start;
@@ -1123,7 +1122,7 @@ string FormatVersionString(unsigned version) {
 }
 
 
-Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version, unsigned user_version ) {
+Ref<NiObject> CloneNifTree( NiObject * root, unsigned version, unsigned user_version ) {
 	//Create a string stream to temporarily hold the state-save of this tree
 	stringstream tmp;
 
@@ -1134,7 +1133,7 @@ Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version, unsign
 	return ReadNifTree( tmp );
 }
 
-void SendNifTreeToBindPos( const Ref<NiNode> & root ) {
+void SendNifTreeToBindPos( NiNode * root ) {
 	//If this node is a skeleton root, send its children to the bind
 	//position
 

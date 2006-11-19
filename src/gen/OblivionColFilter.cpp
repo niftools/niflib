@@ -7,5 +7,18 @@ using namespace Niflib;
 //Constructor
 OblivionColFilter::OblivionColFilter() : colFilter((byte)0), unknownShort((ushort)0) {};
 
+//Copy Constructor
+OblivionColFilter::OblivionColFilter( const OblivionColFilter & src ) {
+	*this = src;
+};
+
+//Copy Operator
+OblivionColFilter & OblivionColFilter::operator=( const OblivionColFilter & src ) {
+	this->layer = src.layer;
+	this->colFilter = src.colFilter;
+	this->unknownShort = src.unknownShort;
+	return *this;
+};
+
 //Destructor
 OblivionColFilter::~OblivionColFilter() {};

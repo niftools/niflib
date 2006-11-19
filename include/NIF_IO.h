@@ -9,7 +9,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <sstream>
 #include <vector>
 #include "Key.h"
-#include "nif_basic_types.h"
 #include "gen/enums_intl.h"
 #include "nif_math.h"
 #include "nif_versions.h"

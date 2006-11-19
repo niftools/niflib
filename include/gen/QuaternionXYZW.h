@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API QuaternionXYZW {
 	/*! Default Constructor */
 	QuaternionXYZW();
+	/*! Copy Constructor */
+	QuaternionXYZW( const QuaternionXYZW & src );
+	/*! Copy Operator */
+	QuaternionXYZW & operator=( const QuaternionXYZW & src );
 	/*! Default Destructor */
 	~QuaternionXYZW();
 	/*!

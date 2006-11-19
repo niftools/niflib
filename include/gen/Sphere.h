@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API Sphere {
 	/*! Default Constructor */
 	Sphere();
+	/*! Copy Constructor */
+	Sphere( const Sphere & src );
+	/*! Copy Operator */
+	Sphere & operator=( const Sphere & src );
 	/*! Default Destructor */
 	~Sphere();
 	/*!

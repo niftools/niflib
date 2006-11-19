@@ -7,5 +7,22 @@ using namespace Niflib;
 //Constructor
 Particle::Particle() : lifetime(0.0f), lifespan(0.0f), timestamp(0.0f), unknownShort((ushort)0), vertexId((ushort)0) {};
 
+//Copy Constructor
+Particle::Particle( const Particle & src ) {
+	*this = src;
+};
+
+//Copy Operator
+Particle & Particle::operator=( const Particle & src ) {
+	this->velocity = src.velocity;
+	this->unknownVector = src.unknownVector;
+	this->lifetime = src.lifetime;
+	this->lifespan = src.lifespan;
+	this->timestamp = src.timestamp;
+	this->unknownShort = src.unknownShort;
+	this->vertexId = src.vertexId;
+	return *this;
+};
+
 //Destructor
 Particle::~Particle() {};

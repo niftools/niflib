@@ -14,7 +14,7 @@ namespace Niflib {
 class NiAVObject;
 class NiObject;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiCollisionObject;
 typedef Ref<NiCollisionObject> NiCollisionObjectRef;

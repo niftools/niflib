@@ -10,7 +10,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiParticleSystem;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysModifier;
 typedef Ref<NiPSysModifier> NiPSysModifierRef;

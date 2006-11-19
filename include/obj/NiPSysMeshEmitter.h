@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiTriBasedGeom;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysMeshEmitter;
 typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;

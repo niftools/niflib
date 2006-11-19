@@ -14,7 +14,7 @@ namespace Niflib {
 class NiSkinPartition;
 class NiGeometry;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiSkinData;
 typedef Ref<NiSkinData> NiSkinDataRef;

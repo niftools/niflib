@@ -7,5 +7,17 @@ using namespace Niflib;
 //Constructor
 MatchGroup::MatchGroup() : numVertices((ushort)0) {};
 
+//Copy Constructor
+MatchGroup::MatchGroup( const MatchGroup & src ) {
+	*this = src;
+};
+
+//Copy Operator
+MatchGroup & MatchGroup::operator=( const MatchGroup & src ) {
+	this->numVertices = src.numVertices;
+	this->vertexIndices = src.vertexIndices;
+	return *this;
+};
+
 //Destructor
 MatchGroup::~MatchGroup() {};

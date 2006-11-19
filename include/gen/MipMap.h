@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API MipMap {
 	/*! Default Constructor */
 	MipMap();
+	/*! Copy Constructor */
+	MipMap( const MipMap & src );
+	/*! Copy Operator */
+	MipMap & operator=( const MipMap & src );
 	/*! Default Destructor */
 	~MipMap();
 	/*!

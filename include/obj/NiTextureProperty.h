@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiImage;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiTextureProperty;
 typedef Ref<NiTextureProperty> NiTexturePropertyRef;

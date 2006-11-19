@@ -7,6 +7,30 @@ using namespace Niflib;
 //Constructor
 Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), userVersion2((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
 
+//Copy Constructor
+Header::Header( const Header & src ) {
+	*this = src;
+};
+
+//Copy Operator
+Header & Header::operator=( const Header & src ) {
+	this->headerString = src.headerString;
+	this->copyright = src.copyright;
+	this->version = src.version;
+	this->endianType = src.endianType;
+	this->userVersion = src.userVersion;
+	this->numBlocks = src.numBlocks;
+	this->userVersion2 = src.userVersion2;
+	this->creator = src.creator;
+	this->exportInfo1 = src.exportInfo1;
+	this->exportInfo2 = src.exportInfo2;
+	this->numBlockTypes = src.numBlockTypes;
+	this->blockTypes = src.blockTypes;
+	this->blockTypeIndex = src.blockTypeIndex;
+	this->unknownInt2 = src.unknownInt2;
+	return *this;
+};
+
 //Destructor
 Header::~Header() {};
 void Header::Read( istream& in ) {

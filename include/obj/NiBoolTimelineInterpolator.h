@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiBoolData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBoolTimelineInterpolator;
 typedef Ref<NiBoolTimelineInterpolator> NiBoolTimelineInterpolatorRef;

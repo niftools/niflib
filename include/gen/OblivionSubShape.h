@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API OblivionSubShape {
 	/*! Default Constructor */
 	OblivionSubShape();
+	/*! Copy Constructor */
+	OblivionSubShape( const OblivionSubShape & src );
+	/*! Copy Operator */
+	OblivionSubShape & operator=( const OblivionSubShape & src );
 	/*! Default Destructor */
 	~OblivionSubShape();
 	/*!

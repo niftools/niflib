@@ -17,6 +17,10 @@ namespace Niflib {
 struct NIFLIB_API ShaderTexDesc {
 	/*! Default Constructor */
 	ShaderTexDesc();
+	/*! Copy Constructor */
+	ShaderTexDesc( const ShaderTexDesc & src );
+	/*! Copy Operator */
+	ShaderTexDesc & operator=( const ShaderTexDesc & src );
 	/*! Default Destructor */
 	~ShaderTexDesc();
 	/*!

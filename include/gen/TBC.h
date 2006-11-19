@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API TBC {
 	/*! Default Constructor */
 	TBC();
+	/*! Copy Constructor */
+	TBC( const TBC & src );
+	/*! Copy Operator */
+	TBC & operator=( const TBC & src );
 	/*! Default Destructor */
 	~TBC();
 	/*!

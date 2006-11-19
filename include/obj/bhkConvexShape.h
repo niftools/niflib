@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkSphereRepShape.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class bhkConvexShape;
 typedef Ref<bhkConvexShape> bhkConvexShapeRef;

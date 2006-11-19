@@ -9,5 +9,17 @@ using namespace Niflib;
 //Constructor
 SkinShape::SkinShape() : shape(NULL), skinInstance(NULL) {};
 
+//Copy Constructor
+SkinShape::SkinShape( const SkinShape & src ) {
+	*this = src;
+};
+
+//Copy Operator
+SkinShape & SkinShape::operator=( const SkinShape & src ) {
+	this->shape = src.shape;
+	this->skinInstance = src.skinInstance;
+	return *this;
+};
+
 //Destructor
 SkinShape::~SkinShape() {};

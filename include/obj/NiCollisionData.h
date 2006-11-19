@@ -10,7 +10,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiCollisionData;
 typedef Ref<NiCollisionData> NiCollisionDataRef;

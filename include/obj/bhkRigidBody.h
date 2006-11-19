@@ -14,7 +14,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class AbhkConstraint;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;

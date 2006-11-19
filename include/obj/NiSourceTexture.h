@@ -14,7 +14,7 @@ namespace Niflib {
 class NiObject;
 class NiPixelData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;

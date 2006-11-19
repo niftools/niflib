@@ -10,7 +10,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiFloatData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysGravityStrengthCtlr;
 typedef Ref<NiPSysGravityStrengthCtlr> NiPSysGravityStrengthCtlrRef;

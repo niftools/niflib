@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysMeshUpdateModifier;
 typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;

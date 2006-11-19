@@ -14,7 +14,7 @@ namespace Niflib {
 class NiMorphData;
 class NiInterpolator;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiGeomMorpherController;
 typedef Ref<NiGeomMorpherController> NiGeomMorpherControllerRef;

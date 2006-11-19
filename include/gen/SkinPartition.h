@@ -16,6 +16,10 @@ namespace Niflib {
 struct NIFLIB_API SkinPartition {
 	/*! Default Constructor */
 	SkinPartition();
+	/*! Copy Constructor */
+	SkinPartition( const SkinPartition & src );
+	/*! Copy Operator */
+	SkinPartition & operator=( const SkinPartition & src );
 	/*! Default Destructor */
 	~SkinPartition();
 	/*!

@@ -17,6 +17,10 @@ class NiAVObject;
 struct NIFLIB_API AVObject {
 	/*! Default Constructor */
 	AVObject();
+	/*! Copy Constructor */
+	AVObject( const AVObject & src );
+	/*! Copy Operator */
+	AVObject & operator=( const AVObject & src );
 	/*! Default Destructor */
 	~AVObject();
 	/*!

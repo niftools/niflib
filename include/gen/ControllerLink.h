@@ -25,6 +25,10 @@ class NiStringPalette;
 struct NIFLIB_API ControllerLink {
 	/*! Default Constructor */
 	ControllerLink();
+	/*! Copy Constructor */
+	ControllerLink( const ControllerLink & src );
+	/*! Copy Operator */
+	ControllerLink & operator=( const ControllerLink & src );
 	/*! Default Destructor */
 	~ControllerLink();
 	/*!

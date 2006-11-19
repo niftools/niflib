@@ -19,7 +19,7 @@ class NiNode;
 class NiAVObject;
 class NiTriBasedGeom;
 
-const unsigned CS_NO_INDEX = 0xFFFFFFFF;
+const unsigned int CS_NO_INDEX = 0xFFFFFFFF;
 
 class ComplexShape {
 public:

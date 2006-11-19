@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API MatchGroup {
 	/*! Default Constructor */
 	MatchGroup();
+	/*! Copy Constructor */
+	MatchGroup( const MatchGroup & src );
+	/*! Copy Operator */
+	MatchGroup & operator=( const MatchGroup & src );
 	/*! Default Destructor */
 	~MatchGroup();
 	/*!

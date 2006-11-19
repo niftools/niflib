@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/ByteArray.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBinaryExtraData;
 typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;

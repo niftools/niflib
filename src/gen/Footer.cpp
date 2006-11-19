@@ -8,6 +8,18 @@ using namespace Niflib;
 //Constructor
 Footer::Footer() : numRoots((uint)0) {};
 
+//Copy Constructor
+Footer::Footer( const Footer & src ) {
+	*this = src;
+};
+
+//Copy Operator
+Footer & Footer::operator=( const Footer & src ) {
+	this->numRoots = src.numRoots;
+	this->roots = src.roots;
+	return *this;
+};
+
 //Destructor
 Footer::~Footer() {};
 

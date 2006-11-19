@@ -7,5 +7,31 @@ using namespace Niflib;
 //Constructor
 SkinPartition::SkinPartition() : numVertices((ushort)0), numTriangles((ushort)0), numBones((ushort)0), numStrips((ushort)0), numWeightsPerVertex((ushort)0), hasVertexMap(false), hasVertexWeights(false), hasStrips(false), hasBoneIndices(false) {};
 
+//Copy Constructor
+SkinPartition::SkinPartition( const SkinPartition & src ) {
+	*this = src;
+};
+
+//Copy Operator
+SkinPartition & SkinPartition::operator=( const SkinPartition & src ) {
+	this->numVertices = src.numVertices;
+	this->numTriangles = src.numTriangles;
+	this->numBones = src.numBones;
+	this->numStrips = src.numStrips;
+	this->numWeightsPerVertex = src.numWeightsPerVertex;
+	this->bones = src.bones;
+	this->hasVertexMap = src.hasVertexMap;
+	this->vertexMap = src.vertexMap;
+	this->hasVertexWeights = src.hasVertexWeights;
+	this->vertexWeights = src.vertexWeights;
+	this->stripLengths = src.stripLengths;
+	this->hasStrips = src.hasStrips;
+	this->strips = src.strips;
+	this->triangles = src.triangles;
+	this->hasBoneIndices = src.hasBoneIndices;
+	this->boneIndices = src.boneIndices;
+	return *this;
+};
+
 //Destructor
 SkinPartition::~SkinPartition() {};

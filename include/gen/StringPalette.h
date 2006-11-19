@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API StringPalette {
 	/*! Default Constructor */
 	StringPalette();
+	/*! Copy Constructor */
+	StringPalette( const StringPalette & src );
+	/*! Copy Operator */
+	StringPalette & operator=( const StringPalette & src );
 	/*! Default Destructor */
 	~StringPalette();
 	/*!

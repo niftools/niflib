@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiPSysSpawnModifier;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysAgeDeathModifier;
 typedef Ref<NiPSysAgeDeathModifier> NiPSysAgeDeathModifierRef;

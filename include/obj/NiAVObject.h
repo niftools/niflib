@@ -6,9 +6,10 @@ All rights reserved.  Please see niflib.h for licence. */
 
 // Includes
 #include "../gen/BoundingBox.h"
-#include "../gen/obj_defines.h"
-#include NI_A_V_OBJECT_INCLUDE
+#include "NiObjectNET.h"
 namespace Niflib {
+
+//#include "../gen/obj_defines.h"
 
 // Forward define of referenced blocks
 class NiProperty;

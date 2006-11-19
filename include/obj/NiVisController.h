@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiVisData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiVisController;
 typedef Ref<NiVisController> NiVisControllerRef;

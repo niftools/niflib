@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API FurniturePosition {
 	/*! Default Constructor */
 	FurniturePosition();
+	/*! Copy Constructor */
+	FurniturePosition( const FurniturePosition & src );
+	/*! Copy Operator */
+	FurniturePosition & operator=( const FurniturePosition & src );
 	/*! Default Destructor */
 	~FurniturePosition();
 	/*!

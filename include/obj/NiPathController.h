@@ -14,7 +14,7 @@ namespace Niflib {
 class NiPosData;
 class NiFloatData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPathController;
 typedef Ref<NiPathController> NiPathControllerRef;

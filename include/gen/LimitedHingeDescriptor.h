@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API LimitedHingeDescriptor {
 	/*! Default Constructor */
 	LimitedHingeDescriptor();
+	/*! Copy Constructor */
+	LimitedHingeDescriptor( const LimitedHingeDescriptor & src );
+	/*! Copy Operator */
+	LimitedHingeDescriptor & operator=( const LimitedHingeDescriptor & src );
 	/*! Default Destructor */
 	~LimitedHingeDescriptor();
 	/*!

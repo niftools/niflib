@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiInterpolator;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiSingleInterpolatorController;
 typedef Ref<NiSingleInterpolatorController> NiSingleInterpolatorControllerRef;

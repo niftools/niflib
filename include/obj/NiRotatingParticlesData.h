@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiParticlesData.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiRotatingParticlesData;
 typedef Ref<NiRotatingParticlesData> NiRotatingParticlesDataRef;

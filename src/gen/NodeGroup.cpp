@@ -8,5 +8,17 @@ using namespace Niflib;
 //Constructor
 NodeGroup::NodeGroup() : numNodes((uint)0) {};
 
+//Copy Constructor
+NodeGroup::NodeGroup( const NodeGroup & src ) {
+	*this = src;
+};
+
+//Copy Operator
+NodeGroup & NodeGroup::operator=( const NodeGroup & src ) {
+	this->numNodes = src.numNodes;
+	this->nodes = src.nodes;
+	return *this;
+};
+
 //Destructor
 NodeGroup::~NodeGroup() {};

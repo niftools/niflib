@@ -20,6 +20,10 @@ class NiObject;
 struct NIFLIB_API Footer {
 	/*! Default Constructor */
 	Footer();
+	/*! Copy Constructor */
+	Footer( const Footer & src );
+	/*! Copy Operator */
+	Footer & operator=( const Footer & src );
 	/*! Default Destructor */
 	~Footer();
 	/*!

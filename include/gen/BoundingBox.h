@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API BoundingBox {
 	/*! Default Constructor */
 	BoundingBox();
+	/*! Copy Constructor */
+	BoundingBox( const BoundingBox & src );
+	/*! Copy Operator */
+	BoundingBox & operator=( const BoundingBox & src );
 	/*! Default Destructor */
 	~BoundingBox();
 	/*!

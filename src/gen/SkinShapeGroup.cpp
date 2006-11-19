@@ -10,5 +10,17 @@ using namespace Niflib;
 //Constructor
 SkinShapeGroup::SkinShapeGroup() : numLinkPairs((uint)0) {};
 
+//Copy Constructor
+SkinShapeGroup::SkinShapeGroup( const SkinShapeGroup & src ) {
+	*this = src;
+};
+
+//Copy Operator
+SkinShapeGroup & SkinShapeGroup::operator=( const SkinShapeGroup & src ) {
+	this->numLinkPairs = src.numLinkPairs;
+	this->linkPairs = src.linkPairs;
+	return *this;
+};
+
 //Destructor
 SkinShapeGroup::~SkinShapeGroup() {};

@@ -14,7 +14,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiTriShape;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBoneLODController;
 typedef Ref<NiBoneLODController> NiBoneLODControllerRef;

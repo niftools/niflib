@@ -14,7 +14,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiLODData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiLODNode;
 typedef Ref<NiLODNode> NiLODNodeRef;

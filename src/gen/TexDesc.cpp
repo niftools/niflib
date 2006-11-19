@@ -8,5 +8,28 @@ using namespace Niflib;
 //Constructor
 TexDesc::TexDesc() : source(NULL), clampMode((TexClampMode)WRAP_S_WRAP_T), filterMode((TexFilterMode)FILTER_TRILERP), uvSet((uint)0), ps2L((ushort)0), ps2K((ushort)0xFFB5), unknown1((ushort)0), hasTextureTransform(false), wRotation(0.0f), transformType_((uint)0) {};
 
+//Copy Constructor
+TexDesc::TexDesc( const TexDesc & src ) {
+	*this = src;
+};
+
+//Copy Operator
+TexDesc & TexDesc::operator=( const TexDesc & src ) {
+	this->source = src.source;
+	this->clampMode = src.clampMode;
+	this->filterMode = src.filterMode;
+	this->uvSet = src.uvSet;
+	this->ps2L = src.ps2L;
+	this->ps2K = src.ps2K;
+	this->unknown1 = src.unknown1;
+	this->hasTextureTransform = src.hasTextureTransform;
+	this->translation = src.translation;
+	this->tiling = src.tiling;
+	this->wRotation = src.wRotation;
+	this->transformType_ = src.transformType_;
+	this->centerOffset = src.centerOffset;
+	return *this;
+};
+
 //Destructor
 TexDesc::~TexDesc() {};

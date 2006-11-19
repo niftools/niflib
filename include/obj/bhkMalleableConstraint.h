@@ -15,7 +15,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiObject;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class bhkMalleableConstraint;
 typedef Ref<bhkMalleableConstraint> bhkMalleableConstraintRef;

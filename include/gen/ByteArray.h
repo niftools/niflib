@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API ByteArray {
 	/*! Default Constructor */
 	ByteArray();
+	/*! Copy Constructor */
+	ByteArray( const ByteArray & src );
+	/*! Copy Operator */
+	ByteArray & operator=( const ByteArray & src );
 	/*! Default Destructor */
 	~ByteArray();
 	/*!

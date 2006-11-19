@@ -14,7 +14,7 @@ namespace Niflib {
 class NiPSysEmitterCtlrData;
 class NiInterpolator;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPSysEmitterCtlr;
 typedef Ref<NiPSysEmitterCtlr> NiPSysEmitterCtlrRef;

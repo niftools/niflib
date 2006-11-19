@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API OblivionColFilter {
 	/*! Default Constructor */
 	OblivionColFilter();
+	/*! Copy Constructor */
+	OblivionColFilter( const OblivionColFilter & src );
+	/*! Copy Operator */
+	OblivionColFilter & operator=( const OblivionColFilter & src );
 	/*! Default Destructor */
 	~OblivionColFilter();
 	/*!

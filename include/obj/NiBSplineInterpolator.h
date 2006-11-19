@@ -11,7 +11,7 @@ namespace Niflib {
 class NiBSplineData;
 class NiBSplineBasisData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiBSplineInterpolator;
 typedef Ref<NiBSplineInterpolator> NiBSplineInterpolatorRef;

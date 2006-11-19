@@ -14,7 +14,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiTriStripsData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class bhkNiTriStripsShape;
 typedef Ref<bhkNiTriStripsShape> bhkNiTriStripsShapeRef;

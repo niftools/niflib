@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiColorData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiParticleColorModifier;
 typedef Ref<NiParticleColorModifier> NiParticleColorModifierRef;

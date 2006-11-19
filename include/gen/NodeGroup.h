@@ -17,6 +17,10 @@ class NiNode;
 struct NIFLIB_API NodeGroup {
 	/*! Default Constructor */
 	NodeGroup();
+	/*! Copy Constructor */
+	NodeGroup( const NodeGroup & src );
+	/*! Copy Operator */
+	NodeGroup & operator=( const NodeGroup & src );
 	/*! Default Destructor */
 	~NodeGroup();
 	/*!

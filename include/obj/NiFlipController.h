@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiSourceTexture;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiFlipController;
 typedef Ref<NiFlipController> NiFlipControllerRef;

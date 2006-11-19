@@ -10,7 +10,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class bhkShape;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class AbhkConstraint;
 typedef Ref<AbhkConstraint> AbhkConstraintRef;

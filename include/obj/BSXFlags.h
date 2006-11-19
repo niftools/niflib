@@ -7,8 +7,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiExtraData.h"
 namespace Niflib {
 
-
-#include "../gen/obj_defines.h"
+typedef unsigned int uint;
+//#include "../gen/obj_defines.h"
 
 class BSXFlags;
 typedef Ref<BSXFlags> BSXFlagsRef;

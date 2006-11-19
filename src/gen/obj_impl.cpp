@@ -197,11 +197,11 @@ const char FIX_LINK_INDEX_ERROR[] = "Object index was not found in object map.  
 const char FIX_LINK_CAST_ERROR[] = "Link could not be cast to required type during file read. This NIF file may be invalid or improperly supported.";
 
 template <class T>
-Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<uint> & link_stack, unsigned version ) {
+Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version ) {
 	if (link_stack.empty()) {
 		throw runtime_error(FIX_LINK_POP_ERROR);
 	}
-	unsigned index = link_stack.front();
+	unsigned int index = link_stack.front();
 	link_stack.pop_front();
 
 	//Check if link is NULL
@@ -209,7 +209,7 @@ Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<uint> & link_sta
 		return NULL;
 	}
 
-	map<unsigned,NiObjectRef>::const_iterator it = objects.find(index);
+	map<unsigned int,NiObjectRef>::const_iterator it = objects.find(index);
 	if ( it == objects.end() ) {
 		throw runtime_error(FIX_LINK_INDEX_ERROR);
 	}

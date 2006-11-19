@@ -20,6 +20,10 @@ class NiPixelData;
 struct NIFLIB_API TexSource {
 	/*! Default Constructor */
 	TexSource();
+	/*! Copy Constructor */
+	TexSource( const TexSource & src );
+	/*! Copy Operator */
+	TexSource & operator=( const TexSource & src );
 	/*! Default Destructor */
 	~TexSource();
 	/*!

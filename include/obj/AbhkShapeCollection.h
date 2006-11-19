@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkShape.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class AbhkShapeCollection;
 typedef Ref<AbhkShapeCollection> AbhkShapeCollectionRef;

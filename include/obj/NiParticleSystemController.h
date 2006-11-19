@@ -15,7 +15,7 @@ namespace Niflib {
 class NiObject;
 class AParticleModifier;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiParticleSystemController;
 typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;

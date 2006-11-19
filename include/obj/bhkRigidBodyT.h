@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkRigidBody.h"
 namespace Niflib {
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class bhkRigidBodyT;
 typedef Ref<bhkRigidBodyT> bhkRigidBodyTRef;

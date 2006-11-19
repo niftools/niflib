@@ -14,7 +14,7 @@ namespace Niflib {
 class NiAVObject;
 class NiDynamicEffect;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiNode;
 class NiAVObject;

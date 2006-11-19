@@ -13,7 +13,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiUVData;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiUVController;
 typedef Ref<NiUVController> NiUVControllerRef;

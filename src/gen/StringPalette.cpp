@@ -7,5 +7,17 @@ using namespace Niflib;
 //Constructor
 StringPalette::StringPalette() : length((uint)0) {};
 
+//Copy Constructor
+StringPalette::StringPalette( const StringPalette & src ) {
+	*this = src;
+};
+
+//Copy Operator
+StringPalette & StringPalette::operator=( const StringPalette & src ) {
+	this->palette = src.palette;
+	this->length = src.length;
+	return *this;
+};
+
 //Destructor
 StringPalette::~StringPalette() {};

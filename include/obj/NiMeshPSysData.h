@@ -14,7 +14,7 @@ namespace Niflib {
 class NiPSysModifier;
 class NiNode;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiMeshPSysData;
 typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;

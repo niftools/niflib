@@ -7,5 +7,17 @@ using namespace Niflib;
 //Constructor
 Sphere::Sphere() : radius(0.0f) {};
 
+//Copy Constructor
+Sphere::Sphere( const Sphere & src ) {
+	*this = src;
+};
+
+//Copy Operator
+Sphere & Sphere::operator=( const Sphere & src ) {
+	this->center = src.center;
+	this->radius = src.radius;
+	return *this;
+};
+
 //Destructor
 Sphere::~Sphere() {};

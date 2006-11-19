@@ -9,5 +9,21 @@ using namespace Niflib;
 //Constructor
 TexSource::TexSource() : useExternal((byte)0), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL) {};
 
+//Copy Constructor
+TexSource::TexSource( const TexSource & src ) {
+	*this = src;
+};
+
+//Copy Operator
+TexSource & TexSource::operator=( const TexSource & src ) {
+	this->useExternal = src.useExternal;
+	this->fileName = src.fileName;
+	this->unknownLink = src.unknownLink;
+	this->unknownByte = src.unknownByte;
+	this->originalFileName_ = src.originalFileName_;
+	this->pixelData = src.pixelData;
+	return *this;
+};
+
 //Destructor
 TexSource::~TexSource() {};

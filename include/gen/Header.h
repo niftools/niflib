@@ -16,6 +16,10 @@ namespace Niflib {
 struct NIFLIB_API Header {
 	/*! Default Constructor */
 	Header();
+	/*! Copy Constructor */
+	Header( const Header & src );
+	/*! Copy Operator */
+	Header & operator=( const Header & src );
 	/*! Default Destructor */
 	~Header();
 	/*!

@@ -17,6 +17,10 @@ namespace Niflib {
 struct NIFLIB_API SkinShapeGroup {
 	/*! Default Constructor */
 	SkinShapeGroup();
+	/*! Copy Constructor */
+	SkinShapeGroup( const SkinShapeGroup & src );
+	/*! Copy Operator */
+	SkinShapeGroup & operator=( const SkinShapeGroup & src );
 	/*! Default Destructor */
 	~SkinShapeGroup();
 	/*!

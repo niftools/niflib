@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API Particle {
 	/*! Default Constructor */
 	Particle();
+	/*! Copy Constructor */
+	Particle( const Particle & src );
+	/*! Copy Operator */
+	Particle & operator=( const Particle & src );
 	/*! Default Destructor */
 	~Particle();
 	/*!

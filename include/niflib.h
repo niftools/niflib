@@ -51,7 +51,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "nif_math.h"
 #include "nif_versions.h"
 #include "Ref.h"
-#include "gen/enums.h"
+#include "nif_basic_types.h"
 
 using namespace std;
 namespace Niflib {
@@ -219,7 +219,7 @@ NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & root, NifInfo & info );
+NIFLIB_API void WriteNifTree( string const & file_name, NiObject * root, const NifInfo & info );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -227,7 +227,7 @@ NIFLIB_API void WriteNifTree( string const & file_name, Ref<NiObject> const & ro
  * \param[in] root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-NIFLIB_API void WriteNifTree( ostream & in, Ref<NiObject> const & root, NifInfo & info );
+NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & info );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
@@ -237,7 +237,7 @@ NIFLIB_API void WriteNifTree( ostream & in, Ref<NiObject> const & root, NifInfo 
  * \param[in] export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param[in] kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & root, NifInfo & info, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
+NIFLIB_API void WriteFileGroup( string const & file_name, NiObject * root, const NifInfo & info, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
 
 /*!
  * Creates a clone of an entire tree of objects.
@@ -246,7 +246,7 @@ NIFLIB_API void WriteFileGroup( string const & file_name, Ref<NiObject> const & 
  * \param[in] user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
  * \return The root of the new cloned tree.
  */
-NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0 );
+NIFLIB_API Ref<NiObject> CloneNifTree( NiObject * root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0 );
 
 
 //TODO:  Figure out how to fix this to work with the new system
@@ -258,7 +258,7 @@ NIFLIB_API Ref<NiObject> CloneNifTree( Ref<NiObject> const & root, unsigned vers
  * \param[in] user_version The user version to use during the clone operation.
  */
 //NIFLIB_API void MergeNifTrees( NiNodeRef target, NiAVObjectRef right, unsigned int version = 0xFFFFFFFF );
-NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControllerSequence> & right, unsigned version = 0xFFFFFFFF, unsigned user_version = 0  );
+NIFLIB_API void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned version = 0xFFFFFFFF, unsigned user_version = 0  );
 
 /*! 
  * Traverses a tree of NIF objects, attempting to move each skeleton root
@@ -267,7 +267,7 @@ NIFLIB_API void MergeNifTrees( const Ref<NiNode> & target, const Ref<NiControlle
  * are skin influences.
  * \param[in] root The root NiNode of the tree.
  */
-NIFLIB_API void SendNifTreeToBindPos( const Ref<NiNode> & root );
+NIFLIB_API void SendNifTreeToBindPos( NiNode * root );
 
 //// Returns list of all blocks in the tree rooted by root block.
 //list<NiObjectRef> GetNifTree( NiObjectRef const & root_block );

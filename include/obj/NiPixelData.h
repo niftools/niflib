@@ -14,7 +14,7 @@ namespace Niflib {
 // Forward define of referenced blocks
 class NiPalette;
 
-#include "../gen/obj_defines.h"
+//#include "../gen/obj_defines.h"
 
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;

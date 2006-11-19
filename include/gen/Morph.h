@@ -15,6 +15,10 @@ namespace Niflib {
 struct NIFLIB_API Morph {
 	/*! Default Constructor */
 	Morph();
+	/*! Copy Constructor */
+	Morph( const Morph & src );
+	/*! Copy Operator */
+	Morph & operator=( const Morph & src );
 	/*! Default Destructor */
 	~Morph();
 	/*!
