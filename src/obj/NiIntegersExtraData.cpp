@@ -40,6 +40,6 @@ vector<unsigned int> NiIntegersExtraData::GetData() const {
 };
 	
 void NiIntegersExtraData::SetData( const vector<unsigned int> & n ) {
-	numIntegers = unsigned int( n.size() );
+	numIntegers = (unsigned int)( n.size() );
 	data = n;
 };

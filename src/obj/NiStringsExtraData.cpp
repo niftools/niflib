@@ -40,6 +40,6 @@ vector<string> NiStringsExtraData::GetData() const {
 };
 	
 void NiStringsExtraData::SetData( const vector<string> & n ) {
-	numStrings = unsigned int(n.size());
+	numStrings = (unsigned int)(n.size());
 	data = n;
 };

@@ -82,8 +82,8 @@ void Header::Read( istream& in ) {
 }
 
 void Header::Write( ostream& out ) const {
-	numBlockTypes = unsigned short(blockTypes.size());
-	numBlocks = unsigned int(blockTypeIndex.size());
+	numBlockTypes = (unsigned short)(blockTypes.size());
+	numBlocks = (unsigned int)(blockTypeIndex.size());
 	NifStream( headerString, out, version );
 	if ( version <= 0x03010000 ) {
 		for (unsigned int i2 = 0; i2 < 3; i2++) {
@@ -132,8 +132,8 @@ void Header::Write( ostream& out ) const {
 string Header::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
-	numBlockTypes = unsigned short(blockTypes.size());
-	numBlocks = unsigned int(blockTypeIndex.size());
+	numBlockTypes = (unsigned short)(blockTypes.size());
+	numBlocks = (unsigned int)(blockTypeIndex.size());
 	out << "  Header String:  " << headerString << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 3; i1++) {

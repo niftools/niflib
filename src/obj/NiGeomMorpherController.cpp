@@ -42,7 +42,7 @@ vector< Ref<NiInterpolator> > NiGeomMorpherController::GetInterpolators() const 
 }
 
 void NiGeomMorpherController::SetInterpolators( const vector< Ref<NiInterpolator> > & n ) {
-	numInterpolators = unsigned int(n.size());
+	numInterpolators = (unsigned int)(n.size());
 	interpolators = n;
 }
 

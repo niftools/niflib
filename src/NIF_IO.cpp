@@ -102,7 +102,7 @@ void WriteFloat( float val, ostream& out ){
 }
 
 void WriteString( string const & val, ostream& out ) {
-	WriteUInt( unsigned int(val.size()), out );
+	WriteUInt( (unsigned int)(val.size()), out );
 	out.write( val.c_str(), std::streamsize(val.size()) );
 }
 
@@ -428,7 +428,7 @@ string HexString( const byte * src, unsigned int len ) {
 	out << hex << setfill('0');
 
 	for ( unsigned int i = 0; i < len; ++i ) {
-		out << uppercase << setw(2) << unsigned int(src[i]);
+		out << uppercase << setw(2) << (unsigned int)(src[i]);
 		if (i % 16 == 15 || i == len - 1)
 			out << endl;
 		else if (i % 16 == 7)
@@ -445,7 +445,7 @@ string HexString( const byte * src, unsigned int len ) {
 
 //Byte
 ostream & operator<<( ostream & out, byte const & val ) {
-	return out << unsigned int(val);
+	return out << (unsigned int)(val);
 }
 
 void NifStream( Key<Quaternion> & key, istream& file, unsigned int version, KeyType type ) {

@@ -42,7 +42,7 @@ const Type & NiSkinData::GetType() const {
 };
 
 unsigned int NiSkinData::GetBoneCount() const {
-	return unsigned int( boneList.size() );
+	return (unsigned int)( boneList.size() );
 }
 
 Matrix44 NiSkinData::GetBoneTransform( unsigned int bone_index ) const {

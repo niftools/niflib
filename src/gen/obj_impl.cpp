@@ -375,7 +375,7 @@ void AbhkConstraint::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void AbhkConstraint::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSerializable::Write( out, link_map, version, user_version );
-	numBodies = unsigned int(bodies.size());
+	numBodies = (unsigned int)(bodies.size());
 	NifStream( numBodies, out, version );
 	for (unsigned int i1 = 0; i1 < bodies.size(); i1++) {
 		if ( bodies[i1] != NULL )
@@ -390,7 +390,7 @@ std::string AbhkConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkSerializable::asString();
-	numBodies = unsigned int(bodies.size());
+	numBodies = (unsigned int)(bodies.size());
 	out << "  Num Bodies:  " << numBodies << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < bodies.size(); i1++) {
@@ -883,7 +883,7 @@ void NiObjectNET::InternalRead( istream& in, list<unsigned int> & link_stack, un
 
 void NiObjectNET::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numExtraDataList = unsigned int(extraDataList.size());
+	numExtraDataList = (unsigned int)(extraDataList.size());
 	NifStream( name, out, version );
 	if ( version <= 0x04020200 ) {
 		if ( extraData != NULL )
@@ -910,7 +910,7 @@ std::string NiObjectNET::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numExtraDataList = unsigned int(extraDataList.size());
+	numExtraDataList = (unsigned int)(extraDataList.size());
 	out << "  Name:  " << name << endl;
 	out << "  Extra Data:  " << extraData << endl;
 	out << "  Num Extra Data List:  " << numExtraDataList << endl;
@@ -994,7 +994,7 @@ void NiAVObject::InternalRead( istream& in, list<unsigned int> & link_stack, uns
 
 void NiAVObject::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObjectNET::Write( out, link_map, version, user_version );
-	numProperties = unsigned int(properties.size());
+	numProperties = (unsigned int)(properties.size());
 	NifStream( flags, out, version );
 	NifStream( translation, out, version );
 	NifStream( rotation, out, version );
@@ -1036,7 +1036,7 @@ std::string NiAVObject::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObjectNET::asString();
-	numProperties = unsigned int(properties.size());
+	numProperties = (unsigned int)(properties.size());
 	out << "  Flags:  " << flags << endl;
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
@@ -1119,7 +1119,7 @@ void NiDynamicEffect::InternalRead( istream& in, list<unsigned int> & link_stack
 
 void NiDynamicEffect::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
-	numAffectedNodes = unsigned int(affectedNodeListPointers.size());
+	numAffectedNodes = (unsigned int)(affectedNodeListPointers.size());
 	if ( version >= 0x0A020000 ) {
 		NifStream( switchState, out, version );
 	};
@@ -1144,7 +1144,7 @@ std::string NiDynamicEffect::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiAVObject::asString();
-	numAffectedNodes = unsigned int(affectedNodeListPointers.size());
+	numAffectedNodes = (unsigned int)(affectedNodeListPointers.size());
 	out << "  Switch State:  " << switchState << endl;
 	out << "  Num Affected Nodes:  " << numAffectedNodes << endl;
 	array_output_count = 0;
@@ -1478,12 +1478,12 @@ void ABoneLODController::InternalRead( istream& in, list<unsigned int> & link_st
 
 void ABoneLODController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
-	numNodeGroups = unsigned int(nodeGroups.size());
+	numNodeGroups = (unsigned int)(nodeGroups.size());
 	NifStream( unknownInt1, out, version );
 	NifStream( numNodeGroups, out, version );
 	NifStream( numNodeGroups2, out, version );
 	for (unsigned int i1 = 0; i1 < nodeGroups.size(); i1++) {
-		nodeGroups[i1].numNodes = unsigned int(nodeGroups[i1].nodes.size());
+		nodeGroups[i1].numNodes = (unsigned int)(nodeGroups[i1].nodes.size());
 		NifStream( nodeGroups[i1].numNodes, out, version );
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
 			if ( nodeGroups[i1].nodes[i2] != NULL )
@@ -1498,7 +1498,7 @@ std::string ABoneLODController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
-	numNodeGroups = unsigned int(nodeGroups.size());
+	numNodeGroups = (unsigned int)(nodeGroups.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Node Groups:  " << numNodeGroups << endl;
 	out << "  Num Node Groups 2:  " << numNodeGroups2 << endl;
@@ -1508,7 +1508,7 @@ std::string ABoneLODController::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		nodeGroups[i1].numNodes = unsigned int(nodeGroups[i1].nodes.size());
+		nodeGroups[i1].numNodes = (unsigned int)(nodeGroups[i1].nodes.size());
 		out << "    Num Nodes:  " << nodeGroups[i1].numNodes << endl;
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
@@ -1804,9 +1804,9 @@ void NiGeometryData::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void NiGeometryData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numUvSets = unsigned short(uvSets.size());
-	numUvSets2 = byte(uvSets.size());
-	numVertices = unsigned short(vertices.size());
+	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets2 = (byte)(uvSets.size());
+	numVertices = (unsigned short)(vertices.size());
 	if ( version >= 0x0A020000 ) {
 		NifStream( name, out, version );
 	};
@@ -1881,9 +1881,9 @@ std::string NiGeometryData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numUvSets = unsigned short(uvSets.size());
-	numUvSets2 = byte(uvSets.size());
-	numVertices = unsigned short(vertices.size());
+	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets2 = (byte)(uvSets.size());
+	numVertices = (unsigned short)(vertices.size());
 	out << "  Name:  " << name << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
@@ -2345,8 +2345,8 @@ void bhkConvexVerticesShape::InternalRead( istream& in, list<unsigned int> & lin
 
 void bhkConvexVerticesShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	numNormals = unsigned int(normals.size());
-	numVertices = unsigned int(vertices.size());
+	numNormals = (unsigned int)(normals.size());
+	numVertices = (unsigned int)(vertices.size());
 	for (unsigned int i1 = 0; i1 < 7; i1++) {
 		NifStream( unknownFloats1[i1], out, version );
 	};
@@ -2364,8 +2364,8 @@ std::string bhkConvexVerticesShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkSphereRepShape::asString();
-	numNormals = unsigned int(normals.size());
-	numVertices = unsigned int(vertices.size());
+	numNormals = (unsigned int)(normals.size());
+	numVertices = (unsigned int)(vertices.size());
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 7; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -2543,8 +2543,8 @@ void bhkListShape::InternalRead( istream& in, list<unsigned int> & link_stack, u
 
 void bhkListShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
-	numUnknownInts = unsigned int(unknownInts.size());
-	numSubShapes = unsigned int(subShapes.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
+	numSubShapes = (unsigned int)(subShapes.size());
 	NifStream( numSubShapes, out, version );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		if ( subShapes[i1] != NULL )
@@ -2566,8 +2566,8 @@ std::string bhkListShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkShapeCollection::asString();
-	numUnknownInts = unsigned int(unknownInts.size());
-	numSubShapes = unsigned int(subShapes.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
+	numSubShapes = (unsigned int)(subShapes.size());
 	out << "  Num Sub Shapes:  " << numSubShapes << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
@@ -2787,7 +2787,7 @@ void bhkMoppBvTreeShape::InternalRead( istream& in, list<unsigned int> & link_st
 
 void bhkMoppBvTreeShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
-	numUnknownBytes2 = unsigned int(unknownBytes2.size());
+	numUnknownBytes2 = (unsigned int)(unknownBytes2.size());
 	if ( shape != NULL )
 		NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, version );
 	else
@@ -2809,7 +2809,7 @@ std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkShape::asString();
-	numUnknownBytes2 = unsigned int(unknownBytes2.size());
+	numUnknownBytes2 = (unsigned int)(unknownBytes2.size());
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
 	array_output_count = 0;
@@ -2871,7 +2871,7 @@ void bhkMultiSphereShape::InternalRead( istream& in, list<unsigned int> & link_s
 
 void bhkMultiSphereShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	numSpheres = unsigned int(spheres.size());
+	numSpheres = (unsigned int)(spheres.size());
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownFloat2, out, version );
 	NifStream( unknownFloat3, out, version );
@@ -2886,7 +2886,7 @@ std::string bhkMultiSphereShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkSphereRepShape::asString();
-	numSpheres = unsigned int(spheres.size());
+	numSpheres = (unsigned int)(spheres.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
@@ -2941,8 +2941,8 @@ void bhkNiTriStripsShape::InternalRead( istream& in, list<unsigned int> & link_s
 
 void bhkNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkSphereRepShape::Write( out, link_map, version, user_version );
-	numDataLayers = unsigned int(dataLayers.size());
-	numStripsData = unsigned int(stripsData.size());
+	numDataLayers = (unsigned int)(dataLayers.size());
+	numStripsData = (unsigned int)(stripsData.size());
 	NifStream( unknownFloat1, out, version );
 	NifStream( unknownInt1, out, version );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
@@ -2970,8 +2970,8 @@ std::string bhkNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkSphereRepShape::asString();
-	numDataLayers = unsigned int(dataLayers.size());
-	numStripsData = unsigned int(stripsData.size());
+	numDataLayers = (unsigned int)(dataLayers.size());
+	numStripsData = (unsigned int)(stripsData.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	array_output_count = 0;
@@ -3058,7 +3058,7 @@ void bhkPackedNiTriStripsShape::InternalRead( istream& in, list<unsigned int> & 
 
 void bhkPackedNiTriStripsShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
-	numSubShapes = unsigned short(subShapes.size());
+	numSubShapes = (unsigned short)(subShapes.size());
 	NifStream( numSubShapes, out, version );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		NifStream( subShapes[i1].layer, out, version );
@@ -3084,7 +3084,7 @@ std::string bhkPackedNiTriStripsShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkShapeCollection::asString();
-	numSubShapes = unsigned short(subShapes.size());
+	numSubShapes = (unsigned short)(subShapes.size());
 	out << "  Num Sub Shapes:  " << numSubShapes << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
@@ -3281,7 +3281,7 @@ void bhkRigidBody::InternalRead( istream& in, list<unsigned int> & link_stack, u
 
 void bhkRigidBody::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkEntity::Write( out, link_map, version, user_version );
-	numConstraints = unsigned int(constraints.size());
+	numConstraints = (unsigned int)(constraints.size());
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( unknown5Floats[i1], out, version );
 	};
@@ -3337,7 +3337,7 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkEntity::asString();
-	numConstraints = unsigned int(constraints.size());
+	numConstraints = (unsigned int)(constraints.size());
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -3755,7 +3755,7 @@ void BSFurnitureMarker::InternalRead( istream& in, list<unsigned int> & link_sta
 
 void BSFurnitureMarker::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numPositions = unsigned int(positions.size());
+	numPositions = (unsigned int)(positions.size());
 	NifStream( numPositions, out, version );
 	for (unsigned int i1 = 0; i1 < positions.size(); i1++) {
 		NifStream( positions[i1].offset, out, version );
@@ -3769,7 +3769,7 @@ std::string BSFurnitureMarker::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numPositions = unsigned int(positions.size());
+	numPositions = (unsigned int)(positions.size());
 	out << "  Num Positions:  " << numPositions << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < positions.size(); i1++) {
@@ -3894,8 +3894,8 @@ void hkPackedNiTriStripsData::InternalRead( istream& in, list<unsigned int> & li
 
 void hkPackedNiTriStripsData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkShapeCollection::Write( out, link_map, version, user_version );
-	numVertices = unsigned int(vertices.size());
-	numTriangles = unsigned int(triangles.size());
+	numVertices = (unsigned int)(vertices.size());
+	numTriangles = (unsigned int)(triangles.size());
 	NifStream( numTriangles, out, version );
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
 		NifStream( triangles[i1].triangle, out, version );
@@ -3912,8 +3912,8 @@ std::string hkPackedNiTriStripsData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkShapeCollection::asString();
-	numVertices = unsigned int(vertices.size());
-	numTriangles = unsigned int(triangles.size());
+	numVertices = (unsigned int)(vertices.size());
+	numTriangles = (unsigned int)(triangles.size());
 	out << "  Num Triangles:  " << numTriangles << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
@@ -4141,7 +4141,7 @@ void NiBinaryExtraData::InternalRead( istream& in, list<unsigned int> & link_sta
 
 void NiBinaryExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	binaryData.dataSize = unsigned int(binaryData.data.size());
+	binaryData.dataSize = (unsigned int)(binaryData.data.size());
 	NifStream( binaryData.dataSize, out, version );
 	for (unsigned int i1 = 0; i1 < binaryData.data.size(); i1++) {
 		NifStream( binaryData.data[i1], out, version );
@@ -4152,7 +4152,7 @@ std::string NiBinaryExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	binaryData.dataSize = unsigned int(binaryData.data.size());
+	binaryData.dataSize = (unsigned int)(binaryData.data.size());
 	out << "  Data Size:  " << binaryData.dataSize << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < binaryData.data.size(); i1++) {
@@ -4313,11 +4313,11 @@ void NiBoneLODController::InternalRead( istream& in, list<unsigned int> & link_s
 
 void NiBoneLODController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	ABoneLODController::Write( out, link_map, version, user_version );
-	numShapeGroups2 = unsigned int(shapeGroups2.size());
-	numShapeGroups = unsigned int(shapeGroups1.size());
+	numShapeGroups2 = (unsigned int)(shapeGroups2.size());
+	numShapeGroups = (unsigned int)(shapeGroups1.size());
 	NifStream( numShapeGroups, out, version );
 	for (unsigned int i1 = 0; i1 < shapeGroups1.size(); i1++) {
-		shapeGroups1[i1].numLinkPairs = unsigned int(shapeGroups1[i1].linkPairs.size());
+		shapeGroups1[i1].numLinkPairs = (unsigned int)(shapeGroups1[i1].linkPairs.size());
 		NifStream( shapeGroups1[i1].numLinkPairs, out, version );
 		for (unsigned int i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
 			if ( shapeGroups1[i1].linkPairs[i2].shape != NULL )
@@ -4343,8 +4343,8 @@ std::string NiBoneLODController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << ABoneLODController::asString();
-	numShapeGroups2 = unsigned int(shapeGroups2.size());
-	numShapeGroups = unsigned int(shapeGroups1.size());
+	numShapeGroups2 = (unsigned int)(shapeGroups2.size());
+	numShapeGroups = (unsigned int)(shapeGroups1.size());
 	out << "  Num Shape Groups:  " << numShapeGroups << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < shapeGroups1.size(); i1++) {
@@ -4352,7 +4352,7 @@ std::string NiBoneLODController::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		shapeGroups1[i1].numLinkPairs = unsigned int(shapeGroups1[i1].linkPairs.size());
+		shapeGroups1[i1].numLinkPairs = (unsigned int)(shapeGroups1[i1].linkPairs.size());
 		out << "    Num Link Pairs:  " << shapeGroups1[i1].numLinkPairs << endl;
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
@@ -4425,7 +4425,7 @@ void NiBoolData::InternalRead( istream& in, list<unsigned int> & link_stack, uns
 
 void NiBoolData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	NifStream( data.numKeys, out, version );
 	if ( (data.numKeys != 0) ) {
 		NifStream( data.interpolation, out, version );
@@ -4439,7 +4439,7 @@ std::string NiBoolData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AKeyedData::asString();
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
@@ -4787,7 +4787,7 @@ void NiBSplineData::InternalRead( istream& in, list<unsigned int> & link_stack, 
 
 void NiBSplineData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	count = unsigned int(controlPoints.size());
+	count = (unsigned int)(controlPoints.size());
 	NifStream( unknownInt, out, version );
 	NifStream( count, out, version );
 	for (unsigned int i1 = 0; i1 < controlPoints.size(); i1++) {
@@ -4799,7 +4799,7 @@ std::string NiBSplineData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	count = unsigned int(controlPoints.size());
+	count = (unsigned int)(controlPoints.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Count:  " << count << endl;
 	array_output_count = 0;
@@ -5043,7 +5043,7 @@ void NiColorData::InternalRead( istream& in, list<unsigned int> & link_stack, un
 
 void NiColorData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	NifStream( data.numKeys, out, version );
 	if ( (data.numKeys != 0) ) {
 		NifStream( data.interpolation, out, version );
@@ -5057,7 +5057,7 @@ std::string NiColorData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AKeyedData::asString();
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
@@ -5131,7 +5131,7 @@ void NiControllerManager::InternalRead( istream& in, list<unsigned int> & link_s
 
 void NiControllerManager::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
-	numControllerSequences = unsigned int(controllerSequences.size());
+	numControllerSequences = (unsigned int)(controllerSequences.size());
 	NifStream( cumulative, out, version );
 	NifStream( numControllerSequences, out, version );
 	for (unsigned int i1 = 0; i1 < controllerSequences.size(); i1++) {
@@ -5150,7 +5150,7 @@ std::string NiControllerManager::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
-	numControllerSequences = unsigned int(controllerSequences.size());
+	numControllerSequences = (unsigned int)(controllerSequences.size());
 	out << "  Cumulative:  " << cumulative << endl;
 	out << "  Num Controller Sequences:  " << numControllerSequences << endl;
 	array_output_count = 0;
@@ -5294,7 +5294,7 @@ void NiControllerSequence::InternalRead( istream& in, list<unsigned int> & link_
 
 void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numControlledBlocks = unsigned int(controlledBlocks.size());
+	numControlledBlocks = (unsigned int)(controlledBlocks.size());
 	NifStream( name, out, version );
 	if ( version <= 0x0A010000 ) {
 		NifStream( textKeysName, out, version );
@@ -5416,7 +5416,7 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numControlledBlocks = unsigned int(controlledBlocks.size());
+	numControlledBlocks = (unsigned int)(controlledBlocks.size());
 	out << "  Name:  " << name << endl;
 	out << "  Text Keys Name:  " << textKeysName << endl;
 	out << "  Text Keys:  " << textKeys << endl;
@@ -5524,7 +5524,7 @@ void NiDefaultAVObjectPalette::InternalRead( istream& in, list<unsigned int> & l
 
 void NiDefaultAVObjectPalette::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numObjs = unsigned int(objs.size());
+	numObjs = (unsigned int)(objs.size());
 	NifStream( unknownInt, out, version );
 	NifStream( numObjs, out, version );
 	for (unsigned int i1 = 0; i1 < objs.size(); i1++) {
@@ -5540,7 +5540,7 @@ std::string NiDefaultAVObjectPalette::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numObjs = unsigned int(objs.size());
+	numObjs = (unsigned int)(objs.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Num Objs:  " << numObjs << endl;
 	array_output_count = 0;
@@ -5641,7 +5641,7 @@ void NiFlipController::InternalRead( istream& in, list<unsigned int> & link_stac
 
 void NiFlipController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiSingleInterpolatorController::Write( out, link_map, version, user_version );
-	numSources = unsigned int(sources.size());
+	numSources = (unsigned int)(sources.size());
 	NifStream( textureSlot, out, version );
 	if ( version <= 0x0A010000 ) {
 		NifStream( unknownInt2, out, version );
@@ -5660,7 +5660,7 @@ std::string NiFlipController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiSingleInterpolatorController::asString();
-	numSources = unsigned int(sources.size());
+	numSources = (unsigned int)(sources.size());
 	out << "  Texture Slot:  " << textureSlot << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Delta:  " << delta << endl;
@@ -5711,7 +5711,7 @@ void NiFloatData::InternalRead( istream& in, list<unsigned int> & link_stack, un
 
 void NiFloatData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	NifStream( data.numKeys, out, version );
 	if ( (data.numKeys != 0) ) {
 		NifStream( data.interpolation, out, version );
@@ -5725,7 +5725,7 @@ std::string NiFloatData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AKeyedData::asString();
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
@@ -5878,7 +5878,7 @@ void NiFloatsExtraData::InternalRead( istream& in, list<unsigned int> & link_sta
 
 void NiFloatsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numFloats = unsigned int(data.size());
+	numFloats = (unsigned int)(data.size());
 	NifStream( numFloats, out, version );
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
 		NifStream( data[i1], out, version );
@@ -5889,7 +5889,7 @@ std::string NiFloatsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numFloats = unsigned int(data.size());
+	numFloats = (unsigned int)(data.size());
 	out << "  Num Floats:  " << numFloats << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
@@ -5981,8 +5981,8 @@ void NiGeomMorpherController::InternalRead( istream& in, list<unsigned int> & li
 
 void NiGeomMorpherController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
-	numUnknownInts = unsigned int(unknownInts.size());
-	numInterpolators = unsigned int(interpolators.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
+	numInterpolators = (unsigned int)(interpolators.size());
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknown, out, version );
 	};
@@ -6015,8 +6015,8 @@ std::string NiGeomMorpherController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
-	numUnknownInts = unsigned int(unknownInts.size());
-	numInterpolators = unsigned int(interpolators.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
+	numInterpolators = (unsigned int)(interpolators.size());
 	out << "  Unknown:  " << unknown << endl;
 	out << "  Unknown 2:  " << unknown2 << endl;
 	out << "  Data:  " << data << endl;
@@ -6151,7 +6151,7 @@ void NiIntegersExtraData::InternalRead( istream& in, list<unsigned int> & link_s
 
 void NiIntegersExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numIntegers = unsigned int(data.size());
+	numIntegers = (unsigned int)(data.size());
 	NifStream( numIntegers, out, version );
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
 		NifStream( data[i1], out, version );
@@ -6162,7 +6162,7 @@ std::string NiIntegersExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numIntegers = unsigned int(data.size());
+	numIntegers = (unsigned int)(data.size());
 	out << "  Num Integers:  " << numIntegers << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
@@ -6326,7 +6326,7 @@ void NiKeyframeData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned
 	};
 	if ( (rotationType == 4) ) {
 		for (unsigned int i2 = 0; i2 < 3; i2++) {
-			xyzRotations[i2].numKeys = unsigned int(xyzRotations[i2].keys.size());
+			xyzRotations[i2].numKeys = (unsigned int)(xyzRotations[i2].keys.size());
 			NifStream( xyzRotations[i2].numKeys, out, version );
 			if ( (xyzRotations[i2].numKeys != 0) ) {
 				NifStream( xyzRotations[i2].interpolation, out, version );
@@ -6336,7 +6336,7 @@ void NiKeyframeData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned
 			};
 		};
 	};
-	translations.numKeys = unsigned int(translations.keys.size());
+	translations.numKeys = (unsigned int)(translations.keys.size());
 	NifStream( translations.numKeys, out, version );
 	if ( (translations.numKeys != 0) ) {
 		NifStream( translations.interpolation, out, version );
@@ -6344,7 +6344,7 @@ void NiKeyframeData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned
 	for (unsigned int i1 = 0; i1 < translations.keys.size(); i1++) {
 		NifStream( translations.keys[i1], out, version, translations.interpolation );
 	};
-	scales.numKeys = unsigned int(scales.keys.size());
+	scales.numKeys = (unsigned int)(scales.keys.size());
 	NifStream( scales.numKeys, out, version );
 	if ( (scales.numKeys != 0) ) {
 		NifStream( scales.interpolation, out, version );
@@ -6384,7 +6384,7 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			xyzRotations[i2].numKeys = unsigned int(xyzRotations[i2].keys.size());
+			xyzRotations[i2].numKeys = (unsigned int)(xyzRotations[i2].keys.size());
 			out << "      Num Keys:  " << xyzRotations[i2].numKeys << endl;
 			if ( (xyzRotations[i2].numKeys != 0) ) {
 				out << "        Interpolation:  " << xyzRotations[i2].interpolation << endl;
@@ -6403,7 +6403,7 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 			};
 		};
 	};
-	translations.numKeys = unsigned int(translations.keys.size());
+	translations.numKeys = (unsigned int)(translations.keys.size());
 	out << "  Num Keys:  " << translations.numKeys << endl;
 	if ( (translations.numKeys != 0) ) {
 		out << "    Interpolation:  " << translations.interpolation << endl;
@@ -6420,7 +6420,7 @@ std::string NiKeyframeData::InternalAsString( bool verbose ) const {
 		out << "    Keys[" << i1 << "]:  " << translations.keys[i1] << endl;
 		array_output_count++;
 	};
-	scales.numKeys = unsigned int(scales.keys.size());
+	scales.numKeys = (unsigned int)(scales.keys.size());
 	out << "  Num Keys:  " << scales.numKeys << endl;
 	if ( (scales.numKeys != 0) ) {
 		out << "    Interpolation:  " << scales.interpolation << endl;
@@ -6827,7 +6827,7 @@ void NiMeshPSysData::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void NiMeshPSysData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	APSysData::Write( out, link_map, version, user_version );
-	numUnknownLinks = unsigned int(unknownLinks.size());
+	numUnknownLinks = (unsigned int)(unknownLinks.size());
 	if ( version >= 0x14000005 ) {
 		NifStream( unknownByte11, out, version );
 	};
@@ -6881,7 +6881,7 @@ std::string NiMeshPSysData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << APSysData::asString();
-	numUnknownLinks = unsigned int(unknownLinks.size());
+	numUnknownLinks = (unsigned int)(unknownLinks.size());
 	out << "  Unknown Byte 11:  " << unknownByte11 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < unknownFloats4.size(); i1++) {
@@ -6995,12 +6995,12 @@ void NiMorphData::InternalRead( istream& in, list<unsigned int> & link_stack, un
 
 void NiMorphData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numMorphs = unsigned int(morphs.size());
+	numMorphs = (unsigned int)(morphs.size());
 	NifStream( numMorphs, out, version );
 	NifStream( numVertices, out, version );
 	NifStream( unknownByte, out, version );
 	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
-		morphs[i1].numKeys = unsigned int(morphs[i1].keys.size());
+		morphs[i1].numKeys = (unsigned int)(morphs[i1].keys.size());
 		if ( version >= 0x0A01006A ) {
 			NifStream( morphs[i1].frameName, out, version );
 		};
@@ -7024,7 +7024,7 @@ std::string NiMorphData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numMorphs = unsigned int(morphs.size());
+	numMorphs = (unsigned int)(morphs.size());
 	out << "  Num Morphs:  " << numMorphs << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
@@ -7034,7 +7034,7 @@ std::string NiMorphData::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		morphs[i1].numKeys = unsigned int(morphs[i1].keys.size());
+		morphs[i1].numKeys = (unsigned int)(morphs[i1].keys.size());
 		out << "    Frame Name:  " << morphs[i1].frameName << endl;
 		out << "    Num Keys:  " << morphs[i1].numKeys << endl;
 		out << "    Interpolation:  " << morphs[i1].interpolation << endl;
@@ -7090,7 +7090,7 @@ void NiMultiTargetTransformController::InternalRead( istream& in, list<unsigned 
 
 void NiMultiTargetTransformController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
-	numExtraTargets = unsigned short(extraTargets.size());
+	numExtraTargets = (unsigned short)(extraTargets.size());
 	NifStream( numExtraTargets, out, version );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
 		if ( extraTargets[i1] != NULL )
@@ -7104,7 +7104,7 @@ std::string NiMultiTargetTransformController::InternalAsString( bool verbose ) c
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
-	numExtraTargets = unsigned short(extraTargets.size());
+	numExtraTargets = (unsigned short)(extraTargets.size());
 	out << "  Num Extra Targets:  " << numExtraTargets << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
@@ -7155,8 +7155,8 @@ void NiNode::InternalRead( istream& in, list<unsigned int> & link_stack, unsigne
 
 void NiNode::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiAVObject::Write( out, link_map, version, user_version );
-	numEffects = unsigned int(effects.size());
-	numChildren = unsigned int(children.size());
+	numEffects = (unsigned int)(effects.size());
+	numChildren = (unsigned int)(children.size());
 	NifStream( numChildren, out, version );
 	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
 		if ( children[i1] != NULL )
@@ -7177,8 +7177,8 @@ std::string NiNode::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiAVObject::asString();
-	numEffects = unsigned int(effects.size());
-	numChildren = unsigned int(children.size());
+	numEffects = (unsigned int)(effects.size());
+	numChildren = (unsigned int)(children.size());
 	out << "  Num Children:  " << numChildren << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
@@ -7344,7 +7344,7 @@ void FxRadioButton::InternalRead( istream& in, list<unsigned int> & link_stack, 
 
 void FxRadioButton::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	FxWidget::Write( out, link_map, version, user_version );
-	numButtons = unsigned int(buttons.size());
+	numButtons = (unsigned int)(buttons.size());
 	NifStream( unknownInt1, out, version );
 	NifStream( unknownInt2, out, version );
 	NifStream( unknownInt3, out, version );
@@ -7361,7 +7361,7 @@ std::string FxRadioButton::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << FxWidget::asString();
-	numButtons = unsigned int(buttons.size());
+	numButtons = (unsigned int)(buttons.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int  2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
@@ -7502,7 +7502,7 @@ void NiLODNode::InternalRead( istream& in, list<unsigned int> & link_stack, unsi
 
 void NiLODNode::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiNode::Write( out, link_map, version, user_version );
-	numLodLevels = unsigned int(lodLevels.size());
+	numLodLevels = (unsigned int)(lodLevels.size());
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( unknown4Bytes[i1], out, version );
 	};
@@ -7527,7 +7527,7 @@ std::string NiLODNode::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
-	numLodLevels = unsigned int(lodLevels.size());
+	numLodLevels = (unsigned int)(lodLevels.size());
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -7767,7 +7767,7 @@ void NiParticleMeshModifier::InternalRead( istream& in, list<unsigned int> & lin
 
 void NiParticleMeshModifier::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AParticleModifier::Write( out, link_map, version, user_version );
-	numParticleMeshes = unsigned int(particleMeshes.size());
+	numParticleMeshes = (unsigned int)(particleMeshes.size());
 	NifStream( numParticleMeshes, out, version );
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
 		if ( particleMeshes[i1] != NULL )
@@ -7781,7 +7781,7 @@ std::string NiParticleMeshModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AParticleModifier::asString();
-	numParticleMeshes = unsigned int(particleMeshes.size());
+	numParticleMeshes = (unsigned int)(particleMeshes.size());
 	out << "  Num Particle Meshes:  " << numParticleMeshes << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
@@ -8070,7 +8070,7 @@ void NiParticleSystem::InternalRead( istream& in, list<unsigned int> & link_stac
 
 void NiParticleSystem::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiParticles::Write( out, link_map, version, user_version );
-	numModifiers = unsigned int(modifiers.size());
+	numModifiers = (unsigned int)(modifiers.size());
 	if ( version >= 0x0A010000 ) {
 		NifStream( unknownBool, out, version );
 		NifStream( numModifiers, out, version );
@@ -8087,7 +8087,7 @@ std::string NiParticleSystem::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiParticles::asString();
-	numModifiers = unsigned int(modifiers.size());
+	numModifiers = (unsigned int)(modifiers.size());
 	out << "  Unknown Bool:  " << unknownBool << endl;
 	out << "  Num Modifiers:  " << numModifiers << endl;
 	array_output_count = 0;
@@ -8204,7 +8204,7 @@ void NiParticleSystemController::InternalRead( istream& in, list<unsigned int> &
 
 void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTimeController::Write( out, link_map, version, user_version );
-	numParticles = unsigned short(particles.size());
+	numParticles = (unsigned short)(particles.size());
 	NifStream( speed, out, version );
 	NifStream( speedRandom, out, version );
 	NifStream( verticalDirection, out, version );
@@ -8266,7 +8266,7 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
-	numParticles = unsigned short(particles.size());
+	numParticles = (unsigned short)(particles.size());
 	out << "  Speed:  " << speed << endl;
 	out << "  Speed Random:  " << speedRandom << endl;
 	out << "  Vertical Direction:  " << verticalDirection << endl;
@@ -8527,7 +8527,7 @@ void NiPixelData::InternalRead( istream& in, list<unsigned int> & link_stack, un
 
 void NiPixelData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numMipmaps = unsigned int(mipmaps.size());
+	numMipmaps = (unsigned int)(mipmaps.size());
 	NifStream( pixelFormat, out, version );
 	if ( version <= 0x0A020000 ) {
 		NifStream( redMask, out, version );
@@ -8558,7 +8558,7 @@ void NiPixelData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( mipmaps[i1].height, out, version );
 		NifStream( mipmaps[i1].offset, out, version );
 	};
-	pixelData.dataSize = unsigned int(pixelData.data.size());
+	pixelData.dataSize = (unsigned int)(pixelData.data.size());
 	NifStream( pixelData.dataSize, out, version );
 	for (unsigned int i1 = 0; i1 < pixelData.data.size(); i1++) {
 		NifStream( pixelData.data[i1], out, version );
@@ -8572,7 +8572,7 @@ std::string NiPixelData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numMipmaps = unsigned int(mipmaps.size());
+	numMipmaps = (unsigned int)(mipmaps.size());
 	out << "  Pixel Format:  " << pixelFormat << endl;
 	out << "  Red Mask:  " << redMask << endl;
 	out << "  Green Mask:  " << greenMask << endl;
@@ -8617,7 +8617,7 @@ std::string NiPixelData::InternalAsString( bool verbose ) const {
 		out << "    Height:  " << mipmaps[i1].height << endl;
 		out << "    Offset:  " << mipmaps[i1].offset << endl;
 	};
-	pixelData.dataSize = unsigned int(pixelData.data.size());
+	pixelData.dataSize = (unsigned int)(pixelData.data.size());
 	out << "  Data Size:  " << pixelData.dataSize << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < pixelData.data.size(); i1++) {
@@ -8822,7 +8822,7 @@ void NiPosData::InternalRead( istream& in, list<unsigned int> & link_stack, unsi
 
 void NiPosData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	NifStream( data.numKeys, out, version );
 	if ( (data.numKeys != 0) ) {
 		NifStream( data.interpolation, out, version );
@@ -8836,7 +8836,7 @@ std::string NiPosData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AKeyedData::asString();
-	data.numKeys = unsigned int(data.keys.size());
+	data.numKeys = (unsigned int)(data.keys.size());
 	out << "  Num Keys:  " << data.numKeys << endl;
 	if ( (data.numKeys != 0) ) {
 		out << "    Interpolation:  " << data.interpolation << endl;
@@ -9444,8 +9444,8 @@ void NiPSysEmitterCtlrData::InternalRead( istream& in, list<unsigned int> & link
 
 void NiPSysEmitterCtlrData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numVisibilityKeys_ = unsigned int(visibilityKeys_.size());
-	floatKeys_.numKeys = unsigned int(floatKeys_.keys.size());
+	numVisibilityKeys_ = (unsigned int)(visibilityKeys_.size());
+	floatKeys_.numKeys = (unsigned int)(floatKeys_.keys.size());
 	NifStream( floatKeys_.numKeys, out, version );
 	if ( (floatKeys_.numKeys != 0) ) {
 		NifStream( floatKeys_.interpolation, out, version );
@@ -9463,8 +9463,8 @@ std::string NiPSysEmitterCtlrData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numVisibilityKeys_ = unsigned int(visibilityKeys_.size());
-	floatKeys_.numKeys = unsigned int(floatKeys_.keys.size());
+	numVisibilityKeys_ = (unsigned int)(visibilityKeys_.size());
+	floatKeys_.numKeys = (unsigned int)(floatKeys_.keys.size());
 	out << "  Num Keys:  " << floatKeys_.numKeys << endl;
 	if ( (floatKeys_.numKeys != 0) ) {
 		out << "    Interpolation:  " << floatKeys_.interpolation << endl;
@@ -9813,7 +9813,7 @@ void NiPSysMeshEmitter::InternalRead( istream& in, list<unsigned int> & link_sta
 
 void NiPSysMeshEmitter::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysEmitter::Write( out, link_map, version, user_version );
-	numEmitterMeshes = unsigned int(emitterMeshes.size());
+	numEmitterMeshes = (unsigned int)(emitterMeshes.size());
 	NifStream( numEmitterMeshes, out, version );
 	for (unsigned int i1 = 0; i1 < emitterMeshes.size(); i1++) {
 		if ( emitterMeshes[i1] != NULL )
@@ -9830,7 +9830,7 @@ std::string NiPSysMeshEmitter::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysEmitter::asString();
-	numEmitterMeshes = unsigned int(emitterMeshes.size());
+	numEmitterMeshes = (unsigned int)(emitterMeshes.size());
 	out << "  Num Emitter Meshes:  " << numEmitterMeshes << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < emitterMeshes.size(); i1++) {
@@ -9880,7 +9880,7 @@ void NiPSysMeshUpdateModifier::InternalRead( istream& in, list<unsigned int> & l
 
 void NiPSysMeshUpdateModifier::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiPSysModifier::Write( out, link_map, version, user_version );
-	numMeshes = unsigned int(meshes.size());
+	numMeshes = (unsigned int)(meshes.size());
 	NifStream( numMeshes, out, version );
 	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
 		if ( meshes[i1] != NULL )
@@ -9894,7 +9894,7 @@ std::string NiPSysMeshUpdateModifier::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
-	numMeshes = unsigned int(meshes.size());
+	numMeshes = (unsigned int)(meshes.size());
 	out << "  Num Meshes:  " << numMeshes << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
@@ -10285,7 +10285,7 @@ void NiRangeLODData::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void NiRangeLODData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLODData::Write( out, link_map, version, user_version );
-	numLodLevels = unsigned int(lodLevels.size());
+	numLodLevels = (unsigned int)(lodLevels.size());
 	NifStream( lodCenter, out, version );
 	NifStream( numLodLevels, out, version );
 	for (unsigned int i1 = 0; i1 < lodLevels.size(); i1++) {
@@ -10298,7 +10298,7 @@ std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiLODData::asString();
-	numLodLevels = unsigned int(lodLevels.size());
+	numLodLevels = (unsigned int)(lodLevels.size());
 	out << "  LOD Center:  " << lodCenter << endl;
 	out << "  Num LOD Levels:  " << numLodLevels << endl;
 	array_output_count = 0;
@@ -10338,7 +10338,7 @@ void NiScreenLODData::InternalRead( istream& in, list<unsigned int> & link_stack
 
 void NiScreenLODData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiLODData::Write( out, link_map, version, user_version );
-	proportionCount = unsigned int(proportionLevels.size());
+	proportionCount = (unsigned int)(proportionLevels.size());
 	NifStream( boundCenter, out, version );
 	NifStream( boundRadius, out, version );
 	NifStream( worldCenter, out, version );
@@ -10353,7 +10353,7 @@ std::string NiScreenLODData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiLODData::asString();
-	proportionCount = unsigned int(proportionLevels.size());
+	proportionCount = (unsigned int)(proportionLevels.size());
 	out << "  Bound Center:  " << boundCenter << endl;
 	out << "  Bound Radius:  " << boundRadius << endl;
 	out << "  World Center:  " << worldCenter << endl;
@@ -10519,7 +10519,7 @@ void NiSkinData::InternalRead( istream& in, list<unsigned int> & link_stack, uns
 
 void NiSkinData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numBones = unsigned int(boneList.size());
+	numBones = (unsigned int)(boneList.size());
 	NifStream( rotation, out, version );
 	NifStream( translation, out, version );
 	NifStream( scale, out, version );
@@ -10534,7 +10534,7 @@ void NiSkinData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int
 		NifStream( unknownByte, out, version );
 	};
 	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
-		boneList[i1].numVertices = unsigned short(boneList[i1].vertexWeights.size());
+		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
 		NifStream( boneList[i1].rotation, out, version );
 		NifStream( boneList[i1].translation, out, version );
 		NifStream( boneList[i1].scale, out, version );
@@ -10552,7 +10552,7 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numBones = unsigned int(boneList.size());
+	numBones = (unsigned int)(boneList.size());
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Translation:  " << translation << endl;
 	out << "  Scale:  " << scale << endl;
@@ -10565,7 +10565,7 @@ std::string NiSkinData::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		boneList[i1].numVertices = unsigned short(boneList[i1].vertexWeights.size());
+		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
 		out << "    Rotation:  " << boneList[i1].rotation << endl;
 		out << "    Translation:  " << boneList[i1].translation << endl;
 		out << "    Scale:  " << boneList[i1].scale << endl;
@@ -10621,7 +10621,7 @@ void NiSkinInstance::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void NiSkinInstance::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numBones = unsigned int(bones.size());
+	numBones = (unsigned int)(bones.size());
 	if ( data != NULL )
 		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, version );
 	else
@@ -10649,7 +10649,7 @@ std::string NiSkinInstance::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numBones = unsigned int(bones.size());
+	numBones = (unsigned int)(bones.size());
 	out << "  Data:  " << data << endl;
 	out << "  Skin Partition:  " << skinPartition << endl;
 	out << "  Skeleton Root:  " << skeletonRoot << endl;
@@ -10818,16 +10818,16 @@ void NiSkinPartition::InternalRead( istream& in, list<unsigned int> & link_stack
 
 void NiSkinPartition::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
-	numSkinPartitionBlocks = unsigned int(skinPartitionBlocks.size());
+	numSkinPartitionBlocks = (unsigned int)(skinPartitionBlocks.size());
 	NifStream( numSkinPartitionBlocks, out, version );
 	for (unsigned int i1 = 0; i1 < skinPartitionBlocks.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++)
-			skinPartitionBlocks[i1].stripLengths[i2] = unsigned short(skinPartitionBlocks[i1].strips[i2].size());
-		skinPartitionBlocks[i1].numWeightsPerVertex = unsigned short((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
-		skinPartitionBlocks[i1].numStrips = unsigned short(skinPartitionBlocks[i1].stripLengths.size());
-		skinPartitionBlocks[i1].numBones = unsigned short(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = unsigned short(skinPartitionBlocks[i1].triangles.size());
-		skinPartitionBlocks[i1].numVertices = unsigned short(skinPartitionBlocks[i1].vertexMap.size());
+			skinPartitionBlocks[i1].stripLengths[i2] = (unsigned short)(skinPartitionBlocks[i1].strips[i2].size());
+		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
+		skinPartitionBlocks[i1].numStrips = (unsigned short)(skinPartitionBlocks[i1].stripLengths.size());
+		skinPartitionBlocks[i1].numBones = (unsigned short)(skinPartitionBlocks[i1].bones.size());
+		skinPartitionBlocks[i1].numTriangles = (unsigned short)(skinPartitionBlocks[i1].triangles.size());
+		skinPartitionBlocks[i1].numVertices = (unsigned short)(skinPartitionBlocks[i1].vertexMap.size());
 		NifStream( skinPartitionBlocks[i1].numVertices, out, version );
 		NifStream( skinPartitionBlocks[i1].numTriangles, out, version );
 		NifStream( skinPartitionBlocks[i1].numBones, out, version );
@@ -10910,7 +10910,7 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numSkinPartitionBlocks = unsigned int(skinPartitionBlocks.size());
+	numSkinPartitionBlocks = (unsigned int)(skinPartitionBlocks.size());
 	out << "  Num Skin Partition Blocks:  " << numSkinPartitionBlocks << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < skinPartitionBlocks.size(); i1++) {
@@ -10919,12 +10919,12 @@ std::string NiSkinPartition::InternalAsString( bool verbose ) const {
 			break;
 		};
 		for (unsigned int i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++)
-			skinPartitionBlocks[i1].stripLengths[i2] = unsigned short(skinPartitionBlocks[i1].strips[i2].size());
-		skinPartitionBlocks[i1].numWeightsPerVertex = unsigned short((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
-		skinPartitionBlocks[i1].numStrips = unsigned short(skinPartitionBlocks[i1].stripLengths.size());
-		skinPartitionBlocks[i1].numBones = unsigned short(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = unsigned short(skinPartitionBlocks[i1].triangles.size());
-		skinPartitionBlocks[i1].numVertices = unsigned short(skinPartitionBlocks[i1].vertexMap.size());
+			skinPartitionBlocks[i1].stripLengths[i2] = (unsigned short)(skinPartitionBlocks[i1].strips[i2].size());
+		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
+		skinPartitionBlocks[i1].numStrips = (unsigned short)(skinPartitionBlocks[i1].stripLengths.size());
+		skinPartitionBlocks[i1].numBones = (unsigned short)(skinPartitionBlocks[i1].bones.size());
+		skinPartitionBlocks[i1].numTriangles = (unsigned short)(skinPartitionBlocks[i1].triangles.size());
+		skinPartitionBlocks[i1].numVertices = (unsigned short)(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;
 		out << "    Num Bones:  " << skinPartitionBlocks[i1].numBones << endl;
@@ -11406,7 +11406,7 @@ void NiStringsExtraData::InternalRead( istream& in, list<unsigned int> & link_st
 
 void NiStringsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numStrings = unsigned int(data.size());
+	numStrings = (unsigned int)(data.size());
 	NifStream( numStrings, out, version );
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
 		NifStream( data[i1], out, version );
@@ -11417,7 +11417,7 @@ std::string NiStringsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numStrings = unsigned int(data.size());
+	numStrings = (unsigned int)(data.size());
 	out << "  Num Strings:  " << numStrings << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < data.size(); i1++) {
@@ -11458,7 +11458,7 @@ void NiTextKeyExtraData::InternalRead( istream& in, list<unsigned int> & link_st
 
 void NiTextKeyExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numTextKeys = unsigned int(textKeys.size());
+	numTextKeys = (unsigned int)(textKeys.size());
 	if ( version <= 0x04020200 ) {
 		NifStream( unknownInt1, out, version );
 	};
@@ -11472,7 +11472,7 @@ std::string NiTextKeyExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numTextKeys = unsigned int(textKeys.size());
+	numTextKeys = (unsigned int)(textKeys.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Text Keys:  " << numTextKeys << endl;
 	array_output_count = 0;
@@ -12065,7 +12065,7 @@ void NiTexturingProperty::InternalRead( istream& in, list<unsigned int> & link_s
 
 void NiTexturingProperty::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiProperty::Write( out, link_map, version, user_version );
-	numShaderTextures = unsigned int(shaderTextures.size());
+	numShaderTextures = (unsigned int)(shaderTextures.size());
 	if ( version <= 0x0A000102 ) {
 		NifStream( flags, out, version );
 	};
@@ -12389,7 +12389,7 @@ std::string NiTexturingProperty::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiProperty::asString();
-	numShaderTextures = unsigned int(shaderTextures.size());
+	numShaderTextures = (unsigned int)(shaderTextures.size());
 	out << "  Flags:  " << flags << endl;
 	out << "  Apply Mode:  " << applyMode << endl;
 	out << "  Texture Count:  " << textureCount << endl;
@@ -12858,7 +12858,7 @@ void NiTriShapeData::InternalRead( istream& in, list<unsigned int> & link_stack,
 
 void NiTriShapeData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
-	numMatchGroups = unsigned short(matchGroups.size());
+	numMatchGroups = (unsigned short)(matchGroups.size());
 	NifStream( numTrianglePoints, out, version );
 	if ( version >= 0x0A010000 ) {
 		NifStream( hasTriangles, out, version );
@@ -12877,7 +12877,7 @@ void NiTriShapeData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned
 	};
 	NifStream( numMatchGroups, out, version );
 	for (unsigned int i1 = 0; i1 < matchGroups.size(); i1++) {
-		matchGroups[i1].numVertices = unsigned short(matchGroups[i1].vertexIndices.size());
+		matchGroups[i1].numVertices = (unsigned short)(matchGroups[i1].vertexIndices.size());
 		NifStream( matchGroups[i1].numVertices, out, version );
 		for (unsigned int i2 = 0; i2 < matchGroups[i1].vertexIndices.size(); i2++) {
 			NifStream( matchGroups[i1].vertexIndices[i2], out, version );
@@ -12889,7 +12889,7 @@ std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
-	numMatchGroups = unsigned short(matchGroups.size());
+	numMatchGroups = (unsigned short)(matchGroups.size());
 	out << "  Num Triangle Points:  " << numTrianglePoints << endl;
 	out << "  Has Triangles:  " << hasTriangles << endl;
 	array_output_count = 0;
@@ -12911,7 +12911,7 @@ std::string NiTriShapeData::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		matchGroups[i1].numVertices = unsigned short(matchGroups[i1].vertexIndices.size());
+		matchGroups[i1].numVertices = (unsigned short)(matchGroups[i1].vertexIndices.size());
 		out << "    Num Vertices:  " << matchGroups[i1].numVertices << endl;
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < matchGroups[i1].vertexIndices.size(); i2++) {
@@ -12999,8 +12999,8 @@ void NiTriStripsData::InternalRead( istream& in, list<unsigned int> & link_stack
 void NiTriStripsData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
 	for (unsigned int i1 = 0; i1 < points.size(); i1++)
-		stripLengths[i1] = unsigned short(points[i1].size());
-	numStrips = unsigned short(stripLengths.size());
+		stripLengths[i1] = (unsigned short)(points[i1].size());
+	numStrips = (unsigned short)(stripLengths.size());
 	NifStream( numStrips, out, version );
 	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
 		NifStream( stripLengths[i1], out, version );
@@ -13031,8 +13031,8 @@ std::string NiTriStripsData::InternalAsString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
 	for (unsigned int i1 = 0; i1 < points.size(); i1++)
-		stripLengths[i1] = unsigned short(points[i1].size());
-	numStrips = unsigned short(stripLengths.size());
+		stripLengths[i1] = (unsigned short)(points[i1].size());
+	numStrips = (unsigned short)(stripLengths.size());
 	out << "  Num Strips:  " << numStrips << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
@@ -13127,9 +13127,9 @@ void NiClodData::InternalRead( istream& in, list<unsigned int> & link_stack, uns
 
 void NiClodData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiTriBasedGeomData::Write( out, link_map, version, user_version );
-	unknownCount3 = unsigned short(unknownClodShorts3.size());
-	unknownCount2 = unsigned short(unknownClodShorts2.size());
-	unknownCount1 = unsigned short(unknownClodShorts1.size());
+	unknownCount3 = (unsigned short)(unknownClodShorts3.size());
+	unknownCount2 = (unsigned short)(unknownClodShorts2.size());
+	unknownCount1 = (unsigned short)(unknownClodShorts1.size());
 	NifStream( unknownShorts, out, version );
 	NifStream( unknownCount1, out, version );
 	NifStream( unknownCount2, out, version );
@@ -13155,9 +13155,9 @@ std::string NiClodData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
-	unknownCount3 = unsigned short(unknownClodShorts3.size());
-	unknownCount2 = unsigned short(unknownClodShorts2.size());
-	unknownCount1 = unsigned short(unknownClodShorts1.size());
+	unknownCount3 = (unsigned short)(unknownClodShorts3.size());
+	unknownCount2 = (unsigned short)(unknownClodShorts2.size());
+	unknownCount1 = (unsigned short)(unknownClodShorts1.size());
 	out << "  Unknown Shorts:  " << unknownShorts << endl;
 	out << "  Unknown Count 1:  " << unknownCount1 << endl;
 	out << "  Unknown Count 2:  " << unknownCount2 << endl;
@@ -13273,7 +13273,7 @@ void NiUVData::InternalRead( istream& in, list<unsigned int> & link_stack, unsig
 void NiUVData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiObject::Write( out, link_map, version, user_version );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		uvGroups[i1].numKeys = unsigned int(uvGroups[i1].keys.size());
+		uvGroups[i1].numKeys = (unsigned int)(uvGroups[i1].keys.size());
 		NifStream( uvGroups[i1].numKeys, out, version );
 		if ( (uvGroups[i1].numKeys != 0) ) {
 			NifStream( uvGroups[i1].interpolation, out, version );
@@ -13294,7 +13294,7 @@ std::string NiUVData::InternalAsString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		uvGroups[i1].numKeys = unsigned int(uvGroups[i1].keys.size());
+		uvGroups[i1].numKeys = (unsigned int)(uvGroups[i1].keys.size());
 		out << "    Num Keys:  " << uvGroups[i1].numKeys << endl;
 		if ( (uvGroups[i1].numKeys != 0) ) {
 			out << "      Interpolation:  " << uvGroups[i1].interpolation << endl;
@@ -13402,7 +13402,7 @@ void NiVertWeightsExtraData::InternalRead( istream& in, list<unsigned int> & lin
 
 void NiVertWeightsExtraData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	NiExtraData::Write( out, link_map, version, user_version );
-	numVertices = unsigned short(weight.size());
+	numVertices = (unsigned short)(weight.size());
 	NifStream( numBytes, out, version );
 	NifStream( numVertices, out, version );
 	for (unsigned int i1 = 0; i1 < weight.size(); i1++) {
@@ -13414,7 +13414,7 @@ std::string NiVertWeightsExtraData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	numVertices = unsigned short(weight.size());
+	numVertices = (unsigned short)(weight.size());
 	out << "  Num Bytes:  " << numBytes << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	array_output_count = 0;
@@ -13495,7 +13495,7 @@ void NiVisData::InternalRead( istream& in, list<unsigned int> & link_stack, unsi
 
 void NiVisData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AKeyedData::Write( out, link_map, version, user_version );
-	numVisKeys = unsigned int(visKeys.size());
+	numVisKeys = (unsigned int)(visKeys.size());
 	NifStream( numVisKeys, out, version );
 	for (unsigned int i1 = 0; i1 < visKeys.size(); i1++) {
 		NifStream( visKeys[i1], out, version, 1 );
@@ -13506,7 +13506,7 @@ std::string NiVisData::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AKeyedData::asString();
-	numVisKeys = unsigned int(visKeys.size());
+	numVisKeys = (unsigned int)(visKeys.size());
 	out << "  Num Vis Keys:  " << numVisKeys << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < visKeys.size(); i1++) {

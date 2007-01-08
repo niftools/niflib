@@ -41,5 +41,5 @@ string NiStringExtraData::GetData() const {
 
 void NiStringExtraData::SetData( const string & n ) {
 	stringData = n;
-	bytesRemaining = unsigned int(stringData.size()) + 4;
+	bytesRemaining = (unsigned int)(stringData.size()) + 4;
 }

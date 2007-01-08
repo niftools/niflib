@@ -36,7 +36,7 @@ void Footer::Read( istream& in, list<unsigned int> & link_stack, unsigned int ve
 }
 
 void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	numRoots = unsigned int(roots.size());
+	numRoots = (unsigned int)(roots.size());
 	if ( version >= 0x0303000D ) {
 		NifStream( numRoots, out, version );
 		for (unsigned int i2 = 0; i2 < roots.size(); i2++) {
@@ -51,7 +51,7 @@ void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 string Footer::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
-	numRoots = unsigned int(roots.size());
+	numRoots = (unsigned int)(roots.size());
 	out << "  Num Roots:  " << numRoots << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < roots.size(); i1++) {

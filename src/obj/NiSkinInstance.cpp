@@ -129,7 +129,7 @@ void NiSkinInstance::SkeletonLost() {
 }
 
 unsigned int NiSkinInstance::GetBoneCount() const {
-	return unsigned int(bones.size());
+	return (unsigned int)(bones.size());
 }
 
 Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {

@@ -31,8 +31,8 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../include/obj/NiExtraData.h"
 #include "../include/obj/bhkRigidBody.h"
 #include "../include/obj/bhkCollisionObject.h"
-#include "../include/gen/header.h"
-#include "../include/gen/footer.h"
+#include "../include/gen/Header.h"
+#include "../include/gen/Footer.h"
 
 namespace Niflib {
 
@@ -505,7 +505,7 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
 	//Add this object type to the map if it isn't there already
 	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
-		type_map[ (Type*)&(root->GetType()) ] = unsigned int(type_map.size());
+		type_map[ (Type*)&(root->GetType()) ] = (unsigned int)(type_map.size());
 	}
 
    // Oblivion has very rigid requirements about block ordering and the bhkRigidBody 
@@ -522,7 +522,7 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
 
    // If reverse is set then add the link after children otherwise add it before
    if (!reverse) {
-      link_map[root] = unsigned int(link_map.size());
+      link_map[root] = (unsigned int)(link_map.size());
    }
 
    //Call this function on all links of this object	
@@ -534,7 +534,7 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
    }
 
    if (reverse) {
-      link_map[root] = unsigned int(link_map.size());
+      link_map[root] = (unsigned int)(link_map.size());
    }
 }
 
@@ -766,10 +766,10 @@ static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiOb
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
 void WriteFileGroup( string const & file_name, NiObject * root_block, const NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
 	// Get base filename.
-	unsigned int file_name_slash = unsigned int(file_name.rfind("\\") + 1);
+	unsigned int file_name_slash = (unsigned int)(file_name.rfind("\\") + 1);
 	string file_name_path = file_name.substr(0, file_name_slash);
 	string file_name_base = file_name.substr(file_name_slash, file_name.length());
-	unsigned int file_name_dot = unsigned int(file_name_base.rfind("."));
+	unsigned int file_name_dot = (unsigned int)(file_name_base.rfind("."));
 	file_name_base = file_name_base.substr(0, file_name_dot);
 	
 	// Deal with the simple case first

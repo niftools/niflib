@@ -40,6 +40,6 @@ vector<float> NiFloatsExtraData::GetData() const {
 }
 	
 void NiFloatsExtraData::SetData( const vector<float> & n ) {
-	numFloats = unsigned int(n.size());
+	numFloats = (unsigned int)(n.size());
 	data = n;
 }

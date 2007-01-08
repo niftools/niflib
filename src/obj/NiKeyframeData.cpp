@@ -53,7 +53,7 @@ void NiKeyframeData::UpdateRotationKeyCount() {
 	if ( rotationType == XYZ_ROTATION_KEY ) {
 		numRotationKeys = 1;
 	} else {
-		numRotationKeys = unsigned int(quaternionKeys.size());
+		numRotationKeys = (unsigned int)(quaternionKeys.size());
 	}
 };
 

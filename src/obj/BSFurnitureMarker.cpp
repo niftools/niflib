@@ -41,7 +41,7 @@ vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {
 }
 	
 void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> & n ) {
-	numPositions = unsigned int(n.size());
+	numPositions = (unsigned int)(n.size());
 	positions = n;
 }
 
