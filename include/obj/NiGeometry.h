@@ -90,7 +90,7 @@ public:
 	 * and then applies them to the verticies of this skin.  Sets the overall
 	 * skin data transform to the identity.
 	 */
-	void NiGeometry::ApplySkinOffset();
+	void ApplySkinOffset();
 
 	void NormalizeSkinWeights();
 

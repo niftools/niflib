@@ -101,7 +101,7 @@ public:
 	void SetSkinFlag( bool n );
 
 private:
-	void NiNode::RepositionGeom( NiAVObjectRef root );
+	void RepositionGeom( NiAVObjectRef root );
 protected:
 	list<NiSkinInstance*> skins;
 	NI_NODE_MEMBERS
