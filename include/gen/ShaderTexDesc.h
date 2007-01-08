@@ -34,7 +34,7 @@ struct NIFLIB_API ShaderTexDesc {
 	/*!
 	 * Unknown.
 	 */
-	uint unknownInt;
+	unsigned int unknownInt;
 };
 
 }

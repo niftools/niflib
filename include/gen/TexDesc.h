@@ -41,19 +41,19 @@ struct NIFLIB_API TexDesc {
 	 * The texture coordinate set in NiGeometryData that this texture slot
 	 * will use.
 	 */
-	uint uvSet;
+	unsigned int uvSet;
 	/*!
 	 * 0?
 	 */
-	ushort ps2L;
+	unsigned short ps2L;
 	/*!
 	 * 0xFFB5?
 	 */
-	ushort ps2K;
+	unsigned short ps2K;
 	/*!
 	 * Unknown, 0 or 0x0101?
 	 */
-	ushort unknown1;
+	unsigned short unknown1;
 	/*!
 	 * Determines whether or not the texture's coordinates are transformed.
 	 */
@@ -73,7 +73,7 @@ struct NIFLIB_API TexDesc {
 	/*!
 	 * The texture transform type?  Doesn't seem to do anything.
 	 */
-	uint transformType_;
+	unsigned int transformType_;
 	/*!
 	 * The offset from the origin?
 	 */

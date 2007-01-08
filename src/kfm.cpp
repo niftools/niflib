@@ -17,7 +17,7 @@ void KfmEventString::Write( ostream & out, unsigned int version ) {
 	WriteString(event, out);
 };
 
-void KfmEvent::Read( istream & in, uint version ) {
+void KfmEvent::Read( istream & in, unsigned int version ) {
 	id = ReadUInt(in);
 	type = ReadUInt(in);
 	if ( type != 5 ) {
@@ -28,7 +28,7 @@ void KfmEvent::Read( istream & in, uint version ) {
 	};
 };
 
-void KfmAction::Read( istream & in, uint version ) {
+void KfmAction::Read( istream & in, unsigned int version ) {
 	if ( version <= VER_KFM_1_2_4b ) action_name = ReadString(in);
 	action_filename = ReadString(in);
 	unk_int1 = ReadUInt(in);
@@ -104,7 +104,7 @@ unsigned int Kfm::Read( istream & in ) {
 };
 
 /*
-void Kfm::Write( ostream & out, uint version ) {
+void Kfm::Write( ostream & out, unsigned int version ) {
 	if ( version == VER_KFM_1_0 ) {
 		// handle this case seperately
 		out << ";Gamebryo KFM File Version 1.0" << endl;

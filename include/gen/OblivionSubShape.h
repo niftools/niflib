@@ -35,11 +35,11 @@ struct NIFLIB_API OblivionSubShape {
 	/*!
 	 * Unknown.
 	 */
-	ushort unknownShort;
+	unsigned short unknownShort;
 	/*!
 	 * Seems to be the number of vertices that form this sub shape.
 	 */
-	uint vertexCount___;
+	unsigned int vertexCount___;
 	/*!
 	 * The material of the subshape.
 	 */

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-OblivionSubShape::OblivionSubShape() : colFilter((byte)0), unknownShort((ushort)0), vertexCount___((uint)0) {};
+OblivionSubShape::OblivionSubShape() : colFilter((byte)0), unknownShort((unsigned short)0), vertexCount___((unsigned int)0) {};
 
 //Copy Constructor
 OblivionSubShape::OblivionSubShape( const OblivionSubShape & src ) {

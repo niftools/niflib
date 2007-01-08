@@ -17,11 +17,11 @@ NiSkinData::NiSkinData() NI_SKIN_DATA_CONSTRUCT {}
 
 NiSkinData::~NiSkinData() {}
 
-void NiSkinData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiSkinData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -29,7 +29,7 @@ string NiSkinData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -41,11 +41,11 @@ const Type & NiSkinData::GetType() const {
 	return TYPE;
 };
 
-uint NiSkinData::GetBoneCount() const {
-	return uint( boneList.size() );
+unsigned int NiSkinData::GetBoneCount() const {
+	return unsigned int( boneList.size() );
 }
 
-Matrix44 NiSkinData::GetBoneTransform( uint bone_index ) const {
+Matrix44 NiSkinData::GetBoneTransform( unsigned int bone_index ) const {
 	if ( bone_index > boneList.size() ) {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
@@ -53,7 +53,7 @@ Matrix44 NiSkinData::GetBoneTransform( uint bone_index ) const {
 	return Matrix44( boneList[bone_index].translation, boneList[bone_index].rotation, boneList[bone_index].scale );
 }
 
-vector<SkinWeight> NiSkinData::GetBoneWeights( uint bone_index ) const {
+vector<SkinWeight> NiSkinData::GetBoneWeights( unsigned int bone_index ) const {
 	if ( bone_index > boneList.size() ) {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
@@ -61,7 +61,7 @@ vector<SkinWeight> NiSkinData::GetBoneWeights( uint bone_index ) const {
 	return boneList[bone_index].vertexWeights;
 }
 
-void NiSkinData::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n, Vector3 center, float radius ) {
+void NiSkinData::SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n, Vector3 center, float radius ) {
 	if ( bone_index > boneList.size() ) {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
@@ -149,7 +149,7 @@ void NiSkinData::ResetOffsets( const Ref<NiGeometry> & owner ) {
 	//--Calculate Bone Offsets--//
 	Matrix44 res_mat;
 	Matrix44 bone_mat;
-	for (uint i = 0; i < boneList.size(); ++i ) {
+	for (unsigned int i = 0; i < boneList.size(); ++i ) {
 		//--Get Bone Bind Pose--//
 
 		//Get bone world position

@@ -11,11 +11,11 @@ NiClodSkinInstance::NiClodSkinInstance() NI_CLOD_SKIN_INSTANCE_CONSTRUCT {}
 
 NiClodSkinInstance::~NiClodSkinInstance() {}
 
-void NiClodSkinInstance::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodSkinInstance::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiClodSkinInstance::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiClodSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiClodSkinInstance::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiClodSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiClodSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

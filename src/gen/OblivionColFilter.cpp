@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-OblivionColFilter::OblivionColFilter() : colFilter((byte)0), unknownShort((ushort)0) {};
+OblivionColFilter::OblivionColFilter() : colFilter((byte)0), unknownShort((unsigned short)0) {};
 
 //Copy Constructor
 OblivionColFilter::OblivionColFilter( const OblivionColFilter & src ) {

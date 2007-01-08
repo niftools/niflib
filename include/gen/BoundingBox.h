@@ -24,7 +24,7 @@ struct NIFLIB_API BoundingBox {
 	/*!
 	 * Usually 1.
 	 */
-	uint unknownInt;
+	unsigned int unknownInt;
 	/*!
 	 * Translation vector.
 	 */

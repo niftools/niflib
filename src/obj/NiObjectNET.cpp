@@ -17,11 +17,11 @@ NiObjectNET::~NiObjectNET() {
 	ClearControllers();
 }
 
-void NiObjectNET::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObjectNET::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiObjectNET::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -29,7 +29,7 @@ string NiObjectNET::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -52,7 +52,7 @@ string NiObjectNET::GetIDString() {
 	return out.str();
 }
 
-void NiObjectNET::AddExtraData( NiExtraData * obj, uint version ) {
+void NiObjectNET::AddExtraData( NiExtraData * obj, unsigned int version ) {
 	if ( version >= VER_10_0_1_0 ) {
 		//In later versions, extra data is just stored in a vector
 		extraDataList.push_back( NiExtraDataRef(obj) );

@@ -785,13 +785,13 @@ Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform,
 
 		//Loop through all compound vertices, adding the data
 		//to the correct arrays.
-		uint vert_index = 0;
+		unsigned int vert_index = 0;
 		for ( vector<CompoundVertex>::iterator cv = compVerts.begin(); cv != compVerts.end(); ++cv ) {
 			shapeVerts[vert_index] = cv->position;
 			shapeColors[vert_index] = cv->color;
 			shapeNorms[vert_index] = cv->normal;
 			shapeNorms[vert_index] = cv->normal;
-			uint tex_index = 0;
+			unsigned int tex_index = 0;
 			for ( list<int>::iterator tex = shapeTexCoordSets.begin(); tex != shapeTexCoordSets.end(); ++tex ) {
 				if ( cv->texCoords.find( TexType(*tex) ) != cv->texCoords.end() ) {
 					shapeTCs[tex_index][vert_index] = cv->texCoords[ TexType(*tex) ];

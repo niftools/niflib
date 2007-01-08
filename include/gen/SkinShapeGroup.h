@@ -26,7 +26,7 @@ struct NIFLIB_API SkinShapeGroup {
 	/*!
 	 * Counts unknown.
 	 */
-	mutable uint numLinkPairs;
+	mutable unsigned int numLinkPairs;
 	/*!
 	 * First link is a NiTriShape object.             Second link is a
 	 * NiSkinInstance object.

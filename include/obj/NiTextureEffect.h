@@ -34,10 +34,10 @@ public:
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 	virtual const Type & GetType() const;
 
@@ -72,15 +72,15 @@ public:
 	 * 0: PROJECTED_LIGHT 1: PROJECTED_SHADOW 2: ENVIRONMENT_MAP (Usual
 	 * value) 3: FOG_MAP
 	 */
-	uint GetTextureType() const;
-	void SetTextureType( uint value );
+	unsigned int GetTextureType() const;
+	void SetTextureType( unsigned int value );
 
 	/*!
 	 * 0: WORLD_PARALLEL 1: WORLD_PERSPECTIVE 2: SPHERE_MAP (Usual value) 3:
 	 * SPECULAR_CUBE_MAP 4: DIFFUSE_CUBE_MAP
 	 */
-	uint GetCoordinateGenerationType() const;
-	void SetCoordinateGenerationType( uint value );
+	unsigned int GetCoordinateGenerationType() const;
+	void SetCoordinateGenerationType( unsigned int value );
 
 	/*!
 	 * Source texture index.
@@ -97,22 +97,22 @@ public:
 	/*!
 	 * 0?
 	 */
-	ushort GetPs2L() const;
-	void SetPs2L( ushort value );
+	unsigned short GetPs2L() const;
+	void SetPs2L( unsigned short value );
 
 	/*!
 	 * 0xFFB5?
 	 */
-	ushort GetPs2K() const;
-	void SetPs2K( ushort value );
+	unsigned short GetPs2K() const;
+	void SetPs2K( unsigned short value );
 
 protected:
 	NI_TEXTURE_EFFECT_MEMBERS
 private:
-	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	void InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	list<NiObjectRef> InternalGetRefs() const;
 };
 

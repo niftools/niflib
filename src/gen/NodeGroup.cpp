@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-NodeGroup::NodeGroup() : numNodes((uint)0) {};
+NodeGroup::NodeGroup() : numNodes((unsigned int)0) {};
 
 //Copy Constructor
 NodeGroup::NodeGroup( const NodeGroup & src ) {

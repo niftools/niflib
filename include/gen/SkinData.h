@@ -49,7 +49,7 @@ struct NIFLIB_API SkinData {
 	/*!
 	 * Number of weighted vertices.
 	 */
-	mutable ushort numVertices;
+	mutable unsigned short numVertices;
 	/*!
 	 * The vertex weights.
 	 */

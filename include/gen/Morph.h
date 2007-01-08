@@ -28,7 +28,7 @@ struct NIFLIB_API Morph {
 	/*!
 	 * The number of morph keys that follow.
 	 */
-	mutable uint numKeys;
+	mutable unsigned int numKeys;
 	/*!
 	 * Unlike most objects, the presense of this value is not conditional on
 	 * there being keys.
@@ -41,7 +41,7 @@ struct NIFLIB_API Morph {
 	/*!
 	 * Unknown.
 	 */
-	uint unknownInt;
+	unsigned int unknownInt;
 	/*!
 	 * Morph vectors.
 	 */

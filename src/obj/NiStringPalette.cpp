@@ -12,11 +12,11 @@ NiStringPalette::NiStringPalette() NI_STRING_PALETTE_CONSTRUCT {}
 
 NiStringPalette::~NiStringPalette() {}
 
-void NiStringPalette::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringPalette::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiStringPalette::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiStringPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiStringPalette::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiStringPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -52,7 +52,7 @@ string NiStringPalette::GetSubStr( short offset ) const {
 		return out;
 	}
 
-	for ( uint i = offset; i < palette.palette.size(); ++i ) {
+	for ( unsigned int i = offset; i < palette.palette.size(); ++i ) {
 		if ( palette.palette[i] == '\0' ) {
 			break;
 		}
@@ -65,11 +65,11 @@ string NiStringPalette::GetSubStr( short offset ) const {
 unsigned int NiStringPalette::AddSubStr( const string & n ) {
 	//Search for the string
    //  When searching for strings also search for ending null.
-	uint offset = (uint)palette.palette.find( n.c_str(), 0, n.size()+1 );
+	unsigned int offset = (unsigned int)palette.palette.find( n.c_str(), 0, n.size()+1 );
 	
 	//If string was not found, append it
 	if ( offset == 0xFFFFFFFF ) {
-		offset = (uint)palette.palette.size();
+		offset = (unsigned int)palette.palette.size();
 		palette.palette.append( n + '\0' );
 	}
 

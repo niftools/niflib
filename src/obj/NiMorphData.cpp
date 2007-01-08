@@ -12,11 +12,11 @@ NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
 
 NiMorphData::~NiMorphData() {}
 
-void NiMorphData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiMorphData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiMorphData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiMorphData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMorphData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -43,7 +43,7 @@ int NiMorphData::GetVertexCount() const {
 
 void NiMorphData::SetVertexCount( int n ) {
 	numVertices = n;
-	for ( uint i = 0; i < morphs.size(); ++i ) {
+	for ( unsigned int i = 0; i < morphs.size(); ++i ) {
 		morphs[i].vectors.resize( n );
 	}
 }
@@ -53,11 +53,11 @@ int NiMorphData::GetMorphCount() const {
 }
 
 void NiMorphData::SetMorphCount( int n ) {
-	uint old_size = uint(morphs.size());
+	unsigned int old_size = unsigned int(morphs.size());
 	morphs.resize( n );
 
 	//Make sure any new vertex groups are the right size
-	for (uint i = old_size; i < morphs.size(); ++i ) {
+	for (unsigned int i = old_size; i < morphs.size(); ++i ) {
 		morphs[i].vectors.resize( numVertices );
 	}
 }

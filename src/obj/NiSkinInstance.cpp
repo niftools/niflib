@@ -15,7 +15,7 @@ NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
 NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) NI_SKIN_INSTANCE_CONSTRUCT {
 	//Ensure that all bones are below the skeleton root node on the scene graph
-	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
 		bool is_decended = false;
 		NiNodeRef node = bone_nodes[i];
 		while ( node != NULL ) {
@@ -32,12 +32,12 @@ NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> >
 
 	//Add the bones to the internal list
 	bones.resize( bone_nodes.size() );
-	for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
 		bones[i] = bone_nodes[i];
 	}
 
 	//Flag any bones that are part of this skin instance
-	for ( uint i = 0; i < bones.size(); ++i ) {
+	for ( unsigned int i = 0; i < bones.size(); ++i ) {
 		bones[i]->SetSkinFlag(true);
 	}
 
@@ -48,7 +48,7 @@ NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> >
 
 NiSkinInstance::~NiSkinInstance() {
 	//Unflag any bones that were part of this skin instance
-	for ( uint i = 0; i < bones.size(); ++i ) {
+	for ( unsigned int i = 0; i < bones.size(); ++i ) {
 		bones[i]->SetSkinFlag(false);
 	}
 
@@ -59,11 +59,11 @@ NiSkinInstance::~NiSkinInstance() {
 	}
 }
 
-void NiSkinInstance::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinInstance::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -71,7 +71,7 @@ string NiSkinInstance::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 
 	//Inform newly fixed skeleton root of attachment
@@ -80,7 +80,7 @@ void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	}
 
 	//Ensure that bones have the flag set properly
-	for ( uint i = 0; i < bones.size(); ++i ) {
+	for ( unsigned int i = 0; i < bones.size(); ++i ) {
 		bones[i]->SetSkinFlag(true);
 	}
 }
@@ -95,7 +95,7 @@ const Type & NiSkinInstance::GetType() const {
 
 vector< Ref<NiNode> > NiSkinInstance::GetBones() const {
 	vector<NiNodeRef> ref_bones( bones.size() );
-	for (uint i = 0; i < bones.size(); ++i ) {
+	for (unsigned int i = 0; i < bones.size(); ++i ) {
 		ref_bones[i] = bones[i];
 	}
 	return ref_bones;
@@ -128,8 +128,8 @@ void NiSkinInstance::SkeletonLost() {
 	skinPartition = NULL;
 }
 
-uint NiSkinInstance::GetBoneCount() const {
-	return uint(bones.size());
+unsigned int NiSkinInstance::GetBoneCount() const {
+	return unsigned int(bones.size());
 }
 
 Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {

@@ -37,7 +37,7 @@ struct NIFLIB_API Header {
 	 * 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000,
 	 * 0x0A020000, 0x14000004, ...
 	 */
-	uint version;
+	unsigned int version;
 	/*!
 	 * Determines the endian-ness of the data.              1 = little endian
 	 * (default)             0 = big endian
@@ -47,16 +47,16 @@ struct NIFLIB_API Header {
 	 * An extra version number, for companies that decide to modify the file
 	 * format.
 	 */
-	uint userVersion;
+	unsigned int userVersion;
 	/*!
 	 * Number of file objects.
 	 */
-	mutable uint numBlocks;
+	mutable unsigned int numBlocks;
 	/*!
 	 * This also appears to be the extra user version number and must be set
 	 * in some circumstances.
 	 */
-	uint userVersion2;
+	unsigned int userVersion2;
 	/*!
 	 * Could be the name of the creator of the NIF file?
 	 */
@@ -73,7 +73,7 @@ struct NIFLIB_API Header {
 	/*!
 	 * Number of object types in this NIF file.
 	 */
-	mutable ushort numBlockTypes;
+	mutable unsigned short numBlockTypes;
 	/*!
 	 * List of all object types used in this NIF file.
 	 */
@@ -83,11 +83,11 @@ struct NIFLIB_API Header {
 	 * type object_types[object_type_index[0]], the second of
 	 * object_types[object_type_index[1]], etc.
 	 */
-	vector<ushort > blockTypeIndex;
+	vector<unsigned short > blockTypeIndex;
 	/*!
 	 * Unknown.
 	 */
-	uint unknownInt2;
+	unsigned int unknownInt2;
 	void Read( istream& in );
 	void Write( ostream& out ) const;
 	string asString( bool verbose = false ) const;

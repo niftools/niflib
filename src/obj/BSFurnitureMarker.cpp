@@ -12,11 +12,11 @@ BSFurnitureMarker::BSFurnitureMarker() B_S_FURNITURE_MARKER_CONSTRUCT {}
 
 BSFurnitureMarker::~BSFurnitureMarker() {}
 
-void BSFurnitureMarker::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSFurnitureMarker::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void BSFurnitureMarker::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void BSFurnitureMarker::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string BSFurnitureMarker::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void BSFurnitureMarker::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSFurnitureMarker::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -41,7 +41,7 @@ vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {
 }
 	
 void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> & n ) {
-	numPositions = uint(n.size());
+	numPositions = unsigned int(n.size());
 	positions = n;
 }
 

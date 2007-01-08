@@ -12,11 +12,11 @@ NiTriShapeData::NiTriShapeData() NI_TRI_SHAPE_DATA_CONSTRUCT {}
 
 NiTriShapeData::~NiTriShapeData() {}
 
-void NiTriShapeData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShapeData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiTriShapeData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiTriShapeData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiTriShapeData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiTriShapeData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTriShapeData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -51,9 +51,9 @@ void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
 void NiTriShapeData::DoMatchDetection() { 
 	matchGroups.resize( vertices.size() );
 
-	for ( uint i = 0; i < matchGroups.size(); ++i ){
+	for ( unsigned int i = 0; i < matchGroups.size(); ++i ){
 		// Find all vertices that match this one.
-		for ( ushort j = 0; j < vertices.size(); ++j ) {
+		for ( unsigned short j = 0; j < vertices.size(); ++j ) {
 			if ( vertices[i] == vertices[j] ) {
 				matchGroups[i].vertexIndices.push_back(j);
 			}
@@ -87,7 +87,7 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 	hasTriangles = ( triangles.size() != 0 );
 
 	//Set nuber of triangles
-	numTriangles = uint(triangles.size());
+	numTriangles = unsigned int(triangles.size());
 
 	//Set number of trianble points to the number of triangles times 3
 	numTrianglePoints = numTriangles * 3;

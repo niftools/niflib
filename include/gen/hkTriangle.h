@@ -28,7 +28,7 @@ struct NIFLIB_API hkTriangle {
 	/*!
 	 * Another short, doesn't look like a vertex index.
 	 */
-	ushort unknownShort;
+	unsigned short unknownShort;
 	/*!
 	 * This is the triangle's normal.
 	 */

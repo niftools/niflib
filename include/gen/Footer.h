@@ -29,7 +29,7 @@ struct NIFLIB_API Footer {
 	/*!
 	 * The number of root references.
 	 */
-	mutable uint numRoots;
+	mutable unsigned int numRoots;
 	/*!
 	 * List of root NIF objects. If there is a camera, for 1st person view,
 	 * then this NIF object is referred to as well in this list, even if it
@@ -37,8 +37,8 @@ struct NIFLIB_API Footer {
 	 * Bip Head node).
 	 */
 	vector<Ref<NiObject > > roots;
-	void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	string asString( bool verbose = false ) const;
 };
 

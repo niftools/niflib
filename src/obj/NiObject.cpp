@@ -78,13 +78,13 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	NiObjectRef clone = CreateObject( this->GetType().GetTypeName() );
 
 	//Dummy map
-	map<NiObjectRef,uint> link_map;
+	map<NiObjectRef,unsigned int> link_map;
 
 	//Write this object's data to the stream
 	this->Write( tmp, link_map, version, user_version );
 
 	//Dummy stack
-	list<uint> link_stack;
+	list<unsigned int> link_stack;
 
 	//Read the data back from the stream into the clone
 	clone->Read( tmp, link_stack, version, user_version );

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-StringPalette::StringPalette() : length((uint)0) {};
+StringPalette::StringPalette() : length((unsigned int)0) {};
 
 //Copy Constructor
 StringPalette::StringPalette( const StringPalette & src ) {

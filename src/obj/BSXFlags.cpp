@@ -11,11 +11,11 @@ BSXFlags::BSXFlags() B_S_X_FLAGS_CONSTRUCT {}
 
 BSXFlags::~BSXFlags() {}
 
-void BSXFlags::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSXFlags::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void BSXFlags::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void BSXFlags::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string BSXFlags::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void BSXFlags::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void BSXFlags::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,11 +35,11 @@ const Type & BSXFlags::GetType() const {
 	return TYPE;
 };
 
-uint BSXFlags::GetFlags() const {
+unsigned int BSXFlags::GetFlags() const {
 	return flags;
 }
 
-void BSXFlags::SetFlags( uint value ) {
+void BSXFlags::SetFlags( unsigned int value ) {
 	flags = value;
 }
 

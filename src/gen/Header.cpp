@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-Header::Header() : version((uint)0x04000002), endianType((byte)1), userVersion((uint)0), numBlocks((uint)0), userVersion2((uint)0), numBlockTypes((ushort)0), unknownInt2((uint)0) {};
+Header::Header() : version((unsigned int)0x04000002), endianType((byte)1), userVersion((unsigned int)0), numBlocks((unsigned int)0), userVersion2((unsigned int)0), numBlockTypes((unsigned short)0), unknownInt2((unsigned int)0) {};
 
 //Copy Constructor
 Header::Header( const Header & src ) {
@@ -36,7 +36,7 @@ Header::~Header() {};
 void Header::Read( istream& in ) {
 	NifStream( headerString, in, version );
 	if ( version <= 0x03010000 ) {
-		for (uint i2 = 0; i2 < 3; i2++) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
 			NifStream( copyright[i2], in, version );
 		};
 	};
@@ -70,11 +70,11 @@ void Header::Read( istream& in ) {
 	if ( version >= 0x0A000100 ) {
 		NifStream( numBlockTypes, in, version );
 		blockTypes.resize(numBlockTypes);
-		for (uint i2 = 0; i2 < blockTypes.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < blockTypes.size(); i2++) {
 			NifStream( blockTypes[i2], in, version );
 		};
 		blockTypeIndex.resize(numBlocks);
-		for (uint i2 = 0; i2 < blockTypeIndex.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < blockTypeIndex.size(); i2++) {
 			NifStream( blockTypeIndex[i2], in, version );
 		};
 		NifStream( unknownInt2, in, version );
@@ -82,11 +82,11 @@ void Header::Read( istream& in ) {
 }
 
 void Header::Write( ostream& out ) const {
-	numBlockTypes = ushort(blockTypes.size());
-	numBlocks = uint(blockTypeIndex.size());
+	numBlockTypes = unsigned short(blockTypes.size());
+	numBlocks = unsigned int(blockTypeIndex.size());
 	NifStream( headerString, out, version );
 	if ( version <= 0x03010000 ) {
-		for (uint i2 = 0; i2 < 3; i2++) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
 			NifStream( copyright[i2], out, version );
 		};
 	};
@@ -119,10 +119,10 @@ void Header::Write( ostream& out ) const {
 	};
 	if ( version >= 0x0A000100 ) {
 		NifStream( numBlockTypes, out, version );
-		for (uint i2 = 0; i2 < blockTypes.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < blockTypes.size(); i2++) {
 			NifStream( blockTypes[i2], out, version );
 		};
-		for (uint i2 = 0; i2 < blockTypeIndex.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < blockTypeIndex.size(); i2++) {
 			NifStream( blockTypeIndex[i2], out, version );
 		};
 		NifStream( unknownInt2, out, version );
@@ -131,12 +131,12 @@ void Header::Write( ostream& out ) const {
 
 string Header::asString( bool verbose ) const {
 	stringstream out;
-	uint array_output_count = 0;
-	numBlockTypes = ushort(blockTypes.size());
-	numBlocks = uint(blockTypeIndex.size());
+	unsigned int array_output_count = 0;
+	numBlockTypes = unsigned short(blockTypes.size());
+	numBlocks = unsigned int(blockTypeIndex.size());
 	out << "  Header String:  " << headerString << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < 3; i1++) {
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -159,7 +159,7 @@ string Header::asString( bool verbose ) const {
 	};
 	out << "  Num Block Types:  " << numBlockTypes << endl;
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < blockTypes.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < blockTypes.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -171,7 +171,7 @@ string Header::asString( bool verbose ) const {
 		array_output_count++;
 	};
 	array_output_count = 0;
-	for (uint i1 = 0; i1 < blockTypeIndex.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < blockTypeIndex.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;

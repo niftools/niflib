@@ -50,7 +50,7 @@ struct NIFLIB_API ControllerLink {
 	/*!
 	 * Unknown.
 	 */
-	ushort unknownShort0;
+	unsigned short unknownShort0;
 	/*!
 	 * Idle animations tend to have low values for this, and NIF objects that
 	 * have high values tend to correspond with the important parts of the
@@ -70,7 +70,7 @@ struct NIFLIB_API ControllerLink {
 	 * Offset in the string palette where the name of the controlled node
 	 * (NiNode, NiTriShape, ...) starts.
 	 */
-	uint nodeNameOffset;
+	unsigned int nodeNameOffset;
 	/*!
 	 * Name of the property (NiMaterialProperty, ...), if this controller
 	 * controls a property.
@@ -80,7 +80,7 @@ struct NIFLIB_API ControllerLink {
 	 * Offset in the string palette where the property (NiMaterialProperty,
 	 * ...) starts, if this controller controls a property. Otherwise, -1.
 	 */
-	uint propertyTypeOffset;
+	unsigned int propertyTypeOffset;
 	/*!
 	 * Probably the object type name of the controller in the NIF file that
 	 * is child of the controlled object.
@@ -94,7 +94,7 @@ struct NIFLIB_API ControllerLink {
 	 * controller in the NIF file that is child of the controlled object, via
 	 * its type name.
 	 */
-	uint controllerTypeOffset;
+	unsigned int controllerTypeOffset;
 	/*!
 	 * Some variable string (such as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U',
 	 * 'tongue_out', etc.).
@@ -105,7 +105,7 @@ struct NIFLIB_API ControllerLink {
 	 * as 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually,
 	 * -1.
 	 */
-	uint variableOffset1;
+	unsigned int variableOffset1;
 	/*!
 	 * Another variable string, apparently used for particle system
 	 * controllers.
@@ -116,7 +116,7 @@ struct NIFLIB_API ControllerLink {
 	 * only 'EmitterActive' and 'BirthRate' have been observed in official
 	 * files, used for particle system controllers). Usually, -1.
 	 */
-	uint variableOffset2;
+	unsigned int variableOffset2;
 };
 
 }

@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-ShaderTexDesc::ShaderTexDesc() : isUsed(false), unknownInt((uint)0) {};
+ShaderTexDesc::ShaderTexDesc() : isUsed(false), unknownInt((unsigned int)0) {};
 
 //Copy Constructor
 ShaderTexDesc::ShaderTexDesc( const ShaderTexDesc & src ) {

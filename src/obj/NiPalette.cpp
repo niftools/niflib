@@ -11,11 +11,11 @@ NiPalette::NiPalette() NI_PALETTE_CONSTRUCT {}
 
 NiPalette::~NiPalette() {}
 
-void NiPalette::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPalette::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiPalette::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiPalette::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -38,7 +38,7 @@ const Type & NiPalette::GetType() const {
 vector<Color4> NiPalette::GetPalette() const {
 	vector<Color4> color_pal(256);
 
-	for ( uint i = 0; i < 256; ++i ) {
+	for ( unsigned int i = 0; i < 256; ++i ) {
 		
 		color_pal[i].r = float(palette[i][0]) / 255.0f;
 		color_pal[i].g = float(palette[i][1]) / 255.0f;
@@ -54,7 +54,7 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
 		throw runtime_error( "Palette size must be 256" );
 	}
 
-	for ( uint i = 0; i < 256; ++i ) {
+	for ( unsigned int i = 0; i < 256; ++i ) {
 		palette[i][0] = int( new_pal[i].r * 255.0f );
 		palette[i][1] = int( new_pal[i].g * 255.0f );
 		palette[i][2] = int( new_pal[i].b * 255.0f );

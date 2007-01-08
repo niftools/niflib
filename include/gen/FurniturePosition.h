@@ -28,7 +28,7 @@ struct NIFLIB_API FurniturePosition {
 	/*!
 	 * Furniture marker orientation.
 	 */
-	ushort orientation;
+	unsigned short orientation;
 	/*!
 	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as
 	 * Position Ref 2.

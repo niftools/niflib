@@ -141,12 +141,12 @@ using namespace std;
 //		return v_[index];
 //	} 
 //
-//	T& operator[](uint index) {
+//	T& operator[](unsigned int index) {
 //		// assert( index >= 0 && index < len_ )
 //		return v_[index];
 //	} 
 //
-//	const T& operator[](uint index) const {
+//	const T& operator[](unsigned int index) const {
 //		// assert( index >= 0 && index < len_ )
 //		return v_[index];
 //	} 
@@ -214,10 +214,10 @@ struct array {
 		memset(data, 0, sizeof(data[0]) * size);
 	}
 	~array() {}
-	T & operator[]( uint index ) {
+	T & operator[]( unsigned int index ) {
 		return data[index];
 	}
-	const T & operator[]( uint index ) const {
+	const T & operator[]( unsigned int index ) const {
 		return data[index];
 	}
 private:
@@ -230,8 +230,8 @@ int BlockSearch( istream& in );
 
 //-- Read Utility Functions--//
 int ReadInt( istream& in );
-uint ReadUInt( istream& in );
-ushort ReadUShort( istream& in );
+unsigned int ReadUInt( istream& in );
+unsigned short ReadUShort( istream& in );
 short ReadShort( istream& in );
 byte ReadByte( istream& in );
 float ReadFloat( istream &in );
@@ -240,8 +240,8 @@ bool ReadBool( istream &in, unsigned int version );
 
 //-- Write Utility Functions --//
 void WriteInt( int val, ostream& out );
-void WriteUInt( uint val, ostream& out );
-void WriteUShort( ushort val, ostream& out );
+void WriteUInt( unsigned int val, ostream& out );
+void WriteUShort( unsigned short val, ostream& out );
 void WriteShort( short val, ostream& out );
 void WriteByte( byte val, ostream& out );
 void WriteFloat( float val, ostream& out );
@@ -255,110 +255,110 @@ void WriteBool( bool val, ostream& out, unsigned int version );
 //--Basic Types--//
 
 //int
-void NifStream( int & val, istream& in, uint version = 0 );
-void NifStream( int const & val, ostream& out, uint version = 0  );
+void NifStream( int & val, istream& in, unsigned int version = 0 );
+void NifStream( int const & val, ostream& out, unsigned int version = 0  );
 
-//uint
-void NifStream( uint & val, istream& in, uint version = 0 );
-void NifStream( uint const & val, ostream& out, uint version = 0  );
+//unsigned int
+void NifStream( unsigned int & val, istream& in, unsigned int version = 0 );
+void NifStream( unsigned int const & val, ostream& out, unsigned int version = 0  );
 
-//ushort
-void NifStream( ushort & val, istream& in, uint version = 0 );
-void NifStream( ushort const & val, ostream& out, uint version = 0  );
+//unsigned short
+void NifStream( unsigned short & val, istream& in, unsigned int version = 0 );
+void NifStream( unsigned short const & val, ostream& out, unsigned int version = 0  );
 
 //short
-void NifStream( short & val, istream& in, uint version = 0 );
-void NifStream( short const & val, ostream& out, uint version = 0  );
+void NifStream( short & val, istream& in, unsigned int version = 0 );
+void NifStream( short const & val, ostream& out, unsigned int version = 0  );
 
 //byte
-void NifStream( byte & val, istream& in, uint version = 0 );
-void NifStream( byte const & val, ostream& out, uint version = 0  );
+void NifStream( byte & val, istream& in, unsigned int version = 0 );
+void NifStream( byte const & val, ostream& out, unsigned int version = 0  );
 
 //bool
-void NifStream( bool & val, istream& in, uint version );  // version is significant
-void NifStream( bool const & val, ostream& out, uint version ); // version is significant
+void NifStream( bool & val, istream& in, unsigned int version );  // version is significant
+void NifStream( bool const & val, ostream& out, unsigned int version ); // version is significant
 
 //float
-void NifStream( float & val, istream& in, uint version = 0 );
-void NifStream( float const & val, ostream& out, uint version = 0  );
+void NifStream( float & val, istream& in, unsigned int version = 0 );
+void NifStream( float const & val, ostream& out, unsigned int version = 0  );
 
 //string
-void NifStream( string & val, istream& in, uint version = 0 );
-void NifStream( string const & val, ostream& out, uint version = 0  );
+void NifStream( string & val, istream& in, unsigned int version = 0 );
+void NifStream( string const & val, ostream& out, unsigned int version = 0  );
 
 //--Structs--//
 
 //TexCoord
-void NifStream( TexCoord & val, istream& in, uint version = 0 );
-void NifStream( TexCoord const & val, ostream& out, uint version = 0 );
+void NifStream( TexCoord & val, istream& in, unsigned int version = 0 );
+void NifStream( TexCoord const & val, ostream& out, unsigned int version = 0 );
 
 //Triangle
-void NifStream( Triangle & val, istream& in, uint version = 0 );
-void NifStream( Triangle const & val, ostream& out, uint version = 0 );
+void NifStream( Triangle & val, istream& in, unsigned int version = 0 );
+void NifStream( Triangle const & val, ostream& out, unsigned int version = 0 );
 
 //Vector3
-void NifStream( Vector3 & val, istream& in, uint version = 0 );
-void NifStream( Vector3 const & val, ostream& out, uint version = 0  );
+void NifStream( Vector3 & val, istream& in, unsigned int version = 0 );
+void NifStream( Vector3 const & val, ostream& out, unsigned int version = 0  );
 
 //Float2
-void NifStream( Float2 & val, istream& in, uint version = 0 );
-void NifStream( Float2 const & val, ostream& out, uint version = 0  );
+void NifStream( Float2 & val, istream& in, unsigned int version = 0 );
+void NifStream( Float2 const & val, ostream& out, unsigned int version = 0  );
 
 //Matrix22
-void NifStream( Matrix22 & val, istream& in, uint version = 0 );
-void NifStream( Matrix22 const & val, ostream& out, uint version = 0 );
+void NifStream( Matrix22 & val, istream& in, unsigned int version = 0 );
+void NifStream( Matrix22 const & val, ostream& out, unsigned int version = 0 );
 
 //Float3
-void NifStream( Float3 & val, istream& in, uint version = 0 );
-void NifStream( Float3 const & val, ostream& out, uint version = 0  );
+void NifStream( Float3 & val, istream& in, unsigned int version = 0 );
+void NifStream( Float3 const & val, ostream& out, unsigned int version = 0  );
 
 //Matrix33
-void NifStream( Matrix33 & val, istream& in, uint version = 0 );
-void NifStream( Matrix33 const & val, ostream& out, uint version = 0 );
+void NifStream( Matrix33 & val, istream& in, unsigned int version = 0 );
+void NifStream( Matrix33 const & val, ostream& out, unsigned int version = 0 );
 
 //Float4
-void NifStream( Float4 & val, istream& in, uint version = 0 );
-void NifStream( Float4 const & val, ostream& out, uint version = 0  );
+void NifStream( Float4 & val, istream& in, unsigned int version = 0 );
+void NifStream( Float4 const & val, ostream& out, unsigned int version = 0  );
 
 //Matrix44
-void NifStream( Matrix44 & val, istream& in, uint version = 0 );
-void NifStream( Matrix44 const & val, ostream& out, uint version = 0 );
+void NifStream( Matrix44 & val, istream& in, unsigned int version = 0 );
+void NifStream( Matrix44 const & val, ostream& out, unsigned int version = 0 );
 
 //Color3
-void NifStream( Color3 & val, istream& in, uint version = 0 );
-void NifStream( Color3 const & val, ostream& out, uint version = 0  );
+void NifStream( Color3 & val, istream& in, unsigned int version = 0 );
+void NifStream( Color3 const & val, ostream& out, unsigned int version = 0  );
 
 //Color4
-void NifStream( Color4 & val, istream& in, uint version = 0 );
-void NifStream( Color4 const & val, ostream& out, uint version = 0  );
+void NifStream( Color4 & val, istream& in, unsigned int version = 0 );
+void NifStream( Color4 const & val, ostream& out, unsigned int version = 0  );
 
 //Quaternion
-void NifStream( Quaternion & val, istream& in, uint version = 0 );
-void NifStream( Quaternion const & val, ostream& out, uint version = 0  );
+void NifStream( Quaternion & val, istream& in, unsigned int version = 0 );
+void NifStream( Quaternion const & val, ostream& out, unsigned int version = 0  );
 
 //HeaderString
-void NifStream( HeaderString & val, istream& in, uint & version ); //Sets the passed in version varible
-void NifStream( HeaderString const & val, ostream& out, uint version = 0  );
+void NifStream( HeaderString & val, istream& in, unsigned int & version ); //Sets the passed in version varible
+void NifStream( HeaderString const & val, ostream& out, unsigned int version = 0  );
 ostream & operator<<( ostream & out, HeaderString const & val );
 
 //LineString
-void NifStream( LineString & val, istream& in, uint version );
-void NifStream( LineString const & val, ostream& out, uint version = 0  );
+void NifStream( LineString & val, istream& in, unsigned int version );
+void NifStream( LineString const & val, ostream& out, unsigned int version = 0  );
 ostream & operator<<( ostream & out, LineString const & val );
 
 //ShortString
-void NifStream( ShortString & val, istream& in, uint version = 0 );
-void NifStream( ShortString const & val, ostream& out, uint version = 0  );
+void NifStream( ShortString & val, istream& in, unsigned int version = 0 );
+void NifStream( ShortString const & val, ostream& out, unsigned int version = 0  );
 ostream & operator<<( ostream & out, ShortString const & val );
 
 //--Templates--//
 
-void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type );
-void NifStream( Key<Quaternion> const & key, ostream& file, uint version,  KeyType type );
+void NifStream( Key<Quaternion> & key, istream& file, unsigned int version, KeyType type );
+void NifStream( Key<Quaternion> const & key, ostream& file, unsigned int version,  KeyType type );
 
 //Key<T>
 template <class T> 
-void NifStream( Key<T> & key, istream& file, uint version, KeyType type ) {
+void NifStream( Key<T> & key, istream& file, unsigned int version, KeyType type ) {
 	key.time = ReadFloat( file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -382,12 +382,12 @@ void NifStream( Key<T> & key, istream& file, uint version, KeyType type ) {
 }
 
 template <class T> 
-void NifStream( Key<T> & key, istream & file, uint version, int type ) {
+void NifStream( Key<T> & key, istream & file, unsigned int version, int type ) {
 	NifStream( key, file, version, (KeyType)type );
 }
 
 template <class T> 
-void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) {
+void NifStream( Key<T> const & key, ostream& file, unsigned int version, KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -411,13 +411,13 @@ void NifStream( Key<T> const & key, ostream& file, uint version, KeyType type ) 
 }
 
 template <class T> 
-void NifStream( Key<T> const & key, ostream & file, uint version, int type ) {
+void NifStream( Key<T> const & key, ostream & file, unsigned int version, int type ) {
 	NifStream( key, file, version, (KeyType)type );
 }
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
-string HexString( const byte * src, uint len );
+string HexString( const byte * src, unsigned int len );
 
 //Byte
 ostream & operator<<( ostream & out, byte const & val );

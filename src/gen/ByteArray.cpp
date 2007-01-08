@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-ByteArray::ByteArray() : dataSize((uint)0) {};
+ByteArray::ByteArray() : dataSize((unsigned int)0) {};
 
 //Copy Constructor
 ByteArray::ByteArray( const ByteArray & src ) {

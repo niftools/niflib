@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-MipMap::MipMap() : width((uint)0), height((uint)0), offset((uint)0) {};
+MipMap::MipMap() : width((unsigned int)0), height((unsigned int)0), offset((unsigned int)0) {};
 
 //Copy Constructor
 MipMap::MipMap( const MipMap & src ) {

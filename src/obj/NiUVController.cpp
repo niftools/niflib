@@ -12,11 +12,11 @@ NiUVController::NiUVController() NI_U_V_CONTROLLER_CONSTRUCT {}
 
 NiUVController::~NiUVController() {}
 
-void NiUVController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVController::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiUVController::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiUVController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiUVController::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiUVController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiUVController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

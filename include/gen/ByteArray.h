@@ -24,7 +24,7 @@ struct NIFLIB_API ByteArray {
 	/*!
 	 * The number of bytes in this array
 	 */
-	mutable uint dataSize;
+	mutable unsigned int dataSize;
 	/*!
 	 * The bytes which make up the array
 	 */

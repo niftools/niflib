@@ -25,27 +25,27 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * Number of vertices in this submesh.
 	 */
-	mutable ushort numVertices;
+	mutable unsigned short numVertices;
 	/*!
 	 * Number of triangles in this submesh.
 	 */
-	mutable ushort numTriangles;
+	mutable unsigned short numTriangles;
 	/*!
 	 * Number of bones influencing this submesh.
 	 */
-	mutable ushort numBones;
+	mutable unsigned short numBones;
 	/*!
 	 * Number of strips in this submesh (zero if not stripped).
 	 */
-	mutable ushort numStrips;
+	mutable unsigned short numStrips;
 	/*!
 	 * Number of weight coefficients per vertex.
 	 */
-	mutable ushort numWeightsPerVertex;
+	mutable unsigned short numWeightsPerVertex;
 	/*!
 	 * List of bones.
 	 */
-	vector<ushort > bones;
+	vector<unsigned short > bones;
 	/*!
 	 * Do we have a vertex map?
 	 */
@@ -54,7 +54,7 @@ struct NIFLIB_API SkinPartition {
 	 * Maps the weight/influence lists in this submesh to the vertices in the
 	 * shape being skinned.
 	 */
-	vector<ushort > vertexMap;
+	vector<unsigned short > vertexMap;
 	/*!
 	 * Do we have vertex weights?
 	 */
@@ -66,7 +66,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * The strip lengths.
 	 */
-	mutable vector<ushort > stripLengths;
+	mutable vector<unsigned short > stripLengths;
 	/*!
 	 * Do we have strip data?
 	 */
@@ -74,7 +74,7 @@ struct NIFLIB_API SkinPartition {
 	/*!
 	 * The strips.
 	 */
-	vector< vector<ushort > > strips;
+	vector< vector<unsigned short > > strips;
 	/*!
 	 * The triangles.
 	 */

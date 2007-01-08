@@ -25,11 +25,11 @@ NiAVObject::~NiAVObject() {
 	ClearProperties();
 }
 
-void NiAVObject::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiAVObject::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -37,7 +37,7 @@ string NiAVObject::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiAVObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAVObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -104,7 +104,7 @@ vector< Ref<NiProperty> > NiAVObject::GetProperties() const {
 }
 
 Ref<NiProperty> NiAVObject::GetPropertyByType( const Type & compare_to ) {
-	for ( uint i = 0; i < properties.size(); ++i ) {
+	for ( unsigned int i = 0; i < properties.size(); ++i ) {
 		if ( properties[i]->IsSameType( compare_to ) ) {
 			return properties[i];
 		}
@@ -113,11 +113,11 @@ Ref<NiProperty> NiAVObject::GetPropertyByType( const Type & compare_to ) {
 	return NULL;
 }
 
-ushort NiAVObject::GetFlags() const {
+unsigned short NiAVObject::GetFlags() const {
 	return flags;
 }
 
-void NiAVObject::SetFlags( ushort n ) {
+void NiAVObject::SetFlags( unsigned short n ) {
 	flags = n;
 }
 

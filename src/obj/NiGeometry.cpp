@@ -16,11 +16,11 @@ NiGeometry::NiGeometry() NI_GEOMETRY_CONSTRUCT {}
 
 NiGeometry::~NiGeometry() {}
 
-void NiGeometry::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiGeometry::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -28,7 +28,7 @@ string NiGeometry::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -311,14 +311,14 @@ void NiGeometry::GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3>
 	//Transform vertices into position based on skin data
 	Matrix44 root_world = skel_root->GetWorldTransform();
 	Matrix44 geom_world = GetWorldTransform();
-	for ( uint i = 0; i < skin_data->GetBoneCount(); ++i ) {
+	for ( unsigned int i = 0; i < skin_data->GetBoneCount(); ++i ) {
 		Matrix44 bone_world = bone_nodes[i]->GetWorldTransform();
 		Matrix44 bone_offset = skin_data->GetBoneTransform(i);
 		vector<SkinWeight> weights = skin_data->GetBoneWeights(i);
 		Matrix44 vert_trans =  bone_offset * bone_world;
 		Matrix44 norm_trans = Matrix44( vert_trans.GetRotation() );
-		for ( uint j = 0; j < weights.size(); ++j ) {
-			uint index = weights[j].index;
+		for ( unsigned int j = 0; j < weights.size(); ++j ) {
+			unsigned int index = weights[j].index;
 			float weight = weights[j].weight;
 			if ( index < vertices.size() ) {
 				vertices[index] += (vert_trans * in_verts[index] ) * weight;
@@ -332,10 +332,10 @@ void NiGeometry::GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3>
 	//Transform all vertices to final position
 	Matrix44 geom_world_inv = geom_world.Inverse();
 	Matrix44 geom_world_inv_rot = Matrix44( geom_world_inv.GetRotation() );
-	for ( uint i = 0; i < vertices.size(); ++i ) {
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
 		vertices[i] = geom_world_inv * vertices[i];
 	}
-	for ( uint i = 0; i < normals.size(); ++i ) {
+	for ( unsigned int i = 0; i < normals.size(); ++i ) {
 		normals[i] = geom_world_inv_rot * normals[i];
 		//normals[i] = normals[i].Normalized();
 	}
@@ -412,7 +412,7 @@ static void CalcCenteredSphere(const vector<SkinWeight> & n, const vector<Vector
    }
 }
 
-void NiGeometry::SetBoneWeights( uint bone_index, const vector<SkinWeight> & n ) {
+void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n ) {
 	
 	if ( n.size() == 0 ) {
 		throw runtime_error( "You must specify at least one weight value." );

@@ -17,7 +17,7 @@ struct NIFLIB_API RotationKeyArray {
 	/*!
 	 * Number of keys.
 	 */
-	mutable uint numKeys;
+	mutable unsigned int numKeys;
 	/*!
 	 * Key type (1, 2, 3, or 4).
 	 */

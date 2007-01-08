@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-BoundingBox::BoundingBox() : unknownInt((uint)1) {};
+BoundingBox::BoundingBox() : unknownInt((unsigned int)1) {};
 
 //Copy Constructor
 BoundingBox::BoundingBox( const BoundingBox & src ) {

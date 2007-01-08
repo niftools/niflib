@@ -11,11 +11,11 @@ NiVertWeightsExtraData::NiVertWeightsExtraData() NI_VERT_WEIGHTS_EXTRA_DATA_CONS
 
 NiVertWeightsExtraData::~NiVertWeightsExtraData() {}
 
-void NiVertWeightsExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertWeightsExtraData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiVertWeightsExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiVertWeightsExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiVertWeightsExtraData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiVertWeightsExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiVertWeightsExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -40,7 +40,7 @@ vector<float> NiVertWeightsExtraData::GetData() const {
 }
 	
 void NiVertWeightsExtraData::SetData( const vector<float> & n ) {
-	numVertices = uint(n.size());
+	numVertices = unsigned int(n.size());
 	numBytes = numVertices + 2;
 	weight = n;
 }

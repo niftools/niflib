@@ -24,11 +24,11 @@ struct NIFLIB_API MatchGroup {
 	/*!
 	 * Number of vertices in this group.
 	 */
-	mutable ushort numVertices;
+	mutable unsigned short numVertices;
 	/*!
 	 * The vertex indices.
 	 */
-	vector<ushort > vertexIndices;
+	vector<unsigned short > vertexIndices;
 };
 
 }

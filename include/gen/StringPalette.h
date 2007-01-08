@@ -28,7 +28,7 @@ struct NIFLIB_API StringPalette {
 	/*!
 	 * Length of the palette string is repeated here.
 	 */
-	uint length;
+	unsigned int length;
 };
 
 }

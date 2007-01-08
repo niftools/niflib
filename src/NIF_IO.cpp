@@ -14,16 +14,16 @@ int ReadInt( istream& in ){
 	return tmp;
 }
 
-uint ReadUInt( istream& in ){
+unsigned int ReadUInt( istream& in ){
 
-	uint tmp;
+	unsigned int tmp;
 	in.read( (char*)&tmp, 4 );
 	return tmp;
 }
 
-ushort ReadUShort( istream& in ){
+unsigned short ReadUShort( istream& in ){
 
-	ushort tmp;
+	unsigned short tmp;
 	in.read( (char*)&tmp, 2 );
 	return tmp;
 }
@@ -49,7 +49,7 @@ float ReadFloat( istream &in ){
 }
 
 string ReadString( istream &in ) {
-	uint len = ReadUInt( in );
+	unsigned int len = ReadUInt( in );
 	string out;
 	if ( len > 10000 )
 	    throw runtime_error("String too long. Not a NIF file or unsupported format?");
@@ -77,12 +77,12 @@ void WriteInt( int val, ostream& out ){
 	out.write( (char*)&val, 4 );
 }
 
-void WriteUInt( uint val, ostream& out ){
+void WriteUInt( unsigned int val, ostream& out ){
 
 	out.write( (char*)&val, 4 );
 }
 
-void WriteUShort( ushort val, ostream& out ){
+void WriteUShort( unsigned short val, ostream& out ){
 
 	out.write( (char*)&val, 2 );
 }
@@ -102,7 +102,7 @@ void WriteFloat( float val, ostream& out ){
 }
 
 void WriteString( string const & val, ostream& out ) {
-	WriteUInt( uint(val.size()), out );
+	WriteUInt( unsigned int(val.size()), out );
 	out.write( val.c_str(), std::streamsize(val.size()) );
 }
 
@@ -130,41 +130,41 @@ void WriteBool( bool val, ostream& out, unsigned int version ) {
 //--Basic Types--//
 
 //int
-void NifStream( int & val, istream& in, uint version ) { val = ReadInt( in ); };
-void NifStream( int const & val, ostream& out, uint version ) { WriteInt( val, out ); }
+void NifStream( int & val, istream& in, unsigned int version ) { val = ReadInt( in ); };
+void NifStream( int const & val, ostream& out, unsigned int version ) { WriteInt( val, out ); }
 
-//uint
-void NifStream( uint & val, istream& in, uint version ) { val = ReadUInt( in ); };
-void NifStream( uint const & val, ostream& out, uint version ) { WriteUInt( val, out ); }
+//unsigned int
+void NifStream( unsigned int & val, istream& in, unsigned int version ) { val = ReadUInt( in ); };
+void NifStream( unsigned int const & val, ostream& out, unsigned int version ) { WriteUInt( val, out ); }
 
-//ushort
-void NifStream( ushort & val, istream& in, uint version ) { val = ReadUShort( in ); };
-void NifStream( ushort const & val, ostream& out, uint version ) { WriteUShort( val, out ); }
+//unsigned short
+void NifStream( unsigned short & val, istream& in, unsigned int version ) { val = ReadUShort( in ); };
+void NifStream( unsigned short const & val, ostream& out, unsigned int version ) { WriteUShort( val, out ); }
 
 //short
-void NifStream( short & val, istream& in, uint version ) { val = ReadShort( in ); };
-void NifStream( short const & val, ostream& out, uint version ) { WriteShort( val, out ); }
+void NifStream( short & val, istream& in, unsigned int version ) { val = ReadShort( in ); };
+void NifStream( short const & val, ostream& out, unsigned int version ) { WriteShort( val, out ); }
 
 //byte
-void NifStream( byte & val, istream& in, uint version ) { val = ReadByte( in ); };
-void NifStream( byte const & val, ostream& out, uint version ) { WriteByte( val, out ); }
+void NifStream( byte & val, istream& in, unsigned int version ) { val = ReadByte( in ); };
+void NifStream( byte const & val, ostream& out, unsigned int version ) { WriteByte( val, out ); }
 
 //bool
-void NifStream( bool & val, istream& in, uint version ) { val = ReadBool( in, version ); };
-void NifStream( bool const & val, ostream& out, uint version ) { WriteBool( val, out, version ); }
+void NifStream( bool & val, istream& in, unsigned int version ) { val = ReadBool( in, version ); };
+void NifStream( bool const & val, ostream& out, unsigned int version ) { WriteBool( val, out, version ); }
 
 //float
-void NifStream( float & val, istream& in, uint version ) { val = ReadFloat( in ); };
-void NifStream( float const & val, ostream& out, uint version ) { WriteFloat( val, out ); }
+void NifStream( float & val, istream& in, unsigned int version ) { val = ReadFloat( in ); };
+void NifStream( float const & val, ostream& out, unsigned int version ) { WriteFloat( val, out ); }
 
 //string
-void NifStream( string & val, istream& in, uint version ) { val = ReadString( in ); };
-void NifStream( string const & val, ostream& out, uint version ) { WriteString( val, out ); }
+void NifStream( string & val, istream& in, unsigned int version ) { val = ReadString( in ); };
+void NifStream( string const & val, ostream& out, unsigned int version ) { WriteString( val, out ); }
 
 //--Structs--//
 
 //HeaderString
-void NifStream( HeaderString & val, istream& in, uint & version ) {
+void NifStream( HeaderString & val, istream& in, unsigned int & version ) {
 	char tmp[256];
 	in.getline( tmp, 256 );
 	val.header = tmp;
@@ -195,7 +195,7 @@ void NifStream( HeaderString & val, istream& in, uint & version ) {
 	//}
 };
 
-void NifStream( HeaderString const & val, ostream& out, uint version ) {
+void NifStream( HeaderString const & val, ostream& out, unsigned int version ) {
 	stringstream header_string;
 	if ( version <= VER_10_0_1_0 ) {
 		header_string << "NetImmerse File Format, Version ";
@@ -216,13 +216,13 @@ ostream & operator<<( ostream & out, HeaderString const & val ) {
 }
 
 //LineString
-void NifStream( LineString & val, istream& in, uint version ) {
+void NifStream( LineString & val, istream& in, unsigned int version ) {
 	char tmp[256];
 	in.getline( tmp, 256 );
 	val.line = tmp;
 };
 
-void NifStream( LineString const & val, ostream& out, uint version ) {
+void NifStream( LineString const & val, ostream& out, unsigned int version ) {
 	out << val.line << "\n";
 };
 
@@ -231,7 +231,7 @@ ostream & operator<<( ostream & out, LineString const & val ) {
 }
 
 //ShortString
-void NifStream( ShortString & val, istream& in, uint version ) {
+void NifStream( ShortString & val, istream& in, unsigned int version ) {
 	byte len = ReadByte( in );
 	char * buffer = new char[len];
 	in.read( buffer, len );
@@ -239,7 +239,7 @@ void NifStream( ShortString & val, istream& in, uint version ) {
 	delete [] buffer;
 };
 
-void NifStream( ShortString const & val, ostream& out, uint version ) {
+void NifStream( ShortString const & val, ostream& out, unsigned int version ) {
 	WriteByte( byte(val.str.size() + 1), out );
 	out.write( val.str.c_str(), std::streamsize(val.str.size()) );
 	WriteByte( 0, out );
@@ -250,55 +250,55 @@ ostream & operator<<( ostream & out, ShortString const & val ) {
 }
 
 //TexCoord
-void NifStream( TexCoord & val, istream& in, uint version ) {
+void NifStream( TexCoord & val, istream& in, unsigned int version ) {
 	val.u = ReadFloat( in );
 	val.v = ReadFloat( in );
 };
 
-void NifStream( TexCoord const & val, ostream& out, uint version ) {
+void NifStream( TexCoord const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.u, out );
 	WriteFloat( val.v, out );
 };
 
 //Triangle
-void NifStream( Triangle & val, istream& in, uint version ) {
+void NifStream( Triangle & val, istream& in, unsigned int version ) {
 	val.v1 = ReadUShort( in );
 	val.v2 = ReadUShort( in );
 	val.v3 = ReadUShort( in );
 };
 
-void NifStream( Triangle const & val, ostream& out, uint version ) {
+void NifStream( Triangle const & val, ostream& out, unsigned int version ) {
 	WriteUShort( val.v1, out );
 	WriteUShort( val.v2, out );
 	WriteUShort( val.v3, out );
 };
 
 //Vector3
-void NifStream( Vector3 & val, istream& in, uint version ) {
+void NifStream( Vector3 & val, istream& in, unsigned int version ) {
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Vector3 const & val, ostream& out, uint version ) {
+void NifStream( Vector3 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
 	WriteFloat( val.z, out );
 };
 
 //Float2
-void NifStream( Float2 & val, istream& in, uint version ) {
+void NifStream( Float2 & val, istream& in, unsigned int version ) {
 	val.data[0] = ReadFloat( in );
 	val.data[1] = ReadFloat( in );
 };
 
-void NifStream( Float2 const & val, ostream& out, uint version ) {
+void NifStream( Float2 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.data[0], out );
 	WriteFloat( val.data[1], out );
 };
 
 //Matrix22
-void NifStream( Matrix22 & val, istream& in, uint version ) {
+void NifStream( Matrix22 & val, istream& in, unsigned int version ) {
 	for (int c = 0; c < 2; ++c) {
 		for (int r = 0; r < 2; ++r) {
 			val[r][c] = ReadFloat( in );
@@ -306,7 +306,7 @@ void NifStream( Matrix22 & val, istream& in, uint version ) {
 	}
 }
 
-void NifStream( Matrix22 const & val, ostream& out, uint version ) {
+void NifStream( Matrix22 const & val, ostream& out, unsigned int version ) {
 	for (int c = 0; c < 2; ++c) {
 		for (int r = 0; r < 2; ++r) {
 			WriteFloat( val[r][c], out );
@@ -315,20 +315,20 @@ void NifStream( Matrix22 const & val, ostream& out, uint version ) {
 }
 
 //Float3
-void NifStream( Float3 & val, istream& in, uint version ) {
+void NifStream( Float3 & val, istream& in, unsigned int version ) {
 	val.data[0] = ReadFloat( in );
 	val.data[1] = ReadFloat( in );
 	val.data[2] = ReadFloat( in );
 };
 
-void NifStream( Float3 const & val, ostream& out, uint version ) {
+void NifStream( Float3 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.data[0], out );
 	WriteFloat( val.data[1], out );
 	WriteFloat( val.data[2], out );
 };
 
 //Matrix33
-void NifStream( Matrix33 & val, istream& in, uint version ) {
+void NifStream( Matrix33 & val, istream& in, unsigned int version ) {
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
 			val[r][c] = ReadFloat( in );
@@ -336,7 +336,7 @@ void NifStream( Matrix33 & val, istream& in, uint version ) {
 	}
 }
 
-void NifStream( Matrix33 const & val, ostream& out, uint version ) {
+void NifStream( Matrix33 const & val, ostream& out, unsigned int version ) {
 	for (int c = 0; c < 3; ++c) {
 		for (int r = 0; r < 3; ++r) {
 			WriteFloat( val[r][c], out );
@@ -345,14 +345,14 @@ void NifStream( Matrix33 const & val, ostream& out, uint version ) {
 }
 
 //Float4
-void NifStream( Float4 & val, istream& in, uint version ) {
+void NifStream( Float4 & val, istream& in, unsigned int version ) {
 	val.data[0] = ReadFloat( in );
 	val.data[1] = ReadFloat( in );
 	val.data[2] = ReadFloat( in );
 	val.data[3] = ReadFloat( in );
 };
 
-void NifStream( Float4 const & val, ostream& out, uint version ) {
+void NifStream( Float4 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.data[0], out );
 	WriteFloat( val.data[1], out );
 	WriteFloat( val.data[2], out );
@@ -360,7 +360,7 @@ void NifStream( Float4 const & val, ostream& out, uint version ) {
 };
 
 //Matrix44
-void NifStream( Matrix44 & val, istream& in, uint version ) {
+void NifStream( Matrix44 & val, istream& in, unsigned int version ) {
 	for (int c = 0; c < 4; ++c) {
 		for (int r = 0; r < 4; ++r) {
 			val[r][c] = ReadFloat( in );
@@ -368,7 +368,7 @@ void NifStream( Matrix44 & val, istream& in, uint version ) {
 	}
 }
 
-void NifStream( Matrix44 const & val, ostream& out, uint version ) {
+void NifStream( Matrix44 const & val, ostream& out, unsigned int version ) {
 	for (int c = 0; c < 4; ++c) {
 		for (int r = 0; r < 4; ++r) {
 			WriteFloat( val[r][c], out );
@@ -377,27 +377,27 @@ void NifStream( Matrix44 const & val, ostream& out, uint version ) {
 }
 
 //Color3
-void NifStream( Color3 & val, istream& in, uint version ) {
+void NifStream( Color3 & val, istream& in, unsigned int version ) {
 	val.r = ReadFloat( in );
 	val.g = ReadFloat( in );
 	val.b = ReadFloat( in );
 };
 
-void NifStream( Color3 const & val, ostream& out, uint version ) {
+void NifStream( Color3 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );
 };
 
 //Color4
-void NifStream( Color4 & val, istream& in, uint version ) {
+void NifStream( Color4 & val, istream& in, unsigned int version ) {
 	val.r = ReadFloat( in );
 	val.g = ReadFloat( in );
 	val.b = ReadFloat( in );
 	val.a = ReadFloat( in );
 };
 
-void NifStream( Color4 const & val, ostream& out, uint version ) {
+void NifStream( Color4 const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.r, out );
 	WriteFloat( val.g, out );
 	WriteFloat( val.b, out );
@@ -405,14 +405,14 @@ void NifStream( Color4 const & val, ostream& out, uint version ) {
 };
 
 //Quaternion
-void NifStream( Quaternion & val, istream& in, uint version ) {
+void NifStream( Quaternion & val, istream& in, unsigned int version ) {
 	val.w = ReadFloat( in );
 	val.x = ReadFloat( in );
 	val.y = ReadFloat( in );
 	val.z = ReadFloat( in );
 };
 
-void NifStream( Quaternion const & val, ostream& out, uint version ) {
+void NifStream( Quaternion const & val, ostream& out, unsigned int version ) {
 	WriteFloat( val.w, out );
 	WriteFloat( val.x, out );
 	WriteFloat( val.y, out );
@@ -421,14 +421,14 @@ void NifStream( Quaternion const & val, ostream& out, uint version ) {
 
 //The HexString function creates a formatted hex display of the given data for use in printing
 //a debug string for information that is not understood
-string HexString( const byte * src, uint len ) {
+string HexString( const byte * src, unsigned int len ) {
 	stringstream out;
 	
 	//Display Data in Hex form
 	out << hex << setfill('0');
 
-	for ( uint i = 0; i < len; ++i ) {
-		out << uppercase << setw(2) << uint(src[i]);
+	for ( unsigned int i = 0; i < len; ++i ) {
+		out << uppercase << setw(2) << unsigned int(src[i]);
 		if (i % 16 == 15 || i == len - 1)
 			out << endl;
 		else if (i % 16 == 7)
@@ -445,10 +445,10 @@ string HexString( const byte * src, uint len ) {
 
 //Byte
 ostream & operator<<( ostream & out, byte const & val ) {
-	return out << uint(val);
+	return out << unsigned int(val);
 }
 
-void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type ) {
+void NifStream( Key<Quaternion> & key, istream& file, unsigned int version, KeyType type ) {
 	key.time = ReadFloat( file );
 
 	//If key type is not 1, 2, or 3, throw an exception
@@ -468,7 +468,7 @@ void NifStream( Key<Quaternion> & key, istream& file, uint version, KeyType type
 }
 
 
-void NifStream( Key<Quaternion> const & key, ostream& file, uint version,  KeyType type ) {
+void NifStream( Key<Quaternion> const & key, ostream& file, unsigned int version,  KeyType type ) {
 	WriteFloat( key.time, file );
 
 	//If key type is not 1, 2, or 3, throw an exception

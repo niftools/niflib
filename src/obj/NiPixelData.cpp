@@ -14,11 +14,11 @@ NiPixelData::NiPixelData() NI_PIXEL_DATA_CONSTRUCT {}
 
 NiPixelData::~NiPixelData() {}
 
-void NiPixelData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiPixelData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -26,7 +26,7 @@ string NiPixelData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiPixelData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiPixelData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -152,7 +152,7 @@ vector<Color4> NiPixelData::GetColors() const {
 	pixels.resize( mipmaps[0].width * mipmaps[0].height );
 	switch(pixelFormat) {
 		case PX_FMT_RGB8:
-			for ( uint i = 0; i < pixels.size(); ++i ) {
+			for ( unsigned int i = 0; i < pixels.size(); ++i ) {
 				pixels[i].r = float(pixelData.data[i * 3]) / 255.0f;
 				pixels[i].g = float(pixelData.data[i * 3 + 1]) / 255.0f;
 				pixels[i].b = float(pixelData.data[i * 3 + 2]) / 255.0f;
@@ -160,7 +160,7 @@ vector<Color4> NiPixelData::GetColors() const {
 			}
 			break;
 		case PX_FMT_RGBA8:
-			for ( uint i = 0; i < pixels.size(); ++i ) {
+			for ( unsigned int i = 0; i < pixels.size(); ++i ) {
 				pixels[i].r = float(pixelData.data[i * 4]) / 255.0f;
 				pixels[i].g = float(pixelData.data[i * 4 + 1]) / 255.0f;
 				pixels[i].b = float(pixelData.data[i * 4 + 2]) / 255.0f;
@@ -198,7 +198,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		throw runtime_error("You must pass one color for every pixel in the image.  There should be height * width colors.");
 	}
 
-	uint size = 0;
+	unsigned int size = 0;
 	mipmaps.resize(1);
 	size = (mipmaps[0].height * mipmaps[0].width * bitsPerPixel) / 8;
 
@@ -234,19 +234,19 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 	//Copy pixels to Color4 C array
 	Color4 * tmp_image = new Color4[new_pixels.size()];
 
-	for (uint i = 0; i < new_pixels.size(); ++i ) {
+	for (unsigned int i = 0; i < new_pixels.size(); ++i ) {
 		tmp_image[i] = new_pixels[i];
 	}
 
 	//Pack pixel data
-	for (uint i = 0; i < mipmaps.size(); ++i ) {
+	for (unsigned int i = 0; i < mipmaps.size(); ++i ) {
 		if ( i > 0 ) {
 			//Allocate space to store re-sized image.
 			Color4 * resized = new Color4[ mipmaps[i].width * mipmaps[i].height ];
 
 			//Visit every other pixel in each row and column of the previous image
-			for ( uint w = 0; w < mipmaps[i-1].width; w+=2 ) {
-				for ( uint h = 0; h < mipmaps[i-1].height; h+=2 ) {
+			for ( unsigned int w = 0; w < mipmaps[i-1].width; w+=2 ) {
+				for ( unsigned int h = 0; h < mipmaps[i-1].height; h+=2 ) {
 					Color4 & av = resized[(h/2) * mipmaps[i].width + (w/2)];
 
 					//Start with the value of the current pixel
@@ -313,7 +313,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 
 		switch(pixelFormat) {
 		case PX_FMT_RGB8:
-			for ( uint j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
+			for ( unsigned int j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
 				map[j * 3] = int( tmp_image[j].r * 255.0f );
 				map[j * 3 + 1] = int( tmp_image[j].g * 255.0f );
 				map[j * 3 + 2] = int( tmp_image[j].b * 255.0f );
@@ -326,7 +326,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 			//#endif
 			break;
 		case PX_FMT_RGBA8:
-			for ( uint j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
+			for ( unsigned int j = 0; j < mipmaps[i].width * mipmaps[i].height; ++j ) {
 				map[j * 4] = int( tmp_image[j].r * 255.0f );
 				map[j * 4 + 1] = int( tmp_image[j].g * 255.0f );
 				map[j * 4 + 2] = int( tmp_image[j].b * 255.0f );

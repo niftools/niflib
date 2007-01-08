@@ -44,11 +44,11 @@ struct NIFLIB_API Particle {
 	/*!
 	 * Unknown short (=0)
 	 */
-	ushort unknownShort;
+	unsigned short unknownShort;
 	/*!
 	 * Particle/vertex index matches array index
 	 */
-	ushort vertexId;
+	unsigned short vertexId;
 };
 
 }

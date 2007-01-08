@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-hkTriangle::hkTriangle() : unknownShort((ushort)0) {};
+hkTriangle::hkTriangle() : unknownShort((unsigned short)0) {};
 
 //Copy Constructor
 hkTriangle::hkTriangle( const hkTriangle & src ) {

@@ -24,15 +24,15 @@ struct NIFLIB_API MipMap {
 	/*!
 	 * Width of the mipmap image.
 	 */
-	uint width;
+	unsigned int width;
 	/*!
 	 * Height of the mipmap image.
 	 */
-	uint height;
+	unsigned int height;
 	/*!
 	 * Offset into the pixel data array where this mipmap starts.
 	 */
-	uint offset;
+	unsigned int offset;
 };
 
 }

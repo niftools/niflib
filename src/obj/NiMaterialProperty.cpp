@@ -11,11 +11,11 @@ NiMaterialProperty::NiMaterialProperty() NI_MATERIAL_PROPERTY_CONSTRUCT {}
 
 NiMaterialProperty::~NiMaterialProperty() {}
 
-void NiMaterialProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialProperty::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiMaterialProperty::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiMaterialProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiMaterialProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,11 +35,11 @@ const Type & NiMaterialProperty::GetType() const {
 	return TYPE;
 };
 
-ushort NiMaterialProperty::GetFlags() const {
+unsigned short NiMaterialProperty::GetFlags() const {
 	return flags;
 }
 
-void NiMaterialProperty::SetFlags( ushort n ) {
+void NiMaterialProperty::SetFlags( unsigned short n ) {
 	flags = n;
 }
 

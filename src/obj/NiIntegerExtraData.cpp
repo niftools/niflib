@@ -11,11 +11,11 @@ NiIntegerExtraData::NiIntegerExtraData() NI_INTEGER_EXTRA_DATA_CONSTRUCT {}
 
 NiIntegerExtraData::~NiIntegerExtraData() {}
 
-void NiIntegerExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegerExtraData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiIntegerExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiIntegerExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiIntegerExtraData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiIntegerExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiIntegerExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,10 +35,10 @@ const Type & NiIntegerExtraData::GetType() const {
 	return TYPE;
 };
 
-uint NiIntegerExtraData::GetData() const {
+unsigned int NiIntegerExtraData::GetData() const {
 	return integerData;
 }
 	
-void NiIntegerExtraData::SetData( uint n ) {
+void NiIntegerExtraData::SetData( unsigned int n ) {
 	integerData = n;
 }

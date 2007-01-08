@@ -11,11 +11,11 @@ NiFogProperty::NiFogProperty() NI_FOG_PROPERTY_CONSTRUCT {}
 
 NiFogProperty::~NiFogProperty() {}
 
-void NiFogProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFogProperty::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiFogProperty::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiFogProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiFogProperty::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiFogProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiFogProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -36,11 +36,11 @@ const Type & NiFogProperty::GetType() const {
 };
 
 
-ushort NiFogProperty::GetFlags() const {
+unsigned short NiFogProperty::GetFlags() const {
    return flags;
 }
 
-void NiFogProperty::SetFlags( ushort n ) {
+void NiFogProperty::SetFlags( unsigned short n ) {
    flags = n;
 }
 

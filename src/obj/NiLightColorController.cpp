@@ -13,11 +13,11 @@ NiLightColorController::NiLightColorController() NI_LIGHT_COLOR_CONTROLLER_CONST
 
 NiLightColorController::~NiLightColorController() {}
 
-void NiLightColorController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightColorController::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiLightColorController::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiLightColorController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -25,7 +25,7 @@ string NiLightColorController::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiLightColorController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiLightColorController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

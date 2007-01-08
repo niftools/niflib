@@ -27,11 +27,11 @@ NiNode::~NiNode() {
 	ClearChildren();
 }
 
-void NiNode::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiNode::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiNode::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -39,7 +39,7 @@ string NiNode::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 	//Connect children to their parents and remove any NULL ones
 	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
@@ -148,7 +148,7 @@ void NiNode::RemoveSkin( NiSkinInstance * skin_inst ) {
 	vector<NiNodeRef> bones;
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
 		bones = (*it)->GetBones();
-		for ( uint i = 0; i < bones.size(); ++i ) {
+		for ( unsigned int i = 0; i < bones.size(); ++i ) {
 			bones[i]->SetSkinFlag(true);
 		}
 	}
@@ -184,12 +184,12 @@ void NiNode::GoToSkeletonBindPosition() {
 		}
 
 		//Loop through all bones influencing this skin
-		for ( uint i = 0; i < bone_nodes.size(); ++i ) {
+		for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
 			//Get current offset Matrix for this bone
 			Matrix44 parent_offset = skin_data->GetBoneTransform(i);
 
 			//Loop through all bones again, checking for any that have this bone as a parent
-			for ( uint j = 0; j < bone_nodes.size(); ++j ) {
+			for ( unsigned int j = 0; j < bone_nodes.size(); ++j ) {
 				if ( bone_nodes[j]->GetParent() == bone_nodes[i] ) {
 					//Node 2 has node 1 as a parent
 

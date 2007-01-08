@@ -12,11 +12,11 @@ NiGeometryData::NiGeometryData() NI_GEOMETRY_DATA_CONSTRUCT {}
 
 NiGeometryData::~NiGeometryData() {}
 
-void NiGeometryData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiGeometryData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiGeometryData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -51,7 +51,7 @@ void NiGeometryData::SetVertices( const vector<Vector3> & in ) {
 	hasNormals = false;
 	vertexColors.clear();
 	this->hasVertexColors = false;
-	for (uint i = 0; i < uvSets.size(); ++i ) {
+	for (unsigned int i = 0; i < uvSets.size(); ++i ) {
 		uvSets[i].clear();
 	}
 
@@ -131,10 +131,10 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 	Matrix44 rotation = Matrix44( transform.GetRotation() );
 
 	//Apply the transformations
-	for ( uint i = 0; i < vertices.size(); ++i ) {
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
 		vertices[i] = transform * vertices[i];
 	}
-	for ( uint i = 0; i < normals.size(); ++i ) {
+	for ( unsigned int i = 0; i < normals.size(); ++i ) {
 		normals[i] = rotation * normals[i];
 	}
 }

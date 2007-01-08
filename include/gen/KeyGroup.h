@@ -18,7 +18,7 @@ struct NIFLIB_API KeyGroup {
 	/*!
 	 * Number of keys in the array.
 	 */
-	mutable uint numKeys;
+	mutable unsigned int numKeys;
 	/*!
 	 * The key type.
 	 */

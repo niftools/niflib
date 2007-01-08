@@ -11,11 +11,11 @@ NiShadeProperty::NiShadeProperty() NI_SHADE_PROPERTY_CONSTRUCT {}
 
 NiShadeProperty::~NiShadeProperty() {}
 
-void NiShadeProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiShadeProperty::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiShadeProperty::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiShadeProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiShadeProperty::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiShadeProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiShadeProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,10 +35,10 @@ const Type & NiShadeProperty::GetType() const {
 	return TYPE;
 };
 
-ushort NiShadeProperty::GetFlags() const {
+unsigned short NiShadeProperty::GetFlags() const {
    return flags;
 }
 
-void NiShadeProperty::SetFlags( ushort n ) {
+void NiShadeProperty::SetFlags( unsigned short n ) {
    flags = n;
 }

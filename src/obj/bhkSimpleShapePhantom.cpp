@@ -11,11 +11,11 @@ bhkSimpleShapePhantom::bhkSimpleShapePhantom() BHK_SIMPLE_SHAPE_PHANTOM_CONSTRUC
 
 bhkSimpleShapePhantom::~bhkSimpleShapePhantom() {}
 
-void bhkSimpleShapePhantom::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSimpleShapePhantom::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void bhkSimpleShapePhantom::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void bhkSimpleShapePhantom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string bhkSimpleShapePhantom::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void bhkSimpleShapePhantom::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void bhkSimpleShapePhantom::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

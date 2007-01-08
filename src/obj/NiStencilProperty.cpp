@@ -11,11 +11,11 @@ NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
 
 NiStencilProperty::~NiStencilProperty() {}
 
-void NiStencilProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStencilProperty::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiStencilProperty::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiStencilProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiStencilProperty::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiStencilProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStencilProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,11 +35,11 @@ const Type & NiStencilProperty::GetType() const {
 	return TYPE;
 };
 
-ushort NiStencilProperty::GetFlags() const {
+unsigned short NiStencilProperty::GetFlags() const {
    return flags;
 }
 
-void NiStencilProperty::SetFlags(ushort value) {
+void NiStencilProperty::SetFlags(unsigned short value) {
    flags = value;
 }
 
@@ -59,19 +59,19 @@ void NiStencilProperty::SetStencilFunction(CompareMode value) {
    stencilFunction = value;
 }
 
-uint NiStencilProperty::GetStencilRef() const {
+unsigned int NiStencilProperty::GetStencilRef() const {
    return stencilRef;
 }
 
-void NiStencilProperty::SetStencilRef(uint value) {
+void NiStencilProperty::SetStencilRef(unsigned int value) {
    stencilRef = value;
 }
 
-uint NiStencilProperty::GetStencilMask() const {
+unsigned int NiStencilProperty::GetStencilMask() const {
    return stencilMask;
 }
 
-void NiStencilProperty::SetStencilMask(uint value) {
+void NiStencilProperty::SetStencilMask(unsigned int value) {
    stencilMask = value;
 }
 

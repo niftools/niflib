@@ -35,7 +35,7 @@ struct NIFLIB_API OblivionColFilter {
 	/*!
 	 * Unknown.
 	 */
-	ushort unknownShort;
+	unsigned short unknownShort;
 };
 
 }

@@ -11,11 +11,11 @@ NiAlphaProperty::NiAlphaProperty() NI_ALPHA_PROPERTY_CONSTRUCT {}
 
 NiAlphaProperty::~NiAlphaProperty() {}
 
-void NiAlphaProperty::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaProperty::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiAlphaProperty::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiAlphaProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiAlphaProperty::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiAlphaProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiAlphaProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -35,11 +35,11 @@ const Type & NiAlphaProperty::GetType() const {
 	return TYPE;
 };
 
-ushort NiAlphaProperty::GetFlags() const {
+unsigned short NiAlphaProperty::GetFlags() const {
 	return flags;
 }
 
-void NiAlphaProperty::SetFlags( ushort n ) {
+void NiAlphaProperty::SetFlags( unsigned short n ) {
 	flags = n;
 }
 

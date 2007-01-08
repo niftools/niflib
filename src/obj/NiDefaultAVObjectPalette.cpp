@@ -13,11 +13,11 @@ NiDefaultAVObjectPalette::NiDefaultAVObjectPalette() NI_DEFAULT_A_V_OBJECT_PALET
 
 NiDefaultAVObjectPalette::~NiDefaultAVObjectPalette() {}
 
-void NiDefaultAVObjectPalette::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDefaultAVObjectPalette::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiDefaultAVObjectPalette::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiDefaultAVObjectPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -25,7 +25,7 @@ string NiDefaultAVObjectPalette::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiDefaultAVObjectPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiDefaultAVObjectPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 

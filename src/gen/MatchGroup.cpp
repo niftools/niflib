@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-MatchGroup::MatchGroup() : numVertices((ushort)0) {};
+MatchGroup::MatchGroup() : numVertices((unsigned short)0) {};
 
 //Copy Constructor
 MatchGroup::MatchGroup( const MatchGroup & src ) {

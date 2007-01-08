@@ -15,14 +15,14 @@ namespace Niflib {
 
 //--ForceType--//
 
-void NifStream( ForceType & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( ForceType & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = ForceType(temp);
 }
 
-void NifStream( ForceType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( ForceType const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, ForceType const & val ) {
@@ -30,21 +30,21 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 		case FORCE_PLANAR: return out << "FORCE_PLANAR";
 		case FORCE_SPHERICAL: return out << "FORCE_SPHERICAL";
 		case FORCE_UNKNOWN: return out << "FORCE_UNKNOWN";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--HavokMaterial--//
 
-void NifStream( HavokMaterial & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( HavokMaterial & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = HavokMaterial(temp);
 }
 
-void NifStream( HavokMaterial const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( HavokMaterial const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, HavokMaterial const & val ) {
@@ -80,21 +80,21 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 		case HAV_MAT_CHAIN_STAIRS: return out << "HAV_MAT_CHAIN_STAIRS";
 		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
 		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--CompareMode--//
 
-void NifStream( CompareMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( CompareMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = CompareMode(temp);
 }
 
-void NifStream( CompareMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( CompareMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, CompareMode const & val ) {
@@ -106,21 +106,21 @@ ostream & operator<<( ostream & out, CompareMode const & val ) {
 		case TEST_GREATER: return out << "TEST_GREATER";
 		case TEST_GREATEREQUAL: return out << "TEST_GREATEREQUAL";
 		case TEST_ALWAYS: return out << "TEST_ALWAYS";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--TexFilterMode--//
 
-void NifStream( TexFilterMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( TexFilterMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = TexFilterMode(temp);
 }
 
-void NifStream( TexFilterMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( TexFilterMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, TexFilterMode const & val ) {
@@ -131,42 +131,42 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
 		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
 		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--LightMode--//
 
-void NifStream( LightMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( LightMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = LightMode(temp);
 }
 
-void NifStream( LightMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( LightMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, LightMode const & val ) {
 	switch ( val ) {
 		case LIGHT_MODE_EMISSIVE: return out << "LIGHT_MODE_EMISSIVE";
 		case LIGHT_MODE_EMI_AMB_DIF: return out << "LIGHT_MODE_EMI_AMB_DIF";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--MipMapFormat--//
 
-void NifStream( MipMapFormat & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( MipMapFormat & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = MipMapFormat(temp);
 }
 
-void NifStream( MipMapFormat const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( MipMapFormat const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, MipMapFormat const & val ) {
@@ -174,21 +174,21 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 		case MIP_FMT_NO: return out << "MIP_FMT_NO";
 		case MIP_FMT_YES: return out << "MIP_FMT_YES";
 		case MIP_FMT_DEFAULT: return out << "MIP_FMT_DEFAULT";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--StencilAction--//
 
-void NifStream( StencilAction & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( StencilAction & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = StencilAction(temp);
 }
 
-void NifStream( StencilAction const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( StencilAction const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, StencilAction const & val ) {
@@ -199,20 +199,20 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 		case ACTION_INCREMENT: return out << "ACTION_INCREMENT";
 		case ACTION_DECREMENT: return out << "ACTION_DECREMENT";
 		case ACTION_INVERT: return out << "ACTION_INVERT";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--OblivionLayer--//
 
-void NifStream( OblivionLayer & val, istream& in, uint version ) {
+void NifStream( OblivionLayer & val, istream& in, unsigned int version ) {
 	byte temp;
 	NifStream( temp, in, version );
 	val = OblivionLayer(temp);
 }
 
-void NifStream( OblivionLayer const & val, ostream& out, uint version ) {
+void NifStream( OblivionLayer const & val, ostream& out, unsigned int version ) {
 	NifStream( byte(val), out, version );
 }
 
@@ -276,21 +276,21 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 		case OL_PONYTAIL: return out << "OL_PONYTAIL";
 		case OL_WING: return out << "OL_WING";
 		case OL_NULL: return out << "OL_NULL";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--FaceDrawMode--//
 
-void NifStream( FaceDrawMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( FaceDrawMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = FaceDrawMode(temp);
 }
 
-void NifStream( FaceDrawMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( FaceDrawMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
@@ -299,21 +299,21 @@ ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
 		case DRAW_CCW: return out << "DRAW_CCW";
 		case DRAW_CW: return out << "DRAW_CW";
 		case DRAW_BOTH: return out << "DRAW_BOTH";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--AlphaFormat--//
 
-void NifStream( AlphaFormat & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( AlphaFormat & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = AlphaFormat(temp);
 }
 
-void NifStream( AlphaFormat const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( AlphaFormat const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, AlphaFormat const & val ) {
@@ -322,21 +322,21 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 		case ALPHA_BINARY: return out << "ALPHA_BINARY";
 		case ALPHA_SMOOTH: return out << "ALPHA_SMOOTH";
 		case ALPHA_DEFAULT: return out << "ALPHA_DEFAULT";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--KeyType--//
 
-void NifStream( KeyType & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( KeyType & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = KeyType(temp);
 }
 
-void NifStream( KeyType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( KeyType const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, KeyType const & val ) {
@@ -346,21 +346,21 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 		case TBC_KEY: return out << "TBC_KEY";
 		case XYZ_ROTATION_KEY: return out << "XYZ_ROTATION_KEY";
 		case UNKNOWN_KEY: return out << "UNKNOWN_KEY";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--VertMode--//
 
-void NifStream( VertMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( VertMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = VertMode(temp);
 }
 
-void NifStream( VertMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( VertMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, VertMode const & val ) {
@@ -368,21 +368,21 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
 		case VERT_MODE_SRC_EMISSIVE: return out << "VERT_MODE_SRC_EMISSIVE";
 		case VERT_MODE_SRC_AMB_DIF: return out << "VERT_MODE_SRC_AMB_DIF";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--ApplyMode--//
 
-void NifStream( ApplyMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( ApplyMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = ApplyMode(temp);
 }
 
-void NifStream( ApplyMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( ApplyMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, ApplyMode const & val ) {
@@ -392,20 +392,20 @@ ostream & operator<<( ostream & out, ApplyMode const & val ) {
 		case APPLY_MODULATE: return out << "APPLY_MODULATE";
 		case APPLY_HILIGHT: return out << "APPLY_HILIGHT";
 		case APPLY_HILIGHT2: return out << "APPLY_HILIGHT2";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--MotionSystem--//
 
-void NifStream( MotionSystem & val, istream& in, uint version ) {
+void NifStream( MotionSystem & val, istream& in, unsigned int version ) {
 	byte temp;
 	NifStream( temp, in, version );
 	val = MotionSystem(temp);
 }
 
-void NifStream( MotionSystem const & val, ostream& out, uint version ) {
+void NifStream( MotionSystem const & val, ostream& out, unsigned int version ) {
 	NifStream( byte(val), out, version );
 }
 
@@ -413,21 +413,21 @@ ostream & operator<<( ostream & out, MotionSystem const & val ) {
 	switch ( val ) {
 		case MO_SYS_BOX: return out << "MO_SYS_BOX";
 		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--BillboardMode--//
 
-void NifStream( BillboardMode & val, istream& in, uint version ) {
-	ushort temp;
+void NifStream( BillboardMode & val, istream& in, unsigned int version ) {
+	unsigned short temp;
 	NifStream( temp, in, version );
 	val = BillboardMode(temp);
 }
 
-void NifStream( BillboardMode const & val, ostream& out, uint version ) {
-	NifStream( ushort(val), out, version );
+void NifStream( BillboardMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned short(val), out, version );
 }
 
 ostream & operator<<( ostream & out, BillboardMode const & val ) {
@@ -437,21 +437,21 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 		case RIGID_FACE_CAMERA: return out << "RIGID_FACE_CAMERA";
 		case ALWAYS_FACE_CENTER: return out << "ALWAYS_FACE_CENTER";
 		case RIGID_FACE_CENTER: return out << "RIGID_FACE_CENTER";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--TexType--//
 
-void NifStream( TexType & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( TexType & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = TexType(temp);
 }
 
-void NifStream( TexType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( TexType const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, TexType const & val ) {
@@ -464,21 +464,21 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 		case BUMP_MAP: return out << "BUMP_MAP";
 		case DECAL_0_MAP: return out << "DECAL_0_MAP";
 		case DECAL_1_MAP: return out << "DECAL_1_MAP";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--PixelLayout--//
 
-void NifStream( PixelLayout & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( PixelLayout & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = PixelLayout(temp);
 }
 
-void NifStream( PixelLayout const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( PixelLayout const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, PixelLayout const & val ) {
@@ -489,21 +489,21 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
 		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
 		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--TexClampMode--//
 
-void NifStream( TexClampMode & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( TexClampMode & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = TexClampMode(temp);
 }
 
-void NifStream( TexClampMode const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( TexClampMode const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, TexClampMode const & val ) {
@@ -512,20 +512,20 @@ ostream & operator<<( ostream & out, TexClampMode const & val ) {
 		case CLAMP_S_WRAP_T: return out << "CLAMP_S_WRAP_T";
 		case WRAP_S_CLAMP_T: return out << "WRAP_S_CLAMP_T";
 		case WRAP_S_WRAP_T: return out << "WRAP_S_WRAP_T";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--MotionQuality--//
 
-void NifStream( MotionQuality & val, istream& in, uint version ) {
+void NifStream( MotionQuality & val, istream& in, unsigned int version ) {
 	byte temp;
 	NifStream( temp, in, version );
 	val = MotionQuality(temp);
 }
 
-void NifStream( MotionQuality const & val, ostream& out, uint version ) {
+void NifStream( MotionQuality const & val, ostream& out, unsigned int version ) {
 	NifStream( byte(val), out, version );
 }
 
@@ -540,21 +540,21 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 		case MO_QUAL_BULLET: return out << "MO_QUAL_BULLET";
 		case MO_QUAL_USER: return out << "MO_QUAL_USER";
 		case MO_QUAL_NULL: return out << "MO_QUAL_NULL";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--PixelFormat--//
 
-void NifStream( PixelFormat & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( PixelFormat & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = PixelFormat(temp);
 }
 
-void NifStream( PixelFormat const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( PixelFormat const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, PixelFormat const & val ) {
@@ -562,21 +562,21 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
 		case PX_FMT_RGBA8: return out << "PX_FMT_RGBA8";
 		case PX_FMT_PAL8: return out << "PX_FMT_PAL8";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--CycleType--//
 
-void NifStream( CycleType & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( CycleType & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = CycleType(temp);
 }
 
-void NifStream( CycleType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( CycleType const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, CycleType const & val ) {
@@ -584,28 +584,28 @@ ostream & operator<<( ostream & out, CycleType const & val ) {
 		case CYCLE_LOOP: return out << "CYCLE_LOOP";
 		case CYCLE_REVERSE: return out << "CYCLE_REVERSE";
 		case CYCLE_CLAMP: return out << "CYCLE_CLAMP";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 
 
 //--FieldType--//
 
-void NifStream( FieldType & val, istream& in, uint version ) {
-	uint temp;
+void NifStream( FieldType & val, istream& in, unsigned int version ) {
+	unsigned int temp;
 	NifStream( temp, in, version );
 	val = FieldType(temp);
 }
 
-void NifStream( FieldType const & val, ostream& out, uint version ) {
-	NifStream( uint(val), out, version );
+void NifStream( FieldType const & val, ostream& out, unsigned int version ) {
+	NifStream( unsigned int(val), out, version );
 }
 
 ostream & operator<<( ostream & out, FieldType const & val ) {
 	switch ( val ) {
 		case FIELD_WIND: return out << "FIELD_WIND";
 		case FIELD_POINT: return out << "FIELD_POINT";
-		default: return out << "Invalid Value! - " << uint(val);
+		default: return out << "Invalid Value! - " << unsigned int(val);
 	}
 }
 

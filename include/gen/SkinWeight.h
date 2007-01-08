@@ -24,7 +24,7 @@ struct NIFLIB_API SkinWeight {
 	/*!
 	 * The vertex index, in the mesh.
 	 */
-	ushort index;
+	unsigned short index;
 	/*!
 	 * The vertex weight - between 0.0 and 1.0
 	 */

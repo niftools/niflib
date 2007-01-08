@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-SkinShapeGroup::SkinShapeGroup() : numLinkPairs((uint)0) {};
+SkinShapeGroup::SkinShapeGroup() : numLinkPairs((unsigned int)0) {};
 
 //Copy Constructor
 SkinShapeGroup::SkinShapeGroup( const SkinShapeGroup & src ) {

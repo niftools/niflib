@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-FurniturePosition::FurniturePosition() : orientation((ushort)0), positionRef1((byte)0), positionRef2((byte)0) {};
+FurniturePosition::FurniturePosition() : orientation((unsigned short)0), positionRef1((byte)0), positionRef2((byte)0) {};
 
 //Copy Constructor
 FurniturePosition::FurniturePosition( const FurniturePosition & src ) {

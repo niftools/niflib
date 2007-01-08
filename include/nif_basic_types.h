@@ -22,10 +22,9 @@ struct LineString {
 };
 
 //--Non-mathematical Basic Types--//
-
+#ifndef byte
 typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
+#endif
 
 //TODO:  This is temporary to make it compile.  Should eventually be adjusted to display 1's and 0's insted of as an int.
 typedef unsigned short Flags;

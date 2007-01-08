@@ -12,11 +12,11 @@ NiTimeController::NiTimeController() NI_TIME_CONTROLLER_CONSTRUCT {}
 
 NiTimeController::~NiTimeController() {}
 
-void NiTimeController::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTimeController::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiTimeController::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiTimeController::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -52,11 +52,11 @@ Ref<NiObjectNET> NiTimeController::GetTarget() {
 	return target;
 }
 
-ushort NiTimeController::GetFlags() const {
+unsigned short NiTimeController::GetFlags() const {
 	return flags;
 }
 
-void NiTimeController::SetFlags( ushort n ) {
+void NiTimeController::SetFlags( unsigned short n ) {
 	flags = n;
 }
 

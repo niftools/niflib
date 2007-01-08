@@ -26,7 +26,7 @@ struct NIFLIB_API NodeGroup {
 	/*!
 	 * Number of node references that follow.
 	 */
-	mutable uint numNodes;
+	mutable unsigned int numNodes;
 	/*!
 	 * The list of NiNode references.
 	 */

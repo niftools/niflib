@@ -42,7 +42,7 @@ bool global_block_map_init = false;
 map<string, blk_factory_func> global_block_map;
 
 //Utility Functions
-void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse = false );
+void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
 void RegisterBlockFactories ();
 NiObjectRef GetObjectByType( NiObject * root, const Type & type );
@@ -102,7 +102,7 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
 
 	//Find the first NiObjectNET derived object
 	NiAVObjectRef root;
-	for (uint i = 0; i < blocks.size(); ++i) {
+	for (unsigned int i = 0; i < blocks.size(); ++i) {
 		root = DynamicCast<NiAVObject>(blocks[i]);
 		if ( root != NULL ) {
 			break;
@@ -179,12 +179,12 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	//--Read Objects--//
 	size_t numObjects = header.numBlocks;
 	map<unsigned,NiObjectRef> objects; //Map to hold objects by number
-	list<uint> link_stack; //List to add link values to as they're read in from the file
+	list<unsigned int> link_stack; //List to add link values to as they're read in from the file
 	string objectType;
 	stringstream errStream;
 
 	//Loop through all objects in the file
-	uint i = 0;
+	unsigned int i = 0;
 	NiObjectRef new_obj;
 	while (true) {
 		//Check for EOF
@@ -206,7 +206,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 			//From version 5.0.0.1 to version 10.0.1.106  there is a zero byte at the begining of each object
 			
 			if ( header.version <= VER_10_1_0_106 ) {
-				uint checkValue = ReadUInt( in );
+				unsigned int checkValue = ReadUInt( in );
 				if ( checkValue != 0 ) {
 					//Throw an exception if it's not zero
 					errStream << "Read failue - Bad object position.  Invalid check value:  " << checkValue << endl;
@@ -229,7 +229,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 #endif
 		} else {
 			// Find which object type this is by reading the string at this location
-			uint objectTypeLength = ReadUInt( in );
+			unsigned int objectTypeLength = ReadUInt( in );
 			if (objectTypeLength > 30 || objectTypeLength < 6) {
 				errStream << "Read failue - Bad object position.  Invalid Type Name Length:  " << objectTypeLength  << endl;
 				if ( new_obj != NULL ) {
@@ -295,7 +295,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 			throw runtime_error( errStream.str() );
 		}
 
-		uint index;
+		unsigned int index;
 		if ( header.version < VER_3_3_0_13 ) {
 			//These old versions have a pointer value after the name
 			//which is used as the index
@@ -340,7 +340,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 #ifdef DEBUG_LINK_PHASE
 	cout << "Link Stack:" << endl;
-	list<uint>::iterator it;
+	list<unsigned int>::iterator it;
 	for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
 		cout << *it << endl;
 	}
@@ -373,8 +373,8 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	//int block_count = ResetBlockNums( 0, root_block );
 	
 	//Enumerate all objects in tree
-	map<Type*,uint> type_map;
-	map<NiObjectRef, uint> link_map;
+	map<Type*,unsigned int> type_map;
+	map<NiObjectRef, unsigned int> link_map;
 
    for (list<NiObjectRef>::const_iterator it = roots.begin(); it != roots.end(); ++it) {
 	   EnumerateObjects( (*it), type_map, link_map );
@@ -382,12 +382,12 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 
 	//Build vectors for reverse look-up
 	vector<NiObjectRef> objects(link_map.size());
-	for ( map<NiObjectRef, uint>::iterator it = link_map.begin(); it != link_map.end(); ++it ) {
+	for ( map<NiObjectRef, unsigned int>::iterator it = link_map.begin(); it != link_map.end(); ++it ) {
 		objects[it->second] = it->first;
 	}
 
 	vector<const Type*> types(type_map.size());
-	for ( map<Type*, uint>::iterator it = type_map.begin(); it != type_map.end(); ++it ) {
+	for ( map<Type*, unsigned int>::iterator it = type_map.begin(); it != type_map.end(); ++it ) {
 		types[it->second] = it->first;
 	}
 
@@ -406,14 +406,14 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	
 	//Set Type Names
 	header.blockTypes.resize( types.size() );
-	for ( uint i = 0; i < types.size(); ++i ) {
+	for ( unsigned int i = 0; i < types.size(); ++i ) {
 		header.blockTypes[i] = types[i]->GetTypeName();
 
 	}
 
 	//Set type number of each block
 	header.blockTypeIndex.resize( objects.size() );
-	for ( uint i = 0; i < objects.size(); ++i ) {
+	for ( unsigned int i = 0; i < objects.size(); ++i ) {
 		header.blockTypeIndex[i] = type_map[(Type*)&(objects[i]->GetType())];
 	}
 
@@ -425,7 +425,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 #endif
 
 	//--Write Objects--//
-	for (uint i = 0; i < objects.size(); ++i) {
+	for (unsigned int i = 0; i < objects.size(); ++i) {
 
 #ifdef PRINT_OBJECT_NAMES
 		cout << endl << i << ":  " << objects[i]->GetType().GetTypeName();
@@ -448,7 +448,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
       const NiObjectRef& root = roots.front();
       if (root->IsDerivedType(NiControllerSequence::TypeConst())) {
          // KF animation files allow for multiple roots of type NiControllerSequence
-         for ( uint i = 0; i < objects.size(); ++i ) {
+         for ( unsigned int i = 0; i < objects.size(); ++i ) {
             if (objects[i]->IsDerivedType(NiControllerSequence::TypeConst())) {
                footer.roots.push_back(objects[i]);
             }
@@ -495,7 +495,7 @@ void WriteNifTree( ostream & out, NiObject * root, const NifInfo & info ) {
    WriteNifTree( out, roots, info );
 }
 
-void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObjectRef, uint> & link_map, bool reverse ) {
+void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse ) {
 	//Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
@@ -505,7 +505,7 @@ void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObject
 	//Add this object type to the map if it isn't there already
 	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
-		type_map[ (Type*)&(root->GetType()) ] = uint(type_map.size());
+		type_map[ (Type*)&(root->GetType()) ] = unsigned int(type_map.size());
 	}
 
    // Oblivion has very rigid requirements about block ordering and the bhkRigidBody 
@@ -522,7 +522,7 @@ void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObject
 
    // If reverse is set then add the link after children otherwise add it before
    if (!reverse) {
-      link_map[root] = uint(link_map.size());
+      link_map[root] = unsigned int(link_map.size());
    }
 
    //Call this function on all links of this object	
@@ -534,7 +534,7 @@ void EnumerateObjects( NiObject * root, map<Type*,uint> & type_map, map<NiObject
    }
 
    if (reverse) {
-      link_map[root] = uint(link_map.size());
+      link_map[root] = unsigned int(link_map.size());
    }
 }
 
@@ -766,10 +766,10 @@ static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiOb
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
 void WriteFileGroup( string const & file_name, NiObject * root_block, const NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
 	// Get base filename.
-	uint file_name_slash = uint(file_name.rfind("\\") + 1);
+	unsigned int file_name_slash = unsigned int(file_name.rfind("\\") + 1);
 	string file_name_path = file_name.substr(0, file_name_slash);
 	string file_name_base = file_name.substr(file_name_slash, file_name.length());
-	uint file_name_dot = uint(file_name_base.rfind("."));
+	unsigned int file_name_dot = unsigned int(file_name_base.rfind("."));
 	file_name_base = file_name_base.substr(0, file_name_dot);
 	
 	// Deal with the simple case first
@@ -884,7 +884,7 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, NiNode * root, NiAVObjec
 		} else {
 			//This is a NiNode class, so merge its child list with that of the root
 			vector<NiAVObjectRef> children = par_node->GetChildren();
-			for ( uint i = 0; i < children.size(); ++i ) {
+			for ( unsigned int i = 0; i < children.size(); ++i ) {
 				root->AddChild( children[i] );
 			}
 		}
@@ -953,7 +953,7 @@ void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned vers
 	vector<ControllerLink> data = right->GetControllerData();
 
 	//Connect a clone of all the interpolators/controllers to the named node
-	for ( uint i = 0; i < data.size(); ++i ) {
+	for ( unsigned int i = 0; i < data.size(); ++i ) {
 		//Get strings
 		//TODO: Find out if other strings are needed
 		string node_name, ctlr_type;
@@ -1147,7 +1147,7 @@ void SendNifTreeToBindPos( NiNode * root ) {
 
 	//Call this function on any NiNode children
 	vector<NiAVObjectRef> children = root->GetChildren();
-	for ( uint i = 0; i < children.size(); ++i ) {
+	for ( unsigned int i = 0; i < children.size(); ++i ) {
 		NiNodeRef child = DynamicCast<NiNode>(children[i]);
 		if ( child != NULL ) {
 			SendNifTreeToBindPos( child );

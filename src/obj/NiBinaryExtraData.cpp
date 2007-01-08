@@ -12,11 +12,11 @@ NiBinaryExtraData::NiBinaryExtraData() NI_BINARY_EXTRA_DATA_CONSTRUCT {}
 
 NiBinaryExtraData::~NiBinaryExtraData() {}
 
-void NiBinaryExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBinaryExtraData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiBinaryExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiBinaryExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiBinaryExtraData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiBinaryExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiBinaryExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -42,6 +42,6 @@ vector<byte> NiBinaryExtraData::GetData() const {
 };
 
 void NiBinaryExtraData::SetData( const vector<byte> & n ) {
-	binaryData.dataSize = uint(n.size());
+	binaryData.dataSize = unsigned int(n.size());
 	binaryData.data = n;
 };

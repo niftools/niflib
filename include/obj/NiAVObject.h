@@ -35,10 +35,10 @@ private:
 	static const Type TYPE;
 public:
 	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	virtual list<NiObjectRef> GetRefs() const;
 
 	//TODO:  What to do with newer files that have a link for a bounding box?  Wrap this in a function and translate?
@@ -79,8 +79,8 @@ public:
 	vector< Ref<NiProperty> > GetProperties() const;
 	Ref<NiProperty> GetPropertyByType( const Type & compare_to );
 
-	ushort GetFlags() const;
-	void SetFlags( ushort n );
+	unsigned short GetFlags() const;
+	void SetFlags( unsigned short n );
 
 	Matrix33 GetLocalRotation() const;
 	void SetLocalRotation( const Matrix33 & n );
@@ -125,10 +125,10 @@ protected:
 	NiNode * parent;
 	NI_A_V_OBJECT_MEMBERS
 private:
-	void InternalRead( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version );
-	void InternalWrite( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const;
+	void InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	list<NiObjectRef> InternalGetRefs() const;
 };
 

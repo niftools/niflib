@@ -12,11 +12,11 @@ NiTextureEffect::NiTextureEffect() NI_TEXTURE_EFFECT_CONSTRUCT {}
 
 NiTextureEffect::~NiTextureEffect() {}
 
-void NiTextureEffect::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureEffect::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -24,7 +24,7 @@ string NiTextureEffect::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -68,19 +68,19 @@ void NiTextureEffect::SetTextureClamping( TexClampMode value ) {
 	textureClamping = value;
 }
 
-uint NiTextureEffect::GetTextureType() const {
+unsigned int NiTextureEffect::GetTextureType() const {
 	return textureType;
 }
 
-void NiTextureEffect::SetTextureType( uint value ) {
+void NiTextureEffect::SetTextureType( unsigned int value ) {
 	textureType = value;
 }
 
-uint NiTextureEffect::GetCoordinateGenerationType() const {
+unsigned int NiTextureEffect::GetCoordinateGenerationType() const {
 	return coordinateGenerationType;
 }
 
-void NiTextureEffect::SetCoordinateGenerationType( uint value ) {
+void NiTextureEffect::SetCoordinateGenerationType( unsigned int value ) {
 	coordinateGenerationType = value;
 }
 
@@ -100,19 +100,19 @@ void NiTextureEffect::SetClippingPlane( byte value ) {
 	clippingPlane = value;
 }
 
-ushort NiTextureEffect::GetPs2L() const {
+unsigned short NiTextureEffect::GetPs2L() const {
 	return ps2L;
 }
 
-void NiTextureEffect::SetPs2L( ushort value ) {
+void NiTextureEffect::SetPs2L( unsigned short value ) {
 	ps2L = value;
 }
 
-ushort NiTextureEffect::GetPs2K() const {
+unsigned short NiTextureEffect::GetPs2K() const {
 	return ps2K;
 }
 
-void NiTextureEffect::SetPs2K( ushort value ) {
+void NiTextureEffect::SetPs2K( unsigned short value ) {
 	ps2K = value;
 }
 

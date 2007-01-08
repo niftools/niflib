@@ -11,11 +11,11 @@ NiStringExtraData::NiStringExtraData() NI_STRING_EXTRA_DATA_CONSTRUCT {}
 
 NiStringExtraData::~NiStringExtraData() {}
 
-void NiStringExtraData::Read( istream& in, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringExtraData::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalRead( in, link_stack, version, user_version );
 }
 
-void NiStringExtraData::Write( ostream& out, const map<NiObjectRef,uint> & link_map, unsigned int version, unsigned int user_version ) const {
+void NiStringExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	InternalWrite( out, link_map, version, user_version );
 }
 
@@ -23,7 +23,7 @@ string NiStringExtraData::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiStringExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uint> & link_stack, unsigned int version, unsigned int user_version ) {
+void NiStringExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	InternalFixLinks( objects, link_stack, version, user_version );
 }
 
@@ -41,5 +41,5 @@ string NiStringExtraData::GetData() const {
 
 void NiStringExtraData::SetData( const string & n ) {
 	stringData = n;
-	bytesRemaining = uint(stringData.size()) + 4;
+	bytesRemaining = unsigned int(stringData.size()) + 4;
 }
