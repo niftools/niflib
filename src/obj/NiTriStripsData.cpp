@@ -188,7 +188,7 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
    numTriangles = 0;
 
    TriStrips strips;
-   vector<unsigned int> idcs(in.size()*3);
+   triangle_stripper::indices idcs(in.size()*3);
    size_t i, j;
    for (i=0; i<in.size(); i++)
    {
