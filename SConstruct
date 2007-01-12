@@ -1,4 +1,4 @@
-
+import commands
 import sys
 import os
 import time
@@ -9,52 +9,364 @@ Help("""
 'scons -c' to clean
 """)
 
-# detect platform
+##Global Vars, should add cc, cxx, build, etc eventually...
+##May want to turn Jobs down
+JOBS='4'
+DEBUG='yes'
+TUNE='yes'
+
+
+
+#Setting up a basic default environment
+#Theory is it can be expanded for versatility, like swig doesn't seem to like jobs of 4
+#env = Environment(ENV = os.environ)
+
+env = Environment(ENV = os.environ)
+env.SetOption('num_jobs', JOBS)
+#env.Append(CCFLAGS = ' -march=opteron -O2')
+if (DEBUG == 'yes'):
+   env.Append(CCFLAGS = ' -g3')
+
+
+#OLD detect platform
 if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    cppflags = '-fPIC -Wall'
+    #cppflags = '-fPIC -Wall -pipe'
+    env.Append(CCFLAGS = ' -fPIC -Wall -pipe')
 elif sys.platform == 'cygwin':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    cppflags = '-Wall'
+    env.Append(CCFLAGS = ' -Wall')
 elif sys.platform == 'win32':
     python_include = [sysconfig.get_python_inc()]
     python_libpath = [sysconfig.get_python_lib(1, 1) + '/../libs']
     python_lib = ['python24']
-    cppflags = '/EHsc /O2 /GS /Zi /TP'
+    env.Append(CCFLAGS = '/EHsc /O2 /GS /Zi /TP')
 else:
     print "Error: Platform %s not supported."%sys.platform
     Exit(1)
 
-env = Environment(ENV = os.environ)
+# Proc x86, x86_64, or what? Better way?
+#proc = commands.getoutput('uname -m')
+#if (proc == 'x86_64'):
+#  arch = 'x86_64'
+#elif exp.match(proc):
+#  arch = 'x86'
+#elif (proc == 'Power Macintosh' or proc == 'ppc'):
+#  arch = 'ppc'
+#else:
+#  arch = 'cpu'
+
+#if (arch == 'x86_64'):
+#   if (commands.getoutput('uname -i') == AuthenticAMD):
+#      if (TUNE == 'yes'):
+#      env.Append(CCFLAGS = ' -mtune=k8')
+
 
 # detect SWIG
-try:
-    env['SWIG']
-except KeyError:
-    print """
-Error: SWIG not found.
-Please install SWIG, it's needed to create the python wrapper.
-You can get it from http://www.swig.org/"""
-    if sys.platform == "win32": print "Also don't forget to add the SWIG directory to your %PATH%."
-    Exit(1)
+#try:
+#    env['SWIG']
+#except KeyError:
+#    print """
+#Error: SWIG not found.
+#Please install SWIG, it's needed to create the python wrapper.
+#You can get it from http://www.swig.org/"""
+#    if sys.platform == "win32": print "Also don't forget to add the SWIG #directory to your %PATH%."
+#    Exit(1)
 
-# build niflib and python wrapper
 
-objfiles = 'gen/ByteArray.cpp gen/Footer.cpp gen/LODRange.cpp gen/MatchGroup.cpp gen/MipMap.cpp gen/NodeGroup.cpp gen/QuaternionXYZW.cpp gen/ShortString.cpp gen/SkinShape.cpp gen/SkinShapeGroup.cpp gen/SkinWeight.cpp gen/AVObject.cpp gen/ControllerLink.cpp gen/Header.cpp gen/StringPalette.cpp gen/TBC.cpp gen/TexDesc.cpp gen/ShaderTexDesc.cpp gen/TexSource.cpp gen/SkinPartition.cpp gen/BoundingBox.cpp gen/FurniturePosition.cpp gen/hkTriangle.cpp gen/Morph.cpp gen/Particle.cpp gen/SkinData.cpp gen/RagDollDescriptor.cpp gen/LimitedHingeDescriptor.cpp obj/NiObject.cpp obj/AKeyedData.cpp obj/AParticleModifier.cpp obj/bhkRefObject.cpp obj/bhkSerializable.cpp obj/AbhkConstraint.cpp obj/AbhkRagdollConstraint.cpp obj/bhkShape.cpp obj/AbhkShapeCollection.cpp obj/bhkSphereRepShape.cpp obj/bhkConvexShape.cpp obj/bhkWorldObject.cpp obj/bhkEntity.cpp obj/NiCollisionObject.cpp obj/NiExtraData.cpp obj/NiInterpolator.cpp obj/NiBlendInterpolator.cpp obj/NiBSplineInterpolator.cpp obj/NiObjectNET.cpp obj/NiAVObject.cpp obj/NiDynamicEffect.cpp obj/NiLight.cpp obj/NiProperty.cpp obj/NiPSysModifier.cpp obj/NiPSysEmitter.cpp obj/NiPSysVolumeEmitter.cpp obj/NiTimeController.cpp obj/ABoneLODController.cpp obj/NiSingleInterpolatorController.cpp obj/APSysCtlr.cpp obj/NiTriBasedGeom.cpp obj/NiTriBasedGeomData.cpp obj/APSysData.cpp obj/bhkBlendCollisionObject.cpp obj/bhkBlendController.cpp obj/bhkBoxShape.cpp obj/bhkCapsuleShape.cpp obj/bhkCollisionObject.cpp obj/bhkConvexVerticesShape.cpp obj/bhkHingeConstraint.cpp obj/bhkLimitedHingeConstraint.cpp obj/bhkListShape.cpp obj/bhkMalleableConstraint.cpp obj/bhkMoppBvTreeShape.cpp obj/bhkMultiSphereShape.cpp obj/bhkNiTriStripsShape.cpp obj/bhkPackedNiTriStripsShape.cpp obj/bhkPrismaticConstraint.cpp obj/bhkRagdollConstraint.cpp obj/bhkRigidBody.cpp obj/bhkRigidBodyT.cpp obj/bhkSimpleShapePhantom.cpp obj/bhkSPCollisionObject.cpp obj/bhkSphereShape.cpp obj/bhkStiffSpringConstraint.cpp obj/bhkTransformShape.cpp obj/bhkConvexTransformShape.cpp obj/BSBound.cpp obj/BSFurnitureMarker.cpp obj/BSParentVelocityModifier.cpp obj/BSPSysArrayEmitter.cpp obj/BSXFlags.cpp obj/hkPackedNiTriStripsData.cpp obj/NiAlphaController.cpp obj/NiAlphaProperty.cpp obj/NiAmbientLight.cpp obj/NiAutoNormalParticlesData.cpp obj/NiBinaryExtraData.cpp obj/NiBlendBoolInterpolator.cpp obj/NiBlendFloatInterpolator.cpp obj/NiBlendPoint3Interpolator.cpp obj/NiBlendTransformInterpolator.cpp obj/NiBoneLODController.cpp obj/NiBoolData.cpp obj/NiBooleanExtraData.cpp obj/NiBoolInterpolator.cpp obj/NiBoolTimelineInterpolator.cpp obj/NiBSBoneLODController.cpp obj/NiBSplineBasisData.cpp obj/NiBSplineCompFloatInterpolator.cpp obj/NiBSplineCompPoint3Interpolator.cpp obj/NiBSplineCompTransformInterpolator.cpp obj/NiBSplineData.cpp obj/NiCamera.cpp obj/NiCollisionData.cpp obj/NiColorData.cpp obj/NiColorExtraData.cpp obj/NiControllerManager.cpp obj/NiControllerSequence.cpp obj/NiDefaultAVObjectPalette.cpp obj/NiDirectionalLight.cpp obj/NiDitherProperty.cpp obj/NiFlipController.cpp obj/NiFloatData.cpp obj/NiFloatExtraData.cpp obj/NiFloatExtraDataController.cpp obj/NiFloatInterpolator.cpp obj/NiFloatsExtraData.cpp obj/NiFogProperty.cpp obj/NiGeomMorpherController.cpp obj/NiGravity.cpp obj/NiIntegerExtraData.cpp obj/NiIntegersExtraData.cpp obj/NiKeyframeController.cpp obj/BSKeyframeController.cpp obj/NiKeyframeData.cpp obj/NiLightColorController.cpp obj/NiLightDimmerController.cpp obj/NiLookAtController.cpp obj/NiLookAtInterpolator.cpp obj/NiMaterialColorController.cpp obj/NiMaterialProperty.cpp obj/NiMeshPSysData.cpp obj/NiMorphData.cpp obj/NiMultiTargetTransformController.cpp obj/NiNode.cpp obj/AvoidNode.cpp obj/FxWidget.cpp obj/FxButton.cpp obj/FxRadioButton.cpp obj/NiBillboardNode.cpp obj/NiBSAnimationNode.cpp obj/NiBSParticleNode.cpp obj/NiLODNode.cpp obj/NiPalette.cpp obj/NiParticleBomb.cpp obj/NiParticleColorModifier.cpp obj/NiParticleGrowFade.cpp obj/NiParticleMeshModifier.cpp obj/NiParticleRotation.cpp obj/NiParticles.cpp obj/NiAutoNormalParticles.cpp obj/NiParticleMeshes.cpp obj/NiParticlesData.cpp obj/NiParticleMeshesData.cpp obj/NiParticleSystem.cpp obj/NiMeshParticleSystem.cpp obj/NiParticleSystemController.cpp obj/NiBSPArrayController.cpp obj/NiPathController.cpp obj/NiPathInterpolator.cpp obj/NiPixelData.cpp obj/NiPlanarCollider.cpp obj/NiPoint3Interpolator.cpp obj/NiPointLight.cpp obj/NiPosData.cpp obj/NiPSysAgeDeathModifier.cpp obj/NiPSysBombModifier.cpp obj/NiPSysBoundUpdateModifier.cpp obj/NiPSysBoxEmitter.cpp obj/NiPSysColliderManager.cpp obj/NiPSysColorModifier.cpp obj/NiPSysCylinderEmitter.cpp obj/NiPSysData.cpp obj/NiPSysDragModifier.cpp obj/NiPSysEmitterCtlr.cpp obj/NiPSysEmitterCtlrData.cpp obj/NiPSysEmitterDeclinationCtlr.cpp obj/NiPSysEmitterDeclinationVarCtlr.cpp obj/NiPSysEmitterInitialRadiusCtlr.cpp obj/NiPSysEmitterLifeSpanCtlr.cpp obj/NiPSysEmitterSpeedCtlr.cpp obj/NiPSysGravityModifier.cpp obj/NiPSysGravityStrengthCtlr.cpp obj/NiPSysGrowFadeModifier.cpp obj/NiPSysMeshEmitter.cpp obj/NiPSysMeshUpdateModifier.cpp obj/NiPSysModifierActiveCtlr.cpp obj/NiPSysPlanarCollider.cpp obj/NiPSysPositionModifier.cpp obj/NiPSysResetOnLoopCtlr.cpp obj/NiPSysRotationModifier.cpp obj/NiPSysSpawnModifier.cpp obj/NiPSysSphereEmitter.cpp obj/NiPSysUpdateCtlr.cpp obj/NiRangeLODData.cpp obj/NiRotatingParticles.cpp obj/NiRotatingParticlesData.cpp obj/NiScreenLODData.cpp obj/NiSequenceStreamHelper.cpp obj/NiShadeProperty.cpp obj/NiSkinData.cpp obj/NiSkinInstance.cpp obj/NiSkinPartition.cpp obj/NiSourceTexture.cpp obj/NiSpecularProperty.cpp obj/NiSphericalCollider.cpp obj/NiSpotLight.cpp obj/NiStencilProperty.cpp obj/NiStringExtraData.cpp obj/NiStringPalette.cpp obj/NiStringsExtraData.cpp obj/NiTextKeyExtraData.cpp obj/NiTextureEffect.cpp obj/NiTextureTransformController.cpp obj/NiTexturingProperty.cpp obj/NiTransformController.cpp obj/NiTransformData.cpp obj/NiTransformInterpolator.cpp obj/NiTriShape.cpp obj/NiTriShapeData.cpp obj/NiTriStrips.cpp obj/NiTriStripsData.cpp obj/NiUVController.cpp obj/NiUVData.cpp obj/NiVectorExtraData.cpp obj/NiVertexColorProperty.cpp obj/NiVertWeightsExtraData.cpp obj/NiVisController.cpp obj/NiVisData.cpp obj/NiWireframeProperty.cpp obj/NiZBufferProperty.cpp obj/RootCollisionNode.cpp '
 
-niflib = env.StaticLibrary('niflib', Split('niflib.cpp nif_math.cpp NIF_IO.cpp kfm.cpp Type.cpp gen/obj_factories.cpp ' + objfiles), CPPPATH = '.', CPPFLAGS = cppflags)
-nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
+
+gen_objfiles = Split("""
+src/gen/ByteArray.cpp
+src/gen/Footer.cpp
+src/gen/LODRange.cpp
+src/gen/MatchGroup.cpp
+src/gen/MipMap.cpp
+src/gen/NodeGroup.cpp
+src/gen/QuaternionXYZW.cpp
+src/gen/SkinShape.cpp
+src/gen/SkinShapeGroup.cpp
+src/gen/SkinWeight.cpp
+src/gen/AVObject.cpp
+src/gen/ControllerLink.cpp
+src/gen/Header.cpp
+src/gen/StringPalette.cpp
+src/gen/TBC.cpp
+src/gen/TexDesc.cpp
+src/gen/ShaderTexDesc.cpp
+src/gen/TexSource.cpp
+src/gen/SkinPartition.cpp
+src/gen/BoundingBox.cpp
+src/gen/FurniturePosition.cpp
+src/gen/hkTriangle.cpp
+src/gen/Morph.cpp
+src/gen/Particle.cpp
+src/gen/SkinData.cpp
+src/gen/RagDollDescriptor.cpp
+src/gen/LimitedHingeDescriptor.cpp
+src/gen/Sphere.cpp
+src/gen/enums.cpp
+src/gen/obj_impl.cpp""")
+
+obj_objfiles = Split("""
+src/obj/NiObject.cpp
+src/obj/AKeyedData.cpp
+src/obj/AParticleModifier.cpp
+src/obj/bhkRefObject.cpp
+src/obj/bhkSerializable.cpp
+src/obj/AbhkConstraint.cpp
+src/obj/AbhkRagdollConstraint.cpp
+src/obj/bhkShape.cpp
+src/obj/AbhkShapeCollection.cpp
+src/obj/bhkSphereRepShape.cpp
+src/obj/bhkConvexShape.cpp
+src/obj/bhkWorldObject.cpp
+src/obj/bhkEntity.cpp
+src/obj/NiCollisionObject.cpp
+src/obj/NiExtraData.cpp
+src/obj/NiInterpolator.cpp
+src/obj/NiBlendInterpolator.cpp
+src/obj/NiBSplineInterpolator.cpp
+src/obj/NiObjectNET.cpp
+src/obj/NiAVObject.cpp
+src/obj/NiDynamicEffect.cpp
+src/obj/NiLight.cpp
+src/obj/NiProperty.cpp
+src/obj/NiPSysModifier.cpp
+src/obj/NiPSysEmitter.cpp
+src/obj/NiPSysVolumeEmitter.cpp
+src/obj/NiTimeController.cpp
+src/obj/ABoneLODController.cpp
+src/obj/NiSingleInterpolatorController.cpp
+src/obj/APSysCtlr.cpp src/obj/NiTriBasedGeom.cpp
+src/obj/NiTriBasedGeomData.cpp
+src/obj/APSysData.cpp
+src/obj/bhkBlendCollisionObject.cpp
+src/obj/bhkBlendController.cpp
+src/obj/bhkBoxShape.cpp
+src/obj/bhkCapsuleShape.cpp
+src/obj/bhkCollisionObject.cpp
+src/obj/bhkConvexVerticesShape.cpp
+src/obj/bhkHingeConstraint.cpp
+src/obj/bhkLimitedHingeConstraint.cpp
+src/obj/bhkListShape.cpp
+src/obj/bhkMalleableConstraint.cpp
+src/obj/bhkMoppBvTreeShape.cpp
+src/obj/bhkMultiSphereShape.cpp
+src/obj/bhkNiTriStripsShape.cpp
+src/obj/bhkPackedNiTriStripsShape.cpp
+src/obj/bhkPrismaticConstraint.cpp
+src/obj/bhkRagdollConstraint.cpp
+src/obj/bhkRigidBody.cpp
+src/obj/bhkRigidBodyT.cpp
+src/obj/bhkSimpleShapePhantom.cpp
+src/obj/bhkSPCollisionObject.cpp
+src/obj/bhkSphereShape.cpp
+src/obj/bhkStiffSpringConstraint.cpp
+src/obj/bhkTransformShape.cpp
+src/obj/bhkConvexTransformShape.cpp
+src/obj/BSBound.cpp
+src/obj/BSFurnitureMarker.cpp
+src/obj/BSParentVelocityModifier.cpp
+src/obj/BSPSysArrayEmitter.cpp
+src/obj/BSXFlags.cpp
+src/obj/hkPackedNiTriStripsData.cpp
+src/obj/NiAlphaController.cpp
+src/obj/NiAlphaProperty.cpp
+src/obj/NiAmbientLight.cpp
+src/obj/NiAutoNormalParticlesData.cpp
+src/obj/NiBinaryExtraData.cpp
+src/obj/NiBlendBoolInterpolator.cpp
+src/obj/NiBlendFloatInterpolator.cpp
+src/obj/NiBlendPoint3Interpolator.cpp
+src/obj/NiBlendTransformInterpolator.cpp
+src/obj/NiBoneLODController.cpp
+src/obj/NiBoolData.cpp
+src/obj/NiBooleanExtraData.cpp
+src/obj/NiBoolInterpolator.cpp
+src/obj/NiBoolTimelineInterpolator.cpp
+src/obj/NiBSBoneLODController.cpp
+src/obj/NiBSplineBasisData.cpp
+src/obj/NiBSplineCompFloatInterpolator.cpp
+src/obj/NiBSplineCompPoint3Interpolator.cpp
+src/obj/NiBSplineCompTransformInterpolator.cpp
+src/obj/NiBSplineData.cpp
+src/obj/NiCamera.cpp src/obj/NiCollisionData.cpp
+src/obj/NiColorData.cpp
+src/obj/NiColorExtraData.cpp
+src/obj/NiControllerManager.cpp
+src/obj/NiControllerSequence.cpp
+src/obj/NiDefaultAVObjectPalette.cpp
+src/obj/NiDirectionalLight.cpp
+src/obj/NiDitherProperty.cpp
+src/obj/NiFlipController.cpp
+src/obj/NiFloatData.cpp
+src/obj/NiFloatExtraData.cpp
+src/obj/NiFloatExtraDataController.cpp
+src/obj/NiFloatInterpolator.cpp
+src/obj/NiFloatsExtraData.cpp
+src/obj/NiFogProperty.cpp
+src/obj/NiGeomMorpherController.cpp
+src/obj/NiGravity.cpp
+src/obj/NiIntegerExtraData.cpp
+src/obj/NiIntegersExtraData.cpp
+src/obj/NiKeyframeController.cpp
+src/obj/BSKeyframeController.cpp
+src/obj/NiKeyframeData.cpp
+src/obj/NiLightColorController.cpp
+src/obj/NiLightDimmerController.cpp
+src/obj/NiLookAtController.cpp
+src/obj/NiLookAtInterpolator.cpp
+src/obj/NiMaterialColorController.cpp
+src/obj/NiMaterialProperty.cpp
+src/obj/NiMeshPSysData.cpp
+src/obj/NiMorphData.cpp
+src/obj/NiMultiTargetTransformController.cpp
+src/obj/NiNode.cpp
+src/obj/AvoidNode.cpp
+src/obj/FxWidget.cpp
+src/obj/FxButton.cpp
+src/obj/FxRadioButton.cpp
+src/obj/NiBillboardNode.cpp
+src/obj/NiBSAnimationNode.cpp
+src/obj/NiBSParticleNode.cpp
+src/obj/NiLODNode.cpp
+src/obj/NiPalette.cpp
+src/obj/NiParticleBomb.cpp
+src/obj/NiParticleColorModifier.cpp
+src/obj/NiParticleGrowFade.cpp
+src/obj/NiParticleMeshModifier.cpp
+src/obj/NiParticleRotation.cpp
+src/obj/NiParticles.cpp
+src/obj/NiAutoNormalParticles.cpp
+src/obj/NiParticleMeshes.cpp
+src/obj/NiParticlesData.cpp
+src/obj/NiParticleMeshesData.cpp
+src/obj/NiParticleSystem.cpp
+src/obj/NiMeshParticleSystem.cpp
+src/obj/NiParticleSystemController.cpp
+src/obj/NiBSPArrayController.cpp
+src/obj/NiPathController.cpp
+src/obj/NiPathInterpolator.cpp
+src/obj/NiPixelData.cpp
+src/obj/NiPlanarCollider.cpp
+src/obj/NiPoint3Interpolator.cpp
+src/obj/NiPointLight.cpp
+src/obj/NiPosData.cpp
+src/obj/NiPSysAgeDeathModifier.cpp
+src/obj/NiPSysBombModifier.cpp
+src/obj/NiPSysBoundUpdateModifier.cpp
+src/obj/NiPSysBoxEmitter.cpp
+src/obj/NiPSysColliderManager.cpp
+src/obj/NiPSysColorModifier.cpp
+src/obj/NiPSysCylinderEmitter.cpp
+src/obj/NiPSysData.cpp
+src/obj/NiPSysDragModifier.cpp
+src/obj/NiPSysEmitterCtlr.cpp
+src/obj/NiPSysEmitterCtlrData.cpp
+src/obj/NiPSysEmitterDeclinationCtlr.cpp
+src/obj/NiPSysEmitterDeclinationVarCtlr.cpp
+src/obj/NiPSysEmitterInitialRadiusCtlr.cpp
+src/obj/NiPSysEmitterLifeSpanCtlr.cpp
+src/obj/NiPSysEmitterSpeedCtlr.cpp
+src/obj/NiPSysGravityModifier.cpp
+src/obj/NiPSysGravityStrengthCtlr.cpp
+src/obj/NiPSysGrowFadeModifier.cpp
+src/obj/NiPSysMeshEmitter.cpp
+src/obj/NiPSysMeshUpdateModifier.cpp
+src/obj/NiPSysModifierActiveCtlr.cpp
+src/obj/NiPSysPlanarCollider.cpp
+src/obj/NiPSysPositionModifier.cpp
+src/obj/NiPSysResetOnLoopCtlr.cpp
+src/obj/NiPSysRotationModifier.cpp
+src/obj/NiPSysSpawnModifier.cpp
+src/obj/NiPSysSphereEmitter.cpp
+src/obj/NiPSysUpdateCtlr.cpp
+src/obj/NiRangeLODData.cpp
+src/obj/NiRotatingParticles.cpp
+src/obj/NiRotatingParticlesData.cpp
+src/obj/NiScreenLODData.cpp
+src/obj/NiSequenceStreamHelper.cpp
+src/obj/NiShadeProperty.cpp
+src/obj/NiSkinData.cpp
+src/obj/NiSkinInstance.cpp
+src/obj/NiSkinPartition.cpp
+src/obj/NiSourceTexture.cpp
+src/obj/NiSpecularProperty.cpp
+src/obj/NiSphericalCollider.cpp
+src/obj/NiSpotLight.cpp
+src/obj/NiStencilProperty.cpp
+src/obj/NiStringExtraData.cpp
+src/obj/NiStringPalette.cpp
+src/obj/NiStringsExtraData.cpp
+src/obj/NiTextKeyExtraData.cpp
+src/obj/NiTextureEffect.cpp
+src/obj/NiTextureTransformController.cpp
+src/obj/NiTexturingProperty.cpp
+src/obj/NiTransformController.cpp
+src/obj/NiTransformData.cpp
+src/obj/NiTransformInterpolator.cpp
+src/obj/NiTriShape.cpp
+src/obj/NiTriShapeData.cpp
+src/obj/NiTriStrips.cpp
+src/obj/NiTriStripsData.cpp
+src/obj/NiUVController.cpp
+src/obj/NiUVData.cpp
+src/obj/NiVectorExtraData.cpp
+src/obj/NiVertexColorProperty.cpp
+src/obj/NiVertWeightsExtraData.cpp
+src/obj/NiVisController.cpp
+src/obj/NiVisData.cpp
+src/obj/NiWireframeProperty.cpp
+src/obj/NiZBufferProperty.cpp
+src/obj/RootCollisionNode.cpp
+src/obj/NiClod.cpp
+src/obj/NiClodData.cpp
+src/obj/NiClodSkinInstance.cpp
+""")
+
+core_objfiles = Split("""
+src/ComplexShape.cpp
+src/niflib.cpp
+src/nif_math.cpp
+src/NIF_IO.cpp
+src/kfm.cpp
+src/Type.cpp
+src/gen/obj_factories.cpp
+""")
+
+TriStripper_files = Split("""
+TriStripper/connectivity_graph.cpp
+TriStripper/policy.cpp
+TriStripper/tri_stripper.cpp
+""")
+
+NvTriStrip_files = Split("""
+NvTriStrip/NvTriStrip.cpp
+NvTriStrip/NvTriStripObjects.cpp
+NvTriStrip/VertexCache.cpp
+""")
+
+print "Building: NvTriStriplib"
+NvTriStriplib = env.StaticLibrary('NvTriStriplib', NvTriStrip_files, CPPPATH = '.')
+print "Building: TriStripperlib"
+TriStripperlib = env.StaticLibrary('TriStripperlib', TriStripper_files, CPPPATH = '.')
+
+niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles], LIBPATH=['.'], LIBS=['TriStripperlib', 'NvTriStriplib'], CPPPATH = '.')
+
+
+
+#nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
 # makes sure niflib.lib is built before trying to build _niflib.dll
-env.Depends(nifshlib, niflib)
+#env.Depends(nifshlib, niflib)
 
 
 # Here's how to compile niflyze:
 #env.Program('niflyze', 'niflyze.cpp', LIBS=['niflib'], LIBPATH=['.'], CPPFLAGS = cppflags)
 
 # A test program:
-#env.Program('test', 'test.cpp', LIBS=['niflib'], LIBPATH=['.'], CPPFLAGS = cppflags)
-
+#env.Program('test', 'test.cpp', LIBS=['niflib'], LIBPATH=['.'], CPPFLAGS = cppflags) 
