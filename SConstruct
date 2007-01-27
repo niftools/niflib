@@ -10,11 +10,12 @@ Help("""
 """)
 
 ##Global Vars, should add cc, cxx, build, etc eventually...
-##May want to turn Jobs down
-JOBS='4'
-DEBUG='yes'
-TUNE='yes'
-
+##May want to turn Jobs down, we will try and detect an appropriate JOB rate for linux
+JOBS ='1'
+DETECT_JOBS = 'yes'  #Set this to no, if you are setting JOBS!!
+DEBUG ='no'
+TUNE ='yes'
+CFFLAGS_EXTRA_WARNING ='no'
 
 
 #Setting up a basic default environment
@@ -22,19 +23,17 @@ TUNE='yes'
 #env = Environment(ENV = os.environ)
 
 env = Environment(ENV = os.environ)
-env.SetOption('num_jobs', JOBS)
+
 #env.Append(CCFLAGS = ' -march=opteron -O2')
-if (DEBUG == 'yes'):
-   env.Append(CCFLAGS = ' -g3')
 
 
 #OLD detect platform
 if sys.platform == 'linux2' or sys.platform == 'linux-i386':
+    OS = 'linux'
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    #cppflags = '-fPIC -Wall -pipe'
-    env.Append(CCFLAGS = ' -fPIC -Wall -pipe')
+    env.Append(CCFLAGS = ' -Iinclude -fPIC -Wall -pipe')
 elif sys.platform == 'cygwin':
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
@@ -49,21 +48,55 @@ else:
     print "Error: Platform %s not supported."%sys.platform
     Exit(1)
 
-# Proc x86, x86_64, or what? Better way?
-#proc = commands.getoutput('uname -m')
-#if (proc == 'x86_64'):
-#  arch = 'x86_64'
-#elif exp.match(proc):
-#  arch = 'x86'
-#elif (proc == 'Power Macintosh' or proc == 'ppc'):
-#  arch = 'ppc'
-#else:
-#  arch = 'cpu'
 
-#if (arch == 'x86_64'):
-#   if (commands.getoutput('uname -i') == AuthenticAMD):
-#      if (TUNE == 'yes'):
-#      env.Append(CCFLAGS = ' -mtune=k8')
+
+#Debug, Extra, 02 checks
+if (sys.platform == 'linux2' or sys.platform == 'linux-i386') or sys.platform == 'cygwin':
+    if DEBUG == 'yes':
+         env.Append(CCFLAGS = ' -g3')
+    if CFFLAGS_EXTRA_WARNING == 'yes':
+         env.Append(CCFLAGS = ' -Wextra')
+    if TUNE == 'yes':
+       env.Append(CCFLAGS = ' -O2')
+    if TUNE == 'yes' and DEBUG == 'yes' :
+	print "TUNE and DEBUG may conflict!!"
+
+
+
+# Proc x86, x86_64, or what? Better way?
+proc = commands.getoutput('uname -m')
+if proc == 'x86_64':
+  arch = 'x86_64'
+elif exp.match(proc):
+  arch = 'x86'
+elif proc == 'Power Macintosh' or proc == 'ppc':
+  arch = 'ppc'
+else:
+  arch = 'cpu'
+
+#This is ugly, needs to be cleaned up and expanded to include Intel.
+#
+if arch == 'x86_64' and TUNE == 'yes':
+   if commands.getoutput('uname -i') == 'AuthenticAMD':
+      env.Append(CCFLAGS = ' -mtune=k8')
+#   if commands.getoutput('uname -i') == 'GenuineIntel':
+#	env.Append(CCFLAGS = ' -mtune=nocona')
+#Should cover 64 bit versions of Intel chips, but don't have one and never bothered to look into it
+
+
+
+#We want to detect the number of jobs! Although some folks depending on sys load may want to set it more aggressively.
+if DETECT_JOBS == 'yes' and OS == 'linux':
+	detected_jobs = commands.getoutput('cat /proc/cpuinfo | grep -c processor')
+	if detected_jobs >= '2' :
+		print "Detected Jobs: %s"%detected_jobs
+		JOBS = detected_jobs
+		print "Detected Jobs changing to %s"%JOBS
+	else
+		print "Error Detecting jobs!"
+
+
+env.SetOption('num_jobs', JOBS)
 
 
 # detect SWIG
@@ -76,8 +109,6 @@ else:
 #You can get it from http://www.swig.org/"""
 #    if sys.platform == "win32": print "Also don't forget to add the SWIG #directory to your %PATH%."
 #    Exit(1)
-
-
 
 
 gen_objfiles = Split("""
@@ -110,7 +141,10 @@ src/gen/RagDollDescriptor.cpp
 src/gen/LimitedHingeDescriptor.cpp
 src/gen/Sphere.cpp
 src/gen/enums.cpp
-src/gen/obj_impl.cpp""")
+src/gen/obj_impl.cpp
+src/gen/OblivionColFilter.cpp
+src/gen/OblivionSubShape.cpp
+""")
 
 obj_objfiles = Split("""
 src/obj/NiObject.cpp
@@ -327,6 +361,12 @@ src/obj/RootCollisionNode.cpp
 src/obj/NiClod.cpp
 src/obj/NiClodData.cpp
 src/obj/NiClodSkinInstance.cpp
+src/obj/NiGeometry.cpp
+src/obj/NiTextureModeProperty.cpp
+src/obj/NiLODData.cpp
+src/obj/NiGeometryData.cpp
+src/obj/NiTextureProperty.cpp
+src/obj/NiImage.cpp
 """)
 
 core_objfiles = Split("""
@@ -351,15 +391,14 @@ NvTriStrip/NvTriStripObjects.cpp
 NvTriStrip/VertexCache.cpp
 """)
 
-print "Building: NvTriStriplib"
-NvTriStriplib = env.StaticLibrary('NvTriStriplib', NvTriStrip_files, CPPPATH = '.')
-print "Building: TriStripperlib"
-TriStripperlib = env.StaticLibrary('TriStripperlib', TriStripper_files, CPPPATH = '.')
+nif_converter = Split("""
+blender/blender_niflib.cpp
+""")
 
-niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles], LIBPATH=['.'], LIBS=['TriStripperlib', 'NvTriStriplib'], CPPPATH = '.')
-
+niflib = env.SharedLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files], LIBPATH=['.'], CPPPATH = '.')
 
 
+##
 #nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
 # makes sure niflib.lib is built before trying to build _niflib.dll
 #env.Depends(nifshlib, niflib)
