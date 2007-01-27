@@ -24,8 +24,6 @@ CFFLAGS_EXTRA_WARNING ='no'
 
 env = Environment(ENV = os.environ)
 
-#env.Append(CCFLAGS = ' -march=opteron -O2')
-
 
 #OLD detect platform
 if sys.platform == 'linux2' or sys.platform == 'linux-i386':
@@ -92,7 +90,7 @@ if DETECT_JOBS == 'yes' and OS == 'linux':
 		print "Detected Jobs: %s"%detected_jobs
 		JOBS = detected_jobs
 		print "Detected Jobs changing to %s"%JOBS
-	else
+	else :
 		print "Error Detecting jobs!"
 
 
