@@ -344,7 +344,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(vector_Triangle) std::vector<Niflib::Triangle>;
 %template(vector_Vector3) std::vector<Niflib::Vector3>;
 %template(vector_SkinWeight) std::vector<Niflib::SkinWeight>;
-%template(vector_uint) std::vector<Niflib::uint>;
+%template(vector_uint) std::vector<unsigned int>;
 %template(vector_NodeGroup) std::vector<Niflib::NodeGroup>;
 %template(vector_Color4) std::vector<Niflib::Color4>;
 %template(vector_float) std::vector<float>;
