@@ -89,11 +89,11 @@ if arch == 'x86_64' and TUNE == 'yes':
 #We want to detect the number of jobs! Although some folks depending on sys load may want to set it more aggressively.
 if DETECT_JOBS == 'yes' and OS == 'linux':
 	detected_jobs = commands.getoutput('cat /proc/cpuinfo | grep -c processor')
-	if detected_jobs >= '2' :
+	if detected_jobs >= '1':
 		print "Detected Jobs: %s"%detected_jobs
 		JOBS = detected_jobs
 		print "Detected Jobs changing to %s"%JOBS
-	else :
+	else:
 		print "Error Detecting jobs!"
 
 
@@ -400,13 +400,13 @@ niflib = env.SharedLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles,
 
 
 ##
-#nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, CPPFLAGS = cppflags, SHLIBPREFIX='')
+nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
 # makes sure niflib.lib is built before trying to build _niflib.dll
-#env.Depends(nifshlib, niflib)
+env.Depends(nifshlib, niflib)
 
 
 # Here's how to compile niflyze:
-#env.Program('niflyze', 'niflyze.cpp', LIBS=['niflib'], LIBPATH=['.'], CPPFLAGS = cppflags)
+#env.Program('niflyze', 'niflyze.cpp', LIBS=['niflib'], LIBPATH=['.'])
 
 # A test program:
-#env.Program('test', 'test.cpp', LIBS=['niflib'], LIBPATH=['.'], CPPFLAGS = cppflags) 
+#env.Program('test', 'test.cpp', LIBS=['niflib'], LIBPATH=['.']) 
