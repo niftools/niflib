@@ -33,11 +33,13 @@ if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_include = [sysconfig.get_python_inc ()]
     env.Append(CCFLAGS = ' -Iinclude -fPIC -Wall -pipe')
 elif sys.platform == 'cygwin':
+    OS = 'linux' # not tested
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
     env.Append(CCFLAGS = ' -Wall')
 elif sys.platform == 'win32':
+    OS = 'windows'
     python_include = [sysconfig.get_python_inc()]
     python_libpath = [sysconfig.get_python_lib(1, 1) + '/../libs']
     python_lib = ['python24']
@@ -65,7 +67,8 @@ if (sys.platform == 'linux2' or sys.platform == 'linux-i386') or sys.platform ==
 proc = commands.getoutput('uname -m')
 if proc == 'x86_64':
   arch = 'x86_64'
-elif exp.match(proc):
+#elif exp.match(proc): # broken
+elif proc == 'x86':
   arch = 'x86'
 elif proc == 'Power Macintosh' or proc == 'ppc':
   arch = 'ppc'
