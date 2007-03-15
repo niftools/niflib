@@ -34,7 +34,7 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE. */
 
-%module new_niflib
+%module niflib
 %include "stl.i"
 %include "std_map.i"
 %include "exception.i"
@@ -71,16 +71,275 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 //Do not use smart pointer support as it doubles the size of the library
 //and makes it take twice as long to be imported
-%ignore Niflib::Ref::operator->;
-%ignore Niflib::Ref::operator=;
+//%ignore Niflib::Ref::operator->;
+//%ignore Niflib::Ref::operator=;
 
 // At the moment, let us ignore some common functions that not really
 // essential for NIF exporting and importing scripts.
 // This will reduce the size of the wrapper file.
+
+// various function ignores (might be put pack in final version)
 %ignore asString;
 %ignore FixLinks;
 %ignore Read;
 %ignore Write;
+%ignore operator=;
+%ignore TypeConst;
+%ignore GetIDString;
+%ignore IsSameType;
+%ignore IsDerivedType;
+%ignore NumObjectsInMemory;
+
+// vector ignores (will be unignored again once wrapper is functional)
+%ignore iterator;
+%ignore pop;
+%ignore append;
+%ignore empty;
+%ignore size;
+%ignore clear;
+%ignore swap;
+%ignore get_allocator;
+%ignore begin;
+%ignore end;
+%ignore rbegin;
+%ignore rend;
+%ignore pop_back;
+%ignore erase;
+%ignore push_back;
+%ignore front;
+%ignore back;
+%ignore assign;
+%ignore resize;
+%ignore insert;
+%ignore reserve;
+%ignore capacity;
+
+// ignores objects python does not need to know of anyway
+%ignore Ptr;
+
+// ignore all base objects: we only need access via the Ref objects
+%ignore NiObject;
+%ignore AKeyedData;
+%ignore AParticleModifier;
+%ignore bhkRefObject;
+%ignore bhkSerializable;
+%ignore AbhkConstraint;
+%ignore AbhkRagdollConstraint;
+%ignore bhkShape;
+%ignore AbhkShapeCollection;
+%ignore bhkSphereRepShape;
+%ignore bhkConvexShape;
+%ignore bhkWorldObject;
+%ignore bhkEntity;
+%ignore NiCollisionObject;
+%ignore NiExtraData;
+%ignore NiInterpolator;
+%ignore NiBlendInterpolator;
+%ignore NiBSplineInterpolator;
+%ignore NiObjectNET;
+%ignore NiAVObject;
+%ignore NiDynamicEffect;
+%ignore NiLight;
+%ignore NiProperty;
+%ignore NiPSysModifier;
+%ignore NiPSysEmitter;
+%ignore NiPSysVolumeEmitter;
+%ignore NiTimeController;
+%ignore ABoneLODController;
+%ignore NiSingleInterpolatorController;
+%ignore APSysCtlr;
+%ignore NiGeometry;
+%ignore NiTriBasedGeom;
+%ignore NiGeometryData;
+%ignore NiTriBasedGeomData;
+%ignore APSysData;
+%ignore bhkBlendCollisionObject;
+%ignore bhkBlendController;
+%ignore bhkBoxShape;
+%ignore bhkCapsuleShape;
+%ignore bhkCollisionObject;
+%ignore bhkConvexVerticesShape;
+%ignore bhkHingeConstraint;
+%ignore bhkLimitedHingeConstraint;
+%ignore bhkListShape;
+%ignore bhkMalleableConstraint;
+%ignore bhkMoppBvTreeShape;
+%ignore bhkMultiSphereShape;
+%ignore bhkNiTriStripsShape;
+%ignore bhkPackedNiTriStripsShape;
+%ignore bhkPrismaticConstraint;
+%ignore bhkRagdollConstraint;
+%ignore bhkRigidBody;
+%ignore bhkRigidBodyT;
+%ignore bhkSimpleShapePhantom;
+%ignore bhkSPCollisionObject;
+%ignore bhkSphereShape;
+%ignore bhkStiffSpringConstraint;
+%ignore bhkTransformShape;
+%ignore bhkConvexTransformShape;
+%ignore BSBound;
+%ignore BSFurnitureMarker;
+%ignore BSParentVelocityModifier;
+%ignore BSPSysArrayEmitter;
+%ignore BSXFlags;
+%ignore hkPackedNiTriStripsData;
+%ignore NiAlphaController;
+%ignore NiAlphaProperty;
+%ignore NiAmbientLight;
+%ignore NiAutoNormalParticlesData;
+%ignore NiBinaryExtraData;
+%ignore NiBlendBoolInterpolator;
+%ignore NiBlendFloatInterpolator;
+%ignore NiBlendPoint3Interpolator;
+%ignore NiBlendTransformInterpolator;
+%ignore NiBoneLODController;
+%ignore NiBoolData;
+%ignore NiBooleanExtraData;
+%ignore NiBoolInterpolator;
+%ignore NiBoolTimelineInterpolator;
+%ignore NiBSBoneLODController;
+%ignore NiBSplineBasisData;
+%ignore NiBSplineCompFloatInterpolator;
+%ignore NiBSplineCompPoint3Interpolator;
+%ignore NiBSplineCompTransformInterpolator;
+%ignore NiBSplineData;
+%ignore NiCamera;
+%ignore NiCollisionData;
+%ignore NiColorData;
+%ignore NiColorExtraData;
+%ignore NiControllerManager;
+%ignore NiControllerSequence;
+%ignore NiDefaultAVObjectPalette;
+%ignore NiDirectionalLight;
+%ignore NiDitherProperty;
+%ignore NiFlipController;
+%ignore NiFloatData;
+%ignore NiFloatExtraData;
+%ignore NiFloatExtraDataController;
+%ignore NiFloatInterpolator;
+%ignore NiFloatsExtraData;
+%ignore NiFogProperty;
+%ignore NiGeomMorpherController;
+%ignore NiGravity;
+%ignore NiIntegerExtraData;
+%ignore NiIntegersExtraData;
+%ignore NiKeyframeController;
+%ignore BSKeyframeController;
+%ignore NiKeyframeData;
+%ignore NiLightColorController;
+%ignore NiLightDimmerController;
+%ignore NiLookAtController;
+%ignore NiLookAtInterpolator;
+%ignore NiMaterialColorController;
+%ignore NiMaterialProperty;
+%ignore NiMeshPSysData;
+%ignore NiMorphData;
+%ignore NiMultiTargetTransformController;
+%ignore NiNode;
+%ignore AvoidNode;
+%ignore FxWidget;
+%ignore FxButton;
+%ignore FxRadioButton;
+%ignore NiBillboardNode;
+%ignore NiBSAnimationNode;
+%ignore NiBSParticleNode;
+%ignore NiLODNode;
+%ignore NiPalette;
+%ignore NiParticleBomb;
+%ignore NiParticleColorModifier;
+%ignore NiParticleGrowFade;
+%ignore NiParticleMeshModifier;
+%ignore NiParticleRotation;
+%ignore NiParticles;
+%ignore NiAutoNormalParticles;
+%ignore NiParticleMeshes;
+%ignore NiParticlesData;
+%ignore NiParticleMeshesData;
+%ignore NiParticleSystem;
+%ignore NiMeshParticleSystem;
+%ignore NiParticleSystemController;
+%ignore NiBSPArrayController;
+%ignore NiPathController;
+%ignore NiPathInterpolator;
+%ignore NiPixelData;
+%ignore NiPlanarCollider;
+%ignore NiPoint3Interpolator;
+%ignore NiPointLight;
+%ignore NiPosData;
+%ignore NiPSysAgeDeathModifier;
+%ignore NiPSysBombModifier;
+%ignore NiPSysBoundUpdateModifier;
+%ignore NiPSysBoxEmitter;
+%ignore NiPSysColliderManager;
+%ignore NiPSysColorModifier;
+%ignore NiPSysCylinderEmitter;
+%ignore NiPSysData;
+%ignore NiPSysDragModifier;
+%ignore NiPSysEmitterCtlr;
+%ignore NiPSysEmitterCtlrData;
+%ignore NiPSysEmitterDeclinationCtlr;
+%ignore NiPSysEmitterDeclinationVarCtlr;
+%ignore NiPSysEmitterInitialRadiusCtlr;
+%ignore NiPSysEmitterLifeSpanCtlr;
+%ignore NiPSysEmitterSpeedCtlr;
+%ignore NiPSysGravityModifier;
+%ignore NiPSysGravityStrengthCtlr;
+%ignore NiPSysGrowFadeModifier;
+%ignore NiPSysMeshEmitter;
+%ignore NiPSysMeshUpdateModifier;
+%ignore NiPSysModifierActiveCtlr;
+%ignore NiPSysPlanarCollider;
+%ignore NiPSysPositionModifier;
+%ignore NiPSysResetOnLoopCtlr;
+%ignore NiPSysRotationModifier;
+%ignore NiPSysSpawnModifier;
+%ignore NiPSysSphereEmitter;
+%ignore NiPSysUpdateCtlr;
+%ignore NiLODData;
+%ignore NiRangeLODData;
+%ignore NiScreenLODData;
+%ignore NiRotatingParticles;
+%ignore NiRotatingParticlesData;
+%ignore NiSequenceStreamHelper;
+%ignore NiShadeProperty;
+%ignore NiSkinData;
+%ignore NiSkinInstance;
+%ignore NiClodSkinInstance;
+%ignore NiSkinPartition;
+%ignore NiSourceTexture;
+%ignore NiSpecularProperty;
+%ignore NiSphericalCollider;
+%ignore NiSpotLight;
+%ignore NiStencilProperty;
+%ignore NiStringExtraData;
+%ignore NiStringPalette;
+%ignore NiStringsExtraData;
+%ignore NiTextKeyExtraData;
+%ignore NiTextureEffect;
+%ignore NiTextureTransformController;
+%ignore NiTextureModeProperty;
+%ignore NiImage;
+%ignore NiTextureProperty;
+%ignore NiTexturingProperty;
+%ignore NiTransformController;
+%ignore NiTransformData;
+%ignore NiTransformInterpolator;
+%ignore NiTriShape;
+%ignore NiTriShapeData;
+%ignore NiTriStrips;
+%ignore NiTriStripsData;
+%ignore NiClod;
+%ignore NiClodData;
+%ignore NiUVController;
+%ignore NiUVData;
+%ignore NiVectorExtraData;
+%ignore NiVertexColorProperty;
+%ignore NiVertWeightsExtraData;
+%ignore NiVisController;
+%ignore NiVisData;
+%ignore NiWireframeProperty;
+%ignore NiZBufferProperty;
+%ignore RootCollisionNode;
 
 //Import the symbols from these but do not include them in the wrapper
 %import "include/gen/obj_defines.h"
@@ -344,6 +603,13 @@ POSSIBILITY OF SUCH DAMAGE. */
 		#include "include/gen/RagDollDescriptor.h"
 		#include "include/gen/LimitedHingeDescriptor.h"
 	using namespace Niflib;
+
+%}
+
+// python specific extensions
+%include "include/python.h"
+%{
+#include "include/python.h"
 %}
 
 %template(vector_byte) std::vector<Niflib::byte>;
@@ -386,6 +652,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiObjectRef) Niflib::Ref<Niflib::NiObject>;
 %template(DynamicCastToNiObject) Niflib::DynamicCast<Niflib::NiObject>;
 %template(StaticCastToNiObject) Niflib::StaticCast<Niflib::NiObject>;
+/*
 %include "include/obj/AKeyedData.h"
 %template(AKeyedDataRef) Niflib::Ref<Niflib::AKeyedData>;
 %template(DynamicCastToAKeyedData) Niflib::DynamicCast<Niflib::AKeyedData>;
@@ -850,10 +1117,12 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiMultiTargetTransformControllerRef) Niflib::Ref<Niflib::NiMultiTargetTransformController>;
 %template(DynamicCastToNiMultiTargetTransformController) Niflib::DynamicCast<Niflib::NiMultiTargetTransformController>;
 %template(StaticCastToNiMultiTargetTransformController) Niflib::StaticCast<Niflib::NiMultiTargetTransformController>;
+*/
 %include "include/obj/NiNode.h"
 %template(NiNodeRef) Niflib::Ref<Niflib::NiNode>;
 %template(DynamicCastToNiNode) Niflib::DynamicCast<Niflib::NiNode>;
 %template(StaticCastToNiNode) Niflib::StaticCast<Niflib::NiNode>;
+/*
 %include "include/obj/AvoidNode.h"
 %template(AvoidNodeRef) Niflib::Ref<Niflib::AvoidNode>;
 %template(DynamicCastToAvoidNode) Niflib::DynamicCast<Niflib::AvoidNode>;
@@ -1270,6 +1539,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(RootCollisionNodeRef) Niflib::Ref<Niflib::RootCollisionNode>;
 %template(DynamicCastToRootCollisionNode) Niflib::DynamicCast<Niflib::RootCollisionNode>;
 %template(StaticCastToRootCollisionNode) Niflib::StaticCast<Niflib::RootCollisionNode>;
+*/
 %include "include/gen/ByteArray.h"
 %include "include/gen/Footer.h"
 %include "include/gen/LODRange.h"

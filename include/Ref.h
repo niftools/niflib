@@ -50,8 +50,8 @@ public:
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
 	operator T*() const;
-	T* operator->() const;
 #endif
+	T* operator->() const;
 
 protected:
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
