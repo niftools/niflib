@@ -51,6 +51,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %typemap(out) std::string* "$result = PyString_FromStringAndSize($1->data(), $1->length());";
 
 // we need a version of SWIG that has SWIG_CATCH_STDEXCEPT support
+/** turned off at the moment to reduce size of wrapper file
 #if SWIG_VERSION >= 0x010322
 %exception {
   try {
@@ -62,6 +63,7 @@ POSSIBILITY OF SUCH DAMAGE. */
   }
 }
 #endif
+*/
 
 //Ignore the const versions of these functions
 %ignore DynamicCast( const NiObject * object );
@@ -71,6 +73,14 @@ POSSIBILITY OF SUCH DAMAGE. */
 //and makes it take twice as long to be imported
 %ignore Niflib::Ref::operator->;
 %ignore Niflib::Ref::operator=;
+
+// At the moment, let us ignore some common functions that not really
+// essential for NIF exporting and importing scripts.
+// This will reduce the size of the wrapper file.
+%ignore asString;
+%ignore FixLinks;
+%ignore Read;
+%ignore Write;
 
 //Import the symbols from these but do not include them in the wrapper
 %import "include/gen/obj_defines.h"
