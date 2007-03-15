@@ -16,16 +16,15 @@ DETECT_JOBS = 'yes'  #Set this to no, if you are setting JOBS!!
 DEBUG ='no'
 TUNE ='yes'
 CFFLAGS_EXTRA_WARNING ='no'
+PYWRAP = True               # set to False if you do not want to build the python wrapper
 
-
-#Setting up a basic default environment
-#Theory is it can be expanded for versatility, like swig doesn't seem to like jobs of 4
-#env = Environment(ENV = os.environ)
+# Setting up a basic default environment
+# Theory is it can be expanded for versatility, like swig doesn't seem to like jobs of 4
 
 env = Environment(ENV = os.environ)
 
 
-#OLD detect platform
+# detect platform
 if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     OS = 'linux'
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
@@ -33,7 +32,7 @@ if sys.platform == 'linux2' or sys.platform == 'linux-i386':
     python_include = [sysconfig.get_python_inc ()]
     env.Append(CCFLAGS = ' -Iinclude -fPIC -Wall -pipe')
 elif sys.platform == 'cygwin':
-    OS = 'linux' # not tested
+    OS = 'linux'
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
@@ -101,15 +100,15 @@ env.SetOption('num_jobs', JOBS)
 
 
 # detect SWIG
-#try:
-#    env['SWIG']
-#except KeyError:
-#    print """
-#Error: SWIG not found.
-#Please install SWIG, it's needed to create the python wrapper.
-#You can get it from http://www.swig.org/"""
-#    if sys.platform == "win32": print "Also don't forget to add the SWIG #directory to your %PATH%."
-#    Exit(1)
+try:
+    env['SWIG']
+except KeyError:
+    PYWRAP = False
+    print """
+Warning: SWIG not found. The python wrapper will not be built.
+Please install SWIG to build the python wrapper."""
+    if sys.platform == "win32": print "Also add the SWIG directory to your %PATH%."
+    print "You can download SWIG from http://www.swig.org/\n"
 
 
 gen_objfiles = Split("""
@@ -396,14 +395,14 @@ nif_converter = Split("""
 blender/blender_niflib.cpp
 """)
 
+# build niflib shared library
 niflib = env.SharedLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files], LIBPATH=['.'], CPPPATH = '.')
 
-
-##
-nifshlib = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
-# makes sure niflib.lib is built before trying to build _niflib.dll
-env.Depends(nifshlib, niflib)
-
+# build Python wrapper
+if PYWRAP:
+    niflib_python = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
+    # makes sure niflib.dll is built before trying to build _niflib.dll
+    env.Depends(niflib_python, niflib)
 
 # Here's how to compile niflyze:
 #env.Program('niflyze', 'niflyze.cpp', LIBS=['niflib'], LIBPATH=['.'])
