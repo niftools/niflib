@@ -9,6 +9,6 @@ root.SetLocalTransform(x)
 
 print root
 
-#nifinfo = NifInfo()
-#WriteNifTree( "test.nif", root.Ptr(), nifinfo )
+nifinfo = NifInfo()
+WriteNifTree( "test.nif", root.Ptr(), nifinfo )
 

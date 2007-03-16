@@ -115,7 +115,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %ignore capacity;
 
 // ignores objects python does not need to know of anyway
-%ignore Ptr;
+//ignore Ptr;
 
 // ignore all base objects: we only need access via the Ref objects
 %ignore NiObject;
@@ -650,9 +650,10 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "../include/Type.h"
 %include "../include/nif_math.h"
 %include "../include/obj/NiObject.h"
-%template(NiObjectRef) Niflib::Ref<Niflib::NiObject>;
-%template(DynamicCastToNiObject) Niflib::DynamicCast<Niflib::NiObject>;
-%template(StaticCastToNiObject) Niflib::StaticCast<Niflib::NiObject>;
+%ignore NiObjectRef;
+//template(NiObjectRef) Niflib::Ref<Niflib::NiObject>;
+//template(DynamicCastToNiObject) Niflib::DynamicCast<Niflib::NiObject>;
+//template(StaticCastToNiObject) Niflib::StaticCast<Niflib::NiObject>;
 /*
 %include "../include/obj/AKeyedData.h"
 %template(AKeyedDataRef) Niflib::Ref<Niflib::AKeyedData>;
@@ -723,14 +724,16 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(DynamicCastToNiBSplineInterpolator) Niflib::DynamicCast<Niflib::NiBSplineInterpolator>;
 %template(StaticCastToNiBSplineInterpolator) Niflib::StaticCast<Niflib::NiBSplineInterpolator>;
 */
-%include "../include/obj/NiObjectNET.h"
-%template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
-%template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
-%template(StaticCastToNiObjectNET) Niflib::StaticCast<Niflib::NiObjectNET>;
-%include "../include/obj/NiAVObject.h"
-%template(NiAVObjectRef) Niflib::Ref<Niflib::NiAVObject>;
-%template(DynamicCastToNiAVObject) Niflib::DynamicCast<Niflib::NiAVObject>;
-%template(StaticCastToNiAVObject) Niflib::StaticCast<Niflib::NiAVObject>;
+%include "../include/obj/NiObjectNET.h";
+%ignore NiObjectNetRef;
+//template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
+//template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
+//template(StaticCastToNiObjectNET) Niflib::StaticCast<Niflib::NiObjectNET>;
+%include "../include/obj/NiAVObject.h";
+%ignore NiAVObjectRef;
+//template(NiAVObjectRef) Niflib::Ref<Niflib::NiAVObject>;
+//template(DynamicCastToNiAVObject) Niflib::DynamicCast<Niflib::NiAVObject>;
+//template(StaticCastToNiAVObject) Niflib::StaticCast<Niflib::NiAVObject>;
 /*
 %include "../include/obj/NiDynamicEffect.h"
 %template(NiDynamicEffectRef) Niflib::Ref<Niflib::NiDynamicEffect>;
