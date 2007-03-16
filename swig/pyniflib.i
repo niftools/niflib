@@ -607,9 +607,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 %}
 
 // python specific extensions
-%include "../include/python.h"
+%include "python.h"
 %{
-#include "../include/python.h"
+#include "python.h"
 %}
 
 %template(vector_byte) std::vector<Niflib::byte>;

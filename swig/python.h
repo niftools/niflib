@@ -1,2 +1,2 @@
-#include "obj/NiNode.h"
+#include "../include/obj/NiNode.h"
 NiNodeRef CreateNiNode() { return Ref<NiNode>(new NiNode); }
