@@ -342,274 +342,274 @@ POSSIBILITY OF SUCH DAMAGE. */
 %ignore RootCollisionNode;
 
 //Import the symbols from these but do not include them in the wrapper
-%import "include/gen/obj_defines.h"
-%import "include/NIF_IO.h"
-%import "include/dll_export.h"
+%import "../include/gen/obj_defines.h"
+%import "../include/NIF_IO.h"
+%import "../include/dll_export.h"
 %{
-		#include "include/niflib.h"
-		#include "include/Ref.h"
-		#include "include/Type.h"
-		#include "include/nif_math.h"
-		#include "include/obj/NiObject.h"
-		#include "include/obj/AKeyedData.h"
-		#include "include/obj/AParticleModifier.h"
-		#include "include/obj/bhkRefObject.h"
-		#include "include/obj/bhkSerializable.h"
-		#include "include/obj/AbhkConstraint.h"
-		#include "include/obj/AbhkRagdollConstraint.h"
-		#include "include/obj/bhkShape.h"
-		#include "include/obj/AbhkShapeCollection.h"
-		#include "include/obj/bhkSphereRepShape.h"
-		#include "include/obj/bhkConvexShape.h"
-		#include "include/obj/bhkWorldObject.h"
-		#include "include/obj/bhkEntity.h"
-		#include "include/obj/NiCollisionObject.h"
-		#include "include/obj/NiExtraData.h"
-		#include "include/obj/NiInterpolator.h"
-		#include "include/obj/NiBlendInterpolator.h"
-		#include "include/obj/NiBSplineInterpolator.h"
-		#include "include/obj/NiObjectNET.h"
-		#include "include/obj/NiAVObject.h"
-		#include "include/obj/NiDynamicEffect.h"
-		#include "include/obj/NiLight.h"
-		#include "include/obj/NiProperty.h"
-		#include "include/obj/NiPSysModifier.h"
-		#include "include/obj/NiPSysEmitter.h"
-		#include "include/obj/NiPSysVolumeEmitter.h"
-		#include "include/obj/NiTimeController.h"
-		#include "include/obj/ABoneLODController.h"
-		#include "include/obj/NiSingleInterpolatorController.h"
-		#include "include/obj/APSysCtlr.h"
-		#include "include/obj/NiGeometry.h"
-		#include "include/obj/NiTriBasedGeom.h"
-		#include "include/obj/NiGeometryData.h"
-		#include "include/obj/NiTriBasedGeomData.h"
-		#include "include/obj/APSysData.h"
-		#include "include/obj/bhkBlendCollisionObject.h"
-		#include "include/obj/bhkBlendController.h"
-		#include "include/obj/bhkBoxShape.h"
-		#include "include/obj/bhkCapsuleShape.h"
-		#include "include/obj/bhkCollisionObject.h"
-		#include "include/obj/bhkConvexVerticesShape.h"
-		#include "include/obj/bhkHingeConstraint.h"
-		#include "include/obj/bhkLimitedHingeConstraint.h"
-		#include "include/obj/bhkListShape.h"
-		#include "include/obj/bhkMalleableConstraint.h"
-		#include "include/obj/bhkMoppBvTreeShape.h"
-		#include "include/obj/bhkMultiSphereShape.h"
-		#include "include/obj/bhkNiTriStripsShape.h"
-		#include "include/obj/bhkPackedNiTriStripsShape.h"
-		#include "include/obj/bhkPrismaticConstraint.h"
-		#include "include/obj/bhkRagdollConstraint.h"
-		#include "include/obj/bhkRigidBody.h"
-		#include "include/obj/bhkRigidBodyT.h"
-		#include "include/obj/bhkSimpleShapePhantom.h"
-		#include "include/obj/bhkSPCollisionObject.h"
-		#include "include/obj/bhkSphereShape.h"
-		#include "include/obj/bhkStiffSpringConstraint.h"
-		#include "include/obj/bhkTransformShape.h"
-		#include "include/obj/bhkConvexTransformShape.h"
-		#include "include/obj/BSBound.h"
-		#include "include/obj/BSFurnitureMarker.h"
-		#include "include/obj/BSParentVelocityModifier.h"
-		#include "include/obj/BSPSysArrayEmitter.h"
-		#include "include/obj/BSXFlags.h"
-		#include "include/obj/hkPackedNiTriStripsData.h"
-		#include "include/obj/NiAlphaController.h"
-		#include "include/obj/NiAlphaProperty.h"
-		#include "include/obj/NiAmbientLight.h"
-		#include "include/obj/NiAutoNormalParticlesData.h"
-		#include "include/obj/NiBinaryExtraData.h"
-		#include "include/obj/NiBlendBoolInterpolator.h"
-		#include "include/obj/NiBlendFloatInterpolator.h"
-		#include "include/obj/NiBlendPoint3Interpolator.h"
-		#include "include/obj/NiBlendTransformInterpolator.h"
-		#include "include/obj/NiBoneLODController.h"
-		#include "include/obj/NiBoolData.h"
-		#include "include/obj/NiBooleanExtraData.h"
-		#include "include/obj/NiBoolInterpolator.h"
-		#include "include/obj/NiBoolTimelineInterpolator.h"
-		#include "include/obj/NiBSBoneLODController.h"
-		#include "include/obj/NiBSplineBasisData.h"
-		#include "include/obj/NiBSplineCompFloatInterpolator.h"
-		#include "include/obj/NiBSplineCompPoint3Interpolator.h"
-		#include "include/obj/NiBSplineCompTransformInterpolator.h"
-		#include "include/obj/NiBSplineData.h"
-		#include "include/obj/NiCamera.h"
-		#include "include/obj/NiCollisionData.h"
-		#include "include/obj/NiColorData.h"
-		#include "include/obj/NiColorExtraData.h"
-		#include "include/obj/NiControllerManager.h"
-		#include "include/obj/NiControllerSequence.h"
-		#include "include/obj/NiDefaultAVObjectPalette.h"
-		#include "include/obj/NiDirectionalLight.h"
-		#include "include/obj/NiDitherProperty.h"
-		#include "include/obj/NiFlipController.h"
-		#include "include/obj/NiFloatData.h"
-		#include "include/obj/NiFloatExtraData.h"
-		#include "include/obj/NiFloatExtraDataController.h"
-		#include "include/obj/NiFloatInterpolator.h"
-		#include "include/obj/NiFloatsExtraData.h"
-		#include "include/obj/NiFogProperty.h"
-		#include "include/obj/NiGeomMorpherController.h"
-		#include "include/obj/NiGravity.h"
-		#include "include/obj/NiIntegerExtraData.h"
-		#include "include/obj/NiIntegersExtraData.h"
-		#include "include/obj/NiKeyframeController.h"
-		#include "include/obj/BSKeyframeController.h"
-		#include "include/obj/NiKeyframeData.h"
-		#include "include/obj/NiLightColorController.h"
-		#include "include/obj/NiLightDimmerController.h"
-		#include "include/obj/NiLookAtController.h"
-		#include "include/obj/NiLookAtInterpolator.h"
-		#include "include/obj/NiMaterialColorController.h"
-		#include "include/obj/NiMaterialProperty.h"
-		#include "include/obj/NiMeshPSysData.h"
-		#include "include/obj/NiMorphData.h"
-		#include "include/obj/NiMultiTargetTransformController.h"
-		#include "include/obj/NiNode.h"
-		#include "include/obj/AvoidNode.h"
-		#include "include/obj/FxWidget.h"
-		#include "include/obj/FxButton.h"
-		#include "include/obj/FxRadioButton.h"
-		#include "include/obj/NiBillboardNode.h"
-		#include "include/obj/NiBSAnimationNode.h"
-		#include "include/obj/NiBSParticleNode.h"
-		#include "include/obj/NiLODNode.h"
-		#include "include/obj/NiPalette.h"
-		#include "include/obj/NiParticleBomb.h"
-		#include "include/obj/NiParticleColorModifier.h"
-		#include "include/obj/NiParticleGrowFade.h"
-		#include "include/obj/NiParticleMeshModifier.h"
-		#include "include/obj/NiParticleRotation.h"
-		#include "include/obj/NiParticles.h"
-		#include "include/obj/NiAutoNormalParticles.h"
-		#include "include/obj/NiParticleMeshes.h"
-		#include "include/obj/NiParticlesData.h"
-		#include "include/obj/NiParticleMeshesData.h"
-		#include "include/obj/NiParticleSystem.h"
-		#include "include/obj/NiMeshParticleSystem.h"
-		#include "include/obj/NiParticleSystemController.h"
-		#include "include/obj/NiBSPArrayController.h"
-		#include "include/obj/NiPathController.h"
-		#include "include/obj/NiPathInterpolator.h"
-		#include "include/obj/NiPixelData.h"
-		#include "include/obj/NiPlanarCollider.h"
-		#include "include/obj/NiPoint3Interpolator.h"
-		#include "include/obj/NiPointLight.h"
-		#include "include/obj/NiPosData.h"
-		#include "include/obj/NiPSysAgeDeathModifier.h"
-		#include "include/obj/NiPSysBombModifier.h"
-		#include "include/obj/NiPSysBoundUpdateModifier.h"
-		#include "include/obj/NiPSysBoxEmitter.h"
-		#include "include/obj/NiPSysColliderManager.h"
-		#include "include/obj/NiPSysColorModifier.h"
-		#include "include/obj/NiPSysCylinderEmitter.h"
-		#include "include/obj/NiPSysData.h"
-		#include "include/obj/NiPSysDragModifier.h"
-		#include "include/obj/NiPSysEmitterCtlr.h"
-		#include "include/obj/NiPSysEmitterCtlrData.h"
-		#include "include/obj/NiPSysEmitterDeclinationCtlr.h"
-		#include "include/obj/NiPSysEmitterDeclinationVarCtlr.h"
-		#include "include/obj/NiPSysEmitterInitialRadiusCtlr.h"
-		#include "include/obj/NiPSysEmitterLifeSpanCtlr.h"
-		#include "include/obj/NiPSysEmitterSpeedCtlr.h"
-		#include "include/obj/NiPSysGravityModifier.h"
-		#include "include/obj/NiPSysGravityStrengthCtlr.h"
-		#include "include/obj/NiPSysGrowFadeModifier.h"
-		#include "include/obj/NiPSysMeshEmitter.h"
-		#include "include/obj/NiPSysMeshUpdateModifier.h"
-		#include "include/obj/NiPSysModifierActiveCtlr.h"
-		#include "include/obj/NiPSysPlanarCollider.h"
-		#include "include/obj/NiPSysPositionModifier.h"
-		#include "include/obj/NiPSysResetOnLoopCtlr.h"
-		#include "include/obj/NiPSysRotationModifier.h"
-		#include "include/obj/NiPSysSpawnModifier.h"
-		#include "include/obj/NiPSysSphereEmitter.h"
-		#include "include/obj/NiPSysUpdateCtlr.h"
-		#include "include/obj/NiLODData.h"
-		#include "include/obj/NiRangeLODData.h"
-		#include "include/obj/NiScreenLODData.h"
-		#include "include/obj/NiRotatingParticles.h"
-		#include "include/obj/NiRotatingParticlesData.h"
-		#include "include/obj/NiSequenceStreamHelper.h"
-		#include "include/obj/NiShadeProperty.h"
-		#include "include/obj/NiSkinData.h"
-		#include "include/obj/NiSkinInstance.h"
-		#include "include/obj/NiClodSkinInstance.h"
-		#include "include/obj/NiSkinPartition.h"
-		#include "include/obj/NiSourceTexture.h"
-		#include "include/obj/NiSpecularProperty.h"
-		#include "include/obj/NiSphericalCollider.h"
-		#include "include/obj/NiSpotLight.h"
-		#include "include/obj/NiStencilProperty.h"
-		#include "include/obj/NiStringExtraData.h"
-		#include "include/obj/NiStringPalette.h"
-		#include "include/obj/NiStringsExtraData.h"
-		#include "include/obj/NiTextKeyExtraData.h"
-		#include "include/obj/NiTextureEffect.h"
-		#include "include/obj/NiTextureTransformController.h"
-		#include "include/obj/NiTextureModeProperty.h"
-		#include "include/obj/NiImage.h"
-		#include "include/obj/NiTextureProperty.h"
-		#include "include/obj/NiTexturingProperty.h"
-		#include "include/obj/NiTransformController.h"
-		#include "include/obj/NiTransformData.h"
-		#include "include/obj/NiTransformInterpolator.h"
-		#include "include/obj/NiTriShape.h"
-		#include "include/obj/NiTriShapeData.h"
-		#include "include/obj/NiTriStrips.h"
-		#include "include/obj/NiTriStripsData.h"
-		#include "include/obj/NiClod.h"
-		#include "include/obj/NiClodData.h"
-		#include "include/obj/NiUVController.h"
-		#include "include/obj/NiUVData.h"
-		#include "include/obj/NiVectorExtraData.h"
-		#include "include/obj/NiVertexColorProperty.h"
-		#include "include/obj/NiVertWeightsExtraData.h"
-		#include "include/obj/NiVisController.h"
-		#include "include/obj/NiVisData.h"
-		#include "include/obj/NiWireframeProperty.h"
-		#include "include/obj/NiZBufferProperty.h"
-		#include "include/obj/RootCollisionNode.h"
-		#include "include/gen/ByteArray.h"
-		#include "include/gen/Footer.h"
-		#include "include/gen/LODRange.h"
-		#include "include/gen/MatchGroup.h"
-		#include "include/gen/MipMap.h"
-		#include "include/gen/NodeGroup.h"
-		#include "include/gen/QuaternionXYZW.h"
-		#include "include/gen/SkinShape.h"
-		#include "include/gen/SkinShapeGroup.h"
-		#include "include/gen/SkinWeight.h"
-		#include "include/gen/AVObject.h"
-		#include "include/gen/ControllerLink.h"
-		#include "include/gen/Header.h"
-		#include "include/gen/StringPalette.h"
-		#include "include/gen/TBC.h"
-		#include "include/gen/KeyGroup.h"
-		#include "include/gen/RotationKeyArray.h"
-		#include "include/gen/TexDesc.h"
-		#include "include/gen/ShaderTexDesc.h"
-		#include "include/gen/TexSource.h"
-		#include "include/gen/SkinPartition.h"
-		#include "include/gen/BoundingBox.h"
-		#include "include/gen/FurniturePosition.h"
-		#include "include/gen/hkTriangle.h"
-		#include "include/gen/Morph.h"
-		#include "include/gen/Particle.h"
-		#include "include/gen/SkinData.h"
-		#include "include/gen/Sphere.h"
-		#include "include/gen/RagDollDescriptor.h"
-		#include "include/gen/LimitedHingeDescriptor.h"
+		#include "../include/niflib.h"
+		#include "../include/Ref.h"
+		#include "../include/Type.h"
+		#include "../include/nif_math.h"
+		#include "../include/obj/NiObject.h"
+		#include "../include/obj/AKeyedData.h"
+		#include "../include/obj/AParticleModifier.h"
+		#include "../include/obj/bhkRefObject.h"
+		#include "../include/obj/bhkSerializable.h"
+		#include "../include/obj/AbhkConstraint.h"
+		#include "../include/obj/AbhkRagdollConstraint.h"
+		#include "../include/obj/bhkShape.h"
+		#include "../include/obj/AbhkShapeCollection.h"
+		#include "../include/obj/bhkSphereRepShape.h"
+		#include "../include/obj/bhkConvexShape.h"
+		#include "../include/obj/bhkWorldObject.h"
+		#include "../include/obj/bhkEntity.h"
+		#include "../include/obj/NiCollisionObject.h"
+		#include "../include/obj/NiExtraData.h"
+		#include "../include/obj/NiInterpolator.h"
+		#include "../include/obj/NiBlendInterpolator.h"
+		#include "../include/obj/NiBSplineInterpolator.h"
+		#include "../include/obj/NiObjectNET.h"
+		#include "../include/obj/NiAVObject.h"
+		#include "../include/obj/NiDynamicEffect.h"
+		#include "../include/obj/NiLight.h"
+		#include "../include/obj/NiProperty.h"
+		#include "../include/obj/NiPSysModifier.h"
+		#include "../include/obj/NiPSysEmitter.h"
+		#include "../include/obj/NiPSysVolumeEmitter.h"
+		#include "../include/obj/NiTimeController.h"
+		#include "../include/obj/ABoneLODController.h"
+		#include "../include/obj/NiSingleInterpolatorController.h"
+		#include "../include/obj/APSysCtlr.h"
+		#include "../include/obj/NiGeometry.h"
+		#include "../include/obj/NiTriBasedGeom.h"
+		#include "../include/obj/NiGeometryData.h"
+		#include "../include/obj/NiTriBasedGeomData.h"
+		#include "../include/obj/APSysData.h"
+		#include "../include/obj/bhkBlendCollisionObject.h"
+		#include "../include/obj/bhkBlendController.h"
+		#include "../include/obj/bhkBoxShape.h"
+		#include "../include/obj/bhkCapsuleShape.h"
+		#include "../include/obj/bhkCollisionObject.h"
+		#include "../include/obj/bhkConvexVerticesShape.h"
+		#include "../include/obj/bhkHingeConstraint.h"
+		#include "../include/obj/bhkLimitedHingeConstraint.h"
+		#include "../include/obj/bhkListShape.h"
+		#include "../include/obj/bhkMalleableConstraint.h"
+		#include "../include/obj/bhkMoppBvTreeShape.h"
+		#include "../include/obj/bhkMultiSphereShape.h"
+		#include "../include/obj/bhkNiTriStripsShape.h"
+		#include "../include/obj/bhkPackedNiTriStripsShape.h"
+		#include "../include/obj/bhkPrismaticConstraint.h"
+		#include "../include/obj/bhkRagdollConstraint.h"
+		#include "../include/obj/bhkRigidBody.h"
+		#include "../include/obj/bhkRigidBodyT.h"
+		#include "../include/obj/bhkSimpleShapePhantom.h"
+		#include "../include/obj/bhkSPCollisionObject.h"
+		#include "../include/obj/bhkSphereShape.h"
+		#include "../include/obj/bhkStiffSpringConstraint.h"
+		#include "../include/obj/bhkTransformShape.h"
+		#include "../include/obj/bhkConvexTransformShape.h"
+		#include "../include/obj/BSBound.h"
+		#include "../include/obj/BSFurnitureMarker.h"
+		#include "../include/obj/BSParentVelocityModifier.h"
+		#include "../include/obj/BSPSysArrayEmitter.h"
+		#include "../include/obj/BSXFlags.h"
+		#include "../include/obj/hkPackedNiTriStripsData.h"
+		#include "../include/obj/NiAlphaController.h"
+		#include "../include/obj/NiAlphaProperty.h"
+		#include "../include/obj/NiAmbientLight.h"
+		#include "../include/obj/NiAutoNormalParticlesData.h"
+		#include "../include/obj/NiBinaryExtraData.h"
+		#include "../include/obj/NiBlendBoolInterpolator.h"
+		#include "../include/obj/NiBlendFloatInterpolator.h"
+		#include "../include/obj/NiBlendPoint3Interpolator.h"
+		#include "../include/obj/NiBlendTransformInterpolator.h"
+		#include "../include/obj/NiBoneLODController.h"
+		#include "../include/obj/NiBoolData.h"
+		#include "../include/obj/NiBooleanExtraData.h"
+		#include "../include/obj/NiBoolInterpolator.h"
+		#include "../include/obj/NiBoolTimelineInterpolator.h"
+		#include "../include/obj/NiBSBoneLODController.h"
+		#include "../include/obj/NiBSplineBasisData.h"
+		#include "../include/obj/NiBSplineCompFloatInterpolator.h"
+		#include "../include/obj/NiBSplineCompPoint3Interpolator.h"
+		#include "../include/obj/NiBSplineCompTransformInterpolator.h"
+		#include "../include/obj/NiBSplineData.h"
+		#include "../include/obj/NiCamera.h"
+		#include "../include/obj/NiCollisionData.h"
+		#include "../include/obj/NiColorData.h"
+		#include "../include/obj/NiColorExtraData.h"
+		#include "../include/obj/NiControllerManager.h"
+		#include "../include/obj/NiControllerSequence.h"
+		#include "../include/obj/NiDefaultAVObjectPalette.h"
+		#include "../include/obj/NiDirectionalLight.h"
+		#include "../include/obj/NiDitherProperty.h"
+		#include "../include/obj/NiFlipController.h"
+		#include "../include/obj/NiFloatData.h"
+		#include "../include/obj/NiFloatExtraData.h"
+		#include "../include/obj/NiFloatExtraDataController.h"
+		#include "../include/obj/NiFloatInterpolator.h"
+		#include "../include/obj/NiFloatsExtraData.h"
+		#include "../include/obj/NiFogProperty.h"
+		#include "../include/obj/NiGeomMorpherController.h"
+		#include "../include/obj/NiGravity.h"
+		#include "../include/obj/NiIntegerExtraData.h"
+		#include "../include/obj/NiIntegersExtraData.h"
+		#include "../include/obj/NiKeyframeController.h"
+		#include "../include/obj/BSKeyframeController.h"
+		#include "../include/obj/NiKeyframeData.h"
+		#include "../include/obj/NiLightColorController.h"
+		#include "../include/obj/NiLightDimmerController.h"
+		#include "../include/obj/NiLookAtController.h"
+		#include "../include/obj/NiLookAtInterpolator.h"
+		#include "../include/obj/NiMaterialColorController.h"
+		#include "../include/obj/NiMaterialProperty.h"
+		#include "../include/obj/NiMeshPSysData.h"
+		#include "../include/obj/NiMorphData.h"
+		#include "../include/obj/NiMultiTargetTransformController.h"
+		#include "../include/obj/NiNode.h"
+		#include "../include/obj/AvoidNode.h"
+		#include "../include/obj/FxWidget.h"
+		#include "../include/obj/FxButton.h"
+		#include "../include/obj/FxRadioButton.h"
+		#include "../include/obj/NiBillboardNode.h"
+		#include "../include/obj/NiBSAnimationNode.h"
+		#include "../include/obj/NiBSParticleNode.h"
+		#include "../include/obj/NiLODNode.h"
+		#include "../include/obj/NiPalette.h"
+		#include "../include/obj/NiParticleBomb.h"
+		#include "../include/obj/NiParticleColorModifier.h"
+		#include "../include/obj/NiParticleGrowFade.h"
+		#include "../include/obj/NiParticleMeshModifier.h"
+		#include "../include/obj/NiParticleRotation.h"
+		#include "../include/obj/NiParticles.h"
+		#include "../include/obj/NiAutoNormalParticles.h"
+		#include "../include/obj/NiParticleMeshes.h"
+		#include "../include/obj/NiParticlesData.h"
+		#include "../include/obj/NiParticleMeshesData.h"
+		#include "../include/obj/NiParticleSystem.h"
+		#include "../include/obj/NiMeshParticleSystem.h"
+		#include "../include/obj/NiParticleSystemController.h"
+		#include "../include/obj/NiBSPArrayController.h"
+		#include "../include/obj/NiPathController.h"
+		#include "../include/obj/NiPathInterpolator.h"
+		#include "../include/obj/NiPixelData.h"
+		#include "../include/obj/NiPlanarCollider.h"
+		#include "../include/obj/NiPoint3Interpolator.h"
+		#include "../include/obj/NiPointLight.h"
+		#include "../include/obj/NiPosData.h"
+		#include "../include/obj/NiPSysAgeDeathModifier.h"
+		#include "../include/obj/NiPSysBombModifier.h"
+		#include "../include/obj/NiPSysBoundUpdateModifier.h"
+		#include "../include/obj/NiPSysBoxEmitter.h"
+		#include "../include/obj/NiPSysColliderManager.h"
+		#include "../include/obj/NiPSysColorModifier.h"
+		#include "../include/obj/NiPSysCylinderEmitter.h"
+		#include "../include/obj/NiPSysData.h"
+		#include "../include/obj/NiPSysDragModifier.h"
+		#include "../include/obj/NiPSysEmitterCtlr.h"
+		#include "../include/obj/NiPSysEmitterCtlrData.h"
+		#include "../include/obj/NiPSysEmitterDeclinationCtlr.h"
+		#include "../include/obj/NiPSysEmitterDeclinationVarCtlr.h"
+		#include "../include/obj/NiPSysEmitterInitialRadiusCtlr.h"
+		#include "../include/obj/NiPSysEmitterLifeSpanCtlr.h"
+		#include "../include/obj/NiPSysEmitterSpeedCtlr.h"
+		#include "../include/obj/NiPSysGravityModifier.h"
+		#include "../include/obj/NiPSysGravityStrengthCtlr.h"
+		#include "../include/obj/NiPSysGrowFadeModifier.h"
+		#include "../include/obj/NiPSysMeshEmitter.h"
+		#include "../include/obj/NiPSysMeshUpdateModifier.h"
+		#include "../include/obj/NiPSysModifierActiveCtlr.h"
+		#include "../include/obj/NiPSysPlanarCollider.h"
+		#include "../include/obj/NiPSysPositionModifier.h"
+		#include "../include/obj/NiPSysResetOnLoopCtlr.h"
+		#include "../include/obj/NiPSysRotationModifier.h"
+		#include "../include/obj/NiPSysSpawnModifier.h"
+		#include "../include/obj/NiPSysSphereEmitter.h"
+		#include "../include/obj/NiPSysUpdateCtlr.h"
+		#include "../include/obj/NiLODData.h"
+		#include "../include/obj/NiRangeLODData.h"
+		#include "../include/obj/NiScreenLODData.h"
+		#include "../include/obj/NiRotatingParticles.h"
+		#include "../include/obj/NiRotatingParticlesData.h"
+		#include "../include/obj/NiSequenceStreamHelper.h"
+		#include "../include/obj/NiShadeProperty.h"
+		#include "../include/obj/NiSkinData.h"
+		#include "../include/obj/NiSkinInstance.h"
+		#include "../include/obj/NiClodSkinInstance.h"
+		#include "../include/obj/NiSkinPartition.h"
+		#include "../include/obj/NiSourceTexture.h"
+		#include "../include/obj/NiSpecularProperty.h"
+		#include "../include/obj/NiSphericalCollider.h"
+		#include "../include/obj/NiSpotLight.h"
+		#include "../include/obj/NiStencilProperty.h"
+		#include "../include/obj/NiStringExtraData.h"
+		#include "../include/obj/NiStringPalette.h"
+		#include "../include/obj/NiStringsExtraData.h"
+		#include "../include/obj/NiTextKeyExtraData.h"
+		#include "../include/obj/NiTextureEffect.h"
+		#include "../include/obj/NiTextureTransformController.h"
+		#include "../include/obj/NiTextureModeProperty.h"
+		#include "../include/obj/NiImage.h"
+		#include "../include/obj/NiTextureProperty.h"
+		#include "../include/obj/NiTexturingProperty.h"
+		#include "../include/obj/NiTransformController.h"
+		#include "../include/obj/NiTransformData.h"
+		#include "../include/obj/NiTransformInterpolator.h"
+		#include "../include/obj/NiTriShape.h"
+		#include "../include/obj/NiTriShapeData.h"
+		#include "../include/obj/NiTriStrips.h"
+		#include "../include/obj/NiTriStripsData.h"
+		#include "../include/obj/NiClod.h"
+		#include "../include/obj/NiClodData.h"
+		#include "../include/obj/NiUVController.h"
+		#include "../include/obj/NiUVData.h"
+		#include "../include/obj/NiVectorExtraData.h"
+		#include "../include/obj/NiVertexColorProperty.h"
+		#include "../include/obj/NiVertWeightsExtraData.h"
+		#include "../include/obj/NiVisController.h"
+		#include "../include/obj/NiVisData.h"
+		#include "../include/obj/NiWireframeProperty.h"
+		#include "../include/obj/NiZBufferProperty.h"
+		#include "../include/obj/RootCollisionNode.h"
+		#include "../include/gen/ByteArray.h"
+		#include "../include/gen/Footer.h"
+		#include "../include/gen/LODRange.h"
+		#include "../include/gen/MatchGroup.h"
+		#include "../include/gen/MipMap.h"
+		#include "../include/gen/NodeGroup.h"
+		#include "../include/gen/QuaternionXYZW.h"
+		#include "../include/gen/SkinShape.h"
+		#include "../include/gen/SkinShapeGroup.h"
+		#include "../include/gen/SkinWeight.h"
+		#include "../include/gen/AVObject.h"
+		#include "../include/gen/ControllerLink.h"
+		#include "../include/gen/Header.h"
+		#include "../include/gen/StringPalette.h"
+		#include "../include/gen/TBC.h"
+		#include "../include/gen/KeyGroup.h"
+		#include "../include/gen/RotationKeyArray.h"
+		#include "../include/gen/TexDesc.h"
+		#include "../include/gen/ShaderTexDesc.h"
+		#include "../include/gen/TexSource.h"
+		#include "../include/gen/SkinPartition.h"
+		#include "../include/gen/BoundingBox.h"
+		#include "../include/gen/FurniturePosition.h"
+		#include "../include/gen/hkTriangle.h"
+		#include "../include/gen/Morph.h"
+		#include "../include/gen/Particle.h"
+		#include "../include/gen/SkinData.h"
+		#include "../include/gen/Sphere.h"
+		#include "../include/gen/RagDollDescriptor.h"
+		#include "../include/gen/LimitedHingeDescriptor.h"
 	using namespace Niflib;
 
 %}
 
 // python specific extensions
-%include "include/python.h"
+%include "../include/python.h"
 %{
-#include "include/python.h"
+#include "../include/python.h"
 %}
 
 %template(vector_byte) std::vector<Niflib::byte>;
@@ -644,931 +644,931 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(pair_int_float) std::pair<int, float>;
 %template(map_int_float) std::map<int, float>;
 
-%include "include/niflib.h"
-%include "include/Ref.h"
-%include "include/Type.h"
-%include "include/nif_math.h"
-%include "include/obj/NiObject.h"
+%include "../include/niflib.h"
+%include "../include/Ref.h"
+%include "../include/Type.h"
+%include "../include/nif_math.h"
+%include "../include/obj/NiObject.h"
 %template(NiObjectRef) Niflib::Ref<Niflib::NiObject>;
 %template(DynamicCastToNiObject) Niflib::DynamicCast<Niflib::NiObject>;
 %template(StaticCastToNiObject) Niflib::StaticCast<Niflib::NiObject>;
 /*
-%include "include/obj/AKeyedData.h"
+%include "../include/obj/AKeyedData.h"
 %template(AKeyedDataRef) Niflib::Ref<Niflib::AKeyedData>;
 %template(DynamicCastToAKeyedData) Niflib::DynamicCast<Niflib::AKeyedData>;
 %template(StaticCastToAKeyedData) Niflib::StaticCast<Niflib::AKeyedData>;
-%include "include/obj/AParticleModifier.h"
+%include "../include/obj/AParticleModifier.h"
 %template(AParticleModifierRef) Niflib::Ref<Niflib::AParticleModifier>;
 %template(DynamicCastToAParticleModifier) Niflib::DynamicCast<Niflib::AParticleModifier>;
 %template(StaticCastToAParticleModifier) Niflib::StaticCast<Niflib::AParticleModifier>;
-%include "include/obj/bhkRefObject.h"
+%include "../include/obj/bhkRefObject.h"
 %template(bhkRefObjectRef) Niflib::Ref<Niflib::bhkRefObject>;
 %template(DynamicCastTobhkRefObject) Niflib::DynamicCast<Niflib::bhkRefObject>;
 %template(StaticCastTobhkRefObject) Niflib::StaticCast<Niflib::bhkRefObject>;
-%include "include/obj/bhkSerializable.h"
+%include "../include/obj/bhkSerializable.h"
 %template(bhkSerializableRef) Niflib::Ref<Niflib::bhkSerializable>;
 %template(DynamicCastTobhkSerializable) Niflib::DynamicCast<Niflib::bhkSerializable>;
 %template(StaticCastTobhkSerializable) Niflib::StaticCast<Niflib::bhkSerializable>;
-%include "include/obj/AbhkConstraint.h"
+%include "../include/obj/AbhkConstraint.h"
 %template(AbhkConstraintRef) Niflib::Ref<Niflib::AbhkConstraint>;
 %template(DynamicCastToAbhkConstraint) Niflib::DynamicCast<Niflib::AbhkConstraint>;
 %template(StaticCastToAbhkConstraint) Niflib::StaticCast<Niflib::AbhkConstraint>;
-%include "include/obj/AbhkRagdollConstraint.h"
+%include "../include/obj/AbhkRagdollConstraint.h"
 %template(AbhkRagdollConstraintRef) Niflib::Ref<Niflib::AbhkRagdollConstraint>;
 %template(DynamicCastToAbhkRagdollConstraint) Niflib::DynamicCast<Niflib::AbhkRagdollConstraint>;
 %template(StaticCastToAbhkRagdollConstraint) Niflib::StaticCast<Niflib::AbhkRagdollConstraint>;
-%include "include/obj/bhkShape.h"
+%include "../include/obj/bhkShape.h"
 %template(bhkShapeRef) Niflib::Ref<Niflib::bhkShape>;
 %template(DynamicCastTobhkShape) Niflib::DynamicCast<Niflib::bhkShape>;
 %template(StaticCastTobhkShape) Niflib::StaticCast<Niflib::bhkShape>;
-%include "include/obj/AbhkShapeCollection.h"
+%include "../include/obj/AbhkShapeCollection.h"
 %template(AbhkShapeCollectionRef) Niflib::Ref<Niflib::AbhkShapeCollection>;
 %template(DynamicCastToAbhkShapeCollection) Niflib::DynamicCast<Niflib::AbhkShapeCollection>;
 %template(StaticCastToAbhkShapeCollection) Niflib::StaticCast<Niflib::AbhkShapeCollection>;
-%include "include/obj/bhkSphereRepShape.h"
+%include "../include/obj/bhkSphereRepShape.h"
 %template(bhkSphereRepShapeRef) Niflib::Ref<Niflib::bhkSphereRepShape>;
 %template(DynamicCastTobhkSphereRepShape) Niflib::DynamicCast<Niflib::bhkSphereRepShape>;
 %template(StaticCastTobhkSphereRepShape) Niflib::StaticCast<Niflib::bhkSphereRepShape>;
-%include "include/obj/bhkConvexShape.h"
+%include "../include/obj/bhkConvexShape.h"
 %template(bhkConvexShapeRef) Niflib::Ref<Niflib::bhkConvexShape>;
 %template(DynamicCastTobhkConvexShape) Niflib::DynamicCast<Niflib::bhkConvexShape>;
 %template(StaticCastTobhkConvexShape) Niflib::StaticCast<Niflib::bhkConvexShape>;
-%include "include/obj/bhkWorldObject.h"
+%include "../include/obj/bhkWorldObject.h"
 %template(bhkWorldObjectRef) Niflib::Ref<Niflib::bhkWorldObject>;
 %template(DynamicCastTobhkWorldObject) Niflib::DynamicCast<Niflib::bhkWorldObject>;
 %template(StaticCastTobhkWorldObject) Niflib::StaticCast<Niflib::bhkWorldObject>;
-%include "include/obj/bhkEntity.h"
+%include "../include/obj/bhkEntity.h"
 %template(bhkEntityRef) Niflib::Ref<Niflib::bhkEntity>;
 %template(DynamicCastTobhkEntity) Niflib::DynamicCast<Niflib::bhkEntity>;
 %template(StaticCastTobhkEntity) Niflib::StaticCast<Niflib::bhkEntity>;
-%include "include/obj/NiCollisionObject.h"
+%include "../include/obj/NiCollisionObject.h"
 %template(NiCollisionObjectRef) Niflib::Ref<Niflib::NiCollisionObject>;
 %template(DynamicCastToNiCollisionObject) Niflib::DynamicCast<Niflib::NiCollisionObject>;
 %template(StaticCastToNiCollisionObject) Niflib::StaticCast<Niflib::NiCollisionObject>;
-%include "include/obj/NiExtraData.h"
+%include "../include/obj/NiExtraData.h"
 %template(NiExtraDataRef) Niflib::Ref<Niflib::NiExtraData>;
 %template(DynamicCastToNiExtraData) Niflib::DynamicCast<Niflib::NiExtraData>;
 %template(StaticCastToNiExtraData) Niflib::StaticCast<Niflib::NiExtraData>;
-%include "include/obj/NiInterpolator.h"
+%include "../include/obj/NiInterpolator.h"
 %template(NiInterpolatorRef) Niflib::Ref<Niflib::NiInterpolator>;
 %template(DynamicCastToNiInterpolator) Niflib::DynamicCast<Niflib::NiInterpolator>;
 %template(StaticCastToNiInterpolator) Niflib::StaticCast<Niflib::NiInterpolator>;
-%include "include/obj/NiBlendInterpolator.h"
+%include "../include/obj/NiBlendInterpolator.h"
 %template(NiBlendInterpolatorRef) Niflib::Ref<Niflib::NiBlendInterpolator>;
 %template(DynamicCastToNiBlendInterpolator) Niflib::DynamicCast<Niflib::NiBlendInterpolator>;
 %template(StaticCastToNiBlendInterpolator) Niflib::StaticCast<Niflib::NiBlendInterpolator>;
-%include "include/obj/NiBSplineInterpolator.h"
+%include "../include/obj/NiBSplineInterpolator.h"
 %template(NiBSplineInterpolatorRef) Niflib::Ref<Niflib::NiBSplineInterpolator>;
 %template(DynamicCastToNiBSplineInterpolator) Niflib::DynamicCast<Niflib::NiBSplineInterpolator>;
 %template(StaticCastToNiBSplineInterpolator) Niflib::StaticCast<Niflib::NiBSplineInterpolator>;
-%include "include/obj/NiObjectNET.h"
+%include "../include/obj/NiObjectNET.h"
 %template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
 %template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
 %template(StaticCastToNiObjectNET) Niflib::StaticCast<Niflib::NiObjectNET>;
-%include "include/obj/NiAVObject.h"
+%include "../include/obj/NiAVObject.h"
 %template(NiAVObjectRef) Niflib::Ref<Niflib::NiAVObject>;
 %template(DynamicCastToNiAVObject) Niflib::DynamicCast<Niflib::NiAVObject>;
 %template(StaticCastToNiAVObject) Niflib::StaticCast<Niflib::NiAVObject>;
-%include "include/obj/NiDynamicEffect.h"
+%include "../include/obj/NiDynamicEffect.h"
 %template(NiDynamicEffectRef) Niflib::Ref<Niflib::NiDynamicEffect>;
 %template(DynamicCastToNiDynamicEffect) Niflib::DynamicCast<Niflib::NiDynamicEffect>;
 %template(StaticCastToNiDynamicEffect) Niflib::StaticCast<Niflib::NiDynamicEffect>;
-%include "include/obj/NiLight.h"
+%include "../include/obj/NiLight.h"
 %template(NiLightRef) Niflib::Ref<Niflib::NiLight>;
 %template(DynamicCastToNiLight) Niflib::DynamicCast<Niflib::NiLight>;
 %template(StaticCastToNiLight) Niflib::StaticCast<Niflib::NiLight>;
-%include "include/obj/NiProperty.h"
+%include "../include/obj/NiProperty.h"
 %template(NiPropertyRef) Niflib::Ref<Niflib::NiProperty>;
 %template(DynamicCastToNiProperty) Niflib::DynamicCast<Niflib::NiProperty>;
 %template(StaticCastToNiProperty) Niflib::StaticCast<Niflib::NiProperty>;
-%include "include/obj/NiPSysModifier.h"
+%include "../include/obj/NiPSysModifier.h"
 %template(NiPSysModifierRef) Niflib::Ref<Niflib::NiPSysModifier>;
 %template(DynamicCastToNiPSysModifier) Niflib::DynamicCast<Niflib::NiPSysModifier>;
 %template(StaticCastToNiPSysModifier) Niflib::StaticCast<Niflib::NiPSysModifier>;
-%include "include/obj/NiPSysEmitter.h"
+%include "../include/obj/NiPSysEmitter.h"
 %template(NiPSysEmitterRef) Niflib::Ref<Niflib::NiPSysEmitter>;
 %template(DynamicCastToNiPSysEmitter) Niflib::DynamicCast<Niflib::NiPSysEmitter>;
 %template(StaticCastToNiPSysEmitter) Niflib::StaticCast<Niflib::NiPSysEmitter>;
-%include "include/obj/NiPSysVolumeEmitter.h"
+%include "../include/obj/NiPSysVolumeEmitter.h"
 %template(NiPSysVolumeEmitterRef) Niflib::Ref<Niflib::NiPSysVolumeEmitter>;
 %template(DynamicCastToNiPSysVolumeEmitter) Niflib::DynamicCast<Niflib::NiPSysVolumeEmitter>;
 %template(StaticCastToNiPSysVolumeEmitter) Niflib::StaticCast<Niflib::NiPSysVolumeEmitter>;
-%include "include/obj/NiTimeController.h"
+%include "../include/obj/NiTimeController.h"
 %template(NiTimeControllerRef) Niflib::Ref<Niflib::NiTimeController>;
 %template(DynamicCastToNiTimeController) Niflib::DynamicCast<Niflib::NiTimeController>;
 %template(StaticCastToNiTimeController) Niflib::StaticCast<Niflib::NiTimeController>;
-%include "include/obj/ABoneLODController.h"
+%include "../include/obj/ABoneLODController.h"
 %template(ABoneLODControllerRef) Niflib::Ref<Niflib::ABoneLODController>;
 %template(DynamicCastToABoneLODController) Niflib::DynamicCast<Niflib::ABoneLODController>;
 %template(StaticCastToABoneLODController) Niflib::StaticCast<Niflib::ABoneLODController>;
-%include "include/obj/NiSingleInterpolatorController.h"
+%include "../include/obj/NiSingleInterpolatorController.h"
 %template(NiSingleInterpolatorControllerRef) Niflib::Ref<Niflib::NiSingleInterpolatorController>;
 %template(DynamicCastToNiSingleInterpolatorController) Niflib::DynamicCast<Niflib::NiSingleInterpolatorController>;
 %template(StaticCastToNiSingleInterpolatorController) Niflib::StaticCast<Niflib::NiSingleInterpolatorController>;
-%include "include/obj/APSysCtlr.h"
+%include "../include/obj/APSysCtlr.h"
 %template(APSysCtlrRef) Niflib::Ref<Niflib::APSysCtlr>;
 %template(DynamicCastToAPSysCtlr) Niflib::DynamicCast<Niflib::APSysCtlr>;
 %template(StaticCastToAPSysCtlr) Niflib::StaticCast<Niflib::APSysCtlr>;
-%include "include/obj/NiGeometry.h"
+%include "../include/obj/NiGeometry.h"
 %template(NiGeometryRef) Niflib::Ref<Niflib::NiGeometry>;
 %template(DynamicCastToNiGeometry) Niflib::DynamicCast<Niflib::NiGeometry>;
 %template(StaticCastToNiGeometry) Niflib::StaticCast<Niflib::NiGeometry>;
-%include "include/obj/NiTriBasedGeom.h"
+%include "../include/obj/NiTriBasedGeom.h"
 %template(NiTriBasedGeomRef) Niflib::Ref<Niflib::NiTriBasedGeom>;
 %template(DynamicCastToNiTriBasedGeom) Niflib::DynamicCast<Niflib::NiTriBasedGeom>;
 %template(StaticCastToNiTriBasedGeom) Niflib::StaticCast<Niflib::NiTriBasedGeom>;
-%include "include/obj/NiGeometryData.h"
+%include "../include/obj/NiGeometryData.h"
 %template(NiGeometryDataRef) Niflib::Ref<Niflib::NiGeometryData>;
 %template(DynamicCastToNiGeometryData) Niflib::DynamicCast<Niflib::NiGeometryData>;
 %template(StaticCastToNiGeometryData) Niflib::StaticCast<Niflib::NiGeometryData>;
-%include "include/obj/NiTriBasedGeomData.h"
+%include "../include/obj/NiTriBasedGeomData.h"
 %template(NiTriBasedGeomDataRef) Niflib::Ref<Niflib::NiTriBasedGeomData>;
 %template(DynamicCastToNiTriBasedGeomData) Niflib::DynamicCast<Niflib::NiTriBasedGeomData>;
 %template(StaticCastToNiTriBasedGeomData) Niflib::StaticCast<Niflib::NiTriBasedGeomData>;
-%include "include/obj/APSysData.h"
+%include "../include/obj/APSysData.h"
 %template(APSysDataRef) Niflib::Ref<Niflib::APSysData>;
 %template(DynamicCastToAPSysData) Niflib::DynamicCast<Niflib::APSysData>;
 %template(StaticCastToAPSysData) Niflib::StaticCast<Niflib::APSysData>;
-%include "include/obj/bhkBlendCollisionObject.h"
+%include "../include/obj/bhkBlendCollisionObject.h"
 %template(bhkBlendCollisionObjectRef) Niflib::Ref<Niflib::bhkBlendCollisionObject>;
 %template(DynamicCastTobhkBlendCollisionObject) Niflib::DynamicCast<Niflib::bhkBlendCollisionObject>;
 %template(StaticCastTobhkBlendCollisionObject) Niflib::StaticCast<Niflib::bhkBlendCollisionObject>;
-%include "include/obj/bhkBlendController.h"
+%include "../include/obj/bhkBlendController.h"
 %template(bhkBlendControllerRef) Niflib::Ref<Niflib::bhkBlendController>;
 %template(DynamicCastTobhkBlendController) Niflib::DynamicCast<Niflib::bhkBlendController>;
 %template(StaticCastTobhkBlendController) Niflib::StaticCast<Niflib::bhkBlendController>;
-%include "include/obj/bhkBoxShape.h"
+%include "../include/obj/bhkBoxShape.h"
 %template(bhkBoxShapeRef) Niflib::Ref<Niflib::bhkBoxShape>;
 %template(DynamicCastTobhkBoxShape) Niflib::DynamicCast<Niflib::bhkBoxShape>;
 %template(StaticCastTobhkBoxShape) Niflib::StaticCast<Niflib::bhkBoxShape>;
-%include "include/obj/bhkCapsuleShape.h"
+%include "../include/obj/bhkCapsuleShape.h"
 %template(bhkCapsuleShapeRef) Niflib::Ref<Niflib::bhkCapsuleShape>;
 %template(DynamicCastTobhkCapsuleShape) Niflib::DynamicCast<Niflib::bhkCapsuleShape>;
 %template(StaticCastTobhkCapsuleShape) Niflib::StaticCast<Niflib::bhkCapsuleShape>;
-%include "include/obj/bhkCollisionObject.h"
+%include "../include/obj/bhkCollisionObject.h"
 %template(bhkCollisionObjectRef) Niflib::Ref<Niflib::bhkCollisionObject>;
 %template(DynamicCastTobhkCollisionObject) Niflib::DynamicCast<Niflib::bhkCollisionObject>;
 %template(StaticCastTobhkCollisionObject) Niflib::StaticCast<Niflib::bhkCollisionObject>;
-%include "include/obj/bhkConvexVerticesShape.h"
+%include "../include/obj/bhkConvexVerticesShape.h"
 %template(bhkConvexVerticesShapeRef) Niflib::Ref<Niflib::bhkConvexVerticesShape>;
 %template(DynamicCastTobhkConvexVerticesShape) Niflib::DynamicCast<Niflib::bhkConvexVerticesShape>;
 %template(StaticCastTobhkConvexVerticesShape) Niflib::StaticCast<Niflib::bhkConvexVerticesShape>;
-%include "include/obj/bhkHingeConstraint.h"
+%include "../include/obj/bhkHingeConstraint.h"
 %template(bhkHingeConstraintRef) Niflib::Ref<Niflib::bhkHingeConstraint>;
 %template(DynamicCastTobhkHingeConstraint) Niflib::DynamicCast<Niflib::bhkHingeConstraint>;
 %template(StaticCastTobhkHingeConstraint) Niflib::StaticCast<Niflib::bhkHingeConstraint>;
-%include "include/obj/bhkLimitedHingeConstraint.h"
+%include "../include/obj/bhkLimitedHingeConstraint.h"
 %template(bhkLimitedHingeConstraintRef) Niflib::Ref<Niflib::bhkLimitedHingeConstraint>;
 %template(DynamicCastTobhkLimitedHingeConstraint) Niflib::DynamicCast<Niflib::bhkLimitedHingeConstraint>;
 %template(StaticCastTobhkLimitedHingeConstraint) Niflib::StaticCast<Niflib::bhkLimitedHingeConstraint>;
-%include "include/obj/bhkListShape.h"
+%include "../include/obj/bhkListShape.h"
 %template(bhkListShapeRef) Niflib::Ref<Niflib::bhkListShape>;
 %template(DynamicCastTobhkListShape) Niflib::DynamicCast<Niflib::bhkListShape>;
 %template(StaticCastTobhkListShape) Niflib::StaticCast<Niflib::bhkListShape>;
-%include "include/obj/bhkMalleableConstraint.h"
+%include "../include/obj/bhkMalleableConstraint.h"
 %template(bhkMalleableConstraintRef) Niflib::Ref<Niflib::bhkMalleableConstraint>;
 %template(DynamicCastTobhkMalleableConstraint) Niflib::DynamicCast<Niflib::bhkMalleableConstraint>;
 %template(StaticCastTobhkMalleableConstraint) Niflib::StaticCast<Niflib::bhkMalleableConstraint>;
-%include "include/obj/bhkMoppBvTreeShape.h"
+%include "../include/obj/bhkMoppBvTreeShape.h"
 %template(bhkMoppBvTreeShapeRef) Niflib::Ref<Niflib::bhkMoppBvTreeShape>;
 %template(DynamicCastTobhkMoppBvTreeShape) Niflib::DynamicCast<Niflib::bhkMoppBvTreeShape>;
 %template(StaticCastTobhkMoppBvTreeShape) Niflib::StaticCast<Niflib::bhkMoppBvTreeShape>;
-%include "include/obj/bhkMultiSphereShape.h"
+%include "../include/obj/bhkMultiSphereShape.h"
 %template(bhkMultiSphereShapeRef) Niflib::Ref<Niflib::bhkMultiSphereShape>;
 %template(DynamicCastTobhkMultiSphereShape) Niflib::DynamicCast<Niflib::bhkMultiSphereShape>;
 %template(StaticCastTobhkMultiSphereShape) Niflib::StaticCast<Niflib::bhkMultiSphereShape>;
-%include "include/obj/bhkNiTriStripsShape.h"
+%include "../include/obj/bhkNiTriStripsShape.h"
 %template(bhkNiTriStripsShapeRef) Niflib::Ref<Niflib::bhkNiTriStripsShape>;
 %template(DynamicCastTobhkNiTriStripsShape) Niflib::DynamicCast<Niflib::bhkNiTriStripsShape>;
 %template(StaticCastTobhkNiTriStripsShape) Niflib::StaticCast<Niflib::bhkNiTriStripsShape>;
-%include "include/obj/bhkPackedNiTriStripsShape.h"
+%include "../include/obj/bhkPackedNiTriStripsShape.h"
 %template(bhkPackedNiTriStripsShapeRef) Niflib::Ref<Niflib::bhkPackedNiTriStripsShape>;
 %template(DynamicCastTobhkPackedNiTriStripsShape) Niflib::DynamicCast<Niflib::bhkPackedNiTriStripsShape>;
 %template(StaticCastTobhkPackedNiTriStripsShape) Niflib::StaticCast<Niflib::bhkPackedNiTriStripsShape>;
-%include "include/obj/bhkPrismaticConstraint.h"
+%include "../include/obj/bhkPrismaticConstraint.h"
 %template(bhkPrismaticConstraintRef) Niflib::Ref<Niflib::bhkPrismaticConstraint>;
 %template(DynamicCastTobhkPrismaticConstraint) Niflib::DynamicCast<Niflib::bhkPrismaticConstraint>;
 %template(StaticCastTobhkPrismaticConstraint) Niflib::StaticCast<Niflib::bhkPrismaticConstraint>;
-%include "include/obj/bhkRagdollConstraint.h"
+%include "../include/obj/bhkRagdollConstraint.h"
 %template(bhkRagdollConstraintRef) Niflib::Ref<Niflib::bhkRagdollConstraint>;
 %template(DynamicCastTobhkRagdollConstraint) Niflib::DynamicCast<Niflib::bhkRagdollConstraint>;
 %template(StaticCastTobhkRagdollConstraint) Niflib::StaticCast<Niflib::bhkRagdollConstraint>;
-%include "include/obj/bhkRigidBody.h"
+%include "../include/obj/bhkRigidBody.h"
 %template(bhkRigidBodyRef) Niflib::Ref<Niflib::bhkRigidBody>;
 %template(DynamicCastTobhkRigidBody) Niflib::DynamicCast<Niflib::bhkRigidBody>;
 %template(StaticCastTobhkRigidBody) Niflib::StaticCast<Niflib::bhkRigidBody>;
-%include "include/obj/bhkRigidBodyT.h"
+%include "../include/obj/bhkRigidBodyT.h"
 %template(bhkRigidBodyTRef) Niflib::Ref<Niflib::bhkRigidBodyT>;
 %template(DynamicCastTobhkRigidBodyT) Niflib::DynamicCast<Niflib::bhkRigidBodyT>;
 %template(StaticCastTobhkRigidBodyT) Niflib::StaticCast<Niflib::bhkRigidBodyT>;
-%include "include/obj/bhkSimpleShapePhantom.h"
+%include "../include/obj/bhkSimpleShapePhantom.h"
 %template(bhkSimpleShapePhantomRef) Niflib::Ref<Niflib::bhkSimpleShapePhantom>;
 %template(DynamicCastTobhkSimpleShapePhantom) Niflib::DynamicCast<Niflib::bhkSimpleShapePhantom>;
 %template(StaticCastTobhkSimpleShapePhantom) Niflib::StaticCast<Niflib::bhkSimpleShapePhantom>;
-%include "include/obj/bhkSPCollisionObject.h"
+%include "../include/obj/bhkSPCollisionObject.h"
 %template(bhkSPCollisionObjectRef) Niflib::Ref<Niflib::bhkSPCollisionObject>;
 %template(DynamicCastTobhkSPCollisionObject) Niflib::DynamicCast<Niflib::bhkSPCollisionObject>;
 %template(StaticCastTobhkSPCollisionObject) Niflib::StaticCast<Niflib::bhkSPCollisionObject>;
-%include "include/obj/bhkSphereShape.h"
+%include "../include/obj/bhkSphereShape.h"
 %template(bhkSphereShapeRef) Niflib::Ref<Niflib::bhkSphereShape>;
 %template(DynamicCastTobhkSphereShape) Niflib::DynamicCast<Niflib::bhkSphereShape>;
 %template(StaticCastTobhkSphereShape) Niflib::StaticCast<Niflib::bhkSphereShape>;
-%include "include/obj/bhkStiffSpringConstraint.h"
+%include "../include/obj/bhkStiffSpringConstraint.h"
 %template(bhkStiffSpringConstraintRef) Niflib::Ref<Niflib::bhkStiffSpringConstraint>;
 %template(DynamicCastTobhkStiffSpringConstraint) Niflib::DynamicCast<Niflib::bhkStiffSpringConstraint>;
 %template(StaticCastTobhkStiffSpringConstraint) Niflib::StaticCast<Niflib::bhkStiffSpringConstraint>;
-%include "include/obj/bhkTransformShape.h"
+%include "../include/obj/bhkTransformShape.h"
 %template(bhkTransformShapeRef) Niflib::Ref<Niflib::bhkTransformShape>;
 %template(DynamicCastTobhkTransformShape) Niflib::DynamicCast<Niflib::bhkTransformShape>;
 %template(StaticCastTobhkTransformShape) Niflib::StaticCast<Niflib::bhkTransformShape>;
-%include "include/obj/bhkConvexTransformShape.h"
+%include "../include/obj/bhkConvexTransformShape.h"
 %template(bhkConvexTransformShapeRef) Niflib::Ref<Niflib::bhkConvexTransformShape>;
 %template(DynamicCastTobhkConvexTransformShape) Niflib::DynamicCast<Niflib::bhkConvexTransformShape>;
 %template(StaticCastTobhkConvexTransformShape) Niflib::StaticCast<Niflib::bhkConvexTransformShape>;
-%include "include/obj/BSBound.h"
+%include "../include/obj/BSBound.h"
 %template(BSBoundRef) Niflib::Ref<Niflib::BSBound>;
 %template(DynamicCastToBSBound) Niflib::DynamicCast<Niflib::BSBound>;
 %template(StaticCastToBSBound) Niflib::StaticCast<Niflib::BSBound>;
-%include "include/obj/BSFurnitureMarker.h"
+%include "../include/obj/BSFurnitureMarker.h"
 %template(BSFurnitureMarkerRef) Niflib::Ref<Niflib::BSFurnitureMarker>;
 %template(DynamicCastToBSFurnitureMarker) Niflib::DynamicCast<Niflib::BSFurnitureMarker>;
 %template(StaticCastToBSFurnitureMarker) Niflib::StaticCast<Niflib::BSFurnitureMarker>;
-%include "include/obj/BSParentVelocityModifier.h"
+%include "../include/obj/BSParentVelocityModifier.h"
 %template(BSParentVelocityModifierRef) Niflib::Ref<Niflib::BSParentVelocityModifier>;
 %template(DynamicCastToBSParentVelocityModifier) Niflib::DynamicCast<Niflib::BSParentVelocityModifier>;
 %template(StaticCastToBSParentVelocityModifier) Niflib::StaticCast<Niflib::BSParentVelocityModifier>;
-%include "include/obj/BSPSysArrayEmitter.h"
+%include "../include/obj/BSPSysArrayEmitter.h"
 %template(BSPSysArrayEmitterRef) Niflib::Ref<Niflib::BSPSysArrayEmitter>;
 %template(DynamicCastToBSPSysArrayEmitter) Niflib::DynamicCast<Niflib::BSPSysArrayEmitter>;
 %template(StaticCastToBSPSysArrayEmitter) Niflib::StaticCast<Niflib::BSPSysArrayEmitter>;
-%include "include/obj/BSXFlags.h"
+%include "../include/obj/BSXFlags.h"
 %template(BSXFlagsRef) Niflib::Ref<Niflib::BSXFlags>;
 %template(DynamicCastToBSXFlags) Niflib::DynamicCast<Niflib::BSXFlags>;
 %template(StaticCastToBSXFlags) Niflib::StaticCast<Niflib::BSXFlags>;
-%include "include/obj/hkPackedNiTriStripsData.h"
+%include "../include/obj/hkPackedNiTriStripsData.h"
 %template(hkPackedNiTriStripsDataRef) Niflib::Ref<Niflib::hkPackedNiTriStripsData>;
 %template(DynamicCastTohkPackedNiTriStripsData) Niflib::DynamicCast<Niflib::hkPackedNiTriStripsData>;
 %template(StaticCastTohkPackedNiTriStripsData) Niflib::StaticCast<Niflib::hkPackedNiTriStripsData>;
-%include "include/obj/NiAlphaController.h"
+%include "../include/obj/NiAlphaController.h"
 %template(NiAlphaControllerRef) Niflib::Ref<Niflib::NiAlphaController>;
 %template(DynamicCastToNiAlphaController) Niflib::DynamicCast<Niflib::NiAlphaController>;
 %template(StaticCastToNiAlphaController) Niflib::StaticCast<Niflib::NiAlphaController>;
-%include "include/obj/NiAlphaProperty.h"
+%include "../include/obj/NiAlphaProperty.h"
 %template(NiAlphaPropertyRef) Niflib::Ref<Niflib::NiAlphaProperty>;
 %template(DynamicCastToNiAlphaProperty) Niflib::DynamicCast<Niflib::NiAlphaProperty>;
 %template(StaticCastToNiAlphaProperty) Niflib::StaticCast<Niflib::NiAlphaProperty>;
-%include "include/obj/NiAmbientLight.h"
+%include "../include/obj/NiAmbientLight.h"
 %template(NiAmbientLightRef) Niflib::Ref<Niflib::NiAmbientLight>;
 %template(DynamicCastToNiAmbientLight) Niflib::DynamicCast<Niflib::NiAmbientLight>;
 %template(StaticCastToNiAmbientLight) Niflib::StaticCast<Niflib::NiAmbientLight>;
-%include "include/obj/NiAutoNormalParticlesData.h"
+%include "../include/obj/NiAutoNormalParticlesData.h"
 %template(NiAutoNormalParticlesDataRef) Niflib::Ref<Niflib::NiAutoNormalParticlesData>;
 %template(DynamicCastToNiAutoNormalParticlesData) Niflib::DynamicCast<Niflib::NiAutoNormalParticlesData>;
 %template(StaticCastToNiAutoNormalParticlesData) Niflib::StaticCast<Niflib::NiAutoNormalParticlesData>;
-%include "include/obj/NiBinaryExtraData.h"
+%include "../include/obj/NiBinaryExtraData.h"
 %template(NiBinaryExtraDataRef) Niflib::Ref<Niflib::NiBinaryExtraData>;
 %template(DynamicCastToNiBinaryExtraData) Niflib::DynamicCast<Niflib::NiBinaryExtraData>;
 %template(StaticCastToNiBinaryExtraData) Niflib::StaticCast<Niflib::NiBinaryExtraData>;
-%include "include/obj/NiBlendBoolInterpolator.h"
+%include "../include/obj/NiBlendBoolInterpolator.h"
 %template(NiBlendBoolInterpolatorRef) Niflib::Ref<Niflib::NiBlendBoolInterpolator>;
 %template(DynamicCastToNiBlendBoolInterpolator) Niflib::DynamicCast<Niflib::NiBlendBoolInterpolator>;
 %template(StaticCastToNiBlendBoolInterpolator) Niflib::StaticCast<Niflib::NiBlendBoolInterpolator>;
-%include "include/obj/NiBlendFloatInterpolator.h"
+%include "../include/obj/NiBlendFloatInterpolator.h"
 %template(NiBlendFloatInterpolatorRef) Niflib::Ref<Niflib::NiBlendFloatInterpolator>;
 %template(DynamicCastToNiBlendFloatInterpolator) Niflib::DynamicCast<Niflib::NiBlendFloatInterpolator>;
 %template(StaticCastToNiBlendFloatInterpolator) Niflib::StaticCast<Niflib::NiBlendFloatInterpolator>;
-%include "include/obj/NiBlendPoint3Interpolator.h"
+%include "../include/obj/NiBlendPoint3Interpolator.h"
 %template(NiBlendPoint3InterpolatorRef) Niflib::Ref<Niflib::NiBlendPoint3Interpolator>;
 %template(DynamicCastToNiBlendPoint3Interpolator) Niflib::DynamicCast<Niflib::NiBlendPoint3Interpolator>;
 %template(StaticCastToNiBlendPoint3Interpolator) Niflib::StaticCast<Niflib::NiBlendPoint3Interpolator>;
-%include "include/obj/NiBlendTransformInterpolator.h"
+%include "../include/obj/NiBlendTransformInterpolator.h"
 %template(NiBlendTransformInterpolatorRef) Niflib::Ref<Niflib::NiBlendTransformInterpolator>;
 %template(DynamicCastToNiBlendTransformInterpolator) Niflib::DynamicCast<Niflib::NiBlendTransformInterpolator>;
 %template(StaticCastToNiBlendTransformInterpolator) Niflib::StaticCast<Niflib::NiBlendTransformInterpolator>;
-%include "include/obj/NiBoneLODController.h"
+%include "../include/obj/NiBoneLODController.h"
 %template(NiBoneLODControllerRef) Niflib::Ref<Niflib::NiBoneLODController>;
 %template(DynamicCastToNiBoneLODController) Niflib::DynamicCast<Niflib::NiBoneLODController>;
 %template(StaticCastToNiBoneLODController) Niflib::StaticCast<Niflib::NiBoneLODController>;
-%include "include/obj/NiBoolData.h"
+%include "../include/obj/NiBoolData.h"
 %template(NiBoolDataRef) Niflib::Ref<Niflib::NiBoolData>;
 %template(DynamicCastToNiBoolData) Niflib::DynamicCast<Niflib::NiBoolData>;
 %template(StaticCastToNiBoolData) Niflib::StaticCast<Niflib::NiBoolData>;
-%include "include/obj/NiBooleanExtraData.h"
+%include "../include/obj/NiBooleanExtraData.h"
 %template(NiBooleanExtraDataRef) Niflib::Ref<Niflib::NiBooleanExtraData>;
 %template(DynamicCastToNiBooleanExtraData) Niflib::DynamicCast<Niflib::NiBooleanExtraData>;
 %template(StaticCastToNiBooleanExtraData) Niflib::StaticCast<Niflib::NiBooleanExtraData>;
-%include "include/obj/NiBoolInterpolator.h"
+%include "../include/obj/NiBoolInterpolator.h"
 %template(NiBoolInterpolatorRef) Niflib::Ref<Niflib::NiBoolInterpolator>;
 %template(DynamicCastToNiBoolInterpolator) Niflib::DynamicCast<Niflib::NiBoolInterpolator>;
 %template(StaticCastToNiBoolInterpolator) Niflib::StaticCast<Niflib::NiBoolInterpolator>;
-%include "include/obj/NiBoolTimelineInterpolator.h"
+%include "../include/obj/NiBoolTimelineInterpolator.h"
 %template(NiBoolTimelineInterpolatorRef) Niflib::Ref<Niflib::NiBoolTimelineInterpolator>;
 %template(DynamicCastToNiBoolTimelineInterpolator) Niflib::DynamicCast<Niflib::NiBoolTimelineInterpolator>;
 %template(StaticCastToNiBoolTimelineInterpolator) Niflib::StaticCast<Niflib::NiBoolTimelineInterpolator>;
-%include "include/obj/NiBSBoneLODController.h"
+%include "../include/obj/NiBSBoneLODController.h"
 %template(NiBSBoneLODControllerRef) Niflib::Ref<Niflib::NiBSBoneLODController>;
 %template(DynamicCastToNiBSBoneLODController) Niflib::DynamicCast<Niflib::NiBSBoneLODController>;
 %template(StaticCastToNiBSBoneLODController) Niflib::StaticCast<Niflib::NiBSBoneLODController>;
-%include "include/obj/NiBSplineBasisData.h"
+%include "../include/obj/NiBSplineBasisData.h"
 %template(NiBSplineBasisDataRef) Niflib::Ref<Niflib::NiBSplineBasisData>;
 %template(DynamicCastToNiBSplineBasisData) Niflib::DynamicCast<Niflib::NiBSplineBasisData>;
 %template(StaticCastToNiBSplineBasisData) Niflib::StaticCast<Niflib::NiBSplineBasisData>;
-%include "include/obj/NiBSplineCompFloatInterpolator.h"
+%include "../include/obj/NiBSplineCompFloatInterpolator.h"
 %template(NiBSplineCompFloatInterpolatorRef) Niflib::Ref<Niflib::NiBSplineCompFloatInterpolator>;
 %template(DynamicCastToNiBSplineCompFloatInterpolator) Niflib::DynamicCast<Niflib::NiBSplineCompFloatInterpolator>;
 %template(StaticCastToNiBSplineCompFloatInterpolator) Niflib::StaticCast<Niflib::NiBSplineCompFloatInterpolator>;
-%include "include/obj/NiBSplineCompPoint3Interpolator.h"
+%include "../include/obj/NiBSplineCompPoint3Interpolator.h"
 %template(NiBSplineCompPoint3InterpolatorRef) Niflib::Ref<Niflib::NiBSplineCompPoint3Interpolator>;
 %template(DynamicCastToNiBSplineCompPoint3Interpolator) Niflib::DynamicCast<Niflib::NiBSplineCompPoint3Interpolator>;
 %template(StaticCastToNiBSplineCompPoint3Interpolator) Niflib::StaticCast<Niflib::NiBSplineCompPoint3Interpolator>;
-%include "include/obj/NiBSplineCompTransformInterpolator.h"
+%include "../include/obj/NiBSplineCompTransformInterpolator.h"
 %template(NiBSplineCompTransformInterpolatorRef) Niflib::Ref<Niflib::NiBSplineCompTransformInterpolator>;
 %template(DynamicCastToNiBSplineCompTransformInterpolator) Niflib::DynamicCast<Niflib::NiBSplineCompTransformInterpolator>;
 %template(StaticCastToNiBSplineCompTransformInterpolator) Niflib::StaticCast<Niflib::NiBSplineCompTransformInterpolator>;
-%include "include/obj/NiBSplineData.h"
+%include "../include/obj/NiBSplineData.h"
 %template(NiBSplineDataRef) Niflib::Ref<Niflib::NiBSplineData>;
 %template(DynamicCastToNiBSplineData) Niflib::DynamicCast<Niflib::NiBSplineData>;
 %template(StaticCastToNiBSplineData) Niflib::StaticCast<Niflib::NiBSplineData>;
-%include "include/obj/NiCamera.h"
+%include "../include/obj/NiCamera.h"
 %template(NiCameraRef) Niflib::Ref<Niflib::NiCamera>;
 %template(DynamicCastToNiCamera) Niflib::DynamicCast<Niflib::NiCamera>;
 %template(StaticCastToNiCamera) Niflib::StaticCast<Niflib::NiCamera>;
-%include "include/obj/NiCollisionData.h"
+%include "../include/obj/NiCollisionData.h"
 %template(NiCollisionDataRef) Niflib::Ref<Niflib::NiCollisionData>;
 %template(DynamicCastToNiCollisionData) Niflib::DynamicCast<Niflib::NiCollisionData>;
 %template(StaticCastToNiCollisionData) Niflib::StaticCast<Niflib::NiCollisionData>;
-%include "include/obj/NiColorData.h"
+%include "../include/obj/NiColorData.h"
 %template(NiColorDataRef) Niflib::Ref<Niflib::NiColorData>;
 %template(DynamicCastToNiColorData) Niflib::DynamicCast<Niflib::NiColorData>;
 %template(StaticCastToNiColorData) Niflib::StaticCast<Niflib::NiColorData>;
-%include "include/obj/NiColorExtraData.h"
+%include "../include/obj/NiColorExtraData.h"
 %template(NiColorExtraDataRef) Niflib::Ref<Niflib::NiColorExtraData>;
 %template(DynamicCastToNiColorExtraData) Niflib::DynamicCast<Niflib::NiColorExtraData>;
 %template(StaticCastToNiColorExtraData) Niflib::StaticCast<Niflib::NiColorExtraData>;
-%include "include/obj/NiControllerManager.h"
+%include "../include/obj/NiControllerManager.h"
 %template(NiControllerManagerRef) Niflib::Ref<Niflib::NiControllerManager>;
 %template(DynamicCastToNiControllerManager) Niflib::DynamicCast<Niflib::NiControllerManager>;
 %template(StaticCastToNiControllerManager) Niflib::StaticCast<Niflib::NiControllerManager>;
-%include "include/obj/NiControllerSequence.h"
+%include "../include/obj/NiControllerSequence.h"
 %template(NiControllerSequenceRef) Niflib::Ref<Niflib::NiControllerSequence>;
 %template(DynamicCastToNiControllerSequence) Niflib::DynamicCast<Niflib::NiControllerSequence>;
 %template(StaticCastToNiControllerSequence) Niflib::StaticCast<Niflib::NiControllerSequence>;
-%include "include/obj/NiDefaultAVObjectPalette.h"
+%include "../include/obj/NiDefaultAVObjectPalette.h"
 %template(NiDefaultAVObjectPaletteRef) Niflib::Ref<Niflib::NiDefaultAVObjectPalette>;
 %template(DynamicCastToNiDefaultAVObjectPalette) Niflib::DynamicCast<Niflib::NiDefaultAVObjectPalette>;
 %template(StaticCastToNiDefaultAVObjectPalette) Niflib::StaticCast<Niflib::NiDefaultAVObjectPalette>;
-%include "include/obj/NiDirectionalLight.h"
+%include "../include/obj/NiDirectionalLight.h"
 %template(NiDirectionalLightRef) Niflib::Ref<Niflib::NiDirectionalLight>;
 %template(DynamicCastToNiDirectionalLight) Niflib::DynamicCast<Niflib::NiDirectionalLight>;
 %template(StaticCastToNiDirectionalLight) Niflib::StaticCast<Niflib::NiDirectionalLight>;
-%include "include/obj/NiDitherProperty.h"
+%include "../include/obj/NiDitherProperty.h"
 %template(NiDitherPropertyRef) Niflib::Ref<Niflib::NiDitherProperty>;
 %template(DynamicCastToNiDitherProperty) Niflib::DynamicCast<Niflib::NiDitherProperty>;
 %template(StaticCastToNiDitherProperty) Niflib::StaticCast<Niflib::NiDitherProperty>;
-%include "include/obj/NiFlipController.h"
+%include "../include/obj/NiFlipController.h"
 %template(NiFlipControllerRef) Niflib::Ref<Niflib::NiFlipController>;
 %template(DynamicCastToNiFlipController) Niflib::DynamicCast<Niflib::NiFlipController>;
 %template(StaticCastToNiFlipController) Niflib::StaticCast<Niflib::NiFlipController>;
-%include "include/obj/NiFloatData.h"
+%include "../include/obj/NiFloatData.h"
 %template(NiFloatDataRef) Niflib::Ref<Niflib::NiFloatData>;
 %template(DynamicCastToNiFloatData) Niflib::DynamicCast<Niflib::NiFloatData>;
 %template(StaticCastToNiFloatData) Niflib::StaticCast<Niflib::NiFloatData>;
-%include "include/obj/NiFloatExtraData.h"
+%include "../include/obj/NiFloatExtraData.h"
 %template(NiFloatExtraDataRef) Niflib::Ref<Niflib::NiFloatExtraData>;
 %template(DynamicCastToNiFloatExtraData) Niflib::DynamicCast<Niflib::NiFloatExtraData>;
 %template(StaticCastToNiFloatExtraData) Niflib::StaticCast<Niflib::NiFloatExtraData>;
-%include "include/obj/NiFloatExtraDataController.h"
+%include "../include/obj/NiFloatExtraDataController.h"
 %template(NiFloatExtraDataControllerRef) Niflib::Ref<Niflib::NiFloatExtraDataController>;
 %template(DynamicCastToNiFloatExtraDataController) Niflib::DynamicCast<Niflib::NiFloatExtraDataController>;
 %template(StaticCastToNiFloatExtraDataController) Niflib::StaticCast<Niflib::NiFloatExtraDataController>;
-%include "include/obj/NiFloatInterpolator.h"
+%include "../include/obj/NiFloatInterpolator.h"
 %template(NiFloatInterpolatorRef) Niflib::Ref<Niflib::NiFloatInterpolator>;
 %template(DynamicCastToNiFloatInterpolator) Niflib::DynamicCast<Niflib::NiFloatInterpolator>;
 %template(StaticCastToNiFloatInterpolator) Niflib::StaticCast<Niflib::NiFloatInterpolator>;
-%include "include/obj/NiFloatsExtraData.h"
+%include "../include/obj/NiFloatsExtraData.h"
 %template(NiFloatsExtraDataRef) Niflib::Ref<Niflib::NiFloatsExtraData>;
 %template(DynamicCastToNiFloatsExtraData) Niflib::DynamicCast<Niflib::NiFloatsExtraData>;
 %template(StaticCastToNiFloatsExtraData) Niflib::StaticCast<Niflib::NiFloatsExtraData>;
-%include "include/obj/NiFogProperty.h"
+%include "../include/obj/NiFogProperty.h"
 %template(NiFogPropertyRef) Niflib::Ref<Niflib::NiFogProperty>;
 %template(DynamicCastToNiFogProperty) Niflib::DynamicCast<Niflib::NiFogProperty>;
 %template(StaticCastToNiFogProperty) Niflib::StaticCast<Niflib::NiFogProperty>;
-%include "include/obj/NiGeomMorpherController.h"
+%include "../include/obj/NiGeomMorpherController.h"
 %template(NiGeomMorpherControllerRef) Niflib::Ref<Niflib::NiGeomMorpherController>;
 %template(DynamicCastToNiGeomMorpherController) Niflib::DynamicCast<Niflib::NiGeomMorpherController>;
 %template(StaticCastToNiGeomMorpherController) Niflib::StaticCast<Niflib::NiGeomMorpherController>;
-%include "include/obj/NiGravity.h"
+%include "../include/obj/NiGravity.h"
 %template(NiGravityRef) Niflib::Ref<Niflib::NiGravity>;
 %template(DynamicCastToNiGravity) Niflib::DynamicCast<Niflib::NiGravity>;
 %template(StaticCastToNiGravity) Niflib::StaticCast<Niflib::NiGravity>;
-%include "include/obj/NiIntegerExtraData.h"
+%include "../include/obj/NiIntegerExtraData.h"
 %template(NiIntegerExtraDataRef) Niflib::Ref<Niflib::NiIntegerExtraData>;
 %template(DynamicCastToNiIntegerExtraData) Niflib::DynamicCast<Niflib::NiIntegerExtraData>;
 %template(StaticCastToNiIntegerExtraData) Niflib::StaticCast<Niflib::NiIntegerExtraData>;
-%include "include/obj/NiIntegersExtraData.h"
+%include "../include/obj/NiIntegersExtraData.h"
 %template(NiIntegersExtraDataRef) Niflib::Ref<Niflib::NiIntegersExtraData>;
 %template(DynamicCastToNiIntegersExtraData) Niflib::DynamicCast<Niflib::NiIntegersExtraData>;
 %template(StaticCastToNiIntegersExtraData) Niflib::StaticCast<Niflib::NiIntegersExtraData>;
-%include "include/obj/NiKeyframeController.h"
+%include "../include/obj/NiKeyframeController.h"
 %template(NiKeyframeControllerRef) Niflib::Ref<Niflib::NiKeyframeController>;
 %template(DynamicCastToNiKeyframeController) Niflib::DynamicCast<Niflib::NiKeyframeController>;
 %template(StaticCastToNiKeyframeController) Niflib::StaticCast<Niflib::NiKeyframeController>;
-%include "include/obj/BSKeyframeController.h"
+%include "../include/obj/BSKeyframeController.h"
 %template(BSKeyframeControllerRef) Niflib::Ref<Niflib::BSKeyframeController>;
 %template(DynamicCastToBSKeyframeController) Niflib::DynamicCast<Niflib::BSKeyframeController>;
 %template(StaticCastToBSKeyframeController) Niflib::StaticCast<Niflib::BSKeyframeController>;
-%include "include/obj/NiKeyframeData.h"
+%include "../include/obj/NiKeyframeData.h"
 %template(NiKeyframeDataRef) Niflib::Ref<Niflib::NiKeyframeData>;
 %template(DynamicCastToNiKeyframeData) Niflib::DynamicCast<Niflib::NiKeyframeData>;
 %template(StaticCastToNiKeyframeData) Niflib::StaticCast<Niflib::NiKeyframeData>;
-%include "include/obj/NiLightColorController.h"
+%include "../include/obj/NiLightColorController.h"
 %template(NiLightColorControllerRef) Niflib::Ref<Niflib::NiLightColorController>;
 %template(DynamicCastToNiLightColorController) Niflib::DynamicCast<Niflib::NiLightColorController>;
 %template(StaticCastToNiLightColorController) Niflib::StaticCast<Niflib::NiLightColorController>;
-%include "include/obj/NiLightDimmerController.h"
+%include "../include/obj/NiLightDimmerController.h"
 %template(NiLightDimmerControllerRef) Niflib::Ref<Niflib::NiLightDimmerController>;
 %template(DynamicCastToNiLightDimmerController) Niflib::DynamicCast<Niflib::NiLightDimmerController>;
 %template(StaticCastToNiLightDimmerController) Niflib::StaticCast<Niflib::NiLightDimmerController>;
-%include "include/obj/NiLookAtController.h"
+%include "../include/obj/NiLookAtController.h"
 %template(NiLookAtControllerRef) Niflib::Ref<Niflib::NiLookAtController>;
 %template(DynamicCastToNiLookAtController) Niflib::DynamicCast<Niflib::NiLookAtController>;
 %template(StaticCastToNiLookAtController) Niflib::StaticCast<Niflib::NiLookAtController>;
-%include "include/obj/NiLookAtInterpolator.h"
+%include "../include/obj/NiLookAtInterpolator.h"
 %template(NiLookAtInterpolatorRef) Niflib::Ref<Niflib::NiLookAtInterpolator>;
 %template(DynamicCastToNiLookAtInterpolator) Niflib::DynamicCast<Niflib::NiLookAtInterpolator>;
 %template(StaticCastToNiLookAtInterpolator) Niflib::StaticCast<Niflib::NiLookAtInterpolator>;
-%include "include/obj/NiMaterialColorController.h"
+%include "../include/obj/NiMaterialColorController.h"
 %template(NiMaterialColorControllerRef) Niflib::Ref<Niflib::NiMaterialColorController>;
 %template(DynamicCastToNiMaterialColorController) Niflib::DynamicCast<Niflib::NiMaterialColorController>;
 %template(StaticCastToNiMaterialColorController) Niflib::StaticCast<Niflib::NiMaterialColorController>;
-%include "include/obj/NiMaterialProperty.h"
+%include "../include/obj/NiMaterialProperty.h"
 %template(NiMaterialPropertyRef) Niflib::Ref<Niflib::NiMaterialProperty>;
 %template(DynamicCastToNiMaterialProperty) Niflib::DynamicCast<Niflib::NiMaterialProperty>;
 %template(StaticCastToNiMaterialProperty) Niflib::StaticCast<Niflib::NiMaterialProperty>;
-%include "include/obj/NiMeshPSysData.h"
+%include "../include/obj/NiMeshPSysData.h"
 %template(NiMeshPSysDataRef) Niflib::Ref<Niflib::NiMeshPSysData>;
 %template(DynamicCastToNiMeshPSysData) Niflib::DynamicCast<Niflib::NiMeshPSysData>;
 %template(StaticCastToNiMeshPSysData) Niflib::StaticCast<Niflib::NiMeshPSysData>;
-%include "include/obj/NiMorphData.h"
+%include "../include/obj/NiMorphData.h"
 %template(NiMorphDataRef) Niflib::Ref<Niflib::NiMorphData>;
 %template(DynamicCastToNiMorphData) Niflib::DynamicCast<Niflib::NiMorphData>;
 %template(StaticCastToNiMorphData) Niflib::StaticCast<Niflib::NiMorphData>;
-%include "include/obj/NiMultiTargetTransformController.h"
+%include "../include/obj/NiMultiTargetTransformController.h"
 %template(NiMultiTargetTransformControllerRef) Niflib::Ref<Niflib::NiMultiTargetTransformController>;
 %template(DynamicCastToNiMultiTargetTransformController) Niflib::DynamicCast<Niflib::NiMultiTargetTransformController>;
 %template(StaticCastToNiMultiTargetTransformController) Niflib::StaticCast<Niflib::NiMultiTargetTransformController>;
 */
-%include "include/obj/NiNode.h"
+%include "../include/obj/NiNode.h"
 %template(NiNodeRef) Niflib::Ref<Niflib::NiNode>;
 %template(DynamicCastToNiNode) Niflib::DynamicCast<Niflib::NiNode>;
 %template(StaticCastToNiNode) Niflib::StaticCast<Niflib::NiNode>;
 /*
-%include "include/obj/AvoidNode.h"
+%include "../include/obj/AvoidNode.h"
 %template(AvoidNodeRef) Niflib::Ref<Niflib::AvoidNode>;
 %template(DynamicCastToAvoidNode) Niflib::DynamicCast<Niflib::AvoidNode>;
 %template(StaticCastToAvoidNode) Niflib::StaticCast<Niflib::AvoidNode>;
-%include "include/obj/FxWidget.h"
+%include "../include/obj/FxWidget.h"
 %template(FxWidgetRef) Niflib::Ref<Niflib::FxWidget>;
 %template(DynamicCastToFxWidget) Niflib::DynamicCast<Niflib::FxWidget>;
 %template(StaticCastToFxWidget) Niflib::StaticCast<Niflib::FxWidget>;
-%include "include/obj/FxButton.h"
+%include "../include/obj/FxButton.h"
 %template(FxButtonRef) Niflib::Ref<Niflib::FxButton>;
 %template(DynamicCastToFxButton) Niflib::DynamicCast<Niflib::FxButton>;
 %template(StaticCastToFxButton) Niflib::StaticCast<Niflib::FxButton>;
-%include "include/obj/FxRadioButton.h"
+%include "../include/obj/FxRadioButton.h"
 %template(FxRadioButtonRef) Niflib::Ref<Niflib::FxRadioButton>;
 %template(DynamicCastToFxRadioButton) Niflib::DynamicCast<Niflib::FxRadioButton>;
 %template(StaticCastToFxRadioButton) Niflib::StaticCast<Niflib::FxRadioButton>;
-%include "include/obj/NiBillboardNode.h"
+%include "../include/obj/NiBillboardNode.h"
 %template(NiBillboardNodeRef) Niflib::Ref<Niflib::NiBillboardNode>;
 %template(DynamicCastToNiBillboardNode) Niflib::DynamicCast<Niflib::NiBillboardNode>;
 %template(StaticCastToNiBillboardNode) Niflib::StaticCast<Niflib::NiBillboardNode>;
-%include "include/obj/NiBSAnimationNode.h"
+%include "../include/obj/NiBSAnimationNode.h"
 %template(NiBSAnimationNodeRef) Niflib::Ref<Niflib::NiBSAnimationNode>;
 %template(DynamicCastToNiBSAnimationNode) Niflib::DynamicCast<Niflib::NiBSAnimationNode>;
 %template(StaticCastToNiBSAnimationNode) Niflib::StaticCast<Niflib::NiBSAnimationNode>;
-%include "include/obj/NiBSParticleNode.h"
+%include "../include/obj/NiBSParticleNode.h"
 %template(NiBSParticleNodeRef) Niflib::Ref<Niflib::NiBSParticleNode>;
 %template(DynamicCastToNiBSParticleNode) Niflib::DynamicCast<Niflib::NiBSParticleNode>;
 %template(StaticCastToNiBSParticleNode) Niflib::StaticCast<Niflib::NiBSParticleNode>;
-%include "include/obj/NiLODNode.h"
+%include "../include/obj/NiLODNode.h"
 %template(NiLODNodeRef) Niflib::Ref<Niflib::NiLODNode>;
 %template(DynamicCastToNiLODNode) Niflib::DynamicCast<Niflib::NiLODNode>;
 %template(StaticCastToNiLODNode) Niflib::StaticCast<Niflib::NiLODNode>;
-%include "include/obj/NiPalette.h"
+%include "../include/obj/NiPalette.h"
 %template(NiPaletteRef) Niflib::Ref<Niflib::NiPalette>;
 %template(DynamicCastToNiPalette) Niflib::DynamicCast<Niflib::NiPalette>;
 %template(StaticCastToNiPalette) Niflib::StaticCast<Niflib::NiPalette>;
-%include "include/obj/NiParticleBomb.h"
+%include "../include/obj/NiParticleBomb.h"
 %template(NiParticleBombRef) Niflib::Ref<Niflib::NiParticleBomb>;
 %template(DynamicCastToNiParticleBomb) Niflib::DynamicCast<Niflib::NiParticleBomb>;
 %template(StaticCastToNiParticleBomb) Niflib::StaticCast<Niflib::NiParticleBomb>;
-%include "include/obj/NiParticleColorModifier.h"
+%include "../include/obj/NiParticleColorModifier.h"
 %template(NiParticleColorModifierRef) Niflib::Ref<Niflib::NiParticleColorModifier>;
 %template(DynamicCastToNiParticleColorModifier) Niflib::DynamicCast<Niflib::NiParticleColorModifier>;
 %template(StaticCastToNiParticleColorModifier) Niflib::StaticCast<Niflib::NiParticleColorModifier>;
-%include "include/obj/NiParticleGrowFade.h"
+%include "../include/obj/NiParticleGrowFade.h"
 %template(NiParticleGrowFadeRef) Niflib::Ref<Niflib::NiParticleGrowFade>;
 %template(DynamicCastToNiParticleGrowFade) Niflib::DynamicCast<Niflib::NiParticleGrowFade>;
 %template(StaticCastToNiParticleGrowFade) Niflib::StaticCast<Niflib::NiParticleGrowFade>;
-%include "include/obj/NiParticleMeshModifier.h"
+%include "../include/obj/NiParticleMeshModifier.h"
 %template(NiParticleMeshModifierRef) Niflib::Ref<Niflib::NiParticleMeshModifier>;
 %template(DynamicCastToNiParticleMeshModifier) Niflib::DynamicCast<Niflib::NiParticleMeshModifier>;
 %template(StaticCastToNiParticleMeshModifier) Niflib::StaticCast<Niflib::NiParticleMeshModifier>;
-%include "include/obj/NiParticleRotation.h"
+%include "../include/obj/NiParticleRotation.h"
 %template(NiParticleRotationRef) Niflib::Ref<Niflib::NiParticleRotation>;
 %template(DynamicCastToNiParticleRotation) Niflib::DynamicCast<Niflib::NiParticleRotation>;
 %template(StaticCastToNiParticleRotation) Niflib::StaticCast<Niflib::NiParticleRotation>;
-%include "include/obj/NiParticles.h"
+%include "../include/obj/NiParticles.h"
 %template(NiParticlesRef) Niflib::Ref<Niflib::NiParticles>;
 %template(DynamicCastToNiParticles) Niflib::DynamicCast<Niflib::NiParticles>;
 %template(StaticCastToNiParticles) Niflib::StaticCast<Niflib::NiParticles>;
-%include "include/obj/NiAutoNormalParticles.h"
+%include "../include/obj/NiAutoNormalParticles.h"
 %template(NiAutoNormalParticlesRef) Niflib::Ref<Niflib::NiAutoNormalParticles>;
 %template(DynamicCastToNiAutoNormalParticles) Niflib::DynamicCast<Niflib::NiAutoNormalParticles>;
 %template(StaticCastToNiAutoNormalParticles) Niflib::StaticCast<Niflib::NiAutoNormalParticles>;
-%include "include/obj/NiParticleMeshes.h"
+%include "../include/obj/NiParticleMeshes.h"
 %template(NiParticleMeshesRef) Niflib::Ref<Niflib::NiParticleMeshes>;
 %template(DynamicCastToNiParticleMeshes) Niflib::DynamicCast<Niflib::NiParticleMeshes>;
 %template(StaticCastToNiParticleMeshes) Niflib::StaticCast<Niflib::NiParticleMeshes>;
-%include "include/obj/NiParticlesData.h"
+%include "../include/obj/NiParticlesData.h"
 %template(NiParticlesDataRef) Niflib::Ref<Niflib::NiParticlesData>;
 %template(DynamicCastToNiParticlesData) Niflib::DynamicCast<Niflib::NiParticlesData>;
 %template(StaticCastToNiParticlesData) Niflib::StaticCast<Niflib::NiParticlesData>;
-%include "include/obj/NiParticleMeshesData.h"
+%include "../include/obj/NiParticleMeshesData.h"
 %template(NiParticleMeshesDataRef) Niflib::Ref<Niflib::NiParticleMeshesData>;
 %template(DynamicCastToNiParticleMeshesData) Niflib::DynamicCast<Niflib::NiParticleMeshesData>;
 %template(StaticCastToNiParticleMeshesData) Niflib::StaticCast<Niflib::NiParticleMeshesData>;
-%include "include/obj/NiParticleSystem.h"
+%include "../include/obj/NiParticleSystem.h"
 %template(NiParticleSystemRef) Niflib::Ref<Niflib::NiParticleSystem>;
 %template(DynamicCastToNiParticleSystem) Niflib::DynamicCast<Niflib::NiParticleSystem>;
 %template(StaticCastToNiParticleSystem) Niflib::StaticCast<Niflib::NiParticleSystem>;
-%include "include/obj/NiMeshParticleSystem.h"
+%include "../include/obj/NiMeshParticleSystem.h"
 %template(NiMeshParticleSystemRef) Niflib::Ref<Niflib::NiMeshParticleSystem>;
 %template(DynamicCastToNiMeshParticleSystem) Niflib::DynamicCast<Niflib::NiMeshParticleSystem>;
 %template(StaticCastToNiMeshParticleSystem) Niflib::StaticCast<Niflib::NiMeshParticleSystem>;
-%include "include/obj/NiParticleSystemController.h"
+%include "../include/obj/NiParticleSystemController.h"
 %template(NiParticleSystemControllerRef) Niflib::Ref<Niflib::NiParticleSystemController>;
 %template(DynamicCastToNiParticleSystemController) Niflib::DynamicCast<Niflib::NiParticleSystemController>;
 %template(StaticCastToNiParticleSystemController) Niflib::StaticCast<Niflib::NiParticleSystemController>;
-%include "include/obj/NiBSPArrayController.h"
+%include "../include/obj/NiBSPArrayController.h"
 %template(NiBSPArrayControllerRef) Niflib::Ref<Niflib::NiBSPArrayController>;
 %template(DynamicCastToNiBSPArrayController) Niflib::DynamicCast<Niflib::NiBSPArrayController>;
 %template(StaticCastToNiBSPArrayController) Niflib::StaticCast<Niflib::NiBSPArrayController>;
-%include "include/obj/NiPathController.h"
+%include "../include/obj/NiPathController.h"
 %template(NiPathControllerRef) Niflib::Ref<Niflib::NiPathController>;
 %template(DynamicCastToNiPathController) Niflib::DynamicCast<Niflib::NiPathController>;
 %template(StaticCastToNiPathController) Niflib::StaticCast<Niflib::NiPathController>;
-%include "include/obj/NiPathInterpolator.h"
+%include "../include/obj/NiPathInterpolator.h"
 %template(NiPathInterpolatorRef) Niflib::Ref<Niflib::NiPathInterpolator>;
 %template(DynamicCastToNiPathInterpolator) Niflib::DynamicCast<Niflib::NiPathInterpolator>;
 %template(StaticCastToNiPathInterpolator) Niflib::StaticCast<Niflib::NiPathInterpolator>;
-%include "include/obj/NiPixelData.h"
+%include "../include/obj/NiPixelData.h"
 %template(NiPixelDataRef) Niflib::Ref<Niflib::NiPixelData>;
 %template(DynamicCastToNiPixelData) Niflib::DynamicCast<Niflib::NiPixelData>;
 %template(StaticCastToNiPixelData) Niflib::StaticCast<Niflib::NiPixelData>;
-%include "include/obj/NiPlanarCollider.h"
+%include "../include/obj/NiPlanarCollider.h"
 %template(NiPlanarColliderRef) Niflib::Ref<Niflib::NiPlanarCollider>;
 %template(DynamicCastToNiPlanarCollider) Niflib::DynamicCast<Niflib::NiPlanarCollider>;
 %template(StaticCastToNiPlanarCollider) Niflib::StaticCast<Niflib::NiPlanarCollider>;
-%include "include/obj/NiPoint3Interpolator.h"
+%include "../include/obj/NiPoint3Interpolator.h"
 %template(NiPoint3InterpolatorRef) Niflib::Ref<Niflib::NiPoint3Interpolator>;
 %template(DynamicCastToNiPoint3Interpolator) Niflib::DynamicCast<Niflib::NiPoint3Interpolator>;
 %template(StaticCastToNiPoint3Interpolator) Niflib::StaticCast<Niflib::NiPoint3Interpolator>;
-%include "include/obj/NiPointLight.h"
+%include "../include/obj/NiPointLight.h"
 %template(NiPointLightRef) Niflib::Ref<Niflib::NiPointLight>;
 %template(DynamicCastToNiPointLight) Niflib::DynamicCast<Niflib::NiPointLight>;
 %template(StaticCastToNiPointLight) Niflib::StaticCast<Niflib::NiPointLight>;
-%include "include/obj/NiPosData.h"
+%include "../include/obj/NiPosData.h"
 %template(NiPosDataRef) Niflib::Ref<Niflib::NiPosData>;
 %template(DynamicCastToNiPosData) Niflib::DynamicCast<Niflib::NiPosData>;
 %template(StaticCastToNiPosData) Niflib::StaticCast<Niflib::NiPosData>;
-%include "include/obj/NiPSysAgeDeathModifier.h"
+%include "../include/obj/NiPSysAgeDeathModifier.h"
 %template(NiPSysAgeDeathModifierRef) Niflib::Ref<Niflib::NiPSysAgeDeathModifier>;
 %template(DynamicCastToNiPSysAgeDeathModifier) Niflib::DynamicCast<Niflib::NiPSysAgeDeathModifier>;
 %template(StaticCastToNiPSysAgeDeathModifier) Niflib::StaticCast<Niflib::NiPSysAgeDeathModifier>;
-%include "include/obj/NiPSysBombModifier.h"
+%include "../include/obj/NiPSysBombModifier.h"
 %template(NiPSysBombModifierRef) Niflib::Ref<Niflib::NiPSysBombModifier>;
 %template(DynamicCastToNiPSysBombModifier) Niflib::DynamicCast<Niflib::NiPSysBombModifier>;
 %template(StaticCastToNiPSysBombModifier) Niflib::StaticCast<Niflib::NiPSysBombModifier>;
-%include "include/obj/NiPSysBoundUpdateModifier.h"
+%include "../include/obj/NiPSysBoundUpdateModifier.h"
 %template(NiPSysBoundUpdateModifierRef) Niflib::Ref<Niflib::NiPSysBoundUpdateModifier>;
 %template(DynamicCastToNiPSysBoundUpdateModifier) Niflib::DynamicCast<Niflib::NiPSysBoundUpdateModifier>;
 %template(StaticCastToNiPSysBoundUpdateModifier) Niflib::StaticCast<Niflib::NiPSysBoundUpdateModifier>;
-%include "include/obj/NiPSysBoxEmitter.h"
+%include "../include/obj/NiPSysBoxEmitter.h"
 %template(NiPSysBoxEmitterRef) Niflib::Ref<Niflib::NiPSysBoxEmitter>;
 %template(DynamicCastToNiPSysBoxEmitter) Niflib::DynamicCast<Niflib::NiPSysBoxEmitter>;
 %template(StaticCastToNiPSysBoxEmitter) Niflib::StaticCast<Niflib::NiPSysBoxEmitter>;
-%include "include/obj/NiPSysColliderManager.h"
+%include "../include/obj/NiPSysColliderManager.h"
 %template(NiPSysColliderManagerRef) Niflib::Ref<Niflib::NiPSysColliderManager>;
 %template(DynamicCastToNiPSysColliderManager) Niflib::DynamicCast<Niflib::NiPSysColliderManager>;
 %template(StaticCastToNiPSysColliderManager) Niflib::StaticCast<Niflib::NiPSysColliderManager>;
-%include "include/obj/NiPSysColorModifier.h"
+%include "../include/obj/NiPSysColorModifier.h"
 %template(NiPSysColorModifierRef) Niflib::Ref<Niflib::NiPSysColorModifier>;
 %template(DynamicCastToNiPSysColorModifier) Niflib::DynamicCast<Niflib::NiPSysColorModifier>;
 %template(StaticCastToNiPSysColorModifier) Niflib::StaticCast<Niflib::NiPSysColorModifier>;
-%include "include/obj/NiPSysCylinderEmitter.h"
+%include "../include/obj/NiPSysCylinderEmitter.h"
 %template(NiPSysCylinderEmitterRef) Niflib::Ref<Niflib::NiPSysCylinderEmitter>;
 %template(DynamicCastToNiPSysCylinderEmitter) Niflib::DynamicCast<Niflib::NiPSysCylinderEmitter>;
 %template(StaticCastToNiPSysCylinderEmitter) Niflib::StaticCast<Niflib::NiPSysCylinderEmitter>;
-%include "include/obj/NiPSysData.h"
+%include "../include/obj/NiPSysData.h"
 %template(NiPSysDataRef) Niflib::Ref<Niflib::NiPSysData>;
 %template(DynamicCastToNiPSysData) Niflib::DynamicCast<Niflib::NiPSysData>;
 %template(StaticCastToNiPSysData) Niflib::StaticCast<Niflib::NiPSysData>;
-%include "include/obj/NiPSysDragModifier.h"
+%include "../include/obj/NiPSysDragModifier.h"
 %template(NiPSysDragModifierRef) Niflib::Ref<Niflib::NiPSysDragModifier>;
 %template(DynamicCastToNiPSysDragModifier) Niflib::DynamicCast<Niflib::NiPSysDragModifier>;
 %template(StaticCastToNiPSysDragModifier) Niflib::StaticCast<Niflib::NiPSysDragModifier>;
-%include "include/obj/NiPSysEmitterCtlr.h"
+%include "../include/obj/NiPSysEmitterCtlr.h"
 %template(NiPSysEmitterCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterCtlr>;
 %template(DynamicCastToNiPSysEmitterCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterCtlr>;
 %template(StaticCastToNiPSysEmitterCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterCtlr>;
-%include "include/obj/NiPSysEmitterCtlrData.h"
+%include "../include/obj/NiPSysEmitterCtlrData.h"
 %template(NiPSysEmitterCtlrDataRef) Niflib::Ref<Niflib::NiPSysEmitterCtlrData>;
 %template(DynamicCastToNiPSysEmitterCtlrData) Niflib::DynamicCast<Niflib::NiPSysEmitterCtlrData>;
 %template(StaticCastToNiPSysEmitterCtlrData) Niflib::StaticCast<Niflib::NiPSysEmitterCtlrData>;
-%include "include/obj/NiPSysEmitterDeclinationCtlr.h"
+%include "../include/obj/NiPSysEmitterDeclinationCtlr.h"
 %template(NiPSysEmitterDeclinationCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterDeclinationCtlr>;
 %template(DynamicCastToNiPSysEmitterDeclinationCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterDeclinationCtlr>;
 %template(StaticCastToNiPSysEmitterDeclinationCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterDeclinationCtlr>;
-%include "include/obj/NiPSysEmitterDeclinationVarCtlr.h"
+%include "../include/obj/NiPSysEmitterDeclinationVarCtlr.h"
 %template(NiPSysEmitterDeclinationVarCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterDeclinationVarCtlr>;
 %template(DynamicCastToNiPSysEmitterDeclinationVarCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterDeclinationVarCtlr>;
 %template(StaticCastToNiPSysEmitterDeclinationVarCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterDeclinationVarCtlr>;
-%include "include/obj/NiPSysEmitterInitialRadiusCtlr.h"
+%include "../include/obj/NiPSysEmitterInitialRadiusCtlr.h"
 %template(NiPSysEmitterInitialRadiusCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterInitialRadiusCtlr>;
 %template(DynamicCastToNiPSysEmitterInitialRadiusCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterInitialRadiusCtlr>;
 %template(StaticCastToNiPSysEmitterInitialRadiusCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterInitialRadiusCtlr>;
-%include "include/obj/NiPSysEmitterLifeSpanCtlr.h"
+%include "../include/obj/NiPSysEmitterLifeSpanCtlr.h"
 %template(NiPSysEmitterLifeSpanCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterLifeSpanCtlr>;
 %template(DynamicCastToNiPSysEmitterLifeSpanCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterLifeSpanCtlr>;
 %template(StaticCastToNiPSysEmitterLifeSpanCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterLifeSpanCtlr>;
-%include "include/obj/NiPSysEmitterSpeedCtlr.h"
+%include "../include/obj/NiPSysEmitterSpeedCtlr.h"
 %template(NiPSysEmitterSpeedCtlrRef) Niflib::Ref<Niflib::NiPSysEmitterSpeedCtlr>;
 %template(DynamicCastToNiPSysEmitterSpeedCtlr) Niflib::DynamicCast<Niflib::NiPSysEmitterSpeedCtlr>;
 %template(StaticCastToNiPSysEmitterSpeedCtlr) Niflib::StaticCast<Niflib::NiPSysEmitterSpeedCtlr>;
-%include "include/obj/NiPSysGravityModifier.h"
+%include "../include/obj/NiPSysGravityModifier.h"
 %template(NiPSysGravityModifierRef) Niflib::Ref<Niflib::NiPSysGravityModifier>;
 %template(DynamicCastToNiPSysGravityModifier) Niflib::DynamicCast<Niflib::NiPSysGravityModifier>;
 %template(StaticCastToNiPSysGravityModifier) Niflib::StaticCast<Niflib::NiPSysGravityModifier>;
-%include "include/obj/NiPSysGravityStrengthCtlr.h"
+%include "../include/obj/NiPSysGravityStrengthCtlr.h"
 %template(NiPSysGravityStrengthCtlrRef) Niflib::Ref<Niflib::NiPSysGravityStrengthCtlr>;
 %template(DynamicCastToNiPSysGravityStrengthCtlr) Niflib::DynamicCast<Niflib::NiPSysGravityStrengthCtlr>;
 %template(StaticCastToNiPSysGravityStrengthCtlr) Niflib::StaticCast<Niflib::NiPSysGravityStrengthCtlr>;
-%include "include/obj/NiPSysGrowFadeModifier.h"
+%include "../include/obj/NiPSysGrowFadeModifier.h"
 %template(NiPSysGrowFadeModifierRef) Niflib::Ref<Niflib::NiPSysGrowFadeModifier>;
 %template(DynamicCastToNiPSysGrowFadeModifier) Niflib::DynamicCast<Niflib::NiPSysGrowFadeModifier>;
 %template(StaticCastToNiPSysGrowFadeModifier) Niflib::StaticCast<Niflib::NiPSysGrowFadeModifier>;
-%include "include/obj/NiPSysMeshEmitter.h"
+%include "../include/obj/NiPSysMeshEmitter.h"
 %template(NiPSysMeshEmitterRef) Niflib::Ref<Niflib::NiPSysMeshEmitter>;
 %template(DynamicCastToNiPSysMeshEmitter) Niflib::DynamicCast<Niflib::NiPSysMeshEmitter>;
 %template(StaticCastToNiPSysMeshEmitter) Niflib::StaticCast<Niflib::NiPSysMeshEmitter>;
-%include "include/obj/NiPSysMeshUpdateModifier.h"
+%include "../include/obj/NiPSysMeshUpdateModifier.h"
 %template(NiPSysMeshUpdateModifierRef) Niflib::Ref<Niflib::NiPSysMeshUpdateModifier>;
 %template(DynamicCastToNiPSysMeshUpdateModifier) Niflib::DynamicCast<Niflib::NiPSysMeshUpdateModifier>;
 %template(StaticCastToNiPSysMeshUpdateModifier) Niflib::StaticCast<Niflib::NiPSysMeshUpdateModifier>;
-%include "include/obj/NiPSysModifierActiveCtlr.h"
+%include "../include/obj/NiPSysModifierActiveCtlr.h"
 %template(NiPSysModifierActiveCtlrRef) Niflib::Ref<Niflib::NiPSysModifierActiveCtlr>;
 %template(DynamicCastToNiPSysModifierActiveCtlr) Niflib::DynamicCast<Niflib::NiPSysModifierActiveCtlr>;
 %template(StaticCastToNiPSysModifierActiveCtlr) Niflib::StaticCast<Niflib::NiPSysModifierActiveCtlr>;
-%include "include/obj/NiPSysPlanarCollider.h"
+%include "../include/obj/NiPSysPlanarCollider.h"
 %template(NiPSysPlanarColliderRef) Niflib::Ref<Niflib::NiPSysPlanarCollider>;
 %template(DynamicCastToNiPSysPlanarCollider) Niflib::DynamicCast<Niflib::NiPSysPlanarCollider>;
 %template(StaticCastToNiPSysPlanarCollider) Niflib::StaticCast<Niflib::NiPSysPlanarCollider>;
-%include "include/obj/NiPSysPositionModifier.h"
+%include "../include/obj/NiPSysPositionModifier.h"
 %template(NiPSysPositionModifierRef) Niflib::Ref<Niflib::NiPSysPositionModifier>;
 %template(DynamicCastToNiPSysPositionModifier) Niflib::DynamicCast<Niflib::NiPSysPositionModifier>;
 %template(StaticCastToNiPSysPositionModifier) Niflib::StaticCast<Niflib::NiPSysPositionModifier>;
-%include "include/obj/NiPSysResetOnLoopCtlr.h"
+%include "../include/obj/NiPSysResetOnLoopCtlr.h"
 %template(NiPSysResetOnLoopCtlrRef) Niflib::Ref<Niflib::NiPSysResetOnLoopCtlr>;
 %template(DynamicCastToNiPSysResetOnLoopCtlr) Niflib::DynamicCast<Niflib::NiPSysResetOnLoopCtlr>;
 %template(StaticCastToNiPSysResetOnLoopCtlr) Niflib::StaticCast<Niflib::NiPSysResetOnLoopCtlr>;
-%include "include/obj/NiPSysRotationModifier.h"
+%include "../include/obj/NiPSysRotationModifier.h"
 %template(NiPSysRotationModifierRef) Niflib::Ref<Niflib::NiPSysRotationModifier>;
 %template(DynamicCastToNiPSysRotationModifier) Niflib::DynamicCast<Niflib::NiPSysRotationModifier>;
 %template(StaticCastToNiPSysRotationModifier) Niflib::StaticCast<Niflib::NiPSysRotationModifier>;
-%include "include/obj/NiPSysSpawnModifier.h"
+%include "../include/obj/NiPSysSpawnModifier.h"
 %template(NiPSysSpawnModifierRef) Niflib::Ref<Niflib::NiPSysSpawnModifier>;
 %template(DynamicCastToNiPSysSpawnModifier) Niflib::DynamicCast<Niflib::NiPSysSpawnModifier>;
 %template(StaticCastToNiPSysSpawnModifier) Niflib::StaticCast<Niflib::NiPSysSpawnModifier>;
-%include "include/obj/NiPSysSphereEmitter.h"
+%include "../include/obj/NiPSysSphereEmitter.h"
 %template(NiPSysSphereEmitterRef) Niflib::Ref<Niflib::NiPSysSphereEmitter>;
 %template(DynamicCastToNiPSysSphereEmitter) Niflib::DynamicCast<Niflib::NiPSysSphereEmitter>;
 %template(StaticCastToNiPSysSphereEmitter) Niflib::StaticCast<Niflib::NiPSysSphereEmitter>;
-%include "include/obj/NiPSysUpdateCtlr.h"
+%include "../include/obj/NiPSysUpdateCtlr.h"
 %template(NiPSysUpdateCtlrRef) Niflib::Ref<Niflib::NiPSysUpdateCtlr>;
 %template(DynamicCastToNiPSysUpdateCtlr) Niflib::DynamicCast<Niflib::NiPSysUpdateCtlr>;
 %template(StaticCastToNiPSysUpdateCtlr) Niflib::StaticCast<Niflib::NiPSysUpdateCtlr>;
-%include "include/obj/NiLODData.h"
+%include "../include/obj/NiLODData.h"
 %template(NiLODDataRef) Niflib::Ref<Niflib::NiLODData>;
 %template(DynamicCastToNiLODData) Niflib::DynamicCast<Niflib::NiLODData>;
 %template(StaticCastToNiLODData) Niflib::StaticCast<Niflib::NiLODData>;
-%include "include/obj/NiRangeLODData.h"
+%include "../include/obj/NiRangeLODData.h"
 %template(NiRangeLODDataRef) Niflib::Ref<Niflib::NiRangeLODData>;
 %template(DynamicCastToNiRangeLODData) Niflib::DynamicCast<Niflib::NiRangeLODData>;
 %template(StaticCastToNiRangeLODData) Niflib::StaticCast<Niflib::NiRangeLODData>;
-%include "include/obj/NiScreenLODData.h"
+%include "../include/obj/NiScreenLODData.h"
 %template(NiScreenLODDataRef) Niflib::Ref<Niflib::NiScreenLODData>;
 %template(DynamicCastToNiScreenLODData) Niflib::DynamicCast<Niflib::NiScreenLODData>;
 %template(StaticCastToNiScreenLODData) Niflib::StaticCast<Niflib::NiScreenLODData>;
-%include "include/obj/NiRotatingParticles.h"
+%include "../include/obj/NiRotatingParticles.h"
 %template(NiRotatingParticlesRef) Niflib::Ref<Niflib::NiRotatingParticles>;
 %template(DynamicCastToNiRotatingParticles) Niflib::DynamicCast<Niflib::NiRotatingParticles>;
 %template(StaticCastToNiRotatingParticles) Niflib::StaticCast<Niflib::NiRotatingParticles>;
-%include "include/obj/NiRotatingParticlesData.h"
+%include "../include/obj/NiRotatingParticlesData.h"
 %template(NiRotatingParticlesDataRef) Niflib::Ref<Niflib::NiRotatingParticlesData>;
 %template(DynamicCastToNiRotatingParticlesData) Niflib::DynamicCast<Niflib::NiRotatingParticlesData>;
 %template(StaticCastToNiRotatingParticlesData) Niflib::StaticCast<Niflib::NiRotatingParticlesData>;
-%include "include/obj/NiSequenceStreamHelper.h"
+%include "../include/obj/NiSequenceStreamHelper.h"
 %template(NiSequenceStreamHelperRef) Niflib::Ref<Niflib::NiSequenceStreamHelper>;
 %template(DynamicCastToNiSequenceStreamHelper) Niflib::DynamicCast<Niflib::NiSequenceStreamHelper>;
 %template(StaticCastToNiSequenceStreamHelper) Niflib::StaticCast<Niflib::NiSequenceStreamHelper>;
-%include "include/obj/NiShadeProperty.h"
+%include "../include/obj/NiShadeProperty.h"
 %template(NiShadePropertyRef) Niflib::Ref<Niflib::NiShadeProperty>;
 %template(DynamicCastToNiShadeProperty) Niflib::DynamicCast<Niflib::NiShadeProperty>;
 %template(StaticCastToNiShadeProperty) Niflib::StaticCast<Niflib::NiShadeProperty>;
-%include "include/obj/NiSkinData.h"
+%include "../include/obj/NiSkinData.h"
 %template(NiSkinDataRef) Niflib::Ref<Niflib::NiSkinData>;
 %template(DynamicCastToNiSkinData) Niflib::DynamicCast<Niflib::NiSkinData>;
 %template(StaticCastToNiSkinData) Niflib::StaticCast<Niflib::NiSkinData>;
-%include "include/obj/NiSkinInstance.h"
+%include "../include/obj/NiSkinInstance.h"
 %template(NiSkinInstanceRef) Niflib::Ref<Niflib::NiSkinInstance>;
 %template(DynamicCastToNiSkinInstance) Niflib::DynamicCast<Niflib::NiSkinInstance>;
 %template(StaticCastToNiSkinInstance) Niflib::StaticCast<Niflib::NiSkinInstance>;
-%include "include/obj/NiClodSkinInstance.h"
+%include "../include/obj/NiClodSkinInstance.h"
 %template(NiClodSkinInstanceRef) Niflib::Ref<Niflib::NiClodSkinInstance>;
 %template(DynamicCastToNiClodSkinInstance) Niflib::DynamicCast<Niflib::NiClodSkinInstance>;
 %template(StaticCastToNiClodSkinInstance) Niflib::StaticCast<Niflib::NiClodSkinInstance>;
-%include "include/obj/NiSkinPartition.h"
+%include "../include/obj/NiSkinPartition.h"
 %template(NiSkinPartitionRef) Niflib::Ref<Niflib::NiSkinPartition>;
 %template(DynamicCastToNiSkinPartition) Niflib::DynamicCast<Niflib::NiSkinPartition>;
 %template(StaticCastToNiSkinPartition) Niflib::StaticCast<Niflib::NiSkinPartition>;
-%include "include/obj/NiSourceTexture.h"
+%include "../include/obj/NiSourceTexture.h"
 %template(NiSourceTextureRef) Niflib::Ref<Niflib::NiSourceTexture>;
 %template(DynamicCastToNiSourceTexture) Niflib::DynamicCast<Niflib::NiSourceTexture>;
 %template(StaticCastToNiSourceTexture) Niflib::StaticCast<Niflib::NiSourceTexture>;
-%include "include/obj/NiSpecularProperty.h"
+%include "../include/obj/NiSpecularProperty.h"
 %template(NiSpecularPropertyRef) Niflib::Ref<Niflib::NiSpecularProperty>;
 %template(DynamicCastToNiSpecularProperty) Niflib::DynamicCast<Niflib::NiSpecularProperty>;
 %template(StaticCastToNiSpecularProperty) Niflib::StaticCast<Niflib::NiSpecularProperty>;
-%include "include/obj/NiSphericalCollider.h"
+%include "../include/obj/NiSphericalCollider.h"
 %template(NiSphericalColliderRef) Niflib::Ref<Niflib::NiSphericalCollider>;
 %template(DynamicCastToNiSphericalCollider) Niflib::DynamicCast<Niflib::NiSphericalCollider>;
 %template(StaticCastToNiSphericalCollider) Niflib::StaticCast<Niflib::NiSphericalCollider>;
-%include "include/obj/NiSpotLight.h"
+%include "../include/obj/NiSpotLight.h"
 %template(NiSpotLightRef) Niflib::Ref<Niflib::NiSpotLight>;
 %template(DynamicCastToNiSpotLight) Niflib::DynamicCast<Niflib::NiSpotLight>;
 %template(StaticCastToNiSpotLight) Niflib::StaticCast<Niflib::NiSpotLight>;
-%include "include/obj/NiStencilProperty.h"
+%include "../include/obj/NiStencilProperty.h"
 %template(NiStencilPropertyRef) Niflib::Ref<Niflib::NiStencilProperty>;
 %template(DynamicCastToNiStencilProperty) Niflib::DynamicCast<Niflib::NiStencilProperty>;
 %template(StaticCastToNiStencilProperty) Niflib::StaticCast<Niflib::NiStencilProperty>;
-%include "include/obj/NiStringExtraData.h"
+%include "../include/obj/NiStringExtraData.h"
 %template(NiStringExtraDataRef) Niflib::Ref<Niflib::NiStringExtraData>;
 %template(DynamicCastToNiStringExtraData) Niflib::DynamicCast<Niflib::NiStringExtraData>;
 %template(StaticCastToNiStringExtraData) Niflib::StaticCast<Niflib::NiStringExtraData>;
-%include "include/obj/NiStringPalette.h"
+%include "../include/obj/NiStringPalette.h"
 %template(NiStringPaletteRef) Niflib::Ref<Niflib::NiStringPalette>;
 %template(DynamicCastToNiStringPalette) Niflib::DynamicCast<Niflib::NiStringPalette>;
 %template(StaticCastToNiStringPalette) Niflib::StaticCast<Niflib::NiStringPalette>;
-%include "include/obj/NiStringsExtraData.h"
+%include "../include/obj/NiStringsExtraData.h"
 %template(NiStringsExtraDataRef) Niflib::Ref<Niflib::NiStringsExtraData>;
 %template(DynamicCastToNiStringsExtraData) Niflib::DynamicCast<Niflib::NiStringsExtraData>;
 %template(StaticCastToNiStringsExtraData) Niflib::StaticCast<Niflib::NiStringsExtraData>;
-%include "include/obj/NiTextKeyExtraData.h"
+%include "../include/obj/NiTextKeyExtraData.h"
 %template(NiTextKeyExtraDataRef) Niflib::Ref<Niflib::NiTextKeyExtraData>;
 %template(DynamicCastToNiTextKeyExtraData) Niflib::DynamicCast<Niflib::NiTextKeyExtraData>;
 %template(StaticCastToNiTextKeyExtraData) Niflib::StaticCast<Niflib::NiTextKeyExtraData>;
-%include "include/obj/NiTextureEffect.h"
+%include "../include/obj/NiTextureEffect.h"
 %template(NiTextureEffectRef) Niflib::Ref<Niflib::NiTextureEffect>;
 %template(DynamicCastToNiTextureEffect) Niflib::DynamicCast<Niflib::NiTextureEffect>;
 %template(StaticCastToNiTextureEffect) Niflib::StaticCast<Niflib::NiTextureEffect>;
-%include "include/obj/NiTextureTransformController.h"
+%include "../include/obj/NiTextureTransformController.h"
 %template(NiTextureTransformControllerRef) Niflib::Ref<Niflib::NiTextureTransformController>;
 %template(DynamicCastToNiTextureTransformController) Niflib::DynamicCast<Niflib::NiTextureTransformController>;
 %template(StaticCastToNiTextureTransformController) Niflib::StaticCast<Niflib::NiTextureTransformController>;
-%include "include/obj/NiTextureModeProperty.h"
+%include "../include/obj/NiTextureModeProperty.h"
 %template(NiTextureModePropertyRef) Niflib::Ref<Niflib::NiTextureModeProperty>;
 %template(DynamicCastToNiTextureModeProperty) Niflib::DynamicCast<Niflib::NiTextureModeProperty>;
 %template(StaticCastToNiTextureModeProperty) Niflib::StaticCast<Niflib::NiTextureModeProperty>;
-%include "include/obj/NiImage.h"
+%include "../include/obj/NiImage.h"
 %template(NiImageRef) Niflib::Ref<Niflib::NiImage>;
 %template(DynamicCastToNiImage) Niflib::DynamicCast<Niflib::NiImage>;
 %template(StaticCastToNiImage) Niflib::StaticCast<Niflib::NiImage>;
-%include "include/obj/NiTextureProperty.h"
+%include "../include/obj/NiTextureProperty.h"
 %template(NiTexturePropertyRef) Niflib::Ref<Niflib::NiTextureProperty>;
 %template(DynamicCastToNiTextureProperty) Niflib::DynamicCast<Niflib::NiTextureProperty>;
 %template(StaticCastToNiTextureProperty) Niflib::StaticCast<Niflib::NiTextureProperty>;
-%include "include/obj/NiTexturingProperty.h"
+%include "../include/obj/NiTexturingProperty.h"
 %template(NiTexturingPropertyRef) Niflib::Ref<Niflib::NiTexturingProperty>;
 %template(DynamicCastToNiTexturingProperty) Niflib::DynamicCast<Niflib::NiTexturingProperty>;
 %template(StaticCastToNiTexturingProperty) Niflib::StaticCast<Niflib::NiTexturingProperty>;
-%include "include/obj/NiTransformController.h"
+%include "../include/obj/NiTransformController.h"
 %template(NiTransformControllerRef) Niflib::Ref<Niflib::NiTransformController>;
 %template(DynamicCastToNiTransformController) Niflib::DynamicCast<Niflib::NiTransformController>;
 %template(StaticCastToNiTransformController) Niflib::StaticCast<Niflib::NiTransformController>;
-%include "include/obj/NiTransformData.h"
+%include "../include/obj/NiTransformData.h"
 %template(NiTransformDataRef) Niflib::Ref<Niflib::NiTransformData>;
 %template(DynamicCastToNiTransformData) Niflib::DynamicCast<Niflib::NiTransformData>;
 %template(StaticCastToNiTransformData) Niflib::StaticCast<Niflib::NiTransformData>;
-%include "include/obj/NiTransformInterpolator.h"
+%include "../include/obj/NiTransformInterpolator.h"
 %template(NiTransformInterpolatorRef) Niflib::Ref<Niflib::NiTransformInterpolator>;
 %template(DynamicCastToNiTransformInterpolator) Niflib::DynamicCast<Niflib::NiTransformInterpolator>;
 %template(StaticCastToNiTransformInterpolator) Niflib::StaticCast<Niflib::NiTransformInterpolator>;
-%include "include/obj/NiTriShape.h"
+%include "../include/obj/NiTriShape.h"
 %template(NiTriShapeRef) Niflib::Ref<Niflib::NiTriShape>;
 %template(DynamicCastToNiTriShape) Niflib::DynamicCast<Niflib::NiTriShape>;
 %template(StaticCastToNiTriShape) Niflib::StaticCast<Niflib::NiTriShape>;
-%include "include/obj/NiTriShapeData.h"
+%include "../include/obj/NiTriShapeData.h"
 %template(NiTriShapeDataRef) Niflib::Ref<Niflib::NiTriShapeData>;
 %template(DynamicCastToNiTriShapeData) Niflib::DynamicCast<Niflib::NiTriShapeData>;
 %template(StaticCastToNiTriShapeData) Niflib::StaticCast<Niflib::NiTriShapeData>;
-%include "include/obj/NiTriStrips.h"
+%include "../include/obj/NiTriStrips.h"
 %template(NiTriStripsRef) Niflib::Ref<Niflib::NiTriStrips>;
 %template(DynamicCastToNiTriStrips) Niflib::DynamicCast<Niflib::NiTriStrips>;
 %template(StaticCastToNiTriStrips) Niflib::StaticCast<Niflib::NiTriStrips>;
-%include "include/obj/NiTriStripsData.h"
+%include "../include/obj/NiTriStripsData.h"
 %template(NiTriStripsDataRef) Niflib::Ref<Niflib::NiTriStripsData>;
 %template(DynamicCastToNiTriStripsData) Niflib::DynamicCast<Niflib::NiTriStripsData>;
 %template(StaticCastToNiTriStripsData) Niflib::StaticCast<Niflib::NiTriStripsData>;
-%include "include/obj/NiClod.h"
+%include "../include/obj/NiClod.h"
 %template(NiClodRef) Niflib::Ref<Niflib::NiClod>;
 %template(DynamicCastToNiClod) Niflib::DynamicCast<Niflib::NiClod>;
 %template(StaticCastToNiClod) Niflib::StaticCast<Niflib::NiClod>;
-%include "include/obj/NiClodData.h"
+%include "../include/obj/NiClodData.h"
 %template(NiClodDataRef) Niflib::Ref<Niflib::NiClodData>;
 %template(DynamicCastToNiClodData) Niflib::DynamicCast<Niflib::NiClodData>;
 %template(StaticCastToNiClodData) Niflib::StaticCast<Niflib::NiClodData>;
-%include "include/obj/NiUVController.h"
+%include "../include/obj/NiUVController.h"
 %template(NiUVControllerRef) Niflib::Ref<Niflib::NiUVController>;
 %template(DynamicCastToNiUVController) Niflib::DynamicCast<Niflib::NiUVController>;
 %template(StaticCastToNiUVController) Niflib::StaticCast<Niflib::NiUVController>;
-%include "include/obj/NiUVData.h"
+%include "../include/obj/NiUVData.h"
 %template(NiUVDataRef) Niflib::Ref<Niflib::NiUVData>;
 %template(DynamicCastToNiUVData) Niflib::DynamicCast<Niflib::NiUVData>;
 %template(StaticCastToNiUVData) Niflib::StaticCast<Niflib::NiUVData>;
-%include "include/obj/NiVectorExtraData.h"
+%include "../include/obj/NiVectorExtraData.h"
 %template(NiVectorExtraDataRef) Niflib::Ref<Niflib::NiVectorExtraData>;
 %template(DynamicCastToNiVectorExtraData) Niflib::DynamicCast<Niflib::NiVectorExtraData>;
 %template(StaticCastToNiVectorExtraData) Niflib::StaticCast<Niflib::NiVectorExtraData>;
-%include "include/obj/NiVertexColorProperty.h"
+%include "../include/obj/NiVertexColorProperty.h"
 %template(NiVertexColorPropertyRef) Niflib::Ref<Niflib::NiVertexColorProperty>;
 %template(DynamicCastToNiVertexColorProperty) Niflib::DynamicCast<Niflib::NiVertexColorProperty>;
 %template(StaticCastToNiVertexColorProperty) Niflib::StaticCast<Niflib::NiVertexColorProperty>;
-%include "include/obj/NiVertWeightsExtraData.h"
+%include "../include/obj/NiVertWeightsExtraData.h"
 %template(NiVertWeightsExtraDataRef) Niflib::Ref<Niflib::NiVertWeightsExtraData>;
 %template(DynamicCastToNiVertWeightsExtraData) Niflib::DynamicCast<Niflib::NiVertWeightsExtraData>;
 %template(StaticCastToNiVertWeightsExtraData) Niflib::StaticCast<Niflib::NiVertWeightsExtraData>;
-%include "include/obj/NiVisController.h"
+%include "../include/obj/NiVisController.h"
 %template(NiVisControllerRef) Niflib::Ref<Niflib::NiVisController>;
 %template(DynamicCastToNiVisController) Niflib::DynamicCast<Niflib::NiVisController>;
 %template(StaticCastToNiVisController) Niflib::StaticCast<Niflib::NiVisController>;
-%include "include/obj/NiVisData.h"
+%include "../include/obj/NiVisData.h"
 %template(NiVisDataRef) Niflib::Ref<Niflib::NiVisData>;
 %template(DynamicCastToNiVisData) Niflib::DynamicCast<Niflib::NiVisData>;
 %template(StaticCastToNiVisData) Niflib::StaticCast<Niflib::NiVisData>;
-%include "include/obj/NiWireframeProperty.h"
+%include "../include/obj/NiWireframeProperty.h"
 %template(NiWireframePropertyRef) Niflib::Ref<Niflib::NiWireframeProperty>;
 %template(DynamicCastToNiWireframeProperty) Niflib::DynamicCast<Niflib::NiWireframeProperty>;
 %template(StaticCastToNiWireframeProperty) Niflib::StaticCast<Niflib::NiWireframeProperty>;
-%include "include/obj/NiZBufferProperty.h"
+%include "../include/obj/NiZBufferProperty.h"
 %template(NiZBufferPropertyRef) Niflib::Ref<Niflib::NiZBufferProperty>;
 %template(DynamicCastToNiZBufferProperty) Niflib::DynamicCast<Niflib::NiZBufferProperty>;
 %template(StaticCastToNiZBufferProperty) Niflib::StaticCast<Niflib::NiZBufferProperty>;
-%include "include/obj/RootCollisionNode.h"
+%include "../include/obj/RootCollisionNode.h"
 %template(RootCollisionNodeRef) Niflib::Ref<Niflib::RootCollisionNode>;
 %template(DynamicCastToRootCollisionNode) Niflib::DynamicCast<Niflib::RootCollisionNode>;
 %template(StaticCastToRootCollisionNode) Niflib::StaticCast<Niflib::RootCollisionNode>;
 */
-%include "include/gen/ByteArray.h"
-%include "include/gen/Footer.h"
-%include "include/gen/LODRange.h"
-%include "include/gen/MatchGroup.h"
-%include "include/gen/MipMap.h"
-%include "include/gen/NodeGroup.h"
-%include "include/gen/QuaternionXYZW.h"
-%include "include/gen/SkinShape.h"
-%include "include/gen/SkinShapeGroup.h"
-%include "include/gen/SkinWeight.h"
-%include "include/gen/AVObject.h"
-%include "include/gen/ControllerLink.h"
-%include "include/gen/Header.h"
-%include "include/gen/StringPalette.h"
-%include "include/gen/TBC.h"
-%include "include/gen/KeyGroup.h"
-%include "include/gen/RotationKeyArray.h"
-%include "include/gen/TexDesc.h"
-%include "include/gen/ShaderTexDesc.h"
-%include "include/gen/TexSource.h"
-%include "include/gen/SkinPartition.h"
-%include "include/gen/BoundingBox.h"
-%include "include/gen/FurniturePosition.h"
-%include "include/gen/hkTriangle.h"
-%include "include/gen/Morph.h"
-%include "include/gen/Particle.h"
-%include "include/gen/SkinData.h"
-%include "include/gen/Sphere.h"
-%include "include/gen/RagDollDescriptor.h"
-%include "include/gen/LimitedHingeDescriptor.h"
+%include "../include/gen/ByteArray.h"
+%include "../include/gen/Footer.h"
+%include "../include/gen/LODRange.h"
+%include "../include/gen/MatchGroup.h"
+%include "../include/gen/MipMap.h"
+%include "../include/gen/NodeGroup.h"
+%include "../include/gen/QuaternionXYZW.h"
+%include "../include/gen/SkinShape.h"
+%include "../include/gen/SkinShapeGroup.h"
+%include "../include/gen/SkinWeight.h"
+%include "../include/gen/AVObject.h"
+%include "../include/gen/ControllerLink.h"
+%include "../include/gen/Header.h"
+%include "../include/gen/StringPalette.h"
+%include "../include/gen/TBC.h"
+%include "../include/gen/KeyGroup.h"
+%include "../include/gen/RotationKeyArray.h"
+%include "../include/gen/TexDesc.h"
+%include "../include/gen/ShaderTexDesc.h"
+%include "../include/gen/TexSource.h"
+%include "../include/gen/SkinPartition.h"
+%include "../include/gen/BoundingBox.h"
+%include "../include/gen/FurniturePosition.h"
+%include "../include/gen/hkTriangle.h"
+%include "../include/gen/Morph.h"
+%include "../include/gen/Particle.h"
+%include "../include/gen/SkinData.h"
+%include "../include/gen/Sphere.h"
+%include "../include/gen/RagDollDescriptor.h"
+%include "../include/gen/LimitedHingeDescriptor.h"
 
 %template(vector_NiAVObjectRef) std::vector<Niflib::NiAVObjectRef>;

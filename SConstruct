@@ -400,9 +400,7 @@ niflib = env.SharedLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles,
 
 # build Python wrapper
 if PYWRAP:
-    niflib_python = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['.'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
-    # makes sure niflib.dll is built before trying to build _niflib.dll
-    env.Depends(niflib_python, niflib)
+    SConscript('swig/SConscript' , exports=['env', 'python_lib', 'python_libpath', 'python_include'])
 
 # Here's how to compile niflyze:
 #env.Program('niflyze', 'niflyze.cpp', LIBS=['niflib'], LIBPATH=['.'])

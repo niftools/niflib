@@ -1,0 +1,4 @@
+Import('*')
+
+niflib_python = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=['niflib'] + python_lib, LIBPATH=['..'] + python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
+
