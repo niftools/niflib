@@ -610,6 +610,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %include "python.h"
 %{
 #include "python.h"
+#include "../include/gen/obj_defines.h"
 %}
 
 %template(vector_byte) std::vector<Niflib::byte>;
@@ -721,6 +722,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiBSplineInterpolatorRef) Niflib::Ref<Niflib::NiBSplineInterpolator>;
 %template(DynamicCastToNiBSplineInterpolator) Niflib::DynamicCast<Niflib::NiBSplineInterpolator>;
 %template(StaticCastToNiBSplineInterpolator) Niflib::StaticCast<Niflib::NiBSplineInterpolator>;
+*/
 %include "../include/obj/NiObjectNET.h"
 %template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
 %template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
@@ -729,6 +731,7 @@ POSSIBILITY OF SUCH DAMAGE. */
 %template(NiAVObjectRef) Niflib::Ref<Niflib::NiAVObject>;
 %template(DynamicCastToNiAVObject) Niflib::DynamicCast<Niflib::NiAVObject>;
 %template(StaticCastToNiAVObject) Niflib::StaticCast<Niflib::NiAVObject>;
+/*
 %include "../include/obj/NiDynamicEffect.h"
 %template(NiDynamicEffectRef) Niflib::Ref<Niflib::NiDynamicEffect>;
 %template(DynamicCastToNiDynamicEffect) Niflib::DynamicCast<Niflib::NiDynamicEffect>;
