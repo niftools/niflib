@@ -87,7 +87,7 @@ if arch == 'x86_64' and TUNE == 'yes':
 
 #We want to detect the number of jobs! Although some folks depending on sys load may want to set it more aggressively.
 if DETECT_JOBS == 'yes' and OS == 'linux':
-	detected_jobs = commands.getoutput('cat /proc/cpuinfo | grep -c processor')
+	detected_jobs = commands.getoutput('cat /proc/cpuinfo | grep -c "^processor"')
 	if detected_jobs >= '1':
 		print "Detected Jobs: %s"%detected_jobs
 		JOBS = detected_jobs
