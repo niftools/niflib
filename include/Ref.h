@@ -7,12 +7,14 @@ All rights reserved.  Please see niflib.h for licence. */
 #include <ostream>
 namespace Niflib {
 
+using namespace std;
+
 /**
  * Smart Pointer Template
  */
 
 template<class T> class Ref;
-template<class T> std::ostream & operator<<(std::ostream &, const Ref<T> &);
+template<class T> ostream & operator<<(ostream &, const Ref<T> &);
 
 template <class T> class Ref {
 public:
@@ -46,7 +48,7 @@ public:
 
 	//These operators generate problems in SWIG
 #ifndef SWIG
-   friend std::ostream & operator<< <T>(std::ostream & os, const Ref & ref);
+   friend ostream & operator<< <T>(ostream & os, const Ref & ref);
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
 	operator T*() const;
@@ -192,7 +194,7 @@ bool Ref<T>::operator!=(const Ref & ref) const {
 
 #ifndef SWIG
 template <class T>
-std::ostream & operator<<(std::ostream & os, const Ref<T> & ref) {
+ostream & operator<<(ostream & os, const Ref<T> & ref) {
 	if (ref._object)
 		os << ref->GetIDString();
 	else
