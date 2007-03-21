@@ -355,8 +355,14 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 // Headers exposed to the Python interface
 
-%include "../include/niflib.h"
+// NOTE: It is mandatory that Ref.h is included before niflib.h, and actually,
+// before any header that uses Ref types.
+// Otherwise, swig will not recognize Ref<> to be part of the Niflib namespace
+// and consequently all functions in niflib.h returning Ref<> types will not 
+// return correctly wrapped python types.
+// Briefly, it is safest to include Ref.h first.
 %include "../include/Ref.h"
+%include "../include/niflib.h"
 %include "../include/Type.h"
 %include "../include/nif_math.h"
 

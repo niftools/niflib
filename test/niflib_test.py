@@ -20,7 +20,7 @@ class TestNiNode(unittest.TestCase):
 
         # read nif file
         self.nifinfo_in = NifInfo()
-        root_obj = ReadNifFile("test.nif", self.nifinfo_in)
+        root_obj = ReadNifTree("test.nif", self.nifinfo_in)
         root_in = DynamicCastToNiNode(root_obj.Ptr())
 
         self.x_in = root_in.GetLocalTransform()

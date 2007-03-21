@@ -11,10 +11,6 @@ using namespace std;
 
 Niflib::NiNodeRef CreateNiNode() { return Niflib::NiNodeRef(new Niflib::NiNode); }
 
-// SWIG does not like ReadNifTree; so far I have no idea why.
-// As a workaround, you can use this wrapper function.
-Niflib::NiObjectRef ReadNifFile( string name, Niflib::NifInfo * nifinfo) { return Niflib::ReadNifTree(name, nifinfo);}
-
 };
 
 #endif
