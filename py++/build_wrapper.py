@@ -64,9 +64,7 @@ def rename_refs( ref ):
 ####
 
 # Creating an instance of class that will help you to expose your declarations
-mb = module_builder.module_builder_t( [r"pyNiflib.h"]
-                                      , include_paths = [wrapper_config.niflib_path + '/include', wrapper_config.niflib_path + '/include/gen', wrapper_config.niflib_path + '/include/obj']
-                                      , indexing_suite_version = 2 )
+mb = module_builder.module_builder_t( [r"pyNiflib.h"], include_paths = [wrapper_config.niflib_path + '/include', wrapper_config.niflib_path + '/include/gen', wrapper_config.niflib_path + '/include/obj'], indexing_suite_version = 2 )
 
 # Set the max. number of template arguments
 mb.BOOST_PYTHON_MAX_ARITY = 20

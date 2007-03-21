@@ -3,7 +3,7 @@
 ######
 
 # The path to the Niflib folder
-niflib_path = "../niflib"
+niflib_path = ".."
 
 # Internal containers - those are not typedef'd
 internal_containers = \
