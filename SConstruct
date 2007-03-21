@@ -11,93 +11,78 @@ Help("""
 
 ##Global Vars, should add cc, cxx, build, etc eventually...
 ##May want to turn Jobs down, we will try and detect an appropriate JOB rate for linux
-JOBS ='1'
-DETECT_JOBS = 'yes'  #Set this to no, if you are setting JOBS!!
-DEBUG ='no'
-TUNE ='yes'
-CFFLAGS_EXTRA_WARNING ='no'
-PYWRAP = True               # set to False if you do not want to build the python wrapper
+JOBS = 1                      # default number of jobs, if detection fails
+DETECT_JOBS = True            # set this to False, if you are setting JOBS
+DEBUG = True                  # turn on debugging info?
+CFFLAGS_EXTRA_WARNING = False # extra compiler warnings
+PYWRAP = True                 # build the python wrapper?
+TEST = True                   # build test scripts?
 
 # Setting up a basic default environment
 # Theory is it can be expanded for versatility, like swig doesn't seem to like jobs of 4
 
 env = Environment(ENV = os.environ)
 
-
-# detect platform
-if sys.platform == 'linux2' or sys.platform == 'linux-i386':
-    OS = 'linux'
+# linux platform
+if sys.platform in ['linux2', 'linux-i386', 'cygwin']:
+    # set python environment
     python_lib = ['python%d.%d' % sys.version_info[0:2]]
     python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
     python_include = [sysconfig.get_python_inc ()]
-    env.Append(CCFLAGS = ' -Iinclude -fPIC -Wall -pipe')
-elif sys.platform == 'cygwin':
-    OS = 'linux'
-    python_lib = ['python%d.%d' % sys.version_info[0:2]]
-    python_libpath = [sysconfig.get_python_lib (0, 1) + '/config']
-    python_include = [sysconfig.get_python_inc ()]
+    # set compiler flags
     env.Append(CCFLAGS = ' -Wall')
+    if CFFLAGS_EXTRA_WARNING:
+         env.Append(CCFLAGS = ' -Wextra')
+    if sys.platform != 'cygwin':
+        env.Append(CCFLAGS = ' -fPIC -pipe')
+    # flags for debugging info
+    if DEBUG:
+         env.Append(CCFLAGS = ' -O0 -g3 -ggdb')
+    # flags for tuning (only if DEBUG is False)
+    else:
+       env.Append(CCFLAGS = ' -O3')
+       # architecture specific tuning
+       # x86, x86_64, or what? (better way?)
+       proc = commands.getoutput('uname -m')
+       if proc == 'x86_64':
+           arch = 'x86_64'
+       #elif exp.match(proc): # broken
+       elif proc in ['x86', 'i386', 'i486', 'i586', 'i686']:
+           arch = 'x86'
+       elif proc in ['Power Macintosh', 'ppc']:
+           arch = 'ppc'
+       else:
+           arch = None
+       # needs to be cleaned up and expanded to include Intel
+       if arch == 'x86_64':
+           if commands.getoutput('uname -i') == 'AuthenticAMD':
+               env.Append(CCFLAGS = ' -mtune=k8')
+           #elif commands.getoutput('uname -i') == 'GenuineIntel':
+           #    env.Append(CCFLAGS = ' -mtune=nocona')
+    # detect the number of jobs
+    if DETECT_JOBS:
+        detected_jobs = int(commands.getoutput('cat /proc/cpuinfo | grep -c "^processor"'))
+        if detected_jobs >= 2:
+            JOBS = detected_jobs
+
+# windows platform
 elif sys.platform == 'win32':
-    OS = 'windows'
     python_include = [sysconfig.get_python_inc()]
     python_libpath = [sysconfig.get_python_lib(1, 1) + '/../libs']
     python_lib = ['python24']
-    env.Append(CCFLAGS = '/EHsc /O2 /GS /Zi /TP')
+    env.Append(CCFLAGS = '/EHsc /GS /TP')
+    if DEBUG:
+        env.Append(CCFLAGS = ' /Zi')
+    else:
+        env.Append(CCFLAGS = ' /O2')
+
+# other platforms
 else:
     print "Error: Platform %s not supported."%sys.platform
     Exit(1)
 
-
-
-#Debug, Extra, 02 checks
-if (sys.platform == 'linux2' or sys.platform == 'linux-i386') or sys.platform == 'cygwin':
-    if DEBUG == 'yes':
-         env.Append(CCFLAGS = ' -g3')
-    if CFFLAGS_EXTRA_WARNING == 'yes':
-         env.Append(CCFLAGS = ' -Wextra')
-    if TUNE == 'yes':
-       env.Append(CCFLAGS = ' -O2')
-    if TUNE == 'yes' and DEBUG == 'yes' :
-	print "TUNE and DEBUG may conflict!!"
-
-
-
-# Proc x86, x86_64, or what? Better way?
-proc = commands.getoutput('uname -m')
-if proc == 'x86_64':
-  arch = 'x86_64'
-#elif exp.match(proc): # broken
-elif proc == 'x86':
-  arch = 'x86'
-elif proc == 'Power Macintosh' or proc == 'ppc':
-  arch = 'ppc'
-else:
-  arch = 'cpu'
-
-#This is ugly, needs to be cleaned up and expanded to include Intel.
-#
-if arch == 'x86_64' and TUNE == 'yes':
-   if commands.getoutput('uname -i') == 'AuthenticAMD':
-      env.Append(CCFLAGS = ' -mtune=k8')
-#   if commands.getoutput('uname -i') == 'GenuineIntel':
-#	env.Append(CCFLAGS = ' -mtune=nocona')
-#Should cover 64 bit versions of Intel chips, but don't have one and never bothered to look into it
-
-
-
-#We want to detect the number of jobs! Although some folks depending on sys load may want to set it more aggressively.
-if DETECT_JOBS == 'yes' and OS == 'linux':
-	detected_jobs = commands.getoutput('cat /proc/cpuinfo | grep -c "^processor"')
-	if detected_jobs >= '1':
-		print "Detected Jobs: %s"%detected_jobs
-		JOBS = detected_jobs
-		print "Detected Jobs changing to %s"%JOBS
-	else:
-		print "Error Detecting jobs!"
-
-
+# set number of jobs
 env.SetOption('num_jobs', JOBS)
-
 
 # detect SWIG
 try:
@@ -109,6 +94,7 @@ Warning: SWIG not found. The python wrapper will not be built.
 Please install SWIG to build the python wrapper."""
     if sys.platform == "win32": print "Also add the SWIG directory to your %PATH%."
     print "You can download SWIG from http://www.swig.org/\n"
+
 
 
 gen_objfiles = Split("""
@@ -401,10 +387,9 @@ niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles,
 
 # build Python wrapper
 if PYWRAP:
-    SConscript('swig/SConscript' , exports=['env', 'python_lib', 'python_libpath', 'python_include', 'niflib'])
-
-# Here's how to compile niflyze:
-#env.Program('niflyze', 'niflyze.cpp', LIBS=[niflib], LIBPATH=['.'])
+    SConscript('swig/SConscript' , exports=['env', 'python_lib', 'python_libpath', 'python_include', 'niflib', 'TEST'])
 
 # A test program:
-#env.Program('test', 'test.cpp', LIBS=[niflib], LIBPATH=['.']) 
+if TEST:
+    env.Program('niflib_test', 'niflib_test.cpp', LIBS=[niflib], LIBPATH=['.'])
+

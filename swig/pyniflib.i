@@ -76,19 +76,20 @@ POSSIBILITY OF SUCH DAMAGE. */
 // essential for NIF exporting and importing scripts.
 // This will reduce the size of the wrapper file.
 
-/*
-
 // various function ignores (might be put pack in final version)
 %ignore asString;
 %ignore FixLinks;
 %ignore Read;
 %ignore Write;
 %ignore operator=;
+%ignore operator[];
 %ignore TypeConst;
 %ignore GetIDString;
 %ignore IsSameType;
 %ignore IsDerivedType;
 %ignore NumObjectsInMemory;
+
+/*
 
 // vector ignores (will be unignored again once wrapper is functional)
 %ignore iterator;
@@ -117,7 +118,9 @@ POSSIBILITY OF SUCH DAMAGE. */
 */
 
 // ignores objects python does not need to know of anyway
-//ignore Ptr;
+//%ignore Ptr;
+
+/*
 
 // ignore all base objects: we only need access via the Ref objects
 %ignore NiObject;
@@ -343,6 +346,8 @@ POSSIBILITY OF SUCH DAMAGE. */
 %ignore NiZBufferProperty;
 %ignore RootCollisionNode;
 
+*/
+
 // Import the symbols from these but do not include them in the wrapper
 %import "../include/gen/obj_defines.h"
 %import "../include/NIF_IO.h"
@@ -359,10 +364,18 @@ POSSIBILITY OF SUCH DAMAGE. */
 
 %{
 #include "../include/niflib.h"
+%}
+
+// SWIG is very picky about namespaces. Using namespace Niflib throughout
+// ensures that SWIG wraps all types in the right way.
+%{
+using namespace Niflib;
+%}
+
+%{
 #include "../include/Ref.h"
 #include "../include/Type.h"
 #include "../include/nif_math.h"
-
 #include "../include/obj/NiObject.h"
 #include "../include/obj/AKeyedData.h"
 #include "../include/obj/AParticleModifier.h"
@@ -617,11 +630,6 @@ POSSIBILITY OF SUCH DAMAGE. */
 #include "../include/gen/LimitedHingeDescriptor.h"
 %}
 
-// This resolves an issue with SWIG and namespace?
-%{
-using namespace Niflib;
-%}
-
 // Extra Python interface functions are defined next
 %include "pyniflib.h"
 %{
@@ -630,7 +638,7 @@ using namespace Niflib;
 %}
 
 // Data structures
-
+/*
 %include "../include/gen/ByteArray.h"
 %include "../include/gen/Footer.h"
 %include "../include/gen/LODRange.h"
@@ -693,18 +701,20 @@ using namespace Niflib;
 %template(vector_MatchGroup) std::vector<Niflib::MatchGroup>;
 %template(pair_int_float) std::pair<int, float>;
 %template(map_int_float) std::map<int, float>;
+*/
 
 // NIF file blocks
 
 %include "../include/obj/NiObject.h"
-//%ignore NiObjectRef;
+%template(NiObjectRef) Niflib::Ref<Niflib::NiObject>;
 %include "../include/obj/NiObjectNET.h";
-//%ignore NiObjectNetRef;
-//template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
-//template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
-//template(StaticCastToNiObjectNET) Niflib::StaticCast<Niflib::NiObjectNET>;
+%template(NiObjectNETRef) Niflib::Ref<Niflib::NiObjectNET>;
+%template(DynamicCastToNiObjectNET) Niflib::DynamicCast<Niflib::NiObjectNET>;
+%template(StaticCastToNiObjectNET) Niflib::StaticCast<Niflib::NiObjectNET>;
 %include "../include/obj/NiAVObject.h";
-//%ignore NiAVObjectRef;
+%template(NiAVObjectRef) Niflib::Ref<Niflib::NiAVObject>;
+%template(DynamicCastToNiAVObject) Niflib::DynamicCast<Niflib::NiAVObject>;
+%template(StaticCastToNiAVObject) Niflib::StaticCast<Niflib::NiAVObject>;
 %include "../include/obj/NiNode.h"
 %template(NiNodeRef) Niflib::Ref<Niflib::NiNode>;
 %template(DynamicCastToNiNode) Niflib::DynamicCast<Niflib::NiNode>;

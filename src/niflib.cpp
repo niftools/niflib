@@ -138,10 +138,9 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 
 	//--Open File--//
 	ifstream in( file_name.c_str(), ifstream::binary );
-
-	return ReadNifList( in, info );
-
+	vector<NiObjectRef> ret = ReadNifList( in, info );
 	in.close();
+	return ret;
 }
 
 vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
@@ -354,7 +353,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 	for ( map<unsigned,NiObjectRef>::iterator it = objects.begin(); it != objects.end(); ++it ) {
 #ifdef DEBUG_LINK_PHASE
-		cout << i << ":  " << blocks[i] << endl;
+		cout << it->first << ":  " << it->second << endl;
 #endif
 		//Fix links & other pre-processing
 		it->second->FixLinks( objects, link_stack, header.version, header.userVersion );
@@ -505,7 +504,8 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
 	//Add this object type to the map if it isn't there already
 	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
 		//The type has not yet been registered, so register it
-		type_map[ (Type*)&(root->GetType()) ] = (unsigned int)(type_map.size());
+		unsigned int n = type_map.size();
+		type_map[ (Type*)&(root->GetType()) ] = n;
 	}
 
    // Oblivion has very rigid requirements about block ordering and the bhkRigidBody 
@@ -522,7 +522,8 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
 
    // If reverse is set then add the link after children otherwise add it before
    if (!reverse) {
-      link_map[root] = (unsigned int)(link_map.size());
+      unsigned int n = link_map.size();
+      link_map[root] = n;
    }
 
    //Call this function on all links of this object	
@@ -534,7 +535,8 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
    }
 
    if (reverse) {
-      link_map[root] = (unsigned int)(link_map.size());
+      unsigned int n = link_map.size();
+      link_map[root] = n;
    }
 }
 
