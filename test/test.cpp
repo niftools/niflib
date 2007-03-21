@@ -1,7 +1,7 @@
 #include <cassert>
 
-#include "include/niflib.h"
-#include "include/obj/NiNode.h"
+#include "../include/niflib.h"
+#include "../include/obj/NiNode.h"
 
 using namespace Niflib;
 using namespace std;

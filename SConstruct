@@ -385,11 +385,14 @@ blender/blender_niflib.cpp
 # (SCons bug: SharedLibrary should also build .lib file, but this is broken; so for now just build static one)
 niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files] , LIBPATH='.', CPPPATH = '.')
 
+Export('env python_lib python_libpath python_include niflib')
+
 # build Python wrapper
 if PYWRAP:
-    SConscript('swig/SConscript' , exports=['env', 'python_lib', 'python_libpath', 'python_include', 'niflib', 'TEST'])
+    niflib_swig = SConscript('swig/SConscript')
+    Export('niflib_swig')
 
 # A test program:
 if TEST:
-    env.Program('niflib_test', 'niflib_test.cpp', LIBS=[niflib], LIBPATH=['.'])
+    SConscript('test/SConscript')
 
