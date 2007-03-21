@@ -1,0 +1,4 @@
+Import('*')
+env.Program('test', 'test.cpp', LIBS=[niflib], LIBPATH=['.'])
+env.Install('.', niflib_swig)
+env.Install('.', '#/swig/niflib.py') # workaround for SCons bug
