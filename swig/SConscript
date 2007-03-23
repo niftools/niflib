@@ -1,5 +1,6 @@
 Import('*')
 
-niflib_python = env.SharedLibrary('_niflib', 'pyniflib.i', LIBS=[niflib] + python_lib, LIBPATH = python_libpath, SWIGFLAGS = '-c++ -python', CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
+niflib_python = env.SharedLibrary('_niflib', 'niflib.i', LIBS=[niflib] + python_lib, LIBPATH = python_libpath, CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
+ninode_python = env.SharedLibrary('_ninode', 'ninode.i', LIBS=[niflib] + python_lib, LIBPATH = python_libpath, CPPPATH = ['.'] + python_include, SHLIBPREFIX='')
 
-Return('niflib_python')
+Return('niflib_python ninode_python')

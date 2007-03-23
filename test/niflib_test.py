@@ -3,6 +3,7 @@
 import unittest
 import os
 from niflib import *
+from ninode import *
 
 class TestNiNode(unittest.TestCase):
     def setUp(self):
@@ -11,19 +12,19 @@ class TestNiNode(unittest.TestCase):
         # create nif file
         root = CreateNiNode()
         self.x = Matrix44(Vector3(2,3,4),Matrix33(0,0,1,0,1,0,-1,0,0),0.123)
-        root.SetLocalTransform(self.x)
+        root().SetLocalTransform(self.x)
         self.nifinfo = NifInfo()
         self.nifinfo.version = 0x14000005
         self.nifinfo.creator = "amorilia"
         self.nifinfo.userVersion = 11
-        WriteNifTree("test.nif", root.Ptr(), self.nifinfo)
+        WriteNifTree("test.nif", root(), self.nifinfo)
 
         # read nif file
         self.nifinfo_in = NifInfo()
         root_obj = ReadNifTree("test.nif", self.nifinfo_in)
-        root_in = DynamicCastToNiNode(root_obj.Ptr())
+        root_in = DynamicCastToNiNode(root_obj())
 
-        self.x_in = root_in.GetLocalTransform()
+        self.x_in = root_in().GetLocalTransform()
 
         # delete nif file
         os.remove("test.nif")

@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 //NIF Version Constants
 
+namespace Niflib {
+
 const unsigned VER_3_1         = 0x03010000; /*!< NIF Version 3.3.0.13 */
 const unsigned VER_3_3_0_13    = 0x0303000D; /*!< NIF Version 3.3.0.13 */
 const unsigned VER_4_0_0_0     = 0x04000000; /*!< NIF Version 4.0.0.0 */
@@ -22,5 +24,7 @@ const unsigned VER_20_0_0_4    = 0x14000004; /*!< NIF Version 20.0.0.4 */
 const unsigned VER_20_0_0_5    = 0x14000005; /*!< NIF Version 20.0.0.4 */ 
 const unsigned VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported NIF Version */
 const unsigned VER_INVALID     = 0xFFFFFFFE; /*!< Not a NIF file */
+
+}
 
 #endif

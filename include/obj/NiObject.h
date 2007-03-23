@@ -128,11 +128,6 @@ public:
 	 */
 	NIFLIB_API virtual list<NiObjectRef> GetRefs() const;
 	
-	// Python Operator Overloads
-	NIFLIB_API string __str__() const {
-		return asString();
-	};
-
 	NIFLIB_API virtual void RemoveCrossRef( NiObject * block_to_remove );
 
 	NIFLIB_API void IncCrossRef( NiObject * block );

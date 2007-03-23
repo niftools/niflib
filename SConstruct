@@ -15,13 +15,15 @@ JOBS = 1                      # default number of jobs, if detection fails
 DETECT_JOBS = True            # set this to False, if you are setting JOBS
 DEBUG = True                  # turn on debugging info?
 CFFLAGS_EXTRA_WARNING = False # extra compiler warnings
-PYWRAP = True                 # build the python wrapper?
+SWIG = True                   # build the swig python wrapper?
 TEST = True                   # build test scripts?
 
 # Setting up a basic default environment
 # Theory is it can be expanded for versatility, like swig doesn't seem to like jobs of 4
 
 env = Environment(ENV = os.environ)
+
+env.Append(SWIGFLAGS = ' -c++ -python -fcompact -fvirtual')
 
 # linux platform
 if sys.platform in ['linux2', 'linux-i386', 'cygwin']:
@@ -59,7 +61,7 @@ if sys.platform in ['linux2', 'linux-i386', 'cygwin']:
                env.Append(CCFLAGS = ' -mtune=k8')
            #elif commands.getoutput('uname -i') == 'GenuineIntel':
            #    env.Append(CCFLAGS = ' -mtune=nocona')
-    # detect the number of jobs
+    # detect the number of processors, and set number of jobs accordingly
     if DETECT_JOBS:
         detected_jobs = int(commands.getoutput('cat /proc/cpuinfo | grep -c "^processor"'))
         if detected_jobs >= 2:
@@ -88,7 +90,7 @@ env.SetOption('num_jobs', JOBS)
 try:
     env['SWIG']
 except KeyError:
-    PYWRAP = False
+    SWIG = False
     print """
 Warning: SWIG not found. The python wrapper will not be built.
 Please install SWIG to build the python wrapper."""
@@ -382,17 +384,20 @@ blender/blender_niflib.cpp
 """)
 
 # build niflib shared library
-# (SCons bug: SharedLibrary should also build .lib file, but this is broken; so for now just build static one)
-niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files] , LIBPATH='.', CPPPATH = '.')
+# (SCons bug: under windows, SharedLibrary should also build .lib file, but this is broken; so for now just build static one)
+if sys.platform == 'win32':
+    niflib = env.StaticLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files] , LIBPATH='.', CPPPATH = '.')
+else:
+    niflib = env.SharedLibrary('niflib', [core_objfiles, gen_objfiles, obj_objfiles, NvTriStrip_files, TriStripper_files] , LIBPATH='.', CPPPATH = '.')
 
 Export('env python_lib python_libpath python_include niflib')
 
-# build Python wrapper
-if PYWRAP:
+# build python wrapper
+if SWIG:
     niflib_swig = SConscript('swig/SConscript')
     Export('niflib_swig')
 
-# A test program:
+# build the test suite
 if TEST:
     SConscript('test/SConscript')
 
