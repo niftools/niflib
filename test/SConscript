@@ -1,6 +1,0 @@
-Import('*')
-env.Program('test', 'test.cpp', LIBS=[niflib], LIBPATH=['.'])
-for lib in niflib_swig:
-    env.Install('.', lib)
-env.Install('.', '#/swig/niflib.py') # workaround for SCons bug
-env.Install('.', '#/swig/ninode.py') # workaround for SCons bug
