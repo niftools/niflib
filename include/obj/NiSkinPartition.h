@@ -23,57 +23,56 @@ typedef Ref<NiSkinPartition> NiSkinPartitionRef;
  * influenced only by a limited and fixed number of bones.
  */
 
-class NIFLIB_API NiSkinPartition : public NI_SKIN_PARTITION_PARENT {
+class NiSkinPartition : public NI_SKIN_PARTITION_PARENT {
 public:
-	NiSkinPartition();
-	~NiSkinPartition();
+	NIFLIB_API NiSkinPartition();
+	NIFLIB_API ~NiSkinPartition();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-   int GetNumPartitions() const;
+	NIFLIB_API int GetNumPartitions() const;
 
-   unsigned short GetWeightsPerVertex( int partition ) const;
+	NIFLIB_API unsigned short GetWeightsPerVertex( int partition ) const;
 
-   unsigned short GetNumVertices( int partition ) const;
+	NIFLIB_API unsigned short GetNumVertices( int partition ) const;
 
-   vector<unsigned short> GetVertexMap( int partition ) const;
+	NIFLIB_API vector<unsigned short> GetVertexMap( int partition ) const;
 
-   vector<unsigned short> GetBoneMap( int partition ) const;
+	NIFLIB_API vector<unsigned short> GetBoneMap( int partition ) const;
 
-   bool HasVertexWeights( int partition ) const;
-   vector<float> GetVertexWeights( int partition, int vertex ) const;
+	NIFLIB_API bool HasVertexWeights( int partition ) const;
+	NIFLIB_API vector<float> GetVertexWeights( int partition, int vertex ) const;
 
-   bool HasVertexBoneIndices( int partition ) const;
-   vector<unsigned short> GetVertexBoneIndices( int partition, int vertex ) const;
+	NIFLIB_API bool HasVertexBoneIndices( int partition ) const;
+	NIFLIB_API vector<unsigned short> GetVertexBoneIndices( int partition, int vertex ) const;
 
-   /*! Used to get the number of triangle strips that a particular skin partition
-    * isis divided into.
-    * \param[in] partition The specific partition to get the strip count from.
-    * \return The number of triangle strips used by this mesh.
-    * \sa NiSkinPartition::SetStripCount
-    */
-   unsigned short GetStripCount( int partition ) const;
+	/*! Used to get the number of triangle strips that a particular skin partition
+	 * isis divided into.
+	 * \param[in] partition The specific partition to get the strip count from.
+	 * \return The number of triangle strips used by this mesh.
+	 * \sa NiSkinPartition::SetStripCount
+	 */
+	NIFLIB_API unsigned short GetStripCount( int partition ) const;
 
-   /*! Used to retrieve all the triangles from a specific triangle strip in a
-    * particular skin partition.
-    * \param[in] partition The specific partition to get the triangles from.
-    * \param[in] index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
-    * \return A vector containing all the triangle faces from the triangle strip specified by index.
-    * \sa NiSkinPartition::SetStrip
-    */
-   vector<unsigned short> GetStrip( int partition, int index ) const;
-   
-   vector<Triangle> GetTriangles( int partition ) const;
+	/*! Used to retrieve all the triangles from a specific triangle strip in a
+	 * particular skin partition.
+	 * \param[in] partition The specific partition to get the triangles from.
+	 * \param[in] index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
+	 * \sa NiSkinPartition::SetStrip
+	 */
+	NIFLIB_API vector<unsigned short> GetStrip( int partition, int index ) const;
 
+	NIFLIB_API vector<Triangle> GetTriangles( int partition ) const;
 
 protected:
    friend class NiTriBasedGeom;

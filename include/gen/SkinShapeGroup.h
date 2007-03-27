@@ -14,15 +14,15 @@ namespace Niflib {
 /*!
  * Unknown.
  */
-struct NIFLIB_API SkinShapeGroup {
+struct SkinShapeGroup {
 	/*! Default Constructor */
-	SkinShapeGroup();
+	NIFLIB_API SkinShapeGroup();
 	/*! Copy Constructor */
-	SkinShapeGroup( const SkinShapeGroup & src );
+	NIFLIB_API SkinShapeGroup( const SkinShapeGroup & src );
 	/*! Copy Operator */
-	SkinShapeGroup & operator=( const SkinShapeGroup & src );
+	NIFLIB_API SkinShapeGroup & operator=( const SkinShapeGroup & src );
 	/*! Default Destructor */
-	~SkinShapeGroup();
+	NIFLIB_API ~SkinShapeGroup();
 	/*!
 	 * Counts unknown.
 	 */

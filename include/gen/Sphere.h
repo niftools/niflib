@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * A sphere.
  */
-struct NIFLIB_API Sphere {
+struct Sphere {
 	/*! Default Constructor */
-	Sphere();
+	NIFLIB_API Sphere();
 	/*! Copy Constructor */
-	Sphere( const Sphere & src );
+	NIFLIB_API Sphere( const Sphere & src );
 	/*! Copy Operator */
-	Sphere & operator=( const Sphere & src );
+	NIFLIB_API Sphere & operator=( const Sphere & src );
 	/*! Default Destructor */
-	~Sphere();
+	NIFLIB_API ~Sphere();
 	/*!
 	 * The sphere's center.
 	 */

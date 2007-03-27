@@ -19,24 +19,24 @@ typedef Ref<NiStringExtraData> NiStringExtraDataRef;
  * blocks (through their name) in animation .kf files.
  */
 
-class NIFLIB_API NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {
+class NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {
 public:
-	NiStringExtraData();
-	~NiStringExtraData();
+	NIFLIB_API NiStringExtraData();
+	NIFLIB_API ~NiStringExtraData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	string GetData() const;
-	void SetData( const string & n );
+	NIFLIB_API string GetData() const;
+	NIFLIB_API void SetData( const string & n );
 
 protected:
 	NI_STRING_EXTRA_DATA_MEMBERS

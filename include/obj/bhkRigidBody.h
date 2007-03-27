@@ -23,111 +23,111 @@ typedef Ref<bhkRigidBody> bhkRigidBodyRef;
  * bhkRigidBody - Describes physical properties of an object.
  */
 
-class NIFLIB_API bhkRigidBody : public BHK_RIGID_BODY_PARENT {
+class bhkRigidBody : public BHK_RIGID_BODY_PARENT {
 public:
-	bhkRigidBody();
-	~bhkRigidBody();
+	NIFLIB_API bhkRigidBody();
+	NIFLIB_API ~bhkRigidBody();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Copy of layer value?
 	 */
-	OblivionLayer GetLayerCopy() const;
-	void SetLayerCopy( OblivionLayer value );
+	NIFLIB_API OblivionLayer GetLayerCopy() const;
+	NIFLIB_API void SetLayerCopy( OblivionLayer value );
 
 	/*!
 	 * Translation.
 	 */
-	Vector3 GetTranslation() const;
-	void SetTranslation( const Vector3 & value );
+	NIFLIB_API Vector3 GetTranslation() const;
+	NIFLIB_API void SetTranslation( const Vector3 & value );
 
 	/*!
 	 * Rotation.
 	 */
-	QuaternionXYZW GetRotation() const;
-	void SetRotation( const QuaternionXYZW & value );
+	NIFLIB_API QuaternionXYZW GetRotation() const;
+	NIFLIB_API void SetRotation( const QuaternionXYZW & value );
 
 	/*!
 	 * Linear velocity.
 	 */
-	Vector3 GetLinearVelocity() const;
-	void SetLinearVelocity( const Vector3 & value );
+	NIFLIB_API Vector3 GetLinearVelocity() const;
+	NIFLIB_API void SetLinearVelocity( const Vector3 & value );
 
 	/*!
 	 * Angular velocity.
 	 */
-	Vector3 GetAngularVelocity() const;
-	void SetAngularVelocity( const Vector3 & value );
+	NIFLIB_API Vector3 GetAngularVelocity() const;
+	NIFLIB_API void SetAngularVelocity( const Vector3 & value );
 
 	/*!
 	 * Seems to be some kind of transformation matrix, scale or translation?
 	 */
-	array<12,float>  GetTransform() const;
-	void SetTransform( const array<12,float>&  value );
+	NIFLIB_API array<12,float>  GetTransform() const;
+	NIFLIB_API void SetTransform( const array<12,float>&  value );
 
 	/*!
 	 * The object's center.
 	 */
-	Vector3 GetCenter() const;
-	void SetCenter( const Vector3 & value );
+	NIFLIB_API Vector3 GetCenter() const;
+	NIFLIB_API void SetCenter( const Vector3 & value );
 
 	/*!
 	 * Object mass.
 	 */
-	float GetMass() const;
-	void SetMass( float value );
+	NIFLIB_API float GetMass() const;
+	NIFLIB_API void SetMass( float value );
 
 	/*!
 	 * Linear damping level.
 	 */
-	float GetLinearDamping() const;
-	void SetLinearDamping( float value );
+	NIFLIB_API float GetLinearDamping() const;
+	NIFLIB_API void SetLinearDamping( float value );
 
 	/*!
 	 * Angular Dampling level.
 	 */
-	float GetAngularDamping() const;
-	void SetAngularDamping( float value );
+	NIFLIB_API float GetAngularDamping() const;
+	NIFLIB_API void SetAngularDamping( float value );
 
 	/*!
 	 * The object's friction.
 	 */
-	float GetFriction() const;
-	void SetFriction( float value );
+	NIFLIB_API float GetFriction() const;
+	NIFLIB_API void SetFriction( float value );
 
 	/*!
 	 * The object's restitution (elasticity).
 	 */
-	float GetRestitution() const;
-	void SetRestitution( float value );
+	NIFLIB_API float GetRestitution() const;
+	NIFLIB_API void SetRestitution( float value );
 
 	/*!
 	 * Maximal linear velocity.
 	 */
-	float GetMaxLinearVelocity() const;
-	void SetMaxLinearVelocity( float value );
+	NIFLIB_API float GetMaxLinearVelocity() const;
+	NIFLIB_API void SetMaxLinearVelocity( float value );
 
 	/*!
 	 * Maximal angular velocity. Pi x 10?
 	 */
-	float GetMaxAngularVelocity() const;
-	void SetMaxAngularVelocity( float value );
+	NIFLIB_API float GetMaxAngularVelocity() const;
+	NIFLIB_API void SetMaxAngularVelocity( float value );
 
 	/*!
 	 * Penetration depth.
 	 */
-	float GetPenetrationDepth() const;
-	void SetPenetrationDepth( float value );
+	NIFLIB_API float GetPenetrationDepth() const;
+	NIFLIB_API void SetPenetrationDepth( float value );
 
 	/*!
 	 * Motion system? Overrides Quality when on Keyframed?
@@ -142,8 +142,8 @@ public:
     * 8: Box
     * 9+: Keyframed?
 	 */
-	MotionSystem GetMotionSystem() const;
-	void SetMotionSystem( MotionSystem value );
+	NIFLIB_API MotionSystem GetMotionSystem() const;
+	NIFLIB_API void SetMotionSystem( MotionSystem value );
 
 	/*!
 	 * The motion type. Determines quality of motion?
@@ -156,8 +156,8 @@ public:
     * 7: User
     * 8+: Null
 	 */
-	MotionQuality GetQualityType() const;
-	void SetQualityType( MotionQuality value );
+	NIFLIB_API MotionQuality GetQualityType() const;
+	NIFLIB_API void SetQualityType( MotionQuality value );
 
 protected:
 	BHK_RIGID_BODY_MEMBERS

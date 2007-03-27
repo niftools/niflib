@@ -14,15 +14,15 @@ class NiAVObject;
 /*!
  * Used in NiDefaultAVObjectPalette.
  */
-struct NIFLIB_API AVObject {
+struct AVObject {
 	/*! Default Constructor */
-	AVObject();
+	NIFLIB_API AVObject();
 	/*! Copy Constructor */
-	AVObject( const AVObject & src );
+	NIFLIB_API AVObject( const AVObject & src );
 	/*! Copy Operator */
-	AVObject & operator=( const AVObject & src );
+	NIFLIB_API AVObject & operator=( const AVObject & src );
 	/*! Default Destructor */
-	~AVObject();
+	NIFLIB_API ~AVObject();
 	/*!
 	 * Object name.
 	 */

@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * A weighted vertex.
  */
-struct NIFLIB_API SkinWeight {
+struct SkinWeight {
 	/*! Default Constructor */
-	SkinWeight();
+	NIFLIB_API SkinWeight();
 	/*! Copy Constructor */
-	SkinWeight( const SkinWeight & src );
+	NIFLIB_API SkinWeight( const SkinWeight & src );
 	/*! Copy Operator */
-	SkinWeight & operator=( const SkinWeight & src );
+	NIFLIB_API SkinWeight & operator=( const SkinWeight & src );
 	/*! Default Destructor */
-	~SkinWeight();
+	NIFLIB_API ~SkinWeight();
 	/*!
 	 * The vertex index, in the mesh.
 	 */

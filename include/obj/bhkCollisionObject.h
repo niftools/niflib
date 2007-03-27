@@ -16,7 +16,7 @@ typedef Ref<bhkCollisionObject> bhkCollisionObjectRef;
  * bhkCollisionObject - Unknown.
  */
 
-class NIFLIB_API bhkCollisionObject : public BHK_COLLISION_OBJECT_PARENT {
+class bhkCollisionObject : public BHK_COLLISION_OBJECT_PARENT {
 public:
 	bhkCollisionObject();
 	~bhkCollisionObject();
@@ -27,10 +27,10 @@ private:
 public:
 	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_API virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_API virtual list<NiObjectRef> GetRefs() const;
+	NIFLIB_API virtual const Type & GetType() const;
 
 protected:
 	BHK_COLLISION_OBJECT_MEMBERS

@@ -13,7 +13,7 @@ namespace Niflib {
  * Rotation key array.
  */
 template <class T >
-struct NIFLIB_API RotationKeyArray {
+struct RotationKeyArray {
 	/*!
 	 * Number of keys.
 	 */

@@ -17,33 +17,33 @@ typedef Ref<NiTextKeyExtraData> NiTextKeyExtraDataRef;
  * sequences.
  */
 
-class NIFLIB_API NiTextKeyExtraData : public NI_TEXT_KEY_EXTRA_DATA_PARENT {
+class NiTextKeyExtraData : public NI_TEXT_KEY_EXTRA_DATA_PARENT {
 public:
-	NiTextKeyExtraData();
-	~NiTextKeyExtraData();
+	NIFLIB_API NiTextKeyExtraData();
+	NIFLIB_API ~NiTextKeyExtraData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*! Retrieves the text note key data.
 	 * \return A vector containing Key<string> data which specify text note over time.
 	 * \sa NiKeyframeData::SetKeys, Key
 	 */
-	vector< Key<string> > GetKeys() const;
+	NIFLIB_API vector< Key<string> > GetKeys() const;
 
 	/*! Sets the text note key data.
 	 * \param keys A vector containing new Key<string> data which will replace any existing data.
 	 * \sa NiKeyframeData::GetKeys, Key
 	 */
-	void SetKeys( vector< Key<string> > const & keys );
+	NIFLIB_API void SetKeys( vector< Key<string> > const & keys );
 
 	//TODO:  There is an unknown member in this class
 

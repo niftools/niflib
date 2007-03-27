@@ -24,44 +24,44 @@ typedef Ref<NiSkinInstance> NiSkinInstanceRef;
  * NiSkinInstance - Skinning instance.
  */
 
-class NIFLIB_API NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
+class NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
 public:
-	NiSkinInstance();
+	NIFLIB_API NiSkinInstance();
 
 	/*!
 	 * This constructor is called by NiTriBasedGeom when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
-	NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+	NIFLIB_HIDDEN NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
 
-	~NiSkinInstance();
+	NIFLIB_API ~NiSkinInstance();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	unsigned int GetBoneCount() const;
-	vector< Ref<NiNode> > GetBones() const;
-	Ref<NiNode> GetSkeletonRoot() const;
+	NIFLIB_API unsigned int GetBoneCount() const;
+	NIFLIB_API vector< Ref<NiNode> > GetBones() const;
+	NIFLIB_API Ref<NiNode> GetSkeletonRoot() const;
 
-	Ref<NiSkinData> GetSkinData() const;
-	void SetSkinData( const Ref<NiSkinData> & n );
+	NIFLIB_API Ref<NiSkinData> GetSkinData() const;
+	NIFLIB_API void SetSkinData( const Ref<NiSkinData> & n );
 
-	Ref<NiSkinPartition> GetSkinPartition() const;
-	void SetSkinPartition( const Ref<NiSkinPartition> & n );
+	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
+	NIFLIB_API void SetSkinPartition( const Ref<NiSkinPartition> & n );
 
 	/*! 
 	 * Called by skeleton root NiNode when it self destructs to inform this skin
 	 * instance that the skeleton has been lost.  Should not be called directly.
 	 */
-	void SkeletonLost();
+	NIFLIB_HIDDEN void SkeletonLost();
 
 protected:
 	NI_SKIN_INSTANCE_MEMBERS

@@ -13,15 +13,15 @@ namespace Niflib {
  * Skinning data for a submesh, optimized for hardware skinning. Part of
  * NiSkinPartition.
  */
-struct NIFLIB_API SkinPartition {
+struct SkinPartition {
 	/*! Default Constructor */
-	SkinPartition();
+	NIFLIB_API SkinPartition();
 	/*! Copy Constructor */
-	SkinPartition( const SkinPartition & src );
+	NIFLIB_API SkinPartition( const SkinPartition & src );
 	/*! Copy Operator */
-	SkinPartition & operator=( const SkinPartition & src );
+	NIFLIB_API SkinPartition & operator=( const SkinPartition & src );
 	/*! Default Destructor */
-	~SkinPartition();
+	NIFLIB_API ~SkinPartition();
 	/*!
 	 * Number of vertices in this submesh.
 	 */

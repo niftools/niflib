@@ -14,15 +14,15 @@ class NiNode;
 /*!
  * A group of NiNodes references.
  */
-struct NIFLIB_API NodeGroup {
+struct NodeGroup {
 	/*! Default Constructor */
-	NodeGroup();
+	NIFLIB_API NodeGroup();
 	/*! Copy Constructor */
-	NodeGroup( const NodeGroup & src );
+	NIFLIB_API NodeGroup( const NodeGroup & src );
 	/*! Copy Operator */
-	NodeGroup & operator=( const NodeGroup & src );
+	NIFLIB_API NodeGroup & operator=( const NodeGroup & src );
 	/*! Default Destructor */
-	~NodeGroup();
+	NIFLIB_API ~NodeGroup();
 	/*!
 	 * Number of node references that follow.
 	 */

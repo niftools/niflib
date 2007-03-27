@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Geometry morphing data component.
  */
-struct NIFLIB_API Morph {
+struct Morph {
 	/*! Default Constructor */
-	Morph();
+	NIFLIB_API Morph();
 	/*! Copy Constructor */
-	Morph( const Morph & src );
+	NIFLIB_API Morph( const Morph & src );
 	/*! Copy Operator */
-	Morph & operator=( const Morph & src );
+	NIFLIB_API Morph & operator=( const Morph & src );
 	/*! Default Destructor */
-	~Morph();
+	NIFLIB_API ~Morph();
 	/*!
 	 * Name of the frame.
 	 */

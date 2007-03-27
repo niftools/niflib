@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Description of a MipMap within a NiPixelData object.
  */
-struct NIFLIB_API MipMap {
+struct MipMap {
 	/*! Default Constructor */
-	MipMap();
+	NIFLIB_API MipMap();
 	/*! Copy Constructor */
-	MipMap( const MipMap & src );
+	NIFLIB_API MipMap( const MipMap & src );
 	/*! Copy Operator */
-	MipMap & operator=( const MipMap & src );
+	NIFLIB_API MipMap & operator=( const MipMap & src );
 	/*! Default Destructor */
-	~MipMap();
+	NIFLIB_API ~MipMap();
 	/*!
 	 * Width of the mipmap image.
 	 */

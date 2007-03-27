@@ -17,15 +17,15 @@ class NiPixelData;
 /*!
  * A texture source.
  */
-struct NIFLIB_API TexSource {
+struct TexSource {
 	/*! Default Constructor */
-	TexSource();
+	NIFLIB_API TexSource();
 	/*! Copy Constructor */
-	TexSource( const TexSource & src );
+	NIFLIB_API TexSource( const TexSource & src );
 	/*! Copy Operator */
-	TexSource & operator=( const TexSource & src );
+	NIFLIB_API TexSource & operator=( const TexSource & src );
 	/*! Default Destructor */
-	~TexSource();
+	NIFLIB_API ~TexSource();
 	/*!
 	 * Is the texture external?
 	 */

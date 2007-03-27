@@ -25,12 +25,12 @@ typedef Ref<NiNode> NiNodeRef;
  * NiNode - Generic node block for grouping.
  */
 
-class NIFLIB_API NiNode : public NI_NODE_PARENT {
+class NiNode : public NI_NODE_PARENT {
 public:
-	NiNode();
-	~NiNode();
+	NIFLIB_API NiNode();
+	NIFLIB_API ~NiNode();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:

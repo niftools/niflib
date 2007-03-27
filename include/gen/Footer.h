@@ -17,15 +17,15 @@ class NiObject;
 /*!
  * The NIF file footer.
  */
-struct NIFLIB_API Footer {
+struct Footer {
 	/*! Default Constructor */
-	Footer();
+	NIFLIB_API Footer();
 	/*! Copy Constructor */
-	Footer( const Footer & src );
+	NIFLIB_API Footer( const Footer & src );
 	/*! Copy Operator */
-	Footer & operator=( const Footer & src );
+	NIFLIB_API Footer & operator=( const Footer & src );
 	/*! Default Destructor */
-	~Footer();
+	NIFLIB_API ~Footer();
 	/*!
 	 * The number of root references.
 	 */

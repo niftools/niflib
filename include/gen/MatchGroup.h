@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Group of vertex indices of vertices that match.
  */
-struct NIFLIB_API MatchGroup {
+struct MatchGroup {
 	/*! Default Constructor */
-	MatchGroup();
+	NIFLIB_API MatchGroup();
 	/*! Copy Constructor */
-	MatchGroup( const MatchGroup & src );
+	NIFLIB_API MatchGroup( const MatchGroup & src );
 	/*! Copy Operator */
-	MatchGroup & operator=( const MatchGroup & src );
+	NIFLIB_API MatchGroup & operator=( const MatchGroup & src );
 	/*! Default Destructor */
-	~MatchGroup();
+	NIFLIB_API ~MatchGroup();
 	/*!
 	 * Number of vertices in this group.
 	 */

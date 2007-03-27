@@ -14,7 +14,7 @@ namespace Niflib {
  * rotations).
  */
 template <class T >
-struct NIFLIB_API KeyGroup {
+struct KeyGroup {
 	/*!
 	 * Number of keys in the array.
 	 */

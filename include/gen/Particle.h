@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * particle array entry
  */
-struct NIFLIB_API Particle {
+struct Particle {
 	/*! Default Constructor */
-	Particle();
+	NIFLIB_API Particle();
 	/*! Copy Constructor */
-	Particle( const Particle & src );
+	NIFLIB_API Particle( const Particle & src );
 	/*! Copy Operator */
-	Particle & operator=( const Particle & src );
+	NIFLIB_API Particle & operator=( const Particle & src );
 	/*! Default Destructor */
-	~Particle();
+	NIFLIB_API ~Particle();
 	/*!
 	 * Particle velocity
 	 */

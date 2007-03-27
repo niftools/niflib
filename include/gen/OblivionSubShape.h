@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Havok Information for packed TriStrip shapes.
  */
-struct NIFLIB_API OblivionSubShape {
+struct OblivionSubShape {
 	/*! Default Constructor */
-	OblivionSubShape();
+	NIFLIB_API OblivionSubShape();
 	/*! Copy Constructor */
-	OblivionSubShape( const OblivionSubShape & src );
+	NIFLIB_API OblivionSubShape( const OblivionSubShape & src );
 	/*! Copy Operator */
-	OblivionSubShape & operator=( const OblivionSubShape & src );
+	NIFLIB_API OblivionSubShape & operator=( const OblivionSubShape & src );
 	/*! Default Destructor */
-	~OblivionSubShape();
+	NIFLIB_API ~OblivionSubShape();
 	/*!
 	 * Sets mesh color in Oblivion Construction Set.
 	 */

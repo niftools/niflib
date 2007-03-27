@@ -260,12 +260,12 @@ float damping; \
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS \
 Ref<bhkShape > shape; \
 HavokMaterial material; \
-array<8,byte > unknownBytes1; \
+array<8,byte > unknown8Bytes; \
 float unknownFloat; \
-mutable unsigned int numUnknownBytes2; \
-vector<byte > unknownBytes2; \
-Vector3 unknownVector; \
-float unknownFloat2; \
+mutable unsigned int moppDataSize; \
+Vector3 objectCorner; \
+float scalingFactor; \
+vector<byte > moppData; \
 
 #define BHK_MULTI_SPHERE_SHAPE_MEMBERS \
 float unknownFloat1; \
@@ -313,7 +313,7 @@ Vector3 linearVelocity; \
 float unknownFloat01; \
 Vector3 angularVelocity; \
 float unknownFloat02; \
-array<12,float > transform; \
+array<12,float > inertia; \
 Vector3 center; \
 float unknownFloat03; \
 float mass; \
@@ -347,8 +347,9 @@ float unknownFloat; \
 float radius; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS \
-array< 2, array<4,float > > unknownFloats; \
-float unknownFloat; \
+Float4 pivotA; \
+Float4 pivotB; \
+float length; \
 
 #define BHK_TRANSFORM_SHAPE_MEMBERS \
 float unknownFloat1; \
@@ -1633,7 +1634,7 @@ CompareMode function; \
 
 #define BHK_MOPP_BV_TREE_SHAPE_PARENT bhkShape
 
-#define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT  : shape(NULL), unknownFloat(0.0f), numUnknownBytes2((unsigned int)0), unknownFloat2(0.0f)
+#define BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT  : shape(NULL), unknownFloat(0.0f), moppDataSize((unsigned int)0), scalingFactor(0.0f)
 
 #define BHK_MULTI_SPHERE_SHAPE_PARENT bhkSphereRepShape
 
@@ -1673,7 +1674,7 @@ CompareMode function; \
 
 #define BHK_STIFF_SPRING_CONSTRAINT_PARENT AbhkConstraint
 
-#define BHK_STIFF_SPRING_CONSTRAINT_CONSTRUCT  : unknownFloat(0.0f)
+#define BHK_STIFF_SPRING_CONSTRAINT_CONSTRUCT  : length(0.0f)
 
 #define BHK_TRANSFORM_SHAPE_PARENT bhkEntity
 

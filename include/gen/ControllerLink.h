@@ -22,15 +22,15 @@ class NiStringPalette;
  * that contains the name), and a sequence of interpolators that apply to
  * this controllable object, via links.
  */
-struct NIFLIB_API ControllerLink {
+struct ControllerLink {
 	/*! Default Constructor */
-	ControllerLink();
+	NIFLIB_API ControllerLink();
 	/*! Copy Constructor */
-	ControllerLink( const ControllerLink & src );
+	NIFLIB_API ControllerLink( const ControllerLink & src );
 	/*! Copy Operator */
-	ControllerLink & operator=( const ControllerLink & src );
+	NIFLIB_API ControllerLink & operator=( const ControllerLink & src );
 	/*! Default Destructor */
-	~ControllerLink();
+	NIFLIB_API ~ControllerLink();
 	/*!
 	 * Name of a controllable object in another NIF file.
 	 */

@@ -16,15 +16,15 @@ class NiSourceTexture;
 /*!
  * Texture description.
  */
-struct NIFLIB_API TexDesc {
+struct TexDesc {
 	/*! Default Constructor */
-	TexDesc();
+	NIFLIB_API TexDesc();
 	/*! Copy Constructor */
-	TexDesc( const TexDesc & src );
+	NIFLIB_API TexDesc( const TexDesc & src );
 	/*! Copy Operator */
-	TexDesc & operator=( const TexDesc & src );
+	NIFLIB_API TexDesc & operator=( const TexDesc & src );
 	/*! Default Destructor */
-	~TexDesc();
+	NIFLIB_API ~TexDesc();
 	/*!
 	 * NiSourceTexture object index.
 	 */

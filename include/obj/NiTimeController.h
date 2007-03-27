@@ -21,62 +21,62 @@ typedef Ref<NiTimeController> NiTimeControllerRef;
  * NiTimeController - A generic time controller block.
  */
 
-class NIFLIB_API NiTimeController : public NI_TIME_CONTROLLER_PARENT {
+class NiTimeController : public NI_TIME_CONTROLLER_PARENT {
 public:
-	NiTimeController();
-	~NiTimeController();
+	NIFLIB_API NiTimeController();
+	NIFLIB_API ~NiTimeController();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*! 
 	 * Returns a reference to the next controller in a linked list.
 	 * This function should only be called by NiObjectNET.
 	 * \return A reference to the next controller in the linked list.
 	 */
-	NiTimeControllerRef GetNextController() const;
+	NIFLIB_HIDDEN NiTimeControllerRef GetNextController() const;
 
 	/*! 
 	 * Sets the next controller in a linked list.
 	 * This function should only be called by NiObjectNET.
 	 * \param obj A reference to the object to set as the one after this in the chain.
 	 */
-	void SetNextController( const NiTimeControllerRef & obj );
+	NIFLIB_HIDDEN void SetNextController( const NiTimeControllerRef & obj );
 
 	/*! 
 	 * This function should only be called by NiObjectNET.  It sets the target of
 	 * this controller when it is attatched to the NiObjectNET class. */
-	void SetTarget( NiObjectNET * new_target );
+	NIFLIB_HIDDEN void SetTarget( NiObjectNET * new_target );
 
 	/*! 
 	 * This function returns the current target NiObjectNET, if any, that this controller
 	 * is acting on.
 	 * \return A reference to the current target of this controller.
 	 */
-	Ref<NiObjectNET> GetTarget();
+	NIFLIB_API Ref<NiObjectNET> GetTarget();
 
-	unsigned short GetFlags() const;
-	void SetFlags( unsigned short n );
+	NIFLIB_API unsigned short GetFlags() const;
+	NIFLIB_API void SetFlags( unsigned short n );
 
-	float GetFrequency() const;
-	void SetFrequency( float n );
+	NIFLIB_API float GetFrequency() const;
+	NIFLIB_API void SetFrequency( float n );
 
-	float GetPhase() const;
-	void SetPhase( float n );
+	NIFLIB_API float GetPhase() const;
+	NIFLIB_API void SetPhase( float n );
 
-	float GetStartTime() const;
-	void SetStartTime( float n );
+	NIFLIB_API float GetStartTime() const;
+	NIFLIB_API void SetStartTime( float n );
 
-	float GetStopTime() const;
-	void SetStopTime( float n );
+	NIFLIB_API float GetStopTime() const;
+	NIFLIB_API void SetStopTime( float n );
 protected:
 	NI_TIME_CONTROLLER_MEMBERS
 private:

@@ -14,15 +14,15 @@ namespace Niflib {
 /*!
  * Skinning data component.
  */
-struct NIFLIB_API SkinData {
+struct SkinData {
 	/*! Default Constructor */
-	SkinData();
+	NIFLIB_API SkinData();
 	/*! Copy Constructor */
-	SkinData( const SkinData & src );
+	NIFLIB_API SkinData( const SkinData & src );
 	/*! Copy Operator */
-	SkinData & operator=( const SkinData & src );
+	NIFLIB_API SkinData & operator=( const SkinData & src );
 	/*! Default Destructor */
-	~SkinData();
+	NIFLIB_API ~SkinData();
 	/*!
 	 * Rotation offset of the skin from this bone in bind position.
 	 */

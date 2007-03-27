@@ -23,42 +23,42 @@ typedef Ref<NiSkinData> NiSkinDataRef;
  * NiSkinData - Skinning data.
  */
 
-class NIFLIB_API NiSkinData : public NI_SKIN_DATA_PARENT {
+class NiSkinData : public NI_SKIN_DATA_PARENT {
 public:
-	NiSkinData();
+	NIFLIB_API NiSkinData();
 
 	/*!
 	 * This constructor is called by NiGeometry when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
-	NiSkinData( const Ref<NiGeometry> & owner );
+	NIFLIB_HIDDEN NiSkinData( const Ref<NiGeometry> & owner );
 
-	~NiSkinData();
+	NIFLIB_API ~NiSkinData();
 
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	void ResetOffsets( const Ref<NiGeometry> & owner );
-	Matrix44 GetOverallTransform() const;
-	void SetOverallTransform( const Matrix44 & transform );
-	unsigned int GetBoneCount() const;
-	Matrix44 GetBoneTransform( unsigned int bone_index ) const;
-	vector<SkinWeight> GetBoneWeights( unsigned int bone_index ) const;
-	void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
+	NIFLIB_API void ResetOffsets( const Ref<NiGeometry> & owner );
+	NIFLIB_API Matrix44 GetOverallTransform() const;
+	NIFLIB_API void SetOverallTransform( const Matrix44 & transform );
+	NIFLIB_API unsigned int GetBoneCount() const;
+	NIFLIB_API Matrix44 GetBoneTransform( unsigned int bone_index ) const;
+	NIFLIB_API vector<SkinWeight> GetBoneWeights( unsigned int bone_index ) const;
+	NIFLIB_API void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n, Vector3 center, float radius );
 
-	void NormalizeWeights( unsigned numVertices );
+	NIFLIB_API void NormalizeWeights( unsigned numVertices );
 	
-	Ref<NiSkinPartition> GetSkinPartition() const;
-	void SetSkinPartition(Ref<NiSkinPartition> skinPartition);
+	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
+	NIFLIB_API void SetSkinPartition(Ref<NiSkinPartition> skinPartition);
 
 protected:
 	NI_SKIN_DATA_MEMBERS

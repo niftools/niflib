@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * The distance range where a specific level of detail applies.
  */
-struct NIFLIB_API LODRange {
+struct LODRange {
 	/*! Default Constructor */
-	LODRange();
+	NIFLIB_API LODRange();
 	/*! Copy Constructor */
-	LODRange( const LODRange & src );
+	NIFLIB_API LODRange( const LODRange & src );
 	/*! Copy Operator */
-	LODRange & operator=( const LODRange & src );
+	NIFLIB_API LODRange & operator=( const LODRange & src );
 	/*! Default Destructor */
-	~LODRange();
+	NIFLIB_API ~LODRange();
 	/*!
 	 * Begining of range.
 	 */

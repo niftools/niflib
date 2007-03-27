@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * An array of bytes.
  */
-struct NIFLIB_API ByteArray {
+struct ByteArray {
 	/*! Default Constructor */
-	ByteArray();
+	NIFLIB_API ByteArray();
 	/*! Copy Constructor */
-	ByteArray( const ByteArray & src );
+	NIFLIB_API ByteArray( const ByteArray & src );
 	/*! Copy Operator */
-	ByteArray & operator=( const ByteArray & src );
+	NIFLIB_API ByteArray & operator=( const ByteArray & src );
 	/*! Default Destructor */
-	~ByteArray();
+	NIFLIB_API ~ByteArray();
 	/*!
 	 * The number of bytes in this array
 	 */

@@ -23,43 +23,43 @@ typedef Ref<NiSourceTexture> NiSourceTextureRef;
  * NiSourceTexture - Describes texture source and properties.
  */
 
-class NIFLIB_API NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
+class NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
 public:
-	NiSourceTexture();
-	~NiSourceTexture();
+	NIFLIB_API NiSourceTexture();
+	NIFLIB_API ~NiSourceTexture();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	bool IsTextureExternal ();
+	NIFLIB_API bool IsTextureExternal ();
 
-	void SetExternalTexture( string file_name, const Ref<NiObject> & unk_link );
+	NIFLIB_API void SetExternalTexture( string file_name, const Ref<NiObject> & unk_link );
 
-	void SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data );
+	NIFLIB_API void SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data );
 
-	string GetExternalFileName() const;
-	Ref<NiObject> GetExternalUnknownLink() const;
+	NIFLIB_API string GetExternalFileName() const;
+	NIFLIB_API Ref<NiObject> GetExternalUnknownLink() const;
 
-	byte GetInternalUnknownByte() const;
-	string GetInternalOriginalFileName() const;
-	Ref<NiPixelData> GetInternalPixelData() const;
+	NIFLIB_API byte GetInternalUnknownByte() const;
+	NIFLIB_API string GetInternalOriginalFileName() const;
+	NIFLIB_API Ref<NiPixelData> GetInternalPixelData() const;
 
-	PixelLayout GetPixelLayout() const;
-	void SetPixelLayout( PixelLayout n );
+	NIFLIB_API PixelLayout GetPixelLayout() const;
+	NIFLIB_API void SetPixelLayout( PixelLayout n );
 
-	MipMapFormat GetMipMapFormat() const;
-	void SetMipMapFormat( MipMapFormat n );
+	NIFLIB_API MipMapFormat GetMipMapFormat() const;
+	NIFLIB_API void SetMipMapFormat( MipMapFormat n );
 
-	AlphaFormat GetAlphaFormat() const;
-	void SetAlphaFormat( AlphaFormat n );
+	NIFLIB_API AlphaFormat GetAlphaFormat() const;
+	NIFLIB_API void SetAlphaFormat( AlphaFormat n );
 
 	//TODO: Fix name problem with Unknown Byte in XML
 	//byte GetUnknownByte2() const;

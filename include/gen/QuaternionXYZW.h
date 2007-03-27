@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * A quaternion as it appears in the havok objects.
  */
-struct NIFLIB_API QuaternionXYZW {
+struct QuaternionXYZW {
 	/*! Default Constructor */
-	QuaternionXYZW();
+	NIFLIB_API QuaternionXYZW();
 	/*! Copy Constructor */
-	QuaternionXYZW( const QuaternionXYZW & src );
+	NIFLIB_API QuaternionXYZW( const QuaternionXYZW & src );
 	/*! Copy Operator */
-	QuaternionXYZW & operator=( const QuaternionXYZW & src );
+	NIFLIB_API QuaternionXYZW & operator=( const QuaternionXYZW & src );
 	/*! Default Destructor */
-	~QuaternionXYZW();
+	NIFLIB_API ~QuaternionXYZW();
 	/*!
 	 * The x-coordinate.
 	 */

@@ -28,48 +28,48 @@ typedef Ref<NiGeometry> NiGeometryRef;
  * mesh, a particle system, lines, etc.
  */
 
-class NIFLIB_API NiGeometry : public NI_GEOMETRY_PARENT {
+class NiGeometry : public NI_GEOMETRY_PARENT {
 public:
-	NiGeometry();
-	~NiGeometry();
+	NIFLIB_API NiGeometry();
+	NIFLIB_API ~NiGeometry();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Binds this geometry to a list of bones.  Creates and attatches a
 	 * NiSkinInstance and NiSkinData class. The bones must have a common
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
-	void BindSkin( vector< Ref<NiNode> > bone_nodes );
+	NIFLIB_API void BindSkin( vector< Ref<NiNode> > bone_nodes );
 
-	void UnbindSkin();
+	NIFLIB_API void UnbindSkin();
 
 	/*!
 	 * Sets the skin weights in the attached NiSkinData object.
 	 * The version on this class calculates the center and radius of
 	 * each set of affected vertices automatically.
 	 */
-	void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n );
+	NIFLIB_API void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n );
 
-	Ref<NiSkinInstance> GetSkinInstance() const;
+	NIFLIB_API Ref<NiSkinInstance> GetSkinInstance() const;
 
-	Ref<NiGeometryData> GetData() const;
-	void SetData( const Ref<NiGeometryData> & n );
+	NIFLIB_API Ref<NiGeometryData> GetData() const;
+	NIFLIB_API void SetData( const Ref<NiGeometryData> & n );
 
-	Ref<NiObject> GetUnknownLink() const;
-	void SetUnknownLink( const Ref<NiObject> & n );
+	NIFLIB_API Ref<NiObject> GetUnknownLink() const;
+	NIFLIB_API void SetUnknownLink( const Ref<NiObject> & n );
 
-	string GetShader() const;
-	void SetShader( const string & n );
+	NIFLIB_API string GetShader() const;
+	NIFLIB_API void SetShader( const string & n );
 
 	/*
 	 * Returns the position of the verticies and values of the normals after they
@@ -77,28 +77,28 @@ public:
 	 * \param[out] vertices A vector that will be filled with the skin deformed position of the verticies.
 	 * \param[out] normals A vector thta will be filled with the skin deformed normal values.
 	 */
-	void GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3> & normals ) const;
+	NIFLIB_API void GetSkinDeformation( vector<Vector3> & vertices, vector<Vector3> & normals ) const;
 
 	/*
 	 * Applies the local transform values to the vertices of the geometry and
 	 * zeros them out to the identity.
 	 */
-	void ApplyTransforms();
+	NIFLIB_API void ApplyTransforms();
 
 	/*
 	 * Propogates the transforms between this skin and the skeleton root,
 	 * and then applies them to the verticies of this skin.  Sets the overall
 	 * skin data transform to the identity.
 	 */
-	void ApplySkinOffset();
+	NIFLIB_API void ApplySkinOffset();
 
-	void NormalizeSkinWeights();
+	NIFLIB_API void NormalizeSkinWeights();
 
 	/*
 	 * Used to determine whether this mesh is influenced by bones as a skin.
 	 * \return true if this mesh is a skin, false otherwise.
 	 */
-	bool IsSkin();
+	NIFLIB_API bool IsSkin();
 
 protected:
 	list< Ref<NiNode> > ListAncestors( const Ref<NiNode> & leaf ) const;

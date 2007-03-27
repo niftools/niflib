@@ -17,15 +17,15 @@ class NiSkinInstance;
 /*!
  * Reference to shape and skin instance.
  */
-struct NIFLIB_API SkinShape {
+struct SkinShape {
 	/*! Default Constructor */
-	SkinShape();
+	NIFLIB_API SkinShape();
 	/*! Copy Constructor */
-	SkinShape( const SkinShape & src );
+	NIFLIB_API SkinShape( const SkinShape & src );
 	/*! Copy Operator */
-	SkinShape & operator=( const SkinShape & src );
+	NIFLIB_API SkinShape & operator=( const SkinShape & src );
 	/*! Default Destructor */
-	~SkinShape();
+	NIFLIB_API ~SkinShape();
 	/*!
 	 * The shape.
 	 */

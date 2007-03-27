@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Describes a furniture position?
  */
-struct NIFLIB_API FurniturePosition {
+struct FurniturePosition {
 	/*! Default Constructor */
-	FurniturePosition();
+	NIFLIB_API FurniturePosition();
 	/*! Copy Constructor */
-	FurniturePosition( const FurniturePosition & src );
+	NIFLIB_API FurniturePosition( const FurniturePosition & src );
 	/*! Copy Operator */
-	FurniturePosition & operator=( const FurniturePosition & src );
+	NIFLIB_API FurniturePosition & operator=( const FurniturePosition & src );
 	/*! Default Destructor */
-	~FurniturePosition();
+	NIFLIB_API ~FurniturePosition();
 	/*!
 	 * Offset of furniture marker.
 	 */

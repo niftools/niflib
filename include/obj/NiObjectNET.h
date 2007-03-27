@@ -23,40 +23,40 @@ class NiTimeController;
  */
 typedef Ref<NiObjectNET> NiObjectNETRef;
 
-class NIFLIB_API NiObjectNET : public NI_OBJECT_N_E_T_PARENT {
+class NiObjectNET : public NI_OBJECT_N_E_T_PARENT {
 public:
-	NiObjectNET();
-	~NiObjectNET();
+	NIFLIB_API NiObjectNET();
+	NIFLIB_API ~NiObjectNET();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual const Type & GetType() const { return TYPE; };
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	string GetName();
-	void SetName( const string & new_name );
+	NIFLIB_API string GetName();
+	NIFLIB_API void SetName( const string & new_name );
 	/*!
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type) {name}
 	 */
-	virtual string GetIDString();
+	NIFLIB_API virtual string GetIDString();
 
-	void AddExtraData( NiExtraData * obj, unsigned version = VER_10_0_1_0 );
-	void RemoveExtraData( NiExtraData * obj );
-	void ShiftExtraData( unsigned int version = VER_10_0_1_0 );
-	void ClearExtraData();
-	list< Ref<NiExtraData> > GetExtraData() const;
+	NIFLIB_API void AddExtraData( NiExtraData * obj, unsigned version = VER_10_0_1_0 );
+	NIFLIB_API void RemoveExtraData( NiExtraData * obj );
+	NIFLIB_API void ShiftExtraData( unsigned int version = VER_10_0_1_0 );
+	NIFLIB_API void ClearExtraData();
+	NIFLIB_API list< Ref<NiExtraData> > GetExtraData() const;
 
-	void AddController( NiTimeController * obj );
-	void RemoveController( NiTimeController * obj );
-	void ClearControllers();
-	list< Ref<NiTimeController> > GetControllers() const;
+	NIFLIB_API void AddController( NiTimeController * obj );
+	NIFLIB_API void RemoveController( NiTimeController * obj );
+	NIFLIB_API void ClearControllers();
+	NIFLIB_API list< Ref<NiTimeController> > GetControllers() const;
 
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
 private:

@@ -16,24 +16,23 @@ typedef Ref<NiTriStripsData> NiTriStripsDataRef;
  * NiTriStripsData - Holds mesh data using strips of triangles.
  */
 
-class NIFLIB_API NiTriStripsData : public NI_TRI_STRIPS_DATA_PARENT {
+class NiTriStripsData : public NI_TRI_STRIPS_DATA_PARENT {
 public:
-	NiTriStripsData();
-	~NiTriStripsData();
+	NIFLIB_API NiTriStripsData();
+	NIFLIB_API ~NiTriStripsData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-
-   NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips = true);
+	NIFLIB_API NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips = true);
 
 	//--Counts--//
 
@@ -41,13 +40,13 @@ public:
 	 * \return The number of triangle strips used by this mesh.
 	 * \sa NiTriStripData::SetStripCount
 	 */
-	unsigned short GetStripCount() const;
+	NIFLIB_API unsigned short GetStripCount() const;
 
 	/*! Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
 	 * \param n The new size of the triangle strips array.
 	 * \sa NiTriStripData::GetStripCount
 	 */
-	void SetStripCount(int n);
+	NIFLIB_API void SetStripCount(int n);
 	
 	//--Getters--//
 
@@ -56,7 +55,7 @@ public:
 	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
 	 * \sa NiTriStripData::SetStrip, NiTriStripData::GetTriangles
 	 */
-	vector<unsigned short> GetStrip( int index ) const;
+	NIFLIB_API vector<unsigned short> GetStrip( int index ) const;
 
 	/*! This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
 	 * \return A vector containing all the triangle faces from all the triangle strips that make up this mesh.
@@ -71,17 +70,17 @@ public:
 	 * \param in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
 	 * \sa NiTriStripData::GetStrip, NiTriStripData::GetTriangles
 	 */
-	void SetStrip( int index, const vector<unsigned short> & in );
+	NIFLIB_API void SetStrip( int index, const vector<unsigned short> & in );
 
-   /*! Replaces the triangle face data in this mesh with new data.
-   * \param in A vector containing the new face data.  Maximum size is 65,535.
-   * \sa GetTriangles
-   */
-   virtual void SetTriangles( const vector<Triangle> & in );
+	/*! Replaces the triangle face data in this mesh with new data.
+	 * \param in A vector containing the new face data.  Maximum size is 65,535.
+	 * \sa GetTriangles
+	 */
+	NIFLIB_API virtual void SetTriangles( const vector<Triangle> & in );
 
 private:
-   void SetNvTriangles( const vector<Triangle> & in );
-   void SetTSTriangles( const vector<Triangle> & in );
+	void SetNvTriangles( const vector<Triangle> & in );
+	void SetTSTriangles( const vector<Triangle> & in );
 	unsigned short CalcTriangleCount() const;
 
 protected:

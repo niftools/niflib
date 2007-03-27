@@ -23,42 +23,42 @@ typedef Ref<NiControllerManager> NiControllerManagerRef;
  * NiControllerManager - Unknown. Root of all controllers?
  */
 
-class NIFLIB_API NiControllerManager : public NI_CONTROLLER_MANAGER_PARENT {
+class NiControllerManager : public NI_CONTROLLER_MANAGER_PARENT {
 public:
-	NiControllerManager();
-	~NiControllerManager();
+	NIFLIB_API NiControllerManager();
+	NIFLIB_API ~NiControllerManager();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Designates whether animation sequences are cumulative?
 	 */
-	bool GetCumulative() const;
-	void SetCumulative( bool value );
+	NIFLIB_API bool GetCumulative() const;
+	NIFLIB_API void SetCumulative( bool value );
 
 	/*!
 	 * Refers to a list of NiControllerSequence object.
 	 */
-	vector<Ref<NiControllerSequence > > GetControllerSequences() const;
-	void SetControllerSequences( const vector<Ref<NiControllerSequence > >& value );
-   void AddSequence( Ref<NiControllerSequence > & obj );
-   void RemoveSequence( Ref<NiControllerSequence > obj );
-   void ClearSequences();
+	NIFLIB_API vector<Ref<NiControllerSequence > > GetControllerSequences() const;
+	NIFLIB_API void SetControllerSequences( const vector<Ref<NiControllerSequence > >& value );
+	NIFLIB_API void AddSequence( Ref<NiControllerSequence > & obj );
+	NIFLIB_API void RemoveSequence( Ref<NiControllerSequence > obj );
+	NIFLIB_API void ClearSequences();
 
 	/*!
 	 * Refers to a NiDefaultAVObjectPalette.
 	 */
-	Ref<NiDefaultAVObjectPalette > GetObjectPalette() const;
-	void SetObjectPalette( Ref<NiDefaultAVObjectPalette > value );
+	NIFLIB_API Ref<NiDefaultAVObjectPalette > GetObjectPalette() const;
+	NIFLIB_API void SetObjectPalette( Ref<NiDefaultAVObjectPalette > value );
 
 protected:
 	NI_CONTROLLER_MANAGER_MEMBERS

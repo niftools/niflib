@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="NIFlib"
+	Name="Niflib"
 	ProjectGUID="{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}"
 	RootNamespace="NIFlib"
 	Keyword="Win32Proj"

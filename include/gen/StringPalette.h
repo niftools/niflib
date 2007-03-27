@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * A list of \\0 terminated strings.
  */
-struct NIFLIB_API StringPalette {
+struct StringPalette {
 	/*! Default Constructor */
-	StringPalette();
+	NIFLIB_API StringPalette();
 	/*! Copy Constructor */
-	StringPalette( const StringPalette & src );
+	NIFLIB_API StringPalette( const StringPalette & src );
 	/*! Copy Operator */
-	StringPalette & operator=( const StringPalette & src );
+	NIFLIB_API StringPalette & operator=( const StringPalette & src );
 	/*! Default Destructor */
-	~StringPalette();
+	NIFLIB_API ~StringPalette();
 	/*!
 	 * A bunch of 0x00 seperated strings.
 	 */

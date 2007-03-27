@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Oblivion's ColFilter property for Havok.
  */
-struct NIFLIB_API OblivionColFilter {
+struct OblivionColFilter {
 	/*! Default Constructor */
-	OblivionColFilter();
+	NIFLIB_API OblivionColFilter();
 	/*! Copy Constructor */
-	OblivionColFilter( const OblivionColFilter & src );
+	NIFLIB_API OblivionColFilter( const OblivionColFilter & src );
 	/*! Copy Operator */
-	OblivionColFilter & operator=( const OblivionColFilter & src );
+	NIFLIB_API OblivionColFilter & operator=( const OblivionColFilter & src );
 	/*! Default Destructor */
-	~OblivionColFilter();
+	NIFLIB_API ~OblivionColFilter();
 	/*!
 	 * Sets mesh color in Oblivion Construction Set.
 	 */

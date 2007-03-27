@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * A triangle with extra data used for physics.
  */
-struct NIFLIB_API hkTriangle {
+struct hkTriangle {
 	/*! Default Constructor */
-	hkTriangle();
+	NIFLIB_API hkTriangle();
 	/*! Copy Constructor */
-	hkTriangle( const hkTriangle & src );
+	NIFLIB_API hkTriangle( const hkTriangle & src );
 	/*! Copy Operator */
-	hkTriangle & operator=( const hkTriangle & src );
+	NIFLIB_API hkTriangle & operator=( const hkTriangle & src );
 	/*! Default Destructor */
-	~hkTriangle();
+	NIFLIB_API ~hkTriangle();
 	/*!
 	 * The triangle.
 	 */

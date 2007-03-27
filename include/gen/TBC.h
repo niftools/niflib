@@ -12,15 +12,15 @@ namespace Niflib {
 /*!
  * Tension, bias, continuity.
  */
-struct NIFLIB_API TBC {
+struct TBC {
 	/*! Default Constructor */
-	TBC();
+	NIFLIB_API TBC();
 	/*! Copy Constructor */
-	TBC( const TBC & src );
+	NIFLIB_API TBC( const TBC & src );
 	/*! Copy Operator */
-	TBC & operator=( const TBC & src );
+	NIFLIB_API TBC & operator=( const TBC & src );
 	/*! Default Destructor */
-	~TBC();
+	NIFLIB_API ~TBC();
 	/*!
 	 * Tension.
 	 */

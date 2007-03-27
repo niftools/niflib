@@ -14,15 +14,15 @@ namespace Niflib {
 /*!
  * An extended texture description for shader textures.
  */
-struct NIFLIB_API ShaderTexDesc {
+struct ShaderTexDesc {
 	/*! Default Constructor */
-	ShaderTexDesc();
+	NIFLIB_API ShaderTexDesc();
 	/*! Copy Constructor */
-	ShaderTexDesc( const ShaderTexDesc & src );
+	NIFLIB_API ShaderTexDesc( const ShaderTexDesc & src );
 	/*! Copy Operator */
-	ShaderTexDesc & operator=( const ShaderTexDesc & src );
+	NIFLIB_API ShaderTexDesc & operator=( const ShaderTexDesc & src );
 	/*! Default Destructor */
-	~ShaderTexDesc();
+	NIFLIB_API ~ShaderTexDesc();
 	/*!
 	 * Is it used?
 	 */
