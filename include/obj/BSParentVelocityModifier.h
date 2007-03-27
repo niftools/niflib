@@ -16,21 +16,21 @@ typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;
  * BSParentVelocityModifier - Unknown.
  */
 
-class NIFLIB_API BSParentVelocityModifier : public B_S_PARENT_VELOCITY_MODIFIER_PARENT {
+class BSParentVelocityModifier : public B_S_PARENT_VELOCITY_MODIFIER_PARENT {
 public:
-	BSParentVelocityModifier();
-	~BSParentVelocityModifier();
+	NIFLIB_API BSParentVelocityModifier();
+	NIFLIB_API ~BSParentVelocityModifier();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
 	B_S_PARENT_VELOCITY_MODIFIER_MEMBERS

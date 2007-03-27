@@ -22,33 +22,33 @@ typedef Ref<NiPoint3Interpolator> NiPoint3InterpolatorRef;
  * NiPoint3Interpolator - Unknown.
  */
 
-class NIFLIB_API NiPoint3Interpolator : public NI_POINT3_INTERPOLATOR_PARENT {
+class NiPoint3Interpolator : public NI_POINT3_INTERPOLATOR_PARENT {
 public:
-	NiPoint3Interpolator();
-	~NiPoint3Interpolator();
+	NIFLIB_API NiPoint3Interpolator();
+	NIFLIB_API ~NiPoint3Interpolator();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Value when posed?  Value at time 0?
 	 */
-	Vector3 GetPoint3Value() const;
-	void SetPoint3Value( Vector3 value );
+	NIFLIB_API Vector3 GetPoint3Value() const;
+	NIFLIB_API void SetPoint3Value( Vector3 value );
 
 	/*!
 	 * Reference to NiPosData.
 	 */
-	Ref<NiPosData > GetData() const;
-	void SetData( Ref<NiPosData > value );
+	NIFLIB_API Ref<NiPosData > GetData() const;
+	NIFLIB_API void SetData( Ref<NiPosData > value );
 
 protected:
 	NI_POINT3_INTERPOLATOR_MEMBERS

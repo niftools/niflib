@@ -23,33 +23,33 @@ typedef Ref<NiLightColorController> NiLightColorControllerRef;
  * NiLightColorController - Light color animation controller.
  */
 
-class NIFLIB_API NiLightColorController : public NI_LIGHT_COLOR_CONTROLLER_PARENT {
+class NiLightColorController : public NI_LIGHT_COLOR_CONTROLLER_PARENT {
 public:
-	NiLightColorController();
-	~NiLightColorController();
+	NIFLIB_API NiLightColorController();
+	NIFLIB_API ~NiLightColorController();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Link to NiPosData
 	 */
-	Ref<NiPosData > GetData() const;
-	void SetData( Ref<NiPosData > value );
+	NIFLIB_API Ref<NiPosData > GetData() const;
+	NIFLIB_API void SetData( Ref<NiPosData > value );
 
 	/*!
 	 * Link to NiPoint3Interpolator.
 	 */
-	Ref<NiPoint3Interpolator > GetInterpolator() const;
-	void SetInterpolator( Ref<NiPoint3Interpolator > value );
+	NIFLIB_API Ref<NiPoint3Interpolator > GetInterpolator() const;
+	NIFLIB_API void SetInterpolator( Ref<NiPoint3Interpolator > value );
 
 protected:
 	NI_LIGHT_COLOR_CONTROLLER_MEMBERS

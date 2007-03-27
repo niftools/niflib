@@ -18,45 +18,45 @@ typedef Ref<NiColorData> NiColorDataRef;
  * NiColorData - Color data for material color controller.
  */
 
-class NIFLIB_API NiColorData : public NI_COLOR_DATA_PARENT {
+class NiColorData : public NI_COLOR_DATA_PARENT {
 public:
-	NiColorData();
-	~NiColorData();
+	NIFLIB_API NiColorData();
+	NIFLIB_API ~NiColorData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*! Retrieves the type of color interpolation being used.
 	 * \return The color key type specifing the type of interpolation being used.
 	 * \sa NiColorData::SetKeyType
 	 */
-	KeyType GetKeyType() const;
+	NIFLIB_API KeyType GetKeyType() const;
 
 	/*! Sets the type of color interpolation being used.  Does not affect existing key data.
 	 * \param t The new color key type specifing the type of interpolation to be used.
 	 * \sa NiColorData::GetKeyType
 	 */
-	void SetKeyType( KeyType t );
+	NIFLIB_API void SetKeyType( KeyType t );
 
 	/*! Retrieves the color key data.
 	 * \return A vector containing Key<Color4> data which specify color over time.
 	 * \sa NiColorData::SetKeys, Key
 	 */
-	vector< Key<Color4> > GetKeys() const;
+	NIFLIB_API vector< Key<Color4> > GetKeys() const;
 
 	/*! Sets the color key data.
 	 * \param keys A vector containing new Key<Color4> data which will replace any existing data.
 	 * \sa NiColorData::GetKeys, Key
 	 */
-	void SetKeys( vector< Key<Color4> > const & keys );
+	NIFLIB_API void SetKeys( vector< Key<Color4> > const & keys );
 protected:
 	NI_COLOR_DATA_MEMBERS
 private:

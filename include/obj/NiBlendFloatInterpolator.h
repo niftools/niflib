@@ -17,27 +17,27 @@ typedef Ref<NiBlendFloatInterpolator> NiBlendFloatInterpolatorRef;
  * NiBlendFloatInterpolator - An interpolator for a float.
  */
 
-class NIFLIB_API NiBlendFloatInterpolator : public NI_BLEND_FLOAT_INTERPOLATOR_PARENT {
+class NiBlendFloatInterpolator : public NI_BLEND_FLOAT_INTERPOLATOR_PARENT {
 public:
-	NiBlendFloatInterpolator();
-	~NiBlendFloatInterpolator();
+	NIFLIB_API NiBlendFloatInterpolator();
+	NIFLIB_API ~NiBlendFloatInterpolator();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * The interpolated float?
 	 */
-	float GetFloatValue() const;
-	void SetFloatValue( float value );
+	NIFLIB_API float GetFloatValue() const;
+	NIFLIB_API void SetFloatValue( float value );
 
 protected:
 	NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS

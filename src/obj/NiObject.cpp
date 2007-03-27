@@ -95,3 +95,7 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	//return new object
 	return clone;
 };
+
+const Type & NiObject::GetType() const {
+	return TYPE;
+};

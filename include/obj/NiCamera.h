@@ -22,94 +22,94 @@ typedef Ref<NiCamera> NiCameraRef;
  * NiCamera - Camera object.
  */
 
-class NIFLIB_API NiCamera : public NI_CAMERA_PARENT {
+class NiCamera : public NI_CAMERA_PARENT {
 public:
-	NiCamera();
-	~NiCamera();
+	NIFLIB_API NiCamera();
+	NIFLIB_API ~NiCamera();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Frustrum left.
 	 */
-	float GetFrustumLeft() const;
-	void SetFrustumLeft( float value );
+	NIFLIB_API float GetFrustumLeft() const;
+	NIFLIB_API void SetFrustumLeft( float value );
 
 	/*!
 	 * Frustrum right.
 	 */
-	float GetFrustumRight() const;
-	void SetFrustumRight( float value );
+	NIFLIB_API float GetFrustumRight() const;
+	NIFLIB_API void SetFrustumRight( float value );
 
 	/*!
 	 * Frustrum top.
 	 */
-	float GetFrustumTop() const;
-	void SetFrustumTop( float value );
+	NIFLIB_API float GetFrustumTop() const;
+	NIFLIB_API void SetFrustumTop( float value );
 
 	/*!
 	 * Frustrum bottom.
 	 */
-	float GetFrustumBottom() const;
-	void SetFrustumBottom( float value );
+	NIFLIB_API float GetFrustumBottom() const;
+	NIFLIB_API void SetFrustumBottom( float value );
 
 	/*!
 	 * Frustrum near.
 	 */
-	float GetFrustumNear() const;
-	void SetFrustumNear( float value );
+	NIFLIB_API float GetFrustumNear() const;
+	NIFLIB_API void SetFrustumNear( float value );
 
 	/*!
 	 * Frustrum far.
 	 */
-	float GetFrustumFar() const;
-	void SetFrustumFar( float value );
+	NIFLIB_API float GetFrustumFar() const;
+	NIFLIB_API void SetFrustumFar( float value );
 
 	/*!
 	 * Determines whether perspective is used.  Orthographic means no
 	 * perspective.
 	 */
-	bool GetUseOrthographicProjection() const;
-	void SetUseOrthographicProjection( bool value );
+	NIFLIB_API bool GetUseOrthographicProjection() const;
+	NIFLIB_API void SetUseOrthographicProjection( bool value );
 
 	/*!
 	 * Viewport left.
 	 */
-	float GetViewportLeft() const;
-	void SetViewportLeft( float value );
+	NIFLIB_API float GetViewportLeft() const;
+	NIFLIB_API void SetViewportLeft( float value );
 
 	/*!
 	 * Viewport right.
 	 */
-	float GetViewportRight() const;
-	void SetViewportRight( float value );
+	NIFLIB_API float GetViewportRight() const;
+	NIFLIB_API void SetViewportRight( float value );
 
 	/*!
 	 * Viewport top.
 	 */
-	float GetViewportTop() const;
-	void SetViewportTop( float value );
+	NIFLIB_API float GetViewportTop() const;
+	NIFLIB_API void SetViewportTop( float value );
 
 	/*!
 	 * Viewport bottom.
 	 */
-	float GetViewportBottom() const;
-	void SetViewportBottom( float value );
+	NIFLIB_API float GetViewportBottom() const;
+	NIFLIB_API void SetViewportBottom( float value );
 
 	/*!
 	 * Level of detail adjust.
 	 */
-	float GetLodAdjust() const;
-	void SetLodAdjust( float value );
+	NIFLIB_API float GetLodAdjust() const;
+	NIFLIB_API void SetLodAdjust( float value );
 
 protected:
 	NI_CAMERA_MEMBERS

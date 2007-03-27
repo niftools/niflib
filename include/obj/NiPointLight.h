@@ -17,39 +17,39 @@ typedef Ref<NiPointLight> NiPointLightRef;
  * NiPointLight - A point light.
  */
 
-class NIFLIB_API NiPointLight : public NI_POINT_LIGHT_PARENT {
+class NiPointLight : public NI_POINT_LIGHT_PARENT {
 public:
-	NiPointLight();
-	~NiPointLight();
+	NIFLIB_API NiPointLight();
+	NIFLIB_API ~NiPointLight();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Constant Attenuation
 	 */
-	float GetConstantAttenuation() const;
-	void SetConstantAttenuation( float value );
+	NIFLIB_API float GetConstantAttenuation() const;
+	NIFLIB_API void SetConstantAttenuation( float value );
 
 	/*!
 	 * Linear Attenuation
 	 */
-	float GetLinearAttenuation() const;
-	void SetLinearAttenuation( float value );
+	NIFLIB_API float GetLinearAttenuation() const;
+	NIFLIB_API void SetLinearAttenuation( float value );
 
 	/*!
 	 * Quadratic Attenuation (see glLight)
 	 */
-	float GetQuadraticAttenuation() const;
-	void SetQuadraticAttenuation( float value );
+	NIFLIB_API float GetQuadraticAttenuation() const;
+	NIFLIB_API void SetQuadraticAttenuation( float value );
 
 protected:
 	NI_POINT_LIGHT_MEMBERS

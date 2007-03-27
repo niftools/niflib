@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Constructor
-Header::Header() : copyright(3), version((unsigned int)0x04000002), endianType((byte)1), userVersion((unsigned int)0), numBlocks((unsigned int)0), userVersion2((unsigned int)0), numBlockTypes((unsigned short)0), unknownInt2((unsigned int)0) {};
+Header::Header() : version((unsigned int)0x04000002), endianType((byte)1), userVersion((unsigned int)0), numBlocks((unsigned int)0), userVersion2((unsigned int)0), numBlockTypes((unsigned short)0), unknownInt2((unsigned int)0) {};
 
 //Copy Constructor
 Header::Header( const Header & src ) {

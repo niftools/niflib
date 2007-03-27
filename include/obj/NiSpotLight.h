@@ -17,33 +17,33 @@ typedef Ref<NiSpotLight> NiSpotLightRef;
  * NiSpotLight - A spot.
  */
 
-class NIFLIB_API NiSpotLight : public NI_SPOT_LIGHT_PARENT {
+class NiSpotLight : public NI_SPOT_LIGHT_PARENT {
 public:
-	NiSpotLight();
-	~NiSpotLight();
+	NIFLIB_API NiSpotLight();
+	NIFLIB_API ~NiSpotLight();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * The opening angle of the spot.
 	 */
-	float GetCutoffAngle() const;
-	void SetCutoffAngle( float value );
+	NIFLIB_API float GetCutoffAngle() const;
+	NIFLIB_API void SetCutoffAngle( float value );
 
 	/*!
 	 * Describes the distribution of light. (see: glLight)
 	 */
-	float GetExponent() const;
-	void SetExponent( float value );
+	NIFLIB_API float GetExponent() const;
+	NIFLIB_API void SetExponent( float value );
 
 protected:
 	NI_SPOT_LIGHT_MEMBERS

@@ -17,51 +17,51 @@ typedef Ref<bhkCapsuleShape> bhkCapsuleShapeRef;
  * bhkCapsuleShape - A capsule.
  */
 
-class NIFLIB_API bhkCapsuleShape : public BHK_CAPSULE_SHAPE_PARENT {
+class bhkCapsuleShape : public BHK_CAPSULE_SHAPE_PARENT {
 public:
-	bhkCapsuleShape();
-	~bhkCapsuleShape();
+	NIFLIB_API bhkCapsuleShape();
+	NIFLIB_API ~bhkCapsuleShape();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Apparently the capsule's radius.
 	 */
-	float GetRadius() const;
-	void SetRadius( float value );
+	NIFLIB_API float GetRadius() const;
+	NIFLIB_API void SetRadius( float value );
 
 	/*!
 	 * First point on the capsule's axis.
 	 */
-	Vector3 GetFirstPoint() const;
-	void SetFirstPoint( const Vector3 & value );
+	NIFLIB_API Vector3 GetFirstPoint() const;
+	NIFLIB_API void SetFirstPoint( const Vector3 & value );
 
 	/*!
 	 * Matches first capsule radius.
 	 */
-	float GetRadius1() const;
-	void SetRadius1( float value );
+	NIFLIB_API float GetRadius1() const;
+	NIFLIB_API void SetRadius1( float value );
 
 	/*!
 	 * Second point on the capsule's axis.
 	 */
-	Vector3 GetSecondPoint() const;
-	void SetSecondPoint( const Vector3 & value );
+	NIFLIB_API Vector3 GetSecondPoint() const;
+	NIFLIB_API void SetSecondPoint( const Vector3 & value );
 
 	/*!
 	 * Matches second capsule radius.
 	 */
-	float GetRadius2() const;
-	void SetRadius2( float value );
+	NIFLIB_API float GetRadius2() const;
+	NIFLIB_API void SetRadius2( float value );
 
 protected:
 	BHK_CAPSULE_SHAPE_MEMBERS

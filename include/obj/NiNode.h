@@ -34,34 +34,34 @@ public:
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	void AddChild( Ref<NiAVObject> obj );
-	void RemoveChild( Ref<NiAVObject> obj );
-	void ClearChildren();
-	vector< Ref<NiAVObject> > GetChildren() const;
+	NIFLIB_API void AddChild( Ref<NiAVObject> obj );
+	NIFLIB_API void RemoveChild( Ref<NiAVObject> obj );
+	NIFLIB_API void ClearChildren();
+	NIFLIB_API vector< Ref<NiAVObject> > GetChildren() const;
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
-   template <typename ChildEquivalence>
-   inline void SortChildren(ChildEquivalence pred) {
-      std::stable_sort(children.begin(), children.end(), pred);
-   }
+	template <typename ChildEquivalence>
+	inline void SortChildren(ChildEquivalence pred) {
+		std::stable_sort(children.begin(), children.end(), pred);
+	}
 #endif
 
-   void AddEffect( Ref<NiDynamicEffect> effect );
-   void RemoveEffect( Ref<NiDynamicEffect> effect );
-   void ClearEffects();
-   vector< Ref<NiDynamicEffect> > GetEffects() const;
+	NIFLIB_API void AddEffect( Ref<NiDynamicEffect> effect );
+	NIFLIB_API void RemoveEffect( Ref<NiDynamicEffect> effect );
+	NIFLIB_API void ClearEffects();
+	NIFLIB_API vector< Ref<NiDynamicEffect> > GetEffects() const;
 
 	/*! Checks if this node has any skins attached. */
-	bool IsSkeletonRoot() const;
+	NIFLIB_API bool IsSkeletonRoot() const;
 
 	/*! Checks if this node influences the vertices in any skins. */
-	bool IsSkinInfluence() const;
+	NIFLIB_API bool IsSkinInfluence() const;
 
 	/*! 
 	 * Applies a huristic to guess whether this node was created as a proxy
@@ -69,36 +69,36 @@ public:
 	 * was split in an exporter.
 	 * /return Whether or not this node is probably a split mesh proxy
 	 */
-	bool IsSplitMeshProxy() const;
+	NIFLIB_API bool IsSplitMeshProxy() const;
 	   
 
 	/*! 
 	 * Causes all children's transforms to be changed so that all the skin
 	 * pieces line up without any vertex transformations.
 	 */
-	void GoToSkeletonBindPosition();
+	NIFLIB_API void GoToSkeletonBindPosition();
 
 	/*!
 	 * Applies the local transforms of this node to its children,
 	 * causing itself to be cleared to identity transforms.
 	 */
-	void PropagateTransform();
+	NIFLIB_API void PropagateTransform();
 
 	/*! 
 	 * Should only be called by NiTriBasedGeom
 	 * Adds a new SkinInstance to the specified mesh.
 	 * The bones must be below this node in the scene graph tree
 	 */
-	void AddSkin( NiSkinInstance * skin_inst );
+	NIFLIB_HIDDEN void AddSkin( NiSkinInstance * skin_inst );
 
 	/*! 
 	 * Should only be called by NiTriBasedGeom
 	 * Detaches the skin associated with a child mesh.
 	 */
-	void RemoveSkin( NiSkinInstance * skin_inst );
+	NIFLIB_HIDDEN void RemoveSkin( NiSkinInstance * skin_inst );
 
 	/*! Should not be called directly */
-	void SetSkinFlag( bool n );
+	NIFLIB_HIDDEN void SetSkinFlag( bool n );
 
 private:
 	void RepositionGeom( NiAVObjectRef root );

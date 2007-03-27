@@ -32,7 +32,7 @@ public:
 private:
 	static const Type TYPE;
 public:
-	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_API virtual const Type & GetType() const;
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
 	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
@@ -72,8 +72,8 @@ public:
 	/*!
 	 * Seems to be some kind of transformation matrix, scale or translation?
 	 */
-	NIFLIB_API array<12,float>  GetTransform() const;
-	NIFLIB_API void SetTransform( const array<12,float>&  value );
+	NIFLIB_API array<12,float>  GetInertia() const;
+	NIFLIB_API void SetInertia( const array<12,float>&  value );
 
 	/*!
 	 * The object's center.

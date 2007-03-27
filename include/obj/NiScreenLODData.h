@@ -17,71 +17,71 @@ typedef Ref<NiScreenLODData> NiScreenLODDataRef;
  * on screen?
  */
 
-class NIFLIB_API NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
+class NiScreenLODData : public NI_SCREEN_L_O_D_DATA_PARENT {
 public:
-	NiScreenLODData();
-	~NiScreenLODData();
+	NIFLIB_API NiScreenLODData();
+	NIFLIB_API ~NiScreenLODData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Get the center of the bounding sphere?
 	 */
-	Vector3 GetBoundCenter() const;
+	NIFLIB_API Vector3 GetBoundCenter() const;
 
 	/*!
 	 * Set the center of the bounding sphere?
 	 */
-	void SetBoundCenter( const Vector3 & bound_center );
+	NIFLIB_API void SetBoundCenter( const Vector3 & bound_center );
 
 	/*!
 	 * Get the radius of the bounding sphere?
 	 */
-	float GetBoundRadius() const;
+	NIFLIB_API float GetBoundRadius() const;
 
 	/*!
 	 * Set the radius of the bounding sphere?
 	 */
-	void SetBoundRadius( float value );
+	NIFLIB_API void SetBoundRadius( float value );
 
 	/*!
 	 * Get the center of the bounding sphere in world space?
 	 */
-	Vector3 GetWorldCenter() const;
+	NIFLIB_API Vector3 GetWorldCenter() const;
 
 	/*!
 	 * Set the center of the bounding sphere in world space?
 	 */
-	void SetWorldCenter( const Vector3 & value );
+	NIFLIB_API void SetWorldCenter( const Vector3 & value );
 
 	/*!
 	 * Get the radius of the bounding sphere in world space?
 	 */
-	float GetWorldRadius() const;
+	NIFLIB_API float GetWorldRadius() const;
 
 	/*!
 	 * Set the radius of the bounding sphere in world space?
 	 */
-	void SetWorldRadius( float value );
+	NIFLIB_API void SetWorldRadius( float value );
 
 	/*!
 	 * Get the LOD levels based on proportion of screen size?
 	 */
-	vector<float > GetProportionLevels() const;
+	NIFLIB_API vector<float > GetProportionLevels() const;
 
 	/*!
 	 * Set the LOD levels based on proportion of screen size?
 	 */
-	void SetProportionLevels( const vector<float >& value );
+	NIFLIB_API void SetProportionLevels( const vector<float >& value );
 
 protected:
 	NI_SCREEN_L_O_D_DATA_MEMBERS

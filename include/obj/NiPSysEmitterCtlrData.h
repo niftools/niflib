@@ -20,33 +20,33 @@ typedef Ref<NiPSysEmitterCtlrData> NiPSysEmitterCtlrDataRef;
  * NiPSysEmitterCtlrData - Particle system emitter controller data.
  */
 
-class NIFLIB_API NiPSysEmitterCtlrData : public NI_P_SYS_EMITTER_CTLR_DATA_PARENT {
+class NiPSysEmitterCtlrData : public NI_P_SYS_EMITTER_CTLR_DATA_PARENT {
 public:
-	NiPSysEmitterCtlrData();
-	~NiPSysEmitterCtlrData();
+	NIFLIB_API NiPSysEmitterCtlrData();
+	NIFLIB_API ~NiPSysEmitterCtlrData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Unknown.
 	 */
-	KeyGroup<float > GetFloatKeys_() const;
-	void SetFloatKeys_( KeyGroup<float > value );
+	NIFLIB_API KeyGroup<float > GetFloatKeys_() const;
+	NIFLIB_API void SetFloatKeys_( KeyGroup<float > value );
 
 	/*!
 	 * Unknown.
 	 */
-	vector<Key<byte > > GetVisibilityKeys_() const;
-	void SetVisibilityKeys_( const vector<Key<byte > >& value );
+	NIFLIB_API vector<Key<byte > > GetVisibilityKeys_() const;
+	NIFLIB_API void SetVisibilityKeys_( const vector<Key<byte > >& value );
 
 protected:
 	NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS

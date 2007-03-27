@@ -19,27 +19,27 @@ typedef Ref<bhkMultiSphereShape> bhkMultiSphereShapeRef;
  * bhkMultiSphereShape - Unknown.
  */
 
-class NIFLIB_API bhkMultiSphereShape : public BHK_MULTI_SPHERE_SHAPE_PARENT {
+class bhkMultiSphereShape : public BHK_MULTI_SPHERE_SHAPE_PARENT {
 public:
-	bhkMultiSphereShape();
-	~bhkMultiSphereShape();
+	NIFLIB_API bhkMultiSphereShape();
+	NIFLIB_API ~bhkMultiSphereShape();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * This array holds the spheres which make up the multi sphere shape.
 	 */
-	vector<Sphere > GetSpheres() const;
-	void SetSpheres( const vector<Sphere >& value );
+	NIFLIB_API vector<Sphere > GetSpheres() const;
+	NIFLIB_API void SetSpheres( const vector<Sphere >& value );
 
 protected:
 	BHK_MULTI_SPHERE_SHAPE_MEMBERS

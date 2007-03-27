@@ -17,7 +17,7 @@ typedef Ref<NiMaterialProperty> NiMaterialPropertyRef;
  * NiMaterialProperty - Describes the material shading properties.
  */
 
-class NIFLIB_API NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
+class NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
 public:
 	NiMaterialProperty();
 	~NiMaterialProperty();
@@ -26,33 +26,33 @@ public:
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	unsigned short GetFlags() const;
-	void SetFlags( unsigned short n );
+	NIFLIB_API unsigned short GetFlags() const;
+	NIFLIB_API void SetFlags( unsigned short n );
 
-	float GetTransparency() const;
-	void SetTransparency( float n );
+	NIFLIB_API float GetTransparency() const;
+	NIFLIB_API void SetTransparency( float n );
 
-	float GetGlossiness() const;
-	void SetGlossiness( float n );
+	NIFLIB_API float GetGlossiness() const;
+	NIFLIB_API void SetGlossiness( float n );
 
-	Color3 GetAmbientColor() const;
-	void SetAmbientColor( const Color3 & n );
+	NIFLIB_API Color3 GetAmbientColor() const;
+	NIFLIB_API void SetAmbientColor( const Color3 & n );
 
-	Color3 GetDiffuseColor() const;
-	void SetDiffuseColor( const Color3 & n );
+	NIFLIB_API Color3 GetDiffuseColor() const;
+	NIFLIB_API void SetDiffuseColor( const Color3 & n );
 
-	Color3 GetEmissiveColor() const;
-	void SetEmissiveColor( const Color3 & n );
+	NIFLIB_API Color3 GetEmissiveColor() const;
+	NIFLIB_API void SetEmissiveColor( const Color3 & n );
 
-	Color3 GetSpecularColor() const;
-	void SetSpecularColor( const Color3 & n );
+	NIFLIB_API Color3 GetSpecularColor() const;
+	NIFLIB_API void SetSpecularColor( const Color3 & n );
 	
 
 protected:

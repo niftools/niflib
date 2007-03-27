@@ -20,30 +20,30 @@ typedef Ref<NiVertexColorProperty> NiVertexColorPropertyRef;
  * not present, vertex colors have vertex_mode=2 and lighting_mode=1.
  */
 
-class NIFLIB_API NiVertexColorProperty : public NI_VERTEX_COLOR_PROPERTY_PARENT {
+class NiVertexColorProperty : public NI_VERTEX_COLOR_PROPERTY_PARENT {
 public:
-	NiVertexColorProperty();
-	~NiVertexColorProperty();
+	NIFLIB_API NiVertexColorProperty();
+	NIFLIB_API ~NiVertexColorProperty();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-   unsigned short GetFlags() const;
-   void SetFlags(unsigned short value);
+   NIFLIB_API unsigned short GetFlags() const;
+   NIFLIB_API void SetFlags(unsigned short value);
 
-   VertMode GetVertexMode() const;
-   void SetVertexMode(VertMode value);
+   NIFLIB_API VertMode GetVertexMode() const;
+   NIFLIB_API void SetVertexMode(VertMode value);
 
-   LightMode GetLightingMode() const;
-   void SetLightingMode(LightMode value);
+   NIFLIB_API LightMode GetLightingMode() const;
+   NIFLIB_API void SetLightingMode(LightMode value);
 
 protected:
 	NI_VERTEX_COLOR_PROPERTY_MEMBERS

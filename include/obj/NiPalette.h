@@ -16,33 +16,33 @@ typedef Ref<NiPalette> NiPaletteRef;
  * NiPalette - A color palette.
  */
 
-class NIFLIB_API NiPalette : public NI_PALETTE_PARENT {
+class NiPalette : public NI_PALETTE_PARENT {
 public:
-	NiPalette();
-	~NiPalette();
+	NIFLIB_API NiPalette();
+	NIFLIB_API ~NiPalette();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*! Retrieves the palette data from this palette block.
 	 * \return A vector containing the the colors stored in the palette.
 	 * \sa NiPalette::SetPalette
 	 */
-	vector<Color4> GetPalette() const;
+	NIFLIB_API vector<Color4> GetPalette() const;
 
 	/*! Sets the palette data for this palette block.
 	 * \param new_pal A vector containing the the new colors to be stored in the palette.
 	 * \sa NiPalette::GetPalette
 	 */
-	void SetPalette( const vector<Color4> & new_pal );
+	NIFLIB_API void SetPalette( const vector<Color4> & new_pal );
 protected:
 	NI_PALETTE_MEMBERS
 private:

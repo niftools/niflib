@@ -21,41 +21,41 @@ typedef Ref<NiRangeLODData> NiRangeLODDataRef;
  * object from camera.
  */
 
-class NIFLIB_API NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
+class NiRangeLODData : public NI_RANGE_L_O_D_DATA_PARENT {
 public:
-	NiRangeLODData();
-	~NiRangeLODData();
+	NIFLIB_API NiRangeLODData();
+	NIFLIB_API ~NiRangeLODData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Get the point to calculate distance from for switching?
 	 */
-	Vector3 GetLODCenter() const;
+	NIFLIB_API Vector3 GetLODCenter() const;
 
 	/*!
 	 * Set the point to calculate distance from for switching?
 	 */
-	void SetLODCenter( const Vector3 & value );
+	NIFLIB_API void SetLODCenter( const Vector3 & value );
 
 	/*!
 	 * Get the ranges of distance that each level of detail applies in.
 	 */
-	vector<LODRange > GetLODLevels() const;
+	NIFLIB_API vector<LODRange > GetLODLevels() const;
 
 	/*!
 	 * Set the ranges of distance that each level of detail applies in.
 	 */
-	void SetLODLevels( const vector<LODRange >& value );
+	NIFLIB_API void SetLODLevels( const vector<LODRange >& value );
 
 protected:
 	NI_RANGE_L_O_D_DATA_MEMBERS

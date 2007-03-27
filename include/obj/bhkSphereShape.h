@@ -17,27 +17,27 @@ typedef Ref<bhkSphereShape> bhkSphereShapeRef;
  * bhkSphereShape - A sphere.
  */
 
-class NIFLIB_API bhkSphereShape : public BHK_SPHERE_SHAPE_PARENT {
+class bhkSphereShape : public BHK_SPHERE_SHAPE_PARENT {
 public:
-	bhkSphereShape();
-	~bhkSphereShape();
+	NIFLIB_API bhkSphereShape();
+	NIFLIB_API ~bhkSphereShape();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * This denotes the radius of the sphere.
 	 */
-	float GetRadius() const;
-	void SetRadius( float value );
+	NIFLIB_API float GetRadius() const;
+	NIFLIB_API void SetRadius( float value );
 
 protected:
 	BHK_SPHERE_SHAPE_MEMBERS

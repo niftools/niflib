@@ -18,116 +18,116 @@ typedef Ref<NiBSplineCompTransformInterpolator> NiBSplineCompTransformInterpolat
 /*!
  * NiBSplineCompTransformInterpolator
  */
-class NIFLIB_API NiBSplineCompTransformInterpolator : public NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT {
+class NiBSplineCompTransformInterpolator : public NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT {
 public:
-	NiBSplineCompTransformInterpolator();
-	~NiBSplineCompTransformInterpolator();
+	NIFLIB_API NiBSplineCompTransformInterpolator();
+	NIFLIB_API ~NiBSplineCompTransformInterpolator();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Base translation when translate curve not defined.
 	 */
-	Vector3 GetTranslation() const;
-	void SetTranslation( Vector3 value );
+	NIFLIB_API Vector3 GetTranslation() const;
+	NIFLIB_API void SetTranslation( Vector3 value );
 
 	/*!
 	 * Base rotation when rotation curve not defined.
 	 */
-	Quaternion GetRotation() const;
-	void SetRotation( Quaternion value );
+	NIFLIB_API Quaternion GetRotation() const;
+	NIFLIB_API void SetRotation( Quaternion value );
 
 	/*!
 	 * Base scale when scale curve not defined.
 	 */
-	float GetScale() const;
-	void SetScale( float value );
+	NIFLIB_API float GetScale() const;
+	NIFLIB_API void SetScale( float value );
 
 	/*!
 	 * Translate Bias
 	 */
-	float GetTranslateBias() const;
-	void SetTranslateBias( float value );
+	NIFLIB_API float GetTranslateBias() const;
+	NIFLIB_API void SetTranslateBias( float value );
 
 	/*!
 	 * Translate Multiplier
 	 */
-	float GetTranslateMultiplier() const;
-	void SetTranslateMultiplier( float value );
+	NIFLIB_API float GetTranslateMultiplier() const;
+	NIFLIB_API void SetTranslateMultiplier( float value );
 
 	/*!
 	 * Rotation Bias
 	 */
-	float GetRotationBias() const;
-	void SetRotationBias( float value );
+	NIFLIB_API float GetRotationBias() const;
+	NIFLIB_API void SetRotationBias( float value );
 
 	/*!
 	 * Rotation Multiplier
 	 */
-	float GetRotationMultiplier() const;
-	void SetRotationMultiplier( float value );
+	NIFLIB_API float GetRotationMultiplier() const;
+	NIFLIB_API void SetRotationMultiplier( float value );
 
 	/*!
 	 * Scale Bias
 	 */
-	float GetScaleBias() const;
-	void SetScaleBias( float value );
+	NIFLIB_API float GetScaleBias() const;
+	NIFLIB_API void SetScaleBias( float value );
 
 	/*!
 	 * Scale Multiplier
 	 */
-	float GetScaleMultiplier() const;
-	void SetScaleMultiplier( float value );
+	NIFLIB_API float GetScaleMultiplier() const;
+	NIFLIB_API void SetScaleMultiplier( float value );
 
    /*! Retrieves the control quaternion rotation data.
    * \return A vector containing control Quaternion data which specify rotation over time.
    */
-   vector< Quaternion > GetQuatRotateControlData() const;
+   NIFLIB_API vector< Quaternion > GetQuatRotateControlData() const;
 
    /*! Retrieves the control translation data.
    * \return A vector containing control Vector3 data which specify translation over time.
    */
-   vector< Vector3 > GetTranslateControlData() const;
+   NIFLIB_API vector< Vector3 > GetTranslateControlData() const;
 
    /*! Retrieves the scale key data.
    * \return A vector containing control float data which specify scale over time.
    */
-   vector< float > GetScaleControlData() const;
+   NIFLIB_API vector< float > GetScaleControlData() const;
 
    /*! Retrieves the sampled quaternion rotation key data between start and stop time.
    * \param npoints The number of data points to sample between start and stop time.
    * \param degree N-th order degree of polynomial used to fit the data.
    * \return A vector containing Key<Quaternion> data which specify rotation over time.
    */
-   vector< Key<Quaternion> > SampleQuatRotateKeys(int npoints, int degree) const;
+   NIFLIB_API vector< Key<Quaternion> > SampleQuatRotateKeys(int npoints, int degree) const;
 
    /*! Retrieves the sampled scale key data between start and stop time.
    * \param npoints The number of data points to sample between start and stop time.
    * \param degree N-th order degree of polynomial used to fit the data.
    * \return A vector containing Key<Vector3> data which specify translation over time.
    */
-   vector< Key<Vector3> > SampleTranslateKeys(int npoints, int degree) const;
+   NIFLIB_API vector< Key<Vector3> > SampleTranslateKeys(int npoints, int degree) const;
 
    /*! Retrieves the sampled scale key data between start and stop time.
    * \param npoints The number of data points to sample between start and stop time.
    * \param degree N-th order degree of polynomial used to fit the data.
    * \return A vector containing Key<float> data which specify scale over time.
    */
-   vector< Key<float> > SampleScaleKeys(int npoints, int degree) const;
+   NIFLIB_API vector< Key<float> > SampleScaleKeys(int npoints, int degree) const;
 
    /*! Retrieves the number of control points used in the spline curve.
    * \return The number of control points used in the spline curve.
    */
-   int GetNumControlPt() const;
+   NIFLIB_API int GetNumControlPt() const;
 
 protected:
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS

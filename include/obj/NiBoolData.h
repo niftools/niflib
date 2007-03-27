@@ -18,45 +18,45 @@ typedef Ref<NiBoolData> NiBoolDataRef;
  * NiBoolData - Timed boolean data.
  */
 
-class NIFLIB_API NiBoolData : public NI_BOOL_DATA_PARENT {
+class NiBoolData : public NI_BOOL_DATA_PARENT {
 public:
-	NiBoolData();
-	~NiBoolData();
+	NIFLIB_API NiBoolData();
+	NIFLIB_API ~NiBoolData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:	
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*! Retrieves the type of boolean interpolation being used.
 	 * \return The boolean key type specifing the type of interpolation being used.
 	 * \sa NiBoolData::SetKeyType
 	 */
-	KeyType GetKeyType() const;
+	NIFLIB_API KeyType GetKeyType() const;
 
 	/*! Sets the type of boolean interpolation being used.  Does not affect existing key data.
 	 * \param t The new boolean key type specifing the type of interpolation to be used.
 	 * \sa NiBoolData::GetKeyType
 	 */
-	void SetKeyType( KeyType t );
+	NIFLIB_API void SetKeyType( KeyType t );
 
 	/*! Retrieves the boolean key data.
 	 * \return A vector containing Key<unsigned char> data which specify boolean values over time.
 	 * \sa NiBoolData::SetKeys, Key
 	 */
-	vector< Key<unsigned char> > GetKeys() const;
+	NIFLIB_API vector< Key<unsigned char> > GetKeys() const;
 
 	/*! Sets the boolean key data.
 	 * \param keys A vector containing new Key<unsigned char> data which will replace any existing data.
 	 * \sa NiBoolData::GetKeys, Key
 	 */
-	void SetKeys( vector< Key<unsigned char> > const & keys );
+	NIFLIB_API void SetKeys( vector< Key<unsigned char> > const & keys );
 
 protected:
 	NI_BOOL_DATA_MEMBERS

@@ -2773,43 +2773,43 @@ void bhkMoppBvTreeShape::InternalRead( istream& in, list<unsigned int> & link_st
 	link_stack.push_back( block_num );
 	NifStream( material, in, version );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownBytes1[i1], in, version );
+		NifStream( unknown8Bytes[i1], in, version );
 	};
 	NifStream( unknownFloat, in, version );
-	NifStream( numUnknownBytes2, in, version );
-	unknownBytes2.resize(numUnknownBytes2);
-	for (unsigned int i1 = 0; i1 < unknownBytes2.size(); i1++) {
-		NifStream( unknownBytes2[i1], in, version );
+	NifStream( moppDataSize, in, version );
+	NifStream( objectCorner, in, version );
+	NifStream( scalingFactor, in, version );
+	moppData.resize(moppDataSize);
+	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
+		NifStream( moppData[i1], in, version );
 	};
-	NifStream( unknownVector, in, version );
-	NifStream( unknownFloat2, in, version );
 }
 
 void bhkMoppBvTreeShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	bhkShape::Write( out, link_map, version, user_version );
-	numUnknownBytes2 = (unsigned int)(unknownBytes2.size());
+	moppDataSize = (unsigned int)(moppData.size());
 	if ( shape != NULL )
 		NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, version );
 	else
 		NifStream( 0xffffffff, out, version );
 	NifStream( material, out, version );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownBytes1[i1], out, version );
+		NifStream( unknown8Bytes[i1], out, version );
 	};
 	NifStream( unknownFloat, out, version );
-	NifStream( numUnknownBytes2, out, version );
-	for (unsigned int i1 = 0; i1 < unknownBytes2.size(); i1++) {
-		NifStream( unknownBytes2[i1], out, version );
+	NifStream( moppDataSize, out, version );
+	NifStream( objectCorner, out, version );
+	NifStream( scalingFactor, out, version );
+	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
+		NifStream( moppData[i1], out, version );
 	};
-	NifStream( unknownVector, out, version );
-	NifStream( unknownFloat2, out, version );
 }
 
 std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkShape::asString();
-	numUnknownBytes2 = (unsigned int)(unknownBytes2.size());
+	moppDataSize = (unsigned int)(moppData.size());
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
 	array_output_count = 0;
@@ -2821,13 +2821,15 @@ std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Bytes 1[" << i1 << "]:  " << unknownBytes1[i1] << endl;
+		out << "    Unknown 8 Bytes[" << i1 << "]:  " << unknown8Bytes[i1] << endl;
 		array_output_count++;
 	};
 	out << "  Unknown Float:  " << unknownFloat << endl;
-	out << "  Num Unknown Bytes 2:  " << numUnknownBytes2 << endl;
+	out << "  MOPP Data Size:  " << moppDataSize << endl;
+	out << "  Object Corner:  " << objectCorner << endl;
+	out << "  Scaling Factor:  " << scalingFactor << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownBytes2.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -2835,11 +2837,9 @@ std::string bhkMoppBvTreeShape::InternalAsString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Bytes 2[" << i1 << "]:  " << unknownBytes2[i1] << endl;
+		out << "    MOPP Data[" << i1 << "]:  " << moppData[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Unknown Vector:  " << unknownVector << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	return out.str();
 }
 
@@ -3251,7 +3251,7 @@ void bhkRigidBody::InternalRead( istream& in, list<unsigned int> & link_stack, u
 	NifStream( angularVelocity, in, version );
 	NifStream( unknownFloat02, in, version );
 	for (unsigned int i1 = 0; i1 < 12; i1++) {
-		NifStream( transform[i1], in, version );
+		NifStream( inertia[i1], in, version );
 	};
 	NifStream( center, in, version );
 	NifStream( unknownFloat03, in, version );
@@ -3304,7 +3304,7 @@ void bhkRigidBody::InternalWrite( ostream& out, const map<NiObjectRef,unsigned i
 	NifStream( angularVelocity, out, version );
 	NifStream( unknownFloat02, out, version );
 	for (unsigned int i1 = 0; i1 < 12; i1++) {
-		NifStream( transform[i1], out, version );
+		NifStream( inertia[i1], out, version );
 	};
 	NifStream( center, out, version );
 	NifStream( unknownFloat03, out, version );
@@ -3395,7 +3395,7 @@ std::string bhkRigidBody::InternalAsString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Transform[" << i1 << "]:  " << transform[i1] << endl;
+		out << "    Inertia[" << i1 << "]:  " << inertia[i1] << endl;
 		array_output_count++;
 	};
 	out << "  Center:  " << center << endl;
@@ -3598,43 +3598,25 @@ std::list<NiObjectRef> bhkSphereShape::InternalGetRefs() const {
 
 void bhkStiffSpringConstraint::InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
 	AbhkConstraint::Read( in, link_stack, version, user_version );
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknownFloats[i1][i2], in, version );
-		};
-	};
-	NifStream( unknownFloat, in, version );
+	NifStream( pivotA, in, version );
+	NifStream( pivotB, in, version );
+	NifStream( length, in, version );
 }
 
 void bhkStiffSpringConstraint::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
 	AbhkConstraint::Write( out, link_map, version, user_version );
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknownFloats[i1][i2], out, version );
-		};
-	};
-	NifStream( unknownFloat, out, version );
+	NifStream( pivotA, out, version );
+	NifStream( pivotB, out, version );
+	NifStream( length, out, version );
 }
 
 std::string bhkStiffSpringConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkConstraint::asString();
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Unknown Floats[" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
-			array_output_count++;
-		};
-	};
-	out << "  Unknown Float:  " << unknownFloat << endl;
+	out << "  Pivot A:  " << pivotA << endl;
+	out << "  Pivot B:  " << pivotB << endl;
+	out << "  Length:  " << length << endl;
 	return out.str();
 }
 

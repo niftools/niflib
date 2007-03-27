@@ -17,24 +17,24 @@ typedef Ref<NiBooleanExtraData> NiBooleanExtraDataRef;
  * NiBooleanExtraData - Boolean extra data.
  */
 
-class NIFLIB_API NiBooleanExtraData : public NI_BOOLEAN_EXTRA_DATA_PARENT {
+class NiBooleanExtraData : public NI_BOOLEAN_EXTRA_DATA_PARENT {
 public:
-	NiBooleanExtraData();
-	~NiBooleanExtraData();
+	NIFLIB_API NiBooleanExtraData();
+	NIFLIB_API ~NiBooleanExtraData();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	bool GetData() const;
-	void SetData( bool n );
+	NIFLIB_API bool GetData() const;
+	NIFLIB_API void SetData( bool n );
 
 protected:
 	NI_BOOLEAN_EXTRA_DATA_MEMBERS

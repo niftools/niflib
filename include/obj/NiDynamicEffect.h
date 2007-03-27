@@ -22,33 +22,33 @@ typedef Ref<NiDynamicEffect> NiDynamicEffectRef;
  * NiDynamicEffect - A dynamic effect such as a light or environment map.
  */
 
-class NIFLIB_API NiDynamicEffect : public NI_DYNAMIC_EFFECT_PARENT {
+class NiDynamicEffect : public NI_DYNAMIC_EFFECT_PARENT {
 public:
-	NiDynamicEffect();
-	~NiDynamicEffect();
+	NIFLIB_API NiDynamicEffect();
+	NIFLIB_API ~NiDynamicEffect();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Turns effect on and off?  Switches list to list of unaffected nodes?
 	 */
-	bool GetSwitchState() const;
-	void SetSwitchState( bool value );
+	NIFLIB_API bool GetSwitchState() const;
+	NIFLIB_API void SetSwitchState( bool value );
 
 	/*!
 	 * The list of affected nodes?
 	 */
-	vector<Ref<NiAVObject > > GetAffectedNodes() const;
-	void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
+	NIFLIB_API vector<Ref<NiAVObject > > GetAffectedNodes() const;
+	NIFLIB_API void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
 
 	/*!
 	 * This is probably the list of affected nodes. For some reason i do not
@@ -56,8 +56,8 @@ public:
 	 * doesn't matter because at least in version 4.0.0.2 the list is
 	 * automagically updated by the engine during the load stage.
 	 */
-	vector<unsigned int> GetAffectedNodeListPointers() const;
-	void SetAffectedNodeListPointers( const vector<unsigned int >& value );
+	NIFLIB_API vector<unsigned int> GetAffectedNodeListPointers() const;
+	NIFLIB_API void SetAffectedNodeListPointers( const vector<unsigned int >& value );
 
 protected:
 	NI_DYNAMIC_EFFECT_MEMBERS

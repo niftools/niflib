@@ -17,45 +17,45 @@ typedef Ref<NiLight> NiLightRef;
  * NiLight - Light source.
  */
 
-class NIFLIB_API NiLight : public NI_LIGHT_PARENT {
+class NiLight : public NI_LIGHT_PARENT {
 public:
-	NiLight();
-	~NiLight();
+	NIFLIB_API NiLight();
+	NIFLIB_API ~NiLight();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Dimmer.
 	 */
-	float GetDimmer() const;
-	void SetDimmer( float value );
+	NIFLIB_API float GetDimmer() const;
+	NIFLIB_API void SetDimmer( float value );
 
 	/*!
 	 * Ambient color.
 	 */
-	Color3 GetAmbientColor() const;
-	void SetAmbientColor( Color3 value );
+	NIFLIB_API Color3 GetAmbientColor() const;
+	NIFLIB_API void SetAmbientColor( Color3 value );
 
 	/*!
 	 * Diffuse color.
 	 */
-	Color3 GetDiffuseColor() const;
-	void SetDiffuseColor( Color3 value );
+	NIFLIB_API Color3 GetDiffuseColor() const;
+	NIFLIB_API void SetDiffuseColor( Color3 value );
 
 	/*!
 	 * Specular color.
 	 */
-	Color3 GetSpecularColor() const;
-	void SetSpecularColor( Color3 value );
+	NIFLIB_API Color3 GetSpecularColor() const;
+	NIFLIB_API void SetSpecularColor( Color3 value );
 
 protected:
 	NI_LIGHT_MEMBERS

@@ -236,7 +236,7 @@
 				Optimization="3"
 				AdditionalIncludeDirectories="$(ProjectDir)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BUILDING_NIFLIB_DLL;USE_NIFLIB_DLL"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough=""
 				WarningLevel="3"
@@ -254,6 +254,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\bin\niflib.dll"
+				ImportLibrary="lib/niflib_dll.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"

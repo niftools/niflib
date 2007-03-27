@@ -179,3 +179,7 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 
 	return conts;
 }
+
+const Type & NiObjectNET::GetType() const {
+	return TYPE;
+};

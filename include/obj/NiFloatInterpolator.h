@@ -22,33 +22,33 @@ typedef Ref<NiFloatInterpolator> NiFloatInterpolatorRef;
  * NiFloatInterpolator - Unknown.
  */
 
-class NIFLIB_API NiFloatInterpolator : public NI_FLOAT_INTERPOLATOR_PARENT {
+class NiFloatInterpolator : public NI_FLOAT_INTERPOLATOR_PARENT {
 public:
-	NiFloatInterpolator();
-	~NiFloatInterpolator();
+	NIFLIB_API NiFloatInterpolator();
+	NIFLIB_API ~NiFloatInterpolator();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Value when posed?  At time 0?
 	 */
-	float GetFloatValue() const;
-	void SetFloatValue( float value );
+	NIFLIB_API float GetFloatValue() const;
+	NIFLIB_API void SetFloatValue( float value );
 
 	/*!
 	 * Float data?
 	 */
-	Ref<NiFloatData > GetData() const;
-	void SetData( Ref<NiFloatData > value );
+	NIFLIB_API Ref<NiFloatData > GetData() const;
+	NIFLIB_API void SetData( Ref<NiFloatData > value );
 
 protected:
 	NI_FLOAT_INTERPOLATOR_MEMBERS

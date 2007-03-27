@@ -55,7 +55,7 @@ public:
 	 * print block.GetType()
 	 * \endcode
 	 */
-	NIFLIB_API virtual const Type & GetType() const { return TYPE; };
+	NIFLIB_API virtual const Type & GetType() const;
 
 	NIFLIB_API bool IsSameType( const Type & compare_to ) const;
 	NIFLIB_API bool IsSameType( const NiObject * object ) const;

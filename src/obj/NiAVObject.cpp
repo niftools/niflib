@@ -226,3 +226,7 @@ void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
 	boundingBox = n;
 	hasBoundingBox = true;
 }
+
+const Type & NiAVObject::GetType() const {
+	return TYPE;
+};

@@ -17,33 +17,33 @@ typedef Ref<BSBound> BSBoundRef;
  * BSBound - Bethesda-specific collision bounding box for skeletons.
  */
 
-class NIFLIB_API BSBound : public B_S_BOUND_PARENT {
+class BSBound : public B_S_BOUND_PARENT {
 public:
-	BSBound();
-	~BSBound();
+	NIFLIB_API BSBound();
+	NIFLIB_API ~BSBound();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Center of the bounding box.
 	 */
-	Vector3 GetCenter() const;
-	void SetCenter( const Vector3 & value );
+	NIFLIB_API Vector3 GetCenter() const;
+	NIFLIB_API void SetCenter( const Vector3 & value );
 
 	/*!
 	 * Dimensions of the bounding box from center.
 	 */
-	Vector3 GetDimensions() const;
-	void SetDimensions( const Vector3 & value );
+	NIFLIB_API Vector3 GetDimensions() const;
+	NIFLIB_API void SetDimensions( const Vector3 & value );
 
 protected:
 	B_S_BOUND_MEMBERS

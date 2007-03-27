@@ -17,75 +17,75 @@ typedef Ref<NiStencilProperty> NiStencilPropertyRef;
  * NiStencilProperty - Allows control of stencil testing.
  */
 
-class NIFLIB_API NiStencilProperty : public NI_STENCIL_PROPERTY_PARENT {
+class NiStencilProperty : public NI_STENCIL_PROPERTY_PARENT {
 public:
-	NiStencilProperty();
-	~NiStencilProperty();
+	NIFLIB_API NiStencilProperty();
+	NIFLIB_API ~NiStencilProperty();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:
-	virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	virtual string asString( bool verbose = false ) const;
-	virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	virtual list<NiObjectRef> GetRefs() const;
-	virtual const Type & GetType() const;
+	NIFLIB_API virtual const Type & GetType() const;
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_API virtual string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
 	 * Property flags.
 	 */
-   unsigned short GetFlags() const;
-   void SetFlags(unsigned short value);
+	NIFLIB_API unsigned short GetFlags() const;
+	NIFLIB_API void SetFlags(unsigned short value);
 
 	/*!
 	 * Enables or disables the stencil test.
 	 */
-   bool GetStencilEnabled() const;
-   void SetStencilEnabled(bool value);
+	NIFLIB_API bool GetStencilEnabled() const;
+	NIFLIB_API void SetStencilEnabled(bool value);
 
 	/*!
 	 * Selects the compare mode function.
 	 */
-	CompareMode GetStencilFunction() const;
-	void SetStencilFunction( CompareMode value );
+	NIFLIB_API CompareMode GetStencilFunction() const;
+	NIFLIB_API void SetStencilFunction( CompareMode value );
 
 	/*!
 	 * Unknown.  Default is 0.
 	 */
-   unsigned int GetStencilRef() const;
-   void SetStencilRef(unsigned int value);
+	NIFLIB_API unsigned int GetStencilRef() const;
+	NIFLIB_API void SetStencilRef(unsigned int value);
 
 	/*!
 	 * A bit mask. The default is 0xffffffff.
 	 */
-   unsigned int GetStencilMask() const;
-   void SetStencilMask(unsigned int value);
+	NIFLIB_API unsigned int GetStencilMask() const;
+	NIFLIB_API void SetStencilMask(unsigned int value);
 
 	/*!
 	 * Unknown.
 	 */
-	StencilAction GetFailAction() const;
-	void SetFailAction( StencilAction value );
+	NIFLIB_API StencilAction GetFailAction() const;
+	NIFLIB_API void SetFailAction( StencilAction value );
 
 	/*!
 	 * Unknown.
 	 */
-	StencilAction GetZFailAction() const;
-	void SetZFailAction( StencilAction  value );
+	NIFLIB_API StencilAction GetZFailAction() const;
+	NIFLIB_API void SetZFailAction( StencilAction  value );
 
 	/*!
 	 * Unknown.
 	 */
-	StencilAction GetPassAction() const;
-	void SetPassAction( StencilAction value );
+	NIFLIB_API StencilAction GetPassAction() const;
+	NIFLIB_API void SetPassAction( StencilAction value );
 
 	/*!
 	 * Used to enabled double sided faces.
 	 */
-	FaceDrawMode GetDrawMode() const;
-	void SetDrawMode( FaceDrawMode value );
+	NIFLIB_API FaceDrawMode GetDrawMode() const;
+	NIFLIB_API void SetDrawMode( FaceDrawMode value );
 
 protected:
 	NI_STENCIL_PROPERTY_MEMBERS
