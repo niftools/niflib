@@ -816,6 +816,7 @@ struct Matrix44 {
         return rows[n];
     }
 
+	private:
 	/*! The 4x4 identity matrix constant */
 	static const Matrix44 IDENTITY;
 };

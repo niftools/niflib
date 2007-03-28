@@ -37,9 +37,9 @@ struct Footer {
 	 * Bip Head node).
 	 */
 	vector<Ref<NiObject > > roots;
-	void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
-	string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	NIFLIB_HIDDEN void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	NIFLIB_HIDDEN string asString( bool verbose = false ) const;
 };
 
 }

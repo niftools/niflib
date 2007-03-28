@@ -31,7 +31,7 @@ struct Header {
 	/*!
 	 * Unknown.
 	 */
-	vector<LineString > copyright;
+	array<3,LineString > copyright;
 	/*!
 	 * The NIF version, in hexadecimal notation: 0x04000002, 0x0401000C,
 	 * 0x04020002, 0x04020100, 0x04020200, 0x0A000100, 0x0A010000,
@@ -88,9 +88,9 @@ struct Header {
 	 * Unknown.
 	 */
 	unsigned int unknownInt2;
-	void Read( istream& in );
-	void Write( ostream& out ) const;
-	string asString( bool verbose = false ) const;
+	NIFLIB_HIDDEN void Read( istream& in );
+	NIFLIB_HIDDEN void Write( ostream& out ) const;
+	NIFLIB_HIDDEN string asString( bool verbose = false ) const;
 };
 
 }

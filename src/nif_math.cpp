@@ -162,7 +162,7 @@ Vector3 Vector3::CrossProduct( const Vector3 & rh) const {
  */
 
 Matrix22::Matrix22() {
-	*this = Matrix22::IDENTITY;
+	*this = Matrix22::Identity();
 }
 
 /*
@@ -170,7 +170,7 @@ Matrix22::Matrix22() {
  */
 
 Matrix33::Matrix33() {
-	*this = Matrix33::IDENTITY;
+	*this = Matrix33::Identity();
 }
 
 Quaternion Matrix33::AsQuaternion() {
@@ -241,7 +241,7 @@ Matrix33 Matrix33::operator*( const Matrix33 & m ) const
  */
 
 Matrix44::Matrix44() {
-	*this = Matrix44::IDENTITY;
+	*this = Matrix44::Identity();
 }
 
 Matrix44::Matrix44( const Matrix33 & r ) {
