@@ -68,9 +68,9 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {}
 
 	//Reference Counting
-	NIFLIB_HIDDEN void AddRef() const; //Should not be called directly
-	NIFLIB_HIDDEN void SubtractRef() const; //Should not be called directly
-	NIFLIB_HIDDEN unsigned int GetNumRefs() { return _ref_count; }
+	NIFLIB_API void AddRef() const; //Should not be called directly
+	NIFLIB_API void SubtractRef() const; //Should not be called directly
+	NIFLIB_API unsigned int GetNumRefs();
 
 	/*! Returns A new object that contains all the same data that this object does,
 	 * but occupies a different part of memory.  The data stored in a NIF file varies

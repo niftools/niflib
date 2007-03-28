@@ -316,8 +316,8 @@ struct NIFLIB_API Float2 {
 
 /*! Stores a 2 by 2 matrix used for bump maps. */
 struct Matrix22 {
-	/*! The 2x2 identity matrix */
-	static const Matrix22 IDENTITY;
+	/*! Get the 2x2 identity matrix */
+	NIFLIB_API static const Matrix22 & Identity();
 
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
 
@@ -372,6 +372,9 @@ struct Matrix22 {
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
     }
+private:
+	/*! The 2x2 identity matrix constant */
+	static const Matrix22 IDENTITY;
 };
 
 /* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
@@ -432,8 +435,8 @@ struct NIFLIB_API Float3 {
 
 /*! Stores a 3 by 3 matrix used for rotation. */
 struct Matrix33 {
-	/*! The 3x3 identity matrix */
-	static const Matrix33 IDENTITY;
+	/*! Returns the 3x3 identity matrix */
+	NIFLIB_API static const Matrix33 & Identity();
 
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
@@ -521,6 +524,10 @@ struct Matrix33 {
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
     }
+
+private:
+	/*! The 3x3 identity matrix constant*/
+	static const Matrix33 IDENTITY;
 };
 
 
@@ -586,8 +593,8 @@ struct NIFLIB_API Float4 {
 
 /*! Stores a 4 by 4 matrix used for combined transformations. */
 struct Matrix44 {
-	/*! The 4x4 identity matrix */
-	static const Matrix44 IDENTITY;
+	/*! Returns the 4x4 identity matrix */
+	NIFLIB_API static const Matrix44 & Identity();
 	
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
@@ -808,6 +815,9 @@ struct Matrix44 {
 			throw std::out_of_range("Index out of range for Matrix44");
         return rows[n];
     }
+
+	/*! The 4x4 identity matrix constant */
+	static const Matrix44 IDENTITY;
 };
 
 /*! Stores a color along with alpha translucency */
@@ -941,17 +951,17 @@ struct NIFLIB_API Quaternion {
 //These operators cause SWIG warnings
 #ifndef SWIG
 
-ostream & operator<<( ostream & out, TexCoord const & val );
-ostream & operator<<( ostream & out, Triangle const & val );
-ostream & operator<<( ostream & out, Vector3 const & val );
-ostream & operator<<( ostream & out, Float2 const & val );
-ostream & operator<<( ostream & out, Matrix22 const & val );
-ostream & operator<<( ostream & out, Float3 const & val );
-ostream & operator<<( ostream & out, Matrix33 const & val );
-ostream & operator<<( ostream & out, Float4 const & val );
-ostream & operator<<( ostream & out, Color3 const & val );
-ostream & operator<<( ostream & out, Color4 const & val );
-ostream & operator<<( ostream & out, Quaternion const & val );
+NIFLIB_API ostream & operator<<( ostream & out, TexCoord const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Triangle const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Vector3 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Float2 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Matrix22 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Float3 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Matrix33 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Float4 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Color3 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Color4 const & val );
+NIFLIB_API ostream & operator<<( ostream & out, Quaternion const & val );
 
 #endif
 

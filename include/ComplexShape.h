@@ -41,9 +41,9 @@ public:
 	 */
 	struct SkinInfluence {
 		/*! Constructor */
-		SkinInfluence() : influenceIndex(CS_NO_INDEX) {}
+		NIFLIB_API SkinInfluence() : influenceIndex(CS_NO_INDEX) {}
 		/*! Destructor */
-		~SkinInfluence() {}
+		NIFLIB_API ~SkinInfluence() {}
 		/*! 
 		 * Index into the ComplexShape::skinInfluences array of the bone
 		 * influence for this skin weight.
@@ -73,9 +73,9 @@ public:
 	 */
 	struct TexCoordIndex {
 		/*! Constructor */
-		TexCoordIndex() : texCoordSetIndex(CS_NO_INDEX), texCoordIndex(CS_NO_INDEX) {}
+		NIFLIB_API TexCoordIndex() : texCoordSetIndex(CS_NO_INDEX), texCoordIndex(CS_NO_INDEX) {}
 		/*! Destructor */
-		~TexCoordIndex() {}
+		NIFLIB_API ~TexCoordIndex() {}
 		/*!
 		 * Index into the ComplexShape::texCoordSets array of texture
 		 * coordinate sets.
@@ -97,9 +97,9 @@ public:
 	 */
 	struct ComplexPoint {
 		/*! Constructor */
-		ComplexPoint() : vertexIndex(CS_NO_INDEX), normalIndex(CS_NO_INDEX), colorIndex(CS_NO_INDEX) {}
+		NIFLIB_API ComplexPoint() : vertexIndex(CS_NO_INDEX), normalIndex(CS_NO_INDEX), colorIndex(CS_NO_INDEX) {}
 		/*! Destructor */
-		~ComplexPoint() {}
+		NIFLIB_API ~ComplexPoint() {}
 		/*! 
 		 * Index into the ComplexShape::vertices array which stores the
 		 * position and any associated skin weights for this point.
@@ -131,9 +131,9 @@ public:
 	 */
 	struct ComplexFace {
 		/*! Constructor */
-		ComplexFace() : propGroupIndex(CS_NO_INDEX) {}
+		NIFLIB_API ComplexFace() : propGroupIndex(CS_NO_INDEX) {}
 		/*! Destructor */
-		~ComplexFace() {}
+		NIFLIB_API ~ComplexFace() {}
 		/*! A list of points which make up this polygon */
 		vector<ComplexPoint> points;
 		/*!
@@ -172,7 +172,7 @@ public:
 	 * information.
 	 * \return A referene to the root NiAVObject that was created.
 	 */
-	Ref<NiAVObject> Split( 
+	NIFLIB_API Ref<NiAVObject> Split( 
 		Ref<NiNode> & parent,
 		Matrix44 & transform,
 		int max_bones_per_partition = 4,
@@ -188,32 +188,32 @@ public:
 	 * or a NiNode that is a split mesh proxy.
 	 * \sa NiNode::IsSplitMeshProxy
 	 */
-	void Merge( const Ref<NiAVObject> & root );
+	NIFLIB_API void Merge( const Ref<NiAVObject> & root );
 	
 	/* 
 	 * Clears out all the data stored in this ComplexShape
 	 */
-	void Clear();
+	NIFLIB_API void Clear();
 
 	//Setters
-	void SetName( const string & n );
-	void SetVertices( const vector<WeightedVertex> & n );
-	void SetColors( const vector<Color4> & n );
-	void SetNormals( const vector<Vector3> & n );
-	void SetTexCoordSets( const vector<TexCoordSet> & n );
-	void SetFaces( const vector<ComplexFace> & n );
-	void SetPropGroups( const vector< vector< Ref<NiProperty> > > & n ); 
-	void SetSkinInfluences( const vector< Ref<NiNode> > & n );
+	NIFLIB_API void SetName( const string & n );
+	NIFLIB_API void SetVertices( const vector<WeightedVertex> & n );
+	NIFLIB_API void SetColors( const vector<Color4> & n );
+	NIFLIB_API void SetNormals( const vector<Vector3> & n );
+	NIFLIB_API void SetTexCoordSets( const vector<TexCoordSet> & n );
+	NIFLIB_API void SetFaces( const vector<ComplexFace> & n );
+	NIFLIB_API void SetPropGroups( const vector< vector< Ref<NiProperty> > > & n ); 
+	NIFLIB_API void SetSkinInfluences( const vector< Ref<NiNode> > & n );
 
 	//Getters
-	string GetName() const;
-	vector<WeightedVertex> GetVertices() const;
-	vector<Color4> GetColors() const;
-	vector<Vector3> GetNormals() const;
-	vector<TexCoordSet> GetTexCoordSets() const;
-	vector<ComplexFace> GetFaces() const;
-	vector< vector< Ref<NiProperty> > > GetPropGroups() const;
-	vector< Ref<NiNode> > GetSkinInfluences() const;
+	NIFLIB_API string GetName() const;
+	NIFLIB_API vector<WeightedVertex> GetVertices() const;
+	NIFLIB_API vector<Color4> GetColors() const;
+	NIFLIB_API vector<Vector3> GetNormals() const;
+	NIFLIB_API vector<TexCoordSet> GetTexCoordSets() const;
+	NIFLIB_API vector<ComplexFace> GetFaces() const;
+	NIFLIB_API vector< vector< Ref<NiProperty> > > GetPropGroups() const;
+	NIFLIB_API vector< Ref<NiNode> > GetSkinInfluences() const;
 
 private:
 	vector<WeightedVertex> vertices;

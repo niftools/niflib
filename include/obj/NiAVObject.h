@@ -76,8 +76,8 @@ public:
 	NIFLIB_API void AddProperty( const Ref<NiProperty> & obj );
 	NIFLIB_API void RemoveProperty( Ref<NiProperty> obj );
 	NIFLIB_API void ClearProperties();
-	vector< Ref<NiProperty> > GetProperties() const;
-	Ref<NiProperty> GetPropertyByType( const Type & compare_to );
+	NIFLIB_API vector< Ref<NiProperty> > GetProperties() const;
+	NIFLIB_API Ref<NiProperty> GetPropertyByType( const Type & compare_to );
 
 	NIFLIB_API unsigned short GetFlags() const;
 	NIFLIB_API void SetFlags( unsigned short n );

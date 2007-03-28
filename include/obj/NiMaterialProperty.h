@@ -19,10 +19,10 @@ typedef Ref<NiMaterialProperty> NiMaterialPropertyRef;
 
 class NiMaterialProperty : public NI_MATERIAL_PROPERTY_PARENT {
 public:
-	NiMaterialProperty();
-	~NiMaterialProperty();
+	NIFLIB_API NiMaterialProperty();
+	NIFLIB_API ~NiMaterialProperty();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst() { return TYPE; }
 private:
 	static const Type TYPE;
 public:

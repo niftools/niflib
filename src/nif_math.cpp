@@ -12,12 +12,24 @@ const Matrix44 Matrix44::IDENTITY( 1.0f, 0.0f, 0.0f, 0.0f,
 								   0.0f, 0.0f, 1.0f, 0.0f,
 								   0.0f, 0.0f, 0.0f, 1.0f );
 
+const Matrix44 & Matrix44::Identity() {
+	return IDENTITY;
+};
+
 const Matrix33 Matrix33::IDENTITY( 1.0f, 0.0f, 0.0f,
 								   0.0f, 1.0f, 0.0f,
 								   0.0f, 0.0f, 1.0f );
 
+const Matrix33 & Matrix33::Identity() {
+	return IDENTITY;
+};
+
 const Matrix22 Matrix22::IDENTITY( 1.0f, 0.0f,
 								   0.0f, 1.0f );
+
+const Matrix22 & Matrix22::Identity() {
+	return IDENTITY;
+};
 
 /* TexCoord Methods
  *
