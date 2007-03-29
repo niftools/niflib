@@ -451,64 +451,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\src\pch.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="PyNiflib|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release - DLL|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug - PCH|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough="$(ProjectDir)include/pch.h"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release - PCH|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						PrecompiledHeaderThrough="$(ProjectDir)include\pch.h"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\src\Type.cpp"
 				>
 			</File>
@@ -1612,10 +1554,6 @@
 			</File>
 			<File
 				RelativePath=".\include\niflib.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\pch.h"
 				>
 			</File>
 			<File
