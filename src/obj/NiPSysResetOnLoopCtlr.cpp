@@ -35,3 +35,6 @@ const Type & NiPSysResetOnLoopCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysResetOnLoopCtlr::TypeConst() {
+	return TYPE;
+}

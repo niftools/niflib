@@ -60,3 +60,6 @@ void NiDynamicEffect::SetAffectedNodeListPointers( const vector<unsigned int >& 
 	affectedNodeListPointers = value;
 }
 
+const Type & NiDynamicEffect::TypeConst() {
+	return TYPE;
+}

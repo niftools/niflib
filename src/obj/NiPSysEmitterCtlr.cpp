@@ -53,3 +53,6 @@ void NiPSysEmitterCtlr::SetVisibilityInterpolator( Ref<NiInterpolator > value ) 
 	visibilityInterpolator = value;
 }
 
+const Type & NiPSysEmitterCtlr::TypeConst() {
+	return TYPE;
+}

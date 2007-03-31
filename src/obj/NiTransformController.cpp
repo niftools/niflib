@@ -35,3 +35,6 @@ const Type & NiTransformController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTransformController::TypeConst() {
+	return TYPE;
+}

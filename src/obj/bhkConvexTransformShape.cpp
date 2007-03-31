@@ -35,3 +35,6 @@ const Type & bhkConvexTransformShape::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkConvexTransformShape::TypeConst() {
+	return TYPE;
+}

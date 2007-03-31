@@ -168,3 +168,6 @@ void NiBSplineInterpolator::bspline(int n, int t, int l, float *control, float *
    delete [] calc;
 }
 
+const Type & NiBSplineInterpolator::TypeConst() {
+	return TYPE;
+}

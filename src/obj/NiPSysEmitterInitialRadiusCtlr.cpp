@@ -35,3 +35,6 @@ const Type & NiPSysEmitterInitialRadiusCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysEmitterInitialRadiusCtlr::TypeConst() {
+	return TYPE;
+}

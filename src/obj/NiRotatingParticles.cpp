@@ -35,3 +35,6 @@ const Type & NiRotatingParticles::GetType() const {
 	return TYPE;
 };
 
+const Type & NiRotatingParticles::TypeConst() {
+	return TYPE;
+}

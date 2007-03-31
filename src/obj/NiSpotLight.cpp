@@ -51,3 +51,6 @@ void NiSpotLight::SetExponent( float value ) {
 	exponent = value;
 }
 
+const Type & NiSpotLight::TypeConst() {
+	return TYPE;
+}

@@ -43,3 +43,6 @@ void NiBillboardNode::SetBillboardMode( BillboardMode value ) {
 	billboardMode = value;
 }
 
+const Type & NiBillboardNode::TypeConst() {
+	return TYPE;
+}

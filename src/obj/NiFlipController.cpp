@@ -36,3 +36,6 @@ const Type & NiFlipController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiFlipController::TypeConst() {
+	return TYPE;
+}

@@ -38,3 +38,6 @@ const Type & NiPSysPlanarCollider::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysPlanarCollider::TypeConst() {
+	return TYPE;
+}

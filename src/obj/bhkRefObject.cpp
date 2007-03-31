@@ -35,3 +35,6 @@ const Type & bhkRefObject::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkRefObject::TypeConst() {
+	return TYPE;
+}

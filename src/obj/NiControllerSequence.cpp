@@ -223,3 +223,7 @@ float NiControllerSequence::GetWeight() const {
 void NiControllerSequence::SetWeight( const float value ) {
 	weight = value;
 }
+
+const Type & NiControllerSequence::TypeConst() {
+	return TYPE;
+}

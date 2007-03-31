@@ -35,3 +35,6 @@ const Type & bhkStiffSpringConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkStiffSpringConstraint::TypeConst() {
+	return TYPE;
+}

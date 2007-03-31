@@ -106,3 +106,7 @@ FaceDrawMode NiStencilProperty::GetDrawMode() const {
 void NiStencilProperty::SetDrawMode(FaceDrawMode value) {
    drawMode = value;
 }
+
+const Type & NiStencilProperty::TypeConst() {
+	return TYPE;
+}

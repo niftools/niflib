@@ -138,3 +138,7 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 		normals[i] = rotation * normals[i];
 	}
 }
+
+const Type & NiGeometryData::TypeConst() {
+	return TYPE;
+}

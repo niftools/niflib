@@ -91,3 +91,7 @@ float NiTimeController::GetStopTime() const {
 void NiTimeController::SetStopTime( float n ) {
 	stopTime = n;
 }
+
+const Type & NiTimeController::TypeConst() {
+	return TYPE;
+}

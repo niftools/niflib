@@ -27,7 +27,7 @@ public:
 	NIFLIB_API bhkEntity();
 	NIFLIB_API ~bhkEntity();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	NIFLIB_API static const Type TYPE;
 public:

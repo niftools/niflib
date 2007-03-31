@@ -42,3 +42,7 @@ bool NiBooleanExtraData::GetData() const {
 void NiBooleanExtraData::SetData( bool n ) {
 	booleanData = n;
 }
+
+const Type & NiBooleanExtraData::TypeConst() {
+	return TYPE;
+}

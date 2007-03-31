@@ -42,3 +42,7 @@ unsigned short NiShadeProperty::GetFlags() const {
 void NiShadeProperty::SetFlags( unsigned short n ) {
    flags = n;
 }
+
+const Type & NiShadeProperty::TypeConst() {
+	return TYPE;
+}

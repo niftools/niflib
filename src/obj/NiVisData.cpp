@@ -35,3 +35,6 @@ const Type & NiVisData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiVisData::TypeConst() {
+	return TYPE;
+}

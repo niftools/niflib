@@ -55,3 +55,6 @@ void NiDefaultAVObjectPalette::SetObjs( const vector<Ref<NiAVObject> >& value ) 
    }
 }
 
+const Type & NiDefaultAVObjectPalette::TypeConst() {
+	return TYPE;
+}

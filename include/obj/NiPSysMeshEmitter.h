@@ -27,7 +27,7 @@ public:
 	NIFLIB_API NiPSysMeshEmitter();
 	NIFLIB_API ~NiPSysMeshEmitter();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

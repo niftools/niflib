@@ -68,3 +68,6 @@ void NiTransformInterpolator::SetData( Ref<NiTransformData > value ) {
 	data = value;
 }
 
+const Type & NiTransformInterpolator::TypeConst() {
+	return TYPE;
+}

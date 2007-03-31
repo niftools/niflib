@@ -43,3 +43,6 @@ void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	dimensions = value;
 }
 
+const Type & bhkBoxShape::TypeConst() {
+	return TYPE;
+}

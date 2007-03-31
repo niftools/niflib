@@ -35,3 +35,6 @@ const Type & NiPSysCylinderEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysCylinderEmitter::TypeConst() {
+	return TYPE;
+}

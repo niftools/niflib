@@ -58,3 +58,7 @@ LightMode NiVertexColorProperty::GetLightingMode() const {
 void NiVertexColorProperty::SetLightingMode(LightMode value) {
    lightingMode = value;
 }
+
+const Type & NiVertexColorProperty::TypeConst() {
+	return TYPE;
+}

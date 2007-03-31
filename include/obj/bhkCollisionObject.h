@@ -18,10 +18,10 @@ typedef Ref<bhkCollisionObject> bhkCollisionObjectRef;
 
 class bhkCollisionObject : public BHK_COLLISION_OBJECT_PARENT {
 public:
-	bhkCollisionObject();
-	~bhkCollisionObject();
+	NIFLIB_API bhkCollisionObject();
+	NIFLIB_API ~bhkCollisionObject();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

@@ -43,3 +43,6 @@ void NiBSplineBasisData::SetNumControlPt( unsigned int value ) {
 	numControlPt = value;
 }
 
+const Type & NiBSplineBasisData::TypeConst() {
+	return TYPE;
+}

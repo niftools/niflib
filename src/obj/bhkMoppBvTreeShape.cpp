@@ -36,3 +36,6 @@ const Type & bhkMoppBvTreeShape::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkMoppBvTreeShape::TypeConst() {
+	return TYPE;
+}

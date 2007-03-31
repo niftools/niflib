@@ -51,3 +51,7 @@ vector< Key<unsigned char> > NiBoolData::GetKeys() const {
 void NiBoolData::SetKeys( vector< Key<unsigned char> > const & keys ) {
 	data.keys = keys;
 }
+
+const Type & NiBoolData::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiTriShape::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTriShape::TypeConst() {
+	return TYPE;
+}

@@ -36,3 +36,6 @@ const Type & NiPSysDragModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysDragModifier::TypeConst() {
+	return TYPE;
+}

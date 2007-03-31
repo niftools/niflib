@@ -52,3 +52,6 @@ void NiColorData::SetKeys( vector< Key<Color4> > const & keys ) {
 	data.keys = keys;
 }
 
+const Type & NiColorData::TypeConst() {
+	return TYPE;
+}

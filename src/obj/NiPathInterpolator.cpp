@@ -53,3 +53,6 @@ void NiPathInterpolator::SetFloatData( Ref<NiFloatData > value ) {
 	floatData = value;
 }
 
+const Type & NiPathInterpolator::TypeConst() {
+	return TYPE;
+}

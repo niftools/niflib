@@ -172,3 +172,7 @@ MotionQuality bhkRigidBody::GetQualityType() const {
 void bhkRigidBody::SetQualityType( MotionQuality value ) {
 	qualityType = value;
 }
+
+const Type & bhkRigidBody::TypeConst() {
+	return TYPE;
+}

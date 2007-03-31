@@ -36,3 +36,6 @@ const Type & NiVisController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiVisController::TypeConst() {
+	return TYPE;
+}

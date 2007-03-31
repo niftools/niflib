@@ -103,3 +103,7 @@ bool NiAlphaProperty::GetAlphaSort() const {
 void NiAlphaProperty::SetAlphaSort(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?0:1, 13, 0x1);
 }
+
+const Type & NiAlphaProperty::TypeConst() {
+	return TYPE;
+}

@@ -43,3 +43,6 @@ void bhkSphereRepShape::SetMaterial( HavokMaterial value ) {
 	material = value;
 }
 
+const Type & bhkSphereRepShape::TypeConst() {
+	return TYPE;
+}

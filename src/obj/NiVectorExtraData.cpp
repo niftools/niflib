@@ -43,3 +43,6 @@ void NiVectorExtraData::SetData( const Vector3 & n ) {
 	vectorData = n;
 };
 
+const Type & NiVectorExtraData::TypeConst() {
+	return TYPE;
+}

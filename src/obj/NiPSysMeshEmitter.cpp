@@ -36,3 +36,6 @@ const Type & NiPSysMeshEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysMeshEmitter::TypeConst() {
+	return TYPE;
+}

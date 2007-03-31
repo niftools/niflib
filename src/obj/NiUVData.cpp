@@ -36,3 +36,6 @@ const Type & NiUVData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiUVData::TypeConst() {
+	return TYPE;
+}

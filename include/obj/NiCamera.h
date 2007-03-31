@@ -27,7 +27,7 @@ public:
 	NIFLIB_API NiCamera();
 	NIFLIB_API ~NiCamera();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

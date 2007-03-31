@@ -42,3 +42,7 @@ float NiFloatExtraData::GetData() const {
 void NiFloatExtraData::SetData( float n ) {
 	floatData = n;
 }
+
+const Type & NiFloatExtraData::TypeConst() {
+	return TYPE;
+}

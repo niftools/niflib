@@ -36,3 +36,6 @@ const Type & NiLightDimmerController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiLightDimmerController::TypeConst() {
+	return TYPE;
+}

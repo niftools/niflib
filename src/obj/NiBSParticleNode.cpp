@@ -35,3 +35,6 @@ const Type & NiBSParticleNode::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBSParticleNode::TypeConst() {
+	return TYPE;
+}

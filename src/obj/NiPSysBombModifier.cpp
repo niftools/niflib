@@ -36,3 +36,6 @@ const Type & NiPSysBombModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysBombModifier::TypeConst() {
+	return TYPE;
+}

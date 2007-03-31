@@ -43,3 +43,6 @@ void NiBlendPoint3Interpolator::SetPointValue( Vector3 value ) {
 	pointValue = value;
 }
 
+const Type & NiBlendPoint3Interpolator::TypeConst() {
+	return TYPE;
+}

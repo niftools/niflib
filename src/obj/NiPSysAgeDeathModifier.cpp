@@ -36,3 +36,6 @@ const Type & NiPSysAgeDeathModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysAgeDeathModifier::TypeConst() {
+	return TYPE;
+}

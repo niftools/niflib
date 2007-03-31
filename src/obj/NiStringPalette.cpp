@@ -76,3 +76,7 @@ unsigned int NiStringPalette::AddSubStr( const string & n ) {
 	//Return the offset where the string was found or appended
 	return offset;
 }
+
+const Type & NiStringPalette::TypeConst() {
+	return TYPE;
+}

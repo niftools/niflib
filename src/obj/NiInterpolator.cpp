@@ -35,3 +35,6 @@ const Type & NiInterpolator::GetType() const {
 	return TYPE;
 };
 
+const Type & NiInterpolator::TypeConst() {
+	return TYPE;
+}

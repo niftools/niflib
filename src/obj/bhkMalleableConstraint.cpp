@@ -38,3 +38,6 @@ const Type & bhkMalleableConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkMalleableConstraint::TypeConst() {
+	return TYPE;
+}

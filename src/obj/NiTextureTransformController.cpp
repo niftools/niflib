@@ -36,3 +36,6 @@ const Type & NiTextureTransformController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTextureTransformController::TypeConst() {
+	return TYPE;
+}

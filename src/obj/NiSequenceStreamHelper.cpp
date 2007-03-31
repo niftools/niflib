@@ -35,3 +35,6 @@ const Type & NiSequenceStreamHelper::GetType() const {
 	return TYPE;
 };
 
+const Type & NiSequenceStreamHelper::TypeConst() {
+	return TYPE;
+}

@@ -103,3 +103,7 @@ const Type & NiObject::GetType() const {
 unsigned int NiObject::GetNumRefs() {
 	return _ref_count;
 }
+
+const Type & NiObject::TypeConst() {
+	return TYPE;
+}

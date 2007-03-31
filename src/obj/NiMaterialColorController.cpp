@@ -36,3 +36,6 @@ const Type & NiMaterialColorController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiMaterialColorController::TypeConst() {
+	return TYPE;
+}

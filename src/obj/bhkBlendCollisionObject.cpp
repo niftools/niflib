@@ -35,3 +35,6 @@ const Type & bhkBlendCollisionObject::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkBlendCollisionObject::TypeConst() {
+	return TYPE;
+}

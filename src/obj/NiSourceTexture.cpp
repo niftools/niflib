@@ -111,3 +111,7 @@ void NiSourceTexture::SetAlphaFormat( AlphaFormat n ) {
 //
 //byte NiSourceTexture::GetUnknownByte3() const;
 //NiSourceTexture::SetUnknownByte3( byte n );
+
+const Type & NiSourceTexture::TypeConst() {
+	return TYPE;
+}

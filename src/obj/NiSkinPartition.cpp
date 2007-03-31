@@ -714,3 +714,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       }
    }
 }
+
+const Type & NiSkinPartition::TypeConst() {
+	return TYPE;
+}

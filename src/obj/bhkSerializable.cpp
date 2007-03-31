@@ -35,3 +35,6 @@ const Type & bhkSerializable::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkSerializable::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & bhkSPCollisionObject::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkSPCollisionObject::TypeConst() {
+	return TYPE;
+}

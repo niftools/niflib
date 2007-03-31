@@ -39,3 +39,7 @@ const Type & NiTriBasedGeomData::GetType() const {
 void NiTriBasedGeomData::SetTriangles( const vector<Triangle> & in ) {
    throw runtime_error("SetTriangles is not implemented for this object.");
 }
+
+const Type & NiTriBasedGeomData::TypeConst() {
+	return TYPE;
+}

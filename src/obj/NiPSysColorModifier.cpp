@@ -36,3 +36,6 @@ const Type & NiPSysColorModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysColorModifier::TypeConst() {
+	return TYPE;
+}

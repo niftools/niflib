@@ -36,3 +36,6 @@ const Type & NiPSysModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysModifier::TypeConst() {
+	return TYPE;
+}

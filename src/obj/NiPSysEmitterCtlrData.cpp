@@ -52,3 +52,6 @@ void NiPSysEmitterCtlrData::SetVisibilityKeys_( const vector<Key<byte > >& value
 	visibilityKeys_ = value;
 }
 
+const Type & NiPSysEmitterCtlrData::TypeConst() {
+	return TYPE;
+}

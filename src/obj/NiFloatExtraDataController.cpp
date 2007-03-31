@@ -36,3 +36,6 @@ const Type & NiFloatExtraDataController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiFloatExtraDataController::TypeConst() {
+	return TYPE;
+}

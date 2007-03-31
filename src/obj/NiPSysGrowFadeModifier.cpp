@@ -35,3 +35,6 @@ const Type & NiPSysGrowFadeModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysGrowFadeModifier::TypeConst() {
+	return TYPE;
+}

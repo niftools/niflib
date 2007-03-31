@@ -35,3 +35,6 @@ const Type & NiAutoNormalParticles::GetType() const {
 	return TYPE;
 };
 
+const Type & NiAutoNormalParticles::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiBSBoneLODController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBSBoneLODController::TypeConst() {
+	return TYPE;
+}

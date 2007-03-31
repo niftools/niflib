@@ -35,3 +35,6 @@ const Type & NiParticleGrowFade::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleGrowFade::TypeConst() {
+	return TYPE;
+}

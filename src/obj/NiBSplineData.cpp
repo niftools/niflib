@@ -50,3 +50,7 @@ vector<short > NiBSplineData::GetControlPointRange(int offset, int count) const
    std::advance(srcend, offset + count);
    return vector<short>(srcbeg, srcend);
 }
+
+const Type & NiBSplineData::TypeConst() {
+	return TYPE;
+}

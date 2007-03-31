@@ -43,3 +43,6 @@ void BSXFlags::SetFlags( unsigned int value ) {
 	flags = value;
 }
 
+const Type & BSXFlags::TypeConst() {
+	return TYPE;
+}

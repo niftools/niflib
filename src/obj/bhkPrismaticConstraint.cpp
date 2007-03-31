@@ -35,3 +35,6 @@ const Type & bhkPrismaticConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkPrismaticConstraint::TypeConst() {
+	return TYPE;
+}

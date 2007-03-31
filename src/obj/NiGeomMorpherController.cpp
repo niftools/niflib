@@ -53,3 +53,7 @@ Ref<NiMorphData> NiGeomMorpherController::GetData() const {
 void NiGeomMorpherController::SetData( const Ref<NiMorphData> & n ) {
 	data = n;
 }
+
+const Type & NiGeomMorpherController::TypeConst() {
+	return TYPE;
+}

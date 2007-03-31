@@ -35,3 +35,6 @@ const Type & NiPSysPositionModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysPositionModifier::TypeConst() {
+	return TYPE;
+}

@@ -135,3 +135,7 @@ unsigned int NiSkinInstance::GetBoneCount() const {
 Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {
 	return skeletonRoot;
 }
+
+const Type & NiSkinInstance::TypeConst() {
+	return TYPE;
+}

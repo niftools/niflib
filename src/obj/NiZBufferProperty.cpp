@@ -50,3 +50,7 @@ CompareMode NiZBufferProperty::GetFunction() const {
 void NiZBufferProperty::SetFunction(CompareMode value) {
    function = value;
 }
+
+const Type & NiZBufferProperty::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiParticleMeshes::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleMeshes::TypeConst() {
+	return TYPE;
+}

@@ -44,3 +44,6 @@ void bhkMultiSphereShape::SetSpheres( const vector<Sphere >& value ) {
 	spheres = value;
 }
 
+const Type & bhkMultiSphereShape::TypeConst() {
+	return TYPE;
+}

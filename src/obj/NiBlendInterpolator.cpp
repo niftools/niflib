@@ -35,3 +35,6 @@ const Type & NiBlendInterpolator::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBlendInterpolator::TypeConst() {
+	return TYPE;
+}

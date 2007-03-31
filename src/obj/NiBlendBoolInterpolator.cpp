@@ -43,3 +43,6 @@ void NiBlendBoolInterpolator::SetBoolValue( byte value ) {
 	boolValue = value;
 }
 
+const Type & NiBlendBoolInterpolator::TypeConst() {
+	return TYPE;
+}

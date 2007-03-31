@@ -23,7 +23,7 @@ public:
 	NIFLIB_API NiPosData();
 	NIFLIB_API ~NiPosData();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:	
 	static const Type TYPE;
 public:

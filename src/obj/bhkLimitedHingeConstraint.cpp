@@ -36,3 +36,6 @@ const Type & bhkLimitedHingeConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkLimitedHingeConstraint::TypeConst() {
+	return TYPE;
+}

@@ -36,3 +36,6 @@ const Type & NiAlphaController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiAlphaController::TypeConst() {
+	return TYPE;
+}

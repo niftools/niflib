@@ -36,3 +36,6 @@ const Type & NiParticleMeshModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleMeshModifier::TypeConst() {
+	return TYPE;
+}

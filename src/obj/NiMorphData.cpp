@@ -90,3 +90,7 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 	//It's the right size, so go ahead and set it
 	morphs[n].vectors = in;
 }
+
+const Type & NiMorphData::TypeConst() {
+	return TYPE;
+}

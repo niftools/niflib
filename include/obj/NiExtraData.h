@@ -24,7 +24,7 @@ public:
 	NIFLIB_API NiExtraData();
 	NIFLIB_API ~NiExtraData();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:	
 	static const Type TYPE;
 public:
@@ -66,7 +66,7 @@ public:
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type) {name}
 	 */
-	NIFLIB_API virtual string GetIDString();
+	NIFLIB_API virtual string GetIDString() const;
 
 protected:
 	NI_EXTRA_DATA_MEMBERS

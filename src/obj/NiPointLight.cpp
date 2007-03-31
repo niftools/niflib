@@ -59,3 +59,6 @@ void NiPointLight::SetQuadraticAttenuation( float value ) {
 	quadraticAttenuation = value;
 }
 
+const Type & NiPointLight::TypeConst() {
+	return TYPE;
+}

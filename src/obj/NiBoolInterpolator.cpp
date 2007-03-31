@@ -52,3 +52,6 @@ void NiBoolInterpolator::SetData( Ref<NiBoolData > value ) {
 	data = value;
 }
 
+const Type & NiBoolInterpolator::TypeConst() {
+	return TYPE;
+}

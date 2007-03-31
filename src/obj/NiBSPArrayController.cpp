@@ -35,3 +35,6 @@ const Type & NiBSPArrayController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBSPArrayController::TypeConst() {
+	return TYPE;
+}

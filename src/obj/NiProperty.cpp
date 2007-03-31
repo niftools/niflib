@@ -35,3 +35,6 @@ const Type & NiProperty::GetType() const {
 	return TYPE;
 };
 
+const Type & NiProperty::TypeConst() {
+	return TYPE;
+}

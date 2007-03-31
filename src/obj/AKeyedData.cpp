@@ -35,3 +35,6 @@ const Type & AKeyedData::GetType() const {
 	return TYPE;
 };
 
+const Type & AKeyedData::TypeConst() {
+	return TYPE;
+}

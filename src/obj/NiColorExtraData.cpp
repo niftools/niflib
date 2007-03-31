@@ -42,3 +42,7 @@ Color4 NiColorExtraData::GetData() const {
 void NiColorExtraData::SetData( const Color4 & n ) {
 	data = n;
 }
+
+const Type & NiColorExtraData::TypeConst() {
+	return TYPE;
+}

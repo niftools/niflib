@@ -62,3 +62,6 @@ void bhkNiTriStripsShape::SetScale( const Vector3 & n ) {
 	scale = n;	
 }
 
+const Type & bhkNiTriStripsShape::TypeConst() {
+	return TYPE;
+}

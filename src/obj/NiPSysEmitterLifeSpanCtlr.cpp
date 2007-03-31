@@ -36,3 +36,6 @@ const Type & NiPSysEmitterLifeSpanCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysEmitterLifeSpanCtlr::TypeConst() {
+	return TYPE;
+}

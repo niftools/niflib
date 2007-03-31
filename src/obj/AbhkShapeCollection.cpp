@@ -35,3 +35,6 @@ const Type & AbhkShapeCollection::GetType() const {
 	return TYPE;
 };
 
+const Type & AbhkShapeCollection::TypeConst() {
+	return TYPE;
+}

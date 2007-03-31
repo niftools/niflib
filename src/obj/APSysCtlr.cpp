@@ -43,3 +43,6 @@ void APSysCtlr::SetModifierName( string value ) {
 	modifierName = value;
 }
 
+const Type & APSysCtlr::TypeConst() {
+	return TYPE;
+}

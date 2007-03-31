@@ -35,3 +35,6 @@ const Type & RootCollisionNode::GetType() const {
 	return TYPE;
 };
 
+const Type & RootCollisionNode::TypeConst() {
+	return TYPE;
+}

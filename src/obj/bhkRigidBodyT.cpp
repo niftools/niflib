@@ -35,3 +35,6 @@ const Type & bhkRigidBodyT::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkRigidBodyT::TypeConst() {
+	return TYPE;
+}

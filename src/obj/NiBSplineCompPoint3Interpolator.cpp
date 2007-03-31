@@ -34,3 +34,7 @@ list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
 const Type & NiBSplineCompPoint3Interpolator::GetType() const {
 	return TYPE;
 };
+
+const Type & NiBSplineCompPoint3Interpolator::TypeConst() {
+	return TYPE;
+}

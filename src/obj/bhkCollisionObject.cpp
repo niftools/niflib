@@ -38,3 +38,6 @@ const Type & bhkCollisionObject::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkCollisionObject::TypeConst() {
+	return TYPE;
+}

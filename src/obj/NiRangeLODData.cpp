@@ -52,3 +52,6 @@ void NiRangeLODData::SetLODLevels( const vector<LODRange >& value ) {
 	lodLevels = value;
 }
 
+const Type & NiRangeLODData::TypeConst() {
+	return TYPE;
+}

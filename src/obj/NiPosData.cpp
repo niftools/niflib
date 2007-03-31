@@ -52,3 +52,6 @@ void NiPosData::SetKeys( vector< Key<Vector3> > const & keys ) {
 	data.keys = keys;
 }
 
+const Type & NiPosData::TypeConst() {
+	return TYPE;
+}

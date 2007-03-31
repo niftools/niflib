@@ -35,3 +35,6 @@ const Type & NiPSysEmitterDeclinationVarCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysEmitterDeclinationVarCtlr::TypeConst() {
+	return TYPE;
+}

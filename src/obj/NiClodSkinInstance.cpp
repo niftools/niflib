@@ -35,3 +35,6 @@ const Type & NiClodSkinInstance::GetType() const {
 	return TYPE;
 };
 
+const Type & NiClodSkinInstance::TypeConst() {
+	return TYPE;
+}

@@ -36,3 +36,6 @@ const Type & FxRadioButton::GetType() const {
 	return TYPE;
 };
 
+const Type & FxRadioButton::TypeConst() {
+	return TYPE;
+}

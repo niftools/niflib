@@ -132,3 +132,6 @@ void NiCamera::SetLodAdjust( float value ) {
 	lodAdjust = value;
 }
 
+const Type & NiCamera::TypeConst() {
+	return TYPE;
+}

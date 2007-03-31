@@ -282,3 +282,7 @@ int NiBSplineCompTransformInterpolator::GetNumControlPt() const
    }
    return 0;
 }
+
+const Type & NiBSplineCompTransformInterpolator::TypeConst() {
+	return TYPE;
+}

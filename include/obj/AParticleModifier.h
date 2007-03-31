@@ -27,7 +27,7 @@ public:
 	NIFLIB_API AParticleModifier();
 	NIFLIB_API ~AParticleModifier();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

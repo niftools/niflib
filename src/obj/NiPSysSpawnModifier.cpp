@@ -35,3 +35,6 @@ const Type & NiPSysSpawnModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysSpawnModifier::TypeConst() {
+	return TYPE;
+}

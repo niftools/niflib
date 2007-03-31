@@ -37,3 +37,6 @@ const Type & NiMeshPSysData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiMeshPSysData::TypeConst() {
+	return TYPE;
+}

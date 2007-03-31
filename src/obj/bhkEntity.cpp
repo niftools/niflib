@@ -52,3 +52,6 @@ void bhkEntity::SetLayer( OblivionLayer value ) {
 	layer = value;
 }
 
+const Type & bhkEntity::TypeConst() {
+	return TYPE;
+}

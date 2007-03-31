@@ -35,3 +35,6 @@ const Type & FxButton::GetType() const {
 	return TYPE;
 };
 
+const Type & FxButton::TypeConst() {
+	return TYPE;
+}

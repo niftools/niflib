@@ -35,3 +35,6 @@ const Type & NiClod::GetType() const {
 	return TYPE;
 };
 
+const Type & NiClod::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiPSysBoundUpdateModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysBoundUpdateModifier::TypeConst() {
+	return TYPE;
+}

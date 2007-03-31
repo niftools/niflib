@@ -35,3 +35,6 @@ const Type & AvoidNode::GetType() const {
 	return TYPE;
 };
 
+const Type & AvoidNode::TypeConst() {
+	return TYPE;
+}

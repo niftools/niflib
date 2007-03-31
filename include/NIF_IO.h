@@ -211,7 +211,9 @@ using namespace std;
 template<int size, class T>
 struct array {
 	array() {
-		memset(data, 0, sizeof(data[0]) * size);
+		for ( size_t i = 0; i < size; ++i ) {
+			data[i] = T();
+		}
 	}
 	~array() {}
 	T & operator[]( unsigned int index ) {

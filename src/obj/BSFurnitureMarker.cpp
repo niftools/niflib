@@ -45,3 +45,6 @@ void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> &
 	positions = n;
 }
 
+const Type & BSFurnitureMarker::TypeConst() {
+	return TYPE;
+}

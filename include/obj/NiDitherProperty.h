@@ -22,7 +22,7 @@ public:
 	NIFLIB_API NiDitherProperty();
 	NIFLIB_API ~NiDitherProperty();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

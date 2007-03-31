@@ -166,6 +166,11 @@ void NiSkinData::ResetOffsets( const Ref<NiGeometry> & owner ) {
 Ref<NiSkinPartition> NiSkinData::GetSkinPartition() const {
    return skinPartition;
 }
+
 void NiSkinData::SetSkinPartition(Ref<NiSkinPartition> value) {
    skinPartition = value;
+}
+
+const Type & NiSkinData::TypeConst() {
+	return TYPE;
 }

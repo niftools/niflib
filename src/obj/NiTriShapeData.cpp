@@ -93,3 +93,6 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 	numTrianglePoints = numTriangles * 3;
 }
 
+const Type & NiTriShapeData::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiImage::GetType() const {
 	return TYPE;
 };
 
+const Type & NiImage::TypeConst() {
+	return TYPE;
+}

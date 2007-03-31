@@ -256,3 +256,7 @@ bool NiNode::IsSplitMeshProxy() const {
 	//Made it all the way through the loop without returning false
 	return true;
 }
+
+const Type & NiNode::TypeConst() {
+	return TYPE;
+}

@@ -39,3 +39,6 @@ const Type & NiBoneLODController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBoneLODController::TypeConst() {
+	return TYPE;
+}

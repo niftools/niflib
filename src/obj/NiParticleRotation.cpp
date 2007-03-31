@@ -35,3 +35,6 @@ const Type & NiParticleRotation::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleRotation::TypeConst() {
+	return TYPE;
+}

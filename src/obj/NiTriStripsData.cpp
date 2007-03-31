@@ -266,3 +266,7 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
    //Recalculate Triangle Count
    numTriangles = CalcTriangleCount();
 }
+
+const Type & NiTriStripsData::TypeConst() {
+	return TYPE;
+}

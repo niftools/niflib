@@ -35,3 +35,6 @@ const Type & NiSphericalCollider::GetType() const {
 	return TYPE;
 };
 
+const Type & NiSphericalCollider::TypeConst() {
+	return TYPE;
+}

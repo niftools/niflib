@@ -36,3 +36,6 @@ const Type & NiParticleSystem::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleSystem::TypeConst() {
+	return TYPE;
+}

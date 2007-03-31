@@ -35,3 +35,6 @@ const Type & NiTransformData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTransformData::TypeConst() {
+	return TYPE;
+}

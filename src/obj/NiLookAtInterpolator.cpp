@@ -70,3 +70,6 @@ void NiLookAtInterpolator::SetScale( float value ) {
 	scale = value;
 }
 
+const Type & NiLookAtInterpolator::TypeConst() {
+	return TYPE;
+}

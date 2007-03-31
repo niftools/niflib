@@ -52,3 +52,6 @@ void NiPoint3Interpolator::SetData( Ref<NiPosData > value ) {
 	data = value;
 }
 
+const Type & NiPoint3Interpolator::TypeConst() {
+	return TYPE;
+}

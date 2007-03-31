@@ -36,3 +36,6 @@ const Type & NiPSysMeshUpdateModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysMeshUpdateModifier::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiPlanarCollider::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPlanarCollider::TypeConst() {
+	return TYPE;
+}

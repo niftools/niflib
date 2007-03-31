@@ -52,4 +52,6 @@ void NiFloatData::SetKeys( vector< Key<float> > const & keys ) {
 	data.keys = keys;
 }
 
-
+const Type & NiFloatData::TypeConst() {
+	return TYPE;
+}

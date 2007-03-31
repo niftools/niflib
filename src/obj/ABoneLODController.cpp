@@ -99,3 +99,7 @@ void ABoneLODController::ClearNodeGroups() {
    nodeGroups.clear();
    numNodeGroups2 = nodeGroups.size();
 }
+
+const Type & ABoneLODController::TypeConst() {
+	return TYPE;
+}

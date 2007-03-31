@@ -35,3 +35,6 @@ const Type & NiPSysSphereEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysSphereEmitter::TypeConst() {
+	return TYPE;
+}

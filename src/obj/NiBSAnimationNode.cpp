@@ -35,3 +35,6 @@ const Type & NiBSAnimationNode::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBSAnimationNode::TypeConst() {
+	return TYPE;
+}

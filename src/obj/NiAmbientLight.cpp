@@ -35,3 +35,6 @@ const Type & NiAmbientLight::GetType() const {
 	return TYPE;
 };
 
+const Type & NiAmbientLight::TypeConst() {
+	return TYPE;
+}

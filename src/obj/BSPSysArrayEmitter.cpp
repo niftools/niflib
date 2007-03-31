@@ -35,3 +35,6 @@ const Type & BSPSysArrayEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & BSPSysArrayEmitter::TypeConst() {
+	return TYPE;
+}

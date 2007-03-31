@@ -43,3 +43,7 @@ void NiIntegersExtraData::SetData( const vector<unsigned int> & n ) {
 	numIntegers = (unsigned int)( n.size() );
 	data = n;
 };
+
+const Type & NiIntegersExtraData::TypeConst() {
+	return TYPE;
+}

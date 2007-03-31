@@ -37,3 +37,6 @@ const Type & NiPSysEmitterSpeedCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysEmitterSpeedCtlr::TypeConst() {
+	return TYPE;
+}

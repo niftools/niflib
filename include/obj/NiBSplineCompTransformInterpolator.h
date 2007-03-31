@@ -23,7 +23,7 @@ public:
 	NIFLIB_API NiBSplineCompTransformInterpolator();
 	NIFLIB_API ~NiBSplineCompTransformInterpolator();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

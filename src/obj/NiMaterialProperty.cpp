@@ -90,3 +90,7 @@ Color3 NiMaterialProperty::GetSpecularColor() const {
 void NiMaterialProperty::SetSpecularColor( const Color3 & n ) {
 	specularColor = n;
 }
+
+const Type & NiMaterialProperty::TypeConst() {
+	return TYPE;
+}

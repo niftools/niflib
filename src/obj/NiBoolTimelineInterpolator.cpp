@@ -52,3 +52,6 @@ void NiBoolTimelineInterpolator::SetData( Ref<NiBoolData > value ) {
 	data = value;
 }
 
+const Type & NiBoolTimelineInterpolator::TypeConst() {
+	return TYPE;
+}

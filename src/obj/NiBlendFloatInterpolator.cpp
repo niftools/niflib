@@ -43,3 +43,6 @@ void NiBlendFloatInterpolator::SetFloatValue( float value ) {
 	floatValue = value;
 }
 
+const Type & NiBlendFloatInterpolator::TypeConst() {
+	return TYPE;
+}

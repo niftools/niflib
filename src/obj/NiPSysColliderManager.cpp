@@ -36,3 +36,6 @@ const Type & NiPSysColliderManager::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysColliderManager::TypeConst() {
+	return TYPE;
+}

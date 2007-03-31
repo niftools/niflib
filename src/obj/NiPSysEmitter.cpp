@@ -35,3 +35,6 @@ const Type & NiPSysEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysEmitter::TypeConst() {
+	return TYPE;
+}

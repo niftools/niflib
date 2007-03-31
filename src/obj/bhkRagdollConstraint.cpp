@@ -35,3 +35,6 @@ const Type & bhkRagdollConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkRagdollConstraint::TypeConst() {
+	return TYPE;
+}

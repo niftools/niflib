@@ -52,3 +52,6 @@ void NiFloatInterpolator::SetData( Ref<NiFloatData > value ) {
 	data = value;
 }
 
+const Type & NiFloatInterpolator::TypeConst() {
+	return TYPE;
+}

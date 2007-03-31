@@ -36,3 +36,6 @@ const Type & NiCollisionData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiCollisionData::TypeConst() {
+	return TYPE;
+}

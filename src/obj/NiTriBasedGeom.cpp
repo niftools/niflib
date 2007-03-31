@@ -216,3 +216,7 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 
 	TSpaceRef->SetData(binData);
 }
+
+const Type & NiTriBasedGeom::TypeConst() {
+	return TYPE;
+}

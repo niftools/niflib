@@ -35,3 +35,6 @@ const Type & bhkWorldObject::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkWorldObject::TypeConst() {
+	return TYPE;
+}

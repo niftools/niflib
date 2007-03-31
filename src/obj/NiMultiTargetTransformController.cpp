@@ -55,3 +55,6 @@ void NiMultiTargetTransformController::SetExtraTargets( const vector<NiNodeRef>&
    extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiNode*)NULL), extraTargets.end());
 }
 
+const Type & NiMultiTargetTransformController::TypeConst() {
+	return TYPE;
+}

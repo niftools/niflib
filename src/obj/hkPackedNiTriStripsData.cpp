@@ -36,3 +36,6 @@ const Type & hkPackedNiTriStripsData::GetType() const {
 	return TYPE;
 };
 
+const Type & hkPackedNiTriStripsData::TypeConst() {
+	return TYPE;
+}

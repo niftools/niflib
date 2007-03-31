@@ -35,3 +35,6 @@ const Type & NiTriStrips::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTriStrips::TypeConst() {
+	return TYPE;
+}

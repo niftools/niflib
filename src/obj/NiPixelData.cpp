@@ -345,3 +345,7 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		}
 	}
 }
+
+const Type & NiPixelData::TypeConst() {
+	return TYPE;
+}

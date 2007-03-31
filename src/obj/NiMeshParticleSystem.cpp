@@ -35,3 +35,6 @@ const Type & NiMeshParticleSystem::GetType() const {
 	return TYPE;
 };
 
+const Type & NiMeshParticleSystem::TypeConst() {
+	return TYPE;
+}

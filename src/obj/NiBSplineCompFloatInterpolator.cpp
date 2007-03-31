@@ -35,3 +35,6 @@ const Type & NiBSplineCompFloatInterpolator::GetType() const {
 	return TYPE;
 };
 
+const Type & NiBSplineCompFloatInterpolator::TypeConst() {
+	return TYPE;
+}

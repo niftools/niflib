@@ -38,3 +38,6 @@ const Type & NiParticleSystemController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleSystemController::TypeConst() {
+	return TYPE;
+}

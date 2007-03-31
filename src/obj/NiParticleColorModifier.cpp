@@ -36,3 +36,6 @@ const Type & NiParticleColorModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleColorModifier::TypeConst() {
+	return TYPE;
+}

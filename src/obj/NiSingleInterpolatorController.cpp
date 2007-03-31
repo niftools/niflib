@@ -44,3 +44,6 @@ void NiSingleInterpolatorController::SetInterpolator( Ref<NiInterpolator > value
 	interpolator = value;
 }
 
+const Type & NiSingleInterpolatorController::TypeConst() {
+	return TYPE;
+}

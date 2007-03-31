@@ -35,3 +35,6 @@ const Type & NiPSysRotationModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysRotationModifier::TypeConst() {
+	return TYPE;
+}

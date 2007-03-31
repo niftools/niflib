@@ -43,3 +43,6 @@ void NiTextKeyExtraData::SetKeys( vector< Key<string> > const & keys ) {
 	textKeys = keys;
 }
 
+const Type & NiTextKeyExtraData::TypeConst() {
+	return TYPE;
+}

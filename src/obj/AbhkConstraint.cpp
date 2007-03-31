@@ -36,3 +36,6 @@ const Type & AbhkConstraint::GetType() const {
 	return TYPE;
 };
 
+const Type & AbhkConstraint::TypeConst() {
+	return TYPE;
+}

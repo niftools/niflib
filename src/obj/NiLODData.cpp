@@ -35,3 +35,6 @@ const Type & NiLODData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiLODData::TypeConst() {
+	return TYPE;
+}

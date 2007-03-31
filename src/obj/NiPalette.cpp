@@ -61,3 +61,7 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
 		palette[i][3] = int( new_pal[i].a * 255.0f );
 	}
 }
+
+const Type & NiPalette::TypeConst() {
+	return TYPE;
+}

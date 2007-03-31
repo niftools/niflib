@@ -75,3 +75,6 @@ void NiScreenLODData::SetProportionLevels( const vector<float >& value ) {
 	proportionLevels = value;
 }
 
+const Type & NiScreenLODData::TypeConst() {
+	return TYPE;
+}

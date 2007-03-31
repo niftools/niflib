@@ -36,3 +36,6 @@ const Type & bhkPackedNiTriStripsShape::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkPackedNiTriStripsShape::TypeConst() {
+	return TYPE;
+}

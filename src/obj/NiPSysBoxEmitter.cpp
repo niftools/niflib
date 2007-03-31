@@ -35,3 +35,6 @@ const Type & NiPSysBoxEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysBoxEmitter::TypeConst() {
+	return TYPE;
+}

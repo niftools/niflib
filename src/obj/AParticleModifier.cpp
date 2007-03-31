@@ -36,3 +36,6 @@ const Type & AParticleModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & AParticleModifier::TypeConst() {
+	return TYPE;
+}

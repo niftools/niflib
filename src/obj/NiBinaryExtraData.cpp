@@ -45,3 +45,7 @@ void NiBinaryExtraData::SetData( const vector<byte> & n ) {
 	binaryData.dataSize = (unsigned int)(n.size());
 	binaryData.data = n;
 };
+
+const Type & NiBinaryExtraData::TypeConst() {
+	return TYPE;
+}

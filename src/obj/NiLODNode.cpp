@@ -61,3 +61,6 @@ void NiLODNode::SetLODLevelData( Ref<NiLODData > value ) {
 	lodLevelData = value;
 }
 
+const Type & NiLODNode::TypeConst() {
+	return TYPE;
+}

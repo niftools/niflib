@@ -53,3 +53,6 @@ void NiLightColorController::SetInterpolator( Ref<NiPoint3Interpolator > value )
 	interpolator = value;
 }
 
+const Type & NiLightColorController::TypeConst() {
+	return TYPE;
+}

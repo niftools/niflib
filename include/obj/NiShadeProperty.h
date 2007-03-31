@@ -23,7 +23,7 @@ public:
 	NIFLIB_API NiShadeProperty();
 	NIFLIB_API ~NiShadeProperty();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

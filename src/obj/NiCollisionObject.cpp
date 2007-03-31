@@ -52,3 +52,7 @@ Ref<NiObject > NiCollisionObject::GetBody() const {
 void NiCollisionObject::SetBody( Ref<NiObject > value ) {
 	body = value;
 }
+
+const Type & NiCollisionObject::TypeConst() {
+	return TYPE;
+}

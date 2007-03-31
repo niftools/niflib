@@ -35,3 +35,6 @@ const Type & bhkSimpleShapePhantom::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkSimpleShapePhantom::TypeConst() {
+	return TYPE;
+}

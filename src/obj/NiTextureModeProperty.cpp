@@ -35,3 +35,6 @@ const Type & NiTextureModeProperty::GetType() const {
 	return TYPE;
 };
 
+const Type & NiTextureModeProperty::TypeConst() {
+	return TYPE;
+}

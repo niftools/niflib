@@ -59,3 +59,7 @@ Color3 NiFogProperty::GetFogColor() const {
 void NiFogProperty::SetFogColor(Color3 value) {
    fogColor = value;
 }
+
+const Type & NiFogProperty::TypeConst() {
+	return TYPE;
+}

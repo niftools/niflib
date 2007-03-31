@@ -43,3 +43,7 @@ void NiWireframeProperty::SetFlags(unsigned short value) {
    flags = value;
 }
 
+const Type & NiWireframeProperty::TypeConst() {
+	return TYPE;
+}
+

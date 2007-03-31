@@ -22,7 +22,7 @@ public:
 	NIFLIB_API NiBlendBoolInterpolator();
 	NIFLIB_API ~NiBlendBoolInterpolator();
 	//Run-Time Type Information
-	static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

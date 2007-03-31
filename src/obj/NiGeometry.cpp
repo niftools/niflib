@@ -448,3 +448,7 @@ void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 
 	skinData->SetBoneWeights( bone_index, n, center, radius );
 }
+
+const Type & NiGeometry::TypeConst() {
+	return TYPE;
+}

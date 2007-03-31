@@ -43,3 +43,7 @@ void NiStringExtraData::SetData( const string & n ) {
 	stringData = n;
 	bytesRemaining = (unsigned int)(stringData.size()) + 4;
 }
+
+const Type & NiStringExtraData::TypeConst() {
+	return TYPE;
+}

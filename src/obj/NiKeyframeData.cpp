@@ -141,3 +141,7 @@ vector< Key<float> > NiKeyframeData::GetScaleKeys() const {
 void NiKeyframeData::SetScaleKeys( vector< Key<float> > const & keys ) {
 	scales.keys = keys;
 }
+
+const Type & NiKeyframeData::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & bhkConvexVerticesShape::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkConvexVerticesShape::TypeConst() {
+	return TYPE;
+}

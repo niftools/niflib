@@ -26,7 +26,7 @@ public:
 	NIFLIB_API NiRangeLODData();
 	NIFLIB_API ~NiRangeLODData();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

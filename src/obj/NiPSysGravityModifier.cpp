@@ -36,3 +36,6 @@ const Type & NiPSysGravityModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysGravityModifier::TypeConst() {
+	return TYPE;
+}

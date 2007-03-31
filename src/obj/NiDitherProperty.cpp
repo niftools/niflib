@@ -43,3 +43,6 @@ void NiDitherProperty::SetFlags( unsigned short n ) {
    flags = n;
 }
 
+const Type & NiDitherProperty::TypeConst() {
+	return TYPE;
+}

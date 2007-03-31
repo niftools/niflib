@@ -42,3 +42,7 @@ unsigned short NiSpecularProperty::GetFlags() const {
 void NiSpecularProperty::SetFlags( unsigned short n ) {
    flags = n;
 }
+
+const Type & NiSpecularProperty::TypeConst() {
+	return TYPE;
+}

@@ -43,3 +43,7 @@ void NiFloatsExtraData::SetData( const vector<float> & n ) {
 	numFloats = (unsigned int)(n.size());
 	data = n;
 }
+
+const Type & NiFloatsExtraData::TypeConst() {
+	return TYPE;
+}

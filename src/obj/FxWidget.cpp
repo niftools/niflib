@@ -35,3 +35,6 @@ const Type & FxWidget::GetType() const {
 	return TYPE;
 };
 
+const Type & FxWidget::TypeConst() {
+	return TYPE;
+}

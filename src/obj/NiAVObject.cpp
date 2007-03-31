@@ -230,3 +230,7 @@ void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
 const Type & NiAVObject::GetType() const {
 	return TYPE;
 };
+
+const Type & NiAVObject::TypeConst() {
+	return TYPE;
+}

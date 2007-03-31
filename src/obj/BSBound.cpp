@@ -51,3 +51,6 @@ void BSBound::SetDimensions( const Vector3 & value ) {
 	dimensions = value;
 }
 
+const Type & BSBound::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & BSParentVelocityModifier::GetType() const {
 	return TYPE;
 };
 
+const Type & BSParentVelocityModifier::TypeConst() {
+	return TYPE;
+}

@@ -44,7 +44,7 @@ void NiExtraData::SetName( const string & new_name ) {
 }
 
 /*! Used to format a human readable string that includes the type of the object */
-string NiExtraData::GetIDString() {
+string NiExtraData::GetIDString() const {
 	stringstream out;
 	out << NiObject::GetIDString() << " {" << name << "}";
 	return out.str();
@@ -56,4 +56,8 @@ NiExtraDataRef NiExtraData::GetNextExtraData() const {
 
 void NiExtraData::SetNextExtraData( const NiExtraDataRef & obj ) {
 	nextExtraData = obj;
+}
+
+const Type & NiExtraData::TypeConst() {
+	return TYPE;
 }

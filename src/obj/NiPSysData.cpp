@@ -35,3 +35,6 @@ const Type & NiPSysData::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysData::TypeConst() {
+	return TYPE;
+}

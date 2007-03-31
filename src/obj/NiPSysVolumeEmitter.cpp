@@ -36,3 +36,6 @@ const Type & NiPSysVolumeEmitter::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysVolumeEmitter::TypeConst() {
+	return TYPE;
+}

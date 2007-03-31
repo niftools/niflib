@@ -67,3 +67,6 @@ void NiLight::SetSpecularColor( Color3 value ) {
 	specularColor = value;
 }
 
+const Type & NiLight::TypeConst() {
+	return TYPE;
+}

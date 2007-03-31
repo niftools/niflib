@@ -245,3 +245,7 @@ void NiTexturingProperty::ClearTexture( int n ) {
 			break;
 	};
 }
+
+const Type & NiTexturingProperty::TypeConst() {
+	return TYPE;
+}

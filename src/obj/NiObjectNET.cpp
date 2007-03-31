@@ -46,7 +46,7 @@ void NiObjectNET::SetName( const string & new_name ) {
 }
 
 /*! Used to format a human readable string that includes the type of the object */
-string NiObjectNET::GetIDString() {
+string NiObjectNET::GetIDString() const {
 	stringstream out;
 	out << NiObject::GetIDString() << " {" << name << "}";
 	return out.str();
@@ -183,3 +183,7 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 const Type & NiObjectNET::GetType() const {
 	return TYPE;
 };
+
+const Type & NiObjectNET::TypeConst() {
+	return TYPE;
+}

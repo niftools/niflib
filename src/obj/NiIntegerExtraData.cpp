@@ -42,3 +42,7 @@ unsigned int NiIntegerExtraData::GetData() const {
 void NiIntegerExtraData::SetData( unsigned int n ) {
 	integerData = n;
 }
+
+const Type & NiIntegerExtraData::TypeConst() {
+	return TYPE;
+}

@@ -52,3 +52,7 @@ Ref<NiPosData> NiPathController::GetPosData() const {
 void NiPathController::SetPosData( const Ref<NiPosData> & n ) {
 	posData = n;
 }
+
+const Type & NiPathController::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiDirectionalLight::GetType() const {
 	return TYPE;
 };
 
+const Type & NiDirectionalLight::TypeConst() {
+	return TYPE;
+}

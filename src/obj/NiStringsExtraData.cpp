@@ -43,3 +43,7 @@ void NiStringsExtraData::SetData( const vector<string> & n ) {
 	numStrings = (unsigned int)(n.size());
 	data = n;
 };
+
+const Type & NiStringsExtraData::TypeConst() {
+	return TYPE;
+}

@@ -35,3 +35,6 @@ const Type & NiGravity::GetType() const {
 	return TYPE;
 };
 
+const Type & NiGravity::TypeConst() {
+	return TYPE;
+}

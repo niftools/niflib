@@ -35,3 +35,6 @@ const Type & NiParticleBomb::GetType() const {
 	return TYPE;
 };
 
+const Type & NiParticleBomb::TypeConst() {
+	return TYPE;
+}

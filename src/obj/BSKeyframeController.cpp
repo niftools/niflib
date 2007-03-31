@@ -36,3 +36,6 @@ const Type & BSKeyframeController::GetType() const {
 	return TYPE;
 };
 
+const Type & BSKeyframeController::TypeConst() {
+	return TYPE;
+}

@@ -36,8 +36,6 @@ public:
 	~Ref();
 
 	T& operator*() const;
-	
-	T* Ptr() const;
 
 	bool operator<(const Ref & ref) const;
 
@@ -54,6 +52,11 @@ public:
 	operator T*() const;
 #endif
 	T* operator->() const;
+
+	//SWIG specific operators
+	string __str__();
+	string __repr__();
+	T* __call__() const;
 
 protected:
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
@@ -97,11 +100,6 @@ Ref<T>::operator T*() const {
 
 template <class T>
 T* Ref<T>::operator->() const {
-	return _object;
-}
-
-template <class T>
-T* Ref<T>::Ptr() const {
 	return _object;
 }
 
@@ -195,14 +193,41 @@ bool Ref<T>::operator!=(const Ref & ref) const {
 #ifndef SWIG
 template <class T>
 ostream & operator<<(ostream & os, const Ref<T> & ref) {
-	if (ref._object)
+	if (ref._object) {
 		os << ref->GetIDString();
-	else
+	} else {
 		os << "NULL";
+	}
 	return os;
 }
 #endif
 
+//SWIG functions
+template <class T>
+string Ref<T>::__str__() {
+	if (_object) {
+		return _object->asString();
+	} else {
+		return string("None");
+	}
 }
+
+template <class T>
+string Ref<T>::__repr__() {
+	if (_object) {
+		return _object->GetIDString();
+	} else {
+		return string("None");
+	}
+}
+
+template <class T>
+T* Ref<T>::__call__() const {
+	return _object;
+}
+
+
+}
+
 
 #endif

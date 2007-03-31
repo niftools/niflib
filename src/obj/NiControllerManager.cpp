@@ -94,3 +94,6 @@ void NiControllerManager::SetObjectPalette( Ref<NiDefaultAVObjectPalette > value
 	objectPalette = value;
 }
 
+const Type & NiControllerManager::TypeConst() {
+	return TYPE;
+}

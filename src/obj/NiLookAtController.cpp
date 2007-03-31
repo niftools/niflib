@@ -36,3 +36,6 @@ const Type & NiLookAtController::GetType() const {
 	return TYPE;
 };
 
+const Type & NiLookAtController::TypeConst() {
+	return TYPE;
+}

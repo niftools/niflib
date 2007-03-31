@@ -116,3 +116,6 @@ void NiTextureEffect::SetPs2K( unsigned short value ) {
 	ps2K = value;
 }
 
+const Type & NiTextureEffect::TypeConst() {
+	return TYPE;
+}

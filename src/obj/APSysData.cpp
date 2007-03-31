@@ -35,3 +35,6 @@ const Type & APSysData::GetType() const {
 	return TYPE;
 };
 
+const Type & APSysData::TypeConst() {
+	return TYPE;
+}

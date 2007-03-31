@@ -35,3 +35,6 @@ const Type & bhkShape::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkShape::TypeConst() {
+	return TYPE;
+}

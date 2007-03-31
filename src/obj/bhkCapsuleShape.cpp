@@ -75,3 +75,6 @@ void bhkCapsuleShape::SetRadius2( float value ) {
 	radius2 = value;
 }
 
+const Type & bhkCapsuleShape::TypeConst() {
+	return TYPE;
+}

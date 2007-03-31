@@ -28,7 +28,7 @@ public:
 	NIFLIB_API NiObjectNET();
 	NIFLIB_API ~NiObjectNET();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:	
 	static const Type TYPE;
 public:
@@ -45,7 +45,7 @@ public:
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type) {name}
 	 */
-	NIFLIB_API virtual string GetIDString();
+	NIFLIB_API virtual string GetIDString() const;
 
 	NIFLIB_API void AddExtraData( NiExtraData * obj, unsigned version = VER_10_0_1_0 );
 	NIFLIB_API void RemoveExtraData( NiExtraData * obj );

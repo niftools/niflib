@@ -36,3 +36,6 @@ const Type & NiPSysGravityStrengthCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysGravityStrengthCtlr::TypeConst() {
+	return TYPE;
+}

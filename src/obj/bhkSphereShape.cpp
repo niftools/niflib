@@ -43,3 +43,6 @@ void bhkSphereShape::SetRadius( float value ) {
 	radius = value;
 }
 
+const Type & bhkSphereShape::TypeConst() {
+	return TYPE;
+}

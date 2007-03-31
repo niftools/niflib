@@ -21,7 +21,7 @@ public:
 	NIFLIB_API NiSequenceStreamHelper();
 	NIFLIB_API ~NiSequenceStreamHelper();
 	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst() { return TYPE; }
+	NIFLIB_API static const Type & TypeConst();
 private:
 	static const Type TYPE;
 public:

@@ -35,3 +35,6 @@ const Type & NiPSysModifierActiveCtlr::GetType() const {
 	return TYPE;
 };
 
+const Type & NiPSysModifierActiveCtlr::TypeConst() {
+	return TYPE;
+}

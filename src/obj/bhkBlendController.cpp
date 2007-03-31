@@ -35,3 +35,6 @@ const Type & bhkBlendController::GetType() const {
 	return TYPE;
 };
 
+const Type & bhkBlendController::TypeConst() {
+	return TYPE;
+}
