@@ -15,12 +15,15 @@ namespace Niflib {
 struct BoundingBox {
 	/*! Default Constructor */
 	NIFLIB_API BoundingBox();
-	/*! Copy Constructor */
-	NIFLIB_API BoundingBox( const BoundingBox & src );
-	/*! Copy Operator */
-	NIFLIB_API BoundingBox & operator=( const BoundingBox & src );
 	/*! Default Destructor */
 	NIFLIB_API ~BoundingBox();
+	/*! Copy Constructor */
+	NIFLIB_API BoundingBox( const BoundingBox & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API BoundingBox & operator=( const BoundingBox & src );
+	#endif
 	/*!
 	 * Usually 1.
 	 */

@@ -25,12 +25,15 @@ class NiStringPalette;
 struct ControllerLink {
 	/*! Default Constructor */
 	NIFLIB_API ControllerLink();
-	/*! Copy Constructor */
-	NIFLIB_API ControllerLink( const ControllerLink & src );
-	/*! Copy Operator */
-	NIFLIB_API ControllerLink & operator=( const ControllerLink & src );
 	/*! Default Destructor */
 	NIFLIB_API ~ControllerLink();
+	/*! Copy Constructor */
+	NIFLIB_API ControllerLink( const ControllerLink & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API ControllerLink & operator=( const ControllerLink & src );
+	#endif
 	/*!
 	 * Name of a controllable object in another NIF file.
 	 */

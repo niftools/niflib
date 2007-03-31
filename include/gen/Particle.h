@@ -15,12 +15,15 @@ namespace Niflib {
 struct Particle {
 	/*! Default Constructor */
 	NIFLIB_API Particle();
-	/*! Copy Constructor */
-	NIFLIB_API Particle( const Particle & src );
-	/*! Copy Operator */
-	NIFLIB_API Particle & operator=( const Particle & src );
 	/*! Default Destructor */
 	NIFLIB_API ~Particle();
+	/*! Copy Constructor */
+	NIFLIB_API Particle( const Particle & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API Particle & operator=( const Particle & src );
+	#endif
 	/*!
 	 * Particle velocity
 	 */

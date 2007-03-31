@@ -16,12 +16,15 @@ namespace Niflib {
 struct SkinPartition {
 	/*! Default Constructor */
 	NIFLIB_API SkinPartition();
-	/*! Copy Constructor */
-	NIFLIB_API SkinPartition( const SkinPartition & src );
-	/*! Copy Operator */
-	NIFLIB_API SkinPartition & operator=( const SkinPartition & src );
 	/*! Default Destructor */
 	NIFLIB_API ~SkinPartition();
+	/*! Copy Constructor */
+	NIFLIB_API SkinPartition( const SkinPartition & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API SkinPartition & operator=( const SkinPartition & src );
+	#endif
 	/*!
 	 * Number of vertices in this submesh.
 	 */

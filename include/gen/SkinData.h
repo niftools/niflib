@@ -17,12 +17,15 @@ namespace Niflib {
 struct SkinData {
 	/*! Default Constructor */
 	NIFLIB_API SkinData();
-	/*! Copy Constructor */
-	NIFLIB_API SkinData( const SkinData & src );
-	/*! Copy Operator */
-	NIFLIB_API SkinData & operator=( const SkinData & src );
 	/*! Default Destructor */
 	NIFLIB_API ~SkinData();
+	/*! Copy Constructor */
+	NIFLIB_API SkinData( const SkinData & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API SkinData & operator=( const SkinData & src );
+	#endif
 	/*!
 	 * Rotation offset of the skin from this bone in bind position.
 	 */

@@ -54,7 +54,7 @@ public:
 	 * the target version.
 	 * \return The name of this NiExtraData object.
 	 */
-	string GetName();
+	NIFLIB_API string GetName();
 
 	/*! Sets the name of this NiExtraData object.  Will only be written to later
 	 * version NIF files.

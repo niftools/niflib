@@ -17,12 +17,15 @@ class NiAVObject;
 struct AVObject {
 	/*! Default Constructor */
 	NIFLIB_API AVObject();
-	/*! Copy Constructor */
-	NIFLIB_API AVObject( const AVObject & src );
-	/*! Copy Operator */
-	NIFLIB_API AVObject & operator=( const AVObject & src );
 	/*! Default Destructor */
 	NIFLIB_API ~AVObject();
+	/*! Copy Constructor */
+	NIFLIB_API AVObject( const AVObject & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API AVObject & operator=( const AVObject & src );
+	#endif
 	/*!
 	 * Object name.
 	 */

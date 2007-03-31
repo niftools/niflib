@@ -17,12 +17,15 @@ namespace Niflib {
 struct ShaderTexDesc {
 	/*! Default Constructor */
 	NIFLIB_API ShaderTexDesc();
-	/*! Copy Constructor */
-	NIFLIB_API ShaderTexDesc( const ShaderTexDesc & src );
-	/*! Copy Operator */
-	NIFLIB_API ShaderTexDesc & operator=( const ShaderTexDesc & src );
 	/*! Default Destructor */
 	NIFLIB_API ~ShaderTexDesc();
+	/*! Copy Constructor */
+	NIFLIB_API ShaderTexDesc( const ShaderTexDesc & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API ShaderTexDesc & operator=( const ShaderTexDesc & src );
+	#endif
 	/*!
 	 * Is it used?
 	 */

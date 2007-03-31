@@ -20,12 +20,15 @@ class NiObject;
 struct Footer {
 	/*! Default Constructor */
 	NIFLIB_API Footer();
-	/*! Copy Constructor */
-	NIFLIB_API Footer( const Footer & src );
-	/*! Copy Operator */
-	NIFLIB_API Footer & operator=( const Footer & src );
 	/*! Default Destructor */
 	NIFLIB_API ~Footer();
+	/*! Copy Constructor */
+	NIFLIB_API Footer( const Footer & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API Footer & operator=( const Footer & src );
+	#endif
 	/*!
 	 * The number of root references.
 	 */

@@ -15,12 +15,15 @@ namespace Niflib {
 struct hkTriangle {
 	/*! Default Constructor */
 	NIFLIB_API hkTriangle();
-	/*! Copy Constructor */
-	NIFLIB_API hkTriangle( const hkTriangle & src );
-	/*! Copy Operator */
-	NIFLIB_API hkTriangle & operator=( const hkTriangle & src );
 	/*! Default Destructor */
 	NIFLIB_API ~hkTriangle();
+	/*! Copy Constructor */
+	NIFLIB_API hkTriangle( const hkTriangle & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API hkTriangle & operator=( const hkTriangle & src );
+	#endif
 	/*!
 	 * The triangle.
 	 */

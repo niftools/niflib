@@ -20,12 +20,15 @@ class NiPixelData;
 struct TexSource {
 	/*! Default Constructor */
 	NIFLIB_API TexSource();
-	/*! Copy Constructor */
-	NIFLIB_API TexSource( const TexSource & src );
-	/*! Copy Operator */
-	NIFLIB_API TexSource & operator=( const TexSource & src );
 	/*! Default Destructor */
 	NIFLIB_API ~TexSource();
+	/*! Copy Constructor */
+	NIFLIB_API TexSource( const TexSource & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API TexSource & operator=( const TexSource & src );
+	#endif
 	/*!
 	 * Is the texture external?
 	 */

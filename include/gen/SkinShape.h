@@ -20,12 +20,15 @@ class NiSkinInstance;
 struct SkinShape {
 	/*! Default Constructor */
 	NIFLIB_API SkinShape();
-	/*! Copy Constructor */
-	NIFLIB_API SkinShape( const SkinShape & src );
-	/*! Copy Operator */
-	NIFLIB_API SkinShape & operator=( const SkinShape & src );
 	/*! Default Destructor */
 	NIFLIB_API ~SkinShape();
+	/*! Copy Constructor */
+	NIFLIB_API SkinShape( const SkinShape & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API SkinShape & operator=( const SkinShape & src );
+	#endif
 	/*!
 	 * The shape.
 	 */

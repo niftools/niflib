@@ -15,12 +15,15 @@ namespace Niflib {
 struct QuaternionXYZW {
 	/*! Default Constructor */
 	NIFLIB_API QuaternionXYZW();
-	/*! Copy Constructor */
-	NIFLIB_API QuaternionXYZW( const QuaternionXYZW & src );
-	/*! Copy Operator */
-	NIFLIB_API QuaternionXYZW & operator=( const QuaternionXYZW & src );
 	/*! Default Destructor */
 	NIFLIB_API ~QuaternionXYZW();
+	/*! Copy Constructor */
+	NIFLIB_API QuaternionXYZW( const QuaternionXYZW & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API QuaternionXYZW & operator=( const QuaternionXYZW & src );
+	#endif
 	/*!
 	 * The x-coordinate.
 	 */

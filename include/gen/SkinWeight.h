@@ -15,12 +15,15 @@ namespace Niflib {
 struct SkinWeight {
 	/*! Default Constructor */
 	NIFLIB_API SkinWeight();
-	/*! Copy Constructor */
-	NIFLIB_API SkinWeight( const SkinWeight & src );
-	/*! Copy Operator */
-	NIFLIB_API SkinWeight & operator=( const SkinWeight & src );
 	/*! Default Destructor */
 	NIFLIB_API ~SkinWeight();
+	/*! Copy Constructor */
+	NIFLIB_API SkinWeight( const SkinWeight & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API SkinWeight & operator=( const SkinWeight & src );
+	#endif
 	/*!
 	 * The vertex index, in the mesh.
 	 */

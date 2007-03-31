@@ -15,12 +15,15 @@ namespace Niflib {
 struct OblivionSubShape {
 	/*! Default Constructor */
 	NIFLIB_API OblivionSubShape();
-	/*! Copy Constructor */
-	NIFLIB_API OblivionSubShape( const OblivionSubShape & src );
-	/*! Copy Operator */
-	NIFLIB_API OblivionSubShape & operator=( const OblivionSubShape & src );
 	/*! Default Destructor */
 	NIFLIB_API ~OblivionSubShape();
+	/*! Copy Constructor */
+	NIFLIB_API OblivionSubShape( const OblivionSubShape & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API OblivionSubShape & operator=( const OblivionSubShape & src );
+	#endif
 	/*!
 	 * Sets mesh color in Oblivion Construction Set.
 	 */

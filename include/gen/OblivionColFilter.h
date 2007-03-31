@@ -15,12 +15,15 @@ namespace Niflib {
 struct OblivionColFilter {
 	/*! Default Constructor */
 	NIFLIB_API OblivionColFilter();
-	/*! Copy Constructor */
-	NIFLIB_API OblivionColFilter( const OblivionColFilter & src );
-	/*! Copy Operator */
-	NIFLIB_API OblivionColFilter & operator=( const OblivionColFilter & src );
 	/*! Default Destructor */
 	NIFLIB_API ~OblivionColFilter();
+	/*! Copy Constructor */
+	NIFLIB_API OblivionColFilter( const OblivionColFilter & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API OblivionColFilter & operator=( const OblivionColFilter & src );
+	#endif
 	/*!
 	 * Sets mesh color in Oblivion Construction Set.
 	 */

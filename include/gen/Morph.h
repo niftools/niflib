@@ -15,12 +15,15 @@ namespace Niflib {
 struct Morph {
 	/*! Default Constructor */
 	NIFLIB_API Morph();
-	/*! Copy Constructor */
-	NIFLIB_API Morph( const Morph & src );
-	/*! Copy Operator */
-	NIFLIB_API Morph & operator=( const Morph & src );
 	/*! Default Destructor */
 	NIFLIB_API ~Morph();
+	/*! Copy Constructor */
+	NIFLIB_API Morph( const Morph & src );
+	//This operator give SWIG problems
+	#ifndef SWIG
+	/*! Copy Operator */
+	NIFLIB_API Morph & operator=( const Morph & src );
+	#endif
 	/*!
 	 * Name of the frame.
 	 */
