@@ -50,7 +50,7 @@ void NiDefaultAVObjectPalette::SetObjs( const vector<Ref<NiAVObject> >& value ) 
    for (vector<NiAVObjectRef>::const_iterator itr = value.begin(); itr != value.end(); ++itr) {
       AVObject obj;
       obj.name = (*itr)->GetName();
-      obj.avObject = (*itr).Ptr();
+      obj.avObject = (*itr);
       objs.push_back(obj);
    }
 }

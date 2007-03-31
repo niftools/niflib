@@ -51,7 +51,7 @@ void NiMultiTargetTransformController::SetExtraTargets( const vector<NiNodeRef>&
    size_t n = value.size();
    extraTargets.reserve(n);
    for (size_t i=0; i<n; ++i)
-      extraTargets.push_back( value[i].Ptr() );
+      extraTargets.push_back( value[i] );
    extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiNode*)NULL), extraTargets.end());
 }
 
