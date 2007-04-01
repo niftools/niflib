@@ -236,7 +236,7 @@
 				Optimization="3"
 				AdditionalIncludeDirectories="$(ProjectDir)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BUILDING_NIFLIB_DLL;USE_NIFLIB_DLL"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough=""
 				WarningLevel="3"
