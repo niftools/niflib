@@ -65,7 +65,24 @@ void NiNode::AddChild( Ref<NiAVObject> obj ) {
 		throw runtime_error( "You have attempted to add a child to a NiNode which already is the child of another NiNode." );
 	}
 	obj->SetParent( this );
-	children.push_back( obj );
+	//Sometimes NiTriBasedGeom with skins can be siblings of NiNodes that
+	//represent joints for that same skin.  This is not allowed, so we have
+	//to prevent it by always adding NiTriBasedGeom to the begining of the child list.
+	NiTriBasedGeomRef niGeom = DynamicCast<NiTriBasedGeom>(obj);
+	if ( niGeom != NULL ) {
+		//This is a NiTriBasedGeom, so shift all children to the right
+		size_t old_size = children.size();
+		children.resize( children.size() + 1 );
+		for ( size_t i = children.size() - 1; i >= 1; --i ) {
+			children[i] = children[i-1];
+		}
+
+		//Now add the new child to the begining of the list
+		children[0] = obj;
+	} else {
+		//This is some other type of object.  Just add it to the end of the list.
+		children.push_back( obj );
+	}
 }
 
 void NiNode::RemoveChild( Ref<NiAVObject> obj ) {
