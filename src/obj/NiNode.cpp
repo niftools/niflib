@@ -66,8 +66,9 @@ void NiNode::AddChild( Ref<NiAVObject> obj ) {
 	}
 	obj->SetParent( this );
 	//Sometimes NiTriBasedGeom with skins can be siblings of NiNodes that
-	//represent joints for that same skin.  This is not allowed, so we have
-	//to prevent it by always adding NiTriBasedGeom to the begining of the child list.
+	//represent joints for that same skin.  When this is the case, NiTriBasedGeom
+	//must com first, so we enforce that by always adding NiTriBasedGeom to the
+	//begining of the child list.
 	NiTriBasedGeomRef niGeom = DynamicCast<NiTriBasedGeom>(obj);
 	if ( niGeom != NULL ) {
 		//This is a NiTriBasedGeom, so shift all children to the right
