@@ -171,7 +171,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/FI&quot;pch.h&quot;"
 				Optimization="3"
 				AdditionalIncludeDirectories="$(ProjectDir)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;BUILDING_NIFLIB_DLL;USE_NIFLIB_DLL"
