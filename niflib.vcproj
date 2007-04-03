@@ -191,7 +191,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="..\bin\niflib.dll"
+				OutputFile="bin\niflib.dll"
 				ImportLibrary="lib/niflib_dll.lib"
 			/>
 			<Tool
