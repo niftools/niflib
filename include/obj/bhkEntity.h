@@ -29,7 +29,7 @@ public:
 	//Run-Time Type Information
 	NIFLIB_API static const Type & TypeConst();
 private:
-	NIFLIB_API static const Type TYPE;
+	static const Type TYPE;
 public:
 	NIFLIB_API virtual const Type & GetType() const;
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
