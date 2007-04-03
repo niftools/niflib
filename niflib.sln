@@ -13,8 +13,8 @@ Global
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Debug|Win32.Build.0 = Debug|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - DLL|Win32.ActiveCfg = Release - DLL|Win32
 		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release - DLL|Win32.Build.0 = Release - DLL|Win32
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.ActiveCfg = Release - PCH|Win32
-		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.Build.0 = Release - PCH|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.ActiveCfg = Release|Win32
+		{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
