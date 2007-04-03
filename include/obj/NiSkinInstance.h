@@ -32,7 +32,9 @@ public:
 	 * This constructor is called by NiTriBasedGeom when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
+#ifndef SWIG // for some reason SWIG cannot properly hide this function in NiSkinInstanceRef
 	NIFLIB_HIDDEN NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+#endif
 
 	NIFLIB_API ~NiSkinInstance();
 	//Run-Time Type Information
