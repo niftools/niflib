@@ -118,7 +118,7 @@ public:
    } CollisionType;
 
    NIFLIB_API CollisionType GetCollision();
-   NIFLIB_API void SetCollsion(CollisionType value);
+   NIFLIB_API void SetCollision(CollisionType value);
 
 
 protected:

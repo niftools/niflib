@@ -158,7 +158,7 @@ NiAVObject::CollisionType NiAVObject::GetCollision()
    return (NiAVObject::CollisionType)NIFLIB_GET_FLAG(flags, 1, 0x03);
 }
 
-void NiAVObject::SetCollsion(NiAVObject::CollisionType value)
+void NiAVObject::SetCollision(NiAVObject::CollisionType value)
 {
    flags = NIFLIB_MASK_FLAG(flags, value, 1, 0x03);
 }
