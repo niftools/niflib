@@ -24,9 +24,9 @@ EndianType DetectEndianType() {
 	short r = *(short *)test;
 
 	if ( r == 1 ) {
-		return NIF_LITTLE_ENDIAN;
+		return ENDIAN_LITTLE;
 	} else {
-		return NIF_BIG_ENDIAN;
+		return ENDIAN_BIG;
 	}		
 }
 
