@@ -81,13 +81,14 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	map<NiObjectRef,unsigned int> link_map;
 
 	//Write this object's data to the stream
-	this->Write( tmp, link_map, version, user_version );
+	NifInfo info( version, user_version );
+	this->Write( tmp, link_map, info );
 
 	//Dummy stack
 	list<unsigned int> link_stack;
 
 	//Read the data back from the stream into the clone
-	clone->Read( tmp, link_stack, version, user_version );
+	clone->Read( tmp, link_stack, info );
 
 	//We don't fix the links, causing the clone to be a copy of all
 	//data but have none of the linkage of the original.

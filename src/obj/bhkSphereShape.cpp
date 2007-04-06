@@ -11,20 +11,20 @@ bhkSphereShape::bhkSphereShape() BHK_SPHERE_SHAPE_CONSTRUCT {}
 
 bhkSphereShape::~bhkSphereShape() {}
 
-void bhkSphereShape::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );
+void bhkSphereShape::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalRead( in, link_stack, info );
 }
 
-void bhkSphereShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	InternalWrite( out, link_map, version, user_version );
+void bhkSphereShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	InternalWrite( out, link_map, info );
 }
 
 string bhkSphereShape::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void bhkSphereShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalFixLinks( objects, link_stack, version, user_version );
+void bhkSphereShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalFixLinks( objects, link_stack, info );
 }
 
 list<NiObjectRef> bhkSphereShape::GetRefs() const {

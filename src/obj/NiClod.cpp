@@ -11,20 +11,20 @@ NiClod::NiClod() NI_CLOD_CONSTRUCT {}
 
 NiClod::~NiClod() {}
 
-void NiClod::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );
+void NiClod::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalRead( in, link_stack, info );
 }
 
-void NiClod::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	InternalWrite( out, link_map, version, user_version );
+void NiClod::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	InternalWrite( out, link_map, info );
 }
 
 string NiClod::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiClod::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalFixLinks( objects, link_stack, version, user_version );
+void NiClod::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalFixLinks( objects, link_stack, info );
 }
 
 list<NiObjectRef> NiClod::GetRefs() const {

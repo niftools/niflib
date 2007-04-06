@@ -84,34 +84,6 @@ enum ExportOptions {
 	EXPORT_KF_MULTI = 4 /*!< multiple KF */
 };
 
-//--Structures--//
-
-struct NifInfo {
-	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(INFO_LITTLE_ENDIAN) {}
-	NifInfo( unsigned version, unsigned userVersion = 0, unsigned userVersion2 = 0) {
-		this->version = version;
-		this->userVersion = userVersion;
-		this->userVersion2 = userVersion2;
-		endian = INFO_LITTLE_ENDIAN;
-	}
-	//TODO: Implement endian support
-	enum EndianType {
-		INFO_BIG_ENDIAN = 0,
-		INFO_LITTLE_ENDIAN = 1
-	}; 
-	unsigned version;
-	unsigned userVersion;
-	unsigned  userVersion2;
-	/*! This is not yet supported. */
-	EndianType endian;
-	/*! This is only supported in Oblivion.  It contains the name of the person who created the NIF file. */
-	string creator;
-	/*! This is only supported in Oblivion.  It seems to contiain the type of script or program used to export the file. */
-	string exportInfo1;
-	/*! This is only supported in Oblivion.  It seems to contain the more specific script or options of the above. */
-	string exportInfo2;
-};
-
 //--Main Functions--//
 
 /*!
@@ -219,7 +191,7 @@ NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
  * 
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API void WriteNifTree( string const & file_name, NiObject * root, const NifInfo & info );
+NIFLIB_API void WriteNifTree( string const & file_name, NiObject * root, const NifInfo & info = NifInfo() );
 
 /*!
  * Writes a nif tree to an ostream starting at the given root block.
@@ -227,7 +199,7 @@ NIFLIB_API void WriteNifTree( string const & file_name, NiObject * root, const N
  * \param[in] root The root block to start from when writing out the NIF data.  All decedents of this block will be written to the stream in tree-descending order.
  * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & info );
+NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & info = NifInfo() );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root block of the Nif file tree.
@@ -237,7 +209,7 @@ NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & inf
  * \param[in] export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param[in] kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
  */
-NIFLIB_API void WriteFileGroup( string const & file_name, NiObject * root, const NifInfo & info, ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
+NIFLIB_API void WriteFileGroup( string const & file_name, NiObject * root, const NifInfo & info = NifInfo(), ExportOptions export_files = EXPORT_NIF, NifGame kf_type = KF_MW);
 
 /*!
  * Creates a clone of an entire tree of objects.

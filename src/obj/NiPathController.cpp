@@ -13,20 +13,20 @@ NiPathController::NiPathController() NI_PATH_CONTROLLER_CONSTRUCT {}
 
 NiPathController::~NiPathController() {}
 
-void NiPathController::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );
+void NiPathController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalRead( in, link_stack, info );
 }
 
-void NiPathController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	InternalWrite( out, link_map, version, user_version );
+void NiPathController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	InternalWrite( out, link_map, info );
 }
 
 string NiPathController::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiPathController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalFixLinks( objects, link_stack, version, user_version );
+void NiPathController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalFixLinks( objects, link_stack, info );
 }
 
 list<NiObjectRef> NiPathController::GetRefs() const {

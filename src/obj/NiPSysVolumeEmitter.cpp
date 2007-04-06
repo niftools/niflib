@@ -12,20 +12,20 @@ NiPSysVolumeEmitter::NiPSysVolumeEmitter() NI_P_SYS_VOLUME_EMITTER_CONSTRUCT {}
 
 NiPSysVolumeEmitter::~NiPSysVolumeEmitter() {}
 
-void NiPSysVolumeEmitter::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );
+void NiPSysVolumeEmitter::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalRead( in, link_stack, info );
 }
 
-void NiPSysVolumeEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	InternalWrite( out, link_map, version, user_version );
+void NiPSysVolumeEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	InternalWrite( out, link_map, info );
 }
 
 string NiPSysVolumeEmitter::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiPSysVolumeEmitter::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalFixLinks( objects, link_stack, version, user_version );
+void NiPSysVolumeEmitter::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalFixLinks( objects, link_stack, info );
 }
 
 list<NiObjectRef> NiPSysVolumeEmitter::GetRefs() const {

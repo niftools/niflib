@@ -12,20 +12,20 @@ NiUVController::NiUVController() NI_U_V_CONTROLLER_CONSTRUCT {}
 
 NiUVController::~NiUVController() {}
 
-void NiUVController::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalRead( in, link_stack, version, user_version );
+void NiUVController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalRead( in, link_stack, info );
 }
 
-void NiUVController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
-	InternalWrite( out, link_map, version, user_version );
+void NiUVController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	InternalWrite( out, link_map, info );
 }
 
 string NiUVController::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void NiUVController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
-	InternalFixLinks( objects, link_stack, version, user_version );
+void NiUVController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	InternalFixLinks( objects, link_stack, info );
 }
 
 list<NiObjectRef> NiUVController::GetRefs() const {

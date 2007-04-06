@@ -128,10 +128,10 @@ unsigned int GetNifVersion( string const & file_name ) {
 	//--Read Header String--//
 
 	HeaderString header;
-	unsigned version;
-	NifStream( header, in, version );
+	NifInfo info;
+	NifStream( header, in, info );
 
-	return version;
+	return info.version;
 }
 
 vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
@@ -148,23 +148,28 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	//--Read Header--//
 	Header header;
 
+	//Create a new NifInfo if one isn't given.
+	bool delete_info = false;
+	if ( info == NULL ) {
+		info = new NifInfo();
+		delete_info = true;
+	}
+
 	//Read header.
-	header.Read( in );
+	*info = header.Read( in );
 
 	//If NifInfo structure is provided, fill it with info from header
-	if ( info != NULL ) {
-		info->version = header.version;
-		info->userVersion = header.userVersion;
-		info->userVersion2 = header.userVersion2;
-		if ( header.endianType == 0) {
-			info->endian = NifInfo::INFO_BIG_ENDIAN;
-		} else {
-			info->endian = NifInfo::INFO_LITTLE_ENDIAN;
-		}
-		info->creator = header.creator.str;
-		info->exportInfo1 = header.exportInfo1.str;
-		info->exportInfo2 = header.exportInfo2.str;
+	info->version = header.version;
+	info->userVersion = header.userVersion;
+	info->userVersion2 = header.userVersion2;
+	if ( header.endianType == 0) {
+		info->endian = BIG_ENDIAN;
+	} else {
+		info->endian = LITTLE_ENDIAN;
 	}
+	info->creator = header.creator.str;
+	info->exportInfo1 = header.exportInfo1.str;
+	info->exportInfo2 = header.exportInfo2.str;
 
 #ifdef DEBUG_HEADER_FOOTER
 	//Print debug output for header
@@ -305,7 +310,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		}
 
 		//Read new object
-		new_obj->Read( in, link_stack, header.version, header.userVersion );
+		new_obj->Read( in, link_stack, *info );
 		objects[index] = new_obj;
 			
 #ifdef PRINT_OBJECT_CONTENTS
@@ -324,7 +329,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 	//--Read Footer--//
 	Footer footer;
-	footer.Read( in, link_stack, header.version, header.userVersion );
+	footer.Read( in, link_stack, *info );
 
 #ifdef DEBUG_HEADER_FOOTER
 	//Print footer debug output
@@ -356,10 +361,15 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		cout << it->first << ":  " << it->second << endl;
 #endif
 		//Fix links & other pre-processing
-		it->second->FixLinks( objects, link_stack, header.version, header.userVersion );
+		it->second->FixLinks( objects, link_stack, *info );
 
 		//Add object to list
 		obj_list.push_back(it->second);
+	}
+
+	//delete info if it was dynamically allocated
+	if ( delete_info ) {
+		delete info;
 	}
 
 	//Return completed block list
@@ -437,7 +447,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 			WriteUInt( 0, out );
 		}
 
-		objects[i]->Write( out, link_map, version, user_version );
+		objects[i]->Write( out, link_map, info );
 	}
 
 	//--Write Footer--//
@@ -461,7 +471,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
       footer.numRoots = roots.size();
       footer.roots.insert(footer.roots.end(), roots.begin(), roots.end());
    }
-	footer.Write( out, link_map, version, user_version );
+	footer.Write( out, link_map, info );
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root block of a file tree

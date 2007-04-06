@@ -19,14 +19,14 @@ namespace Niflib {
 
 //--ForceType--//
 
-void NifStream( ForceType & val, istream& in, unsigned int version ) {
+void NifStream( ForceType & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = ForceType(temp);
 }
 
-void NifStream( ForceType const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( ForceType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, ForceType const & val ) {
@@ -41,14 +41,14 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 
 //--HavokMaterial--//
 
-void NifStream( HavokMaterial & val, istream& in, unsigned int version ) {
+void NifStream( HavokMaterial & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = HavokMaterial(temp);
 }
 
-void NifStream( HavokMaterial const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( HavokMaterial const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, HavokMaterial const & val ) {
@@ -91,14 +91,14 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 
 //--CompareMode--//
 
-void NifStream( CompareMode & val, istream& in, unsigned int version ) {
+void NifStream( CompareMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = CompareMode(temp);
 }
 
-void NifStream( CompareMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( CompareMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, CompareMode const & val ) {
@@ -117,14 +117,14 @@ ostream & operator<<( ostream & out, CompareMode const & val ) {
 
 //--TexFilterMode--//
 
-void NifStream( TexFilterMode & val, istream& in, unsigned int version ) {
+void NifStream( TexFilterMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = TexFilterMode(temp);
 }
 
-void NifStream( TexFilterMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( TexFilterMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, TexFilterMode const & val ) {
@@ -142,14 +142,14 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 
 //--LightMode--//
 
-void NifStream( LightMode & val, istream& in, unsigned int version ) {
+void NifStream( LightMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = LightMode(temp);
 }
 
-void NifStream( LightMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( LightMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, LightMode const & val ) {
@@ -163,14 +163,14 @@ ostream & operator<<( ostream & out, LightMode const & val ) {
 
 //--MipMapFormat--//
 
-void NifStream( MipMapFormat & val, istream& in, unsigned int version ) {
+void NifStream( MipMapFormat & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = MipMapFormat(temp);
 }
 
-void NifStream( MipMapFormat const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( MipMapFormat const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, MipMapFormat const & val ) {
@@ -185,14 +185,14 @@ ostream & operator<<( ostream & out, MipMapFormat const & val ) {
 
 //--StencilAction--//
 
-void NifStream( StencilAction & val, istream& in, unsigned int version ) {
+void NifStream( StencilAction & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = StencilAction(temp);
 }
 
-void NifStream( StencilAction const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( StencilAction const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, StencilAction const & val ) {
@@ -210,14 +210,14 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 
 //--OblivionLayer--//
 
-void NifStream( OblivionLayer & val, istream& in, unsigned int version ) {
+void NifStream( OblivionLayer & val, istream& in, const NifInfo & info ) {
 	byte temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = OblivionLayer(temp);
 }
 
-void NifStream( OblivionLayer const & val, ostream& out, unsigned int version ) {
-	NifStream( (byte)(val), out, version );
+void NifStream( OblivionLayer const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, OblivionLayer const & val ) {
@@ -287,14 +287,14 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 
 //--FaceDrawMode--//
 
-void NifStream( FaceDrawMode & val, istream& in, unsigned int version ) {
+void NifStream( FaceDrawMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = FaceDrawMode(temp);
 }
 
-void NifStream( FaceDrawMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( FaceDrawMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
@@ -310,14 +310,14 @@ ostream & operator<<( ostream & out, FaceDrawMode const & val ) {
 
 //--AlphaFormat--//
 
-void NifStream( AlphaFormat & val, istream& in, unsigned int version ) {
+void NifStream( AlphaFormat & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = AlphaFormat(temp);
 }
 
-void NifStream( AlphaFormat const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( AlphaFormat const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, AlphaFormat const & val ) {
@@ -333,14 +333,14 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 
 //--KeyType--//
 
-void NifStream( KeyType & val, istream& in, unsigned int version ) {
+void NifStream( KeyType & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = KeyType(temp);
 }
 
-void NifStream( KeyType const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( KeyType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, KeyType const & val ) {
@@ -357,14 +357,14 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 
 //--VertMode--//
 
-void NifStream( VertMode & val, istream& in, unsigned int version ) {
+void NifStream( VertMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = VertMode(temp);
 }
 
-void NifStream( VertMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( VertMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, VertMode const & val ) {
@@ -379,14 +379,14 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 
 //--ApplyMode--//
 
-void NifStream( ApplyMode & val, istream& in, unsigned int version ) {
+void NifStream( ApplyMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = ApplyMode(temp);
 }
 
-void NifStream( ApplyMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( ApplyMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, ApplyMode const & val ) {
@@ -403,14 +403,14 @@ ostream & operator<<( ostream & out, ApplyMode const & val ) {
 
 //--MotionSystem--//
 
-void NifStream( MotionSystem & val, istream& in, unsigned int version ) {
+void NifStream( MotionSystem & val, istream& in, const NifInfo & info ) {
 	byte temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = MotionSystem(temp);
 }
 
-void NifStream( MotionSystem const & val, ostream& out, unsigned int version ) {
-	NifStream( (byte)(val), out, version );
+void NifStream( MotionSystem const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, MotionSystem const & val ) {
@@ -424,14 +424,14 @@ ostream & operator<<( ostream & out, MotionSystem const & val ) {
 
 //--BillboardMode--//
 
-void NifStream( BillboardMode & val, istream& in, unsigned int version ) {
+void NifStream( BillboardMode & val, istream& in, const NifInfo & info ) {
 	unsigned short temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = BillboardMode(temp);
 }
 
-void NifStream( BillboardMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned short)(val), out, version );
+void NifStream( BillboardMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, BillboardMode const & val ) {
@@ -448,14 +448,14 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 
 //--TexType--//
 
-void NifStream( TexType & val, istream& in, unsigned int version ) {
+void NifStream( TexType & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = TexType(temp);
 }
 
-void NifStream( TexType const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( TexType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, TexType const & val ) {
@@ -475,14 +475,14 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 
 //--PixelLayout--//
 
-void NifStream( PixelLayout & val, istream& in, unsigned int version ) {
+void NifStream( PixelLayout & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = PixelLayout(temp);
 }
 
-void NifStream( PixelLayout const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( PixelLayout const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, PixelLayout const & val ) {
@@ -500,14 +500,14 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 
 //--TexClampMode--//
 
-void NifStream( TexClampMode & val, istream& in, unsigned int version ) {
+void NifStream( TexClampMode & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = TexClampMode(temp);
 }
 
-void NifStream( TexClampMode const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( TexClampMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, TexClampMode const & val ) {
@@ -523,14 +523,14 @@ ostream & operator<<( ostream & out, TexClampMode const & val ) {
 
 //--MotionQuality--//
 
-void NifStream( MotionQuality & val, istream& in, unsigned int version ) {
+void NifStream( MotionQuality & val, istream& in, const NifInfo & info ) {
 	byte temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = MotionQuality(temp);
 }
 
-void NifStream( MotionQuality const & val, ostream& out, unsigned int version ) {
-	NifStream( (byte)(val), out, version );
+void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, MotionQuality const & val ) {
@@ -551,14 +551,14 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 
 //--PixelFormat--//
 
-void NifStream( PixelFormat & val, istream& in, unsigned int version ) {
+void NifStream( PixelFormat & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = PixelFormat(temp);
 }
 
-void NifStream( PixelFormat const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( PixelFormat const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, PixelFormat const & val ) {
@@ -573,14 +573,14 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 
 //--CycleType--//
 
-void NifStream( CycleType & val, istream& in, unsigned int version ) {
+void NifStream( CycleType & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = CycleType(temp);
 }
 
-void NifStream( CycleType const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( CycleType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, CycleType const & val ) {
@@ -595,14 +595,14 @@ ostream & operator<<( ostream & out, CycleType const & val ) {
 
 //--FieldType--//
 
-void NifStream( FieldType & val, istream& in, unsigned int version ) {
+void NifStream( FieldType & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
-	NifStream( temp, in, version );
+	NifStream( temp, in, info );
 	val = FieldType(temp);
 }
 
-void NifStream( FieldType const & val, ostream& out, unsigned int version ) {
-	NifStream( (unsigned int)(val), out, version );
+void NifStream( FieldType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
 }
 
 ostream & operator<<( ostream & out, FieldType const & val ) {

@@ -63,9 +63,9 @@ public:
 	NIFLIB_API bool IsDerivedType( const NiObject * objct ) const;
 
 	//Streaming Functions
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {}
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {}
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {}
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {}
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {}
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {}
 
 	//Reference Counting
 	NIFLIB_API void AddRef() const; //Should not be called directly
@@ -140,10 +140,10 @@ private:
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
 private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const;
+	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
 	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version );
+	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	list<NiObjectRef> InternalGetRefs() const;
 };
 

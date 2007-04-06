@@ -37,99 +37,120 @@ Header & Header::operator=( const Header & src ) {
 
 //Destructor
 Header::~Header() {};
-void Header::Read( istream& in ) {
-	NifStream( headerString, in, version );
-	if ( version <= 0x03010000 ) {
+NifInfo Header::Read( istream& in ) {
+	//Declare NifInfo structure
+	NifInfo info;
+
+	NifStream( headerString, in, info );
+	if ( info.version <= 0x03010000 ) {
 		for (unsigned int i2 = 0; i2 < 3; i2++) {
-			NifStream( copyright[i2], in, version );
+			NifStream( copyright[i2], in, info );
 		};
 	};
-	if ( version >= 0x0303000D ) {
-		NifStream( version, in, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( version, in, info );
 	};
-	if ( version >= 0x14000004 ) {
-		NifStream( endianType, in, version );
+	if ( info.version >= 0x14000004 ) {
+		NifStream( endianType, in, info );
 	};
-	if ( version >= 0x0A010000 ) {
-		NifStream( userVersion, in, version );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( userVersion, in, info );
 	};
-	if ( version >= 0x0303000D ) {
-		NifStream( numBlocks, in, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( numBlocks, in, info );
 	};
-	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-		NifStream( userVersion, in, version );
+	if ( ( info.version >= 0x0A000102 ) && ( info.version <= 0x0A000102 ) ) {
+		NifStream( userVersion, in, info );
 	};
-	if ( version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( userVersion2, in, version );
+			NifStream( userVersion2, in, info );
 		};
 	};
-	if ( version >= 0x0A000102 ) {
+	if ( info.version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( creator, in, version );
-			NifStream( exportInfo1, in, version );
-			NifStream( exportInfo2, in, version );
+			NifStream( creator, in, info );
+			NifStream( exportInfo1, in, info );
+			NifStream( exportInfo2, in, info );
 		};
 	};
-	if ( version >= 0x0A000100 ) {
-		NifStream( numBlockTypes, in, version );
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( numBlockTypes, in, info );
 		blockTypes.resize(numBlockTypes);
 		for (unsigned int i2 = 0; i2 < blockTypes.size(); i2++) {
-			NifStream( blockTypes[i2], in, version );
+			NifStream( blockTypes[i2], in, info );
 		};
 		blockTypeIndex.resize(numBlocks);
 		for (unsigned int i2 = 0; i2 < blockTypeIndex.size(); i2++) {
-			NifStream( blockTypeIndex[i2], in, version );
+			NifStream( blockTypeIndex[i2], in, info );
 		};
-		NifStream( unknownInt2, in, version );
+		NifStream( unknownInt2, in, info );
 	};
+
+	//Copy info.version to local version var.
+	version = info.version;
+
+	//Fill out and return NifInfo structure.
+	info.userVersion = userVersion;
+	if ( endianType == 0) {
+		info->endian = BIG_ENDIAN;
+	} else {
+		info->endian = LITTLE_ENDIAN;
+	}
+	info.endian = EndianType(endianType);
+	info.creator = creator.str;
+	info.exportInfo1 = exportInfo1;
+	info.exportInfo2 = exportInfo2;
+
+	return info;
+
 }
 
-void Header::Write( ostream& out ) const {
+void Header::Write( ostream& out, const NifInfo & info ) const {
 	numBlockTypes = (unsigned short)(blockTypes.size());
 	numBlocks = (unsigned int)(blockTypeIndex.size());
-	NifStream( headerString, out, version );
-	if ( version <= 0x03010000 ) {
+	NifStream( headerString, out, info );
+	if ( info.version <= 0x03010000 ) {
 		for (unsigned int i2 = 0; i2 < 3; i2++) {
-			NifStream( copyright[i2], out, version );
+			NifStream( copyright[i2], out, info );
 		};
 	};
-	if ( version >= 0x0303000D ) {
-		NifStream( version, out, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( version, out, info );
 	};
-	if ( version >= 0x14000004 ) {
-		NifStream( endianType, out, version );
+	if ( info.version >= 0x14000004 ) {
+		NifStream( endianType, out, info );
 	};
-	if ( version >= 0x0A010000 ) {
-		NifStream( userVersion, out, version );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( userVersion, out, info );
 	};
-	if ( version >= 0x0303000D ) {
-		NifStream( numBlocks, out, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( numBlocks, out, info );
 	};
-	if ( ( version >= 0x0A000102 ) && ( version <= 0x0A000102 ) ) {
-		NifStream( userVersion, out, version );
+	if ( ( info.version >= 0x0A000102 ) && ( info.version <= 0x0A000102 ) ) {
+		NifStream( userVersion, out, info );
 	};
-	if ( version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A010000 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( userVersion2, out, version );
+			NifStream( userVersion2, out, info );
 		};
 	};
-	if ( version >= 0x0A000102 ) {
+	if ( info.version >= 0x0A000102 ) {
 		if ( (userVersion != 0) ) {
-			NifStream( creator, out, version );
-			NifStream( exportInfo1, out, version );
-			NifStream( exportInfo2, out, version );
+			NifStream( creator, out, info );
+			NifStream( exportInfo1, out, info );
+			NifStream( exportInfo2, out, info );
 		};
 	};
-	if ( version >= 0x0A000100 ) {
-		NifStream( numBlockTypes, out, version );
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( numBlockTypes, out, info );
 		for (unsigned int i2 = 0; i2 < blockTypes.size(); i2++) {
-			NifStream( blockTypes[i2], out, version );
+			NifStream( blockTypes[i2], out, info );
 		};
 		for (unsigned int i2 = 0; i2 < blockTypeIndex.size(); i2++) {
-			NifStream( blockTypeIndex[i2], out, version );
+			NifStream( blockTypeIndex[i2], out, info );
 		};
-		NifStream( unknownInt2, out, version );
+		NifStream( unknownInt2, out, info );
 	};
 }
 

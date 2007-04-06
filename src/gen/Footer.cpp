@@ -27,27 +27,27 @@ Footer & Footer::operator=( const Footer & src ) {
 //Destructor
 Footer::~Footer() {};
 
-void Footer::Read( istream& in, list<unsigned int> & link_stack, unsigned int version, unsigned int user_version ) {
+void Footer::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	unsigned int block_num;
-	if ( version >= 0x0303000D ) {
-		NifStream( numRoots, in, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( numRoots, in, info );
 		roots.resize(numRoots);
 		for (unsigned int i2 = 0; i2 < roots.size(); i2++) {
-			NifStream( block_num, in, version );
+			NifStream( block_num, in, info );
 			link_stack.push_back( block_num );
 		};
 	};
 }
 
-void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, unsigned int version, unsigned int user_version ) const {
+void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	numRoots = (unsigned int)(roots.size());
-	if ( version >= 0x0303000D ) {
-		NifStream( numRoots, out, version );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( numRoots, out, info );
 		for (unsigned int i2 = 0; i2 < roots.size(); i2++) {
 			if ( roots[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(roots[i2]) )->second, out, version );
+				NifStream( link_map.find( StaticCast<NiObject>(roots[i2]) )->second, out, info );
 			else
-				NifStream( 0xffffffff, out, version );
+				NifStream( 0xffffffff, out, info );
 		};
 	};
 }

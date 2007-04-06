@@ -6,6 +6,8 @@ All rights reserved.  Please see niflib.h for licence. */
 
 #include <string>
 #include "gen/enums.h"
+#include "nif_versions.h"
+
 namespace Niflib {
 using namespace std;
 
@@ -25,6 +27,39 @@ struct LineString {
 #ifndef byte
 typedef unsigned char	byte;
 #endif
+
+/*! Specifies the low-level nature of the storage process */
+enum EndianType {
+	BIG_ENDIAN = 0, /*!< Big Endian storage, such as that used by PowerPC processors */
+	LITTLE_ENDIAN = 1 /*!< Little Endian storage, such as that used by x86 processors */
+};
+
+//--Structures--//
+
+/*! 
+ * Used to specify optional ways the NIF file is to be written or retrieve information about
+ * the way an existing file was stored. 
+ */
+struct NifInfo {
+	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(LITTLE_ENDIAN) {}
+	NifInfo( unsigned version, unsigned userVersion = 0, unsigned userVersion2 = 0) {
+		this->version = version;
+		this->userVersion = userVersion;
+		this->userVersion2 = userVersion2;
+		endian = LITTLE_ENDIAN;
+	}
+	unsigned version;
+	unsigned userVersion;
+	unsigned userVersion2;
+	/*! Specifies which low-level number storage format to use. Should match the processor type for the target system. */
+	EndianType endian;
+	/*! This is only supported in Oblivion.  It contains the name of the person who created the NIF file. */
+	string creator;
+	/*! This is only supported in Oblivion.  It seems to contiain the type of script or program used to export the file. */
+	string exportInfo1;
+	/*! This is only supported in Oblivion.  It seems to contain the more specific script or options of the above. */
+	string exportInfo2;
+};
 
 //TODO:  This is temporary to make it compile.  Should eventually be adjusted to display 1's and 0's insted of as an int.
 typedef unsigned short Flags;
