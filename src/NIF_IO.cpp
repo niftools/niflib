@@ -8,11 +8,13 @@ namespace Niflib {
 //--Endian Support Functions--//
 EndianType DetectEndianType();
 int SwapEndian( int in );
+unsigned int SwapEndian( unsigned int in );
 short SwapEndian( short in );
+unsigned short SwapEndian( unsigned short in );
 float SwapEndian( float in );
 
 //Constant that stores the detected endian storage type of the current system
-const EndianType system_endian = DetectEndianType();
+const EndianType sys_endian = DetectEndianType();
 
 //--Endian Function Bodies--//
 
@@ -44,8 +46,38 @@ int SwapEndian( int in ) {
 	return out;
 }
 
+unsigned int SwapEndian( unsigned int in ) {
+	unsigned int out = 0;
+	char * temp_in;
+	char * temp_out;
+
+	temp_in = (char*)&in;
+	temp_out = (char*)&out;
+
+	temp_out[0] = temp_in[3];
+	temp_out[1] = temp_in[2];
+	temp_out[2] = temp_in[1];
+	temp_out[3] = temp_in[0];
+
+	return out;
+}
+
 short SwapEndian( short in ) {
 	short out = 0;
+	char * temp_in;
+	char * temp_out;
+
+	temp_in = (char*)&in;
+	temp_out = (char*)&out;
+
+	temp_out[0] = temp_in[1];
+	temp_out[1] = temp_in[0];
+
+	return out;
+}
+
+unsigned short SwapEndian( unsigned short in ) {
+	unsigned short out = 0;
 	char * temp_in;
 	char * temp_out;
 
@@ -199,36 +231,116 @@ void WriteBool( bool val, ostream& out, unsigned int version ) {
 //--Basic Types--//
 
 //int
-void NifStream( int & val, istream& in, const NifInfo & info ) { val = ReadInt( in ); };
-void NifStream( int const & val, ostream& out, const NifInfo & info ) { WriteInt( val, out ); }
+void NifStream( int & val, istream& in, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		val = ReadInt( in );
+	} else {
+		val = SwapEndian( ReadInt( in ) );
+	}
+}
+
+void NifStream( int const & val, ostream& out, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		WriteInt( val, out );
+	} else {
+		WriteInt( SwapEndian(val), out );
+	}
+}
 
 //unsigned int
-void NifStream( unsigned int & val, istream& in, const NifInfo & info ) { val = ReadUInt( in ); };
-void NifStream( unsigned int const & val, ostream& out, const NifInfo & info ) { WriteUInt( val, out ); }
+void NifStream( unsigned int & val, istream& in, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		val = ReadUInt( in );
+	} else {
+		val = SwapEndian( ReadUInt( in ) );
+	}
+};
+
+void NifStream( unsigned int const & val, ostream& out, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		WriteUInt( val, out );
+	} else {
+		WriteUInt( SwapEndian(val), out );
+	}
+}
 
 //unsigned short
-void NifStream( unsigned short & val, istream& in, const NifInfo & info ) { val = ReadUShort( in ); };
-void NifStream( unsigned short const & val, ostream& out, const NifInfo & info ) { WriteUShort( val, out ); }
+void NifStream( unsigned short & val, istream& in, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		val = ReadUShort( in );
+	} else {
+		val = SwapEndian( ReadUShort( in ) );
+	}
+}
+
+void NifStream( unsigned short const & val, ostream& out, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		WriteUShort( val, out );
+	} else {
+		WriteUShort( SwapEndian(val), out );
+	}
+}
 
 //short
-void NifStream( short & val, istream& in, const NifInfo & info ) { val = ReadShort( in ); };
-void NifStream( short const & val, ostream& out, const NifInfo & info ) { WriteShort( val, out ); }
+void NifStream( short & val, istream& in, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		val = ReadShort( in );
+	} else {
+		val = SwapEndian( ReadShort( in ) );
+	}
+}
+
+void NifStream( short const & val, ostream& out, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		WriteShort( val, out );
+	} else {
+		WriteShort( SwapEndian(val), out );
+	}
+}
 
 //byte
-void NifStream( byte & val, istream& in, const NifInfo & info ) { val = ReadByte( in ); };
-void NifStream( byte const & val, ostream& out, const NifInfo & info ) { WriteByte( val, out ); }
+void NifStream( byte & val, istream& in, const NifInfo & info ) {
+	val = ReadByte( in );
+}
+
+void NifStream( byte const & val, ostream& out, const NifInfo & info ) {
+	WriteByte( val, out );
+}
 
 //bool
-void NifStream( bool & val, istream& in, const NifInfo & info ) { val = ReadBool( in, info.version ); };
-void NifStream( bool const & val, ostream& out, const NifInfo & info ) { WriteBool( val, out, info.version ); }
+void NifStream( bool & val, istream& in, const NifInfo & info ) {
+	val = ReadBool( in, info.version );
+}
+
+void NifStream( bool const & val, ostream& out, const NifInfo & info ) {
+	WriteBool( val, out, info.version );
+}
 
 //float
-void NifStream( float & val, istream& in, const NifInfo & info ) { val = ReadFloat( in ); };
-void NifStream( float const & val, ostream& out, const NifInfo & info ) { WriteFloat( val, out ); }
+void NifStream( float & val, istream& in, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		val = ReadFloat( in );
+	} else {
+		val = SwapEndian( ReadFloat( in ) );
+	}
+}
+
+void NifStream( float const & val, ostream& out, const NifInfo & info ) {
+	if ( info.endian == sys_endian ) {
+		WriteFloat( val, out );
+	} else {
+		WriteFloat( SwapEndian(val), out );
+	}
+}
 
 //string
-void NifStream( string & val, istream& in, const NifInfo & info ) { val = ReadString( in ); };
-void NifStream( string const & val, ostream& out, const NifInfo & info ) { WriteString( val, out ); }
+void NifStream( string & val, istream& in, const NifInfo & info ) {
+	val = ReadString( in );
+}
+
+void NifStream( string const & val, ostream& out, const NifInfo & info ) {
+	WriteString( val, out );
+}
 
 //--Structs--//
 

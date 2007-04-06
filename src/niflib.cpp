@@ -427,7 +427,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	}
 
 	//Write header to file
-	header.Write( out );
+	header.Write( out, info );
 
 #ifdef PRINT_OBJECT_NAMES
 	cout << endl << "Writing Objects:";
