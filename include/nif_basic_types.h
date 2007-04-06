@@ -30,8 +30,8 @@ typedef unsigned char	byte;
 
 /*! Specifies the low-level nature of the storage process */
 enum EndianType {
-	BIG_ENDIAN = 0, /*!< Big Endian storage, such as that used by PowerPC processors */
-	LITTLE_ENDIAN = 1 /*!< Little Endian storage, such as that used by x86 processors */
+	NIF_BIG_ENDIAN = 0, /*!< Big Endian storage, such as that used by PowerPC processors */
+	NIF_LITTLE_ENDIAN = 1 /*!< Little Endian storage, such as that used by x86 processors */
 };
 
 //--Structures--//
@@ -41,12 +41,12 @@ enum EndianType {
  * the way an existing file was stored. 
  */
 struct NifInfo {
-	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(LITTLE_ENDIAN) {}
+	NifInfo() : version(VER_4_0_0_2), userVersion(0), userVersion2(0), endian(NIF_LITTLE_ENDIAN) {}
 	NifInfo( unsigned version, unsigned userVersion = 0, unsigned userVersion2 = 0) {
 		this->version = version;
 		this->userVersion = userVersion;
 		this->userVersion2 = userVersion2;
-		endian = LITTLE_ENDIAN;
+		endian = NIF_LITTLE_ENDIAN;
 	}
 	unsigned version;
 	unsigned userVersion;

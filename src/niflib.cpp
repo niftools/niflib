@@ -162,11 +162,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	info->version = header.version;
 	info->userVersion = header.userVersion;
 	info->userVersion2 = header.userVersion2;
-	if ( header.endianType == 0) {
-		info->endian = BIG_ENDIAN;
-	} else {
-		info->endian = LITTLE_ENDIAN;
-	}
+	info->endian = EndianType(header.endianType);
 	info->creator = header.creator.str;
 	info->exportInfo1 = header.exportInfo1.str;
 	info->exportInfo2 = header.exportInfo2.str;

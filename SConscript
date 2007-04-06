@@ -11,7 +11,7 @@ else:
 
 # generate code
 
-os.system('cd ' + os.path.join('..', 'docsys') + ' && python nifxml_niflib.py -p ' + os.path.join('..' , 'niflib'))
+os.system('cd ' + os.path.join('..', '..', 'docsys') + ' && python nifxml_niflib.py -p ' + os.path.join('..' , 'niflib'))
 
 # list source files
 

@@ -92,11 +92,6 @@ NifInfo Header::Read( istream& in ) {
 
 	//Fill out and return NifInfo structure.
 	info.userVersion = userVersion;
-	if ( endianType == 0) {
-		info.endian = BIG_ENDIAN;
-	} else {
-		info.endian = LITTLE_ENDIAN;
-	}
 	info.endian = EndianType(endianType);
 	info.creator = creator.str;
 	info.exportInfo1 = exportInfo1.str;
