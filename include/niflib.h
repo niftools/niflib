@@ -241,6 +241,22 @@ NIFLIB_API void MergeNifTrees( NiNode * target, NiControllerSequence * right, un
  */
 NIFLIB_API void SendNifTreeToBindPos( NiNode * root );
 
+/*!
+ * Returns the common ancestor of several NiAVObjects, or NULL if there is no common
+ * ancestor.  None of the objects given can be the common ansestor, the search starts
+ * with their parents.
+ * \param[in] objects The list of NiAVObjects to try to find the commen ancestor of.
+ * \return The common anscestor if one is found, otherwise a NULL reference.
+ */
+NIFLIB_API Ref<NiNode> FindCommonAncestor( const vector< Ref<NiAVObject> > & objects );
+
+/*!
+ * Returns a list of all the ancestors of a given NiAVObject
+ * \param leaf[in] The NiAVObject to list the ancestors of.
+ * \return A list containing all the ancestors of the given NiAVObject
+ */
+NIFLIB_API list< Ref<NiNode> > ListAncestors( NiAVObject * leaf );
+
 //// Returns list of all blocks in the tree rooted by root block.
 //list<NiObjectRef> GetNifTree( NiObjectRef const & root_block );
 

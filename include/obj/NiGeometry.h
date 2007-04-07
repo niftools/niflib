@@ -101,7 +101,6 @@ public:
 	NIFLIB_API bool IsSkin();
 
 protected:
-	list< Ref<NiNode> > ListAncestors( const Ref<NiNode> & leaf ) const;
 	NI_GEOMETRY_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

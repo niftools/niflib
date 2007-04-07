@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiNode.h"
 #include "../../include/obj/NiSkinData.h"
+#include "../../include/niflib.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -87,83 +88,16 @@ void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 
 	//--Find a suitable skeleton root--//
 
-	//create lists of nodes that have an influence and this TriBasedGeom
-	//as decendents
-	int num_lists = int(bone_nodes.size()) + 1;
-	vector< list<NiNodeRef> > ancestors( num_lists );
+	//The skeleton root will be the common ancestor of all bones which influence this skin,
+	//and the skin object itself.
 
-	if ( GetParent() == NULL ) {
-		throw runtime_error("Attempted to bind skin on a shape with no parent.");
+	vector<NiAVObjectRef> objects;
+	objects.push_back( NiAVObjectRef(this) );
+	for ( size_t i = 0; i < bone_nodes.size(); ++i ) {
+		objects.push_back( StaticCast<NiAVObject>(bone_nodes[i]) );
 	}
 
-	ancestors[bone_nodes.size()] = ListAncestors( GetParent() );
-	
-	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
-		if ( bone_nodes[i] == NULL ) {
-			throw runtime_error("Attempted to bind skin to a NULL bone reference.");
-		}
-		NiNodeRef bonePar = bone_nodes[i]->GetParent();
-		if ( bonePar == NULL ) {
-			throw runtime_error("Attempted to bind skin to a bone with no parent.  A skeleton root cannot be a bone so all bones must have at least one parent.");
-		}
-		ancestors[i] = ListAncestors( bonePar );
-	}
-
-	if ( ancestors[0].size() == 0 ) {
-		throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-	}
-
-	NiNodeRef skeleton_root = ancestors[0].front();
-   //Make sure bone and shapes are part of the same tree
-   for ( int i = 1; i < num_lists; ++i ) {
-	   if ( ancestors[i].size() == 0 ) {
-		   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-	   }
-	   if ( ancestors[i].front() != skeleton_root ) {
-		   throw runtime_error("Shape and all skin influence bones must be part of the same tree before skin bind can take place.");
-	   }
-   }
-
-   //Since the first items have been shown to match, pop all the stacks
-   for ( int i = 0; i < num_lists; ++i ) {
-	   ancestors[i].pop_front();
-   }
-
-   //Now search for the common ancestor
-   while(true) {
-	   bool all_same = true;
-	   if ( ancestors[0].size() == 0 ) {
-		   //This list is over, so the last top is the common ancestor
-		   //break out of the loop
-		   break;
-	   }
-	   NiNodeRef first_ancestor = ancestors[0].front();
-	   for ( int i = 1; i < num_lists; ++i ) {
-		   if ( ancestors[i].size() == 0 ) {
-			   //This list is over, so the last top is the common ancestor
-			   //break out of the loop
-			   all_same = false;
-			   break;
-		   }
-		   if ( ancestors[i].front() != first_ancestor ) {
-			   all_same = false;
-		   }
-	   }
-
-	   if ( all_same == true ) {
-		   //They're all the same, so set the top, pop all the stacks
-		   //and look again
-		
-		   skeleton_root = ancestors[0].front();
-		   for ( int i = 0; i < num_lists; ++i ) {
-			   ancestors[i].pop_front();
-		   }
-	   } else {
-		   //One is different, so the last top is the common ancestor.
-		   //break out of the loop
-		   break;
-	   }
-   }
+	NiNodeRef skeleton_root = FindCommonAncestor( objects );
 
 	if ( skeleton_root == NULL ) {
 		throw runtime_error("Failed to find suitable skeleton root.");
@@ -191,7 +125,7 @@ void NiGeometry::ApplySkinOffset() {
 	
 	//Get ancestors
 	list<NiNodeRef> ancestors;
-	ancestors = ListAncestors( GetParent() );
+	ancestors = ListAncestors( this );
 
 	//Propogate transforms on ancestors below skeleton root
 	bool below_root = false;
@@ -238,26 +172,6 @@ bool NiGeometry::IsSkin() {
 	} else {
 		return false;
 	}
-}
-
-list< Ref<NiNode> > NiGeometry::ListAncestors( const Ref<NiNode> & leaf ) const {
-	if ( leaf == NULL ) {
-		throw runtime_error("ListAncestors called with a NULL leaf NiNode Ref");
-	}
-	
-	list<NiNodeRef> ancestors;
-
-	NiNodeRef niNode = leaf;
-	while (true) {
-		ancestors.push_front(niNode);
-		if ( niNode->GetParent() == NULL ) {
-			break;
-		} else {
-			niNode = niNode->GetParent();
-		}
-	}
-
-	return ancestors;
 }
 
 void NiGeometry::UnbindSkin() {

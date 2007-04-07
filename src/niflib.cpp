@@ -1163,4 +1163,97 @@ void SendNifTreeToBindPos( NiNode * root ) {
 	}
 }
 
+list< Ref<NiNode> > ListAncestors( NiAVObject * leaf ) {
+	if ( leaf == NULL ) {
+		throw runtime_error("ListAncestors called with a NULL leaf NiNode Ref");
+	}
+
+	list<NiNodeRef> ancestors;
+
+	NiNodeRef current = leaf->GetParent();
+
+	while ( current != NULL ) {
+		ancestors.push_front(current);
+
+		current = current->GetParent();
+	}
+
+	return ancestors;
+}
+
+Ref<NiNode> FindCommonAncestor( const vector< Ref<NiAVObject> > & objects ) {
+
+	//create lists of nodes that have an influence and this TriBasedGeom
+	//as decendents
+	size_t obj_count = objects.size();
+	vector< list<NiNodeRef> > ancestors( obj_count );
+	
+	//Add Ancestors of each object to its corresponding list
+	for ( size_t i = 0; i < obj_count; ++i ) {
+		ancestors[i] = ListAncestors( objects[i] );
+	}
+
+	if ( ancestors[0].size() == 0 ) {
+		//All objects must have a parent for there to be a common ancestor, so return NULL
+		return NULL;
+	}
+
+	NiNodeRef root = ancestors[0].front();
+	//Make sure bone and shapes are part of the same tree
+	for ( size_t i = 1; i < obj_count; ++i ) {
+		if ( ancestors[i].size() == 0 ) {
+			//All objects must have a parent for there to be a common ancestor, so return NULL
+			return NULL;
+		}
+		if ( ancestors[i].front() != root ) {
+			//These objects are not part of the same tree, so return NULL
+			return NULL;
+		}
+	}
+
+	//Since the first items have been shown to match, pop all the stacks
+	for ( size_t i = 0; i < obj_count; ++i ) {
+		ancestors[i].pop_front();
+	}
+
+	//Now search for the common ancestor
+	while(true) {
+		bool all_same = true;
+		if ( ancestors[0].size() == 0 ) {
+			//This list is over, so the last top is the common ancestor
+			//break out of the loop
+			break;
+		}
+		NiNodeRef first_ancestor = ancestors[0].front();
+		for ( size_t i = 1; i < obj_count; ++i ) {
+			if ( ancestors[i].size() == 0 ) {
+				//This list is over, so the last top is the common ancestor
+				//break out of the loop
+				all_same = false;
+				break;
+			}
+			if ( ancestors[i].front() != first_ancestor ) {
+				all_same = false;
+			}
+		}
+
+		if ( all_same == true ) {
+			//They're all the same, so set the top, pop all the stacks
+			//and look again
+
+			root = ancestors[0].front();
+			for ( size_t i = 0; i < obj_count; ++i ) {
+				ancestors[i].pop_front();
+			}
+		} else {
+			//One is different, so the last top is the common ancestor.
+			//break out of the loop
+			break;
+		}
+	}
+
+	//Return result
+	return root;
+}
+
 } // namespace NifLib
