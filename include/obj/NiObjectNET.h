@@ -53,6 +53,7 @@ public:
 	NIFLIB_API void ClearExtraData();
 	NIFLIB_API list< Ref<NiExtraData> > GetExtraData() const;
 
+	NIFLIB_API bool IsAnimated();
 	NIFLIB_API void AddController( NiTimeController * obj );
 	NIFLIB_API void RemoveController( NiTimeController * obj );
 	NIFLIB_API void ClearControllers();

@@ -135,7 +135,11 @@ list< Ref<NiExtraData> > NiObjectNET::GetExtraData() const {
 	return extras;
 }
 
-	void NiObjectNET::AddController( NiTimeController * obj ) {
+bool NiObjectNET::IsAnimated() {
+	return ( controller != NULL );
+}
+
+void NiObjectNET::AddController( NiTimeController * obj ) {
 	//Insert at begining of list
 	obj->SetTarget( this );
 	obj->SetNextController( controller );
