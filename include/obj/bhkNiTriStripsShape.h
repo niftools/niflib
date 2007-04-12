@@ -40,13 +40,29 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Scale. Usually (1.0, 1.0, 1.0).
+	 * Gets the scale. Usually (1.0, 1.0, 1.0).
+	 * \return The scale.
 	 */
 	NIFLIB_API Vector3 GetScale() const;
+
+	/*!
+	 * Sets the scale. Usually (1.0, 1.0, 1.0).
+	 * \param[in] n The new scale.
+	 */
 	NIFLIB_API void SetScale( const Vector3 & n );
 
+	/*!
+	 * Sets the number of NiTriStripsData objects referenced by this shape.
+	 * \param[in] n The new number of NiTriStripsData objects.
+	 */
 	NIFLIB_API void	SetNumStripsData(int i);
-	NIFLIB_API void	SetStripsData(int i, Ref<NiTriStripsData> &);
+
+	/*!
+	 * Sets the NiTriStripsData object referenced by this shape at the specified index.
+	 * \param[in] index The index at which the given NiTriStripsData object will be referenced.  Should be lower than the value set with bhkNiTriStripsShape::SetNumStripsData.
+	 * \param[in] strips The new NiTriStripsData object to be referenced by this shape at the specified index.
+	 */
+	NIFLIB_API void	SetStripsData( int index, NiTriStripsData * strips );
 
 protected:
 	BHK_NI_TRI_STRIPS_SHAPE_MEMBERS

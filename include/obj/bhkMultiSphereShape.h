@@ -36,10 +36,17 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * This array holds the spheres which make up the multi sphere shape.
+	 * Gets the spheres which make up the multi sphere shape.
+	 * \return The spheres which make up the multi sphere shape.
 	 */
-	NIFLIB_API vector<Sphere > GetSpheres() const;
-	NIFLIB_API void SetSpheres( const vector<Sphere >& value );
+	NIFLIB_API vector<Sphere> GetSpheres() const;
+
+	/*!
+	 * Sets the spheres which make up the multi sphere shape.
+	 * \param[in] value The new spheres which will make up the multi sphere shape.
+	 */
+
+	NIFLIB_API void SetSpheres( const vector<Sphere> & value );
 
 protected:
 	BHK_MULTI_SPHERE_SHAPE_MEMBERS

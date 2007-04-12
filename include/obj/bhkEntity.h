@@ -39,73 +39,27 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The body's shape.
+	 * Retrieves the shape object that this body is using.
+	 * \param[in] value The shape object being used by this body.
 	 */
 	NIFLIB_API Ref<bhkShape > GetShape() const;
-	NIFLIB_API void SetShape( Ref<bhkShape > value );
 
 	/*!
-	 * Sets mesh colour in CS.
-    * 0: Unidentified (white)
-	 * 1: Static (red)
-    * 2: AnimStatic (magenta)
-    * 3: Transparent (light pink)
-    * 4: Clutter (light blue)
-	 * 5: Weapon (orange)
-    * 6: Projectile (light orange)
-	 * 7: Spell (cyan)
-    * 8: Biped (green) Seems to apply to all creatures/NPCs
-    * 9: Trees (light brown)
-    * 10: Props (magenta)
-    * 11: Water (cyan)
-    * 12: Trigger (light grey)
-    * 13: Terrain (light yellow)
-    * 14: Trap (light grey)
-    * 15: NonCollidable (white)
-	 * 16: CloudTrap (greenish grey)
-    * 17: Ground (none)
-	 * 18: Portal (green)
-    * 19: Stairs (white)
-    * 20: CharController (yellow)
-    * 21: AvoidBox (dark yellow)
-	 * 22: ? (white)
-    * 23: ? (white)
-    * 24: CameraPick (white)
-    * 25: ItemPick (white)
-    * 26: LineOfSight (white)
-    * 27: PathPick (white)
-    * 28: CustomPick1 (white)
-    * 29: CustomPick2 (white)
-    * 30: SpellExplosion (white)
-    * 31: DroppingPick (white)
-	 * 32: Other (white)
-    * 33: Head
-    * 34: Body
-	 * 35: Spine1
-    * 36: Spine2
-    * 37: LUpperArm
-	 * 38: LForeArm
-    * 39: LHand
-    * 40: LThigh
-	 * 41: LCalf
-    * 42: LFoot
-    * 43: RUpperArm
-	 * 44: RForeArm
-    * 45: RHand
-    * 46: RThigh
-    * 47: RCalf
-    * 48: RFoot
-    * 49: Tail
-    * 50: SideWeapon
-    * 51: Shield
-    * 52: Quiver
-	 * 53: BackWeapon
-    * 54: BackWeapon (?)
-    * 55: PonyTail
-	 * 56: Wing
-    * 57+: Null
+	 * Sets the shape object that this body will use.
+	 * \param[in] value The new shape object for this body to use.
+	 */
+	NIFLIB_API void SetShape( bhkShape * value );
+
+	/*!
+	 * Gets the current Oblivion layer, which seems to determine the mesh color displayed by the Oblivion Construction Set.
+	 * \return The current Oblivion Layer.
 	 */
 	NIFLIB_API OblivionLayer GetLayer() const;
+
+	/*!
+	 * Sets the Oblivion layer, which seems to determine the mesh color displayed by the Oblivion Construction Set.
+	 * \param[in] value The new Oblivoin layer to use.
+	 */
 	NIFLIB_API void SetLayer( OblivionLayer value );
 
 protected:

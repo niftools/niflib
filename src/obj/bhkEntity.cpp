@@ -40,7 +40,7 @@ Ref<bhkShape > bhkEntity::GetShape() const {
 	return shape;
 }
 
-void bhkEntity::SetShape( Ref<bhkShape > value ) {
+void bhkEntity::SetShape( bhkShape * value ) {
 	shape = value;
 }
 

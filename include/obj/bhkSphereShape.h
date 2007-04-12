@@ -34,9 +34,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * This denotes the radius of the sphere.
+	 * Retrieves the radius of the sphere.
+	 * \return The radius of the sphere.
 	 */
 	NIFLIB_API float GetRadius() const;
+
+	/*!
+	 * Sets a new value for the radius of the sphere.
+	 * \param[in] value The new radius of the sphere.
+	 */
 	NIFLIB_API void SetRadius( float value );
 
 protected:

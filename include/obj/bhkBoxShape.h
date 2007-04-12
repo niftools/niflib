@@ -34,10 +34,16 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Looks like this could be the box size.
+	 * Gets the dimentions of the box.
+	 * \return The dimentions of the bounding box.
 	 */
 	NIFLIB_API Vector3 GetDimensions() const;
-	NIFLIB_API void SetDimensions( const Vector3& value );
+
+	/*!
+	 * Sets the dimentions of the box.
+	 * \param The new dimentions for the bounding box.
+	 */
+	NIFLIB_API void SetDimensions( const Vector3 & value );
 
 protected:
 	BHK_BOX_SHAPE_MEMBERS

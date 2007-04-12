@@ -49,9 +49,9 @@ void bhkNiTriStripsShape::SetNumStripsData(int n)
 	//TODO:  Understand why these are gone and what to do about it
 }
 
-void bhkNiTriStripsShape::SetStripsData(int i, Ref<NiTriStripsData> &strips)
+void bhkNiTriStripsShape::SetStripsData( int index, NiTriStripsData * strips )
 {
-	stripsData[i] = strips;
+	stripsData[index] = strips;
 }
 
 Vector3 bhkNiTriStripsShape::GetScale() const {
