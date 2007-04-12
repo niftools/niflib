@@ -45,11 +45,6 @@ void NiObject::SubtractRef() const {
 	}
 }
 
-void NiObject::RemoveCrossRef( NiObject * block_to_remove ) {}
-void NiObject::IncCrossRef( NiObject * block ) {}
-void NiObject::DecCrossRef( NiObject* block ) {}
-void NiObject::ReassignCrossRefs( const map<string,NiObjectRef> & name_map ) {}
-
 unsigned int NiObject::NumObjectsInMemory() {
 	return objectsInMemory;
 }

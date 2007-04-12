@@ -20,57 +20,55 @@ namespace Niflib {
 
 using namespace std;
 
-
-
-/**
- * NiObject - Base Object class from which all other objects derive
- */
-
 class NiObject;
 typedef Ref<NiObject> NiObjectRef;
 
+/**
+ * NiObject - Base NIF object from which all other NIF objects derive
+ */
 class NiObject {
 public:
+	/*! Constructor */
 	NIFLIB_API NiObject();
+
+	/*! Destructor */
 	NIFLIB_API virtual ~NiObject();
-	//Run-Time Type Information
-	NIFLIB_API static const Type & TypeConst();
-private:	
-	static const Type TYPE;
-public:
 
 	/*!
-	 * Used to determine an object's type.  These type strings are the same as the class names of the blocks in the <a href = "http://www.niftools.org/docsys/">NIF File Format Browser</a>.
-	 * \return A string containing the type of the object.  Ex. NiNode, NiTriShapeData, NiParticleSystemController, etc.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * blk_ref my_block = ReadNifTree("test_in.nif");
-	 * cout << my_block->GetType();
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * my_block = ReadNifTree("test_in.nif")
-	 * print block.GetType()
-	 * \endcode
+	 * Fetches Run Time Type Information Constant which can be used in type comparision operations.
+	 * \return The type constant that represents this type of object.  This is a static function and is not dependent on any particular instance of the object.
+	 */
+	NIFLIB_API static const Type & TypeConst();
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
 	 */
 	NIFLIB_API virtual const Type & GetType() const;
 
+	/*!
+	 * Used to determine whether this object is exactly the same type as the given type constant.
+	 * \return True if this object is exactly the same type as that represented by the given type constant.  False otherwise.
+	 */
 	NIFLIB_API bool IsSameType( const Type & compare_to ) const;
+
+	/*!
+	 * Used to determine whether this object is exactly the same type as another object.
+	 * \return True if this object is exactly the same type as the given object.  False otherwise.
+	 */
 	NIFLIB_API bool IsSameType( const NiObject * object ) const;
-	NIFLIB_API bool IsDerivedType (const Type & compare_to ) const;
+
+	/*!
+	 * Used to determine whether this object is a derived type of the given type constant.  For example, all NIF objects are derived types of NiObject, and a NiNode is also a derived type of NiObjectNET and NiAVObject.
+	 * \return True if this object is derived from the type represented by the given type constant.  False otherwise.
+	 */
+	NIFLIB_API bool IsDerivedType( const Type & compare_to ) const;
+
+	/*!
+	 * Used to determine whether this object is a derived type of another object.  For example, all NIF objects are derived types of NiObject, and a NiNode is also a derived type of NiObjectNET and NiAVObject.
+	 * \return True if this object is derived from the type of of the given object.  False otherwise.
+	 */
 	NIFLIB_API bool IsDerivedType( const NiObject * objct ) const;
-
-	//Streaming Functions
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {}
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {}
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {}
-
-	//Reference Counting
-	NIFLIB_API void AddRef() const; //Should not be called directly
-	NIFLIB_API void SubtractRef() const; //Should not be called directly
-	NIFLIB_API unsigned int GetNumRefs();
 
 	/*! Returns A new object that contains all the same data that this object does,
 	 * but occupies a different part of memory.  The data stored in a NIF file varies
@@ -105,41 +103,54 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 
 	/*!
-	 * Formats a human readable string that includes the type of the object
-	 * \return A string in the form:  address(type)
+	 * Formats a human readable string that includes the type of the object, and its name, if any
+	 * \return A string in the form:  address(type), or adress(type) {name}
 	 */
 	NIFLIB_API virtual string GetIDString() const;
-
-	/*!
-	 * Used to retrieve all blocks that the current block is linked to through <i>all</i> attributes.
-	 * \return A list of references to blocks that this attribute links its owner block to.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * blk_ref my_block = ReadNifTree("test_in.nif");
-	 * list<blk_ref> attr_list = my_block->GetRefs();
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * my_block = ReadNifTree("test_in.nif")
-	 * attr_list = my_block.GetRefs()
-	 * \endcode
-	 */
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 	
-	NIFLIB_API virtual void RemoveCrossRef( NiObject * block_to_remove );
 
-	NIFLIB_API void IncCrossRef( NiObject * block );
-	NIFLIB_API void DecCrossRef( NiObject* block );
-	NIFLIB_API virtual void ReassignCrossRefs( const map<string,NiObjectRef> & name_map );
 	
 	NIFLIB_API static unsigned int NumObjectsInMemory();
+
+	//Reference Counting
+
+	/*!
+	 * Increments the reference count on this object.  This should be taken care of automatically as long as you use Ref<T> smart pointers.  However, if you use bare pointers you may call this function yourself, though it is not recomended.
+	 */
+	NIFLIB_API void AddRef() const;
+
+	/*!
+	 * Decriments the reference count on this object.  This should be taken care of automatically as long as you use Ref<T> smart pointers.  However, if you use bare pointers you may call this function yourself, though it is not recomended.
+	 */
+	NIFLIB_API void SubtractRef() const;
+
+	/*!
+	 * Returns the number of references that currently exist for this object.
+	 * \return The number of references to this object that are in use.
+	 */
+	NIFLIB_API unsigned int GetNumRefs();
+
+	//--NIFLIB_HIDDEN functions.  For internal use only--//
+
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	//Streaming Functions
+
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {}
+	
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {}
+
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {}
+
 private:
+	static const Type TYPE;
 	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
-private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
 	string InternalAsString( bool verbose ) const;
