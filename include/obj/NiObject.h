@@ -109,7 +109,10 @@ public:
 	NIFLIB_API virtual string GetIDString() const;
 	
 
-	
+	/*!
+	 * Returns the total number of NIF objects of any kind that have been allocated by Niflib for any reason.  This is for debugging or informational purpouses.  Mostly usful for tracking down memory leaks.
+	 * \return The total number of NIF objects that have been allocated.
+	 */
 	NIFLIB_API static unsigned int NumObjectsInMemory();
 
 	//Reference Counting
