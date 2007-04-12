@@ -128,7 +128,7 @@ string ComplexShape::GetName() const {
 	return name;
 }
 
-vector<ComplexShape::WeightedVertex> ComplexShape::GetVertices() const {
+vector<WeightedVertex> ComplexShape::GetVertices() const {
 	return vertices;
 }
 
@@ -140,11 +140,11 @@ vector<Vector3> ComplexShape::GetNormals() const {
 	return normals;
 }
 
-vector<ComplexShape::TexCoordSet> ComplexShape::GetTexCoordSets() const {
+vector<TexCoordSet> ComplexShape::GetTexCoordSets() const {
 	return texCoordSets;
 }
 
-vector< ComplexShape::ComplexFace > ComplexShape::GetFaces() const {
+vector<ComplexFace> ComplexShape::GetFaces() const {
 	return faces;
 }
 
@@ -174,7 +174,7 @@ struct MergeLookUp {
 	map<unsigned int, unsigned int> uvIndices; //TexCoordSet Index, TexCoord Index
 };
 
-void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
+void ComplexShape::Merge( NiAVObject * root ) {
 
 	if ( root == NULL ) {
 		throw runtime_error("Called ComplexShape::Merge with a null root reference.");
@@ -583,7 +583,7 @@ void ComplexShape::Merge( const Ref<NiAVObject> & root ) {
 //	}
 //}
 
-Ref<NiAVObject> ComplexShape::Split( Ref<NiNode> & parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space ) const {
+Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
