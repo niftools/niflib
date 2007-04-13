@@ -40,16 +40,25 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Links to the node parent.
+	 * Returns the NiNode that this collision object is connected to, if any.
+	 * \return The NiNode that this collision object is connected to, or NULL if it is not connected to any nodes.
 	 */
 	NIFLIB_API Ref<NiAVObject> GetParent() const;
-	NIFLIB_API void SetParent( NiAVObject * value );
 
 	/*!
-	 * Links to the collision object data
+	 * Gets the rigid body that this collision object uses, if any.
+	 * \return The rigid body that this object references, or a NULL reference if it does not reference any.
 	 */
-	NIFLIB_API Ref<NiObject > GetBody() const;
-	NIFLIB_API void SetBody( Ref<NiObject > value );
+	NIFLIB_API Ref<NiObject> GetBody() const;
+
+	/*!
+	 * Sets the new rigid body that this collision object uses.
+	 * \param[in] value The new rigid body for this collision object to use, or NULL to clear the current reference.
+	 */
+	NIFLIB_API void SetBody( NiObject * value );
+
+	/*! NIFLIB_HIDDEN function.  For internal use only */
+	NIFLIB_HIDDEN void SetParent( NiAVObject * value );
 
 protected:
 	NI_COLLISION_OBJECT_MEMBERS

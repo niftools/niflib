@@ -33,9 +33,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The flags.
+	 * Gets the BSX Flag data.
+	 * \return The flag data.
 	 */
 	NIFLIB_API unsigned int GetFlags() const;
+
+	/*!
+	 * Sets the BSX Flag data.
+	 * \param[in] value The new flag data.
+	 */
 	NIFLIB_API void SetFlags( unsigned int value );
 
 protected:

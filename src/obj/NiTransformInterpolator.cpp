@@ -60,11 +60,11 @@ void NiTransformInterpolator::SetScale( float value ) {
 	scale = value;
 }
 
-Ref<NiTransformData > NiTransformInterpolator::GetData() const {
+Ref<NiTransformData> NiTransformInterpolator::GetData() const {
 	return data;
 }
 
-void NiTransformInterpolator::SetData( Ref<NiTransformData > value ) {
+void NiTransformInterpolator::SetData( NiTransformData * value ) {
 	data = value;
 }
 

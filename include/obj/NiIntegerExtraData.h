@@ -33,7 +33,16 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Retrieves the integer value stored in this object.
+	 * \return The integer value stored in this object.
+	 */
 	NIFLIB_API unsigned int GetData() const;
+
+	/*!
+	 * Sets the integer value stored in this object.
+	 * \param[in] n The new integer value to store in this object.
+	 */
 	NIFLIB_API void SetData( unsigned int n );
 
 protected:

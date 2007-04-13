@@ -23,6 +23,11 @@ NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
 NiAVObject::~NiAVObject() {
 	//Clear Properties
 	ClearProperties();
+
+	//Clear Collision Object Link
+	if ( collisionObject != NULL ) {
+		collisionObject->SetParent(NULL);
+	}
 }
 
 void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
@@ -172,7 +177,7 @@ Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
    return collisionData;
 }
 
-void NiAVObject::SetCollisionData( Ref<NiCollisionData > value ) {
+void NiAVObject::SetCollisionData( NiCollisionData * value ) {
    collisionData = value;
 }
 
@@ -181,8 +186,18 @@ Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
   return collisionObject;
 }
 
-void NiAVObject::SetCollisionObject( Ref<NiCollisionObject > value ) {
-   collisionObject = value;
+void NiAVObject::SetCollisionObject( NiCollisionObject * value ) {
+	if ( value->GetParent() != NULL ) {
+		throw runtime_error( "You have attempted to add a collision object to a NiNode which is already attached to another NiNode." );
+	}
+	value->SetParent( this );
+
+	if ( collisionObject !=NULL ) {
+		//Remove unlink previous collision object from this node
+		collisionObject->SetParent(NULL);
+	}
+
+	collisionObject = value;
 }
 
 void NiAVObject::SetHidden(bool value)

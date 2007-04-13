@@ -101,16 +101,16 @@ public:
 	 * In Oblivion this links the havok objects.
 	 */
 	NIFLIB_API Ref<NiCollisionObject > GetCollisionObject() const;
-	NIFLIB_API void SetCollisionObject( Ref<NiCollisionObject> value );
+	NIFLIB_API void SetCollisionObject( NiCollisionObject * value );
 
-   /*!
-   * Bounding box: refers to NiCollisionData
-   */
-   NIFLIB_API Ref<NiCollisionData > GetCollisionData() const;
-   NIFLIB_API void SetCollisionData( Ref<NiCollisionData> value );
+	/*!
+	 * Bounding box: refers to NiCollisionData
+	 */
+	NIFLIB_API Ref<NiCollisionData > GetCollisionData() const;
+	NIFLIB_API void SetCollisionData( NiCollisionData * value );
 
-   NIFLIB_API bool GetHidden();
-   NIFLIB_API void SetHidden(bool value);
+	NIFLIB_API bool GetHidden();
+	NIFLIB_API void SetHidden(bool value);
 
    typedef enum CollisionType
    {

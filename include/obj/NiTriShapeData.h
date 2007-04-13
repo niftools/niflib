@@ -35,15 +35,20 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 public:
 
-	NIFLIB_API NiTriShapeData(const vector<Triangle>& verts);
+	/*!
+	 * A constructor which can be used to create a NiTriShapeData and initialize it with vertices.
+	 * \param[in] verts The verticies to initialize the NiTriShapeData with.
+	 */
+	NIFLIB_API NiTriShapeData( const vector<Triangle>& verts );
 
 	//--Match Detection--//
 	
-	//Re-implemented only to casue match detection data to be cleared
+	//Reimplemented only to casue match detection data to be cleared
 	//when vertices are updated.
 	NIFLIB_API virtual void SetVertices( const vector<Vector3> & in );
 
-	/*! This function generates match detection data based on the current
+	/*!
+	 * This function generates match detection data based on the current
 	 * vertex list.  The function of this data is unknown and appears to be
 	 * optional.  The data contains a list of all the vertices that have
 	 * identical positions are stored in the file.  If the vertex data is
@@ -52,7 +57,8 @@ public:
 	 */
 	NIFLIB_API void DoMatchDetection();
 
-	/*! Used to determine whether current match detection data has been previously
+	/*!
+	 * Used to determine whether current match detection data has been previously
 	 * generated.
 	 * \return true if there is current match data, false otherwise.
 	 * \sa NiTriShapeData::DoMatchDetection
@@ -61,7 +67,8 @@ public:
 
 	//--Getters--//
 
-	/*! Returns the triangle faces that make up this mesh.
+	/*!
+	 * Returns the triangle faces that make up this mesh.
 	 * \return A vector containing the triangle faces that make up this mesh.
 	 * \sa ITriShapeData::SetTriangles
 	 */

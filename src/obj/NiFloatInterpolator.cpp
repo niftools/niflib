@@ -48,7 +48,7 @@ Ref<NiFloatData > NiFloatInterpolator::GetData() const {
 	return data;
 }
 
-void NiFloatInterpolator::SetData( Ref<NiFloatData > value ) {
+void NiFloatInterpolator::SetData( NiFloatData * value ) {
 	data = value;
 }
 

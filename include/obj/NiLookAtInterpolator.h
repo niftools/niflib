@@ -41,27 +41,51 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Refers to a Node to focus on.
+	 * Retrieves the node that this interpolator is focused on.
+	 * \return The node that this interpolator is focused on.
 	 */
 	NIFLIB_API Ref<NiNode > GetLookAt() const;
+
+	/*!
+	 * Sets the node that this interpolator will focus on.
+	 * \return The new node that the interpolator will focus on, or NULL to clear the current one.
+	 */
 	NIFLIB_API void SetLookAt( Ref<NiNode > value );
 
 	/*!
-	 * Translate.
+	 * Gets the translation of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \return The translation of the interpolator.
 	 */
 	NIFLIB_API Vector3 GetTranslation() const;
+
+	/*!
+	 * Sets the translation of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \param[in] value The new translation for the interpolator.
+	 */
 	NIFLIB_API void SetTranslation( Vector3 value );
 
 	/*!
-	 * Rotation.
+	 * Gets the rotation of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \return The rotation of the interpolator.
 	 */
 	NIFLIB_API Quaternion GetRotation() const;
+
+	/*!
+	 * Sets the rotation of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \param[in] value The new rotation for the interpolator.
+	 */
 	NIFLIB_API void SetRotation( Quaternion value );
 
 	/*!
-	 * Scale.
+	 * Gets the scale of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \return The scale of the interpolator.
 	 */
 	NIFLIB_API float GetScale() const;
+
+	/*!
+	 * Sets the scale of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
+	 * \param[in] value The new scale for the interpolator.
+	 */
 	NIFLIB_API void SetScale( float value );
 
 protected:

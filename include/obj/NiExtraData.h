@@ -35,28 +35,16 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	/*! Returns a reference to the next extra data used in early version NIF
-	 * files which store extra data in a linked list.  This function should
-	 * only be called by NiObjectNET as it is not always meaningful.
-	 * \return A reference to the next extra data in early version NIF files.  May not always be meaningful.
-	 */
-	NIFLIB_HIDDEN NiExtraDataRef GetNextExtraData() const;
-
-	/*! Sets the next extra data in early version NIF files which store extra
-	 * data in a linked list.  This function should only be called by
-	 * NiObjectNET.
-	 * \param obj A reference to the object to set as the one after this in the chain.
-	 */
-	NIFLIB_HIDDEN void SetNextExtraData( const NiExtraDataRef & obj );
-
-	/*! Retrieve the name of this NiExtraData object.  Names are only stored
+	/*!
+	 * Retrieve the name of this NiExtraData object.  Names are only stored
 	 * in later version NIF files so this may not be necessary depending on
 	 * the target version.
 	 * \return The name of this NiExtraData object.
 	 */
 	NIFLIB_API string GetName();
 
-	/*! Sets the name of this NiExtraData object.  Will only be written to later
+	/*!
+	 * Sets the name of this NiExtraData object.  Will only be written to later
 	 * version NIF files.
 	 * \param new_name The new name for this NiExtraData object.
 	 */
@@ -67,6 +55,24 @@ public:
 	 * \return A string in the form:  address(type) {name}
 	 */
 	NIFLIB_API virtual string GetIDString() const;
+
+	/*! 
+	 * NIFLIB HIDDEN function.  For internal use only.
+	 * Returns a reference to the next extra data used in early version NIF
+	 * files which store extra data in a linked list.  This function should
+	 * only be called by NiObjectNET as it is not always meaningful.
+	 * \return A reference to the next extra data in early version NIF files.  May not always be meaningful.
+	 */
+	NIFLIB_HIDDEN NiExtraDataRef GetNextExtraData() const;
+
+	/*!
+	 * NIFLIB HIDDEN function.  For internal use only.
+	 * Sets the next extra data in early version NIF files which store extra
+	 * data in a linked list.  This function should only be called by
+	 * NiObjectNET.
+	 * \param obj A reference to the object to set as the one after this in the chain.
+	 */
+	NIFLIB_HIDDEN void SetNextExtraData( NiExtraData * obj );
 
 protected:
 	NI_EXTRA_DATA_MEMBERS

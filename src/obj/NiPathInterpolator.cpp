@@ -41,7 +41,7 @@ Ref<NiPosData > NiPathInterpolator::GetPosData() const {
 	return posData;
 }
 
-void NiPathInterpolator::SetPosData( Ref<NiPosData > value ) {
+void NiPathInterpolator::SetPosData( NiPosData * value ) {
 	posData = value;
 }
 
@@ -49,7 +49,7 @@ Ref<NiFloatData > NiPathInterpolator::GetFloatData() const {
 	return floatData;
 }
 
-void NiPathInterpolator::SetFloatData( Ref<NiFloatData > value ) {
+void NiPathInterpolator::SetFloatData( NiFloatData * value ) {
 	floatData = value;
 }
 

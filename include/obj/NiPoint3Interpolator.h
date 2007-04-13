@@ -39,16 +39,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Value when posed?  Value at time 0?
+	 * Gets the 3D point value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \return The 3D point value stored in this object.
 	 */
 	NIFLIB_API Vector3 GetPoint3Value() const;
+
+	/*!
+	 * Sets the 3D point value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \param[in] value The new 3D point value to store in this object.
+	 */
 	NIFLIB_API void SetPoint3Value( Vector3 value );
 
 	/*!
-	 * Reference to NiPosData.
+	 * Gets the NiPosData object that this interpolator links to, if any.
+	 * \return The NiPosData object that this interpolator links to, or NULL if one is not linked.
 	 */
-	NIFLIB_API Ref<NiPosData > GetData() const;
-	NIFLIB_API void SetData( Ref<NiPosData > value );
+	NIFLIB_API Ref<NiPosData> GetData() const;
+
+	/*!
+	 * Sets the NiPosData object that this interpolator links to, if any.
+	 * \return The NiPosData object that this interpolator should now link to, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetData( NiPosData * value );
 
 protected:
 	NI_POINT3_INTERPOLATOR_MEMBERS

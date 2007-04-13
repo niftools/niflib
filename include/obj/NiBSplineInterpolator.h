@@ -37,28 +37,52 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Animation start time.
+	 * Retrieves the animation start time.
+	 * \return The animation start time
 	 */
 	NIFLIB_API float GetStartTime() const;
+
+	/*!
+	 * Sets the animation start time.
+	 * \param[in] value The new animation start time
+	 */
 	NIFLIB_API void SetStartTime( float value );
 
 	/*!
-	 * Animation stop time.
+	 * Retrieves the animation stop time.
+	 * \return The animation stop time
 	 */
 	NIFLIB_API float GetStopTime() const;
+
+	/*!
+	 * Sets the animation stop time.
+	 * \param[in] value The new animation stop time
+	 */
 	NIFLIB_API void SetStopTime( float value );
 
 	/*!
-	 * Refers to NiBSplineData.
+	 * Gets the NiBSplineData used by this interpolator.
+	 * \return the NiBSplineData used by this interpolator.
 	 */
 	NIFLIB_API Ref<NiBSplineData > GetSplineData() const;
-	NIFLIB_API void SetSplineData( Ref<NiBSplineData > value );
 
 	/*!
-	 * Refers to NiBSPlineBasisData.
+	 * Sets the NiBSplineData used by this interpolator.
+	 * \param[in] value The NiBSplineData used by this interpolator.
+	 */
+	NIFLIB_API void SetSplineData( NiBSplineData * value );
+
+	/*!
+	 * Gets the NiBSplineBasisData used by this interpolator.
+	 * \return the NiBSplineBasisData used by this interpolator.
 	 */
 	NIFLIB_API Ref<NiBSplineBasisData > GetBasisData() const;
-	NIFLIB_API void SetBasisData( Ref<NiBSplineBasisData > value );
+
+	/*!
+	 * Sets the SetBasisData used by this interpolator.
+	 * \param[in] value The SetBasisData used by this interpolator.
+	 */
+	NIFLIB_API void SetBasisData( NiBSplineBasisData * value );
 
 protected:
 

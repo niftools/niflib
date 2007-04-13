@@ -40,16 +40,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Links to NiPosData.
+	 * Gets the NiPosData object that this interpolator links to, if any.
+	 * \return The NiPosData object that this interpolator links to, or NULL if one is not linked.
 	 */
-	NIFLIB_API Ref<NiPosData > GetPosData() const;
-	NIFLIB_API void SetPosData( Ref<NiPosData > value );
+	NIFLIB_API Ref<NiPosData> GetPosData() const;
 
 	/*!
-	 * Links to NiFloatData.
+	 * Sets the NiPosData object that this interpolator links to, if any.
+	 * \return The NiPosData object that this interpolator should now link to, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetPosData( NiPosData * value );
+
+	/*!
+	 * Gets the NiFloatData object that this interpolator links to, if any.
+	 * \return The NiFloatData object that this interpolator links to, or NULL if one is not linked.
 	 */
 	NIFLIB_API Ref<NiFloatData > GetFloatData() const;
-	NIFLIB_API void SetFloatData( Ref<NiFloatData > value );
+
+	/*!
+	 * Sets the NiFloatData object that this interpolator links to, if any.
+	 * \return The NiFloatData object that this interpolator should now link to, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetFloatData( NiFloatData * value );
 
 protected:
 	NI_PATH_INTERPOLATOR_MEMBERS

@@ -34,9 +34,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The interpolated point?
+	 * Gets the 3D point value stored in this object.  Perhaps this is the current interpolated value.
+	 * \return The 3D point value stored in this object.
 	 */
 	NIFLIB_API Vector3 GetPointValue() const;
+
+	/*!
+	 * Sets the 3D point value stored in this object.  Perhaps this is the current interpolated value.
+	 * \param[in] value The new 3D point value to store in this object.
+	 */
 	NIFLIB_API void SetPointValue( Vector3 value );
 
 protected:

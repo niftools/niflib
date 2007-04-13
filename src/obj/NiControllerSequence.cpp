@@ -56,13 +56,13 @@ void NiControllerSequence::SetParent(NiControllerManager * parent) {
 }
 
 
-void NiControllerSequence::SetTextKey( const Ref<NiTextKeyExtraData> & txt_key ) {
+void NiControllerSequence::SetTextKey( NiTextKeyExtraData * txt_key ) {
 	//Set new name
 	textKeysName = txt_key->GetName();
 	textKeys = txt_key;
 }
 
-void NiControllerSequence::AddController( const Ref<NiTimeController> & obj ) {
+void NiControllerSequence::AddController( NiTimeController * obj ) {
 	//Make sure the link isn't null
 	if ( obj == NULL ) {
 		throw runtime_error("Attempted to add a null controller to NiControllerSequence block.");
@@ -90,7 +90,7 @@ void NiControllerSequence::AddController( const Ref<NiTimeController> & obj ) {
 	controlledBlocks.push_back( cl );
 }
 
-void NiControllerSequence::AddInterpolator( const Ref<NiSingleInterpolatorController> & obj, byte priority ) {
+void NiControllerSequence::AddInterpolator( NiSingleInterpolatorController * obj, byte priority ) {
 	//Make sure the link isn't null
 	if ( obj == NULL ) {
 		throw runtime_error("Attempted to add a null controller to NiControllerSequence block.");

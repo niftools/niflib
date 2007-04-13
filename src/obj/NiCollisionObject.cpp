@@ -49,7 +49,7 @@ Ref<NiObject > NiCollisionObject::GetBody() const {
 	return body;
 }
 
-void NiCollisionObject::SetBody( Ref<NiObject > value ) {
+void NiCollisionObject::SetBody( NiObject * value ) {
 	body = value;
 }
 

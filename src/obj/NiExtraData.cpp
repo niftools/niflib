@@ -54,7 +54,7 @@ NiExtraDataRef NiExtraData::GetNextExtraData() const {
 	return nextExtraData;
 }
 
-void NiExtraData::SetNextExtraData( const NiExtraDataRef & obj ) {
+void NiExtraData::SetNextExtraData( NiExtraData * obj ) {
 	nextExtraData = obj;
 }
 

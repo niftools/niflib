@@ -35,53 +35,63 @@ public:
 
 	/*!
 	 * Get the center of the bounding sphere?
+	 * \return The center of the bounding sphere?
 	 */
 	NIFLIB_API Vector3 GetBoundCenter() const;
 
 	/*!
 	 * Set the center of the bounding sphere?
+	 * \param[in] bound_center The new center of the bounding sphere?
 	 */
 	NIFLIB_API void SetBoundCenter( const Vector3 & bound_center );
 
 	/*!
 	 * Get the radius of the bounding sphere?
+	 * \return The radius of the bounding sphere?
 	 */
 	NIFLIB_API float GetBoundRadius() const;
 
 	/*!
 	 * Set the radius of the bounding sphere?
+	 * \param[in] value The new radius of the bounding sphere?
 	 */
 	NIFLIB_API void SetBoundRadius( float value );
 
 	/*!
 	 * Get the center of the bounding sphere in world space?
+	 * \return The center of the bounding sphere in world space?
 	 */
 	NIFLIB_API Vector3 GetWorldCenter() const;
 
 	/*!
 	 * Set the center of the bounding sphere in world space?
+	 * \param[in] value The new center of the bounding sphere in world space?
 	 */
 	NIFLIB_API void SetWorldCenter( const Vector3 & value );
 
 	/*!
 	 * Get the radius of the bounding sphere in world space?
+	 * \return The radius of the bounding sphere in world space?
 	 */
 	NIFLIB_API float GetWorldRadius() const;
 
 	/*!
 	 * Set the radius of the bounding sphere in world space?
+	 * \param[in] value The new radius of the bounding sphere in world space?
 	 */
 	NIFLIB_API void SetWorldRadius( float value );
 
 	/*!
 	 * Get the LOD levels based on proportion of screen size?
+	 * \return The LOD levels based on proportion of screen size?
 	 */
 	NIFLIB_API vector<float > GetProportionLevels() const;
 
 	/*!
 	 * Set the LOD levels based on proportion of screen size?
+	 * \param[in] value The LOD levels based on proportion of screen size?
 	 */
-	NIFLIB_API void SetProportionLevels( const vector<float >& value );
+	NIFLIB_API void SetProportionLevels( const vector<float> & value );
 
 protected:
 	NI_SCREEN_L_O_D_DATA_MEMBERS

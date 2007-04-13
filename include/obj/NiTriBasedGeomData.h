@@ -38,15 +38,15 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-
-
-	/*! Returns the triangle faces that make up this mesh.
+	/*!
+	 * Returns the triangle faces that make up this mesh.
 	 * \return A vector containing the triangle faces that make up this mesh.
 	 * \sa SetTriangles
 	 */
-	NIFLIB_API virtual vector<Triangle> GetTriangles() const { return vector<Triangle>(); }  //TODO:  Make this pure virtual?
+	NIFLIB_API virtual vector<Triangle> GetTriangles() const;
 
-	/*! Replaces the triangle face data in this mesh with new data.
+	/*!
+	 * Replaces the triangle face data in this mesh with new data.
 	 * \param in A vector containing the new face data.  Maximum size is 65,535.
 	 * \sa GetTriangles
 	 */

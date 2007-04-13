@@ -39,23 +39,27 @@ public:
 
 	/*!
 	 * Get the point to calculate distance from for switching?
+	 * \return The point to calculate distance from for switching?
 	 */
 	NIFLIB_API Vector3 GetLODCenter() const;
 
 	/*!
 	 * Set the point to calculate distance from for switching?
+	 * \param[in] value The new point to calculate distance from for switching?
 	 */
 	NIFLIB_API void SetLODCenter( const Vector3 & value );
 
 	/*!
 	 * Get the ranges of distance that each level of detail applies in.
+	 * \return The ranges of distance that each level of detail applies in.
 	 */
 	NIFLIB_API vector<LODRange > GetLODLevels() const;
 
 	/*!
 	 * Set the ranges of distance that each level of detail applies in.
+	 * \param[in] value The new ranges of distance that each level of detail applies in.
 	 */
-	NIFLIB_API void SetLODLevels( const vector<LODRange >& value );
+	NIFLIB_API void SetLODLevels( const vector<LODRange> & value );
 
 protected:
 	NI_RANGE_L_O_D_DATA_MEMBERS

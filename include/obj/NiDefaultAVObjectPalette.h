@@ -38,9 +38,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The objects.
+	 * Gets the AV Objects stored in this palette.
+	 * \return The AV Objects stored in this palette.
 	 */
 	NIFLIB_API vector<Ref<NiAVObject> > GetObjs() const;
+
+	/*!
+	 * Sets the AV Objects stored in this palette.
+	 * \return The new AV Objects to be stored in this palette.
+	 */
 	NIFLIB_API void SetObjs( const vector<Ref<NiAVObject> >& value );
 
 protected:

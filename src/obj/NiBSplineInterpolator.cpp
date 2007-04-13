@@ -57,7 +57,7 @@ Ref<NiBSplineData > NiBSplineInterpolator::GetSplineData() const {
 	return splineData;
 }
 
-void NiBSplineInterpolator::SetSplineData( Ref<NiBSplineData > value ) {
+void NiBSplineInterpolator::SetSplineData( NiBSplineData * value ) {
 	splineData = value;
 }
 
@@ -65,7 +65,7 @@ Ref<NiBSplineBasisData > NiBSplineInterpolator::GetBasisData() const {
 	return basisData;
 }
 
-void NiBSplineInterpolator::SetBasisData( Ref<NiBSplineBasisData > value ) {
+void NiBSplineInterpolator::SetBasisData( NiBSplineBasisData * value ) {
 	basisData = value;
 }
 /*********************************************************************

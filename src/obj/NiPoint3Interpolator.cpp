@@ -48,7 +48,7 @@ Ref<NiPosData > NiPoint3Interpolator::GetData() const {
 	return data;
 }
 
-void NiPoint3Interpolator::SetData( Ref<NiPosData > value ) {
+void NiPoint3Interpolator::SetData( NiPosData * value ) {
 	data = value;
 }
 

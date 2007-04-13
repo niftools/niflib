@@ -33,10 +33,16 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Integers.
+	 * Retrieves the integer values stored in this object.
+	 * \return The integer values stored in this object.
 	 */
 	NIFLIB_API vector<unsigned int> GetData() const;
-	NIFLIB_API void SetData( const vector<unsigned int >& value );
+
+	/*!
+	 * Sets the integer values stored in this object.
+	 * \param[in] value The new integer values to store in this object.
+	 */
+	NIFLIB_API void SetData( const vector<unsigned int > & value );
 
 protected:
 	NI_INTEGERS_EXTRA_DATA_MEMBERS

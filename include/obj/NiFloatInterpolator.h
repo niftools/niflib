@@ -39,16 +39,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Value when posed?  At time 0?
+	 * Gets the floating point value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \return The floating point value stored in this object.
 	 */
 	NIFLIB_API float GetFloatValue() const;
+
+	/*!
+	 * Sets the floating point value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \param[in] value The new floating point value to store in this object.
+	 */
 	NIFLIB_API void SetFloatValue( float value );
 
 	/*!
-	 * Float data?
+	 * Gets the NiFloatData object that this interpolator links to, if any.
+	 * \return The NiFloatData object that this interpolator links to, or NULL if one is not linked.
 	 */
 	NIFLIB_API Ref<NiFloatData > GetData() const;
-	NIFLIB_API void SetData( Ref<NiFloatData > value );
+
+	/*!
+	 * Sets the NiFloatData object that this interpolator links to, if any.
+	 * \return The NiFloatData object that this interpolator should now link to, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetData( NiFloatData * value );
 
 protected:
 	NI_FLOAT_INTERPOLATOR_MEMBERS

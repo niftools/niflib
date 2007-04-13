@@ -48,7 +48,7 @@ Ref<NiBoolData > NiBoolInterpolator::GetData() const {
 	return data;
 }
 
-void NiBoolInterpolator::SetData( Ref<NiBoolData > value ) {
+void NiBoolInterpolator::SetData( NiBoolData * value ) {
 	data = value;
 }
 

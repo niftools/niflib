@@ -32,15 +32,19 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-   /*!
-   * Get Signed shorts representing the data scaled by SHRT_MAX.
-   */
-   NIFLIB_API vector<short > GetControlPoints() const;
+	/*!
+	 * Get Signed shorts representing the spline data scaled by SHRT_MAX.
+	 * \return The spline data.
+	 */
+	NIFLIB_API vector<short> GetControlPoints() const;
 
-   /*!
-   * Get Range of signed shorts representing the data scaled by SHRT_MAX.
-   */
-   NIFLIB_API vector<short > GetControlPointRange(int offset, int count) const;
+	/*!
+	 * Get Range of signed shorts representing the data scaled by SHRT_MAX.
+	 * \param[in] offset The start of the range.
+	 * \param[in] count The number of control points to get.
+	 * \return The control points that fall within the specified range.
+	 */
+	NIFLIB_API vector<short> GetControlPointRange(int offset, int count) const;
 
 protected:
 	NI_B_SPLINE_DATA_MEMBERS

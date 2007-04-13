@@ -39,16 +39,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Value when posed?  At time 0?
+	 * Gets the boolean value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \return The boolean value stored in this object.
 	 */
 	NIFLIB_API bool GetBoolValue() const;
+
+	/*!
+	 * Sets the boolean value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
+	 * \param[in] value The new boolean value to store in this object.
+	 */
 	NIFLIB_API void SetBoolValue( bool value );
 
 	/*!
-	 * Refers to a NiBoolData block.
+	 * Gets the NiBoolData object that this interpolator links to, if any.
+	 * \return The NiBoolData object that this interpolator links to, or NULL if one is not linked.
 	 */
 	NIFLIB_API Ref<NiBoolData > GetData() const;
-	NIFLIB_API void SetData( Ref<NiBoolData > value );
+
+	/*!
+	 * Sets the NiBoolData object that this interpolator links to, if any.
+	 * \return The NiBoolData object that this interpolator should now link to, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetData( NiBoolData * value );
 
 protected:
 	NI_BOOL_INTERPOLATOR_MEMBERS

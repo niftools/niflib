@@ -34,9 +34,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The interpolated bool?
+	 * Gets the boolean value stored in this object.  Perhaps this is the current interpolated value.
+	 * \return The boolean value stored in this object.
 	 */
 	NIFLIB_API byte GetBoolValue() const;
+
+	/*!
+	 * Sets the boolean value stored in this object.  Perhaps this is the current interpolated value.
+	 * \param[in] value The new boolean value to store in this object.
+	 */
 	NIFLIB_API void SetBoolValue( byte value );
 
 protected:

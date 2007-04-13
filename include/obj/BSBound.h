@@ -34,15 +34,27 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Center of the bounding box.
+	 * Gets the center point of the bounding box.
+	 * \return The center point of the bounding box.
 	 */
 	NIFLIB_API Vector3 GetCenter() const;
+
+	/*!
+	 * Sets the center point of the bounding box.
+	 * \param[in] value The new center point of the bounding box.
+	 */
 	NIFLIB_API void SetCenter( const Vector3 & value );
 
 	/*!
-	 * Dimensions of the bounding box from center.
+	 * Gets the dimensions of the bounding box from center.  The three radii.
+	 * \return The radius of the bounding box along each axis.
 	 */
 	NIFLIB_API Vector3 GetDimensions() const;
+
+	/*!
+	 * Gets the dimensions of the bounding box from center.  The three radii.
+	 * \param[in] value The new radius of the bounding box along each axis.
+	 */
 	NIFLIB_API void SetDimensions( const Vector3 & value );
 
 protected:

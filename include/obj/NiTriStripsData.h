@@ -32,17 +32,24 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	NIFLIB_API NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips = true);
+	/*!
+	 * A constructor which can be used to create a NiTriStripsData and initialize it with triangles.
+	 * \param[in] tris The triangles to use to initialize the NiTriShapeData with.
+	 * \param[in] nvtristrips Whether or not to use the NvTriStrips library from nVidia to generate triangle strips from the given data.
+	 */
+	NIFLIB_API NiTriStripsData(const vector<Triangle> & tris, bool nvtristrips = true);
 
 	//--Counts--//
 
-	/*! Used to get the number of triangle strips that this mesh is divided into.
+	/*!
+	 * Used to get the number of triangle strips that this mesh is divided into.
 	 * \return The number of triangle strips used by this mesh.
 	 * \sa NiTriStripData::SetStripCount
 	 */
 	NIFLIB_API unsigned short GetStripCount() const;
 
-	/*! Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
+	/*!
+	 * Used to resize the triangle strips array.  If the new size is smaller, strips at the end of the array will be deleted.
 	 * \param n The new size of the triangle strips array.
 	 * \sa NiTriStripData::GetStripCount
 	 */
@@ -50,14 +57,16 @@ public:
 	
 	//--Getters--//
 
-	/*! Used to retrieve all the triangles from a specific triangle strip.
+	/*!
+	 * Used to retrieve all the triangles from a specific triangle strip.
 	 * \param index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
 	 * \return A vector containing all the triangle faces from the triangle strip specified by index.
 	 * \sa NiTriStripData::SetStrip, NiTriStripData::GetTriangles
 	 */
 	NIFLIB_API vector<unsigned short> GetStrip( int index ) const;
 
-	/*! This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
+	/*!
+	 * This is a conveniance function which returns all triangle faces in all triangle strips that make up this mesh.  It is similar to the ITriShapeData::GetTriangles function.
 	 * \return A vector containing all the triangle faces from all the triangle strips that make up this mesh.
 	 * \sa NiTriStripData::GetTriangles, NiTriStripData::GetStrip, NiTriStripData::SetStrip
 	 */
@@ -65,14 +74,16 @@ public:
 
 	//--Setter--/
 
-	/*! Used to set the triangle face data in a specific triangle strip.
+	/*!
+	 * Used to set the triangle face data in a specific triangle strip.
 	 * \param index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
 	 * \param in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
 	 * \sa NiTriStripData::GetStrip, NiTriStripData::GetTriangles
 	 */
 	NIFLIB_API void SetStrip( int index, const vector<unsigned short> & in );
 
-	/*! Replaces the triangle face data in this mesh with new data.
+	/*!
+	 * Replaces the triangle face data in this mesh with new data.
 	 * \param in A vector containing the new face data.  Maximum size is 65,535.
 	 * \sa GetTriangles
 	 */
