@@ -12,6 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../NvTriStrip/NvTriStrip.h"
 #include <algorithm>
 using namespace Niflib;
+using namespace NvTriStrip;
 
 typedef vector<float> WeightList;
 typedef vector<unsigned short> BoneList;

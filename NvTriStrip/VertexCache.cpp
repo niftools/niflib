@@ -1,6 +1,7 @@
 
 
 #include "VertexCache.h"
+using namespace NvTriStrip;
 
 VertexCache::VertexCache()
 {

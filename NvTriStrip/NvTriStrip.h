@@ -5,6 +5,8 @@
 #define NULL 0
 #endif
 
+namespace NvTriStrip {
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // Public interface for stripifier
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -139,5 +141,7 @@ bool GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 //
 void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numGroups, 
 				  const unsigned short numVerts, PrimitiveGroup** remappedGroups);
+
+} //End namespace
 
 #endif

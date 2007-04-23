@@ -2,6 +2,10 @@
 #include "NvTriStripObjects.h"
 #include "NvTriStrip.h"
 
+using namespace NvTriStrip;
+
+namespace NvTriStrip {
+
 ////////////////////////////////////////////////////////////////////////////////////////
 //private data
 static unsigned int cacheSize    = CACHESIZE_GEFORCE1_2;
@@ -496,3 +500,5 @@ void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numG
 
 	delete[] indexCache;
 }
+
+} //end namespace

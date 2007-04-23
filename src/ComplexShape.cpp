@@ -18,6 +18,9 @@ All rights reserved.  Please see niflib.h for licence. */
 
 using namespace Niflib;
 
+//Wrape these in the Niflib namespace so they don't polute the Class View
+namespace Niflib {
+
 struct VertNorm {
 	Vector3 position;
 	Vector3 normal;
@@ -90,6 +93,15 @@ struct CompoundVertex {
 		return true;
 	}
 };
+
+struct MergeLookUp {
+	unsigned int vertIndex;
+	unsigned int normIndex;
+	unsigned int colorIndex;
+	map<unsigned int, unsigned int> uvIndices; //TexCoordSet Index, TexCoord Index
+};
+
+} //End namespace
 
 void ComplexShape::SetName( const string & n ) {
 	name = n;
@@ -166,13 +178,6 @@ void ComplexShape::Clear() {
 	skinInfluences.clear();
 	name.clear();
 }
-
-struct MergeLookUp {
-	unsigned int vertIndex;
-	unsigned int normIndex;
-	unsigned int colorIndex;
-	map<unsigned int, unsigned int> uvIndices; //TexCoordSet Index, TexCoord Index
-};
 
 void ComplexShape::Merge( NiAVObject * root ) {
 

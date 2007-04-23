@@ -6,6 +6,8 @@
 #include "NvTriStripObjects.h"
 #include "VertexCache.h"
 
+using namespace NvTriStrip;
+
 #define CACHE_INEFFICIENCY 6
 
 NvStripifier::NvStripifier()

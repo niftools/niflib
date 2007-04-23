@@ -7,6 +7,9 @@
 #include <list>
 #include "VertexCache.h"
 
+//Wrap these types in a namespace
+namespace NvTriStrip {
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 // Types defined for stripification
@@ -239,5 +242,7 @@ protected:
 	// to these protected stripificaton methods if they want
 	friend class NvStripInfo;
 };
+
+} //End namespace
 
 #endif

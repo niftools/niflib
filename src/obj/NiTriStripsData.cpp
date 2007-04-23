@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 using namespace Niflib;
 using namespace triangle_stripper;
+using namespace NvTriStrip;
 
 // Helper methods
 typedef vector<unsigned short> TriStrip;

@@ -3,6 +3,8 @@
 
 #define VERTEX_CACHE_H
 
+namespace NvTriStrip {
+
 class VertexCache
 {
 	
@@ -23,5 +25,7 @@ private:
   int numEntries;
 
 };
+
+} //End namespace
 
 #endif
