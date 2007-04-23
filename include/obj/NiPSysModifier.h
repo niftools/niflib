@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiObject.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiParticleSystem;
 
 //#include "../gen/obj_defines.h"
@@ -16,7 +16,7 @@ class NiPSysModifier;
 typedef Ref<NiPSysModifier> NiPSysModifierRef;
 
 /*!
- * NiPSysModifier - Generic particle system modifier block.
+ * NiPSysModifier - Generic particle system modifier object.
  */
 
 class NiPSysModifier : public NI_P_SYS_MODIFIER_PARENT {

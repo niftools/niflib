@@ -65,7 +65,7 @@ void NiControllerSequence::SetTextKey( NiTextKeyExtraData * txt_key ) {
 void NiControllerSequence::AddController( NiTimeController * obj ) {
 	//Make sure the link isn't null
 	if ( obj == NULL ) {
-		throw runtime_error("Attempted to add a null controller to NiControllerSequence block.");
+		throw runtime_error("Attempted to add a null controller to NiControllerSequence.");
 	}
 
 	NiObjectNETRef target = obj->GetTarget();

@@ -34,15 +34,27 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * The opening angle of the spot.
+	 * Retrieves the opening angle of the spot light.
+	 * \return The cutoff angle.
 	 */
 	NIFLIB_API float GetCutoffAngle() const;
+
+	/*!
+	 * Sets the opening angle of the spot light.
+	 * \param[in] value The new cutoff angle.
+	 */
 	NIFLIB_API void SetCutoffAngle( float value );
 
 	/*!
-	 * Describes the distribution of light. (see: glLight)
+	 * Retrieves the exponent of this spot light.  This describes the distribution of light.  See glLight in OpenGL.
+	 * \return The exponent value.
 	 */
 	NIFLIB_API float GetExponent() const;
+
+	/*!
+	 * Sets the exponent of this spot light.  This describes the distribution of light.  See glLight in OpenGL.
+	 * \param[in] value The new exponent value.
+	 */
 	NIFLIB_API void SetExponent( float value );
 
 protected:

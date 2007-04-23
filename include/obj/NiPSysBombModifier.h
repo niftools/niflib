@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "NiPSysModifier.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiNode;
 
 //#include "../gen/obj_defines.h"

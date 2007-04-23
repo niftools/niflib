@@ -228,8 +228,6 @@ private:
 
 //--IO Functions--//
 
-int BlockSearch( istream& in );
-
 //-- Read Utility Functions--//
 int ReadInt( istream& in );
 unsigned int ReadUInt( istream& in );

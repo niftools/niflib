@@ -69,7 +69,7 @@ struct Kfm {
 	unsigned int Read( const string & file_name ); // returns Kfm version
 	unsigned int Read( istream & in ); // returns Kfm version
 
-	// Reads the NIF file and all KF files referred to in this KFM, and returns the root block of the resulting NIF tree.
+	// Reads the NIF file and all KF files referred to in this KFM, and returns the root object of the resulting NIF tree.
 	Ref<NiObject> MergeActions( const string & path );
 	//void Write( string const & file_name, unsigned int version );
 	//void Write( ostream & out, unsigned int version );

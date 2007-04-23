@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiKeyframeData;
 
 //#include "../gen/obj_defines.h"
@@ -19,7 +19,7 @@ class NiKeyframeController;
 typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
 
 /*!
- * NiKeyframeController - A time controller block for animation key
+ * NiKeyframeController - A time controller object for animation key
  * frames.
  */
 

@@ -78,11 +78,11 @@ Ref<NiNode> NiAVObject::GetParent() const {
 	return parent;
 }
 
-void NiAVObject::AddProperty( const Ref<NiProperty> & obj ) {
+void NiAVObject::AddProperty( NiProperty * obj ) {
 	properties.push_back( obj );
 }
 
-void NiAVObject::RemoveProperty( Ref<NiProperty> obj ) {
+void NiAVObject::RemoveProperty( NiProperty * obj ) {
 	//Search property list for the one to remove
 	for ( vector< NiPropertyRef >::iterator it = properties.begin(); it != properties.end(); ) {
 		if ( *it == obj ) {

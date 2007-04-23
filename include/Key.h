@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 using namespace std;
 
-/*! Stores an animation key and the time in the animation that it takes affect. It is a template class so it can hold any kind of data as different blocks key different sorts of information to the animation timeline.*/
+/*! Stores an animation key and the time in the animation that it takes affect. It is a template class so it can hold any kind of data as different objects key different sorts of information to the animation timeline.*/
 template <class T> 
 struct Key {
 	float time; /*!< The time on the animation timeline that this keyframe takes affect. */ 

@@ -10,7 +10,7 @@ namespace Niflib {
 
 //#include "../gen/obj_defines.h"
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiFloatData;
 
 class NiPSysEmitterLifeSpanCtlr;

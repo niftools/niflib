@@ -18,7 +18,7 @@ typedef Ref<NiStringPalette> NiStringPaletteRef;
 
 /*!
  * NiStringPalette - List of 0x00-seperated strings, which are names of
- * controlled blocks and controller types. Used in .kf files in
+ * controlled objects and controller types. Used in .kf files in
  * conjunction with NiControllerSequence.
  */
 

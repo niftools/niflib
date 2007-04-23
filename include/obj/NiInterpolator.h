@@ -14,7 +14,7 @@ class NiInterpolator;
 typedef Ref<NiInterpolator> NiInterpolatorRef;
 
 /*!
- * NiInterpolator - Interpolator blocks - function unknown.
+ * NiInterpolator - Interpolator objects - function unknown.
  */
 
 class NiInterpolator : public NI_INTERPOLATOR_PARENT {

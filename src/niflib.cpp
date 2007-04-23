@@ -38,72 +38,71 @@ namespace Niflib {
 
 //Stores the mapping between object names and factory function pointers to create them
 typedef NiObject * (*blk_factory_func)();
-bool global_block_map_init = false;
-map<string, blk_factory_func> global_block_map;
+bool global_object_map_init = false;
+map<string, blk_factory_func> global_object_map;
 
 //Utility Functions
 void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
-NiObjectRef FindRoot( vector<NiObjectRef> const & blocks );
-void RegisterBlockFactories ();
+NiObjectRef FindRoot( vector<NiObjectRef> const & objects );
+void RegisterObjectFactories ();
 NiObjectRef GetObjectByType( NiObject * root, const Type & type );
 
 /*!
- * Helper function to split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be null blocks.
- * \param root_block The root block of the full tree.
+ * Helper function to split off animation from a nif tree. If no animation groups are defined, then both xnif_root and xkf_root will be NULL.
+ * \param root_object The root object of the full tree.
  * \param xnif_root The root object of the tree without animation.
  * \param xkf_roots The root objects of the animation trees.
  * \param kfm The KFM structure (if required by style).
  * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
  * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
+static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
 
 //--Function Bodies--//
 
-NiObjectRef CreateObject( string block_type ) {
+NiObjectRef CreateObject( string obj_type ) {
 	
-	//Initialize the global block list if it hasn't been done yet
-	if ( global_block_map_init == false ) {
-		RegisterBlockFactories();
-		global_block_map_init = true;
+	//Initialize the global object list if it hasn't been done yet
+	if ( global_object_map_init == false ) {
+		RegisterObjectFactories();
+		global_object_map_init = true;
 	}
 
-	NiObject * block = NULL;
+	NiObject * object = NULL;
 
 	map<string, blk_factory_func>::iterator it;
-	it = global_block_map.find(block_type);
+	it = global_object_map.find(obj_type);
 
-	if ( it != global_block_map.end() ) {
+	if ( it != global_object_map.end() ) {
 		//Requested type has been registered
-		block = it->second();
+		object = it->second();
 	} else {
 		//An unknown type has been encountered
-		return NULL; //Return null block_ref
-		//block = new UnknownBlock( block_type );
+		return NULL; //Return null
 	}
 	
-	return NiObjectRef(block);
+	return NiObjectRef(object);
 }
 
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
-	//Read block list
-	vector<NiObjectRef> blocks = ReadNifList( file_name, info );
-	return FindRoot( blocks );
+	//Read object list
+	vector<NiObjectRef> objects = ReadNifList( file_name, info );
+	return FindRoot( objects );
 }
 
 NiObjectRef ReadNifTree( istream & in, NifInfo * info ) {
-	//Read block list
-	vector<NiObjectRef> blocks = ReadNifList( in, info );
-	return FindRoot( blocks );
+	//Read object list
+	vector<NiObjectRef> objects = ReadNifList( in, info );
+	return FindRoot( objects );
 }
 
-NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
+NiObjectRef FindRoot( vector<NiObjectRef> const & objects ) {
 	//--Look for a NiNode that has no parents--//
 
 	//Find the first NiObjectNET derived object
 	NiAVObjectRef root;
-	for (unsigned int i = 0; i < blocks.size(); ++i) {
-		root = DynamicCast<NiAVObject>(blocks[i]);
+	for (unsigned int i = 0; i < objects.size(); ++i) {
+		root = DynamicCast<NiAVObject>(objects[i]);
 		if ( root != NULL ) {
 			break;
 		}
@@ -111,7 +110,7 @@ NiObjectRef FindRoot( vector<NiObjectRef> const & blocks ) {
 
 	//Make sure a node was found, if not return first node
 	if ( root == NULL )
-		return blocks[0];
+		return objects[0];
 
 	//Move up the chain to the root node
 	while ( root->GetParent() != NULL ) {
@@ -221,7 +220,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 				}
 			}
 
-			// Find which block type this is by using the header arrays
+			// Find which NIF object type this is by using the header arrays
 			objectType = header.blockTypes[ header.blockTypeIndex[i] ];
 
 #ifdef PRINT_OBJECT_NAMES
@@ -349,7 +348,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 #ifdef DEBUG_LINK_PHASE
 	cout << "Fixing Links:"  << endl;
 #endif
-	//--Now that all blocks are read, go back and fix the links--//
+	//--Now that all objects are read, go back and fix the links--//
 	vector<NiObjectRef> obj_list;
 
 	for ( map<unsigned,NiObjectRef>::iterator it = objects.begin(); it != objects.end(); ++it ) {
@@ -368,15 +367,12 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		delete info;
 	}
 
-	//Return completed block list
+	//Return completed object list
 	return obj_list;
 }
 
 // Writes a valid Nif File given an ostream, a list to the root objects of a file tree
 void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info ) {
-	// Walk tree, resetting all block numbers
-	//int block_count = ResetBlockNums( 0, root_block );
-	
 	//Enumerate all objects in tree
 	map<Type*,unsigned int> type_map;
 	map<NiObjectRef, unsigned int> link_map;
@@ -416,7 +412,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 
 	}
 
-	//Set type number of each block
+	//Set type number of each object
 	header.blockTypeIndex.resize( objects.size() );
 	for ( unsigned int i = 0; i < objects.size(); ++i ) {
 		header.blockTypeIndex[i] = type_map[(Type*)&(objects[i]->GetType())];
@@ -470,13 +466,13 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	footer.Write( out, link_map, info );
 }
 
-// Writes a valid Nif File given a file name, a pointer to the root block of a file tree
-void WriteNifTree( string const & file_name, NiObject * root_block, const NifInfo & info ) {
+// Writes a valid Nif File given a file name, a pointer to the root object of a file tree
+void WriteNifTree( string const & file_name, NiObject * root, const NifInfo & info ) {
    //Open output file
    ofstream out( file_name.c_str(), ofstream::binary );
 
    list<NiObjectRef> roots;
-   roots.push_back(root_block);
+   roots.push_back(root);
    WriteNifTree( out, roots, info );
 
    //Close file
@@ -514,7 +510,7 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
 		type_map[ (Type*)&(root->GetType()) ] = n;
 	}
 
-   // Oblivion has very rigid requirements about block ordering and the bhkRigidBody 
+   // Oblivion has very rigid requirements about object ordering and the bhkRigidBody 
    //   must be after its children. Hopefully this can be removed and replaced with 
    //   a more generic mechanism in the future.
 	Type *t = (Type*)&(root->GetType());
@@ -545,32 +541,6 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
       link_map[root] = n;
    }
 }
-
-//void BuildUpBindPositions( const NiAVObjectRef & root ) {
-//
-//	//Get parent if there is one
-//	NiNodeRef par = root->GetParent();
-//	if ( par != NULL ) {
-//		//There is a node parent
-//
-//		//Post-multipy the block's bind matrix with the parent's bind matrix
-//		Matrix44 result = root->GetWorldBindPos() * par->GetWorldBindPos();
-//
-//		//Store result back to block bind position
-//		root->SetWorldBindPos( result );
-//	}
-//
-//	//If this is a NiNode, call this function for all child AVObjects
-//	NiNodeRef node = DynamicCast<NiNode>(root);
-//	if ( node != NULL ) {
-//		vector<NiAVObjectRef> children = node->GetChildren();
-//		for (vector<NiAVObjectRef>::iterator it = children.begin(); it != children.end(); ++it) {
-//			if ( *it != NULL ) {
-//				BuildUpBindPositions( *it );
-//			}
-//		}
-//	}
-//}
 
 //TODO: Should this be returning an object of a derived type too?
 // Searches for the first object in the hierarchy of type.
@@ -607,21 +577,7 @@ list<NiObjectRef> GetAllObjectsByType( NiObject * root, const Type & type ) {
 	return result;
 };
 
-//TODO:  Is this function used anywhere?  Does it need to be re-done?
-//list<NiObjectRef> GetNifTree( NiObjectRef const & root_block ) {
-//	list<NiObjectRef> result;
-//	result.push_back( root_block );
-//	list<NiObjectRef> links = root_block->GetRefs();
-//	for (list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-//		if ( it->is_null() == false && (*it)->GetParent() == root_block ) {
-//			list<NiObjectRef> childresult = GetNifTree( *it );
-//			result.merge( childresult );
-//		};
-//	};
-//	return result;
-//};
-
-// Create a valid 
+// Create a valid file name
 static std::string CreateFileName(std::string name) {
    std::string retname = name;
    std::string::size_type off = 0;
@@ -637,19 +593,19 @@ static std::string CreateFileName(std::string name) {
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
-	// Do we have animation groups (a NiTextKeyExtraData block)?
+static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
+	// Do we have animation groups (a NiTextKeyExtraData object)?
 	// If so, create XNif and XKf trees.
-	NiObjectRef txtkey = GetObjectByType( root_block, NiTextKeyExtraData::TypeConst() );
-	NiTextKeyExtraDataRef txtkey_block;
+	NiObjectRef txtkey = GetObjectByType( root_object, NiTextKeyExtraData::TypeConst() );
+	NiTextKeyExtraDataRef txtkey_obj;
 	if ( txtkey != NULL ) {
-		txtkey_block = DynamicCast<NiTextKeyExtraData>(txtkey);
+		txtkey_obj = DynamicCast<NiTextKeyExtraData>(txtkey);
 	}
-	if ( txtkey_block != NULL ) {
+	if ( txtkey_obj != NULL ) {
 		if ( kf_type == KF_MW ) {
 			// Construct the XNif file...
 
-			xnif_root = CloneNifTree( root_block, info.version, info.userVersion );
+			xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
 				
 			// Now search and locate newer timeframe controllers and convert to keyframecontrollers
 			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TypeConst() );
@@ -672,7 +628,7 @@ static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiOb
 			NiSequenceStreamHelperRef xkf_stream_helper = new NiSequenceStreamHelper;
 			xkf_roots.push_back( StaticCast<NiObject>(xkf_stream_helper) );
 					
-			// Append NiNodes with a NiKeyFrameController as NiStringExtraData blocks.
+			// Append NiNodes with a NiKeyFrameController as NiStringExtraData objects.
 			list< pair< NiNodeRef, NiKeyframeControllerRef> > node_controllers;
 
 			list<NiObjectRef> nodes = GetAllObjectsByType( xnif_root, NiNode::TypeConst() );
@@ -740,14 +696,14 @@ static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiOb
 				xkf_stream_helper->AddController( StaticCast<NiTimeController>(controller) );
 			}
 
-			// Add a copy of the NiTextKeyExtraData block to the XKf header.
-			NiTextKeyExtraDataRef xkf_txtkey_block = new NiTextKeyExtraData;
-			xkf_stream_helper->AddExtraData( StaticCast<NiExtraData>(xkf_txtkey_block), info.version );
-			xkf_txtkey_block->SetKeys( txtkey_block->GetKeys() );
+			// Add a copy of the NiTextKeyExtraData object to the XKf header.
+			NiTextKeyExtraDataRef xkf_txtkey_obj = new NiTextKeyExtraData;
+			xkf_stream_helper->AddExtraData( StaticCast<NiExtraData>(xkf_txtkey_obj), info.version );
+			xkf_txtkey_obj->SetKeys( txtkey_obj->GetKeys() );
 
 		} else if (kf_type == KF_CIV4) {
 			// Construct the Nif file without transform controllers ...
-			xnif_root = CloneNifTree( root_block, info.version, info.userVersion );
+			xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
 
 			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TypeConst() );
 			for ( list<NiObjectRef>::iterator it = mgrs.begin(); it != mgrs.end(); ++it) {
@@ -767,12 +723,12 @@ static void SplitNifTree( NiObject * root_block, NiObject * xnif_root, list<NiOb
 		}
 	} else {
 		// no animation groups: nothing to do
-		xnif_root = root_block;
+		xnif_root = root_object;
 	};
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-void WriteFileGroup( string const & file_name, NiObject * root_block, const NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
+void WriteFileGroup( string const & file_name, NiObject * root_object, const NifInfo & info, ExportOptions export_files, NifGame kf_type ) {
 	// Get base filename.
 	unsigned int file_name_slash = (unsigned int)(file_name.rfind("\\") + 1);
 	string file_name_path = file_name.substr(0, file_name_slash);
@@ -782,16 +738,16 @@ void WriteFileGroup( string const & file_name, NiObject * root_block, const NifI
 	
 	// Deal with the simple case first
 	if ( export_files == EXPORT_NIF )
-		WriteNifTree( file_name_path + file_name_base + ".nif", root_block, info ); // simply export the NIF file!
+		WriteNifTree( file_name_path + file_name_base + ".nif", root_object, info ); // simply export the NIF file!
 	// Now consider all other cases
 	else if ( kf_type == KF_MW ) {
 		if ( export_files == EXPORT_NIF_KF ) {
 			// for Morrowind we must also write the full NIF file
-			WriteNifTree( file_name_path + file_name_base + ".nif", root_block, info ); // simply export the NIF file!
+			WriteNifTree( file_name_path + file_name_base + ".nif", root_object, info ); // simply export the NIF file!
 			NiObjectRef xnif_root;
 			list<NiObjectRef> xkf_roots;
 			Kfm kfm; // dummy
-			SplitNifTree( root_block, xnif_root, xkf_roots, kfm, kf_type, info );
+			SplitNifTree( root_object, xnif_root, xkf_roots, kfm, kf_type, info );
 			if ( xnif_root != NULL && !xkf_roots.empty()) {
 				WriteNifTree( file_name_path + "x" + file_name_base + ".nif", xnif_root, info );
 				WriteNifTree( file_name_path + "x" + file_name_base + ".kf", xkf_roots.front(), info );
@@ -803,7 +759,7 @@ void WriteFileGroup( string const & file_name, NiObject * root_block, const NifI
       NiObjectRef xnif_root;
       list<NiObjectRef> xkf_roots;
       Kfm kfm; // dummy
-	  SplitNifTree( root_block, xnif_root, xkf_roots, kfm, kf_type, info );
+	  SplitNifTree( root_object, xnif_root, xkf_roots, kfm, kf_type, info );
       if ( export_files == EXPORT_NIF || export_files == EXPORT_NIF_KF || export_files == EXPORT_NIF_KF_MULTI ) {
          WriteNifTree( file_name_path + file_name_base + ".nif", xnif_root, info );
       }
@@ -836,31 +792,15 @@ void MapNodeNames( map<string,NiNodeRef> & name_map, NiNode * par ) {
 	};
 }
 
-void ReassignTreeCrossRefs( map<string,NiNodeRef> & name_map, NiAVObject * par ) {
-	//TODO: Decide how cross refs are going to work
-	////Reassign any cross references on this block
-	//((ABlock*)par.get_block())->ReassignCrossRefs( name_map );
-
-	//list<NiObjectRef> links = par->GetRefs();
-	//for (list <NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it) {
-	//	// if the link is not null, and if the child's first parent is root_block
-	//	// (this makes sure we only check every child once, even if it is shared by multiple parents),
-	//	// then look for a match in the tree starting from the child.
-	//	if ( it->is_null() == false && (*it)->GetParent() == par ) {
-	//		ReassignTreeCrossRefs( name_map, *it );
-	//	};
-	//};
-}
-
 //This function will merge two scene graphs by attatching new objects to the correct position
 //on the existing scene graph.  In other words, it deals only with adding new nodes, not altering
 //existing nodes by changing their data or attatched properties
 void MergeSceneGraph( map<string,NiNodeRef> & name_map, NiNode * root, NiAVObject * par ) {
-	//Check if this block's name exists in the block map
+	//Check if this object's name exists in the object map
 	string name = par->GetName();
 
 	if ( name_map.find(name) != name_map.end() ) {
-		//This block already exists in the original file, so continue on to its children, if it is a NiNode
+		//This object already exists in the original file, so continue on to its children, if it is a NiNode
 		
 		NiNodeRef par_node = DynamicCast<NiNode>(par);
 		if ( par_node != NULL ) {
@@ -874,13 +814,13 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, NiNode * root, NiAVObjec
 		return;
 	}
 
-	//This block has a new name and either it has no parent or its parent has a name that is
-	// in the list.  Attatch it to the block with the same name as its parent
-	//all child blocks will follow along.
+	//This object has a new name and either it has no parent or its parent has a name that is
+	// in the list.  Attatch it to the object with the same name as its parent
+	//all child objects will follow along.
 	NiNodeRef par_par = par->GetParent();
 
 	if ( par_par == NULL) {
-		//This block has a new name and no parents.  That means it is the root block
+		//This object has a new name and no parents.  That means it is the root object.
 		//of a disimilar Nif file.
 			
 		//Check whether we have a NiNode ( a node that might have children) or not.
@@ -897,19 +837,19 @@ void MergeSceneGraph( map<string,NiNodeRef> & name_map, NiNode * root, NiAVObjec
 			}
 		}
 	} else {
-		//This block has a new name and has a parent with a name that already exists.
-		//Attatch it to the block in the target tree that matches the name of its
+		//This object has a new name and has a parent with a name that already exists.
+		//Attatch it to the object in the target tree that matches the name of its
 		//parent
 
 		//TODO:  Implement children
-		////Remove this block from its old parent
+		////Remove this object from its old parent
 		//par_par->GetAttr("Children")->RemoveLinks( par );
 
-		//Get the block to attatch to
+		//Get the object to attatch to
 		NiObjectRef attatch = DynamicCast<NiObject>(name_map[par_par->GetName()]);
 
 		//TODO:  Implement children
-		////Add this block as new child
+		////Add this object as new child
 		//attatch->GetAttr("Children")->AddLink( par );
 	}
 }
@@ -927,9 +867,9 @@ void MergeNifTrees( NiNode * target, NiAVObject * right, unsigned version, unsig
 	map<string,NiNodeRef> name_map;
 	MapNodeNames( name_map, target );
 
-	//Reassign any cross references in the new tree to point to blocks in the
-	//target tree with the same names
-	ReassignTreeCrossRefs( name_map, new_tree );
+	////Reassign any cross references in the new tree to point to objects in the
+	////target tree with the same names
+	//ReassignTreeCrossRefs( name_map, new_tree );
 
 	//Use the name map to merge the Scene Graphs
 	MergeSceneGraph( name_map, target, new_tree );

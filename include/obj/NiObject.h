@@ -84,21 +84,7 @@ public:
 	/*!
 	 * Summarizes the information contained in this object in English.
 	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
-	 * \return A string containing a summary of the information within the block in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
-	 * 
-	 * <b>Example:</b> 
-	 * \code
-	 * blk_ref my_block = ReadNifTree("test_in.nif");
-	 * cout << my_block->asString();
-	 * \endcode
-	 * 
-	 * <b>In Python:</b>
-	 * \code
-	 * my_block = ReadNifTree("test_in.nif")
-	 * print block.asString()
-	 * \endcode
-	 * 
-	 * \sa IAttr::asString, SetVerboseMode
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
 	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 

@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiTextKeyExtraData;
 class NiControllerManager;
 class NiStringPalette;
@@ -63,7 +63,7 @@ public:
 	NIFLIB_API void SetName( const string & value );
 
 	/*!
-	 * Sets the name and block reference to the NiTextKeyExtraData block which will be used by this controller sequence to specify the keyframe labels or "notes."
+	 * Sets the name and reference to the NiTextKeyExtraData object which will be used by this controller sequence to specify the keyframe labels or "notes."
 	 * \param[in] txt_key A reference to the NiTextKeyExtraData object to use.
 	 * \sa NiTextKeyExtraData
 	 */

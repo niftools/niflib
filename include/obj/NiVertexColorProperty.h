@@ -14,9 +14,9 @@ class NiVertexColorProperty;
 typedef Ref<NiVertexColorProperty> NiVertexColorPropertyRef;
 
 /*!
- * NiVertexColorProperty - Property of vertex colors. This block is
- * referred to by the root block of the NIF file whenever some
- * NiTriShapeData block has vertex colors with non-default settings; if
+ * NiVertexColorProperty - Property of vertex colors. This object is
+ * referred to by the root object of the NIF file whenever some
+ * NiTriShapeData object has vertex colors with non-default settings; if
  * not present, vertex colors have vertex_mode=2 and lighting_mode=1.
  */
 

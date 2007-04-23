@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiAVObject;
 
 //#include "../gen/obj_defines.h"
@@ -39,25 +39,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Turns effect on and off?  Switches list to list of unaffected nodes?
+	 * Gets the current switch state for this effect.  Perhaps this turns effect on and off?
+	 * \return The current switch state for this object.
 	 */
 	NIFLIB_API bool GetSwitchState() const;
+
+	/*!
+	 * Sets the current switch state for this effect.  Perhaps this turns effect on and off?
+	 * \param[in] value The new switch state for this object.
+	 */
 	NIFLIB_API void SetSwitchState( bool value );
 
 	/*!
-	 * The list of affected nodes?
+	 * Retrieves what appears to be a list of the nodes that will be affected by this effect.
+	 * \return A list of the nodes that will be affected by this effect.
 	 */
 	NIFLIB_API vector<Ref<NiAVObject > > GetAffectedNodes() const;
-	NIFLIB_API void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
 
 	/*!
-	 * This is probably the list of affected nodes. For some reason i do not
-	 * know the max exporter seems to write pointers instead of links. But it
-	 * doesn't matter because at least in version 4.0.0.2 the list is
-	 * automagically updated by the engine during the load stage.
+	 * Sets what appears to be a list of the nodes that will be affected by this effect.
+	 * \param[in] value A list of the new nodes that will be affected by this effect.
 	 */
-	NIFLIB_API vector<unsigned int> GetAffectedNodeListPointers() const;
-	NIFLIB_API void SetAffectedNodeListPointers( const vector<unsigned int >& value );
+	NIFLIB_API void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
 
 protected:
 	NI_DYNAMIC_EFFECT_MEMBERS

@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "bhkSerializable.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class bhkShape;
 
 //#include "../gen/obj_defines.h"

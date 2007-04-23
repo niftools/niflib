@@ -16,7 +16,7 @@ class NiExtraData;
 typedef Ref<NiExtraData> NiExtraDataRef;
 
 /*!
- * NiExtraData - A generic extra data block.
+ * NiExtraData - A generic extra data object.
  */
 
 class NiExtraData : public NI_EXTRA_DATA_PARENT {

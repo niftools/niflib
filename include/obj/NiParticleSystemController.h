@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/Particle.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiObject;
 class AParticleModifier;
 
@@ -22,7 +22,7 @@ typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;
 
 /*!
  * NiParticleSystemController - A generic particle system time controller
- * block.
+ * object.
  */
 
 class NiParticleSystemController : public NI_PARTICLE_SYSTEM_CONTROLLER_PARENT {

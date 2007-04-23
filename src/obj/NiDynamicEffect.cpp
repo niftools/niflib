@@ -52,14 +52,6 @@ void NiDynamicEffect::SetAffectedNodes( const vector<Ref<NiAVObject > >& value )
 	affectedNodes = value;
 }
 
-vector<unsigned int> NiDynamicEffect::GetAffectedNodeListPointers() const {
-	return affectedNodeListPointers;
-}
-
-void NiDynamicEffect::SetAffectedNodeListPointers( const vector<unsigned int >& value ) {
-	affectedNodeListPointers = value;
-}
-
 const Type & NiDynamicEffect::TypeConst() {
 	return TYPE;
 }

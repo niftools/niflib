@@ -15,7 +15,7 @@ class NiBinaryExtraData;
 typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;
 
 /*!
- * NiBinaryExtraData - Binary extra data block. Used to store normals and
+ * NiBinaryExtraData - Binary extra data object. Used to store normals and
  * binormals in Oblivion.
  */
 

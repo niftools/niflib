@@ -13,7 +13,7 @@ class NiRotatingParticlesData;
 typedef Ref<NiRotatingParticlesData> NiRotatingParticlesDataRef;
 
 /*!
- * NiRotatingParticlesData - Rotating particles data block.
+ * NiRotatingParticlesData - Rotating particles data object.
  */
 
 class NiRotatingParticlesData : public NI_ROTATING_PARTICLES_DATA_PARENT {

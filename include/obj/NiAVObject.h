@@ -11,7 +11,7 @@ namespace Niflib {
 
 //#include "../gen/obj_defines.h"
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiProperty;
 class NiCollisionData;
 class NiCollisionObject;
@@ -96,13 +96,13 @@ public:
 	 * Adds a property to this object.  Properties specify various charactaristics of the object that affect rendering.  They may be shared among objects.
 	 * \param[in] obj The new property that is to affect this object.
 	 */
-	NIFLIB_API void AddProperty( const Ref<NiProperty> & obj );
+	NIFLIB_API void AddProperty( NiProperty * obj );
 
 	/*!
 	 * Removes a property from this object.  Properties specify various charactaristics of the object that affect rendering.  They may be shared among objects.
 	 * \param[in] obj The property that is no longer to affect this object.
 	 */
-	NIFLIB_API void RemoveProperty( Ref<NiProperty> obj );
+	NIFLIB_API void RemoveProperty( NiProperty * obj );
 
 	/*!
 	 * Removes all properties from this object.  Properties specify various charactaristics of the object that affect rendering.  They may be shared among objects.

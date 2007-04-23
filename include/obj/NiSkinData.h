@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../gen/SkinData.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiSkinPartition;
 class NiGeometry;
 

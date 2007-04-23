@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiAVObject;
 class NiDynamicEffect;
 
@@ -22,7 +22,7 @@ class NiSkinInstance;
 typedef Ref<NiNode> NiNodeRef;
 
 /*!
- * NiNode - Generic node block for grouping.
+ * NiNode - Generic node object for grouping.
  */
 
 class NiNode : public NI_NODE_PARENT {

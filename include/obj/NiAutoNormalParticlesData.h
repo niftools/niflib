@@ -14,7 +14,7 @@ class NiAutoNormalParticlesData;
 typedef Ref<NiAutoNormalParticlesData> NiAutoNormalParticlesDataRef;
 
 /*!
- * NiAutoNormalParticlesData - Particle system data block (with automatic
+ * NiAutoNormalParticlesData - Particle system data object (with automatic
  * normals?).
  */
 

@@ -35,14 +35,14 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.
+	 * Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this object stores data is attatched.  This is not done automatically by Niflib.
 	 * \return The number of vertices used in the morph target meshes.
 	 * \sa NiMorphData::SetVertexCount
 	 */
 	NIFLIB_API int GetVertexCount() const;
 
 	/*!
-	 * Sets the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this block stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
+	 * Sets the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this object stores data is attatched.  This is not done automatically by Niflib.  If the new size is smaller, vertices at the ends of the morph targets will be lost.
 	 * \param n The new size of the morph target's vertex arrays.
 	 * \sa NiMorphData::GetVertexCount
 	 */

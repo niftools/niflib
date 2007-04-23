@@ -34,27 +34,51 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Dimmer.
+	 * Gets the current dimmer value for this light.  Used to turn the light intensity up or down.
+	 * \return The current dimmer value.
 	 */
 	NIFLIB_API float GetDimmer() const;
+
+	/*!
+	 * Sets the dimmer value for this light.  Used to turn the light intensity up or down.
+	 * \param[in] value The new dimmer value.
+	 */
 	NIFLIB_API void SetDimmer( float value );
 
 	/*!
-	 * Ambient color.
+	 * Gets the current ambient color of this light.
+	 * \return The current ambient color.
 	 */
 	NIFLIB_API Color3 GetAmbientColor() const;
+
+	/*!
+	 * Sets the ambient color of this light.
+	 * \param[in] value The new ambient color.
+	 */
 	NIFLIB_API void SetAmbientColor( Color3 value );
 
 	/*!
-	 * Diffuse color.
+	 * Gets the current diffuse color of this light.
+	 * \return The current diffuse color.
 	 */
 	NIFLIB_API Color3 GetDiffuseColor() const;
+
+	/*!
+	 * Sets the diffuse color of this light.
+	 * \param[in] value The new diffuse color.
+	 */
 	NIFLIB_API void SetDiffuseColor( Color3 value );
 
 	/*!
-	 * Specular color.
+	 * Gets the current specular color of this light.
+	 * \return The current specular color.
 	 */
 	NIFLIB_API Color3 GetSpecularColor() const;
+
+	/*!
+	 * Sets the specular color of this light.
+	 * \param[in] value The new specular color.
+	 */
 	NIFLIB_API void SetSpecularColor( Color3 value );
 
 protected:

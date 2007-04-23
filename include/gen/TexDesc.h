@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiSourceTexture;
 
 /*!

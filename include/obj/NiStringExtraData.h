@@ -16,7 +16,7 @@ typedef Ref<NiStringExtraData> NiStringExtraDataRef;
 /*!
  * NiStringExtraData - Apparently commands for an optimizer instructing
  * it to keep things it would normally discard. Also refers to NiNode
- * blocks (through their name) in animation .kf files.
+ * objects (through their name) in animation .kf files.
  */
 
 class NiStringExtraData : public NI_STRING_EXTRA_DATA_PARENT {

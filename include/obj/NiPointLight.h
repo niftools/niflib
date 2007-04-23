@@ -34,21 +34,39 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Constant Attenuation
+	 * Gets the current constant attenuation of this point light.
+	 * \return The constant attentuation.
 	 */
 	NIFLIB_API float GetConstantAttenuation() const;
+
+	/*!
+	 * Sets the constant attenuation of this point light.
+	 * \param[in] value The new constant attentuation.
+	 */
 	NIFLIB_API void SetConstantAttenuation( float value );
 
 	/*!
-	 * Linear Attenuation
+	 * Gets the current linear attenuation of this point light.
+	 * \return The linear attentuation.
 	 */
 	NIFLIB_API float GetLinearAttenuation() const;
+
+	/*!
+	 * Sets the linear attenuation of this point light.
+	 * \param[in] value The new linear attentuation.
+	 */
 	NIFLIB_API void SetLinearAttenuation( float value );
 
 	/*!
-	 * Quadratic Attenuation (see glLight)
+	 * Gets the current quadratic attenuation of this point light.
+	 * \return The quadratic attentuation.
 	 */
 	NIFLIB_API float GetQuadraticAttenuation() const;
+
+	/*!
+	 * Sets the quadratic attenuation of this point light.
+	 * \param[in] value The new quadratic attentuation.
+	 */
 	NIFLIB_API void SetQuadraticAttenuation( float value );
 
 protected:

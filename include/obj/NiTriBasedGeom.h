@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 
 //#include "../gen/obj_defines.h"
 
@@ -40,7 +40,7 @@ public:
 	NIFLIB_API void GenHardwareSkinInfo( int max_bones_per_partition = 4, int max_bones_per_vertex = 4 );
 
 	/*!
-	 * Generate or update a NiStringExtraData block with precalculated
+	 * Generate or update a NiStringExtraData object with precalculated
 	 * tangent and binormal data (Oblivion specific)
 	 */
 	NIFLIB_API void UpdateTangentSpace();

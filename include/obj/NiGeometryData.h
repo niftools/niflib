@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiObject;
 class NiGeometryData;
 class NiSkinInstance;
@@ -52,14 +52,14 @@ public:
 	NIFLIB_API int GetVertexCount() const;
 
 	/*! 
-	 * Returns the number of texture coordinate sets used by this mesh.  For each UV set, there is a pair of texture coordinates for every vertex in the mesh.  Each set corresponds to a texture entry in the NiTexturingPropery block.
+	 * Returns the number of texture coordinate sets used by this mesh.  For each UV set, there is a pair of texture coordinates for every vertex in the mesh.  Each set corresponds to a texture entry in the NiTexturingPropery object.
 	 * \return The number of texture cooridnate sets used by this mesh.  Can be zero.
 	 * \sa IShapeData::SetUVSetCount, ITexturingProperty
 	 */
 	NIFLIB_API short GetUVSetCount() const;
 
 	/*! 
-	 * Changes the number of UV sets used by this mesh.  If the new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty block.
+	 * Changes the number of UV sets used by this mesh.  If the new size is smaller, data at the end of the array will be lost.  Otherwise it will be retained.  The number of UV sets must correspond with the number of textures defined in the corresponding NiTexturingProperty object.
 	 * \param n The new size of the uv set array.
 	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
 	 */

@@ -66,7 +66,7 @@ string NiObject::GetIDString() const {
 }
 
 NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
-	//Create a string stream to temporarily hold the state-save of this block
+	//Create a string stream to temporarily hold the state-save of this object
 	stringstream tmp;
 
 	//Create a new object of the same type

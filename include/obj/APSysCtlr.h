@@ -34,7 +34,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Refers to modifier block by its name?
+	 * Refers to modifier object by its name?
 	 */
 	NIFLIB_API string GetModifierName() const;
 	NIFLIB_API void SetModifierName( string value );

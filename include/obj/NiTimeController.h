@@ -18,7 +18,7 @@ class NiObjectNET;
 typedef Ref<NiTimeController> NiTimeControllerRef;
 
 /*!
- * NiTimeController - A generic time controller block.
+ * NiTimeController - A generic time controller object.
  */
 
 class NiTimeController : public NI_TIME_CONTROLLER_PARENT {

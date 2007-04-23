@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 
 namespace Niflib {
 
-// Forward define of referenced blocks
+// Forward define of referenced NIF objects
 class NiObject;
 class NiGeometryData;
 class NiSkinInstance;

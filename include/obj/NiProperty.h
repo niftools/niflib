@@ -13,7 +13,7 @@ class NiProperty;
 typedef Ref<NiProperty> NiPropertyRef;
 
 /*!
- * NiProperty - A generic property block.
+ * NiProperty - A generic property object.
  */
 
 class NiProperty : public NI_PROPERTY_PARENT {
