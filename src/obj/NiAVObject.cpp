@@ -8,13 +8,6 @@ All rights reserved.  Please see niflib.h for licence. */
 #include "../../include/obj/NiCollisionObject.h"
 using namespace Niflib;
 
-
-#define NIFLIB_GET_FLAG(value, shift, mask) \
-   (( value >> shift ) & mask)
-
-#define NIFLIB_MASK_FLAG(flag, value, shift, mask) \
-   ((flag ^ ~(mask << shift)) | ((value & mask) << shift))
-
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TypeConst() );
 
@@ -158,19 +151,25 @@ void NiAVObject::SetVelocity( const Vector3 & n ) {
 	velocity = n;
 }
 
-NiAVObject::CollisionType NiAVObject::GetCollision()
-{
-   return (NiAVObject::CollisionType)NIFLIB_GET_FLAG(flags, 1, 0x03);
+NiAVObject::CollisionType NiAVObject::GetCollisionMode() const {
+	//Mask off the 2 significant bits
+	unsigned short temp = flags & 0x6;
+
+	//Shift the result one right
+	return NiAVObject::CollisionType(temp >> 1);
 }
 
-void NiAVObject::SetCollision(NiAVObject::CollisionType value)
-{
-   flags = NIFLIB_MASK_FLAG(flags, value, 1, 0x03);
-}
+void NiAVObject::SetCollisionMode( CollisionType value ) {
+	unsigned short temp = (unsigned short)value;
 
-bool NiAVObject::GetHidden()
-{
-   return (bool)NIFLIB_GET_FLAG(flags, 0, 0x01);
+	//Shift one left
+	temp = temp << 1;
+
+	//Zero out the values in the flags for the 2 significant bits
+	flags = flags & 0xFFF9;
+
+	//Now combine values
+	flags = flags | temp;
 }
 
 Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
@@ -198,11 +197,6 @@ void NiAVObject::SetCollisionObject( NiCollisionObject * value ) {
 	}
 
 	collisionObject = value;
-}
-
-void NiAVObject::SetHidden(bool value)
-{
-   flags = NIFLIB_MASK_FLAG(flags, value, 0, 0x01);
 }
 
 void NiAVObject::SetLocalTransform( const Matrix44 & n ) {

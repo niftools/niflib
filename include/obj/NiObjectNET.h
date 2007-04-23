@@ -41,22 +41,72 @@ public:
 
 	NIFLIB_API string GetName();
 	NIFLIB_API void SetName( const string & new_name );
+
 	/*!
 	 * Formats a human readable string that includes the type of the object
 	 * \return A string in the form:  address(type) {name}
 	 */
 	NIFLIB_API virtual string GetIDString() const;
 
+	/*! 
+	 * Adds an extra data object to this one.  The way this data is stored changed after version 10.0.1.0, so the version
+	 * can optionally be included to specify the old storage method.
+	 * \param[in] obj The NiExtraData object to attach to this object.
+	 * \param[in] version The way the extra data is arranged internally varies with the NIF version, so if a file is to be written, it is best to pass the intended version.  The default is 10.0.1.0, which specifies the newer behavior.
+	 */
 	NIFLIB_API void AddExtraData( NiExtraData * obj, unsigned version = VER_10_0_1_0 );
+
+	/*! 
+	 * Removes an extra data object to this one.
+	 * \param[in] obj The NiExtraData object to remove from this object.
+	 */
 	NIFLIB_API void RemoveExtraData( NiExtraData * obj );
+
+	/*! 
+	 * Changes the internal storage method of the extra data in preparation for writing to a file.  This is only necessary if the
+	 * extra data was added in one way and needs to be output in another.  This would happen if extra data was loaded from an old file and needed to be written to a file with a newer version.
+	 * \param[in] version Specifies the NIF version that the internal data should be arranged for.
+	 */
 	NIFLIB_API void ShiftExtraData( unsigned int version = VER_10_0_1_0 );
+
+	/*!
+	 * Removes all extra data from this object.
+	 */
 	NIFLIB_API void ClearExtraData();
+
+	/*!
+	 * Returns a list of references to all the extra data referenced by this object.
+	 * \return All the extra data objects referenced by this one.
+	 */
 	NIFLIB_API list< Ref<NiExtraData> > GetExtraData() const;
 
+	/*!
+	 * Used to determine whether this object is animated.  In other words, whether it has any controllers.
+	 * \return True if the object has controllers, false otherwise.
+	 */
 	NIFLIB_API bool IsAnimated();
+
+	/*!
+	 * Adds a controller to this object.  Controllers allow various properties to be animated over time.
+	 * \param[in] obj The controller to add.
+	 */
 	NIFLIB_API void AddController( NiTimeController * obj );
+
+	/*!
+	 * Removes a controller from this object.  Controllers allow various properties to be animated over time.
+	 * \param[in] obj The controller to remove.
+	 */
 	NIFLIB_API void RemoveController( NiTimeController * obj );
+
+	/*!
+	 * Removes all controllers from this object.  This will remove any animation from it.
+	 */
 	NIFLIB_API void ClearControllers();
+
+	/*!
+	 * Gets a list of all controllers affecting this object.
+	 * \return All the controllers affecting this object.
+	 */
 	NIFLIB_API list< Ref<NiTimeController> > GetControllers() const;
 
 	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
