@@ -51,6 +51,9 @@ public:
 	 */
 	NIFLIB_API void BindSkin( vector< Ref<NiNode> > bone_nodes );
 
+	/*!
+	 * Unbinds this geometry from the bones.  This removes the NiSkinInstance and NiSkinData objects and causes this geometry to stop behaving as a skin.
+	 */
 	NIFLIB_API void UnbindSkin();
 
 	/*!
@@ -60,15 +63,46 @@ public:
 	 */
 	NIFLIB_API void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n );
 
+	/*!
+	 * Retrieves the NiSkinInstance object used by this geometry node, if any.
+	 * \return The NiSkinInstance object used by this geometry node, or NULL if none is used.
+	 */
 	NIFLIB_API Ref<NiSkinInstance> GetSkinInstance() const;
 
+	/*!
+	 * Retrieves the geometry data object used by this geometry node, if any.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.
+	 * \return The geometry data object, or NULL if there is none.
+	 */
 	NIFLIB_API Ref<NiGeometryData> GetData() const;
+
+	/*!
+	 * Sets the geometry data object used by this geometry node.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.
+	 * \param[in] n The new geometry data object, or NULL to clear the current one.
+	 */
 	NIFLIB_API void SetData( const Ref<NiGeometryData> & n );
 
+	/*!
+	 * Retrieves the object pointed to by the unknown link in this geometry node, if any.
+	 * \return The target of the unknown link, or NULL if there is none.
+	 */
 	NIFLIB_API Ref<NiObject> GetUnknownLink() const;
+
+	/*!
+	 * Sets the object pointed to by the unknown link in this geometry node.
+	 * \param[in] n The new object to be pointed to by the unknown link, or NULL to clear the current one.
+	 */
 	NIFLIB_API void SetUnknownLink( const Ref<NiObject> & n );
 
+	/*!
+	 * Retrieves the name of the shader used by this geometry node.  The allowable values are game-dependant.
+	 * \return The shader name.
+	 */
 	NIFLIB_API string GetShader() const;
+
+	/*!
+	 * Sets the name of the shader used by this geometry node.  The allowable values are game-dependant.
+	 * \param[in] n The new shader name.
+	 */
 	NIFLIB_API void SetShader( const string & n );
 
 	/*
@@ -92,11 +126,14 @@ public:
 	 */
 	NIFLIB_API void ApplySkinOffset();
 
+	/*
+	 * This automatically normalizes all the skin weights for this geometry node if it is bound to bones as a skin.  In other words, it will guarantee that the weights for all bones on each vertex will add up to 1.0.  This can be used to correct bad input data.
+	 */
 	NIFLIB_API void NormalizeSkinWeights();
 
 	/*
 	 * Used to determine whether this mesh is influenced by bones as a skin.
-	 * \return true if this mesh is a skin, false otherwise.
+	 * \return True if this mesh is a skin, false otherwise.
 	 */
 	NIFLIB_API bool IsSkin();
 
