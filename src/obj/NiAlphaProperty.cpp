@@ -43,11 +43,11 @@ void NiAlphaProperty::SetFlags( unsigned short n ) {
 	flags = n;
 }
 
-byte NiAlphaProperty::GetAlphaTestThreshold() const {
+byte NiAlphaProperty::GetTestThreshold() const {
 	return threshold;
 }
 
-void NiAlphaProperty::SetAlphaTestThreshold( byte n ) {
+void NiAlphaProperty::SetTestThreshold( byte n ) {
 	threshold = n;
 }
 
@@ -57,50 +57,50 @@ void NiAlphaProperty::SetAlphaTestThreshold( byte n ) {
 #define NIFLIB_MASK_FLAG(flag, value, shift, mask) \
    ((flag & ~(mask << shift)) | ((value & mask) << shift))
 
-NiAlphaProperty::BlendMode NiAlphaProperty::GetSourceBlendMode() const {
-   return (NiAlphaProperty::BlendMode)NIFLIB_GET_FLAG(flags, 1, 0x0f);
+NiAlphaProperty::BlendFunc NiAlphaProperty::GetSourceBlendFunc() const {
+   return (NiAlphaProperty::BlendFunc)NIFLIB_GET_FLAG(flags, 1, 0x0f);
 }
 
-void NiAlphaProperty::SetSourceBlendMode(BlendMode value) {
+void NiAlphaProperty::SetSourceBlendFunc(BlendFunc value) {
    flags = NIFLIB_MASK_FLAG(flags, value, 1, 0x0f);
 }
 
-NiAlphaProperty::BlendMode NiAlphaProperty::GetDestBlendMode() const {
-   return (NiAlphaProperty::BlendMode)(( flags >> 5 ) & 0x0f);
+NiAlphaProperty::BlendFunc NiAlphaProperty::GetDestBlendFunc() const {
+   return (NiAlphaProperty::BlendFunc)(( flags >> 5 ) & 0x0f);
 }
 
-void NiAlphaProperty::SetDestBlendMode(BlendMode value) {
+void NiAlphaProperty::SetDestBlendFunc(BlendFunc value) {
    flags = NIFLIB_MASK_FLAG(flags, value, 5, 0x0f);
 }
 
-NiAlphaProperty::TestMode NiAlphaProperty::GetTestMode() const {
-   return (NiAlphaProperty::TestMode)NIFLIB_GET_FLAG(flags, 10, 0x7);
+NiAlphaProperty::TestFunc NiAlphaProperty::GetTestFunc() const {
+   return (NiAlphaProperty::TestFunc)NIFLIB_GET_FLAG(flags, 10, 0x7);
 }
 
-void NiAlphaProperty::SetTestMode(TestMode value) {
+void NiAlphaProperty::SetTestFunc(TestFunc value) {
    flags = NIFLIB_MASK_FLAG(flags, value, 10, 0x7);
 }
 
-bool NiAlphaProperty::GetAlphaBlend() const {
+bool NiAlphaProperty::GetBlendState() const {
    return NIFLIB_GET_FLAG(flags, 0, 0x1) ? true : false;
 }
 
-void NiAlphaProperty::SetAlphaBlend(bool value) {
+void NiAlphaProperty::SetBlendState(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?1:0, 0, 0x1);
 }
 
-bool NiAlphaProperty::GetAlphaTest() const {
+bool NiAlphaProperty::GetTestState() const {
    return NIFLIB_GET_FLAG(flags, 9, 0x1) ? true : false;
 }
 
-void NiAlphaProperty::SetAlphaTest(bool value) {
+void NiAlphaProperty::SetTestState(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?1:0, 9, 0x1);
 }
 
-bool NiAlphaProperty::GetAlphaSort() const {
+bool NiAlphaProperty::GetTriangleSortMode() const {
    return NIFLIB_GET_FLAG(flags, 13, 0x1) ? false : true;
 }
-void NiAlphaProperty::SetAlphaSort(bool value) {
+void NiAlphaProperty::SetTriangleSortMode(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?0:1, 13, 0x1);
 }
 

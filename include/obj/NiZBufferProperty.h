@@ -34,11 +34,29 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
+	 */
 	NIFLIB_API unsigned short GetFlags() const;
-	NIFLIB_API void SetFlags(unsigned short value);
 
-	NIFLIB_API CompareMode GetFunction() const;
-	NIFLIB_API void SetFunction(CompareMode value);
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] value The new flag data.  Will overwrite any existing flag data.
+	 */
+	NIFLIB_API void SetFlags( unsigned short value );
+
+	/*!
+	 * Used to get the current depth buffer (Z-Buffer) test function, which determine whether a pixel is drawn based on the value of the depth buffer at the same location.
+	 * \return The current depth buffer test function.
+	 */
+	NIFLIB_API CompareMode GetDepthFunction() const;
+
+	/*!
+	 * Used to set the depth buffer (Z-Buffer) test function, which determine whether a pixel is drawn based on the value of the depth buffer at the same location.
+	 * \param[in] value The new depth buffer test function.
+	 */
+	NIFLIB_API void SetDepthFunction(CompareMode value);
 
 protected:
 	NI_Z_BUFFER_PROPERTY_MEMBERS

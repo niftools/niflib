@@ -39,34 +39,73 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	NIFLIB_API bool IsTextureExternal ();
+	/*!
+	 * Used to check whether the texture referenced by this object is an external file.
+	 * \return True if the texture is stored in an external file, false if it is stored within this NIF file.
+	 */
+	NIFLIB_API bool IsTextureExternal() const;
 
-	NIFLIB_API void SetExternalTexture( string file_name, const Ref<NiObject> & unk_link );
+	/*!
+	 * Sets a new external file texture.  Removes any existing texture references, whether internal or external.
+	 * \param[in] file_name The file name of the external texture.  Often needs to follow game guidlines to be found.
+	 */
+	NIFLIB_API void SetExternalTexture( string file_name );
 
-	NIFLIB_API void SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data );
+	/*!
+	 * Sets a new internal file texture.  Removes any existing texture references, whether internal or external.
+	 * \param[in] original_file_name The original file name of the texture.  This may be optional.
+	 * \param[in] pixel_data The NiPixelData object that contains the texture image data.
+	 */
+	NIFLIB_API void SetInternalTexture( string original_file_name, NiPixelData * pixel_data );
 
-	NIFLIB_API string GetExternalFileName() const;
-	NIFLIB_API Ref<NiObject> GetExternalUnknownLink() const;
+	/*!
+	 * Returns either the file name of the external texture, or the original file name of the internal one.
+	 * \return The name of the texture file.
+	 */
+	NIFLIB_API string GetTextureFileName() const;
 
-	NIFLIB_API byte GetInternalUnknownByte() const;
-	NIFLIB_API string GetInternalOriginalFileName() const;
-	NIFLIB_API Ref<NiPixelData> GetInternalPixelData() const;
+	/*!
+	 * Returns a reference to the texture image data object used by this texture, if any.
+	 * \return The iamge data object referenced by this texture, or NULL if one is not being used.
+	 */
+	NIFLIB_API Ref<NiPixelData> GetPixelData() const;
 
+	/*!
+	 * Gets the current pixel layout of this texture.  This is the image format, usually the color depth.
+	 * \return The pixel layout of this texture.
+	 */
 	NIFLIB_API PixelLayout GetPixelLayout() const;
+
+	/*!
+	 * Sets the pixel layout of this texture.  This is the image format, usually the color depth.
+	 * \param[in] n The new pixel layout of this texture.
+	 */
 	NIFLIB_API void SetPixelLayout( PixelLayout n );
 
+	/*!
+	 * Gets the current mip map format of this texture.  Specifies whether or not the texture contains mipmaps which are smaller versions of the texture that will be displayed on far away objects that use it.
+	 * \return The current mip map format of this texture.
+	 */
 	NIFLIB_API MipMapFormat GetMipMapFormat() const;
+
+	/*!
+	 * Sets the mip map format of this texture.  Specifies whether or not the texture contains mipmaps which are smaller versions of the texture that will be displayed on far away objects that use it.
+	 * \param[in] n The new mip map format of this texture.
+	 */
 	NIFLIB_API void SetMipMapFormat( MipMapFormat n );
 
+	/*!
+	 * Gets the current alpha format of this texture.  Specifies whether and how the texture uses alpha transparency.
+	 * \return The current alpha format of this texture.
+	 */
 	NIFLIB_API AlphaFormat GetAlphaFormat() const;
+
+	/*!
+	 * Sets the alpha format of this texture.  Specifies whether and how the texture uses alpha transparency.
+	 * \param[in] n The new alpha format of this texture.
+	 */
 	NIFLIB_API void SetAlphaFormat( AlphaFormat n );
 
-	//TODO: Fix name problem with Unknown Byte in XML
-	//byte GetUnknownByte2() const;
-	//SetUnknownByte2( byte n );
-
-	//byte GetUnknownByte3() const;
-	//SetUnknownByte3( byte n );
 protected:
 	NI_SOURCE_TEXTURE_MEMBERS
 private:

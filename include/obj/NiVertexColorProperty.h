@@ -36,14 +36,41 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-   NIFLIB_API unsigned short GetFlags() const;
-   NIFLIB_API void SetFlags(unsigned short value);
+	/*!
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
+	 */
+	NIFLIB_API unsigned short GetFlags() const;
 
-   NIFLIB_API VertMode GetVertexMode() const;
-   NIFLIB_API void SetVertexMode(VertMode value);
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] value The new flag data.  Will overwrite any existing flag data.
+	 */
+	NIFLIB_API void SetFlags(unsigned short value);
 
-   NIFLIB_API LightMode GetLightingMode() const;
-   NIFLIB_API void SetLightingMode(LightMode value);
+	/*!
+	 * Gets the current vertex mode.  This seems to specify how to apply vertex colors.
+	 * \return The current vertex mode.
+	 */
+	NIFLIB_API VertMode GetVertexMode() const;
+
+	/*!
+	 * Sets the vertex mode.  This seems to specify how to apply vertex colors.
+	 * \param[in] value The new vertex mode.
+	 */
+	NIFLIB_API void SetVertexMode(VertMode value);
+
+	/*!
+	 * Gets the current lighting mode.  This seems to specify how vertex colors influence lighting.
+	 * \return The current lighting mode.
+	 */
+	NIFLIB_API LightMode GetLightingMode() const;
+
+	/*!
+	 * Sets the lighting mode.  This seems to specify how vertex colors influence lighting.
+	 * \param[in] value The new lighting mode.
+	 */
+	NIFLIB_API void SetLightingMode(LightMode value);
 
 protected:
 	NI_VERTEX_COLOR_PROPERTY_MEMBERS

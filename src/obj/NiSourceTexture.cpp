@@ -37,47 +37,38 @@ const Type & NiSourceTexture::GetType() const {
 	return TYPE;
 };
 
-bool NiSourceTexture::IsTextureExternal () {
+bool NiSourceTexture::IsTextureExternal() const {
 	return ( useExternal != 0 );
 }
 
-void NiSourceTexture::SetExternalTexture( string file_name, const Ref<NiObject> & unk_link ) {
+void NiSourceTexture::SetExternalTexture( string file_name ) {
 	useExternal = 1;
 	pixelData = NULL;
 	this->originalFileName_.clear();
 
 	fileName = file_name;
-	unknownLink = unk_link;
+	unknownLink = NULL;
 }
 
-
-void NiSourceTexture::SetInternalTexture( byte unk_byte, string original_file_name, const Ref<NiPixelData> & pixel_data ) {
+void NiSourceTexture::SetInternalTexture( string original_file_name, NiPixelData * pixel_data ) {
 	useExternal = 0;
 	fileName.clear();
 	
 	//TODO: Fix name problem with Unknown Byte in XML
-	unknownByte = unk_byte;
+	unknownByte = 0;
 	originalFileName_ = original_file_name;
 	pixelData = pixel_data;
 }
 
-string NiSourceTexture::GetExternalFileName() const {
-	return fileName;
+string NiSourceTexture::GetTextureFileName() const {
+	if ( IsTextureExternal() ) {
+		return fileName;
+	} else {
+		return originalFileName_;
+	}
 }
 
-Ref<NiObject> NiSourceTexture::GetExternalUnknownLink() const {
-	return unknownLink;
-}
-
-byte NiSourceTexture::GetInternalUnknownByte() const {
-	return unknownByte;
-}
-
-string NiSourceTexture::GetInternalOriginalFileName() const {
-	return originalFileName_;
-}
-
-Ref<NiPixelData> NiSourceTexture::GetInternalPixelData() const {
+Ref<NiPixelData> NiSourceTexture::GetPixelData() const {
 	return pixelData;
 }
 
@@ -104,13 +95,6 @@ AlphaFormat NiSourceTexture::GetAlphaFormat() const {
 void NiSourceTexture::SetAlphaFormat( AlphaFormat n ) {
 	alphaFormat = n;
 }
-
-//TODO: Fix name problem with Unknown Byte in XML
-//byte NiSourceTexture::GetUnknownByte2() const;
-//SNiSourceTexture::etUnknownByte2( byte n );
-//
-//byte NiSourceTexture::GetUnknownByte3() const;
-//NiSourceTexture::SetUnknownByte3( byte n );
 
 const Type & NiSourceTexture::TypeConst() {
 	return TYPE;

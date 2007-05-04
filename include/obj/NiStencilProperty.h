@@ -34,58 +34,112 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Property flags.
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
 	 */
 	NIFLIB_API unsigned short GetFlags() const;
+
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] value The new flag data.  Will overwrite any existing flag data.
+	 */
 	NIFLIB_API void SetFlags(unsigned short value);
 
 	/*!
-	 * Enables or disables the stencil test.
+	 * Used to get the current stencil state buffer state.  This determines whether or not the stencil buffer is being used.
+	 * \return True if the stencil buffer is enabled, false otherwise.
 	 */
-	NIFLIB_API bool GetStencilEnabled() const;
-	NIFLIB_API void SetStencilEnabled(bool value);
+	NIFLIB_API bool GetStencilState() const;
 
 	/*!
-	 * Selects the compare mode function.
+	 * Used to set the stencil state buffer state.  This determines whether or not the stencil buffer is being used.
+	 * \param[in] value True to enable the stencil, false to disable it.
+	 */
+	NIFLIB_API void SetStencilState(bool value);
+
+	/*!
+	 * Used to get the current stencil buffer comparison function.  This function determines whether a particular pixel will be drawn based on the contents of the stencil buffer at that location.
+	 * \return The current stencil buffer comparison function.
 	 */
 	NIFLIB_API CompareMode GetStencilFunction() const;
+
+	/*!
+	 * Used to set the current stencil buffer comparison function.  This function determines whether a particular pixel will be drawn based on the contents of the stencil buffer at that location.
+	 * \param[in] value The new stencil buffer comparison function.
+	 */
 	NIFLIB_API void SetStencilFunction( CompareMode value );
 
 	/*!
-	 * Unknown.  Default is 0.
+	 * Used to get the current reference value used in the stencil test.  This is the value that the stencil function compares against to determine whether a pixel is drawn.
+	 * \return The current stencil reference value.
 	 */
 	NIFLIB_API unsigned int GetStencilRef() const;
+
+	/*!
+	 * Used to set the current reference value used in the stencil test.  This is the value that the stencil function compares against to determine whether a pixel is drawn.
+	 * \param[in] value The new stencil reference value.
+	 */
 	NIFLIB_API void SetStencilRef(unsigned int value);
 
 	/*!
-	 * A bit mask. The default is 0xffffffff.
+	 * Used to get the current bit mask used in the stencil test.  The reference value and the stored stencil value are both bitwise ANDed with this mask before being compared.  The default is 0xFFFFFFFF.
+	 * \return The current stencil test bit mask.
 	 */
 	NIFLIB_API unsigned int GetStencilMask() const;
+
+	/*!
+	 * Used to set the bit mask used in the stencil test.  The reference value and the stored stencil value are both bitwise ANDed with this mask before being compared.  The default is 0xFFFFFFFF.
+	 * \param[in] value The new stencil test bit mask.
+	 */
 	NIFLIB_API void SetStencilMask(unsigned int value);
 
 	/*!
-	 * Unknown.
+	 * Used to get the current action that occurs if the stencil test fails (evaluates to false).  This involves whether the stencil buffer will be altered and how.
+	 * \return The current action that occurs if the stencil test fails.
 	 */
 	NIFLIB_API StencilAction GetFailAction() const;
+
+	/*!
+	 * Used to set the action that will occur if the stencil test fails (evaluates to false).  This involves whether the stencil buffer will be altered and how.
+	 * \param[in] value The new action that occur if the stencil test fails.
+	 */
 	NIFLIB_API void SetFailAction( StencilAction value );
 
 	/*!
-	 * Unknown.
+	 * Used to get the current action that occurs if the depth buffer test fails (evaluates to false).  This involves whether the stencil buffer will be altered and how.
+	 * \return The current action that occurs if the depth buffer test fails.
 	 */
 	NIFLIB_API StencilAction GetZFailAction() const;
+
+	/*!
+	 * Used to set the action that will occur if the depth buffer (Z-buffer) fails (evaluates to false).  This involves whether the stencil buffer will be altered and how.
+	 * \param[in] value The new action that occur if the depth buffer fails.
+	 */
 	NIFLIB_API void SetZFailAction( StencilAction  value );
 
 	/*!
-	 * Unknown.
+	 * Used to get the current action that occurs if the depth buffer (Z-buffer) test passes (evaluate to true).  This involves whether the stencil buffer will be altered and how.
+	 * \return The current action that occurs if the depth buffer test passes.
 	 */
 	NIFLIB_API StencilAction GetPassAction() const;
+
+	/*!
+	 * Used to set the action that will occur if the depth buffer (Z-buffer) test passes (evaluate to true).  This involves whether the stencil buffer will be altered and how.
+	 * \param[in] value The new action that occur if the depth buffer test passes.
+	 */
 	NIFLIB_API void SetPassAction( StencilAction value );
 
 	/*!
-	 * Used to enabled double sided faces.
+	 * Used to determine whether the front, back, or both sides of triangles will be drawn.   This isn't related to the stencil buffer, but happens to be included in this propery, probably for conveniance.
+	 * \return The current face drawing mode.
 	 */
-	NIFLIB_API FaceDrawMode GetDrawMode() const;
-	NIFLIB_API void SetDrawMode( FaceDrawMode value );
+	NIFLIB_API FaceDrawMode GetFaceDrawMode() const;
+
+	/*!
+	 * Sets whether the front, back, or both sides of triangles will be drawn.   This isn't related to the stencil buffer, but happens to be included in this propery, probably for conveniance.
+	 * \param[in] value The new face drawing mode.
+	 */
+	NIFLIB_API void SetFaceDrawMode( FaceDrawMode value );
 
 protected:
 	NI_STENCIL_PROPERTY_MEMBERS

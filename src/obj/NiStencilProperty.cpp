@@ -43,11 +43,11 @@ void NiStencilProperty::SetFlags(unsigned short value) {
    flags = value;
 }
 
-bool NiStencilProperty::GetStencilEnabled() const {
+bool NiStencilProperty::GetStencilState() const {
    return (stencilEnabled != 0);
 }
 
-void NiStencilProperty::SetStencilEnabled(bool value) {
+void NiStencilProperty::SetStencilState(bool value) {
    stencilEnabled = value;
 }
 
@@ -99,11 +99,11 @@ void NiStencilProperty::SetPassAction(StencilAction value) {
    passAction = value;
 }
 
-FaceDrawMode NiStencilProperty::GetDrawMode() const {
+FaceDrawMode NiStencilProperty::GetFaceDrawMode() const {
    return drawMode;
 }
 
-void NiStencilProperty::SetDrawMode(FaceDrawMode value) {
+void NiStencilProperty::SetFaceDrawMode(FaceDrawMode value) {
    drawMode = value;
 }
 

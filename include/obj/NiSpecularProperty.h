@@ -33,7 +33,16 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
+	 */
 	NIFLIB_API unsigned short GetFlags() const;
+
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] n The new flag data.  Will overwrite any existing flag data.
+	 */
 	NIFLIB_API void SetFlags( unsigned short n );
 
 protected:

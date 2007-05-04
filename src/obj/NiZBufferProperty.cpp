@@ -43,11 +43,11 @@ void NiZBufferProperty::SetFlags(unsigned short value) {
    flags = value;
 }
 
-CompareMode NiZBufferProperty::GetFunction() const {
+CompareMode NiZBufferProperty::GetDepthFunction() const {
    return function;
 }
 
-void NiZBufferProperty::SetFunction(CompareMode value) {
+void NiZBufferProperty::SetDepthFunction(CompareMode value) {
    function = value;
 }
 
