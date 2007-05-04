@@ -43,31 +43,37 @@ public:
 
 	/*!
 	 * Get the point to calculate distance from for switching?
+	 * \return The LOD center.
 	 */
 	NIFLIB_API Vector3 GetLODCenter() const;
 
 	/*!
 	 * Set the point to calculate distance from for switching?
+	 * \param[in] value The new LOD center.
 	 */
 	NIFLIB_API void SetLODCenter( const Vector3 & value );
 
 	/*!
 	 * Get the ranges of distance that each level of detail applies in.
+	 * \return The LOD levels.
 	 */
 	NIFLIB_API vector<LODRange > GetLODLevels() const;
 
 	/*!
 	 * Set the ranges of distance that each level of detail applies in.
+	 * \param[in] value The new LOD levels.
 	 */
 	NIFLIB_API void SetLODLevels( const vector<LODRange >& value );
 
 	/*!
-	 * Get the data object that refers to LOD level information
+	 * Get the data object that refers to LOD level information.
+	 * \return The LOD level data object or NULL if there is none.
 	 */
 	NIFLIB_API Ref<NiLODData > GetLODLevelData() const;
 	
 	/*!
-	 * Set the data object that refers to LOD level information
+	 * Set the data object that refers to LOD level information.
+	 * \param[in] The new LOD level data object or NULL to clear the current one.
 	 */
 	NIFLIB_API void SetLODLevelData( Ref<NiLODData > value );
 

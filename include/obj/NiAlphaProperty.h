@@ -33,28 +33,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	enum BlendMode {
-	  BM_ONE = 0x00,
-	  BM_ZERO = 0x01,
-	  BM_SRC_COLOR = 0x02,
-	  BM_ONE_MINUS_SRC_COLOR = 0x03,
-	  BM_DST_COLOR = 0x04,
-	  BM_ONE_MINUS_DST_COLOR = 0x05,
-	  BM_SRC_ALPHA = 0x06,
-	  BM_ONE_MINUS_SRC_ALPHA = 0x07,
-	  BM_DST_ALPHA = 0x08,
-	  BM_ONE_MINUS_DST_ALPHA = 0x08,
-	  BM_SRC_ALPHA_SATURATE = 0x09,
+		BM_ONE = 0x00,
+		BM_ZERO = 0x01,
+		BM_SRC_COLOR = 0x02,
+		BM_ONE_MINUS_SRC_COLOR = 0x03,
+		BM_DST_COLOR = 0x04,
+		BM_ONE_MINUS_DST_COLOR = 0x05,
+		BM_SRC_ALPHA = 0x06,
+		BM_ONE_MINUS_SRC_ALPHA = 0x07,
+		BM_DST_ALPHA = 0x08,
+		BM_ONE_MINUS_DST_ALPHA = 0x08,
+		BM_SRC_ALPHA_SATURATE = 0x09,
 	};
 
 	enum TestMode {
-	  TM_ALWAYS = 0x00,
-	  TM_LESS = 0x01,
-	  TM_EQUAL = 0x02,
-	  TM_LEQUAL = 0x03,
-	  TM_GREATER = 0x04,
-	  TM_NOTEQUAL = 0x05,
-	  TM_GEQUAL = 0x06,
-	  TM_NEVER = 0x07,
+		TM_ALWAYS = 0x00,
+		TM_LESS = 0x01,
+		TM_EQUAL = 0x02,
+		TM_LEQUAL = 0x03,
+		TM_GREATER = 0x04,
+		TM_NOTEQUAL = 0x05,
+		TM_GEQUAL = 0x06,
+		TM_NEVER = 0x07,
 	};
 
 	NIFLIB_API BlendMode GetSourceBlendMode() const;
@@ -75,7 +75,16 @@ public:
 	NIFLIB_API bool GetAlphaSort() const;
 	NIFLIB_API void SetAlphaSort(bool value);
 
+	/*!
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
+	 */
 	NIFLIB_API unsigned short GetFlags() const;
+
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] n The new flag data.  Will overwrite any existing flag data.
+	 */
 	NIFLIB_API void SetFlags( unsigned short n );
 
 	NIFLIB_API byte GetAlphaTestThreshold() const;

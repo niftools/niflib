@@ -35,10 +35,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * 0: ALWAYS_FACE_CAMERA 1: ROTATE_ABOUT_UP 2: RIGID_FACE_CAMERA 3:
-	 * ALWAYS_FACE_CENTER 4: RIGID_FACE_CENTER
+	 * Retreives the current bilboard mode of this bilboard node.  This determines how it will cause the node to face the camera.
+	 * \return The current bilboard mode.
 	 */
 	NIFLIB_API BillboardMode GetBillboardMode() const;
+
+	/*!
+	 * Sets the bilboard mode of this bilboard node.  This determines how it will cause the node to face the camera.
+	 * \param[in] value The new bilboard mode.
+	 */
 	NIFLIB_API void SetBillboardMode( BillboardMode value );
 
 protected:

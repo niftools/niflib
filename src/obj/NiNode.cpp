@@ -117,12 +117,12 @@ vector< Ref<NiAVObject> > NiNode::GetChildren() const {
 }
 
 
-void NiNode::AddEffect( Ref<NiDynamicEffect> obj ) {
+void NiNode::AddEffect( NiDynamicEffect * obj ) {
    obj->SetParent( this );
    effects.push_back( obj );
 }
 
-void NiNode::RemoveEffect( Ref<NiDynamicEffect> obj ) {
+void NiNode::RemoveEffect( NiDynamicEffect * obj ) {
    //Search Effect list for the one to remove
    for ( vector< NiDynamicEffectRef >::iterator it = effects.begin(); it != effects.end(); ) {
       if ( *it == obj ) {

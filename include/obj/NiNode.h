@@ -52,9 +52,27 @@ public:
 	}
 #endif
 
-	NIFLIB_API void AddEffect( Ref<NiDynamicEffect> effect );
-	NIFLIB_API void RemoveEffect( Ref<NiDynamicEffect> effect );
+	/*!
+	 * Adds a dynamic effect to this node.  This is usually a light, but can also be a texture effect or something else.  Can affect nodes further down the scene graph from this one as well.
+	 * \param[in] effect The new dynamic effect to add to this node.
+	 */
+	NIFLIB_API void AddEffect( NiDynamicEffect * effect );
+
+	/*!
+	 * Removes a dynamic effect to this node.  This is usually a light, but can also be a texture effect or something else.  Can affect nodes further down the scene graph from this one as well.
+	 * \param[in] effect The dynamic effect to remove from this node.
+	 */
+	NIFLIB_API void RemoveEffect( NiDynamicEffect * effect );
+
+	/*!
+	 * Removes all dynamic effects from this node.  These is usually lights, but can also be a texture effects or something else.  Can affect nodes further down the scene graph from this one as well.
+	 */
 	NIFLIB_API void ClearEffects();
+
+	/*!
+	 * Retrieves all the dynamic effects attached to this node.  This is usually a light, but can also be a texture effect or something else.  Can affect nodes further down the scene graph from this one as well.
+	 * \return The dynamic effects attached to this node.
+	 */
 	NIFLIB_API vector< Ref<NiDynamicEffect> > GetEffects() const;
 
 	/*! Checks if this node has any skins attached. */
@@ -85,19 +103,18 @@ public:
 	NIFLIB_API void PropagateTransform();
 
 	/*! 
-	 * Should only be called by NiTriBasedGeom
-	 * Adds a new SkinInstance to the specified mesh.
-	 * The bones must be below this node in the scene graph tree
+	 * NIFLIB_HIDDEN function.  For internal use only.
+	 * Should only be called by NiTriBasedGeom.  Adds a new SkinInstance to the specified mesh.  The bones must be below this node in the scene graph tree
 	 */
 	NIFLIB_HIDDEN void AddSkin( NiSkinInstance * skin_inst );
 
 	/*! 
-	 * Should only be called by NiTriBasedGeom
-	 * Detaches the skin associated with a child mesh.
+	 * NIFLIB_HIDDEN function.  For internal use only.
+	 * Should only be called by NiTriBasedGeom.  Detaches the skin associated with a child mesh.
 	 */
 	NIFLIB_HIDDEN void RemoveSkin( NiSkinInstance * skin_inst );
 
-	/*! Should not be called directly */
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN void SetSkinFlag( bool n );
 
 private:
