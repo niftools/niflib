@@ -36,18 +36,6 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	/*!
-	 * Unknown.
-	 */
-	NIFLIB_API KeyGroup<float > GetFloatKeys_() const;
-	NIFLIB_API void SetFloatKeys_( KeyGroup<float > value );
-
-	/*!
-	 * Unknown.
-	 */
-	NIFLIB_API vector<Key<byte > > GetVisibilityKeys_() const;
-	NIFLIB_API void SetVisibilityKeys_( const vector<Key<byte > >& value );
-
 protected:
 	NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS
 private:

@@ -32,13 +32,15 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	/*! Retrieves the palette data from this palette object.
+	/*!
+	 * Retrieves the palette data from this palette object.
 	 * \return A vector containing the the colors stored in the palette.
 	 * \sa NiPalette::SetPalette
 	 */
 	NIFLIB_API vector<Color4> GetPalette() const;
 
-	/*! Sets the palette data for this palette object.
+	/*!
+	 * Sets the palette data for this palette object.
 	 * \param new_pal A vector containing the the new colors to be stored in the palette.
 	 * \sa NiPalette::GetPalette
 	 */
