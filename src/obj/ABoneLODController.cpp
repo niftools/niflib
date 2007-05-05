@@ -56,7 +56,7 @@ vector<Ref<NiNode> > ABoneLODController::GetNodeGroup( int index ) const {
    return value;
 }
 
-void ABoneLODController::AddNodeToGroup( int index, Ref<NiNode> node ) {
+void ABoneLODController::AddNodeToGroup( int index, NiNode * node ) {
    while (index >= int(nodeGroups.size()))
       nodeGroups.insert(nodeGroups.end(), NodeGroup() );
    numNodeGroups2 = nodeGroups.size();
@@ -67,7 +67,7 @@ void ABoneLODController::AddNodeToGroup( int index, Ref<NiNode> node ) {
       nodes.push_back(node);
 }
 
-void ABoneLODController::RemoveNodeFromGroup( int index, Ref<NiNode> node ) {
+void ABoneLODController::RemoveNodeFromGroup( int index, NiNode * node ) {
    if (index < 0 || index >= int(nodeGroups.size()) ) {
       throw runtime_error("Invalid index referenced.");
    }

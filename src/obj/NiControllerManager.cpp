@@ -58,7 +58,7 @@ void NiControllerManager::SetControllerSequences( const vector<Ref<NiControllerS
    }
 }
 
-void NiControllerManager::AddSequence( Ref<NiControllerSequence > & obj ) {
+void NiControllerManager::AddSequence( NiControllerSequence * obj ) {
    vector<NiControllerSequenceRef>::iterator begin = controllerSequences.begin();
    vector<NiControllerSequenceRef>::iterator end = controllerSequences.end();
    vector<NiControllerSequenceRef>::iterator it = std::find(begin, end, obj);
@@ -68,7 +68,7 @@ void NiControllerManager::AddSequence( Ref<NiControllerSequence > & obj ) {
    }
 }
 
-void NiControllerManager::RemoveSequence( Ref<NiControllerSequence > obj ) {
+void NiControllerManager::RemoveSequence( NiControllerSequence * obj ) {
    vector<NiControllerSequenceRef>::iterator begin = controllerSequences.begin();
    vector<NiControllerSequenceRef>::iterator end = controllerSequences.end();
    vector<NiControllerSequenceRef>::iterator it = std::find(begin, end, obj);
@@ -90,7 +90,7 @@ Ref<NiDefaultAVObjectPalette > NiControllerManager::GetObjectPalette() const {
 	return objectPalette;
 }
 
-void NiControllerManager::SetObjectPalette( Ref<NiDefaultAVObjectPalette > value ) {
+void NiControllerManager::SetObjectPalette( NiDefaultAVObjectPalette * value ) {
 	objectPalette = value;
 }
 

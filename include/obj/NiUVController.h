@@ -39,8 +39,18 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	//TODO:  This class has an unknown member
+
+	/*!
+	 * Retrives the UV data used by this controller.
+	 * \return The UV data.
+	 */
 	NIFLIB_API Ref<NiUVData> GetData() const;
-	NIFLIB_API void SetData( const Ref<NiUVData> & n );
+
+	/*!
+	 * Sets the UV data used by this controller.
+	 * \param[in] n The new UV data.
+	 */
+	NIFLIB_API void SetData( NiUVData * n );
 
 protected:
 	NI_U_V_CONTROLLER_MEMBERS

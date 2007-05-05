@@ -37,10 +37,16 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * NiNode Targets to be controlled.
+	 * Retrives a list of the extra NiNode targets to be controlled.
+	 * \return The NiNode targets to be controlled.
 	 */
 	NIFLIB_API vector<Ref<NiNode> > GetExtraTargets() const;
-	NIFLIB_API void SetExtraTargets( const vector< Ref<NiNode> >& value );
+
+	/*!
+	 * Sets the list of the extra NiNode targets to be controlled.
+	 * \param[in] value The new NiNode targets to be controlled.
+	 */
+	NIFLIB_API void SetExtraTargets( const vector< Ref<NiNode> > & value );
 
 protected:
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS

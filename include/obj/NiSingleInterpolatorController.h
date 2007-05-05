@@ -40,10 +40,16 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Link to interpolator.
+	 * Retrives the interpolator used by this controller.
+	 * \return The interpolator.
 	 */
 	NIFLIB_API Ref<NiInterpolator > GetInterpolator() const;
-	NIFLIB_API void SetInterpolator( Ref<NiInterpolator > value );
+
+	/*!
+	 * Sets the interpolator used by this controller.
+	 * \param[in] value The new interpolator.
+	 */
+	NIFLIB_API void SetInterpolator( NiInterpolator * value );
 
 protected:
 	NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS

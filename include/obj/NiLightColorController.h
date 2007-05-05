@@ -40,16 +40,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Link to NiPosData
+	 * Retrives the pos data used by this controller.
+	 * \return The pos data.
 	 */
-	NIFLIB_API Ref<NiPosData > GetData() const;
-	NIFLIB_API void SetData( Ref<NiPosData > value );
+	NIFLIB_API Ref<NiPosData> GetData() const;
 
 	/*!
-	 * Link to NiPoint3Interpolator.
+	 * Sets the pos data used by this controller.
+	 * \param[in] value The new pos data.
 	 */
-	NIFLIB_API Ref<NiPoint3Interpolator > GetInterpolator() const;
-	NIFLIB_API void SetInterpolator( Ref<NiPoint3Interpolator > value );
+	NIFLIB_API void SetData( NiPosData * value );
+
+	/*!
+	 * Retrives the interpolator used by this controller.
+	 * \return The interpolator.
+	 */
+	NIFLIB_API Ref<NiPoint3Interpolator> GetInterpolator() const;
+
+	/*!
+	 * Sets the interpolator used by this controller.
+	 * \param[in] value The new interpolator.
+	 */
+	NIFLIB_API void SetInterpolator( NiPoint3Interpolator * value );
 
 protected:
 	NI_LIGHT_COLOR_CONTROLLER_MEMBERS

@@ -42,6 +42,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	//TODO:  This controller is not a priority and it has a lot of unknown data.
+
 protected:
 	NI_PARTICLE_SYSTEM_CONTROLLER_MEMBERS
 private:

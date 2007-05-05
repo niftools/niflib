@@ -41,7 +41,7 @@ Ref<NiPSysEmitterCtlrData > NiPSysEmitterCtlr::GetData() const {
 	return data;
 }
 
-void NiPSysEmitterCtlr::SetData( Ref<NiPSysEmitterCtlrData > value ) {
+void NiPSysEmitterCtlr::SetData( NiPSysEmitterCtlrData * value ) {
 	data = value;
 }
 
@@ -49,7 +49,7 @@ Ref<NiInterpolator > NiPSysEmitterCtlr::GetVisibilityInterpolator() const {
 	return visibilityInterpolator;
 }
 
-void NiPSysEmitterCtlr::SetVisibilityInterpolator( Ref<NiInterpolator > value ) {
+void NiPSysEmitterCtlr::SetVisibilityInterpolator( NiInterpolator * value ) {
 	visibilityInterpolator = value;
 }
 

@@ -40,11 +40,31 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	//TODO:  This class has a lot of unknown data
-	NIFLIB_API Ref<NiFloatData> GetFloatData() const;
-	NIFLIB_API void SetFloatData( const Ref<NiFloatData> & n );
 
+	/*!
+	 * Retrives the float data used by this controller.
+	 * \return The float data.
+	 */
+	NIFLIB_API Ref<NiFloatData> GetFloatData() const;
+
+	/*!
+	 * Sets the float data used by this controller.
+	 * \param[in] n The new float data.
+	 */
+	NIFLIB_API void SetFloatData( NiFloatData * n );
+
+	/*!
+	 * Retrives the pos data used by this controller.
+	 * \return The pos data.
+	 */
 	NIFLIB_API Ref<NiPosData> GetPosData() const;
-	NIFLIB_API void SetPosData( const Ref<NiPosData> & n );
+
+	/*!
+	 * Sets the pos data used by this controller.
+	 * \param[in] n The new pos data.
+	 */
+	NIFLIB_API void SetPosData( NiPosData * n );
+
 protected:
 	NI_PATH_CONTROLLER_MEMBERS
 private:

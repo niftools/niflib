@@ -40,7 +40,7 @@ Ref<NiKeyframeData> NiKeyframeController::GetData() const {
 	return data;
 }
 	
-void NiKeyframeController::SetData( const Ref<NiKeyframeData> & n ) {
+void NiKeyframeController::SetData( NiKeyframeData * n ) {
 	data = n;
 }
 

@@ -41,7 +41,7 @@ Ref<NiFloatData> NiPathController::GetFloatData() const {
 	return floatData;
 }
 
-void NiPathController::SetFloatData( const Ref<NiFloatData> & n ) {
+void NiPathController::SetFloatData( NiFloatData * n ) {
 	floatData = n;
 }
 
@@ -49,7 +49,7 @@ Ref<NiPosData> NiPathController::GetPosData() const {
 	return posData;
 }
 
-void NiPathController::SetPosData( const Ref<NiPosData> & n ) {
+void NiPathController::SetPosData( NiPosData * n ) {
 	posData = n;
 }
 

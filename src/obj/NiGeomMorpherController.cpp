@@ -50,7 +50,7 @@ Ref<NiMorphData> NiGeomMorpherController::GetData() const {
 	return data;
 }
 
-void NiGeomMorpherController::SetData( const Ref<NiMorphData> & n ) {
+void NiGeomMorpherController::SetData( NiMorphData * n ) {
 	data = n;
 }
 

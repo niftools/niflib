@@ -40,16 +40,28 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * This controller's data
+	 * Retrives the data object used by this controller.
+	 * \return The data object.
 	 */
-	NIFLIB_API Ref<NiPSysEmitterCtlrData > GetData() const;
-	NIFLIB_API void SetData( Ref<NiPSysEmitterCtlrData > value );
+	NIFLIB_API Ref<NiPSysEmitterCtlrData> GetData() const;
 
 	/*!
-	 * Links to a bool interpolator. Controls emitter's visibility status?
+	 * Sets the data object used by this controller.
+	 * \param[in] value The new data object.
 	 */
-	NIFLIB_API Ref<NiInterpolator > GetVisibilityInterpolator() const;
-	NIFLIB_API void SetVisibilityInterpolator( Ref<NiInterpolator > value );
+	NIFLIB_API void SetData( NiPSysEmitterCtlrData * value );
+
+	/*!
+	 * Retrives the visibility interpolator used by this controller.
+	 * \return The visibility interpolator.
+	 */
+	NIFLIB_API Ref<NiInterpolator> GetVisibilityInterpolator() const;
+
+	/*!
+	 * Sets the visibility interpolator used by this controller.
+	 * \param[in] value The new visibility interpolator.
+	 */
+	NIFLIB_API void SetVisibilityInterpolator( NiInterpolator * value );
 
 protected:
 	NI_P_SYS_EMITTER_CTLR_MEMBERS

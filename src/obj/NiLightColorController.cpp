@@ -41,7 +41,7 @@ Ref<NiPosData > NiLightColorController::GetData() const {
 	return data;
 }
 
-void NiLightColorController::SetData( Ref<NiPosData > value ) {
+void NiLightColorController::SetData( NiPosData * value ) {
 	data = value;
 }
 
@@ -49,7 +49,7 @@ Ref<NiPoint3Interpolator > NiLightColorController::GetInterpolator() const {
 	return interpolator;
 }
 
-void NiLightColorController::SetInterpolator( Ref<NiPoint3Interpolator > value ) {
+void NiLightColorController::SetInterpolator( NiPoint3Interpolator * value ) {
 	interpolator = value;
 }
 

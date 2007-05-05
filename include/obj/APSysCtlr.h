@@ -34,9 +34,15 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 	/*!
-	 * Refers to modifier object by its name?
+	 * Retrives the modifier name. This seems to refer to the modifier object by its name.
+	 * \return The modifier name.
 	 */
 	NIFLIB_API string GetModifierName() const;
+
+	/*!
+	 * Sets the modifier name. This seems to refer to the modifier object by its name.
+	 * \param[in] value The new modifier name.
+	 */
 	NIFLIB_API void SetModifierName( string value );
 
 protected:

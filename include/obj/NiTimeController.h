@@ -63,19 +63,64 @@ public:
 	 */
 	NIFLIB_API Ref<NiObjectNET> GetTarget();
 
+	/*!
+	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \return The flag data.
+	 */
 	NIFLIB_API unsigned short GetFlags() const;
+
+	/*!
+	 * Can be used to set the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
+	 * \param[in] n The new flag data.  Will overwrite any existing flag data.
+	 */
 	NIFLIB_API void SetFlags( unsigned short n );
 
+	/*!
+	 * Gets the frequency value of this controller.  This is used to map the time indices stored in the controller to seconds.  The value is multiplied by the application time to arrive at the controller time, so the default value of 1.0 means that the times in the controller are already in seconds.
+	 * \return The frequency.
+	 */
 	NIFLIB_API float GetFrequency() const;
+
+	/*!
+	 * Sets the frequency value of this controller.  This is used to map the time indices stored in the controller to seconds.  The value is multiplied by the application time to arrive at the controller time, so the default value of 1.0 means that the times in the controller are already in seconds.  Calling this function with a new value will not cause any changes to the data stored in the controller.
+	 * \param[in] n The new frequency.
+	 */
 	NIFLIB_API void SetFrequency( float n );
 
+	/*!
+	 * Gets the phase value of this controller.  This is used to map the time indices stored in the controller to seconds.  The value is is added to the result of the multiplication of application time by frequency to arrive at the controller time, so the default value of 0.0 means that there is no phase shift in the time indices.
+	 * \return The phase.
+	 */
 	NIFLIB_API float GetPhase() const;
+
+	/*!
+	 * Sets the phase value of this controller.  This is used to map the time indices stored in the controller to seconds.  The value is is added to the result of the multiplication of application time by frequency to arrive at the controller time, so the default value of 0.0 means that there is no phase shift in the time indices.  Calling this function with a new value will not cause any changes to the data stored in the controller.
+	 * \param[in] n The new phase.
+	 */
 	NIFLIB_API void SetPhase( float n );
 
+	/*!
+	 * Retrieves the time index where this controller begins to take affect.  If the animation type is set to wrap or cycle, the animation will not occur only between these time intervals but will be mapped to the right spot between them.  This value is in controller time, i.e. phase and frequency are applied to transform it to application time.
+	 * \return The start time for the controller animation.
+	 */
 	NIFLIB_API float GetStartTime() const;
+
+	/*!
+	 * Sets the time index where this controller begins to take affect.  If the animation type is set to wrap or cycle, the animation will not occur only between these time intervals but will be mapped to the right spot between them.  This value is in controller time, i.e. phase and frequency are applied to transform it to application time.
+	 * \param[in] n The new start time for the controller animation.
+	 */
 	NIFLIB_API void SetStartTime( float n );
 
+	/*!
+	 * Retrieves the time index where this controller stops taking affect.  If the animation type is set to wrap or cycle, the animation will not occur only between these time intervals but will be mapped to the right spot between them.  This value is in controller time, i.e. phase and frequency are applied to transform it to application time.
+	 * \return The end time for the controller animation.
+	 */
 	NIFLIB_API float GetStopTime() const;
+
+	/*!
+	 * Sets the time index where this controller stops taking affect.  If the animation type is set to wrap or cycle, the animation will not occur only between these time intervals but will be mapped to the right spot between them.  This value is in controller time, i.e. phase and frequency are applied to transform it to application time.
+	 * \param[in] n The new end time for the controller animation.
+	 */
 	NIFLIB_API void SetStopTime( float n );
 protected:
 	NI_TIME_CONTROLLER_MEMBERS

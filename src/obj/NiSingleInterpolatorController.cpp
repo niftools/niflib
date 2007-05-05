@@ -40,7 +40,7 @@ Ref<NiInterpolator > NiSingleInterpolatorController::GetInterpolator() const {
 	return interpolator;
 }
 
-void NiSingleInterpolatorController::SetInterpolator( Ref<NiInterpolator > value ) {
+void NiSingleInterpolatorController::SetInterpolator( NiInterpolator * value ) {
 	interpolator = value;
 }
 

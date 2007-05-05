@@ -39,12 +39,32 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	//TODO: lots of unknown data in this object
+	//TODO: Lots of unknown data in this object
+
+	/*!
+	 * Retrives a list of the interpolators used by this controller.
+	 * \return The interpolators.
+	 */
 	NIFLIB_API vector< Ref<NiInterpolator> > GetInterpolators() const;
+
+	/*!
+	 * Sets the list of the interpolators used by this controller.
+	 * \param[in] n The new interpolators.
+	 */
 	NIFLIB_API void SetInterpolators( const vector< Ref<NiInterpolator> > & n );
 
+	/*!
+	 * Retrives the morph data used by this controller.
+	 * \return The morph data.
+	 */
 	NIFLIB_API Ref<NiMorphData> GetData() const;
-	NIFLIB_API void SetData( const Ref<NiMorphData> & n );
+
+	/*!
+	 * Sets the morph data used by this controller.
+	 * \param[in] n The new morph data.
+	 */
+	NIFLIB_API void SetData( NiMorphData * n );
+
 protected:
 	NI_GEOM_MORPHER_CONTROLLER_MEMBERS
 private:

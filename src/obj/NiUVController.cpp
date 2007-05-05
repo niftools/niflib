@@ -40,7 +40,7 @@ Ref<NiUVData> NiUVController::GetData() const {
 	return data;
 }
 
-void NiUVController::SetData( const Ref<NiUVData> & n ) {
+void NiUVController::SetData( NiUVData * n ) {
 	data = n;
 }
 
