@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineCompFloatInterpolator::TYPE("NiBSplineCompFloatInterpolator", &NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBSplineCompFloatInterpolator::TYPE("NiBSplineCompFloatInterpolator", &NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_PARENT::TYPE );
 
 NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiBSplineCompFloatInterpolator::GetRefs() const {
 const Type & NiBSplineCompFloatInterpolator::GetType() const {
 	return TYPE;
 };
-
-const Type & NiBSplineCompFloatInterpolator::TypeConst() {
-	return TYPE;
-}

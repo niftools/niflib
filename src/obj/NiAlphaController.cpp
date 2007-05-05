@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAlphaController::TYPE("NiAlphaController", &NI_ALPHA_CONTROLLER_PARENT::TypeConst() );
+const Type NiAlphaController::TYPE("NiAlphaController", &NI_ALPHA_CONTROLLER_PARENT::TYPE );
 
 NiAlphaController::NiAlphaController() NI_ALPHA_CONTROLLER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiAlphaController::GetRefs() const {
 const Type & NiAlphaController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiAlphaController::TypeConst() {
-	return TYPE;
-}

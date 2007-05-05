@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysBoxEmitter::TYPE("NiPSysBoxEmitter", &NI_P_SYS_BOX_EMITTER_PARENT::TypeConst() );
+const Type NiPSysBoxEmitter::TYPE("NiPSysBoxEmitter", &NI_P_SYS_BOX_EMITTER_PARENT::TYPE );
 
 NiPSysBoxEmitter::NiPSysBoxEmitter() NI_P_SYS_BOX_EMITTER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysBoxEmitter::GetRefs() const {
 const Type & NiPSysBoxEmitter::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysBoxEmitter::TypeConst() {
-	return TYPE;
-}

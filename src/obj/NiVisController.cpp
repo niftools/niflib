@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVisController::TYPE("NiVisController", &NI_VIS_CONTROLLER_PARENT::TypeConst() );
+const Type NiVisController::TYPE("NiVisController", &NI_VIS_CONTROLLER_PARENT::TYPE );
 
 NiVisController::NiVisController() NI_VIS_CONTROLLER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiVisController::GetRefs() const {
 const Type & NiVisController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiVisController::TypeConst() {
-	return TYPE;
-}

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAlphaProperty::TYPE("NiAlphaProperty", &NI_ALPHA_PROPERTY_PARENT::TypeConst() );
+const Type NiAlphaProperty::TYPE("NiAlphaProperty", &NI_ALPHA_PROPERTY_PARENT::TYPE );
 
 NiAlphaProperty::NiAlphaProperty() NI_ALPHA_PROPERTY_CONSTRUCT {}
 
@@ -102,8 +102,4 @@ bool NiAlphaProperty::GetTriangleSortMode() const {
 }
 void NiAlphaProperty::SetTriangleSortMode(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?0:1, 13, 0x1);
-}
-
-const Type & NiAlphaProperty::TypeConst() {
-	return TYPE;
 }

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiFloatData::TYPE("NiFloatData", &NI_FLOAT_DATA_PARENT::TypeConst() );
+const Type NiFloatData::TYPE("NiFloatData", &NI_FLOAT_DATA_PARENT::TYPE );
 
 NiFloatData::NiFloatData() NI_FLOAT_DATA_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector< Key<float> > NiFloatData::GetKeys() const {
 
 void NiFloatData::SetKeys( vector< Key<float> > const & keys ) {
 	data.keys = keys;
-}
-
-const Type & NiFloatData::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextureModeProperty::TYPE("NiTextureModeProperty", &NI_TEXTURE_MODE_PROPERTY_PARENT::TypeConst() );
+const Type NiTextureModeProperty::TYPE("NiTextureModeProperty", &NI_TEXTURE_MODE_PROPERTY_PARENT::TYPE );
 
 NiTextureModeProperty::NiTextureModeProperty() NI_TEXTURE_MODE_PROPERTY_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiTextureModeProperty::GetRefs() const {
 const Type & NiTextureModeProperty::GetType() const {
 	return TYPE;
 };
-
-const Type & NiTextureModeProperty::TypeConst() {
-	return TYPE;
-}

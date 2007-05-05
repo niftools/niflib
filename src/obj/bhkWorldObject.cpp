@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkWorldObject::TYPE("bhkWorldObject", &BHK_WORLD_OBJECT_PARENT::TypeConst() );
+const Type bhkWorldObject::TYPE("bhkWorldObject", &BHK_WORLD_OBJECT_PARENT::TYPE );
 
 bhkWorldObject::bhkWorldObject() BHK_WORLD_OBJECT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkWorldObject::GetRefs() const {
 const Type & bhkWorldObject::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkWorldObject::TypeConst() {
-	return TYPE;
-}

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVisData::TYPE("NiVisData", &NI_VIS_DATA_PARENT::TypeConst() );
+const Type NiVisData::TYPE("NiVisData", &NI_VIS_DATA_PARENT::TYPE );
 
 NiVisData::NiVisData() NI_VIS_DATA_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiVisData::GetRefs() const {
 const Type & NiVisData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiVisData::TypeConst() {
-	return TYPE;
-}

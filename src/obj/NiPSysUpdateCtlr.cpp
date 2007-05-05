@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysUpdateCtlr::TYPE("NiPSysUpdateCtlr", &NI_P_SYS_UPDATE_CTLR_PARENT::TypeConst() );
+const Type NiPSysUpdateCtlr::TYPE("NiPSysUpdateCtlr", &NI_P_SYS_UPDATE_CTLR_PARENT::TYPE );
 
 NiPSysUpdateCtlr::NiPSysUpdateCtlr() NI_P_SYS_UPDATE_CTLR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysUpdateCtlr::GetRefs() const {
 const Type & NiPSysUpdateCtlr::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysUpdateCtlr::TypeConst() {
-	return TYPE;
-}

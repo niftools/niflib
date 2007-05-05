@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TypeConst() );
+const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
 
 NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
 
@@ -239,7 +239,3 @@ void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
 const Type & NiAVObject::GetType() const {
 	return TYPE;
 };
-
-const Type & NiAVObject::TypeConst() {
-	return TYPE;
-}

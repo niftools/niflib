@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiWireframeProperty::TYPE("NiWireframeProperty", &NI_WIREFRAME_PROPERTY_PARENT::TypeConst() );
+const Type NiWireframeProperty::TYPE("NiWireframeProperty", &NI_WIREFRAME_PROPERTY_PARENT::TYPE );
 
 NiWireframeProperty::NiWireframeProperty() NI_WIREFRAME_PROPERTY_CONSTRUCT {}
 
@@ -42,8 +42,3 @@ unsigned short NiWireframeProperty::GetFlags() const {
 void NiWireframeProperty::SetFlags(unsigned short value) {
    flags = value;
 }
-
-const Type & NiWireframeProperty::TypeConst() {
-	return TYPE;
-}
-

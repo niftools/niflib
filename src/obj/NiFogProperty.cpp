@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiFogProperty::TYPE("NiFogProperty", &NI_FOG_PROPERTY_PARENT::TypeConst() );
+const Type NiFogProperty::TYPE("NiFogProperty", &NI_FOG_PROPERTY_PARENT::TYPE );
 
 NiFogProperty::NiFogProperty() NI_FOG_PROPERTY_CONSTRUCT {}
 
@@ -58,8 +58,4 @@ Color3 NiFogProperty::GetFogColor() const {
 
 void NiFogProperty::SetFogColor(Color3 value) {
    fogColor = value;
-}
-
-const Type & NiFogProperty::TypeConst() {
-	return TYPE;
 }

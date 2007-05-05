@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBoolTimelineInterpolator::TYPE("NiBoolTimelineInterpolator", &NI_BOOL_TIMELINE_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBoolTimelineInterpolator::TYPE("NiBoolTimelineInterpolator", &NI_BOOL_TIMELINE_INTERPOLATOR_PARENT::TYPE );
 
 NiBoolTimelineInterpolator::NiBoolTimelineInterpolator() NI_BOOL_TIMELINE_INTERPOLATOR_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ Ref<NiBoolData> NiBoolTimelineInterpolator::GetData() const {
 
 void NiBoolTimelineInterpolator::SetData( NiBoolData * value ) {
 	data = value;
-}
-
-const Type & NiBoolTimelineInterpolator::TypeConst() {
-	return TYPE;
 }

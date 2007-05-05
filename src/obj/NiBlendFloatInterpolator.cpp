@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBlendFloatInterpolator::TYPE("NiBlendFloatInterpolator", &NI_BLEND_FLOAT_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBlendFloatInterpolator::TYPE("NiBlendFloatInterpolator", &NI_BLEND_FLOAT_INTERPOLATOR_PARENT::TYPE );
 
 NiBlendFloatInterpolator::NiBlendFloatInterpolator() NI_BLEND_FLOAT_INTERPOLATOR_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ float NiBlendFloatInterpolator::GetFloatValue() const {
 
 void NiBlendFloatInterpolator::SetFloatValue( float value ) {
 	floatValue = value;
-}
-
-const Type & NiBlendFloatInterpolator::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPointLight::TYPE("NiPointLight", &NI_POINT_LIGHT_PARENT::TypeConst() );
+const Type NiPointLight::TYPE("NiPointLight", &NI_POINT_LIGHT_PARENT::TYPE );
 
 NiPointLight::NiPointLight() NI_POINT_LIGHT_CONSTRUCT {}
 
@@ -57,8 +57,4 @@ float NiPointLight::GetQuadraticAttenuation() const {
 
 void NiPointLight::SetQuadraticAttenuation( float value ) {
 	quadraticAttenuation = value;
-}
-
-const Type & NiPointLight::TypeConst() {
-	return TYPE;
 }

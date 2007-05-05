@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleBomb::TYPE("NiParticleBomb", &NI_PARTICLE_BOMB_PARENT::TypeConst() );
+const Type NiParticleBomb::TYPE("NiParticleBomb", &NI_PARTICLE_BOMB_PARENT::TYPE );
 
 NiParticleBomb::NiParticleBomb() NI_PARTICLE_BOMB_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiParticleBomb::GetRefs() const {
 const Type & NiParticleBomb::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleBomb::TypeConst() {
-	return TYPE;
-}

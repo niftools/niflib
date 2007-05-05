@@ -11,7 +11,7 @@ static const int SizeofTrans = 3;
 static const int SizeofScale = 1;
 
 //Definition of TYPE constant
-const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT::TYPE );
 
 NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT {}
 
@@ -281,8 +281,4 @@ int NiBSplineCompTransformInterpolator::GetNumControlPt() const
       return basisData->GetNumControlPt();
    }
    return 0;
-}
-
-const Type & NiBSplineCompTransformInterpolator::TypeConst() {
-	return TYPE;
 }

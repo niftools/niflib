@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiLight::TYPE("NiLight", &NI_LIGHT_PARENT::TypeConst() );
+const Type NiLight::TYPE("NiLight", &NI_LIGHT_PARENT::TYPE );
 
 NiLight::NiLight() NI_LIGHT_CONSTRUCT {}
 
@@ -65,8 +65,4 @@ Color3 NiLight::GetSpecularColor() const {
 
 void NiLight::SetSpecularColor( Color3 value ) {
 	specularColor = value;
-}
-
-const Type & NiLight::TypeConst() {
-	return TYPE;
 }

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriShapeData::TYPE("NiTriShapeData", &NI_TRI_SHAPE_DATA_PARENT::TypeConst() );
+const Type NiTriShapeData::TYPE("NiTriShapeData", &NI_TRI_SHAPE_DATA_PARENT::TYPE );
 
 NiTriShapeData::NiTriShapeData() NI_TRI_SHAPE_DATA_CONSTRUCT {}
 
@@ -91,8 +91,4 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 
 	//Set number of trianble points to the number of triangles times 3
 	numTrianglePoints = numTriangles * 3;
-}
-
-const Type & NiTriShapeData::TypeConst() {
-	return TYPE;
 }

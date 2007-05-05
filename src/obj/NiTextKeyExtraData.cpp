@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextKeyExtraData::TYPE("NiTextKeyExtraData", &NI_TEXT_KEY_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiTextKeyExtraData::TYPE("NiTextKeyExtraData", &NI_TEXT_KEY_EXTRA_DATA_PARENT::TYPE );
 
 NiTextKeyExtraData::NiTextKeyExtraData() NI_TEXT_KEY_EXTRA_DATA_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ vector< Key<string> > NiTextKeyExtraData::GetKeys() const {
 
 void NiTextKeyExtraData::SetKeys( vector< Key<string> > const & keys ) {
 	textKeys = keys;
-}
-
-const Type & NiTextKeyExtraData::TypeConst() {
-	return TYPE;
 }

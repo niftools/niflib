@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPixelData::TYPE("NiPixelData", &NI_PIXEL_DATA_PARENT::TypeConst() );
+const Type NiPixelData::TYPE("NiPixelData", &NI_PIXEL_DATA_PARENT::TYPE );
 
 NiPixelData::NiPixelData() NI_PIXEL_DATA_CONSTRUCT {}
 
@@ -344,8 +344,4 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 			break;
 		}
 	}
-}
-
-const Type & NiPixelData::TypeConst() {
-	return TYPE;
 }

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextureTransformController::TYPE("NiTextureTransformController", &NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT::TypeConst() );
+const Type NiTextureTransformController::TYPE("NiTextureTransformController", &NI_TEXTURE_TRANSFORM_CONTROLLER_PARENT::TYPE );
 
 NiTextureTransformController::NiTextureTransformController() NI_TEXTURE_TRANSFORM_CONTROLLER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiTextureTransformController::GetRefs() const {
 const Type & NiTextureTransformController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiTextureTransformController::TypeConst() {
-	return TYPE;
-}

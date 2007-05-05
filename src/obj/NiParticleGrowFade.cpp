@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleGrowFade::TYPE("NiParticleGrowFade", &NI_PARTICLE_GROW_FADE_PARENT::TypeConst() );
+const Type NiParticleGrowFade::TYPE("NiParticleGrowFade", &NI_PARTICLE_GROW_FADE_PARENT::TYPE );
 
 NiParticleGrowFade::NiParticleGrowFade() NI_PARTICLE_GROW_FADE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiParticleGrowFade::GetRefs() const {
 const Type & NiParticleGrowFade::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleGrowFade::TypeConst() {
-	return TYPE;
-}

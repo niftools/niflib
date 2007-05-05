@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TypeConst() );
+const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TYPE );
 
 NiControllerSequence::NiControllerSequence() NI_CONTROLLER_SEQUENCE_CONSTRUCT {}
 
@@ -222,8 +222,4 @@ float NiControllerSequence::GetWeight() const {
 
 void NiControllerSequence::SetWeight( const float value ) {
 	weight = value;
-}
-
-const Type & NiControllerSequence::TypeConst() {
-	return TYPE;
 }

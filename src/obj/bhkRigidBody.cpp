@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TypeConst() );
+const Type bhkRigidBody::TYPE("bhkRigidBody", &BHK_RIGID_BODY_PARENT::TYPE );
 
 bhkRigidBody::bhkRigidBody() BHK_RIGID_BODY_CONSTRUCT {}
 
@@ -171,8 +171,4 @@ MotionQuality bhkRigidBody::GetQualityType() const {
 
 void bhkRigidBody::SetQualityType( MotionQuality value ) {
 	qualityType = value;
-}
-
-const Type & bhkRigidBody::TypeConst() {
-	return TYPE;
 }

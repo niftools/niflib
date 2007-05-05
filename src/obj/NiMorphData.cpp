@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TypeConst() );
+const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TYPE );
 
 NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
 
@@ -89,8 +89,4 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 
 	//It's the right size, so go ahead and set it
 	morphs[n].vectors = in;
-}
-
-const Type & NiMorphData::TypeConst() {
-	return TYPE;
 }

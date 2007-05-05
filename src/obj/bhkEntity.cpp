@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkEntity::TYPE("bhkEntity", &BHK_ENTITY_PARENT::TypeConst() );
+const Type bhkEntity::TYPE("bhkEntity", &BHK_ENTITY_PARENT::TYPE );
 
 bhkEntity::bhkEntity() BHK_ENTITY_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ OblivionLayer bhkEntity::GetLayer() const {
 
 void bhkEntity::SetLayer( OblivionLayer value ) {
 	layer = value;
-}
-
-const Type & bhkEntity::TypeConst() {
-	return TYPE;
 }

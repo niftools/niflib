@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSpotLight::TYPE("NiSpotLight", &NI_SPOT_LIGHT_PARENT::TypeConst() );
+const Type NiSpotLight::TYPE("NiSpotLight", &NI_SPOT_LIGHT_PARENT::TYPE );
 
 NiSpotLight::NiSpotLight() NI_SPOT_LIGHT_CONSTRUCT {}
 
@@ -49,8 +49,4 @@ float NiSpotLight::GetExponent() const {
 
 void NiSpotLight::SetExponent( float value ) {
 	exponent = value;
-}
-
-const Type & NiSpotLight::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiExtraData::TYPE("NiExtraData", &NI_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiExtraData::TYPE("NiExtraData", &NI_EXTRA_DATA_PARENT::TYPE );
 
 NiExtraData::NiExtraData() NI_EXTRA_DATA_CONSTRUCT {}
 
@@ -56,8 +56,4 @@ NiExtraDataRef NiExtraData::GetNextExtraData() const {
 
 void NiExtraData::SetNextExtraData( NiExtraData * obj ) {
 	nextExtraData = obj;
-}
-
-const Type & NiExtraData::TypeConst() {
-	return TYPE;
 }

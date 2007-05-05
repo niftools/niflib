@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBinaryExtraData::TYPE("NiBinaryExtraData", &NI_BINARY_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiBinaryExtraData::TYPE("NiBinaryExtraData", &NI_BINARY_EXTRA_DATA_PARENT::TYPE );
 
 NiBinaryExtraData::NiBinaryExtraData() NI_BINARY_EXTRA_DATA_CONSTRUCT {}
 
@@ -45,7 +45,3 @@ void NiBinaryExtraData::SetData( const vector<byte> & n ) {
 	binaryData.dataSize = (unsigned int)(n.size());
 	binaryData.data = n;
 };
-
-const Type & NiBinaryExtraData::TypeConst() {
-	return TYPE;
-}

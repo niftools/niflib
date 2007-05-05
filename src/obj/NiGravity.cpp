@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGravity::TYPE("NiGravity", &NI_GRAVITY_PARENT::TypeConst() );
+const Type NiGravity::TYPE("NiGravity", &NI_GRAVITY_PARENT::TYPE );
 
 NiGravity::NiGravity() NI_GRAVITY_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiGravity::GetRefs() const {
 const Type & NiGravity::GetType() const {
 	return TYPE;
 };
-
-const Type & NiGravity::TypeConst() {
-	return TYPE;
-}

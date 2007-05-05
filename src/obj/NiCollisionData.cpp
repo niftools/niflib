@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TypeConst() );
+const Type NiCollisionData::TYPE("NiCollisionData", &NI_COLLISION_DATA_PARENT::TYPE );
 
 NiCollisionData::NiCollisionData() NI_COLLISION_DATA_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiCollisionData::GetRefs() const {
 const Type & NiCollisionData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiCollisionData::TypeConst() {
-	return TYPE;
-}

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiColorData::TYPE("NiColorData", &NI_COLOR_DATA_PARENT::TypeConst() );
+const Type NiColorData::TYPE("NiColorData", &NI_COLOR_DATA_PARENT::TYPE );
 
 NiColorData::NiColorData() NI_COLOR_DATA_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector< Key<Color4> > NiColorData::GetKeys() const {
 
 void NiColorData::SetKeys( vector< Key<Color4> > const & keys ) {
 	data.keys = keys;
-}
-
-const Type & NiColorData::TypeConst() {
-	return TYPE;
 }

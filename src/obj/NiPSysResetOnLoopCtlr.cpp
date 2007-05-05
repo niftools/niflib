@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysResetOnLoopCtlr::TYPE("NiPSysResetOnLoopCtlr", &NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT::TypeConst() );
+const Type NiPSysResetOnLoopCtlr::TYPE("NiPSysResetOnLoopCtlr", &NI_P_SYS_RESET_ON_LOOP_CTLR_PARENT::TYPE );
 
 NiPSysResetOnLoopCtlr::NiPSysResetOnLoopCtlr() NI_P_SYS_RESET_ON_LOOP_CTLR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysResetOnLoopCtlr::GetRefs() const {
 const Type & NiPSysResetOnLoopCtlr::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysResetOnLoopCtlr::TypeConst() {
-	return TYPE;
-}

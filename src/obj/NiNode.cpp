@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TypeConst() );
+const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );
 
 NiNode::NiNode() NI_NODE_CONSTRUCT {
 	//Set flag to default of 8: not a skin influence
@@ -260,7 +260,7 @@ bool NiNode::IsSplitMeshProxy() const {
 	}
 
 	for ( unsigned i = 0; i < children.size(); ++i ) {
-		if ( children[i]->IsDerivedType( NiTriBasedGeom::TypeConst() ) == false ) {
+		if ( children[i]->IsDerivedType( NiTriBasedGeom::TYPE ) == false ) {
 			return false;
 		}
 		if ( children[i]->GetLocalTransform() != Matrix44::IDENTITY ) {
@@ -273,8 +273,4 @@ bool NiNode::IsSplitMeshProxy() const {
 
 	//Made it all the way through the loop without returning false
 	return true;
-}
-
-const Type & NiNode::TypeConst() {
-	return TYPE;
 }

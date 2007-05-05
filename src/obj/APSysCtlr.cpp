@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type APSysCtlr::TYPE("APSysCtlr", &A_P_SYS_CTLR_PARENT::TypeConst() );
+const Type APSysCtlr::TYPE("APSysCtlr", &A_P_SYS_CTLR_PARENT::TYPE );
 
 APSysCtlr::APSysCtlr() A_P_SYS_CTLR_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ string APSysCtlr::GetModifierName() const {
 
 void APSysCtlr::SetModifierName( string value ) {
 	modifierName = value;
-}
-
-const Type & APSysCtlr::TypeConst() {
-	return TYPE;
 }

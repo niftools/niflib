@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysPositionModifier::TYPE("NiPSysPositionModifier", &NI_P_SYS_POSITION_MODIFIER_PARENT::TypeConst() );
+const Type NiPSysPositionModifier::TYPE("NiPSysPositionModifier", &NI_P_SYS_POSITION_MODIFIER_PARENT::TYPE );
 
 NiPSysPositionModifier::NiPSysPositionModifier() NI_P_SYS_POSITION_MODIFIER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysPositionModifier::GetRefs() const {
 const Type & NiPSysPositionModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysPositionModifier::TypeConst() {
-	return TYPE;
-}

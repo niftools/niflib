@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiLightColorController::TYPE("NiLightColorController", &NI_LIGHT_COLOR_CONTROLLER_PARENT::TypeConst() );
+const Type NiLightColorController::TYPE("NiLightColorController", &NI_LIGHT_COLOR_CONTROLLER_PARENT::TYPE );
 
 NiLightColorController::NiLightColorController() NI_LIGHT_COLOR_CONTROLLER_CONSTRUCT {}
 
@@ -51,8 +51,4 @@ Ref<NiPoint3Interpolator > NiLightColorController::GetInterpolator() const {
 
 void NiLightColorController::SetInterpolator( NiPoint3Interpolator * value ) {
 	interpolator = value;
-}
-
-const Type & NiLightColorController::TypeConst() {
-	return TYPE;
 }

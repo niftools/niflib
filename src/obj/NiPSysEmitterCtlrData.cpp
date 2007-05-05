@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysEmitterCtlrData::TYPE("NiPSysEmitterCtlrData", &NI_P_SYS_EMITTER_CTLR_DATA_PARENT::TypeConst() );
+const Type NiPSysEmitterCtlrData::TYPE("NiPSysEmitterCtlrData", &NI_P_SYS_EMITTER_CTLR_DATA_PARENT::TYPE );
 
 NiPSysEmitterCtlrData::NiPSysEmitterCtlrData() NI_P_SYS_EMITTER_CTLR_DATA_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiPSysEmitterCtlrData::GetRefs() const {
 const Type & NiPSysEmitterCtlrData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysEmitterCtlrData::TypeConst() {
-	return TYPE;
-}

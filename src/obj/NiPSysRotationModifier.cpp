@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysRotationModifier::TYPE("NiPSysRotationModifier", &NI_P_SYS_ROTATION_MODIFIER_PARENT::TypeConst() );
+const Type NiPSysRotationModifier::TYPE("NiPSysRotationModifier", &NI_P_SYS_ROTATION_MODIFIER_PARENT::TYPE );
 
 NiPSysRotationModifier::NiPSysRotationModifier() NI_P_SYS_ROTATION_MODIFIER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysRotationModifier::GetRefs() const {
 const Type & NiPSysRotationModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysRotationModifier::TypeConst() {
-	return TYPE;
-}

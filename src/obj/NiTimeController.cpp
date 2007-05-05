@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTimeController::TYPE("NiTimeController", &NI_TIME_CONTROLLER_PARENT::TypeConst() );
+const Type NiTimeController::TYPE("NiTimeController", &NI_TIME_CONTROLLER_PARENT::TYPE );
 
 NiTimeController::NiTimeController() NI_TIME_CONTROLLER_CONSTRUCT {}
 
@@ -90,8 +90,4 @@ float NiTimeController::GetStopTime() const {
 
 void NiTimeController::SetStopTime( float n ) {
 	stopTime = n;
-}
-
-const Type & NiTimeController::TypeConst() {
-	return TYPE;
 }

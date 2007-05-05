@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextureProperty::TYPE("NiTextureProperty", &NI_TEXTURE_PROPERTY_PARENT::TypeConst() );
+const Type NiTextureProperty::TYPE("NiTextureProperty", &NI_TEXTURE_PROPERTY_PARENT::TYPE );
 
 NiTextureProperty::NiTextureProperty() NI_TEXTURE_PROPERTY_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiTextureProperty::GetRefs() const {
 const Type & NiTextureProperty::GetType() const {
 	return TYPE;
 };
-
-const Type & NiTextureProperty::TypeConst() {
-	return TYPE;
-}

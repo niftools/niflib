@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineData::TYPE("NiBSplineData", &NI_B_SPLINE_DATA_PARENT::TypeConst() );
+const Type NiBSplineData::TYPE("NiBSplineData", &NI_B_SPLINE_DATA_PARENT::TYPE );
 
 NiBSplineData::NiBSplineData() NI_B_SPLINE_DATA_CONSTRUCT {}
 
@@ -49,8 +49,4 @@ vector<short > NiBSplineData::GetControlPointRange(int offset, int count) const
    std::advance(srcbeg, offset);
    std::advance(srcend, offset + count);
    return vector<short>(srcbeg, srcend);
-}
-
-const Type & NiBSplineData::TypeConst() {
-	return TYPE;
 }

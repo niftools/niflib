@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AKeyedData::TYPE("AKeyedData", &A_KEYED_DATA_PARENT::TypeConst() );
+const Type AKeyedData::TYPE("AKeyedData", &A_KEYED_DATA_PARENT::TYPE );
 
 AKeyedData::AKeyedData() A_KEYED_DATA_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> AKeyedData::GetRefs() const {
 const Type & AKeyedData::GetType() const {
 	return TYPE;
 };
-
-const Type & AKeyedData::TypeConst() {
-	return TYPE;
-}

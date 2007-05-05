@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSFurnitureMarker::TYPE("BSFurnitureMarker", &B_S_FURNITURE_MARKER_PARENT::TypeConst() );
+const Type BSFurnitureMarker::TYPE("BSFurnitureMarker", &B_S_FURNITURE_MARKER_PARENT::TYPE );
 
 BSFurnitureMarker::BSFurnitureMarker() B_S_FURNITURE_MARKER_CONSTRUCT {}
 
@@ -43,8 +43,4 @@ vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {
 void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> & n ) {
 	numPositions = (unsigned int)(n.size());
 	positions = n;
-}
-
-const Type & BSFurnitureMarker::TypeConst() {
-	return TYPE;
 }

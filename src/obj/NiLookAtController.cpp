@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiLookAtController::TYPE("NiLookAtController", &NI_LOOK_AT_CONTROLLER_PARENT::TypeConst() );
+const Type NiLookAtController::TYPE("NiLookAtController", &NI_LOOK_AT_CONTROLLER_PARENT::TYPE );
 
 NiLookAtController::NiLookAtController() NI_LOOK_AT_CONTROLLER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiLookAtController::GetRefs() const {
 const Type & NiLookAtController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiLookAtController::TypeConst() {
-	return TYPE;
-}

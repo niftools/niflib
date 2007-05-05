@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleSystemController::TYPE("NiParticleSystemController", &NI_PARTICLE_SYSTEM_CONTROLLER_PARENT::TypeConst() );
+const Type NiParticleSystemController::TYPE("NiParticleSystemController", &NI_PARTICLE_SYSTEM_CONTROLLER_PARENT::TYPE );
 
 NiParticleSystemController::NiParticleSystemController() NI_PARTICLE_SYSTEM_CONTROLLER_CONSTRUCT {}
 
@@ -37,7 +37,3 @@ list<NiObjectRef> NiParticleSystemController::GetRefs() const {
 const Type & NiParticleSystemController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleSystemController::TypeConst() {
-	return TYPE;
-}

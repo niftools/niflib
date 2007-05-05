@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysGravityModifier::TYPE("NiPSysGravityModifier", &NI_P_SYS_GRAVITY_MODIFIER_PARENT::TypeConst() );
+const Type NiPSysGravityModifier::TYPE("NiPSysGravityModifier", &NI_P_SYS_GRAVITY_MODIFIER_PARENT::TYPE );
 
 NiPSysGravityModifier::NiPSysGravityModifier() NI_P_SYS_GRAVITY_MODIFIER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiPSysGravityModifier::GetRefs() const {
 const Type & NiPSysGravityModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysGravityModifier::TypeConst() {
-	return TYPE;
-}

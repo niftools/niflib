@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type hkPackedNiTriStripsData::TYPE("hkPackedNiTriStripsData", &HK_PACKED_NI_TRI_STRIPS_DATA_PARENT::TypeConst() );
+const Type hkPackedNiTriStripsData::TYPE("hkPackedNiTriStripsData", &HK_PACKED_NI_TRI_STRIPS_DATA_PARENT::TYPE );
 
 hkPackedNiTriStripsData::hkPackedNiTriStripsData() HK_PACKED_NI_TRI_STRIPS_DATA_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> hkPackedNiTriStripsData::GetRefs() const {
 const Type & hkPackedNiTriStripsData::GetType() const {
 	return TYPE;
 };
-
-const Type & hkPackedNiTriStripsData::TypeConst() {
-	return TYPE;
-}

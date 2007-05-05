@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysVolumeEmitter::TYPE("NiPSysVolumeEmitter", &NI_P_SYS_VOLUME_EMITTER_PARENT::TypeConst() );
+const Type NiPSysVolumeEmitter::TYPE("NiPSysVolumeEmitter", &NI_P_SYS_VOLUME_EMITTER_PARENT::TYPE );
 
 NiPSysVolumeEmitter::NiPSysVolumeEmitter() NI_P_SYS_VOLUME_EMITTER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiPSysVolumeEmitter::GetRefs() const {
 const Type & NiPSysVolumeEmitter::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysVolumeEmitter::TypeConst() {
-	return TYPE;
-}

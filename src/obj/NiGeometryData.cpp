@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGeometryData::TYPE("NiGeometryData", &NI_GEOMETRY_DATA_PARENT::TypeConst() );
+const Type NiGeometryData::TYPE("NiGeometryData", &NI_GEOMETRY_DATA_PARENT::TYPE );
 
 NiGeometryData::NiGeometryData() NI_GEOMETRY_DATA_CONSTRUCT {}
 
@@ -161,8 +161,4 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 	for ( unsigned int i = 0; i < normals.size(); ++i ) {
 		normals[i] = rotation * normals[i];
 	}
-}
-
-const Type & NiGeometryData::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkCapsuleShape::TYPE("bhkCapsuleShape", &BHK_CAPSULE_SHAPE_PARENT::TypeConst() );
+const Type bhkCapsuleShape::TYPE("bhkCapsuleShape", &BHK_CAPSULE_SHAPE_PARENT::TYPE );
 
 bhkCapsuleShape::bhkCapsuleShape() BHK_CAPSULE_SHAPE_CONSTRUCT {}
 
@@ -73,8 +73,4 @@ float bhkCapsuleShape::GetRadius2() const {
 
 void bhkCapsuleShape::SetRadius2( float value ) {
 	radius2 = value;
-}
-
-const Type & bhkCapsuleShape::TypeConst() {
-	return TYPE;
 }

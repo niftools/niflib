@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiImage::TYPE("NiImage", &NI_IMAGE_PARENT::TypeConst() );
+const Type NiImage::TYPE("NiImage", &NI_IMAGE_PARENT::TYPE );
 
 NiImage::NiImage() NI_IMAGE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiImage::GetRefs() const {
 const Type & NiImage::GetType() const {
 	return TYPE;
 };
-
-const Type & NiImage::TypeConst() {
-	return TYPE;
-}

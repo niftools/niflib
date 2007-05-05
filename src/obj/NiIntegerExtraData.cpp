@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiIntegerExtraData::TYPE("NiIntegerExtraData", &NI_INTEGER_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiIntegerExtraData::TYPE("NiIntegerExtraData", &NI_INTEGER_EXTRA_DATA_PARENT::TYPE );
 
 NiIntegerExtraData::NiIntegerExtraData() NI_INTEGER_EXTRA_DATA_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ unsigned int NiIntegerExtraData::GetData() const {
 	
 void NiIntegerExtraData::SetData( unsigned int n ) {
 	integerData = n;
-}
-
-const Type & NiIntegerExtraData::TypeConst() {
-	return TYPE;
 }

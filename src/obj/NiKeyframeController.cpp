@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiKeyframeController::TYPE("NiKeyframeController", &NI_KEYFRAME_CONTROLLER_PARENT::TypeConst() );
+const Type NiKeyframeController::TYPE("NiKeyframeController", &NI_KEYFRAME_CONTROLLER_PARENT::TYPE );
 
 NiKeyframeController::NiKeyframeController() NI_KEYFRAME_CONTROLLER_CONSTRUCT {}
 
@@ -42,8 +42,4 @@ Ref<NiKeyframeData> NiKeyframeController::GetData() const {
 	
 void NiKeyframeController::SetData( NiKeyframeData * n ) {
 	data = n;
-}
-
-const Type & NiKeyframeController::TypeConst() {
-	return TYPE;
 }

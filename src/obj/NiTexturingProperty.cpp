@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TypeConst() );
+const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NI_TEXTURING_PROPERTY_PARENT::TYPE );
 
 NiTexturingProperty::NiTexturingProperty() NI_TEXTURING_PROPERTY_CONSTRUCT {}
 
@@ -244,8 +244,4 @@ void NiTexturingProperty::ClearTexture( int n ) {
 			decal1Texture.source = NULL;
 			break;
 	};
-}
-
-const Type & NiTexturingProperty::TypeConst() {
-	return TYPE;
 }

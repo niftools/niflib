@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleSystem::TYPE("NiParticleSystem", &NI_PARTICLE_SYSTEM_PARENT::TypeConst() );
+const Type NiParticleSystem::TYPE("NiParticleSystem", &NI_PARTICLE_SYSTEM_PARENT::TYPE );
 
 NiParticleSystem::NiParticleSystem() NI_PARTICLE_SYSTEM_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiParticleSystem::GetRefs() const {
 const Type & NiParticleSystem::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleSystem::TypeConst() {
-	return TYPE;
-}

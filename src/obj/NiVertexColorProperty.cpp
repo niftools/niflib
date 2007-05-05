@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVertexColorProperty::TYPE("NiVertexColorProperty", &NI_VERTEX_COLOR_PROPERTY_PARENT::TypeConst() );
+const Type NiVertexColorProperty::TYPE("NiVertexColorProperty", &NI_VERTEX_COLOR_PROPERTY_PARENT::TYPE );
 
 NiVertexColorProperty::NiVertexColorProperty() NI_VERTEX_COLOR_PROPERTY_CONSTRUCT {}
 
@@ -57,8 +57,4 @@ LightMode NiVertexColorProperty::GetLightingMode() const {
 
 void NiVertexColorProperty::SetLightingMode(LightMode value) {
    lightingMode = value;
-}
-
-const Type & NiVertexColorProperty::TypeConst() {
-	return TYPE;
 }

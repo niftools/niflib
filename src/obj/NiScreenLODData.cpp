@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiScreenLODData::TYPE("NiScreenLODData", &NI_SCREEN_L_O_D_DATA_PARENT::TypeConst() );
+const Type NiScreenLODData::TYPE("NiScreenLODData", &NI_SCREEN_L_O_D_DATA_PARENT::TYPE );
 
 NiScreenLODData::NiScreenLODData() NI_SCREEN_L_O_D_DATA_CONSTRUCT {}
 
@@ -73,8 +73,4 @@ vector<float > NiScreenLODData::GetProportionLevels() const {
 
 void NiScreenLODData::SetProportionLevels( const vector<float >& value ) {
 	proportionLevels = value;
-}
-
-const Type & NiScreenLODData::TypeConst() {
-	return TYPE;
 }

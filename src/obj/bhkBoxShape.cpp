@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkBoxShape::TYPE("bhkBoxShape", &BHK_BOX_SHAPE_PARENT::TypeConst() );
+const Type bhkBoxShape::TYPE("bhkBoxShape", &BHK_BOX_SHAPE_PARENT::TYPE );
 
 bhkBoxShape::bhkBoxShape() BHK_BOX_SHAPE_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ Vector3 bhkBoxShape::GetDimensions() const {
 
 void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	dimensions = value;
-}
-
-const Type & bhkBoxShape::TypeConst() {
-	return TYPE;
 }

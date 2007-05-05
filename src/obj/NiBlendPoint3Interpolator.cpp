@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBlendPoint3Interpolator::TYPE("NiBlendPoint3Interpolator", &NI_BLEND_POINT3_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBlendPoint3Interpolator::TYPE("NiBlendPoint3Interpolator", &NI_BLEND_POINT3_INTERPOLATOR_PARENT::TYPE );
 
 NiBlendPoint3Interpolator::NiBlendPoint3Interpolator() NI_BLEND_POINT3_INTERPOLATOR_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ Vector3 NiBlendPoint3Interpolator::GetPointValue() const {
 
 void NiBlendPoint3Interpolator::SetPointValue( Vector3 value ) {
 	pointValue = value;
-}
-
-const Type & NiBlendPoint3Interpolator::TypeConst() {
-	return TYPE;
 }

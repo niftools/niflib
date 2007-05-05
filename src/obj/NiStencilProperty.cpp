@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiStencilProperty::TYPE("NiStencilProperty", &NI_STENCIL_PROPERTY_PARENT::TypeConst() );
+const Type NiStencilProperty::TYPE("NiStencilProperty", &NI_STENCIL_PROPERTY_PARENT::TYPE );
 
 NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
 
@@ -105,8 +105,4 @@ FaceDrawMode NiStencilProperty::GetFaceDrawMode() const {
 
 void NiStencilProperty::SetFaceDrawMode(FaceDrawMode value) {
    drawMode = value;
-}
-
-const Type & NiStencilProperty::TypeConst() {
-	return TYPE;
 }

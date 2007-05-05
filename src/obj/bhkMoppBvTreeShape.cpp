@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &BHK_MOPP_BV_TREE_SHAPE_PARENT::TypeConst() );
+const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &BHK_MOPP_BV_TREE_SHAPE_PARENT::TYPE );
 
 bhkMoppBvTreeShape::bhkMoppBvTreeShape() BHK_MOPP_BV_TREE_SHAPE_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> bhkMoppBvTreeShape::GetRefs() const {
 const Type & bhkMoppBvTreeShape::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkMoppBvTreeShape::TypeConst() {
-	return TYPE;
-}

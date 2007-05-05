@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkRagdollConstraint::TYPE("bhkRagdollConstraint", &BHK_RAGDOLL_CONSTRAINT_PARENT::TypeConst() );
+const Type bhkRagdollConstraint::TYPE("bhkRagdollConstraint", &BHK_RAGDOLL_CONSTRAINT_PARENT::TYPE );
 
 bhkRagdollConstraint::bhkRagdollConstraint() BHK_RAGDOLL_CONSTRAINT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkRagdollConstraint::GetRefs() const {
 const Type & bhkRagdollConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkRagdollConstraint::TypeConst() {
-	return TYPE;
-}

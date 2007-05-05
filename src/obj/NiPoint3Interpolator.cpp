@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPoint3Interpolator::TYPE("NiPoint3Interpolator", &NI_POINT3_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiPoint3Interpolator::TYPE("NiPoint3Interpolator", &NI_POINT3_INTERPOLATOR_PARENT::TYPE );
 
 NiPoint3Interpolator::NiPoint3Interpolator() NI_POINT3_INTERPOLATOR_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ Ref<NiPosData > NiPoint3Interpolator::GetData() const {
 
 void NiPoint3Interpolator::SetData( NiPosData * value ) {
 	data = value;
-}
-
-const Type & NiPoint3Interpolator::TypeConst() {
-	return TYPE;
 }

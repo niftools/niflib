@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TypeConst() );
+const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TYPE );
 
 NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
@@ -134,8 +134,4 @@ unsigned int NiSkinInstance::GetBoneCount() const {
 
 Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {
 	return skeletonRoot;
-}
-
-const Type & NiSkinInstance::TypeConst() {
-	return TYPE;
 }

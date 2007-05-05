@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TypeConst() );
+const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TYPE );
 
 NiObjectNET::NiObjectNET() NI_OBJECT_N_E_T_CONSTRUCT {}
 
@@ -187,7 +187,3 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 const Type & NiObjectNET::GetType() const {
 	return TYPE;
 };
-
-const Type & NiObjectNET::TypeConst() {
-	return TYPE;
-}

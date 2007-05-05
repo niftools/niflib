@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiFlipController::TYPE("NiFlipController", &NI_FLIP_CONTROLLER_PARENT::TypeConst() );
+const Type NiFlipController::TYPE("NiFlipController", &NI_FLIP_CONTROLLER_PARENT::TYPE );
 
 NiFlipController::NiFlipController() NI_FLIP_CONTROLLER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiFlipController::GetRefs() const {
 const Type & NiFlipController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiFlipController::TypeConst() {
-	return TYPE;
-}

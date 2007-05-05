@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSingleInterpolatorController::TYPE("NiSingleInterpolatorController", &NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TypeConst() );
+const Type NiSingleInterpolatorController::TYPE("NiSingleInterpolatorController", &NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT::TYPE );
 
 NiSingleInterpolatorController::NiSingleInterpolatorController() NI_SINGLE_INTERPOLATOR_CONTROLLER_CONSTRUCT {}
 
@@ -42,8 +42,4 @@ Ref<NiInterpolator > NiSingleInterpolatorController::GetInterpolator() const {
 
 void NiSingleInterpolatorController::SetInterpolator( NiInterpolator * value ) {
 	interpolator = value;
-}
-
-const Type & NiSingleInterpolatorController::TypeConst() {
-	return TYPE;
 }

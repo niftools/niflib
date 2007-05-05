@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysEmitterLifeSpanCtlr::TYPE("NiPSysEmitterLifeSpanCtlr", &NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT::TypeConst() );
+const Type NiPSysEmitterLifeSpanCtlr::TYPE("NiPSysEmitterLifeSpanCtlr", &NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT::TYPE );
 
 NiPSysEmitterLifeSpanCtlr::NiPSysEmitterLifeSpanCtlr() NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiPSysEmitterLifeSpanCtlr::GetRefs() const {
 const Type & NiPSysEmitterLifeSpanCtlr::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysEmitterLifeSpanCtlr::TypeConst() {
-	return TYPE;
-}

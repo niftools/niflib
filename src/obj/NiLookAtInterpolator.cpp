@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiLookAtInterpolator::TYPE("NiLookAtInterpolator", &NI_LOOK_AT_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiLookAtInterpolator::TYPE("NiLookAtInterpolator", &NI_LOOK_AT_INTERPOLATOR_PARENT::TYPE );
 
 NiLookAtInterpolator::NiLookAtInterpolator() NI_LOOK_AT_INTERPOLATOR_CONSTRUCT {}
 
@@ -68,8 +68,4 @@ float NiLookAtInterpolator::GetScale() const {
 
 void NiLookAtInterpolator::SetScale( float value ) {
 	scale = value;
-}
-
-const Type & NiLookAtInterpolator::TypeConst() {
-	return TYPE;
 }

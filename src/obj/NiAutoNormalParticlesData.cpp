@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAutoNormalParticlesData::TYPE("NiAutoNormalParticlesData", &NI_AUTO_NORMAL_PARTICLES_DATA_PARENT::TypeConst() );
+const Type NiAutoNormalParticlesData::TYPE("NiAutoNormalParticlesData", &NI_AUTO_NORMAL_PARTICLES_DATA_PARENT::TYPE );
 
 NiAutoNormalParticlesData::NiAutoNormalParticlesData() NI_AUTO_NORMAL_PARTICLES_DATA_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiAutoNormalParticlesData::GetRefs() const {
 const Type & NiAutoNormalParticlesData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiAutoNormalParticlesData::TypeConst() {
-	return TYPE;
-}

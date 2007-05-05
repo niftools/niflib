@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TypeConst() );
+const Type NiLODNode::TYPE("NiLODNode", &NI_L_O_D_NODE_PARENT::TYPE );
 
 NiLODNode::NiLODNode() NI_L_O_D_NODE_CONSTRUCT {}
 
@@ -59,8 +59,4 @@ Ref<NiLODData > NiLODNode::GetLODLevelData() const {
 
 void NiLODNode::SetLODLevelData( Ref<NiLODData > value ) {
 	lodLevelData = value;
-}
-
-const Type & NiLODNode::TypeConst() {
-	return TYPE;
 }

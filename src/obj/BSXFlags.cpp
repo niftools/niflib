@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSXFlags::TYPE("BSXFlags", &B_S_X_FLAGS_PARENT::TypeConst() );
+const Type BSXFlags::TYPE("BSXFlags", &B_S_X_FLAGS_PARENT::TYPE );
 
 BSXFlags::BSXFlags() B_S_X_FLAGS_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ unsigned int BSXFlags::GetFlags() const {
 
 void BSXFlags::SetFlags( unsigned int value ) {
 	flags = value;
-}
-
-const Type & BSXFlags::TypeConst() {
-	return TYPE;
 }

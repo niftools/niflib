@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSBoneLODController::TYPE("NiBSBoneLODController", &NI_B_S_BONE_L_O_D_CONTROLLER_PARENT::TypeConst() );
+const Type NiBSBoneLODController::TYPE("NiBSBoneLODController", &NI_B_S_BONE_L_O_D_CONTROLLER_PARENT::TYPE );
 
 NiBSBoneLODController::NiBSBoneLODController() NI_B_S_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiBSBoneLODController::GetRefs() const {
 const Type & NiBSBoneLODController::GetType() const {
 	return TYPE;
 };
-
-const Type & NiBSBoneLODController::TypeConst() {
-	return TYPE;
-}

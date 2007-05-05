@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkStiffSpringConstraint::TYPE("bhkStiffSpringConstraint", &BHK_STIFF_SPRING_CONSTRAINT_PARENT::TypeConst() );
+const Type bhkStiffSpringConstraint::TYPE("bhkStiffSpringConstraint", &BHK_STIFF_SPRING_CONSTRAINT_PARENT::TYPE );
 
 bhkStiffSpringConstraint::bhkStiffSpringConstraint() BHK_STIFF_SPRING_CONSTRAINT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkStiffSpringConstraint::GetRefs() const {
 const Type & bhkStiffSpringConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkStiffSpringConstraint::TypeConst() {
-	return TYPE;
-}

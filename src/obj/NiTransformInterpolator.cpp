@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTransformInterpolator::TYPE("NiTransformInterpolator", &NI_TRANSFORM_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiTransformInterpolator::TYPE("NiTransformInterpolator", &NI_TRANSFORM_INTERPOLATOR_PARENT::TYPE );
 
 NiTransformInterpolator::NiTransformInterpolator() NI_TRANSFORM_INTERPOLATOR_CONSTRUCT {}
 
@@ -66,8 +66,4 @@ Ref<NiTransformData> NiTransformInterpolator::GetData() const {
 
 void NiTransformInterpolator::SetData( NiTransformData * value ) {
 	data = value;
-}
-
-const Type & NiTransformInterpolator::TypeConst() {
-	return TYPE;
 }

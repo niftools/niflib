@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysEmitterDeclinationCtlr::TYPE("NiPSysEmitterDeclinationCtlr", &NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT::TypeConst() );
+const Type NiPSysEmitterDeclinationCtlr::TYPE("NiPSysEmitterDeclinationCtlr", &NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT::TYPE );
 
 NiPSysEmitterDeclinationCtlr::NiPSysEmitterDeclinationCtlr() NI_P_SYS_EMITTER_DECLINATION_CTLR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPSysEmitterDeclinationCtlr::GetRefs() const {
 const Type & NiPSysEmitterDeclinationCtlr::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysEmitterDeclinationCtlr::TypeConst() {
-	return TYPE;
-}

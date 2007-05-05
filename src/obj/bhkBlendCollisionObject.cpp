@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkBlendCollisionObject::TYPE("bhkBlendCollisionObject", &BHK_BLEND_COLLISION_OBJECT_PARENT::TypeConst() );
+const Type bhkBlendCollisionObject::TYPE("bhkBlendCollisionObject", &BHK_BLEND_COLLISION_OBJECT_PARENT::TYPE );
 
 bhkBlendCollisionObject::bhkBlendCollisionObject() BHK_BLEND_COLLISION_OBJECT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkBlendCollisionObject::GetRefs() const {
 const Type & bhkBlendCollisionObject::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkBlendCollisionObject::TypeConst() {
-	return TYPE;
-}

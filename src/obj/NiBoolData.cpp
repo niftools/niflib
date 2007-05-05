@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBoolData::TYPE("NiBoolData", &NI_BOOL_DATA_PARENT::TypeConst() );
+const Type NiBoolData::TYPE("NiBoolData", &NI_BOOL_DATA_PARENT::TYPE );
 
 NiBoolData::NiBoolData() NI_BOOL_DATA_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector< Key<unsigned char> > NiBoolData::GetKeys() const {
 
 void NiBoolData::SetKeys( vector< Key<unsigned char> > const & keys ) {
 	data.keys = keys;
-}
-
-const Type & NiBoolData::TypeConst() {
-	return TYPE;
 }

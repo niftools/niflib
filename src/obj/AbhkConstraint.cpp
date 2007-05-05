@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AbhkConstraint::TYPE("AbhkConstraint", &ABHK_CONSTRAINT_PARENT::TypeConst() );
+const Type AbhkConstraint::TYPE("AbhkConstraint", &ABHK_CONSTRAINT_PARENT::TYPE );
 
 AbhkConstraint::AbhkConstraint() ABHK_CONSTRAINT_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> AbhkConstraint::GetRefs() const {
 const Type & AbhkConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & AbhkConstraint::TypeConst() {
-	return TYPE;
-}

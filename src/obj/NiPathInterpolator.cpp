@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPathInterpolator::TYPE("NiPathInterpolator", &NI_PATH_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiPathInterpolator::TYPE("NiPathInterpolator", &NI_PATH_INTERPOLATOR_PARENT::TYPE );
 
 NiPathInterpolator::NiPathInterpolator() NI_PATH_INTERPOLATOR_CONSTRUCT {}
 
@@ -51,8 +51,4 @@ Ref<NiFloatData > NiPathInterpolator::GetFloatData() const {
 
 void NiPathInterpolator::SetFloatData( NiFloatData * value ) {
 	floatData = value;
-}
-
-const Type & NiPathInterpolator::TypeConst() {
-	return TYPE;
 }

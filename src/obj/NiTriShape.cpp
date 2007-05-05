@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriShape::TYPE("NiTriShape", &NI_TRI_SHAPE_PARENT::TypeConst() );
+const Type NiTriShape::TYPE("NiTriShape", &NI_TRI_SHAPE_PARENT::TYPE );
 
 NiTriShape::NiTriShape() NI_TRI_SHAPE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiTriShape::GetRefs() const {
 const Type & NiTriShape::GetType() const {
 	return TYPE;
 };
-
-const Type & NiTriShape::TypeConst() {
-	return TYPE;
-}

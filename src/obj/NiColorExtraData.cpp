@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiColorExtraData::TYPE("NiColorExtraData", &NI_COLOR_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiColorExtraData::TYPE("NiColorExtraData", &NI_COLOR_EXTRA_DATA_PARENT::TYPE );
 
 NiColorExtraData::NiColorExtraData() NI_COLOR_EXTRA_DATA_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ Color4 NiColorExtraData::GetData() const {
 	
 void NiColorExtraData::SetData( const Color4 & n ) {
 	data = n;
-}
-
-const Type & NiColorExtraData::TypeConst() {
-	return TYPE;
 }

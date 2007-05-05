@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSAnimationNode::TYPE("NiBSAnimationNode", &NI_B_S_ANIMATION_NODE_PARENT::TypeConst() );
+const Type NiBSAnimationNode::TYPE("NiBSAnimationNode", &NI_B_S_ANIMATION_NODE_PARENT::TYPE );
 
 NiBSAnimationNode::NiBSAnimationNode() NI_B_S_ANIMATION_NODE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiBSAnimationNode::GetRefs() const {
 const Type & NiBSAnimationNode::GetType() const {
 	return TYPE;
 };
-
-const Type & NiBSAnimationNode::TypeConst() {
-	return TYPE;
-}

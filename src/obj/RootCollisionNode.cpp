@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type RootCollisionNode::TYPE("RootCollisionNode", &ROOT_COLLISION_NODE_PARENT::TypeConst() );
+const Type RootCollisionNode::TYPE("RootCollisionNode", &ROOT_COLLISION_NODE_PARENT::TYPE );
 
 RootCollisionNode::RootCollisionNode() ROOT_COLLISION_NODE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> RootCollisionNode::GetRefs() const {
 const Type & RootCollisionNode::GetType() const {
 	return TYPE;
 };
-
-const Type & RootCollisionNode::TypeConst() {
-	return TYPE;
-}

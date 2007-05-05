@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPlanarCollider::TYPE("NiPlanarCollider", &NI_PLANAR_COLLIDER_PARENT::TypeConst() );
+const Type NiPlanarCollider::TYPE("NiPlanarCollider", &NI_PLANAR_COLLIDER_PARENT::TYPE );
 
 NiPlanarCollider::NiPlanarCollider() NI_PLANAR_COLLIDER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiPlanarCollider::GetRefs() const {
 const Type & NiPlanarCollider::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPlanarCollider::TypeConst() {
-	return TYPE;
-}

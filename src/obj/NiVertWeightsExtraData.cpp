@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVertWeightsExtraData::TYPE("NiVertWeightsExtraData", &NI_VERT_WEIGHTS_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiVertWeightsExtraData::TYPE("NiVertWeightsExtraData", &NI_VERT_WEIGHTS_EXTRA_DATA_PARENT::TYPE );
 
 NiVertWeightsExtraData::NiVertWeightsExtraData() NI_VERT_WEIGHTS_EXTRA_DATA_CONSTRUCT {}
 
@@ -43,8 +43,4 @@ void NiVertWeightsExtraData::SetData( const vector<float> & n ) {
 	numVertices = (unsigned int)(n.size());
 	numBytes = numVertices + 2;
 	weight = n;
-}
-
-const Type & NiVertWeightsExtraData::TypeConst() {
-	return TYPE;
 }

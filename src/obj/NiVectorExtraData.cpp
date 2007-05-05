@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NI_VECTOR_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NI_VECTOR_EXTRA_DATA_PARENT::TYPE );
 
 NiVectorExtraData::NiVectorExtraData() NI_VECTOR_EXTRA_DATA_CONSTRUCT {}
 
@@ -42,7 +42,3 @@ Vector3 NiVectorExtraData::GetData() const {
 void NiVectorExtraData::SetData( const Vector3 & n ) {
 	vectorData = n;
 };
-
-const Type & NiVectorExtraData::TypeConst() {
-	return TYPE;
-}

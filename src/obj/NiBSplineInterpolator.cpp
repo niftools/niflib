@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TYPE );
 
 NiBSplineInterpolator::NiBSplineInterpolator() NI_B_SPLINE_INTERPOLATOR_CONSTRUCT {}
 
@@ -166,8 +166,4 @@ void NiBSplineInterpolator::bspline(int n, int t, int l, float *control, float *
    copy_floats(&output[(num_output-1)*l], &control[n*l], l); // put in the last points
    delete [] u;
    delete [] calc;
-}
-
-const Type & NiBSplineInterpolator::TypeConst() {
-	return TYPE;
 }

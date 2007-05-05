@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiCollisionObject::TYPE("NiCollisionObject", &NI_COLLISION_OBJECT_PARENT::TypeConst() );
+const Type NiCollisionObject::TYPE("NiCollisionObject", &NI_COLLISION_OBJECT_PARENT::TYPE );
 
 NiCollisionObject::NiCollisionObject() NI_COLLISION_OBJECT_CONSTRUCT {}
 
@@ -51,8 +51,4 @@ Ref<NiObject > NiCollisionObject::GetBody() const {
 
 void NiCollisionObject::SetBody( NiObject * value ) {
 	body = value;
-}
-
-const Type & NiCollisionObject::TypeConst() {
-	return TYPE;
 }

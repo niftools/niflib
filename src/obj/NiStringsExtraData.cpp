@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiStringsExtraData::TYPE("NiStringsExtraData", &NI_STRINGS_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiStringsExtraData::TYPE("NiStringsExtraData", &NI_STRINGS_EXTRA_DATA_PARENT::TYPE );
 
 NiStringsExtraData::NiStringsExtraData() NI_STRINGS_EXTRA_DATA_CONSTRUCT {}
 
@@ -43,7 +43,3 @@ void NiStringsExtraData::SetData( const vector<string> & n ) {
 	numStrings = (unsigned int)(n.size());
 	data = n;
 };
-
-const Type & NiStringsExtraData::TypeConst() {
-	return TYPE;
-}

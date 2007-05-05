@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiZBufferProperty::TYPE("NiZBufferProperty", &NI_Z_BUFFER_PROPERTY_PARENT::TypeConst() );
+const Type NiZBufferProperty::TYPE("NiZBufferProperty", &NI_Z_BUFFER_PROPERTY_PARENT::TYPE );
 
 NiZBufferProperty::NiZBufferProperty() NI_Z_BUFFER_PROPERTY_CONSTRUCT {}
 
@@ -49,8 +49,4 @@ CompareMode NiZBufferProperty::GetDepthFunction() const {
 
 void NiZBufferProperty::SetDepthFunction(CompareMode value) {
    function = value;
-}
-
-const Type & NiZBufferProperty::TypeConst() {
-	return TYPE;
 }

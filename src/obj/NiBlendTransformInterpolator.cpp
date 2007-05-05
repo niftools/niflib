@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBlendTransformInterpolator::TYPE("NiBlendTransformInterpolator", &NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBlendTransformInterpolator::TYPE("NiBlendTransformInterpolator", &NI_BLEND_TRANSFORM_INTERPOLATOR_PARENT::TYPE );
 
 NiBlendTransformInterpolator::NiBlendTransformInterpolator() NI_BLEND_TRANSFORM_INTERPOLATOR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiBlendTransformInterpolator::GetRefs() const {
 const Type & NiBlendTransformInterpolator::GetType() const {
 	return TYPE;
 };
-
-const Type & NiBlendTransformInterpolator::TypeConst() {
-	return TYPE;
-}

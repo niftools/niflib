@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBlendBoolInterpolator::TYPE("NiBlendBoolInterpolator", &NI_BLEND_BOOL_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBlendBoolInterpolator::TYPE("NiBlendBoolInterpolator", &NI_BLEND_BOOL_INTERPOLATOR_PARENT::TYPE );
 
 NiBlendBoolInterpolator::NiBlendBoolInterpolator() NI_BLEND_BOOL_INTERPOLATOR_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ byte NiBlendBoolInterpolator::GetBoolValue() const {
 
 void NiBlendBoolInterpolator::SetBoolValue( byte value ) {
 	boolValue = value;
-}
-
-const Type & NiBlendBoolInterpolator::TypeConst() {
-	return TYPE;
 }

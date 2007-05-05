@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &NI_PARTICLE_COLOR_MODIFIER_PARENT::TypeConst() );
+const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &NI_PARTICLE_COLOR_MODIFIER_PARENT::TYPE );
 
 NiParticleColorModifier::NiParticleColorModifier() NI_PARTICLE_COLOR_MODIFIER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiParticleColorModifier::GetRefs() const {
 const Type & NiParticleColorModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleColorModifier::TypeConst() {
-	return TYPE;
-}

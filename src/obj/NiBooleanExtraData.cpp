@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBooleanExtraData::TYPE("NiBooleanExtraData", &NI_BOOLEAN_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiBooleanExtraData::TYPE("NiBooleanExtraData", &NI_BOOLEAN_EXTRA_DATA_PARENT::TYPE );
 
 NiBooleanExtraData::NiBooleanExtraData() NI_BOOLEAN_EXTRA_DATA_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ bool NiBooleanExtraData::GetData() const {
 
 void NiBooleanExtraData::SetData( bool n ) {
 	booleanData = n;
-}
-
-const Type & NiBooleanExtraData::TypeConst() {
-	return TYPE;
 }

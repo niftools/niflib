@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiDefaultAVObjectPalette::TYPE("NiDefaultAVObjectPalette", &NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT::TypeConst() );
+const Type NiDefaultAVObjectPalette::TYPE("NiDefaultAVObjectPalette", &NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT::TYPE );
 
 NiDefaultAVObjectPalette::NiDefaultAVObjectPalette() NI_DEFAULT_A_V_OBJECT_PALETTE_CONSTRUCT {}
 
@@ -53,8 +53,4 @@ void NiDefaultAVObjectPalette::SetObjs( const vector<Ref<NiAVObject> >& value ) 
       obj.avObject = (*itr);
       objs.push_back(obj);
    }
-}
-
-const Type & NiDefaultAVObjectPalette::TypeConst() {
-	return TYPE;
 }

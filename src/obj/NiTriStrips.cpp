@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriStrips::TYPE("NiTriStrips", &NI_TRI_STRIPS_PARENT::TypeConst() );
+const Type NiTriStrips::TYPE("NiTriStrips", &NI_TRI_STRIPS_PARENT::TYPE );
 
 NiTriStrips::NiTriStrips() NI_TRI_STRIPS_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiTriStrips::GetRefs() const {
 const Type & NiTriStrips::GetType() const {
 	return TYPE;
 };
-
-const Type & NiTriStrips::TypeConst() {
-	return TYPE;
-}

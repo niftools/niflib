@@ -15,7 +15,7 @@ typedef	list<TriStrip> TriStrips;
 
 
 //Definition of TYPE constant
-const Type NiTriStripsData::TYPE("NiTriStripsData", &NI_TRI_STRIPS_DATA_PARENT::TypeConst() );
+const Type NiTriStripsData::TYPE("NiTriStripsData", &NI_TRI_STRIPS_DATA_PARENT::TYPE );
 
 NiTriStripsData::NiTriStripsData() NI_TRI_STRIPS_DATA_CONSTRUCT {}
 
@@ -266,8 +266,4 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
 
    //Recalculate Triangle Count
    numTriangles = CalcTriangleCount();
-}
-
-const Type & NiTriStripsData::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type APSysData::TYPE("APSysData", &A_P_SYS_DATA_PARENT::TypeConst() );
+const Type APSysData::TYPE("APSysData", &A_P_SYS_DATA_PARENT::TYPE );
 
 APSysData::APSysData() A_P_SYS_DATA_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> APSysData::GetRefs() const {
 const Type & APSysData::GetType() const {
 	return TYPE;
 };
-
-const Type & APSysData::TypeConst() {
-	return TYPE;
-}

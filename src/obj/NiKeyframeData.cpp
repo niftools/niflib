@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiKeyframeData::TYPE("NiKeyframeData", &NI_KEYFRAME_DATA_PARENT::TypeConst() );
+const Type NiKeyframeData::TYPE("NiKeyframeData", &NI_KEYFRAME_DATA_PARENT::TYPE );
 
 NiKeyframeData::NiKeyframeData() NI_KEYFRAME_DATA_CONSTRUCT {}
 
@@ -140,8 +140,4 @@ vector< Key<float> > NiKeyframeData::GetScaleKeys() const {
 
 void NiKeyframeData::SetScaleKeys( vector< Key<float> > const & keys ) {
 	scales.keys = keys;
-}
-
-const Type & NiKeyframeData::TypeConst() {
-	return TYPE;
 }

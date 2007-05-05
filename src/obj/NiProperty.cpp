@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiProperty::TYPE("NiProperty", &NI_PROPERTY_PARENT::TypeConst() );
+const Type NiProperty::TYPE("NiProperty", &NI_PROPERTY_PARENT::TYPE );
 
 NiProperty::NiProperty() NI_PROPERTY_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiProperty::GetRefs() const {
 const Type & NiProperty::GetType() const {
 	return TYPE;
 };
-
-const Type & NiProperty::TypeConst() {
-	return TYPE;
-}

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkSimpleShapePhantom::TYPE("bhkSimpleShapePhantom", &BHK_SIMPLE_SHAPE_PHANTOM_PARENT::TypeConst() );
+const Type bhkSimpleShapePhantom::TYPE("bhkSimpleShapePhantom", &BHK_SIMPLE_SHAPE_PHANTOM_PARENT::TYPE );
 
 bhkSimpleShapePhantom::bhkSimpleShapePhantom() BHK_SIMPLE_SHAPE_PHANTOM_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkSimpleShapePhantom::GetRefs() const {
 const Type & bhkSimpleShapePhantom::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkSimpleShapePhantom::TypeConst() {
-	return TYPE;
-}

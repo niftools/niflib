@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkBlendController::TYPE("bhkBlendController", &BHK_BLEND_CONTROLLER_PARENT::TypeConst() );
+const Type bhkBlendController::TYPE("bhkBlendController", &BHK_BLEND_CONTROLLER_PARENT::TYPE );
 
 bhkBlendController::bhkBlendController() BHK_BLEND_CONTROLLER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkBlendController::GetRefs() const {
 const Type & bhkBlendController::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkBlendController::TypeConst() {
-	return TYPE;
-}

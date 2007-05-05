@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSParentVelocityModifier::TYPE("BSParentVelocityModifier", &B_S_PARENT_VELOCITY_MODIFIER_PARENT::TypeConst() );
+const Type BSParentVelocityModifier::TYPE("BSParentVelocityModifier", &B_S_PARENT_VELOCITY_MODIFIER_PARENT::TYPE );
 
 BSParentVelocityModifier::BSParentVelocityModifier() B_S_PARENT_VELOCITY_MODIFIER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> BSParentVelocityModifier::GetRefs() const {
 const Type & BSParentVelocityModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & BSParentVelocityModifier::TypeConst() {
-	return TYPE;
-}

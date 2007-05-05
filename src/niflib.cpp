@@ -447,10 +447,10 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
    footer.numRoots = 0;
    if (roots.size() == 1) {
       const NiObjectRef& root = roots.front();
-      if (root->IsDerivedType(NiControllerSequence::TypeConst())) {
+      if (root->IsDerivedType(NiControllerSequence::TYPE)) {
          // KF animation files allow for multiple roots of type NiControllerSequence
          for ( unsigned int i = 0; i < objects.size(); ++i ) {
-            if (objects[i]->IsDerivedType(NiControllerSequence::TypeConst())) {
+            if (objects[i]->IsDerivedType(NiControllerSequence::TYPE)) {
                footer.roots.push_back(objects[i]);
             }
          }
@@ -515,8 +515,8 @@ void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<
    //   a more generic mechanism in the future.
 	Type *t = (Type*)&(root->GetType());
    if (  reverse
-      || t->IsDerivedType(bhkRigidBody::TypeConst()) 
-      || t->IsDerivedType(bhkCollisionObject::TypeConst())
+      || t->IsDerivedType(bhkRigidBody::TYPE) 
+      || t->IsDerivedType(bhkCollisionObject::TYPE)
       )
    {
       reverse = true;
@@ -596,7 +596,7 @@ static std::string CreateFileName(std::string name) {
 static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
 	// Do we have animation groups (a NiTextKeyExtraData object)?
 	// If so, create XNif and XKf trees.
-	NiObjectRef txtkey = GetObjectByType( root_object, NiTextKeyExtraData::TypeConst() );
+	NiObjectRef txtkey = GetObjectByType( root_object, NiTextKeyExtraData::TYPE );
 	NiTextKeyExtraDataRef txtkey_obj;
 	if ( txtkey != NULL ) {
 		txtkey_obj = DynamicCast<NiTextKeyExtraData>(txtkey);
@@ -608,7 +608,7 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 			xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
 				
 			// Now search and locate newer timeframe controllers and convert to keyframecontrollers
-			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TypeConst() );
+			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TYPE );
 			for ( list<NiObjectRef>::iterator it = mgrs.begin(); it != mgrs.end(); ++it) {
 				NiControllerManagerRef mgr = DynamicCast<NiControllerManager>(*it);
 				if ( mgr == NULL ) {
@@ -631,7 +631,7 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 			// Append NiNodes with a NiKeyFrameController as NiStringExtraData objects.
 			list< pair< NiNodeRef, NiKeyframeControllerRef> > node_controllers;
 
-			list<NiObjectRef> nodes = GetAllObjectsByType( xnif_root, NiNode::TypeConst() );
+			list<NiObjectRef> nodes = GetAllObjectsByType( xnif_root, NiNode::TYPE );
 			for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ++it) {
 				NiNodeRef node = DynamicCast<NiNode>(*it);
 				if ( node == NULL ) {
@@ -643,9 +643,9 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 				NiKeyframeControllerRef key_controller;
 				for ( list<NiTimeControllerRef>::iterator it = controllers.begin(); it != controllers.end(); ++it ) {
 
-					if ((*it)->IsDerivedType(NiKeyframeController::TypeConst())) {
+					if ((*it)->IsDerivedType(NiKeyframeController::TYPE)) {
 						key_controller = StaticCast<NiKeyframeController>(*it);
-					} else if ((*it)->IsDerivedType(NiTransformController::TypeConst())) {
+					} else if ((*it)->IsDerivedType(NiTransformController::TYPE)) {
 						NiTransformControllerRef trans = StaticCast<NiTransformController>(*it);
 						NiTransformInterpolatorRef interp = DynamicCast<NiTransformInterpolator>(trans->GetInterpolator());
 						if (interp != NULL) {
@@ -705,7 +705,7 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 			// Construct the Nif file without transform controllers ...
 			xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
 
-			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TypeConst() );
+			list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TYPE );
 			for ( list<NiObjectRef>::iterator it = mgrs.begin(); it != mgrs.end(); ++it) {
 				NiControllerManagerRef mgr = DynamicCast<NiControllerManager>(*it);
 				if ( mgr == NULL ) {

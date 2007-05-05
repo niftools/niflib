@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TypeConst() );
+const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TYPE );
 
 NiStringPalette::NiStringPalette() NI_STRING_PALETTE_CONSTRUCT {}
 
@@ -75,8 +75,4 @@ unsigned int NiStringPalette::AddSubStr( const string & n ) {
 
 	//Return the offset where the string was found or appended
 	return offset;
-}
-
-const Type & NiStringPalette::TypeConst() {
-	return TYPE;
 }

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkPackedNiTriStripsShape::TYPE("bhkPackedNiTriStripsShape", &BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT::TypeConst() );
+const Type bhkPackedNiTriStripsShape::TYPE("bhkPackedNiTriStripsShape", &BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT::TYPE );
 
 bhkPackedNiTriStripsShape::bhkPackedNiTriStripsShape() BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> bhkPackedNiTriStripsShape::GetRefs() const {
 const Type & bhkPackedNiTriStripsShape::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkPackedNiTriStripsShape::TypeConst() {
-	return TYPE;
-}

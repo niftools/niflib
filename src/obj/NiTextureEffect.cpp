@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextureEffect::TYPE("NiTextureEffect", &NI_TEXTURE_EFFECT_PARENT::TypeConst() );
+const Type NiTextureEffect::TYPE("NiTextureEffect", &NI_TEXTURE_EFFECT_PARENT::TYPE );
 
 NiTextureEffect::NiTextureEffect() NI_TEXTURE_EFFECT_CONSTRUCT {}
 
@@ -114,8 +114,4 @@ unsigned short NiTextureEffect::GetPs2K() const {
 
 void NiTextureEffect::SetPs2K( unsigned short value ) {
 	ps2K = value;
-}
-
-const Type & NiTextureEffect::TypeConst() {
-	return TYPE;
 }

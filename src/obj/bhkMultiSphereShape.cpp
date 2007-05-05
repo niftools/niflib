@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkMultiSphereShape::TYPE("bhkMultiSphereShape", &BHK_MULTI_SPHERE_SHAPE_PARENT::TypeConst() );
+const Type bhkMultiSphereShape::TYPE("bhkMultiSphereShape", &BHK_MULTI_SPHERE_SHAPE_PARENT::TYPE );
 
 bhkMultiSphereShape::bhkMultiSphereShape() BHK_MULTI_SPHERE_SHAPE_CONSTRUCT {}
 
@@ -42,8 +42,4 @@ vector<Sphere > bhkMultiSphereShape::GetSpheres() const {
 
 void bhkMultiSphereShape::SetSpheres( const vector<Sphere >& value ) {
 	spheres = value;
-}
-
-const Type & bhkMultiSphereShape::TypeConst() {
-	return TYPE;
 }

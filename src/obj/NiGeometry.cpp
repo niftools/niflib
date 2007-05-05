@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGeometry::TYPE("NiGeometry", &NI_GEOMETRY_PARENT::TypeConst() );
+const Type NiGeometry::TYPE("NiGeometry", &NI_GEOMETRY_PARENT::TYPE );
 
 NiGeometry::NiGeometry() NI_GEOMETRY_CONSTRUCT {}
 
@@ -361,8 +361,4 @@ void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 	center = skinData->GetBoneTransform( bone_index ) * center;
 
 	skinData->SetBoneWeights( bone_index, n, center, radius );
-}
-
-const Type & NiGeometry::TypeConst() {
-	return TYPE;
 }

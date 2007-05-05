@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGeomMorpherController::TYPE("NiGeomMorpherController", &NI_GEOM_MORPHER_CONTROLLER_PARENT::TypeConst() );
+const Type NiGeomMorpherController::TYPE("NiGeomMorpherController", &NI_GEOM_MORPHER_CONTROLLER_PARENT::TYPE );
 
 NiGeomMorpherController::NiGeomMorpherController() NI_GEOM_MORPHER_CONTROLLER_CONSTRUCT {}
 
@@ -52,8 +52,4 @@ Ref<NiMorphData> NiGeomMorpherController::GetData() const {
 
 void NiGeomMorpherController::SetData( NiMorphData * n ) {
 	data = n;
-}
-
-const Type & NiGeomMorpherController::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineBasisData::TYPE("NiBSplineBasisData", &NI_B_SPLINE_BASIS_DATA_PARENT::TypeConst() );
+const Type NiBSplineBasisData::TYPE("NiBSplineBasisData", &NI_B_SPLINE_BASIS_DATA_PARENT::TYPE );
 
 NiBSplineBasisData::NiBSplineBasisData() NI_B_SPLINE_BASIS_DATA_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ unsigned int NiBSplineBasisData::GetNumControlPt() const {
 
 void NiBSplineBasisData::SetNumControlPt( unsigned int value ) {
 	numControlPt = value;
-}
-
-const Type & NiBSplineBasisData::TypeConst() {
-	return TYPE;
 }

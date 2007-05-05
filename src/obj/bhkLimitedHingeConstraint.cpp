@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkLimitedHingeConstraint::TYPE("bhkLimitedHingeConstraint", &BHK_LIMITED_HINGE_CONSTRAINT_PARENT::TypeConst() );
+const Type bhkLimitedHingeConstraint::TYPE("bhkLimitedHingeConstraint", &BHK_LIMITED_HINGE_CONSTRAINT_PARENT::TYPE );
 
 bhkLimitedHingeConstraint::bhkLimitedHingeConstraint() BHK_LIMITED_HINGE_CONSTRAINT_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> bhkLimitedHingeConstraint::GetRefs() const {
 const Type & bhkLimitedHingeConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkLimitedHingeConstraint::TypeConst() {
-	return TYPE;
-}

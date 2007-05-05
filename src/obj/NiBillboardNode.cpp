@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBillboardNode::TYPE("NiBillboardNode", &NI_BILLBOARD_NODE_PARENT::TypeConst() );
+const Type NiBillboardNode::TYPE("NiBillboardNode", &NI_BILLBOARD_NODE_PARENT::TYPE );
 
 NiBillboardNode::NiBillboardNode() NI_BILLBOARD_NODE_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ BillboardMode NiBillboardNode::GetBillboardMode() const {
 
 void NiBillboardNode::SetBillboardMode( BillboardMode value ) {
 	billboardMode = value;
-}
-
-const Type & NiBillboardNode::TypeConst() {
-	return TYPE;
 }

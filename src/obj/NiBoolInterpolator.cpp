@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBoolInterpolator::TYPE("NiBoolInterpolator", &NI_BOOL_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBoolInterpolator::TYPE("NiBoolInterpolator", &NI_BOOL_INTERPOLATOR_PARENT::TYPE );
 
 NiBoolInterpolator::NiBoolInterpolator() NI_BOOL_INTERPOLATOR_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ Ref<NiBoolData > NiBoolInterpolator::GetData() const {
 
 void NiBoolInterpolator::SetData( NiBoolData * value ) {
 	data = value;
-}
-
-const Type & NiBoolInterpolator::TypeConst() {
-	return TYPE;
 }

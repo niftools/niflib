@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAmbientLight::TYPE("NiAmbientLight", &NI_AMBIENT_LIGHT_PARENT::TypeConst() );
+const Type NiAmbientLight::TYPE("NiAmbientLight", &NI_AMBIENT_LIGHT_PARENT::TYPE );
 
 NiAmbientLight::NiAmbientLight() NI_AMBIENT_LIGHT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiAmbientLight::GetRefs() const {
 const Type & NiAmbientLight::GetType() const {
 	return TYPE;
 };
-
-const Type & NiAmbientLight::TypeConst() {
-	return TYPE;
-}

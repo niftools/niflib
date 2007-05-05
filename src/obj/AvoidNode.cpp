@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AvoidNode::TYPE("AvoidNode", &AVOID_NODE_PARENT::TypeConst() );
+const Type AvoidNode::TYPE("AvoidNode", &AVOID_NODE_PARENT::TYPE );
 
 AvoidNode::AvoidNode() AVOID_NODE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> AvoidNode::GetRefs() const {
 const Type & AvoidNode::GetType() const {
 	return TYPE;
 };
-
-const Type & AvoidNode::TypeConst() {
-	return TYPE;
-}

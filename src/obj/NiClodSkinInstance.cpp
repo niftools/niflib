@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiClodSkinInstance::TYPE("NiClodSkinInstance", &NI_CLOD_SKIN_INSTANCE_PARENT::TypeConst() );
+const Type NiClodSkinInstance::TYPE("NiClodSkinInstance", &NI_CLOD_SKIN_INSTANCE_PARENT::TYPE );
 
 NiClodSkinInstance::NiClodSkinInstance() NI_CLOD_SKIN_INSTANCE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiClodSkinInstance::GetRefs() const {
 const Type & NiClodSkinInstance::GetType() const {
 	return TYPE;
 };
-
-const Type & NiClodSkinInstance::TypeConst() {
-	return TYPE;
-}

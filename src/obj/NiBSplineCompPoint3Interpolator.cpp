@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineCompPoint3Interpolator::TYPE("NiBSplineCompPoint3Interpolator", &NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiBSplineCompPoint3Interpolator::TYPE("NiBSplineCompPoint3Interpolator", &NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_PARENT::TYPE );
 
 NiBSplineCompPoint3Interpolator::NiBSplineCompPoint3Interpolator() NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
 const Type & NiBSplineCompPoint3Interpolator::GetType() const {
 	return TYPE;
 };
-
-const Type & NiBSplineCompPoint3Interpolator::TypeConst() {
-	return TYPE;
-}

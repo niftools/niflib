@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TypeConst() );
+const Type NiSourceTexture::TYPE("NiSourceTexture", &NI_SOURCE_TEXTURE_PARENT::TYPE );
 
 NiSourceTexture::NiSourceTexture() NI_SOURCE_TEXTURE_CONSTRUCT {}
 
@@ -94,8 +94,4 @@ AlphaFormat NiSourceTexture::GetAlphaFormat() const {
 
 void NiSourceTexture::SetAlphaFormat( AlphaFormat n ) {
 	alphaFormat = n;
-}
-
-const Type & NiSourceTexture::TypeConst() {
-	return TYPE;
 }

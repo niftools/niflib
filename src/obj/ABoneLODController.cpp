@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type ABoneLODController::TYPE("ABoneLODController", &A_BONE_L_O_D_CONTROLLER_PARENT::TypeConst() );
+const Type ABoneLODController::TYPE("ABoneLODController", &A_BONE_L_O_D_CONTROLLER_PARENT::TYPE );
 
 ABoneLODController::ABoneLODController() A_BONE_L_O_D_CONTROLLER_CONSTRUCT {}
 
@@ -98,8 +98,4 @@ void ABoneLODController::RemoveNodeGroup( int index ) {
 void ABoneLODController::ClearNodeGroups() {
    nodeGroups.clear();
    numNodeGroups2 = nodeGroups.size();
-}
-
-const Type & ABoneLODController::TypeConst() {
-	return TYPE;
 }

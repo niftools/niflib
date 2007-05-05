@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiDitherProperty::TYPE("NiDitherProperty", &NI_DITHER_PROPERTY_PARENT::TypeConst() );
+const Type NiDitherProperty::TYPE("NiDitherProperty", &NI_DITHER_PROPERTY_PARENT::TYPE );
 
 NiDitherProperty::NiDitherProperty() NI_DITHER_PROPERTY_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ unsigned short NiDitherProperty::GetFlags() const {
 
 void NiDitherProperty::SetFlags( unsigned short n ) {
    flags = n;
-}
-
-const Type & NiDitherProperty::TypeConst() {
-	return TYPE;
 }

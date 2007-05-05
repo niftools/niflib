@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysEmitterSpeedCtlr::TYPE("NiPSysEmitterSpeedCtlr", &NI_P_SYS_EMITTER_SPEED_CTLR_PARENT::TypeConst() );
+const Type NiPSysEmitterSpeedCtlr::TYPE("NiPSysEmitterSpeedCtlr", &NI_P_SYS_EMITTER_SPEED_CTLR_PARENT::TYPE );
 
 NiPSysEmitterSpeedCtlr::NiPSysEmitterSpeedCtlr() NI_P_SYS_EMITTER_SPEED_CTLR_CONSTRUCT {}
 
@@ -36,7 +36,3 @@ list<NiObjectRef> NiPSysEmitterSpeedCtlr::GetRefs() const {
 const Type & NiPSysEmitterSpeedCtlr::GetType() const {
 	return TYPE;
 };
-
-const Type & NiPSysEmitterSpeedCtlr::TypeConst() {
-	return TYPE;
-}

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiFloatsExtraData::TYPE("NiFloatsExtraData", &NI_FLOATS_EXTRA_DATA_PARENT::TypeConst() );
+const Type NiFloatsExtraData::TYPE("NiFloatsExtraData", &NI_FLOATS_EXTRA_DATA_PARENT::TYPE );
 
 NiFloatsExtraData::NiFloatsExtraData() NI_FLOATS_EXTRA_DATA_CONSTRUCT {}
 
@@ -42,8 +42,4 @@ vector<float> NiFloatsExtraData::GetData() const {
 void NiFloatsExtraData::SetData( const vector<float> & n ) {
 	numFloats = (unsigned int)(n.size());
 	data = n;
-}
-
-const Type & NiFloatsExtraData::TypeConst() {
-	return TYPE;
 }

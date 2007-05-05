@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type FxWidget::TYPE("FxWidget", &FX_WIDGET_PARENT::TypeConst() );
+const Type FxWidget::TYPE("FxWidget", &FX_WIDGET_PARENT::TYPE );
 
 FxWidget::FxWidget() FX_WIDGET_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> FxWidget::GetRefs() const {
 const Type & FxWidget::GetType() const {
 	return TYPE;
 };
-
-const Type & FxWidget::TypeConst() {
-	return TYPE;
-}

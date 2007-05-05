@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &BHK_PRISMATIC_CONSTRAINT_PARENT::TypeConst() );
+const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &BHK_PRISMATIC_CONSTRAINT_PARENT::TYPE );
 
 bhkPrismaticConstraint::bhkPrismaticConstraint() BHK_PRISMATIC_CONSTRAINT_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkPrismaticConstraint::GetRefs() const {
 const Type & bhkPrismaticConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkPrismaticConstraint::TypeConst() {
-	return TYPE;
-}

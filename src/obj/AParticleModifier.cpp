@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AParticleModifier::TYPE("AParticleModifier", &A_PARTICLE_MODIFIER_PARENT::TypeConst() );
+const Type AParticleModifier::TYPE("AParticleModifier", &A_PARTICLE_MODIFIER_PARENT::TYPE );
 
 AParticleModifier::AParticleModifier() A_PARTICLE_MODIFIER_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> AParticleModifier::GetRefs() const {
 const Type & AParticleModifier::GetType() const {
 	return TYPE;
 };
-
-const Type & AParticleModifier::TypeConst() {
-	return TYPE;
-}

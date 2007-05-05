@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiRangeLODData::TYPE("NiRangeLODData", &NI_RANGE_L_O_D_DATA_PARENT::TypeConst() );
+const Type NiRangeLODData::TYPE("NiRangeLODData", &NI_RANGE_L_O_D_DATA_PARENT::TYPE );
 
 NiRangeLODData::NiRangeLODData() NI_RANGE_L_O_D_DATA_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector<LODRange > NiRangeLODData::GetLODLevels() const {
 
 void NiRangeLODData::SetLODLevels( const vector<LODRange >& value ) {
 	lodLevels = value;
-}
-
-const Type & NiRangeLODData::TypeConst() {
-	return TYPE;
 }

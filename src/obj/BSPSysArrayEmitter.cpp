@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSPSysArrayEmitter::TYPE("BSPSysArrayEmitter", &B_S_P_SYS_ARRAY_EMITTER_PARENT::TypeConst() );
+const Type BSPSysArrayEmitter::TYPE("BSPSysArrayEmitter", &B_S_P_SYS_ARRAY_EMITTER_PARENT::TYPE );
 
 BSPSysArrayEmitter::BSPSysArrayEmitter() B_S_P_SYS_ARRAY_EMITTER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> BSPSysArrayEmitter::GetRefs() const {
 const Type & BSPSysArrayEmitter::GetType() const {
 	return TYPE;
 };
-
-const Type & BSPSysArrayEmitter::TypeConst() {
-	return TYPE;
-}

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiDynamicEffect::TYPE("NiDynamicEffect", &NI_DYNAMIC_EFFECT_PARENT::TypeConst() );
+const Type NiDynamicEffect::TYPE("NiDynamicEffect", &NI_DYNAMIC_EFFECT_PARENT::TYPE );
 
 NiDynamicEffect::NiDynamicEffect() NI_DYNAMIC_EFFECT_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector<Ref<NiAVObject > > NiDynamicEffect::GetAffectedNodes() const {
 
 void NiDynamicEffect::SetAffectedNodes( const vector<Ref<NiAVObject > >& value ) {
 	affectedNodes = value;
-}
-
-const Type & NiDynamicEffect::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkSphereShape::TYPE("bhkSphereShape", &BHK_SPHERE_SHAPE_PARENT::TypeConst() );
+const Type bhkSphereShape::TYPE("bhkSphereShape", &BHK_SPHERE_SHAPE_PARENT::TYPE );
 
 bhkSphereShape::bhkSphereShape() BHK_SPHERE_SHAPE_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ float bhkSphereShape::GetRadius() const {
 
 void bhkSphereShape::SetRadius( float value ) {
 	radius = value;
-}
-
-const Type & bhkSphereShape::TypeConst() {
-	return TYPE;
 }

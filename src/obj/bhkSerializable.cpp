@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkSerializable::TYPE("bhkSerializable", &BHK_SERIALIZABLE_PARENT::TypeConst() );
+const Type bhkSerializable::TYPE("bhkSerializable", &BHK_SERIALIZABLE_PARENT::TYPE );
 
 bhkSerializable::bhkSerializable() BHK_SERIALIZABLE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkSerializable::GetRefs() const {
 const Type & bhkSerializable::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkSerializable::TypeConst() {
-	return TYPE;
-}

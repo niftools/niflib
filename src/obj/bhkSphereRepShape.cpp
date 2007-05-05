@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkSphereRepShape::TYPE("bhkSphereRepShape", &BHK_SPHERE_REP_SHAPE_PARENT::TypeConst() );
+const Type bhkSphereRepShape::TYPE("bhkSphereRepShape", &BHK_SPHERE_REP_SHAPE_PARENT::TYPE );
 
 bhkSphereRepShape::bhkSphereRepShape() BHK_SPHERE_REP_SHAPE_CONSTRUCT {}
 
@@ -41,8 +41,4 @@ HavokMaterial bhkSphereRepShape::GetMaterial() const {
 
 void bhkSphereRepShape::SetMaterial( HavokMaterial value ) {
 	material = value;
-}
-
-const Type & bhkSphereRepShape::TypeConst() {
-	return TYPE;
 }

@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiMaterialProperty::TYPE("NiMaterialProperty", &NI_MATERIAL_PROPERTY_PARENT::TypeConst() );
+const Type NiMaterialProperty::TYPE("NiMaterialProperty", &NI_MATERIAL_PROPERTY_PARENT::TYPE );
 
 NiMaterialProperty::NiMaterialProperty() NI_MATERIAL_PROPERTY_CONSTRUCT {}
 
@@ -89,8 +89,4 @@ Color3 NiMaterialProperty::GetSpecularColor() const {
 
 void NiMaterialProperty::SetSpecularColor( const Color3 & n ) {
 	specularColor = n;
-}
-
-const Type & NiMaterialProperty::TypeConst() {
-	return TYPE;
 }

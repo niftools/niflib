@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkConvexShape::TYPE("bhkConvexShape", &BHK_CONVEX_SHAPE_PARENT::TypeConst() );
+const Type bhkConvexShape::TYPE("bhkConvexShape", &BHK_CONVEX_SHAPE_PARENT::TYPE );
 
 bhkConvexShape::bhkConvexShape() BHK_CONVEX_SHAPE_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkConvexShape::GetRefs() const {
 const Type & bhkConvexShape::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkConvexShape::TypeConst() {
-	return TYPE;
-}

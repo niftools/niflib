@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiUVData::TYPE("NiUVData", &NI_U_V_DATA_PARENT::TypeConst() );
+const Type NiUVData::TYPE("NiUVData", &NI_U_V_DATA_PARENT::TYPE );
 
 NiUVData::NiUVData() NI_U_V_DATA_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiUVData::GetRefs() const {
 const Type & NiUVData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiUVData::TypeConst() {
-	return TYPE;
-}

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiCamera::TYPE("NiCamera", &NI_CAMERA_PARENT::TypeConst() );
+const Type NiCamera::TYPE("NiCamera", &NI_CAMERA_PARENT::TYPE );
 
 NiCamera::NiCamera() NI_CAMERA_CONSTRUCT {}
 
@@ -130,8 +130,4 @@ float NiCamera::GetLodAdjust() const {
 
 void NiCamera::SetLodAdjust( float value ) {
 	lodAdjust = value;
-}
-
-const Type & NiCamera::TypeConst() {
-	return TYPE;
 }

@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkNiTriStripsShape::TYPE("bhkNiTriStripsShape", &BHK_NI_TRI_STRIPS_SHAPE_PARENT::TypeConst() );
+const Type bhkNiTriStripsShape::TYPE("bhkNiTriStripsShape", &BHK_NI_TRI_STRIPS_SHAPE_PARENT::TYPE );
 
 bhkNiTriStripsShape::bhkNiTriStripsShape() BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT {}
 
@@ -60,8 +60,4 @@ Vector3 bhkNiTriStripsShape::GetScale() const {
 
 void bhkNiTriStripsShape::SetScale( const Vector3 & n ) {
 	scale = n;	
-}
-
-const Type & bhkNiTriStripsShape::TypeConst() {
-	return TYPE;
 }

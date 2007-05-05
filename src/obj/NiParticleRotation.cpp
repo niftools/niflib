@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleRotation::TYPE("NiParticleRotation", &NI_PARTICLE_ROTATION_PARENT::TypeConst() );
+const Type NiParticleRotation::TYPE("NiParticleRotation", &NI_PARTICLE_ROTATION_PARENT::TYPE );
 
 NiParticleRotation::NiParticleRotation() NI_PARTICLE_ROTATION_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiParticleRotation::GetRefs() const {
 const Type & NiParticleRotation::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleRotation::TypeConst() {
-	return TYPE;
-}

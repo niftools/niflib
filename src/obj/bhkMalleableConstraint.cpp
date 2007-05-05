@@ -8,7 +8,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &BHK_MALLEABLE_CONSTRAINT_PARENT::TypeConst() );
+const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &BHK_MALLEABLE_CONSTRAINT_PARENT::TYPE );
 
 bhkMalleableConstraint::bhkMalleableConstraint() BHK_MALLEABLE_CONSTRAINT_CONSTRUCT {}
 
@@ -37,7 +37,3 @@ list<NiObjectRef> bhkMalleableConstraint::GetRefs() const {
 const Type & bhkMalleableConstraint::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkMalleableConstraint::TypeConst() {
-	return TYPE;
-}

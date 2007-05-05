@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSBound::TYPE("BSBound", &B_S_BOUND_PARENT::TypeConst() );
+const Type BSBound::TYPE("BSBound", &B_S_BOUND_PARENT::TYPE );
 
 BSBound::BSBound() B_S_BOUND_CONSTRUCT {}
 
@@ -49,8 +49,4 @@ Vector3 BSBound::GetDimensions() const {
 
 void BSBound::SetDimensions( const Vector3 & value ) {
 	dimensions = value;
-}
-
-const Type & BSBound::TypeConst() {
-	return TYPE;
 }

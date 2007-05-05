@@ -23,7 +23,7 @@ public:
 
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
    template<typename U> Ref( const Ref<U>& other ) { 
-      if ( (NULL != other._object) && other._object->IsDerivedType(T::TypeConst()) ) {
+      if ( (NULL != other._object) && other._object->IsDerivedType(T::TYPE) ) {
          _object = static_cast<T*>(other._object);
          if ( _object != NULL )
             _object->AddRef();

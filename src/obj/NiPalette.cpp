@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPalette::TYPE("NiPalette", &NI_PALETTE_PARENT::TypeConst() );
+const Type NiPalette::TYPE("NiPalette", &NI_PALETTE_PARENT::TYPE );
 
 NiPalette::NiPalette() NI_PALETTE_CONSTRUCT {}
 
@@ -60,8 +60,4 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
 		palette[i][2] = int( new_pal[i].b * 255.0f );
 		palette[i][3] = int( new_pal[i].a * 255.0f );
 	}
-}
-
-const Type & NiPalette::TypeConst() {
-	return TYPE;
 }

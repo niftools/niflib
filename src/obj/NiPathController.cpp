@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TypeConst() );
+const Type NiPathController::TYPE("NiPathController", &NI_PATH_CONTROLLER_PARENT::TYPE );
 
 NiPathController::NiPathController() NI_PATH_CONTROLLER_CONSTRUCT {}
 
@@ -51,8 +51,4 @@ Ref<NiPosData> NiPathController::GetPosData() const {
 
 void NiPathController::SetPosData( NiPosData * n ) {
 	posData = n;
-}
-
-const Type & NiPathController::TypeConst() {
-	return TYPE;
 }

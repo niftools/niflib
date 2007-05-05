@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NI_MESH_P_SYS_DATA_PARENT::TypeConst() );
+const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NI_MESH_P_SYS_DATA_PARENT::TYPE );
 
 NiMeshPSysData::NiMeshPSysData() NI_MESH_P_SYS_DATA_CONSTRUCT {}
 
@@ -36,7 +36,3 @@ list<NiObjectRef> NiMeshPSysData::GetRefs() const {
 const Type & NiMeshPSysData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiMeshPSysData::TypeConst() {
-	return TYPE;
-}

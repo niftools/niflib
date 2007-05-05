@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiMultiTargetTransformController::TYPE("NiMultiTargetTransformController", &NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT::TypeConst() );
+const Type NiMultiTargetTransformController::TYPE("NiMultiTargetTransformController", &NI_MULTI_TARGET_TRANSFORM_CONTROLLER_PARENT::TYPE );
 
 NiMultiTargetTransformController::NiMultiTargetTransformController() NI_MULTI_TARGET_TRANSFORM_CONTROLLER_CONSTRUCT {}
 
@@ -53,8 +53,4 @@ void NiMultiTargetTransformController::SetExtraTargets( const vector<NiNodeRef>&
    for (size_t i=0; i<n; ++i)
       extraTargets.push_back( value[i] );
    extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiNode*)NULL), extraTargets.end());
-}
-
-const Type & NiMultiTargetTransformController::TypeConst() {
-	return TYPE;
 }

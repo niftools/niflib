@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkRigidBodyT::TYPE("bhkRigidBodyT", &BHK_RIGID_BODY_T_PARENT::TypeConst() );
+const Type bhkRigidBodyT::TYPE("bhkRigidBodyT", &BHK_RIGID_BODY_T_PARENT::TYPE );
 
 bhkRigidBodyT::bhkRigidBodyT() BHK_RIGID_BODY_T_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> bhkRigidBodyT::GetRefs() const {
 const Type & bhkRigidBodyT::GetType() const {
 	return TYPE;
 };
-
-const Type & bhkRigidBodyT::TypeConst() {
-	return TYPE;
-}

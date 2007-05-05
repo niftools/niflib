@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysEmitterCtlr::TYPE("NiPSysEmitterCtlr", &NI_P_SYS_EMITTER_CTLR_PARENT::TypeConst() );
+const Type NiPSysEmitterCtlr::TYPE("NiPSysEmitterCtlr", &NI_P_SYS_EMITTER_CTLR_PARENT::TYPE );
 
 NiPSysEmitterCtlr::NiPSysEmitterCtlr() NI_P_SYS_EMITTER_CTLR_CONSTRUCT {}
 
@@ -51,8 +51,4 @@ Ref<NiInterpolator > NiPSysEmitterCtlr::GetVisibilityInterpolator() const {
 
 void NiPSysEmitterCtlr::SetVisibilityInterpolator( NiInterpolator * value ) {
 	visibilityInterpolator = value;
-}
-
-const Type & NiPSysEmitterCtlr::TypeConst() {
-	return TYPE;
 }

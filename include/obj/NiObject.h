@@ -35,12 +35,6 @@ public:
 	NIFLIB_API virtual ~NiObject();
 
 	/*!
-	 * Fetches Run Time Type Information Constant which can be used in type comparision operations.
-	 * \return The type constant that represents this type of object.  This is a static function and is not dependent on any particular instance of the object.
-	 */
-	NIFLIB_API static const Type & TypeConst();
-
-	/*!
 	 * Used to determine the type of a particular instance of this object.
 	 * \return The type constant for the actual type of the object.
 	 */
@@ -135,8 +129,9 @@ public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {}
 
+	NIFLIB_API static const Type TYPE;
 private:
-	static const Type TYPE;
+	
 	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;
@@ -164,7 +159,7 @@ template <class T> Ref<const T> StaticCast (const NiObject * object) {
 #endif
 
 template <class T> Ref<T> DynamicCast( NiObject * object ) {
-	if ( object && object->IsDerivedType(T::TypeConst()) ) {
+	if ( object && object->IsDerivedType(T::TYPE) ) {
 		return (T*)object;
 	} else {
 		return NULL;
@@ -174,7 +169,7 @@ template <class T> Ref<T> DynamicCast( NiObject * object ) {
 //SWIG doesn't want two versions of the same thing
 #ifndef SWIG
 template <class T> Ref<const T> DynamicCast( const NiObject * object ) {
-	if ( object && object->IsDerivedType(T::TypeConst()) ) {
+	if ( object && object->IsDerivedType(T::TYPE) ) {
 		return (const T*)object;
 	} else {
 		return NULL;

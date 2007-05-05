@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiInterpolator::TYPE("NiInterpolator", &NI_INTERPOLATOR_PARENT::TypeConst() );
+const Type NiInterpolator::TYPE("NiInterpolator", &NI_INTERPOLATOR_PARENT::TYPE );
 
 NiInterpolator::NiInterpolator() NI_INTERPOLATOR_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiInterpolator::GetRefs() const {
 const Type & NiInterpolator::GetType() const {
 	return TYPE;
 };
-
-const Type & NiInterpolator::TypeConst() {
-	return TYPE;
-}

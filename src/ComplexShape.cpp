@@ -188,17 +188,17 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	vector<NiTriBasedGeomRef> shapes;
 
 	//Determine root type
-	if ( root->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
+	if ( root->IsDerivedType( NiTriBasedGeom::TYPE ) ) {
 		//The function was called on a single shape.
 		//Add it to the list
 		shapes.push_back( DynamicCast<NiTriBasedGeom>(root) );
-	} else if ( root->IsDerivedType( NiNode::TypeConst() ) ) {
+	} else if ( root->IsDerivedType( NiNode::TYPE ) ) {
 		//The function was called on a NiNOde.  Search for
 		//shape children
 		NiNodeRef nodeRoot = DynamicCast<NiNode>(root);
 		vector<NiAVObjectRef> children = nodeRoot->GetChildren();
 		for ( unsigned int child = 0; child < children.size(); ++child ) {
-			if ( children[child]->IsDerivedType( NiTriBasedGeom::TypeConst() ) ) {
+			if ( children[child]->IsDerivedType( NiTriBasedGeom::TYPE ) ) {
 				shapes.push_back( DynamicCast<NiTriBasedGeom>(children[child]) );
 			}
 		}
@@ -334,7 +334,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		for ( unsigned int tex = 0; tex < uvSetList.size(); ++tex ) {
 			uvSetList[tex] = BASE_MAP;
 		}
-		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TypeConst() );
+		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TYPE );
 		NiTexturingPropertyRef niTexProp;
 		if ( niProp != NULL ) {
 			niTexProp = DynamicCast<NiTexturingProperty>(niProp);
@@ -680,7 +680,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 		//Search for a NiTexturingProperty to build list of
 		//texture cooridinate sets to create
-		NiPropertyRef niProp = shapes[shape_num]->GetPropertyByType( NiTexturingProperty::TypeConst() );
+		NiPropertyRef niProp = shapes[shape_num]->GetPropertyByType( NiTexturingProperty::TYPE );
 		NiTexturingPropertyRef niTexProp;
 		if ( niProp != NULL ) {
 			niTexProp = DynamicCast<NiTexturingProperty>(niProp);

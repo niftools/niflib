@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPosData::TYPE("NiPosData", &NI_POS_DATA_PARENT::TypeConst() );
+const Type NiPosData::TYPE("NiPosData", &NI_POS_DATA_PARENT::TYPE );
 
 NiPosData::NiPosData() NI_POS_DATA_CONSTRUCT {}
 
@@ -50,8 +50,4 @@ vector< Key<Vector3> > NiPosData::GetKeys() const {
 
 void NiPosData::SetKeys( vector< Key<Vector3> > const & keys ) {
 	data.keys = keys;
-}
-
-const Type & NiPosData::TypeConst() {
-	return TYPE;
 }

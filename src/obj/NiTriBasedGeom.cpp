@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriBasedGeom::TYPE("NiTriBasedGeom", &NI_TRI_BASED_GEOM_PARENT::TypeConst() );
+const Type NiTriBasedGeom::TYPE("NiTriBasedGeom", &NI_TRI_BASED_GEOM_PARENT::TYPE );
 
 NiTriBasedGeom::NiTriBasedGeom() NI_TRI_BASED_GEOM_CONSTRUCT {}
 
@@ -229,8 +229,4 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 	}
 
 	TSpaceRef->SetData(binData);
-}
-
-const Type & NiTriBasedGeom::TypeConst() {
-	return TYPE;
 }

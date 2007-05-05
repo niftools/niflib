@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiClod::TYPE("NiClod", &NI_CLOD_PARENT::TypeConst() );
+const Type NiClod::TYPE("NiClod", &NI_CLOD_PARENT::TYPE );
 
 NiClod::NiClod() NI_CLOD_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiClod::GetRefs() const {
 const Type & NiClod::GetType() const {
 	return TYPE;
 };
-
-const Type & NiClod::TypeConst() {
-	return TYPE;
-}

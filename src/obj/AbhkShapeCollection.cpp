@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AbhkShapeCollection::TYPE("AbhkShapeCollection", &ABHK_SHAPE_COLLECTION_PARENT::TypeConst() );
+const Type AbhkShapeCollection::TYPE("AbhkShapeCollection", &ABHK_SHAPE_COLLECTION_PARENT::TYPE );
 
 AbhkShapeCollection::AbhkShapeCollection() ABHK_SHAPE_COLLECTION_CONSTRUCT {}
 
@@ -35,6 +35,3 @@ const Type & AbhkShapeCollection::GetType() const {
 	return TYPE;
 };
 
-const Type & AbhkShapeCollection::TypeConst() {
-	return TYPE;
-}

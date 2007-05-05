@@ -5,7 +5,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSphericalCollider::TYPE("NiSphericalCollider", &NI_SPHERICAL_COLLIDER_PARENT::TypeConst() );
+const Type NiSphericalCollider::TYPE("NiSphericalCollider", &NI_SPHERICAL_COLLIDER_PARENT::TYPE );
 
 NiSphericalCollider::NiSphericalCollider() NI_SPHERICAL_COLLIDER_CONSTRUCT {}
 
@@ -34,7 +34,3 @@ list<NiObjectRef> NiSphericalCollider::GetRefs() const {
 const Type & NiSphericalCollider::GetType() const {
 	return TYPE;
 };
-
-const Type & NiSphericalCollider::TypeConst() {
-	return TYPE;
-}

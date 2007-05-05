@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriBasedGeomData::TYPE("NiTriBasedGeomData", &NI_TRI_BASED_GEOM_DATA_PARENT::TypeConst() );
+const Type NiTriBasedGeomData::TYPE("NiTriBasedGeomData", &NI_TRI_BASED_GEOM_DATA_PARENT::TYPE );
 
 NiTriBasedGeomData::NiTriBasedGeomData() NI_TRI_BASED_GEOM_DATA_CONSTRUCT {}
 
@@ -43,7 +43,3 @@ void NiTriBasedGeomData::SetTriangles( const vector<Triangle> & in ) {
 vector<Triangle> NiTriBasedGeomData::GetTriangles() const {
 	return vector<Triangle>();
 }  
-
-const Type & NiTriBasedGeomData::TypeConst() {
-	return TYPE;
-}

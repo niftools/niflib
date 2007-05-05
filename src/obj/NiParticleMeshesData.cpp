@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for licence. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleMeshesData::TYPE("NiParticleMeshesData", &NI_PARTICLE_MESHES_DATA_PARENT::TypeConst() );
+const Type NiParticleMeshesData::TYPE("NiParticleMeshesData", &NI_PARTICLE_MESHES_DATA_PARENT::TYPE );
 
 NiParticleMeshesData::NiParticleMeshesData() NI_PARTICLE_MESHES_DATA_CONSTRUCT {}
 
@@ -35,7 +35,3 @@ list<NiObjectRef> NiParticleMeshesData::GetRefs() const {
 const Type & NiParticleMeshesData::GetType() const {
 	return TYPE;
 };
-
-const Type & NiParticleMeshesData::TypeConst() {
-	return TYPE;
-}

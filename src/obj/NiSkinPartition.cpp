@@ -26,7 +26,7 @@ typedef SkinPartition Partition;
 typedef vector<SkinPartition > PartitionList;
 
 //Definition of TYPE constant
-const Type NiSkinPartition::TYPE("NiSkinPartition", &NI_SKIN_PARTITION_PARENT::TypeConst() );
+const Type NiSkinPartition::TYPE("NiSkinPartition", &NI_SKIN_PARTITION_PARENT::TYPE );
 
 NiSkinPartition::NiSkinPartition() NI_SKIN_PARTITION_CONSTRUCT {}
 
@@ -714,8 +714,4 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
          }
       }
    }
-}
-
-const Type & NiSkinPartition::TypeConst() {
-	return TYPE;
 }
