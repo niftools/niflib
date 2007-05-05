@@ -37,14 +37,13 @@ All rights reserved.  Please see niflib.h for licence. */
 namespace Niflib {
 
 //Stores the mapping between object names and factory function pointers to create them
-typedef NiObject * (*blk_factory_func)();
+typedef NiObject * (*obj_factory_func)();
 bool global_object_map_init = false;
-map<string, blk_factory_func> global_object_map;
+map<string, obj_factory_func> global_object_map;
 
 //Utility Functions
 void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & objects );
-void RegisterObjectFactories ();
 NiObjectRef GetObjectByType( NiObject * root, const Type & type );
 
 /*!
@@ -61,16 +60,9 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 //--Function Bodies--//
 
 NiObjectRef CreateObject( string obj_type ) {
-	
-	//Initialize the global object list if it hasn't been done yet
-	if ( global_object_map_init == false ) {
-		RegisterObjectFactories();
-		global_object_map_init = true;
-	}
-
 	NiObject * object = NULL;
 
-	map<string, blk_factory_func>::iterator it;
+	map<string, obj_factory_func>::iterator it;
 	it = global_object_map.find(obj_type);
 
 	if ( it != global_object_map.end() ) {

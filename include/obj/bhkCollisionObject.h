@@ -22,6 +22,7 @@ public:
 	NIFLIB_API ~bhkCollisionObject();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
+	NIFLIB_API static NiObject * Create();
 	virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
 	NIFLIB_API virtual string asString( bool verbose = false ) const;

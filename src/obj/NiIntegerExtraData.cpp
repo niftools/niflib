@@ -42,3 +42,27 @@ unsigned int NiIntegerExtraData::GetData() const {
 void NiIntegerExtraData::SetData( unsigned int n ) {
 	integerData = n;
 }
+
+namespace Niflib { 
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiIntegerExtraData"] = NiIntegerExtraData::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiIntegerExtraData::Create() {
+	return new NiIntegerExtraData;
+}

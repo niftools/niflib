@@ -130,6 +130,7 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {}
 
 	NIFLIB_API static const Type TYPE;
+	NIFLIB_API static NiObject * Create();
 private:
 	
 	mutable unsigned int _ref_count;

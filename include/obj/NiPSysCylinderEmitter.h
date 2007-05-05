@@ -23,6 +23,7 @@ public:
 	NIFLIB_API ~NiPSysCylinderEmitter();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
+	NIFLIB_API static NiObject * Create();
 	NIFLIB_API virtual const Type & GetType() const;
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

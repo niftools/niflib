@@ -1299,10 +1299,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\gen\obj_factories.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\gen\obj_impl.cpp"
 					>
 				</File>
