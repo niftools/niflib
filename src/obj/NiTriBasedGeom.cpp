@@ -42,6 +42,20 @@ const Type & NiTriBasedGeom::GetType() const {
 	return TYPE;
 };
 
+void NiTriBasedGeom::ClearHardareSkinInfo() {
+   // Clear the partition info in both places.
+   NiSkinInstanceRef skinInst = GetSkinInstance();
+   if ( skinInst != NULL ) {
+      skinInst->SetSkinPartition( NULL );
+
+      NiSkinDataRef skinData = skinInst->GetSkinData();
+      if (skinData != NULL) {
+         skinData->SetSkinPartition( NULL );
+      }
+   }
+}
+
+
 void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, int max_bones_per_vertex /*= INT_MAX*/ ) {
    NiSkinPartitionRef skinPart; 
    if ( max_bones_per_partition == 0 ) //old method

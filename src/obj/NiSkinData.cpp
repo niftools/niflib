@@ -61,12 +61,12 @@ vector<SkinWeight> NiSkinData::GetBoneWeights( unsigned int bone_index ) const {
 	return boneList[bone_index].vertexWeights;
 }
 
-void NiSkinData::SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & n, Vector3 center, float radius ) {
+void NiSkinData::SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & weights, Vector3 center, float radius ) {
 	if ( bone_index > boneList.size() ) {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
 
-	boneList[bone_index].vertexWeights = n;
+	boneList[bone_index].vertexWeights = weights;
    boneList[bone_index].boundingSphereOffset = center;
    boneList[bone_index].boundingSphereRadius = radius;
 }
@@ -79,7 +79,7 @@ void NiSkinData::SetOverallTransform( const Matrix44 & transform ) {
 	transform.Decompose( translation, rotation, scale );
 }
 
-NiSkinData::NiSkinData( const Ref<NiGeometry> & owner ) NI_SKIN_DATA_CONSTRUCT {
+NiSkinData::NiSkinData( NiGeometry * owner ) NI_SKIN_DATA_CONSTRUCT {
 	ResetOffsets( owner );
 }
 
@@ -120,7 +120,7 @@ void NiSkinData::NormalizeWeights( unsigned numVertices ) {
 	}	
 }
 
-void NiSkinData::ResetOffsets( const Ref<NiGeometry> & owner ) {
+void NiSkinData::ResetOffsets( NiGeometry * owner ) {
 
 	//Get skin instance
 	NiSkinInstanceRef skinInst = owner->GetSkinInstance();
@@ -167,7 +167,7 @@ Ref<NiSkinPartition> NiSkinData::GetSkinPartition() const {
    return skinPartition;
 }
 
-void NiSkinData::SetSkinPartition(Ref<NiSkinPartition> value) {
+void NiSkinData::SetSkinPartition( NiSkinPartition * value ) {
    skinPartition = value;
 }
 

@@ -45,7 +45,7 @@ Ref<NiGeometryData> NiGeometry::GetData() const {
 	return data;
 }
 
-void NiGeometry::SetData( const Ref<NiGeometryData> & n ) {
+void NiGeometry::SetData( NiGeometryData * n ) {
 	data = n;
 }
 

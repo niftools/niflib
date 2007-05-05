@@ -33,7 +33,7 @@ public:
 	 * instance using the BindSkin function.
 	 */
 #ifndef SWIG // for some reason SWIG cannot properly hide this function in NiSkinInstanceRef
-	NIFLIB_HIDDEN NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes );
+	NIFLIB_HIDDEN NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
 #endif
 
 	NIFLIB_API ~NiSkinInstance();
@@ -49,17 +49,52 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Retrieves the number of NiNode bones that influence this skin.
+	 * \return The number of bones that influence this skin.
+	 */
 	NIFLIB_API unsigned int GetBoneCount() const;
+
+	/*!
+	 * Retrieves a list of references to all the NiNode bones that influence this skin.
+	 * \return All the bones that influence this skin.
+	 */
 	NIFLIB_API vector< Ref<NiNode> > GetBones() const;
+
+	/*!
+	 * Retrieves the root node of the skeleton that influences this skin.  This is the common ancestor of all bones and the skin itself.
+	 * \return The skeleton root.
+	 */
 	NIFLIB_API Ref<NiNode> GetSkeletonRoot() const;
 
+	/*!
+	 * Retrieves the root node of the skeleton that influences this skin.  This is the common ancestor of all bones and the skin itself.
+	 * \return The skeleton root.
+	 */
 	NIFLIB_API Ref<NiSkinData> GetSkinData() const;
-	NIFLIB_API void SetSkinData( const Ref<NiSkinData> & n );
 
+
+	/*!
+	 * Retrieves the hardare skin partition, if any.
+	 * \return The skeleton root.
+	 */
 	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
-	NIFLIB_API void SetSkinPartition( const Ref<NiSkinPartition> & n );
 
 	/*! 
+	 * NIFLIB_HIDDEN function.  For internal use only.
+	 * Called by NiGeometry during the skin binding process.
+	 */
+	NIFLIB_HIDDEN void SetSkinData( NiSkinData * n );
+
+	/*
+	 * NIFLIB_HIDDEN function.  For internal use only.
+	 * This can be used to set or clear the hardware skin partition data.  To create partition data, the NiTriBasedGeom::GenHardwareSkinInfo function should be used.
+	 * \param[in] n The new hardware skin partition data object to use, or NULL to clear the existing one.
+	 */
+	NIFLIB_HIDDEN void SetSkinPartition( NiSkinPartition * n );
+
+	/*! 
+	 * NIFLIB_HIDDEN function.  For internal use only.
 	 * Called by skeleton root NiNode when it self destructs to inform this skin
 	 * instance that the skeleton has been lost.  Should not be called directly.
 	 */

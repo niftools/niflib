@@ -50,20 +50,23 @@ public:
 	NIFLIB_API vector<unsigned short> GetBoneMap( int partition ) const;
 
 	NIFLIB_API bool HasVertexWeights( int partition ) const;
+
 	NIFLIB_API vector<float> GetVertexWeights( int partition, int vertex ) const;
 
 	NIFLIB_API bool HasVertexBoneIndices( int partition ) const;
+
 	NIFLIB_API vector<unsigned short> GetVertexBoneIndices( int partition, int vertex ) const;
 
-	/*! Used to get the number of triangle strips that a particular skin partition
-	 * isis divided into.
+	/*!
+	 * Used to get the number of triangle strips that a particular skin partition is divided into.
 	 * \param[in] partition The specific partition to get the strip count from.
 	 * \return The number of triangle strips used by this mesh.
 	 * \sa NiSkinPartition::SetStripCount
 	 */
 	NIFLIB_API unsigned short GetStripCount( int partition ) const;
 
-	/*! Used to retrieve all the triangles from a specific triangle strip in a
+	/*!
+	 * Used to retrieve all the triangles from a specific triangle strip in a
 	 * particular skin partition.
 	 * \param[in] partition The specific partition to get the triangles from.
 	 * \param[in] index The index of the triangle strip to retrieve the triangles from.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.

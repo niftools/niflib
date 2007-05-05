@@ -45,6 +45,11 @@ public:
 	NIFLIB_API void GenHardwareSkinInfo( int max_bones_per_partition = 4, int max_bones_per_vertex = 4 );
 
 	/*!
+	 * This clears any hardware acceleration skin data that was previously created.
+	 */
+	NIFLIB_API void ClearHardareSkinInfo();
+
+	/*!
 	 * Generate or update a NiStringExtraData object with precalculated
 	 * tangent and binormal data (Oblivion specific)
 	 */

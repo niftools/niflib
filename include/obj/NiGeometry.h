@@ -79,7 +79,7 @@ public:
 	 * Sets the geometry data object used by this geometry node.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.
 	 * \param[in] n The new geometry data object, or NULL to clear the current one.
 	 */
-	NIFLIB_API void SetData( const Ref<NiGeometryData> & n );
+	NIFLIB_API void SetData( NiGeometryData * n );
 
 	/*!
 	 * Retrieves the object pointed to by the unknown link in this geometry node, if any.

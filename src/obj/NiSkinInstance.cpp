@@ -13,7 +13,7 @@ const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::Type
 
 NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
-NiSkinInstance::NiSkinInstance( Ref<NiNode> skeleton_root, vector< Ref<NiNode> > bone_nodes ) NI_SKIN_INSTANCE_CONSTRUCT {
+NiSkinInstance::NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes ) NI_SKIN_INSTANCE_CONSTRUCT {
 	//Ensure that all bones are below the skeleton root node on the scene graph
 	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
 		bool is_decended = false;
@@ -105,7 +105,7 @@ Ref<NiSkinData> NiSkinInstance::GetSkinData() const {
 	return data;
 }
 
-void NiSkinInstance::SetSkinData( const Ref<NiSkinData> & n ) {
+void NiSkinInstance::SetSkinData( NiSkinData * n ) {
 	data = n;
 }
 
@@ -113,7 +113,7 @@ Ref<NiSkinPartition> NiSkinInstance::GetSkinPartition() const {
 	return skinPartition;
 }
 
-void NiSkinInstance::SetSkinPartition( const Ref<NiSkinPartition> & n ) {
+void NiSkinInstance::SetSkinPartition( NiSkinPartition * n ) {
 	skinPartition = n;
 }
 
