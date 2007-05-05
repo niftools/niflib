@@ -316,8 +316,8 @@ struct NIFLIB_API Float2 {
 
 /*! Stores a 2 by 2 matrix used for bump maps. */
 struct Matrix22 {
-	/*! Get the 2x2 identity matrix */
-	NIFLIB_API static const Matrix22 & Identity();
+	/*! The 2x2 identity matrix constant */
+	NIFLIB_API static const Matrix22 IDENTITY;
 
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
 
@@ -372,9 +372,6 @@ struct Matrix22 {
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
     }
-private:
-	/*! The 2x2 identity matrix constant */
-	static const Matrix22 IDENTITY;
 };
 
 /* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
@@ -435,8 +432,8 @@ struct NIFLIB_API Float3 {
 
 /*! Stores a 3 by 3 matrix used for rotation. */
 struct Matrix33 {
-	/*! Returns the 3x3 identity matrix */
-	NIFLIB_API static const Matrix33 & Identity();
+	/*! The 3x3 identity matrix constant*/
+	NIFLIB_API static const Matrix33 IDENTITY;
 
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
@@ -524,10 +521,6 @@ struct Matrix33 {
 			throw std::out_of_range("Index out of range for MatrixRow3");
         return rows[n];
     }
-
-private:
-	/*! The 3x3 identity matrix constant*/
-	static const Matrix33 IDENTITY;
 };
 
 
@@ -593,9 +586,9 @@ struct NIFLIB_API Float4 {
 
 /*! Stores a 4 by 4 matrix used for combined transformations. */
 struct Matrix44 {
-	/*! Returns the 4x4 identity matrix */
-	NIFLIB_API static const Matrix44 & Identity();
-	
+	/*! The 4x4 identity matrix constant */
+	NIFLIB_API static const Matrix44 IDENTITY;
+
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
 //These operators cause SWIG warnings
@@ -815,10 +808,6 @@ struct Matrix44 {
 			throw std::out_of_range("Index out of range for Matrix44");
         return rows[n];
     }
-
-	private:
-	/*! The 4x4 identity matrix constant */
-	static const Matrix44 IDENTITY;
 };
 
 /*! Stores a color along with alpha translucency */

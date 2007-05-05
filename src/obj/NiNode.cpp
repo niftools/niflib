@@ -239,7 +239,7 @@ void NiNode::PropagateTransform() {
 	}
 
 	//Nowthat the transforms have been propogated, clear them out
-	this->SetLocalTransform( Matrix44::Identity() );
+	this->SetLocalTransform( Matrix44::IDENTITY );
 }
 
 bool NiNode::IsSplitMeshProxy() const {
@@ -263,7 +263,7 @@ bool NiNode::IsSplitMeshProxy() const {
 		if ( children[i]->IsDerivedType( NiTriBasedGeom::TypeConst() ) == false ) {
 			return false;
 		}
-		if ( children[i]->GetLocalTransform() != Matrix44::Identity() ) {
+		if ( children[i]->GetLocalTransform() != Matrix44::IDENTITY ) {
 			return false;
 		}
 		if ( children[i]->GetVisibility() == false ) {

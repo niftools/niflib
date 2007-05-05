@@ -12,24 +12,12 @@ const Matrix44 Matrix44::IDENTITY( 1.0f, 0.0f, 0.0f, 0.0f,
 								   0.0f, 0.0f, 1.0f, 0.0f,
 								   0.0f, 0.0f, 0.0f, 1.0f );
 
-const Matrix44 & Matrix44::Identity() {
-	return IDENTITY;
-};
-
 const Matrix33 Matrix33::IDENTITY( 1.0f, 0.0f, 0.0f,
 								   0.0f, 1.0f, 0.0f,
 								   0.0f, 0.0f, 1.0f );
 
-const Matrix33 & Matrix33::Identity() {
-	return IDENTITY;
-};
-
 const Matrix22 Matrix22::IDENTITY( 1.0f, 0.0f,
 								   0.0f, 1.0f );
-
-const Matrix22 & Matrix22::Identity() {
-	return IDENTITY;
-};
 
 /* TexCoord Methods
  *
@@ -162,7 +150,7 @@ Vector3 Vector3::CrossProduct( const Vector3 & rh) const {
  */
 
 Matrix22::Matrix22() {
-	*this = Matrix22::Identity();
+	*this = Matrix22::IDENTITY;
 }
 
 /*
@@ -170,7 +158,7 @@ Matrix22::Matrix22() {
  */
 
 Matrix33::Matrix33() {
-	*this = Matrix33::Identity();
+	*this = Matrix33::IDENTITY;
 }
 
 Quaternion Matrix33::AsQuaternion() {
@@ -241,7 +229,7 @@ Matrix33 Matrix33::operator*( const Matrix33 & m ) const
  */
 
 Matrix44::Matrix44() {
-	*this = Matrix44::Identity();
+	*this = Matrix44::IDENTITY;
 }
 
 Matrix44::Matrix44( const Matrix33 & r ) {

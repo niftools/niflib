@@ -144,7 +144,7 @@ void NiGeometry::ApplySkinOffset() {
 	this->ApplyTransforms();
 
 	//Set the skin overall transform to the identity
-	skinInstance->GetSkinData()->SetOverallTransform( Matrix44::Identity() );	
+	skinInstance->GetSkinData()->SetOverallTransform( Matrix44::IDENTITY );	
 
 	//Reset skin offsets
 	skinInstance->GetSkinData()->ResetOffsets( this );
@@ -266,7 +266,7 @@ void NiGeometry::ApplyTransforms() {
 	geom_data->Transform( this->GetLocalTransform() );
 
 	//Now that the transforms have been applied, clear them to the identity
-	this->SetLocalTransform( Matrix44::Identity() );
+	this->SetLocalTransform( Matrix44::IDENTITY );
 }
 
 // Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.
