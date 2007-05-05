@@ -39,22 +39,68 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Retrieves the number of partitions that the triangles in the skin are divided into within this skin partition data object.
+	 * \return The number of skin partitions.
+	 */
 	NIFLIB_API int GetNumPartitions() const;
 
+	/*!
+	 * Retrieves the the number of skin weights for each vertex that a particular partition stores.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return The number of weights per vertex in the specified partition.
+	 */
 	NIFLIB_API unsigned short GetWeightsPerVertex( int partition ) const;
 
+	/*!
+	 * Retrieves the the vertices in a particular partition.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return The number of vertices in the specified partition.
+	 */
 	NIFLIB_API unsigned short GetNumVertices( int partition ) const;
 
+	/*!
+	 * Retrieves the the vertex map for a particular partition.  This maps the weight/influence lists in the submesh to the vertices in the skin shape.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return The vertex map for the specified partition.
+	 */
 	NIFLIB_API vector<unsigned short> GetVertexMap( int partition ) const;
 
+	/*!
+	 * Retrieves the the bone map for a particular partition.  This is a list of bones that affect this partition by index.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return The bone map for the specified partition.
+	 */
 	NIFLIB_API vector<unsigned short> GetBoneMap( int partition ) const;
 
+	/*!
+	 * Used to determine whether a particular partition has vertex weights.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return True if the specified partition has vertex weights, false otherwise.
+	 */
 	NIFLIB_API bool HasVertexWeights( int partition ) const;
 
+	/*!
+	 * Retrieves the the vertex weights for a particular vertex in a particular partition.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \param[in] vertex The index of the vertex to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumVertices.
+	 * \return The vertex weights for the specified vertex of the specified partition.
+	 */
 	NIFLIB_API vector<float> GetVertexWeights( int partition, int vertex ) const;
 
+	/*!
+	 * Used to determine whether a particular partition has vertex bone indices.  In other words, that it has bones influencing it.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return True if the specified partition has vertex bone indices, false otherwise.
+	 */
 	NIFLIB_API bool HasVertexBoneIndices( int partition ) const;
 
+	/*!
+	 * Retrieves the the vertex bone indices for a particular vertex in a particular partition.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \param[in] vertex The index of the vertex to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumVertices.
+	 * \return The vertex bone indices for the specified vertex of the specified partition.
+	 */
 	NIFLIB_API vector<unsigned short> GetVertexBoneIndices( int partition, int vertex ) const;
 
 	/*!
@@ -75,6 +121,11 @@ public:
 	 */
 	NIFLIB_API vector<unsigned short> GetStrip( int partition, int index ) const;
 
+	/*!
+	 * Retrieves the triangles that make up a particular partition.
+	 * \param[in] partition The index of the skin partition to get the data for.  Must be >= 0 and < the result of NiSkinPartition::GetNumPartitions.
+	 * \return The triangles that make up the specified partition.
+	 */
 	NIFLIB_API vector<Triangle> GetTriangles( int partition ) const;
 
 protected:

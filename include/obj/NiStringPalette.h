@@ -38,9 +38,30 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Retrieves the entire palette string.  This is a buffer of characters that will contain the all the strings stored in this palette.  It is usually better to get individual strings with the NiStringPalette::GetSubStr function.
+	 * \return The entire palette string.
+	 */
 	NIFLIB_API string GetPaletteString() const;
+
+	/*!
+	 * Sets the contents of the entire palette string.  This is a buffer of characters that will contain the all the strings stored in this palette.  It is usually better to add individual strings with the NiStringPalette::AddSubStr function.
+	 * \param[in] n The new palette string.  This will overwrite all existing strings stored in the palette.
+	 */
 	NIFLIB_API void SetPaletteString( const string & n );
+
+	/*!
+	 * Retrieves a particular sub string from the palette by offset into the string palette.
+	 * \param[in] offset The offset into the string palette where the desired sub string starts.  I.e. the number of characters that preceed it in the string palette.
+	 * \return The sub string starting at the specified offset in the string palette.
+	 */
 	NIFLIB_API string GetSubStr( short offset ) const;
+
+	/*!
+	 * Adds a new sub string to the end of the string palete and returns the offset position where it was added.
+	 * \param[in] n The new sub string to add.
+	 * \return The offset into the string palette where the new sub string was added.  I.e. the number of characters that preceed it in the string palette.
+	 */
 	NIFLIB_API unsigned int AddSubStr( const string & n );
 
 protected:
