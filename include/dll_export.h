@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for licence. */
 #endif
 
 // shared library: expose NIFLIB_API objects, hide NIFLIB_HIDDEN objects
-#ifdef USE_NIFLIB_DLL
+#ifndef NIFLIB_STATIC_LINK
 	// building swig wrapper
 	#if defined(SWIG)
 		#define NIFLIB_API
