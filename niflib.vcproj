@@ -435,6 +435,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\bhkMeshShape.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\bhkMoppBvTreeShape.cpp"
 					>
 				</File>
@@ -839,6 +843,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiMultiTextureProperty.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiNode.cpp"
 					>
 				</File>
@@ -1063,6 +1071,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiRawImageData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiRotatingParticles.cpp"
 					>
 				</File>
@@ -1072,6 +1084,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiScreenLODData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiSequence.cpp"
 					>
 				</File>
 				<File
@@ -1248,6 +1264,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\ByteArray.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\ByteColor3.cpp"
 					>
 				</File>
 				<File
@@ -1538,6 +1558,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkMalleableConstraint.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkMeshShape.h"
 					>
 				</File>
 				<File
@@ -1945,6 +1969,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiMultiTextureProperty.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiNode.h"
 					>
 				</File>
@@ -2169,6 +2197,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiRawImageData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiRotatingParticles.h"
 					>
 				</File>
@@ -2178,6 +2210,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiScreenLODData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiSequence.h"
 					>
 				</File>
 				<File
@@ -2354,6 +2390,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\ByteArray.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\ByteColor3.h"
 					>
 				</File>
 				<File

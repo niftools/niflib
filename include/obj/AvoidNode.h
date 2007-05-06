@@ -1,13 +1,11 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
-All rights reserved.  Please see niflib.h for licence. */
+All rights reserved.  Please see niflib.h for license. */
 
 #ifndef _AVOIDNODE_H_
 #define _AVOIDNODE_H_
 
 #include "NiNode.h"
 namespace Niflib {
-
-//#include "../gen/obj_defines.h"
 
 class AvoidNode;
 typedef Ref<AvoidNode> AvoidNodeRef;

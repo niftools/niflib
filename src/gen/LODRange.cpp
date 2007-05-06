@@ -20,6 +20,7 @@ LODRange::LODRange( const LODRange & src ) {
 LODRange & LODRange::operator=( const LODRange & src ) {
 	this->nearExtent = src.nearExtent;
 	this->farExtent = src.farExtent;
+	this->unknownInts = src.unknownInts;
 	return *this;
 };
 

@@ -22,6 +22,7 @@ using namespace std;
 #include "../../include/obj/bhkMoppBvTreeShape.h"
 #include "../../include/obj/bhkMultiSphereShape.h"
 #include "../../include/obj/bhkNiTriStripsShape.h"
+#include "../../include/obj/bhkMeshShape.h"
 #include "../../include/obj/bhkPackedNiTriStripsShape.h"
 #include "../../include/obj/bhkPrismaticConstraint.h"
 #include "../../include/obj/bhkRagdollConstraint.h"
@@ -64,6 +65,7 @@ using namespace std;
 #include "../../include/obj/NiColorData.h"
 #include "../../include/obj/NiColorExtraData.h"
 #include "../../include/obj/NiControllerManager.h"
+#include "../../include/obj/NiSequence.h"
 #include "../../include/obj/NiControllerSequence.h"
 #include "../../include/obj/NiDefaultAVObjectPalette.h"
 #include "../../include/obj/NiDirectionalLight.h"
@@ -175,6 +177,7 @@ using namespace std;
 #include "../../include/obj/NiTextureModeProperty.h"
 #include "../../include/obj/NiImage.h"
 #include "../../include/obj/NiTextureProperty.h"
+#include "../../include/obj/NiMultiTextureProperty.h"
 #include "../../include/obj/NiTexturingProperty.h"
 #include "../../include/obj/NiTransformController.h"
 #include "../../include/obj/NiTransformData.h"
@@ -195,6 +198,7 @@ using namespace std;
 #include "../../include/obj/NiWireframeProperty.h"
 #include "../../include/obj/NiZBufferProperty.h"
 #include "../../include/obj/RootCollisionNode.h"
+#include "../../include/obj/NiRawImageData.h"
 
 const char FIX_LINK_POP_ERROR[] = "Trying to pop a link from empty stack. This is probably a bug.";
 const char FIX_LINK_INDEX_ERROR[] = "Object index was not found in object map.  This NIF file may be invalid or imporperly supported.";
@@ -276,8 +280,10 @@ void AParticleModifier::InternalRead( istream& in, list<unsigned int> & link_sta
 	NiObject::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 }
 
 void AParticleModifier::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
@@ -286,10 +292,12 @@ void AParticleModifier::InternalWrite( ostream& out, const map<NiObjectRef,unsig
 		NifStream( link_map.find( StaticCast<NiObject>(nextModifier) )->second, out, info );
 	else
 		NifStream( 0xffffffff, out, info );
-	if ( controller != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version >= 0x04000002 ) {
+		if ( controller != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
 }
 
 std::string AParticleModifier::InternalAsString( bool verbose ) const {
@@ -304,7 +312,9 @@ std::string AParticleModifier::InternalAsString( bool verbose ) const {
 void AParticleModifier::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	NiObject::FixLinks( objects, link_stack, info );
 	nextModifier = FixLink<AParticleModifier>( objects, link_stack, info );
-	controller = FixLink<NiParticleSystemController>( objects, link_stack, info );
+	if ( info.version >= 0x04000002 ) {
+		controller = FixLink<NiParticleSystemController>( objects, link_stack, info );
+	};
 }
 
 std::list<NiObjectRef> AParticleModifier::InternalGetRefs() const {
@@ -429,52 +439,52 @@ std::list<NiObjectRef> AbhkConstraint::InternalGetRefs() const {
 
 void AbhkRagdollConstraint::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	AbhkConstraint::Read( in, link_stack, info );
-	NifStream( pivotA, in, info );
-	NifStream( planeA, in, info );
-	NifStream( twistA, in, info );
-	NifStream( pivotB, in, info );
-	NifStream( planeB, in, info );
-	NifStream( twistB, in, info );
-	NifStream( coneMinAngle, in, info );
-	NifStream( planeMinAngle, in, info );
-	NifStream( planeMaxAngle, in, info );
-	NifStream( twistMinAngle, in, info );
-	NifStream( twistMaxAngle, in, info );
-	NifStream( maxFriction, in, info );
+	NifStream( ragdoll.pivotA, in, info );
+	NifStream( ragdoll.planeA, in, info );
+	NifStream( ragdoll.twistA, in, info );
+	NifStream( ragdoll.pivotB, in, info );
+	NifStream( ragdoll.planeB, in, info );
+	NifStream( ragdoll.twistB, in, info );
+	NifStream( ragdoll.coneMinAngle, in, info );
+	NifStream( ragdoll.planeMinAngle, in, info );
+	NifStream( ragdoll.planeMaxAngle, in, info );
+	NifStream( ragdoll.twistMinAngle, in, info );
+	NifStream( ragdoll.twistMaxAngle, in, info );
+	NifStream( ragdoll.maxFriction, in, info );
 }
 
 void AbhkRagdollConstraint::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	AbhkConstraint::Write( out, link_map, info );
-	NifStream( pivotA, out, info );
-	NifStream( planeA, out, info );
-	NifStream( twistA, out, info );
-	NifStream( pivotB, out, info );
-	NifStream( planeB, out, info );
-	NifStream( twistB, out, info );
-	NifStream( coneMinAngle, out, info );
-	NifStream( planeMinAngle, out, info );
-	NifStream( planeMaxAngle, out, info );
-	NifStream( twistMinAngle, out, info );
-	NifStream( twistMaxAngle, out, info );
-	NifStream( maxFriction, out, info );
+	NifStream( ragdoll.pivotA, out, info );
+	NifStream( ragdoll.planeA, out, info );
+	NifStream( ragdoll.twistA, out, info );
+	NifStream( ragdoll.pivotB, out, info );
+	NifStream( ragdoll.planeB, out, info );
+	NifStream( ragdoll.twistB, out, info );
+	NifStream( ragdoll.coneMinAngle, out, info );
+	NifStream( ragdoll.planeMinAngle, out, info );
+	NifStream( ragdoll.planeMaxAngle, out, info );
+	NifStream( ragdoll.twistMinAngle, out, info );
+	NifStream( ragdoll.twistMaxAngle, out, info );
+	NifStream( ragdoll.maxFriction, out, info );
 }
 
 std::string AbhkRagdollConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkConstraint::asString();
-	out << "  Pivot A:  " << pivotA << endl;
-	out << "  Plane A:  " << planeA << endl;
-	out << "  Twist A:  " << twistA << endl;
-	out << "  Pivot B:  " << pivotB << endl;
-	out << "  Plane B:  " << planeB << endl;
-	out << "  Twist B:  " << twistB << endl;
-	out << "  Cone Min Angle:  " << coneMinAngle << endl;
-	out << "  Plane Min Angle:  " << planeMinAngle << endl;
-	out << "  Plane Max Angle:  " << planeMaxAngle << endl;
-	out << "  Twist Min Angle:  " << twistMinAngle << endl;
-	out << "  Twist Max Angle:  " << twistMaxAngle << endl;
-	out << "  Max Friction:  " << maxFriction << endl;
+	out << "  Pivot A:  " << ragdoll.pivotA << endl;
+	out << "  Plane A:  " << ragdoll.planeA << endl;
+	out << "  Twist A:  " << ragdoll.twistA << endl;
+	out << "  Pivot B:  " << ragdoll.pivotB << endl;
+	out << "  Plane B:  " << ragdoll.planeB << endl;
+	out << "  Twist B:  " << ragdoll.twistB << endl;
+	out << "  Cone Min Angle:  " << ragdoll.coneMinAngle << endl;
+	out << "  Plane Min Angle:  " << ragdoll.planeMinAngle << endl;
+	out << "  Plane Max Angle:  " << ragdoll.planeMaxAngle << endl;
+	out << "  Twist Min Angle:  " << ragdoll.twistMinAngle << endl;
+	out << "  Twist Max Angle:  " << ragdoll.twistMaxAngle << endl;
+	out << "  Max Friction:  " << ragdoll.maxFriction << endl;
 	return out.str();
 }
 
@@ -1104,15 +1114,14 @@ void NiDynamicEffect::InternalRead( istream& in, list<unsigned int> & link_stack
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( switchState, in, info );
 	};
+	NifStream( numAffectedNodes, in, info );
 	if ( info.version <= 0x04000002 ) {
-		NifStream( numAffectedNodes, in, info );
 		affectedNodeListPointers.resize(numAffectedNodes);
 		for (unsigned int i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
 			NifStream( affectedNodeListPointers[i2], in, info );
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( numAffectedNodes, in, info );
 		affectedNodes.resize(numAffectedNodes);
 		for (unsigned int i2 = 0; i2 < affectedNodes.size(); i2++) {
 			NifStream( block_num, in, info );
@@ -1127,14 +1136,13 @@ void NiDynamicEffect::InternalWrite( ostream& out, const map<NiObjectRef,unsigne
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( switchState, out, info );
 	};
+	NifStream( numAffectedNodes, out, info );
 	if ( info.version <= 0x04000002 ) {
-		NifStream( numAffectedNodes, out, info );
 		for (unsigned int i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
 			NifStream( affectedNodeListPointers[i2], out, info );
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( numAffectedNodes, out, info );
 		for (unsigned int i2 = 0; i2 < affectedNodes.size(); i2++) {
 			if ( affectedNodes[i2] != NULL )
 				NifStream( link_map.find( StaticCast<NiObject>(affectedNodes[i2]) )->second, out, info );
@@ -2423,40 +2431,31 @@ std::list<NiObjectRef> bhkConvexVerticesShape::InternalGetRefs() const {
 
 void bhkHingeConstraint::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	AbhkConstraint::Read( in, link_stack, info );
-	for (unsigned int i1 = 0; i1 < 5; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknownFloats[i1][i2], in, info );
-		};
-	};
+	NifStream( pivotA, in, info );
+	NifStream( perp2axleina1, in, info );
+	NifStream( perp2axleina2, in, info );
+	NifStream( pivotB, in, info );
+	NifStream( axleB, in, info );
 }
 
 void bhkHingeConstraint::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	AbhkConstraint::Write( out, link_map, info );
-	for (unsigned int i1 = 0; i1 < 5; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknownFloats[i1][i2], out, info );
-		};
-	};
+	NifStream( pivotA, out, info );
+	NifStream( perp2axleina1, out, info );
+	NifStream( perp2axleina2, out, info );
+	NifStream( pivotB, out, info );
+	NifStream( axleB, out, info );
 }
 
 std::string bhkHingeConstraint::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << AbhkConstraint::asString();
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 5; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Unknown Floats[" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
-			array_output_count++;
-		};
-	};
+	out << "  Pivot A:  " << pivotA << endl;
+	out << "  Perp2AxleInA1:  " << perp2axleina1 << endl;
+	out << "  Perp2AxleInA2:  " << perp2axleina2 << endl;
+	out << "  Pivot B:  " << pivotB << endl;
+	out << "  Axle B:  " << axleB << endl;
 	return out.str();
 }
 
@@ -2781,8 +2780,10 @@ void bhkMoppBvTreeShape::InternalRead( istream& in, list<unsigned int> & link_st
 	};
 	NifStream( unknownFloat, in, info );
 	NifStream( moppDataSize, in, info );
-	NifStream( objectCorner, in, info );
-	NifStream( scalingFactor, in, info );
+	if ( info.version >= 0x14000005 ) {
+		NifStream( objectCorner, in, info );
+		NifStream( scalingFactor, in, info );
+	};
 	moppData.resize(moppDataSize);
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		NifStream( moppData[i1], in, info );
@@ -2802,8 +2803,10 @@ void bhkMoppBvTreeShape::InternalWrite( ostream& out, const map<NiObjectRef,unsi
 	};
 	NifStream( unknownFloat, out, info );
 	NifStream( moppDataSize, out, info );
-	NifStream( objectCorner, out, info );
-	NifStream( scalingFactor, out, info );
+	if ( info.version >= 0x14000005 ) {
+		NifStream( objectCorner, out, info );
+		NifStream( scalingFactor, out, info );
+	};
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		NifStream( moppData[i1], out, info );
 	};
@@ -3037,6 +3040,121 @@ std::list<NiObjectRef> bhkNiTriStripsShape::InternalGetRefs() const {
 	return refs;
 }
 
+void bhkMeshShape::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	unsigned int block_num;
+	bhkSphereRepShape::Read( in, link_stack, info );
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown[i1], in, info );
+	};
+	NifStream( unknownCount, in, info );
+	unknownFloats.resize(unknownCount);
+	for (unsigned int i1 = 0; i1 < unknownFloats.size(); i1++) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownFloats[i1][i2], in, info );
+		};
+	};
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		NifStream( unknown[i1], in, info );
+	};
+	NifStream( numStripsData, in, info );
+	stripsData.resize(numStripsData);
+	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+}
+
+void bhkMeshShape::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	bhkSphereRepShape::Write( out, link_map, info );
+	numStripsData = (unsigned int)(stripsData.size());
+	unknownCount = (int)(unknownFloats.size());
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown[i1], out, info );
+	};
+	NifStream( unknownCount, out, info );
+	for (unsigned int i1 = 0; i1 < unknownFloats.size(); i1++) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownFloats[i1][i2], out, info );
+		};
+	};
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		NifStream( unknown[i1], out, info );
+	};
+	NifStream( numStripsData, out, info );
+	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
+		if ( stripsData[i1] != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(stripsData[i1]) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+}
+
+std::string bhkMeshShape::InternalAsString( bool verbose ) const {
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << bhkSphereRepShape::asString();
+	numStripsData = (unsigned int)(stripsData.size());
+	unknownCount = (int)(unknownFloats.size());
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    unknown[" << i1 << "]:  " << unknown[i1] << endl;
+		array_output_count++;
+	};
+	out << "  unknown count:  " << unknownCount << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < unknownFloats.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      unknown floats[" << i2 << "]:  " << unknownFloats[i1][i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Num Strips Data:  " << numStripsData << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Strips Data[" << i1 << "]:  " << stripsData[i1] << endl;
+		array_output_count++;
+	};
+	return out.str();
+}
+
+void bhkMeshShape::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	bhkSphereRepShape::FixLinks( objects, link_stack, info );
+	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
+		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, info );
+	};
+}
+
+std::list<NiObjectRef> bhkMeshShape::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = bhkSphereRepShape::GetRefs();
+	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
+		if ( stripsData[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(stripsData[i1]));
+	};
+	return refs;
+}
+
 void bhkPackedNiTriStripsShape::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	unsigned int block_num;
 	AbhkShapeCollection::Read( in, link_stack, info );
@@ -3236,13 +3354,15 @@ void bhkRigidBody::InternalRead( istream& in, list<unsigned int> & link_stack, c
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( unknown5Floats[i1], in, info );
 	};
-	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		NifStream( unknown4Shorts[i1], in, info );
-	};
-	NifStream( layerCopy, in, info );
-	NifStream( colFilterCopy, in, info );
-	for (unsigned int i1 = 0; i1 < 7; i1++) {
-		NifStream( unknown7Shorts[i1], in, info );
+	if ( info.version >= 0x14000004 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( unknown4Shorts[i2], in, info );
+		};
+		NifStream( layerCopy, in, info );
+		NifStream( colFilterCopy, in, info );
+		for (unsigned int i2 = 0; i2 < 7; i2++) {
+			NifStream( unknown7Shorts[i2], in, info );
+		};
 	};
 	NifStream( translation, in, info );
 	NifStream( unknownFloat00, in, info );
@@ -3289,13 +3409,15 @@ void bhkRigidBody::InternalWrite( ostream& out, const map<NiObjectRef,unsigned i
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( unknown5Floats[i1], out, info );
 	};
-	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		NifStream( unknown4Shorts[i1], out, info );
-	};
-	NifStream( layerCopy, out, info );
-	NifStream( colFilterCopy, out, info );
-	for (unsigned int i1 = 0; i1 < 7; i1++) {
-		NifStream( unknown7Shorts[i1], out, info );
+	if ( info.version >= 0x14000004 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( unknown4Shorts[i2], out, info );
+		};
+		NifStream( layerCopy, out, info );
+		NifStream( colFilterCopy, out, info );
+		for (unsigned int i2 = 0; i2 < 7; i2++) {
+			NifStream( unknown7Shorts[i2], out, info );
+		};
 	};
 	NifStream( translation, out, info );
 	NifStream( unknownFloat00, out, info );
@@ -5175,7 +5297,7 @@ std::list<NiObjectRef> NiControllerManager::InternalGetRefs() const {
 	return refs;
 }
 
-void NiControllerSequence::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiSequence::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
 	NifStream( name, in, info );
@@ -5247,38 +5369,9 @@ void NiControllerSequence::InternalRead( istream& in, list<unsigned int> & link_
 			NifStream( controlledBlocks[i1].variableOffset2, in, info );
 		};
 	};
-	if ( info.version >= 0x0A01006A ) {
-		NifStream( weight, in, info );
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-		NifStream( cycleType, in, info );
-	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
-		NifStream( unknownInt0, in, info );
-	};
-	if ( info.version >= 0x0A01006A ) {
-		NifStream( frequency, in, info );
-		NifStream( startTime, in, info );
-		NifStream( stopTime, in, info );
-	};
-	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
-		NifStream( unknownFloat2, in, info );
-	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
-		NifStream( unknownByte, in, info );
-	};
-	if ( info.version >= 0x0A01006A ) {
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-		NifStream( targetName, in, info );
-	};
-	if ( info.version >= 0x0A020000 ) {
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-	};
 }
 
-void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiSequence::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	NiObject::Write( out, link_map, info );
 	numControlledBlocks = (unsigned int)(controlledBlocks.size());
 	NifStream( name, out, info );
@@ -5361,6 +5454,121 @@ void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,un
 			NifStream( controlledBlocks[i1].variableOffset2, out, info );
 		};
 	};
+}
+
+std::string NiSequence::InternalAsString( bool verbose ) const {
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	numControlledBlocks = (unsigned int)(controlledBlocks.size());
+	out << "  Name:  " << name << endl;
+	out << "  Text Keys Name:  " << textKeysName << endl;
+	out << "  Text Keys:  " << textKeys << endl;
+	out << "  Num Controlled Blocks:  " << numControlledBlocks << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		out << "    Target Name:  " << controlledBlocks[i1].targetName << endl;
+		out << "    Controller:  " << controlledBlocks[i1].controller << endl;
+		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
+		out << "    Unknown Link 2:  " << controlledBlocks[i1].unknownLink2 << endl;
+		out << "    Unknown Short 0:  " << controlledBlocks[i1].unknownShort0 << endl;
+		out << "    Priority?:  " << controlledBlocks[i1].priority_ << endl;
+		out << "    String Palette:  " << controlledBlocks[i1].stringPalette << endl;
+		out << "    Node Name:  " << controlledBlocks[i1].nodeName << endl;
+		out << "    Node Name Offset:  " << controlledBlocks[i1].nodeNameOffset << endl;
+		out << "    Property Type:  " << controlledBlocks[i1].propertyType << endl;
+		out << "    Property Type Offset:  " << controlledBlocks[i1].propertyTypeOffset << endl;
+		out << "    Controller Type:  " << controlledBlocks[i1].controllerType << endl;
+		out << "    Controller Type Offset:  " << controlledBlocks[i1].controllerTypeOffset << endl;
+		out << "    Variable 1:  " << controlledBlocks[i1].variable1 << endl;
+		out << "    Variable Offset 1:  " << controlledBlocks[i1].variableOffset1 << endl;
+		out << "    Variable 2:  " << controlledBlocks[i1].variable2 << endl;
+		out << "    Variable Offset 2:  " << controlledBlocks[i1].variableOffset2 << endl;
+	};
+	return out.str();
+}
+
+void NiSequence::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	NiObject::FixLinks( objects, link_stack, info );
+	if ( info.version <= 0x0A010000 ) {
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
+	};
+	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( info.version <= 0x0A010000 ) {
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
+		};
+		if ( info.version >= 0x0A01006A ) {
+			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
+		};
+		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
+		};
+		if ( info.version >= 0x0A020000 ) {
+			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
+		};
+	};
+}
+
+std::list<NiObjectRef> NiSequence::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	if ( textKeys != NULL )
+		refs.push_back(StaticCast<NiObject>(textKeys));
+	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
+		if ( controlledBlocks[i1].controller != NULL )
+			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].controller));
+		if ( controlledBlocks[i1].interpolator != NULL )
+			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].interpolator));
+		if ( controlledBlocks[i1].unknownLink2 != NULL )
+			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].unknownLink2));
+		if ( controlledBlocks[i1].stringPalette != NULL )
+			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].stringPalette));
+	};
+	return refs;
+}
+
+void NiControllerSequence::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	unsigned int block_num;
+	NiSequence::Read( in, link_stack, info );
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( weight, in, info );
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+		NifStream( cycleType, in, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownInt0, in, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( frequency, in, info );
+		NifStream( startTime, in, info );
+		NifStream( stopTime, in, info );
+	};
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
+		NifStream( unknownFloat2, in, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownByte, in, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+		NifStream( targetName, in, info );
+	};
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+}
+
+void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	NiSequence::Write( out, link_map, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( weight, out, info );
 		if ( textKeys != NULL )
@@ -5401,38 +5609,9 @@ void NiControllerSequence::InternalWrite( ostream& out, const map<NiObjectRef,un
 std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiObject::asString();
-	numControlledBlocks = (unsigned int)(controlledBlocks.size());
-	out << "  Name:  " << name << endl;
-	out << "  Text Keys Name:  " << textKeysName << endl;
-	out << "  Text Keys:  " << textKeys << endl;
-	out << "  Num Controlled Blocks:  " << numControlledBlocks << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		out << "    Target Name:  " << controlledBlocks[i1].targetName << endl;
-		out << "    Controller:  " << controlledBlocks[i1].controller << endl;
-		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
-		out << "    Unknown Link 2:  " << controlledBlocks[i1].unknownLink2 << endl;
-		out << "    Unknown Short 0:  " << controlledBlocks[i1].unknownShort0 << endl;
-		out << "    Priority?:  " << controlledBlocks[i1].priority_ << endl;
-		out << "    String Palette:  " << controlledBlocks[i1].stringPalette << endl;
-		out << "    Node Name:  " << controlledBlocks[i1].nodeName << endl;
-		out << "    Node Name Offset:  " << controlledBlocks[i1].nodeNameOffset << endl;
-		out << "    Property Type:  " << controlledBlocks[i1].propertyType << endl;
-		out << "    Property Type Offset:  " << controlledBlocks[i1].propertyTypeOffset << endl;
-		out << "    Controller Type:  " << controlledBlocks[i1].controllerType << endl;
-		out << "    Controller Type Offset:  " << controlledBlocks[i1].controllerTypeOffset << endl;
-		out << "    Variable 1:  " << controlledBlocks[i1].variable1 << endl;
-		out << "    Variable Offset 1:  " << controlledBlocks[i1].variableOffset1 << endl;
-		out << "    Variable 2:  " << controlledBlocks[i1].variable2 << endl;
-		out << "    Variable Offset 2:  " << controlledBlocks[i1].variableOffset2 << endl;
-	};
+	out << NiSequence::asString();
 	out << "  Weight:  " << weight << endl;
+	out << "  Text Keys:  " << textKeys << endl;
 	out << "  Cycle Type:  " << cycleType << endl;
 	out << "  Unknown Int 0:  " << unknownInt0 << endl;
 	out << "  Frequency:  " << frequency << endl;
@@ -5447,25 +5626,7 @@ std::string NiControllerSequence::InternalAsString( bool verbose ) const {
 }
 
 void NiControllerSequence::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	NiObject::FixLinks( objects, link_stack, info );
-	if ( info.version <= 0x0A010000 ) {
-		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
-	};
-	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		if ( info.version <= 0x0A010000 ) {
-			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
-		};
-		if ( info.version >= 0x0A01006A ) {
-			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
-			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
-		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
-			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
-		};
-		if ( info.version >= 0x0A020000 ) {
-			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
-		};
-	};
+	NiSequence::FixLinks( objects, link_stack, info );
 	if ( info.version >= 0x0A01006A ) {
 		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
 		manager = FixLink<NiControllerManager>( objects, link_stack, info );
@@ -5477,19 +5638,9 @@ void NiControllerSequence::InternalFixLinks( const map<unsigned int,NiObjectRef>
 
 std::list<NiObjectRef> NiControllerSequence::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiObject::GetRefs();
+	refs = NiSequence::GetRefs();
 	if ( textKeys != NULL )
 		refs.push_back(StaticCast<NiObject>(textKeys));
-	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
-		if ( controlledBlocks[i1].controller != NULL )
-			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].controller));
-		if ( controlledBlocks[i1].interpolator != NULL )
-			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].interpolator));
-		if ( controlledBlocks[i1].unknownLink2 != NULL )
-			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].unknownLink2));
-		if ( controlledBlocks[i1].stringPalette != NULL )
-			refs.push_back(StaticCast<NiObject>(controlledBlocks[i1].stringPalette));
-	};
 	if ( stringPalette != NULL )
 		refs.push_back(StaticCast<NiObject>(stringPalette));
 	return refs;
@@ -6060,7 +6211,9 @@ std::list<NiObjectRef> NiGeomMorpherController::InternalGetRefs() const {
 
 void NiGravity::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	AParticleModifier::Read( in, link_stack, info );
-	NifStream( unknownFloat1, in, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownFloat1, in, info );
+	};
 	NifStream( force, in, info );
 	NifStream( type, in, info );
 	NifStream( position, in, info );
@@ -6069,7 +6222,9 @@ void NiGravity::InternalRead( istream& in, list<unsigned int> & link_stack, cons
 
 void NiGravity::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	AParticleModifier::Write( out, link_map, info );
-	NifStream( unknownFloat1, out, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownFloat1, out, info );
+	};
 	NifStream( force, out, info );
 	NifStream( type, out, info );
 	NifStream( position, out, info );
@@ -7470,13 +7625,20 @@ void NiLODNode::InternalRead( istream& in, list<unsigned int> & link_stack, cons
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( unknown4Bytes[i1], in, info );
 	};
-	if ( info.version <= 0x0A000100 ) {
+	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A000100 ) ) {
 		NifStream( lodCenter, in, info );
+	};
+	if ( info.version <= 0x0A000100 ) {
 		NifStream( numLodLevels, in, info );
 		lodLevels.resize(numLodLevels);
 		for (unsigned int i2 = 0; i2 < lodLevels.size(); i2++) {
 			NifStream( lodLevels[i2].nearExtent, in, info );
 			NifStream( lodLevels[i2].farExtent, in, info );
+			if ( info.version <= 0x03010000 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( lodLevels[i2].unknownInts[i4], in, info );
+				};
+			};
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
@@ -7492,12 +7654,19 @@ void NiLODNode::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int>
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( unknown4Bytes[i1], out, info );
 	};
-	if ( info.version <= 0x0A000100 ) {
+	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A000100 ) ) {
 		NifStream( lodCenter, out, info );
+	};
+	if ( info.version <= 0x0A000100 ) {
 		NifStream( numLodLevels, out, info );
 		for (unsigned int i2 = 0; i2 < lodLevels.size(); i2++) {
 			NifStream( lodLevels[i2].nearExtent, out, info );
 			NifStream( lodLevels[i2].farExtent, out, info );
+			if ( info.version <= 0x03010000 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( lodLevels[i2].unknownInts[i4], out, info );
+				};
+			};
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
@@ -7536,6 +7705,18 @@ std::string NiLODNode::InternalAsString( bool verbose ) const {
 		};
 		out << "    Near Extent:  " << lodLevels[i1].nearExtent << endl;
 		out << "    Far Extent:  " << lodLevels[i1].farExtent << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Ints[" << i2 << "]:  " << lodLevels[i1].unknownInts[i2] << endl;
+			array_output_count++;
+		};
 	};
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  LOD Level Data:  " << lodLevelData << endl;
@@ -8154,38 +8335,62 @@ void NiParticleSystemController::InternalRead( istream& in, list<unsigned int> &
 	NifStream( size, in, info );
 	NifStream( emitStartTime, in, info );
 	NifStream( emitStopTime, in, info );
-	NifStream( unknownByte, in, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownByte, in, info );
+	};
 	NifStream( emitRate, in, info );
 	NifStream( lifetime, in, info );
 	NifStream( lifetimeRandom, in, info );
-	NifStream( emitFlags, in, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( emitFlags, in, info );
+	};
 	NifStream( startRandom, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( unknownShort2_, in, info );
-	NifStream( unknownFloat13_, in, info );
-	NifStream( unknownInt1_, in, info );
-	NifStream( unknownInt2_, in, info );
-	NifStream( unknownShort3_, in, info );
-	NifStream( numParticles, in, info );
-	NifStream( numValid, in, info );
-	particles.resize(numParticles);
-	for (unsigned int i1 = 0; i1 < particles.size(); i1++) {
-		NifStream( particles[i1].velocity, in, info );
-		NifStream( particles[i1].unknownVector, in, info );
-		NifStream( particles[i1].lifetime, in, info );
-		NifStream( particles[i1].lifespan, in, info );
-		NifStream( particles[i1].timestamp, in, info );
-		NifStream( particles[i1].unknownShort, in, info );
-		NifStream( particles[i1].vertexId, in, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownShort2_, in, info );
+		NifStream( unknownFloat13_, in, info );
+		NifStream( unknownInt1_, in, info );
+		NifStream( unknownInt2_, in, info );
+		NifStream( unknownShort3_, in, info );
+	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( particle.velocity, in, info );
+		NifStream( particle.unknownVector, in, info );
+		NifStream( particle.lifetime, in, info );
+		NifStream( particle.lifespan, in, info );
+		NifStream( particle.timestamp, in, info );
+		NifStream( particle.unknownShort, in, info );
+		NifStream( particle.vertexId, in, info );
+	};
+	if ( info.version >= 0x04000002 ) {
+		NifStream( numParticles, in, info );
+		NifStream( numValid, in, info );
+		particles.resize(numParticles);
+		for (unsigned int i2 = 0; i2 < particles.size(); i2++) {
+			NifStream( particles[i2].velocity, in, info );
+			NifStream( particles[i2].unknownVector, in, info );
+			NifStream( particles[i2].lifetime, in, info );
+			NifStream( particles[i2].lifespan, in, info );
+			NifStream( particles[i2].timestamp, in, info );
+			NifStream( particles[i2].unknownShort, in, info );
+			NifStream( particles[i2].vertexId, in, info );
+		};
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
 	};
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
-	NifStream( trailer, in, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( trailer, in, info );
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unkownFloats[i2], in, info );
+		};
+	};
 }
 
 void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
@@ -8207,36 +8412,53 @@ void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObject
 	NifStream( size, out, info );
 	NifStream( emitStartTime, out, info );
 	NifStream( emitStopTime, out, info );
-	NifStream( unknownByte, out, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownByte, out, info );
+	};
 	NifStream( emitRate, out, info );
 	NifStream( lifetime, out, info );
 	NifStream( lifetimeRandom, out, info );
-	NifStream( emitFlags, out, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( emitFlags, out, info );
+	};
 	NifStream( startRandom, out, info );
 	if ( emitter != NULL )
 		NifStream( link_map.find( StaticCast<NiObject>(emitter) )->second, out, info );
 	else
 		NifStream( 0xffffffff, out, info );
-	NifStream( unknownShort2_, out, info );
-	NifStream( unknownFloat13_, out, info );
-	NifStream( unknownInt1_, out, info );
-	NifStream( unknownInt2_, out, info );
-	NifStream( unknownShort3_, out, info );
-	NifStream( numParticles, out, info );
-	NifStream( numValid, out, info );
-	for (unsigned int i1 = 0; i1 < particles.size(); i1++) {
-		NifStream( particles[i1].velocity, out, info );
-		NifStream( particles[i1].unknownVector, out, info );
-		NifStream( particles[i1].lifetime, out, info );
-		NifStream( particles[i1].lifespan, out, info );
-		NifStream( particles[i1].timestamp, out, info );
-		NifStream( particles[i1].unknownShort, out, info );
-		NifStream( particles[i1].vertexId, out, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( unknownShort2_, out, info );
+		NifStream( unknownFloat13_, out, info );
+		NifStream( unknownInt1_, out, info );
+		NifStream( unknownInt2_, out, info );
+		NifStream( unknownShort3_, out, info );
 	};
-	if ( unknownLink != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version <= 0x03010000 ) {
+		NifStream( particle.velocity, out, info );
+		NifStream( particle.unknownVector, out, info );
+		NifStream( particle.lifetime, out, info );
+		NifStream( particle.lifespan, out, info );
+		NifStream( particle.timestamp, out, info );
+		NifStream( particle.unknownShort, out, info );
+		NifStream( particle.vertexId, out, info );
+	};
+	if ( info.version >= 0x04000002 ) {
+		NifStream( numParticles, out, info );
+		NifStream( numValid, out, info );
+		for (unsigned int i2 = 0; i2 < particles.size(); i2++) {
+			NifStream( particles[i2].velocity, out, info );
+			NifStream( particles[i2].unknownVector, out, info );
+			NifStream( particles[i2].lifetime, out, info );
+			NifStream( particles[i2].lifespan, out, info );
+			NifStream( particles[i2].timestamp, out, info );
+			NifStream( particles[i2].unknownShort, out, info );
+			NifStream( particles[i2].vertexId, out, info );
+		};
+		if ( unknownLink != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
 	if ( particleExtra != NULL )
 		NifStream( link_map.find( StaticCast<NiObject>(particleExtra) )->second, out, info );
 	else
@@ -8245,7 +8467,14 @@ void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObject
 		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
 	else
 		NifStream( 0xffffffff, out, info );
-	NifStream( trailer, out, info );
+	if ( info.version >= 0x04000002 ) {
+		NifStream( trailer, out, info );
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unkownFloats[i2], out, info );
+		};
+	};
 }
 
 std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
@@ -8281,6 +8510,13 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	out << "  Unknown Int 1?:  " << unknownInt1_ << endl;
 	out << "  Unknown Int 2?:  " << unknownInt2_ << endl;
 	out << "  Unknown Short 3?:  " << unknownShort3_ << endl;
+	out << "  Velocity:  " << particle.velocity << endl;
+	out << "  Unknown Vector:  " << particle.unknownVector << endl;
+	out << "  Lifetime:  " << particle.lifetime << endl;
+	out << "  Lifespan:  " << particle.lifespan << endl;
+	out << "  Timestamp:  " << particle.timestamp << endl;
+	out << "  Unknown Short:  " << particle.unknownShort << endl;
+	out << "  Vertex ID:  " << particle.vertexId << endl;
 	out << "  Num Particles:  " << numParticles << endl;
 	out << "  Num Valid:  " << numValid << endl;
 	array_output_count = 0;
@@ -8301,13 +8537,27 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	out << "  Particle Extra:  " << particleExtra << endl;
 	out << "  Unknown Link 2:  " << unknownLink2 << endl;
 	out << "  Trailer:  " << trailer << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unkown Floats[" << i1 << "]:  " << unkownFloats[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 }
 
 void NiParticleSystemController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	NiTimeController::FixLinks( objects, link_stack, info );
 	emitter = FixLink<NiObject>( objects, link_stack, info );
-	unknownLink = FixLink<NiObject>( objects, link_stack, info );
+	if ( info.version >= 0x04000002 ) {
+		unknownLink = FixLink<NiObject>( objects, link_stack, info );
+	};
 	particleExtra = FixLink<AParticleModifier>( objects, link_stack, info );
 	unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
 }
@@ -10266,6 +10516,11 @@ void NiRangeLODData::InternalRead( istream& in, list<unsigned int> & link_stack,
 	for (unsigned int i1 = 0; i1 < lodLevels.size(); i1++) {
 		NifStream( lodLevels[i1].nearExtent, in, info );
 		NifStream( lodLevels[i1].farExtent, in, info );
+		if ( info.version <= 0x03010000 ) {
+			for (unsigned int i3 = 0; i3 < 3; i3++) {
+				NifStream( lodLevels[i1].unknownInts[i3], in, info );
+			};
+		};
 	};
 }
 
@@ -10277,6 +10532,11 @@ void NiRangeLODData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned
 	for (unsigned int i1 = 0; i1 < lodLevels.size(); i1++) {
 		NifStream( lodLevels[i1].nearExtent, out, info );
 		NifStream( lodLevels[i1].farExtent, out, info );
+		if ( info.version <= 0x03010000 ) {
+			for (unsigned int i3 = 0; i3 < 3; i3++) {
+				NifStream( lodLevels[i1].unknownInts[i3], out, info );
+			};
+		};
 	};
 }
 
@@ -10295,6 +10555,18 @@ std::string NiRangeLODData::InternalAsString( bool verbose ) const {
 		};
 		out << "    Near Extent:  " << lodLevels[i1].nearExtent << endl;
 		out << "    Far Extent:  " << lodLevels[i1].farExtent << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Ints[" << i2 << "]:  " << lodLevels[i1].unknownInts[i2] << endl;
+			array_output_count++;
+		};
 	};
 	return out.str();
 }
@@ -11741,6 +12013,102 @@ void NiTextureProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & 
 }
 
 std::list<NiObjectRef> NiTextureProperty::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiProperty::GetRefs();
+	if ( image != NULL )
+		refs.push_back(StaticCast<NiObject>(image));
+	return refs;
+}
+
+void NiMultiTextureProperty::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	unsigned int block_num;
+	NiProperty::Read( in, link_stack, info );
+	NifStream( flags, in, info );
+	NifStream( unknownInt1, in, info );
+	NifStream( unknownInt2, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+	NifStream( unknownInt3, in, info );
+	NifStream( unknownInt4, in, info );
+	NifStream( unknownInt5, in, info );
+	for (unsigned int i1 = 0; i1 < 11; i1++) {
+		NifStream( unknownShorts[i1], in, info );
+	};
+	if ( (unknownInt5 == 0) ) {
+		for (unsigned int i2 = 0; i2 < 11; i2++) {
+			NifStream( unknownExtraShorts[i2], in, info );
+		};
+	};
+}
+
+void NiMultiTextureProperty::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	NiProperty::Write( out, link_map, info );
+	NifStream( flags, out, info );
+	NifStream( unknownInt1, out, info );
+	NifStream( unknownInt2, out, info );
+	if ( image != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+	NifStream( unknownInt3, out, info );
+	NifStream( unknownInt4, out, info );
+	NifStream( unknownInt5, out, info );
+	for (unsigned int i1 = 0; i1 < 11; i1++) {
+		NifStream( unknownShorts[i1], out, info );
+	};
+	if ( (unknownInt5 == 0) ) {
+		for (unsigned int i2 = 0; i2 < 11; i2++) {
+			NifStream( unknownExtraShorts[i2], out, info );
+		};
+	};
+}
+
+std::string NiMultiTextureProperty::InternalAsString( bool verbose ) const {
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiProperty::asString();
+	out << "  Flags:  " << flags << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Image:  " << image << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Unknown Int 4:  " << unknownInt4 << endl;
+	out << "  Unknown Int 5:  " << unknownInt5 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 11; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Shorts[" << i1 << "]:  " << unknownShorts[i1] << endl;
+		array_output_count++;
+	};
+	if ( (unknownInt5 == 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < 11; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Extra Shorts[" << i2 << "]:  " << unknownExtraShorts[i2] << endl;
+			array_output_count++;
+		};
+	};
+	return out.str();
+}
+
+void NiMultiTextureProperty::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	NiProperty::FixLinks( objects, link_stack, info );
+	image = FixLink<NiImage>( objects, link_stack, info );
+}
+
+std::list<NiObjectRef> NiMultiTextureProperty::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiProperty::GetRefs();
 	if ( image != NULL )
@@ -13604,6 +13972,72 @@ void RootCollisionNode::InternalFixLinks( const map<unsigned int,NiObjectRef> & 
 std::list<NiObjectRef> RootCollisionNode::InternalGetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiNode::GetRefs();
+	return refs;
+}
+
+void NiRawImageData::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	NiObject::Read( in, link_stack, info );
+	NifStream( width, in, info );
+	NifStream( height, in, info );
+	NifStream( unknownInt, in, info );
+	imageData.resize(width);
+	for (unsigned int i1 = 0; i1 < imageData.size(); i1++) {
+		imageData[i1].resize(height);
+		for (unsigned int i2 = 0; i2 < imageData[i1].size(); i2++) {
+			NifStream( imageData[i1][i2].r, in, info );
+			NifStream( imageData[i1][i2].g, in, info );
+			NifStream( imageData[i1][i2].b, in, info );
+		};
+	};
+}
+
+void NiRawImageData::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	NiObject::Write( out, link_map, info );
+	height = (unsigned int)((imageData.size() > 0) ? imageData[0].size() : 0);
+	width = (unsigned int)(imageData.size());
+	NifStream( width, out, info );
+	NifStream( height, out, info );
+	NifStream( unknownInt, out, info );
+	for (unsigned int i1 = 0; i1 < imageData.size(); i1++) {
+		for (unsigned int i2 = 0; i2 < imageData[i1].size(); i2++) {
+			NifStream( imageData[i1][i2].r, out, info );
+			NifStream( imageData[i1][i2].g, out, info );
+			NifStream( imageData[i1][i2].b, out, info );
+		};
+	};
+}
+
+std::string NiRawImageData::InternalAsString( bool verbose ) const {
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	height = (unsigned int)((imageData.size() > 0) ? imageData[0].size() : 0);
+	width = (unsigned int)(imageData.size());
+	out << "  Width:  " << width << endl;
+	out << "  Height:  " << height << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < imageData.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (unsigned int i2 = 0; i2 < imageData[i1].size(); i2++) {
+			out << "      r:  " << imageData[i1][i2].r << endl;
+			out << "      g:  " << imageData[i1][i2].g << endl;
+			out << "      b:  " << imageData[i1][i2].b << endl;
+		};
+	};
+	return out.str();
+}
+
+void NiRawImageData::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	NiObject::FixLinks( objects, link_stack, info );
+}
+
+std::list<NiObjectRef> NiRawImageData::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
 	return refs;
 }
 

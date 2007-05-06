@@ -1,5 +1,5 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
-All rights reserved.  Please see niflib.h for licence. */
+All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/obj/AvoidNode.h"
 using namespace Niflib;
@@ -33,9 +33,9 @@ list<NiObjectRef> AvoidNode::GetRefs() const {
 
 const Type & AvoidNode::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -58,3 +58,4 @@ namespace Niflib {
 NiObject * AvoidNode::Create() {
 	return new AvoidNode;
 }
+

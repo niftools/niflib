@@ -29,18 +29,7 @@ vector<bhkShape * > bodies; \
 unsigned int priority; \
 
 #define ABHK_RAGDOLL_CONSTRAINT_MEMBERS \
-Float4 pivotA; \
-Float4 planeA; \
-Float4 twistA; \
-Float4 pivotB; \
-Float4 planeB; \
-Float4 twistB; \
-float coneMinAngle; \
-float planeMinAngle; \
-float planeMaxAngle; \
-float twistMinAngle; \
-float twistMaxAngle; \
-float maxFriction; \
+RagdollDescriptor ragdoll; \
 
 #define BHK_SHAPE_MEMBERS \
 
@@ -237,7 +226,11 @@ mutable unsigned int numNormals; \
 vector<Float4 > normals; \
 
 #define BHK_HINGE_CONSTRAINT_MEMBERS \
-array< 5, array<4,float > > unknownFloats; \
+Float4 pivotA; \
+Float4 perp2axleina1; \
+Float4 perp2axleina2; \
+Float4 pivotB; \
+Float4 axleB; \
 
 #define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS \
 LimitedHingeDescriptor limitedHinge; \
@@ -256,7 +249,7 @@ unsigned int unknownInt2; \
 Ref<NiObject > unknownLink1; \
 Ref<NiObject > unknownLink2; \
 unsigned int unknownInt3; \
-RagDollDescriptor ragdoll; \
+RagdollDescriptor ragdoll; \
 LimitedHingeDescriptor limitedHinge; \
 float tau; \
 float damping; \
@@ -289,6 +282,13 @@ mutable unsigned int numStripsData; \
 vector<Ref<NiTriStripsData > > stripsData; \
 mutable unsigned int numDataLayers; \
 vector<OblivionColFilter > dataLayers; \
+
+#define BHK_MESH_SHAPE_MEMBERS \
+array<8,int > unknown; \
+mutable int unknownCount; \
+vector< array<3,float > > unknownFloats; \
+mutable unsigned int numStripsData; \
+vector<Ref<NiTriStripsData > > stripsData; \
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 mutable unsigned short numSubShapes; \
@@ -506,14 +506,17 @@ mutable unsigned int numControllerSequences; \
 vector<Ref<NiControllerSequence > > controllerSequences; \
 Ref<NiDefaultAVObjectPalette > objectPalette; \
 
-#define NI_CONTROLLER_SEQUENCE_MEMBERS \
+#define NI_SEQUENCE_MEMBERS \
 string name; \
 string textKeysName; \
 Ref<NiTextKeyExtraData > textKeys; \
 mutable unsigned int numControlledBlocks; \
 unsigned int unknownInt1; \
 vector<ControllerLink > controlledBlocks; \
+
+#define NI_CONTROLLER_SEQUENCE_MEMBERS \
 float weight; \
+Ref<NiTextKeyExtraData > textKeys; \
 CycleType cycleType; \
 unsigned int unknownInt0; \
 float frequency; \
@@ -791,6 +794,7 @@ float unknownFloat13_; \
 unsigned int unknownInt1_; \
 unsigned int unknownInt2_; \
 unsigned short unknownShort3_; \
+Particle particle; \
 mutable unsigned short numParticles; \
 unsigned short numValid; \
 vector<Particle > particles; \
@@ -798,6 +802,7 @@ Ref<NiObject > unknownLink; \
 Ref<AParticleModifier > particleExtra; \
 Ref<NiObject > unknownLink2; \
 byte trailer; \
+array<3,float > unkownFloats; \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_MEMBERS \
 
@@ -1139,6 +1144,17 @@ array<4,short > unknown4Shorts; \
 unsigned short flags; \
 Ref<NiImage > image; \
 
+#define NI_MULTI_TEXTURE_PROPERTY_MEMBERS \
+unsigned short flags; \
+unsigned int unknownInt1; \
+unsigned int unknownInt2; \
+Ref<NiImage > image; \
+unsigned int unknownInt3; \
+unsigned int unknownInt4; \
+unsigned int unknownInt5; \
+array<11,short > unknownShorts; \
+array<11,short > unknownExtraShorts; \
+
 #define NI_TEXTURING_PROPERTY_MEMBERS \
 unsigned short flags; \
 ApplyMode applyMode; \
@@ -1247,6 +1263,12 @@ CompareMode function; \
 
 #define ROOT_COLLISION_NODE_MEMBERS \
 
+#define NI_RAW_IMAGE_DATA_MEMBERS \
+mutable unsigned int width; \
+mutable unsigned int height; \
+unsigned int unknownInt; \
+vector< vector<ByteColor3 > > imageData; \
+
 #else
 #define NI_OBJECT_MEMBERS
 #define A_KEYED_DATA_MEMBERS
@@ -1296,6 +1318,7 @@ CompareMode function; \
 #define BHK_MOPP_BV_TREE_SHAPE_MEMBERS
 #define BHK_MULTI_SPHERE_SHAPE_MEMBERS
 #define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS
+#define BHK_MESH_SHAPE_MEMBERS
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS
 #define BHK_PRISMATIC_CONSTRAINT_MEMBERS
 #define BHK_RAGDOLL_CONSTRAINT_MEMBERS
@@ -1338,6 +1361,7 @@ CompareMode function; \
 #define NI_COLOR_DATA_MEMBERS
 #define NI_COLOR_EXTRA_DATA_MEMBERS
 #define NI_CONTROLLER_MANAGER_MEMBERS
+#define NI_SEQUENCE_MEMBERS
 #define NI_CONTROLLER_SEQUENCE_MEMBERS
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS
 #define NI_DIRECTIONAL_LIGHT_MEMBERS
@@ -1450,6 +1474,7 @@ CompareMode function; \
 #define NI_TEXTURE_MODE_PROPERTY_MEMBERS
 #define NI_IMAGE_MEMBERS
 #define NI_TEXTURE_PROPERTY_MEMBERS
+#define NI_MULTI_TEXTURE_PROPERTY_MEMBERS
 #define NI_TEXTURING_PROPERTY_MEMBERS
 #define NI_TRANSFORM_CONTROLLER_MEMBERS
 #define NI_TRANSFORM_DATA_MEMBERS
@@ -1470,6 +1495,7 @@ CompareMode function; \
 #define NI_WIREFRAME_PROPERTY_MEMBERS
 #define NI_Z_BUFFER_PROPERTY_MEMBERS
 #define ROOT_COLLISION_NODE_MEMBERS
+#define NI_RAW_IMAGE_DATA_MEMBERS
 #endif
 
 #define NI_OBJECT_PARENT
@@ -1494,8 +1520,7 @@ CompareMode function; \
 
 #define ABHK_RAGDOLL_CONSTRAINT_PARENT AbhkConstraint
 
-#define ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT  : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f)
-
+#define ABHK_RAGDOLL_CONSTRAINT_CONSTRUCT 
 #define BHK_SHAPE_PARENT bhkSerializable
 
 #define BHK_SHAPE_CONSTRUCT 
@@ -1648,6 +1673,10 @@ CompareMode function; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0f, 1.0f, 1.0f), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0)
 
+#define BHK_MESH_SHAPE_PARENT bhkSphereRepShape
+
+#define BHK_MESH_SHAPE_CONSTRUCT  : unknownCount((int)0), numStripsData((unsigned int)0)
+
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT AbhkShapeCollection
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : numSubShapes((unsigned short)0), scale(1.0f), data(NULL)
@@ -1799,9 +1828,13 @@ CompareMode function; \
 
 #define NI_CONTROLLER_MANAGER_CONSTRUCT  : cumulative(false), numControllerSequences((unsigned int)0), objectPalette(NULL)
 
-#define NI_CONTROLLER_SEQUENCE_PARENT NiObject
+#define NI_SEQUENCE_PARENT NiObject
 
-#define NI_CONTROLLER_SEQUENCE_CONSTRUCT  : textKeys(NULL), numControlledBlocks((unsigned int)0), unknownInt1((unsigned int)0), weight(1.0f), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL)
+#define NI_SEQUENCE_CONSTRUCT  : textKeys(NULL), numControlledBlocks((unsigned int)0), unknownInt1((unsigned int)0)
+
+#define NI_CONTROLLER_SEQUENCE_PARENT NiSequence
+
+#define NI_CONTROLLER_SEQUENCE_CONSTRUCT  : weight(1.0f), textKeys(NULL), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL)
 
 #define NI_DEFAULT_A_V_OBJECT_PALETTE_PARENT NiObject
 
@@ -2221,6 +2254,10 @@ CompareMode function; \
 
 #define NI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), image(NULL)
 
+#define NI_MULTI_TEXTURE_PROPERTY_PARENT NiProperty
+
+#define NI_MULTI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), unknownInt1((unsigned int)5), unknownInt2((unsigned int)0), image(NULL), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0)
+
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty
 
 #define NI_TEXTURING_PROPERTY_CONSTRUCT  : flags((unsigned short)0), applyMode((ApplyMode)2), textureCount((unsigned int)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), hasDecal2Texture(false), hasDecal3Texture(false), numShaderTextures((unsigned int)0)
@@ -2294,4 +2331,8 @@ CompareMode function; \
 #define ROOT_COLLISION_NODE_PARENT NiNode
 
 #define ROOT_COLLISION_NODE_CONSTRUCT 
+#define NI_RAW_IMAGE_DATA_PARENT NiObject
+
+#define NI_RAW_IMAGE_DATA_CONSTRUCT  : width((unsigned int)0), height((unsigned int)0), unknownInt((unsigned int)0)
+
 #endif

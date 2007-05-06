@@ -16,17 +16,17 @@ namespace Niflib {
 /*!
  * 
  */
-struct RagDollDescriptor {
+struct RagdollDescriptor {
 	/*! Default Constructor */
-	NIFLIB_API RagDollDescriptor();
+	NIFLIB_API RagdollDescriptor();
 	/*! Default Destructor */
-	NIFLIB_API ~RagDollDescriptor();
+	NIFLIB_API ~RagdollDescriptor();
 	/*! Copy Constructor */
-	NIFLIB_API RagDollDescriptor( const RagDollDescriptor & src );
+	NIFLIB_API RagdollDescriptor( const RagdollDescriptor & src );
 	//This operator give SWIG problems
 	#ifndef SWIG
 	/*! Copy Operator */
-	NIFLIB_API RagDollDescriptor & operator=( const RagDollDescriptor & src );
+	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
 	#endif
 	/*!
 	 * Unknown.

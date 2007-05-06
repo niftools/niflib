@@ -5,19 +5,19 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/nifxml_niflib.py Python script.
 
-#include "../../include/gen/RagDollDescriptor.h"
+#include "../../include/gen/RagdollDescriptor.h"
 using namespace Niflib;
 
 //Constructor
-RagDollDescriptor::RagDollDescriptor() : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};
+RagdollDescriptor::RagdollDescriptor() : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};
 
 //Copy Constructor
-RagDollDescriptor::RagDollDescriptor( const RagDollDescriptor & src ) {
+RagdollDescriptor::RagdollDescriptor( const RagdollDescriptor & src ) {
 	*this = src;
 };
 
 //Copy Operator
-RagDollDescriptor & RagDollDescriptor::operator=( const RagDollDescriptor & src ) {
+RagdollDescriptor & RagdollDescriptor::operator=( const RagdollDescriptor & src ) {
 	this->pivotA = src.pivotA;
 	this->planeA = src.planeA;
 	this->twistA = src.twistA;
@@ -34,4 +34,4 @@ RagDollDescriptor & RagDollDescriptor::operator=( const RagDollDescriptor & src 
 };
 
 //Destructor
-RagDollDescriptor::~RagDollDescriptor() {};
+RagdollDescriptor::~RagdollDescriptor() {};

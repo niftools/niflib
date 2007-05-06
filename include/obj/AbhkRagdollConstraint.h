@@ -1,10 +1,12 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
-All rights reserved.  Please see niflib.h for licence. */
+All rights reserved.  Please see niflib.h for license. */
 
 #ifndef _ABHKRAGDOLLCONSTRAINT_H_
 #define _ABHKRAGDOLLCONSTRAINT_H_
 
 #include "AbhkConstraint.h"
+// Include structures
+#include "../gen/RagdollDescriptor.h"
 namespace Niflib {
 
 

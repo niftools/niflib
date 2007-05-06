@@ -1,10 +1,10 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
-All rights reserved.  Please see niflib.h for licence. */
+All rights reserved.  Please see niflib.h for license. */
 
 #ifndef _NICONTROLLERSEQUENCE_H_
 #define _NICONTROLLERSEQUENCE_H_
 
-#include "NiObject.h"
+#include "NiSequence.h"
 // Include structures
 #include "../gen/ControllerLink.h"
 #include "../Ref.h"
