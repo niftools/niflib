@@ -13,7 +13,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/obj/NiTexturingProperty.h"
 #include "../include/obj/NiSkinInstance.h"
 #include "../include/obj/NiSkinData.h"
+#include "../include/obj/NiTextureProperty.h"
 #include "../include/gen/SkinWeight.h"
+
 #include <stdlib.h>
 
 using namespace Niflib;
@@ -335,72 +337,92 @@ void ComplexShape::Merge( NiAVObject * root ) {
 			uvSetList[tex] = BASE_MAP;
 		}
 		NiPropertyRef niProp = (*geom)->GetPropertyByType( NiTexturingProperty::TYPE );
-		NiTexturingPropertyRef niTexProp;
+		NiTexturingPropertyRef niTexingProp;
 		if ( niProp != NULL ) {
-			niTexProp = DynamicCast<NiTexturingProperty>(niProp);
+			niTexingProp = DynamicCast<NiTexturingProperty>(niProp);
+		}
+		niProp = (*geom)->GetPropertyByType( NiTextureProperty::TYPE );
+		NiTexturePropertyRef niTexProp;
+		if ( niProp != NULL ) {
+			niTexProp = DynamicCast<NiTextureProperty>(niProp);
 		}
 
-		if ( niTexProp != NULL && shapeUVs.size() != 0 ) {
+		//Create a list of UV sets to check
+		//pair.first = Texture Type
+		//pair.second = UV Set ID
+		vector< pair<TexType, unsigned int> > uvSets;
+
+		if ( shapeUVs.size() != 0 && (niTexingProp != NULL || niTexProp != NULL) ) {
+			if ( niTexingProp != NULL ) {
+				//Add the UV set to the list for every type of texture slot that uses it
+				for ( int tex = 0; tex < 8; ++tex ) {
+					if ( niTexingProp->HasTexture(tex) == true ) {
+						TexDesc td;
+						td = niTexingProp->GetTexture(tex);
+						
+						uvSets.push_back( pair<TexType, unsigned int>( TexType(tex), td.uvSet ) );
+					}
+				}
+			} else if ( niTexProp != NULL ) {
+				//Add the base UV set to the list and just use zero.
+				uvSets.push_back( pair<TexType, unsigned int>( BASE_MAP, 0 ) );
+			}
+
 			//Add the UV set to the list for every type of texture slot that uses it
-			for ( int tex = 0; tex < 8; ++tex ) {
-				if ( niTexProp->HasTexture(tex) == true ) {
-					TexDesc td;
-					td = niTexProp->GetTexture(tex);
-					
-					unsigned int set = td.uvSet;
+			for ( size_t i = 0; i < uvSets.size(); ++i ) {
 
-					TexType newType = TexType(tex);
+				TexType newType = uvSets[i].first;
+				unsigned int set = uvSets[i].second;
 
-					//Search for matching UV set
+				//Search for matching UV set
+				bool match_found = false;
+				unsigned int uvSetIndex;
+				for ( unsigned int set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
+					if ( texCoordSets[set_index].texType  == newType ) {
+						//Match found, use existing index
+						uvSetIndex = set_index;
+						match_found = true;
+						//Stop searching
+						break;
+					}
+				}
+
+				if ( match_found == false ) {
+					//No match found, add this UV set to the list
+					TexCoordSet newTCS;
+					newTCS.texType = newType;
+					texCoordSets.push_back( newTCS );
+					//Record new index
+					uvSetIndex = (unsigned int)(texCoordSets.size()) - 1;
+				}
+
+				//Loop through texture cooridnates in this set
+				if ( set >= shapeUVs.size() || set < 0 ) {
+					throw runtime_error("One of the UV sets specified in the NiTexturingProperty did not exist in the NiTriBasedGeomData.");
+				}
+				for ( unsigned int v = 0; v < shapeUVs[set].size(); ++v ) {
+					TexCoord newCoord;
+
+					newCoord = shapeUVs[set][v];
+
+					//Search for matching texture cooridnate
 					bool match_found = false;
-					unsigned int uvSetIndex;
-					for ( unsigned int set_index = 0; set_index < texCoordSets.size(); ++set_index ) {
-						if ( texCoordSets[set_index].texType  == newType ) {
+					for ( unsigned int tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
+						if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
 							//Match found, use existing index
-							uvSetIndex = set_index;
+							lookUp[v].uvIndices[uvSetIndex] = tc_index;
 							match_found = true;
 							//Stop searching
 							break;
 						}
 					}
 
+					//Done with loop, check if match was found
 					if ( match_found == false ) {
-						//No match found, add this UV set to the list
-						TexCoordSet newTCS;
-						newTCS.texType = newType;
-						texCoordSets.push_back( newTCS );
+						//No match found, add this texture coordinate to the list
+						texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
 						//Record new index
-						uvSetIndex = (unsigned int)(texCoordSets.size()) - 1;
-					}
-
-					//Loop through texture cooridnates in this set
-					if ( set >= shapeUVs.size() || set < 0 ) {
-						throw runtime_error("One of the UV sets specified in the NiTexturingProperty did not exist in the NiTriBasedGeomData.");
-					}
-					for ( unsigned int v = 0; v < shapeUVs[set].size(); ++v ) {
-						TexCoord newCoord;
-
-						newCoord = shapeUVs[set][v];
-
-						//Search for matching texture cooridnate
-						bool match_found = false;
-						for ( unsigned int tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
-							if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
-								//Match found, use existing index
-								lookUp[v].uvIndices[uvSetIndex] = tc_index;
-								match_found = true;
-								//Stop searching
-								break;
-							}
-						}
-
-						//Done with loop, check if match was found
-						if ( match_found == false ) {
-							//No match found, add this texture coordinate to the list
-							texCoordSets[uvSetIndex].texCoords.push_back( newCoord );
-							//Record new index
-							lookUp[v].uvIndices[uvSetIndex] = (unsigned int)(texCoordSets[uvSetIndex].texCoords.size()) - 1;
-						}
+						lookUp[v].uvIndices[uvSetIndex] = (unsigned int)(texCoordSets[uvSetIndex].texCoords.size()) - 1;
 					}
 				}
 			}

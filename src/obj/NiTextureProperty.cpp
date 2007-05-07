@@ -59,3 +59,11 @@ namespace Niflib {
 NiObject * NiTextureProperty::Create() {
 	return new NiTextureProperty;
 }
+
+Ref<NiImage> NiTextureProperty::GetImage() const {
+	return image;
+}
+
+void NiTextureProperty::SetImage( NiImage * n ) {
+	image = n;
+}

@@ -31,6 +31,19 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	/*!
+	 * Sets a new external file texture.  Removes any existing texture references.
+	 * \param[in] file_name The file name of the new external texture.  Often needs to follow game guidlines to be found.
+	 */
+	NIFLIB_API void SetTextureFileName( string file_name );
+
+	/*!
+	 * Returns the external texture file name.
+	 * \return The name of the texture file.
+	 */
+	NIFLIB_API string GetTextureFileName() const;
+
+
 protected:
 	NI_IMAGE_MEMBERS
 private:

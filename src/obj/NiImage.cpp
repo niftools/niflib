@@ -58,3 +58,11 @@ namespace Niflib {
 NiObject * NiImage::Create() {
 	return new NiImage;
 }
+
+void NiImage::SetTextureFileName( string file_name ) {
+	file = file_name;
+}
+
+string NiImage::GetTextureFileName() const {
+	return file;
+}
