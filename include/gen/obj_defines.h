@@ -483,6 +483,7 @@ float lodAdjust; \
 Ref<NiObject > unknownLink_; \
 unsigned int unknownInt; \
 unsigned int unknownInt2; \
+unsigned int unknownInt3; \
 
 #define NI_COLLISION_DATA_MEMBERS \
 NiNode * targetNode; \
@@ -544,6 +545,10 @@ unsigned int unknownInt2; \
 float delta; \
 mutable unsigned int numSources; \
 vector<Ref<NiSourceTexture > > sources; \
+vector<Ref<NiImage > > image; \
+
+#define NI_ROLL_CONTROLLER_MEMBERS \
+Ref<NiFloatData > data; \
 
 #define NI_FLOAT_DATA_MEMBERS \
 KeyGroup<float > data; \
@@ -802,7 +807,8 @@ Ref<NiObject > unknownLink; \
 Ref<AParticleModifier > particleExtra; \
 Ref<NiObject > unknownLink2; \
 byte trailer; \
-array<3,float > unkownFloats; \
+Ref<NiColorData > colorData; \
+array<2,float > unkownFloats; \
 
 #define NI_B_S_P_ARRAY_CONTROLLER_MEMBERS \
 
@@ -1367,6 +1373,7 @@ vector< vector<ByteColor3 > > imageData; \
 #define NI_DIRECTIONAL_LIGHT_MEMBERS
 #define NI_DITHER_PROPERTY_MEMBERS
 #define NI_FLIP_CONTROLLER_MEMBERS
+#define NI_ROLL_CONTROLLER_MEMBERS
 #define NI_FLOAT_DATA_MEMBERS
 #define NI_FLOAT_EXTRA_DATA_MEMBERS
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS
@@ -1812,7 +1819,7 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_CAMERA_PARENT NiAVObject
 
-#define NI_CAMERA_CONSTRUCT  : unknownShort((unsigned short)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink_(NULL), unknownInt((unsigned int)0), unknownInt2((unsigned int)0)
+#define NI_CAMERA_CONSTRUCT  : unknownShort((unsigned short)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink_(NULL), unknownInt((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0)
 
 #define NI_COLLISION_DATA_PARENT NiObject
 
@@ -1850,6 +1857,10 @@ vector< vector<ByteColor3 > > imageData; \
 #define NI_FLIP_CONTROLLER_PARENT NiSingleInterpolatorController
 
 #define NI_FLIP_CONTROLLER_CONSTRUCT  : textureSlot((unsigned int)0), unknownInt2((unsigned int)0), delta(0.0f), numSources((unsigned int)0)
+
+#define NI_ROLL_CONTROLLER_PARENT NiSingleInterpolatorController
+
+#define NI_ROLL_CONTROLLER_CONSTRUCT  : data(NULL)
 
 #define NI_FLOAT_DATA_PARENT AKeyedData
 
@@ -2019,7 +2030,7 @@ vector< vector<ByteColor3 > > imageData; \
 #define NI_MESH_PARTICLE_SYSTEM_CONSTRUCT 
 #define NI_PARTICLE_SYSTEM_CONTROLLER_PARENT NiTimeController
 
-#define NI_PARTICLE_SYSTEM_CONTROLLER_CONSTRUCT  : speed(0.0f), speedRandom(0.0f), verticalDirection(0.0f), verticalAngle(0.0f), horizontalDirection(0.0f), horizontalAngle(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), size(0.0f), emitStartTime(0.0f), emitStopTime(0.0f), unknownByte((byte)0), emitRate(0.0f), lifetime(0.0f), lifetimeRandom(0.0f), emitFlags((unsigned short)0), emitter(NULL), unknownShort2_((unsigned short)0), unknownFloat13_(0.0f), unknownInt1_((unsigned int)0), unknownInt2_((unsigned int)0), unknownShort3_((unsigned short)0), numParticles((unsigned short)0), numValid((unsigned short)0), unknownLink(NULL), particleExtra(NULL), unknownLink2(NULL), trailer((byte)0)
+#define NI_PARTICLE_SYSTEM_CONTROLLER_CONSTRUCT  : speed(0.0f), speedRandom(0.0f), verticalDirection(0.0f), verticalAngle(0.0f), horizontalDirection(0.0f), horizontalAngle(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), size(0.0f), emitStartTime(0.0f), emitStopTime(0.0f), unknownByte((byte)0), emitRate(0.0f), lifetime(0.0f), lifetimeRandom(0.0f), emitFlags((unsigned short)0), emitter(NULL), unknownShort2_((unsigned short)0), unknownFloat13_(0.0f), unknownInt1_((unsigned int)0), unknownInt2_((unsigned int)0), unknownShort3_((unsigned short)0), numParticles((unsigned short)0), numValid((unsigned short)0), unknownLink(NULL), particleExtra(NULL), unknownLink2(NULL), trailer((byte)0), colorData(NULL)
 
 #define NI_B_S_P_ARRAY_CONTROLLER_PARENT NiParticleSystemController
 

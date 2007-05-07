@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/obj/NiFlipController.h"
 #include "../../include/obj/NiSourceTexture.h"
+#include "../../include/obj/NiImage.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

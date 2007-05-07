@@ -1,8 +1,8 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NIFLIPCONTROLLER_H_
-#define _NIFLIPCONTROLLER_H_
+#ifndef _NIROLLCONTROLLER_H_
+#define _NIROLLCONTROLLER_H_
 
 #include "NiSingleInterpolatorController.h"
 
@@ -11,22 +11,18 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiSourceTexture;
-class NiImage;
-
-//#include "../gen/obj_defines.h"
-
-class NiFlipController;
-typedef Ref<NiFlipController> NiFlipControllerRef;
+class NiFloatData;
+class NiRollController;
+typedef Ref<NiRollController> NiRollControllerRef;
 
 /*!
- * NiFlipController - Texture flipping controller.
+ * NiRollController - Unknown.
  */
 
-class NiFlipController : public NI_FLIP_CONTROLLER_PARENT {
+class NiRollController : public NI_ROLL_CONTROLLER_PARENT {
 public:
-	NIFLIB_API NiFlipController();
-	NIFLIB_API ~NiFlipController();
+	NIFLIB_API NiRollController();
+	NIFLIB_API ~NiRollController();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -38,7 +34,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	NI_FLIP_CONTROLLER_MEMBERS
+	NI_ROLL_CONTROLLER_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

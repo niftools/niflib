@@ -364,12 +364,12 @@ void NifStream( HeaderString & val, istream& in, NifInfo & info ) {
 	//Parse version string and return result.
 	info.version = ParseVersionString( val.header.substr( ver_start ) );
 
-	//Temporarily read the next 3 strings if this is a < 4 file
-	if ( info.version < VER_3_3_0_13 ) {
-		in.getline( tmp, 256 );
-		in.getline( tmp, 256 );
-		in.getline( tmp, 256 );
-	}
+	////Temporarily read the next 3 strings if this is a < 4 file
+	//if ( info.version < VER_3_3_0_13 ) {
+	//	in.getline( tmp, 256 );
+	//	in.getline( tmp, 256 );
+	//	in.getline( tmp, 256 );
+	//}
 
 	//if ( version < VER_4_0_0_0 ) {
 	//	throw runtime_error("NIF Versions below 4.0.0.0 are not yet supported");

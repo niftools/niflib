@@ -71,6 +71,7 @@ using namespace std;
 #include "../../include/obj/NiDirectionalLight.h"
 #include "../../include/obj/NiDitherProperty.h"
 #include "../../include/obj/NiFlipController.h"
+#include "../../include/obj/NiRollController.h"
 #include "../../include/obj/NiFloatData.h"
 #include "../../include/obj/NiFloatExtraData.h"
 #include "../../include/obj/NiFloatExtraDataController.h"
@@ -213,8 +214,14 @@ Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<unsigned int> & 
 	link_stack.pop_front();
 
 	//Check if link is NULL
-	if ( index == 0xFFFFFFFF) {
-		return NULL;
+	if ( info.version > VER_3_3_0_13) {
+		if ( index == 0xFFFFFFFF) {
+			return NULL;
+		}
+	} else {
+		if ( index == 0 ) {
+			return NULL;
+		}
 	}
 
 	map<unsigned int,NiObjectRef>::const_iterator it = objects.find(index);
@@ -224,7 +231,11 @@ Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<unsigned int> & 
 		
 	Ref<T> object = DynamicCast<T>(it->second);
 	if ( object == NULL ) {
-		throw runtime_error(FIX_LINK_CAST_ERROR);
+		stringstream ss;
+		ss << FIX_LINK_CAST_ERROR << endl;
+		ss << "Type of object with index " << index << " was:  " << it->second->GetType().GetTypeName() << endl;
+		ss << "Required type was:  " << T::TYPE.GetTypeName() << endl;
+		throw runtime_error( ss.str().c_str() );
 	}
 
 	return object;
@@ -1114,7 +1125,12 @@ void NiDynamicEffect::InternalRead( istream& in, list<unsigned int> & link_stack
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( switchState, in, info );
 	};
-	NifStream( numAffectedNodes, in, info );
+	if ( info.version <= 0x04000002 ) {
+		NifStream( numAffectedNodes, in, info );
+	};
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( numAffectedNodes, in, info );
+	};
 	if ( info.version <= 0x04000002 ) {
 		affectedNodeListPointers.resize(numAffectedNodes);
 		for (unsigned int i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
@@ -1136,7 +1152,12 @@ void NiDynamicEffect::InternalWrite( ostream& out, const map<NiObjectRef,unsigne
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( switchState, out, info );
 	};
-	NifStream( numAffectedNodes, out, info );
+	if ( info.version <= 0x04000002 ) {
+		NifStream( numAffectedNodes, out, info );
+	};
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( numAffectedNodes, out, info );
+	};
 	if ( info.version <= 0x04000002 ) {
 		for (unsigned int i2 = 0; i2 < affectedNodeListPointers.size(); i2++) {
 			NifStream( affectedNodeListPointers[i2], out, info );
@@ -4961,6 +4982,9 @@ void NiCamera::InternalRead( istream& in, list<unsigned int> & link_stack, const
 	if ( info.version >= 0x04020100 ) {
 		NifStream( unknownInt2, in, info );
 	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInt3, in, info );
+	};
 }
 
 void NiCamera::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
@@ -4990,6 +5014,9 @@ void NiCamera::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> 
 	if ( info.version >= 0x04020100 ) {
 		NifStream( unknownInt2, out, info );
 	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInt3, out, info );
+	};
 }
 
 std::string NiCamera::InternalAsString( bool verbose ) const {
@@ -5012,6 +5039,7 @@ std::string NiCamera::InternalAsString( bool verbose ) const {
 	out << "  Unknown Link?:  " << unknownLink_ << endl;
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	return out.str();
 }
 
@@ -5764,15 +5792,26 @@ void NiFlipController::InternalRead( istream& in, list<unsigned int> & link_stac
 	unsigned int block_num;
 	NiSingleInterpolatorController::Read( in, link_stack, info );
 	NifStream( textureSlot, in, info );
-	if ( info.version <= 0x0A010000 ) {
+	if ( ( info.version >= 0x04000000 ) && ( info.version <= 0x0A010000 ) ) {
 		NifStream( unknownInt2, in, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
 		NifStream( delta, in, info );
 	};
 	NifStream( numSources, in, info );
-	sources.resize(numSources);
-	for (unsigned int i1 = 0; i1 < sources.size(); i1++) {
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
+	if ( info.version >= 0x04000000 ) {
+		sources.resize(numSources);
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		image.resize(numSources);
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
 	};
 }
 
@@ -5780,16 +5819,28 @@ void NiFlipController::InternalWrite( ostream& out, const map<NiObjectRef,unsign
 	NiSingleInterpolatorController::Write( out, link_map, info );
 	numSources = (unsigned int)(sources.size());
 	NifStream( textureSlot, out, info );
-	if ( info.version <= 0x0A010000 ) {
+	if ( ( info.version >= 0x04000000 ) && ( info.version <= 0x0A010000 ) ) {
 		NifStream( unknownInt2, out, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
 		NifStream( delta, out, info );
 	};
 	NifStream( numSources, out, info );
-	for (unsigned int i1 = 0; i1 < sources.size(); i1++) {
-		if ( sources[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(sources[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+	if ( info.version >= 0x04000000 ) {
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			if ( sources[i2] != NULL )
+				NifStream( link_map.find( StaticCast<NiObject>(sources[i2]) )->second, out, info );
+			else
+				NifStream( 0xffffffff, out, info );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			if ( image[i2] != NULL )
+				NifStream( link_map.find( StaticCast<NiObject>(image[i2]) )->second, out, info );
+			else
+				NifStream( 0xffffffff, out, info );
+		};
 	};
 }
 
@@ -5814,13 +5865,32 @@ std::string NiFlipController::InternalAsString( bool verbose ) const {
 		out << "    Sources[" << i1 << "]:  " << sources[i1] << endl;
 		array_output_count++;
 	};
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Image[" << i1 << "]:  " << image[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 }
 
 void NiFlipController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	NiSingleInterpolatorController::FixLinks( objects, link_stack, info );
-	for (unsigned int i1 = 0; i1 < sources.size(); i1++) {
-		sources[i1] = FixLink<NiSourceTexture>( objects, link_stack, info );
+	if ( info.version >= 0x04000000 ) {
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			sources[i2] = FixLink<NiSourceTexture>( objects, link_stack, info );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			image[i2] = FixLink<NiImage>( objects, link_stack, info );
+		};
 	};
 }
 
@@ -5831,6 +5901,46 @@ std::list<NiObjectRef> NiFlipController::InternalGetRefs() const {
 		if ( sources[i1] != NULL )
 			refs.push_back(StaticCast<NiObject>(sources[i1]));
 	};
+	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
+		if ( image[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(image[i1]));
+	};
+	return refs;
+}
+
+void NiRollController::InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	unsigned int block_num;
+	NiSingleInterpolatorController::Read( in, link_stack, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+}
+
+void NiRollController::InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	NiSingleInterpolatorController::Write( out, link_map, info );
+	if ( data != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+}
+
+std::string NiRollController::InternalAsString( bool verbose ) const {
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiSingleInterpolatorController::asString();
+	out << "  Data:  " << data << endl;
+	return out.str();
+}
+
+void NiRollController::InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	NiSingleInterpolatorController::FixLinks( objects, link_stack, info );
+	data = FixLink<NiFloatData>( objects, link_stack, info );
+}
+
+std::list<NiObjectRef> NiRollController::InternalGetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiSingleInterpolatorController::GetRefs();
+	if ( data != NULL )
+		refs.push_back(StaticCast<NiObject>(data));
 	return refs;
 }
 
@@ -8387,7 +8497,9 @@ void NiParticleSystemController::InternalRead( istream& in, list<unsigned int> &
 		NifStream( trailer, in, info );
 	};
 	if ( info.version <= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < 3; i2++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+		for (unsigned int i2 = 0; i2 < 2; i2++) {
 			NifStream( unkownFloats[i2], in, info );
 		};
 	};
@@ -8471,7 +8583,11 @@ void NiParticleSystemController::InternalWrite( ostream& out, const map<NiObject
 		NifStream( trailer, out, info );
 	};
 	if ( info.version <= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < 3; i2++) {
+		if ( colorData != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+		for (unsigned int i2 = 0; i2 < 2; i2++) {
 			NifStream( unkownFloats[i2], out, info );
 		};
 	};
@@ -8537,8 +8653,9 @@ std::string NiParticleSystemController::InternalAsString( bool verbose ) const {
 	out << "  Particle Extra:  " << particleExtra << endl;
 	out << "  Unknown Link 2:  " << unknownLink2 << endl;
 	out << "  Trailer:  " << trailer << endl;
+	out << "  Color Data:  " << colorData << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
+	for (unsigned int i1 = 0; i1 < 2; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -8560,6 +8677,9 @@ void NiParticleSystemController::InternalFixLinks( const map<unsigned int,NiObje
 	};
 	particleExtra = FixLink<AParticleModifier>( objects, link_stack, info );
 	unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
+	if ( info.version <= 0x03010000 ) {
+		colorData = FixLink<NiColorData>( objects, link_stack, info );
+	};
 }
 
 std::list<NiObjectRef> NiParticleSystemController::InternalGetRefs() const {
@@ -8571,6 +8691,8 @@ std::list<NiObjectRef> NiParticleSystemController::InternalGetRefs() const {
 		refs.push_back(StaticCast<NiObject>(particleExtra));
 	if ( unknownLink2 != NULL )
 		refs.push_back(StaticCast<NiObject>(unknownLink2));
+	if ( colorData != NULL )
+		refs.push_back(StaticCast<NiObject>(colorData));
 	return refs;
 }
 

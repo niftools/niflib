@@ -14,6 +14,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiObject;
 class AParticleModifier;
+class NiColorData;
 
 //#include "../gen/obj_defines.h"
 

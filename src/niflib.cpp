@@ -170,6 +170,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	//--Read Objects--//
 	size_t numObjects = header.numBlocks;
 	map<unsigned,NiObjectRef> objects; //Map to hold objects by number
+	vector<NiObjectRef> obj_list; //Vector to hold links in the order they were created.
 	list<unsigned int> link_stack; //List to add link values to as they're read in from the file
 	string objectType;
 	stringstream errStream;
@@ -298,7 +299,12 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 		//Read new object
 		new_obj->Read( in, link_stack, *info );
+
+		//Add object to map
 		objects[index] = new_obj;
+
+		//Add object to list
+		obj_list.push_back(new_obj);
 			
 #ifdef PRINT_OBJECT_CONTENTS
 		cout << endl << new_obj->asString() << endl;
@@ -335,23 +341,18 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	for ( it = link_stack.begin(); it != link_stack.end(); ++it ) {
 		cout << *it << endl;
 	}
-#endif
-	
-#ifdef DEBUG_LINK_PHASE
+
 	cout << "Fixing Links:"  << endl;
 #endif
 	//--Now that all objects are read, go back and fix the links--//
-	vector<NiObjectRef> obj_list;
+	
 
-	for ( map<unsigned,NiObjectRef>::iterator it = objects.begin(); it != objects.end(); ++it ) {
+	for ( unsigned int i = 0; i < obj_list.size(); ++i ) {
 #ifdef DEBUG_LINK_PHASE
-		cout << it->first << ":  " << it->second << endl;
+		cout << "   " << i << ":  " << obj_list[i] << endl;
 #endif
 		//Fix links & other pre-processing
-		it->second->FixLinks( objects, link_stack, *info );
-
-		//Add object to list
-		obj_list.push_back(it->second);
+		obj_list[i]->FixLinks( objects, link_stack, *info );
 	}
 
 	//delete info if it was dynamically allocated
@@ -987,7 +988,7 @@ void MergeNifTrees( NiNode * target, NiSequenceStreamHelper * right, unsigned ve
 
 bool IsSupportedVersion( unsigned int version ) {
 	switch (version) {
-		//case VER_3_1:
+		case VER_3_1:
 		case VER_3_3_0_13:
 		case VER_4_0_0_0:
 		case VER_4_0_0_2:
