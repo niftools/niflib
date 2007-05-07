@@ -17,6 +17,7 @@ const unsigned VER_4_2_0_2     = 0x04020002; /*!< NIF Version 4.2.0.2 */
 const unsigned VER_4_2_1_0     = 0x04020100; /*!< NIF Version 4.2.1.0 */ 
 const unsigned VER_4_2_2_0     = 0x04020200; /*!< NIF Version 4.2.2.0 */ 
 const unsigned VER_10_0_1_0    = 0x0A000100; /*!< NIF Version 10.0.1.0 */ 
+const unsigned VER_10_0_1_2    = 0x0A000102; /*!< NIF Version 10.0.1.2 */ 
 const unsigned VER_10_1_0_0    = 0x0A010000; /*!< NIF Version 10.1.0.0 */ 
 const unsigned VER_10_1_0_106  = 0x0A01006A; /*!< NIF Version 10.1.0.106 */
 const unsigned VER_10_2_0_0    = 0x0A020000; /*!< NIF Version 10.2.0.0 */ 

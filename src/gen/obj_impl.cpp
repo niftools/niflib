@@ -214,7 +214,7 @@ Ref<T> FixLink( const map<unsigned,NiObjectRef> & objects, list<unsigned int> & 
 	link_stack.pop_front();
 
 	//Check if link is NULL
-	if ( info.version > VER_3_3_0_13) {
+	if ( info.version >= VER_3_3_0_13) {
 		if ( index == 0xFFFFFFFF) {
 			return NULL;
 		}

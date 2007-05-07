@@ -998,6 +998,7 @@ bool IsSupportedVersion( unsigned int version ) {
 		case VER_4_2_2_0:
 		case VER_10_0_1_0:
 		case VER_10_1_0_0:
+		case VER_10_0_1_2:
 		case VER_10_1_0_106:
 		case VER_10_2_0_0:
 		case VER_20_0_0_4:
