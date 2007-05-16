@@ -260,17 +260,15 @@ If you need help to do this, there is information about it on our main website h
 
 \section include Including the Library
 
-\subsection cpp C++
-
-Visual Studio 2005 is the preferred compiler for Niflib as this is the platform that all development is done on.  The instructions in this guide assume that you are using this compiler.  If you do not have a copy, you can download Microsoft Visual C++ 2005 Express for free from Microsoft.  Niflib should work on other compilers, and is tested on GCC from time to time, but you will have to figure out how to use those compilers on your own.
+Visual Studio 2005 is the preferred compiler for Niflib as this is the platform that all development is done on.  The instructions in this guide assume that you are using this compiler.  If you do not have a copy, you can <a href="http://msdn.microsoft.com/vstudio/express/downloads/default.aspx">download Microsoft Visual C++ 2005 Express</a> for free from Microsoft.  Niflib should work on other compilers, and is tested on GCC from time to time, but you will have to figure out how to use those compilers on your own.
 
 You need to make some changes to the project settings of your project before you can build a program that uses Niflib.  These settings are available when right-clicking the project in the Solution Explorer and clicking “Properties.”  You want to use Niflib in Release or Debug mode, or as a static or dynamic library.
 
 Debug mode means that Visual C++ will put a bunch of extra data in your program to enable you to use the Visual Debugger and see the real code when you set break points or experience a crash.  This adds bloat to your program and slows it down, however, so you should always compile in Release mode when you plan on creating the final version for distribution.
 
-Dynamic linking means that your program will include a Niflib DLL file which the user can replace with a new version so long as the file hasn’t changed too much.  It also means that various applications can share one copy of the Niflib code.  On the other hand, it also means that you will need to tell your users how to obtain and install the Microsoft Visual Studio 2005 Runtime DLL files from Microsoft.  Static linking means that all of the Niflib code that your application uses will be included directly in the EXE file.  This also includes the code from the standard C++ library which would otherwise be part of the MSVS 2005 Runtime DLL.  This means your EXE will be bigger, but also means that your user won’t have to install any DLL files.
+Dynamic linking means that your program will include a Niflib DLL file which the user can replace with a new version so long as the file hasn't changed too much.  It also means that various applications can share one copy of the Niflib code.  On the other hand, it also means that you will need to tell your users how to obtain and install the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en">Microsoft Visual C++ 2005 Redistributable Package</a> from Microsoft.  Static linking means that all of the Niflib code that your application uses will be included directly in the EXE file.  This also includes the code from the standard C++ library which would otherwise be part of the MSVS 2005 Runtime DLL.  This means your EXE will be bigger, but also means that your user won't have to install any DLL files.
 
-These are the project settings that you should change to use each combination of Debug/Release and DLL/Static.  This assumes that you’ve already created a default empty project with Debug and Release configurations, and are altering those with these additional settings.  It also assumes that you’re using the provided Niflib project file to build Niflib, and have added Niflib’s lib and include folders to the proper paths in the Tools > Options screen under Projects and Solutions > VC++ Directories.
+These are the project settings that you should change to use each combination of Debug/Release and DLL/Static.  This assumes that you've already created a default empty project with Debug and Release configurations, and are altering those with these additional settings.  It also assumes that you're using the provided Niflib project file to build Niflib, and have added Niflib's lib and include folders to the proper paths in the Tools > Options screen under Projects and Solutions > VC++ Directories.
 
 DLL Release:
 Configuration Properties > C/C++ > Code Generation = Multi-threaded DLL (/MD)
@@ -326,7 +324,7 @@ Niflib::NiObjectRef niObj = Niflib::ReadNifTree( "test.nif" );
 
 \section exept Exceptions
 
-Niflib uses C++ exceptions rather than error return codes. These are a lot more convenient in that you don’t have to wrap every single function in an if-test, but not everyone understands what they are, so I thought I’d provide enough of an intro to get you along.
+Niflib uses C++ exceptions rather than error return codes. These are a lot more convenient in that you don't have to wrap every single function in an if-test, but not everyone understands what they are, so I thought I'd provide enough of an intro to get you along.
 
 Very basically, if you want to check if Niflib function calls are failing and why, then wrap them in a try block like this:
 
@@ -373,19 +371,19 @@ Each object type has member functions which allow you to get and set data, adjus
 
 You do not access the classes directly, however.  Niflib uses reference counting to determine when objects are destroyed, so you always access a class through a Ref smart pointer.  This is a template which takes the class as its template argument, such as Ref<NiNode>.  For each type of Ref a typedef has been provided in the form of [class name]Ref, so Ref<NiNode> has the typedef NiNodeRef, and this name can be used instead of the more unusual template syntax.  When the last Ref smart pointer that points to a particular object is reassigned or goes out of scope, that object will take care of cleaning itself up automatically.
 
-Objects use Ref smart pointers internally as well, so you don’t have to worry about objects that are referenced by other objects destroying themselves unexpectedly.  Also, any function that takes a pointer to a NIF object, such as “NiObject*” will also take appropriate Ref versions of compatible objects.  Compatible objects are those that can be converted to the correct type via a static cast.  That is, a derived type can be substituted for a type that it inherits from.
+Objects use Ref smart pointers internally as well, so you don't have to worry about objects that are referenced by other objects destroying themselves unexpectedly.  Also, any function that takes a pointer to a NIF object, such as “NiObject*” will also take appropriate Ref versions of compatible objects.  Compatible objects are those that can be converted to the correct type via a static cast.  That is, a derived type can be substituted for a type that it inherits from.
 
 \section rw_files Reading and Writing NIF Files
 
-To check whether a file is really a NIF file, call the CheckNifVersion() function. You can then call the IsSupportedVersion() function to determine whether the data in the file may not be well understood.  There are two ways to read in a NIF file – as a list of objects in the order they appear in the file and as a single Ref pointing to the root of the scene graph tree from which all other objects can be found by following the links between objects.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all objects, regardless of whether we fully understand the links that keep them from destroying themselves.  Unsupported objects may not be included in the tree representation if no other objects reference them.  So most of the time, you’re going to want to call the ReadNifTree() function.
+To check whether a file is really a NIF file, call the CheckNifVersion() function. You can then call the IsSupportedVersion() function to determine whether the data in the file may not be well understood.  There are two ways to read in a NIF file – as a list of objects in the order they appear in the file and as a single Ref pointing to the root of the scene graph tree from which all other objects can be found by following the links between objects.  Most of the time you will probably want to use the tree method, as this is the only one eligible for writing.  The list method is provided for uses such as Niflyze that need to retrieve all objects, regardless of whether we fully understand the links that keep them from destroying themselves.  Unsupported objects may not be included in the tree representation if no other objects reference them.  So most of the time, you're going to want to call the ReadNifTree() function.
 
-That’s all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one NIF object in memory – the root object of the tree.  You can pass this same object to the WriteNifTree() function to create a new NIF file from the representation in memory.
+That's all there is to reading in a NIF file.  If all goes well with the reading process (no exception was thrown), you will have at least one NIF object in memory – the root object of the tree.  You can pass this same object to the WriteNifTree() function to create a new NIF file from the representation in memory.
 
 WARNING:  Some features of the NIF format are still unsupported by Niflib, therefore in some cases the exported NIF may either be different from the original, or completely unusable.  DO NOT OVERWRITE THE ORIGINAL NIF FILE.
 
 \section work_blk Working with NIF Objects
 
-New class objects don’t have to just come from loaded NIF files.  To create an object yourself, you can do so by using the C++ new keyword like so:
+New class objects don't have to just come from loaded NIF files.  To create an object yourself, you can do so by using the C++ new keyword like so:
 
 \code
 RefNiNode node = new NiNode;
@@ -414,7 +412,7 @@ if ( node != NULL ) {
    ...
 \endcode
 
-Note the template syntax of the DynamicCast() function.  Notice also that you must always check the value returned by DynamicCast().  If the cast is not successful, i.e. the object is not a derived type of the one you’re trying to cast it to, the function will return NULL.
+Note the template syntax of the DynamicCast() function.  Notice also that you must always check the value returned by DynamicCast().  If the cast is not successful, i.e. the object is not a derived type of the one you're trying to cast it to, the function will return NULL.
 
 Casting down the inheritance tree is usually automatic, but you can also explicitly call the StaticCast() function.
 
@@ -422,7 +420,7 @@ One useful function of all NIF objects is the NiObject::asString() function.  Yo
 
 You will probably also want to know the type of a object at some point.  Each NIF object has a static member variable called TYPE which uniquely identifies that type of object.  For example, the type constant for NiNode is NiNode::TYPE while the type constant for NiAVObject is NiAVObject::TYPE.  These constants should be used instead of the object name string since comparisons between the unique type ID number are much faster than string comparisons, and because these comparisons are aware of inheritance.  The type objects also have a function which you can use to get the type name at any time, the Type::GetTypeName() function.
 
-For example, you may have a program that does something to NiGeometry objects.  There are many types of NiGeometry objects in a NIF file, but perhaps for what you’re doing you only need to know whether the object is derived from the NiGeometry type.  You can do this without attempting a dynamic cast by using the NiObject:: IsDerivedType () function.  For example:
+For example, you may have a program that does something to NiGeometry objects.  There are many types of NiGeometry objects in a NIF file, but perhaps for what you're doing you only need to know whether the object is derived from the NiGeometry type.  You can do this without attempting a dynamic cast by using the NiObject:: IsDerivedType () function.  For example:
 
 \code
 NiObjectRef niObj = new NiTriShapeData;
