@@ -11,6 +11,7 @@ namespace Niflib {
 //#include "../gen/obj_defines.h"
 
 class NiImage;
+class NiRawImageData;
 typedef Ref<NiImage> NiImageRef;
 
 /*!

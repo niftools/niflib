@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../gen/ByteColor3.h"
+#include "../gen/ByteColor4.h"
 namespace Niflib {
 
 class NiRawImageData;

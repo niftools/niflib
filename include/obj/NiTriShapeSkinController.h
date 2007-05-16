@@ -1,27 +1,28 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NIPSYSEMITTERDECLINATIONCTLR_H_
-#define _NIPSYSEMITTERDECLINATIONCTLR_H_
+#ifndef _NITRISHAPESKINCONTROLLER_H_
+#define _NITRISHAPESKINCONTROLLER_H_
 
-#include "APSysCtlr.h"
+#include "NiTimeController.h"
+
+// Include structures
+#include "../gen/OldSkinData.h"
 namespace Niflib {
 
-
-//#include "../gen/obj_defines.h"
-
-class NiPSysEmitterDeclinationCtlr;
-class NiFloatData;
-typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
+// Forward define of referenced NIF objects
+class NiBone;
+class NiTriShapeSkinController;
+typedef Ref<NiTriShapeSkinController> NiTriShapeSkinControllerRef;
 
 /*!
- * NiPSysEmitterDeclinationCtlr - Unknown.
+ * NiTriShapeSkinController - Old version of skinning instance.
  */
 
-class NiPSysEmitterDeclinationCtlr : public NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT {
+class NiTriShapeSkinController : public NI_TRI_SHAPE_SKIN_CONTROLLER_PARENT {
 public:
-	NIFLIB_API NiPSysEmitterDeclinationCtlr();
-	NIFLIB_API ~NiPSysEmitterDeclinationCtlr();
+	NIFLIB_API NiTriShapeSkinController();
+	NIFLIB_API ~NiTriShapeSkinController();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -33,7 +34,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS
+	NI_TRI_SHAPE_SKIN_CONTROLLER_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

@@ -435,10 +435,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\obj\bhkMeshShape.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\obj\bhkMoppBvTreeShape.cpp"
 					>
 				</File>
@@ -583,6 +579,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiBinaryVoxelData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBinaryVoxelExtraData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiBlendBoolInterpolator.cpp"
 					>
 				</File>
@@ -600,6 +604,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiBlendTransformInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBone.cpp"
 					>
 				</File>
 				<File
@@ -955,6 +963,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPSysCollider.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPSysColliderManager.cpp"
 					>
 				</File>
@@ -1056,6 +1068,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPSysSphereEmitter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysSphericalCollider.cpp"
 					>
 				</File>
 				<File
@@ -1207,6 +1223,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiTriShapeSkinController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiTriStrips.cpp"
 					>
 				</File>
@@ -1275,6 +1295,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\ByteColor4.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\ControllerLink.cpp"
 					>
 				</File>
@@ -1319,6 +1343,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\MultiTextureElement.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\NodeGroup.cpp"
 					>
 				</File>
@@ -1332,6 +1360,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\OblivionSubShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\OldSkinData.cpp"
 					>
 				</File>
 				<File
@@ -1565,10 +1597,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\obj\bhkMeshShape.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\obj\bhkMoppBvTreeShape.h"
 					>
 				</File>
@@ -1713,6 +1741,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiBinaryVoxelData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBinaryVoxelExtraData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiBlendBoolInterpolator.h"
 					>
 				</File>
@@ -1730,6 +1766,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiBlendTransformInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBone.h"
 					>
 				</File>
 				<File
@@ -2085,6 +2125,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPSysCollider.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPSysColliderManager.h"
 					>
 				</File>
@@ -2186,6 +2230,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysSphereEmitter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysSphericalCollider.h"
 					>
 				</File>
 				<File
@@ -2337,6 +2385,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiTriShapeSkinController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiTriStrips.h"
 					>
 				</File>
@@ -2405,6 +2457,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\ByteColor4.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\ControllerLink.h"
 					>
 				</File>
@@ -2457,6 +2513,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\MultiTextureElement.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\NodeGroup.h"
 					>
 				</File>
@@ -2470,6 +2530,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\OblivionSubShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\OldSkinData.h"
 					>
 				</File>
 				<File

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSPLANARCOLLIDER_H_
 #define _NIPSYSPLANARCOLLIDER_H_
 
-#include "NiObject.h"
+#include "NiPSysCollider.h"
 
 // Include structures
 #include "../Ref.h"

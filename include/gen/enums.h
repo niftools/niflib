@@ -120,8 +120,8 @@ ostream & operator<<( ostream & out, MipMapFormat const & val );
 
 /*!
  * This enum defines the various actions used in conjunction with the
- * stencil buffer.                 For a detailed description of the
- * individual options please refer to the OpenGL docs.
+ * stencil buffer.         For a detailed description of the individual
+ * options please refer to the OpenGL docs.
  */
 enum StencilAction {
 	ACTION_KEEP = 0, /*!< ACTION_KEEP */

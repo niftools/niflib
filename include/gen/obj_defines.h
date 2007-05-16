@@ -18,6 +18,15 @@ All rights reserved.  Please see niflib.h for license. */
 Ref<AParticleModifier > nextModifier; \
 NiParticleSystemController * controller; \
 
+#define NI_P_SYS_COLLIDER_MEMBERS \
+float bounce; \
+bool spawnOnCollide; \
+bool dieOnCollide; \
+Ref<NiPSysSpawnModifier > spawnModifier; \
+NiObject * parent; \
+Ref<NiObject > nextCollider; \
+Ref<NiNode > colliderObject; \
+
 #define BHK_REF_OBJECT_MEMBERS \
 
 #define BHK_SERIALIZABLE_MEMBERS \
@@ -90,6 +99,7 @@ Ref<NiCollisionObject > collisionObject; \
 
 #define NI_DYNAMIC_EFFECT_MEMBERS \
 bool switchState; \
+mutable unsigned int numAffectedNodeListPointers; \
 mutable unsigned int numAffectedNodes; \
 vector<unsigned int > affectedNodeListPointers; \
 vector<Ref<NiAVObject > > affectedNodes; \
@@ -282,13 +292,6 @@ vector<Ref<NiTriStripsData > > stripsData; \
 mutable unsigned int numDataLayers; \
 vector<OblivionColFilter > dataLayers; \
 
-#define BHK_MESH_SHAPE_MEMBERS \
-array<8,int > unknown; \
-mutable int unknownCount; \
-vector< array<3,float > > unknownFloats; \
-mutable unsigned int numStripsData; \
-vector<Ref<NiTriStripsData > > stripsData; \
-
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS \
 mutable unsigned short numSubShapes; \
 vector<OblivionSubShape > subShapes; \
@@ -403,6 +406,22 @@ vector<float > sizes; \
 
 #define NI_BINARY_EXTRA_DATA_MEMBERS \
 ByteArray binaryData; \
+
+#define NI_BINARY_VOXEL_EXTRA_DATA_MEMBERS \
+unsigned int unknownInt; \
+Ref<NiBinaryVoxelData > data; \
+
+#define NI_BINARY_VOXEL_DATA_MEMBERS \
+unsigned short unknownShort1; \
+unsigned short unknownShort2; \
+unsigned short unknownShort3; \
+array<7,float > unknown7Floats; \
+array< 7, array<12,byte > > unknownBytes1; \
+mutable unsigned int numUnknownVectors; \
+vector<Float4 > unknownVectors; \
+mutable unsigned int numUnknownBytes2; \
+vector<byte > unknownBytes2; \
+array<5,unsigned int > unknown5Ints; \
 
 #define NI_BLEND_BOOL_INTERPOLATOR_MEMBERS \
 byte boolValue; \
@@ -557,7 +576,7 @@ float floatData; \
 
 #define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS \
 Ref<NiObject > unknownLink; \
-string unknownString; \
+string controllerData; \
 
 #define NI_FLOAT_INTERPOLATOR_MEMBERS \
 float floatValue; \
@@ -678,6 +697,8 @@ mutable unsigned int numChildren; \
 vector<Ref<NiAVObject > > children; \
 mutable unsigned int numEffects; \
 vector<Ref<NiDynamicEffect > > effects; \
+
+#define NI_BONE_MEMBERS \
 
 #define AVOID_NODE_MEMBERS \
 
@@ -931,10 +952,12 @@ mutable unsigned int numVisibilityKeys_; \
 vector<Key<byte > > visibilityKeys_; \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS \
+Ref<NiFloatData > data; \
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_MEMBERS \
 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_MEMBERS \
+Ref<NiFloatData > data; \
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_MEMBERS \
 Ref<NiFloatData > unknownLink; \
@@ -975,17 +998,13 @@ vector<Ref<NiNode > > meshes; \
 unsigned int unknownInt; \
 
 #define NI_P_SYS_PLANAR_COLLIDER_MEMBERS \
-float bounce; \
-bool spawnOnCollide; \
-bool dieOnCollide; \
-Ref<NiPSysSpawnModifier > spawnModifier; \
-NiObject * parent; \
-Ref<NiObject > unknownLink_; \
-Ref<NiNode > colliderObject; \
 float width; \
 float height; \
 Vector3 xAxis; \
 Vector3 yAxis; \
+
+#define NI_P_SYS_SPHERICAL_COLLIDER_MEMBERS \
+float radius; \
 
 #define NI_P_SYS_POSITION_MODIFIER_MEMBERS \
 
@@ -1045,7 +1064,7 @@ Vector3 translation; \
 float scale; \
 mutable unsigned int numBones; \
 Ref<NiSkinPartition > skinPartition; \
-byte unknownByte; \
+byte hasVertexWeights; \
 vector<SkinData > boneList; \
 
 #define NI_SKIN_INSTANCE_MEMBERS \
@@ -1054,6 +1073,12 @@ Ref<NiSkinPartition > skinPartition; \
 NiNode * skeletonRoot; \
 mutable unsigned int numBones; \
 vector<NiNode * > bones; \
+
+#define NI_TRI_SHAPE_SKIN_CONTROLLER_MEMBERS \
+mutable unsigned int numBones; \
+mutable vector<unsigned int > vertexCounts; \
+vector<NiBone * > bones; \
+vector< vector<OldSkinData > > boneData; \
 
 #define NI_CLOD_SKIN_INSTANCE_MEMBERS \
 
@@ -1138,27 +1163,26 @@ unsigned int operation; \
 Ref<NiFloatData > data; \
 
 #define NI_TEXTURE_MODE_PROPERTY_MEMBERS \
-array<3,short > unknown3Shorts; \
+short unknownShort; \
+array<2,short > unknown2Shorts; \
 
 #define NI_IMAGE_MEMBERS \
-byte external_; \
-string file; \
-array<4,short > unknown4Shorts; \
+byte external; \
+string fileName; \
+Ref<NiRawImageData > imageData; \
+unsigned int unknownInt1; \
+unsigned int unknownInt2; \
 
 #define NI_TEXTURE_PROPERTY_MEMBERS \
 unsigned short flags; \
 Ref<NiImage > image; \
+unsigned int unknownInt1; \
+unsigned int unknownInt2; \
 
 #define NI_MULTI_TEXTURE_PROPERTY_MEMBERS \
 unsigned short flags; \
-unsigned int unknownInt1; \
-unsigned int unknownInt2; \
-Ref<NiImage > image; \
-unsigned int unknownInt3; \
-unsigned int unknownInt4; \
-unsigned int unknownInt5; \
-array<11,short > unknownShorts; \
-array<11,short > unknownExtraShorts; \
+unsigned int unknownInt; \
+array<5,MultiTextureElement > textureElements; \
 
 #define NI_TEXTURING_PROPERTY_MEMBERS \
 unsigned short flags; \
@@ -1271,238 +1295,10 @@ CompareMode function; \
 #define NI_RAW_IMAGE_DATA_MEMBERS \
 mutable unsigned int width; \
 mutable unsigned int height; \
-unsigned int unknownInt; \
-vector< vector<ByteColor3 > > imageData; \
+unsigned int imageType; \
+vector< vector<ByteColor3 > > rgbImageData; \
+vector< vector<ByteColor4 > > rgbaImageData; \
 
-#else
-#define NI_OBJECT_MEMBERS
-#define A_KEYED_DATA_MEMBERS
-#define A_PARTICLE_MODIFIER_MEMBERS
-#define BHK_REF_OBJECT_MEMBERS
-#define BHK_SERIALIZABLE_MEMBERS
-#define ABHK_CONSTRAINT_MEMBERS
-#define ABHK_RAGDOLL_CONSTRAINT_MEMBERS
-#define BHK_SHAPE_MEMBERS
-#define ABHK_SHAPE_COLLECTION_MEMBERS
-#define BHK_SPHERE_REP_SHAPE_MEMBERS
-#define BHK_CONVEX_SHAPE_MEMBERS
-#define BHK_WORLD_OBJECT_MEMBERS
-#define BHK_ENTITY_MEMBERS
-#define NI_COLLISION_OBJECT_MEMBERS
-#define NI_EXTRA_DATA_MEMBERS
-#define NI_INTERPOLATOR_MEMBERS
-#define NI_BLEND_INTERPOLATOR_MEMBERS
-#define NI_B_SPLINE_INTERPOLATOR_MEMBERS
-#define NI_OBJECT_N_E_T_MEMBERS
-#define NI_A_V_OBJECT_MEMBERS
-#define NI_DYNAMIC_EFFECT_MEMBERS
-#define NI_LIGHT_MEMBERS
-#define NI_PROPERTY_MEMBERS
-#define NI_P_SYS_MODIFIER_MEMBERS
-#define NI_P_SYS_EMITTER_MEMBERS
-#define NI_P_SYS_VOLUME_EMITTER_MEMBERS
-#define NI_TIME_CONTROLLER_MEMBERS
-#define A_BONE_L_O_D_CONTROLLER_MEMBERS
-#define NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
-#define A_P_SYS_CTLR_MEMBERS
-#define NI_GEOMETRY_MEMBERS
-#define NI_TRI_BASED_GEOM_MEMBERS
-#define NI_GEOMETRY_DATA_MEMBERS
-#define NI_TRI_BASED_GEOM_DATA_MEMBERS
-#define A_P_SYS_DATA_MEMBERS
-#define BHK_BLEND_COLLISION_OBJECT_MEMBERS
-#define BHK_BLEND_CONTROLLER_MEMBERS
-#define BHK_BOX_SHAPE_MEMBERS
-#define BHK_CAPSULE_SHAPE_MEMBERS
-#define BHK_COLLISION_OBJECT_MEMBERS
-#define BHK_CONVEX_VERTICES_SHAPE_MEMBERS
-#define BHK_HINGE_CONSTRAINT_MEMBERS
-#define BHK_LIMITED_HINGE_CONSTRAINT_MEMBERS
-#define BHK_LIST_SHAPE_MEMBERS
-#define BHK_MALLEABLE_CONSTRAINT_MEMBERS
-#define BHK_MOPP_BV_TREE_SHAPE_MEMBERS
-#define BHK_MULTI_SPHERE_SHAPE_MEMBERS
-#define BHK_NI_TRI_STRIPS_SHAPE_MEMBERS
-#define BHK_MESH_SHAPE_MEMBERS
-#define BHK_PACKED_NI_TRI_STRIPS_SHAPE_MEMBERS
-#define BHK_PRISMATIC_CONSTRAINT_MEMBERS
-#define BHK_RAGDOLL_CONSTRAINT_MEMBERS
-#define BHK_RIGID_BODY_MEMBERS
-#define BHK_RIGID_BODY_T_MEMBERS
-#define BHK_SIMPLE_SHAPE_PHANTOM_MEMBERS
-#define BHK_S_P_COLLISION_OBJECT_MEMBERS
-#define BHK_SPHERE_SHAPE_MEMBERS
-#define BHK_STIFF_SPRING_CONSTRAINT_MEMBERS
-#define BHK_TRANSFORM_SHAPE_MEMBERS
-#define BHK_CONVEX_TRANSFORM_SHAPE_MEMBERS
-#define B_S_BOUND_MEMBERS
-#define B_S_FURNITURE_MARKER_MEMBERS
-#define B_S_PARENT_VELOCITY_MODIFIER_MEMBERS
-#define B_S_P_SYS_ARRAY_EMITTER_MEMBERS
-#define B_S_X_FLAGS_MEMBERS
-#define HK_PACKED_NI_TRI_STRIPS_DATA_MEMBERS
-#define NI_ALPHA_CONTROLLER_MEMBERS
-#define NI_ALPHA_PROPERTY_MEMBERS
-#define NI_AMBIENT_LIGHT_MEMBERS
-#define NI_AUTO_NORMAL_PARTICLES_DATA_MEMBERS
-#define NI_BINARY_EXTRA_DATA_MEMBERS
-#define NI_BLEND_BOOL_INTERPOLATOR_MEMBERS
-#define NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS
-#define NI_BLEND_POINT3_INTERPOLATOR_MEMBERS
-#define NI_BLEND_TRANSFORM_INTERPOLATOR_MEMBERS
-#define NI_BONE_L_O_D_CONTROLLER_MEMBERS
-#define NI_BOOL_DATA_MEMBERS
-#define NI_BOOLEAN_EXTRA_DATA_MEMBERS
-#define NI_BOOL_INTERPOLATOR_MEMBERS
-#define NI_BOOL_TIMELINE_INTERPOLATOR_MEMBERS
-#define NI_B_S_BONE_L_O_D_CONTROLLER_MEMBERS
-#define NI_B_SPLINE_BASIS_DATA_MEMBERS
-#define NI_B_SPLINE_COMP_FLOAT_INTERPOLATOR_MEMBERS
-#define NI_B_SPLINE_COMP_POINT3_INTERPOLATOR_MEMBERS
-#define NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS
-#define NI_B_SPLINE_DATA_MEMBERS
-#define NI_CAMERA_MEMBERS
-#define NI_COLLISION_DATA_MEMBERS
-#define NI_COLOR_DATA_MEMBERS
-#define NI_COLOR_EXTRA_DATA_MEMBERS
-#define NI_CONTROLLER_MANAGER_MEMBERS
-#define NI_SEQUENCE_MEMBERS
-#define NI_CONTROLLER_SEQUENCE_MEMBERS
-#define NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS
-#define NI_DIRECTIONAL_LIGHT_MEMBERS
-#define NI_DITHER_PROPERTY_MEMBERS
-#define NI_FLIP_CONTROLLER_MEMBERS
-#define NI_ROLL_CONTROLLER_MEMBERS
-#define NI_FLOAT_DATA_MEMBERS
-#define NI_FLOAT_EXTRA_DATA_MEMBERS
-#define NI_FLOAT_EXTRA_DATA_CONTROLLER_MEMBERS
-#define NI_FLOAT_INTERPOLATOR_MEMBERS
-#define NI_FLOATS_EXTRA_DATA_MEMBERS
-#define NI_FOG_PROPERTY_MEMBERS
-#define NI_GEOM_MORPHER_CONTROLLER_MEMBERS
-#define NI_GRAVITY_MEMBERS
-#define NI_INTEGER_EXTRA_DATA_MEMBERS
-#define NI_INTEGERS_EXTRA_DATA_MEMBERS
-#define NI_KEYFRAME_CONTROLLER_MEMBERS
-#define B_S_KEYFRAME_CONTROLLER_MEMBERS
-#define NI_KEYFRAME_DATA_MEMBERS
-#define NI_LIGHT_COLOR_CONTROLLER_MEMBERS
-#define NI_LIGHT_DIMMER_CONTROLLER_MEMBERS
-#define NI_LOOK_AT_CONTROLLER_MEMBERS
-#define NI_LOOK_AT_INTERPOLATOR_MEMBERS
-#define NI_MATERIAL_COLOR_CONTROLLER_MEMBERS
-#define NI_MATERIAL_PROPERTY_MEMBERS
-#define NI_MESH_P_SYS_DATA_MEMBERS
-#define NI_MORPH_DATA_MEMBERS
-#define NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS
-#define NI_NODE_MEMBERS
-#define AVOID_NODE_MEMBERS
-#define FX_WIDGET_MEMBERS
-#define FX_BUTTON_MEMBERS
-#define FX_RADIO_BUTTON_MEMBERS
-#define NI_BILLBOARD_NODE_MEMBERS
-#define NI_B_S_ANIMATION_NODE_MEMBERS
-#define NI_B_S_PARTICLE_NODE_MEMBERS
-#define NI_L_O_D_NODE_MEMBERS
-#define NI_PALETTE_MEMBERS
-#define NI_PARTICLE_BOMB_MEMBERS
-#define NI_PARTICLE_COLOR_MODIFIER_MEMBERS
-#define NI_PARTICLE_GROW_FADE_MEMBERS
-#define NI_PARTICLE_MESH_MODIFIER_MEMBERS
-#define NI_PARTICLE_ROTATION_MEMBERS
-#define NI_PARTICLES_MEMBERS
-#define NI_AUTO_NORMAL_PARTICLES_MEMBERS
-#define NI_PARTICLE_MESHES_MEMBERS
-#define NI_PARTICLES_DATA_MEMBERS
-#define NI_PARTICLE_MESHES_DATA_MEMBERS
-#define NI_PARTICLE_SYSTEM_MEMBERS
-#define NI_MESH_PARTICLE_SYSTEM_MEMBERS
-#define NI_PARTICLE_SYSTEM_CONTROLLER_MEMBERS
-#define NI_B_S_P_ARRAY_CONTROLLER_MEMBERS
-#define NI_PATH_CONTROLLER_MEMBERS
-#define NI_PATH_INTERPOLATOR_MEMBERS
-#define NI_PIXEL_DATA_MEMBERS
-#define NI_PLANAR_COLLIDER_MEMBERS
-#define NI_POINT3_INTERPOLATOR_MEMBERS
-#define NI_POINT_LIGHT_MEMBERS
-#define NI_POS_DATA_MEMBERS
-#define NI_P_SYS_AGE_DEATH_MODIFIER_MEMBERS
-#define NI_P_SYS_BOMB_MODIFIER_MEMBERS
-#define NI_P_SYS_BOUND_UPDATE_MODIFIER_MEMBERS
-#define NI_P_SYS_BOX_EMITTER_MEMBERS
-#define NI_P_SYS_COLLIDER_MANAGER_MEMBERS
-#define NI_P_SYS_COLOR_MODIFIER_MEMBERS
-#define NI_P_SYS_CYLINDER_EMITTER_MEMBERS
-#define NI_P_SYS_DATA_MEMBERS
-#define NI_P_SYS_DRAG_MODIFIER_MEMBERS
-#define NI_P_SYS_EMITTER_CTLR_MEMBERS
-#define NI_P_SYS_EMITTER_CTLR_DATA_MEMBERS
-#define NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS
-#define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_MEMBERS
-#define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_MEMBERS
-#define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_MEMBERS
-#define NI_P_SYS_EMITTER_SPEED_CTLR_MEMBERS
-#define NI_P_SYS_GRAVITY_MODIFIER_MEMBERS
-#define NI_P_SYS_GRAVITY_STRENGTH_CTLR_MEMBERS
-#define NI_P_SYS_GROW_FADE_MODIFIER_MEMBERS
-#define NI_P_SYS_MESH_EMITTER_MEMBERS
-#define NI_P_SYS_MESH_UPDATE_MODIFIER_MEMBERS
-#define NI_P_SYS_MODIFIER_ACTIVE_CTLR_MEMBERS
-#define NI_P_SYS_PLANAR_COLLIDER_MEMBERS
-#define NI_P_SYS_POSITION_MODIFIER_MEMBERS
-#define NI_P_SYS_RESET_ON_LOOP_CTLR_MEMBERS
-#define NI_P_SYS_ROTATION_MODIFIER_MEMBERS
-#define NI_P_SYS_SPAWN_MODIFIER_MEMBERS
-#define NI_P_SYS_SPHERE_EMITTER_MEMBERS
-#define NI_P_SYS_UPDATE_CTLR_MEMBERS
-#define NI_L_O_D_DATA_MEMBERS
-#define NI_RANGE_L_O_D_DATA_MEMBERS
-#define NI_SCREEN_L_O_D_DATA_MEMBERS
-#define NI_ROTATING_PARTICLES_MEMBERS
-#define NI_ROTATING_PARTICLES_DATA_MEMBERS
-#define NI_SEQUENCE_STREAM_HELPER_MEMBERS
-#define NI_SHADE_PROPERTY_MEMBERS
-#define NI_SKIN_DATA_MEMBERS
-#define NI_SKIN_INSTANCE_MEMBERS
-#define NI_CLOD_SKIN_INSTANCE_MEMBERS
-#define NI_SKIN_PARTITION_MEMBERS
-#define NI_SOURCE_TEXTURE_MEMBERS
-#define NI_SPECULAR_PROPERTY_MEMBERS
-#define NI_SPHERICAL_COLLIDER_MEMBERS
-#define NI_SPOT_LIGHT_MEMBERS
-#define NI_STENCIL_PROPERTY_MEMBERS
-#define NI_STRING_EXTRA_DATA_MEMBERS
-#define NI_STRING_PALETTE_MEMBERS
-#define NI_STRINGS_EXTRA_DATA_MEMBERS
-#define NI_TEXT_KEY_EXTRA_DATA_MEMBERS
-#define NI_TEXTURE_EFFECT_MEMBERS
-#define NI_TEXTURE_TRANSFORM_CONTROLLER_MEMBERS
-#define NI_TEXTURE_MODE_PROPERTY_MEMBERS
-#define NI_IMAGE_MEMBERS
-#define NI_TEXTURE_PROPERTY_MEMBERS
-#define NI_MULTI_TEXTURE_PROPERTY_MEMBERS
-#define NI_TEXTURING_PROPERTY_MEMBERS
-#define NI_TRANSFORM_CONTROLLER_MEMBERS
-#define NI_TRANSFORM_DATA_MEMBERS
-#define NI_TRANSFORM_INTERPOLATOR_MEMBERS
-#define NI_TRI_SHAPE_MEMBERS
-#define NI_TRI_SHAPE_DATA_MEMBERS
-#define NI_TRI_STRIPS_MEMBERS
-#define NI_TRI_STRIPS_DATA_MEMBERS
-#define NI_CLOD_MEMBERS
-#define NI_CLOD_DATA_MEMBERS
-#define NI_U_V_CONTROLLER_MEMBERS
-#define NI_U_V_DATA_MEMBERS
-#define NI_VECTOR_EXTRA_DATA_MEMBERS
-#define NI_VERTEX_COLOR_PROPERTY_MEMBERS
-#define NI_VERT_WEIGHTS_EXTRA_DATA_MEMBERS
-#define NI_VIS_CONTROLLER_MEMBERS
-#define NI_VIS_DATA_MEMBERS
-#define NI_WIREFRAME_PROPERTY_MEMBERS
-#define NI_Z_BUFFER_PROPERTY_MEMBERS
-#define ROOT_COLLISION_NODE_MEMBERS
-#define NI_RAW_IMAGE_DATA_MEMBERS
-#endif
 
 #define NI_OBJECT_PARENT
 
@@ -1513,6 +1309,10 @@ vector< vector<ByteColor3 > > imageData; \
 #define A_PARTICLE_MODIFIER_PARENT NiObject
 
 #define A_PARTICLE_MODIFIER_CONSTRUCT  : nextModifier(NULL), controller(NULL)
+
+#define NI_P_SYS_COLLIDER_PARENT NiObject
+
+#define NI_P_SYS_COLLIDER_CONSTRUCT  : bounce(0.0f), spawnOnCollide(false), dieOnCollide(false), spawnModifier(NULL), parent(NULL), nextCollider(NULL), colliderObject(NULL)
 
 #define BHK_REF_OBJECT_PARENT NiObject
 
@@ -1575,7 +1375,7 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_DYNAMIC_EFFECT_PARENT NiAVObject
 
-#define NI_DYNAMIC_EFFECT_CONSTRUCT  : switchState(false), numAffectedNodes((unsigned int)0)
+#define NI_DYNAMIC_EFFECT_CONSTRUCT  : switchState(false), numAffectedNodeListPointers((unsigned int)0), numAffectedNodes((unsigned int)0)
 
 #define NI_LIGHT_PARENT NiDynamicEffect
 
@@ -1679,10 +1479,6 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define BHK_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0f, 1.0f, 1.0f), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0)
 
-#define BHK_MESH_SHAPE_PARENT bhkSphereRepShape
-
-#define BHK_MESH_SHAPE_CONSTRUCT  : unknownCount((int)0), numStripsData((unsigned int)0)
-
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_PARENT AbhkShapeCollection
 
 #define BHK_PACKED_NI_TRI_STRIPS_SHAPE_CONSTRUCT  : numSubShapes((unsigned short)0), scale(1.0f), data(NULL)
@@ -1762,6 +1558,14 @@ vector< vector<ByteColor3 > > imageData; \
 #define NI_BINARY_EXTRA_DATA_PARENT NiExtraData
 
 #define NI_BINARY_EXTRA_DATA_CONSTRUCT 
+#define NI_BINARY_VOXEL_EXTRA_DATA_PARENT NiExtraData
+
+#define NI_BINARY_VOXEL_EXTRA_DATA_CONSTRUCT  : unknownInt((unsigned int)0), data(NULL)
+
+#define NI_BINARY_VOXEL_DATA_PARENT NiObject
+
+#define NI_BINARY_VOXEL_DATA_CONSTRUCT  : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), numUnknownVectors((unsigned int)0), numUnknownBytes2((unsigned int)0)
+
 #define NI_BLEND_BOOL_INTERPOLATOR_PARENT NiBlendInterpolator
 
 #define NI_BLEND_BOOL_INTERPOLATOR_CONSTRUCT  : boolValue((byte)0)
@@ -1952,6 +1756,9 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_NODE_CONSTRUCT  : numChildren((unsigned int)0), numEffects((unsigned int)0)
 
+#define NI_BONE_PARENT NiNode
+
+#define NI_BONE_CONSTRUCT 
 #define AVOID_NODE_PARENT NiNode
 
 #define AVOID_NODE_CONSTRUCT 
@@ -2107,13 +1914,15 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_EMITTER_DECLINATION_CTLR_CONSTRUCT 
+#define NI_P_SYS_EMITTER_DECLINATION_CTLR_CONSTRUCT  : data(NULL)
+
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_PARENT APSysCtlr
 
 #define NI_P_SYS_EMITTER_DECLINATION_VAR_CTLR_CONSTRUCT 
 #define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_PARENT APSysCtlr
 
-#define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_CONSTRUCT 
+#define NI_P_SYS_EMITTER_INITIAL_RADIUS_CTLR_CONSTRUCT  : data(NULL)
+
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_PARENT APSysCtlr
 
 #define NI_P_SYS_EMITTER_LIFE_SPAN_CTLR_CONSTRUCT  : unknownLink(NULL)
@@ -2146,9 +1955,13 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_P_SYS_MODIFIER_ACTIVE_CTLR_CONSTRUCT  : unknownInt((unsigned int)0)
 
-#define NI_P_SYS_PLANAR_COLLIDER_PARENT NiObject
+#define NI_P_SYS_PLANAR_COLLIDER_PARENT NiPSysCollider
 
-#define NI_P_SYS_PLANAR_COLLIDER_CONSTRUCT  : bounce(0.0f), spawnOnCollide(false), dieOnCollide(false), spawnModifier(NULL), parent(NULL), unknownLink_(NULL), colliderObject(NULL), width(0.0f), height(0.0f)
+#define NI_P_SYS_PLANAR_COLLIDER_CONSTRUCT  : width(0.0f), height(0.0f)
+
+#define NI_P_SYS_SPHERICAL_COLLIDER_PARENT NiPSysCollider
+
+#define NI_P_SYS_SPHERICAL_COLLIDER_CONSTRUCT  : radius(0.0f)
 
 #define NI_P_SYS_POSITION_MODIFIER_PARENT NiPSysModifier
 
@@ -2197,11 +2010,15 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_SKIN_DATA_PARENT NiObject
 
-#define NI_SKIN_DATA_CONSTRUCT  : scale(0.0f), numBones((unsigned int)0), skinPartition(NULL), unknownByte((byte)1)
+#define NI_SKIN_DATA_CONSTRUCT  : scale(0.0f), numBones((unsigned int)0), skinPartition(NULL), hasVertexWeights((byte)1)
 
 #define NI_SKIN_INSTANCE_PARENT NiObject
 
 #define NI_SKIN_INSTANCE_CONSTRUCT  : data(NULL), skinPartition(NULL), skeletonRoot(NULL), numBones((unsigned int)0)
+
+#define NI_TRI_SHAPE_SKIN_CONTROLLER_PARENT NiTimeController
+
+#define NI_TRI_SHAPE_SKIN_CONTROLLER_CONSTRUCT  : numBones((unsigned int)0)
 
 #define NI_CLOD_SKIN_INSTANCE_PARENT NiSkinInstance
 
@@ -2255,18 +2072,19 @@ vector< vector<ByteColor3 > > imageData; \
 
 #define NI_TEXTURE_MODE_PROPERTY_PARENT NiProperty
 
-#define NI_TEXTURE_MODE_PROPERTY_CONSTRUCT 
+#define NI_TEXTURE_MODE_PROPERTY_CONSTRUCT  : unknownShort((short)0)
+
 #define NI_IMAGE_PARENT NiObject
 
-#define NI_IMAGE_CONSTRUCT  : external_((byte)0)
+#define NI_IMAGE_CONSTRUCT  : external((byte)0), imageData(NULL), unknownInt1((unsigned int)7), unknownInt2((unsigned int)0x43008000)
 
 #define NI_TEXTURE_PROPERTY_PARENT NiProperty
 
-#define NI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), image(NULL)
+#define NI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), image(NULL), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0)
 
 #define NI_MULTI_TEXTURE_PROPERTY_PARENT NiProperty
 
-#define NI_MULTI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), unknownInt1((unsigned int)5), unknownInt2((unsigned int)0), image(NULL), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0)
+#define NI_MULTI_TEXTURE_PROPERTY_CONSTRUCT  : flags((unsigned short)0), unknownInt((unsigned int)0)
 
 #define NI_TEXTURING_PROPERTY_PARENT NiProperty
 
@@ -2343,4 +2161,6 @@ vector< vector<ByteColor3 > > imageData; \
 #define ROOT_COLLISION_NODE_CONSTRUCT 
 #define NI_RAW_IMAGE_DATA_PARENT NiObject
 
-#define NI_RAW_IMAGE_DATA_CONSTRUCT  : width((unsigned int)0), height((unsigned int)0), unknownInt((unsigned int)0)
+#define NI_RAW_IMAGE_DATA_CONSTRUCT  : width((unsigned int)0), height((unsigned int)0), imageType((unsigned int)0)
+
+#endif

@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/obj/NiPSysEmitterDeclinationCtlr.h"
+#include "../../include/obj/NiFloatData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

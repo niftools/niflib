@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/obj/NiImage.h"
+#include "../../include/obj/NiRawImageData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -60,9 +61,9 @@ NiObject * NiImage::Create() {
 }
 
 void NiImage::SetTextureFileName( string file_name ) {
-	file = file_name;
+	fileName = file_name;
 }
 
 string NiImage::GetTextureFileName() const {
-	return file;
+	return fileName;
 }

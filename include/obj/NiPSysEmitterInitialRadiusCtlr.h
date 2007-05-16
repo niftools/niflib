@@ -11,6 +11,7 @@ namespace Niflib {
 //#include "../gen/obj_defines.h"
 
 class NiPSysEmitterInitialRadiusCtlr;
+class NiFloatData;
 typedef Ref<NiPSysEmitterInitialRadiusCtlr> NiPSysEmitterInitialRadiusCtlrRef;
 
 /*!

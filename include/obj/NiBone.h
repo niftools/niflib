@@ -1,27 +1,23 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NIPSYSEMITTERDECLINATIONCTLR_H_
-#define _NIPSYSEMITTERDECLINATIONCTLR_H_
+#ifndef _NIBONE_H_
+#define _NIBONE_H_
 
-#include "APSysCtlr.h"
+#include "NiNode.h"
 namespace Niflib {
 
-
-//#include "../gen/obj_defines.h"
-
-class NiPSysEmitterDeclinationCtlr;
-class NiFloatData;
-typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
+class NiBone;
+typedef Ref<NiBone> NiBoneRef;
 
 /*!
- * NiPSysEmitterDeclinationCtlr - Unknown.
+ * NiBone - A NiNode used as a skeleton bone?
  */
 
-class NiPSysEmitterDeclinationCtlr : public NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT {
+class NiBone : public NI_BONE_PARENT {
 public:
-	NIFLIB_API NiPSysEmitterDeclinationCtlr();
-	NIFLIB_API ~NiPSysEmitterDeclinationCtlr();
+	NIFLIB_API NiBone();
+	NIFLIB_API ~NiBone();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -33,7 +29,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS
+	NI_BONE_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

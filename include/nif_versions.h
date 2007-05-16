@@ -8,6 +8,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 namespace Niflib {
 
+const unsigned VER_3_0         = 0x03000000; /*!< NIF Version 3.0 */
+const unsigned VER_3_03        = 0x03000300; /*!< NIF Version 3.03 */
 const unsigned VER_3_1         = 0x03010000; /*!< NIF Version 3.1 */
 const unsigned VER_3_3_0_13    = 0x0303000D; /*!< NIF Version 3.3.0.13 */
 const unsigned VER_4_0_0_0     = 0x04000000; /*!< NIF Version 4.0.0.0 */

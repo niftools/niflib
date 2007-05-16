@@ -1,27 +1,23 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NIPSYSEMITTERDECLINATIONCTLR_H_
-#define _NIPSYSEMITTERDECLINATIONCTLR_H_
+#ifndef _NIPSYSSPHERICALCOLLIDER_H_
+#define _NIPSYSSPHERICALCOLLIDER_H_
 
-#include "APSysCtlr.h"
+#include "NiPSysCollider.h"
 namespace Niflib {
 
-
-//#include "../gen/obj_defines.h"
-
-class NiPSysEmitterDeclinationCtlr;
-class NiFloatData;
-typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
+class NiPSysSphericalCollider;
+typedef Ref<NiPSysSphericalCollider> NiPSysSphericalColliderRef;
 
 /*!
- * NiPSysEmitterDeclinationCtlr - Unknown.
+ * NiPSysSphericalCollider - Unknown.
  */
 
-class NiPSysEmitterDeclinationCtlr : public NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT {
+class NiPSysSphericalCollider : public NI_P_SYS_SPHERICAL_COLLIDER_PARENT {
 public:
-	NIFLIB_API NiPSysEmitterDeclinationCtlr();
-	NIFLIB_API ~NiPSysEmitterDeclinationCtlr();
+	NIFLIB_API NiPSysSphericalCollider();
+	NIFLIB_API ~NiPSysSphericalCollider();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -33,7 +29,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS
+	NI_P_SYS_SPHERICAL_COLLIDER_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

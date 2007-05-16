@@ -988,6 +988,8 @@ void MergeNifTrees( NiNode * target, NiSequenceStreamHelper * right, unsigned ve
 
 bool IsSupportedVersion( unsigned int version ) {
 	switch (version) {
+		case VER_3_0:
+		case VER_3_03:
 		case VER_3_1:
 		case VER_3_3_0_13:
 		case VER_4_0_0_0:
@@ -1017,9 +1019,16 @@ unsigned int ParseVersionString(string version) {
 		end = version.find_first_of( ".", start );
 		
 		if ( end == string::npos ) {
-			len = end;
+			if ( offset > 0 ) {
+				//This version has only one period in it.  Take the rest of the numbers one character at a time.
+				len = 1;
+			} else {
+				//We've already taken two characters one at a time, so take the rest all at once.
+				len = end;
+			}
 		} else {
 			len = end-start;
+			
 		}
 
 		int num = 0;
@@ -1032,7 +1041,12 @@ unsigned int ParseVersionString(string version) {
 		if ( len == string::npos ) {
 			break;
 		}
-		start = start + len + 1;
+
+		if ( end != string::npos ) {
+			//account for length of the period
+			start += 1;
+		}
+		start += len;
 	}
 
 	if ( outver == 0 ) {
@@ -1058,6 +1072,12 @@ string FormatVersionString(unsigned version) {
 	} else {
 		//Versions before 3.3.0.13 are in x.x format.
 		out << int_ver[0] << "." << int_ver[1];
+		if ( int_ver[2] ) {
+			out << int_ver[2];
+			if ( int_ver[3] ) {
+				out << int_ver[3];
+			}
+		}
 	}
 
 	return out.str();

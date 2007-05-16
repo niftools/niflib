@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../Ref.h"
+#include "../gen/MultiTextureElement.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects

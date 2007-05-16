@@ -1,27 +1,30 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NIPSYSEMITTERDECLINATIONCTLR_H_
-#define _NIPSYSEMITTERDECLINATIONCTLR_H_
+#ifndef _NIPSYSCOLLIDER_H_
+#define _NIPSYSCOLLIDER_H_
 
-#include "APSysCtlr.h"
+#include "NiObject.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
-
-//#include "../gen/obj_defines.h"
-
-class NiPSysEmitterDeclinationCtlr;
-class NiFloatData;
-typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
+// Forward define of referenced NIF objects
+class NiPSysSpawnModifier;
+class NiObject;
+class NiNode;
+class NiPSysCollider;
+typedef Ref<NiPSysCollider> NiPSysColliderRef;
 
 /*!
- * NiPSysEmitterDeclinationCtlr - Unknown.
+ * NiPSysCollider - Particle system collider.
  */
 
-class NiPSysEmitterDeclinationCtlr : public NI_P_SYS_EMITTER_DECLINATION_CTLR_PARENT {
+class NiPSysCollider : public NI_P_SYS_COLLIDER_PARENT {
 public:
-	NIFLIB_API NiPSysEmitterDeclinationCtlr();
-	NIFLIB_API ~NiPSysEmitterDeclinationCtlr();
+	NIFLIB_API NiPSysCollider();
+	NIFLIB_API ~NiPSysCollider();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -33,7 +36,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	NI_P_SYS_EMITTER_DECLINATION_CTLR_MEMBERS
+	NI_P_SYS_COLLIDER_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

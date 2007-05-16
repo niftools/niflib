@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/gen/SkinData.h"
 #include "../../include/gen/SkinWeight.h"
+#include "../../include/gen/SkinWeight.h"
 using namespace Niflib;
 
 //Constructor

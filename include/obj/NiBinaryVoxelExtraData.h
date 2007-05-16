@@ -1,28 +1,28 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _BHKMESHSHAPE_H_
-#define _BHKMESHSHAPE_H_
+#ifndef _NIBINARYVOXELEXTRADATA_H_
+#define _NIBINARYVOXELEXTRADATA_H_
 
-#include "bhkSphereRepShape.h"
+#include "NiExtraData.h"
 
 // Include structures
 #include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiTriStripsData;
-class bhkMeshShape;
-typedef Ref<bhkMeshShape> bhkMeshShapeRef;
+class NiBinaryVoxelData;
+class NiBinaryVoxelExtraData;
+typedef Ref<NiBinaryVoxelExtraData> NiBinaryVoxelExtraDataRef;
 
 /*!
- * bhkMeshShape -
+ * NiBinaryVoxelExtraData - Voxel extra data object.
  */
 
-class bhkMeshShape : public BHK_MESH_SHAPE_PARENT {
+class NiBinaryVoxelExtraData : public NI_BINARY_VOXEL_EXTRA_DATA_PARENT {
 public:
-	NIFLIB_API bhkMeshShape();
-	NIFLIB_API ~bhkMeshShape();
+	NIFLIB_API NiBinaryVoxelExtraData();
+	NIFLIB_API ~NiBinaryVoxelExtraData();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -34,7 +34,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	BHK_MESH_SHAPE_MEMBERS
+	NI_BINARY_VOXEL_EXTRA_DATA_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
