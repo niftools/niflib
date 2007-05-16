@@ -90,8 +90,6 @@ struct NIFLIB_API Triangle {
 		this->v3 = v3;
 	}
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -112,7 +110,6 @@ struct NIFLIB_API Triangle {
 			default: throw std::out_of_range("Index out of range for Triangle");
 		};
 	}
-#endif
 };
 
 /*!Represents a position or direction in 3D space*/
@@ -218,13 +215,10 @@ struct NIFLIB_API Vector3 {
 	 */
 	Vector3 & operator/=( const float & rh );
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/* Sets the components of this Vector3 to those of another Vector3 
 	 * \return This vector is returned.
 	 */
 	Vector3 & operator=( const Vector3 & v ) { x = v.x; y = v.y; z = v.z;  return *this; }
-#endif
 
 	/* Tests the equality of two Vector3 structures.  Vectors are considered equal if all
 	 * three components are equal.
@@ -266,8 +260,6 @@ struct NIFLIB_API Vector3 {
 struct NIFLIB_API Float2 {
 	float data[2]; /*!< The two floating point numbers stored as an array. */ 
 	
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0 or 1.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -278,7 +270,6 @@ struct NIFLIB_API Float2 {
 	float operator[](int n) const {
 		return data[n];
 	}
-#endif
 
 	/*! Default constructor. */
 	Float2() {}
@@ -300,18 +291,6 @@ struct NIFLIB_API Float2 {
 		data[0] = f1;
 		data[1] = f2;
 	}
-
-	//Python Operator Overloads
-	float __getitem__(int n) {
-		if (n > 1 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-        return data[n];
-    }
-	void __setitem__(int n, float value) {
-		if (n > 1 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-		data[n] = value;
-	}
 };
 
 /*! Stores a 2 by 2 matrix used for bump maps. */
@@ -321,8 +300,6 @@ struct Matrix22 {
 
 	Float2 rows[2];  /*!< The two rows of Float2 structures which hold two floating point numbers each. */ 
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 2x2 C++ array.
 	 * \param[in] n The index into the row array.  Should be 0 or 1.
 	 * \return The Float2 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -333,7 +310,6 @@ struct Matrix22 {
 	NIFLIB_API const Float2 & operator[](int n) const {
 		return rows[n];
 	}
-#endif
 
 	/*! Default Constructor */
 	NIFLIB_API Matrix22();
@@ -365,21 +341,12 @@ struct Matrix22 {
 		rows[0][0] = m11; rows[0][1] = m12;
 		rows[1][0] = m21; rows[1][1] = m22;
 	}
-
-	//Python Operator Overloads
-	NIFLIB_API Float2 & __getitem__(int n) {
-		if (n > 1 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-        return rows[n];
-    }
 };
 
 /* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
 struct NIFLIB_API Float3 {
 	float data[3]; /*!< The three floating point numbers stored as an array. */ 
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -390,7 +357,6 @@ struct NIFLIB_API Float3 {
 	float operator[](int n) const {
 		return data[n];
 	}
-#endif
 
 	/*!Default constructor.*/
 	Float3() {}
@@ -416,18 +382,6 @@ struct NIFLIB_API Float3 {
 		data[1] = f2;
 		data[2] = f3;
 	}
-
-	//Python Operator Overloads
-	float __getitem__(int n) {
-		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for Float3");
-		return data[n];
-	}
-	void __setitem__(int n, float value) {
-		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for Float3");
-		data[n] = value;
-	}
 };
 
 /*! Stores a 3 by 3 matrix used for rotation. */
@@ -437,8 +391,6 @@ struct Matrix33 {
 
 	Float3 rows[3]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 3x3 C++ array.
 	 * \param[in] n The index into the row array.  Should be 0, 1, or 2.
 	 * \return The Float3 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -449,7 +401,6 @@ struct Matrix33 {
 	NIFLIB_API const Float3 & operator[](int n) const {
 		return rows[n];
 	}
-#endif
 
 	/*! Default constructor.   Initializes matrix to identity.  */
 	NIFLIB_API Matrix33();
@@ -514,13 +465,6 @@ struct Matrix33 {
 	}
 
    NIFLIB_API Matrix33 operator*( const Matrix33 & m ) const;
-
-	//Python Operator Overloads
-	NIFLIB_API Float3 & __getitem__(int n) {
-		if (n > 2 || n < 0)
-			throw std::out_of_range("Index out of range for MatrixRow3");
-        return rows[n];
-    }
 };
 
 
@@ -528,8 +472,6 @@ struct Matrix33 {
 struct NIFLIB_API Float4 {
 	float data[4]; /*!< The four floating point numbers stored as an array. */ 
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
@@ -540,7 +482,6 @@ struct NIFLIB_API Float4 {
 	float operator[](int n) const {
 		return data[n];
 	}
-#endif
 
 	/*! Default Constructor.*/
 	Float4() {}
@@ -570,18 +511,6 @@ struct NIFLIB_API Float4 {
 		data[3] = f3;
 		data[4] = f4;
 	}
-
-	//Python Operator Overloads
-	float __getitem__(int n) {
-		if (n > 3 || n < 0)
-			throw std::out_of_range("Index out of range for Float4");
-        return data[n];
-    }
-	void __setitem__(int n, float value) {
-		if (n > 3 || n < 0)
-			throw std::out_of_range("Index out of range for Float4");
-		data[n] = value;
-	}
 };
 
 /*! Stores a 4 by 4 matrix used for combined transformations. */
@@ -591,8 +520,6 @@ struct Matrix44 {
 
 	Float4 rows[4]; /*!< The three rows of Float3 structures which hold three floating point numbers each. */ 
 	
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/*! The bracket operator makes it possible to use this structure like a 4x4 C++ array.
 	 * \param[in] n The index into the row array.  Should be 0, 1, 2, or 3.
 	 * \return The Float4 structure for the given row index by reference so it can be read or set via the bracket operator.
@@ -603,7 +530,6 @@ struct Matrix44 {
 	NIFLIB_API Float4 const & operator[](int n) const {
 		return rows[n];
 	}
-#endif
 
 	/*! Default constructor. Initializes Matrix to Identity. */
 	NIFLIB_API Matrix44();
@@ -729,8 +655,6 @@ struct Matrix44 {
 	 */
 	NIFLIB_API Matrix44 & operator+=( const Matrix44 & rh );
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 	/* Sets the values of this matrix to those of the given matrix.
 	 * \param[in] rh The matrix to copy values from.
 	 * \return This matrix is returned.
@@ -743,7 +667,6 @@ struct Matrix44 {
 	 * \return The given ostream is returned.
 	 */
 	NIFLIB_API friend ostream & operator<<( ostream & lh, const Matrix44 & rh );
-#endif
 
 	/* Compares two 4x4 matricies.  They are considered equal if all components are equal.
 	 * \param[in] rh The matrix to compare this one with.
@@ -801,13 +724,6 @@ struct Matrix44 {
 
    // undocumented
    NIFLIB_API void Decompose( Vector3 & translate, Matrix33 & rotation, float & scale ) const;
-
-	//Python Operator Overloads
-	NIFLIB_API Float4 & __getitem__(int n) {
-		if (n > 3 || n < 0)
-			throw std::out_of_range("Index out of range for Matrix44");
-        return rows[n];
-    }
 };
 
 /*! Stores a color along with alpha translucency */
@@ -938,9 +854,6 @@ struct NIFLIB_API Quaternion {
 
 //--ostream functions for printing with cout--//
 
-//These operators cause SWIG warnings
-#ifndef SWIG
-
 NIFLIB_API ostream & operator<<( ostream & out, TexCoord const & val );
 NIFLIB_API ostream & operator<<( ostream & out, Triangle const & val );
 NIFLIB_API ostream & operator<<( ostream & out, Vector3 const & val );
@@ -952,8 +865,6 @@ NIFLIB_API ostream & operator<<( ostream & out, Float4 const & val );
 NIFLIB_API ostream & operator<<( ostream & out, Color3 const & val );
 NIFLIB_API ostream & operator<<( ostream & out, Color4 const & val );
 NIFLIB_API ostream & operator<<( ostream & out, Quaternion const & val );
-
-#endif
 
 }
 #endif

@@ -28,11 +28,8 @@ struct TexSource {
 	NIFLIB_API ~TexSource();
 	/*! Copy Constructor */
 	NIFLIB_API TexSource( const TexSource & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API TexSource & operator=( const TexSource & src );
-	#endif
 	/*!
 	 * Is the texture external?
 	 */

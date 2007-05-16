@@ -23,11 +23,8 @@ struct RagdollDescriptor {
 	NIFLIB_API ~RagdollDescriptor();
 	/*! Copy Constructor */
 	NIFLIB_API RagdollDescriptor( const RagdollDescriptor & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
-	#endif
 	/*!
 	 * Unknown.
 	 */

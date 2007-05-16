@@ -23,11 +23,8 @@ struct TBC {
 	NIFLIB_API ~TBC();
 	/*! Copy Constructor */
 	NIFLIB_API TBC( const TBC & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API TBC & operator=( const TBC & src );
-	#endif
 	/*!
 	 * Tension.
 	 */

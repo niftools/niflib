@@ -23,11 +23,8 @@ struct LODRange {
 	NIFLIB_API ~LODRange();
 	/*! Copy Constructor */
 	NIFLIB_API LODRange( const LODRange & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API LODRange & operator=( const LODRange & src );
-	#endif
 	/*!
 	 * Begining of range.
 	 */

@@ -44,19 +44,11 @@ public:
 	bool operator==(const Ref & ref) const;
 	bool operator!=(const Ref & ref) const;
 
-	//These operators generate problems in SWIG
-#ifndef SWIG
    friend ostream & operator<< <T>(ostream & os, const Ref & ref);
 	Ref & operator=( T * object );
 	Ref & operator=( const Ref & ref );
 	operator T*() const;
-#endif
 	T* operator->() const;
-
-	//SWIG specific operators
-	string __str__();
-	string __repr__();
-	T* __call__() const;
 
 protected:
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
@@ -102,9 +94,6 @@ template <class T>
 T* Ref<T>::operator->() const {
 	return _object;
 }
-
-//These operators generate warnings in SWIG
-#ifndef SWIG
 
 template <class T>
 T& Ref<T>::operator*() const {
@@ -157,7 +146,6 @@ Ref<T> & Ref<T>::operator=( const Ref & ref ) {
 
 	return *this;
 }
-#endif
 
 //Template functions must be in the header file
 
@@ -190,7 +178,6 @@ bool Ref<T>::operator!=(const Ref & ref) const {
 	return ( _object != ref._object );
 }
 
-#ifndef SWIG
 template <class T>
 ostream & operator<<(ostream & os, const Ref<T> & ref) {
 	if (ref._object) {
@@ -200,34 +187,7 @@ ostream & operator<<(ostream & os, const Ref<T> & ref) {
 	}
 	return os;
 }
-#endif
-
-//SWIG functions
-template <class T>
-string Ref<T>::__str__() {
-	if (_object) {
-		return _object->asString();
-	} else {
-		return string("None");
-	}
-}
-
-template <class T>
-string Ref<T>::__repr__() {
-	if (_object) {
-		return _object->GetIDString();
-	} else {
-		return string("None");
-	}
-}
-
-template <class T>
-T* Ref<T>::__call__() const {
-	return _object;
-}
-
 
 }
-
 
 #endif

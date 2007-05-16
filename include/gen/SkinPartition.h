@@ -24,11 +24,8 @@ struct SkinPartition {
 	NIFLIB_API ~SkinPartition();
 	/*! Copy Constructor */
 	NIFLIB_API SkinPartition( const SkinPartition & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API SkinPartition & operator=( const SkinPartition & src );
-	#endif
 	/*!
 	 * Number of vertices in this submesh.
 	 */

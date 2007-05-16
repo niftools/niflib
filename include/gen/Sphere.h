@@ -23,11 +23,8 @@ struct Sphere {
 	NIFLIB_API ~Sphere();
 	/*! Copy Constructor */
 	NIFLIB_API Sphere( const Sphere & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API Sphere & operator=( const Sphere & src );
-	#endif
 	/*!
 	 * The sphere's center.
 	 */

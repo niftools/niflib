@@ -23,11 +23,8 @@ struct LimitedHingeDescriptor {
 	NIFLIB_API ~LimitedHingeDescriptor();
 	/*! Copy Constructor */
 	NIFLIB_API LimitedHingeDescriptor( const LimitedHingeDescriptor & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API LimitedHingeDescriptor & operator=( const LimitedHingeDescriptor & src );
-	#endif
 	/*!
 	 * Unknown.
 	 */

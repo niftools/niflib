@@ -23,11 +23,8 @@ struct BoundingBox {
 	NIFLIB_API ~BoundingBox();
 	/*! Copy Constructor */
 	NIFLIB_API BoundingBox( const BoundingBox & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API BoundingBox & operator=( const BoundingBox & src );
-	#endif
 	/*!
 	 * Usually 1.
 	 */

@@ -10,7 +10,6 @@ All rights reserved.  Please see niflib.h for license. */
 
 #define MAXARRAYDUMP 20
 
-#ifndef SWIG
 #define NI_OBJECT_MEMBERS \
 
 #define A_KEYED_DATA_MEMBERS \
@@ -2345,5 +2344,3 @@ vector< vector<ByteColor3 > > imageData; \
 #define NI_RAW_IMAGE_DATA_PARENT NiObject
 
 #define NI_RAW_IMAGE_DATA_CONSTRUCT  : width((unsigned int)0), height((unsigned int)0), unknownInt((unsigned int)0)
-
-#endif

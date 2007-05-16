@@ -24,11 +24,8 @@ struct Header {
 	NIFLIB_API ~Header();
 	/*! Copy Constructor */
 	NIFLIB_API Header( const Header & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API Header & operator=( const Header & src );
-	#endif
 	/*!
 	 * 'NetImmerse File Format x.x.x.x' (versions <= 10.0.1.2) or 'Gamebryo
 	 * File Format x.x.x.x' (versions >= 10.1.0.0), with x.x.x.x the version

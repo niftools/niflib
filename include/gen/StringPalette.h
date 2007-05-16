@@ -23,11 +23,8 @@ struct StringPalette {
 	NIFLIB_API ~StringPalette();
 	/*! Copy Constructor */
 	NIFLIB_API StringPalette( const StringPalette & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API StringPalette & operator=( const StringPalette & src );
-	#endif
 	/*!
 	 * A bunch of 0x00 seperated strings.
 	 */

@@ -25,11 +25,8 @@ struct NodeGroup {
 	NIFLIB_API ~NodeGroup();
 	/*! Copy Constructor */
 	NIFLIB_API NodeGroup( const NodeGroup & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API NodeGroup & operator=( const NodeGroup & src );
-	#endif
 	/*!
 	 * Number of node references that follow.
 	 */

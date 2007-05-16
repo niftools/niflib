@@ -25,11 +25,8 @@ struct ShaderTexDesc {
 	NIFLIB_API ~ShaderTexDesc();
 	/*! Copy Constructor */
 	NIFLIB_API ShaderTexDesc( const ShaderTexDesc & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API ShaderTexDesc & operator=( const ShaderTexDesc & src );
-	#endif
 	/*!
 	 * Is it used?
 	 */

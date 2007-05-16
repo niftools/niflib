@@ -23,11 +23,8 @@ struct ByteColor3 {
 	NIFLIB_API ~ByteColor3();
 	/*! Copy Constructor */
 	NIFLIB_API ByteColor3( const ByteColor3 & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API ByteColor3 & operator=( const ByteColor3 & src );
-	#endif
 	/*!
 	 * Red color component.
 	 */

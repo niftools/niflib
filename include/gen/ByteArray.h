@@ -23,11 +23,8 @@ struct ByteArray {
 	NIFLIB_API ~ByteArray();
 	/*! Copy Constructor */
 	NIFLIB_API ByteArray( const ByteArray & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API ByteArray & operator=( const ByteArray & src );
-	#endif
 	/*!
 	 * The number of bytes in this array
 	 */

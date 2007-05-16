@@ -23,11 +23,8 @@ struct FurniturePosition {
 	NIFLIB_API ~FurniturePosition();
 	/*! Copy Constructor */
 	NIFLIB_API FurniturePosition( const FurniturePosition & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API FurniturePosition & operator=( const FurniturePosition & src );
-	#endif
 	/*!
 	 * Offset of furniture marker.
 	 */

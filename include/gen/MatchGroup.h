@@ -23,11 +23,8 @@ struct MatchGroup {
 	NIFLIB_API ~MatchGroup();
 	/*! Copy Constructor */
 	NIFLIB_API MatchGroup( const MatchGroup & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API MatchGroup & operator=( const MatchGroup & src );
-	#endif
 	/*!
 	 * Number of vertices in this group.
 	 */

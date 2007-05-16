@@ -23,11 +23,8 @@ struct MipMap {
 	NIFLIB_API ~MipMap();
 	/*! Copy Constructor */
 	NIFLIB_API MipMap( const MipMap & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API MipMap & operator=( const MipMap & src );
-	#endif
 	/*!
 	 * Width of the mipmap image.
 	 */

@@ -27,11 +27,8 @@ struct TexDesc {
 	NIFLIB_API ~TexDesc();
 	/*! Copy Constructor */
 	NIFLIB_API TexDesc( const TexDesc & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API TexDesc & operator=( const TexDesc & src );
-	#endif
 	/*!
 	 * NiSourceTexture object index.
 	 */

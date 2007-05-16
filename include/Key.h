@@ -21,8 +21,6 @@ struct Key {
 	float continuity; /*!< The amount of continuity to use in tension, bias, continuity interpolation.  Ignored if key type is something else.*/
 };
 
-//These operators cause SWIG warnings
-#ifndef SWIG
 template <class T> 
 ostream & operator<<( ostream & out, Key<T> const & val ) {
 	return out << "Time:  " << val.time << endl
@@ -32,7 +30,6 @@ ostream & operator<<( ostream & out, Key<T> const & val ) {
 			   << "Bias:  " << val.bias << endl
 			   << "Continuity:  " << val.continuity << endl;
 }
-#endif
 
 }
 #endif

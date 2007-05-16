@@ -11,29 +11,28 @@ All rights reserved.  Please see niflib.h for license. */
 #  endif
 #endif
 
-// shared library: expose NIFLIB_API objects, hide NIFLIB_HIDDEN objects
+
 #ifndef NIFLIB_STATIC_LINK
-	// building swig wrapper
-	#if defined(SWIG)
-		#define NIFLIB_API
-		#define NIFLIB_HIDDEN
-	// building shared library (windows)
-	#elif defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER) || defined(__CYGWIN__)
+	// Building shared library
+	#if defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER) || defined(__CYGWIN__)
+		// Windows
 		#ifdef BUILDING_NIFLIB_DLL
+			//The building process is underway, export symbols
 			#define NIFLIB_API __declspec(dllexport)
 		#else
+			//Header files are being used to import symbols from a previously built library
 			#define NIFLIB_API __declspec(dllimport)
 		#endif
 		#define NIFLIB_HIDDEN
-	// building shared library (linux)
 	#elif defined(__GNUC__) && defined(GCC_HASCLASSVISIBILITY)
+		// Linux (GCC)
 		#define NIFLIB_API __attribute__ ((visibility("default")))
 		#define NIFLIB_HIDDEN __attribute__ ((visibility("hidden")))
 	#else
 		#error __attribute__ ((visibility("hidden"))) support required, but not detected (see gcc.gnu.org/wiki/Visibility)
 	#endif
-// static library: nothing to hide
 #else
+	// Building static library
 	#define NIFLIB_API
 	#define NIFLIB_HIDDEN
 #endif

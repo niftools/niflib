@@ -25,11 +25,8 @@ struct SkinShapeGroup {
 	NIFLIB_API ~SkinShapeGroup();
 	/*! Copy Constructor */
 	NIFLIB_API SkinShapeGroup( const SkinShapeGroup & src );
-	//This operator give SWIG problems
-	#ifndef SWIG
 	/*! Copy Operator */
 	NIFLIB_API SkinShapeGroup & operator=( const SkinShapeGroup & src );
-	#endif
 	/*!
 	 * Counts unknown.
 	 */
