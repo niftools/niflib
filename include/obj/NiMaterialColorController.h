@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIMATERIALCOLORCONTROLLER_H_
 #define _NIMATERIALCOLORCONTROLLER_H_
 
-#include "NiSingleInterpolatorController.h"
+#include "NiPoint3InterpController.h"
 
 // Include structures
 #include "../Ref.h"

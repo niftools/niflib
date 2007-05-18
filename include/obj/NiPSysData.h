@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSDATA_H_
 #define _NIPSYSDATA_H_
 
-#include "APSysData.h"
+#include "NiRotatingParticlesData.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

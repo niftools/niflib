@@ -13,6 +13,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiAVObject;
 class NiObject;
+class NiNode;
 
 //#include "../gen/obj_defines.h"
 
@@ -41,7 +42,7 @@ public:
 	 * Returns the NiNode that this collision object is connected to, if any.
 	 * \return The NiNode that this collision object is connected to, or NULL if it is not connected to any nodes.
 	 */
-	NIFLIB_API Ref<NiAVObject> GetParent() const;
+	NIFLIB_API Ref<NiAVObject> GetTarget() const;
 
 	/*!
 	 * Gets the rigid body that this collision object uses, if any.
@@ -56,7 +57,7 @@ public:
 	NIFLIB_API void SetBody( NiObject * value );
 
 	/*! NIFLIB_HIDDEN function.  For internal use only */
-	NIFLIB_HIDDEN void SetParent( NiAVObject * value );
+	NIFLIB_HIDDEN void SetTarget( NiAVObject * value );
 
 protected:
 	NI_COLLISION_OBJECT_MEMBERS

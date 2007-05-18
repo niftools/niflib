@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBOOLTIMELINEINTERPOLATOR_H_
 #define _NIBOOLTIMELINEINTERPOLATOR_H_
 
-#include "NiInterpolator.h"
+#include "NiBoolInterpolator.h"
 
 // Include structures
 #include "../Ref.h"

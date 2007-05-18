@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSEMITTERCTLR_H_
 #define _NIPSYSEMITTERCTLR_H_
 
-#include "APSysCtlr.h"
+#include "NiPSysModifierCtlr.h"
 
 // Include structures
 #include "../Ref.h"

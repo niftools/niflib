@@ -35,14 +35,6 @@ const Type & BSXFlags::GetType() const {
 	return TYPE;
 };
 
-unsigned int BSXFlags::GetFlags() const {
-	return flags;
-}
-
-void BSXFlags::SetFlags( unsigned int value ) {
-	flags = value;
-}
-
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;

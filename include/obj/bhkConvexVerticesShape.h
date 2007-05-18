@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKCONVEXVERTICESSHAPE_H_
 #define _BHKCONVEXVERTICESSHAPE_H_
 
-#include "bhkSphereRepShape.h"
+#include "bhkConvexShape.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

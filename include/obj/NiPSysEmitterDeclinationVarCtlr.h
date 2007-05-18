@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSEMITTERDECLINATIONVARCTLR_H_
 #define _NIPSYSEMITTERDECLINATIONVARCTLR_H_
 
-#include "APSysCtlr.h"
+#include "NiPSysModifierFloatCtlr.h"
 namespace Niflib {
 
 

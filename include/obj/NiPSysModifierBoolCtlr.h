@@ -1,25 +1,24 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _AKEYEDDATA_H_
-#define _AKEYEDDATA_H_
+#ifndef _NIPSYSMODIFIERBOOLCTLR_H_
+#define _NIPSYSMODIFIERBOOLCTLR_H_
 
-#include "NiObject.h"
+#include "NiPSysModifierCtlr.h"
 namespace Niflib {
 
-//#include "../gen/obj_defines.h"
-
-class AKeyedData;
-typedef Ref<AKeyedData> AKeyedDataRef;
+class NiPSysModifierBoolCtlr;
+typedef Ref<NiPSysModifierBoolCtlr> NiPSysModifierBoolCtlrRef;
 
 /*!
- * AKeyedData - Single items of data linked to particular key times.
+ * NiPSysModifierBoolCtlr - A particle system modifier controller that
+ * deals with boolean data?
  */
 
-class AKeyedData : public A_KEYED_DATA_PARENT {
+class NiPSysModifierBoolCtlr : public NI_P_SYS_MODIFIER_BOOL_CTLR_PARENT {
 public:
-	NIFLIB_API AKeyedData();
-	NIFLIB_API ~AKeyedData();
+	NIFLIB_API NiPSysModifierBoolCtlr();
+	NIFLIB_API ~NiPSysModifierBoolCtlr();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -31,7 +30,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	A_KEYED_DATA_MEMBERS
+	NI_P_SYS_MODIFIER_BOOL_CTLR_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

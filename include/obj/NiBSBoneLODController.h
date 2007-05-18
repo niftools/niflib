@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBSBONELODCONTROLLER_H_
 #define _NIBSBONELODCONTROLLER_H_
 
-#include "ABoneLODController.h"
+#include "NiBoneLODController.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

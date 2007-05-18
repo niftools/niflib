@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBSPLINECOMPPOINT3INTERPOLATOR_H_
 #define _NIBSPLINECOMPPOINT3INTERPOLATOR_H_
 
-#include "NiBSplineInterpolator.h"
+#include "NiBSplinePoint3Interpolator.h"
 
 // Include structures
 #include "../Ref.h"

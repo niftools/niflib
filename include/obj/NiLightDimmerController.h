@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NILIGHTDIMMERCONTROLLER_H_
 #define _NILIGHTDIMMERCONTROLLER_H_
 
-#include "NiTimeController.h"
+#include "NiFloatInterpController.h"
 
 // Include structures
 #include "../Ref.h"

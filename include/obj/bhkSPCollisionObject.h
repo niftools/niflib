@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKSPCOLLISIONOBJECT_H_
 #define _BHKSPCOLLISIONOBJECT_H_
 
-#include "NiCollisionObject.h"
+#include "bhkPCollisionObject.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

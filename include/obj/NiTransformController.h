@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NITRANSFORMCONTROLLER_H_
 #define _NITRANSFORMCONTROLLER_H_
 
-#include "NiSingleInterpolatorController.h"
+#include "NiSingleInterpController.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

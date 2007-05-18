@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIFLOATEXTRADATACONTROLLER_H_
 #define _NIFLOATEXTRADATACONTROLLER_H_
 
-#include "NiTimeController.h"
+#include "NiExtraDataController.h"
 
 // Include structures
 #include "../Ref.h"

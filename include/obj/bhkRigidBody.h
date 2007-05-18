@@ -12,7 +12,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class AbhkConstraint;
+class bhkConstraint;
 
 //#include "../gen/obj_defines.h"
 

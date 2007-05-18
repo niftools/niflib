@@ -1,28 +1,24 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _ABHKRAGDOLLCONSTRAINT_H_
-#define _ABHKRAGDOLLCONSTRAINT_H_
+#ifndef _BHKSHAPEPHANTOM_H_
+#define _BHKSHAPEPHANTOM_H_
 
-#include "AbhkConstraint.h"
-// Include structures
-#include "../gen/RagdollDescriptor.h"
+#include "bhkPhantom.h"
 namespace Niflib {
 
-
-//#include "../gen/obj_defines.h"
-
-class AbhkRagdollConstraint;
-typedef Ref<AbhkRagdollConstraint> AbhkRagdollConstraintRef;
+class bhkShapePhantom;
+typedef Ref<bhkShapePhantom> bhkShapePhantomRef;
 
 /*!
- * AbhkRagdollConstraint - Ragdoll constraint.
+ * bhkShapePhantom - A Havok phantom that uses a Havok shape object for
+ * its collision volume instead of just a bounding box.
  */
 
-class AbhkRagdollConstraint : public ABHK_RAGDOLL_CONSTRAINT_PARENT {
+class bhkShapePhantom : public BHK_SHAPE_PHANTOM_PARENT {
 public:
-	NIFLIB_API AbhkRagdollConstraint();
-	NIFLIB_API ~AbhkRagdollConstraint();
+	NIFLIB_API bhkShapePhantom();
+	NIFLIB_API ~bhkShapePhantom();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -34,7 +30,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	ABHK_RAGDOLL_CONSTRAINT_MEMBERS
+	BHK_SHAPE_PHANTOM_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

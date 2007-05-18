@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKPACKEDNITRISTRIPSSHAPE_H_
 #define _BHKPACKEDNITRISTRIPSSHAPE_H_
 
-#include "AbhkShapeCollection.h"
+#include "bhkShapeCollection.h"
 
 // Include structures
 #include "../Ref.h"

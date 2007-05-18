@@ -15,7 +15,7 @@ class NiTextKeyExtraData;
 class NiControllerManager;
 class NiStringPalette;
 class NiTimeController;
-class NiSingleInterpolatorController;
+class NiSingleInterpController;
 
 //#include "../gen/obj_defines.h"
 
@@ -80,7 +80,7 @@ public:
 	 * \param[in] priority Used only in Oblivion to set the priority of one controller over another when the two are merged.
 	 * \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddController
 	 */
-	NIFLIB_API void AddInterpolator( NiSingleInterpolatorController * obj, byte priority = 0 );
+	NIFLIB_API void AddInterpolator( NiSingleInterpController * obj, byte priority = 0 );
 
 	/*! 
 	 * Removes all controllers and interpolators from this Kf file root object.

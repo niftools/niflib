@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIMULTITARGETTRANSFORMCONTROLLER_H_
 #define _NIMULTITARGETTRANSFORMCONTROLLER_H_
 
-#include "NiTimeController.h"
+#include "NiInterpController.h"
 
 namespace Niflib {
 

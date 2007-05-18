@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NILODNODE_H_
 #define _NILODNODE_H_
 
-#include "NiNode.h"
+#include "NiSwitchNode.h"
 
 // Include structures
 #include "../gen/LODRange.h"

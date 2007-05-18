@@ -1,28 +1,23 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _ABHKCONSTRAINT_H_
-#define _ABHKCONSTRAINT_H_
+#ifndef _BHKPCOLLISIONOBJECT_H_
+#define _BHKPCOLLISIONOBJECT_H_
 
-#include "bhkSerializable.h"
+#include "bhkNiCollisionObject.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class bhkShape;
-
-//#include "../gen/obj_defines.h"
-
-class AbhkConstraint;
-typedef Ref<AbhkConstraint> AbhkConstraintRef;
+class bhkPCollisionObject;
+typedef Ref<bhkPCollisionObject> bhkPCollisionObjectRef;
 
 /*!
- * AbhkConstraint - Describes a physical constraint.
+ * bhkPCollisionObject - Unknown.
  */
 
-class AbhkConstraint : public ABHK_CONSTRAINT_PARENT {
+class bhkPCollisionObject : public BHK_P_COLLISION_OBJECT_PARENT {
 public:
-	NIFLIB_API AbhkConstraint();
-	NIFLIB_API ~AbhkConstraint();
+	NIFLIB_API bhkPCollisionObject();
+	NIFLIB_API ~bhkPCollisionObject();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -34,7 +29,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	ABHK_CONSTRAINT_MEMBERS
+	BHK_P_COLLISION_OBJECT_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

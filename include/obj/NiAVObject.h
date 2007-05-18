@@ -194,28 +194,16 @@ public:
 	NIFLIB_API void SetVisibility( bool n );
 
 	/*!
-	 * Gets the current collision object for this object.  Used in later NIF versions.  In Oblivion this links to the Havok objects.
+	 * Gets the current collision object for this object.  Usually a bounding box.  In Oblivion this links to the Havok objects.
 	 * \return The current collision object for this object.
 	 */
 	NIFLIB_API Ref<NiCollisionObject > GetCollisionObject() const;
 
 	/*!
-	 * Sets the collision object for this object.  Used in later NIF versions.  In Oblivion this links to the Havok objects.
+	 * Sets the collision object for this object.  Usually a bounding box.  In Oblivion this links to the Havok objects.
 	 * \param[in] value The new collision object to use.
 	 */
 	NIFLIB_API void SetCollisionObject( NiCollisionObject * value );
-
-	/*!
-	 * Gets the current collision data for this object.  Usually a bounding box.  Used in some NIF versions.
-	 * \return The current collision data for this object.
-	 */
-	NIFLIB_API Ref<NiCollisionData > GetCollisionData() const;
-
-	/*!
-	 * Sets the collision data for this object.  Usually a bounding box.  Used in some NIF versions.
-	 * \param[in] value The new collision data for this object.
-	 */
-	NIFLIB_API void SetCollisionData( NiCollisionData * value );
 
 	/*!
 	 * Used to get and set the collision type of a NiAVObject.

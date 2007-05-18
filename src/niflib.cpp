@@ -20,7 +20,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/obj/NiStringPalette.h"
 #include "../include/obj/NiSkinPartition.h"
 #include "../include/obj/NiTimeController.h"
-#include "../include/obj/NiSingleInterpolatorController.h"
+#include "../include/obj/NiSingleInterpController.h"
 #include "../include/obj/NiInterpolator.h"
 #include "../include/obj/NiKeyframeController.h"
 #include "../include/obj/NiKeyframeData.h"
@@ -923,10 +923,10 @@ void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned vers
 				//connected to the named node
 				NiNodeRef node = name_map[node_name];
 				list<NiTimeControllerRef> ctlrs = node->GetControllers();
-				NiSingleInterpolatorControllerRef ctlr;
+				NiSingleInterpControllerRef ctlr;
 				for ( list<NiTimeControllerRef>::iterator it = ctlrs.begin(); it != ctlrs.end(); ++it ) {
 					if ( *it != NULL && (*it)->GetType().GetTypeName() == ctlr_type ) {
-						ctlr = DynamicCast<NiSingleInterpolatorController>(*it);
+						ctlr = DynamicCast<NiSingleInterpController>(*it);
 						if ( ctlr != NULL ) {
 							break;
 						}
@@ -936,9 +936,9 @@ void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned vers
 				//If the controller wasn't found, create one of the right type and attach it
 				if ( ctlr == NULL ) {
 					NiObjectRef new_ctlr = CreateObject( ctlr_type );
-					ctlr = DynamicCast<NiSingleInterpolatorController>( new_ctlr );
+					ctlr = DynamicCast<NiSingleInterpController>( new_ctlr );
 					if ( ctlr == NULL ) {
-						throw runtime_error ("Non-NiSingleInterpolatorController controller found in KF file.");
+						throw runtime_error ("Non-NiSingleInterpController controller found in KF file.");
 					}
 					node->AddController( StaticCast<NiTimeController>(ctlr) );
 				}

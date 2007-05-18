@@ -4,13 +4,14 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSMODIFIERACTIVECTLR_H_
 #define _NIPSYSMODIFIERACTIVECTLR_H_
 
-#include "APSysCtlr.h"
+#include "NiPSysModifierBoolCtlr.h"
 namespace Niflib {
 
 
 //#include "../gen/obj_defines.h"
 
 class NiPSysModifierActiveCtlr;
+class NiVisData;
 typedef Ref<NiPSysModifierActiveCtlr> NiPSysModifierActiveCtlrRef;
 
 /*!

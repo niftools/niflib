@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiCollisionObject.h"
 #include "../../include/obj/NiAVObject.h"
 #include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -37,12 +38,12 @@ const Type & NiCollisionObject::GetType() const {
 	return TYPE;
 };
 
-Ref<NiAVObject> NiCollisionObject::GetParent() const {
-	return Ref<NiAVObject>(parent);
+Ref<NiAVObject> NiCollisionObject::GetTarget() const {
+	return target;
 }
 
-void NiCollisionObject::SetParent( NiAVObject * value ) {
-	parent = value;
+void NiCollisionObject::SetTarget( NiAVObject * value ) {
+	target = value;
 }
 
 Ref<NiObject > NiCollisionObject::GetBody() const {

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _HKPACKEDNITRISTRIPSDATA_H_
 #define _HKPACKEDNITRISTRIPSDATA_H_
 
-#include "AbhkShapeCollection.h"
+#include "bhkShapeCollection.h"
 
 // Include structures
 #include "../gen/hkTriangle.h"

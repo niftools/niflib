@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKMOPPBVTREESHAPE_H_
 #define _BHKMOPPBVTREESHAPE_H_
 
-#include "bhkShape.h"
+#include "bhkBvTreeShape.h"
 
 // Include structures
 #include "../Ref.h"

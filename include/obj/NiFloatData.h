@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIFLOATDATA_H_
 #define _NIFLOATDATA_H_
 
-#include "AKeyedData.h"
+#include "NiObject.h"
 // Include structures
 #include "../gen/KeyGroup.h"
 namespace Niflib {

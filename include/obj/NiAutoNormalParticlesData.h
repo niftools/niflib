@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIAUTONORMALPARTICLESDATA_H_
 #define _NIAUTONORMALPARTICLESDATA_H_
 
-#include "NiTriBasedGeomData.h"
+#include "NiParticlesData.h"
 namespace Niflib {
 
 

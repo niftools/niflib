@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIMESHPSYSDATA_H_
 #define _NIMESHPSYSDATA_H_
 
-#include "APSysData.h"
+#include "NiPSysData.h"
 
 // Include structures
 #include "../Ref.h"

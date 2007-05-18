@@ -4,7 +4,8 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKRAGDOLLCONSTRAINT_H_
 #define _BHKRAGDOLLCONSTRAINT_H_
 
-#include "AbhkRagdollConstraint.h"
+#include "bhkConstraint.h"
+#include "../gen/RagdollDescriptor.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"

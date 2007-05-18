@@ -347,35 +347,7 @@
 				Name="obj"
 				>
 				<File
-					RelativePath=".\src\obj\AbhkConstraint.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\AbhkRagdollConstraint.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\AbhkShapeCollection.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\ABoneLODController.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\AKeyedData.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\obj\AParticleModifier.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\APSysCtlr.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\obj\APSysData.cpp"
 					>
 				</File>
 				<File
@@ -395,11 +367,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\bhkBvTreeShape.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\bhkCapsuleShape.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkCollisionObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkConstraint.cpp"
 					>
 				</File>
 				<File
@@ -443,11 +423,23 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\bhkNiCollisionObject.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\bhkNiTriStripsShape.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkPackedNiTriStripsShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkPCollisionObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkPhantom.cpp"
 					>
 				</File>
 				<File
@@ -476,6 +468,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkShapeCollection.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkShapePhantom.cpp"
 					>
 				</File>
 				<File
@@ -527,6 +527,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\BSWindModifier.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\BSXFlags.cpp"
 					>
 				</File>
@@ -568,6 +572,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiAVObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiAVObjectPalette.cpp"
 					>
 				</File>
 				<File
@@ -623,6 +631,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiBoolInterpController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiBoolInterpolator.cpp"
 					>
 				</File>
@@ -667,7 +679,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiBSplineFloatInterpolator.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiBSplineInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBSplinePoint3Interpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBSplineTransformInterpolator.cpp"
 					>
 				</File>
 				<File
@@ -731,6 +755,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiExtraDataController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiFlipController.cpp"
 					>
 				</File>
@@ -744,6 +772,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiFloatExtraDataController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiFloatInterpController.cpp"
 					>
 				</File>
 				<File
@@ -787,7 +819,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiInterpController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiKeyBasedInterpolator.cpp"
 					>
 				</File>
 				<File
@@ -931,6 +971,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPoint3InterpController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPoint3Interpolator.cpp"
 					>
 				</File>
@@ -1047,6 +1091,18 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPSysModifierBoolCtlr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysModifierCtlr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysModifierFloatCtlr.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPSysPlanarCollider.cpp"
 					>
 				</File>
@@ -1119,7 +1175,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\obj\NiSingleInterpolatorController.cpp"
+					RelativePath=".\src\obj\NiSingleInterpController.cpp"
 					>
 				</File>
 				<File
@@ -1167,7 +1223,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiSwitchNode.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiTextKeyExtraData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiTexture.cpp"
 					>
 				</File>
 				<File
@@ -1509,35 +1573,7 @@
 				Name="obj"
 				>
 				<File
-					RelativePath=".\include\obj\AbhkConstraint.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\AbhkRagdollConstraint.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\AbhkShapeCollection.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\ABoneLODController.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\AKeyedData.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\obj\AParticleModifier.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\APSysCtlr.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\obj\APSysData.h"
 					>
 				</File>
 				<File
@@ -1557,11 +1593,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\bhkBvTreeShape.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\bhkCapsuleShape.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkCollisionObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkConstraint.h"
 					>
 				</File>
 				<File
@@ -1605,11 +1649,23 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\bhkNiCollisionObject.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\bhkNiTriStripsShape.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkPackedNiTriStripsShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkPCollisionObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkPhantom.h"
 					>
 				</File>
 				<File
@@ -1638,6 +1694,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkShapeCollection.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkShapePhantom.h"
 					>
 				</File>
 				<File
@@ -1689,6 +1753,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\BSWindModifier.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\BSXFlags.h"
 					>
 				</File>
@@ -1730,6 +1798,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiAVObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiAVObjectPalette.h"
 					>
 				</File>
 				<File
@@ -1785,6 +1857,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiBoolInterpController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiBoolInterpolator.h"
 					>
 				</File>
@@ -1829,7 +1905,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiBSplineFloatInterpolator.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiBSplineInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBSplinePoint3Interpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBSplineTransformInterpolator.h"
 					>
 				</File>
 				<File
@@ -1893,6 +1981,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiExtraDataController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiFlipController.h"
 					>
 				</File>
@@ -1906,6 +1998,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiFloatExtraDataController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiFloatInterpController.h"
 					>
 				</File>
 				<File
@@ -1949,7 +2045,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiInterpController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiKeyBasedInterpolator.h"
 					>
 				</File>
 				<File
@@ -2093,6 +2197,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPoint3InterpController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPoint3Interpolator.h"
 					>
 				</File>
@@ -2209,6 +2317,18 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPSysModifierBoolCtlr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysModifierCtlr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysModifierFloatCtlr.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPSysPlanarCollider.h"
 					>
 				</File>
@@ -2281,7 +2401,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\obj\NiSingleInterpolatorController.h"
+					RelativePath=".\include\obj\NiSingleInterpController.h"
 					>
 				</File>
 				<File
@@ -2329,7 +2449,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiSwitchNode.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiTextKeyExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiTexture.h"
 					>
 				</File>
 				<File

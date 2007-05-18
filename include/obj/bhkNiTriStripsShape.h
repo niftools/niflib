@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKNITRISTRIPSSHAPE_H_
 #define _BHKNITRISTRIPSSHAPE_H_
 
-#include "bhkSphereRepShape.h"
+#include "bhkShapeCollection.h"
 
 // Include structures
 #include "../Ref.h"

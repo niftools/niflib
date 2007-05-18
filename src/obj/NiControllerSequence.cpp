@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiTextKeyExtraData.h"
 #include "../../include/obj/NiControllerManager.h"
 #include "../../include/obj/NiTimeController.h"
-#include "../../include/obj/NiSingleInterpolatorController.h"
+#include "../../include/obj/NiSingleInterpController.h"
 #include "../../include/obj/NiObjectNET.h"
 #include "../../include/obj/NiProperty.h"
 
@@ -90,7 +90,7 @@ void NiControllerSequence::AddController( NiTimeController * obj ) {
 	controlledBlocks.push_back( cl );
 }
 
-void NiControllerSequence::AddInterpolator( NiSingleInterpolatorController * obj, byte priority ) {
+void NiControllerSequence::AddInterpolator( NiSingleInterpController * obj, byte priority ) {
 	//Make sure the link isn't null
 	if ( obj == NULL ) {
 		throw runtime_error("Attempted to add a null controller to NiControllerSequence block.");

@@ -1,25 +1,23 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _APSYSDATA_H_
-#define _APSYSDATA_H_
+#ifndef _NIBSPLINETRANSFORMINTERPOLATOR_H_
+#define _NIBSPLINETRANSFORMINTERPOLATOR_H_
 
-#include "NiTriBasedGeomData.h"
+#include "NiBSplineInterpolator.h"
 namespace Niflib {
 
-//#include "../gen/obj_defines.h"
-
-class APSysData;
-typedef Ref<APSysData> APSysDataRef;
+class NiBSplineTransformInterpolator;
+typedef Ref<NiBSplineTransformInterpolator> NiBSplineTransformInterpolatorRef;
 
 /*!
- * APSysData - Particle system data.  Probably really NiPSysData.
+ * NiBSplineTransformInterpolator - Unknown.
  */
 
-class APSysData : public A_P_SYS_DATA_PARENT {
+class NiBSplineTransformInterpolator : public NI_B_SPLINE_TRANSFORM_INTERPOLATOR_PARENT {
 public:
-	NIFLIB_API APSysData();
-	NIFLIB_API ~APSysData();
+	NIFLIB_API NiBSplineTransformInterpolator();
+	NIFLIB_API ~NiBSplineTransformInterpolator();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -31,7 +29,7 @@ public:
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
 protected:
-	A_P_SYS_DATA_MEMBERS
+	NI_B_SPLINE_TRANSFORM_INTERPOLATOR_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

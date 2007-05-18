@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIFLOATINTERPOLATOR_H_
 #define _NIFLOATINTERPOLATOR_H_
 
-#include "NiInterpolator.h"
+#include "NiKeyBasedInterpolator.h"
 
 // Include structures
 #include "../Ref.h"

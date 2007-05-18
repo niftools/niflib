@@ -1,41 +1,41 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/AKeyedData.h"
+#include "../../include/obj/bhkShapePhantom.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AKeyedData::TYPE("AKeyedData", &A_KEYED_DATA_PARENT::TYPE );
+const Type bhkShapePhantom::TYPE("bhkShapePhantom", &BHK_SHAPE_PHANTOM_PARENT::TYPE );
 
-AKeyedData::AKeyedData() A_KEYED_DATA_CONSTRUCT {}
+bhkShapePhantom::bhkShapePhantom() BHK_SHAPE_PHANTOM_CONSTRUCT {}
 
-AKeyedData::~AKeyedData() {}
+bhkShapePhantom::~bhkShapePhantom() {}
 
-void AKeyedData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkShapePhantom::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	InternalRead( in, link_stack, info );
 }
 
-void AKeyedData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkShapePhantom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	InternalWrite( out, link_map, info );
 }
 
-string AKeyedData::asString( bool verbose ) const {
+string bhkShapePhantom::asString( bool verbose ) const {
 	return InternalAsString( verbose );
 }
 
-void AKeyedData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkShapePhantom::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	InternalFixLinks( objects, link_stack, info );
 }
 
-list<NiObjectRef> AKeyedData::GetRefs() const {
+list<NiObjectRef> bhkShapePhantom::GetRefs() const {
 	return InternalGetRefs();
 }
 
-const Type & AKeyedData::GetType() const {
+const Type & bhkShapePhantom::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -47,7 +47,7 @@ namespace Niflib {
 
 	static bool Initialization() {
 		//Add the function to the global object map
-		global_object_map["AKeyedData"] = AKeyedData::Create;
+		global_object_map["bhkShapePhantom"] = bhkShapePhantom::Create;
 
 		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
 		obj_initialized = true;
@@ -55,6 +55,7 @@ namespace Niflib {
 	}
 }
 
-NiObject * AKeyedData::Create() {
-	return new AKeyedData;
+NiObject * bhkShapePhantom::Create() {
+	return new bhkShapePhantom;
 }
+

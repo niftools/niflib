@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPSYSEMITTERSPEEDCTLR_H_
 #define _NIPSYSEMITTERSPEEDCTLR_H_
 
-#include "APSysCtlr.h"
+#include "NiPSysModifierFloatCtlr.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects

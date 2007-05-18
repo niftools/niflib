@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BHKMALLEABLECONSTRAINT_H_
 #define _BHKMALLEABLECONSTRAINT_H_
 
-#include "AbhkConstraint.h"
+#include "bhkConstraint.h"
 
 // Include structures
 #include "../Ref.h"

@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NICOLLISIONDATA_H_
 #define _NICOLLISIONDATA_H_
 
-#include "NiObject.h"
+#include "NiCollisionObject.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects

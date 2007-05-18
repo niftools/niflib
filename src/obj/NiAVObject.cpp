@@ -19,7 +19,7 @@ NiAVObject::~NiAVObject() {
 
 	//Clear Collision Object Link
 	if ( collisionObject != NULL ) {
-		collisionObject->SetParent(NULL);
+		collisionObject->SetTarget(NULL);
 	}
 }
 
@@ -172,28 +172,19 @@ void NiAVObject::SetCollisionMode( CollisionType value ) {
 	flags = flags | temp;
 }
 
-Ref<NiCollisionData > NiAVObject::GetCollisionData() const {
-   return collisionData;
-}
-
-void NiAVObject::SetCollisionData( NiCollisionData * value ) {
-   collisionData = value;
-}
-
-
 Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
   return collisionObject;
 }
 
 void NiAVObject::SetCollisionObject( NiCollisionObject * value ) {
-	if ( value->GetParent() != NULL ) {
-		throw runtime_error( "You have attempted to add a collision object to a NiNode which is already attached to another NiNode." );
+	if ( value->GetTarget() != NULL ) {
+		throw runtime_error( "You have attempted to add a collision object to a NiAVObject which is already attached to another NiAVObject." );
 	}
-	value->SetParent( this );
+	value->SetTarget( this );
 
 	if ( collisionObject !=NULL ) {
 		//Remove unlink previous collision object from this node
-		collisionObject->SetParent(NULL);
+		collisionObject->SetTarget(NULL);
 	}
 
 	collisionObject = value;

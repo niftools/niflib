@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NILIGHTCOLORCONTROLLER_H_
 #define _NILIGHTCOLORCONTROLLER_H_
 
-#include "NiTimeController.h"
+#include "NiPoint3InterpController.h"
 
 // Include structures
 #include "../Ref.h"
@@ -36,30 +36,6 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
-
-	/*!
-	 * Retrives the pos data used by this controller.
-	 * \return The pos data.
-	 */
-	NIFLIB_API Ref<NiPosData> GetData() const;
-
-	/*!
-	 * Sets the pos data used by this controller.
-	 * \param[in] value The new pos data.
-	 */
-	NIFLIB_API void SetData( NiPosData * value );
-
-	/*!
-	 * Retrives the interpolator used by this controller.
-	 * \return The interpolator.
-	 */
-	NIFLIB_API Ref<NiPoint3Interpolator> GetInterpolator() const;
-
-	/*!
-	 * Sets the interpolator used by this controller.
-	 * \param[in] value The new interpolator.
-	 */
-	NIFLIB_API void SetInterpolator( NiPoint3Interpolator * value );
 
 protected:
 	NI_LIGHT_COLOR_CONTROLLER_MEMBERS

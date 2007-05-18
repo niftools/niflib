@@ -4,10 +4,11 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBONELODCONTROLLER_H_
 #define _NIBONELODCONTROLLER_H_
 
-#include "ABoneLODController.h"
+#include "NiTimeController.h"
 
 // Include structures
 #include "../gen/SkinShapeGroup.h"
+#include "../gen/NodeGroup.h"
 #include "../Ref.h"
 namespace Niflib {
 

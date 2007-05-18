@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/obj/bhkRigidBody.h"
 #include "../../include/gen/QuaternionXYZW.h"
-#include "../../include/obj/AbhkConstraint.h"
+#include "../../include/obj/bhkConstraint.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

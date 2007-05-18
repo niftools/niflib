@@ -1,32 +1,24 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NISINGLEINTERPOLATORCONTROLLER_H_
-#define _NISINGLEINTERPOLATORCONTROLLER_H_
+#ifndef _NIFLOATINTERPCONTROLLER_H_
+#define _NIFLOATINTERPCONTROLLER_H_
 
-#include "NiTimeController.h"
-
-// Include structures
-#include "../Ref.h"
+#include "NiSingleInterpController.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiInterpolator;
-
-//#include "../gen/obj_defines.h"
-
-class NiSingleInterpolatorController;
-typedef Ref<NiSingleInterpolatorController> NiSingleInterpolatorControllerRef;
+class NiFloatInterpController;
+typedef Ref<NiFloatInterpController> NiFloatInterpControllerRef;
 
 /*!
- * NiSingleInterpolatorController - A controller referring to an
- * interpolator.
+ * NiFloatInterpController - A controller that interpolates floating
+ * point numbers?
  */
 
-class NiSingleInterpolatorController : public NI_SINGLE_INTERPOLATOR_CONTROLLER_PARENT {
+class NiFloatInterpController : public NI_FLOAT_INTERP_CONTROLLER_PARENT {
 public:
-	NIFLIB_API NiSingleInterpolatorController();
-	NIFLIB_API ~NiSingleInterpolatorController();
+	NIFLIB_API NiFloatInterpController();
+	NIFLIB_API ~NiFloatInterpController();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
 	NIFLIB_API static NiObject * Create();
@@ -37,20 +29,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
-	/*!
-	 * Retrives the interpolator used by this controller.
-	 * \return The interpolator.
-	 */
-	NIFLIB_API Ref<NiInterpolator > GetInterpolator() const;
-
-	/*!
-	 * Sets the interpolator used by this controller.
-	 * \param[in] value The new interpolator.
-	 */
-	NIFLIB_API void SetInterpolator( NiInterpolator * value );
-
 protected:
-	NI_SINGLE_INTERPOLATOR_CONTROLLER_MEMBERS
+	NI_FLOAT_INTERP_CONTROLLER_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
 	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;

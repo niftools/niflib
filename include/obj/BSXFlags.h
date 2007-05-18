@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _BSXFLAGS_H_
 #define _BSXFLAGS_H_
 
-#include "NiExtraData.h"
+#include "NiIntegerExtraData.h"
 namespace Niflib {
 
 //#include "../gen/obj_defines.h"
@@ -29,18 +29,6 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
-
-	/*!
-	 * Gets the BSX Flag data.
-	 * \return The flag data.
-	 */
-	NIFLIB_API unsigned int GetFlags() const;
-
-	/*!
-	 * Sets the BSX Flag data.
-	 * \param[in] value The new flag data.
-	 */
-	NIFLIB_API void SetFlags( unsigned int value );
 
 protected:
 	B_S_X_FLAGS_MEMBERS

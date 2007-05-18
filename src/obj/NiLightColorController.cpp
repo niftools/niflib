@@ -37,22 +37,6 @@ const Type & NiLightColorController::GetType() const {
 	return TYPE;
 };
 
-Ref<NiPosData > NiLightColorController::GetData() const {
-	return data;
-}
-
-void NiLightColorController::SetData( NiPosData * value ) {
-	data = value;
-}
-
-Ref<NiPoint3Interpolator > NiLightColorController::GetInterpolator() const {
-	return interpolator;
-}
-
-void NiLightColorController::SetInterpolator( NiPoint3Interpolator * value ) {
-	interpolator = value;
-}
-
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;

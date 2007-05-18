@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBSPLINECOMPTRANSFORMINTERPOLATOR_H_
 #define _NIBSPLINECOMPTRANSFORMINTERPOLATOR_H_
 
-#include "NiBSplineInterpolator.h"
+#include "NiBSplineTransformInterpolator.h"
 
 // Include structures
 #include "../Ref.h"

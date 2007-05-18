@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIFLIPCONTROLLER_H_
 #define _NIFLIPCONTROLLER_H_
 
-#include "NiSingleInterpolatorController.h"
+#include "NiFloatInterpController.h"
 
 // Include structures
 #include "../Ref.h"

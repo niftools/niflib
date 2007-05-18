@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIPARTICLEMESHESDATA_H_
 #define _NIPARTICLEMESHESDATA_H_
 
-#include "NiParticlesData.h"
+#include "NiRotatingParticlesData.h"
 
 // Include structures
 #include "../Ref.h"

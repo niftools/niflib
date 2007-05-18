@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIGEOMMORPHERCONTROLLER_H_
 #define _NIGEOMMORPHERCONTROLLER_H_
 
-#include "NiTimeController.h"
+#include "NiInterpController.h"
 
 // Include structures
 #include "../Ref.h"

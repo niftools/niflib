@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIVISCONTROLLER_H_
 #define _NIVISCONTROLLER_H_
 
-#include "NiSingleInterpolatorController.h"
+#include "NiBoolInterpController.h"
 
 // Include structures
 #include "../Ref.h"

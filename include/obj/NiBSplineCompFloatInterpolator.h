@@ -4,7 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #ifndef _NIBSPLINECOMPFLOATINTERPOLATOR_H_
 #define _NIBSPLINECOMPFLOATINTERPOLATOR_H_
 
-#include "NiBSplineInterpolator.h"
+#include "NiBSplineFloatInterpolator.h"
 namespace Niflib {
 
 
