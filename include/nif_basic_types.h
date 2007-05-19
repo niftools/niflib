@@ -61,6 +61,25 @@ struct NifInfo {
 	string exportInfo2;
 };
 
+/*! Used to enable static arrays to be members of vectors */
+template<int size, class T>
+struct array {
+	array() {
+		for ( size_t i = 0; i < size; ++i ) {
+			data[i] = T();
+		}
+	}
+	~array() {}
+	T & operator[]( unsigned int index ) {
+		return data[index];
+	}
+	const T & operator[]( unsigned int index ) const {
+		return data[index];
+	}
+private:
+	T data[size];
+};
+
 //TODO:  This is temporary to make it compile.  Should eventually be adjusted to display 1's and 0's insted of as an int.
 typedef unsigned short Flags;
 }
