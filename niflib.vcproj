@@ -304,10 +304,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\ComplexShape.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\kfm.cpp"
 				>
 			</File>
@@ -1412,10 +1408,6 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\NodeGroup.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\gen\obj_impl.cpp"
 					>
 				</File>
 				<File
@@ -2646,10 +2638,6 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\NodeGroup.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\gen\obj_defines.h"
 					>
 				</File>
 				<File

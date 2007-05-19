@@ -5,7 +5,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/nifxml_niflib.py Python script.
 
-#include "../../include/obj/NiObject.h"
+#include "obj/NiObject.h"
+#include "Ref.h"
 namespace Niflib {
 
 using namespace std;
