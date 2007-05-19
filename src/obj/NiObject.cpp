@@ -1,22 +1,119 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiObject.h"
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
 #include "../../include/niflib.h"
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiObject::TYPE("NiObject", NULL );
 
-//Static to track total number of objects in memory.  Initialize to zero.
-unsigned int NiObject::objectsInMemory = 0;
-
-NiObject::NiObject() : _ref_count(0) {
+NiObject::NiObject() {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	_ref_count = 0;
 	objectsInMemory++;
+
+	//--END CUSTOM CODE--//
 }
+
 NiObject::~NiObject() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 	objectsInMemory--;
+	//--END CUSTOM CODE--//
 }
+
+const Type & NiObject::GetType() const {
+	return TYPE;
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiObject"] = NiObject::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiObject::Create() {
+	return new NiObject;
+}
+
+void NiObject::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+void NiObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+std::string NiObject::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+void NiObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiObject::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
 
 bool NiObject::IsSameType( const Type & compare_to) const {
 	return GetType().IsSameType( compare_to );
@@ -47,15 +144,6 @@ void NiObject::SubtractRef() const {
 
 unsigned int NiObject::NumObjectsInMemory() {
 	return objectsInMemory;
-}
-
-//These should be pure virtual eventually
-string NiObject::asString( bool verbose ) const {
-	return string();
-}
-
-list<NiObjectRef> NiObject::GetRefs() const {
-	return list<NiObjectRef>();
 }
 
 /*! Used to format a human readable string that includes the type of the object */
@@ -92,35 +180,8 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	return clone;
 };
 
-const Type & NiObject::GetType() const {
-	return TYPE;
-};
-
 unsigned int NiObject::GetNumRefs() {
 	return _ref_count;
 }
 
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiObject"] = NiObject::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiObject::Create() {
-	return new NiObject;
-}
-
+//--END CUSTOM CODE--//
