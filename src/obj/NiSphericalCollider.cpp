@@ -1,41 +1,38 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSphericalCollider.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSphericalCollider::TYPE("NiSphericalCollider", &NI_SPHERICAL_COLLIDER_PARENT::TYPE );
+const Type NiSphericalCollider::TYPE("NiSphericalCollider", &AParticleModifier::TYPE );
 
-NiSphericalCollider::NiSphericalCollider() NI_SPHERICAL_COLLIDER_CONSTRUCT {}
-
-NiSphericalCollider::~NiSphericalCollider() {}
-
-void NiSphericalCollider::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiSphericalCollider::NiSphericalCollider() : unknownFloat1(0.0f), unknownShort1((unsigned short)0), unknownFloat2(0.0f), unknownShort2((unsigned short)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiSphericalCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiSphericalCollider::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiSphericalCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiSphericalCollider::GetRefs() const {
-	return InternalGetRefs();
+NiSphericalCollider::~NiSphericalCollider() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiSphericalCollider::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -58,3 +55,84 @@ namespace Niflib {
 NiObject * NiSphericalCollider::Create() {
 	return new NiSphericalCollider;
 }
+
+void NiSphericalCollider::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	AParticleModifier::Read( in, link_stack, info );
+	NifStream( unknownFloat1, in, info );
+	NifStream( unknownShort1, in, info );
+	NifStream( unknownFloat2, in, info );
+	if ( info.version <= 0x04020002 ) {
+		NifStream( unknownShort2, in, info );
+	};
+	if ( info.version >= 0x04020100 ) {
+		NifStream( unknownFloat3, in, info );
+	};
+	NifStream( unknownFloat4, in, info );
+	NifStream( unknownFloat5, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSphericalCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	AParticleModifier::Write( out, link_map, info );
+	NifStream( unknownFloat1, out, info );
+	NifStream( unknownShort1, out, info );
+	NifStream( unknownFloat2, out, info );
+	if ( info.version <= 0x04020002 ) {
+		NifStream( unknownShort2, out, info );
+	};
+	if ( info.version >= 0x04020100 ) {
+		NifStream( unknownFloat3, out, info );
+	};
+	NifStream( unknownFloat4, out, info );
+	NifStream( unknownFloat5, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiSphericalCollider::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << AParticleModifier::asString();
+	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
+	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
+	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
+	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSphericalCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	AParticleModifier::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiSphericalCollider::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = AParticleModifier::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

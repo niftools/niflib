@@ -1,61 +1,38 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSpotLight.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSpotLight::TYPE("NiSpotLight", &NI_SPOT_LIGHT_PARENT::TYPE );
+const Type NiSpotLight::TYPE("NiSpotLight", &NiPointLight::TYPE );
 
-NiSpotLight::NiSpotLight() NI_SPOT_LIGHT_CONSTRUCT {}
-
-NiSpotLight::~NiSpotLight() {}
-
-void NiSpotLight::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiSpotLight::NiSpotLight() : cutoffAngle(0.0f), exponent(0.0f) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiSpotLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiSpotLight::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiSpotLight::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiSpotLight::GetRefs() const {
-	return InternalGetRefs();
+NiSpotLight::~NiSpotLight() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiSpotLight::GetType() const {
 	return TYPE;
-};
-
-//--BEGIN MISC CUSTOM CODE--//
-
-float NiSpotLight::GetCutoffAngle() const {
-	return cutoffAngle;
 }
 
-void NiSpotLight::SetCutoffAngle( float value ) {
-	cutoffAngle = value;
-}
-
-float NiSpotLight::GetExponent() const {
-	return exponent;
-}
-
-void NiSpotLight::SetExponent( float value ) {
-	exponent = value;
-}
-
-//--END CUSTOM CODE--//
-
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -78,3 +55,78 @@ namespace Niflib {
 NiObject * NiSpotLight::Create() {
 	return new NiSpotLight;
 }
+
+void NiSpotLight::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPointLight::Read( in, link_stack, info );
+	NifStream( cutoffAngle, in, info );
+	NifStream( exponent, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSpotLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPointLight::Write( out, link_map, info );
+	NifStream( cutoffAngle, out, info );
+	NifStream( exponent, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiSpotLight::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiPointLight::asString();
+	out << "  Cutoff Angle:  " << cutoffAngle << endl;
+	out << "  Exponent:  " << exponent << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSpotLight::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPointLight::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiSpotLight::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiPointLight::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+
+float NiSpotLight::GetCutoffAngle() const {
+	return cutoffAngle;
+}
+
+void NiSpotLight::SetCutoffAngle( float value ) {
+	cutoffAngle = value;
+}
+
+float NiSpotLight::GetExponent() const {
+	return exponent;
+}
+
+void NiSpotLight::SetExponent( float value ) {
+	exponent = value;
+}
+
+//--END CUSTOM CODE--//

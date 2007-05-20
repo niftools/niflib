@@ -1,44 +1,38 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPSysPlanarCollider.h"
-#include "../../include/obj/NiPSysSpawnModifier.h"
-#include "../../include/obj/NiObject.h"
-#include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysPlanarCollider::TYPE("NiPSysPlanarCollider", &NI_P_SYS_PLANAR_COLLIDER_PARENT::TYPE );
+const Type NiPSysPlanarCollider::TYPE("NiPSysPlanarCollider", &NiPSysCollider::TYPE );
 
-NiPSysPlanarCollider::NiPSysPlanarCollider() NI_P_SYS_PLANAR_COLLIDER_CONSTRUCT {}
-
-NiPSysPlanarCollider::~NiPSysPlanarCollider() {}
-
-void NiPSysPlanarCollider::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiPSysPlanarCollider::NiPSysPlanarCollider() : width(0.0f), height(0.0f) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiPSysPlanarCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiPSysPlanarCollider::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiPSysPlanarCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiPSysPlanarCollider::GetRefs() const {
-	return InternalGetRefs();
+NiPSysPlanarCollider::~NiPSysPlanarCollider() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiPSysPlanarCollider::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -61,3 +55,67 @@ namespace Niflib {
 NiObject * NiPSysPlanarCollider::Create() {
 	return new NiPSysPlanarCollider;
 }
+
+void NiPSysPlanarCollider::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPSysCollider::Read( in, link_stack, info );
+	NifStream( width, in, info );
+	NifStream( height, in, info );
+	NifStream( xAxis, in, info );
+	NifStream( yAxis, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiPSysPlanarCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPSysCollider::Write( out, link_map, info );
+	NifStream( width, out, info );
+	NifStream( height, out, info );
+	NifStream( xAxis, out, info );
+	NifStream( yAxis, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiPSysPlanarCollider::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiPSysCollider::asString();
+	out << "  Width:  " << width << endl;
+	out << "  Height:  " << height << endl;
+	out << "  X Axis:  " << xAxis << endl;
+	out << "  Y Axis:  " << yAxis << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiPSysPlanarCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiPSysCollider::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiPSysPlanarCollider::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiPSysCollider::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

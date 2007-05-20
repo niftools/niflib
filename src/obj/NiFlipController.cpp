@@ -1,43 +1,40 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiFlipController.h"
 #include "../../include/obj/NiSourceTexture.h"
 #include "../../include/obj/NiImage.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiFlipController::TYPE("NiFlipController", &NI_FLIP_CONTROLLER_PARENT::TYPE );
+const Type NiFlipController::TYPE("NiFlipController", &NiFloatInterpController::TYPE );
 
-NiFlipController::NiFlipController() NI_FLIP_CONTROLLER_CONSTRUCT {}
-
-NiFlipController::~NiFlipController() {}
-
-void NiFlipController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiFlipController::NiFlipController() : textureSlot((unsigned int)0), unknownInt2((unsigned int)0), delta(0.0f), numSources((unsigned int)0) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiFlipController::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiFlipController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiFlipController::GetRefs() const {
-	return InternalGetRefs();
+NiFlipController::~NiFlipController() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiFlipController::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -60,3 +57,150 @@ namespace Niflib {
 NiObject * NiFlipController::Create() {
 	return new NiFlipController;
 }
+
+void NiFlipController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiFloatInterpController::Read( in, link_stack, info );
+	NifStream( textureSlot, in, info );
+	if ( ( info.version >= 0x04000000 ) && ( info.version <= 0x0A010000 ) ) {
+		NifStream( unknownInt2, in, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( delta, in, info );
+	};
+	NifStream( numSources, in, info );
+	if ( info.version >= 0x04000000 ) {
+		sources.resize(numSources);
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		image.resize(numSources);
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiFloatInterpController::Write( out, link_map, info );
+	numSources = (unsigned int)(sources.size());
+	NifStream( textureSlot, out, info );
+	if ( ( info.version >= 0x04000000 ) && ( info.version <= 0x0A010000 ) ) {
+		NifStream( unknownInt2, out, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( delta, out, info );
+	};
+	NifStream( numSources, out, info );
+	if ( info.version >= 0x04000000 ) {
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			if ( sources[i2] != NULL )
+				NifStream( link_map.find( StaticCast<NiObject>(sources[i2]) )->second, out, info );
+			else
+				NifStream( 0xffffffff, out, info );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			if ( image[i2] != NULL )
+				NifStream( link_map.find( StaticCast<NiObject>(image[i2]) )->second, out, info );
+			else
+				NifStream( 0xffffffff, out, info );
+		};
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiFlipController::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiFloatInterpController::asString();
+	numSources = (unsigned int)(sources.size());
+	out << "  Texture Slot:  " << textureSlot << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Delta:  " << delta << endl;
+	out << "  Num Sources:  " << numSources << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < sources.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Sources[" << i1 << "]:  " << sources[i1] << endl;
+		array_output_count++;
+	};
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Image[" << i1 << "]:  " << image[i1] << endl;
+		array_output_count++;
+	};
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiFlipController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiFloatInterpController::FixLinks( objects, link_stack, info );
+	if ( info.version >= 0x04000000 ) {
+		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
+			sources[i2] = FixLink<NiSourceTexture>( objects, link_stack, info );
+		};
+	};
+	if ( info.version <= 0x03010000 ) {
+		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+			image[i2] = FixLink<NiImage>( objects, link_stack, info );
+		};
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiFlipController::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiFloatInterpController::GetRefs();
+	for (unsigned int i1 = 0; i1 < sources.size(); i1++) {
+		if ( sources[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(sources[i1]));
+	};
+	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
+		if ( image[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(image[i1]));
+	};
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

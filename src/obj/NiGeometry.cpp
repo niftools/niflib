@@ -1,45 +1,172 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/niflib.h"
+#include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiSkinData.h"
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiGeometry.h"
 #include "../../include/obj/NiGeometryData.h"
 #include "../../include/obj/NiSkinInstance.h"
 #include "../../include/obj/NiObject.h"
-#include "../../include/obj/NiNode.h"
-#include "../../include/obj/NiSkinData.h"
-#include "../../include/niflib.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGeometry::TYPE("NiGeometry", &NI_GEOMETRY_PARENT::TYPE );
+const Type NiGeometry::TYPE("NiGeometry", &NiAVObject::TYPE );
 
-NiGeometry::NiGeometry() NI_GEOMETRY_CONSTRUCT {}
-
-NiGeometry::~NiGeometry() {}
-
-void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), hasShader(false), unknownLink(NULL) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiGeometry::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiGeometry::GetRefs() const {
-	return InternalGetRefs();
+NiGeometry::~NiGeometry() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiGeometry::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiGeometry"] = NiGeometry::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiGeometry::Create() {
+	return new NiGeometry;
+}
+
+void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiAVObject::Read( in, link_stack, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( hasShader, in, info );
+		if ( (hasShader != 0) ) {
+			NifStream( shaderName, in, info );
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiAVObject::Write( out, link_map, info );
+	if ( data != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+	if ( info.version >= 0x0303000D ) {
+		if ( skinInstance != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( hasShader, out, info );
+		if ( (hasShader != 0) ) {
+			NifStream( shaderName, out, info );
+			if ( unknownLink != NULL )
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+			else
+				NifStream( 0xffffffff, out, info );
+		};
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiGeometry::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiAVObject::asString();
+	out << "  Data:  " << data << endl;
+	out << "  Skin Instance:  " << skinInstance << endl;
+	out << "  Has Shader:  " << hasShader << endl;
+	if ( (hasShader != 0) ) {
+		out << "    Shader Name:  " << shaderName << endl;
+		out << "    Unknown Link:  " << unknownLink << endl;
+	};
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiAVObject::FixLinks( objects, link_stack, info );
+	data = FixLink<NiGeometryData>( objects, link_stack, info );
+	if ( info.version >= 0x0303000D ) {
+		skinInstance = FixLink<NiSkinInstance>( objects, link_stack, info );
+	};
+	if ( info.version >= 0x0A000100 ) {
+		if ( (hasShader != 0) ) {
+			unknownLink = FixLink<NiObject>( objects, link_stack, info );
+		};
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiGeometry::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiAVObject::GetRefs();
+	if ( data != NULL )
+		refs.push_back(StaticCast<NiObject>(data));
+	if ( skinInstance != NULL )
+		refs.push_back(StaticCast<NiObject>(skinInstance));
+	if ( unknownLink != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -366,27 +493,3 @@ void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiGeometry"] = NiGeometry::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiGeometry::Create() {
-	return new NiGeometry;
-}

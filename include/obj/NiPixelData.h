@@ -1,10 +1,20 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _NIPIXELDATA_H_
 #define _NIPIXELDATA_H_
 
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
 #include "NiObject.h"
+
 // Include structures
 #include "../Ref.h"
 #include "../gen/MipMap.h"
@@ -13,9 +23,6 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiPalette;
-
-//#include "../gen/obj_defines.h"
-
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;
 
@@ -23,19 +30,37 @@ typedef Ref<NiPixelData> NiPixelDataRef;
  * NiPixelData - A texture.
  */
 
-class NiPixelData : public NI_PIXEL_DATA_PARENT {
+class NiPixelData : public NiObject {
 public:
+	/*! Constructor */
 	NIFLIB_API NiPixelData();
-	NIFLIB_API ~NiPixelData();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~NiPixelData();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -85,16 +110,84 @@ public:
 	NIFLIB_API void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	NI_PIXEL_DATA_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * The format of the pixels in this internally stored image.
+	 */
+	PixelFormat pixelFormat;
+	/*!
+	 * 0x000000ff (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
+	 */
+	unsigned int redMask;
+	/*!
+	 * 0x0000ff00 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
+	 */
+	unsigned int greenMask;
+	/*!
+	 * 0x00ff0000 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
+	 */
+	unsigned int blueMask;
+	/*!
+	 * 0xff000000 (for 32bpp) or 0x00000000 (for 24bpp and 8bpp)
+	 */
+	unsigned int alphaMask;
+	/*!
+	 * Bits per pixel, 0 (?), 8, 24 or 32.
+	 */
+	unsigned int bitsPerPixel;
+	/*!
+	 * [96,8,130,0,0,65,0,0] if 24 bits per pixel
+	 * [129,8,130,32,0,65,12,0] if 32 bits per pixel
+	 * [34,0,0,0,0,0,0,0] if 8 bits per pixel             [4,0,0,0,0,0,0,0]
+	 * if 0 (?) bits per pixel
+	 */
+	array<8,byte > unknown8Bytes;
+	/*!
+	 * Seems to always be zero.
+	 */
+	unsigned int unknownInt;
+	/*!
+	 * Unknown.
+	 */
+	array<54,byte > unknown54Bytes;
+	/*!
+	 * Link to NiPalette, for 8-bit textures.
+	 */
+	Ref<NiPalette > palette;
+	/*!
+	 * Number of mipmaps in the texture.
+	 */
+	mutable unsigned int numMipmaps;
+	/*!
+	 * Bytes per pixel (Bits Per Pixel / 8).
+	 */
+	unsigned int bytesPerPixel;
+	/*!
+	 * Mipmap descriptions (width, height, offset).
+	 */
+	vector<MipMap > mipmaps;
+	/*!
+	 * Raw pixel data holding the mipmaps.  Mipmap zero is the full-size
+	 * texture and they get smaller by half as the number increases.
+	 */
+	ByteArray pixelData;
+	/*!
+	 * Unknown.
+	 */
+	unsigned int unknownInt2;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

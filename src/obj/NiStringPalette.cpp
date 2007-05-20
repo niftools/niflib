@@ -1,40 +1,116 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiStringPalette.h"
 #include "../../include/gen/StringPalette.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiStringPalette::TYPE("NiStringPalette", &NI_STRING_PALETTE_PARENT::TYPE );
+const Type NiStringPalette::TYPE("NiStringPalette", &NiObject::TYPE );
 
-NiStringPalette::NiStringPalette() NI_STRING_PALETTE_CONSTRUCT {}
-
-NiStringPalette::~NiStringPalette() {}
-
-void NiStringPalette::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiStringPalette::NiStringPalette() {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiStringPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiStringPalette::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiStringPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiStringPalette::GetRefs() const {
-	return InternalGetRefs();
+NiStringPalette::~NiStringPalette() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiStringPalette::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiStringPalette"] = NiStringPalette::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiStringPalette::Create() {
+	return new NiStringPalette;
+}
+
+void NiStringPalette::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Read( in, link_stack, info );
+	NifStream( palette.palette, in, info );
+	NifStream( palette.length, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiStringPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Write( out, link_map, info );
+	NifStream( palette.palette, out, info );
+	NifStream( palette.length, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiStringPalette::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	out << "  Palette:  " << palette.palette << endl;
+	out << "  Length:  " << palette.length << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiStringPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiStringPalette::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -80,27 +156,3 @@ unsigned int NiStringPalette::AddSubStr( const string & n ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiStringPalette"] = NiStringPalette::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiStringPalette::Create() {
-	return new NiStringPalette;
-}

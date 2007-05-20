@@ -1,10 +1,23 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _NISKINDATA_H_
 #define _NISKINDATA_H_
 
+//--BEGIN FILE HEAD CUSTOM CODE--//
+namespace Niflib {
+	class NiGeometry;
+}
+//--END CUSTOM CODE--//
+
 #include "NiObject.h"
+
 // Include structures
 #include "../Ref.h"
 #include "../gen/SkinData.h"
@@ -12,10 +25,6 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiSkinPartition;
-class NiGeometry;
-
-//#include "../gen/obj_defines.h"
-
 class NiSkinData;
 typedef Ref<NiSkinData> NiSkinDataRef;
 
@@ -23,20 +32,37 @@ typedef Ref<NiSkinData> NiSkinDataRef;
  * NiSkinData - Skinning data.
  */
 
-class NiSkinData : public NI_SKIN_DATA_PARENT {
+class NiSkinData : public NiObject {
 public:
+	/*! Constructor */
 	NIFLIB_API NiSkinData();
-	NIFLIB_API ~NiSkinData();
 
-	//Run-Time Type Information
+	/*! Destructor */
+	NIFLIB_API virtual ~NiSkinData();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -113,16 +139,53 @@ public:
 	NIFLIB_HIDDEN void ResetOffsets( NiGeometry * owner );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	NI_SKIN_DATA_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * The overall rotation offset of the skin from this bone in the bind
+	 * position.             (This is a guess, it has always been the
+	 * identity matrix so far)
+	 */
+	Matrix33 rotation;
+	/*!
+	 * The overall translation offset of the skin from this bone in the bind
+	 * position. (This is a guess, it has always been (0.0, 0.0, 0.0) so far)
+	 */
+	Vector3 translation;
+	/*!
+	 * The scale offset of the skin from this bone in the bind position.
+	 * (This is an assumption - it has always been 1.0 so far)
+	 */
+	float scale;
+	/*!
+	 * Number of bones.
+	 */
+	mutable unsigned int numBones;
+	/*!
+	 * This optionally links a NiSkinPartition for hardware-acceleration
+	 * information.
+	 */
+	Ref<NiSkinPartition > skinPartition;
+	/*!
+	 * Enables Vertex Weights for this NiSkinData.
+	 */
+	byte hasVertexWeights;
+	/*!
+	 * Contains offset data for each node that this skin is influenced by.
+	 */
+	vector<SkinData > boneList;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

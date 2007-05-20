@@ -41,7 +41,7 @@ public:
 	NIFLIB_API NiObject();
 
 	/*! Destructor */
-	NIFLIB_API ~NiObject();
+	NIFLIB_API virtual ~NiObject();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.

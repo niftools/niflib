@@ -1,12 +1,15 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiBSplineCompTransformInterpolator.h"
-#include "../../include/obj/NiBSplineBasisData.h"
-#include "../../include/obj/NiBSplineData.h"
-using namespace Niflib;
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/NiBSplineBasisData.h"
+#include "../../include/obj/NiBSplineData.h"
 
 static const int SizeofQuat = 4;
 static const int SizeofTrans = 3;
@@ -14,36 +17,136 @@ static const int SizeofScale = 1;
 
 //--END CUSTOM CODE--//
 
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/NiBSplineCompTransformInterpolator.h"
+using namespace Niflib;
+
 //Definition of TYPE constant
-const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT::TYPE );
+const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NiBSplineTransformInterpolator::TYPE );
 
-NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_CONSTRUCT {}
-
-NiBSplineCompTransformInterpolator::~NiBSplineCompTransformInterpolator() {}
-
-void NiBSplineCompTransformInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : scale(0.0f), translateOffset((unsigned int)0), rotateOffset((unsigned int)0), scaleOffset((unsigned int)0), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiBSplineCompTransformInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiBSplineCompTransformInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
-	return InternalGetRefs();
+NiBSplineCompTransformInterpolator::~NiBSplineCompTransformInterpolator() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiBSplineCompTransformInterpolator::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiBSplineCompTransformInterpolator"] = NiBSplineCompTransformInterpolator::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiBSplineCompTransformInterpolator::Create() {
+	return new NiBSplineCompTransformInterpolator;
+}
+
+void NiBSplineCompTransformInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiBSplineTransformInterpolator::Read( in, link_stack, info );
+	NifStream( translation, in, info );
+	NifStream( rotation, in, info );
+	NifStream( scale, in, info );
+	NifStream( translateOffset, in, info );
+	NifStream( rotateOffset, in, info );
+	NifStream( scaleOffset, in, info );
+	NifStream( translateBias, in, info );
+	NifStream( translateMultiplier, in, info );
+	NifStream( rotationBias, in, info );
+	NifStream( rotationMultiplier, in, info );
+	NifStream( scaleBias, in, info );
+	NifStream( scaleMultiplier, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiBSplineCompTransformInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiBSplineTransformInterpolator::Write( out, link_map, info );
+	NifStream( translation, out, info );
+	NifStream( rotation, out, info );
+	NifStream( scale, out, info );
+	NifStream( translateOffset, out, info );
+	NifStream( rotateOffset, out, info );
+	NifStream( scaleOffset, out, info );
+	NifStream( translateBias, out, info );
+	NifStream( translateMultiplier, out, info );
+	NifStream( rotationBias, out, info );
+	NifStream( rotationMultiplier, out, info );
+	NifStream( scaleBias, out, info );
+	NifStream( scaleMultiplier, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiBSplineTransformInterpolator::asString();
+	out << "  Translation:  " << translation << endl;
+	out << "  Rotation:  " << rotation << endl;
+	out << "  Scale:  " << scale << endl;
+	out << "  Translate Offset:  " << translateOffset << endl;
+	out << "  Rotate Offset:  " << rotateOffset << endl;
+	out << "  Scale Offset:  " << scaleOffset << endl;
+	out << "  Translate Bias:  " << translateBias << endl;
+	out << "  Translate Multiplier:  " << translateMultiplier << endl;
+	out << "  Rotation Bias:  " << rotationBias << endl;
+	out << "  Rotation Multiplier:  " << rotationMultiplier << endl;
+	out << "  Scale Bias:  " << scaleBias << endl;
+	out << "  Scale Multiplier:  " << scaleMultiplier << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiBSplineCompTransformInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiBSplineTransformInterpolator::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiBSplineTransformInterpolator::GetRefs();
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -290,27 +393,3 @@ int NiBSplineCompTransformInterpolator::GetNumControlPt() const
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiBSplineCompTransformInterpolator"] = NiBSplineCompTransformInterpolator::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiBSplineCompTransformInterpolator::Create() {
-	return new NiBSplineCompTransformInterpolator;
-}

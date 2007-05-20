@@ -1,53 +1,38 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiIntegerExtraData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiIntegerExtraData::TYPE("NiIntegerExtraData", &NI_INTEGER_EXTRA_DATA_PARENT::TYPE );
+const Type NiIntegerExtraData::TYPE("NiIntegerExtraData", &NiExtraData::TYPE );
 
-NiIntegerExtraData::NiIntegerExtraData() NI_INTEGER_EXTRA_DATA_CONSTRUCT {}
-
-NiIntegerExtraData::~NiIntegerExtraData() {}
-
-void NiIntegerExtraData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiIntegerExtraData::NiIntegerExtraData() : integerData((unsigned int)0) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiIntegerExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiIntegerExtraData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiIntegerExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiIntegerExtraData::GetRefs() const {
-	return InternalGetRefs();
+NiIntegerExtraData::~NiIntegerExtraData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiIntegerExtraData::GetType() const {
 	return TYPE;
-};
-
-//--BEGIN MISC CUSTOM CODE--//
-
-unsigned int NiIntegerExtraData::GetData() const {
-	return integerData;
-}
-	
-void NiIntegerExtraData::SetData( unsigned int n ) {
-	integerData = n;
 }
 
-//--END CUSTOM CODE--//
-
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -70,3 +55,67 @@ namespace Niflib {
 NiObject * NiIntegerExtraData::Create() {
 	return new NiIntegerExtraData;
 }
+
+void NiIntegerExtraData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::Read( in, link_stack, info );
+	NifStream( integerData, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiIntegerExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::Write( out, link_map, info );
+	NifStream( integerData, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiIntegerExtraData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiExtraData::asString();
+	out << "  Integer Data:  " << integerData << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiIntegerExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiIntegerExtraData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiExtraData::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+
+unsigned int NiIntegerExtraData::GetData() const {
+	return integerData;
+}
+	
+void NiIntegerExtraData::SetData( unsigned int n ) {
+	integerData = n;
+}
+
+//--END CUSTOM CODE--//

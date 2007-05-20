@@ -1,42 +1,39 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiTextureProperty.h"
 #include "../../include/obj/NiImage.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTextureProperty::TYPE("NiTextureProperty", &NI_TEXTURE_PROPERTY_PARENT::TYPE );
+const Type NiTextureProperty::TYPE("NiTextureProperty", &NiProperty::TYPE );
 
-NiTextureProperty::NiTextureProperty() NI_TEXTURE_PROPERTY_CONSTRUCT {}
-
-NiTextureProperty::~NiTextureProperty() {}
-
-void NiTextureProperty::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiTextureProperty::NiTextureProperty() : flags((unsigned short)0), image(NULL), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiTextureProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiTextureProperty::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiTextureProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiTextureProperty::GetRefs() const {
-	return InternalGetRefs();
+NiTextureProperty::~NiTextureProperty() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiTextureProperty::GetType() const {
 	return TYPE;
-};
+}
 
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -58,6 +55,79 @@ namespace Niflib {
 
 NiObject * NiTextureProperty::Create() {
 	return new NiTextureProperty;
+}
+
+void NiTextureProperty::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiProperty::Read( in, link_stack, info );
+	NifStream( flags, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+	if ( info.version <= 0x03000300 ) {
+		NifStream( unknownInt1, in, info );
+		NifStream( unknownInt2, in, info );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiTextureProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiProperty::Write( out, link_map, info );
+	NifStream( flags, out, info );
+	if ( image != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+	if ( info.version <= 0x03000300 ) {
+		NifStream( unknownInt1, out, info );
+		NifStream( unknownInt2, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiTextureProperty::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiProperty::asString();
+	out << "  Flags:  " << flags << endl;
+	out << "  Image:  " << image << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiTextureProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiProperty::FixLinks( objects, link_stack, info );
+	image = FixLink<NiImage>( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiTextureProperty::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiProperty::GetRefs();
+	if ( image != NULL )
+		refs.push_back(StaticCast<NiObject>(image));
+	return refs;
 }
 
 //--BEGIN MISC CUSTOM CODE--//

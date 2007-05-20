@@ -1,8 +1,17 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _BHKRIGIDBODY_H_
 #define _BHKRIGIDBODY_H_
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
 
 #include "bhkEntity.h"
 
@@ -13,29 +22,49 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class bhkConstraint;
-
-//#include "../gen/obj_defines.h"
-
 class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;
 
 /*!
- * bhkRigidBody - Describes physical properties of an object.
+ * bhkRigidBody - This is the default body type for all "normal" usable
+ * and static world objects. The "T" suffix         marks this body as
+ * active for translation and rotation, a normal bhkRigidBody ignores
+ * those         properties. Because the properties are equal, a
+ * bhkRigidBody may be renamed         into a bhkRigidBodyT and vice-
+ * versa.
  */
 
-class bhkRigidBody : public BHK_RIGID_BODY_PARENT {
+class bhkRigidBody : public bhkEntity {
 public:
+	/*! Constructor */
 	NIFLIB_API bhkRigidBody();
-	NIFLIB_API ~bhkRigidBody();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~bhkRigidBody();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -244,16 +273,156 @@ public:
 	NIFLIB_API void SetQualityType( MotionQuality value );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	BHK_RIGID_BODY_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * Unknown.
+	 */
+	array<5,float > unknown5Floats;
+	/*!
+	 * Unknown.
+	 */
+	array<4,unsigned short > unknown4Shorts;
+	/*!
+	 * Copy of Layer value?
+	 */
+	OblivionLayer layerCopy;
+	/*!
+	 * Copy of Col Filter value?
+	 */
+	byte colFilterCopy;
+	/*!
+	 * Unknown.
+	 */
+	array<7,unsigned short > unknown7Shorts;
+	/*!
+	 * A vector that moves the body by the specified amount. Only enabled in
+	 * bhkRigidBodyT objects.
+	 */
+	Vector3 translation;
+	/*!
+	 * This seems to often be 1 for single objects, or the first one in a
+	 * a linked object group. This may be due to those objects often being
+	 * bhkRigidBodyT as well.
+	 */
+	float unknownFloat00;
+	/*!
+	 * The rotation Yaw/Pitch/Roll to apply to the body. Only enabled in
+	 * bhkRigidBodyT objects.
+	 */
+	QuaternionXYZW rotation;
+	/*!
+	 * Linear velocity.
+	 */
+	Vector3 linearVelocity;
+	/*!
+	 * Unknown.
+	 */
+	float unknownFloat01;
+	/*!
+	 * Angular velocity.
+	 */
+	Vector3 angularVelocity;
+	/*!
+	 * Unknown.
+	 */
+	float unknownFloat02;
+	/*!
+	 * Defines how the mass is distributed among the body.
+	 */
+	array<12,float > inertia;
+	/*!
+	 * This seems to be used to relocate the object's center of mass. Useful
+	 * for balancing objects in contraints.
+	 */
+	Vector3 center;
+	/*!
+	 * Unknown float.
+	 */
+	float unknownFloat03;
+	/*!
+	 * The body's mass.
+	 */
+	float mass;
+	/*!
+	 * Damping value for linear movement. A value that is too small fixes the
+	 * object in place.
+	 */
+	float linearDamping;
+	/*!
+	 * Damping value for angular movement.
+	 */
+	float angularDamping;
+	/*!
+	 * The body's friction.
+	 */
+	float friction;
+	/*!
+	 * The body's restitution (elasticity).
+	 */
+	float restitution;
+	/*!
+	 * Maximal linear velocity.
+	 */
+	float maxLinearVelocity;
+	/*!
+	 * Maximal angular velocity. Pi x 10?
+	 */
+	float maxAngularVelocity;
+	/*!
+	 * Penetration depth.
+	 */
+	float penetrationDepth;
+	/*!
+	 * Motion system? Overrides Quality when on Keyframed?
+	 */
+	MotionSystem motionSystem;
+	/*!
+	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.
+	 * Seems to always be same as Unknown Byte 2.
+	 */
+	byte unknownByte1;
+	/*!
+	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.
+	 * Seems to always be same as Unknown Byte 1.
+	 */
+	byte unknownByte2;
+	/*!
+	 * The motion type. Determines quality of motion?
+	 */
+	MotionQuality qualityType;
+	/*!
+	 * Unknown.
+	 */
+	unsigned int unknownInt6;
+	/*!
+	 * Unknown.
+	 */
+	unsigned int unknownInt7;
+	/*!
+	 * Unknown.
+	 */
+	unsigned int unknownInt8;
+	/*!
+	 * The number of constraints this object is bound to.
+	 */
+	mutable unsigned int numConstraints;
+	/*!
+	 * Unknown.
+	 */
+	vector<Ref<bhkConstraint > > constraints;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

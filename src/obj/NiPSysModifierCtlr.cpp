@@ -1,34 +1,31 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPSysModifierCtlr.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPSysModifierCtlr::TYPE("NiPSysModifierCtlr", &NI_P_SYS_MODIFIER_CTLR_PARENT::TYPE );
+const Type NiPSysModifierCtlr::TYPE("NiPSysModifierCtlr", &NiSingleInterpController::TYPE );
 
-NiPSysModifierCtlr::NiPSysModifierCtlr() NI_P_SYS_MODIFIER_CTLR_CONSTRUCT {}
-
-NiPSysModifierCtlr::~NiPSysModifierCtlr() {}
-
-void NiPSysModifierCtlr::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiPSysModifierCtlr::NiPSysModifierCtlr() {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiPSysModifierCtlr::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiPSysModifierCtlr::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiPSysModifierCtlr::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiPSysModifierCtlr::GetRefs() const {
-	return InternalGetRefs();
+NiPSysModifierCtlr::~NiPSysModifierCtlr() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiPSysModifierCtlr::GetType() const {
@@ -59,3 +56,57 @@ NiObject * NiPSysModifierCtlr::Create() {
 	return new NiPSysModifierCtlr;
 }
 
+void NiPSysModifierCtlr::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiSingleInterpController::Read( in, link_stack, info );
+	NifStream( modifierName, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiPSysModifierCtlr::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiSingleInterpController::Write( out, link_map, info );
+	NifStream( modifierName, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiPSysModifierCtlr::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiSingleInterpController::asString();
+	out << "  Modifier Name:  " << modifierName << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiPSysModifierCtlr::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiSingleInterpController::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiPSysModifierCtlr::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiSingleInterpController::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

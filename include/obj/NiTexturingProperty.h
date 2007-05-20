@@ -1,16 +1,24 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#ifndef _NiTexturingProperty_H_
-#define _NiTexturingProperty_H_
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+#ifndef _NITEXTURINGPROPERTY_H_
+#define _NITEXTURINGPROPERTY_H_
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
 
 #include "NiProperty.h"
+
 // Include structures
 #include "../gen/TexDesc.h"
 #include "../gen/ShaderTexDesc.h"
 namespace Niflib {
-
-//#include "../gen/obj_defines.h"
 
 class NiTexturingProperty;
 typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
@@ -19,19 +27,37 @@ typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
  * NiTexturingProperty - Describes an object's textures.
  */
 
-class NiTexturingProperty : public NI_TEXTURING_PROPERTY_PARENT {
+class NiTexturingProperty : public NiProperty {
 public:
+	/*! Constructor */
 	NIFLIB_API NiTexturingProperty();
-	NIFLIB_API ~NiTexturingProperty();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~NiTexturingProperty();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -163,16 +189,133 @@ public:
 	NIFLIB_API void SetBumpMapMatrix( Matrix22 & new_val );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	NI_TEXTURING_PROPERTY_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * Property flags.
+	 */
+	unsigned short flags;
+	/*!
+	 * 0=replace, 1=decal, 2=modulate, 3=hilight, 4=hilight2
+	 */
+	ApplyMode applyMode;
+	/*!
+	 * Number of textures. Always 7 in versions < 20.0.0.4. Can also be 8 in
+	 * >= 20.0.0.4.
+	 */
+	unsigned int textureCount;
+	/*!
+	 * Do we have a base texture?
+	 */
+	bool hasBaseTexture;
+	/*!
+	 * The base texture.
+	 */
+	TexDesc baseTexture;
+	/*!
+	 * Do we have a dark texture?
+	 */
+	bool hasDarkTexture;
+	/*!
+	 * The dark texture.
+	 */
+	TexDesc darkTexture;
+	/*!
+	 * Do we have a detail texture?
+	 */
+	bool hasDetailTexture;
+	/*!
+	 * The detail texture.
+	 */
+	TexDesc detailTexture;
+	/*!
+	 * Do we have a gloss texture?
+	 */
+	bool hasGlossTexture;
+	/*!
+	 * The gloss texture.
+	 */
+	TexDesc glossTexture;
+	/*!
+	 * Do we have a glow texture?
+	 */
+	bool hasGlowTexture;
+	/*!
+	 * The glowing texture.
+	 */
+	TexDesc glowTexture;
+	/*!
+	 * Do we have a bump map texture?
+	 */
+	bool hasBumpMapTexture;
+	/*!
+	 * The bump map texture.
+	 */
+	TexDesc bumpMapTexture;
+	/*!
+	 * Unknown.
+	 */
+	float bumpMapLumaScale;
+	/*!
+	 * Unknown.
+	 */
+	float bumpMapLumaOffset;
+	/*!
+	 * Unknown.
+	 */
+	Matrix22 bumpMapMatrix;
+	/*!
+	 * Do we have a decal 0 texture?
+	 */
+	bool hasDecal0Texture;
+	/*!
+	 * The decal texture.
+	 */
+	TexDesc decal0Texture;
+	/*!
+	 * Do we have a decal 1 texture?
+	 */
+	bool hasDecal1Texture;
+	/*!
+	 * Another decal texture.
+	 */
+	TexDesc decal1Texture;
+	/*!
+	 * Do we have a decal 2 texture?
+	 */
+	bool hasDecal2Texture;
+	/*!
+	 * Another decal texture.
+	 */
+	TexDesc decal2Texture;
+	/*!
+	 * Do we have a decal 3 texture?
+	 */
+	bool hasDecal3Texture;
+	/*!
+	 * Another decal texture. Who knows the limit.
+	 */
+	TexDesc decal3Texture;
+	/*!
+	 * Number of Shader textures that follow.
+	 */
+	mutable unsigned int numShaderTextures;
+	/*!
+	 * Shader textures.
+	 */
+	vector<ShaderTexDesc > shaderTextures;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

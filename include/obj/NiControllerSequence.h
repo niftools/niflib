@@ -1,12 +1,24 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _NICONTROLLERSEQUENCE_H_
 #define _NICONTROLLERSEQUENCE_H_
 
+//--BEGIN FILE HEAD CUSTOM CODE--//
+namespace Niflib {
+	class NiSingleInterpController;
+}
+//--END CUSTOM CODE--//
+
 #include "NiSequence.h"
+
 // Include structures
-#include "../gen/ControllerLink.h"
 #include "../Ref.h"
 namespace Niflib {
 
@@ -14,31 +26,45 @@ namespace Niflib {
 class NiTextKeyExtraData;
 class NiControllerManager;
 class NiStringPalette;
-class NiTimeController;
-class NiSingleInterpController;
-
-//#include "../gen/obj_defines.h"
-
 class NiControllerSequence;
 typedef Ref<NiControllerSequence> NiControllerSequenceRef;
 
 /*!
- * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and up).
+ * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and
+ * up).
  */
 
-class NiControllerSequence : public NI_CONTROLLER_SEQUENCE_PARENT {
+class NiControllerSequence : public NiSequence {
 public:
+	/*! Constructor */
 	NIFLIB_API NiControllerSequence();
-	NIFLIB_API ~NiControllerSequence();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~NiControllerSequence();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -203,15 +229,70 @@ protected:
    NiControllerManager * GetParent() const;
    void SetParent( NiControllerManager * parent );
 
-//--END CUSTOM CODE--//
-	NI_CONTROLLER_SEQUENCE_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	//--END CUSTOM CODE--//
+protected:
+	/*!
+	 * Weight/priority of animation?
+	 */
+	float weight;
+	/*!
+	 * Link to NiTextKeyExtraData. Replaces the other Text Keys field in
+	 * versions 10.1.0.106 and up.
+	 */
+	Ref<NiTextKeyExtraData > textKeys;
+	/*!
+	 * Anim cycle type? Is part of "Flags" in other objects?
+	 */
+	CycleType cycleType;
+	/*!
+	 * Unknown.
+	 */
+	unsigned int unknownInt0;
+	/*!
+	 * The animation frequency.
+	 */
+	float frequency;
+	/*!
+	 * The controller sequence start time?
+	 */
+	float startTime;
+	/*!
+	 * The controller sequence stop time?
+	 */
+	float stopTime;
+	/*!
+	 * Unknown.
+	 */
+	float unknownFloat2;
+	/*!
+	 * Unknown.
+	 */
+	byte unknownByte;
+	/*!
+	 * Refers to NiControllerManager which references this object, if any.
+	 */
+	NiControllerManager * manager;
+	/*!
+	 * Name of target node Controller acts on.
+	 */
+	string targetName;
+	/*!
+	 * Refers to NiStringPalette.
+	 */
+	Ref<NiStringPalette > stringPalette;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

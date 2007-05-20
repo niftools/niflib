@@ -1,40 +1,361 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiGeometryData.h"
 #include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGeometryData::TYPE("NiGeometryData", &NI_GEOMETRY_DATA_PARENT::TYPE );
+const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() NI_GEOMETRY_DATA_CONSTRUCT {}
-
-NiGeometryData::~NiGeometryData() {}
-
-void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), unknownShort1((unsigned short)0), hasVertices(false), numUvSets2((byte)0), unknownByte1((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((unsigned short)0), hasUv(false), unknownShort2((unsigned short)0), unknownLink1(NULL) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiGeometryData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiGeometryData::GetRefs() const {
-	return InternalGetRefs();
+NiGeometryData::~NiGeometryData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiGeometryData::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiGeometryData"] = NiGeometryData::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiGeometryData::Create() {
+	return new NiGeometryData;
+}
+
+void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiObject::Read( in, link_stack, info );
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( name, in, info );
+	};
+	NifStream( numVertices, in, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( unknownShort1, in, info );
+	};
+	NifStream( hasVertices, in, info );
+	if ( (hasVertices != 0) ) {
+		vertices.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
+			NifStream( vertices[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( numUvSets2, in, info );
+		NifStream( unknownByte1, in, info );
+	};
+	NifStream( hasNormals, in, info );
+	if ( (hasNormals != 0) ) {
+		normals.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
+			NifStream( normals[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x0A010000 ) {
+		if ( (((hasNormals != 0)) && ((unknownByte1 & 16))) ) {
+			unknownVectors1.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < unknownVectors1.size(); i3++) {
+				NifStream( unknownVectors1[i3], in, info );
+			};
+			unknownVectors2.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < unknownVectors2.size(); i3++) {
+				NifStream( unknownVectors2[i3], in, info );
+			};
+		};
+	};
+	NifStream( center, in, info );
+	NifStream( radius, in, info );
+	NifStream( hasVertexColors, in, info );
+	if ( (hasVertexColors != 0) ) {
+		vertexColors.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
+			NifStream( vertexColors[i2], in, info );
+		};
+	};
+	if ( info.version <= 0x04020200 ) {
+		NifStream( numUvSets, in, info );
+	};
+	if ( info.version <= 0x04000002 ) {
+		NifStream( hasUv, in, info );
+	};
+	if ( info.version <= 0x04020200 ) {
+		uvSets.resize(numUvSets);
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			uvSets[i2].resize(numVertices);
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], in, info );
+			};
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		uvSets.resize((numUvSets2 & 63));
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			uvSets[i2].resize(numVertices);
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], in, info );
+			};
+		};
+		NifStream( unknownShort2, in, info );
+	};
+	if ( info.version >= 0x14000004 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Write( out, link_map, info );
+	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets2 = (byte)(uvSets.size());
+	numVertices = (unsigned short)(vertices.size());
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( name, out, info );
+	};
+	NifStream( numVertices, out, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( unknownShort1, out, info );
+	};
+	NifStream( hasVertices, out, info );
+	if ( (hasVertices != 0) ) {
+		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
+			NifStream( vertices[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( numUvSets2, out, info );
+		NifStream( unknownByte1, out, info );
+	};
+	NifStream( hasNormals, out, info );
+	if ( (hasNormals != 0) ) {
+		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
+			NifStream( normals[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x0A010000 ) {
+		if ( (((hasNormals != 0)) && ((unknownByte1 & 16))) ) {
+			for (unsigned int i3 = 0; i3 < unknownVectors1.size(); i3++) {
+				NifStream( unknownVectors1[i3], out, info );
+			};
+			for (unsigned int i3 = 0; i3 < unknownVectors2.size(); i3++) {
+				NifStream( unknownVectors2[i3], out, info );
+			};
+		};
+	};
+	NifStream( center, out, info );
+	NifStream( radius, out, info );
+	NifStream( hasVertexColors, out, info );
+	if ( (hasVertexColors != 0) ) {
+		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
+			NifStream( vertexColors[i2], out, info );
+		};
+	};
+	if ( info.version <= 0x04020200 ) {
+		NifStream( numUvSets, out, info );
+	};
+	if ( info.version <= 0x04000002 ) {
+		NifStream( hasUv, out, info );
+	};
+	if ( info.version <= 0x04020200 ) {
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], out, info );
+			};
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], out, info );
+			};
+		};
+		NifStream( unknownShort2, out, info );
+	};
+	if ( info.version >= 0x14000004 ) {
+		if ( unknownLink1 != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiGeometryData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets2 = (byte)(uvSets.size());
+	numVertices = (unsigned short)(vertices.size());
+	out << "  Name:  " << name << endl;
+	out << "  Num Vertices:  " << numVertices << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Has Vertices:  " << hasVertices << endl;
+	if ( (hasVertices != 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Vertices[" << i2 << "]:  " << vertices[i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Num UV Sets 2:  " << numUvSets2 << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Has Normals:  " << hasNormals << endl;
+	if ( (hasNormals != 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Normals[" << i2 << "]:  " << normals[i2] << endl;
+			array_output_count++;
+		};
+	};
+	if ( (((hasNormals != 0)) && ((unknownByte1 & 16))) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < unknownVectors1.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Vectors 1[" << i2 << "]:  " << unknownVectors1[i2] << endl;
+			array_output_count++;
+		};
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < unknownVectors2.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Vectors 2[" << i2 << "]:  " << unknownVectors2[i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Center:  " << center << endl;
+	out << "  Radius:  " << radius << endl;
+	out << "  Has Vertex Colors:  " << hasVertexColors << endl;
+	if ( (hasVertexColors != 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Vertex Colors[" << i2 << "]:  " << vertexColors[i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Num UV Sets:  " << numUvSets << endl;
+	out << "  Has UV:  " << hasUv << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < uvSets.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (unsigned int i2 = 0; i2 < uvSets[i1].size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      UV Sets[" << i2 << "]:  " << uvSets[i1][i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
+	out << "  Unknown Link 1:  " << unknownLink1 << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::FixLinks( objects, link_stack, info );
+	if ( info.version >= 0x14000004 ) {
+		unknownLink1 = FixLink<NiObject>( objects, link_stack, info );
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiGeometryData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	if ( unknownLink1 != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink1));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -166,27 +487,3 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiGeometryData"] = NiGeometryData::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiGeometryData::Create() {
-	return new NiGeometryData;
-}

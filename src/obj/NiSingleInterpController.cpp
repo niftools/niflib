@@ -1,35 +1,32 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSingleInterpController.h"
 #include "../../include/obj/NiInterpolator.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSingleInterpController::TYPE("NiSingleInterpController", &NI_SINGLE_INTERP_CONTROLLER_PARENT::TYPE );
+const Type NiSingleInterpController::TYPE("NiSingleInterpController", &NiInterpController::TYPE );
 
-NiSingleInterpController::NiSingleInterpController() NI_SINGLE_INTERP_CONTROLLER_CONSTRUCT {}
-
-NiSingleInterpController::~NiSingleInterpController() {}
-
-void NiSingleInterpController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiSingleInterpController::NiSingleInterpController() : interpolator(NULL) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiSingleInterpController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiSingleInterpController::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiSingleInterpController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiSingleInterpController::GetRefs() const {
-	return InternalGetRefs();
+NiSingleInterpController::~NiSingleInterpController() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiSingleInterpController::GetType() const {
@@ -58,6 +55,72 @@ namespace Niflib {
 
 NiObject * NiSingleInterpController::Create() {
 	return new NiSingleInterpController;
+}
+
+void NiSingleInterpController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiInterpController::Read( in, link_stack, info );
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSingleInterpController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpController::Write( out, link_map, info );
+	if ( info.version >= 0x0A020000 ) {
+		if ( interpolator != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiSingleInterpController::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiInterpController::asString();
+	out << "  Interpolator:  " << interpolator << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSingleInterpController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpController::FixLinks( objects, link_stack, info );
+	if ( info.version >= 0x0A020000 ) {
+		interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiSingleInterpController::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiInterpController::GetRefs();
+	if ( interpolator != NULL )
+		refs.push_back(StaticCast<NiObject>(interpolator));
+	return refs;
 }
 
 //--BEGIN MISC CUSTOM CODE--//

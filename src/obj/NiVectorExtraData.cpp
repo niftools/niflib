@@ -1,53 +1,38 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiVectorExtraData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NI_VECTOR_EXTRA_DATA_PARENT::TYPE );
+const Type NiVectorExtraData::TYPE("NiVectorExtraData", &NiExtraData::TYPE );
 
-NiVectorExtraData::NiVectorExtraData() NI_VECTOR_EXTRA_DATA_CONSTRUCT {}
-
-NiVectorExtraData::~NiVectorExtraData() {}
-
-void NiVectorExtraData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiVectorExtraData::NiVectorExtraData() : unknownFloat(0.0f) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiVectorExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiVectorExtraData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiVectorExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiVectorExtraData::GetRefs() const {
-	return InternalGetRefs();
+NiVectorExtraData::~NiVectorExtraData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiVectorExtraData::GetType() const {
 	return TYPE;
-};
+}
 
-//--BEGIN MISC CUSTOM CODE--//
-
-Vector3 NiVectorExtraData::GetData() const {
-	return vectorData;
-};
-	
-void NiVectorExtraData::SetData( const Vector3 & n ) {
-	vectorData = n;
-};
-
-//--END CUSTOM CODE--//
-
-namespace Niflib { 
+namespace Niflib {
 	typedef NiObject*(*obj_factory_func)();
 	extern map<string, obj_factory_func> global_object_map;
 
@@ -70,3 +55,70 @@ namespace Niflib {
 NiObject * NiVectorExtraData::Create() {
 	return new NiVectorExtraData;
 }
+
+void NiVectorExtraData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::Read( in, link_stack, info );
+	NifStream( vectorData, in, info );
+	NifStream( unknownFloat, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiVectorExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::Write( out, link_map, info );
+	NifStream( vectorData, out, info );
+	NifStream( unknownFloat, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiVectorExtraData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiExtraData::asString();
+	out << "  Vector Data:  " << vectorData << endl;
+	out << "  Unknown Float:  " << unknownFloat << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiVectorExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiExtraData::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiVectorExtraData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiExtraData::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+
+Vector3 NiVectorExtraData::GetData() const {
+	return vectorData;
+};
+	
+void NiVectorExtraData::SetData( const Vector3 & n ) {
+	vectorData = n;
+};
+
+//--END CUSTOM CODE--//

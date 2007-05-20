@@ -1,51 +1,204 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiControllerSequence.h"
-#include "../../include/gen/ControllerLink.h"
-#include "../../include/obj/NiInterpolator.h"
-#include "../../include/obj/NiObject.h"
-#include "../../include/obj/NiStringPalette.h"
-#include "../../include/gen/ControllerLink.h"
-#include "../../include/obj/NiTextKeyExtraData.h"
-#include "../../include/obj/NiControllerManager.h"
-#include "../../include/obj/NiTimeController.h"
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
 #include "../../include/obj/NiSingleInterpController.h"
 #include "../../include/obj/NiObjectNET.h"
 #include "../../include/obj/NiProperty.h"
+#include "../../include/obj/NiInterpolator.h"
+//--END CUSTOM CODE--//
 
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/NiControllerSequence.h"
+#include "../../include/obj/NiTextKeyExtraData.h"
+#include "../../include/obj/NiControllerManager.h"
+#include "../../include/obj/NiStringPalette.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiControllerSequence::TYPE("NiControllerSequence", &NI_CONTROLLER_SEQUENCE_PARENT::TYPE );
+const Type NiControllerSequence::TYPE("NiControllerSequence", &NiSequence::TYPE );
 
-NiControllerSequence::NiControllerSequence() NI_CONTROLLER_SEQUENCE_CONSTRUCT {}
-
-NiControllerSequence::~NiControllerSequence() {}
-
-void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiControllerSequence::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiControllerSequence::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiControllerSequence::GetRefs() const {
-	return InternalGetRefs();
+NiControllerSequence::~NiControllerSequence() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiControllerSequence::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiControllerSequence"] = NiControllerSequence::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiControllerSequence::Create() {
+	return new NiControllerSequence;
+}
+
+void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiSequence::Read( in, link_stack, info );
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( weight, in, info );
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+		NifStream( cycleType, in, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownInt0, in, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( frequency, in, info );
+		NifStream( startTime, in, info );
+		NifStream( stopTime, in, info );
+	};
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
+		NifStream( unknownFloat2, in, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownByte, in, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+		NifStream( targetName, in, info );
+	};
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiSequence::Write( out, link_map, info );
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( weight, out, info );
+		if ( textKeys != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+		NifStream( cycleType, out, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownInt0, out, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		NifStream( frequency, out, info );
+		NifStream( startTime, out, info );
+		NifStream( stopTime, out, info );
+	};
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
+		NifStream( unknownFloat2, out, info );
+	};
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		NifStream( unknownByte, out, info );
+	};
+	if ( info.version >= 0x0A01006A ) {
+		if ( manager != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+		NifStream( targetName, out, info );
+	};
+	if ( info.version >= 0x0A020000 ) {
+		if ( stringPalette != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiControllerSequence::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiSequence::asString();
+	out << "  Weight:  " << weight << endl;
+	out << "  Text Keys:  " << textKeys << endl;
+	out << "  Cycle Type:  " << cycleType << endl;
+	out << "  Unknown Int 0:  " << unknownInt0 << endl;
+	out << "  Frequency:  " << frequency << endl;
+	out << "  Start Time:  " << startTime << endl;
+	out << "  Stop Time:  " << stopTime << endl;
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Byte:  " << unknownByte << endl;
+	out << "  Manager:  " << manager << endl;
+	out << "  Target Name:  " << targetName << endl;
+	out << "  String Palette:  " << stringPalette << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiControllerSequence::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiSequence::FixLinks( objects, link_stack, info );
+	if ( info.version >= 0x0A01006A ) {
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
+		manager = FixLink<NiControllerManager>( objects, link_stack, info );
+	};
+	if ( info.version >= 0x0A020000 ) {
+		stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiControllerSequence::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiSequence::GetRefs();
+	if ( textKeys != NULL )
+		refs.push_back(StaticCast<NiObject>(textKeys));
+	if ( stringPalette != NULL )
+		refs.push_back(StaticCast<NiObject>(stringPalette));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -226,27 +379,3 @@ void NiControllerSequence::SetWeight( const float value ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiControllerSequence"] = NiControllerSequence::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiControllerSequence::Create() {
-	return new NiControllerSequence;
-}

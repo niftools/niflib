@@ -1,17 +1,28 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiAVObject.h"
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
 #include "../../include/obj/NiNode.h"
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/NiAVObject.h"
+#include "../../include/gen/BoundingBox.h"
 #include "../../include/obj/NiProperty.h"
-#include "../../include/obj/NiCollisionData.h"
 #include "../../include/obj/NiCollisionObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
+const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
 
-NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT {
+NiAVObject::NiAVObject() : flags((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), hasBoundingBox(false), collisionObject(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	parent = NULL;
@@ -33,24 +44,177 @@ NiAVObject::~NiAVObject() {
 	//--END CUSTOM CODE--//
 }
 
+const Type & NiAVObject::GetType() const {
+	return TYPE;
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiAVObject"] = NiAVObject::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiAVObject::Create() {
+	return new NiAVObject;
+}
+
 void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiObjectNET::Read( in, link_stack, info );
+	NifStream( flags, in, info );
+	NifStream( translation, in, info );
+	NifStream( rotation, in, info );
+	NifStream( scale, in, info );
+	if ( info.version <= 0x04020200 ) {
+		NifStream( velocity, in, info );
+	};
+	NifStream( numProperties, in, info );
+	properties.resize(numProperties);
+	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( info.version <= 0x04020200 ) {
+		NifStream( hasBoundingBox, in, info );
+		if ( (hasBoundingBox != 0) ) {
+			NifStream( boundingBox.unknownInt, in, info );
+			NifStream( boundingBox.translation, in, info );
+			NifStream( boundingBox.rotation, in, info );
+			NifStream( boundingBox.radius, in, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObjectNET::Write( out, link_map, info );
+	numProperties = (unsigned int)(properties.size());
+	NifStream( flags, out, info );
+	NifStream( translation, out, info );
+	NifStream( rotation, out, info );
+	NifStream( scale, out, info );
+	if ( info.version <= 0x04020200 ) {
+		NifStream( velocity, out, info );
+	};
+	NifStream( numProperties, out, info );
+	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
+		if ( properties[i1] != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+	if ( info.version <= 0x04020200 ) {
+		NifStream( hasBoundingBox, out, info );
+		if ( (hasBoundingBox != 0) ) {
+			NifStream( boundingBox.unknownInt, out, info );
+			NifStream( boundingBox.translation, out, info );
+			NifStream( boundingBox.rotation, out, info );
+			NifStream( boundingBox.radius, out, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
+		if ( collisionObject != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-string NiAVObject::asString( bool verbose ) const {
-	return InternalAsString( verbose );
+std::string NiAVObject::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObjectNET::asString();
+	numProperties = (unsigned int)(properties.size());
+	out << "  Flags:  " << flags << endl;
+	out << "  Translation:  " << translation << endl;
+	out << "  Rotation:  " << rotation << endl;
+	out << "  Scale:  " << scale << endl;
+	out << "  Velocity:  " << velocity << endl;
+	out << "  Num Properties:  " << numProperties << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Properties[" << i1 << "]:  " << properties[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Has Bounding Box:  " << hasBoundingBox << endl;
+	if ( (hasBoundingBox != 0) ) {
+		out << "    Unknown Int:  " << boundingBox.unknownInt << endl;
+		out << "    Translation:  " << boundingBox.translation << endl;
+		out << "    Rotation:  " << boundingBox.rotation << endl;
+		out << "    Radius:  " << boundingBox.radius << endl;
+	};
+	out << "  Collision Object:  " << collisionObject << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 void NiAVObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObjectNET::FixLinks( objects, link_stack, info );
+	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
+		properties[i1] = FixLink<NiProperty>( objects, link_stack, info );
+	};
+	if ( info.version >= 0x0A000100 ) {
+		collisionObject = FixLink<NiCollisionObject>( objects, link_stack, info );
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-list<NiObjectRef> NiAVObject::GetRefs() const {
-	return InternalGetRefs();
+std::list<NiObjectRef> NiAVObject::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObjectNET::GetRefs();
+	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
+		if ( properties[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(properties[i1]));
+	};
+	if ( collisionObject != NULL )
+		refs.push_back(StaticCast<NiObject>(collisionObject));
+	return refs;
 }
 
 //--BEGIN MISC CUSTOM CODE--//
@@ -231,31 +395,3 @@ void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
 }
 
 //--END CUSTOM CODE--//
-
-const Type & NiAVObject::GetType() const {
-	return TYPE;
-};
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiAVObject"] = NiAVObject::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiAVObject::Create() {
-	return new NiAVObject;
-}

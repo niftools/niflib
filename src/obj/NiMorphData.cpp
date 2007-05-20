@@ -1,40 +1,197 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiMorphData.h"
 #include "../../include/gen/Morph.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiMorphData::TYPE("NiMorphData", &NI_MORPH_DATA_PARENT::TYPE );
+const Type NiMorphData::TYPE("NiMorphData", &NiObject::TYPE );
 
-NiMorphData::NiMorphData() NI_MORPH_DATA_CONSTRUCT {}
-
-NiMorphData::~NiMorphData() {}
-
-void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiMorphData::NiMorphData() : numMorphs((unsigned int)0), numVertices((unsigned int)0), unknownByte((byte)0) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiMorphData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiMorphData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiMorphData::GetRefs() const {
-	return InternalGetRefs();
+NiMorphData::~NiMorphData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiMorphData::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiMorphData"] = NiMorphData::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiMorphData::Create() {
+	return new NiMorphData;
+}
+
+void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Read( in, link_stack, info );
+	NifStream( numMorphs, in, info );
+	NifStream( numVertices, in, info );
+	NifStream( unknownByte, in, info );
+	morphs.resize(numMorphs);
+	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
+		if ( info.version >= 0x0A01006A ) {
+			NifStream( morphs[i1].frameName, in, info );
+		};
+		if ( info.version <= 0x0A010000 ) {
+			NifStream( morphs[i1].numKeys, in, info );
+			NifStream( morphs[i1].interpolation, in, info );
+			morphs[i1].keys.resize(morphs[i1].numKeys);
+			for (unsigned int i3 = 0; i3 < morphs[i1].keys.size(); i3++) {
+				NifStream( morphs[i1].keys[i3], in, info, morphs[i1].interpolation );
+			};
+		};
+		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+			NifStream( morphs[i1].unknownInt, in, info );
+		};
+		morphs[i1].vectors.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {
+			NifStream( morphs[i1].vectors[i2], in, info );
+		};
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Write( out, link_map, info );
+	numMorphs = (unsigned int)(morphs.size());
+	NifStream( numMorphs, out, info );
+	NifStream( numVertices, out, info );
+	NifStream( unknownByte, out, info );
+	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
+		morphs[i1].numKeys = (unsigned int)(morphs[i1].keys.size());
+		if ( info.version >= 0x0A01006A ) {
+			NifStream( morphs[i1].frameName, out, info );
+		};
+		if ( info.version <= 0x0A010000 ) {
+			NifStream( morphs[i1].numKeys, out, info );
+			NifStream( morphs[i1].interpolation, out, info );
+			for (unsigned int i3 = 0; i3 < morphs[i1].keys.size(); i3++) {
+				NifStream( morphs[i1].keys[i3], out, info, morphs[i1].interpolation );
+			};
+		};
+		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+			NifStream( morphs[i1].unknownInt, out, info );
+		};
+		for (unsigned int i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {
+			NifStream( morphs[i1].vectors[i2], out, info );
+		};
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiMorphData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	numMorphs = (unsigned int)(morphs.size());
+	out << "  Num Morphs:  " << numMorphs << endl;
+	out << "  Num Vertices:  " << numVertices << endl;
+	out << "  Unknown Byte:  " << unknownByte << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		morphs[i1].numKeys = (unsigned int)(morphs[i1].keys.size());
+		out << "    Frame Name:  " << morphs[i1].frameName << endl;
+		out << "    Num Keys:  " << morphs[i1].numKeys << endl;
+		out << "    Interpolation:  " << morphs[i1].interpolation << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < morphs[i1].keys.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Keys[" << i2 << "]:  " << morphs[i1].keys[i2] << endl;
+			array_output_count++;
+		};
+		out << "    Unknown Int:  " << morphs[i1].unknownInt << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Vectors[" << i2 << "]:  " << morphs[i1].vectors[i2] << endl;
+			array_output_count++;
+		};
+	};
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiMorphData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiMorphData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -94,27 +251,3 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiMorphData"] = NiMorphData::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiMorphData::Create() {
-	return new NiMorphData;
-}

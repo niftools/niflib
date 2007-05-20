@@ -1,45 +1,225 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiSkinData.h"
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/NiSkinInstance.h"
+#include "../../include/obj/NiGeometry.h"
 #include "../../include/obj/NiNode.h"
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/NiSkinData.h"
 #include "../../include/gen/SkinData.h"
 #include "../../include/gen/SkinWeight.h"
+#include "../../include/gen/SkinWeight.h"
 #include "../../include/obj/NiSkinPartition.h"
-#include "../../include/obj/NiGeometry.h"
-#include "../../include/obj/NiSkinInstance.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSkinData::TYPE("NiSkinData", &NI_SKIN_DATA_PARENT::TYPE );
+const Type NiSkinData::TYPE("NiSkinData", &NiObject::TYPE );
 
-NiSkinData::NiSkinData() NI_SKIN_DATA_CONSTRUCT {}
-
-NiSkinData::~NiSkinData() {}
-
-void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiSkinData::NiSkinData() : scale(0.0f), numBones((unsigned int)0), skinPartition(NULL), hasVertexWeights((byte)1) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiSkinData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiSkinData::GetRefs() const {
-	return InternalGetRefs();
+NiSkinData::~NiSkinData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiSkinData::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiSkinData"] = NiSkinData::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiSkinData::Create() {
+	return new NiSkinData;
+}
+
+void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiObject::Read( in, link_stack, info );
+	NifStream( rotation, in, info );
+	NifStream( translation, in, info );
+	NifStream( scale, in, info );
+	NifStream( numBones, in, info );
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( info.version >= 0x04020100 ) {
+		NifStream( hasVertexWeights, in, info );
+	};
+	boneList.resize(numBones);
+	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
+		NifStream( boneList[i1].rotation, in, info );
+		NifStream( boneList[i1].translation, in, info );
+		NifStream( boneList[i1].scale, in, info );
+		NifStream( boneList[i1].boundingSphereOffset, in, info );
+		NifStream( boneList[i1].boundingSphereRadius, in, info );
+		NifStream( boneList[i1].numVertices, in, info );
+		if ( info.version <= 0x04020100 ) {
+			boneList[i1].vertexWeights.resize(boneList[i1].numVertices);
+			for (unsigned int i3 = 0; i3 < boneList[i1].vertexWeights.size(); i3++) {
+				NifStream( boneList[i1].vertexWeights[i3].index, in, info );
+				NifStream( boneList[i1].vertexWeights[i3].weight, in, info );
+			};
+		};
+		if ( info.version >= 0x04020200 ) {
+			if ( (hasVertexWeights != 0) ) {
+				boneList[i1].vertexWeights.resize(boneList[i1].numVertices);
+				for (unsigned int i4 = 0; i4 < boneList[i1].vertexWeights.size(); i4++) {
+					NifStream( boneList[i1].vertexWeights[i4].index, in, info );
+					NifStream( boneList[i1].vertexWeights[i4].weight, in, info );
+				};
+			};
+		};
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::Write( out, link_map, info );
+	numBones = (unsigned int)(boneList.size());
+	NifStream( rotation, out, info );
+	NifStream( translation, out, info );
+	NifStream( scale, out, info );
+	NifStream( numBones, out, info );
+	if ( info.version <= 0x0A010000 ) {
+		if ( skinPartition != NULL )
+			NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
+		else
+			NifStream( 0xffffffff, out, info );
+	};
+	if ( info.version >= 0x04020100 ) {
+		NifStream( hasVertexWeights, out, info );
+	};
+	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
+		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
+		NifStream( boneList[i1].rotation, out, info );
+		NifStream( boneList[i1].translation, out, info );
+		NifStream( boneList[i1].scale, out, info );
+		NifStream( boneList[i1].boundingSphereOffset, out, info );
+		NifStream( boneList[i1].boundingSphereRadius, out, info );
+		NifStream( boneList[i1].numVertices, out, info );
+		if ( info.version <= 0x04020100 ) {
+			for (unsigned int i3 = 0; i3 < boneList[i1].vertexWeights.size(); i3++) {
+				NifStream( boneList[i1].vertexWeights[i3].index, out, info );
+				NifStream( boneList[i1].vertexWeights[i3].weight, out, info );
+			};
+		};
+		if ( info.version >= 0x04020200 ) {
+			if ( (hasVertexWeights != 0) ) {
+				for (unsigned int i4 = 0; i4 < boneList[i1].vertexWeights.size(); i4++) {
+					NifStream( boneList[i1].vertexWeights[i4].index, out, info );
+					NifStream( boneList[i1].vertexWeights[i4].weight, out, info );
+				};
+			};
+		};
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiSkinData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiObject::asString();
+	numBones = (unsigned int)(boneList.size());
+	out << "  Rotation:  " << rotation << endl;
+	out << "  Translation:  " << translation << endl;
+	out << "  Scale:  " << scale << endl;
+	out << "  Num Bones:  " << numBones << endl;
+	out << "  Skin Partition:  " << skinPartition << endl;
+	out << "  Has Vertex Weights:  " << hasVertexWeights << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
+		out << "    Rotation:  " << boneList[i1].rotation << endl;
+		out << "    Translation:  " << boneList[i1].translation << endl;
+		out << "    Scale:  " << boneList[i1].scale << endl;
+		out << "    Bounding Sphere Offset:  " << boneList[i1].boundingSphereOffset << endl;
+		out << "    Bounding Sphere Radius:  " << boneList[i1].boundingSphereRadius << endl;
+		out << "    Num Vertices:  " << boneList[i1].numVertices << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			out << "      Index:  " << boneList[i1].vertexWeights[i2].index << endl;
+			out << "      Weight:  " << boneList[i1].vertexWeights[i2].weight << endl;
+		};
+	};
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiObject::FixLinks( objects, link_stack, info );
+	if ( info.version <= 0x0A010000 ) {
+		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, info );
+	};
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiSkinData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiObject::GetRefs();
+	if ( skinPartition != NULL )
+		refs.push_back(StaticCast<NiObject>(skinPartition));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -81,7 +261,10 @@ void NiSkinData::SetOverallTransform( const Matrix44 & transform ) {
 	transform.Decompose( translation, rotation, scale );
 }
 
-NiSkinData::NiSkinData( NiGeometry * owner ) NI_SKIN_DATA_CONSTRUCT {
+NiSkinData::NiSkinData( NiGeometry * owner ) {
+	//Call normal constructor
+	NiSkinData();
+
 	ResetOffsets( owner );
 }
 
@@ -174,27 +357,3 @@ void NiSkinData::SetSkinPartition( NiSkinPartition * value ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiSkinData"] = NiSkinData::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiSkinData::Create() {
-	return new NiSkinData;
-}

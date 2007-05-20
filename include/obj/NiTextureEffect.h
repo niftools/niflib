@@ -1,8 +1,17 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _NITEXTUREEFFECT_H_
 #define _NITEXTUREEFFECT_H_
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
 
 #include "NiDynamicEffect.h"
 
@@ -12,32 +21,47 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiSourceTexture;
-
-//#include "../gen/obj_defines.h"
-
 class NiTextureEffect;
 typedef Ref<NiTextureEffect> NiTextureEffectRef;
 
 /*!
  * NiTextureEffect - Enables environment mapping. Should be in both the
- * children list and effects list of the NiTriShape object. For Morrowind:
- * the bump map can be used to bump the environment map (note that the
- * bump map is ignored if no NiTextureEffect object is present).
+ * children list and effects list of the NiTriShape object. For
+ * Morrowind: the bump map can be used to bump the environment map (note
+ * that the bump map is ignored if no NiTextureEffect object is present).
  */
 
-class NiTextureEffect : public NI_TEXTURE_EFFECT_PARENT {
+class NiTextureEffect : public NiDynamicEffect {
 public:
+	/*! Constructor */
 	NIFLIB_API NiTextureEffect();
-	NIFLIB_API ~NiTextureEffect();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~NiTextureEffect();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -184,16 +208,75 @@ public:
 	NIFLIB_API void SetPs2K( unsigned short value );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	NI_TEXTURE_EFFECT_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * Model projection matrix.  Always identity?
+	 */
+	Matrix33 modelProjectionMatrix;
+	/*!
+	 * Model projection transform.  Always (0,0,0)?
+	 */
+	Vector3 modelProjectionTransform;
+	/*!
+	 * Texture Filtering mode.
+	 */
+	TexFilterMode textureFiltering;
+	/*!
+	 * Texture Clamp mode.
+	 */
+	TexClampMode textureClamping;
+	/*!
+	 * 0: PROJECTED_LIGHT             1: PROJECTED_SHADOW             2:
+	 * ENVIRONMENT_MAP (Usual value)             3: FOG_MAP
+	 */
+	unsigned int textureType;
+	/*!
+	 * 0: WORLD_PARALLEL             1: WORLD_PERSPECTIVE             2:
+	 * SPHERE_MAP (Usual value)             3: SPECULAR_CUBE_MAP
+	 * 4: DIFFUSE_CUBE_MAP
+	 */
+	unsigned int coordinateGenerationType;
+	/*!
+	 * Source texture index.
+	 */
+	Ref<NiSourceTexture > sourceTexture;
+	/*!
+	 * 0: Disabled (Usual value)             1: Enabled
+	 */
+	byte clippingPlane;
+	/*!
+	 * Unknown: (1,0,0)?
+	 */
+	Vector3 unknownVector;
+	/*!
+	 * Unknown. 0?
+	 */
+	float unknownFloat;
+	/*!
+	 * 0?
+	 */
+	unsigned short ps2L;
+	/*!
+	 * 0xFFB5?
+	 */
+	unsigned short ps2K;
+	/*!
+	 * Unknown: 0.
+	 */
+	unsigned short unknownShort;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

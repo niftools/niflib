@@ -1,34 +1,31 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiKeyBasedInterpolator.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiKeyBasedInterpolator::TYPE("NiKeyBasedInterpolator", &NI_KEY_BASED_INTERPOLATOR_PARENT::TYPE );
+const Type NiKeyBasedInterpolator::TYPE("NiKeyBasedInterpolator", &NiInterpolator::TYPE );
 
-NiKeyBasedInterpolator::NiKeyBasedInterpolator() NI_KEY_BASED_INTERPOLATOR_CONSTRUCT {}
-
-NiKeyBasedInterpolator::~NiKeyBasedInterpolator() {}
-
-void NiKeyBasedInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiKeyBasedInterpolator::NiKeyBasedInterpolator() {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiKeyBasedInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiKeyBasedInterpolator::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiKeyBasedInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiKeyBasedInterpolator::GetRefs() const {
-	return InternalGetRefs();
+NiKeyBasedInterpolator::~NiKeyBasedInterpolator() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiKeyBasedInterpolator::GetType() const {
@@ -59,3 +56,54 @@ NiObject * NiKeyBasedInterpolator::Create() {
 	return new NiKeyBasedInterpolator;
 }
 
+void NiKeyBasedInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpolator::Read( in, link_stack, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiKeyBasedInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpolator::Write( out, link_map, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiKeyBasedInterpolator::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiInterpolator::asString();
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiKeyBasedInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpolator::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiKeyBasedInterpolator::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiInterpolator::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

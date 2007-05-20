@@ -1,39 +1,140 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiStencilProperty.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiStencilProperty::TYPE("NiStencilProperty", &NI_STENCIL_PROPERTY_PARENT::TYPE );
+const Type NiStencilProperty::TYPE("NiStencilProperty", &NiProperty::TYPE );
 
-NiStencilProperty::NiStencilProperty() NI_STENCIL_PROPERTY_CONSTRUCT {}
-
-NiStencilProperty::~NiStencilProperty() {}
-
-void NiStencilProperty::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiStencilProperty::NiStencilProperty() : flags((unsigned short)0), stencilEnabled((byte)0), stencilRef((unsigned int)0), stencilMask((unsigned int)4294967295) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiStencilProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiStencilProperty::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiStencilProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiStencilProperty::GetRefs() const {
-	return InternalGetRefs();
+NiStencilProperty::~NiStencilProperty() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiStencilProperty::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiStencilProperty"] = NiStencilProperty::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiStencilProperty::Create() {
+	return new NiStencilProperty;
+}
+
+void NiStencilProperty::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiProperty::Read( in, link_stack, info );
+	if ( info.version <= 0x0A000102 ) {
+		NifStream( flags, in, info );
+	};
+	NifStream( stencilEnabled, in, info );
+	NifStream( stencilFunction, in, info );
+	NifStream( stencilRef, in, info );
+	NifStream( stencilMask, in, info );
+	NifStream( failAction, in, info );
+	NifStream( zFailAction, in, info );
+	NifStream( passAction, in, info );
+	NifStream( drawMode, in, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiStencilProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiProperty::Write( out, link_map, info );
+	if ( info.version <= 0x0A000102 ) {
+		NifStream( flags, out, info );
+	};
+	NifStream( stencilEnabled, out, info );
+	NifStream( stencilFunction, out, info );
+	NifStream( stencilRef, out, info );
+	NifStream( stencilMask, out, info );
+	NifStream( failAction, out, info );
+	NifStream( zFailAction, out, info );
+	NifStream( passAction, out, info );
+	NifStream( drawMode, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiStencilProperty::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiProperty::asString();
+	out << "  Flags:  " << flags << endl;
+	out << "  Stencil Enabled:  " << stencilEnabled << endl;
+	out << "  Stencil Function:  " << stencilFunction << endl;
+	out << "  Stencil Ref:  " << stencilRef << endl;
+	out << "  Stencil Mask:  " << stencilMask << endl;
+	out << "  Fail Action:  " << failAction << endl;
+	out << "  Z Fail Action:  " << zFailAction << endl;
+	out << "  Pass Action:  " << passAction << endl;
+	out << "  Draw Mode:  " << drawMode << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiStencilProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiProperty::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiStencilProperty::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiProperty::GetRefs();
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -110,27 +211,3 @@ void NiStencilProperty::SetFaceDrawMode(FaceDrawMode value) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiStencilProperty"] = NiStencilProperty::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiStencilProperty::Create() {
-	return new NiStencilProperty;
-}

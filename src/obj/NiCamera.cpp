@@ -1,40 +1,185 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiCamera.h"
 #include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiCamera::TYPE("NiCamera", &NI_CAMERA_PARENT::TYPE );
+const Type NiCamera::TYPE("NiCamera", &NiAVObject::TYPE );
 
-NiCamera::NiCamera() NI_CAMERA_CONSTRUCT {}
-
-NiCamera::~NiCamera() {}
-
-void NiCamera::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiCamera::NiCamera() : unknownShort((unsigned short)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink_(NULL), unknownInt((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiCamera::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiCamera::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiCamera::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiCamera::GetRefs() const {
-	return InternalGetRefs();
+NiCamera::~NiCamera() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiCamera::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiCamera"] = NiCamera::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiCamera::Create() {
+	return new NiCamera;
+}
+
+void NiCamera::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiAVObject::Read( in, link_stack, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( unknownShort, in, info );
+	};
+	NifStream( frustumLeft, in, info );
+	NifStream( frustumRight, in, info );
+	NifStream( frustumTop, in, info );
+	NifStream( frustumBottom, in, info );
+	NifStream( frustumNear, in, info );
+	NifStream( frustumFar, in, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( useOrthographicProjection, in, info );
+	};
+	NifStream( viewportLeft, in, info );
+	NifStream( viewportRight, in, info );
+	NifStream( viewportTop, in, info );
+	NifStream( viewportBottom, in, info );
+	NifStream( lodAdjust, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+	NifStream( unknownInt, in, info );
+	if ( info.version >= 0x04020100 ) {
+		NifStream( unknownInt2, in, info );
+	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInt3, in, info );
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiCamera::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiAVObject::Write( out, link_map, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( unknownShort, out, info );
+	};
+	NifStream( frustumLeft, out, info );
+	NifStream( frustumRight, out, info );
+	NifStream( frustumTop, out, info );
+	NifStream( frustumBottom, out, info );
+	NifStream( frustumNear, out, info );
+	NifStream( frustumFar, out, info );
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( useOrthographicProjection, out, info );
+	};
+	NifStream( viewportLeft, out, info );
+	NifStream( viewportRight, out, info );
+	NifStream( viewportTop, out, info );
+	NifStream( viewportBottom, out, info );
+	NifStream( lodAdjust, out, info );
+	if ( unknownLink_ != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(unknownLink_) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+	NifStream( unknownInt, out, info );
+	if ( info.version >= 0x04020100 ) {
+		NifStream( unknownInt2, out, info );
+	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInt3, out, info );
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiCamera::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiAVObject::asString();
+	out << "  Unknown Short:  " << unknownShort << endl;
+	out << "  Frustum Left:  " << frustumLeft << endl;
+	out << "  Frustum Right:  " << frustumRight << endl;
+	out << "  Frustum Top:  " << frustumTop << endl;
+	out << "  Frustum Bottom:  " << frustumBottom << endl;
+	out << "  Frustum Near:  " << frustumNear << endl;
+	out << "  Frustum Far:  " << frustumFar << endl;
+	out << "  Use Orthographic Projection:  " << useOrthographicProjection << endl;
+	out << "  Viewport Left:  " << viewportLeft << endl;
+	out << "  Viewport Right:  " << viewportRight << endl;
+	out << "  Viewport Top:  " << viewportTop << endl;
+	out << "  Viewport Bottom:  " << viewportBottom << endl;
+	out << "  LOD Adjust:  " << lodAdjust << endl;
+	out << "  Unknown Link?:  " << unknownLink_ << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiCamera::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiAVObject::FixLinks( objects, link_stack, info );
+	unknownLink_ = FixLink<NiObject>( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiCamera::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiAVObject::GetRefs();
+	if ( unknownLink_ != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink_));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -135,27 +280,3 @@ void NiCamera::SetLodAdjust( float value ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiCamera"] = NiCamera::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiCamera::Create() {
-	return new NiCamera;
-}

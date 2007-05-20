@@ -1,41 +1,138 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiBSplineInterpolator.h"
 #include "../../include/obj/NiBSplineData.h"
 #include "../../include/obj/NiBSplineBasisData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NI_B_SPLINE_INTERPOLATOR_PARENT::TYPE );
+const Type NiBSplineInterpolator::TYPE("NiBSplineInterpolator", &NiInterpolator::TYPE );
 
-NiBSplineInterpolator::NiBSplineInterpolator() NI_B_SPLINE_INTERPOLATOR_CONSTRUCT {}
-
-NiBSplineInterpolator::~NiBSplineInterpolator() {}
-
-void NiBSplineInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiBSplineInterpolator::NiBSplineInterpolator() : startTime(0.0f), stopTime(0.0f), splineData(NULL), basisData(NULL) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiBSplineInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiBSplineInterpolator::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiBSplineInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiBSplineInterpolator::GetRefs() const {
-	return InternalGetRefs();
+NiBSplineInterpolator::~NiBSplineInterpolator() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiBSplineInterpolator::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiBSplineInterpolator"] = NiBSplineInterpolator::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiBSplineInterpolator::Create() {
+	return new NiBSplineInterpolator;
+}
+
+void NiBSplineInterpolator::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	unsigned int block_num;
+	NiInterpolator::Read( in, link_stack, info );
+	NifStream( startTime, in, info );
+	NifStream( stopTime, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiBSplineInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpolator::Write( out, link_map, info );
+	NifStream( startTime, out, info );
+	NifStream( stopTime, out, info );
+	if ( splineData != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(splineData) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+	if ( basisData != NULL )
+		NifStream( link_map.find( StaticCast<NiObject>(basisData) )->second, out, info );
+	else
+		NifStream( 0xffffffff, out, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiBSplineInterpolator::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiInterpolator::asString();
+	out << "  Start Time:  " << startTime << endl;
+	out << "  Stop Time:  " << stopTime << endl;
+	out << "  Spline Data:  " << splineData << endl;
+	out << "  Basis Data:  " << basisData << endl;
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiBSplineInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiInterpolator::FixLinks( objects, link_stack, info );
+	splineData = FixLink<NiBSplineData>( objects, link_stack, info );
+	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiBSplineInterpolator::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiInterpolator::GetRefs();
+	if ( splineData != NULL )
+		refs.push_back(StaticCast<NiObject>(splineData));
+	if ( basisData != NULL )
+		refs.push_back(StaticCast<NiObject>(basisData));
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -171,27 +268,3 @@ void NiBSplineInterpolator::bspline(int n, int t, int l, float *control, float *
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiBSplineInterpolator"] = NiBSplineInterpolator::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiBSplineInterpolator::Create() {
-	return new NiBSplineInterpolator;
-}

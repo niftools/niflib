@@ -1,8 +1,17 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 #ifndef _NISOURCETEXTURE_H_
 #define _NISOURCETEXTURE_H_
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+//--END CUSTOM CODE--//
 
 #include "NiTexture.h"
 
@@ -13,9 +22,6 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiObject;
 class NiPixelData;
-
-//#include "../gen/obj_defines.h"
-
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;
 
@@ -23,19 +29,37 @@ typedef Ref<NiSourceTexture> NiSourceTextureRef;
  * NiSourceTexture - Describes texture source and properties.
  */
 
-class NiSourceTexture : public NI_SOURCE_TEXTURE_PARENT {
+class NiSourceTexture : public NiTexture {
 public:
+	/*! Constructor */
 	NIFLIB_API NiSourceTexture();
-	NIFLIB_API ~NiSourceTexture();
-	//Run-Time Type Information
+
+	/*! Destructor */
+	NIFLIB_API virtual ~NiSourceTexture();
+
+	/*!
+	 * A constant value which uniquly identifies objects of this type.
+	 */
 	NIFLIB_API static const Type TYPE;
+
+	/*!
+	 * A factory function used during file reading to create an instance of this type of object.
+	 * \return A pointer to a newly allocated instance of this type of object.
+	 */
 	NIFLIB_API static NiObject * Create();
-	NIFLIB_API virtual const Type & GetType() const;
-	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+
+	/*!
+	 * Summarizes the information contained in this object in English.
+	 * \param[in] verbose Determines whether or not detailed information about large areas of data will be printed out.
+	 * \return A string containing a summary of the information within the object in English.  This is the function that Niflyze calls to generate its analysis, so the output is the same.
+	 */
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
-	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	/*!
+	 * Used to determine the type of a particular instance of this object.
+	 * \return The type constant for the actual type of the object.
+	 */
+	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
 
@@ -107,16 +131,63 @@ public:
 	NIFLIB_API void SetAlphaFormat( AlphaFormat n );
 
 	//--END CUSTOM CODE--//
-
 protected:
-	NI_SOURCE_TEXTURE_MEMBERS
-private:
-	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
-	void InternalWrite( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
-	string InternalAsString( bool verbose ) const;
-	void InternalFixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
-	list<NiObjectRef> InternalGetRefs() const;
+	/*!
+	 * Is the texture external?
+	 */
+	byte useExternal;
+	/*!
+	 * The external texture file name.
+	 */
+	string fileName;
+	/*!
+	 * Unknown.
+	 */
+	Ref<NiObject > unknownLink;
+	/*!
+	 * Unknown.
+	 */
+	byte unknownByte;
+	/*!
+	 * The original source filename of the image embedded by the referred
+	 * NiPixelData object.
+	 */
+	string originalFileName_;
+	/*!
+	 * Pixel data object index.
+	 */
+	Ref<NiPixelData > pixelData;
+	/*!
+	 * Specifies the way the image will be stored.
+	 */
+	PixelLayout pixelLayout;
+	/*!
+	 * Specifies whether mip maps are used.
+	 */
+	MipMapFormat useMipmaps;
+	/*!
+	 * Note: the NiTriShape linked to this object must have a NiAlphaProperty
+	 * in its list of properties to enable material and/or texture
+	 * transparency.
+	 */
+	AlphaFormat alphaFormat;
+	/*!
+	 * Set to one if textures have mipmaps?
+	 */
+	byte unknownByte2;
+public:
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const;
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 };
 
-}
+//--BEGIN FILE FOOT CUSTOM CODE--//
+//--END CUSTOM CODE--//
+
+} //End Niflib namespace
 #endif

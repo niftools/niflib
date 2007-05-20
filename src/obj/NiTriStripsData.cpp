@@ -1,54 +1,207 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
 //--BEGIN FILE HEAD CUSTOM CODE--//
 
 #include "../../NvTriStrip/NvTriStrip.h"
 #include "../../TriStripper/tri_stripper.h"
+#include <vector>
+#include <list>
 
 using namespace triangle_stripper;
 using namespace NvTriStrip;
 
 // Helper methods
-typedef vector<unsigned short> TriStrip;
-typedef	list<TriStrip> TriStrips;
+typedef std::vector<unsigned short> TriStrip;
+typedef	std::list<TriStrip> TriStrips;
 
 //--END CUSTOM CODE--//
 
+#include "../../include/FixLink.h"
+#include "../../include/NIF_IO.h"
 #include "../../include/obj/NiTriStripsData.h"
-
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTriStripsData::TYPE("NiTriStripsData", &NI_TRI_STRIPS_DATA_PARENT::TYPE );
+const Type NiTriStripsData::TYPE("NiTriStripsData", &NiTriBasedGeomData::TYPE );
 
-NiTriStripsData::NiTriStripsData() NI_TRI_STRIPS_DATA_CONSTRUCT {}
-
-NiTriStripsData::~NiTriStripsData() {}
-
-void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalRead( in, link_stack, info );
+NiTriStripsData::NiTriStripsData() : numStrips((unsigned short)0), hasPoints(false) {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
-void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
-	InternalWrite( out, link_map, info );
-}
-
-string NiTriStripsData::asString( bool verbose ) const {
-	return InternalAsString( verbose );
-}
-
-void NiTriStripsData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
-	InternalFixLinks( objects, link_stack, info );
-}
-
-list<NiObjectRef> NiTriStripsData::GetRefs() const {
-	return InternalGetRefs();
+NiTriStripsData::~NiTriStripsData() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 }
 
 const Type & NiTriStripsData::GetType() const {
 	return TYPE;
-};
+}
+
+namespace Niflib {
+	typedef NiObject*(*obj_factory_func)();
+	extern map<string, obj_factory_func> global_object_map;
+
+	//Initialization function
+	static bool Initialization();
+
+	//A static bool to force the initialization to happen pre-main
+	static bool obj_initialized = Initialization();
+
+	static bool Initialization() {
+		//Add the function to the global object map
+		global_object_map["NiTriStripsData"] = NiTriStripsData::Create;
+
+		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+		obj_initialized = true;
+		return obj_initialized;
+	}
+}
+
+NiObject * NiTriStripsData::Create() {
+	return new NiTriStripsData;
+}
+
+void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiTriBasedGeomData::Read( in, link_stack, info );
+	NifStream( numStrips, in, info );
+	stripLengths.resize(numStrips);
+	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
+		NifStream( stripLengths[i1], in, info );
+	};
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( hasPoints, in, info );
+	};
+	if ( info.version <= 0x0A000102 ) {
+		points.resize(numStrips);
+		for (unsigned int i2 = 0; i2 < points.size(); i2++) {
+			points[i2].resize(stripLengths[i2]);
+			for (unsigned int i3 = 0; i3 < stripLengths[i2]; i3++) {
+				NifStream( points[i2][i3], in, info );
+			};
+		};
+	};
+	if ( info.version >= 0x0A010000 ) {
+		if ( (hasPoints != 0) ) {
+			points.resize(numStrips);
+			for (unsigned int i3 = 0; i3 < points.size(); i3++) {
+				points[i3].resize(stripLengths[i3]);
+				for (unsigned int i4 = 0; i4 < stripLengths[i3]; i4++) {
+					NifStream( points[i3][i4], in, info );
+				};
+			};
+		};
+	};
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiTriBasedGeomData::Write( out, link_map, info );
+	for (unsigned int i1 = 0; i1 < points.size(); i1++)
+		stripLengths[i1] = (unsigned short)(points[i1].size());
+	numStrips = (unsigned short)(stripLengths.size());
+	NifStream( numStrips, out, info );
+	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
+		NifStream( stripLengths[i1], out, info );
+	};
+	if ( info.version >= 0x0A010000 ) {
+		NifStream( hasPoints, out, info );
+	};
+	if ( info.version <= 0x0A000102 ) {
+		for (unsigned int i2 = 0; i2 < points.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < stripLengths[i2]; i3++) {
+				NifStream( points[i2][i3], out, info );
+			};
+		};
+	};
+	if ( info.version >= 0x0A010000 ) {
+		if ( (hasPoints != 0) ) {
+			for (unsigned int i3 = 0; i3 < points.size(); i3++) {
+				for (unsigned int i4 = 0; i4 < stripLengths[i3]; i4++) {
+					NifStream( points[i3][i4], out, info );
+				};
+			};
+		};
+	};
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::string NiTriStripsData::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiTriBasedGeomData::asString();
+	for (unsigned int i1 = 0; i1 < points.size(); i1++)
+		stripLengths[i1] = (unsigned short)(points[i1].size());
+	numStrips = (unsigned short)(stripLengths.size());
+	out << "  Num Strips:  " << numStrips << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Strip Lengths[" << i1 << "]:  " << stripLengths[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Has Points:  " << hasPoints << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < points.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (unsigned int i2 = 0; i2 < stripLengths[i1]; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Points[" << i2 << "]:  " << points[i1][i2] << endl;
+			array_output_count++;
+		};
+	};
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+void NiTriStripsData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+
+	NiTriBasedGeomData::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> NiTriStripsData::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiTriBasedGeomData::GetRefs();
+	return refs;
+}
 
 //--BEGIN MISC CUSTOM CODE--//
 
@@ -276,27 +429,3 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
 }
 
 //--END CUSTOM CODE--//
-
-namespace Niflib { 
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
-
-	//Initialization function
-	static bool Initialization();
-
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiTriStripsData"] = NiTriStripsData::Create;
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
-}
-
-NiObject * NiTriStripsData::Create() {
-	return new NiTriStripsData;
-}

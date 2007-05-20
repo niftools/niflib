@@ -115,6 +115,8 @@ std::list<NiObjectRef> NiObject::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+unsigned int NiObject::objectsInMemory = 0;
+
 bool NiObject::IsSameType( const Type & compare_to) const {
 	return GetType().IsSameType( compare_to );
 }
