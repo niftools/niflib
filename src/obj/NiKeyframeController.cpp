@@ -36,6 +36,8 @@ const Type & NiKeyframeController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiKeyframeData> NiKeyframeController::GetData() const {
 	return data;
 }
@@ -43,6 +45,8 @@ Ref<NiKeyframeData> NiKeyframeController::GetData() const {
 void NiKeyframeController::SetData( NiKeyframeData * n ) {
 	data = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

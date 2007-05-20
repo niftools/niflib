@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Get the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
 	 * \return The Oblivion material used by this collision shape.
@@ -43,6 +45,8 @@ public:
 	 * \param[in] value The new material for this shape to use.
 	 */
 	NIFLIB_API void SetMaterial( HavokMaterial value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_SPHERE_REP_SHAPE_MEMBERS

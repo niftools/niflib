@@ -35,6 +35,8 @@ const Type & NiPalette::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<Color4> NiPalette::GetPalette() const {
 	vector<Color4> color_pal(256);
 
@@ -61,6 +63,8 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
 		palette[i][3] = int( new_pal[i].a * 255.0f );
 	}
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

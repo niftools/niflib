@@ -35,6 +35,8 @@ const Type & bhkCapsuleShape::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float bhkCapsuleShape::GetRadius() const {
 	return radius;
 }
@@ -74,6 +76,8 @@ float bhkCapsuleShape::GetRadius2() const {
 void bhkCapsuleShape::SetRadius2( float value ) {
 	radius2 = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

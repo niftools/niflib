@@ -60,6 +60,8 @@ NiObject * NiPoint3InterpController::Create() {
 	return new NiPoint3InterpController;
 }
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiPosData > NiPoint3InterpController::GetData() const {
 	return data;
 }
@@ -67,3 +69,5 @@ Ref<NiPosData > NiPoint3InterpController::GetData() const {
 void NiPoint3InterpController::SetData( NiPosData * value ) {
 	data = value;
 }
+
+//--END CUSTOM CODE--//

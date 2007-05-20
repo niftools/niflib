@@ -35,6 +35,8 @@ const Type & bhkBoxShape::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 bhkBoxShape::GetDimensions() const {
 	return dimensions;
 }
@@ -42,6 +44,8 @@ Vector3 bhkBoxShape::GetDimensions() const {
 void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	dimensions = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

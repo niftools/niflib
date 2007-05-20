@@ -35,6 +35,8 @@ const Type & NiPointLight::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiPointLight::GetConstantAttenuation() const {
 	return constantAttenuation;
 }
@@ -58,6 +60,8 @@ float NiPointLight::GetQuadraticAttenuation() const {
 void NiPointLight::SetQuadraticAttenuation( float value ) {
 	quadraticAttenuation = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the current constant attenuation of this point light.
 	 * \return The constant attentuation.
@@ -66,6 +68,8 @@ public:
 	 * \param[in] value The new quadratic attentuation.
 	 */
 	NIFLIB_API void SetQuadraticAttenuation( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_POINT_LIGHT_MEMBERS

@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	//TODO: Lots of unknown data in this object
 
 	/*!
@@ -62,6 +64,8 @@ public:
 	 * \param[in] n The new morph data.
 	 */
 	NIFLIB_API void SetData( NiMorphData * n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_GEOM_MORPHER_CONTROLLER_MEMBERS

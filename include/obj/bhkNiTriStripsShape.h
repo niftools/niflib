@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the scale. Usually (1.0, 1.0, 1.0).
 	 * \return The scale.
@@ -61,6 +63,8 @@ public:
 	 * \param[in] strips The new NiTriStripsData object to be referenced by this shape at the specified index.
 	 */
 	NIFLIB_API void	SetStripsData( int index, NiTriStripsData * strips );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_NI_TRI_STRIPS_SHAPE_MEMBERS

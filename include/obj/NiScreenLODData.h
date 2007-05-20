@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Get the center of the bounding sphere?
 	 * \return The center of the bounding sphere?
@@ -90,6 +92,8 @@ public:
 	 * \param[in] value The LOD levels based on proportion of screen size?
 	 */
 	NIFLIB_API void SetProportionLevels( const vector<float> & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_SCREEN_L_O_D_DATA_MEMBERS

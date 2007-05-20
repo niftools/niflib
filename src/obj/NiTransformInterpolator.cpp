@@ -36,6 +36,8 @@ const Type & NiTransformInterpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiTransformInterpolator::GetTranslation() const {
 	return translation;
 }
@@ -67,6 +69,8 @@ Ref<NiTransformData> NiTransformInterpolator::GetData() const {
 void NiTransformInterpolator::SetData( NiTransformData * value ) {
 	data = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

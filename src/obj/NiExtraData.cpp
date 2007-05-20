@@ -35,6 +35,8 @@ const Type & NiExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 string NiExtraData::GetName() {
 	return name;
 }
@@ -57,6 +59,8 @@ NiExtraDataRef NiExtraData::GetNextExtraData() const {
 void NiExtraData::SetNextExtraData( NiExtraData * obj ) {
 	nextExtraData = obj;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

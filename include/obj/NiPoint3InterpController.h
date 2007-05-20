@@ -34,6 +34,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives the pos data used by this controller.
 	 * \return The pos data.
@@ -45,6 +47,8 @@ public:
 	 * \param[in] value The new pos data.
 	 */
 	NIFLIB_API void SetData( NiPosData * value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_POINT3_INTERP_CONTROLLER_MEMBERS

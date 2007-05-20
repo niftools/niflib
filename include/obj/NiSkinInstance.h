@@ -27,13 +27,6 @@ typedef Ref<NiSkinInstance> NiSkinInstanceRef;
 class NiSkinInstance : public NI_SKIN_INSTANCE_PARENT {
 public:
 	NIFLIB_API NiSkinInstance();
-
-	/*!
-	 * This constructor is called by NiTriBasedGeom when it creates a new skin
-	 * instance using the BindSkin function.
-	 */
-	NIFLIB_HIDDEN NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
-
 	NIFLIB_API ~NiSkinInstance();
 	//Run-Time Type Information
 	NIFLIB_API static const Type TYPE;
@@ -44,6 +37,8 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
 	 * Retrieves the number of NiNode bones that influence this skin.
@@ -76,6 +71,13 @@ public:
 	 */
 	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
 
+	/*!
+	 * This constructor is called by NiTriBasedGeom when it creates a new skin
+	 * instance using the BindSkin function.
+	 */
+	NIFLIB_HIDDEN NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
+
+
 	/*! 
 	 * NIFLIB_HIDDEN function.  For internal use only.
 	 * Called by NiGeometry during the skin binding process.
@@ -95,6 +97,8 @@ public:
 	 * instance that the skeleton has been lost.  Should not be called directly.
 	 */
 	NIFLIB_HIDDEN void SkeletonLost();
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_SKIN_INSTANCE_MEMBERS

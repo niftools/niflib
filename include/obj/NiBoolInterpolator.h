@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the boolean value stored in this object.  Perhaps this is the current interpolated value, the value when posed, or at time index 0.
 	 * \return The boolean value stored in this object.
@@ -59,6 +61,8 @@ public:
 	 * \return The NiBoolData object that this interpolator should now link to, or NULL to clear the current one.
 	 */
 	NIFLIB_API void SetData( NiBoolData * value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_BOOL_INTERPOLATOR_MEMBERS

@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the 3D point value stored in this object.  Perhaps this is the current interpolated value.
 	 * \return The 3D point value stored in this object.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] value The new 3D point value to store in this object.
 	 */
 	NIFLIB_API void SetPointValue( Vector3 value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_BLEND_POINT3_INTERPOLATOR_MEMBERS

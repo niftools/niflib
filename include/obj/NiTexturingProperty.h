@@ -33,6 +33,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! 
 	 * Retrieves the number of texture slots defined by this texturing propery.  Texture slots may or may not actually contain textures, but each slot has a different meaning so the way a texture is used is dependant upon which slot it is in.
 	 * \return The number of texture slots defined by this texturing property.
@@ -159,6 +161,8 @@ public:
 	 * \sa NiTexturingProperty::GetBumpMapMatrix
 	 */
 	NIFLIB_API void SetBumpMapMatrix( Matrix22 & new_val );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TEXTURING_PROPERTY_MEMBERS

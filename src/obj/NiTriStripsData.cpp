@@ -1,11 +1,11 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "../../include/obj/NiTriStripsData.h"
+//--BEGIN FILE HEAD CUSTOM CODE--//
+
 #include "../../NvTriStrip/NvTriStrip.h"
 #include "../../TriStripper/tri_stripper.h"
 
-using namespace Niflib;
 using namespace triangle_stripper;
 using namespace NvTriStrip;
 
@@ -13,6 +13,11 @@ using namespace NvTriStrip;
 typedef vector<unsigned short> TriStrip;
 typedef	list<TriStrip> TriStrips;
 
+//--END CUSTOM CODE--//
+
+#include "../../include/obj/NiTriStripsData.h"
+
+using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiTriStripsData::TYPE("NiTriStripsData", &NI_TRI_STRIPS_DATA_PARENT::TYPE );
@@ -44,6 +49,8 @@ list<NiObjectRef> NiTriStripsData::GetRefs() const {
 const Type & NiTriStripsData::GetType() const {
 	return TYPE;
 };
+
+//--BEGIN MISC CUSTOM CODE--//
 
 NiTriStripsData::NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips) {
    if (nvtristrips)
@@ -267,6 +274,8 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
    //Recalculate Triangle Count
    numTriangles = CalcTriangleCount();
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

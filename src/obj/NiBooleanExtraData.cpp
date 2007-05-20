@@ -35,6 +35,8 @@ const Type & NiBooleanExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 bool NiBooleanExtraData::GetData() const {
 	return (booleanData != 0);
 }
@@ -42,6 +44,8 @@ bool NiBooleanExtraData::GetData() const {
 void NiBooleanExtraData::SetData( bool n ) {
 	booleanData = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

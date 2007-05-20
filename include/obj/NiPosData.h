@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! Retrieves the type of position interpolation being used.
 	 * \return The position key type specifing the type of interpolation being used.
 	 * \sa NiPosData::SetKeyType
@@ -55,6 +57,8 @@ public:
 	 * \sa NIPosData::GetKeys, Key
 	 */
 	NIFLIB_API void SetKeys( vector< Key<Vector3> > const & keys );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_POS_DATA_MEMBERS

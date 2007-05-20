@@ -36,6 +36,8 @@ const Type & NiRangeLODData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiRangeLODData::GetLODCenter() const {
 	return lodCenter;
 }
@@ -51,6 +53,8 @@ vector<LODRange > NiRangeLODData::GetLODLevels() const {
 void NiRangeLODData::SetLODLevels( const vector<LODRange >& value ) {
 	lodLevels = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

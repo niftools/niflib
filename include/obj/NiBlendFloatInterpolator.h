@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the floating point value stored in this object.  Perhaps this is the current interpolated value.
 	 * \return The floating point value stored in this object.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] value The new floating point value to store in this object.
 	 */
 	NIFLIB_API void SetFloatValue( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_BLEND_FLOAT_INTERPOLATOR_MEMBERS

@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	//TODO:  This class has an unknown member
 
 	/*!
@@ -49,6 +51,8 @@ public:
 	 * \param[in] n The new UV data.
 	 */
 	NIFLIB_API void SetData( NiUVData * n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_U_V_CONTROLLER_MEMBERS

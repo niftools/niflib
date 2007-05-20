@@ -35,6 +35,8 @@ const Type & NiStencilProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiStencilProperty::GetFlags() const {
    return flags;
 }
@@ -106,6 +108,8 @@ FaceDrawMode NiStencilProperty::GetFaceDrawMode() const {
 void NiStencilProperty::SetFaceDrawMode(FaceDrawMode value) {
    drawMode = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

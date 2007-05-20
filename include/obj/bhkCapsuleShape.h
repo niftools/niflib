@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the capsule's radius.
 	 * \return The radius of the capsule.
@@ -90,6 +92,8 @@ public:
 	 * \param value[in] The new third capsule radius.
 	 */
 	NIFLIB_API void SetRadius2( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_CAPSULE_SHAPE_MEMBERS

@@ -13,11 +13,17 @@ using namespace Niflib;
 const Type NiNode::TYPE("NiNode", &NI_NODE_PARENT::TYPE );
 
 NiNode::NiNode() NI_NODE_CONSTRUCT {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
 	//Set flag to default of 8: not a skin influence
 	flags = 8;
+
+	//--END CUSTOM CODE--//
 }
 
 NiNode::~NiNode() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//Unbind any attached skins - must happen before children are cleared
 	for ( list<NiSkinInstance*>::iterator it = skins.begin(); it != skins.end(); ++it ) {
 		(*it)->SkeletonLost();
@@ -25,6 +31,8 @@ NiNode::~NiNode() {
 
 	//Clear Children
 	ClearChildren();
+
+	//--END CUSTOM CODE--//
 }
 
 void NiNode::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
@@ -41,6 +49,9 @@ string NiNode::asString( bool verbose ) const {
 
 void NiNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	InternalFixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
 	//Connect children to their parents and remove any NULL ones
 	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
 		if ( *it == NULL) {
@@ -50,6 +61,8 @@ void NiNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsig
 			++it;
 		}
 	}
+
+	//--END CUSTOM CODE--//
 }
 
 list<NiObjectRef> NiNode::GetRefs() const {
@@ -59,6 +72,8 @@ list<NiObjectRef> NiNode::GetRefs() const {
 const Type & NiNode::GetType() const {
 	return TYPE;
 };
+
+//--BEGIN MISC CUSTOM CODE--//
 
 void NiNode::AddChild( Ref<NiAVObject> obj ) {
 	if ( obj->GetParent() != NULL ) {
@@ -274,6 +289,8 @@ bool NiNode::IsSplitMeshProxy() const {
 	//Made it all the way through the loop without returning false
 	return true;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

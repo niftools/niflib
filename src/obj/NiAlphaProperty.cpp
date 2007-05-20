@@ -35,6 +35,8 @@ const Type & NiAlphaProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiAlphaProperty::GetFlags() const {
 	return flags;
 }
@@ -103,6 +105,8 @@ bool NiAlphaProperty::GetTriangleSortMode() const {
 void NiAlphaProperty::SetTriangleSortMode(bool value) {
    flags = NIFLIB_MASK_FLAG(flags, value?0:1, 13, 0x1);
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

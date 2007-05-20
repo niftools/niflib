@@ -30,6 +30,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives the current number of spline control points.  This is usually the number of frames for animation.
 	 * \return The number of spline control points.
@@ -41,6 +43,8 @@ public:
 	 * \param[in] value The new number of spline control points.
 	 */
 	NIFLIB_API void SetNumControlPt( unsigned int value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_B_SPLINE_BASIS_DATA_MEMBERS

@@ -31,7 +31,8 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
-public:
+
+	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
 	 * A constructor which can be used to create a NiTriShapeData and initialize it with vertices.
@@ -79,6 +80,8 @@ public:
 	 * \sa ITriShapeData::GetTriangles
 	 */
 	NIFLIB_API virtual void SetTriangles( const vector<Triangle> & in );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TRI_SHAPE_DATA_MEMBERS

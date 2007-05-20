@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the base translation when a translate curve is not defined.
 	 * \return The base translation.
@@ -187,6 +189,8 @@ public:
 	 * \return The number of control points used in the spline curve.
 	 */
 	NIFLIB_API int GetNumControlPt() const;
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_MEMBERS

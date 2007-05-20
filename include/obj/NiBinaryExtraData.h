@@ -33,6 +33,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the binary data stored in this object.
 	 * \return The binary data stored in this object.
@@ -44,6 +46,8 @@ public:
 	 * \param[in] n The new binary data to store in this object.
 	 */
 	NIFLIB_API void SetData( const vector<byte> & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_BINARY_EXTRA_DATA_MEMBERS

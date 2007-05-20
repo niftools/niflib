@@ -36,6 +36,8 @@ const Type & NiTextureEffect::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Matrix33 NiTextureEffect::GetModelProjectionMatrix() const {
 	return modelProjectionMatrix;
 }
@@ -115,6 +117,8 @@ unsigned short NiTextureEffect::GetPs2K() const {
 void NiTextureEffect::SetPs2K( unsigned short value ) {
 	ps2K = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

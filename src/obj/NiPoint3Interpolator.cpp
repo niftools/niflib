@@ -36,6 +36,8 @@ const Type & NiPoint3Interpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiPoint3Interpolator::GetPoint3Value() const {
 	return point3Value;
 }
@@ -51,6 +53,8 @@ Ref<NiPosData > NiPoint3Interpolator::GetData() const {
 void NiPoint3Interpolator::SetData( NiPosData * value ) {
 	data = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

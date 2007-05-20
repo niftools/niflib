@@ -37,6 +37,8 @@ const Type & NiTexturingProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 ApplyMode NiTexturingProperty::GetApplyMode() const {
 	return applyMode;
 }
@@ -245,6 +247,8 @@ void NiTexturingProperty::ClearTexture( int n ) {
 			break;
 	};
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

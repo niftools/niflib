@@ -35,6 +35,8 @@ const Type & NiSpecularProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiSpecularProperty::GetFlags() const {
    return flags;
 }
@@ -42,6 +44,8 @@ unsigned short NiSpecularProperty::GetFlags() const {
 void NiSpecularProperty::SetFlags( unsigned short n ) {
    flags = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

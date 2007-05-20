@@ -12,30 +12,6 @@ NiGeometryData::NiGeometryData() NI_GEOMETRY_DATA_CONSTRUCT {}
 
 NiGeometryData::~NiGeometryData() {}
 
-int NiGeometryData::GetVertexCount() const {
-	return int(vertices.size());
-}
-
-short NiGeometryData::GetUVSetCount() const {
-	return short(uvSets.size());
-}
-
-vector<Vector3> NiGeometryData::GetVertices() const {
-	return vertices;
-}
-
-vector<Vector3> NiGeometryData::GetNormals() const {
-	return normals;
-}
-
-vector<Color4> NiGeometryData::GetColors() const {
-	return vertexColors;
-}
-
-vector<TexCoord> NiGeometryData::GetUVSet( int index ) const {
-	return uvSets[index];
-}
-
 void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	InternalRead( in, link_stack, info );
 }
@@ -59,6 +35,32 @@ list<NiObjectRef> NiGeometryData::GetRefs() const {
 const Type & NiGeometryData::GetType() const {
 	return TYPE;
 };
+
+//--BEGIN MISC CUSTOM CODE--//
+
+int NiGeometryData::GetVertexCount() const {
+	return int(vertices.size());
+}
+
+short NiGeometryData::GetUVSetCount() const {
+	return short(uvSets.size());
+}
+
+vector<Vector3> NiGeometryData::GetVertices() const {
+	return vertices;
+}
+
+vector<Vector3> NiGeometryData::GetNormals() const {
+	return normals;
+}
+
+vector<Color4> NiGeometryData::GetColors() const {
+	return vertexColors;
+}
+
+vector<TexCoord> NiGeometryData::GetUVSet( int index ) const {
+	return uvSets[index];
+}
 
 void NiGeometryData::SetUVSetCount(int n) {
 	uvSets.resize(n);
@@ -162,6 +164,8 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 		normals[i] = rotation * normals[i];
 	}
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -36,6 +36,8 @@ const Type & NiTriShapeData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 NiTriShapeData::NiTriShapeData(const vector<Triangle> &tris) {
    SetTriangles(tris);
 }
@@ -92,6 +94,8 @@ void NiTriShapeData::SetTriangles( const vector<Triangle> & in ) {
 	//Set number of trianble points to the number of triangles times 3
 	numTrianglePoints = numTriangles * 3;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

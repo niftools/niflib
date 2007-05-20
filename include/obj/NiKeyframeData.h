@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	//--Rotate--//
 
 	/*! Retrieves the type of rotation interpolation being used.
@@ -184,6 +186,9 @@ public:
 
 protected:
 	void UpdateRotationKeyCount();
+
+	//--END CUSTOM CODE--//
+
 	NI_KEYFRAME_DATA_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

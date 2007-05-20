@@ -36,6 +36,8 @@ const Type & bhkMultiSphereShape::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<Sphere > bhkMultiSphereShape::GetSpheres() const {
 	return spheres;
 }
@@ -43,6 +45,8 @@ vector<Sphere > bhkMultiSphereShape::GetSpheres() const {
 void bhkMultiSphereShape::SetSpheres( const vector<Sphere >& value ) {
 	spheres = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

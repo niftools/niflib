@@ -35,6 +35,8 @@ const Type & NiFloatExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiFloatExtraData::GetData() const {
 	return floatData;
 }
@@ -42,6 +44,8 @@ float NiFloatExtraData::GetData() const {
 void NiFloatExtraData::SetData( float n ) {
 	floatData = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

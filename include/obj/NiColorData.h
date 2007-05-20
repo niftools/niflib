@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! Retrieves the type of color interpolation being used.
 	 * \return The color key type specifing the type of interpolation being used.
 	 * \sa NiColorData::SetKeyType
@@ -55,6 +57,9 @@ public:
 	 * \sa NiColorData::GetKeys, Key
 	 */
 	NIFLIB_API void SetKeys( vector< Key<Color4> > const & keys );
+
+	//--END CUSTOM CODE--//
+
 protected:
 	NI_COLOR_DATA_MEMBERS
 private:

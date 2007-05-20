@@ -42,6 +42,8 @@ const Type & NiTriBasedGeom::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 void NiTriBasedGeom::ClearHardareSkinInfo() {
    // Clear the partition info in both places.
    NiSkinInstanceRef skinInst = GetSkinInstance();
@@ -230,6 +232,8 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 
 	TSpaceRef->SetData(binData);
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

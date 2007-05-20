@@ -36,6 +36,8 @@ const Type & BSFurnitureMarker::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {
 	return positions;
 }
@@ -44,6 +46,8 @@ void BSFurnitureMarker::SetFurniturePositions( const vector<FurniturePosition> &
 	numPositions = (unsigned int)(n.size());
 	positions = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

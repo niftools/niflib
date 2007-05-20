@@ -35,6 +35,8 @@ const Type & NiColorExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Color4 NiColorExtraData::GetData() const {
 	return data;
 }
@@ -42,6 +44,8 @@ Color4 NiColorExtraData::GetData() const {
 void NiColorExtraData::SetData( const Color4 & n ) {
 	data = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

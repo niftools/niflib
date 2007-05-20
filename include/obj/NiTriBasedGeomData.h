@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Returns the triangle faces that make up this mesh.
 	 * \return A vector containing the triangle faces that make up this mesh.
@@ -49,6 +51,8 @@ public:
 	 * \sa GetTriangles
 	 */
 	NIFLIB_API virtual void SetTriangles( const vector<Triangle> & in );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TRI_BASED_GEOM_DATA_MEMBERS

@@ -35,17 +35,21 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the AV Objects stored in this palette.
 	 * \return The AV Objects stored in this palette.
 	 */
-	NIFLIB_API vector<Ref<NiAVObject> > GetObjs() const;
+	NIFLIB_API vector< Ref<NiAVObject> > GetObjs() const;
 
 	/*!
 	 * Sets the AV Objects stored in this palette.
 	 * \return The new AV Objects to be stored in this palette.
 	 */
-	NIFLIB_API void SetObjs( const vector<Ref<NiAVObject> >& value );
+	NIFLIB_API void SetObjs( const vector< Ref<NiAVObject> > & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_DEFAULT_A_V_OBJECT_PALETTE_MEMBERS

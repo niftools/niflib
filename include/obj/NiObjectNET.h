@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	NIFLIB_API string GetName();
 	NIFLIB_API void SetName( const string & new_name );
 
@@ -107,7 +109,7 @@ public:
 	 */
 	NIFLIB_API list< Ref<NiTimeController> > GetControllers() const;
 
-	//TODO: pointer to first NiTimeController type.  Need functions to add/remove.
+	//--END CUSTOM CODE--//
 private:
 	NI_OBJECT_N_E_T_MEMBERS
 private:

@@ -36,6 +36,8 @@ const Type & NiMorphData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 int NiMorphData::GetVertexCount() const {
 	
 	return numVertices;
@@ -90,6 +92,8 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 	//It's the right size, so go ahead and set it
 	morphs[n].vectors = in;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -26,13 +26,6 @@ typedef Ref<NiSkinData> NiSkinDataRef;
 class NiSkinData : public NI_SKIN_DATA_PARENT {
 public:
 	NIFLIB_API NiSkinData();
-
-	/*!
-	 * NIFLIB_HIDDEN function.  For internal use only.
-	 * This constructor is called by NiGeometry when it creates a new skin instance using the BindSkin function.
-	 */
-	NIFLIB_HIDDEN NiSkinData( NiGeometry * owner );
-
 	NIFLIB_API ~NiSkinData();
 
 	//Run-Time Type Information
@@ -44,6 +37,8 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
 	 * Retrieves the current overall transform for this skin.  This is the transform from the geometry node back to its skeleton root.
@@ -93,6 +88,12 @@ public:
 	 */
 	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
 
+	/*!
+	 * NIFLIB_HIDDEN function.  For internal use only.
+	 * This constructor is called by NiGeometry when it creates a new skin instance using the BindSkin function.
+	 */
+	NIFLIB_HIDDEN NiSkinData( NiGeometry * owner );
+
 	/*
 	 * NIFLIB_HIDDEN function.  For internal use only.
 	 * This can be used to set or clear the hardware skin partition data.  To create partition data, the NiTriBasedGeom::GenHardwareSkinInfo function should be used.
@@ -110,6 +111,8 @@ public:
 	 * This function resets the bone offsets to their current positions, effetivley changing the bind pose.  This does not cause any tranformations to the vertex positions, however, so is mostly usful for instances where the world positions of the old and new bind pose are equivalent, but result from different local transformations along the way.  It is called by NiGeometry when the interum transforms are flattened.
 	 */
 	NIFLIB_HIDDEN void ResetOffsets( NiGeometry * owner );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_SKIN_DATA_MEMBERS

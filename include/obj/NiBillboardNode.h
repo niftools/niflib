@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retreives the current bilboard mode of this bilboard node.  This determines how it will cause the node to face the camera.
 	 * \return The current bilboard mode.
@@ -43,6 +45,8 @@ public:
 	 * \param[in] value The new bilboard mode.
 	 */
 	NIFLIB_API void SetBillboardMode( BillboardMode value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_BILLBOARD_NODE_MEMBERS

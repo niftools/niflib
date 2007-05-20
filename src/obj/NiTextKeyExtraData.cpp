@@ -35,6 +35,8 @@ const Type & NiTextKeyExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector< Key<string> > NiTextKeyExtraData::GetKeys() const {
 	return textKeys;
 }
@@ -42,6 +44,8 @@ vector< Key<string> > NiTextKeyExtraData::GetKeys() const {
 void NiTextKeyExtraData::SetKeys( vector< Key<string> > const & keys ) {
 	textKeys = keys;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the vector value stored in this object.
 	 * \return The vector value stored in this object.
@@ -44,6 +46,9 @@ public:
 	NIFLIB_API void SetData( const Vector3 & n );
 
 	//TODO:  There is an unknown member in this class
+
+	//--END CUSTOM CODE--//
+
 protected:
 	NI_VECTOR_EXTRA_DATA_MEMBERS
 private:

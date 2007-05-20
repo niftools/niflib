@@ -36,13 +36,17 @@ const Type & NiTriBasedGeomData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 void NiTriBasedGeomData::SetTriangles( const vector<Triangle> & in ) {
    throw runtime_error("SetTriangles is not implemented for this object.");
 }
 
 vector<Triangle> NiTriBasedGeomData::GetTriangles() const {
 	return vector<Triangle>();
-}  
+}
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

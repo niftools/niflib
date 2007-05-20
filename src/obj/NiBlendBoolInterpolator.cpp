@@ -35,6 +35,8 @@ const Type & NiBlendBoolInterpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 byte NiBlendBoolInterpolator::GetBoolValue() const {
 	return boolValue;
 }
@@ -42,6 +44,8 @@ byte NiBlendBoolInterpolator::GetBoolValue() const {
 void NiBlendBoolInterpolator::SetBoolValue( byte value ) {
 	boolValue = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

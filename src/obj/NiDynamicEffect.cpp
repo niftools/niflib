@@ -36,6 +36,8 @@ const Type & NiDynamicEffect::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 bool NiDynamicEffect::GetSwitchState() const {
 	return switchState;
 }
@@ -51,6 +53,8 @@ vector<Ref<NiAVObject > > NiDynamicEffect::GetAffectedNodes() const {
 void NiDynamicEffect::SetAffectedNodes( const vector<Ref<NiAVObject > >& value ) {
 	affectedNodes = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

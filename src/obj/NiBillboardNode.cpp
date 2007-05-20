@@ -35,6 +35,8 @@ const Type & NiBillboardNode::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 BillboardMode NiBillboardNode::GetBillboardMode() const {
 	return billboardMode;
 }
@@ -42,6 +44,8 @@ BillboardMode NiBillboardNode::GetBillboardMode() const {
 void NiBillboardNode::SetBillboardMode( BillboardMode value ) {
 	billboardMode = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

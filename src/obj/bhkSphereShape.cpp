@@ -35,6 +35,8 @@ const Type & bhkSphereShape::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float bhkSphereShape::GetRadius() const {
 	return radius;
 }
@@ -42,6 +44,8 @@ float bhkSphereShape::GetRadius() const {
 void bhkSphereShape::SetRadius( float value ) {
 	radius = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

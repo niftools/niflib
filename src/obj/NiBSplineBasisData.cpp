@@ -35,6 +35,8 @@ const Type & NiBSplineBasisData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned int NiBSplineBasisData::GetNumControlPt() const {
 	return numControlPt;
 }
@@ -42,6 +44,8 @@ unsigned int NiBSplineBasisData::GetNumControlPt() const {
 void NiBSplineBasisData::SetNumControlPt( unsigned int value ) {
 	numControlPt = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

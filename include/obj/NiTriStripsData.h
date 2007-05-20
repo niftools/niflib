@@ -30,6 +30,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * A constructor which can be used to create a NiTriStripsData and initialize it with triangles.
 	 * \param[in] tris The triangles to use to initialize the NiTriShapeData with.
@@ -91,6 +93,8 @@ private:
 	void SetNvTriangles( const vector<Triangle> & in );
 	void SetTSTriangles( const vector<Triangle> & in );
 	unsigned short CalcTriangleCount() const;
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TRI_STRIPS_DATA_MEMBERS

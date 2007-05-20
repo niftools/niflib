@@ -33,6 +33,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the string value stored in this object.
 	 * \return The string value stored in this object.
@@ -44,6 +46,8 @@ public:
 	 * \param[in] n The new string value to store in this object.
 	 */
 	NIFLIB_API void SetData( const string & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_STRING_EXTRA_DATA_MEMBERS

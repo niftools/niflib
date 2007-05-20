@@ -35,6 +35,8 @@ const Type & BSBound::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 BSBound::GetCenter() const {
 	return center;
 }
@@ -50,6 +52,8 @@ Vector3 BSBound::GetDimensions() const {
 void BSBound::SetDimensions( const Vector3 & value ) {
 	dimensions = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

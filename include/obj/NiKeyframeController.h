@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives the keyframe data used by this controller.
 	 * \return The keyframe data.
@@ -48,6 +50,8 @@ public:
 	 * \param[in] n The new morph data.
 	 */
 	NIFLIB_API void SetData( NiKeyframeData * n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_KEYFRAME_CONTROLLER_MEMBERS

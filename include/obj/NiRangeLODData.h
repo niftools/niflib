@@ -35,6 +35,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Get the point to calculate distance from for switching?
 	 * \return The point to calculate distance from for switching?
@@ -58,6 +60,8 @@ public:
 	 * \param[in] value The new ranges of distance that each level of detail applies in.
 	 */
 	NIFLIB_API void SetLODLevels( const vector<LODRange> & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_RANGE_L_O_D_DATA_MEMBERS

@@ -35,6 +35,8 @@ const Type & NiWireframeProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiWireframeProperty::GetFlags() const {
    return flags;
 }
@@ -42,6 +44,8 @@ unsigned short NiWireframeProperty::GetFlags() const {
 void NiWireframeProperty::SetFlags(unsigned short value) {
    flags = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

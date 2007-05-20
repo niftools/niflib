@@ -12,9 +12,13 @@ const Type NiObjectNET::TYPE("NiObjectNET", &NI_OBJECT_N_E_T_PARENT::TYPE );
 NiObjectNET::NiObjectNET() NI_OBJECT_N_E_T_CONSTRUCT {}
 
 NiObjectNET::~NiObjectNET() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//Clear Lists
 	ClearExtraData();
 	ClearControllers();
+
+	//--END CUSTOM CODE--//
 }
 
 void NiObjectNET::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
@@ -36,6 +40,8 @@ void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 list<NiObjectRef> NiObjectNET::GetRefs() const {
 	return InternalGetRefs();
 }
+
+//--BEGIN MISC CUSTOM CODE--//
 
 string NiObjectNET::GetName() {
 	return name;
@@ -183,6 +189,8 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 
 	return conts;
 }
+
+//--END CUSTOM CODE--//
 
 const Type & NiObjectNET::GetType() const {
 	return TYPE;

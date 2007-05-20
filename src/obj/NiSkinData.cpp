@@ -41,6 +41,8 @@ const Type & NiSkinData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned int NiSkinData::GetBoneCount() const {
 	return (unsigned int)( boneList.size() );
 }
@@ -170,6 +172,8 @@ Ref<NiSkinPartition> NiSkinData::GetSkinPartition() const {
 void NiSkinData::SetSkinPartition( NiSkinPartition * value ) {
    skinPartition = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

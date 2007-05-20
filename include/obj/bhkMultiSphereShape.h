@@ -33,6 +33,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the spheres which make up the multi sphere shape.
 	 * \return The spheres which make up the multi sphere shape.
@@ -45,6 +47,8 @@ public:
 	 */
 
 	NIFLIB_API void SetSpheres( const vector<Sphere> & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_MULTI_SPHERE_SHAPE_MEMBERS

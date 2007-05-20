@@ -37,6 +37,8 @@ const Type & NiPSysEmitterCtlr::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiPSysEmitterCtlrData > NiPSysEmitterCtlr::GetData() const {
 	return data;
 }
@@ -52,6 +54,8 @@ Ref<NiInterpolator > NiPSysEmitterCtlr::GetVisibilityInterpolator() const {
 void NiPSysEmitterCtlr::SetVisibilityInterpolator( NiInterpolator * value ) {
 	visibilityInterpolator = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

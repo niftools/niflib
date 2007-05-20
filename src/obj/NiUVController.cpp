@@ -36,6 +36,8 @@ const Type & NiUVController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiUVData> NiUVController::GetData() const {
 	return data;
 }
@@ -43,6 +45,8 @@ Ref<NiUVData> NiUVController::GetData() const {
 void NiUVController::SetData( NiUVData * n ) {
 	data = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

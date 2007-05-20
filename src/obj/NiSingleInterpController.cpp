@@ -60,6 +60,8 @@ NiObject * NiSingleInterpController::Create() {
 	return new NiSingleInterpController;
 }
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiInterpolator > NiSingleInterpController::GetInterpolator() const {
 	return interpolator;
 }
@@ -67,3 +69,5 @@ Ref<NiInterpolator > NiSingleInterpController::GetInterpolator() const {
 void NiSingleInterpController::SetInterpolator( NiInterpolator * value ) {
 	interpolator = value;
 }
+
+//--END CUSTOM CODE--//

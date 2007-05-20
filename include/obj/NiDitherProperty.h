@@ -30,6 +30,8 @@ public:
 	NIFLIB_API virtual string asString( bool verbose = false ) const;
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
+
+	//--BEGIN MISC CUSTOM CODE--//
 	
 	/*!
 	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] n The new flag data.  Will overwrite any existing flag data.
 	 */
 	NIFLIB_API void SetFlags( unsigned short n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_DITHER_PROPERTY_MEMBERS

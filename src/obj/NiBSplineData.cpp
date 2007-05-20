@@ -35,6 +35,8 @@ const Type & NiBSplineData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<short > NiBSplineData::GetControlPoints() const 
 {
 	return controlPoints;
@@ -50,6 +52,8 @@ vector<short > NiBSplineData::GetControlPointRange(int offset, int count) const
    std::advance(srcend, offset + count);
    return vector<short>(srcbeg, srcend);
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

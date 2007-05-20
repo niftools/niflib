@@ -34,6 +34,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the furniture marker positions.  These are markers that show where the character will end up if he/she sits or lies on this object.
 	 * \return The furniture marker positions.
@@ -45,6 +47,8 @@ public:
 	 * \return The new furniture marker positions.
 	 */
 	NIFLIB_API void SetFurniturePositions( const vector<FurniturePosition> & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	B_S_FURNITURE_MARKER_MEMBERS

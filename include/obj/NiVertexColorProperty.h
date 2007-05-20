@@ -34,6 +34,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
 	 * \return The flag data.
@@ -69,6 +71,8 @@ public:
 	 * \param[in] value The new lighting mode.
 	 */
 	NIFLIB_API void SetLightingMode(LightMode value);
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_VERTEX_COLOR_PROPERTY_MEMBERS

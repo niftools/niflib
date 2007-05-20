@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this object stores data is attatched.  This is not done automatically by Niflib.
 	 * \return The number of vertices used in the morph target meshes.
@@ -106,6 +108,8 @@ public:
 	 * \sa NiMorphData::SetMorphVerts
 	 */
 	NIFLIB_API void SetMorphVerts( int n, const vector<Vector3> & in );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_MORPH_DATA_MEMBERS

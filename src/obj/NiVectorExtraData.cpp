@@ -35,6 +35,8 @@ const Type & NiVectorExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiVectorExtraData::GetData() const {
 	return vectorData;
 };
@@ -42,6 +44,8 @@ Vector3 NiVectorExtraData::GetData() const {
 void NiVectorExtraData::SetData( const Vector3 & n ) {
 	vectorData = n;
 };
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

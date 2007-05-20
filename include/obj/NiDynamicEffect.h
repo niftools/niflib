@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the current switch state for this effect.  Perhaps this turns effect on and off?
 	 * \return The current switch state for this object.
@@ -59,6 +61,8 @@ public:
 	 * \param[in] value A list of the new nodes that will be affected by this effect.
 	 */
 	NIFLIB_API void SetAffectedNodes( const vector<Ref<NiAVObject > >& value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_DYNAMIC_EFFECT_MEMBERS

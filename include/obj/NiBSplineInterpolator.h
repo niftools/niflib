@@ -34,6 +34,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the animation start time.
 	 * \return The animation start time
@@ -83,10 +85,10 @@ public:
 	NIFLIB_API void SetBasisData( NiBSplineBasisData * value );
 
 protected:
+	// internal method for bspline calculation in child classes
+	static void bspline(int n, int t, int l, float *control, float *output, int num_output);
 
-   // internal method for bspline calculation in child classes
-   static void bspline(int n, int t, int l, float *control, float *output, int num_output);
-
+	//--END CUSTOM CODE--//
 protected:
 	NI_B_SPLINE_INTERPOLATOR_MEMBERS
 private:

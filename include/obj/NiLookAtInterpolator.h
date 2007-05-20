@@ -38,17 +38,19 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the node that this interpolator is focused on.
 	 * \return The node that this interpolator is focused on.
 	 */
-	NIFLIB_API Ref<NiNode > GetLookAt() const;
+	NIFLIB_API Ref<NiNode> GetLookAt() const;
 
 	/*!
 	 * Sets the node that this interpolator will focus on.
 	 * \return The new node that the interpolator will focus on, or NULL to clear the current one.
 	 */
-	NIFLIB_API void SetLookAt( Ref<NiNode > value );
+	NIFLIB_API void SetLookAt( Ref<NiNode> value );
 
 	/*!
 	 * Gets the translation of the interpolator.  Could be the necessary value to point at the referenced node in the current pose.
@@ -85,6 +87,8 @@ public:
 	 * \param[in] value The new scale for the interpolator.
 	 */
 	NIFLIB_API void SetScale( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_LOOK_AT_INTERPOLATOR_MEMBERS

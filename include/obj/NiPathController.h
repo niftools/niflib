@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	//TODO:  This class has a lot of unknown data
 
 	/*!
@@ -62,6 +64,8 @@ public:
 	 * \param[in] n The new pos data.
 	 */
 	NIFLIB_API void SetPosData( NiPosData * n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_PATH_CONTROLLER_MEMBERS

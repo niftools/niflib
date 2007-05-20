@@ -37,6 +37,8 @@ const Type & bhkRigidBody::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 OblivionLayer bhkRigidBody::GetLayerCopy() const {
 	return layerCopy;
 }
@@ -172,6 +174,8 @@ MotionQuality bhkRigidBody::GetQualityType() const {
 void bhkRigidBody::SetQualityType( MotionQuality value ) {
 	qualityType = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

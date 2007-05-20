@@ -36,6 +36,8 @@ const Type & NiFloatData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 KeyType NiFloatData::GetKeyType() const {
 	return data.interpolation;
 }
@@ -51,6 +53,8 @@ vector< Key<float> > NiFloatData::GetKeys() const {
 void NiFloatData::SetKeys( vector< Key<float> > const & keys ) {
 	data.keys = keys;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

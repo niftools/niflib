@@ -35,6 +35,8 @@ const Type & NiIntegerExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned int NiIntegerExtraData::GetData() const {
 	return integerData;
 }
@@ -42,6 +44,8 @@ unsigned int NiIntegerExtraData::GetData() const {
 void NiIntegerExtraData::SetData( unsigned int n ) {
 	integerData = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

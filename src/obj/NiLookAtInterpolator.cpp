@@ -38,7 +38,9 @@ const Type & NiLookAtInterpolator::GetType() const {
 	return TYPE;
 };
 
-Ref<NiNode > NiLookAtInterpolator::GetLookAt() const {
+//--BEGIN MISC CUSTOM CODE--//
+
+Ref<NiNode> NiLookAtInterpolator::GetLookAt() const {
 	return lookAt;
 }
 
@@ -69,6 +71,8 @@ float NiLookAtInterpolator::GetScale() const {
 void NiLookAtInterpolator::SetScale( float value ) {
 	scale = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

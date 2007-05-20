@@ -37,6 +37,8 @@ const Type & NiPathController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiFloatData> NiPathController::GetFloatData() const {
 	return floatData;
 }
@@ -52,6 +54,8 @@ Ref<NiPosData> NiPathController::GetPosData() const {
 void NiPathController::SetPosData( NiPosData * n ) {
 	posData = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

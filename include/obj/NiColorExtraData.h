@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the RGBA color value stored in this object.
 	 * \return The RGBA color value stored in this object.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] n The new RGBA color value to store in this object.
 	 */
 	NIFLIB_API void SetData( const Color4 & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_COLOR_EXTRA_DATA_MEMBERS

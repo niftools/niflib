@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the entire palette string.  This is a buffer of characters that will contain the all the strings stored in this palette.  It is usually better to get individual strings with the NiStringPalette::GetSubStr function.
 	 * \return The entire palette string.
@@ -61,6 +63,8 @@ public:
 	 * \return The offset into the string palette where the new sub string was added.  I.e. the number of characters that preceed it in the string palette.
 	 */
 	NIFLIB_API unsigned int AddSubStr( const string & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_STRING_PALETTE_MEMBERS

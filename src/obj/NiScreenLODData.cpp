@@ -35,6 +35,8 @@ const Type & NiScreenLODData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiScreenLODData::GetBoundCenter() const {
 	return boundCenter;
 }
@@ -74,6 +76,8 @@ vector<float > NiScreenLODData::GetProportionLevels() const {
 void NiScreenLODData::SetProportionLevels( const vector<float >& value ) {
 	proportionLevels = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

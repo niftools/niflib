@@ -34,6 +34,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives a list of the extra NiNode targets to be controlled.
 	 * \return The NiNode targets to be controlled.
@@ -45,6 +47,8 @@ public:
 	 * \param[in] value The new NiNode targets to be controlled.
 	 */
 	NIFLIB_API void SetExtraTargets( const vector< Ref<NiNode> > & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_MULTI_TARGET_TRANSFORM_CONTROLLER_MEMBERS

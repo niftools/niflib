@@ -35,6 +35,8 @@ const Type & NiLight::GetType() const {
 	return TYPE;
 };
 
+//--END CUSTOM CODE--//
+
 float NiLight::GetDimmer() const {
 	return dimmer;
 }
@@ -66,6 +68,8 @@ Color3 NiLight::GetSpecularColor() const {
 void NiLight::SetSpecularColor( Color3 value ) {
 	specularColor = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

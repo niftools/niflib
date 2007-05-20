@@ -36,6 +36,7 @@ const Type & NiBinaryExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
 
 vector<byte> NiBinaryExtraData::GetData() const {
 	return binaryData.data;
@@ -45,6 +46,8 @@ void NiBinaryExtraData::SetData( const vector<byte> & n ) {
 	binaryData.dataSize = (unsigned int)(n.size());
 	binaryData.data = n;
 };
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -47,6 +47,8 @@ const Type & NiControllerSequence::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 NiControllerManager * NiControllerSequence::GetParent() const { 
    return manager; 
 }
@@ -54,7 +56,6 @@ NiControllerManager * NiControllerSequence::GetParent() const {
 void NiControllerSequence::SetParent(NiControllerManager * parent) { 
    manager = parent; 
 }
-
 
 void NiControllerSequence::SetTextKey( NiTextKeyExtraData * txt_key ) {
 	//Set new name
@@ -223,6 +224,8 @@ float NiControllerSequence::GetWeight() const {
 void NiControllerSequence::SetWeight( const float value ) {
 	weight = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -41,6 +41,8 @@ const Type & NiGeometry::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiGeometryData> NiGeometry::GetData() const {
 	return data;
 }
@@ -362,6 +364,8 @@ void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 
 	skinData->SetBoneWeights( bone_index, n, center, radius );
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

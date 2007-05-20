@@ -30,6 +30,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! Used to specify the source and destination blending functions.  The function of each value is equivalent to the OpenGL blending function of similar name. */
 	enum BlendFunc {
 		BF_ONE = 0x00, 
@@ -153,6 +155,8 @@ public:
 	 * \param[in] n The new flag data.  Will overwrite any existing flag data.
 	 */
 	NIFLIB_API void SetFlags( unsigned short n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_ALPHA_PROPERTY_MEMBERS

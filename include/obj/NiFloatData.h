@@ -32,6 +32,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! Retrieves the type of float interpolation being used.
 	 * \return The float key type specifing the type of interpolation being used.
 	 * \sa NiFloatData::SetKeyType
@@ -55,6 +57,8 @@ public:
 	 * \sa NiFloatData::GetKeys, Key
 	 */
 	NIFLIB_API void SetKeys( vector< Key<float> > const & keys );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_FLOAT_DATA_MEMBERS

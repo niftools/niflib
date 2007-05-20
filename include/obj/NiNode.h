@@ -39,10 +39,31 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Adds a child AV Object to this node.  This is a sub-leaf in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 * \param[in] obj The AV Object to add as a child of this node.
+	 */
 	NIFLIB_API void AddChild( Ref<NiAVObject> obj );
+
+	/*!
+	 * Removes an AV Object child from this node.  This is a sub-leaf in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 * \param[in] obj The AV Object to remove as a child from this node.
+	 */
 	NIFLIB_API void RemoveChild( Ref<NiAVObject> obj );
+
+	/*!
+	 * Removes all AV Object children from this node.  These are a sub-leafs in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 */
 	NIFLIB_API void ClearChildren();
+
+	/*!
+	 * Retrieves all AV Object children from this node.  These are a sub-leafs in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 * \param[in] A list of all the AV Objects that are children of this node in the scene graph.
+	 */
 	NIFLIB_API vector< Ref<NiAVObject> > GetChildren() const;
+
 #ifdef USE_NIFLIB_TEMPLATE_HELPERS
 	template <typename ChildEquivalence>
 	inline void SortChildren(ChildEquivalence pred) {
@@ -119,6 +140,9 @@ private:
 	void RepositionGeom( NiAVObjectRef root );
 protected:
 	list<NiSkinInstance*> skins;
+
+	//--END CUSTOM CODE--//
+
 	NI_NODE_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

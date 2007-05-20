@@ -36,6 +36,8 @@ const Type & NiStringPalette::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 string NiStringPalette::GetPaletteString() const {
 	return palette.palette;
 }
@@ -76,6 +78,8 @@ unsigned int NiStringPalette::AddSubStr( const string & n ) {
 	//Return the offset where the string was found or appended
 	return offset;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

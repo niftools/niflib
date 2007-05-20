@@ -35,6 +35,8 @@ const Type & NiZBufferProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiZBufferProperty::GetFlags() const {
    return flags;
 }
@@ -50,6 +52,8 @@ CompareMode NiZBufferProperty::GetDepthFunction() const {
 void NiZBufferProperty::SetDepthFunction(CompareMode value) {
    function = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

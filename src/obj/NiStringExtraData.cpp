@@ -35,6 +35,8 @@ const Type & NiStringExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 string NiStringExtraData::GetData() const {
 	return stringData;
 }
@@ -43,6 +45,8 @@ void NiStringExtraData::SetData( const string & n ) {
 	stringData = n;
 	bytesRemaining = (unsigned int)(stringData.size()) + 4;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

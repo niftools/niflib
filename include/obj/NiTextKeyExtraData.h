@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! Retrieves the text note key data.
 	 * \return A vector containing Key<string> data which specify text note over time.
 	 * \sa NiKeyframeData::SetKeys, Key
@@ -44,6 +46,8 @@ public:
 	NIFLIB_API void SetKeys( vector< Key<string> > const & keys );
 
 	//TODO:  There is an unknown member in this class
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TEXT_KEY_EXTRA_DATA_MEMBERS

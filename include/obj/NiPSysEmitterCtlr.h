@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives the data object used by this controller.
 	 * \return The data object.
@@ -60,6 +62,8 @@ public:
 	 * \param[in] value The new visibility interpolator.
 	 */
 	NIFLIB_API void SetVisibilityInterpolator( NiInterpolator * value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_P_SYS_EMITTER_CTLR_MEMBERS

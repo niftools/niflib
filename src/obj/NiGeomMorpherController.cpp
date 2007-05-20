@@ -37,6 +37,8 @@ const Type & NiGeomMorpherController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector< Ref<NiInterpolator> > NiGeomMorpherController::GetInterpolators() const {
 	return interpolators;
 }
@@ -53,6 +55,8 @@ Ref<NiMorphData> NiGeomMorpherController::GetData() const {
 void NiGeomMorpherController::SetData( NiMorphData * n ) {
 	data = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

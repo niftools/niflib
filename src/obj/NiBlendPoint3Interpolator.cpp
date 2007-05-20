@@ -35,6 +35,8 @@ const Type & NiBlendPoint3Interpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiBlendPoint3Interpolator::GetPointValue() const {
 	return pointValue;
 }
@@ -42,6 +44,8 @@ Vector3 NiBlendPoint3Interpolator::GetPointValue() const {
 void NiBlendPoint3Interpolator::SetPointValue( Vector3 value ) {
 	pointValue = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

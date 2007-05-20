@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the radius of the sphere.
 	 * \return The radius of the sphere.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] value The new radius of the sphere.
 	 */
 	NIFLIB_API void SetRadius( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_SPHERE_SHAPE_MEMBERS

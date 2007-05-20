@@ -6,9 +6,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiBSplineData.h"
 using namespace Niflib;
 
+//--BEGIN FILE HEAD CUSTOM CODE--//
+
 static const int SizeofQuat = 4;
 static const int SizeofTrans = 3;
 static const int SizeofScale = 1;
+
+//--END CUSTOM CODE--//
 
 //Definition of TYPE constant
 const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NI_B_SPLINE_COMP_TRANSFORM_INTERPOLATOR_PARENT::TYPE );
@@ -40,6 +44,8 @@ list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
 const Type & NiBSplineCompTransformInterpolator::GetType() const {
 	return TYPE;
 };
+
+//--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiBSplineCompTransformInterpolator::GetTranslation() const {
 	return translation;
@@ -282,6 +288,8 @@ int NiBSplineCompTransformInterpolator::GetNumControlPt() const
    }
    return 0;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

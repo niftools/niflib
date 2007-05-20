@@ -37,6 +37,8 @@ const Type & NiLODNode::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Vector3 NiLODNode::GetLODCenter() const {
 	return lodCenter;
 }
@@ -60,6 +62,8 @@ Ref<NiLODData > NiLODNode::GetLODLevelData() const {
 void NiLODNode::SetLODLevelData( Ref<NiLODData > value ) {
 	lodLevelData = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

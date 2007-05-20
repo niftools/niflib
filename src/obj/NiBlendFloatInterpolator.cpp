@@ -35,6 +35,8 @@ const Type & NiBlendFloatInterpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiBlendFloatInterpolator::GetFloatValue() const {
 	return floatValue;
 }
@@ -42,6 +44,8 @@ float NiBlendFloatInterpolator::GetFloatValue() const {
 void NiBlendFloatInterpolator::SetFloatValue( float value ) {
 	floatValue = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

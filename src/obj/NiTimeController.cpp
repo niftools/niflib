@@ -36,6 +36,8 @@ const Type & NiTimeController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 NiTimeControllerRef NiTimeController::GetNextController() const {
 	return nextController;
 }
@@ -91,6 +93,8 @@ float NiTimeController::GetStopTime() const {
 void NiTimeController::SetStopTime( float n ) {
 	stopTime = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

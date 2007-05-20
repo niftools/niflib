@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the number of partitions that the triangles in the skin are divided into within this skin partition data object.
 	 * \return The number of skin partitions.
@@ -161,6 +163,8 @@ protected:
    void SetStrip( int partition, int index, const vector<unsigned short> & in );
 
    void SetTriangles( int partition, const vector<Triangle> & in );
+
+   //--END CUSTOM CODE--//
 
 protected:
 	NI_SKIN_PARTITION_MEMBERS

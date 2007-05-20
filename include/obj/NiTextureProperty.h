@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the image object used by this texture property, if any.
 	 * \return The image used by this property, or NULL if there is none.
@@ -47,6 +49,8 @@ public:
 	 * \return The new image to be used by this property, or NULL to clear the existing one.
 	 */
 	NIFLIB_API void SetImage( NiImage * n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TEXTURE_PROPERTY_MEMBERS

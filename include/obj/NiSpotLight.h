@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the opening angle of the spot light.
 	 * \return The cutoff angle.
@@ -54,6 +56,8 @@ public:
 	 * \param[in] value The new exponent value.
 	 */
 	NIFLIB_API void SetExponent( float value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_SPOT_LIGHT_MEMBERS

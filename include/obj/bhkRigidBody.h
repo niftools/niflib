@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves what appears to be a copy of the layer value.
 	 * \return The duplicate layer value.
@@ -240,6 +242,8 @@ public:
 	 * \param[in] value The new motion quality setting for this rigid body.
 	 */
 	NIFLIB_API void SetQualityType( MotionQuality value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_RIGID_BODY_MEMBERS

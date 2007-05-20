@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
 	 * \return The flag data.
@@ -114,6 +116,8 @@ public:
 	 * \param[in] n The new glossiness.
 	 */
 	NIFLIB_API void SetGlossiness( float n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_MATERIAL_PROPERTY_MEMBERS

@@ -40,6 +40,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Returns the name of this NiControllerSequence object. This is also the name of the action
 	 * associated with this file. For instance, if the original NIF file is called
@@ -172,7 +174,6 @@ public:
 	 */
 	NIFLIB_API void SetControllerPriority( int controller, int priority );
 
-
 	/*!
 	 * Gets weight/priority of animation?
 	 * \return The weight/priority of the animation?
@@ -202,6 +203,7 @@ protected:
    NiControllerManager * GetParent() const;
    void SetParent( NiControllerManager * parent );
 
+//--END CUSTOM CODE--//
 	NI_CONTROLLER_SEQUENCE_MEMBERS
 private:
 	void InternalRead( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

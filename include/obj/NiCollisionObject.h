@@ -38,6 +38,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Returns the NiNode that this collision object is connected to, if any.
 	 * \return The NiNode that this collision object is connected to, or NULL if it is not connected to any nodes.
@@ -58,6 +60,8 @@ public:
 
 	/*! NIFLIB_HIDDEN function.  For internal use only */
 	NIFLIB_HIDDEN void SetTarget( NiAVObject * value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_COLLISION_OBJECT_MEMBERS

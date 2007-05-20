@@ -30,6 +30,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Get Signed shorts representing the spline data scaled by SHRT_MAX.
 	 * \return The spline data.
@@ -43,6 +45,8 @@ public:
 	 * \return The control points that fall within the specified range.
 	 */
 	NIFLIB_API vector<short> GetControlPointRange(int offset, int count) const;
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_B_SPLINE_DATA_MEMBERS

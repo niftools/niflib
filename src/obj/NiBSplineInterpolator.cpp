@@ -37,6 +37,8 @@ const Type & NiBSplineInterpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiBSplineInterpolator::GetStartTime() const {
 	return startTime;
 }
@@ -167,6 +169,8 @@ void NiBSplineInterpolator::bspline(int n, int t, int l, float *control, float *
    delete [] u;
    delete [] calc;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

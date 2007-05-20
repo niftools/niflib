@@ -35,6 +35,8 @@ const Type & NiMaterialProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiMaterialProperty::GetFlags() const {
 	return flags;
 }
@@ -90,6 +92,8 @@ Color3 NiMaterialProperty::GetSpecularColor() const {
 void NiMaterialProperty::SetSpecularColor( const Color3 & n ) {
 	specularColor = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

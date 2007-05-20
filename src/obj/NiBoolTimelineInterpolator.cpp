@@ -36,6 +36,8 @@ const Type & NiBoolTimelineInterpolator::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 bool NiBoolTimelineInterpolator::GetBoolValue() const {
 	return (boolValue != 0);
 }
@@ -51,6 +53,8 @@ Ref<NiBoolData> NiBoolTimelineInterpolator::GetData() const {
 void NiBoolTimelineInterpolator::SetData( NiBoolData * value ) {
 	data = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

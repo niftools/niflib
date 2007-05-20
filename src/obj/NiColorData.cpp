@@ -36,6 +36,8 @@ const Type & NiColorData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 KeyType NiColorData::GetKeyType() const {
 	return data.interpolation;
 }
@@ -51,6 +53,8 @@ vector< Key<Color4> > NiColorData::GetKeys() const {
 void NiColorData::SetKeys( vector< Key<Color4> > const & keys ) {
 	data.keys = keys;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

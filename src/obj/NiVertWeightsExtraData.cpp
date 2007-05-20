@@ -35,6 +35,8 @@ const Type & NiVertWeightsExtraData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<float> NiVertWeightsExtraData::GetData() const {
 	return weight;
 }
@@ -44,6 +46,8 @@ void NiVertWeightsExtraData::SetData( const vector<float> & n ) {
 	numBytes = numVertices + 2;
 	weight = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

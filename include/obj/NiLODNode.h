@@ -39,6 +39,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Get the point to calculate distance from for switching?
 	 * \return The LOD center.
@@ -74,6 +76,8 @@ public:
 	 * \param[in] The new LOD level data object or NULL to clear the current one.
 	 */
 	NIFLIB_API void SetLODLevelData( Ref<NiLODData > value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_L_O_D_NODE_MEMBERS

@@ -36,6 +36,8 @@ const Type & NiCamera::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiCamera::GetFrustumLeft() const {
 	return frustumLeft;
 }
@@ -131,6 +133,8 @@ float NiCamera::GetLodAdjust() const {
 void NiCamera::SetLodAdjust( float value ) {
 	lodAdjust = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

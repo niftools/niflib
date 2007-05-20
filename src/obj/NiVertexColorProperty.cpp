@@ -35,6 +35,8 @@ const Type & NiVertexColorProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 unsigned short NiVertexColorProperty::GetFlags() const {
    return flags;
 }
@@ -58,6 +60,8 @@ LightMode NiVertexColorProperty::GetLightingMode() const {
 void NiVertexColorProperty::SetLightingMode(LightMode value) {
    lightingMode = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

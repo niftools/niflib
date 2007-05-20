@@ -38,6 +38,8 @@ const Type & NiPixelData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 int NiPixelData::GetHeight() const {
 	if ( mipmaps.size() == 0 ) {
 		return 0;
@@ -345,6 +347,8 @@ void NiPixelData::SetColors( const vector<Color4> & new_pixels, bool generate_mi
 		}
 	}
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

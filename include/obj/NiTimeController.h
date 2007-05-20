@@ -35,6 +35,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*! 
 	 * Returns a reference to the next controller in a linked list.
 	 * This function should only be called by NiObjectNET.
@@ -120,6 +122,9 @@ public:
 	 * \param[in] n The new end time for the controller animation.
 	 */
 	NIFLIB_API void SetStopTime( float n );
+
+	//--END CUSTOM CODE--//
+
 protected:
 	NI_TIME_CONTROLLER_MEMBERS
 private:

@@ -60,6 +60,8 @@ NiObject * NiImage::Create() {
 	return new NiImage;
 }
 
+//--BEGIN MISC CUSTOM CODE--//
+
 void NiImage::SetTextureFileName( string file_name ) {
 	fileName = file_name;
 }
@@ -67,3 +69,5 @@ void NiImage::SetTextureFileName( string file_name ) {
 string NiImage::GetTextureFileName() const {
 	return fileName;
 }
+
+//--END CUSTOM CODE--//

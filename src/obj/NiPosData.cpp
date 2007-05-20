@@ -36,6 +36,8 @@ const Type & NiPosData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 KeyType NiPosData::GetKeyType() const {
 	return data.interpolation;
 }
@@ -51,6 +53,8 @@ vector< Key<Vector3> > NiPosData::GetKeys() const {
 void NiPosData::SetKeys( vector< Key<Vector3> > const & keys ) {
 	data.keys = keys;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

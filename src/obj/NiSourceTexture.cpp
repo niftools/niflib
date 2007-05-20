@@ -37,6 +37,8 @@ const Type & NiSourceTexture::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 bool NiSourceTexture::IsTextureExternal() const {
 	return ( useExternal != 0 );
 }
@@ -95,6 +97,8 @@ AlphaFormat NiSourceTexture::GetAlphaFormat() const {
 void NiSourceTexture::SetAlphaFormat( AlphaFormat n ) {
 	alphaFormat = n;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

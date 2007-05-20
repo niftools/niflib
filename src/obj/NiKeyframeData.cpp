@@ -36,6 +36,8 @@ const Type & NiKeyframeData::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 KeyType NiKeyframeData::GetRotateType() const {
 	return rotationType;
 }
@@ -141,6 +143,8 @@ vector< Key<float> > NiKeyframeData::GetScaleKeys() const {
 void NiKeyframeData::SetScaleKeys( vector< Key<float> > const & keys ) {
 	scales.keys = keys;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

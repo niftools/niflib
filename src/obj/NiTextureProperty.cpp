@@ -60,6 +60,8 @@ NiObject * NiTextureProperty::Create() {
 	return new NiTextureProperty;
 }
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiImage> NiTextureProperty::GetImage() const {
 	return image;
 }
@@ -67,3 +69,5 @@ Ref<NiImage> NiTextureProperty::GetImage() const {
 void NiTextureProperty::SetImage( NiImage * n ) {
 	image = n;
 }
+
+//--END CUSTOM CODE--//

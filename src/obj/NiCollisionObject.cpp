@@ -38,6 +38,8 @@ const Type & NiCollisionObject::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<NiAVObject> NiCollisionObject::GetTarget() const {
 	return target;
 }
@@ -53,6 +55,8 @@ Ref<NiObject > NiCollisionObject::GetBody() const {
 void NiCollisionObject::SetBody( NiObject * value ) {
 	body = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

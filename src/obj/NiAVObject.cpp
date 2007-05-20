@@ -11,9 +11,17 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NI_A_V_OBJECT_PARENT::TYPE );
 
-NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT, parent(NULL) {}
+NiAVObject::NiAVObject() NI_A_V_OBJECT_CONSTRUCT {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
+	parent = NULL;
+
+	//--END CUSTOM CODE--//
+}
 
 NiAVObject::~NiAVObject() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//Clear Properties
 	ClearProperties();
 
@@ -21,6 +29,8 @@ NiAVObject::~NiAVObject() {
 	if ( collisionObject != NULL ) {
 		collisionObject->SetTarget(NULL);
 	}
+
+	//--END CUSTOM CODE--//
 }
 
 void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
@@ -43,19 +53,12 @@ list<NiObjectRef> NiAVObject::GetRefs() const {
 	return InternalGetRefs();
 }
 
-/*! 
- * This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
- * \return A 4x4 transformation matrix built from the node's transform attributes.
- * \sa INode::GetWorldTransform
- */
+//--BEGIN MISC CUSTOM CODE--//
+
 Matrix44 NiAVObject::GetLocalTransform() const {
 	return Matrix44( translation, rotation, scale );
 }
-/*! 
- * This function will return a transform matrix that represents the location of this node in world space.  In other words, it concatenates all parent transforms up to the root of the scene to give the ultimate combined transform from the origin for this node.
- * \return The 4x4 world transform matrix of this node.
- * \sa INode::GetLocalTransform
- */
+
 Matrix44 NiAVObject::GetWorldTransform() const {
 	//Get Parent Transform if there is one
 	NiNodeRef par = GetParent();
@@ -226,6 +229,8 @@ void NiAVObject::SetBoundingBox( const BoundingBox & n ) {
 	boundingBox = n;
 	hasBoundingBox = true;
 }
+
+//--END CUSTOM CODE--//
 
 const Type & NiAVObject::GetType() const {
 	return TYPE;

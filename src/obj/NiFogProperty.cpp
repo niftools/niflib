@@ -35,6 +35,7 @@ const Type & NiFogProperty::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiFogProperty::GetFlags() const {
    return flags;
@@ -59,6 +60,8 @@ Color3 NiFogProperty::GetFogColor() const {
 void NiFogProperty::SetFogColor(Color3 value) {
    fogColor = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

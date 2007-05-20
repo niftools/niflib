@@ -33,6 +33,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieve the name of this NiExtraData object.  Names are only stored
 	 * in later version NIF files so this may not be necessary depending on
@@ -71,6 +73,8 @@ public:
 	 * \param obj A reference to the object to set as the one after this in the chain.
 	 */
 	NIFLIB_HIDDEN void SetNextExtraData( NiExtraData * obj );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_EXTRA_DATA_MEMBERS

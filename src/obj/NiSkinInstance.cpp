@@ -14,6 +14,8 @@ const Type NiSkinInstance::TYPE("NiSkinInstance", &NI_SKIN_INSTANCE_PARENT::TYPE
 NiSkinInstance::NiSkinInstance() NI_SKIN_INSTANCE_CONSTRUCT {}
 
 NiSkinInstance::NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes ) NI_SKIN_INSTANCE_CONSTRUCT {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
 	//Ensure that all bones are below the skeleton root node on the scene graph
 	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {
 		bool is_decended = false;
@@ -44,9 +46,13 @@ NiSkinInstance::NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bo
 	//Store skeleton root and inform it of this attachment
 	skeletonRoot = skeleton_root;
 	skeletonRoot->AddSkin( this );
+
+	//--END CUSTOM CODE--//
 }
 
 NiSkinInstance::~NiSkinInstance() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//Unflag any bones that were part of this skin instance
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
 		bones[i]->SetSkinFlag(false);
@@ -57,6 +63,8 @@ NiSkinInstance::~NiSkinInstance() {
 		skeletonRoot->RemoveSkin( this );
 		skeletonRoot = NULL;
 	}
+
+	//--END CUSTOM CODE--//
 }
 
 void NiSkinInstance::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
@@ -74,6 +82,8 @@ string NiSkinInstance::asString( bool verbose ) const {
 void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	InternalFixLinks( objects, link_stack, info );
 
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
 	//Inform newly fixed skeleton root of attachment
 	if ( skeletonRoot != NULL ) {
 		skeletonRoot->AddSkin( this );
@@ -83,6 +93,8 @@ void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
 		bones[i]->SetSkinFlag(true);
 	}
+
+	//--END CUSTOM CODE--//
 }
 
 list<NiObjectRef> NiSkinInstance::GetRefs() const {
@@ -92,6 +104,8 @@ list<NiObjectRef> NiSkinInstance::GetRefs() const {
 const Type & NiSkinInstance::GetType() const {
 	return TYPE;
 };
+
+//--BEGIN MISC CUSTOM CODE--//
 
 vector< Ref<NiNode> > NiSkinInstance::GetBones() const {
 	vector<NiNodeRef> ref_bones( bones.size() );
@@ -135,6 +149,8 @@ unsigned int NiSkinInstance::GetBoneCount() const {
 Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {
 	return skeletonRoot;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

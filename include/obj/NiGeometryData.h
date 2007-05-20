@@ -40,6 +40,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	//--Counts--//
 
 	/*! 
@@ -144,6 +146,8 @@ public:
 	 * \param[in] transform The 4x4 transformation matrix to apply to the vertices and normals in this mesh.  Normals are only affected by the rotation portion of this matrix.
 	 */
 	NIFLIB_API void Transform( const Matrix44 & transform );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_GEOMETRY_DATA_MEMBERS

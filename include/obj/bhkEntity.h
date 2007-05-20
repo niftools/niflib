@@ -36,6 +36,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the shape object that this body is using.
 	 * \param[in] value The shape object being used by this body.
@@ -59,6 +61,8 @@ public:
 	 * \param[in] value The new Oblivoin layer to use.
 	 */
 	NIFLIB_API void SetLayer( OblivionLayer value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	BHK_ENTITY_MEMBERS

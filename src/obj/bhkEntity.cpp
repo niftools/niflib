@@ -36,6 +36,8 @@ const Type & bhkEntity::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 Ref<bhkShape > bhkEntity::GetShape() const {
 	return shape;
 }
@@ -51,6 +53,8 @@ OblivionLayer bhkEntity::GetLayer() const {
 void bhkEntity::SetLayer( OblivionLayer value ) {
 	layer = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -39,6 +39,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrives the model projection matrix of this effect.  This always seems to be set to the identity.
 	 * \return The model projection matrix.
@@ -180,6 +182,8 @@ public:
 	 * \param[in] The new PS2 K value.
 	 */
 	NIFLIB_API void SetPs2K( unsigned short value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_TEXTURE_EFFECT_MEMBERS

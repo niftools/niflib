@@ -37,6 +37,8 @@ const Type & NiMultiTargetTransformController::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<NiNodeRef> NiMultiTargetTransformController::GetExtraTargets() const {
    vector<NiNodeRef> retval;
    size_t n = extraTargets.size();
@@ -46,7 +48,7 @@ vector<NiNodeRef> NiMultiTargetTransformController::GetExtraTargets() const {
 	return retval;
 }
 
-void NiMultiTargetTransformController::SetExtraTargets( const vector<NiNodeRef>& value ) {
+void NiMultiTargetTransformController::SetExtraTargets( const vector< Ref<NiNode> > & value ) {
    extraTargets.clear();
    size_t n = value.size();
    extraTargets.reserve(n);
@@ -54,6 +56,8 @@ void NiMultiTargetTransformController::SetExtraTargets( const vector<NiNodeRef>&
       extraTargets.push_back( value[i] );
    extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiNode*)NULL), extraTargets.end());
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

@@ -37,6 +37,8 @@ const Type & NiDefaultAVObjectPalette::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 vector<Ref<NiAVObject> > NiDefaultAVObjectPalette::GetObjs() const {
    vector<NiAVObjectRef> objRefs;
    for (vector<AVObject>::const_iterator itr = objs.begin(); itr != objs.end(); ++itr) {
@@ -54,6 +56,8 @@ void NiDefaultAVObjectPalette::SetObjs( const vector<Ref<NiAVObject> >& value ) 
       objs.push_back(obj);
    }
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

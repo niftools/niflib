@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Used to check whether the texture referenced by this object is an external file.
 	 * \return True if the texture is stored in an external file, false if it is stored within this NIF file.
@@ -103,6 +105,8 @@ public:
 	 * \param[in] n The new alpha format of this texture.
 	 */
 	NIFLIB_API void SetAlphaFormat( AlphaFormat n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_SOURCE_TEXTURE_MEMBERS

@@ -37,6 +37,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 *  Used to determine whether or not the animation sequences are cumulative.
 	 * \return True if animation sequences are cumulative, false otherwise.
@@ -60,7 +62,6 @@ public:
 	 * \param[in] value The new controller sequences.
 	 */
 	NIFLIB_API void SetControllerSequences( const vector< Ref<NiControllerSequence> > & value );
-
 
 	/*!
 	 * Adds a new controller sequence to this controller manager.
@@ -90,6 +91,8 @@ public:
 	 * \param[in] value The new object pallete.
 	 */
 	NIFLIB_API void SetObjectPalette( NiDefaultAVObjectPalette * value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_CONTROLLER_MANAGER_MEMBERS

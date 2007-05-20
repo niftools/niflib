@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Retrieves the floating point values stored in this object.
 	 * \return The floating point values stored in this object.
@@ -42,6 +44,8 @@ public:
 	 * \param[in] n The new floating point values to store in this object.
 	 */
 	NIFLIB_API void SetData( const vector<float> & n );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	NI_FLOATS_EXTRA_DATA_MEMBERS

@@ -31,6 +31,8 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
+
 	/*!
 	 * Gets the center point of the bounding box.
 	 * \return The center point of the bounding box.
@@ -54,6 +56,8 @@ public:
 	 * \param[in] value The new radius of the bounding box along each axis.
 	 */
 	NIFLIB_API void SetDimensions( const Vector3 & value );
+
+	//--END CUSTOM CODE--//
 
 protected:
 	B_S_BOUND_MEMBERS

@@ -35,6 +35,8 @@ const Type & NiSpotLight::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 float NiSpotLight::GetCutoffAngle() const {
 	return cutoffAngle;
 }
@@ -50,6 +52,8 @@ float NiSpotLight::GetExponent() const {
 void NiSpotLight::SetExponent( float value ) {
 	exponent = value;
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();

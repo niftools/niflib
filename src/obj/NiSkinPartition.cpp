@@ -56,6 +56,8 @@ const Type & NiSkinPartition::GetType() const {
 	return TYPE;
 };
 
+//--BEGIN MISC CUSTOM CODE--//
+
 int NiSkinPartition::GetNumPartitions() const {
    return (int)skinPartitionBlocks.size();
 }
@@ -715,6 +717,8 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       }
    }
 }
+
+//--END CUSTOM CODE--//
 
 namespace Niflib { 
 	typedef NiObject*(*obj_factory_func)();
