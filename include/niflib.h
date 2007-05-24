@@ -160,7 +160,7 @@ NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & inf
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root object of the Nif file tree.
  * \param[in] file_name The desired file name for the base NIF file. This name serves as the basis for the names of any Kf files and Kfm files as well.  The path is relative to the working directory unless a full path is specified.
- * \param[in] root The root object to start from when writing out the NIF file.
+ * \param[in] root_object The root object to start from when writing out the NIF file.
  * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  * \param[in] export_files What files to write: NIF, NIF + KF + KFM, NIF + KF's + KFM, KF only, KF's only
  * \param[in] kf_type The KF type (Morrowind style, DAoC style, CivIV style, ...)
@@ -208,7 +208,7 @@ NIFLIB_API Ref<NiNode> FindCommonAncestor( const vector< Ref<NiAVObject> > & obj
 
 /*!
  * Returns a list of all the ancestors of a given NiAVObject
- * \param leaf[in] The NiAVObject to list the ancestors of.
+ * \param[in] leaf The NiAVObject to list the ancestors of.
  * \return A list containing all the ancestors of the given NiAVObject
  */
 NIFLIB_API list< Ref<NiNode> > ListAncestors( NiAVObject * leaf );
@@ -258,7 +258,7 @@ While it is possible to use the pre-compiled DLL file if you are using Microsoft
 
 If you need help to do this, there is information about it on our main website here:  <a href="http://www.niftools.org/wiki/index.php/Niflib/Compile">Compiling Niflib</a>.
 
-\section include Including the Library
+\section include_lib Including the Library
 
 Visual Studio 2005 is the preferred compiler for Niflib as this is the platform that all development is done on.  The instructions in this guide assume that you are using this compiler.  If you do not have a copy, you can <a href="http://msdn.microsoft.com/vstudio/express/downloads/default.aspx">download Microsoft Visual C++ 2005 Express</a> for free from Microsoft.  Niflib should work on other compilers, and is tested on GCC from time to time, but you will have to figure out how to use those compilers on your own.
 
@@ -270,23 +270,33 @@ Dynamic linking means that your program will include a Niflib DLL file which the
 
 These are the project settings that you should change to use each combination of Debug/Release and DLL/Static.  This assumes that you've already created a default empty project with Debug and Release configurations, and are altering those with these additional settings.  It also assumes that you're using the provided Niflib project file to build Niflib, and have added Niflib's lib and include folders to the proper paths in the Tools > Options screen under Projects and Solutions > VC++ Directories.
 
-DLL Release:
+\subsection dll_release DLL Release:
+
 Configuration Properties > C/C++ > Code Generation = Multi-threaded DLL (/MD)
+
 Configuration Properties > Linker > Additional Dependencies = niflib_dll.lib
 
-DLL Debug:
+\subsection dll_debug DLL Debug:
+
 Configuration Properties > C/C++ > Code Generation = Multi-threaded Debug DLL (/MDd)
+
 Configuration Properties > Linker > Additional Dependencies = niflib_dll_debug.lib
 
-Static Release:
+\subsection static_release Static Release:
+
 Configuration Properties > C/C++ > Code Generation = Multi-threaded (/MT)
-Configuration Properties > Preprocessor > Preprocessor Definitions:  (Add this to the end of what is already there, separated by semicolons) NIFLIB_STATIC_LINK 
+
 Configuration Properties > Linker > Additional Dependencies = niflib_static.lib
 
-Static Debug:
-Configuration Properties > C/C++ > Code Generation = Multi-threaded Debug (/MTd)
 Configuration Properties > Preprocessor > Preprocessor Definitions:  (Add this to the end of what is already there, separated by semicolons) NIFLIB_STATIC_LINK 
+
+\subsection static_debug Static Debug:
+
+Configuration Properties > C/C++ > Code Generation = Multi-threaded Debug (/MTd)
+
 Configuration Properties > Linker > Additional Dependencies = niflib_static_debug.lib
+
+Configuration Properties > Preprocessor > Preprocessor Definitions:  (Add this to the end of what is already there, separated by semicolons) NIFLIB_STATIC_LINK 
 
 With that out of the way, you can start writing your source code and include the main Niflib header file:
 
@@ -302,7 +312,7 @@ In addition to the main header file, there are also separate headers for each ob
 
 You will have one such line in your source code for each NIF object that your program needs access to.
 
-Niflib also wraps all its functions in the "Niflib" namespace.  So, depending on your needs, you can either gain access to all Niflib symbols with a using directive that follows the #include statements like this:
+Niflib also wraps all its functions in the "Niflib" namespace.  So, depending on your needs, you can either gain access to all Niflib symbols with a using directive that follows the include statements like this:
 
 \code
 using namespace Niflib;

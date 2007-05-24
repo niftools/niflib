@@ -85,7 +85,7 @@ public:
 
 	/*!
 	 * Retrieves all AV Object children from this node.  These are a sub-leafs in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
-	 * \param[in] A list of all the AV Objects that are children of this node in the scene graph.
+	 * \return A list of all the AV Objects that are children of this node in the scene graph.
 	 */
 	NIFLIB_API vector< Ref<NiAVObject> > GetChildren() const;
 

@@ -89,7 +89,7 @@ public:
 
 	/*!
 	 * Sets the second capsule radius.  Seems to match the first capsule radius.
-	 * \param value[in] The new second capsule radius.
+	 * \param[in] value The new second capsule radius.
 	 */
 	NIFLIB_API void SetRadius1( float value );
 
@@ -113,7 +113,7 @@ public:
 
 	/*!
 	 * Sets the third capsule radius.  Seems to match the second capsule radius.
-	 * \param value[in] The new third capsule radius.
+	 * \param[in] value The new third capsule radius.
 	 */
 	NIFLIB_API void SetRadius2( float value );
 

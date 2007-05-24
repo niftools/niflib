@@ -77,9 +77,9 @@ public:
 
 	/*!
 	 * Sets the number of NiTriStripsData objects referenced by this shape.
-	 * \param[in] n The new number of NiTriStripsData objects.
+	 * \param[in] i The new number of NiTriStripsData objects.
 	 */
-	NIFLIB_API void	SetNumStripsData(int i);
+	NIFLIB_API void	SetNumStripsData( int i );
 
 	/*!
 	 * Sets the NiTriStripsData object referenced by this shape at the specified index.

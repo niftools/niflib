@@ -97,7 +97,7 @@ public:
 	
 	/*!
 	 * Set the data object that refers to LOD level information.
-	 * \param[in] The new LOD level data object or NULL to clear the current one.
+	 * \param[in] value The new LOD level data object or NULL to clear the current one.
 	 */
 	NIFLIB_API void SetLODLevelData( Ref<NiLODData > value );
 

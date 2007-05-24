@@ -191,7 +191,7 @@ public:
 
 	/*!
 	 * Sets a Playstation 2 - specific value.  Can just be left at the default of 0.
-	 * \param[in] The new PS2 L value.
+	 * \param[in] value The new PS2 L value.
 	 */
 	NIFLIB_API void SetPs2L( unsigned short value );
 
@@ -203,7 +203,7 @@ public:
 
 	/*!
 	 * Sets a Playstation 2 - specific value.  Can just be left at the default of 0xFFB5.
-	 * \param[in] The new PS2 K value.
+	 * \param[in] value The new PS2 K value.
 	 */
 	NIFLIB_API void SetPs2K( unsigned short value );
 

@@ -64,7 +64,7 @@ public:
 
 	/*!
 	 * Retrieves the shape object that this body is using.
-	 * \param[in] value The shape object being used by this body.
+	 * \return The shape object being used by this body.
 	 */
 	NIFLIB_API Ref<bhkShape > GetShape() const;
 

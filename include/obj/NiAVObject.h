@@ -143,7 +143,7 @@ public:
 
 	/*!
 	 * Retrieves the property that matches the specified type, if there is one.  A valid object should not have more than one property of the same type.  Properties specify various charactaristics of the object that affect rendering.  They may be shared among objects.
-	 * \param[in] compare-to The type constant of the desired property type.
+	 * \param[in] compare_to The type constant of the desired property type.
 	 * \return The property that matches the specified type, or NULL if there isn't a match.
 	 * \sa NiObject::TypeConst
 	 */
@@ -217,7 +217,7 @@ public:
 
 	/*!
 	 * Sets the current visibility of this object by altering its flag data.
-	 * \param[in] Whether or not the object will now be visible.  True if visible, false otherwise.
+	 * \param[in] n Whether or not the object will now be visible.  True if visible, false otherwise.
 	 */
 	NIFLIB_API void SetVisibility( bool n );
 

@@ -65,7 +65,7 @@ public:
 
 	/*!
 	 * Sets the dimentions of the box.
-	 * \param The new dimentions for the bounding box.
+	 * \param value The new dimentions for the bounding box.
 	 */
 	NIFLIB_API void SetDimensions( const Vector3 & value );
 
