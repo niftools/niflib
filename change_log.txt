@@ -481,3 +481,131 @@
  * Added NiClodSkinInstance and fixed NiClodData.  Niflib can now open all
    Freedom Force demo NIF files.
  * Corrected Shape/particle hierarchy by adding NiGeometry and NiGeometryData.
+ 
+ ==Version 0.7==
+ 
+ * Removed predefines from Doxyfile since they are no longer needed with the
+   new Python generation method.
+ * Disabled Whole Program Optimization in project settings.  This makes a full
+   recompile take longer, but makes compiling after small changes to a few
+   files much much faster.
+ * Niflib is now using a new XML update method.  This means:
+   - There are no longer any defines, things like inheritance class name, NIF
+     attribute variables, and default constructor code are all visible without
+     looking at another file.
+   - All non-custom parts of the Object files are now totally identical and in
+     the same order, so it will be easier to compare them.
+   - NiObjects are now completely self-contained.  To remove them from Niflib,
+     you have only to exclude their CPP file from the build.  To add new ones,
+     you only have to include their new CPP file.
+   - Making a change to a NiObject implementation file only causes that one
+     file to be re-compiled, which is generally much quicker than before since
+     the large obj_define and obj_impl files do not have to be parsed or
+     compiled.
+   - There are no longer any "Internal" versions of the Read, Write, asString,
+     FixLinks, or GetRefs functions.  Now there is just one function for each
+     of these with pre and post custom code areas (except for GetRefs which I
+     didn't think needed it.)
+   - Updates to the hierarchy in the XML should now be almost completely
+     automatic.  All that should be necessary to make an update is to add any
+     new NiObject CPP files to the build.
+   - Changes to the generated parts of the NiObject files can now be made at
+     any time, and immediately applied to all NiObjects without editing each
+     existing one.
+ * Moved FixLink template file from obj_impl.cpp to its own file.
+ * Moving array template to nif_basic_types so that NIF_IO won't need to be
+   exposed.
+ * Removed erroneous bhkMeshShape object.
+ * Added support in the version parsing functions for versions such as "3.03"
+   which were being parsed as "3.3.0.0" before.  These will now be parsed as
+   "3.0.3.0."
+ * All Bridge Commander demo NIF files other than those that contain voxel 3D
+   textures can now be read.
+ * All DAoC demo NIF files except those of version 2.3 and those that do not
+   appear to store NIF data can now be read.
+ * Updated user's guide.
+ * Added functions to NiImage and NiTextureProperty to allow texture name to be
+   manipulated in <= 3.1 files.
+ * Updated ComplexShape to take the above objects into account when deciding
+   whether to include UV coordinates.
+ * Fixed one more bug that allows 3.3.0.13 files to work again.
+ * Added 10.0.1.2 to the list of "supported" versions.
+ * Added version 3.1 to list of "supported" versions.
+ * Fixed several bugs that were preventing support for old 3.1 and below files
+   from working.  Many of these can now be loaded.
+ * Updated Niflib to the latest XML which adds support for:  bhkMeshShape,
+   NiMultiTextureProperty, NiRawImageData, NiRollController, NiSequence,
+   NiBinaryVoxelExtraData, NiBinaryVoxelData, NiPSysCollider, NiBone,
+   NiPSysSphericalCollider, BSWindModifier, NiTriShapeSkinController objects,
+   and possibly more.  This also significantly improves the class hierarchy.
+ * Objects now have a Create methods and register themselves in the global
+   object map with pre-main initialization, making obj_factories.cpp obsolete.
+ * Re-exposed TYPE constants and marked them NIFLIB_API, making the TypeConst
+   function obsolete.  You now must use NiObject::TYPE instead of
+   NiObject::TypeConst() again.
+ * Re-exposed IDENTITY constants and marked then NIFLIB_API.  Now you must use
+   MatrixXX::IDENTITY instead of MatrixXX::Identity() again.
+ * Changed the default linkage to DLL.  You now have to define
+   NIFLIB_STATIC_LINK if you want to use static linking instead of having to
+   define USE_NIFLIB_DLL if you want to use the DLL.
+ * Added a new Debug - DLL configuration.
+ * Static configurations now create either niflib_static.lib or
+   niflib_static_debug.lib, while DLL configurations create niflib_dll.lib and
+   niflib_dll_debug.lib along with niflib.dll and niflib_debug.dll.
+ * Added ClearHardareSkinInfo function to NiTriBasedGeom so that
+   SetSkinPartition functions could be made NIFLIB_HIDDEN.
+ * Removed access to unknown data in NiPSysEmitterCtlrData.
+ * Some function and enum name changes in NiAlphaProperty and
+   NiStencilProperty to be more consistent with OpenGL and the rest of Niflib.
+ * Removed access to unknown parameters in NiSourceTexture and merged file name
+   access functions.
+ * Removed redundant Get/SetHidden functions from NiAVObject, use
+   Get/SetVisibility instead.
+ * Renamed Get/SetCollision to Get/SetCollisionMode in NiAVObject.
+ * Made sure all classes fell into 3 namespaces:  Niflib, triangle_stripper,
+   and NvTriStrip.
+ * Removed some functions from NiObject that did nothing.
+ * Moved structures contained within the ComplexShape class outside of it so
+   they're easier to reference.
+ * Moved ListAncestors and FindCommonAncestor helper functions from inside of
+   NiGeometry to public interface.
+ * Added IsAnimated function to NiObjectNET.
+ * Implemented experimental endian support which means that Niflib may be able
+   to work on PowrePC Macs and other big-endian CPUs, however support is not
+   complete.  Theoretically it should be possible to read a big-endian file on
+   a little-endian system, but it is not possible to do the opposite, or to
+   create a little-endian file due to issues with the header needing to switch
+   endian types int he middle of the generated code and always read the bytes
+   that make up the NIF version in the same order.
+ * DLL files built with the MSVC project will now appear in the niflib/bin
+   folder instead of the common ../bin folder.  This should make it easier to
+   find the files if only the niflib folder is checked out.
+ * Added warning comments to generated files advising the user not to edit them
+   manually.
+ * Changed NiNode AddChild function to keep NiTriBasedGeom-derived objects at
+   the top of the list.  Fixes issue with Oblivion flattened skin file
+   hierarchies where the NiTriBasedGeom skin was appearing after the NiNode
+   bones that it used in the child list of their mutual parent.
+ * Project file now properly uses "Multithreaded DLL" runtime library for
+   "Release - DLL" configuration.
+ * Removed old SWIG-related code as SWIG will no longer be suppoted.
+ * Fixed GetIDString virtual function missmatch that was causing the name not
+   to show up when the function was called from a NiObjectRef.
+ * Removed precompiled header file stuff from project files that is no longer
+   used.
+ * Fixed Niflib DLL compile.  All public functions should now be marked with
+   either NIFLIB_API or NIFLIB_HIDDEN.  May have missed a few here or there
+   but they should be noticed eventually.
+ * All public functions are now documented with Doxygen comments.
+ * Changed all occurrences of uint and ushort to unsigned int and unsigned
+   short.
+ * Fixed many GCC compile problems.  Niflib should compile in GCC now:
+   - Replaced array template with a simpler one that works with GCC.
+   - Replaced "unsigned" with "unsigned int"  GCC doesn't like this.
+   - Changed C++ style unsigned int casts so GCC will be able to understand
+     them.
+   - Properly capitalized include file names in niflib.cpp.
+ * Changed as many functions as possible to take pointer arguments instead of
+   Ref template arguments.
+ * Prevented the link map from being copied unnecessarily, improving
+   performance and memory usage.

@@ -192,6 +192,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib.dll"
+				Version="0.7"
 				ImportLibrary="lib/niflib_dll.lib"
 			/>
 			<Tool
@@ -267,6 +268,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_debug.dll"
+				Version="0.7"
 				ImportLibrary="lib/niflib_dll_debug.lib"
 			/>
 			<Tool
@@ -1527,6 +1529,10 @@
 			</File>
 			<File
 				RelativePath=".\include\dll_export.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\FixLink.h"
 				>
 			</File>
 			<File

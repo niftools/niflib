@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #ifndef NIFLIB_STATIC_LINK
 	// Building shared library
-	#if defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER) || defined(__CYGWIN__)
+	#if defined(_WIN32) || defined(__WIN32__) || defined(_MSC_VER)
 		// Windows
 		#ifdef BUILDING_NIFLIB_DLL
 			//The building process is underway, export symbols

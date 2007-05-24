@@ -31,18 +31,18 @@ struct Float4;
 struct Matrix44;
 
 /*! Stores 2D texture coordinates – two floating point variables, u and v. */
-struct NIFLIB_API TexCoord {
+struct TexCoord {
 	float u; /*!< The U value in this coordinate pair. */ 
 	float v; /*!< The V value in this coordinate pair. */ 
 
 	/*! Default constructor	*/
-	TexCoord() : u(0.0f), v(0.0f) {}
+	NIFLIB_API TexCoord() : u(0.0f), v(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] u The value to set U to.
 	 * \param[in] v The value to set V to.
 	 */
-	TexCoord(float u, float v) {
+	NIFLIB_API TexCoord(float u, float v) {
 		this->u = u;
 		this->v = v;
 	}
@@ -51,7 +51,7 @@ struct NIFLIB_API TexCoord {
 	 * \param[in] u The value to set U to.
 	 * \param[in] v The value to set V to.
 	 */
-	void Set(float u, float v) {
+	NIFLIB_API void Set(float u, float v) {
 		this->u = u;
 		this->v = v;
 	}
@@ -60,20 +60,20 @@ struct NIFLIB_API TexCoord {
 };
 
 /*! Represents a triangle face formed between three vertices referenced by number */
-struct NIFLIB_API Triangle {
+struct Triangle {
 	unsigned short v1; /*!< The index of the first vertex. */ 
 	unsigned short v2; /*!< The index of the second vertex. */ 
 	unsigned short v3; /*!< The index of the third vertex. */ 
 
 	/*! Default constructor */
-	Triangle() {}
+	NIFLIB_API Triangle() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] v1 The index of the first vertex.
 	 * \param[in] v2 The index of the second vertex.
 	 * \param[in] v3 The index of the third vertex.
 	 */
-	Triangle(unsigned short v1, unsigned short v2, unsigned short v3) {
+	NIFLIB_API Triangle(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
@@ -84,7 +84,7 @@ struct NIFLIB_API Triangle {
 	 * \param[in] v2 The index of the second vertex.
 	 * \param[in] v3 The index of the third vertex.
 	 */
-	void Set(unsigned short v1, unsigned short v2, unsigned short v3) {
+	NIFLIB_API void Set(unsigned short v1, unsigned short v2, unsigned short v3) {
 		this->v1 = v1;
 		this->v2 = v2;
 		this->v3 = v3;
@@ -94,7 +94,7 @@ struct NIFLIB_API Triangle {
 	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
-	unsigned short & operator[](int n) {
+	NIFLIB_API unsigned short & operator[](int n) {
 		switch (n) {
 			case 0: return v1; break;
 			case 1: return v2; break;
@@ -102,7 +102,7 @@ struct NIFLIB_API Triangle {
 			default: throw std::out_of_range("Index out of range for Triangle");
 		};
 	}
-	unsigned short operator[](int n) const {
+	NIFLIB_API unsigned short operator[](int n) const {
 		switch (n) {
 			case 0: return v1; break;
 			case 1: return v2; break;
@@ -113,20 +113,20 @@ struct NIFLIB_API Triangle {
 };
 
 /*!Represents a position or direction in 3D space*/
-struct NIFLIB_API Vector3 {
+struct Vector3 {
 	float x; /*!< The X component of this vector. */ 
 	float y; /*!< The Y component of this vector. */ 
 	float z; /*!< The Z component of this vector. */ 
 
 	/*!Default constructor.*/
-	Vector3() { x = y = z = 0.0f; }
+	NIFLIB_API Vector3() { x = y = z = 0.0f; }
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] x The value to set X to.
 	 * \param[in] y The value to set Y to.
 	 * \param[in] z The value to set Z to.
 	 */
-	Vector3(float x, float y, float z) {
+	NIFLIB_API Vector3(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
@@ -135,17 +135,17 @@ struct NIFLIB_API Vector3 {
 	/*! This constructor can be used to initialize this Vector3 with another Vector3
 	 * \param[in] v The Vector3 to construct this one from
 	 */
-	Vector3( const Vector3 & v) { x = v.x; y = v.y; z = v.z; }
+	NIFLIB_API Vector3( const Vector3 & v) { x = v.x; y = v.y; z = v.z; }
 	
 	/*! Destructor */
-	~Vector3() {}
+	NIFLIB_API ~Vector3() {}
 
 	/*! This function can be used to set all values in the structure at the same time.
 	 * \param[in] x The value to set X to.
 	 * \param[in] y The value to set Y to.
 	 * \param[in] z The value to set Z to.
 	 */
-	void Set(float x, float y, float z) {
+	NIFLIB_API void Set(float x, float y, float z) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
@@ -154,40 +154,40 @@ struct NIFLIB_API Vector3 {
 	/* This function calculates the magnitude of this vector
 	 * \return the magnitude of the vector; its length.
 	 */
-	float Magnitude() const;
+	NIFLIB_API float Magnitude() const;
 
 	/* This function returns a normalization of this vector.  A vecctor pointing in the same
 	 * direction but with a magnitude, or length, of 1.
 	 */
-	Vector3 Normalized() const;
+	NIFLIB_API Vector3 Normalized() const;
 
 	/* Allows the addition of vectors.  Each component, x, y, y, is added with
 	 * the same component of the other vector.
 	 * \return The result of the addition.
 	 */
-	Vector3 operator+( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator+( const Vector3 & rh ) const;
 
 	/* Adds the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
-	Vector3 & operator+=( const Vector3 & rh );
+	NIFLIB_API Vector3 & operator+=( const Vector3 & rh );
 
 	/* Allows the subtraction of vectors.  Each component, x, y, y, is subtracted from
 	 * the same component of the other vector.
 	 * \return The result of the subtraction.
 	 */
-	Vector3 operator-( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator-( const Vector3 & rh ) const;
 
 	/* This operator subtracts the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
-	Vector3 & operator-=( const Vector3 & rh);
+	NIFLIB_API Vector3 & operator-=( const Vector3 & rh);
 
 	/* Allows scaler multiplication, that is multipying all components of the
 	 * vector, x, y and z, by the same number.
 	 * \return The result of the multiplication.
 	 */
-	Vector3 operator*( const float & rh) const; //Scalar Multiply
+	NIFLIB_API Vector3 operator*( const float & rh) const; //Scalar Multiply
 
 	/* Multipies a vector by a scalar and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
@@ -197,18 +197,18 @@ struct NIFLIB_API Vector3 {
 	/* Multiplies a vector by a vector using the dot product
 	 * \return The dot product of the two vectors.
 	 */
-	float operator*( const Vector3 & v ) const;
+	NIFLIB_API float operator*( const Vector3 & v ) const;
 
 	/* Multiplies a vector by a vector using the cross product
 	 * \return The cross product of the two vectors.
 	 */
-	Vector3 operator^( const Vector3 & v ) const;
+	NIFLIB_API Vector3 operator^( const Vector3 & v ) const;
 
 	/* Allows scaler division, that is dividing all components of the
 	 * vector, x, y and z, by the same number.
 	 * \return The result of the division.
 	 */
-	Vector3 operator/( const float & rh ) const;
+	NIFLIB_API Vector3 operator/( const float & rh ) const;
 
 	/* Divides a vector by a scalar and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
@@ -218,29 +218,29 @@ struct NIFLIB_API Vector3 {
 	/* Sets the components of this Vector3 to those of another Vector3 
 	 * \return This vector is returned.
 	 */
-	Vector3 & operator=( const Vector3 & v ) { x = v.x; y = v.y; z = v.z;  return *this; }
+	NIFLIB_API Vector3 & operator=( const Vector3 & v ) { x = v.x; y = v.y; z = v.z;  return *this; }
 
 	/* Tests the equality of two Vector3 structures.  Vectors are considered equal if all
 	 * three components are equal.
 	 */
-	bool operator==( const Vector3 & rh ) const;
+	NIFLIB_API bool operator==( const Vector3 & rh ) const;
 
 	/* Tests the inequality of two Vector3 structures.  Vectors are considered equal if all
 	 * three components are equal.
 	 */
-	bool operator!=( const Vector3 & rh ) const;
+	NIFLIB_API bool operator!=( const Vector3 & rh ) const;
 
 	/* Computes the dot product of two vectors; the angle between two vectors.
 	 * \param[in] rh The vector to perform the dot product with
 	 * \return The angle in radians between this vector and the one given
 	 */
-	float DotProduct( const Vector3 & rh ) const;
+	NIFLIB_API float DotProduct( const Vector3 & rh ) const;
 
 	/* Computes the cross product of two vectors; a vector perpendicular to both of them.
 	 * \param[in] The vector to perform the cross product with
 	 * \return A vector perpendicular to this vector and the one given
 	 */
-	Vector3 CrossProduct( const Vector3 & rh) const; //Cross Product
+	NIFLIB_API Vector3 CrossProduct( const Vector3 & rh) const; //Cross Product
 
 
 	///* Multiplies this Vector with a 4x4 matrix
@@ -257,28 +257,33 @@ struct NIFLIB_API Vector3 {
 };
 
 /* Stores two floating point numbers.  Used as a row of a Matrix22 */
-struct NIFLIB_API Float2 {
+struct Float2 {
 	float data[2]; /*!< The two floating point numbers stored as an array. */ 
 	
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0 or 1.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
-	float & operator[](int n) {
+	NIFLIB_API float & operator[](int n) {
 		return data[n];
 	}
-	float operator[](int n) const {
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	 * \param[in] n The index into the data array.  Should be 0 or 1.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
+	NIFLIB_API float operator[](int n) const {
 		return data[n];
 	}
 
 	/*! Default constructor. */
-	Float2() {}
+	NIFLIB_API Float2() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] f1 The value to set the first floating point number to.
 	 * \param[in] f2 The value to set the second floating point number to.
 	 */
-	Float2( float f1, float f2 ) {
+	NIFLIB_API Float2( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
 	}
@@ -287,7 +292,7 @@ struct NIFLIB_API Float2 {
 	 * \param[in] f1 The value to set the first floating point number to.
 	 * \param[in] f2 The value to set the second floating point number to.
 	 */
-	void Set( float f1, float f2 ) {
+	NIFLIB_API void Set( float f1, float f2 ) {
 		data[0] = f1;
 		data[1] = f2;
 	}
@@ -344,29 +349,34 @@ struct Matrix22 {
 };
 
 /* Stores three floating point numbers.  Used as a row of a Matrix33 and to store the data in attr_vector3 and attr_color3 type attributes. */
-struct NIFLIB_API Float3 {
+struct Float3 {
 	float data[3]; /*!< The three floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
-	float & operator[](int n) {
+	NIFLIB_API float & operator[](int n) {
 		return data[n];
 	}
-	float operator[](int n) const {
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	 * \param[in] n The index into the data array.  Should be 0, 1, or 2.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
+	NIFLIB_API float operator[](int n) const {
 		return data[n];
 	}
 
 	/*!Default constructor.*/
-	Float3() {}
+	NIFLIB_API Float3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] f1 The value to set the first floating point number to.
 	 * \param[in] f2 The value to set the second floating point number to.
 	 * \param[in] f3 The value to set the third floating point number to.
 	 */
-	Float3( float f1, float f2, float f3 ) {
+	NIFLIB_API Float3( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[2] = f3;
@@ -377,7 +387,7 @@ struct NIFLIB_API Float3 {
 	 * \param[in] f2 The value to set the second floating point number to.
 	 * \param[in] f3 The value to set the third floating point number to.
 	 */
-	void Set( float f1, float f2, float f3 ) {
+	NIFLIB_API void Set( float f1, float f2, float f3 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[2] = f3;
@@ -469,22 +479,27 @@ struct Matrix33 {
 
 
 /* Stores four floating point numbers.  Used as a row of a Matrix44. */
-struct NIFLIB_API Float4 {
+struct Float4 {
 	float data[4]; /*!< The four floating point numbers stored as an array. */ 
 
 	/*! The bracket operator makes it possible to use this structure like a C++ array.
 	 * \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
 	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
 	 */
-	float & operator[](int n) {
+	NIFLIB_API float & operator[](int n) {
 		return data[n];
 	}
-	float operator[](int n) const {
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	 * \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
+	 * \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	 */
+	NIFLIB_API float operator[](int n) const {
 		return data[n];
 	}
 
 	/*! Default Constructor.*/
-	Float4() {}
+	NIFLIB_API Float4() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] f1 The value to set the first floating point number to.
@@ -492,7 +507,7 @@ struct NIFLIB_API Float4 {
 	 * \param[in] f3 The value to set the third floating point number to.
 	 * \param[in] f4 The value to set the fourth floating point number to.
 	 */
-	Float4( float f1, float f2, float f3, float f4 ) {
+	NIFLIB_API Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[3] = f3;
@@ -505,7 +520,7 @@ struct NIFLIB_API Float4 {
 	 * \param[in] f3 The value to set the third floating point number to.
 	 * \param[in] f4 The value to set the fourth floating point number to.
 	 */
-	void Set( float f1, float f2, float f3, float f4 ) {
+	NIFLIB_API void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
 		data[3] = f3;
@@ -601,7 +616,7 @@ struct Matrix44 {
 	 * \param[in] m43 The value to set at row 4, column 3.
 	 * \param[in] m44 The value to set at row 4, column 4.
 	 */
-	void Set(
+	NIFLIB_API void Set(
 		float m11, float m12, float m13, float m14,
 		float m21, float m22, float m23, float m24,
 		float m31, float m32, float m33, float m34,
@@ -727,20 +742,20 @@ struct Matrix44 {
 };
 
 /*! Stores a color along with alpha translucency */
-struct NIFLIB_API Color3 {
+struct Color3 {
 	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
 	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
 	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
 
 	/*! Default constructor */
-	Color3() {}
+	NIFLIB_API Color3() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
 	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
 	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 */
-	Color3(float r, float g, float b) {
+	NIFLIB_API Color3(float r, float g, float b) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
@@ -751,7 +766,7 @@ struct NIFLIB_API Color3 {
 	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
 	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 */
-	void Set(float r, float g, float b) {
+	NIFLIB_API void Set(float r, float g, float b) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
@@ -759,14 +774,14 @@ struct NIFLIB_API Color3 {
 };
 
 /*! Stores a color along with alpha translucency */
-struct NIFLIB_API Color4 {
+struct Color4 {
 	float r; /*!< The red component of this color.  Should be between 0.0f and 1.0f. */ 
 	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
 	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
 	float a; /*!< The alpha translucency component of this color.  Should be between 0.0f and 1.0f. */ 
 
 	/*! Default constructor */
-	Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
+	NIFLIB_API Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
@@ -774,7 +789,7 @@ struct NIFLIB_API Color4 {
 	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 * \param[in] a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
 	 */
-	Color4(float r, float g, float b, float a = 1.0f) {
+	NIFLIB_API Color4(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
@@ -787,31 +802,31 @@ struct NIFLIB_API Color4 {
 	 * \param[in] b The value to set the blue component of this color to.  Should be between 0.0f and 1.0f.
 	 * \param[in] a The value to set the alpha translucency component of this color to.  Should be between 0.0f and 1.0f.
 	 */
-	void Set(float r, float g, float b, float a = 1.0f) {
+	NIFLIB_API void Set(float r, float g, float b, float a = 1.0f) {
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = a;
 	}
 
-	bool operator==( const Color4 & n ) const {
+	NIFLIB_API bool operator==( const Color4 & n ) const {
 		return ( r == n.r && g == n.g && b == n.b && a == n.a );
 	}
 
-	bool operator!=( const Color4 & n ) const {
+	NIFLIB_API bool operator!=( const Color4 & n ) const {
 		return ( r != n.r || g != n.g || b != n.b || a != n.a );
 	}
 };
 
 /*! Represents a quaternion - a 4D extention of complex numbers used as an alternitive to matrices to represent rotation.*/
-struct NIFLIB_API Quaternion {
+struct Quaternion {
 	float w; /*!< The W scalar component of this Quaternion. */ 
 	float x; /*!< The X vector component of this Quaternion. */ 
 	float y; /*!< The Y vector component of this Quaternion. */ 
 	float z; /*!< The Z vector component of this Quaternion. */ 
 
 	/*! Default constructor. */
-	Quaternion() {}
+	NIFLIB_API Quaternion() {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] w The value to set the W scalar component of this quaternion to.
@@ -819,7 +834,7 @@ struct NIFLIB_API Quaternion {
 	 * \param[in] y The value to set the Y vector component of this quaternion to.
 	 * \param[in] z The value to set the Z vector component of this quaternion to.
 	 */
-	Quaternion(float w, float x, float y, float z) {
+	NIFLIB_API Quaternion(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
 		this->y = y;
@@ -832,7 +847,7 @@ struct NIFLIB_API Quaternion {
 	 * \param[in] y The value to set the Y vector component of this quaternion to.
 	 * \param[in] z The value to set the Z vector component of this quaternion to.
 	 */
-	void Set(float w, float x, float y, float z) {
+	NIFLIB_API void Set(float w, float x, float y, float z) {
 		this->w = w;
 		this->x = x;
 		this->y = y;
@@ -842,14 +857,14 @@ struct NIFLIB_API Quaternion {
 	/*! This function returns a 3x3 matrix representation of the rotation stored in this quaternion.
 	 * \return a Matrix33 structure with an equivalent rotation to this quaternion.
 	 */
-	Matrix33 AsMatrix();
+	NIFLIB_API Matrix33 AsMatrix();
 
 	/*! This function returns a Euler Angle representation of the rotation stored in this quaternion.
 	 * The angles returned correspond to yaw, pitch, and roll and are in radiens.
 	 * \return a Float3 structure with the first value containing the yaw, the second the pitch,
 	 * and the third the roll.  The values are in radians.
 	 */
-	Float3 AsEulerYawPitchRoll();
+	NIFLIB_API Float3 AsEulerYawPitchRoll();
 };
 
 //--ostream functions for printing with cout--//

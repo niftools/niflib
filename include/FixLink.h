@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "obj/NiObject.h"
 #include "Ref.h"
+#include <stdexcept>
 namespace Niflib {
 
 using namespace std;

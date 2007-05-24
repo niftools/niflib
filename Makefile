@@ -29,8 +29,8 @@ CXXFLAGS	= $(CFLAGS)
 #IT should find the libs used, but if it doesn't specify here. Ex: -lm for libm.so.<whatever>
 LIBS		=
 L_FLAGS 	= -shared -Wl,-soname,libniflib.so.0
-VERSION		= .6.3
-VERSION_MIN	= .6
+VERSION		= 0.7
+VERSION_MIN	= 0.7
 TARGET  	= libniflib.so.0$(VERSION)
 
 TARGETA       = libniflib.a
@@ -46,63 +46,25 @@ TARGET2       = libniflib.so.0.$(VERSION_MIN)
 OBJ_FILES = NvTriStrip/NvTriStrip.o \
            NvTriStrip/NvTriStripObjects.o \
            NvTriStrip/VertexCache.o \
-           src/ComplexShape.o \
-           src/kfm.o \
-           src/NIF_IO.o \
-           src/nif_math.o \
-           src/niflib.o \
-           src/pch.o \
-           src/Type.o \
            TriStripper/connectivity_graph.o \
            TriStripper/policy.o \
            TriStripper/tri_stripper.o \
-           src/gen/AVObject.o \
-           src/gen/BoundingBox.o \
-           src/gen/ByteArray.o \
-           src/gen/ControllerLink.o \
-           src/gen/enums.o \
-           src/gen/Footer.o \
-           src/gen/FurniturePosition.o \
-           src/gen/Header.o \
-           src/gen/hkTriangle.o \
-           src/gen/LimitedHingeDescriptor.o \
-           src/gen/LODRange.o \
-           src/gen/MatchGroup.o \
-           src/gen/MipMap.o \
-           src/gen/Morph.o \
-           src/gen/NodeGroup.o \
-           src/gen/obj_factories.o \
-           src/gen/obj_impl.o \
-           src/gen/OblivionColFilter.o \
-           src/gen/OblivionSubShape.o \
-           src/gen/Particle.o \
-           src/gen/QuaternionXYZW.o \
-           src/gen/RagDollDescriptor.o \
-           src/gen/ShaderTexDesc.o \
-           src/gen/SkinData.o \
-           src/gen/SkinPartition.o \
-           src/gen/SkinShape.o \
-           src/gen/SkinShapeGroup.o \
-           src/gen/SkinWeight.o \
-           src/gen/Sphere.o \
-           src/gen/StringPalette.o \
-           src/gen/TBC.o \
-           src/gen/TexDesc.o \
-           src/gen/TexSource.o \
-           src/obj/AbhkConstraint.o \
-           src/obj/AbhkRagdollConstraint.o \
-           src/obj/AbhkShapeCollection.o \
-           src/obj/ABoneLODController.o \
-           src/obj/AKeyedData.o \
+           src/ComplexShape.o \
+           src/kfm.o \
+           src/niflib.o \
+           src/NIF_IO.o \
+           src/nif_math.o \
+           src/pch.o \
+           src/Type.o \
            src/obj/AParticleModifier.o \
-           src/obj/APSysCtlr.o \
-           src/obj/APSysData.o \
            src/obj/AvoidNode.o \
            src/obj/bhkBlendCollisionObject.o \
            src/obj/bhkBlendController.o \
            src/obj/bhkBoxShape.o \
+           src/obj/bhkBvTreeShape.o \
            src/obj/bhkCapsuleShape.o \
            src/obj/bhkCollisionObject.o \
+           src/obj/bhkConstraint.o \
            src/obj/bhkConvexShape.o \
            src/obj/bhkConvexTransformShape.o \
            src/obj/bhkConvexVerticesShape.o \
@@ -113,8 +75,11 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/bhkMalleableConstraint.o \
            src/obj/bhkMoppBvTreeShape.o \
            src/obj/bhkMultiSphereShape.o \
+           src/obj/bhkNiCollisionObject.o \
            src/obj/bhkNiTriStripsShape.o \
            src/obj/bhkPackedNiTriStripsShape.o \
+           src/obj/bhkPCollisionObject.o \
+           src/obj/bhkPhantom.o \
            src/obj/bhkPrismaticConstraint.o \
            src/obj/bhkRagdollConstraint.o \
            src/obj/bhkRefObject.o \
@@ -122,6 +87,8 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/bhkRigidBodyT.o \
            src/obj/bhkSerializable.o \
            src/obj/bhkShape.o \
+           src/obj/bhkShapeCollection.o \
+           src/obj/bhkShapePhantom.o \
            src/obj/bhkSimpleShapePhantom.o \
            src/obj/bhkSPCollisionObject.o \
            src/obj/bhkSphereRepShape.o \
@@ -134,6 +101,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/BSKeyframeController.o \
            src/obj/BSParentVelocityModifier.o \
            src/obj/BSPSysArrayEmitter.o \
+           src/obj/BSWindModifier.o \
            src/obj/BSXFlags.o \
            src/obj/FxButton.o \
            src/obj/FxRadioButton.o \
@@ -145,16 +113,21 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiAutoNormalParticles.o \
            src/obj/NiAutoNormalParticlesData.o \
            src/obj/NiAVObject.o \
+           src/obj/NiAVObjectPalette.o \
            src/obj/NiBillboardNode.o \
            src/obj/NiBinaryExtraData.o \
+           src/obj/NiBinaryVoxelData.o \
+           src/obj/NiBinaryVoxelExtraData.o \
            src/obj/NiBlendBoolInterpolator.o \
            src/obj/NiBlendFloatInterpolator.o \
            src/obj/NiBlendInterpolator.o \
            src/obj/NiBlendPoint3Interpolator.o \
            src/obj/NiBlendTransformInterpolator.o \
+           src/obj/NiBone.o \
            src/obj/NiBoneLODController.o \
            src/obj/NiBoolData.o \
            src/obj/NiBooleanExtraData.o \
+           src/obj/NiBoolInterpController.o \
            src/obj/NiBoolInterpolator.o \
            src/obj/NiBoolTimelineInterpolator.o \
            src/obj/NiBSAnimationNode.o \
@@ -166,7 +139,10 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiBSplineCompPoint3Interpolator.o \
            src/obj/NiBSplineCompTransformInterpolator.o \
            src/obj/NiBSplineData.o \
+           src/obj/NiBSplineFloatInterpolator.o \
            src/obj/NiBSplineInterpolator.o \
+           src/obj/NiBSplinePoint3Interpolator.o \
+           src/obj/NiBSplineTransformInterpolator.o \
            src/obj/NiCamera.o \
            src/obj/NiClod.o \
            src/obj/NiClodData.o \
@@ -182,10 +158,12 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiDitherProperty.o \
            src/obj/NiDynamicEffect.o \
            src/obj/NiExtraData.o \
+           src/obj/NiExtraDataController.o \
            src/obj/NiFlipController.o \
            src/obj/NiFloatData.o \
            src/obj/NiFloatExtraData.o \
            src/obj/NiFloatExtraDataController.o \
+           src/obj/NiFloatInterpController.o \
            src/obj/NiFloatInterpolator.o \
            src/obj/NiFloatsExtraData.o \
            src/obj/NiFogProperty.o \
@@ -196,7 +174,9 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiImage.o \
            src/obj/NiIntegerExtraData.o \
            src/obj/NiIntegersExtraData.o \
+           src/obj/NiInterpController.o \
            src/obj/NiInterpolator.o \
+           src/obj/NiKeyBasedInterpolator.o \
            src/obj/NiKeyframeController.o \
            src/obj/NiKeyframeData.o \
            src/obj/NiLight.o \
@@ -212,6 +192,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiMeshPSysData.o \
            src/obj/NiMorphData.o \
            src/obj/NiMultiTargetTransformController.o \
+           src/obj/NiMultiTextureProperty.o \
            src/obj/NiNode.o \
            src/obj/NiObject.o \
            src/obj/NiObjectNET.o \
@@ -231,6 +212,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiPathInterpolator.o \
            src/obj/NiPixelData.o \
            src/obj/NiPlanarCollider.o \
+           src/obj/NiPoint3InterpController.o \
            src/obj/NiPoint3Interpolator.o \
            src/obj/NiPointLight.o \
            src/obj/NiPosData.o \
@@ -239,6 +221,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiPSysBombModifier.o \
            src/obj/NiPSysBoundUpdateModifier.o \
            src/obj/NiPSysBoxEmitter.o \
+           src/obj/NiPSysCollider.o \
            src/obj/NiPSysColliderManager.o \
            src/obj/NiPSysColorModifier.o \
            src/obj/NiPSysCylinderEmitter.o \
@@ -259,21 +242,28 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiPSysMeshUpdateModifier.o \
            src/obj/NiPSysModifier.o \
            src/obj/NiPSysModifierActiveCtlr.o \
+           src/obj/NiPSysModifierBoolCtlr.o \
+           src/obj/NiPSysModifierCtlr.o \
+           src/obj/NiPSysModifierFloatCtlr.o \
            src/obj/NiPSysPlanarCollider.o \
            src/obj/NiPSysPositionModifier.o \
            src/obj/NiPSysResetOnLoopCtlr.o \
            src/obj/NiPSysRotationModifier.o \
            src/obj/NiPSysSpawnModifier.o \
            src/obj/NiPSysSphereEmitter.o \
+           src/obj/NiPSysSphericalCollider.o \
            src/obj/NiPSysUpdateCtlr.o \
            src/obj/NiPSysVolumeEmitter.o \
            src/obj/NiRangeLODData.o \
+           src/obj/NiRawImageData.o \
+           src/obj/NiRollController.o \
            src/obj/NiRotatingParticles.o \
            src/obj/NiRotatingParticlesData.o \
            src/obj/NiScreenLODData.o \
+           src/obj/NiSequence.o \
            src/obj/NiSequenceStreamHelper.o \
            src/obj/NiShadeProperty.o \
-           src/obj/NiSingleInterpolatorController.o \
+           src/obj/NiSingleInterpController.o \
            src/obj/NiSkinData.o \
            src/obj/NiSkinInstance.o \
            src/obj/NiSkinPartition.o \
@@ -285,7 +275,9 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiStringExtraData.o \
            src/obj/NiStringPalette.o \
            src/obj/NiStringsExtraData.o \
+           src/obj/NiSwitchNode.o \
            src/obj/NiTextKeyExtraData.o \
+           src/obj/NiTexture.o \
            src/obj/NiTextureEffect.o \
            src/obj/NiTextureModeProperty.o \
            src/obj/NiTextureProperty.o \
@@ -299,6 +291,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiTriBasedGeomData.o \
            src/obj/NiTriShape.o \
            src/obj/NiTriShapeData.o \
+           src/obj/NiTriShapeSkinController.o \
            src/obj/NiTriStrips.o \
            src/obj/NiTriStripsData.o \
            src/obj/NiUVController.o \
@@ -310,7 +303,42 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/obj/NiVisData.o \
            src/obj/NiWireframeProperty.o \
            src/obj/NiZBufferProperty.o \
-           src/obj/RootCollisionNode.o
+           src/obj/RootCollisionNode.o \
+           src/gen/AVObject.o \
+           src/gen/BoundingBox.o \
+           src/gen/ByteArray.o \
+           src/gen/ByteColor3.o \
+           src/gen/ByteColor4.o \
+           src/gen/ControllerLink.o \
+           src/gen/enums.o \
+           src/gen/Footer.o \
+           src/gen/FurniturePosition.o \
+           src/gen/Header.o \
+           src/gen/hkTriangle.o \
+           src/gen/LimitedHingeDescriptor.o \
+           src/gen/LODRange.o \
+           src/gen/MatchGroup.o \
+           src/gen/MipMap.o \
+           src/gen/Morph.o \
+           src/gen/MultiTextureElement.o \
+           src/gen/NodeGroup.o \
+           src/gen/OblivionColFilter.o \
+           src/gen/OblivionSubShape.o \
+           src/gen/OldSkinData.o \
+           src/gen/Particle.o \
+           src/gen/QuaternionXYZW.o \
+           src/gen/RagDollDescriptor.o \
+           src/gen/ShaderTexDesc.o \
+           src/gen/SkinData.o \
+           src/gen/SkinPartition.o \
+           src/gen/SkinShape.o \
+           src/gen/SkinShapeGroup.o \
+           src/gen/SkinWeight.o \
+           src/gen/Sphere.o \
+           src/gen/StringPalette.o \
+           src/gen/TBC.o \
+           src/gen/TexDesc.o \
+           src/gen/TexSource.o
 
 all: Makefile  $(TARGET)
 
