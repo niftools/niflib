@@ -33,18 +33,6 @@ const Type & NiPSysGrowFadeModifier::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPSysGrowFadeModifier::obj_initialized = NiPSysGrowFadeModifier::Register();
-
-bool NiPSysGrowFadeModifier::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPSysGrowFadeModifier", NiPSysGrowFadeModifier::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPSysGrowFadeModifier::Create() {
 	return new NiPSysGrowFadeModifier;
 }

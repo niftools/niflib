@@ -33,18 +33,6 @@ const Type & NiCollisionData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiCollisionData::obj_initialized = NiCollisionData::Register();
-
-bool NiCollisionData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiCollisionData", NiCollisionData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiCollisionData::Create() {
 	return new NiCollisionData;
 }

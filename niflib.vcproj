@@ -1445,6 +1445,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\register.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\ShaderTexDesc.cpp"
 					>
 				</File>

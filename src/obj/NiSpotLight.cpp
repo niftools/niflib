@@ -33,18 +33,6 @@ const Type & NiSpotLight::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiSpotLight::obj_initialized = NiSpotLight::Register();
-
-bool NiSpotLight::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiSpotLight", NiSpotLight::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiSpotLight::Create() {
 	return new NiSpotLight;
 }

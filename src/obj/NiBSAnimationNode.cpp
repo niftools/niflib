@@ -33,18 +33,6 @@ const Type & NiBSAnimationNode::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBSAnimationNode::obj_initialized = NiBSAnimationNode::Register();
-
-bool NiBSAnimationNode::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBSAnimationNode", NiBSAnimationNode::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBSAnimationNode::Create() {
 	return new NiBSAnimationNode;
 }

@@ -39,18 +39,6 @@ const Type & NiGeometry::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiGeometry::obj_initialized = NiGeometry::Register();
-
-bool NiGeometry::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiGeometry", NiGeometry::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiGeometry::Create() {
 	return new NiGeometry;
 }

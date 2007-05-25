@@ -34,18 +34,6 @@ const Type & NiRangeLODData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiRangeLODData::obj_initialized = NiRangeLODData::Register();
-
-bool NiRangeLODData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiRangeLODData", NiRangeLODData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiRangeLODData::Create() {
 	return new NiRangeLODData;
 }

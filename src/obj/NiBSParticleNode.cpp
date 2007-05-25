@@ -33,18 +33,6 @@ const Type & NiBSParticleNode::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBSParticleNode::obj_initialized = NiBSParticleNode::Register();
-
-bool NiBSParticleNode::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBSParticleNode", NiBSParticleNode::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBSParticleNode::Create() {
 	return new NiBSParticleNode;
 }

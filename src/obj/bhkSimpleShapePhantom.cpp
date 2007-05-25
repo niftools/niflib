@@ -33,18 +33,6 @@ const Type & bhkSimpleShapePhantom::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkSimpleShapePhantom::obj_initialized = bhkSimpleShapePhantom::Register();
-
-bool bhkSimpleShapePhantom::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkSimpleShapePhantom", bhkSimpleShapePhantom::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkSimpleShapePhantom::Create() {
 	return new bhkSimpleShapePhantom;
 }

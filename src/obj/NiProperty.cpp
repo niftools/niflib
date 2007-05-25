@@ -33,18 +33,6 @@ const Type & NiProperty::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiProperty::obj_initialized = NiProperty::Register();
-
-bool NiProperty::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiProperty", NiProperty::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiProperty::Create() {
 	return new NiProperty;
 }

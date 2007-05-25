@@ -33,18 +33,6 @@ const Type & NiBSBoneLODController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBSBoneLODController::obj_initialized = NiBSBoneLODController::Register();
-
-bool NiBSBoneLODController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBSBoneLODController", NiBSBoneLODController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBSBoneLODController::Create() {
 	return new NiBSBoneLODController;
 }

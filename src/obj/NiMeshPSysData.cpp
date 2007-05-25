@@ -35,18 +35,6 @@ const Type & NiMeshPSysData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiMeshPSysData::obj_initialized = NiMeshPSysData::Register();
-
-bool NiMeshPSysData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiMeshPSysData", NiMeshPSysData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiMeshPSysData::Create() {
 	return new NiMeshPSysData;
 }

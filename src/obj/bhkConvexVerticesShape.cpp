@@ -33,18 +33,6 @@ const Type & bhkConvexVerticesShape::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkConvexVerticesShape::obj_initialized = bhkConvexVerticesShape::Register();
-
-bool bhkConvexVerticesShape::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkConvexVerticesShape", bhkConvexVerticesShape::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkConvexVerticesShape::Create() {
 	return new bhkConvexVerticesShape;
 }

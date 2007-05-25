@@ -33,18 +33,6 @@ const Type & bhkPCollisionObject::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkPCollisionObject::obj_initialized = bhkPCollisionObject::Register();
-
-bool bhkPCollisionObject::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkPCollisionObject", bhkPCollisionObject::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkPCollisionObject::Create() {
 	return new bhkPCollisionObject;
 }

@@ -33,18 +33,6 @@ const Type & NiFloatExtraData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiFloatExtraData::obj_initialized = NiFloatExtraData::Register();
-
-bool NiFloatExtraData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiFloatExtraData", NiFloatExtraData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiFloatExtraData::Create() {
 	return new NiFloatExtraData;
 }

@@ -48,18 +48,6 @@ const Type & NiSkinInstance::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiSkinInstance::obj_initialized = NiSkinInstance::Register();
-
-bool NiSkinInstance::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiSkinInstance", NiSkinInstance::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiSkinInstance::Create() {
 	return new NiSkinInstance;
 }

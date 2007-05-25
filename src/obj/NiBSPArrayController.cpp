@@ -33,18 +33,6 @@ const Type & NiBSPArrayController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBSPArrayController::obj_initialized = NiBSPArrayController::Register();
-
-bool NiBSPArrayController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBSPArrayController", NiBSPArrayController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBSPArrayController::Create() {
 	return new NiBSPArrayController;
 }

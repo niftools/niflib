@@ -33,18 +33,6 @@ const Type & NiStencilProperty::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiStencilProperty::obj_initialized = NiStencilProperty::Register();
-
-bool NiStencilProperty::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiStencilProperty", NiStencilProperty::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiStencilProperty::Create() {
 	return new NiStencilProperty;
 }

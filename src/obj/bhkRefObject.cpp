@@ -33,18 +33,6 @@ const Type & bhkRefObject::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkRefObject::obj_initialized = bhkRefObject::Register();
-
-bool bhkRefObject::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkRefObject", bhkRefObject::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkRefObject::Create() {
 	return new bhkRefObject;
 }

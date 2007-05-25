@@ -33,18 +33,6 @@ const Type & NiPSysRotationModifier::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPSysRotationModifier::obj_initialized = NiPSysRotationModifier::Register();
-
-bool NiPSysRotationModifier::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPSysRotationModifier", NiPSysRotationModifier::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPSysRotationModifier::Create() {
 	return new NiPSysRotationModifier;
 }

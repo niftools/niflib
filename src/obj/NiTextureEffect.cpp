@@ -34,18 +34,6 @@ const Type & NiTextureEffect::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiTextureEffect::obj_initialized = NiTextureEffect::Register();
-
-bool NiTextureEffect::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiTextureEffect", NiTextureEffect::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiTextureEffect::Create() {
 	return new NiTextureEffect;
 }

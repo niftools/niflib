@@ -33,18 +33,6 @@ const Type & bhkPrismaticConstraint::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkPrismaticConstraint::obj_initialized = bhkPrismaticConstraint::Register();
-
-bool bhkPrismaticConstraint::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkPrismaticConstraint", bhkPrismaticConstraint::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkPrismaticConstraint::Create() {
 	return new bhkPrismaticConstraint;
 }

@@ -33,18 +33,6 @@ const Type & NiBlendPoint3Interpolator::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBlendPoint3Interpolator::obj_initialized = NiBlendPoint3Interpolator::Register();
-
-bool NiBlendPoint3Interpolator::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBlendPoint3Interpolator", NiBlendPoint3Interpolator::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBlendPoint3Interpolator::Create() {
 	return new NiBlendPoint3Interpolator;
 }

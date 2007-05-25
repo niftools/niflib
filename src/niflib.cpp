@@ -37,6 +37,10 @@ All rights reserved.  Please see niflib.h for license. */
 
 namespace Niflib {
 
+//Object Registration
+bool g_objects_registered = false;
+void RegisterObjects();
+
 //Utility Functions
 void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & objects );
@@ -114,6 +118,12 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 }
 
 vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
+
+	//Ensure that objects are registered
+	if ( g_objects_registered == false ) {
+		g_objects_registered = true;
+		RegisterObjects();
+	}
 
 	//--Read Header--//
 	Header header;

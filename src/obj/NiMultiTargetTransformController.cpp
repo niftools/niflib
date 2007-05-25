@@ -35,18 +35,6 @@ const Type & NiMultiTargetTransformController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiMultiTargetTransformController::obj_initialized = NiMultiTargetTransformController::Register();
-
-bool NiMultiTargetTransformController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiMultiTargetTransformController", NiMultiTargetTransformController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiMultiTargetTransformController::Create() {
 	return new NiMultiTargetTransformController;
 }

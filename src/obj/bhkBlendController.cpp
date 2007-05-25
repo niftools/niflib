@@ -33,18 +33,6 @@ const Type & bhkBlendController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool bhkBlendController::obj_initialized = bhkBlendController::Register();
-
-bool bhkBlendController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "bhkBlendController", bhkBlendController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * bhkBlendController::Create() {
 	return new bhkBlendController;
 }

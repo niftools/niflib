@@ -33,18 +33,6 @@ const Type & NiPSysEmitterDeclinationCtlr::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPSysEmitterDeclinationCtlr::obj_initialized = NiPSysEmitterDeclinationCtlr::Register();
-
-bool NiPSysEmitterDeclinationCtlr::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPSysEmitterDeclinationCtlr", NiPSysEmitterDeclinationCtlr::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPSysEmitterDeclinationCtlr::Create() {
 	return new NiPSysEmitterDeclinationCtlr;
 }

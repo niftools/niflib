@@ -33,18 +33,6 @@ const Type & NiKeyBasedInterpolator::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiKeyBasedInterpolator::obj_initialized = NiKeyBasedInterpolator::Register();
-
-bool NiKeyBasedInterpolator::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiKeyBasedInterpolator", NiKeyBasedInterpolator::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiKeyBasedInterpolator::Create() {
 	return new NiKeyBasedInterpolator;
 }

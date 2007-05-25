@@ -33,18 +33,6 @@ const Type & NiBSplineCompFloatInterpolator::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiBSplineCompFloatInterpolator::obj_initialized = NiBSplineCompFloatInterpolator::Register();
-
-bool NiBSplineCompFloatInterpolator::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiBSplineCompFloatInterpolator", NiBSplineCompFloatInterpolator::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiBSplineCompFloatInterpolator::Create() {
 	return new NiBSplineCompFloatInterpolator;
 }

@@ -33,18 +33,6 @@ const Type & NiVertWeightsExtraData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiVertWeightsExtraData::obj_initialized = NiVertWeightsExtraData::Register();
-
-bool NiVertWeightsExtraData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiVertWeightsExtraData", NiVertWeightsExtraData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiVertWeightsExtraData::Create() {
 	return new NiVertWeightsExtraData;
 }

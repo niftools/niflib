@@ -34,18 +34,6 @@ const Type & NiMorphData::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiMorphData::obj_initialized = NiMorphData::Register();
-
-bool NiMorphData::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiMorphData", NiMorphData::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiMorphData::Create() {
 	return new NiMorphData;
 }

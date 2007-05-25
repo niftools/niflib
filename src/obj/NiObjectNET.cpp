@@ -40,18 +40,6 @@ const Type & NiObjectNET::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiObjectNET::obj_initialized = NiObjectNET::Register();
-
-bool NiObjectNET::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiObjectNET", NiObjectNET::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiObjectNET::Create() {
 	return new NiObjectNET;
 }

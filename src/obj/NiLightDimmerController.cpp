@@ -33,18 +33,6 @@ const Type & NiLightDimmerController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiLightDimmerController::obj_initialized = NiLightDimmerController::Register();
-
-bool NiLightDimmerController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiLightDimmerController", NiLightDimmerController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiLightDimmerController::Create() {
 	return new NiLightDimmerController;
 }

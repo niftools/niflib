@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 //---THIS FILE WAS AUTOMATICALLY GENERATED.  DO NOT EDIT---//
 
-//To change this file, alter the niftools/docsys/nifxml_niflib.py Python script.
+//To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
 #include "../../include/gen/LODRange.h"
 using namespace Niflib;

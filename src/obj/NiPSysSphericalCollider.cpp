@@ -33,18 +33,6 @@ const Type & NiPSysSphericalCollider::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPSysSphericalCollider::obj_initialized = NiPSysSphericalCollider::Register();
-
-bool NiPSysSphericalCollider::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPSysSphericalCollider", NiPSysSphericalCollider::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPSysSphericalCollider::Create() {
 	return new NiPSysSphericalCollider;
 }

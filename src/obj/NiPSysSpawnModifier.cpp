@@ -33,18 +33,6 @@ const Type & NiPSysSpawnModifier::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPSysSpawnModifier::obj_initialized = NiPSysSpawnModifier::Register();
-
-bool NiPSysSpawnModifier::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPSysSpawnModifier", NiPSysSpawnModifier::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPSysSpawnModifier::Create() {
 	return new NiPSysSpawnModifier;
 }

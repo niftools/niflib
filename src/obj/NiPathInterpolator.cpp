@@ -35,18 +35,6 @@ const Type & NiPathInterpolator::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiPathInterpolator::obj_initialized = NiPathInterpolator::Register();
-
-bool NiPathInterpolator::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiPathInterpolator", NiPathInterpolator::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiPathInterpolator::Create() {
 	return new NiPathInterpolator;
 }

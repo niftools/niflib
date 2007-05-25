@@ -34,18 +34,6 @@ const Type & NiImage::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiImage::obj_initialized = NiImage::Register();
-
-bool NiImage::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiImage", NiImage::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiImage::Create() {
 	return new NiImage;
 }

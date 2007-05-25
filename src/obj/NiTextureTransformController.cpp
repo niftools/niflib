@@ -34,18 +34,6 @@ const Type & NiTextureTransformController::GetType() const {
 	return TYPE;
 }
 
-//A static bool to force the initialization to happen pre-main
-bool NiTextureTransformController::obj_initialized = NiTextureTransformController::Register();
-
-bool NiTextureTransformController::Register() {
-	//Register this object type with Niflib
-	ObjectRegistry::RegisterObject( "NiTextureTransformController", NiTextureTransformController::Create );
-
-	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-	obj_initialized = true;
-	return obj_initialized;
-}
-
 NiObject * NiTextureTransformController::Create() {
 	return new NiTextureTransformController;
 }
