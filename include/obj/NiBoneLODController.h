@@ -64,6 +64,53 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Returns the number of node groups (each group a sequence of bones).
+	 * \return The number of node groups.
+	 */
+	NIFLIB_API int GetNodeGroupCount() const;
+
+	/*!
+	 * Returns a specific node group (each group a sequence of bones).
+	 * \param[in] index The index of the node group to return the data for.  This must be >= 0 and < the result of ABoneLODController::GetNodeGroupCount.
+	 * \return The specified node group.
+	 */
+	NIFLIB_API vector<Ref<NiNode> > GetNodeGroup( int index ) const;
+
+	/*!
+	 * Adds a single node to the specified group. The group list will expand if necessary.
+	 * \param[in] index The index of the node group to add a node to.  This must be >= 0 and < the result of ABoneLODController::GetNodeGroupCount.
+	 * \param[in] node The node to add to the group.
+	 */
+	NIFLIB_API void AddNodeToGroup( int index, NiNode * node );
+
+	/*!
+	 * Remove a single node from the specified node group. 
+	 * \param[in] index The index of the node group to remove a node from.  This must be >= 0 and < the result of ABoneLODController::GetNodeGroupCount.
+	 * \param[in] node The node remove from the group.
+	 */
+	NIFLIB_API void RemoveNodeFromGroup( int index, NiNode * node );
+
+	/*!
+	 * Assigns an entire node group, replacing any nodes that were in the group before.
+	 * \param[in] index The index of the node group to assign a list of nodes to.  This must be >= 0 and < the result of ABoneLODController::GetNodeGroupCount.
+	 * \param[in] group The list of nodes to assign to the specified node group.
+	 */
+	NIFLIB_API void SetNodeGroup( int index, const vector<Ref<NiNode> > & group );
+
+
+	/*!
+	 * Removes an entire node group.  This will cause the indices of any subsequent node groups to shift.
+	 * \param[in] index The index of the node group to remove.  This must be >= 0 and < the result of ABoneLODController::GetNodeGroupCount.
+	 */
+	NIFLIB_API void RemoveNodeGroup( int index );
+
+	/*!
+	 * Clears all node groups.
+	 */
+	NIFLIB_API void ClearNodeGroups();
+
 	//--END CUSTOM CODE--//
 protected:
 	/*!

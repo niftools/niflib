@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include <algorithm>
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -277,4 +278,68 @@ std::list<NiObjectRef> NiBoneLODController::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+/*!
+ * A list of node groups (each group a sequence of bones?).
+ */
+int NiBoneLODController::GetNodeGroupCount() const {
+   return int(nodeGroups.size());
+}
+
+vector<Ref<NiNode> > NiBoneLODController::GetNodeGroup( int index ) const {
+   if (index < 0 || index >= int(nodeGroups.size()) ) {
+      throw runtime_error("Invalid index referenced.");
+   }
+   vector<NiNodeRef> value;
+   const vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   for (vector<NiNode*>::const_iterator itr = nodes.begin(); itr != nodes.end(); ++itr)
+      value.push_back(*itr);
+   return value;
+}
+
+void NiBoneLODController::AddNodeToGroup( int index, NiNode * node ) {
+   while (index >= int(nodeGroups.size()))
+      nodeGroups.insert(nodeGroups.end(), NodeGroup() );
+   numNodeGroups2 = nodeGroups.size();
+
+   vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   vector<NiNode*>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
+   if (itr == nodes.end())
+      nodes.push_back(node);
+}
+
+void NiBoneLODController::RemoveNodeFromGroup( int index, NiNode * node ) {
+   if (index < 0 || index >= int(nodeGroups.size()) ) {
+      throw runtime_error("Invalid index referenced.");
+   }
+   vector<NiNode*>& nodes = nodeGroups[index].nodes;
+   vector<NiNode*>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
+   if (itr == nodes.end())
+      return;
+   nodes.erase(itr);
+}
+
+void NiBoneLODController::SetNodeGroup( int index, const vector<Ref<NiNode> >& group ) {
+   while (index >= int(nodeGroups.size()))
+      nodeGroups.insert(nodeGroups.end(), NodeGroup() );
+   numNodeGroups2 = nodeGroups.size();
+   nodeGroups[index].nodes.assign(group.begin(), group.end());
+}
+
+void NiBoneLODController::RemoveNodeGroup( int index ) {
+   if (index < 0 || index >= int(nodeGroups.size()) ) {
+      throw runtime_error("Invalid index referenced.");
+   }
+   vector<NodeGroup>::iterator itr = nodeGroups.begin();
+   std::advance(itr, index);
+   nodeGroups.erase(itr);
+   numNodeGroups2 = nodeGroups.size();
+}
+
+void NiBoneLODController::ClearNodeGroups() {
+   nodeGroups.clear();
+   numNodeGroups2 = nodeGroups.size();
+}
+
+
 //--END CUSTOM CODE--//
