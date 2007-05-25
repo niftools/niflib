@@ -34,24 +34,16 @@ const Type & NiPoint3InterpController::GetType() const {
 	return TYPE;
 }
 
-namespace Niflib {
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
+//A static bool to force the initialization to happen pre-main
+bool NiPoint3InterpController::obj_initialized = NiPoint3InterpController::Register();
 
-	//Initialization function
-	static bool Initialization();
+bool NiPoint3InterpController::Register() {
+	//Register this object type with Niflib
+	ObjectRegistry::RegisterObject( "NiPoint3InterpController", NiPoint3InterpController::Create );
 
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Register this object type with Niflib
-		ObjectRegistry::RegisterObject( "NiPoint3InterpController", NiPoint3InterpController::Create );
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
+	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+	obj_initialized = true;
+	return obj_initialized;
 }
 
 NiObject * NiPoint3InterpController::Create() {

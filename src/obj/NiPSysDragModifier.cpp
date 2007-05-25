@@ -34,24 +34,16 @@ const Type & NiPSysDragModifier::GetType() const {
 	return TYPE;
 }
 
-namespace Niflib {
-	typedef NiObject*(*obj_factory_func)();
-	extern map<string, obj_factory_func> global_object_map;
+//A static bool to force the initialization to happen pre-main
+bool NiPSysDragModifier::obj_initialized = NiPSysDragModifier::Register();
 
-	//Initialization function
-	static bool Initialization();
+bool NiPSysDragModifier::Register() {
+	//Register this object type with Niflib
+	ObjectRegistry::RegisterObject( "NiPSysDragModifier", NiPSysDragModifier::Create );
 
-	//A static bool to force the initialization to happen pre-main
-	static bool obj_initialized = Initialization();
-
-	static bool Initialization() {
-		//Register this object type with Niflib
-		ObjectRegistry::RegisterObject( "NiPSysDragModifier", NiPSysDragModifier::Create );
-
-		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
-		obj_initialized = true;
-		return obj_initialized;
-	}
+	//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
+	obj_initialized = true;
+	return obj_initialized;
 }
 
 NiObject * NiPSysDragModifier::Create() {

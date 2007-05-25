@@ -29,7 +29,7 @@ public:
 	NIFLIB_HIDDEN static NiObject * CreateObject( const string & type_name );
 
 private:
-	static map<string, obj_factory_func> object_map;
+	static map<string, obj_factory_func> * object_map;
 };
 
 } //End namespace Niflib
