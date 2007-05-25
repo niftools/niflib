@@ -9,6 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../include/niflib.h"
 #include "../include/NIF_IO.h"
+#include "../include/ObjectRegistry.h"
 #include "../include/kfm.h"
 #include "../include/obj/NiObject.h"
 #include "../include/obj/NiNode.h"
@@ -36,11 +37,6 @@ All rights reserved.  Please see niflib.h for license. */
 
 namespace Niflib {
 
-//Stores the mapping between object names and factory function pointers to create them
-typedef NiObject * (*obj_factory_func)();
-bool global_object_map_init = false;
-map<string, obj_factory_func> global_object_map;
-
 //Utility Functions
 void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
 NiObjectRef FindRoot( vector<NiObjectRef> const & objects );
@@ -58,23 +54,6 @@ NiObjectRef GetObjectByType( NiObject * root, const Type & type );
 static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
 
 //--Function Bodies--//
-
-NiObjectRef CreateObject( string obj_type ) {
-	NiObject * object = NULL;
-
-	map<string, obj_factory_func>::iterator it;
-	it = global_object_map.find(obj_type);
-
-	if ( it != global_object_map.end() ) {
-		//Requested type has been registered
-		object = it->second();
-	} else {
-		//An unknown type has been encountered
-		return NULL; //Return null
-	}
-	
-	return NiObjectRef(object);
-}
 
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	//Read object list
@@ -272,7 +251,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		}
 
 		//Create object of the type that was found
-		new_obj = CreateObject(objectType);
+		new_obj = ObjectRegistry::CreateObject(objectType);
 
 		//Check for an unknown object type
 		if ( new_obj == NULL ) {
@@ -935,7 +914,7 @@ void MergeNifTrees( NiNode * target, NiControllerSequence * right, unsigned vers
 
 				//If the controller wasn't found, create one of the right type and attach it
 				if ( ctlr == NULL ) {
-					NiObjectRef new_ctlr = CreateObject( ctlr_type );
+					NiObjectRef new_ctlr = ObjectRegistry::CreateObject( ctlr_type );
 					ctlr = DynamicCast<NiSingleInterpController>( new_ctlr );
 					if ( ctlr == NULL ) {
 						throw runtime_error ("Non-NiSingleInterpController controller found in KF file.");

@@ -342,6 +342,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\src\ObjectRegistry.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Type.cpp"
 				>
 			</File>
@@ -1561,6 +1565,10 @@
 			</File>
 			<File
 				RelativePath=".\include\niflib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\ObjectRegistry.h"
 				>
 			</File>
 			<File

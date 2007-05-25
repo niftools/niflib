@@ -12,6 +12,7 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
+#include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiAVObject.h"
 #include "../../include/gen/BoundingBox.h"
@@ -59,8 +60,8 @@ namespace Niflib {
 	static bool obj_initialized = Initialization();
 
 	static bool Initialization() {
-		//Add the function to the global object map
-		global_object_map["NiAVObject"] = NiAVObject::Create;
+		//Register this object type with Niflib
+		ObjectRegistry::RegisterObject( "NiAVObject", NiAVObject::Create );
 
 		//Do this stuff just to make sure the compiler doesn't optimize this function and the static bool away.
 		obj_initialized = true;

@@ -213,9 +213,6 @@ NIFLIB_API Ref<NiNode> FindCommonAncestor( const vector< Ref<NiAVObject> > & obj
  */
 NIFLIB_API list< Ref<NiNode> > ListAncestors( NiAVObject * leaf );
 
-/*! NIFLIB_HIDDEN function.  For internal use only. */
-NIFLIB_HIDDEN Ref<NiObject> CreateObject( string obj_type );
-
 /*!
  * Returns whether the requested version is explicitly supported.  This does
  * not mean that the file will not open, rather it means that we have not
