@@ -314,6 +314,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MaterialCollection.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\NIF_IO.cpp"
 				>
 			</File>
@@ -1549,6 +1553,10 @@
 			</File>
 			<File
 				RelativePath=".\include\kfm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\MaterialCollection.h"
 				>
 			</File>
 			<File

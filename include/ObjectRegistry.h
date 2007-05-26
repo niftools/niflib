@@ -1,6 +1,9 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
+#ifndef _OBJECT_REGISTRY_H_
+#define _OBJECT_REGISTRY_H_
+
 #include <map>
 #include <string>
 #include "obj/Niobject.h"
@@ -29,7 +32,9 @@ public:
 	NIFLIB_HIDDEN static NiObject * CreateObject( const string & type_name );
 
 private:
-	static map<string, obj_factory_func> * object_map;
+	static map<string, obj_factory_func> object_map;
 };
 
 } //End namespace Niflib
+
+#endif

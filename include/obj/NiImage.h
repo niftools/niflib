@@ -60,16 +60,37 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
-	 * Sets a new external file texture.  Removes any existing texture references.
-	 * \param[in] file_name The file name of the new external texture.  Often needs to follow game guidlines to be found.
+	 * Used to check whether the texture referenced by this object is an external file.
+	 * \return True if the texture is stored in an external file, false if it is stored within this NIF file.
 	 */
-	NIFLIB_API void SetTextureFileName( string file_name );
+	NIFLIB_API bool IsTextureExternal() const;
 
 	/*!
-	 * Returns the external texture file name.
+	 * Sets a new external file texture.  Removes any existing texture references, whether internal or external.
+	 * \param[in] file_name The file name of the external texture.  Often needs to follow game guidlines to be found.
+	 */
+	NIFLIB_API void SetExternalTexture( string file_name );
+
+	/*!
+	 * Sets a new internal file texture.  Removes any existing texture references, whether internal or external.
+	 * \param[in] original_file_name The original file name of the texture.  This may be optional.
+	 * \param[in] raw_image_data The NiRawImageData object that contains the texture image data.
+	 */
+	NIFLIB_API void SetInternalTexture( NiRawImageData * raw_image_data );
+
+
+	/*!
+	 * Returns either the file name of the external texture, or the original file name of the internal one.
 	 * \return The name of the texture file.
 	 */
 	NIFLIB_API string GetTextureFileName() const;
+
+	/*!
+	 * Returns a reference to the texture image data object used by this texture, if any.
+	 * \return The iamge data object referenced by this texture, or NULL if one is not being used.
+	 */
+	NIFLIB_API Ref<NiRawImageData> GetRawImageData() const;
+
 
 	//--END CUSTOM CODE--//
 protected:

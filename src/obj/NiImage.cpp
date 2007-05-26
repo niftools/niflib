@@ -130,12 +130,28 @@ std::list<NiObjectRef> NiImage::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-void NiImage::SetTextureFileName( string file_name ) {
+bool NiImage::IsTextureExternal() const {
+	return (external != 0);
+}
+
+void NiImage::SetExternalTexture( string file_name ) {
+	imageData = NULL;
+	external = 1;
 	fileName = file_name;
+}
+
+void NiImage::SetInternalTexture( NiRawImageData * raw_image_data ) {
+	external = 0;
+	fileName.clear();
+	imageData = raw_image_data;
 }
 
 string NiImage::GetTextureFileName() const {
 	return fileName;
+}
+
+Ref<NiRawImageData> NiImage::GetRawImageData() const {
+	return imageData;
 }
 
 //--END CUSTOM CODE--//
