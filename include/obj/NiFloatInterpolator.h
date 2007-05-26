@@ -24,10 +24,7 @@ class NiFloatData;
 class NiFloatInterpolator;
 typedef Ref<NiFloatInterpolator> NiFloatInterpolatorRef;
 
-/*!
- * NiFloatInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiFloatInterpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */
@@ -88,13 +85,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Value when posed?  At time 0?
-	 */
+	/*! Value when posed?  At time 0? */
 	float floatValue;
-	/*!
-	 * Float data?
-	 */
+	/*! Float data? */
 	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

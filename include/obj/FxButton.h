@@ -19,10 +19,7 @@ namespace Niflib {
 class FxButton;
 typedef Ref<FxButton> FxButtonRef;
 
-/*!
- * FxButton - Unknown.
- */
-
+/*! Unknown. */
 class FxButton : public FxWidget {
 public:
 	/*! Constructor */

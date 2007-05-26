@@ -25,10 +25,7 @@ class NiInterpolator;
 class NiGeomMorpherController;
 typedef Ref<NiGeomMorpherController> NiGeomMorpherControllerRef;
 
-/*!
- * NiGeomMorpherController - Time controller for geometry morphing.
- */
-
+/*! Time controller for geometry morphing. */
 class NiGeomMorpherController : public NiInterpController {
 public:
 	/*! Constructor */
@@ -91,37 +88,21 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknown;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknown2;
-	/*!
-	 * Geometry morphing data index.
-	 */
+	/*! Geometry morphing data index. */
 	Ref<NiMorphData > data;
-	/*!
-	 * Unknown byte (always zero?).
-	 */
+	/*! Unknown byte (always zero?). */
 	byte unknownByte;
-	/*!
-	 * The number of interpolator objects.
-	 */
+	/*! The number of interpolator objects. */
 	mutable unsigned int numInterpolators;
-	/*!
-	 * List of interpolators.
-	 */
+	/*! List of interpolators. */
 	vector<Ref<NiInterpolator > > interpolators;
-	/*!
-	 * A count.
-	 */
+	/*! A count. */
 	mutable unsigned int numUnknownInts;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<unsigned int > unknownInts;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -25,10 +25,7 @@ class NiDefaultAVObjectPalette;
 class NiControllerManager;
 typedef Ref<NiControllerManager> NiControllerManagerRef;
 
-/*!
- * NiControllerManager - Unknown. Root of all controllers?
- */
-
+/*! Unknown. Root of all controllers? */
 class NiControllerManager : public NiTimeController {
 public:
 	/*! Constructor */
@@ -118,21 +115,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Designates whether animation sequences are cumulative?
-	 */
+	/*! Designates whether animation sequences are cumulative? */
 	bool cumulative;
-	/*!
-	 * The number of controller sequence objects.
-	 */
+	/*! The number of controller sequence objects. */
 	mutable unsigned int numControllerSequences;
-	/*!
-	 * Refers to a list of NiControllerSequence object.
-	 */
+	/*! Refers to a list of NiControllerSequence object. */
 	vector<Ref<NiControllerSequence > > controllerSequences;
-	/*!
-	 * Refers to a NiDefaultAVObjectPalette.
-	 */
+	/*! Refers to a NiDefaultAVObjectPalette. */
 	Ref<NiDefaultAVObjectPalette > objectPalette;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

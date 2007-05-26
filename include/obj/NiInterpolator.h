@@ -19,10 +19,7 @@ namespace Niflib {
 class NiInterpolator;
 typedef Ref<NiInterpolator> NiInterpolatorRef;
 
-/*!
- * NiInterpolator - Interpolator objects - function unknown.
- */
-
+/*! Interpolator objects - function unknown. */
 class NiInterpolator : public NiObject {
 public:
 	/*! Constructor */

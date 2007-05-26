@@ -25,10 +25,7 @@ class NiInterpolator;
 class NiPSysEmitterCtlr;
 typedef Ref<NiPSysEmitterCtlr> NiPSysEmitterCtlrRef;
 
-/*!
- * NiPSysEmitterCtlr - Particle system emitter controller.
- */
-
+/*! Particle system emitter controller. */
 class NiPSysEmitterCtlr : public NiPSysModifierCtlr {
 public:
 	/*! Constructor */
@@ -89,13 +86,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * This controller's data
-	 */
+	/*! This controller's data */
 	Ref<NiPSysEmitterCtlrData > data;
-	/*!
-	 * Links to a bool interpolator. Controls emitter's visibility status?
-	 */
+	/*! Links to a bool interpolator. Controls emitter's visibility status? */
 	Ref<NiInterpolator > visibilityInterpolator;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

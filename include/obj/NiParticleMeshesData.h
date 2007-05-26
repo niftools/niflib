@@ -24,10 +24,7 @@ class NiAVObject;
 class NiParticleMeshesData;
 typedef Ref<NiParticleMeshesData> NiParticleMeshesDataRef;
 
-/*!
- * NiParticleMeshesData - Particle meshes data.
- */
-
+/*! Particle meshes data. */
 class NiParticleMeshesData : public NiRotatingParticlesData {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Refers to the mesh that makes up a particle?
-	 */
+	/*! Refers to the mesh that makes up a particle? */
 	Ref<NiAVObject > unknownLink2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

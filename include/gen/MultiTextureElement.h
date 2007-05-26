@@ -17,9 +17,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiImage;
 
-/*!
- * 
- */
+/*!  */
 struct MultiTextureElement {
 	/*! Default Constructor */
 	NIFLIB_API MultiTextureElement();
@@ -29,37 +27,21 @@ struct MultiTextureElement {
 	NIFLIB_API MultiTextureElement( const MultiTextureElement & src );
 	/*! Copy Operator */
 	NIFLIB_API MultiTextureElement & operator=( const MultiTextureElement & src );
-	/*!
-	 * Looks like a memory address, so probably a bool.
-	 */
+	/*! Looks like a memory address, so probably a bool. */
 	bool hasImage;
-	/*!
-	 * Link to the texture image.
-	 */
+	/*! Link to the texture image. */
 	Ref<NiImage > image;
-	/*!
-	 * Unkown.  Usually 3 but sometimes 0.
-	 */
+	/*! Unkown.  Usually 3 but sometimes 0. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unkown. Usually 2.
-	 */
+	/*! Unkown. Usually 2. */
 	unsigned int unknownInt2;
-	/*!
-	 * Unkown. Usually 1.
-	 */
+	/*! Unkown. Usually 1. */
 	unsigned int unknownInt3;
-	/*!
-	 * Unknown.  Usually 0.
-	 */
+	/*! Unknown.  Usually 0. */
 	short unknownShort1;
-	/*!
-	 * Unknown.  Usually -75.
-	 */
+	/*! Unknown.  Usually -75. */
 	short unknownShort2;
-	/*!
-	 * Unknown.  Usually 0 but sometimes 257
-	 */
+	/*! Unknown.  Usually 0 but sometimes 257 */
 	short unknownShort3;
 };
 

@@ -20,12 +20,10 @@ class bhkPhantom;
 typedef Ref<bhkPhantom> bhkPhantomRef;
 
 /*!
- * bhkPhantom - Havok object that do not react with other objects when
- * they collide (causing deflection, etc.) but still trigger collision
- * notifications to the game.  Possible uses are traps, portals, AI
- * fields, etc.
+ * Havok object that do not react with other objects when they collide (causing
+ * deflection, etc.) but still trigger collision notifications to the game.
+ * Possible uses are traps, portals, AI fields, etc.
  */
-
 class bhkPhantom : public bhkWorldObject {
 public:
 	/*! Constructor */

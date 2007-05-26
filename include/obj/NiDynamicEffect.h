@@ -24,10 +24,7 @@ class NiAVObject;
 class NiDynamicEffect;
 typedef Ref<NiDynamicEffect> NiDynamicEffectRef;
 
-/*!
- * NiDynamicEffect - A dynamic effect such as a light or environment map.
- */
-
+/*! A dynamic effect such as a light or environment map. */
 class NiDynamicEffect : public NiAVObject {
 public:
 	/*! Constructor */
@@ -88,28 +85,20 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Turns effect on and off?  Switches list to list of unaffected nodes?
-	 */
+	/*! Turns effect on and off?  Switches list to list of unaffected nodes? */
 	bool switchState;
-	/*!
-	 * The number of affected nodes referenced.
-	 */
+	/*! The number of affected nodes referenced. */
 	mutable unsigned int numAffectedNodeListPointers;
-	/*!
-	 * The number of affected nodes referenced.
-	 */
+	/*! The number of affected nodes referenced. */
 	mutable unsigned int numAffectedNodes;
 	/*!
-	 * This is probably the list of affected nodes. For some reason i do not
-	 * know the max exporter seems to write pointers instead of links. But it
-	 * doesn't matter because at least in version 4.0.0.2 the list is
-	 * automagically updated by the engine during the load stage.
+	 * This is probably the list of affected nodes. For some reason i do not know the
+	 * max exporter seems to write pointers instead of links. But it doesn't matter
+	 * because at least in version 4.0.0.2 the list is automagically updated by the
+	 * engine during the load stage.
 	 */
 	vector<unsigned int > affectedNodeListPointers;
-	/*!
-	 * The list of affected nodes?
-	 */
+	/*! The list of affected nodes? */
 	vector<Ref<NiAVObject > > affectedNodes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

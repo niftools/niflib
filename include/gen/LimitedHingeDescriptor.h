@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * 
- */
+/*!  */
 struct LimitedHingeDescriptor {
 	/*! Default Constructor */
 	NIFLIB_API LimitedHingeDescriptor();
@@ -25,45 +23,25 @@ struct LimitedHingeDescriptor {
 	NIFLIB_API LimitedHingeDescriptor( const LimitedHingeDescriptor & src );
 	/*! Copy Operator */
 	NIFLIB_API LimitedHingeDescriptor & operator=( const LimitedHingeDescriptor & src );
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 pivotA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 axleA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 perp2axleina1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 perp2axleina2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 pivotB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 axleB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 perp2axleinb2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float minAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float maxAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float maxFriction;
 };
 

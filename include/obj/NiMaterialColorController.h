@@ -19,10 +19,7 @@ namespace Niflib {
 class NiMaterialColorController;
 typedef Ref<NiMaterialColorController> NiMaterialColorControllerRef;
 
-/*!
- * NiMaterialColorController - Time controller for material color.
- */
-
+/*! Time controller for material color. */
 class NiMaterialColorController : public NiPoint3InterpController {
 public:
 	/*! Constructor */

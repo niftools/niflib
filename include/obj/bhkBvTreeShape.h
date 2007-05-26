@@ -19,11 +19,7 @@ namespace Niflib {
 class bhkBvTreeShape;
 typedef Ref<bhkBvTreeShape> bhkBvTreeShapeRef;
 
-/*!
- * bhkBvTreeShape - A tree-like Havok data structure stored in an
- * assembly-like binary code?
- */
-
+/*! A tree-like Havok data structure stored in an assembly-like binary code? */
 class bhkBvTreeShape : public bhkShape {
 public:
 	/*! Constructor */

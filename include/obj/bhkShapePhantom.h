@@ -20,10 +20,9 @@ class bhkShapePhantom;
 typedef Ref<bhkShapePhantom> bhkShapePhantomRef;
 
 /*!
- * bhkShapePhantom - A Havok phantom that uses a Havok shape object for
- * its collision volume instead of just a bounding box.
+ * A Havok phantom that uses a Havok shape object for its collision volume instead
+ * of just a bounding box.
  */
-
 class bhkShapePhantom : public bhkPhantom {
 public:
 	/*! Constructor */

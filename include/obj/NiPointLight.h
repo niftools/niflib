@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPointLight;
 typedef Ref<NiPointLight> NiPointLightRef;
 
-/*!
- * NiPointLight - A point light.
- */
-
+/*! A point light. */
 class NiPointLight : public NiLight {
 public:
 	/*! Constructor */
@@ -95,17 +92,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Constant Attenuation
-	 */
+	/*! Constant Attenuation */
 	float constantAttenuation;
-	/*!
-	 * Linear Attenuation
-	 */
+	/*! Linear Attenuation */
 	float linearAttenuation;
-	/*!
-	 * Quadratic Attenuation (see glLight)
-	 */
+	/*! Quadratic Attenuation (see glLight) */
 	float quadraticAttenuation;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

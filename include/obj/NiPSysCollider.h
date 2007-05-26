@@ -26,10 +26,7 @@ class NiNode;
 class NiPSysCollider;
 typedef Ref<NiPSysCollider> NiPSysColliderRef;
 
-/*!
- * NiPSysCollider - Particle system collider.
- */
-
+/*! Particle system collider. */
 class NiPSysCollider : public NiObject {
 public:
 	/*! Constructor */
@@ -65,33 +62,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float bounce;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool spawnOnCollide;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool dieOnCollide;
-	/*!
-	 * Link to NiPSysSpawnModifier object?
-	 */
+	/*! Link to NiPSysSpawnModifier object? */
 	Ref<NiPSysSpawnModifier > spawnModifier;
-	/*!
-	 * Link to parent.
-	 */
+	/*! Link to parent. */
 	NiObject * parent;
-	/*!
-	 * The next collider.
-	 */
+	/*! The next collider. */
 	Ref<NiObject > nextCollider;
-	/*!
-	 * Link to a NiNode?
-	 */
+	/*! Link to a NiNode? */
 	Ref<NiNode > colliderObject;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

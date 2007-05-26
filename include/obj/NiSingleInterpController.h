@@ -24,11 +24,7 @@ class NiInterpolator;
 class NiSingleInterpController;
 typedef Ref<NiSingleInterpController> NiSingleInterpControllerRef;
 
-/*!
- * NiSingleInterpController - A controller referring to a single
- * interpolator.
- */
-
+/*! A controller referring to a single interpolator. */
 class NiSingleInterpController : public NiInterpController {
 public:
 	/*! Constructor */
@@ -77,9 +73,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Link to interpolator.
-	 */
+	/*! Link to interpolator. */
 	Ref<NiInterpolator > interpolator;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

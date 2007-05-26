@@ -22,10 +22,7 @@ namespace Niflib {
 class NiKeyframeData;
 typedef Ref<NiKeyframeData> NiKeyframeDataRef;
 
-/*!
- * NiKeyframeData - Keyframes for mesh animation.
- */
-
+/*! Keyframes for mesh animation. */
 class NiKeyframeData : public NiObject {
 public:
 	/*! Constructor */
@@ -215,35 +212,22 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of rotation keys.
-	 */
+	/*! The number of rotation keys. */
 	mutable unsigned int numRotationKeys;
 	/*!
-	 * The type of interpolation to use for rotation.  Can also be 4 to
-	 * indicate that separate X, Y, and Z values are used for the rotation
-	 * instead of Quaternions.
+	 * The type of interpolation to use for rotation.  Can also be 4 to indicate that
+	 * separate X, Y, and Z values are used for the rotation instead of Quaternions.
 	 */
 	KeyType rotationType;
-	/*!
-	 * The rotation keys if Quaternion rotation is used.
-	 */
+	/*! The rotation keys if Quaternion rotation is used. */
 	vector<Key<Quaternion > > quaternionKeys;
-	/*!
-	 * Possibly a vestigial time value?  Doesn't appear to be significant.
-	 */
+	/*! Possibly a vestigial time value?  Doesn't appear to be significant. */
 	float unknownFloat;
-	/*!
-	 * Individual arrays of keys for rotating X, Y, and Z individually.
-	 */
+	/*! Individual arrays of keys for rotating X, Y, and Z individually. */
 	array<3,KeyGroup<float > > xyzRotations;
-	/*!
-	 * Translation keys.
-	 */
+	/*! Translation keys. */
 	KeyGroup<Vector3 > translations;
-	/*!
-	 * Scale keys.
-	 */
+	/*! Scale keys. */
 	KeyGroup<float > scales;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

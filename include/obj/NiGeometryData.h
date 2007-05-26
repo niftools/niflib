@@ -24,10 +24,7 @@ class NiObject;
 class NiGeometryData;
 typedef Ref<NiGeometryData> NiGeometryDataRef;
 
-/*!
- * NiGeometryData - Mesh data: vertices, vertex normals, etc.
- */
-
+/*! Mesh data: vertices, vertex normals, etc. */
 class NiGeometryData : public NiObject {
 public:
 	/*! Constructor */
@@ -169,98 +166,77 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Name of this object.
-	 */
+	/*! Name of this object. */
 	string name;
-	/*!
-	 * Number of vertices. For NiPSysData this is max particles.
-	 */
+	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort1;
-	/*!
-	 * Is the vertex array present? (Always non-zero.)
-	 */
+	/*! Is the vertex array present? (Always non-zero.) */
 	bool hasVertices;
-	/*!
-	 * The mesh vertices.
-	 */
+	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
 	/*!
-	 * The lower 6 (or less?) bits of this field represent the number of UV
-	 * texture sets. The other bits are probably flag bits.
+	 * The lower 6 (or less?) bits of this field represent the number of UV texture
+	 * sets. The other bits are probably flag bits.
 	 */
 	mutable byte numUvSets2;
-	/*!
-	 * Unknown. If bit 4 is set then extra vectors are present after the
-	 * normals.
-	 */
+	/*! Unknown. If bit 4 is set then extra vectors are present after the normals. */
 	byte unknownByte1;
 	/*!
-	 * Do we have lighting normals? These are essential for proper lighting:
-	 * if not present, the model will only be influenced by ambient light.
+	 * Do we have lighting normals? These are essential for proper lighting: if not
+	 * present, the model will only be influenced by ambient light.
 	 */
 	bool hasNormals;
-	/*!
-	 * The lighting normals.
-	 */
+	/*! The lighting normals. */
 	vector<Vector3 > normals;
 	/*!
-	 * Unknown. Binormal & tangents? has_normals must be set as well for this
-	 * field to be present.
+	 * Unknown. Binormal & tangents? has_normals must be set as well for this field to
+	 * be present.
 	 */
 	vector<Vector3 > unknownVectors1;
-	/*!
-	 * Unknown. Binormal & tangents?
-	 */
+	/*! Unknown. Binormal & tangents? */
 	vector<Vector3 > unknownVectors2;
 	/*!
-	 * Center of the bounding box (smallest box that contains all vertices)
-	 * of the mesh.
+	 * Center of the bounding box (smallest box that contains all vertices) of the
+	 * mesh.
 	 */
 	Vector3 center;
 	/*!
-	 * Radius of the mesh: maximal Euclidean distance between the center and
-	 * all vertices.
+	 * Radius of the mesh: maximal Euclidean distance between the center and all
+	 * vertices.
 	 */
 	float radius;
 	/*!
-	 * Do we have vertex colors? These are usually used to fine-tune the
-	 * lighting of the model.              Note: how vertex colors influence
-	 * the model can be controlled by having a NiVertexColorProperty object
-	 * as a property child of the root node. If this property object is not
-	 * present, the vertex colors fine-tune lighting.              Note 2:
-	 * set to either 0 or 0xFFFFFFFF for NifTexture compatibility.
+	 * Do we have vertex colors? These are usually used to fine-tune the lighting of
+	 * the model.
+	 * 
+	 *             Note: how vertex colors influence the model can be controlled by
+	 * having a NiVertexColorProperty object as a property child of the root node. If
+	 * this property object is not present, the vertex colors fine-tune lighting.
+	 * 
+	 *             Note 2: set to either 0 or 0xFFFFFFFF for NifTexture compatibility.
 	 */
 	bool hasVertexColors;
-	/*!
-	 * The vertex colors.
-	 */
+	/*! The vertex colors. */
 	vector<Color4 > vertexColors;
-	/*!
-	 * Number of texture sets.
-	 */
+	/*! Number of texture sets. */
 	mutable unsigned short numUvSets;
 	/*!
-	 * Do we have UV coordinates?              Note: for compatibility with
-	 * NifTexture, set this value to either 0x00000000 or 0xFFFFFFFF.
+	 * Do we have UV coordinates?
+	 * 
+	 *             Note: for compatibility with NifTexture, set this value to either
+	 * 0x00000000 or 0xFFFFFFFF.
 	 */
 	bool hasUv;
 	/*!
-	 * The UV texture coordinates. They follow the OpenGL standard: some
-	 * programs may require you to flip the second coordinate.
+	 * The UV texture coordinates. They follow the OpenGL standard: some programs may
+	 * require you to flip the second coordinate.
 	 */
 	vector< vector<TexCoord > > uvSets;
-	/*!
-	 * Unknown. Usually zero.
-	 */
+	/*! Unknown. Usually zero. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Ref<NiObject > unknownLink1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

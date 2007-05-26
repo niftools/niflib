@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkShapeCollection;
 typedef Ref<bhkShapeCollection> bhkShapeCollectionRef;
 
-/*!
- * bhkShapeCollection - Havok collision object that uses multiple shapes?
- */
-
+/*! Havok collision object that uses multiple shapes? */
 class bhkShapeCollection : public bhkShape {
 public:
 	/*! Constructor */

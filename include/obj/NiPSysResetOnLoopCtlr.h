@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysResetOnLoopCtlr;
 typedef Ref<NiPSysResetOnLoopCtlr> NiPSysResetOnLoopCtlrRef;
 
-/*!
- * NiPSysResetOnLoopCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysResetOnLoopCtlr : public NiTimeController {
 public:
 	/*! Constructor */

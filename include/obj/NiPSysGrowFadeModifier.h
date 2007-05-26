@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysGrowFadeModifier;
 typedef Ref<NiPSysGrowFadeModifier> NiPSysGrowFadeModifierRef;
 
-/*!
- * NiPSysGrowFadeModifier - Unknown particle system modifier.
- */
-
+/*! Unknown particle system modifier. */
 class NiPSysGrowFadeModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,21 +55,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float growTime;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short growGeneration;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float fadeTime;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short fadeGeneration;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

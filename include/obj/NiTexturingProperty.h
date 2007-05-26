@@ -23,10 +23,7 @@ namespace Niflib {
 class NiTexturingProperty;
 typedef Ref<NiTexturingProperty> NiTexturingPropertyRef;
 
-/*!
- * NiTexturingProperty - Describes an object's textures.
- */
-
+/*! Describes an object's textures. */
 class NiTexturingProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -190,118 +187,64 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
-	/*!
-	 * 0=replace, 1=decal, 2=modulate, 3=hilight, 4=hilight2
-	 */
+	/*! 0=replace, 1=decal, 2=modulate, 3=hilight, 4=hilight2 */
 	ApplyMode applyMode;
 	/*!
-	 * Number of textures. Always 7 in versions < 20.0.0.4. Can also be 8 in
-	 * >= 20.0.0.4.
+	 * Number of textures. Always 7 in versions < 20.0.0.4. Can also be 8 in >=
+	 * 20.0.0.4.
 	 */
 	unsigned int textureCount;
-	/*!
-	 * Do we have a base texture?
-	 */
+	/*! Do we have a base texture? */
 	bool hasBaseTexture;
-	/*!
-	 * The base texture.
-	 */
+	/*! The base texture. */
 	TexDesc baseTexture;
-	/*!
-	 * Do we have a dark texture?
-	 */
+	/*! Do we have a dark texture? */
 	bool hasDarkTexture;
-	/*!
-	 * The dark texture.
-	 */
+	/*! The dark texture. */
 	TexDesc darkTexture;
-	/*!
-	 * Do we have a detail texture?
-	 */
+	/*! Do we have a detail texture? */
 	bool hasDetailTexture;
-	/*!
-	 * The detail texture.
-	 */
+	/*! The detail texture. */
 	TexDesc detailTexture;
-	/*!
-	 * Do we have a gloss texture?
-	 */
+	/*! Do we have a gloss texture? */
 	bool hasGlossTexture;
-	/*!
-	 * The gloss texture.
-	 */
+	/*! The gloss texture. */
 	TexDesc glossTexture;
-	/*!
-	 * Do we have a glow texture?
-	 */
+	/*! Do we have a glow texture? */
 	bool hasGlowTexture;
-	/*!
-	 * The glowing texture.
-	 */
+	/*! The glowing texture. */
 	TexDesc glowTexture;
-	/*!
-	 * Do we have a bump map texture?
-	 */
+	/*! Do we have a bump map texture? */
 	bool hasBumpMapTexture;
-	/*!
-	 * The bump map texture.
-	 */
+	/*! The bump map texture. */
 	TexDesc bumpMapTexture;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float bumpMapLumaScale;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float bumpMapLumaOffset;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Matrix22 bumpMapMatrix;
-	/*!
-	 * Do we have a decal 0 texture?
-	 */
+	/*! Do we have a decal 0 texture? */
 	bool hasDecal0Texture;
-	/*!
-	 * The decal texture.
-	 */
+	/*! The decal texture. */
 	TexDesc decal0Texture;
-	/*!
-	 * Do we have a decal 1 texture?
-	 */
+	/*! Do we have a decal 1 texture? */
 	bool hasDecal1Texture;
-	/*!
-	 * Another decal texture.
-	 */
+	/*! Another decal texture. */
 	TexDesc decal1Texture;
-	/*!
-	 * Do we have a decal 2 texture?
-	 */
+	/*! Do we have a decal 2 texture? */
 	bool hasDecal2Texture;
-	/*!
-	 * Another decal texture.
-	 */
+	/*! Another decal texture. */
 	TexDesc decal2Texture;
-	/*!
-	 * Do we have a decal 3 texture?
-	 */
+	/*! Do we have a decal 3 texture? */
 	bool hasDecal3Texture;
-	/*!
-	 * Another decal texture. Who knows the limit.
-	 */
+	/*! Another decal texture. Who knows the limit. */
 	TexDesc decal3Texture;
-	/*!
-	 * Number of Shader textures that follow.
-	 */
+	/*! Number of Shader textures that follow. */
 	mutable unsigned int numShaderTextures;
-	/*!
-	 * Shader textures.
-	 */
+	/*! Shader textures. */
 	vector<ShaderTexDesc > shaderTextures;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

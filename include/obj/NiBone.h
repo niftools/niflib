@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBone;
 typedef Ref<NiBone> NiBoneRef;
 
-/*!
- * NiBone - A NiNode used as a skeleton bone?
- */
-
+/*! A NiNode used as a skeleton bone? */
 class NiBone : public NiNode {
 public:
 	/*! Constructor */

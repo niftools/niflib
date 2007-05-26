@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplineBasisData;
 typedef Ref<NiBSplineBasisData> NiBSplineBasisDataRef;
 
-/*!
- * NiBSplineBasisData - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplineBasisData : public NiObject {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of control points (Usually number of frames for animation).
-	 */
+	/*! The number of control points (Usually number of frames for animation). */
 	unsigned int numControlPt;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

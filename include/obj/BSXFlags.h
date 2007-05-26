@@ -20,13 +20,14 @@ class BSXFlags;
 typedef Ref<BSXFlags> BSXFlagsRef;
 
 /*!
- * BSXFlags - Controls animation and collision.  Integer holds flags:
- * Bit 0 : enable animation         Bit 1 : enable collision         Bit
- * 2 : unknown, usually zero         Bit 3 : toggable? unknown, set to 1
- * on oblivion signs         Bit 4 : unknown, usually zero         Bit 5
- * : trigger?
+ * Controls animation and collision.  Integer holds flags:
+ *         Bit 0 : enable animation
+ *         Bit 1 : enable collision
+ *         Bit 2 : unknown, usually zero
+ *         Bit 3 : toggable? unknown, set to 1 on oblivion signs
+ *         Bit 4 : unknown, usually zero
+ *         Bit 5 : trigger?
  */
-
 class BSXFlags : public NiIntegerExtraData {
 public:
 	/*! Constructor */

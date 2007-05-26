@@ -22,10 +22,7 @@ namespace Niflib {
 class NiPSysEmitterCtlrData;
 typedef Ref<NiPSysEmitterCtlrData> NiPSysEmitterCtlrDataRef;
 
-/*!
- * NiPSysEmitterCtlrData - Particle system emitter controller data.
- */
-
+/*! Particle system emitter controller data. */
 class NiPSysEmitterCtlrData : public NiObject {
 public:
 	/*! Constructor */
@@ -61,17 +58,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	KeyGroup<float > floatKeys_;
-	/*!
-	 * Number of keys.
-	 */
+	/*! Number of keys. */
 	mutable unsigned int numVisibilityKeys_;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<Key<byte > > visibilityKeys_;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

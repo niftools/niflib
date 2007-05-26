@@ -19,10 +19,7 @@ namespace Niflib {
 class BSBound;
 typedef Ref<BSBound> BSBoundRef;
 
-/*!
- * BSBound - Bethesda-specific collision bounding box for skeletons.
- */
-
+/*! Bethesda-specific collision bounding box for skeletons. */
 class BSBound : public NiExtraData {
 public:
 	/*! Constructor */
@@ -83,13 +80,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Center of the bounding box.
-	 */
+	/*! Center of the bounding box. */
 	Vector3 center;
-	/*!
-	 * Dimensions of the bounding box from center.
-	 */
+	/*! Dimensions of the bounding box from center. */
 	Vector3 dimensions;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

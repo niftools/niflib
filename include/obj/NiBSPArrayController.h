@@ -19,11 +19,7 @@ namespace Niflib {
 class NiBSPArrayController;
 typedef Ref<NiBSPArrayController> NiBSPArrayControllerRef;
 
-/*!
- * NiBSPArrayController - A particle system controller, used by BS in
- * conjunction with NiBSParticleNode.
- */
-
+/*! A particle system controller, used by BS in conjunction with NiBSParticleNode. */
 class NiBSPArrayController : public NiParticleSystemController {
 public:
 	/*! Constructor */

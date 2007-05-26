@@ -28,10 +28,9 @@ class NiGeometry;
 typedef Ref<NiGeometry> NiGeometryRef;
 
 /*!
- * NiGeometry - Describes a visible scene element with vertices like a
- * mesh, a particle system, lines, etc.
+ * Describes a visible scene element with vertices like a mesh, a particle system,
+ * lines, etc.
  */
-
 class NiGeometry : public NiAVObject {
 public:
 	/*! Constructor */
@@ -161,25 +160,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Data index (NiTriShapeData/NiTriStripData).
-	 */
+	/*! Data index (NiTriShapeData/NiTriStripData). */
 	Ref<NiGeometryData > data;
-	/*!
-	 * Skin instance index.
-	 */
+	/*! Skin instance index. */
 	Ref<NiSkinInstance > skinInstance;
-	/*!
-	 * Shader.
-	 */
+	/*! Shader. */
 	bool hasShader;
-	/*!
-	 * The shader name.
-	 */
+	/*! The shader name. */
 	string shaderName;
-	/*!
-	 * Unknown link, usually -1.
-	 */
+	/*! Unknown link, usually -1. */
 	Ref<NiObject > unknownLink;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

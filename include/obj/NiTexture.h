@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTexture;
 typedef Ref<NiTexture> NiTextureRef;
 
-/*!
- * NiTexture - A texture.
- */
-
+/*! A texture. */
 class NiTexture : public NiObjectNET {
 public:
 	/*! Constructor */

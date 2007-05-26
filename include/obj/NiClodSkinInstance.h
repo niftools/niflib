@@ -19,11 +19,7 @@ namespace Niflib {
 class NiClodSkinInstance;
 typedef Ref<NiClodSkinInstance> NiClodSkinInstanceRef;
 
-/*!
- * NiClodSkinInstance - A copy of NISkinInstance for use with NiClod
- * meshes.
- */
-
+/*! A copy of NISkinInstance for use with NiClod meshes. */
 class NiClodSkinInstance : public NiSkinInstance {
 public:
 	/*! Constructor */

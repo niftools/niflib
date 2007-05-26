@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Description of a MipMap within a NiPixelData object.
- */
+/*! Description of a MipMap within a NiPixelData object. */
 struct MipMap {
 	/*! Default Constructor */
 	NIFLIB_API MipMap();
@@ -25,17 +23,11 @@ struct MipMap {
 	NIFLIB_API MipMap( const MipMap & src );
 	/*! Copy Operator */
 	NIFLIB_API MipMap & operator=( const MipMap & src );
-	/*!
-	 * Width of the mipmap image.
-	 */
+	/*! Width of the mipmap image. */
 	unsigned int width;
-	/*!
-	 * Height of the mipmap image.
-	 */
+	/*! Height of the mipmap image. */
 	unsigned int height;
-	/*!
-	 * Offset into the pixel data array where this mipmap starts.
-	 */
+	/*! Offset into the pixel data array where this mipmap starts. */
 	unsigned int offset;
 };
 

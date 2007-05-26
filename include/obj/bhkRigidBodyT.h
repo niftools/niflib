@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkRigidBodyT;
 typedef Ref<bhkRigidBodyT> bhkRigidBodyTRef;
 
-/*!
- * bhkRigidBodyT - Unknown.
- */
-
+/*! Unknown. */
 class bhkRigidBodyT : public bhkRigidBody {
 public:
 	/*! Constructor */

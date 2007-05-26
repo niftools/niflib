@@ -20,12 +20,10 @@ class NiParticleGrowFade;
 typedef Ref<NiParticleGrowFade> NiParticleGrowFadeRef;
 
 /*!
- * NiParticleGrowFade - This particle system modifier controls the
- * particle size. If it is present the particles start with size 0.0 .
- * Then they grow to their original size and stay there until they fade
- * to zero size again at the end of their lifetime cycle.
+ * This particle system modifier controls the particle size. If it is present the
+ * particles start with size 0.0 . Then they grow to their original size and stay
+ * there until they fade to zero size again at the end of their lifetime cycle.
  */
-
 class NiParticleGrowFade : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -62,14 +60,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * The time from the beginning of the particle lifetime during which the
-	 * particle grows.
+	 * The time from the beginning of the particle lifetime during which the particle
+	 * grows.
 	 */
 	float grow;
-	/*!
-	 * The time from the end of the particle lifetime during which the
-	 * particle fades.
-	 */
+	/*! The time from the end of the particle lifetime during which the particle fades. */
 	float fade;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

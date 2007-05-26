@@ -24,10 +24,7 @@ class NiFloatData;
 class NiTextureTransformController;
 typedef Ref<NiTextureTransformController> NiTextureTransformControllerRef;
 
-/*!
- * NiTextureTransformController - Texture transformation controller.
- */
-
+/*! Texture transformation controller. */
 class NiTextureTransformController : public NiFloatInterpController {
 public:
 	/*! Constructor */
@@ -63,22 +60,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknown2;
-	/*!
-	 * The target texture slot.
-	 */
+	/*! The target texture slot. */
 	TexType textureSlot;
 	/*!
-	 * 0: translate u             1: translate v             2: rotate ?
-	 * 3: tiling u             4: tiling v
+	 * 0: translate u
+	 *             1: translate v
+	 *             2: rotate ?
+	 *             3: tiling u
+	 *             4: tiling v
 	 */
 	unsigned int operation;
-	/*!
-	 * Link to NiFloatData.
-	 */
+	/*! Link to NiFloatData. */
 	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

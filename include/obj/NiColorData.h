@@ -22,10 +22,7 @@ namespace Niflib {
 class NiColorData;
 typedef Ref<NiColorData> NiColorDataRef;
 
-/*!
- * NiColorData - Color data for material color controller.
- */
-
+/*! Color data for material color controller. */
 class NiColorData : public NiObject {
 public:
 	/*! Constructor */
@@ -86,9 +83,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The color keys.
-	 */
+	/*! The color keys. */
 	KeyGroup<Color4 > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

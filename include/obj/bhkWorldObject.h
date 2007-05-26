@@ -24,10 +24,7 @@ class bhkShape;
 class bhkWorldObject;
 typedef Ref<bhkWorldObject> bhkWorldObjectRef;
 
-/*!
- * bhkWorldObject - Havok objects that have a position in the world?
- */
-
+/*! Havok objects that have a position in the world? */
 class bhkWorldObject : public bhkSerializable {
 public:
 	/*! Constructor */
@@ -89,24 +86,18 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Link to the body for this collision object.
-	 */
+	/*! Link to the body for this collision object. */
 	Ref<bhkShape > shape;
-	/*!
-	 * Sets mesh color in Oblivion Construction Set.
-	 */
+	/*! Sets mesh color in Oblivion Construction Set. */
 	OblivionLayer layer;
 	/*!
 	 * The first bit sets the LINK property and controls whether this body is
-	 * physically linked to others. The next bit turns collision off. Then,
-	 * the next bit sets the SCALED property in Oblivion. The next five bits
-	 * make up the number of this part in a linked body list.
+	 * physically linked to others. The next bit turns collision off. Then, the next
+	 * bit sets the SCALED property in Oblivion. The next five bits make up the number
+	 * of this part in a linked body list.
 	 */
 	byte colFilter;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

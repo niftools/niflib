@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * A triangle with extra data used for physics.
- */
+/*! A triangle with extra data used for physics. */
 struct hkTriangle {
 	/*! Default Constructor */
 	NIFLIB_API hkTriangle();
@@ -25,17 +23,11 @@ struct hkTriangle {
 	NIFLIB_API hkTriangle( const hkTriangle & src );
 	/*! Copy Operator */
 	NIFLIB_API hkTriangle & operator=( const hkTriangle & src );
-	/*!
-	 * The triangle.
-	 */
+	/*! The triangle. */
 	Triangle triangle;
-	/*!
-	 * Another short, doesn't look like a vertex index.
-	 */
+	/*! Another short, doesn't look like a vertex index. */
 	unsigned short unknownShort;
-	/*!
-	 * This is the triangle's normal.
-	 */
+	/*! This is the triangle's normal. */
 	Vector3 normal;
 };
 

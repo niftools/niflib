@@ -25,10 +25,7 @@ class NiImage;
 class NiFlipController;
 typedef Ref<NiFlipController> NiFlipControllerRef;
 
-/*!
- * NiFlipController - Texture flipping controller.
- */
-
+/*! Texture flipping controller. */
 class NiFlipController : public NiFloatInterpController {
 public:
 	/*! Constructor */
@@ -64,30 +61,20 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Target texture slot (0=base, 4=glow).
-	 */
+	/*! Target texture slot (0=base, 4=glow). */
 	unsigned int textureSlot;
-	/*!
-	 * 0?
-	 */
+	/*! 0? */
 	unsigned int unknownInt2;
 	/*!
-	 * Time between two flips.             delta = (start_time - stop_time) /
-	 * sources.num_indices
+	 * Time between two flips.
+	 *             delta = (start_time - stop_time) / sources.num_indices
 	 */
 	float delta;
-	/*!
-	 * The number of source objects.
-	 */
+	/*! The number of source objects. */
 	mutable unsigned int numSources;
-	/*!
-	 * The texture sources.
-	 */
+	/*! The texture sources. */
 	vector<Ref<NiSourceTexture > > sources;
-	/*!
-	 * The image sources
-	 */
+	/*! The image sources */
 	vector<Ref<NiImage > > image;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

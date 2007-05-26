@@ -23,11 +23,10 @@ class NiSkinPartition;
 typedef Ref<NiSkinPartition> NiSkinPartitionRef;
 
 /*!
- * NiSkinPartition - Skinning data, optimized for hardware skinning. The
- * mesh is partitioned in submeshes such that each vertex of a submesh is
- * influenced only by a limited and fixed number of bones.
+ * Skinning data, optimized for hardware skinning. The mesh is partitioned in
+ * submeshes such that each vertex of a submesh is influenced only by a limited and
+ * fixed number of bones.
  */
-
 class NiSkinPartition : public NiObject {
 public:
 	/*! Constructor */
@@ -189,13 +188,9 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned int numSkinPartitionBlocks;
-	/*!
-	 * Skin partition objects.
-	 */
+	/*! Skin partition objects. */
 	vector<SkinPartition > skinPartitionBlocks;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

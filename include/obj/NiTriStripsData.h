@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTriStripsData;
 typedef Ref<NiTriStripsData> NiTriStripsDataRef;
 
-/*!
- * NiTriStripsData - Holds mesh data using strips of triangles.
- */
-
+/*! Holds mesh data using strips of triangles. */
 class NiTriStripsData : public NiTriBasedGeomData {
 public:
 	/*! Constructor */
@@ -121,21 +118,15 @@ private:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of OpenGL triangle strips that are present.
-	 */
+	/*! Number of OpenGL triangle strips that are present. */
 	mutable unsigned short numStrips;
-	/*!
-	 * The number of points in each triangle strip.
-	 */
+	/*! The number of points in each triangle strip. */
 	mutable vector<unsigned short > stripLengths;
-	/*!
-	 * Do we have strip point data?
-	 */
+	/*! Do we have strip point data? */
 	bool hasPoints;
 	/*!
-	 * The points in the Triangle strips.  Size is the sum of all entries in
-	 * Strip Lengths.
+	 * The points in the Triangle strips.  Size is the sum of all entries in Strip
+	 * Lengths.
 	 */
 	vector< vector<unsigned short > > points;
 public:

@@ -26,10 +26,7 @@ class NiFloatInterpolator;
 class NiLookAtInterpolator;
 typedef Ref<NiLookAtInterpolator> NiLookAtInterpolatorRef;
 
-/*!
- * NiLookAtInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiLookAtInterpolator : public NiInterpolator {
 public:
 	/*! Constructor */
@@ -114,41 +111,23 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Refers to a Node to focus on.
-	 */
+	/*! Refers to a Node to focus on. */
 	Ref<NiNode > lookAt;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat;
-	/*!
-	 * Translate.
-	 */
+	/*! Translate. */
 	Vector3 translation;
-	/*!
-	 * Rotation.
-	 */
+	/*! Rotation. */
 	Quaternion rotation;
-	/*!
-	 * Scale.
-	 */
+	/*! Scale. */
 	float scale;
-	/*!
-	 * Refers to NiPoint3Interpolator.
-	 */
+	/*! Refers to NiPoint3Interpolator. */
 	Ref<NiPoint3Interpolator > unknownLink1;
-	/*!
-	 * Refers to a NiFloatInterpolator.
-	 */
+	/*! Refers to a NiFloatInterpolator. */
 	Ref<NiFloatInterpolator > unknownLink2;
-	/*!
-	 * Refers to a NiFloatInterpolator.
-	 */
+	/*! Refers to a NiFloatInterpolator. */
 	Ref<NiFloatInterpolator > unknownLink3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

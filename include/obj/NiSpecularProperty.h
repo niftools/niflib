@@ -19,10 +19,7 @@ namespace Niflib {
 class NiSpecularProperty;
 typedef Ref<NiSpecularProperty> NiSpecularPropertyRef;
 
-/*!
- * NiSpecularProperty - Gives specularity to a shape. Flags 0x0001.
- */
-
+/*! Gives specularity to a shape. Flags 0x0001. */
 class NiSpecularProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * 1's Bit = Enable specular lighting on this shape.
-	 */
+	/*! 1's Bit = Enable specular lighting on this shape. */
 	unsigned short flags;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

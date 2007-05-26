@@ -24,10 +24,7 @@ class NiImage;
 class NiTextureProperty;
 typedef Ref<NiTextureProperty> NiTexturePropertyRef;
 
-/*!
- * NiTextureProperty -
- */
-
+/*!  */
 class NiTextureProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -76,21 +73,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
-	/*!
-	 * Link to the texture image.
-	 */
+	/*! Link to the texture image. */
 	Ref<NiImage > image;
-	/*!
-	 * Unknown.  0?
-	 */
+	/*! Unknown.  0? */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.  0xFFFFFFFF?
-	 */
+	/*! Unknown.  0xFFFFFFFF? */
 	unsigned int unknownInt2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

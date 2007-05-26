@@ -19,10 +19,7 @@ namespace Niflib {
 class FxWidget;
 typedef Ref<FxWidget> FxWidgetRef;
 
-/*!
- * FxWidget - Firaxis-specific UI widgets?
- */
-
+/*! Firaxis-specific UI widgets? */
 class FxWidget : public NiNode {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknown1;
-	/*!
-	 * Looks like 9 links and some string data.
-	 */
+	/*! Looks like 9 links and some string data. */
 	array<292,byte > unknown292Bytes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

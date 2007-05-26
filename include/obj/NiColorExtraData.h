@@ -19,10 +19,7 @@ namespace Niflib {
 class NiColorExtraData;
 typedef Ref<NiColorExtraData> NiColorExtraDataRef;
 
-/*!
- * NiColorExtraData - Unknown.
- */
-
+/*! Unknown. */
 class NiColorExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * RGBA Color?
-	 */
+	/*! RGBA Color? */
 	Color4 data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiDirectionalLight;
 typedef Ref<NiDirectionalLight> NiDirectionalLightRef;
 
-/*!
- * NiDirectionalLight - Directional light source.
- */
-
+/*! Directional light source. */
 class NiDirectionalLight : public NiLight {
 public:
 	/*! Constructor */

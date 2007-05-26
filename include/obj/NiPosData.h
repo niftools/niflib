@@ -22,10 +22,7 @@ namespace Niflib {
 class NiPosData;
 typedef Ref<NiPosData> NiPosDataRef;
 
-/*!
- * NiPosData - Position data.
- */
-
+/*! Position data. */
 class NiPosData : public NiObject {
 public:
 	/*! Constructor */
@@ -86,9 +83,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The position keys.
-	 */
+	/*! The position keys. */
 	KeyGroup<Vector3 > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

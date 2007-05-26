@@ -19,11 +19,7 @@ namespace Niflib {
 class NiTransformController;
 typedef Ref<NiTransformController> NiTransformControllerRef;
 
-/*!
- * NiTransformController - NiTransformController replaces the
- * NiKeyframeController.
- */
-
+/*! NiTransformController replaces the NiKeyframeController. */
 class NiTransformController : public NiSingleInterpController {
 public:
 	/*! Constructor */

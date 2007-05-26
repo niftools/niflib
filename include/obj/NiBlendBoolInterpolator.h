@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBlendBoolInterpolator;
 typedef Ref<NiBlendBoolInterpolator> NiBlendBoolInterpolatorRef;
 
-/*!
- * NiBlendBoolInterpolator - An interpolator for a bool.
- */
-
+/*! An interpolator for a bool. */
 class NiBlendBoolInterpolator : public NiBlendInterpolator {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The interpolated bool?
-	 */
+	/*! The interpolated bool? */
 	byte boolValue;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

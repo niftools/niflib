@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplineData;
 typedef Ref<NiBSplineData> NiBSplineDataRef;
 
-/*!
- * NiBSplineData - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplineData : public NiObject {
 public:
 	/*! Constructor */
@@ -73,17 +70,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown. Zero?
-	 */
+	/*! Unknown. Zero? */
 	unsigned int unknownInt;
-	/*!
-	 * Number of Data Points
-	 */
+	/*! Number of Data Points */
 	mutable unsigned int count;
-	/*!
-	 * Signed shorts representing the data from 0 to 1 (scaled by SHRT_MAX).
-	 */
+	/*! Signed shorts representing the data from 0 to 1 (scaled by SHRT_MAX). */
 	vector<short > controlPoints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

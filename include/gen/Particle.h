@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * particle array entry
- */
+/*! particle array entry */
 struct Particle {
 	/*! Default Constructor */
 	NIFLIB_API Particle();
@@ -25,33 +23,19 @@ struct Particle {
 	NIFLIB_API Particle( const Particle & src );
 	/*! Copy Operator */
 	NIFLIB_API Particle & operator=( const Particle & src );
-	/*!
-	 * Particle velocity
-	 */
+	/*! Particle velocity */
 	Vector3 velocity;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	Vector3 unknownVector;
-	/*!
-	 * The particle's age.
-	 */
+	/*! The particle's age. */
 	float lifetime;
-	/*!
-	 * Maximum age of the particle.
-	 */
+	/*! Maximum age of the particle. */
 	float lifespan;
-	/*!
-	 * Timestamp of the last update.
-	 */
+	/*! Timestamp of the last update. */
 	float timestamp;
-	/*!
-	 * Unknown short (=0)
-	 */
+	/*! Unknown short (=0) */
 	unsigned short unknownShort;
-	/*!
-	 * Particle/vertex index matches array index
-	 */
+	/*! Particle/vertex index matches array index */
 	unsigned short vertexId;
 };
 

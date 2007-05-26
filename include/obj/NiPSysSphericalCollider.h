@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysSphericalCollider;
 typedef Ref<NiPSysSphericalCollider> NiPSysSphericalColliderRef;
 
-/*!
- * NiPSysSphericalCollider - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysSphericalCollider : public NiPSysCollider {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float radius;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

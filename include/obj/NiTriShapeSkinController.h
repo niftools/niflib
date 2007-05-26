@@ -24,10 +24,7 @@ class NiBone;
 class NiTriShapeSkinController;
 typedef Ref<NiTriShapeSkinController> NiTriShapeSkinControllerRef;
 
-/*!
- * NiTriShapeSkinController - Old version of skinning instance.
- */
-
+/*! Old version of skinning instance. */
 class NiTriShapeSkinController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -63,22 +60,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of node bones referenced as influences.
-	 */
+	/*! The number of node bones referenced as influences. */
 	mutable unsigned int numBones;
-	/*!
-	 * The number of vertex weights stored for each bone.
-	 */
+	/*! The number of vertex weights stored for each bone. */
 	mutable vector<unsigned int > vertexCounts;
-	/*!
-	 * List of all armature bones.
-	 */
+	/*! List of all armature bones. */
 	vector<NiBone * > bones;
-	/*!
-	 * Contains skin weight data for each node that this skin is influenced
-	 * by.
-	 */
+	/*! Contains skin weight data for each node that this skin is influenced by. */
 	vector< vector<OldSkinData > > boneData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

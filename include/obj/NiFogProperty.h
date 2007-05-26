@@ -19,10 +19,7 @@ namespace Niflib {
 class NiFogProperty;
 typedef Ref<NiFogProperty> NiFogPropertyRef;
 
-/*!
- * NiFogProperty - Describes... fog?
- */
-
+/*! Describes... fog? */
 class NiFogProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -96,19 +93,17 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * 1's bit: Enables Fog             2's bit: Sets Fog Function to
-	 * FOG_RANGE_SQ             4's bit: Sets Fog Function to
-	 * FOG_VERTEX_ALPHA              If 2's and 4's bit are not set, but fog
-	 * is enabled, Fog function is FOG_Z_LINEAR.
+	 * 1's bit: Enables Fog
+	 *             2's bit: Sets Fog Function to FOG_RANGE_SQ
+	 *             4's bit: Sets Fog Function to FOG_VERTEX_ALPHA
+	 * 
+	 *             If 2's and 4's bit are not set, but fog is enabled, Fog function is
+	 * FOG_Z_LINEAR.
 	 */
 	unsigned short flags;
-	/*!
-	 * The thickness of the fog?  Default is 1.0
-	 */
+	/*! The thickness of the fog?  Default is 1.0 */
 	float fogDepth;
-	/*!
-	 * The color of the fog.
-	 */
+	/*! The color of the fog. */
 	Color3 fogColor;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

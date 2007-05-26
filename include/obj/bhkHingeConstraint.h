@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkHingeConstraint;
 typedef Ref<bhkHingeConstraint> bhkHingeConstraintRef;
 
-/*!
- * bhkHingeConstraint - A hinge constraint.
- */
-
+/*! A hinge constraint. */
 class bhkHingeConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -58,25 +55,15 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Pivot A.
-	 */
+	/*! Pivot A. */
 	Float4 pivotA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 perp2axleina1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 perp2axleina2;
-	/*!
-	 * Pivot B.
-	 */
+	/*! Pivot B. */
 	Float4 pivotB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 axleB;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

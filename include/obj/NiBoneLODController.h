@@ -26,11 +26,7 @@ class NiTriShape;
 class NiBoneLODController;
 typedef Ref<NiBoneLODController> NiBoneLODControllerRef;
 
-/*!
- * NiBoneLODController - Level of detail controller for bones.  Priority
- * is arranged from low to high.
- */
-
+/*! Level of detail controller for bones.  Priority is arranged from low to high. */
 class NiBoneLODController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -113,37 +109,21 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Number of node groups.
-	 */
+	/*! Number of node groups. */
 	mutable unsigned int numNodeGroups;
-	/*!
-	 * Number of node groups.
-	 */
+	/*! Number of node groups. */
 	unsigned int numNodeGroups2;
-	/*!
-	 * A list of node groups (each group a sequence of bones).
-	 */
+	/*! A list of node groups (each group a sequence of bones). */
 	vector<NodeGroup > nodeGroups;
-	/*!
-	 * Number of shape groups.
-	 */
+	/*! Number of shape groups. */
 	mutable unsigned int numShapeGroups;
-	/*!
-	 * List of shape groups.
-	 */
+	/*! List of shape groups. */
 	vector<SkinShapeGroup > shapeGroups1;
-	/*!
-	 * The size of the second list of shape groups.
-	 */
+	/*! The size of the second list of shape groups. */
 	mutable unsigned int numShapeGroups2;
-	/*!
-	 * Group of NiTriShape indices.
-	 */
+	/*! Group of NiTriShape indices. */
 	vector<Ref<NiTriShape > > shapeGroups2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,11 +19,7 @@ namespace Niflib {
 class NiAutoNormalParticlesData;
 typedef Ref<NiAutoNormalParticlesData> NiAutoNormalParticlesDataRef;
 
-/*!
- * NiAutoNormalParticlesData - Particle system data object (with
- * automatic normals?).
- */
-
+/*! Particle system data object (with automatic normals?). */
 class NiAutoNormalParticlesData : public NiParticlesData {
 public:
 	/*! Constructor */

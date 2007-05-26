@@ -19,11 +19,7 @@ namespace Niflib {
 class NiSwitchNode;
 typedef Ref<NiSwitchNode> NiSwitchNodeRef;
 
-/*!
- * NiSwitchNode - A node used to switch between branches, such as for LOD
- * levels?
- */
-
+/*! A node used to switch between branches, such as for LOD levels? */
 class NiSwitchNode : public NiNode {
 public:
 	/*! Constructor */

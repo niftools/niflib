@@ -29,11 +29,7 @@ class NiStringPalette;
 class NiControllerSequence;
 typedef Ref<NiControllerSequence> NiControllerSequenceRef;
 
-/*!
- * NiControllerSequence - Root node in .kf files (version 10.0.1.0 and
- * up).
- */
-
+/*! Root node in .kf files (version 10.0.1.0 and up). */
 class NiControllerSequence : public NiSequence {
 public:
 	/*! Constructor */
@@ -231,54 +227,32 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Weight/priority of animation?
-	 */
+	/*! Weight/priority of animation? */
 	float weight;
 	/*!
-	 * Link to NiTextKeyExtraData. Replaces the other Text Keys field in
-	 * versions 10.1.0.106 and up.
+	 * Link to NiTextKeyExtraData. Replaces the other Text Keys field in versions
+	 * 10.1.0.106 and up.
 	 */
 	Ref<NiTextKeyExtraData > textKeys;
-	/*!
-	 * Anim cycle type? Is part of "Flags" in other objects?
-	 */
+	/*! Anim cycle type? Is part of "Flags" in other objects? */
 	CycleType cycleType;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt0;
-	/*!
-	 * The animation frequency.
-	 */
+	/*! The animation frequency. */
 	float frequency;
-	/*!
-	 * The controller sequence start time?
-	 */
+	/*! The controller sequence start time? */
 	float startTime;
-	/*!
-	 * The controller sequence stop time?
-	 */
+	/*! The controller sequence stop time? */
 	float stopTime;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte;
-	/*!
-	 * Refers to NiControllerManager which references this object, if any.
-	 */
+	/*! Refers to NiControllerManager which references this object, if any. */
 	NiControllerManager * manager;
-	/*!
-	 * Name of target node Controller acts on.
-	 */
+	/*! Name of target node Controller acts on. */
 	string targetName;
-	/*!
-	 * Refers to NiStringPalette.
-	 */
+	/*! Refers to NiStringPalette. */
 	Ref<NiStringPalette > stringPalette;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

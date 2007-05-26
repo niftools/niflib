@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * A weighted vertex.
- */
+/*! A weighted vertex. */
 struct SkinWeight {
 	/*! Default Constructor */
 	NIFLIB_API SkinWeight();
@@ -25,13 +23,9 @@ struct SkinWeight {
 	NIFLIB_API SkinWeight( const SkinWeight & src );
 	/*! Copy Operator */
 	NIFLIB_API SkinWeight & operator=( const SkinWeight & src );
-	/*!
-	 * The vertex index, in the mesh.
-	 */
+	/*! The vertex index, in the mesh. */
 	unsigned short index;
-	/*!
-	 * The vertex weight - between 0.0 and 1.0
-	 */
+	/*! The vertex weight - between 0.0 and 1.0 */
 	float weight;
 };
 

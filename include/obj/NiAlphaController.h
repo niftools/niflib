@@ -24,10 +24,7 @@ class NiFloatData;
 class NiAlphaController;
 typedef Ref<NiAlphaController> NiAlphaControllerRef;
 
-/*!
- * NiAlphaController - Time controller for transparency.
- */
-
+/*! Time controller for transparency. */
 class NiAlphaController : public NiFloatInterpController {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Alpha controller data index.
-	 */
+	/*! Alpha controller data index. */
 	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

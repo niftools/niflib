@@ -25,10 +25,7 @@ class NiPixelData;
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;
 
-/*!
- * NiSourceTexture - Describes texture source and properties.
- */
-
+/*! Describes texture source and properties. */
 class NiSourceTexture : public NiTexture {
 public:
 	/*! Constructor */
@@ -132,48 +129,31 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Is the texture external?
-	 */
+	/*! Is the texture external? */
 	byte useExternal;
-	/*!
-	 * The external texture file name.
-	 */
+	/*! The external texture file name. */
 	string fileName;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Ref<NiObject > unknownLink;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte;
 	/*!
-	 * The original source filename of the image embedded by the referred
-	 * NiPixelData object.
+	 * The original source filename of the image embedded by the referred NiPixelData
+	 * object.
 	 */
 	string originalFileName_;
-	/*!
-	 * Pixel data object index.
-	 */
+	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
-	/*!
-	 * Specifies the way the image will be stored.
-	 */
+	/*! Specifies the way the image will be stored. */
 	PixelLayout pixelLayout;
-	/*!
-	 * Specifies whether mip maps are used.
-	 */
+	/*! Specifies whether mip maps are used. */
 	MipMapFormat useMipmaps;
 	/*!
-	 * Note: the NiTriShape linked to this object must have a NiAlphaProperty
-	 * in its list of properties to enable material and/or texture
-	 * transparency.
+	 * Note: the NiTriShape linked to this object must have a NiAlphaProperty in its
+	 * list of properties to enable material and/or texture transparency.
 	 */
 	AlphaFormat alphaFormat;
-	/*!
-	 * Set to one if textures have mipmaps?
-	 */
+	/*! Set to one if textures have mipmaps? */
 	byte unknownByte2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

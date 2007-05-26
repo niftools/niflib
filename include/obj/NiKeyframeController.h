@@ -24,11 +24,7 @@ class NiKeyframeData;
 class NiKeyframeController;
 typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
 
-/*!
- * NiKeyframeController - A time controller object for animation key
- * frames.
- */
-
+/*! A time controller object for animation key frames. */
 class NiKeyframeController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -77,9 +73,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Keyframe controller data index.
-	 */
+	/*! Keyframe controller data index. */
 	Ref<NiKeyframeData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

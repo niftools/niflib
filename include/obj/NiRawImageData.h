@@ -23,10 +23,7 @@ namespace Niflib {
 class NiRawImageData;
 typedef Ref<NiRawImageData> NiRawImageDataRef;
 
-/*!
- * NiRawImageData - Raw image data.
- */
-
+/*! Raw image data. */
 class NiRawImageData : public NiObject {
 public:
 	/*! Constructor */
@@ -62,25 +59,15 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Image width
-	 */
+	/*! Image width */
 	mutable unsigned int width;
-	/*!
-	 * Image height
-	 */
+	/*! Image height */
 	mutable unsigned int height;
-	/*!
-	 * Type of image.  1 = RGB, 2 = RGBA
-	 */
+	/*! Type of image.  1 = RGB, 2 = RGBA */
 	unsigned int imageType;
-	/*!
-	 * Image pixel data.
-	 */
+	/*! Image pixel data. */
 	vector< vector<ByteColor3 > > rgbImageData;
-	/*!
-	 * Image pixel data.
-	 */
+	/*! Image pixel data. */
 	vector< vector<ByteColor4 > > rgbaImageData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

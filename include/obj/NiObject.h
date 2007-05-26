@@ -31,10 +31,7 @@ using namespace std;
 class NiObject;
 typedef Ref<NiObject> NiObjectRef;
 
-/*!
- * NiObject - Abstract object type.
- */
-
+/*! Abstract object type. */
 class NiObject {
 public:
 	/*! Constructor */

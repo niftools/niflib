@@ -24,10 +24,7 @@ class NiFloatData;
 class NiRollController;
 typedef Ref<NiRollController> NiRollControllerRef;
 
-/*!
- * NiRollController - Unknown.
- */
-
+/*! Unknown. */
 class NiRollController : public NiSingleInterpController {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The data for the controller.
-	 */
+	/*! The data for the controller. */
 	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

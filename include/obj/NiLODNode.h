@@ -26,11 +26,9 @@ class NiLODNode;
 typedef Ref<NiLODNode> NiLODNodeRef;
 
 /*!
- * NiLODNode - Level of detail selector. Links to different levels of
- * detail of the same model, used to switch a geometry at a specified
- * distance.
+ * Level of detail selector. Links to different levels of detail of the same model,
+ * used to switch a geometry at a specified distance.
  */
-
 class NiLODNode : public NiSwitchNode {
 public:
 	/*! Constructor */
@@ -103,29 +101,17 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.  0,0,0,0 or 1,0,0,0.
-	 */
+	/*! Unknown.  0,0,0,0 or 1,0,0,0. */
 	array<4,byte > unknown4Bytes;
-	/*!
-	 * Point to calculate distance from for switching?
-	 */
+	/*! Point to calculate distance from for switching? */
 	Vector3 lodCenter;
-	/*!
-	 * Number of levels of detail.
-	 */
+	/*! Number of levels of detail. */
 	mutable unsigned int numLodLevels;
-	/*!
-	 * The ranges of distance that each level of detail applies in.
-	 */
+	/*! The ranges of distance that each level of detail applies in. */
 	vector<LODRange > lodLevels;
-	/*!
-	 * Zero?
-	 */
+	/*! Zero? */
 	unsigned short unknownShort;
-	/*!
-	 * Refers to LOD level information, either distance or screen size based.
-	 */
+	/*! Refers to LOD level information, either distance or screen size based. */
 	Ref<NiLODData > lodLevelData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

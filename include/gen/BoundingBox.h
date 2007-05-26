@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Bounding box.
- */
+/*! Bounding box. */
 struct BoundingBox {
 	/*! Default Constructor */
 	NIFLIB_API BoundingBox();
@@ -25,21 +23,13 @@ struct BoundingBox {
 	NIFLIB_API BoundingBox( const BoundingBox & src );
 	/*! Copy Operator */
 	NIFLIB_API BoundingBox & operator=( const BoundingBox & src );
-	/*!
-	 * Usually 1.
-	 */
+	/*! Usually 1. */
 	unsigned int unknownInt;
-	/*!
-	 * Translation vector.
-	 */
+	/*! Translation vector. */
 	Vector3 translation;
-	/*!
-	 * Rotation matrix.
-	 */
+	/*! Rotation matrix. */
 	Matrix33 rotation;
-	/*!
-	 * Radius, per direction.
-	 */
+	/*! Radius, per direction. */
 	Vector3 radius;
 };
 

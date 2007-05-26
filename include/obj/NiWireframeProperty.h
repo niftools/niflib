@@ -19,10 +19,7 @@ namespace Niflib {
 class NiWireframeProperty;
 typedef Ref<NiWireframeProperty> NiWireframePropertyRef;
 
-/*!
- * NiWireframeProperty - Unknown.
- */
-
+/*! Unknown. */
 class NiWireframeProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -72,8 +69,9 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Property flags.             0 - Wireframe Mode Disabled             1
-	 * - Wireframe Mode Enabled
+	 * Property flags.
+	 *             0 - Wireframe Mode Disabled
+	 *             1 - Wireframe Mode Enabled
 	 */
 	unsigned short flags;
 public:

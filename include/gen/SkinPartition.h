@@ -26,70 +26,40 @@ struct SkinPartition {
 	NIFLIB_API SkinPartition( const SkinPartition & src );
 	/*! Copy Operator */
 	NIFLIB_API SkinPartition & operator=( const SkinPartition & src );
-	/*!
-	 * Number of vertices in this submesh.
-	 */
+	/*! Number of vertices in this submesh. */
 	mutable unsigned short numVertices;
-	/*!
-	 * Number of triangles in this submesh.
-	 */
+	/*! Number of triangles in this submesh. */
 	mutable unsigned short numTriangles;
-	/*!
-	 * Number of bones influencing this submesh.
-	 */
+	/*! Number of bones influencing this submesh. */
 	mutable unsigned short numBones;
-	/*!
-	 * Number of strips in this submesh (zero if not stripped).
-	 */
+	/*! Number of strips in this submesh (zero if not stripped). */
 	mutable unsigned short numStrips;
-	/*!
-	 * Number of weight coefficients per vertex.
-	 */
+	/*! Number of weight coefficients per vertex. */
 	mutable unsigned short numWeightsPerVertex;
-	/*!
-	 * List of bones.
-	 */
+	/*! List of bones. */
 	vector<unsigned short > bones;
-	/*!
-	 * Do we have a vertex map?
-	 */
+	/*! Do we have a vertex map? */
 	bool hasVertexMap;
 	/*!
-	 * Maps the weight/influence lists in this submesh to the vertices in the
-	 * shape being skinned.
+	 * Maps the weight/influence lists in this submesh to the vertices in the shape
+	 * being skinned.
 	 */
 	vector<unsigned short > vertexMap;
-	/*!
-	 * Do we have vertex weights?
-	 */
+	/*! Do we have vertex weights? */
 	bool hasVertexWeights;
-	/*!
-	 * The vertex weights.
-	 */
+	/*! The vertex weights. */
 	vector< vector<float > > vertexWeights;
-	/*!
-	 * The strip lengths.
-	 */
+	/*! The strip lengths. */
 	mutable vector<unsigned short > stripLengths;
-	/*!
-	 * Do we have strip data?
-	 */
+	/*! Do we have strip data? */
 	bool hasStrips;
-	/*!
-	 * The strips.
-	 */
+	/*! The strips. */
 	vector< vector<unsigned short > > strips;
-	/*!
-	 * The triangles.
-	 */
+	/*! The triangles. */
 	vector<Triangle > triangles;
-	/*!
-	 * Do we have bone indices?
-	 */
+	/*! Do we have bone indices? */
 	bool hasBoneIndices;
-	/*!
-	 * Bone indices, they index into 'Bones'.
-	 */
+	/*! Bone indices, they index into 'Bones'. */
 	vector< vector<byte > > boneIndices;
 };
 

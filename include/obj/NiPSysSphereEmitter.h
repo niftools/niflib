@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysSphereEmitter;
 typedef Ref<NiPSysSphereEmitter> NiPSysSphereEmitterRef;
 
-/*!
- * NiPSysSphereEmitter - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysSphereEmitter : public NiPSysVolumeEmitter {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Radius of spheres to emit?
-	 */
+	/*! Radius of spheres to emit? */
 	float radius;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

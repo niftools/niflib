@@ -24,10 +24,7 @@ class NiUVData;
 class NiUVController;
 typedef Ref<NiUVController> NiUVControllerRef;
 
-/*!
- * NiUVController - Time controller for texture coordinates.
- */
-
+/*! Time controller for texture coordinates. */
 class NiUVController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -78,13 +75,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Always 0?
-	 */
+	/*! Always 0? */
 	unsigned short unknownShort;
-	/*!
-	 * Texture coordinate controller data index.
-	 */
+	/*! Texture coordinate controller data index. */
 	Ref<NiUVData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

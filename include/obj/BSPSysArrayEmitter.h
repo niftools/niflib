@@ -19,10 +19,7 @@ namespace Niflib {
 class BSPSysArrayEmitter;
 typedef Ref<BSPSysArrayEmitter> BSPSysArrayEmitterRef;
 
-/*!
- * BSPSysArrayEmitter - Unknown.
- */
-
+/*! Unknown. */
 class BSPSysArrayEmitter : public NiPSysVolumeEmitter {
 public:
 	/*! Constructor */

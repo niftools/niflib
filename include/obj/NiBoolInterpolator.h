@@ -24,10 +24,7 @@ class NiBoolData;
 class NiBoolInterpolator;
 typedef Ref<NiBoolInterpolator> NiBoolInterpolatorRef;
 
-/*!
- * NiBoolInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBoolInterpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */
@@ -88,13 +85,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Value when posed?  At time 0?
-	 */
+	/*! Value when posed?  At time 0? */
 	bool boolValue;
-	/*!
-	 * Refers to a NiBoolData object.
-	 */
+	/*! Refers to a NiBoolData object. */
 	Ref<NiBoolData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

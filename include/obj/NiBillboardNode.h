@@ -20,10 +20,9 @@ class NiBillboardNode;
 typedef Ref<NiBillboardNode> NiBillboardNodeRef;
 
 /*!
- * NiBillboardNode - These nodes will always be rotated to face the
- * camera creating a billboard effect for any attached objects.
+ * These nodes will always be rotated to face the camera creating a billboard
+ * effect for any attached objects.
  */
-
 class NiBillboardNode : public NiNode {
 public:
 	/*! Constructor */
@@ -72,9 +71,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The way the billboard will react to the camera.
-	 */
+	/*! The way the billboard will react to the camera. */
 	BillboardMode billboardMode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

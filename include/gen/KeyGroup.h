@@ -13,23 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Array of vector keys (anything that can be interpolated, except
- * rotations).
- */
+/*! Array of vector keys (anything that can be interpolated, except rotations). */
 template <class T >
 struct KeyGroup {
-	/*!
-	 * Number of keys in the array.
-	 */
+	/*! Number of keys in the array. */
 	mutable unsigned int numKeys;
-	/*!
-	 * The key type.
-	 */
+	/*! The key type. */
 	KeyType interpolation;
-	/*!
-	 * The keys.
-	 */
+	/*! The keys. */
 	vector<Key<T > > keys;
 };
 

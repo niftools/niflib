@@ -24,10 +24,7 @@ class NiPSysSpawnModifier;
 class NiPSysAgeDeathModifier;
 typedef Ref<NiPSysAgeDeathModifier> NiPSysAgeDeathModifierRef;
 
-/*!
- * NiPSysAgeDeathModifier - Unknown particle modifier.
- */
-
+/*! Unknown particle modifier. */
 class NiPSysAgeDeathModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -63,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool spawnOnDeath;
-	/*!
-	 * Link to NiPSysSpawnModifier object?
-	 */
+	/*! Link to NiPSysSpawnModifier object? */
 	Ref<NiPSysSpawnModifier > spawnModifier;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

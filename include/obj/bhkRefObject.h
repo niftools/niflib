@@ -19,11 +19,7 @@ namespace Niflib {
 class bhkRefObject;
 typedef Ref<bhkRefObject> bhkRefObjectRef;
 
-/*!
- * bhkRefObject - The base type of most Bethesda-specific Havok-related
- * NIF objects.
- */
-
+/*! The base type of most Bethesda-specific Havok-related NIF objects. */
 class bhkRefObject : public NiObject {
 public:
 	/*! Constructor */

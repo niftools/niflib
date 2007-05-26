@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPlanarCollider;
 typedef Ref<NiPlanarCollider> NiPlanarColliderRef;
 
-/*!
- * NiPlanarCollider - Unknown.
- */
-
+/*! Unknown. */
 class NiPlanarCollider : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -58,77 +55,41 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Usually 0?
-	 */
+	/*! Usually 0? */
 	unsigned short unknownShort;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat4;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat5;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat7;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat8;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat9;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat10;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat11;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat12;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat13;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat14;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat15;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat16;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

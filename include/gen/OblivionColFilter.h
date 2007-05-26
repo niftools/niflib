@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Oblivion's ColFilter property for Havok.
- */
+/*! Oblivion's ColFilter property for Havok. */
 struct OblivionColFilter {
 	/*! Default Constructor */
 	NIFLIB_API OblivionColFilter();
@@ -25,20 +23,16 @@ struct OblivionColFilter {
 	NIFLIB_API OblivionColFilter( const OblivionColFilter & src );
 	/*! Copy Operator */
 	NIFLIB_API OblivionColFilter & operator=( const OblivionColFilter & src );
-	/*!
-	 * Sets mesh color in Oblivion Construction Set.
-	 */
+	/*! Sets mesh color in Oblivion Construction Set. */
 	OblivionLayer layer;
 	/*!
 	 * The first bit sets the LINK property and controls whether this body is
-	 * physically linked to others. The next bit turns collision off. Then,
-	 * the next bit sets the SCALED property in Oblivion. The next five bits
-	 * make up the number of this part in a linked body list.
+	 * physically linked to others. The next bit turns collision off. Then, the next
+	 * bit sets the SCALED property in Oblivion. The next five bits make up the number
+	 * of this part in a linked body list.
 	 */
 	byte colFilter;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
 };
 

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysModifierCtlr;
 typedef Ref<NiPSysModifierCtlr> NiPSysModifierCtlrRef;
 
-/*!
- * NiPSysModifierCtlr - A particle system modifier controller.
- */
-
+/*! A particle system modifier controller. */
 class NiPSysModifierCtlr : public NiSingleInterpController {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Refers to modifier object by its name?
-	 */
+	/*! Refers to modifier object by its name? */
 	string modifierName;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

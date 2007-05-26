@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplineCompFloatInterpolator;
 typedef Ref<NiBSplineCompFloatInterpolator> NiBSplineCompFloatInterpolatorRef;
 
-/*!
- * NiBSplineCompFloatInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplineCompFloatInterpolator : public NiBSplineFloatInterpolator {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<4,float > unknownFloats;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

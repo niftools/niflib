@@ -25,10 +25,7 @@ class NiFloatData;
 class NiPathInterpolator;
 typedef Ref<NiPathInterpolator> NiPathInterpolatorRef;
 
-/*!
- * NiPathInterpolator - Unknown interpolator.
- */
-
+/*! Unknown interpolator. */
 class NiPathInterpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */
@@ -89,33 +86,19 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown. Zero.
-	 */
+	/*! Unknown. Zero. */
 	unsigned short unknownShort2;
-	/*!
-	 * Links to NiPosData.
-	 */
+	/*! Links to NiPosData. */
 	Ref<NiPosData > posData;
-	/*!
-	 * Links to NiFloatData.
-	 */
+	/*! Links to NiFloatData. */
 	Ref<NiFloatData > floatData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

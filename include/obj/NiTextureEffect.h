@@ -25,12 +25,11 @@ class NiTextureEffect;
 typedef Ref<NiTextureEffect> NiTextureEffectRef;
 
 /*!
- * NiTextureEffect - Enables environment mapping. Should be in both the
- * children list and effects list of the NiTriShape object. For
- * Morrowind: the bump map can be used to bump the environment map (note
- * that the bump map is ignored if no NiTextureEffect object is present).
+ * Enables environment mapping. Should be in both the children list and effects
+ * list of the NiTriShape object. For Morrowind: the bump map can be used to bump
+ * the environment map (note that the bump map is ignored if no NiTextureEffect
+ * object is present).
  */
-
 class NiTextureEffect : public NiDynamicEffect {
 public:
 	/*! Constructor */
@@ -209,60 +208,45 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Model projection matrix.  Always identity?
-	 */
+	/*! Model projection matrix.  Always identity? */
 	Matrix33 modelProjectionMatrix;
-	/*!
-	 * Model projection transform.  Always (0,0,0)?
-	 */
+	/*! Model projection transform.  Always (0,0,0)? */
 	Vector3 modelProjectionTransform;
-	/*!
-	 * Texture Filtering mode.
-	 */
+	/*! Texture Filtering mode. */
 	TexFilterMode textureFiltering;
-	/*!
-	 * Texture Clamp mode.
-	 */
+	/*! Texture Clamp mode. */
 	TexClampMode textureClamping;
 	/*!
-	 * 0: PROJECTED_LIGHT             1: PROJECTED_SHADOW             2:
-	 * ENVIRONMENT_MAP (Usual value)             3: FOG_MAP
+	 * 0: PROJECTED_LIGHT
+	 *             1: PROJECTED_SHADOW
+	 *             2: ENVIRONMENT_MAP (Usual value)
+	 *             3: FOG_MAP
 	 */
 	unsigned int textureType;
 	/*!
-	 * 0: WORLD_PARALLEL             1: WORLD_PERSPECTIVE             2:
-	 * SPHERE_MAP (Usual value)             3: SPECULAR_CUBE_MAP
-	 * 4: DIFFUSE_CUBE_MAP
+	 * 0: WORLD_PARALLEL
+	 *             1: WORLD_PERSPECTIVE
+	 *             2: SPHERE_MAP (Usual value)
+	 *             3: SPECULAR_CUBE_MAP
+	 *             4: DIFFUSE_CUBE_MAP
 	 */
 	unsigned int coordinateGenerationType;
-	/*!
-	 * Source texture index.
-	 */
+	/*! Source texture index. */
 	Ref<NiSourceTexture > sourceTexture;
 	/*!
-	 * 0: Disabled (Usual value)             1: Enabled
+	 * 0: Disabled (Usual value)
+	 *             1: Enabled
 	 */
 	byte clippingPlane;
-	/*!
-	 * Unknown: (1,0,0)?
-	 */
+	/*! Unknown: (1,0,0)? */
 	Vector3 unknownVector;
-	/*!
-	 * Unknown. 0?
-	 */
+	/*! Unknown. 0? */
 	float unknownFloat;
-	/*!
-	 * 0?
-	 */
+	/*! 0? */
 	unsigned short ps2L;
-	/*!
-	 * 0xFFB5?
-	 */
+	/*! 0xFFB5? */
 	unsigned short ps2K;
-	/*!
-	 * Unknown: 0.
-	 */
+	/*! Unknown: 0. */
 	unsigned short unknownShort;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

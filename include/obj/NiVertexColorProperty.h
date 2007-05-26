@@ -20,12 +20,10 @@ class NiVertexColorProperty;
 typedef Ref<NiVertexColorProperty> NiVertexColorPropertyRef;
 
 /*!
- * NiVertexColorProperty - Property of vertex colors. This object is
- * referred to by the root object of the NIF file whenever some
- * NiTriShapeData object has vertex colors with non-default settings; if
- * not present, vertex colors have vertex_mode=2 and lighting_mode=1.
+ * Property of vertex colors. This object is referred to by the root object of the
+ * NIF file whenever some NiTriShapeData object has vertex colors with non-default
+ * settings; if not present, vertex colors have vertex_mode=2 and lighting_mode=1.
  */
-
 class NiVertexColorProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -98,21 +96,19 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
 	/*!
 	 * 0: SOURCE_IGNORE (ignore vertex colors, use material defaults)
-	 * 1: SOURCE_EMISSIVE (vertex colors override the material's emissive
-	 * color)             2: SOURCE_AMB_DIFF (vertex colors are mapped to
-	 * ambient and diffuse color)              related gl function:
-	 * glColorMaterial
+	 *             1: SOURCE_EMISSIVE (vertex colors override the material's emissive
+	 * color)
+	 *             2: SOURCE_AMB_DIFF (vertex colors are mapped to ambient and diffuse
+	 * color)
+	 * 
+	 *             related gl function: glColorMaterial
 	 */
 	VertMode vertexMode;
-	/*!
-	 * The light mode.
-	 */
+	/*! The light mode. */
 	LightMode lightingMode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -22,10 +22,7 @@ namespace Niflib {
 class NiBoolData;
 typedef Ref<NiBoolData> NiBoolDataRef;
 
-/*!
- * NiBoolData - Timed boolean data.
- */
-
+/*! Timed boolean data. */
 class NiBoolData : public NiObject {
 public:
 	/*! Constructor */
@@ -86,9 +83,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The boolean keys.
-	 */
+	/*! The boolean keys. */
 	KeyGroup<byte > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

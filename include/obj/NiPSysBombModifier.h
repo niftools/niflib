@@ -21,10 +21,7 @@ class NiNode;
 class NiPSysBombModifier;
 typedef Ref<NiPSysBombModifier> NiPSysBombModifierRef;
 
-/*!
- * NiPSysBombModifier - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysBombModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -60,21 +57,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Link to a node.
-	 */
+	/*! Link to a node. */
 	NiNode * unknownLink;
-	/*!
-	 * Not sure, could be floats as well. Zero.
-	 */
+	/*! Not sure, could be floats as well. Zero. */
 	array<2,unsigned int > unknownInts1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<3,float > unknownFloats;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<2,unsigned int > unknownInts2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

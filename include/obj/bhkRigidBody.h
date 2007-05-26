@@ -26,14 +26,14 @@ class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;
 
 /*!
- * bhkRigidBody - This is the default body type for all "normal" usable
- * and static world objects. The "T" suffix         marks this body as
- * active for translation and rotation, a normal bhkRigidBody ignores
- * those         properties. Because the properties are equal, a
- * bhkRigidBody may be renamed         into a bhkRigidBodyT and vice-
- * versa.
+ * This is the default body type for all "normal" usable and static world objects.
+ * The "T" suffix
+ *         marks this body as active for translation and rotation, a normal
+ * bhkRigidBody ignores those
+ *         properties. Because the properties are equal, a bhkRigidBody may be
+ * renamed
+ *         into a bhkRigidBodyT and vice-versa.
  */
-
 class bhkRigidBody : public bhkEntity {
 public:
 	/*! Constructor */
@@ -274,25 +274,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<5,float > unknown5Floats;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<4,unsigned short > unknown4Shorts;
-	/*!
-	 * Copy of Layer value?
-	 */
+	/*! Copy of Layer value? */
 	OblivionLayer layerCopy;
-	/*!
-	 * Copy of Col Filter value?
-	 */
+	/*! Copy of Col Filter value? */
 	byte colFilterCopy;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<7,unsigned short > unknown7Shorts;
 	/*!
 	 * A vector that moves the body by the specified amount. Only enabled in
@@ -301,114 +291,74 @@ protected:
 	Vector3 translation;
 	/*!
 	 * This seems to often be 1 for single objects, or the first one in a
-	 * a linked object group. This may be due to those objects often being
+	 *             a linked object group. This may be due to those objects often being
 	 * bhkRigidBodyT as well.
 	 */
 	float unknownFloat00;
 	/*!
-	 * The rotation Yaw/Pitch/Roll to apply to the body. Only enabled in
-	 * bhkRigidBodyT objects.
+	 * The rotation Yaw/Pitch/Roll to apply to the body. Only enabled in bhkRigidBodyT
+	 * objects.
 	 */
 	QuaternionXYZW rotation;
-	/*!
-	 * Linear velocity.
-	 */
+	/*! Linear velocity. */
 	Vector3 linearVelocity;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat01;
-	/*!
-	 * Angular velocity.
-	 */
+	/*! Angular velocity. */
 	Vector3 angularVelocity;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat02;
-	/*!
-	 * Defines how the mass is distributed among the body.
-	 */
+	/*! Defines how the mass is distributed among the body. */
 	array<12,float > inertia;
 	/*!
-	 * This seems to be used to relocate the object's center of mass. Useful
-	 * for balancing objects in contraints.
+	 * This seems to be used to relocate the object's center of mass. Useful for
+	 * balancing objects in contraints.
 	 */
 	Vector3 center;
-	/*!
-	 * Unknown float.
-	 */
+	/*! Unknown float. */
 	float unknownFloat03;
-	/*!
-	 * The body's mass.
-	 */
+	/*! The body's mass. */
 	float mass;
 	/*!
-	 * Damping value for linear movement. A value that is too small fixes the
-	 * object in place.
+	 * Damping value for linear movement. A value that is too small fixes the object in
+	 * place.
 	 */
 	float linearDamping;
-	/*!
-	 * Damping value for angular movement.
-	 */
+	/*! Damping value for angular movement. */
 	float angularDamping;
-	/*!
-	 * The body's friction.
-	 */
+	/*! The body's friction. */
 	float friction;
-	/*!
-	 * The body's restitution (elasticity).
-	 */
+	/*! The body's restitution (elasticity). */
 	float restitution;
-	/*!
-	 * Maximal linear velocity.
-	 */
+	/*! Maximal linear velocity. */
 	float maxLinearVelocity;
-	/*!
-	 * Maximal angular velocity. Pi x 10?
-	 */
+	/*! Maximal angular velocity. Pi x 10? */
 	float maxAngularVelocity;
-	/*!
-	 * Penetration depth.
-	 */
+	/*! Penetration depth. */
 	float penetrationDepth;
-	/*!
-	 * Motion system? Overrides Quality when on Keyframed?
-	 */
+	/*! Motion system? Overrides Quality when on Keyframed? */
 	MotionSystem motionSystem;
 	/*!
-	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.
-	 * Seems to always be same as Unknown Byte 2.
+	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
+	 * always be same as Unknown Byte 2.
 	 */
 	byte unknownByte1;
 	/*!
-	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.
-	 * Seems to always be same as Unknown Byte 1.
+	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
+	 * always be same as Unknown Byte 1.
 	 */
 	byte unknownByte2;
-	/*!
-	 * The motion type. Determines quality of motion?
-	 */
+	/*! The motion type. Determines quality of motion? */
 	MotionQuality qualityType;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt7;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt8;
-	/*!
-	 * The number of constraints this object is bound to.
-	 */
+	/*! The number of constraints this object is bound to. */
 	mutable unsigned int numConstraints;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<Ref<bhkConstraint > > constraints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

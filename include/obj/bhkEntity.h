@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkEntity;
 typedef Ref<bhkEntity> bhkEntityRef;
 
-/*!
- * bhkEntity - A havok node, describes physical properties.
- */
-
+/*! A havok node, describes physical properties. */
 class bhkEntity : public bhkWorldObject {
 public:
 	/*! Constructor */

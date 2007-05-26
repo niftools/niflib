@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * The distance range where a specific level of detail applies.
- */
+/*! The distance range where a specific level of detail applies. */
 struct LODRange {
 	/*! Default Constructor */
 	NIFLIB_API LODRange();
@@ -25,17 +23,11 @@ struct LODRange {
 	NIFLIB_API LODRange( const LODRange & src );
 	/*! Copy Operator */
 	NIFLIB_API LODRange & operator=( const LODRange & src );
-	/*!
-	 * Begining of range.
-	 */
+	/*! Begining of range. */
 	float nearExtent;
-	/*!
-	 * End of Range.
-	 */
+	/*! End of Range. */
 	float farExtent;
-	/*!
-	 * Unknown (0,0,0).
-	 */
+	/*! Unknown (0,0,0). */
 	array<3,unsigned int > unknownInts;
 };
 

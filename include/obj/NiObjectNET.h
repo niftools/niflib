@@ -25,10 +25,7 @@ class NiTimeController;
 class NiObjectNET;
 typedef Ref<NiObjectNET> NiObjectNETRef;
 
-/*!
- * NiObjectNET - An object that can be controlled by a controller.
- */
-
+/*! An object that can be controlled by a controller. */
 class NiObjectNET : public NiObject {
 public:
 	/*! Constructor */
@@ -135,26 +132,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Name of this controllable object, used to refer to the object in .kf
-	 * files.
-	 */
+	/*! Name of this controllable object, used to refer to the object in .kf files. */
 	string name;
-	/*!
-	 * Extra data object index. (The first in a chain)
-	 */
+	/*! Extra data object index. (The first in a chain) */
 	Ref<NiExtraData > extraData;
-	/*!
-	 * The number of Extra Data objects referenced through the list.
-	 */
+	/*! The number of Extra Data objects referenced through the list. */
 	mutable unsigned int numExtraDataList;
-	/*!
-	 * List of extra data indices.
-	 */
+	/*! List of extra data indices. */
 	vector<Ref<NiExtraData > > extraDataList;
-	/*!
-	 * Controller object index. (The first in a chain)
-	 */
+	/*! Controller object index. (The first in a chain) */
 	Ref<NiTimeController > controller;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

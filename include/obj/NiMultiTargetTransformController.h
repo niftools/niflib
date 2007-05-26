@@ -21,10 +21,7 @@ class NiNode;
 class NiMultiTargetTransformController;
 typedef Ref<NiMultiTargetTransformController> NiMultiTargetTransformControllerRef;
 
-/*!
- * NiMultiTargetTransformController - Unknown.
- */
-
+/*! Unknown. */
 class NiMultiTargetTransformController : public NiInterpController {
 public:
 	/*! Constructor */
@@ -73,13 +70,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of target pointers that follow.
-	 */
+	/*! The number of target pointers that follow. */
 	mutable unsigned short numExtraTargets;
-	/*!
-	 * NiNode Targets to be controlled.
-	 */
+	/*! NiNode Targets to be controlled. */
 	vector<NiNode * > extraTargets;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

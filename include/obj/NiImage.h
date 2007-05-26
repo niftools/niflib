@@ -24,10 +24,7 @@ class NiRawImageData;
 class NiImage;
 typedef Ref<NiImage> NiImageRef;
 
-/*!
- * NiImage -
- */
-
+/*!  */
 class NiImage : public NiObject {
 public:
 	/*! Constructor */
@@ -76,26 +73,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * 0 if the texture is internal to the NIF file.
-	 */
+	/*! 0 if the texture is internal to the NIF file. */
 	byte external;
-	/*!
-	 * The filepath to the texture.
-	 */
+	/*! The filepath to the texture. */
 	string fileName;
-	/*!
-	 * Link to the internally stored image data.
-	 */
+	/*! Link to the internally stored image data. */
 	Ref<NiRawImageData > imageData;
-	/*!
-	 * Unknown.  Often seems to be 7.
-	 */
+	/*! Unknown.  Often seems to be 7. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.  Perhaps some flags?  Two shorts? Default seems to be
-	 * 0x43008000
-	 */
+	/*! Unknown.  Perhaps some flags?  Two shorts? Default seems to be 0x43008000 */
 	unsigned int unknownInt2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

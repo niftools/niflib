@@ -22,11 +22,7 @@ namespace Niflib {
 class NiRangeLODData;
 typedef Ref<NiRangeLODData> NiRangeLODDataRef;
 
-/*!
- * NiRangeLODData - Describes levels of detail based on distance of
- * object from camera.
- */
-
+/*! Describes levels of detail based on distance of object from camera. */
 class NiRangeLODData : public NiLODData {
 public:
 	/*! Constructor */
@@ -87,17 +83,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * ?
-	 */
+	/*! ? */
 	Vector3 lodCenter;
-	/*!
-	 * Number of levels of detail.
-	 */
+	/*! Number of levels of detail. */
 	mutable unsigned int numLodLevels;
-	/*!
-	 * The ranges of distance that each level of detail applies in.
-	 */
+	/*! The ranges of distance that each level of detail applies in. */
 	vector<LODRange > lodLevels;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

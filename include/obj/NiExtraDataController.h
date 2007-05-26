@@ -19,10 +19,7 @@ namespace Niflib {
 class NiExtraDataController;
 typedef Ref<NiExtraDataController> NiExtraDataControllerRef;
 
-/*!
- * NiExtraDataController - An controller for extra data.
- */
-
+/*! An controller for extra data. */
 class NiExtraDataController : public NiSingleInterpController {
 public:
 	/*! Constructor */

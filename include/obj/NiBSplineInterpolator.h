@@ -25,10 +25,7 @@ class NiBSplineBasisData;
 class NiBSplineInterpolator;
 typedef Ref<NiBSplineInterpolator> NiBSplineInterpolatorRef;
 
-/*!
- * NiBSplineInterpolator - A B-spline (component?) interpolator.
- */
-
+/*! A B-spline (component?) interpolator. */
 class NiBSplineInterpolator : public NiInterpolator {
 public:
 	/*! Constructor */
@@ -117,21 +114,13 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Animation start time.
-	 */
+	/*! Animation start time. */
 	float startTime;
-	/*!
-	 * Animation stop time.
-	 */
+	/*! Animation stop time. */
 	float stopTime;
-	/*!
-	 * Refers to NiBSplineData.
-	 */
+	/*! Refers to NiBSplineData. */
 	Ref<NiBSplineData > splineData;
-	/*!
-	 * Refers to NiBSPlineBasisData.
-	 */
+	/*! Refers to NiBSPlineBasisData. */
 	Ref<NiBSplineBasisData > basisData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

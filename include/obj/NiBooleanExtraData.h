@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBooleanExtraData;
 typedef Ref<NiBooleanExtraData> NiBooleanExtraDataRef;
 
-/*!
- * NiBooleanExtraData - Boolean extra data.
- */
-
+/*! Boolean extra data. */
 class NiBooleanExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The boolean extra data value.
-	 */
+	/*! The boolean extra data value. */
 	byte booleanData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

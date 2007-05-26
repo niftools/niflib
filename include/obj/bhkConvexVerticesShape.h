@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkConvexVerticesShape;
 typedef Ref<bhkConvexVerticesShape> bhkConvexVerticesShapeRef;
 
-/*!
- * bhkConvexVerticesShape - A convex shape built from vertices?
- */
-
+/*! A convex shape built from vertices? */
 class bhkConvexVerticesShape : public bhkConvexShape {
 public:
 	/*! Constructor */
@@ -58,25 +55,17 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<6,float > unknown6Floats;
-	/*!
-	 * Number of vertices.
-	 */
+	/*! Number of vertices. */
 	mutable unsigned int numVertices;
-	/*!
-	 * Vertices. Fourth component is 0.
-	 */
+	/*! Vertices. Fourth component is 0. */
 	vector<Float4 > vertices;
-	/*!
-	 * The number of normals.
-	 */
+	/*! The number of normals. */
 	mutable unsigned int numNormals;
 	/*!
-	 * The normals of the shape's outer faces. Fourth component is the
-	 * distance from center, negative.
+	 * The normals of the shape's outer faces. Fourth component is the distance from
+	 * center, negative.
 	 */
 	vector<Float4 > normals;
 public:

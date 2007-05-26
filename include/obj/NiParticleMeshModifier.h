@@ -24,10 +24,7 @@ class NiAVObject;
 class NiParticleMeshModifier;
 typedef Ref<NiParticleMeshModifier> NiParticleMeshModifierRef;
 
-/*!
- * NiParticleMeshModifier - Unknown.
- */
-
+/*! Unknown. */
 class NiParticleMeshModifier : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -63,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of particle mesh references that follow.
-	 */
+	/*! The number of particle mesh references that follow. */
 	mutable unsigned int numParticleMeshes;
-	/*!
-	 * Links to nodes of particle meshes?
-	 */
+	/*! Links to nodes of particle meshes? */
 	vector<Ref<NiAVObject > > particleMeshes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

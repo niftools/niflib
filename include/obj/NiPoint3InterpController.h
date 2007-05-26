@@ -24,11 +24,7 @@ class NiPosData;
 class NiPoint3InterpController;
 typedef Ref<NiPoint3InterpController> NiPoint3InterpControllerRef;
 
-/*!
- * NiPoint3InterpController - A controller that interpolates point 3
- * data?
- */
-
+/*! A controller that interpolates point 3 data? */
 class NiPoint3InterpController : public NiSingleInterpController {
 public:
 	/*! Constructor */
@@ -78,13 +74,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Selects which color to control. 0 : ambient, 1 : diffuse, 2 :
-	 * specular, 3 : self illum
+	 * Selects which color to control. 0 : ambient, 1 : diffuse, 2 : specular, 3 : self
+	 * illum
 	 */
 	unsigned short targetColor;
-	/*!
-	 * Material color controller data object index. Points to NiPosData.
-	 */
+	/*! Material color controller data object index. Points to NiPosData. */
 	Ref<NiPosData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

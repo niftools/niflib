@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkSimpleShapePhantom;
 typedef Ref<bhkSimpleShapePhantom> bhkSimpleShapePhantomRef;
 
-/*!
- * bhkSimpleShapePhantom - Unknown shape.
- */
-
+/*! Unknown shape. */
 class bhkSimpleShapePhantom : public bhkShapePhantom {
 public:
 	/*! Constructor */
@@ -58,17 +55,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<7,float > unkownFloats;
-	/*!
-	 * Unknown. (1,0,0,0,0) x 3.
-	 */
+	/*! Unknown. (1,0,0,0,0) x 3. */
 	array< 3, array<5,float > > unknownFloats2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

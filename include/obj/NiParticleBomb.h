@@ -19,10 +19,7 @@ namespace Niflib {
 class NiParticleBomb;
 typedef Ref<NiParticleBomb> NiParticleBombRef;
 
-/*!
- * NiParticleBomb - A particle modifier.
- */
-
+/*! A particle modifier. */
 class NiParticleBomb : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -58,53 +55,29 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat4;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat5;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat7;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat8;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat9;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat10;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

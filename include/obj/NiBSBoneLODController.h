@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSBoneLODController;
 typedef Ref<NiBSBoneLODController> NiBSBoneLODControllerRef;
 
-/*!
- * NiBSBoneLODController - A simple LOD controller for bones.
- */
-
+/*! A simple LOD controller for bones. */
 class NiBSBoneLODController : public NiBoneLODController {
 public:
 	/*! Constructor */

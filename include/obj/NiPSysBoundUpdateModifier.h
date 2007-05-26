@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysBoundUpdateModifier;
 typedef Ref<NiPSysBoundUpdateModifier> NiPSysBoundUpdateModifierRef;
 
-/*!
- * NiPSysBoundUpdateModifier - Unknown particle system modifier.
- */
-
+/*! Unknown particle system modifier. */
 class NiPSysBoundUpdateModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short updateSkip;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

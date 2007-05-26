@@ -24,10 +24,7 @@ class NiObjectNET;
 class NiTimeController;
 typedef Ref<NiTimeController> NiTimeControllerRef;
 
-/*!
- * NiTimeController - A generic time controller object.
- */
-
+/*! A generic time controller object. */
 class NiTimeController : public NiObject {
 public:
 	/*! Constructor */
@@ -150,35 +147,26 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Index of the next controller.
-	 */
+	/*! Index of the next controller. */
 	Ref<NiTimeController > nextController;
 	/*!
 	 * Controller flags (usually 0x000C). Probably controls loops.
-	 * Bit 0-1 : unknown              Bit 2 : if set, loop only once,
-	 * otherwise loop infinitely?              Bit 3 : enable animation?
+	 *              Bit 0-1 : unknown
+	 *              Bit 2 : if set, loop only once, otherwise loop infinitely?
+	 *              Bit 3 : enable animation?
 	 */
 	unsigned short flags;
-	/*!
-	 * Frequency (is usually 1.0).
-	 */
+	/*! Frequency (is usually 1.0). */
 	float frequency;
-	/*!
-	 * Phase (usually 0.0).
-	 */
+	/*! Phase (usually 0.0). */
 	float phase;
-	/*!
-	 * Controller start time.
-	 */
+	/*! Controller start time. */
 	float startTime;
-	/*!
-	 * Controller stop time.
-	 */
+	/*! Controller stop time. */
 	float stopTime;
 	/*!
-	 * Controller target (object index of the first controllable ancestor of
-	 * this object).
+	 * Controller target (object index of the first controllable ancestor of this
+	 * object).
 	 */
 	NiObjectNET * target;
 public:

@@ -24,11 +24,7 @@ class NiFloatData;
 class NiPSysModifierFloatCtlr;
 typedef Ref<NiPSysModifierFloatCtlr> NiPSysModifierFloatCtlrRef;
 
-/*!
- * NiPSysModifierFloatCtlr - A particle system modifier controller that
- * deals with floating point data?
- */
-
+/*! A particle system modifier controller that deals with floating point data? */
 class NiPSysModifierFloatCtlr : public NiPSysModifierCtlr {
 public:
 	/*! Constructor */
@@ -64,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * This controller's data.
-	 */
+	/*! This controller's data. */
 	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

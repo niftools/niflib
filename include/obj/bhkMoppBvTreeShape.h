@@ -24,11 +24,7 @@ class bhkShape;
 class bhkMoppBvTreeShape;
 typedef Ref<bhkMoppBvTreeShape> bhkMoppBvTreeShapeRef;
 
-/*!
- * bhkMoppBvTreeShape - Memory optimized partial polytope bounding volume
- * tree shape (not an entity).
- */
-
+/*! Memory optimized partial polytope bounding volume tree shape (not an entity). */
 class bhkMoppBvTreeShape : public bhkBvTreeShape {
 public:
 	/*! Constructor */
@@ -64,38 +60,21 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The shape.
-	 */
+	/*! The shape. */
 	Ref<bhkShape > shape;
-	/*!
-	 * The shape's material.
-	 */
+	/*! The shape's material. */
 	HavokMaterial material;
-	/*!
-	 * Unknown bytes, probably MOPP Header.
-	 */
+	/*! Unknown bytes, probably MOPP Header. */
 	array<8,byte > unknown8Bytes;
-	/*!
-	 * Unknown float, might be scale.
-	 */
+	/*! Unknown float, might be scale. */
 	float unknownFloat;
-	/*!
-	 * Number of bytes for MOPP data.
-	 */
+	/*! Number of bytes for MOPP data. */
 	mutable unsigned int moppDataSize;
-	/*!
-	 * Corner of the object with min. coordinates.
-	 */
+	/*! Corner of the object with min. coordinates. */
 	Vector3 objectCorner;
-	/*!
-	 * The scaling factor to quantize the MOPP. Determined by 255*255*255 /
-	 * size.
-	 */
+	/*! The scaling factor to quantize the MOPP. Determined by 255*255*255 / size. */
 	float scalingFactor;
-	/*!
-	 * The tree of bounding volume data.
-	 */
+	/*! The tree of bounding volume data. */
 	vector<byte > moppData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

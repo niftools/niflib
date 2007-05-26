@@ -12,9 +12,7 @@ using namespace std;
 
 namespace Niflib {
 
-/*!
- * The type of force?  May be more valid values.
- */
+/*! The type of force?  May be more valid values. */
 enum ForceType {
 	FORCE_PLANAR = 0, /*!< FORCE_PLANAR */
 	FORCE_SPHERICAL = 1, /*!< FORCE_SPHERICAL */
@@ -23,9 +21,7 @@ enum ForceType {
 
 ostream & operator<<( ostream & out, ForceType const & val );
 
-/*!
- * A material, used by havok shape objects.
- */
+/*! A material, used by havok shape objects. */
 enum HavokMaterial {
 	HAV_MAT_STONE = 0, /*!< Stone */
 	HAV_MAT_CLOTH = 1, /*!< Cloth */
@@ -62,10 +58,7 @@ enum HavokMaterial {
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
 
-/*!
- * This enum contains the options for doing z buffer or stecil buffer
- * tests.
- */
+/*! This enum contains the options for doing z buffer or stecil buffer tests. */
 enum CompareMode {
 	TEST_NEVER = 0, /*!< Test will allways return false. Nothing is drawn at all. */
 	TEST_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
@@ -79,10 +72,9 @@ enum CompareMode {
 ostream & operator<<( ostream & out, CompareMode const & val );
 
 /*!
- * Specifies the availiable texture filter modes.  That is, the way
- * pixels within a texture are blended together when textures are
- * displayed on the screen at a size other than their original
- * dimentions.
+ * Specifies the availiable texture filter modes.  That is, the way pixels within a
+ * texture are blended together when textures are displayed on the screen at a size
+ * other than their original dimentions.
  */
 enum TexFilterMode {
 	FILTER_NEAREST = 0, /*!< Simply uses the nearest pixel.  Very grainy. */
@@ -95,10 +87,7 @@ enum TexFilterMode {
 
 ostream & operator<<( ostream & out, TexFilterMode const & val );
 
-/*!
- * An unsigned 32-bit integer, describing how vertex colors influence
- * lighting.
- */
+/*! An unsigned 32-bit integer, describing how vertex colors influence lighting. */
 enum LightMode {
 	LIGHT_MODE_EMISSIVE = 0, /*!< Emissive. */
 	LIGHT_MODE_EMI_AMB_DIF = 1, /*!< Emissive + Ambient + Diffuse. (Default) */
@@ -106,10 +95,7 @@ enum LightMode {
 
 ostream & operator<<( ostream & out, LightMode const & val );
 
-/*!
- * An unsigned 32-bit integer, describing how mipmaps are handled in a
- * texture.
- */
+/*! An unsigned 32-bit integer, describing how mipmaps are handled in a texture. */
 enum MipMapFormat {
 	MIP_FMT_NO = 0, /*!< Texture does not use mip maps. */
 	MIP_FMT_YES = 1, /*!< Texture uses mip maps. */
@@ -119,9 +105,10 @@ enum MipMapFormat {
 ostream & operator<<( ostream & out, MipMapFormat const & val );
 
 /*!
- * This enum defines the various actions used in conjunction with the
- * stencil buffer.         For a detailed description of the individual
- * options please refer to the OpenGL docs.
+ * This enum defines the various actions used in conjunction with the stencil
+ * buffer.
+ *         For a detailed description of the individual options please refer to the
+ * OpenGL docs.
  */
 enum StencilAction {
 	ACTION_KEEP = 0, /*!< ACTION_KEEP */
@@ -135,8 +122,8 @@ enum StencilAction {
 ostream & operator<<( ostream & out, StencilAction const & val );
 
 /*!
- * Sets mesh color in Oblivion Construction Set.  Anything higher than 57
- * is also null.
+ * Sets mesh color in Oblivion Construction Set.  Anything higher than 57 is also
+ * null.
  */
 enum OblivionLayer {
 	OL_UNIDENTIFIED = 0, /*!< Unidentified (white) */
@@ -201,9 +188,7 @@ enum OblivionLayer {
 
 ostream & operator<<( ostream & out, OblivionLayer const & val );
 
-/*!
- * This enum lists the different face culling options.
- */
+/*! This enum lists the different face culling options. */
 enum FaceDrawMode {
 	DRAW_CCW_OR_BOTH = 0, /*!< use application defaults? */
 	DRAW_CCW = 1, /*!< Draw counter clock wise faces, cull clock wise faces. This is the default for most (all?) Nif Games so far. */
@@ -213,10 +198,7 @@ enum FaceDrawMode {
 
 ostream & operator<<( ostream & out, FaceDrawMode const & val );
 
-/*!
- * An unsigned 32-bit integer, describing how transparency is handled in
- * a texture.
- */
+/*! An unsigned 32-bit integer, describing how transparency is handled in a texture. */
 enum AlphaFormat {
 	ALPHA_NONE = 0, /*!< No alpha blending; the texture is fully opaque. */
 	ALPHA_BINARY = 1, /*!< Texture is either fully transparent or fully opaque.  There are no partially transparent areas. */
@@ -227,8 +209,8 @@ enum AlphaFormat {
 ostream & operator<<( ostream & out, AlphaFormat const & val );
 
 /*!
- * The type of animation interpolation (blending) that will be used on
- * the associated key frames.
+ * The type of animation interpolation (blending) that will be used on the
+ * associated key frames.
  */
 enum KeyType {
 	LINEAR_KEY = 1, /*!< Use linear interpolation. */
@@ -240,10 +222,7 @@ enum KeyType {
 
 ostream & operator<<( ostream & out, KeyType const & val );
 
-/*!
- * An unsigned 32-bit integer, which describes how to apply vertex
- * colors.
- */
+/*! An unsigned 32-bit integer, which describes how to apply vertex colors. */
 enum VertMode {
 	VERT_MODE_SRC_IGNORE = 0, /*!< Source Ignore. */
 	VERT_MODE_SRC_EMISSIVE = 1, /*!< Source Emissive. */
@@ -252,9 +231,7 @@ enum VertMode {
 
 ostream & operator<<( ostream & out, VertMode const & val );
 
-/*!
- * An unsigned 32-bit integer, describing the apply mode of a texture.
- */
+/*! An unsigned 32-bit integer, describing the apply mode of a texture. */
 enum ApplyMode {
 	APPLY_REPLACE = 0, /*!< Replaces existing color */
 	APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */
@@ -266,12 +243,20 @@ enum ApplyMode {
 ostream & operator<<( ostream & out, ApplyMode const & val );
 
 /*!
- * The motion system. 4 (Box) is used for everything movable. 7
- * (Keyframed) is used on statics and animated stuff.
- * Oblivion's ssg commando reveals even more values:         0: Keyframed
- * 1: Box         2: Sphere         3: Sphere         4: Box         5:
- * Box         6: Keyframed         7: Keyframed         8: Box
- * 9+: Keyframed?
+ * The motion system. 4 (Box) is used for everything movable. 7 (Keyframed) is used
+ * on statics and animated stuff.
+ * 
+ *         Oblivion's ssg commando reveals even more values:
+ *         0: Keyframed
+ *         1: Box
+ *         2: Sphere
+ *         3: Sphere
+ *         4: Box
+ *         5: Box
+ *         6: Keyframed
+ *         7: Keyframed
+ *         8: Box
+ *         9+: Keyframed?
  */
 enum MotionSystem {
 	MO_SYS_BOX = 4, /*!< Box */
@@ -280,9 +265,7 @@ enum MotionSystem {
 
 ostream & operator<<( ostream & out, MotionSystem const & val );
 
-/*!
- * Determines the way the billboard will react to the camera.
- */
+/*! Determines the way the billboard will react to the camera. */
 enum BillboardMode {
 	ALWAYS_FACE_CAMERA = 0, /*!< The billboard will always face the camera. */
 	ROTATE_ABOUT_UP = 1, /*!< The billboard will only rotate around the up axis. */
@@ -293,9 +276,7 @@ enum BillboardMode {
 
 ostream & operator<<( ostream & out, BillboardMode const & val );
 
-/*!
- * The type of texture.
- */
+/*! The type of texture. */
 enum TexType {
 	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
 	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
@@ -309,9 +290,7 @@ enum TexType {
 
 ostream & operator<<( ostream & out, TexType const & val );
 
-/*!
- * An unsigned 32-bit integer, describing the color depth of a texture.
- */
+/*! An unsigned 32-bit integer, describing the color depth of a texture. */
 enum PixelLayout {
 	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
 	PIX_LAY_HIGH_COLOR_16 = 1, /*!< Texture is in 16-bit high color format. */
@@ -324,8 +303,8 @@ enum PixelLayout {
 ostream & operator<<( ostream & out, PixelLayout const & val );
 
 /*!
- * Specifies the availiable texture clamp modes.  That is, the behavior
- * of pixels outside the range of the texture.
+ * Specifies the availiable texture clamp modes.  That is, the behavior of pixels
+ * outside the range of the texture.
  */
 enum TexClampMode {
 	CLAMP_S_CLAMP_T = 0, /*!< Clamp in both directions. */
@@ -336,9 +315,7 @@ enum TexClampMode {
 
 ostream & operator<<( ostream & out, TexClampMode const & val );
 
-/*!
- * The motion type. Determines quality of motion?
- */
+/*! The motion type. Determines quality of motion? */
 enum MotionQuality {
 	MO_QUAL_MOVING = 0, /*!< Moving */
 	MO_QUAL_FIXED = 1, /*!< Fixed */
@@ -353,10 +330,7 @@ enum MotionQuality {
 
 ostream & operator<<( ostream & out, MotionQuality const & val );
 
-/*!
- * Specifies the pixel format used by the NiPixelData object to store a
- * texture.
- */
+/*! Specifies the pixel format used by the NiPixelData object to store a texture. */
 enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
 	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
@@ -365,9 +339,7 @@ enum PixelFormat {
 
 ostream & operator<<( ostream & out, PixelFormat const & val );
 
-/*!
- * The animation cyle behavior.
- */
+/*! The animation cyle behavior. */
 enum CycleType {
 	CYCLE_LOOP = 0, /*!< Loop */
 	CYCLE_REVERSE = 1, /*!< Reverse */
@@ -376,9 +348,7 @@ enum CycleType {
 
 ostream & operator<<( ostream & out, CycleType const & val );
 
-/*!
- * The force field's type.
- */
+/*! The force field's type. */
 enum FieldType {
 	FIELD_WIND = 0, /*!< Wind (fixed direction) */
 	FIELD_POINT = 1, /*!< Point (fixed origin) */

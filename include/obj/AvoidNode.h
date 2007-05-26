@@ -19,10 +19,7 @@ namespace Niflib {
 class AvoidNode;
 typedef Ref<AvoidNode> AvoidNodeRef;
 
-/*!
- * AvoidNode - Morrowind specific?
- */
-
+/*! Morrowind specific? */
 class AvoidNode : public NiNode {
 public:
 	/*! Constructor */

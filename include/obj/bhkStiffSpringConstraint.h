@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkStiffSpringConstraint;
 typedef Ref<bhkStiffSpringConstraint> bhkStiffSpringConstraintRef;
 
-/*!
- * bhkStiffSpringConstraint - A spring constraint.
- */
-
+/*! A spring constraint. */
 class bhkStiffSpringConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -58,17 +55,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Pivot A.
-	 */
+	/*! Pivot A. */
 	Float4 pivotA;
-	/*!
-	 * Pivot B.
-	 */
+	/*! Pivot B. */
 	Float4 pivotB;
-	/*!
-	 * Length.
-	 */
+	/*! Length. */
 	float length;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -22,11 +22,7 @@ namespace Niflib {
 class NiMultiTextureProperty;
 typedef Ref<NiMultiTextureProperty> NiMultiTexturePropertyRef;
 
-/*!
- * NiMultiTextureProperty - (note: not quite complete yet... but already
- * reads most of the DAoC ones)
- */
-
+/*! (note: not quite complete yet... but already reads most of the DAoC ones) */
 class NiMultiTextureProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -62,20 +58,16 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
 	/*!
-	 * Unknown. Always 5 for DAoC files, and always 6 for Bridge Commander.
-	 * Seems to have nothing to do with the number of Texture Element slots
-	 * that follow.
+	 * Unknown. Always 5 for DAoC files, and always 6 for Bridge Commander.  Seems to
+	 * have nothing to do with the number of Texture Element slots that follow.
 	 */
 	unsigned int unknownInt;
 	/*!
-	 * Describes the various textures used by this mutli-texture property.
-	 * Each slot probably has special meaning like thoes in
-	 * NiTexturingProperty.
+	 * Describes the various textures used by this mutli-texture property.  Each slot
+	 * probably has special meaning like thoes in NiTexturingProperty.
 	 */
 	array<5,MultiTextureElement > textureElements;
 public:

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiParticles;
 typedef Ref<NiParticles> NiParticlesRef;
 
-/*!
- * NiParticles - Generic particle system node.
- */
-
+/*! Generic particle system node. */
 class NiParticles : public NiGeometry {
 public:
 	/*! Constructor */

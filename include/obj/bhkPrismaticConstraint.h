@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkPrismaticConstraint;
 typedef Ref<bhkPrismaticConstraint> bhkPrismaticConstraintRef;
 
-/*!
- * bhkPrismaticConstraint - A prismatic constraint.
- */
-
+/*! A prismatic constraint. */
 class bhkPrismaticConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<8,Float4 > unknownVectors;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<3,float > unknownFloats2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

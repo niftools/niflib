@@ -24,10 +24,7 @@ class NiTransformData;
 class NiTransformInterpolator;
 typedef Ref<NiTransformInterpolator> NiTransformInterpolatorRef;
 
-/*!
- * NiTransformInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiTransformInterpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */
@@ -112,25 +109,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Translate.
-	 */
+	/*! Translate. */
 	Vector3 translation;
-	/*!
-	 * Rotation.
-	 */
+	/*! Rotation. */
 	Quaternion rotation;
-	/*!
-	 * Scale.
-	 */
+	/*! Scale. */
 	float scale;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<3,byte > unknownBytes;
-	/*!
-	 * Refers to NiTransformData.
-	 */
+	/*! Refers to NiTransformData. */
 	Ref<NiTransformData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

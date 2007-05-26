@@ -24,10 +24,7 @@ class bhkShape;
 class bhkTransformShape;
 typedef Ref<bhkTransformShape> bhkTransformShapeRef;
 
-/*!
- * bhkTransformShape - Transforms a shape.
- */
-
+/*! Transforms a shape. */
 class bhkTransformShape : public bhkShape {
 public:
 	/*! Constructor */
@@ -63,25 +60,15 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The shape that this object transforms.
-	 */
+	/*! The shape that this object transforms. */
 	Ref<bhkShape > shape;
-	/*!
-	 * The shape's material.
-	 */
+	/*! The shape's material. */
 	HavokMaterial material;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<8,byte > unknown8Bytes;
-	/*!
-	 * A transform matrix.
-	 */
+	/*! A transform matrix. */
 	Matrix44 transform;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

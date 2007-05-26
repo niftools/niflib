@@ -21,10 +21,7 @@ class NiObject;
 class NiPSysDragModifier;
 typedef Ref<NiPSysDragModifier> NiPSysDragModifierRef;
 
-/*!
- * NiPSysDragModifier - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysDragModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -60,25 +57,15 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Parent reference.
-	 */
+	/*! Parent reference. */
 	NiObject * parent;
-	/*!
-	 * The drag axis.
-	 */
+	/*! The drag axis. */
 	Vector3 dragAxis;
-	/*!
-	 * Drag percentage.
-	 */
+	/*! Drag percentage. */
 	float percentage;
-	/*!
-	 * The range.
-	 */
+	/*! The range. */
 	float range;
-	/*!
-	 * The range falloff.
-	 */
+	/*! The range falloff. */
 	float rangeFalloff;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

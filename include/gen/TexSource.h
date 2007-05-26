@@ -18,9 +18,7 @@ namespace Niflib {
 class NiObject;
 class NiPixelData;
 
-/*!
- * A texture source.
- */
+/*! A texture source. */
 struct TexSource {
 	/*! Default Constructor */
 	NIFLIB_API TexSource();
@@ -30,35 +28,27 @@ struct TexSource {
 	NIFLIB_API TexSource( const TexSource & src );
 	/*! Copy Operator */
 	NIFLIB_API TexSource & operator=( const TexSource & src );
-	/*!
-	 * Is the texture external?
-	 */
+	/*! Is the texture external? */
 	byte useExternal;
 	/*!
-	 * The external texture file name.              Note: all original
-	 * morrowind nifs use name.ext only for addressing the textures, but most
-	 * mods use something like textures/[subdir/]name.ext. This is due to a
-	 * feature in Morrowind resource manager: it loads name.ext,
-	 * textures/name.ext and textures/subdir/name.ext but NOT
-	 * subdir/name.ext.
+	 * The external texture file name.
+	 * 
+	 *             Note: all original morrowind nifs use name.ext only for addressing
+	 * the textures, but most mods use something like textures/[subdir/]name.ext. This
+	 * is due to a feature in Morrowind resource manager: it loads name.ext,
+	 * textures/name.ext and textures/subdir/name.ext but NOT subdir/name.ext.
 	 */
 	string fileName;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Ref<NiObject > unknownLink;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte;
 	/*!
-	 * The original source filename of the image embedded by the referred
-	 * NiPixelData object.
+	 * The original source filename of the image embedded by the referred NiPixelData
+	 * object.
 	 */
 	string originalFileName_;
-	/*!
-	 * Pixel data object index.
-	 */
+	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
 };
 

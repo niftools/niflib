@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysPlanarCollider;
 typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;
 
-/*!
- * NiPSysPlanarCollider - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysPlanarCollider : public NiPSysCollider {
 public:
 	/*! Constructor */
@@ -58,21 +55,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float width;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float height;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Vector3 xAxis;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Vector3 yAxis;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

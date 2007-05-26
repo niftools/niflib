@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBlendPoint3Interpolator;
 typedef Ref<NiBlendPoint3Interpolator> NiBlendPoint3InterpolatorRef;
 
-/*!
- * NiBlendPoint3Interpolator - Interpolates a point?
- */
-
+/*! Interpolates a point? */
 class NiBlendPoint3Interpolator : public NiBlendInterpolator {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The interpolated point?
-	 */
+	/*! The interpolated point? */
 	Vector3 pointValue;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

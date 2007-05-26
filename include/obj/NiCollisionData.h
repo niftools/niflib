@@ -19,10 +19,7 @@ namespace Niflib {
 class NiCollisionData;
 typedef Ref<NiCollisionData> NiCollisionDataRef;
 
-/*!
- * NiCollisionData - Collision box.
- */
-
+/*! Collision box. */
 class NiCollisionData : public NiCollisionObject {
 public:
 	/*! Constructor */
@@ -58,33 +55,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte;
-	/*!
-	 * Type of collision data.
-	 */
+	/*! Type of collision data. */
 	unsigned int collisionType;
-	/*!
-	 * Unknown (can be negative, so not necessarily a radius).
-	 */
+	/*! Unknown (can be negative, so not necessarily a radius). */
 	Vector3 unknownVector;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<8,float > unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<15,float > unknownFloat2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

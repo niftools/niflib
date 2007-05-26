@@ -19,10 +19,7 @@ namespace Niflib {
 class NiRotatingParticlesData;
 typedef Ref<NiRotatingParticlesData> NiRotatingParticlesDataRef;
 
-/*!
- * NiRotatingParticlesData - Rotating particles data object.
- */
-
+/*! Rotating particles data object. */
 class NiRotatingParticlesData : public NiParticlesData {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Is the particle rotation array present?
-	 */
+	/*! Is the particle rotation array present? */
 	bool hasRotations2;
-	/*!
-	 * The individual particle rotations.
-	 */
+	/*! The individual particle rotations. */
 	vector<Quaternion > rotations2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

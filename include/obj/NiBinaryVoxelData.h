@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBinaryVoxelData;
 typedef Ref<NiBinaryVoxelData> NiBinaryVoxelDataRef;
 
-/*!
- * NiBinaryVoxelData - Voxel data object.
- */
-
+/*! Voxel data object. */
 class NiBinaryVoxelData : public NiObject {
 public:
 	/*! Constructor */
@@ -58,45 +55,25 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown. Is this^3 the Unknown Bytes 1 size?
-	 */
+	/*! Unknown. Is this^3 the Unknown Bytes 1 size? */
 	unsigned short unknownShort3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<7,float > unknown7Floats;
-	/*!
-	 * Unknown. Always a multiple of 7.
-	 */
+	/*! Unknown. Always a multiple of 7. */
 	array< 7, array<12,byte > > unknownBytes1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned int numUnknownVectors;
-	/*!
-	 * Vectors on the unit sphere.
-	 */
+	/*! Vectors on the unit sphere. */
 	vector<Float4 > unknownVectors;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned int numUnknownBytes2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<byte > unknownBytes2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<5,unsigned int > unknown5Ints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

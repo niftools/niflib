@@ -19,10 +19,7 @@ namespace Niflib {
 class NiVectorExtraData;
 typedef Ref<NiVectorExtraData> NiVectorExtraDataRef;
 
-/*!
- * NiVectorExtraData - Extra vector data.
- */
-
+/*! Extra vector data. */
 class NiVectorExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -73,13 +70,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The vector data.
-	 */
+	/*! The vector data. */
 	Vector3 vectorData;
-	/*!
-	 * Not sure whether this comes before or after the vector data.
-	 */
+	/*! Not sure whether this comes before or after the vector data. */
 	float unknownFloat;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

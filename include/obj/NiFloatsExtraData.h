@@ -19,10 +19,7 @@ namespace Niflib {
 class NiFloatsExtraData;
 typedef Ref<NiFloatsExtraData> NiFloatsExtraDataRef;
 
-/*!
- * NiFloatsExtraData - Unknown.
- */
-
+/*! Unknown. */
 class NiFloatsExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -71,13 +68,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of floats in the next field.
-	 */
+	/*! Number of floats in the next field. */
 	mutable unsigned int numFloats;
-	/*!
-	 * Float data.
-	 */
+	/*! Float data. */
 	vector<float > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

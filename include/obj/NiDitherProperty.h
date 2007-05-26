@@ -19,10 +19,7 @@ namespace Niflib {
 class NiDitherProperty;
 typedef Ref<NiDitherProperty> NiDitherPropertyRef;
 
-/*!
- * NiDitherProperty - Unknown.
- */
-
+/*! Unknown. */
 class NiDitherProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * 1's Bit: Enable dithering
-	 */
+	/*! 1's Bit: Enable dithering */
 	unsigned short flags;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

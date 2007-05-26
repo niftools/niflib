@@ -19,10 +19,7 @@ namespace Niflib {
 class NiIntegerExtraData;
 typedef Ref<NiIntegerExtraData> NiIntegerExtraDataRef;
 
-/*!
- * NiIntegerExtraData - Extra integer data.
- */
-
+/*! Extra integer data. */
 class NiIntegerExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The value of the extra data.
-	 */
+	/*! The value of the extra data. */
 	unsigned int integerData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

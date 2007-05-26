@@ -24,10 +24,7 @@ class NiVisData;
 class NiPSysModifierActiveCtlr;
 typedef Ref<NiPSysModifierActiveCtlr> NiPSysModifierActiveCtlrRef;
 
-/*!
- * NiPSysModifierActiveCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysModifierActiveCtlr : public NiPSysModifierBoolCtlr {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * This controller's data.
-	 */
+	/*! This controller's data. */
 	Ref<NiVisData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

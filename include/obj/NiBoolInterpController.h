@@ -19,11 +19,7 @@ namespace Niflib {
 class NiBoolInterpController;
 typedef Ref<NiBoolInterpController> NiBoolInterpControllerRef;
 
-/*!
- * NiBoolInterpController - A controller that interpolates floating point
- * numbers?
- */
-
+/*! A controller that interpolates floating point numbers? */
 class NiBoolInterpController : public NiSingleInterpController {
 public:
 	/*! Constructor */

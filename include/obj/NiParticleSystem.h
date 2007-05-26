@@ -24,10 +24,7 @@ class NiPSysModifier;
 class NiParticleSystem;
 typedef Ref<NiParticleSystem> NiParticleSystemRef;
 
-/*!
- * NiParticleSystem - A particle system.
- */
-
+/*! A particle system. */
 class NiParticleSystem : public NiParticles {
 public:
 	/*! Constructor */
@@ -63,17 +60,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool unknownBool;
-	/*!
-	 * The number of modifier references.
-	 */
+	/*! The number of modifier references. */
 	mutable unsigned int numModifiers;
-	/*!
-	 * The list of particle modifiers.
-	 */
+	/*! The list of particle modifiers. */
 	vector<Ref<NiPSysModifier > > modifiers;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

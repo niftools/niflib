@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Tension, bias, continuity.
- */
+/*! Tension, bias, continuity. */
 struct TBC {
 	/*! Default Constructor */
 	NIFLIB_API TBC();
@@ -25,17 +23,11 @@ struct TBC {
 	NIFLIB_API TBC( const TBC & src );
 	/*! Copy Operator */
 	NIFLIB_API TBC & operator=( const TBC & src );
-	/*!
-	 * Tension.
-	 */
+	/*! Tension. */
 	float t;
-	/*!
-	 * Bias.
-	 */
+	/*! Bias. */
 	float b;
-	/*!
-	 * Continuity.
-	 */
+	/*! Continuity. */
 	float c;
 };
 

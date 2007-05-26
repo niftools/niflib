@@ -19,11 +19,7 @@ namespace Niflib {
 class bhkBlendController;
 typedef Ref<bhkBlendController> bhkBlendControllerRef;
 
-/*!
- * bhkBlendController - Unknown. Is apparently only used in skeleton.nif
- * files.
- */
-
+/*! Unknown. Is apparently only used in skeleton.nif files. */
 class bhkBlendController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -59,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Seems to be always zero.
-	 */
+	/*! Seems to be always zero. */
 	unsigned int unknownInt;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -24,10 +24,7 @@ class NiTriBasedGeom;
 class NiPSysMeshEmitter;
 typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;
 
-/*!
- * NiPSysMeshEmitter - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysMeshEmitter : public NiPSysEmitter {
 public:
 	/*! Constructor */
@@ -63,29 +60,29 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of references to emitter meshes that follow.
-	 */
+	/*! The number of references to emitter meshes that follow. */
 	mutable unsigned int numEmitterMeshes;
-	/*!
-	 * Links to meshes used for emitting.
-	 */
+	/*! Links to meshes used for emitting. */
 	vector<Ref<NiTriBasedGeom > > emitterMeshes;
 	/*!
-	 * 0: NI_VELOCITY_USE_NORMALS             1: NI_VELOCITY_USE_RANDOM
-	 * 2: NI_VELOCITY_USE_DIRECTION             3+: UNKNOWN
+	 * 0: NI_VELOCITY_USE_NORMALS
+	 *             1: NI_VELOCITY_USE_RANDOM
+	 *             2: NI_VELOCITY_USE_DIRECTION
+	 *             3+: UNKNOWN
 	 */
 	unsigned int initialVelocityType;
 	/*!
-	 * Where it emits from.              0: NI_EMIT_FROM_EDGE_SURFACE(?)
-	 * 1: NI_EMIT_FROM_FACE_CENTER             2: NI_EMIT_FROM_EDGE_CENTER
-	 * 3: NI_EMIT_FROM_FACE_SURFACE             4: NI_EMIT_FROM_EDGE_SURFACE
-	 * 5+: UNKNOWN
+	 * Where it emits from.
+	 * 
+	 *             0: NI_EMIT_FROM_EDGE_SURFACE(?)
+	 *             1: NI_EMIT_FROM_FACE_CENTER
+	 *             2: NI_EMIT_FROM_EDGE_CENTER
+	 *             3: NI_EMIT_FROM_FACE_SURFACE
+	 *             4: NI_EMIT_FROM_EDGE_SURFACE
+	 *             5+: UNKNOWN
 	 */
 	unsigned int emissionType;
-	/*!
-	 * The emission axis.
-	 */
+	/*! The emission axis. */
 	Vector3 emissionAxis;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysUpdateCtlr;
 typedef Ref<NiPSysUpdateCtlr> NiPSysUpdateCtlrRef;
 
-/*!
- * NiPSysUpdateCtlr - Particle system controller, used for ???.
- */
-
+/*! Particle system controller, used for ???. */
 class NiPSysUpdateCtlr : public NiTimeController {
 public:
 	/*! Constructor */

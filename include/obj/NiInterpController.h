@@ -19,10 +19,7 @@ namespace Niflib {
 class NiInterpController;
 typedef Ref<NiInterpController> NiInterpControllerRef;
 
-/*!
- * NiInterpController - A controller capable of interpolation?
- */
-
+/*! A controller capable of interpolation? */
 class NiInterpController : public NiTimeController {
 public:
 	/*! Constructor */

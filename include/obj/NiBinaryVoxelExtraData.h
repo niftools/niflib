@@ -24,10 +24,7 @@ class NiBinaryVoxelData;
 class NiBinaryVoxelExtraData;
 typedef Ref<NiBinaryVoxelExtraData> NiBinaryVoxelExtraDataRef;
 
-/*!
- * NiBinaryVoxelExtraData - Voxel extra data object.
- */
-
+/*! Voxel extra data object. */
 class NiBinaryVoxelExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -63,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.  0?
-	 */
+	/*! Unknown.  0? */
 	unsigned int unknownInt;
-	/*!
-	 * Link to binary voxel data.
-	 */
+	/*! Link to binary voxel data. */
 	Ref<NiBinaryVoxelData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

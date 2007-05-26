@@ -24,11 +24,7 @@ class NiNode;
 class NiLookAtController;
 typedef Ref<NiLookAtController> NiLookAtControllerRef;
 
-/*!
- * NiLookAtController - Unknown. Start time is 3.4e+38 and stop time is
- * -3.4e+38.
- */
-
+/*! Unknown. Start time is 3.4e+38 and stop time is -3.4e+38. */
 class NiLookAtController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -64,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknown1;
-	/*!
-	 * Link to the node to look at?
-	 */
+	/*! Link to the node to look at? */
 	Ref<NiNode > lookAtNode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

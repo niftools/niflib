@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysEmitterInitialRadiusCtlr;
 typedef Ref<NiPSysEmitterInitialRadiusCtlr> NiPSysEmitterInitialRadiusCtlrRef;
 
-/*!
- * NiPSysEmitterInitialRadiusCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysEmitterInitialRadiusCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

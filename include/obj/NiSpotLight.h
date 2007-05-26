@@ -19,10 +19,7 @@ namespace Niflib {
 class NiSpotLight;
 typedef Ref<NiSpotLight> NiSpotLightRef;
 
-/*!
- * NiSpotLight - A spot.
- */
-
+/*! A spot. */
 class NiSpotLight : public NiPointLight {
 public:
 	/*! Constructor */
@@ -83,13 +80,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The opening angle of the spot.
-	 */
+	/*! The opening angle of the spot. */
 	float cutoffAngle;
-	/*!
-	 * Describes the distribution of light. (see: glLight)
-	 */
+	/*! Describes the distribution of light. (see: glLight) */
 	float exponent;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

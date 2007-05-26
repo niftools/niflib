@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTextureModeProperty;
 typedef Ref<NiTextureModeProperty> NiTextureModePropertyRef;
 
-/*!
- * NiTextureModeProperty - Unknown
- */
-
+/*! Unknown */
 class NiTextureModeProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown. Either 210 or 194.
-	 */
+	/*! Unknown. Either 210 or 194. */
 	short unknownShort;
-	/*!
-	 * Unknown. Either (0,-75) or (0,-75)
-	 */
+	/*! Unknown. Either (0,-75) or (0,-75) */
 	array<2,short > unknown2Shorts;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -15,9 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Unknown.
- */
+/*! Unknown. */
 struct SkinShapeGroup {
 	/*! Default Constructor */
 	NIFLIB_API SkinShapeGroup();
@@ -27,13 +25,11 @@ struct SkinShapeGroup {
 	NIFLIB_API SkinShapeGroup( const SkinShapeGroup & src );
 	/*! Copy Operator */
 	NIFLIB_API SkinShapeGroup & operator=( const SkinShapeGroup & src );
-	/*!
-	 * Counts unknown.
-	 */
+	/*! Counts unknown. */
 	mutable unsigned int numLinkPairs;
 	/*!
-	 * First link is a NiTriShape object.             Second link is a
-	 * NiSkinInstance object.
+	 * First link is a NiTriShape object.
+	 *             Second link is a NiSkinInstance object.
 	 */
 	vector<SkinShape > linkPairs;
 };

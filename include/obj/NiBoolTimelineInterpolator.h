@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBoolTimelineInterpolator;
 typedef Ref<NiBoolTimelineInterpolator> NiBoolTimelineInterpolatorRef;
 
-/*!
- * NiBoolTimelineInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBoolTimelineInterpolator : public NiBoolInterpolator {
 public:
 	/*! Constructor */

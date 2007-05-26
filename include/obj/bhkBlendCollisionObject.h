@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkBlendCollisionObject;
 typedef Ref<bhkBlendCollisionObject> bhkBlendCollisionObjectRef;
 
-/*!
- * bhkBlendCollisionObject - Unknown.
- */
-
+/*! Unknown. */
 class bhkBlendCollisionObject : public bhkCollisionObject {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Blending parameter?
-	 */
+	/*! Blending parameter? */
 	float unknownFloat1;
-	/*!
-	 * Another blending parameter?
-	 */
+	/*! Another blending parameter? */
 	float unknownFloat2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

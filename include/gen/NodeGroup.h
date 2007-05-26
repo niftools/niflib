@@ -15,9 +15,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiNode;
 
-/*!
- * A group of NiNodes references.
- */
+/*! A group of NiNodes references. */
 struct NodeGroup {
 	/*! Default Constructor */
 	NIFLIB_API NodeGroup();
@@ -27,13 +25,9 @@ struct NodeGroup {
 	NIFLIB_API NodeGroup( const NodeGroup & src );
 	/*! Copy Operator */
 	NIFLIB_API NodeGroup & operator=( const NodeGroup & src );
-	/*!
-	 * Number of node references that follow.
-	 */
+	/*! Number of node references that follow. */
 	mutable unsigned int numNodes;
-	/*!
-	 * The list of NiNode references.
-	 */
+	/*! The list of NiNode references. */
 	vector<NiNode * > nodes;
 };
 

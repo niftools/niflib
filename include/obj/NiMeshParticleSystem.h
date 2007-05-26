@@ -19,10 +19,7 @@ namespace Niflib {
 class NiMeshParticleSystem;
 typedef Ref<NiMeshParticleSystem> NiMeshParticleSystemRef;
 
-/*!
- * NiMeshParticleSystem - Particle system.
- */
-
+/*! Particle system. */
 class NiMeshParticleSystem : public NiParticleSystem {
 public:
 	/*! Constructor */

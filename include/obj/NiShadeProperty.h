@@ -19,11 +19,7 @@ namespace Niflib {
 class NiShadeProperty;
 typedef Ref<NiShadeProperty> NiShadePropertyRef;
 
-/*!
- * NiShadeProperty - Determines whether flat shading or smooth shading is
- * used on a shape.
- */
-
+/*! Determines whether flat shading or smooth shading is used on a shape. */
 class NiShadeProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -73,8 +69,9 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * 1's Bit:  Enable smooth phong shading on this shape.              If
-	 * 1's bit is not set, hard-edged flat shading will be used on this
+	 * 1's Bit:  Enable smooth phong shading on this shape.
+	 * 
+	 *             If 1's bit is not set, hard-edged flat shading will be used on this
 	 * shape.
 	 */
 	unsigned short flags;

@@ -15,9 +15,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiAVObject;
 
-/*!
- * Used in NiDefaultAVObjectPalette.
- */
+/*! Used in NiDefaultAVObjectPalette. */
 struct AVObject {
 	/*! Default Constructor */
 	NIFLIB_API AVObject();
@@ -27,13 +25,9 @@ struct AVObject {
 	NIFLIB_API AVObject( const AVObject & src );
 	/*! Copy Operator */
 	NIFLIB_API AVObject & operator=( const AVObject & src );
-	/*!
-	 * Object name.
-	 */
+	/*! Object name. */
 	string name;
-	/*!
-	 * Object reference.
-	 */
+	/*! Object reference. */
 	NiAVObject * avObject;
 };
 

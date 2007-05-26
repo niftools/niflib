@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Describes a furniture position?
- */
+/*! Describes a furniture position? */
 struct FurniturePosition {
 	/*! Default Constructor */
 	NIFLIB_API FurniturePosition();
@@ -25,22 +23,18 @@ struct FurniturePosition {
 	NIFLIB_API FurniturePosition( const FurniturePosition & src );
 	/*! Copy Operator */
 	NIFLIB_API FurniturePosition & operator=( const FurniturePosition & src );
-	/*!
-	 * Offset of furniture marker.
-	 */
+	/*! Offset of furniture marker. */
 	Vector3 offset;
-	/*!
-	 * Furniture marker orientation.
-	 */
+	/*! Furniture marker orientation. */
 	unsigned short orientation;
 	/*!
-	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as
-	 * Position Ref 2.
+	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as Position
+	 * Ref 2.
 	 */
 	byte positionRef1;
 	/*!
-	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as
-	 * Position Ref 1.
+	 * Refers to a furnituremarkerxx.nif file. Always seems to be the same as Position
+	 * Ref 1.
 	 */
 	byte positionRef2;
 };

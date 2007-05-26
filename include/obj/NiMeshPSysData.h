@@ -25,10 +25,7 @@ class NiNode;
 class NiMeshPSysData;
 typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;
 
-/*!
- * NiMeshPSysData - Particle meshes data.
- */
-
+/*! Particle meshes data. */
 class NiMeshPSysData : public NiPSysData {
 public:
 	/*! Constructor */
@@ -65,42 +62,26 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Unknown. Seems to refer to particle modifiers, however at least one
-	 * file has a NiNode here.  May indicate that this is really two separate
-	 * links in different versions or some other problem.
+	 * Unknown. Seems to refer to particle modifiers, however at least one file has a
+	 * NiNode here.  May indicate that this is really two separate links in different
+	 * versions or some other problem.
 	 */
 	Ref<NiObject > modifier;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte2;
-	/*!
-	 * The number of unknown links that follow.
-	 */
+	/*! The number of unknown links that follow. */
 	mutable unsigned int numUnknownLinks;
-	/*!
-	 * Unknown. Seems to refer to particle modifiers.
-	 */
+	/*! Unknown. Seems to refer to particle modifiers. */
 	vector<Ref<NiObject > > unknownLinks;
-	/*!
-	 * Repeat of Vertex Count?
-	 */
+	/*! Repeat of Vertex Count? */
 	unsigned int numVertices2;
-	/*!
-	 * Unknown. 0?
-	 */
+	/*! Unknown. 0? */
 	byte unknownByte3;
-	/*!
-	 * Unknown.  1?
-	 */
+	/*! Unknown.  1? */
 	unsigned int unknownInt2;
-	/*!
-	 * Repeat of Vertex Count?
-	 */
+	/*! Repeat of Vertex Count? */
 	unsigned int numVertices3;
-	/*!
-	 * Links to a NiNode; but this NiNode doesn't seem to be a mesh?
-	 */
+	/*! Links to a NiNode; but this NiNode doesn't seem to be a mesh? */
 	Ref<NiNode > unknownLink2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Group of vertex indices of vertices that match.
- */
+/*! Group of vertex indices of vertices that match. */
 struct MatchGroup {
 	/*! Default Constructor */
 	NIFLIB_API MatchGroup();
@@ -25,13 +23,9 @@ struct MatchGroup {
 	NIFLIB_API MatchGroup( const MatchGroup & src );
 	/*! Copy Operator */
 	NIFLIB_API MatchGroup & operator=( const MatchGroup & src );
-	/*!
-	 * Number of vertices in this group.
-	 */
+	/*! Number of vertices in this group. */
 	mutable unsigned short numVertices;
-	/*!
-	 * The vertex indices.
-	 */
+	/*! The vertex indices. */
 	vector<unsigned short > vertexIndices;
 };
 

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiLightColorController;
 typedef Ref<NiLightColorController> NiLightColorControllerRef;
 
-/*!
- * NiLightColorController - Light color animation controller.
- */
-
+/*! Light color animation controller. */
 class NiLightColorController : public NiPoint3InterpController {
 public:
 	/*! Constructor */

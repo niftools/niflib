@@ -24,10 +24,7 @@ class NiParticleSystemController;
 class AParticleModifier;
 typedef Ref<AParticleModifier> AParticleModifierRef;
 
-/*!
- * AParticleModifier - A particle system modifier.
- */
-
+/*! A particle system modifier. */
 class AParticleModifier : public NiObject {
 public:
 	/*! Constructor */
@@ -63,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Next particle modifier.
-	 */
+	/*! Next particle modifier. */
 	Ref<AParticleModifier > nextModifier;
-	/*!
-	 * Points to the particle system controller parent.
-	 */
+	/*! Points to the particle system controller parent. */
 	NiParticleSystemController * controller;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

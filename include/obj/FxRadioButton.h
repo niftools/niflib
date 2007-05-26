@@ -19,10 +19,7 @@ namespace Niflib {
 class FxRadioButton;
 typedef Ref<FxRadioButton> FxRadioButtonRef;
 
-/*!
- * FxRadioButton - Unknown.
- */
-
+/*! Unknown. */
 class FxRadioButton : public FxWidget {
 public:
 	/*! Constructor */
@@ -58,25 +55,17 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt3;
-	/*!
-	 * Number of unknown links.
-	 */
+	/*! Number of unknown links. */
 	mutable unsigned int numButtons;
 	/*!
-	 * Unknown pointers to other buttons.  Maybe other buttons in a group so
-	 * they can be switch off if this one is switched on?
+	 * Unknown pointers to other buttons.  Maybe other buttons in a group so they can
+	 * be switch off if this one is switched on?
 	 */
 	vector<FxRadioButton * > buttons;
 public:

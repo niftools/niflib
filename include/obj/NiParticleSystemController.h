@@ -27,11 +27,7 @@ class NiColorData;
 class NiParticleSystemController;
 typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;
 
-/*!
- * NiParticleSystemController - A generic particle system time controller
- * object.
- */
-
+/*! A generic particle system time controller object. */
 class NiParticleSystemController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -67,163 +63,95 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Particle speed
-	 */
+	/*! Particle speed */
 	float speed;
-	/*!
-	 * Particle random speed modifier
-	 */
+	/*! Particle random speed modifier */
 	float speedRandom;
 	/*!
-	 * vertical emit direction [radians]             0.0 : up             1.6
-	 * : horizontal             3.1416 : down
+	 * vertical emit direction [radians]
+	 *             0.0 : up
+	 *             1.6 : horizontal
+	 *             3.1416 : down
 	 */
 	float verticalDirection;
-	/*!
-	 * emitter's vertical opening angle [radians]
-	 */
+	/*! emitter's vertical opening angle [radians] */
 	float verticalAngle;
-	/*!
-	 * horizontal emit direction
-	 */
+	/*! horizontal emit direction */
 	float horizontalDirection;
-	/*!
-	 * emitter's horizontal opening angle
-	 */
+	/*! emitter's horizontal opening angle */
 	float horizontalAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat5;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat7;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat8;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat9;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat10;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat11;
-	/*!
-	 * Particle size
-	 */
+	/*! Particle size */
 	float size;
-	/*!
-	 * Particle emit start time
-	 */
+	/*! Particle emit start time */
 	float emitStartTime;
-	/*!
-	 * Particle emit stop time
-	 */
+	/*! Particle emit stop time */
 	float emitStopTime;
-	/*!
-	 * Unknown byte, (=0)
-	 */
+	/*! Unknown byte, (=0) */
 	byte unknownByte;
-	/*!
-	 * Particle emission rate (particles per second)
-	 */
+	/*! Particle emission rate (particles per second) */
 	float emitRate;
-	/*!
-	 * Particle lifetime
-	 */
+	/*! Particle lifetime */
 	float lifetime;
-	/*!
-	 * Particle lifetime random modifier
-	 */
+	/*! Particle lifetime random modifier */
 	float lifetimeRandom;
-	/*!
-	 * Bit 0: Emit Rate toggle bit (0 = auto adjust, 1 = use Emit Rate value)
-	 */
+	/*! Bit 0: Emit Rate toggle bit (0 = auto adjust, 1 = use Emit Rate value) */
 	unsigned short emitFlags;
-	/*!
-	 * Particle random start translation vector
-	 */
+	/*! Particle random start translation vector */
 	Vector3 startRandom;
 	/*!
-	 * This index targets the particle emitter object (TODO: find out what
-	 * type of object this refers to).
+	 * This index targets the particle emitter object (TODO: find out what type of
+	 * object this refers to).
 	 */
 	NiObject * emitter;
-	/*!
-	 * ? short=0 ?
-	 */
+	/*! ? short=0 ? */
 	unsigned short unknownShort2_;
-	/*!
-	 * ? float=1.0 ?
-	 */
+	/*! ? float=1.0 ? */
 	float unknownFloat13_;
-	/*!
-	 * ? int=1 ?
-	 */
+	/*! ? int=1 ? */
 	unsigned int unknownInt1_;
-	/*!
-	 * ? int=0 ?
-	 */
+	/*! ? int=0 ? */
 	unsigned int unknownInt2_;
-	/*!
-	 * ? short=0 ?
-	 */
+	/*! ? short=0 ? */
 	unsigned short unknownShort3_;
-	/*!
-	 * The particle (older NIF versions only have a single particle per
-	 * controller?)
-	 */
+	/*! The particle (older NIF versions only have a single particle per controller?) */
 	Particle particle;
-	/*!
-	 * Size of the following array. (Maximum number of simultaneous active
-	 * particles)
-	 */
+	/*! Size of the following array. (Maximum number of simultaneous active particles) */
 	mutable unsigned short numParticles;
 	/*!
-	 * Number of valid entries in the following array. (Number of active
-	 * particles at the time the system was saved)
+	 * Number of valid entries in the following array. (Number of active particles at
+	 * the time the system was saved)
 	 */
 	unsigned short numValid;
-	/*!
-	 * Individual particle modifiers?
-	 */
+	/*! Individual particle modifiers? */
 	vector<Particle > particles;
-	/*!
-	 * unknown int (=0xffffffff)
-	 */
+	/*! unknown int (=0xffffffff) */
 	Ref<NiObject > unknownLink;
 	/*!
-	 * Link to some optional particle modifiers (NiGravity,
-	 * NiParticleGrowFade, NiParticleBomb, ...)
+	 * Link to some optional particle modifiers (NiGravity, NiParticleGrowFade,
+	 * NiParticleBomb, ...)
 	 */
 	Ref<AParticleModifier > particleExtra;
-	/*!
-	 * Unknown int (=0xffffffff)
-	 */
+	/*! Unknown int (=0xffffffff) */
 	Ref<NiObject > unknownLink2;
-	/*!
-	 * Trailing null byte
-	 */
+	/*! Trailing null byte */
 	byte trailer;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Ref<NiColorData > colorData;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<2,float > unkownFloats;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

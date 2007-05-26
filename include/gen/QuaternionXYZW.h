@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * A quaternion as it appears in the havok objects.
- */
+/*! A quaternion as it appears in the havok objects. */
 struct QuaternionXYZW {
 	/*! Default Constructor */
 	NIFLIB_API QuaternionXYZW();
@@ -25,21 +23,13 @@ struct QuaternionXYZW {
 	NIFLIB_API QuaternionXYZW( const QuaternionXYZW & src );
 	/*! Copy Operator */
 	NIFLIB_API QuaternionXYZW & operator=( const QuaternionXYZW & src );
-	/*!
-	 * The x-coordinate.
-	 */
+	/*! The x-coordinate. */
 	float x;
-	/*!
-	 * The y-coordinate.
-	 */
+	/*! The y-coordinate. */
 	float y;
-	/*!
-	 * The z-coordinate.
-	 */
+	/*! The z-coordinate. */
 	float z;
-	/*!
-	 * The w-coordinate.
-	 */
+	/*! The w-coordinate. */
 	float w;
 };
 

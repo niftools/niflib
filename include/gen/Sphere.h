@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * A sphere.
- */
+/*! A sphere. */
 struct Sphere {
 	/*! Default Constructor */
 	NIFLIB_API Sphere();
@@ -25,13 +23,9 @@ struct Sphere {
 	NIFLIB_API Sphere( const Sphere & src );
 	/*! Copy Operator */
 	NIFLIB_API Sphere & operator=( const Sphere & src );
-	/*!
-	 * The sphere's center.
-	 */
+	/*! The sphere's center. */
 	Vector3 center;
-	/*!
-	 * The sphere's radius.
-	 */
+	/*! The sphere's radius. */
 	float radius;
 };
 

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiParticleRotation;
 typedef Ref<NiParticleRotation> NiParticleRotationRef;
 
-/*!
- * NiParticleRotation - Unknown.
- */
-
+/*! Unknown. */
 class NiParticleRotation : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -58,25 +55,15 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	byte unknownByte;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat4;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

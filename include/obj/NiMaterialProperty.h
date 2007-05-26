@@ -19,10 +19,7 @@ namespace Niflib {
 class NiMaterialProperty;
 typedef Ref<NiMaterialProperty> NiMaterialPropertyRef;
 
-/*!
- * NiMaterialProperty - Describes the material shading properties.
- */
-
+/*! Describes the material shading properties. */
 class NiMaterialProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -143,34 +140,21 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
-	/*!
-	 * How much the material reflects ambient light.
-	 */
+	/*! How much the material reflects ambient light. */
 	Color3 ambientColor;
-	/*!
-	 * How much the material reflects diffuse light.
-	 */
+	/*! How much the material reflects diffuse light. */
 	Color3 diffuseColor;
-	/*!
-	 * How much light the material reflects in a specular manner.
-	 */
+	/*! How much light the material reflects in a specular manner. */
 	Color3 specularColor;
-	/*!
-	 * How much light the material emits.
-	 */
+	/*! How much light the material emits. */
 	Color3 emissiveColor;
-	/*!
-	 * The material's glossiness.
-	 */
+	/*! The material's glossiness. */
 	float glossiness;
 	/*!
-	 * The material transparency (1=non-transparant). Refer to a
-	 * NiAlphaProperty object in this material's parent NiTriShape object,
-	 * when alpha is not 1.
+	 * The material transparency (1=non-transparant). Refer to a NiAlphaProperty object
+	 * in this material's parent NiTriShape object, when alpha is not 1.
 	 */
 	float alpha;
 public:

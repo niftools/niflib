@@ -19,11 +19,7 @@ namespace Niflib {
 class NiPSysModifierBoolCtlr;
 typedef Ref<NiPSysModifierBoolCtlr> NiPSysModifierBoolCtlrRef;
 
-/*!
- * NiPSysModifierBoolCtlr - A particle system modifier controller that
- * deals with boolean data?
- */
-
+/*! A particle system modifier controller that deals with boolean data? */
 class NiPSysModifierBoolCtlr : public NiPSysModifierCtlr {
 public:
 	/*! Constructor */

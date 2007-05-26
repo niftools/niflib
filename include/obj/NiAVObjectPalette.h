@@ -19,10 +19,7 @@ namespace Niflib {
 class NiAVObjectPalette;
 typedef Ref<NiAVObjectPalette> NiAVObjectPaletteRef;
 
-/*!
- * NiAVObjectPalette - Unknown.
- */
-
+/*! Unknown. */
 class NiAVObjectPalette : public NiObject {
 public:
 	/*! Constructor */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBlendTransformInterpolator;
 typedef Ref<NiBlendTransformInterpolator> NiBlendTransformInterpolatorRef;
 
-/*!
- * NiBlendTransformInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBlendTransformInterpolator : public NiBlendInterpolator {
 public:
 	/*! Constructor */

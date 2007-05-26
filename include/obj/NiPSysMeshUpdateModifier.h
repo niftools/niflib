@@ -24,10 +24,7 @@ class NiNode;
 class NiPSysMeshUpdateModifier;
 typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;
 
-/*!
- * NiPSysMeshUpdateModifier - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysMeshUpdateModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -63,13 +60,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of object references that follow.
-	 */
+	/*! The number of object references that follow. */
 	mutable unsigned int numMeshes;
-	/*!
-	 * Not sure here... Group of target NiNodes?
-	 */
+	/*! Not sure here... Group of target NiNodes? */
 	vector<Ref<NiNode > > meshes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

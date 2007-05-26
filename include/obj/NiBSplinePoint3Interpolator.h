@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplinePoint3Interpolator;
 typedef Ref<NiBSplinePoint3Interpolator> NiBSplinePoint3InterpolatorRef;
 
-/*!
- * NiBSplinePoint3Interpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplinePoint3Interpolator : public NiBSplineInterpolator {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<6,float > unknownFloats;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

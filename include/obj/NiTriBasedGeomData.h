@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTriBasedGeomData;
 typedef Ref<NiTriBasedGeomData> NiTriBasedGeomDataRef;
 
-/*!
- * NiTriBasedGeomData - Describes a mesh, built from triangles.
- */
-
+/*! Describes a mesh, built from triangles. */
 class NiTriBasedGeomData : public NiGeometryData {
 public:
 	/*! Constructor */
@@ -73,9 +70,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of triangles.
-	 */
+	/*! Number of triangles. */
 	unsigned short numTriangles;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -18,9 +18,7 @@ namespace Niflib {
 class NiTriShape;
 class NiSkinInstance;
 
-/*!
- * Reference to shape and skin instance.
- */
+/*! Reference to shape and skin instance. */
 struct SkinShape {
 	/*! Default Constructor */
 	NIFLIB_API SkinShape();
@@ -30,13 +28,9 @@ struct SkinShape {
 	NIFLIB_API SkinShape( const SkinShape & src );
 	/*! Copy Operator */
 	NIFLIB_API SkinShape & operator=( const SkinShape & src );
-	/*!
-	 * The shape.
-	 */
+	/*! The shape. */
 	Ref<NiTriShape > shape;
-	/*!
-	 * Skinning instance for the shape?
-	 */
+	/*! Skinning instance for the shape? */
 	Ref<NiSkinInstance > skinInstance;
 };
 

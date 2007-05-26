@@ -19,10 +19,7 @@ namespace Niflib {
 class NiLight;
 typedef Ref<NiLight> NiLightRef;
 
-/*!
- * NiLight - Light source.
- */
-
+/*! Light source. */
 class NiLight : public NiDynamicEffect {
 public:
 	/*! Constructor */
@@ -107,21 +104,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Dimmer.
-	 */
+	/*! Dimmer. */
 	float dimmer;
-	/*!
-	 * Ambient color.
-	 */
+	/*! Ambient color. */
 	Color3 ambientColor;
-	/*!
-	 * Diffuse color.
-	 */
+	/*! Diffuse color. */
 	Color3 diffuseColor;
-	/*!
-	 * Specular color.
-	 */
+	/*! Specular color. */
 	Color3 specularColor;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

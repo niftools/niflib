@@ -19,11 +19,7 @@ namespace Niflib {
 class NiTextKeyExtraData;
 typedef Ref<NiTextKeyExtraData> NiTextKeyExtraDataRef;
 
-/*!
- * NiTextKeyExtraData - Extra data, used to name different animation
- * sequences.
- */
-
+/*! Extra data, used to name different animation sequences. */
 class NiTextKeyExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -74,18 +70,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.  Always equals zero in all official files.
-	 */
+	/*! Unknown.  Always equals zero in all official files. */
 	unsigned int unknownInt1;
-	/*!
-	 * The number of text keys that follow.
-	 */
+	/*! The number of text keys that follow. */
 	mutable unsigned int numTextKeys;
 	/*!
-	 * List of textual notes and at which time they take effect. Used for
-	 * designating the start and stop of animations and the triggering of
-	 * sounds.
+	 * List of textual notes and at which time they take effect. Used for designating
+	 * the start and stop of animations and the triggering of sounds.
 	 */
 	vector<Key<string > > textKeys;
 public:

@@ -29,10 +29,7 @@ class NiCollisionObject;
 class NiAVObject;
 typedef Ref<NiAVObject> NiAVObjectRef;
 
-/*!
- * NiAVObject - Generic node object.
- */
-
+/*! Generic node object. */
 class NiAVObject : public NiObjectNET {
 public:
 	/*! Constructor */
@@ -270,45 +267,27 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Some flags; commonly 0x000C or 0x000A.
-	 */
+	/*! Some flags; commonly 0x000C or 0x000A. */
 	unsigned short flags;
-	/*!
-	 * The translation vector.
-	 */
+	/*! The translation vector. */
 	Vector3 translation;
-	/*!
-	 * The rotation part of the transformation matrix.
-	 */
+	/*! The rotation part of the transformation matrix. */
 	Matrix33 rotation;
-	/*!
-	 * Scaling part (only uniform scaling is supported).
-	 */
+	/*! Scaling part (only uniform scaling is supported). */
 	float scale;
-	/*!
-	 * Unknown function. Always seems to be (0, 0, 0)
-	 */
+	/*! Unknown function. Always seems to be (0, 0, 0) */
 	Vector3 velocity;
-	/*!
-	 * The number of property objects referenced.
-	 */
+	/*! The number of property objects referenced. */
 	mutable unsigned int numProperties;
-	/*!
-	 * List of node properties.
-	 */
+	/*! List of node properties. */
 	vector<Ref<NiProperty > > properties;
-	/*!
-	 * Do we have a bounding box?
-	 */
+	/*! Do we have a bounding box? */
 	bool hasBoundingBox;
-	/*!
-	 * The bounding box.
-	 */
+	/*! The bounding box. */
 	BoundingBox boundingBox;
 	/*!
-	 * Refers to NiCollisionObject, which is usually a bounding box or other
-	 * simple collision shape.  In Oblivion this links the Havok objects.
+	 * Refers to NiCollisionObject, which is usually a bounding box or other simple
+	 * collision shape.  In Oblivion this links the Havok objects.
 	 */
 	Ref<NiCollisionObject > collisionObject;
 public:

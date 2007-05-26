@@ -28,10 +28,7 @@ class NiSkinPartition;
 class NiSkinData;
 typedef Ref<NiSkinData> NiSkinDataRef;
 
-/*!
- * NiSkinData - Skinning data.
- */
-
+/*! Skinning data. */
 class NiSkinData : public NiObject {
 public:
 	/*! Constructor */
@@ -141,37 +138,27 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * The overall rotation offset of the skin from this bone in the bind
-	 * position.             (This is a guess, it has always been the
-	 * identity matrix so far)
+	 * The overall rotation offset of the skin from this bone in the bind position.
+	 *             (This is a guess, it has always been the identity matrix so far)
 	 */
 	Matrix33 rotation;
 	/*!
-	 * The overall translation offset of the skin from this bone in the bind
-	 * position. (This is a guess, it has always been (0.0, 0.0, 0.0) so far)
+	 * The overall translation offset of the skin from this bone in the bind position.
+	 * (This is a guess, it has always been (0.0, 0.0, 0.0) so far)
 	 */
 	Vector3 translation;
 	/*!
-	 * The scale offset of the skin from this bone in the bind position.
-	 * (This is an assumption - it has always been 1.0 so far)
+	 * The scale offset of the skin from this bone in the bind position. (This is an
+	 * assumption - it has always been 1.0 so far)
 	 */
 	float scale;
-	/*!
-	 * Number of bones.
-	 */
+	/*! Number of bones. */
 	mutable unsigned int numBones;
-	/*!
-	 * This optionally links a NiSkinPartition for hardware-acceleration
-	 * information.
-	 */
+	/*! This optionally links a NiSkinPartition for hardware-acceleration information. */
 	Ref<NiSkinPartition > skinPartition;
-	/*!
-	 * Enables Vertex Weights for this NiSkinData.
-	 */
+	/*! Enables Vertex Weights for this NiSkinData. */
 	byte hasVertexWeights;
-	/*!
-	 * Contains offset data for each node that this skin is influenced by.
-	 */
+	/*! Contains offset data for each node that this skin is influenced by. */
 	vector<SkinData > boneList;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

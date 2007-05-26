@@ -24,10 +24,7 @@ class NiObject;
 class NiCamera;
 typedef Ref<NiCamera> NiCameraRef;
 
-/*!
- * NiCamera - Camera object.
- */
-
+/*! Camera object. */
 class NiCamera : public NiAVObject {
 public:
 	/*! Constructor */
@@ -203,74 +200,39 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Frustrum left.
-	 */
+	/*! Frustrum left. */
 	float frustumLeft;
-	/*!
-	 * Frustrum right.
-	 */
+	/*! Frustrum right. */
 	float frustumRight;
-	/*!
-	 * Frustrum top.
-	 */
+	/*! Frustrum top. */
 	float frustumTop;
-	/*!
-	 * Frustrum bottom.
-	 */
+	/*! Frustrum bottom. */
 	float frustumBottom;
-	/*!
-	 * Frustrum near.
-	 */
+	/*! Frustrum near. */
 	float frustumNear;
-	/*!
-	 * Frustrum far.
-	 */
+	/*! Frustrum far. */
 	float frustumFar;
-	/*!
-	 * Determines whether perspective is used.  Orthographic means no
-	 * perspective.
-	 */
+	/*! Determines whether perspective is used.  Orthographic means no perspective. */
 	bool useOrthographicProjection;
-	/*!
-	 * Viewport left.
-	 */
+	/*! Viewport left. */
 	float viewportLeft;
-	/*!
-	 * Viewport right.
-	 */
+	/*! Viewport right. */
 	float viewportRight;
-	/*!
-	 * Viewport top.
-	 */
+	/*! Viewport top. */
 	float viewportTop;
-	/*!
-	 * Viewport bottom.
-	 */
+	/*! Viewport bottom. */
 	float viewportBottom;
-	/*!
-	 * Level of detail adjust.
-	 */
+	/*! Level of detail adjust. */
 	float lodAdjust;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Ref<NiObject > unknownLink_;
-	/*!
-	 * Unknown.  Changing value crashes viewer.
-	 */
+	/*! Unknown.  Changing value crashes viewer. */
 	unsigned int unknownInt;
-	/*!
-	 * Unknown.  Changing value crashes viewer.
-	 */
+	/*! Unknown.  Changing value crashes viewer. */
 	unsigned int unknownInt2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

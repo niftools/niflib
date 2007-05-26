@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysEmitterSpeedCtlr;
 typedef Ref<NiPSysEmitterSpeedCtlr> NiPSysEmitterSpeedCtlrRef;
 
-/*!
- * NiPSysEmitterSpeedCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysEmitterSpeedCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkConvexShape;
 typedef Ref<bhkConvexShape> bhkConvexShapeRef;
 
-/*!
- * bhkConvexShape - A havok shape.
- */
-
+/*! A havok shape. */
 class bhkConvexShape : public bhkSphereRepShape {
 public:
 	/*! Constructor */

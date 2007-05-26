@@ -19,10 +19,7 @@ namespace Niflib {
 class NiStencilProperty;
 typedef Ref<NiStencilProperty> NiStencilPropertyRef;
 
-/*!
- * NiStencilProperty - Allows control of stencil testing.
- */
-
+/*! Allows control of stencil testing. */
 class NiStencilProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -167,41 +164,23 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Property flags.
-	 */
+	/*! Property flags. */
 	unsigned short flags;
-	/*!
-	 * Enables or disables the stencil test.
-	 */
+	/*! Enables or disables the stencil test. */
 	byte stencilEnabled;
-	/*!
-	 * Selects the compare mode function.
-	 */
+	/*! Selects the compare mode function. */
 	CompareMode stencilFunction;
-	/*!
-	 * Unknown.  Default is 0.
-	 */
+	/*! Unknown.  Default is 0. */
 	unsigned int stencilRef;
-	/*!
-	 * A bit mask. The default is 0xffffffff.
-	 */
+	/*! A bit mask. The default is 0xffffffff. */
 	unsigned int stencilMask;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	StencilAction failAction;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	StencilAction zFailAction;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	StencilAction passAction;
-	/*!
-	 * Used to enabled double sided faces.
-	 */
+	/*! Used to enabled double sided faces. */
 	FaceDrawMode drawMode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

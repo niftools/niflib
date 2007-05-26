@@ -19,11 +19,7 @@ namespace Niflib {
 class NiGravity;
 typedef Ref<NiGravity> NiGravityRef;
 
-/*!
- * NiGravity - A particle modifier; applies a gravitational field on the
- * particles.
- */
-
+/*! A particle modifier; applies a gravitational field on the particles. */
 class NiGravity : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -59,26 +55,18 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * The strength/force of this gravity.
-	 */
+	/*! The strength/force of this gravity. */
 	float force;
-	/*!
-	 * The force field's type.
-	 */
+	/*! The force field's type. */
 	FieldType type;
 	/*!
-	 * The position of the mass point relative to the particle system. (TODO:
-	 * check for versions <= 3.1)
+	 * The position of the mass point relative to the particle system. (TODO: check for
+	 * versions <= 3.1)
 	 */
 	Vector3 position;
-	/*!
-	 * The direction of the applied acceleration.
-	 */
+	/*! The direction of the applied acceleration. */
 	Vector3 direction;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

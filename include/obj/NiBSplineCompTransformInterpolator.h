@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplineCompTransformInterpolator;
 typedef Ref<NiBSplineCompTransformInterpolator> NiBSplineCompTransformInterpolatorRef;
 
-/*!
- * NiBSplineCompTransformInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplineCompTransformInterpolator : public NiBSplineTransformInterpolator {
 public:
 	/*! Constructor */
@@ -215,53 +212,29 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Base translation when translate curve not defined.
-	 */
+	/*! Base translation when translate curve not defined. */
 	Vector3 translation;
-	/*!
-	 * Base rotation when rotation curve not defined.
-	 */
+	/*! Base rotation when rotation curve not defined. */
 	Quaternion rotation;
-	/*!
-	 * Base scale when scale curve not defined.
-	 */
+	/*! Base scale when scale curve not defined. */
 	float scale;
-	/*!
-	 * Starting offset for the translation data. (USHRT_MAX for no data.)
-	 */
+	/*! Starting offset for the translation data. (USHRT_MAX for no data.) */
 	unsigned int translateOffset;
-	/*!
-	 * Starting offset for the rotation data. (USHRT_MAX for no data.)
-	 */
+	/*! Starting offset for the rotation data. (USHRT_MAX for no data.) */
 	unsigned int rotateOffset;
-	/*!
-	 * Starting offset for the scale data. (USHRT_MAX for no data.)
-	 */
+	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
 	unsigned int scaleOffset;
-	/*!
-	 * Translate Bias
-	 */
+	/*! Translate Bias */
 	float translateBias;
-	/*!
-	 * Translate Multiplier
-	 */
+	/*! Translate Multiplier */
 	float translateMultiplier;
-	/*!
-	 * Rotation Bias
-	 */
+	/*! Rotation Bias */
 	float rotationBias;
-	/*!
-	 * Rotation Multiplier
-	 */
+	/*! Rotation Multiplier */
 	float rotationMultiplier;
-	/*!
-	 * Scale Bias
-	 */
+	/*! Scale Bias */
 	float scaleBias;
-	/*!
-	 * Scale Multiplier
-	 */
+	/*! Scale Multiplier */
 	float scaleMultiplier;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

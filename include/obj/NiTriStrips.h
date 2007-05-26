@@ -19,11 +19,7 @@ namespace Niflib {
 class NiTriStrips;
 typedef Ref<NiTriStrips> NiTriStripsRef;
 
-/*!
- * NiTriStrips - A shape node that refers to data organized into strips
- * of triangles
- */
-
+/*! A shape node that refers to data organized into strips of triangles */
 class NiTriStrips : public NiTriBasedGeom {
 public:
 	/*! Constructor */

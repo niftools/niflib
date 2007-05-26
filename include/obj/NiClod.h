@@ -20,10 +20,9 @@ class NiClod;
 typedef Ref<NiClod> NiClodRef;
 
 /*!
- * NiClod - A shape node that holds continuous level of detail
- * information.         Seems to be specific to Freedom Force.
+ * A shape node that holds continuous level of detail information.
+ *         Seems to be specific to Freedom Force.
  */
-
 class NiClod : public NiTriBasedGeom {
 public:
 	/*! Constructor */

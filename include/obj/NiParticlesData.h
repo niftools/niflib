@@ -19,10 +19,7 @@ namespace Niflib {
 class NiParticlesData;
 typedef Ref<NiParticlesData> NiParticlesDataRef;
 
-/*!
- * NiParticlesData - Generic rotating particles data object.
- */
-
+/*! Generic rotating particles data object. */
 class NiParticlesData : public NiGeometryData {
 public:
 	/*! Constructor */
@@ -58,46 +55,28 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The maximum number of particles (matches the number of vertices).
-	 */
+	/*! The maximum number of particles (matches the number of vertices). */
 	unsigned short numParticles;
-	/*!
-	 * The particles' size.
-	 */
+	/*! The particles' size. */
 	float size;
 	/*!
-	 * The number of active particles at the time the system was saved. This
-	 * is also the number of valid entries in the following arrays.
+	 * The number of active particles at the time the system was saved. This is also
+	 * the number of valid entries in the following arrays.
 	 */
 	unsigned short numActive;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Is the particle size array present?
-	 */
+	/*! Is the particle size array present? */
 	bool hasSizes;
-	/*!
-	 * The individual particel sizes.
-	 */
+	/*! The individual particel sizes. */
 	vector<float > sizes;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	bool hasUnknownFloats1;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	vector<float > unknownFloats1;
-	/*!
-	 * Is the particle rotation array present?
-	 */
+	/*! Is the particle rotation array present? */
 	bool hasRotations1;
-	/*!
-	 * The individual particle rotations.
-	 */
+	/*! The individual particle rotations. */
 	vector<Quaternion > rotations1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

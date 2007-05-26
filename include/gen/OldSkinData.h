@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Used to store skin weights in NiTriShapeSkinController.
- */
+/*! Used to store skin weights in NiTriShapeSkinController. */
 struct OldSkinData {
 	/*! Default Constructor */
 	NIFLIB_API OldSkinData();
@@ -25,17 +23,11 @@ struct OldSkinData {
 	NIFLIB_API OldSkinData( const OldSkinData & src );
 	/*! Copy Operator */
 	NIFLIB_API OldSkinData & operator=( const OldSkinData & src );
-	/*!
-	 * The amount that this bone affects the vertex.
-	 */
+	/*! The amount that this bone affects the vertex. */
 	float vertexWeight;
-	/*!
-	 * The index of the vertex that this weight applies to.
-	 */
+	/*! The index of the vertex that this weight applies to. */
 	unsigned short vertexIndex;
-	/*!
-	 * Unknown.  Perhaps some sort of offset?
-	 */
+	/*! Unknown.  Perhaps some sort of offset? */
 	Vector3 unknownVector;
 };
 

@@ -20,10 +20,9 @@ class NiBSAnimationNode;
 typedef Ref<NiBSAnimationNode> NiBSAnimationNodeRef;
 
 /*!
- * NiBSAnimationNode - Bethesda-specific extension of Node with animation
- * properties stored in the flags.
+ * Bethesda-specific extension of Node with animation properties stored in the
+ * flags.
  */
-
 class NiBSAnimationNode : public NiNode {
 public:
 	/*! Constructor */

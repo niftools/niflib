@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysEmitterLifeSpanCtlr;
 typedef Ref<NiPSysEmitterLifeSpanCtlr> NiPSysEmitterLifeSpanCtlrRef;
 
-/*!
- * NiPSysEmitterLifeSpanCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysEmitterLifeSpanCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

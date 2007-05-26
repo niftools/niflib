@@ -24,10 +24,7 @@ class NiKeyframeData;
 class BSKeyframeController;
 typedef Ref<BSKeyframeController> BSKeyframeControllerRef;
 
-/*!
- * BSKeyframeController - An extended keyframe controller.
- */
-
+/*! An extended keyframe controller. */
 class BSKeyframeController : public NiKeyframeController {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * A link to more keyframe data.
-	 */
+	/*! A link to more keyframe data. */
 	Ref<NiKeyframeData > data2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

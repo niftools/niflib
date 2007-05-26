@@ -19,10 +19,7 @@ namespace Niflib {
 class BSParentVelocityModifier;
 typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;
 
-/*!
- * BSParentVelocityModifier - Unknown.
- */
-
+/*! Unknown. */
 class BSParentVelocityModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

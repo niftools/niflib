@@ -22,10 +22,7 @@ namespace Niflib {
 class NiFloatData;
 typedef Ref<NiFloatData> NiFloatDataRef;
 
-/*!
- * NiFloatData - Possibly the 1D position along a 3D path.
- */
-
+/*! Possibly the 1D position along a 3D path. */
 class NiFloatData : public NiObject {
 public:
 	/*! Constructor */
@@ -86,9 +83,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The keys.
-	 */
+	/*! The keys. */
 	KeyGroup<float > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

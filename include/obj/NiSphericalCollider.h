@@ -19,10 +19,7 @@ namespace Niflib {
 class NiSphericalCollider;
 typedef Ref<NiSphericalCollider> NiSphericalColliderRef;
 
-/*!
- * NiSphericalCollider - Unknown.
- */
-
+/*! Unknown. */
 class NiSphericalCollider : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -58,33 +55,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat4;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat5;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

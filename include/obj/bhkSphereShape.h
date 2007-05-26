@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkSphereShape;
 typedef Ref<bhkSphereShape> bhkSphereShapeRef;
 
-/*!
- * bhkSphereShape - A sphere.
- */
-
+/*! A sphere. */
 class bhkSphereShape : public bhkConvexShape {
 public:
 	/*! Constructor */

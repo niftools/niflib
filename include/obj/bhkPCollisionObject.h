@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkPCollisionObject;
 typedef Ref<bhkPCollisionObject> bhkPCollisionObjectRef;
 
-/*!
- * bhkPCollisionObject - Unknown.
- */
-
+/*! Unknown. */
 class bhkPCollisionObject : public bhkNiCollisionObject {
 public:
 	/*! Constructor */

@@ -25,10 +25,7 @@ class hkPackedNiTriStripsData;
 class bhkPackedNiTriStripsShape;
 typedef Ref<bhkPackedNiTriStripsShape> bhkPackedNiTriStripsShapeRef;
 
-/*!
- * bhkPackedNiTriStripsShape - A shape constructed from strips data.
- */
-
+/*! A shape constructed from strips data. */
 class bhkPackedNiTriStripsShape : public bhkShapeCollection {
 public:
 	/*! Constructor */
@@ -64,29 +61,17 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of subparts.
-	 */
+	/*! Number of subparts. */
 	mutable unsigned short numSubShapes;
-	/*!
-	 * The subparts.
-	 */
+	/*! The subparts. */
 	vector<OblivionSubShape > subShapes;
-	/*!
-	 * Unknown. A rotation matrix?
-	 */
+	/*! Unknown. A rotation matrix? */
 	array<9,float > unknownFloats;
-	/*!
-	 * Scale.
-	 */
+	/*! Scale. */
 	float scale;
-	/*!
-	 * Unknown. Translation?
-	 */
+	/*! Unknown. Translation? */
 	array<3,float > unknownFloats2;
-	/*!
-	 * A link to the shape's NiTriStripsData.
-	 */
+	/*! A link to the shape's NiTriStripsData. */
 	Ref<hkPackedNiTriStripsData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

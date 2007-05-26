@@ -13,22 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Rotation key array.
- */
+/*! Rotation key array. */
 template <class T >
 struct RotationKeyArray {
-	/*!
-	 * Number of keys.
-	 */
+	/*! Number of keys. */
 	mutable unsigned int numKeys;
-	/*!
-	 * Key type (1, 2, 3, or 4).
-	 */
+	/*! Key type (1, 2, 3, or 4). */
 	KeyType keyType;
-	/*!
-	 * The rotation keys.
-	 */
+	/*! The rotation keys. */
 	vector<Key<T > > keys;
 };
 

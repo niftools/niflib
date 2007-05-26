@@ -24,10 +24,7 @@ class NiColorData;
 class NiParticleColorModifier;
 typedef Ref<NiParticleColorModifier> NiParticleColorModifierRef;
 
-/*!
- * NiParticleColorModifier - Unknown.
- */
-
+/*! Unknown. */
 class NiParticleColorModifier : public AParticleModifier {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Color data index.
-	 */
+	/*! Color data index. */
 	Ref<NiColorData > colorData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

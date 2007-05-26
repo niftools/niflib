@@ -22,10 +22,7 @@ namespace Niflib {
 class NiUVData;
 typedef Ref<NiUVData> NiUVDataRef;
 
-/*!
- * NiUVData - Texture coordinate data.
- */
-
+/*! Texture coordinate data. */
 class NiUVData : public NiObject {
 public:
 	/*! Constructor */
@@ -63,8 +60,8 @@ public:
 protected:
 	/*!
 	 * Four UV data groups.  Perhaps the first two control x and y.
-	 * The existence of the second two is a guess - there are always two zero
-	 * values following the first two in all official files.
+	 *             The existence of the second two is a guess - there are always two
+	 * zero values following the first two in all official files.
 	 */
 	array<4,KeyGroup<float > > uvGroups;
 public:

@@ -22,10 +22,7 @@ namespace Niflib {
 class bhkMultiSphereShape;
 typedef Ref<bhkMultiSphereShape> bhkMultiSphereShapeRef;
 
-/*!
- * bhkMultiSphereShape - Unknown.
- */
-
+/*! Unknown. */
 class bhkMultiSphereShape : public bhkSphereRepShape {
 public:
 	/*! Constructor */
@@ -75,21 +72,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat2;
-	/*!
-	 * The number of spheres in this multi sphere shape.
-	 */
+	/*! The number of spheres in this multi sphere shape. */
 	mutable unsigned int numSpheres;
-	/*!
-	 * This array holds the spheres which make up the multi sphere shape.
-	 */
+	/*! This array holds the spheres which make up the multi sphere shape. */
 	vector<Sphere > spheres;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

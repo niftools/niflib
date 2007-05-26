@@ -19,10 +19,7 @@ namespace Niflib {
 class NiAmbientLight;
 typedef Ref<NiAmbientLight> NiAmbientLightRef;
 
-/*!
- * NiAmbientLight - Ambient light source.
- */
-
+/*! Ambient light source. */
 class NiAmbientLight : public NiLight {
 public:
 	/*! Constructor */

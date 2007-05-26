@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkNiCollisionObject;
 typedef Ref<bhkNiCollisionObject> bhkNiCollisionObjectRef;
 
-/*!
- * bhkNiCollisionObject - Havok related collision object?
- */
-
+/*! Havok related collision object? */
 class bhkNiCollisionObject : public NiCollisionObject {
 public:
 	/*! Constructor */

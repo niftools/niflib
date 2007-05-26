@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSplineFloatInterpolator;
 typedef Ref<NiBSplineFloatInterpolator> NiBSplineFloatInterpolatorRef;
 
-/*!
- * NiBSplineFloatInterpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiBSplineFloatInterpolator : public NiBSplineInterpolator {
 public:
 	/*! Constructor */

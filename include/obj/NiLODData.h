@@ -19,10 +19,7 @@ namespace Niflib {
 class NiLODData;
 typedef Ref<NiLODData> NiLODDataRef;
 
-/*!
- * NiLODData - Abstract class used for different types of LOD selections.
- */
-
+/*! Abstract class used for different types of LOD selections. */
 class NiLODData : public NiObject {
 public:
 	/*! Constructor */

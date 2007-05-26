@@ -22,10 +22,7 @@ namespace Niflib {
 class hkPackedNiTriStripsData;
 typedef Ref<hkPackedNiTriStripsData> hkPackedNiTriStripsDataRef;
 
-/*!
- * hkPackedNiTriStripsData - NiTriStripsData for havok data?
- */
-
+/*! NiTriStripsData for havok data? */
 class hkPackedNiTriStripsData : public bhkShapeCollection {
 public:
 	/*! Constructor */
@@ -61,21 +58,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of triangles?
-	 */
+	/*! Number of triangles? */
 	mutable unsigned int numTriangles;
-	/*!
-	 * The physics triangles?
-	 */
+	/*! The physics triangles? */
 	vector<hkTriangle > triangles;
-	/*!
-	 * Number of vertices.
-	 */
+	/*! Number of vertices. */
 	mutable unsigned int numVertices;
-	/*!
-	 * The vertices?
-	 */
+	/*! The vertices? */
 	vector<Vector3 > vertices;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTransformData;
 typedef Ref<NiTransformData> NiTransformDataRef;
 
-/*!
- * NiTransformData - Mesh animation keyframe data.
- */
-
+/*! Mesh animation keyframe data. */
 class NiTransformData : public NiKeyframeData {
 public:
 	/*! Constructor */

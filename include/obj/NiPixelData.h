@@ -26,10 +26,7 @@ class NiPalette;
 class NiPixelData;
 typedef Ref<NiPixelData> NiPixelDataRef;
 
-/*!
- * NiPixelData - A texture.
- */
-
+/*! A texture. */
 class NiPixelData : public NiObject {
 public:
 	/*! Constructor */
@@ -111,69 +108,43 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The format of the pixels in this internally stored image.
-	 */
+	/*! The format of the pixels in this internally stored image. */
 	PixelFormat pixelFormat;
-	/*!
-	 * 0x000000ff (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
-	 */
+	/*! 0x000000ff (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
 	unsigned int redMask;
-	/*!
-	 * 0x0000ff00 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
-	 */
+	/*! 0x0000ff00 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
 	unsigned int greenMask;
-	/*!
-	 * 0x00ff0000 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp)
-	 */
+	/*! 0x00ff0000 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
 	unsigned int blueMask;
-	/*!
-	 * 0xff000000 (for 32bpp) or 0x00000000 (for 24bpp and 8bpp)
-	 */
+	/*! 0xff000000 (for 32bpp) or 0x00000000 (for 24bpp and 8bpp) */
 	unsigned int alphaMask;
-	/*!
-	 * Bits per pixel, 0 (?), 8, 24 or 32.
-	 */
+	/*! Bits per pixel, 0 (?), 8, 24 or 32. */
 	unsigned int bitsPerPixel;
 	/*!
 	 * [96,8,130,0,0,65,0,0] if 24 bits per pixel
-	 * [129,8,130,32,0,65,12,0] if 32 bits per pixel
-	 * [34,0,0,0,0,0,0,0] if 8 bits per pixel             [4,0,0,0,0,0,0,0]
-	 * if 0 (?) bits per pixel
+	 *             [129,8,130,32,0,65,12,0] if 32 bits per pixel
+	 *             [34,0,0,0,0,0,0,0] if 8 bits per pixel
+	 *             [4,0,0,0,0,0,0,0] if 0 (?) bits per pixel
 	 */
 	array<8,byte > unknown8Bytes;
-	/*!
-	 * Seems to always be zero.
-	 */
+	/*! Seems to always be zero. */
 	unsigned int unknownInt;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<54,byte > unknown54Bytes;
-	/*!
-	 * Link to NiPalette, for 8-bit textures.
-	 */
+	/*! Link to NiPalette, for 8-bit textures. */
 	Ref<NiPalette > palette;
-	/*!
-	 * Number of mipmaps in the texture.
-	 */
+	/*! Number of mipmaps in the texture. */
 	mutable unsigned int numMipmaps;
-	/*!
-	 * Bytes per pixel (Bits Per Pixel / 8).
-	 */
+	/*! Bytes per pixel (Bits Per Pixel / 8). */
 	unsigned int bytesPerPixel;
-	/*!
-	 * Mipmap descriptions (width, height, offset).
-	 */
+	/*! Mipmap descriptions (width, height, offset). */
 	vector<MipMap > mipmaps;
 	/*!
-	 * Raw pixel data holding the mipmaps.  Mipmap zero is the full-size
-	 * texture and they get smaller by half as the number increases.
+	 * Raw pixel data holding the mipmaps.  Mipmap zero is the full-size texture and
+	 * they get smaller by half as the number increases.
 	 */
 	ByteArray pixelData;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

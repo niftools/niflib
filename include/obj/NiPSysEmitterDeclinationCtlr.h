@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysEmitterDeclinationCtlr;
 typedef Ref<NiPSysEmitterDeclinationCtlr> NiPSysEmitterDeclinationCtlrRef;
 
-/*!
- * NiPSysEmitterDeclinationCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysEmitterDeclinationCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

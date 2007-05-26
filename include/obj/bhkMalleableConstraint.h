@@ -26,10 +26,7 @@ class NiObject;
 class bhkMalleableConstraint;
 typedef Ref<bhkMalleableConstraint> bhkMalleableConstraintRef;
 
-/*!
- * bhkMalleableConstraint - A malleable constraint.
- */
-
+/*! A malleable constraint. */
 class bhkMalleableConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -65,41 +62,23 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Type of constraint.
-	 */
+	/*! Type of constraint. */
 	unsigned int type;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt2;
-	/*!
-	 * Usually -1?
-	 */
+	/*! Usually -1? */
 	Ref<NiObject > unknownLink1;
-	/*!
-	 * Usually -1?
-	 */
+	/*! Usually -1? */
 	Ref<NiObject > unknownLink2;
-	/*!
-	 * Unknown. 1?
-	 */
+	/*! Unknown. 1? */
 	unsigned int unknownInt3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	RagdollDescriptor ragdoll;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	LimitedHingeDescriptor limitedHinge;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float tau;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float damping;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

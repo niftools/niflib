@@ -24,10 +24,7 @@ class NiPSysPlanarCollider;
 class NiPSysColliderManager;
 typedef Ref<NiPSysColliderManager> NiPSysColliderManagerRef;
 
-/*!
- * NiPSysColliderManager - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysColliderManager : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Link to NiPSysPlanarCollider.
-	 */
+	/*! Link to NiPSysPlanarCollider. */
 	Ref<NiPSysPlanarCollider > collider;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

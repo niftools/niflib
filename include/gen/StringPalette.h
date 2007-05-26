@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * A list of \\0 terminated strings.
- */
+/*! A list of \\0 terminated strings. */
 struct StringPalette {
 	/*! Default Constructor */
 	NIFLIB_API StringPalette();
@@ -25,13 +23,9 @@ struct StringPalette {
 	NIFLIB_API StringPalette( const StringPalette & src );
 	/*! Copy Operator */
 	NIFLIB_API StringPalette & operator=( const StringPalette & src );
-	/*!
-	 * A bunch of 0x00 seperated strings.
-	 */
+	/*! A bunch of 0x00 seperated strings. */
 	string palette;
-	/*!
-	 * Length of the palette string is repeated here.
-	 */
+	/*! Length of the palette string is repeated here. */
 	unsigned int length;
 };
 

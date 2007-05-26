@@ -19,10 +19,7 @@ namespace Niflib {
 class NiKeyBasedInterpolator;
 typedef Ref<NiKeyBasedInterpolator> NiKeyBasedInterpolatorRef;
 
-/*!
- * NiKeyBasedInterpolator - Interpolator objects that use keys?
- */
-
+/*! Interpolator objects that use keys? */
 class NiKeyBasedInterpolator : public NiInterpolator {
 public:
 	/*! Constructor */

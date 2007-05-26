@@ -25,10 +25,7 @@ class NiFloatData;
 class NiPathController;
 typedef Ref<NiPathController> NiPathControllerRef;
 
-/*!
- * NiPathController - Time controller for a path.
- */
-
+/*! Time controller for a path. */
 class NiPathController : public NiTimeController {
 public:
 	/*! Constructor */
@@ -91,33 +88,19 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown, always 1?
-	 */
+	/*! Unknown, always 1? */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown, always 0?
-	 */
+	/*! Unknown, always 0? */
 	unsigned int unknownInt2;
-	/*!
-	 * Unknown, always 0?
-	 */
+	/*! Unknown, always 0? */
 	unsigned int unknownInt3;
-	/*!
-	 * Unknown, always 0?
-	 */
+	/*! Unknown, always 0? */
 	unsigned short unknownShort;
-	/*!
-	 * Path controller data index (position data). ?
-	 */
+	/*! Path controller data index (position data). ? */
 	Ref<NiPosData > posData;
-	/*!
-	 * Path controller data index (float data). ?
-	 */
+	/*! Path controller data index (float data). ? */
 	Ref<NiFloatData > floatData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

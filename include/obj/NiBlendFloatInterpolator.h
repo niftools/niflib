@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBlendFloatInterpolator;
 typedef Ref<NiBlendFloatInterpolator> NiBlendFloatInterpolatorRef;
 
-/*!
- * NiBlendFloatInterpolator - An interpolator for a float.
- */
-
+/*! An interpolator for a float. */
 class NiBlendFloatInterpolator : public NiBlendInterpolator {
 public:
 	/*! Constructor */
@@ -71,9 +68,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The interpolated float?
-	 */
+	/*! The interpolated float? */
 	float floatValue;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

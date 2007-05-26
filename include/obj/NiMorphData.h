@@ -22,10 +22,7 @@ namespace Niflib {
 class NiMorphData;
 typedef Ref<NiMorphData> NiMorphDataRef;
 
-/*!
- * NiMorphData - Geometry morphing data.
- */
-
+/*! Geometry morphing data. */
 class NiMorphData : public NiObject {
 public:
 	/*! Constructor */
@@ -137,21 +134,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of morphing object.
-	 */
+	/*! Number of morphing object. */
 	mutable unsigned int numMorphs;
-	/*!
-	 * Number of vertices.
-	 */
+	/*! Number of vertices. */
 	unsigned int numVertices;
-	/*!
-	 * This byte is always 1 in all official files.
-	 */
+	/*! This byte is always 1 in all official files. */
 	byte unknownByte;
-	/*!
-	 * The geometry morphing objects.
-	 */
+	/*! The geometry morphing objects. */
 	vector<Morph > morphs;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -20,13 +20,13 @@ class NiClodData;
 typedef Ref<NiClodData> NiClodDataRef;
 
 /*!
- * NiClodData - Holds mesh data for continuous level of detail shapes.
- * Pesumably a progressive mesh with triangles specified by edge splits.
- * Seems to be specific to Freedom Force.         The structure of this
- * is uncertain and highly experimental at this point.         No file
- * with this data can currently be read properly.
+ * Holds mesh data for continuous level of detail shapes.
+ *         Pesumably a progressive mesh with triangles specified by edge splits.
+ *         Seems to be specific to Freedom Force.
+ *         The structure of this is uncertain and highly experimental at this
+ * point.
+ *         No file with this data can currently be read properly.
  */
-
 class NiClodData : public NiTriBasedGeomData {
 public:
 	/*! Constructor */
@@ -62,41 +62,23 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShorts;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned short unknownCount1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned short unknownCount2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	mutable unsigned short unknownCount3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector< array<6,unsigned short > > unknownClodShorts1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<unsigned short > unknownClodShorts2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector< array<6,unsigned short > > unknownClodShorts3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

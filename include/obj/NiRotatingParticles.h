@@ -19,10 +19,7 @@ namespace Niflib {
 class NiRotatingParticles;
 typedef Ref<NiRotatingParticles> NiRotatingParticlesRef;
 
-/*!
- * NiRotatingParticles - Unknown.
- */
-
+/*! Unknown. */
 class NiRotatingParticles : public NiParticles {
 public:
 	/*! Constructor */

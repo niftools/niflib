@@ -22,10 +22,7 @@ namespace Niflib {
 class NiExtraData;
 typedef Ref<NiExtraData> NiExtraDataRef;
 
-/*!
- * NiExtraData - A generic extra data object.
- */
-
+/*! A generic extra data object. */
 class NiExtraData : public NiObject {
 public:
 	/*! Constructor */
@@ -101,13 +98,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Name of this object.
-	 */
+	/*! Name of this object. */
 	string name;
-	/*!
-	 * Block number of the next extra data object.
-	 */
+	/*! Block number of the next extra data object. */
 	Ref<NiExtraData > nextExtraData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -24,10 +24,7 @@ class bhkShape;
 class bhkListShape;
 typedef Ref<bhkListShape> bhkListShapeRef;
 
-/*!
- * bhkListShape - A list of shapes.
- */
-
+/*! A list of shapes. */
 class bhkListShape : public bhkShapeCollection {
 public:
 	/*! Constructor */
@@ -63,29 +60,17 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of sub shapes referenced.
-	 */
+	/*! The number of sub shapes referenced. */
 	mutable unsigned int numSubShapes;
-	/*!
-	 * List of shapes.
-	 */
+	/*! List of shapes. */
 	vector<Ref<bhkShape > > subShapes;
-	/*!
-	 * The shape's material.
-	 */
+	/*! The shape's material. */
 	HavokMaterial material;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<6,float > unknownFloats;
-	/*!
-	 * Count.
-	 */
+	/*! Count. */
 	mutable unsigned int numUnknownInts;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<unsigned int > unknownInts;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -26,13 +26,14 @@ class NiCollisionObject;
 typedef Ref<NiCollisionObject> NiCollisionObjectRef;
 
 /*!
- * NiCollisionObject - This is the most common collision object found in
- * NIF files. It acts as a real object that         is visible and
- * possibly (if the body allows for it) interactive. The node itself
- * is simple, it only has three properties.         For this type of
- * collision object, bhkRigidBody or bhkRigidBodyT is generally used.
+ * This is the most common collision object found in NIF files. It acts as a real
+ * object that
+ *         is visible and possibly (if the body allows for it) interactive. The
+ * node itself
+ *         is simple, it only has three properties.
+ *         For this type of collision object, bhkRigidBody or bhkRigidBodyT is
+ * generally used.
  */
-
 class NiCollisionObject : public NiObject {
 public:
 	/*! Constructor */
@@ -90,17 +91,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Index of the AV object referring to this collision object.
-	 */
+	/*! Index of the AV object referring to this collision object. */
 	NiAVObject * target;
-	/*!
-	 * Set to "1" for most objects.
-	 */
+	/*! Set to "1" for most objects. */
 	unsigned short unknownShort;
-	/*!
-	 * Links to the collision object data
-	 */
+	/*! Links to the collision object data */
 	Ref<NiObject > body;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

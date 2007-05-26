@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkShape;
 typedef Ref<bhkShape> bhkShapeRef;
 
-/*!
- * bhkShape - A Havok Shape?
- */
-
+/*! A Havok Shape? */
 class bhkShape : public bhkSerializable {
 public:
 	/*! Constructor */

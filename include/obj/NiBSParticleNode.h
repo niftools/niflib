@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBSParticleNode;
 typedef Ref<NiBSParticleNode> NiBSParticleNodeRef;
 
-/*!
- * NiBSParticleNode - Unknown.
- */
-
+/*! Unknown. */
 class NiBSParticleNode : public NiNode {
 public:
 	/*! Constructor */

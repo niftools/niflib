@@ -26,10 +26,7 @@ class NiNode;
 class NiSkinInstance;
 typedef Ref<NiSkinInstance> NiSkinInstanceRef;
 
-/*!
- * NiSkinInstance - Skinning instance.
- */
-
+/*! Skinning instance. */
 class NiSkinInstance : public NiObject {
 public:
 	/*! Constructor */
@@ -122,26 +119,18 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Skinning data reference.
-	 */
+	/*! Skinning data reference. */
 	Ref<NiSkinData > data;
 	/*!
-	 * Refers to a NiSkinPartition objects, which partitions the mesh such
-	 * that every vertex is only influenced by a limited number of bones.
+	 * Refers to a NiSkinPartition objects, which partitions the mesh such that every
+	 * vertex is only influenced by a limited number of bones.
 	 */
 	Ref<NiSkinPartition > skinPartition;
-	/*!
-	 * Armature root node.
-	 */
+	/*! Armature root node. */
 	NiNode * skeletonRoot;
-	/*!
-	 * The number of node bones referenced as influences.
-	 */
+	/*! The number of node bones referenced as influences. */
 	mutable unsigned int numBones;
-	/*!
-	 * List of all armature bones.
-	 */
+	/*! List of all armature bones. */
 	vector<NiNode * > bones;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

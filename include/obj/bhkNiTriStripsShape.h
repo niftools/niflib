@@ -25,10 +25,7 @@ class NiTriStripsData;
 class bhkNiTriStripsShape;
 typedef Ref<bhkNiTriStripsShape> bhkNiTriStripsShapeRef;
 
-/*!
- * bhkNiTriStripsShape - A shape constructed from a bunch of strips.
- */
-
+/*! A shape constructed from a bunch of strips. */
 class bhkNiTriStripsShape : public bhkShapeCollection {
 public:
 	/*! Constructor */
@@ -90,49 +87,27 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The shape's material.
-	 */
+	/*! The shape's material. */
 	HavokMaterial material;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float unknownFloat1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	array<4,unsigned int > unknownInts1;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	unsigned int unknownInt2;
-	/*!
-	 * Scale. Usually (1.0, 1.0, 1.0).
-	 */
+	/*! Scale. Usually (1.0, 1.0, 1.0). */
 	Vector3 scale;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt3;
-	/*!
-	 * The number of strips data objects referenced.
-	 */
+	/*! The number of strips data objects referenced. */
 	mutable unsigned int numStripsData;
-	/*!
-	 * Refers to a bunch of NiTriStripsData objects that make up this shape.
-	 */
+	/*! Refers to a bunch of NiTriStripsData objects that make up this shape. */
 	vector<Ref<NiTriStripsData > > stripsData;
-	/*!
-	 * Number of Havok Layers, equal to Number of strips data objects.
-	 */
+	/*! Number of Havok Layers, equal to Number of strips data objects. */
 	mutable unsigned int numDataLayers;
-	/*!
-	 * Havok Layers for each strip data.
-	 */
+	/*! Havok Layers for each strip data. */
 	vector<OblivionColFilter > dataLayers;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

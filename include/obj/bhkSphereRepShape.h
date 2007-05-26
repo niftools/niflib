@@ -20,10 +20,9 @@ class bhkSphereRepShape;
 typedef Ref<bhkSphereRepShape> bhkSphereRepShapeRef;
 
 /*!
- * bhkSphereRepShape - A havok shape, perhaps with a bounding sphere for
- * quick rejection in addition to more detailed shape data?
+ * A havok shape, perhaps with a bounding sphere for quick rejection in addition to
+ * more detailed shape data?
  */
-
 class bhkSphereRepShape : public bhkShape {
 public:
 	/*! Constructor */
@@ -72,13 +71,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The shape's material.
-	 */
+	/*! The shape's material. */
 	HavokMaterial material;
-	/*!
-	 * The radius of the sphere that encloses the shape.
-	 */
+	/*! The radius of the sphere that encloses the shape. */
 	float radius;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

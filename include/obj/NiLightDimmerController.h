@@ -19,10 +19,7 @@ namespace Niflib {
 class NiLightDimmerController;
 typedef Ref<NiLightDimmerController> NiLightDimmerControllerRef;
 
-/*!
- * NiLightDimmerController - Unknown controller.
- */
-
+/*! Unknown controller. */
 class NiLightDimmerController : public NiFloatInterpController {
 public:
 	/*! Constructor */

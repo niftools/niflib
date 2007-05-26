@@ -19,10 +19,7 @@ namespace Niflib {
 class NiFloatExtraDataController;
 typedef Ref<NiFloatExtraDataController> NiFloatExtraDataControllerRef;
 
-/*!
- * NiFloatExtraDataController - Unknown.
- */
-
+/*! Unknown. */
 class NiFloatExtraDataController : public NiExtraDataController {
 public:
 	/*! Constructor */
@@ -58,9 +55,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Refers to a NiFloatExtraData name.
-	 */
+	/*! Refers to a NiFloatExtraData name. */
 	string controllerData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

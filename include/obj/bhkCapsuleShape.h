@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkCapsuleShape;
 typedef Ref<bhkCapsuleShape> bhkCapsuleShapeRef;
 
-/*!
- * bhkCapsuleShape - A capsule.
- */
-
+/*! A capsule. */
 class bhkCapsuleShape : public bhkConvexShape {
 public:
 	/*! Constructor */
@@ -119,37 +116,21 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort4;
-	/*!
-	 * First point on the capsule's axis.
-	 */
+	/*! First point on the capsule's axis. */
 	Vector3 firstPoint;
-	/*!
-	 * Matches first capsule radius.
-	 */
+	/*! Matches first capsule radius. */
 	float radius1;
-	/*!
-	 * Second point on the capsule's axis.
-	 */
+	/*! Second point on the capsule's axis. */
 	Vector3 secondPoint;
-	/*!
-	 * Matches second capsule radius.
-	 */
+	/*! Matches second capsule radius. */
 	float radius2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

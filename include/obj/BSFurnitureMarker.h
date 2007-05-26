@@ -22,10 +22,7 @@ namespace Niflib {
 class BSFurnitureMarker;
 typedef Ref<BSFurnitureMarker> BSFurnitureMarkerRef;
 
-/*!
- * BSFurnitureMarker - Unknown. Marks furniture sitting positions?
- */
-
+/*! Unknown. Marks furniture sitting positions? */
 class BSFurnitureMarker : public NiExtraData {
 public:
 	/*! Constructor */
@@ -74,13 +71,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of positions.
-	 */
+	/*! Number of positions. */
 	mutable unsigned int numPositions;
-	/*!
-	 * Unknown. Probably has something to do with the furniture positions?
-	 */
+	/*! Unknown. Probably has something to do with the furniture positions? */
 	vector<FurniturePosition > positions;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

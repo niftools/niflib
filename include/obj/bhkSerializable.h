@@ -19,11 +19,7 @@ namespace Niflib {
 class bhkSerializable;
 typedef Ref<bhkSerializable> bhkSerializableRef;
 
-/*!
- * bhkSerializable - Havok objects that can be saved and loaded from
- * disk?
- */
-
+/*! Havok objects that can be saved and loaded from disk? */
 class bhkSerializable : public bhkRefObject {
 public:
 	/*! Constructor */

@@ -22,10 +22,7 @@ namespace Niflib {
 class bhkLimitedHingeConstraint;
 typedef Ref<bhkLimitedHingeConstraint> bhkLimitedHingeConstraintRef;
 
-/*!
- * bhkLimitedHingeConstraint - Hinge constraint.
- */
-
+/*! Hinge constraint. */
 class bhkLimitedHingeConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -61,9 +58,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Describes a limited hinge constraint
-	 */
+	/*! Describes a limited hinge constraint */
 	LimitedHingeDescriptor limitedHinge;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

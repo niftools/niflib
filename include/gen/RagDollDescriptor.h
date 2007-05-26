@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * 
- */
+/*!  */
 struct RagdollDescriptor {
 	/*! Default Constructor */
 	NIFLIB_API RagdollDescriptor();
@@ -25,53 +23,29 @@ struct RagdollDescriptor {
 	NIFLIB_API RagdollDescriptor( const RagdollDescriptor & src );
 	/*! Copy Operator */
 	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 pivotA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 planeA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 twistA;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 pivotB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 planeB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Float4 twistB;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float coneMinAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float planeMinAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float planeMaxAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float twistMinAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float twistMaxAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float maxFriction;
 };
 

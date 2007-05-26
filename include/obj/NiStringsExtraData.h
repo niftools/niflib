@@ -19,11 +19,7 @@ namespace Niflib {
 class NiStringsExtraData;
 typedef Ref<NiStringsExtraData> NiStringsExtraDataRef;
 
-/*!
- * NiStringsExtraData - List of strings; for example, a list of all bone
- * names.
- */
-
+/*! List of strings; for example, a list of all bone names. */
 class NiStringsExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -72,13 +68,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of strings.
-	 */
+	/*! Number of strings. */
 	mutable unsigned int numStrings;
-	/*!
-	 * The strings.
-	 */
+	/*! The strings. */
 	vector<string > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiParticleMeshes;
 typedef Ref<NiParticleMeshes> NiParticleMeshesRef;
 
-/*!
- * NiParticleMeshes - Mesh particle node?
- */
-
+/*! Mesh particle node? */
 class NiParticleMeshes : public NiParticles {
 public:
 	/*! Constructor */

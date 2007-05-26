@@ -19,10 +19,7 @@ namespace Niflib {
 class NiAutoNormalParticles;
 typedef Ref<NiAutoNormalParticles> NiAutoNormalParticlesRef;
 
-/*!
- * NiAutoNormalParticles - Unknown.
- */
-
+/*! Unknown. */
 class NiAutoNormalParticles : public NiParticles {
 public:
 	/*! Constructor */

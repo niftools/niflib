@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Geometry morphing data component.
- */
+/*! Geometry morphing data component. */
 struct Morph {
 	/*! Default Constructor */
 	NIFLIB_API Morph();
@@ -25,30 +23,20 @@ struct Morph {
 	NIFLIB_API Morph( const Morph & src );
 	/*! Copy Operator */
 	NIFLIB_API Morph & operator=( const Morph & src );
-	/*!
-	 * Name of the frame.
-	 */
+	/*! Name of the frame. */
 	string frameName;
-	/*!
-	 * The number of morph keys that follow.
-	 */
+	/*! The number of morph keys that follow. */
 	mutable unsigned int numKeys;
 	/*!
-	 * Unlike most objects, the presense of this value is not conditional on
-	 * there being keys.
+	 * Unlike most objects, the presense of this value is not conditional on there
+	 * being keys.
 	 */
 	KeyType interpolation;
-	/*!
-	 * The morph key frames.
-	 */
+	/*! The morph key frames. */
 	vector<Key<float > > keys;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt;
-	/*!
-	 * Morph vectors.
-	 */
+	/*! Morph vectors. */
 	vector<Vector3 > vectors;
 };
 

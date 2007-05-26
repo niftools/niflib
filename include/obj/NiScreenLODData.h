@@ -19,11 +19,7 @@ namespace Niflib {
 class NiScreenLODData;
 typedef Ref<NiScreenLODData> NiScreenLODDataRef;
 
-/*!
- * NiScreenLODData - Describes levels of detail based on size of object
- * on screen?
- */
-
+/*! Describes levels of detail based on size of object on screen? */
 class NiScreenLODData : public NiLODData {
 public:
 	/*! Constructor */
@@ -120,29 +116,17 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The center of the bounding sphere?
-	 */
+	/*! The center of the bounding sphere? */
 	Vector3 boundCenter;
-	/*!
-	 * The radius of the bounding sphere?
-	 */
+	/*! The radius of the bounding sphere? */
 	float boundRadius;
-	/*!
-	 * The center of the bounding sphere in world space?
-	 */
+	/*! The center of the bounding sphere in world space? */
 	Vector3 worldCenter;
-	/*!
-	 * The radius of the bounding sphere in world space?
-	 */
+	/*! The radius of the bounding sphere in world space? */
 	float worldRadius;
-	/*!
-	 * The number of screen size based LOD levels.
-	 */
+	/*! The number of screen size based LOD levels. */
 	mutable unsigned int proportionCount;
-	/*!
-	 * The LOD levels based on proportion of screen size?
-	 */
+	/*! The LOD levels based on proportion of screen size? */
 	vector<float > proportionLevels;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

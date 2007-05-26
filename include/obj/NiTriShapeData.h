@@ -22,10 +22,7 @@ namespace Niflib {
 class NiTriShapeData;
 typedef Ref<NiTriShapeData> NiTriShapeDataRef;
 
-/*!
- * NiTriShapeData - Holds mesh data using a list of singular triangles.
- */
-
+/*! Holds mesh data using a list of singular triangles. */
 class NiTriShapeData : public NiTriBasedGeomData {
 public:
 	/*! Constructor */
@@ -109,25 +106,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Num Triangles times 3.
-	 */
+	/*! Num Triangles times 3. */
 	unsigned int numTrianglePoints;
-	/*!
-	 * Do we have triangle data?
-	 */
+	/*! Do we have triangle data? */
 	bool hasTriangles;
-	/*!
-	 * Triangle data.
-	 */
+	/*! Triangle data. */
 	vector<Triangle > triangles;
-	/*!
-	 * Number of vertex matching groups.
-	 */
+	/*! Number of vertex matching groups. */
 	mutable unsigned short numMatchGroups;
-	/*!
-	 * The matching vertex groups.
-	 */
+	/*! The matching vertex groups. */
 	vector<MatchGroup > matchGroups;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

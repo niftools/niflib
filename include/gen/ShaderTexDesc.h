@@ -15,9 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * An extended texture description for shader textures.
- */
+/*! An extended texture description for shader textures. */
 struct ShaderTexDesc {
 	/*! Default Constructor */
 	NIFLIB_API ShaderTexDesc();
@@ -27,17 +25,11 @@ struct ShaderTexDesc {
 	NIFLIB_API ShaderTexDesc( const ShaderTexDesc & src );
 	/*! Copy Operator */
 	NIFLIB_API ShaderTexDesc & operator=( const ShaderTexDesc & src );
-	/*!
-	 * Is it used?
-	 */
+	/*! Is it used? */
 	bool isUsed;
-	/*!
-	 * The texture data.
-	 */
+	/*! The texture data. */
 	TexDesc textureData;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt;
 };
 

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiBlendInterpolator;
 typedef Ref<NiBlendInterpolator> NiBlendInterpolatorRef;
 
-/*!
- * NiBlendInterpolator - An extended type of interpolater.
- */
-
+/*! An extended type of interpolater. */
 class NiBlendInterpolator : public NiInterpolator {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

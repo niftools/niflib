@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysData;
 typedef Ref<NiPSysData> NiPSysDataRef;
 
-/*!
- * NiPSysData - Particle system data.
- */
-
+/*! Particle system data. */
 class NiPSysData : public NiRotatingParticlesData {
 public:
 	/*! Constructor */
@@ -58,41 +55,23 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector< array<10,float > > unknownFloats2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool hasUnknownFloats3;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	vector<float > unknownFloats1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool hasUnknownFloats4;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector< array<4,float > > unknownFloats4;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector< array<7,float > > unknownFloats5;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool hasUnknownFloats6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	vector<float > unknownFloats6;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

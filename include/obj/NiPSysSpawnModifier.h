@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysSpawnModifier;
 typedef Ref<NiPSysSpawnModifier> NiPSysSpawnModifierRef;
 
-/*!
- * NiPSysSpawnModifier - Unknown particle modifier.
- */
-
+/*! Unknown particle modifier. */
 class NiPSysSpawnModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,37 +55,21 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short numSpawnGenerations;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float percentageSpawned;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short minNumToSpawn;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short maxNumToSpawn;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float spawnSpeedChaos;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float spawnDirChaos;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float lifeSpan;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float lifeSpanVariation;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

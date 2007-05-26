@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysPositionModifier;
 typedef Ref<NiPSysPositionModifier> NiPSysPositionModifierRef;
 
-/*!
- * NiPSysPositionModifier - Unknown particle system modifier.
- */
-
+/*! Unknown particle system modifier. */
 class NiPSysPositionModifier : public NiPSysModifier {
 public:
 	/*! Constructor */

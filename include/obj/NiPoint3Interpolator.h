@@ -24,10 +24,7 @@ class NiPosData;
 class NiPoint3Interpolator;
 typedef Ref<NiPoint3Interpolator> NiPoint3InterpolatorRef;
 
-/*!
- * NiPoint3Interpolator - Unknown.
- */
-
+/*! Unknown. */
 class NiPoint3Interpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */
@@ -88,13 +85,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Value when posed?  Value at time 0?
-	 */
+	/*! Value when posed?  Value at time 0? */
 	Vector3 point3Value;
-	/*!
-	 * Reference to NiPosData.
-	 */
+	/*! Reference to NiPosData. */
 	Ref<NiPosData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

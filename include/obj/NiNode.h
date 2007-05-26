@@ -28,10 +28,7 @@ class NiDynamicEffect;
 class NiNode;
 typedef Ref<NiNode> NiNodeRef;
 
-/*!
- * NiNode - Generic node object for grouping.
- */
-
+/*! Generic node object for grouping. */
 class NiNode : public NiAVObject {
 public:
 	/*! Constructor */
@@ -168,21 +165,13 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of child objects.
-	 */
+	/*! The number of child objects. */
 	mutable unsigned int numChildren;
-	/*!
-	 * List of child node object indices.
-	 */
+	/*! List of child node object indices. */
 	vector<Ref<NiAVObject > > children;
-	/*!
-	 * The number of references to effect objects that follow.
-	 */
+	/*! The number of references to effect objects that follow. */
 	mutable unsigned int numEffects;
-	/*!
-	 * List of node effects. ADynamicEffect?
-	 */
+	/*! List of node effects. ADynamicEffect? */
 	vector<Ref<NiDynamicEffect > > effects;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class NiProperty;
 typedef Ref<NiProperty> NiPropertyRef;
 
-/*!
- * NiProperty - A generic property object.
- */
-
+/*! A generic property object. */
 class NiProperty : public NiObjectNET {
 public:
 	/*! Constructor */

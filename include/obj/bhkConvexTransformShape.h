@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkConvexTransformShape;
 typedef Ref<bhkConvexTransformShape> bhkConvexTransformShapeRef;
 
-/*!
- * bhkConvexTransformShape - A convex transformed shape?
- */
-
+/*! A convex transformed shape? */
 class bhkConvexTransformShape : public bhkTransformShape {
 public:
 	/*! Constructor */

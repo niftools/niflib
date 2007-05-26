@@ -15,9 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Skinning data component.
- */
+/*! Skinning data component. */
 struct SkinData {
 	/*! Default Constructor */
 	NIFLIB_API SkinData();
@@ -27,36 +25,25 @@ struct SkinData {
 	NIFLIB_API SkinData( const SkinData & src );
 	/*! Copy Operator */
 	NIFLIB_API SkinData & operator=( const SkinData & src );
-	/*!
-	 * Rotation offset of the skin from this bone in bind position.
-	 */
+	/*! Rotation offset of the skin from this bone in bind position. */
 	Matrix33 rotation;
-	/*!
-	 * Translation offset of the skin from this bone in bind position.
-	 */
+	/*! Translation offset of the skin from this bone in bind position. */
 	Vector3 translation;
 	/*!
-	 * Scale offset of the skin from this bone in bind position. (Assumption
-	 * - this is always 1.0 so far)
+	 * Scale offset of the skin from this bone in bind position. (Assumption - this is
+	 * always 1.0 so far)
 	 */
 	float scale;
 	/*!
-	 * Translation offset of a bounding sphere holding all vertices. (Note
-	 * that its a Sphere Containing Axis Aligned Box not a minimum volume
-	 * Sphere)
+	 * Translation offset of a bounding sphere holding all vertices. (Note that its a
+	 * Sphere Containing Axis Aligned Box not a minimum volume Sphere)
 	 */
 	Vector3 boundingSphereOffset;
-	/*!
-	 * Radius for bounding sphere holding all vertices.
-	 */
+	/*! Radius for bounding sphere holding all vertices. */
 	float boundingSphereRadius;
-	/*!
-	 * Number of weighted vertices.
-	 */
+	/*! Number of weighted vertices. */
 	mutable unsigned short numVertices;
-	/*!
-	 * The vertex weights.
-	 */
+	/*! The vertex weights. */
 	vector<SkinWeight > vertexWeights;
 };
 

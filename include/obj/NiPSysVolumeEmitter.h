@@ -21,10 +21,7 @@ class NiNode;
 class NiPSysVolumeEmitter;
 typedef Ref<NiPSysVolumeEmitter> NiPSysVolumeEmitterRef;
 
-/*!
- * NiPSysVolumeEmitter - An emitter that emits meshes?
- */
-
+/*! An emitter that emits meshes? */
 class NiPSysVolumeEmitter : public NiPSysEmitter {
 public:
 	/*! Constructor */
@@ -60,9 +57,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Node parent of this modifier?
-	 */
+	/*! Node parent of this modifier? */
 	NiNode * emitterObject;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

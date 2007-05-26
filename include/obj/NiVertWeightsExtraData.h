@@ -20,10 +20,9 @@ class NiVertWeightsExtraData;
 typedef Ref<NiVertWeightsExtraData> NiVertWeightsExtraDataRef;
 
 /*!
- * NiVertWeightsExtraData - Not used in skinning.         Unsure of use -
- * perhaps for morphing animation or gravity.
+ * Not used in skinning.
+ *         Unsure of use - perhaps for morphing animation or gravity.
  */
-
 class NiVertWeightsExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -72,17 +71,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of bytes in this data object.
-	 */
+	/*! Number of bytes in this data object. */
 	unsigned int numBytes;
-	/*!
-	 * Number of vertices.
-	 */
+	/*! Number of vertices. */
 	mutable unsigned short numVertices;
-	/*!
-	 * The vertex weights.
-	 */
+	/*! The vertex weights. */
 	vector<float > weight;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

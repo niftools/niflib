@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * 
- */
+/*!  */
 struct ByteColor3 {
 	/*! Default Constructor */
 	NIFLIB_API ByteColor3();
@@ -25,17 +23,11 @@ struct ByteColor3 {
 	NIFLIB_API ByteColor3( const ByteColor3 & src );
 	/*! Copy Operator */
 	NIFLIB_API ByteColor3 & operator=( const ByteColor3 & src );
-	/*!
-	 * Red color component.
-	 */
+	/*! Red color component. */
 	byte r;
-	/*!
-	 * Green color component.
-	 */
+	/*! Green color component. */
 	byte g;
-	/*!
-	 * Blue color component.
-	 */
+	/*! Blue color component. */
 	byte b;
 };
 

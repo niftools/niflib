@@ -24,10 +24,7 @@ class NiVisData;
 class NiVisController;
 typedef Ref<NiVisController> NiVisControllerRef;
 
-/*!
- * NiVisController - Time controller for visibility.
- */
-
+/*! Time controller for visibility. */
 class NiVisController : public NiBoolInterpController {
 public:
 	/*! Constructor */
@@ -63,9 +60,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Visibility controller data object index.
-	 */
+	/*! Visibility controller data object index. */
 	Ref<NiVisData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

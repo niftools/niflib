@@ -21,10 +21,7 @@ class bhkEntity;
 class bhkConstraint;
 typedef Ref<bhkConstraint> bhkConstraintRef;
 
-/*!
- * bhkConstraint - Describes a physical constraint.
- */
-
+/*! Describes a physical constraint. */
 class bhkConstraint : public bhkSerializable {
 public:
 	/*! Constructor */
@@ -60,17 +57,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of bodies affected by this constraint.
-	 */
+	/*! Number of bodies affected by this constraint. */
 	mutable unsigned int numEntities;
-	/*!
-	 * The entities affected by this constraint.
-	 */
+	/*! The entities affected by this constraint. */
 	vector<bhkEntity * > entities;
-	/*!
-	 * Usually 1. Higher values indicate higher priority of this constraint?
-	 */
+	/*! Usually 1. Higher values indicate higher priority of this constraint? */
 	unsigned int priority;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

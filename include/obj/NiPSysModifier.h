@@ -21,10 +21,7 @@ class NiParticleSystem;
 class NiPSysModifier;
 typedef Ref<NiPSysModifier> NiPSysModifierRef;
 
-/*!
- * NiPSysModifier - Generic particle system modifier object.
- */
-
+/*! Generic particle system modifier object. */
 class NiPSysModifier : public NiObject {
 public:
 	/*! Constructor */
@@ -60,22 +57,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The object name.
-	 */
+	/*! The object name. */
 	string name;
-	/*!
-	 * Modifier ID in the particle modifier chain (always a multiple of
-	 * 1000)?
-	 */
+	/*! Modifier ID in the particle modifier chain (always a multiple of 1000)? */
 	unsigned int order;
-	/*!
-	 * NiParticleSystem parent of this modifier.
-	 */
+	/*! NiParticleSystem parent of this modifier. */
 	NiParticleSystem * target;
-	/*!
-	 * Whether the modifier is currently in effect?  Usually true.
-	 */
+	/*! Whether the modifier is currently in effect?  Usually true. */
 	bool active;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

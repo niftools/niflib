@@ -19,10 +19,7 @@ namespace Niflib {
 class NiVisData;
 typedef Ref<NiVisData> NiVisDataRef;
 
-/*!
- * NiVisData - Visibility data for a controller.
- */
-
+/*! Visibility data for a controller. */
 class NiVisData : public NiObject {
 public:
 	/*! Constructor */
@@ -58,13 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The number of visibility keys that follow.
-	 */
+	/*! The number of visibility keys that follow. */
 	mutable unsigned int numVisKeys;
-	/*!
-	 * The visibility keys.
-	 */
+	/*! The visibility keys. */
 	vector<Key<byte > > visKeys;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

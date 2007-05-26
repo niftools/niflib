@@ -22,11 +22,7 @@ namespace Niflib {
 class NiDefaultAVObjectPalette;
 typedef Ref<NiDefaultAVObjectPalette> NiDefaultAVObjectPaletteRef;
 
-/*!
- * NiDefaultAVObjectPalette - Unknown. Refers to a list of objects. Used
- * by NiControllerManager.
- */
-
+/*! Unknown. Refers to a list of objects. Used by NiControllerManager. */
 class NiDefaultAVObjectPalette : public NiAVObjectPalette {
 public:
 	/*! Constructor */
@@ -75,17 +71,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt;
-	/*!
-	 * Number of objects.
-	 */
+	/*! Number of objects. */
 	mutable unsigned int numObjs;
-	/*!
-	 * The objects.
-	 */
+	/*! The objects. */
 	vector<AVObject > objs;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

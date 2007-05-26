@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysGravityStrengthCtlr;
 typedef Ref<NiPSysGravityStrengthCtlr> NiPSysGravityStrengthCtlrRef;
 
-/*!
- * NiPSysGravityStrengthCtlr - Unknown.
- */
-
+/*! Unknown. */
 class NiPSysGravityStrengthCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

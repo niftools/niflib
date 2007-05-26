@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysRotationModifier;
 typedef Ref<NiPSysRotationModifier> NiPSysRotationModifierRef;
 
-/*!
- * NiPSysRotationModifier - Unknown particle system modifier.
- */
-
+/*! Unknown particle system modifier. */
 class NiPSysRotationModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,33 +55,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float initialRotationSpeed;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	float initialRotationSpeedVariation;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float initialRotationAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float initialRotationAngleVariation;
-	/*!
-	 * Unknown
-	 */
+	/*! Unknown */
 	bool randomRotSpeedSign;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	bool randomInitialAxis;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Vector3 initialAxis;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

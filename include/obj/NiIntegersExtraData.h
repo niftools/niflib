@@ -19,10 +19,7 @@ namespace Niflib {
 class NiIntegersExtraData;
 typedef Ref<NiIntegersExtraData> NiIntegersExtraDataRef;
 
-/*!
- * NiIntegersExtraData - Integers data.
- */
-
+/*! Integers data. */
 class NiIntegersExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -71,13 +68,9 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Number of integers.
-	 */
+	/*! Number of integers. */
 	mutable unsigned int numIntegers;
-	/*!
-	 * Integers.
-	 */
+	/*! Integers. */
 	vector<unsigned int > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * An array of bytes.
- */
+/*! An array of bytes. */
 struct ByteArray {
 	/*! Default Constructor */
 	NIFLIB_API ByteArray();
@@ -25,13 +23,9 @@ struct ByteArray {
 	NIFLIB_API ByteArray( const ByteArray & src );
 	/*! Copy Operator */
 	NIFLIB_API ByteArray & operator=( const ByteArray & src );
-	/*!
-	 * The number of bytes in this array
-	 */
+	/*! The number of bytes in this array */
 	mutable unsigned int dataSize;
-	/*!
-	 * The bytes which make up the array
-	 */
+	/*! The bytes which make up the array */
 	vector<byte > data;
 };
 

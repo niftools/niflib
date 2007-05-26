@@ -19,10 +19,7 @@ namespace Niflib {
 class NiSequenceStreamHelper;
 typedef Ref<NiSequenceStreamHelper> NiSequenceStreamHelperRef;
 
-/*!
- * NiSequenceStreamHelper - Keyframe animation root node, in .kf files.
- */
-
+/*! Keyframe animation root node, in .kf files. */
 class NiSequenceStreamHelper : public NiObjectNET {
 public:
 	/*! Constructor */

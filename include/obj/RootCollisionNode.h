@@ -19,10 +19,7 @@ namespace Niflib {
 class RootCollisionNode;
 typedef Ref<RootCollisionNode> RootCollisionNodeRef;
 
-/*!
- * RootCollisionNode - Morrowind-specific node for collision mesh.
- */
-
+/*! Morrowind-specific node for collision mesh. */
 class RootCollisionNode : public NiNode {
 public:
 	/*! Constructor */

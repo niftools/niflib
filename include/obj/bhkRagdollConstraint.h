@@ -22,10 +22,7 @@ namespace Niflib {
 class bhkRagdollConstraint;
 typedef Ref<bhkRagdollConstraint> bhkRagdollConstraintRef;
 
-/*!
- * bhkRagdollConstraint - Ragdoll constraint.
- */
-
+/*! Ragdoll constraint. */
 class bhkRagdollConstraint : public bhkConstraint {
 public:
 	/*! Constructor */
@@ -61,9 +58,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Ragdoll constraint.
-	 */
+	/*! Ragdoll constraint. */
 	RagdollDescriptor ragdoll;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

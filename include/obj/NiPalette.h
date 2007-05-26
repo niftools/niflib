@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPalette;
 typedef Ref<NiPalette> NiPaletteRef;
 
-/*!
- * NiPalette - A color palette.
- */
-
+/*! A color palette. */
 class NiPalette : public NiObject {
 public:
 	/*! Constructor */
@@ -73,17 +70,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown, always = 0.
-	 */
+	/*! Unknown, always = 0. */
 	byte unknownByte;
-	/*!
-	 * The number of palette entries?  Always = 256.
-	 */
+	/*! The number of palette entries?  Always = 256. */
 	unsigned int numEntries_;
-	/*!
-	 * The color palette.
-	 */
+	/*! The color palette. */
 	array< 256, array<4,byte > > palette;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

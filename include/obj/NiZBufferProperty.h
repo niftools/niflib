@@ -19,11 +19,7 @@ namespace Niflib {
 class NiZBufferProperty;
 typedef Ref<NiZBufferProperty> NiZBufferPropertyRef;
 
-/*!
- * NiZBufferProperty - This Property controls the Z buffer (OpenGL: depth
- * buffer).
- */
-
+/*! This Property controls the Z buffer (OpenGL: depth buffer). */
 class NiZBufferProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -85,13 +81,12 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Bit 0 enables the z test             Bit 1 controls wether the Z
-	 * buffer is read only (0) or read/write (1)
+	 * Bit 0 enables the z test
+	 *             Bit 1 controls wether the Z buffer is read only (0) or read/write
+	 * (1)
 	 */
 	unsigned short flags;
-	/*!
-	 * Z-Test function (see: glDepthFunc)
-	 */
+	/*! Z-Test function (see: glDepthFunc) */
 	CompareMode function;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -19,10 +19,7 @@ namespace Niflib {
 class bhkBoxShape;
 typedef Ref<bhkBoxShape> bhkBoxShapeRef;
 
-/*!
- * bhkBoxShape - A box.
- */
-
+/*! A box. */
 class bhkBoxShape : public bhkConvexShape {
 public:
 	/*! Constructor */
@@ -71,29 +68,17 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort1;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort3;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort4;
-	/*!
-	 * Looks like this could be the box size.
-	 */
+	/*! Looks like this could be the box size. */
 	Vector3 dimensions;
-	/*!
-	 * The smallest of the three sizes. Might be used for optimization.
-	 */
+	/*! The smallest of the three sizes. Might be used for optimization. */
 	float min_Size;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -20,11 +20,11 @@ class NiStringExtraData;
 typedef Ref<NiStringExtraData> NiStringExtraDataRef;
 
 /*!
- * NiStringExtraData - Apparently commands for an optimizer instructing
- * it to keep things it would normally discard.         Also refers to
- * NiNode objects (through their name) in animation .kf files.
+ * Apparently commands for an optimizer instructing it to keep things it would
+ * normally discard.
+ *         Also refers to NiNode objects (through their name) in animation .kf
+ * files.
  */
-
 class NiStringExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -74,13 +74,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * The number of bytes left in the record.  Equals the length of the
-	 * following string + 4.
+	 * The number of bytes left in the record.  Equals the length of the following
+	 * string + 4.
 	 */
 	unsigned int bytesRemaining;
-	/*!
-	 * The string.
-	 */
+	/*! The string. */
 	string stringData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

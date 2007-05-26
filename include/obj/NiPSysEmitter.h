@@ -19,10 +19,7 @@ namespace Niflib {
 class NiPSysEmitter;
 typedef Ref<NiPSysEmitter> NiPSysEmitterRef;
 
-/*!
- * NiPSysEmitter - A particle emitter modifier?
- */
-
+/*! A particle emitter modifier? */
 class NiPSysEmitter : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -58,49 +55,27 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float speed;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float speedVariation;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float declination;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float declinationVariation;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float planarAngle;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float planarAngleVariation;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	Color4 initialColor;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float initialRadius;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float radiusVariation;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float lifeSpan;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	float lifeSpanVariation;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

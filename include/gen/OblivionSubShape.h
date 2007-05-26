@@ -13,9 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!
- * Havok Information for packed TriStrip shapes.
- */
+/*! Havok Information for packed TriStrip shapes. */
 struct OblivionSubShape {
 	/*! Default Constructor */
 	NIFLIB_API OblivionSubShape();
@@ -25,28 +23,20 @@ struct OblivionSubShape {
 	NIFLIB_API OblivionSubShape( const OblivionSubShape & src );
 	/*! Copy Operator */
 	NIFLIB_API OblivionSubShape & operator=( const OblivionSubShape & src );
-	/*!
-	 * Sets mesh color in Oblivion Construction Set.
-	 */
+	/*! Sets mesh color in Oblivion Construction Set. */
 	OblivionLayer layer;
 	/*!
 	 * The first bit sets the LINK property and controls whether this body is
-	 * physically linked to others. The next bit turns collision off. Then,
-	 * the next bit sets the SCALED property in Oblivion. The next five bits
-	 * make up the number of this part in a linked body list.
+	 * physically linked to others. The next bit turns collision off. Then, the next
+	 * bit sets the SCALED property in Oblivion. The next five bits make up the number
+	 * of this part in a linked body list.
 	 */
 	byte colFilter;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned short unknownShort;
-	/*!
-	 * Seems to be the number of vertices that form this sub shape.
-	 */
+	/*! Seems to be the number of vertices that form this sub shape. */
 	unsigned int vertexCount___;
-	/*!
-	 * The material of the subshape.
-	 */
+	/*! The material of the subshape. */
 	HavokMaterial material;
 };
 

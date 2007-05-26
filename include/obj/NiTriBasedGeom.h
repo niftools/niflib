@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTriBasedGeom;
 typedef Ref<NiTriBasedGeom> NiTriBasedGeomRef;
 
-/*!
- * NiTriBasedGeom - Describes a mesh, built from triangles.
- */
-
+/*! Describes a mesh, built from triangles. */
 class NiTriBasedGeom : public NiGeometry {
 public:
 	/*! Constructor */

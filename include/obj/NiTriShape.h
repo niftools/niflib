@@ -19,10 +19,7 @@ namespace Niflib {
 class NiTriShape;
 typedef Ref<NiTriShape> NiTriShapeRef;
 
-/*!
- * NiTriShape - A shape node that refers to singular triangle data.
- */
-
+/*! A shape node that refers to singular triangle data. */
 class NiTriShape : public NiTriBasedGeom {
 public:
 	/*! Constructor */

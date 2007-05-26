@@ -23,11 +23,9 @@ class NiStringPalette;
 typedef Ref<NiStringPalette> NiStringPaletteRef;
 
 /*!
- * NiStringPalette - List of 0x00-seperated strings, which are names of
- * controlled objects and controller types. Used in .kf files in
- * conjunction with NiControllerSequence.
+ * List of 0x00-seperated strings, which are names of controlled objects and
+ * controller types. Used in .kf files in conjunction with NiControllerSequence.
  */
-
 class NiStringPalette : public NiObject {
 public:
 	/*! Constructor */
@@ -90,9 +88,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * A bunch of 0x00 seperated strings.
-	 */
+	/*! A bunch of 0x00 seperated strings. */
 	StringPalette palette;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

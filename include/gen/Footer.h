@@ -18,9 +18,7 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiObject;
 
-/*!
- * The NIF file footer.
- */
+/*! The NIF file footer. */
 struct Footer {
 	/*! Default Constructor */
 	NIFLIB_API Footer();
@@ -30,15 +28,12 @@ struct Footer {
 	NIFLIB_API Footer( const Footer & src );
 	/*! Copy Operator */
 	NIFLIB_API Footer & operator=( const Footer & src );
-	/*!
-	 * The number of root references.
-	 */
+	/*! The number of root references. */
 	mutable unsigned int numRoots;
 	/*!
-	 * List of root NIF objects. If there is a camera, for 1st person view,
-	 * then this NIF object is referred to as well in this list, even if it
-	 * is not a root object (usually we want the camera to be attached to the
-	 * Bip Head node).
+	 * List of root NIF objects. If there is a camera, for 1st person view, then this
+	 * NIF object is referred to as well in this list, even if it is not a root object
+	 * (usually we want the camera to be attached to the Bip Head node).
 	 */
 	vector<Ref<NiObject > > roots;
 	NIFLIB_HIDDEN void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

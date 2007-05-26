@@ -25,11 +25,7 @@ class NiTextKeyExtraData;
 class NiSequence;
 typedef Ref<NiSequence> NiSequenceRef;
 
-/*!
- * NiSequence - Root node used in some Empire Earth II .kf files (version
- * 4.2.2.0).
- */
-
+/*! Root node used in some Empire Earth II .kf files (version 4.2.2.0). */
 class NiSequence : public NiObject {
 public:
 	/*! Constructor */
@@ -66,32 +62,21 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Name of this object. This is also the name of the action associated
-	 * with this file. For instance, if the original NIF file is called
-	 * "demon.nif" and this animation file contains an attack sequence, then
-	 * the file would be called "demon_attack1.kf" and this field would
-	 * contain the string "attack1".
+	 * Name of this object. This is also the name of the action associated with this
+	 * file. For instance, if the original NIF file is called "demon.nif" and this
+	 * animation file contains an attack sequence, then the file would be called
+	 * "demon_attack1.kf" and this field would contain the string "attack1".
 	 */
 	string name;
-	/*!
-	 * Name of following referenced NiTextKeyExtraData class.
-	 */
+	/*! Name of following referenced NiTextKeyExtraData class. */
 	string textKeysName;
-	/*!
-	 * Link to NiTextKeyExtraData.
-	 */
+	/*! Link to NiTextKeyExtraData. */
 	Ref<NiTextKeyExtraData > textKeys;
-	/*!
-	 * Number of controlled objects.
-	 */
+	/*! Number of controlled objects. */
 	mutable unsigned int numControlledBlocks;
-	/*!
-	 * Unknown.
-	 */
+	/*! Unknown. */
 	unsigned int unknownInt1;
-	/*!
-	 * Refers to controlled objects.
-	 */
+	/*! Refers to controlled objects. */
 	vector<ControllerLink > controlledBlocks;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
