@@ -43,17 +43,13 @@ TARGET2       = libniflib.so.0.$(VERSION_MIN)
 
 
 
-OBJ_FILES = NvTriStrip/NvTriStrip.o \
-           NvTriStrip/NvTriStripObjects.o \
-           NvTriStrip/VertexCache.o \
-           TriStripper/connectivity_graph.o \
-           TriStripper/policy.o \
-           TriStripper/tri_stripper.o \
-           src/ComplexShape.o \
+OBJ_FILES = src/ComplexShape.o \
            src/kfm.o \
+           src/MatTexCollection.o \
            src/niflib.o \
            src/NIF_IO.o \
            src/nif_math.o \
+           src/ObjectRegistry.o \
            src/pch.o \
            src/Type.o \
            src/obj/AParticleModifier.o \
@@ -328,6 +324,7 @@ OBJ_FILES = NvTriStrip/NvTriStrip.o \
            src/gen/Particle.o \
            src/gen/QuaternionXYZW.o \
            src/gen/RagDollDescriptor.o \
+           src/gen/register.o \
            src/gen/ShaderTexDesc.o \
            src/gen/SkinData.o \
            src/gen/SkinPartition.o \
