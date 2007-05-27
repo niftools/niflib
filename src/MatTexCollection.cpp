@@ -356,11 +356,11 @@ Ref<NiAlphaProperty> MaterialWrapper::GetTranslucencyInfo() {
 
 //--Texture Functions--//
 
-bool MaterialWrapper::HasTexture( TexType tex ) {
+bool MaterialWrapper::HasTexture( TexType slot ) {
 	if ( texing_prop != NULL ) {
-		return texing_prop->HasTexture( int(tex) );
+		return texing_prop->HasTexture( int(slot) );
 	}
-	if ( tex_prop != NULL && tex == BASE_MAP ) {
+	if ( tex_prop != NULL && slot == BASE_MAP ) {
 		if ( tex_prop->GetImage() != NULL ) {
 			return true;
 		}
@@ -417,13 +417,13 @@ void MaterialWrapper::SetTextureIndex( TexType slot, unsigned int tex_index ) {
 	//TODO:  Figure out which slots are what in NiMultiTextureProperty so this can be implemented for that too
 }
 
-unsigned int MaterialWrapper::GetTexUVSetIndex( TexType tex ) {
+unsigned int MaterialWrapper::GetTexUVSetIndex( TexType slot ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		return td.uvSet;
 	}
 
@@ -431,27 +431,27 @@ unsigned int MaterialWrapper::GetTexUVSetIndex( TexType tex ) {
 	return 0;
 }
 
-void MaterialWrapper::SetTexUVSetIndex( TexType tex, unsigned int uv_set ) {
+void MaterialWrapper::SetTexUVSetIndex( TexType slot, unsigned int uv_set ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		td.uvSet = uv_set;
-		texing_prop->SetTexture( int(tex), td );
+		texing_prop->SetTexture( int(slot), td );
 	}
 
 	//Just silently fail for now.  Not sure where this data may or may not be stored in the old style texture properties.
 }
 
-TexClampMode MaterialWrapper::GetTexClampMode( TexType tex ) {
+TexClampMode MaterialWrapper::GetTexClampMode( TexType slot ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		return td.clampMode;
 	}
 
@@ -459,27 +459,27 @@ TexClampMode MaterialWrapper::GetTexClampMode( TexType tex ) {
 	return WRAP_S_WRAP_T;
 }
 
-void MaterialWrapper::SetTexClampMode( TexType tex, TexClampMode mode ) {
+void MaterialWrapper::SetTexClampMode( TexType slot, TexClampMode mode ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		td.clampMode = mode;
-		texing_prop->SetTexture( int(tex), td );
+		texing_prop->SetTexture( int(slot), td );
 	}
 
 	//Just silently fail for now.  Not sure where this data may or may not be stored in the old style texture properties.
 }
 
-TexFilterMode MaterialWrapper::GetTexFilterMode( TexType tex ) {
+TexFilterMode MaterialWrapper::GetTexFilterMode( TexType slot ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		return td.filterMode;
 	}
 
@@ -487,15 +487,15 @@ TexFilterMode MaterialWrapper::GetTexFilterMode( TexType tex ) {
 	return FILTER_BILERP;
 }
 
-void MaterialWrapper::SetTexFilterMode( TexType tex, TexFilterMode mode ) {
+void MaterialWrapper::SetTexFilterMode( TexType slot, TexFilterMode mode ) {
 	if ( texing_prop != NULL ) {
-		if ( texing_prop->HasTexture( int(tex) ) == false ) {
+		if ( texing_prop->HasTexture( int(slot) ) == false ) {
 			throw runtime_error("The texture at the specified index does not exist.");
 		}
 
-		TexDesc td = texing_prop->GetTexture( int(tex) );
+		TexDesc td = texing_prop->GetTexture( int(slot) );
 		td.filterMode = mode;
-		texing_prop->SetTexture( int(tex), td );
+		texing_prop->SetTexture( int(slot), td );
 	}
 
 	//Just silently fail for now.  Not sure where this data may or may not be stored in the old style texture properties.

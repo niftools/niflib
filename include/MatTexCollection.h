@@ -191,11 +191,14 @@ private:
 	vector<TextureWrapper> textures;
 };
 
+/*
+ * A class that wraps up all the various NIF property objects that affect the
+ * color and texture of an object.  It's especially useful to be able to use it
+ * to hide the differences between old and new texture properties.
+ */
 class MaterialWrapper {
 public:
-	/*! NIFLIB_HIDDEN function.  For internal use only. */
-	NIFLIB_HIDDEN MaterialWrapper( NiMaterialProperty * mat, NiTexturingProperty * texing, NiTextureProperty * tex, NiMultiTextureProperty * multi, NiSpecularProperty * spec, NiAlphaProperty * alpha, MatTexCollection * creator );
-	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	/*! Destructor */
 	NIFLIB_API ~MaterialWrapper();
 
 	/*!
@@ -259,22 +262,75 @@ public:
 	 */
 	NIFLIB_API unsigned int GetTextureIndex( TexType slot );
 
+	/*
+	 * Sets a new texture to the specified texture slot.  Overwrites any
+	 * texture that's already there.
+	 * \param[in] slot The type of texture slot to set a new texture for.
+	 * \param[in] tex_index The index of the texture to set the specified slot
+	 * to.  Must be an index from the same MatTexCollection that holds this
+	 * material wrapper.
+	 */
 	NIFLIB_API void SetTextureIndex( TexType slot, unsigned int tex_index );
 
-	NIFLIB_API unsigned int GetTexUVSetIndex( TexType tex );
+	/*
+	 * Retrieves the UV Set Index of the texture in the specified slot.  This
+	 * is the index into the array of UV sets in the NiTriBasedGeom object that
+	 * this material will be applied to.
+	 * \param[in] slot The type of texture slot to get the UV set index for.
+	 * \return The UV set index used by the specified texture slot.
+	 */
+	NIFLIB_API unsigned int GetTexUVSetIndex( TexType slot );
 
-	NIFLIB_API void SetTexUVSetIndex( TexType tex, unsigned int uv_set );
+	/*
+	 * Sets the UV Set Index of the texture in the specified slot.  This
+	 * is the index into the array of UV sets in the NiTriBasedGeom object that
+	 * this material will be applied to.
+	 * \param[in] slot The type of texture slot to set the UV set index for.
+	 * \param[in] uv_set The new UV set index that will be used by the
+	 * specified texture slot.
+	 */
+	NIFLIB_API void SetTexUVSetIndex( TexType slot, unsigned int uv_set );
 
-	NIFLIB_API TexClampMode GetTexClampMode( TexType tex );
+	/*
+	 * Retrieves the texture clamp mode of the specified texture slot.  This
+	 * specifies the way that textures will be displayed for UV coordinates
+	 * that fall outside the 0-1 range.
+	 * \param[in] slot The type of texture slot to get the clamp mode for.
+	 * \return The clamp mode of the specified texture slot.
+	 */
+	NIFLIB_API TexClampMode GetTexClampMode( TexType slot );
 
-	NIFLIB_API void SetTexClampMode( TexType tex, TexClampMode mode );
+	/*
+	 * Sets the texture clamp mode of the specified texture slot.  This
+	 * specifies the way that textures will be displayed for UV coordinates
+	 * that fall outside the 0-1 range.
+	 * \param[in] slot The type of texture slot to get the clamp mode for.
+	 * \param[in] mode The new clamp mode for the specified texture slot.
+	 */
+	NIFLIB_API void SetTexClampMode( TexType slot, TexClampMode mode );
 
-	NIFLIB_API TexFilterMode GetTexFilterMode( TexType tex );
+	/*
+	 * Retrieves the texture filter mode of the specified texture slot.  This
+	 * specifies the way the texure will look when it's minified or magnified.
+	 * \param[in] slot The type of texture slot to set the filter mode for.
+	 * \return The texture filter mode of the specified texture slot.
+	 */
+	NIFLIB_API TexFilterMode GetTexFilterMode( TexType slot );
 
-	NIFLIB_API void SetTexFilterMode( TexType tex, TexFilterMode mode );
+	/*
+	 * Sets the texture filter mode of the specified texture slot.  This
+	 * specifies the way the texure will look when it's minified or magnified.
+	 * \param[in] slot The type of texture slot to set the filter mode for.
+	 * \param[in] mode The new texture filter mode for the specified texture
+	 * slot.
+	 */
+	NIFLIB_API void SetTexFilterMode( TexType slot, TexFilterMode mode );
 
 private:
 	friend class MatTexCollection;
+
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN MaterialWrapper( NiMaterialProperty * mat, NiTexturingProperty * texing, NiTextureProperty * tex, NiMultiTextureProperty * multi, NiSpecularProperty * spec, NiAlphaProperty * alpha, MatTexCollection * creator );
 
 	/*! The NiMaterialProperty that this object wraps, if any. */
 	Ref<NiMaterialProperty> mat_prop;
@@ -292,37 +348,109 @@ private:
 	MatTexCollection * _creator;
 };
 
+/*
+ * A class that wraps up the objects that diferent versions of NIF files use to
+ * store textures and allows them to me manipulated through the same class.
+ */
 class TextureWrapper {
 public:
-	NIFLIB_HIDDEN TextureWrapper( NiSourceTexture * src );
-	NIFLIB_HIDDEN TextureWrapper( NiImage * img );
+	/*! Destructor */
 	NIFLIB_API ~TextureWrapper();
 
+	/*
+	 * Used to determine whether the texture that this object stores is
+	 * stored in an external file, rather than being packed into the NIF
+	 * file itself.
+	 * \return True if the texture is external, false otherwise.
+	 */
 	NIFLIB_API bool IsTextureExternal();
 
+	/*
+	 * Retrieves the file name of the external texture.  If the texture is not
+	 * external, an empty string or the name of the original file may be
+	 * returned.
+	 * \return The file name of the external texture, if any.
+	 */
 	NIFLIB_API string GetTextureFileName();
 
+	/*
+	 * Changes the texture mode to external, if it isn't already, and sets the
+	 * file name of the new texture location.
+	 * \param[in] The new file name for the external texture.
+	 */
 	NIFLIB_API void SetExternalTexture( const string & file_name );
 
+	/*
+	 * Gets the pixel layout of the texture.  This describes the image format
+	 * of the texture, such as palattized, 32-bit, etc.
+	 * \return The pixel layout of the texture.
+	 */
 	NIFLIB_API PixelLayout GetPixelLayout();
 
+	/*
+	 * Sets the pixel layout of the texture.  This describes the image format
+	 * of the texture, such as palattized, 32-bit, etc.  Older texture objects
+	 * don't seem to have this option, so calling this function won't affect
+	 * them.
+	 * \param[in] layout The new pixel layout for the texture.
+	 */
 	NIFLIB_API void SetPixelLayout( PixelLayout layout );
-
+	/*
+	 * Gets the mipmap format of the texture.  This indicates whether or not
+	 * the textures will use mipmaps which are smaller versions of the texture
+	 * that are cached to improve the look of the texture as it is scaled down.
+	 * \return The mipmap format of the texture.
+	 */
 	NIFLIB_API MipMapFormat GetMipMapFormat();
 
+	/*
+	 * Sets the mipmap format of the texture.  This indicates whether or not
+	 * the textures will use mipmaps which are smaller versions of the texture
+	 * that are cached to improve the look of the texture as it is scaled down.
+	 * Older texture objects don't seem to have this option, so calling this
+	 * function won't affect them.
+	 * \param[in] format The new mipmap format for the texture.
+	 */
 	NIFLIB_API void SetMipMapFormat( MipMapFormat format );
 
+	/*
+	 * Gets the alpha format of the texture.  This indicates the type of alpha
+	 * information the texture will contain, such as none, binary, or smooth.
+	 * \return The alpha format of the texture.
+	 */
 	NIFLIB_API AlphaFormat GetAlphaFormat();
 
+	/*
+	 * Sets the alpha format of the texture.  This indicates the type of alpha
+	 * information the texture will contain, such as none, binary, or smooth.
+	 * Older texture objects don't seem to have this option, so calling this
+	 * function won't affect them.
+	 * \param[in] format The new alpha format for the texture.
+	 */
 	NIFLIB_API void SetAlphaFormat( AlphaFormat format );
 
+	/*
+	 * Retrieves the generic name property of the texture object, if it has one.
+	 * \return The NiObjectNET name of the texture object, if any.
+	 */
 	NIFLIB_API string GetObjectName();
 
+	/*
+	 * Sets the generic name property of the texture object, if it has one.  If
+	 * the object doesn't have the name parameter, this function will do
+	 * nothing.
+	 * \param[in] The new NiObjectNET name for the texture object.
+	 */
 	NIFLIB_API void SetObjectName( const string & name );
 
 private:
 	friend class MatTexCollection;
 	friend class MaterialWrapper;
+
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN TextureWrapper( NiSourceTexture * src );
+	/*! NIFLIB_HIDDEN function.  For internal use only. */
+	NIFLIB_HIDDEN TextureWrapper( NiImage * img );
 
 	/*! The NiSourceTexture that this object wraps, if any. */
 	Ref<NiSourceTexture> src_tex;
