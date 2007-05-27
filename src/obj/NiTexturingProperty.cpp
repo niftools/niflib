@@ -380,10 +380,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	NifStream( textureCount, out, info );
 	NifStream( hasBaseTexture, out, info );
 	if ( (hasBaseTexture != 0) ) {
-		if ( baseTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(baseTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*baseTexture.source), out, info );
+		} else {
+			if ( baseTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(baseTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( baseTexture.clampMode, out, info );
 		NifStream( baseTexture.filterMode, out, info );
 		NifStream( baseTexture.uvSet, out, info );
@@ -407,10 +412,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasDarkTexture, out, info );
 	if ( (hasDarkTexture != 0) ) {
-		if ( darkTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(darkTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*darkTexture.source), out, info );
+		} else {
+			if ( darkTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(darkTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( darkTexture.clampMode, out, info );
 		NifStream( darkTexture.filterMode, out, info );
 		NifStream( darkTexture.uvSet, out, info );
@@ -434,10 +444,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasDetailTexture, out, info );
 	if ( (hasDetailTexture != 0) ) {
-		if ( detailTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(detailTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*detailTexture.source), out, info );
+		} else {
+			if ( detailTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(detailTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( detailTexture.clampMode, out, info );
 		NifStream( detailTexture.filterMode, out, info );
 		NifStream( detailTexture.uvSet, out, info );
@@ -461,10 +476,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasGlossTexture, out, info );
 	if ( (hasGlossTexture != 0) ) {
-		if ( glossTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(glossTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*glossTexture.source), out, info );
+		} else {
+			if ( glossTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(glossTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( glossTexture.clampMode, out, info );
 		NifStream( glossTexture.filterMode, out, info );
 		NifStream( glossTexture.uvSet, out, info );
@@ -488,10 +508,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasGlowTexture, out, info );
 	if ( (hasGlowTexture != 0) ) {
-		if ( glowTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(glowTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*glowTexture.source), out, info );
+		} else {
+			if ( glowTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(glowTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( glowTexture.clampMode, out, info );
 		NifStream( glowTexture.filterMode, out, info );
 		NifStream( glowTexture.uvSet, out, info );
@@ -515,10 +540,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasBumpMapTexture, out, info );
 	if ( (hasBumpMapTexture != 0) ) {
-		if ( bumpMapTexture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(bumpMapTexture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*bumpMapTexture.source), out, info );
+		} else {
+			if ( bumpMapTexture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(bumpMapTexture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( bumpMapTexture.clampMode, out, info );
 		NifStream( bumpMapTexture.filterMode, out, info );
 		NifStream( bumpMapTexture.uvSet, out, info );
@@ -545,10 +575,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	};
 	NifStream( hasDecal0Texture, out, info );
 	if ( (hasDecal0Texture != 0) ) {
-		if ( decal0Texture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(decal0Texture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*decal0Texture.source), out, info );
+		} else {
+			if ( decal0Texture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(decal0Texture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( decal0Texture.clampMode, out, info );
 		NifStream( decal0Texture.filterMode, out, info );
 		NifStream( decal0Texture.uvSet, out, info );
@@ -574,10 +609,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( hasDecal1Texture, out, info );
 	};
 	if ( (((textureCount >= 8)) && ((hasDecal1Texture != 0))) ) {
-		if ( decal1Texture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(decal1Texture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*decal1Texture.source), out, info );
+		} else {
+			if ( decal1Texture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(decal1Texture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( decal1Texture.clampMode, out, info );
 		NifStream( decal1Texture.filterMode, out, info );
 		NifStream( decal1Texture.uvSet, out, info );
@@ -603,10 +643,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( hasDecal2Texture, out, info );
 	};
 	if ( (((textureCount >= 9)) && ((hasDecal2Texture != 0))) ) {
-		if ( decal2Texture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(decal2Texture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*decal2Texture.source), out, info );
+		} else {
+			if ( decal2Texture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(decal2Texture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( decal2Texture.clampMode, out, info );
 		NifStream( decal2Texture.filterMode, out, info );
 		NifStream( decal2Texture.uvSet, out, info );
@@ -632,10 +677,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( hasDecal3Texture, out, info );
 	};
 	if ( (((textureCount >= 10)) && ((hasDecal3Texture != 0))) ) {
-		if ( decal3Texture.source != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(decal3Texture.source) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*decal3Texture.source), out, info );
+		} else {
+			if ( decal3Texture.source != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(decal3Texture.source) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( decal3Texture.clampMode, out, info );
 		NifStream( decal3Texture.filterMode, out, info );
 		NifStream( decal3Texture.uvSet, out, info );
@@ -662,10 +712,15 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		for (unsigned int i2 = 0; i2 < shaderTextures.size(); i2++) {
 			NifStream( shaderTextures[i2].isUsed, out, info );
 			if ( (shaderTextures[i2].isUsed != 0) ) {
-				if ( shaderTextures[i2].textureData.source != NULL )
-					NifStream( link_map.find( StaticCast<NiObject>(shaderTextures[i2].textureData.source) )->second, out, info );
-				else
-					NifStream( 0xffffffff, out, info );
+				if ( info.version < VER_3_3_0_13 ) {
+					NifStream( (unsigned int)&(*shaderTextures[i2].textureData.source), out, info );
+				} else {
+					if ( shaderTextures[i2].textureData.source != NULL ) {
+						NifStream( link_map.find( StaticCast<NiObject>(shaderTextures[i2].textureData.source) )->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
+				}
 				NifStream( shaderTextures[i2].textureData.clampMode, out, info );
 				NifStream( shaderTextures[i2].textureData.filterMode, out, info );
 				NifStream( shaderTextures[i2].textureData.uvSet, out, info );

@@ -59,10 +59,15 @@ void NiSingleInterpController::Write( ostream& out, const map<NiObjectRef,unsign
 
 	NiInterpController::Write( out, link_map, info );
 	if ( info.version >= 0x0A020000 ) {
-		if ( interpolator != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*interpolator), out, info );
+		} else {
+			if ( interpolator != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

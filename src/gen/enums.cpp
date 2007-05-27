@@ -106,9 +106,10 @@ ostream & operator<<( ostream & out, CompareMode const & val ) {
 		case TEST_NEVER: return out << "TEST_NEVER";
 		case TEST_LESS: return out << "TEST_LESS";
 		case TEST_EQUAL: return out << "TEST_EQUAL";
-		case TEST_LESSEQUAL: return out << "TEST_LESSEQUAL";
+		case TEST_LESS_EQUAL: return out << "TEST_LESS_EQUAL";
 		case TEST_GREATER: return out << "TEST_GREATER";
-		case TEST_GREATEREQUAL: return out << "TEST_GREATEREQUAL";
+		case TEST_NOT_EQUAL: return out << "TEST_NOT_EQUAL";
+		case TEST_GREATER_EQUAL: return out << "TEST_GREATER_EQUAL";
 		case TEST_ALWAYS: return out << "TEST_ALWAYS";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}

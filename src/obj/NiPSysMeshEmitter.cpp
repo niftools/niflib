@@ -66,10 +66,15 @@ void NiPSysMeshEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	numEmitterMeshes = (unsigned int)(emitterMeshes.size());
 	NifStream( numEmitterMeshes, out, info );
 	for (unsigned int i1 = 0; i1 < emitterMeshes.size(); i1++) {
-		if ( emitterMeshes[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(emitterMeshes[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*emitterMeshes[i1]), out, info );
+		} else {
+			if ( emitterMeshes[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(emitterMeshes[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	NifStream( initialVelocityType, out, info );
 	NifStream( emissionType, out, info );

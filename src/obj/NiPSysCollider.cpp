@@ -70,22 +70,42 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NifStream( bounce, out, info );
 	NifStream( spawnOnCollide, out, info );
 	NifStream( dieOnCollide, out, info );
-	if ( spawnModifier != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( parent != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( nextCollider != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(nextCollider) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( colliderObject != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(colliderObject) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*spawnModifier), out, info );
+	} else {
+		if ( spawnModifier != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*parent), out, info );
+	} else {
+		if ( parent != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*nextCollider), out, info );
+	} else {
+		if ( nextCollider != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(nextCollider) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*colliderObject), out, info );
+	} else {
+		if ( colliderObject != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(colliderObject) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

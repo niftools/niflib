@@ -56,10 +56,15 @@ void BSKeyframeController::Write( ostream& out, const map<NiObjectRef,unsigned i
 	//--END CUSTOM CODE--//
 
 	NiKeyframeController::Write( out, link_map, info );
-	if ( data2 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(data2) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data2), out, info );
+	} else {
+		if ( data2 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data2) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

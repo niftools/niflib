@@ -83,26 +83,46 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 
 	NiObject::Write( out, link_map, info );
 	numBones = (unsigned int)(bones.size());
-	if ( data != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data), out, info );
+	} else {
+		if ( data != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x0A020000 ) {
-		if ( skinPartition != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*skinPartition), out, info );
+		} else {
+			if ( skinPartition != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
-	if ( skeletonRoot != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(skeletonRoot) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*skeletonRoot), out, info );
+	} else {
+		if ( skeletonRoot != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(skeletonRoot) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( numBones, out, info );
 	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
-		if ( bones[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*bones[i1]), out, info );
+		} else {
+			if ( bones[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

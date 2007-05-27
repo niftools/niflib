@@ -87,18 +87,28 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 		NifStream( unknown2, out, info );
 	};
-	if ( data != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data), out, info );
+	} else {
+		if ( data != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( unknownByte, out, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( numInterpolators, out, info );
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
-			if ( interpolators[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(interpolators[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*interpolators[i2]), out, info );
+			} else {
+				if ( interpolators[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(interpolators[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 	if ( info.version >= 0x0A020000 ) {

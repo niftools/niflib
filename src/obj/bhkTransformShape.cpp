@@ -62,10 +62,15 @@ void bhkTransformShape::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	//--END CUSTOM CODE--//
 
 	bhkShape::Write( out, link_map, info );
-	if ( shape != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*shape), out, info );
+	} else {
+		if ( shape != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( material, out, info );
 	NifStream( unknownFloat1, out, info );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {

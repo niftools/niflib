@@ -75,10 +75,15 @@ void NiMultiTextureProperty::Write( ostream& out, const map<NiObjectRef,unsigned
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( textureElements[i1].hasImage, out, info );
 		if ( textureElements[i1].hasImage ) {
-			if ( textureElements[i1].image != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(textureElements[i1].image) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*textureElements[i1].image), out, info );
+			} else {
+				if ( textureElements[i1].image != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(textureElements[i1].image) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 			NifStream( textureElements[i1].unknownInt1, out, info );
 			NifStream( textureElements[i1].unknownInt2, out, info );
 			NifStream( textureElements[i1].unknownInt3, out, info );

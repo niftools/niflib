@@ -62,10 +62,15 @@ void NiPSysGravityModifier::Write( ostream& out, const map<NiObjectRef,unsigned 
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Write( out, link_map, info );
-	if ( gravityObject != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(gravityObject) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*gravityObject), out, info );
+	} else {
+		if ( gravityObject != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(gravityObject) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( gravityAxis, out, info );
 	NifStream( decay, out, info );
 	NifStream( strength, out, info );

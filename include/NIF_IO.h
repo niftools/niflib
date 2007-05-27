@@ -43,6 +43,54 @@ void WriteFloat( float val, ostream& out );
 void WriteString( string const & val, ostream& out );
 void WriteBool( bool val, ostream& out, unsigned int version );
 
+//-- BitField Helper functions --//
+
+template <class storage>
+bool UnpackFlag( storage src, size_t lshift ) {
+	//Generate mask
+	storage mask = 1 << lshift;
+
+	return (( src & mask) << lshift) != 0;
+}
+
+template <class storage>
+void PackFlag( storage & dest, bool new_value, size_t lshift ) {
+	//Generate mask
+	storage mask = 1 << lshift;
+
+	//Clear current value of requested flag
+	dest &= ~mask;
+
+	//Pack in the new value
+	dest |= ( ((storage)new_value << lshift) & mask );
+}
+
+template <class storage>
+storage UnpackField( storage src, size_t lshift, size_t num_bits ) {
+	//Generate mask
+	storage mask = 0;
+	for ( size_t i = lshift; i < num_bits + lshift; ++i ) {
+		mask |= (1 << i);
+	}
+
+	return (storage)(( src & mask) << lshift);
+}
+
+template <class storage, class T>
+void PackField( storage & dest, T new_value, size_t lshift, size_t num_bits ) {
+	//Generate Mask
+	storage mask = 0;
+	for ( size_t i = lshift; i < num_bits + lshift; ++i ) {
+		mask |= (1 << i);
+	}
+
+	//Clear current value of requested field
+	dest &= ~mask;
+
+	//Pack in the new value
+	dest |= ( ((storage)new_value << lshift) & mask );
+}
+
 //-- NifStream And ostream Functions --//
 // The NifStream functions allow each built-in type to be streamed to and from a file.
 // The ostream functions are for writing out a debug string.

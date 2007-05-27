@@ -159,10 +159,15 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 		NifStream( emitFlags, out, info );
 	};
 	NifStream( startRandom, out, info );
-	if ( emitter != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(emitter) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*emitter), out, info );
+	} else {
+		if ( emitter != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(emitter) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x04000002 ) {
 		NifStream( unknownShort2_, out, info );
 		NifStream( unknownFloat13_, out, info );
@@ -191,27 +196,47 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 			NifStream( particles[i2].unknownShort, out, info );
 			NifStream( particles[i2].vertexId, out, info );
 		};
-		if ( unknownLink != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*unknownLink), out, info );
+		} else {
+			if ( unknownLink != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
-	if ( particleExtra != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(particleExtra) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( unknownLink2 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*particleExtra), out, info );
+	} else {
+		if ( particleExtra != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(particleExtra) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink2), out, info );
+	} else {
+		if ( unknownLink2 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x04000002 ) {
 		NifStream( trailer, out, info );
 	};
 	if ( info.version <= 0x03010000 ) {
-		if ( colorData != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*colorData), out, info );
+		} else {
+			if ( colorData != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		for (unsigned int i2 = 0; i2 < 2; i2++) {
 			NifStream( unkownFloats[i2], out, info );
 		};

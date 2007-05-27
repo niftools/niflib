@@ -383,11 +383,11 @@ void NifStream( HeaderString const & val, ostream& out, const NifInfo & info ) {
 	} else {
 		header_string << "Gamebryo File Format, Version ";
 	}
+
+	header_string << FormatVersionString(info.version);
+
 	char * byte_ver = (char*)&(info.version);
 	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
-
-
-	header_string << int_ver[0] << "." << int_ver[1] << "." << int_ver[2] << "." << int_ver[3];
 
 	out << header_string.str() << "\n";
 };

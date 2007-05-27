@@ -113,10 +113,15 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			NifStream( unknown54Bytes[i2], out, info );
 		};
 	};
-	if ( palette != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(palette) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*palette), out, info );
+	} else {
+		if ( palette != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(palette) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( numMipmaps, out, info );
 	NifStream( bytesPerPixel, out, info );
 	for (unsigned int i1 = 0; i1 < mipmaps.size(); i1++) {

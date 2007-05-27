@@ -56,29 +56,29 @@ public:
 
 	/*! Used to specify the source and destination blending functions.  The function of each value is equivalent to the OpenGL blending function of similar name. */
 	enum BlendFunc {
-		BF_ONE = 0x00, 
-		BF_ZERO = 0x01,
-		BF_SRC_COLOR = 0x02,
-		BF_ONE_MINUS_SRC_COLOR = 0x03,
-		BF_DST_COLOR = 0x04,
-		BF_ONE_MINUS_DST_COLOR = 0x05,
-		BF_SRC_ALPHA = 0x06,
-		BF_ONE_MINUS_SRC_ALPHA = 0x07,
-		BF_DST_ALPHA = 0x08,
-		BF_ONE_MINUS_DST_ALPHA = 0x08,
-		BF_SRC_ALPHA_SATURATE = 0x09,
+		BF_ONE = 0, 
+		BF_ZERO = 1,
+		BF_SRC_COLOR = 2,
+		BF_ONE_MINUS_SRC_COLOR = 3,
+		BF_DST_COLOR = 4,
+		BF_ONE_MINUS_DST_COLOR = 5,
+		BF_SRC_ALPHA = 6,
+		BF_ONE_MINUS_SRC_ALPHA = 7,
+		BF_DST_ALPHA = 8,
+		BF_ONE_MINUS_DST_ALPHA = 9,
+		BF_SRC_ALPHA_SATURATE = 10
 	};
 
 	/*! Used to set the alpha test function.  The function of each value is equivalent to the OpenGL test function of similar name. */
 	enum TestFunc {
-		TF_ALWAYS = 0x00,
-		TF_LESS = 0x01,
-		TF_EQUAL = 0x02,
-		TF_LEQUAL = 0x03,
-		TF_GREATER = 0x04,
-		TF_NOTEQUAL = 0x05,
-		TF_GEQUAL = 0x06,
-		TF_NEVER = 0x07,
+		TF_ALWAYS = 0,
+		TF_LESS = 1,
+		TF_EQUAL = 2,
+		TF_LEQUAL = 3,
+		TF_GREATER = 4,
+		TF_NOTEQUAL = 5,
+		TF_GEQUAL = 6,
+		TF_NEVER = 7
 	};
 
 	/*!

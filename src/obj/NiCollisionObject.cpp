@@ -62,16 +62,26 @@ void NiCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	if ( target != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*target), out, info );
+	} else {
+		if ( target != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x14000004 ) {
 		NifStream( unknownShort, out, info );
-		if ( body != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*body), out, info );
+		} else {
+			if ( body != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

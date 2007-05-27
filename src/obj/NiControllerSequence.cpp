@@ -91,10 +91,15 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	NiSequence::Write( out, link_map, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( weight, out, info );
-		if ( textKeys != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*textKeys), out, info );
+		} else {
+			if ( textKeys != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( cycleType, out, info );
 	};
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
@@ -112,17 +117,27 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 		NifStream( unknownByte, out, info );
 	};
 	if ( info.version >= 0x0A01006A ) {
-		if ( manager != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*manager), out, info );
+		} else {
+			if ( manager != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 		NifStream( targetName, out, info );
 	};
 	if ( info.version >= 0x0A020000 ) {
-		if ( stringPalette != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*stringPalette), out, info );
+		} else {
+			if ( stringPalette != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

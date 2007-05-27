@@ -78,24 +78,39 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	numExtraDataList = (unsigned int)(extraDataList.size());
 	NifStream( name, out, info );
 	if ( info.version <= 0x04020200 ) {
-		if ( extraData != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(extraData) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*extraData), out, info );
+		} else {
+			if ( extraData != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(extraData) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( numExtraDataList, out, info );
 		for (unsigned int i2 = 0; i2 < extraDataList.size(); i2++) {
-			if ( extraDataList[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(extraDataList[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*extraDataList[i2]), out, info );
+			} else {
+				if ( extraDataList[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(extraDataList[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
-	if ( controller != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*controller), out, info );
+	} else {
+		if ( controller != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

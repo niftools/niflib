@@ -91,6 +91,14 @@ std::list<NiObjectRef> NiSpecularProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+bool NiSpecularProperty::GetSpecularState() const {
+	return UnpackFlag<unsigned short>( flags, 0 );
+}
+
+void NiSpecularProperty::SetSpecularState( bool n ) {
+	PackFlag<unsigned short>( flags, (unsigned short)n, 0 );
+}
+
 unsigned short NiSpecularProperty::GetFlags() const {
    return flags;
 }

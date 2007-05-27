@@ -72,10 +72,15 @@ void NiTransformInterpolator::Write( ostream& out, const map<NiObjectRef,unsigne
 			NifStream( unknownBytes[i2], out, info );
 		};
 	};
-	if ( data != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data), out, info );
+	} else {
+		if ( data != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

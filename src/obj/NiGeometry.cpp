@@ -73,24 +73,39 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	//--END CUSTOM CODE--//
 
 	NiAVObject::Write( out, link_map, info );
-	if ( data != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data), out, info );
+	} else {
+		if ( data != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x0303000D ) {
-		if ( skinInstance != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*skinInstance), out, info );
+		} else {
+			if ( skinInstance != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( hasShader, out, info );
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, out, info );
-			if ( unknownLink != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*unknownLink), out, info );
+			} else {
+				if ( unknownLink != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 

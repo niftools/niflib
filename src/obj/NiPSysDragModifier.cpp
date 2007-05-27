@@ -60,10 +60,15 @@ void NiPSysDragModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Write( out, link_map, info );
-	if ( parent != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*parent), out, info );
+	} else {
+		if ( parent != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( dragAxis, out, info );
 	NifStream( percentage, out, info );
 	NifStream( range, out, info );

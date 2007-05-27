@@ -80,19 +80,29 @@ void NiMeshPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NiPSysData::Write( out, link_map, info );
 	numUnknownLinks = (unsigned int)(unknownLinks.size());
 	if ( info.version <= 0x14000004 ) {
-		if ( modifier != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(modifier) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*modifier), out, info );
+		} else {
+			if ( modifier != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(modifier) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000004 ) ) {
 		NifStream( unknownByte2, out, info );
 		NifStream( numUnknownLinks, out, info );
 		for (unsigned int i2 = 0; i2 < unknownLinks.size(); i2++) {
-			if ( unknownLinks[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(unknownLinks[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*unknownLinks[i2]), out, info );
+			} else {
+				if ( unknownLinks[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(unknownLinks[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 	if ( info.version >= 0x14000005 ) {
@@ -102,10 +112,15 @@ void NiMeshPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		NifStream( numVertices3, out, info );
 	};
 	if ( info.version >= 0x0A020000 ) {
-		if ( unknownLink2 != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*unknownLink2), out, info );
+		} else {
+			if ( unknownLink2 != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

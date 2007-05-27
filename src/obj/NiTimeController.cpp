@@ -63,19 +63,29 @@ void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	if ( nextController != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(nextController) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*nextController), out, info );
+	} else {
+		if ( nextController != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(nextController) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( flags, out, info );
 	NifStream( frequency, out, info );
 	NifStream( phase, out, info );
 	NifStream( startTime, out, info );
 	NifStream( stopTime, out, info );
-	if ( target != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*target), out, info );
+	} else {
+		if ( target != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

@@ -73,10 +73,15 @@ void bhkListShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	numSubShapes = (unsigned int)(subShapes.size());
 	NifStream( numSubShapes, out, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
-		if ( subShapes[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(subShapes[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*subShapes[i1]), out, info );
+		} else {
+			if ( subShapes[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(subShapes[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	NifStream( material, out, info );
 	for (unsigned int i1 = 0; i1 < 6; i1++) {

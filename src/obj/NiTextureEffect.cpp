@@ -78,10 +78,15 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( textureClamping, out, info );
 	NifStream( textureType, out, info );
 	NifStream( coordinateGenerationType, out, info );
-	if ( sourceTexture != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*sourceTexture), out, info );
+	} else {
+		if ( sourceTexture != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( clippingPlane, out, info );
 	NifStream( unknownVector, out, info );
 	NifStream( unknownFloat, out, info );

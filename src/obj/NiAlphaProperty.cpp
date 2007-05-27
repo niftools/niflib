@@ -110,57 +110,51 @@ void NiAlphaProperty::SetTestThreshold( byte n ) {
 	threshold = n;
 }
 
-#define NIFLIB_GET_FLAG(value, shift, mask) \
-   (( value >> shift ) & mask)
-
-#define NIFLIB_MASK_FLAG(flag, value, shift, mask) \
-   ((flag & ~(mask << shift)) | ((value & mask) << shift))
-
 NiAlphaProperty::BlendFunc NiAlphaProperty::GetSourceBlendFunc() const {
-   return (NiAlphaProperty::BlendFunc)NIFLIB_GET_FLAG(flags, 1, 0x0f);
+	return (BlendFunc)UnpackField( flags, 1, 4 );
 }
 
 void NiAlphaProperty::SetSourceBlendFunc(BlendFunc value) {
-   flags = NIFLIB_MASK_FLAG(flags, value, 1, 0x0f);
+	PackField( flags, value, 1, 4 );
 }
 
 NiAlphaProperty::BlendFunc NiAlphaProperty::GetDestBlendFunc() const {
-   return (NiAlphaProperty::BlendFunc)(( flags >> 5 ) & 0x0f);
+	return (BlendFunc)UnpackField( flags, 5, 4 );
 }
 
 void NiAlphaProperty::SetDestBlendFunc(BlendFunc value) {
-   flags = NIFLIB_MASK_FLAG(flags, value, 5, 0x0f);
+   PackField( flags, value, 5, 4 );
 }
 
 NiAlphaProperty::TestFunc NiAlphaProperty::GetTestFunc() const {
-   return (NiAlphaProperty::TestFunc)NIFLIB_GET_FLAG(flags, 10, 0x7);
+	return (TestFunc)UnpackField( flags, 10, 3 );
 }
 
 void NiAlphaProperty::SetTestFunc(TestFunc value) {
-   flags = NIFLIB_MASK_FLAG(flags, value, 10, 0x7);
+	PackField( flags, value, 10, 3 );
 }
 
 bool NiAlphaProperty::GetBlendState() const {
-   return NIFLIB_GET_FLAG(flags, 0, 0x1) ? true : false;
+   return UnpackFlag( flags, 0);
 }
 
 void NiAlphaProperty::SetBlendState(bool value) {
-   flags = NIFLIB_MASK_FLAG(flags, value?1:0, 0, 0x1);
+	PackFlag( flags, value, 0 );
 }
 
 bool NiAlphaProperty::GetTestState() const {
-   return NIFLIB_GET_FLAG(flags, 9, 0x1) ? true : false;
+	return UnpackFlag( flags, 9 );
 }
 
 void NiAlphaProperty::SetTestState(bool value) {
-   flags = NIFLIB_MASK_FLAG(flags, value?1:0, 9, 0x1);
+	PackFlag( flags, value, 9 );
 }
 
 bool NiAlphaProperty::GetTriangleSortMode() const {
-   return NIFLIB_GET_FLAG(flags, 13, 0x1) ? false : true;
+	return UnpackFlag( flags, 13 );
 }
 void NiAlphaProperty::SetTriangleSortMode(bool value) {
-   flags = NIFLIB_MASK_FLAG(flags, value?0:1, 13, 0x1);
+	PackFlag( flags, value, 13 );
 }
 
 //--END CUSTOM CODE--//

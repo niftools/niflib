@@ -102,10 +102,15 @@ void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NifStream( scale, out, info );
 	NifStream( numBones, out, info );
 	if ( info.version <= 0x0A010000 ) {
-		if ( skinPartition != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*skinPartition), out, info );
+		} else {
+			if ( skinPartition != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	if ( info.version >= 0x04020100 ) {
 		NifStream( hasVertexWeights, out, info );

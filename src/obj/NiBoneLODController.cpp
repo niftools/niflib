@@ -103,10 +103,15 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 		nodeGroups[i1].numNodes = (unsigned int)(nodeGroups[i1].nodes.size());
 		NifStream( nodeGroups[i1].numNodes, out, info );
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
-			if ( nodeGroups[i1].nodes[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(nodeGroups[i1].nodes[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*nodeGroups[i1].nodes[i2]), out, info );
+			} else {
+				if ( nodeGroups[i1].nodes[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(nodeGroups[i1].nodes[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 	if ( info.version <= 0x0A000100 ) {
@@ -115,22 +120,37 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 			shapeGroups1[i2].numLinkPairs = (unsigned int)(shapeGroups1[i2].linkPairs.size());
 			NifStream( shapeGroups1[i2].numLinkPairs, out, info );
 			for (unsigned int i3 = 0; i3 < shapeGroups1[i2].linkPairs.size(); i3++) {
-				if ( shapeGroups1[i2].linkPairs[i3].shape != NULL )
-					NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].shape) )->second, out, info );
-				else
-					NifStream( 0xffffffff, out, info );
-				if ( shapeGroups1[i2].linkPairs[i3].skinInstance != NULL )
-					NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].skinInstance) )->second, out, info );
-				else
-					NifStream( 0xffffffff, out, info );
+				if ( info.version < VER_3_3_0_13 ) {
+					NifStream( (unsigned int)&(*shapeGroups1[i2].linkPairs[i3].shape), out, info );
+				} else {
+					if ( shapeGroups1[i2].linkPairs[i3].shape != NULL ) {
+						NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].shape) )->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
+				}
+				if ( info.version < VER_3_3_0_13 ) {
+					NifStream( (unsigned int)&(*shapeGroups1[i2].linkPairs[i3].skinInstance), out, info );
+				} else {
+					if ( shapeGroups1[i2].linkPairs[i3].skinInstance != NULL ) {
+						NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].skinInstance) )->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
+				}
 			};
 		};
 		NifStream( numShapeGroups2, out, info );
 		for (unsigned int i2 = 0; i2 < shapeGroups2.size(); i2++) {
-			if ( shapeGroups2[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(shapeGroups2[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*shapeGroups2[i2]), out, info );
+			} else {
+				if ( shapeGroups2[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(shapeGroups2[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 

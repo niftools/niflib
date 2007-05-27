@@ -82,10 +82,15 @@ void NiTriShapeSkinController::Write( ostream& out, const map<NiObjectRef,unsign
 		NifStream( vertexCounts[i1], out, info );
 	};
 	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
-		if ( bones[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*bones[i1]), out, info );
+		} else {
+			if ( bones[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	for (unsigned int i1 = 0; i1 < boneData.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < vertexCounts[i1]; i2++) {

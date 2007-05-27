@@ -63,10 +63,11 @@ enum CompareMode {
 	TEST_NEVER = 0, /*!< Test will allways return false. Nothing is drawn at all. */
 	TEST_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
 	TEST_EQUAL = 2, /*!< Test will only succeed if the z value of the pixel to be drawn is equal to the value of the previous drawn pixel. */
-	TEST_LESSEQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer. */
+	TEST_LESS_EQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer. */
 	TEST_GREATER = 4, /*!< Opposite of TEST_LESS. */
-	TEST_GREATEREQUAL = 5, /*!< Opposite of TEST_LESSEQUAL. */
-	TEST_ALWAYS = 6, /*!< Test will allways succeed. The Z Buffer value is ignored. */
+	TEST_NOT_EQUAL = 5, /*!< Test will succeed if the z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel. */
+	TEST_GREATER_EQUAL = 6, /*!< Opposite of TEST_LESS_EQUAL. */
+	TEST_ALWAYS = 7, /*!< Test will allways succeed. The Z Buffer value is ignored. */
 };
 
 ostream & operator<<( ostream & out, CompareMode const & val );

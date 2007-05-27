@@ -132,10 +132,15 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NifStream( name, out, info );
 	if ( info.version <= 0x0A010000 ) {
 		NifStream( textKeysName, out, info );
-		if ( textKeys != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*textKeys), out, info );
+		} else {
+			if ( textKeys != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	NifStream( numControlledBlocks, out, info );
 	if ( info.version >= 0x0A01006A ) {
@@ -144,26 +149,46 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( info.version <= 0x0A010000 ) {
 			NifStream( controlledBlocks[i1].targetName, out, info );
-			if ( controlledBlocks[i1].controller != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*controlledBlocks[i1].controller), out, info );
+			} else {
+				if ( controlledBlocks[i1].controller != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 		if ( info.version >= 0x0A01006A ) {
-			if ( controlledBlocks[i1].interpolator != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].interpolator) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
-			if ( controlledBlocks[i1].controller != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*controlledBlocks[i1].interpolator), out, info );
+			} else {
+				if ( controlledBlocks[i1].interpolator != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].interpolator) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*controlledBlocks[i1].controller), out, info );
+			} else {
+				if ( controlledBlocks[i1].controller != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
-			if ( controlledBlocks[i1].unknownLink2 != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].unknownLink2) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*controlledBlocks[i1].unknownLink2), out, info );
+			} else {
+				if ( controlledBlocks[i1].unknownLink2 != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].unknownLink2) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 			NifStream( controlledBlocks[i1].unknownShort0, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 10 ) ) {
@@ -173,10 +198,15 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			NifStream( controlledBlocks[i1].priority_, out, info );
 		};
 		if ( info.version >= 0x0A020000 ) {
-			if ( controlledBlocks[i1].stringPalette != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].stringPalette) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*controlledBlocks[i1].stringPalette), out, info );
+			} else {
+				if ( controlledBlocks[i1].stringPalette != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].stringPalette) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].nodeName, out, info );

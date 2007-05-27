@@ -105,10 +105,15 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	};
 	NifStream( numProperties, out, info );
 	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
-		if ( properties[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*properties[i1]), out, info );
+		} else {
+			if ( properties[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	if ( info.version <= 0x04020200 ) {
 		NifStream( hasBoundingBox, out, info );
@@ -120,10 +125,15 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
-		if ( collisionObject != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*collisionObject), out, info );
+		} else {
+			if ( collisionObject != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

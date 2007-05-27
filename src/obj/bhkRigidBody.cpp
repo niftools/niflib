@@ -151,10 +151,15 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	NifStream( unknownInt8, out, info );
 	NifStream( numConstraints, out, info );
 	for (unsigned int i1 = 0; i1 < constraints.size(); i1++) {
-		if ( constraints[i1] != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(constraints[i1]) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*constraints[i1]), out, info );
+		} else {
+			if ( constraints[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(constraints[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	NifStream( unknownInt6, out, info );
 

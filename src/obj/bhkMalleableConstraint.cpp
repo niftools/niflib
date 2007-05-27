@@ -93,14 +93,24 @@ void bhkMalleableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 	bhkConstraint::Write( out, link_map, info );
 	NifStream( type, out, info );
 	NifStream( unknownInt2, out, info );
-	if ( unknownLink1 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( unknownLink2 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink1), out, info );
+	} else {
+		if ( unknownLink1 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink2), out, info );
+	} else {
+		if ( unknownLink2 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( unknownInt3, out, info );
 	if ( (type == 7) ) {
 		NifStream( ragdoll.pivotA, out, info );

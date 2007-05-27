@@ -359,9 +359,9 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	map<Type*,unsigned int> type_map;
 	map<NiObjectRef, unsigned int> link_map;
 
-   for (list<NiObjectRef>::const_iterator it = roots.begin(); it != roots.end(); ++it) {
-	   EnumerateObjects( (*it), type_map, link_map );
-   }
+	for (list<NiObjectRef>::const_iterator it = roots.begin(); it != roots.end(); ++it) {
+		EnumerateObjects( (*it), type_map, link_map );
+	}
 
 	//Build vectors for reverse look-up
 	vector<NiObjectRef> objects(link_map.size());
@@ -386,6 +386,9 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	header.creator.str = info.creator;
 	header.exportInfo1.str = info.exportInfo1;
 	header.exportInfo2.str = info.exportInfo2;
+	header.copyright[0].line = "Numerical Design Limited, Chapel Hill, NC 27514";
+	header.copyright[1].line = "Copyright (c) 1996-2000";
+	header.copyright[2].line = "All Rights Reserved";
 	
 	//Set Type Names
 	header.blockTypes.resize( types.size() );
@@ -414,7 +417,23 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 		cout << endl << i << ":  " << objects[i]->GetType().GetTypeName();
 #endif
 
-		if (version < 0x05000001) {
+		if ( version < VER_3_3_0_13 ) {
+			//Check if this object is one of the roots.
+			for ( list<NiObjectRef>::const_iterator it = roots.begin(); it != roots.end(); ++it ) {
+				if ( objects[i] == *it ) {
+					//Write "Top Level Object"
+					WriteString( "Top Level Object", out );
+					break;
+				}
+			}
+
+			//Write Object Type
+			WriteString( objects[i]->GetType().GetTypeName() , out );
+			//Write pointer number of object
+			WriteUInt( (unsigned int)&(*objects[i]), out );
+
+			
+		} else if (version < 0x05000001) {
 			//Write Object Type
 			WriteString( objects[i]->GetType().GetTypeName() , out );
 		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
@@ -425,27 +444,33 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	}
 
 	//--Write Footer--//
-	Footer footer;
-   footer.numRoots = 0;
-   if (roots.size() == 1) {
-      const NiObjectRef& root = roots.front();
-      if (root->IsDerivedType(NiControllerSequence::TYPE)) {
-         // KF animation files allow for multiple roots of type NiControllerSequence
-         for ( unsigned int i = 0; i < objects.size(); ++i ) {
-            if (objects[i]->IsDerivedType(NiControllerSequence::TYPE)) {
-               footer.roots.push_back(objects[i]);
-            }
-         }
-      } else { // just assume its correctly passed in 
-         footer.numRoots = 1;
-         footer.roots.resize(1);
-         footer.roots[0] = root;
-      }
-   } else {
-      footer.numRoots = roots.size();
-      footer.roots.insert(footer.roots.end(), roots.begin(), roots.end());
-   }
-	footer.Write( out, link_map, info );
+
+	if ( version < VER_3_3_0_13 ) {
+		//Write "End Of File"
+		WriteString( "End Of File", out );
+	} else {
+		Footer footer;
+		footer.numRoots = 0;
+		if (roots.size() == 1) {
+			const NiObjectRef& root = roots.front();
+			if (root->IsDerivedType(NiControllerSequence::TYPE)) {
+				// KF animation files allow for multiple roots of type NiControllerSequence
+				for ( unsigned int i = 0; i < objects.size(); ++i ) {
+					if (objects[i]->IsDerivedType(NiControllerSequence::TYPE)) {
+						footer.roots.push_back(objects[i]);
+					}
+				}
+			} else { // just assume its correctly passed in 
+				footer.numRoots = 1;
+				footer.roots.resize(1);
+				footer.roots[0] = root;
+			}
+		} else {
+			footer.numRoots = roots.size();
+			footer.roots.insert(footer.roots.end(), roots.begin(), roots.end());
+		}
+		footer.Write( out, link_map, info );
+	}
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root object of a file tree

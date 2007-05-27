@@ -70,26 +70,46 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 
 	NiInterpolator::Write( out, link_map, info );
 	NifStream( unknownShort, out, info );
-	if ( lookAt != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(lookAt) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*lookAt), out, info );
+	} else {
+		if ( lookAt != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(lookAt) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( unknownFloat, out, info );
 	NifStream( translation, out, info );
 	NifStream( rotation, out, info );
 	NifStream( scale, out, info );
-	if ( unknownLink1 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( unknownLink2 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( unknownLink3 != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(unknownLink3) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink1), out, info );
+	} else {
+		if ( unknownLink1 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink2), out, info );
+	} else {
+		if ( unknownLink2 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownLink3), out, info );
+	} else {
+		if ( unknownLink3 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink3) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

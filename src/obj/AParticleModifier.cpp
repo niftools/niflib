@@ -60,15 +60,25 @@ void AParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	if ( nextModifier != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(nextModifier) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*nextModifier), out, info );
+	} else {
+		if ( nextModifier != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(nextModifier) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	if ( info.version >= 0x04000002 ) {
-		if ( controller != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*controller), out, info );
+		} else {
+			if ( controller != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

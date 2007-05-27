@@ -69,14 +69,24 @@ void NiPathInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownFloat2, out, info );
 	NifStream( unknownShort2, out, info );
-	if ( posData != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(posData) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
-	if ( floatData != NULL )
-		NifStream( link_map.find( StaticCast<NiObject>(floatData) )->second, out, info );
-	else
-		NifStream( 0xffffffff, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*posData), out, info );
+	} else {
+		if ( posData != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(posData) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*floatData), out, info );
+	} else {
+		if ( floatData != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(floatData) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

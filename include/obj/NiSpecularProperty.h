@@ -55,6 +55,18 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
+	 * Used to check whether this specular proprety enables or disables specular lighting.
+	 * \return True if this property enables specular lighting, false if it disables it.
+	 */
+	NIFLIB_API bool GetSpecularState() const;
+
+	/*!
+	 * Used to set whether this specular property enables or disables specular lighting.
+	 * \param[in] n True to enable specular lighting with this property, false to disable it.
+	 */
+	NIFLIB_API void SetSpecularState( bool n );
+
+	/*!
 	 * Can be used to get the data stored in the flags field for this object.  It is usually better to call more specific flag-toggle functions if they are availiable.
 	 * \return The flag data.
 	 */

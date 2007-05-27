@@ -94,10 +94,15 @@ void NiDynamicEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( info.version >= 0x0A010000 ) {
 		for (unsigned int i2 = 0; i2 < affectedNodes.size(); i2++) {
-			if ( affectedNodes[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(affectedNodes[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*affectedNodes[i2]), out, info );
+			} else {
+				if ( affectedNodes[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(affectedNodes[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 

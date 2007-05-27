@@ -71,10 +71,15 @@ void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_ma
 		NifStream( fileName, out, info );
 	};
 	if ( (external == 0) ) {
-		if ( imageData != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(imageData) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*imageData), out, info );
+		} else {
+			if ( imageData != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(imageData) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 	NifStream( unknownInt1, out, info );
 	if ( info.version >= 0x03010000 ) {

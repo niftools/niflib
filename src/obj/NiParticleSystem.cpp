@@ -68,10 +68,15 @@ void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		NifStream( unknownBool, out, info );
 		NifStream( numModifiers, out, info );
 		for (unsigned int i2 = 0; i2 < modifiers.size(); i2++) {
-			if ( modifiers[i2] != NULL )
-				NifStream( link_map.find( StaticCast<NiObject>(modifiers[i2]) )->second, out, info );
-			else
-				NifStream( 0xffffffff, out, info );
+			if ( info.version < VER_3_3_0_13 ) {
+				NifStream( (unsigned int)&(*modifiers[i2]), out, info );
+			} else {
+				if ( modifiers[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(modifiers[i2]) )->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
+			}
 		};
 	};
 

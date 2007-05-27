@@ -314,7 +314,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\MaterialCollection.cpp"
+				RelativePath=".\src\MatTexCollection.cpp"
 				>
 			</File>
 			<File
@@ -1556,7 +1556,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\MaterialCollection.h"
+				RelativePath=".\include\MatTexCollection.h"
 				>
 			</File>
 			<File

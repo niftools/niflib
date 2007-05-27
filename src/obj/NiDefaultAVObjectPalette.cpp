@@ -68,10 +68,15 @@ void NiDefaultAVObjectPalette::Write( ostream& out, const map<NiObjectRef,unsign
 	NifStream( numObjs, out, info );
 	for (unsigned int i1 = 0; i1 < objs.size(); i1++) {
 		NifStream( objs[i1].name, out, info );
-		if ( objs[i1].avObject != NULL )
-			NifStream( link_map.find( StaticCast<NiObject>(objs[i1].avObject) )->second, out, info );
-		else
-			NifStream( 0xffffffff, out, info );
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*objs[i1].avObject), out, info );
+		} else {
+			if ( objs[i1].avObject != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(objs[i1].avObject) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
