@@ -609,3 +609,25 @@
    Ref template arguments.
  * Prevented the link map from being copied unnecessarily, improving
    performance and memory usage.
+   
+==Version 0.7.2==
+
+ * Added some internal template functions for extracting flags and fields from
+   bitfields to NIF_IO.h.
+ * Finished new MatTexCollection helper class which makes it possible to
+   manipulate material properties and texture objects with the same classes
+   regardless of the intended NIF version.
+ * Implemented write for files of version < 3.3.0.13, so now old files can be
+   both read and written.
+ * Made some minor formatting improvements through alteration in the XML Python
+   script.
+ * Pre-main initialization of objects was causing problems with both static and
+   DLL linking of the library.  I fixed the DLL issues, but statically linking
+   the library caused none of the objects to register themselves, so I went
+   back to using a single function that registers all objects the first time
+   ReadNifTree is called.  This fixes the issues with crashing and missing
+   objects.
+ * Moved Object Registration/Creation functionality into new ObjectRegistry
+   class.  This allows users of the library to register new NIF object or
+   overwrite exiting ones without recompiling the library.
+ * Restored some missing function implementations.

@@ -73,7 +73,6 @@ public:
 
 	/*!
 	 * Sets a new internal file texture.  Removes any existing texture references, whether internal or external.
-	 * \param[in] original_file_name The original file name of the texture.  This may be optional.
 	 * \param[in] raw_image_data The NiRawImageData object that contains the texture image data.
 	 */
 	NIFLIB_API void SetInternalTexture( NiRawImageData * raw_image_data );

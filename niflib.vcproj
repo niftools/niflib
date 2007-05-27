@@ -192,7 +192,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib.dll"
-				Version="0.7"
+				Version="0.7.2"
 				ImportLibrary="lib/niflib_dll.lib"
 			/>
 			<Tool
@@ -268,7 +268,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_debug.dll"
-				Version="0.7"
+				Version="0.7.2"
 				ImportLibrary="lib/niflib_dll_debug.lib"
 			/>
 			<Tool
