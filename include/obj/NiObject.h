@@ -130,7 +130,7 @@ public:
 	 * \return The number of references to this object that are in use.
 	 */
 	NIFLIB_API unsigned int GetNumRefs();
-private:
+//private:
 	mutable unsigned int _ref_count;
 	list<NiObject*> _cross_refs;
 	static unsigned int objectsInMemory;

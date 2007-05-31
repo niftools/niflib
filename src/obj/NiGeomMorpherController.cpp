@@ -197,6 +197,16 @@ std::list<NiObjectRef> NiGeomMorpherController::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+void NiGeomMorpherController::NormalizeKeys() {
+
+	//Normalize any keys that are stored in Morph Data
+	if ( data != NULL ) {}
+
+	//Call the NiTimeController version of this function to normalize the start
+	//and stop times and reset the phase and frequency
+	NiTimeController::NormalizeKeys();
+}
+
 vector< Ref<NiInterpolator> > NiGeomMorpherController::GetInterpolators() const {
 	return interpolators;
 }

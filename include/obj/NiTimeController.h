@@ -122,6 +122,14 @@ public:
 	NIFLIB_API void SetPhase( float n );
 
 	/*!
+	 * This function will adjust the times in all the keys stored in this
+	 * controller so that phase will equal 0 and frequency will equal one.  In
+	 * other words, it will cause the key times to be in seconds starting from
+	 * zero.
+	 */
+	NIFLIB_API virtual void NormalizeKeys();
+
+	/*!
 	 * Retrieves the time index where this controller begins to take affect.  If the animation type is set to wrap or cycle, the animation will not occur only between these time intervals but will be mapped to the right spot between them.  This value is in controller time, i.e. phase and frequency are applied to transform it to application time.
 	 * \return The start time for the controller animation.
 	 */

@@ -173,6 +173,16 @@ void NiTimeController::SetPhase( float n ) {
 	phase = n;
 }
 
+void NiTimeController::NormalizeKeys() {
+	//Normalize the start and stop times
+	startTime = frequency * startTime + phase;
+	stopTime = frequency * stopTime + phase;
+
+	//Set phase to 0 and frequency to 1
+	phase = 0.0f;
+	frequency = 0.0f;
+}
+
 float NiTimeController::GetStartTime() const {
 	return startTime;
 }

@@ -58,6 +58,18 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
+	 * This function will adjust the times in all the keys stored in this
+	 * controller so that phase will equal 0 and frequency will equal one.  In
+	 * other words, it will cause the key times to be in seconds starting from
+	 * zero.
+	 * \param[in] phase The phase shift to remove from any keys stored in this
+	 * object.
+	 * \param[in] frequency The frequency to normalize to 1.0 for any keys
+	 * stored in this object
+	 */
+	NIFLIB_API void NormalizeKeys( float frequency, float phase );
+
+	/*!
 	 * Retrieves the number of verticies used in the morph targets.  This must be the same as the number of verticies in the base mesh that the morph controller for which this object stores data is attatched.  This is not done automatically by Niflib.
 	 * \return The number of vertices used in the morph target meshes.
 	 * \sa NiMorphData::SetVertexCount

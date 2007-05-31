@@ -42,9 +42,6 @@ void NiBSplineCompPoint3Interpolator::Read( istream& in, list<unsigned int> & li
 	//--END CUSTOM CODE--//
 
 	NiBSplinePoint3Interpolator::Read( in, link_stack, info );
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats[i1], in, info );
-	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -55,9 +52,6 @@ void NiBSplineCompPoint3Interpolator::Write( ostream& out, const map<NiObjectRef
 	//--END CUSTOM CODE--//
 
 	NiBSplinePoint3Interpolator::Write( out, link_map, info );
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats[i1], out, info );
-	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -70,18 +64,6 @@ std::string NiBSplineCompPoint3Interpolator::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiBSplinePoint3Interpolator::asString();
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
-		array_output_count++;
-	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

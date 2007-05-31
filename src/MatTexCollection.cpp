@@ -1,18 +1,18 @@
 /* Copyright (c) 2006, NIF File Format Library and Tools
 All rights reserved.  Please see niflib.h for license. */
 
-#include "MatTexCollection.h"
-#include "obj/NiGeometry.h"
-#include "obj/NiAVObject.h"
-#include "obj/NiNode.h"
-#include "obj/NiMaterialProperty.h"
-#include "obj/NiTexturingProperty.h"
-#include "obj/NiTextureProperty.h"
-#include "obj/NiMultiTextureProperty.h"
-#include "obj/NiSpecularProperty.h"
-#include "obj/NiAlphaProperty.h"
-#include "obj/NiSourceTexture.h"
-#include "obj/NiImage.h"
+#include "../include/MatTexCollection.h"
+#include "../include/obj/NiGeometry.h"
+#include "../include/obj/NiAVObject.h"
+#include "../include/obj/NiNode.h"
+#include "../include/obj/NiMaterialProperty.h"
+#include "../include/obj/NiTexturingProperty.h"
+#include "../include/obj/NiTextureProperty.h"
+#include "../include/obj/NiMultiTextureProperty.h"
+#include "../include/obj/NiSpecularProperty.h"
+#include "../include/obj/NiAlphaProperty.h"
+#include "../include/obj/NiSourceTexture.h"
+#include "../include/obj/NiImage.h"
 
 namespace Niflib {
 
