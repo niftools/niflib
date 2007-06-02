@@ -13,14 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 namespace Niflib {
 
 class NiGravity;
 typedef Ref<NiGravity> NiGravityRef;
 
 /*! A particle modifier; applies a gravitational field on the particles. */
-class NiGravity : public AParticleModifier {
+class NiGravity : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiGravity();

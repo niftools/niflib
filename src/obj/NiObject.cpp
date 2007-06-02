@@ -18,19 +18,15 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiObject::TYPE("NiObject", NULL );
+const Type NiObject::TYPE("NiObject", &RefObject::TYPE );
 
 NiObject::NiObject() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
-	_ref_count = 0;
-	objectsInMemory++;
-
 	//--END CUSTOM CODE--//
 }
 
 NiObject::~NiObject() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
-	objectsInMemory--;
 	//--END CUSTOM CODE--//
 }
 
@@ -96,46 +92,6 @@ std::list<NiObjectRef> NiObject::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-unsigned int NiObject::objectsInMemory = 0;
-
-bool NiObject::IsSameType( const Type & compare_to) const {
-	return GetType().IsSameType( compare_to );
-}
-
-bool NiObject::IsSameType( const NiObject * object ) const {
-	return GetType().IsSameType( object->GetType() );
-}
-
-bool NiObject::IsDerivedType( const Type & compare_to) const {
-	return GetType().IsDerivedType( compare_to );
-}
-
-bool NiObject::IsDerivedType( const NiObject * object ) const {
-	return GetType().IsDerivedType( object->GetType() );
-}
-
-void NiObject::AddRef() const {
-	++_ref_count;
-}
-
-void NiObject::SubtractRef() const {
-	_ref_count--;
-	if ( _ref_count < 1 ) {
-		delete this;
-	}
-}
-
-unsigned int NiObject::NumObjectsInMemory() {
-	return objectsInMemory;
-}
-
-/*! Used to format a human readable string that includes the type of the object */
-string NiObject::GetIDString() const {
-	stringstream out;
-	out << this << "(" << this->GetType().GetTypeName() << ")";
-	return out.str();
-}
-
 NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	//Create a string stream to temporarily hold the state-save of this object
 	stringstream tmp;
@@ -162,9 +118,5 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	//return new object
 	return clone;
 };
-
-unsigned int NiObject::GetNumRefs() {
-	return _ref_count;
-}
 
 //--END CUSTOM CODE--//

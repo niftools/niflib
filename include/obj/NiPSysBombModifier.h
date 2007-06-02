@@ -57,14 +57,18 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Link to a node. */
-	NiNode * unknownLink;
-	/*! Not sure, could be floats as well. Zero. */
-	array<2,unsigned int > unknownInts1;
+	/*! Link to a node.  Exact function unknown. */
+	NiNode * bombObject;
 	/*! Unknown. */
-	array<3,float > unknownFloats;
+	Vector3 bombAxis;
 	/*! Unknown. */
-	array<2,unsigned int > unknownInts2;
+	float decay;
+	/*! Unknown. */
+	float deltaV;
+	/*! Unknown. */
+	DecayType decayType;
+	/*! Unknown. */
+	SymmetryType symmetryType;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

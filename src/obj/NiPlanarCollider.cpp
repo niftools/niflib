@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiPlanarCollider::TYPE("NiPlanarCollider", &AParticleModifier::TYPE );
+const Type NiPlanarCollider::TYPE("NiPlanarCollider", &NiParticleModifier::TYPE );
 
 NiPlanarCollider::NiPlanarCollider() : unknownShort((unsigned short)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownShort2((unsigned short)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), unknownFloat12(0.0f), unknownFloat13(0.0f), unknownFloat14(0.0f), unknownFloat15(0.0f), unknownFloat16(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -41,7 +41,7 @@ void NiPlanarCollider::Read( istream& in, list<unsigned int> & link_stack, const
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( unknownShort, in, info );
 	};
@@ -73,7 +73,7 @@ void NiPlanarCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( unknownShort, out, info );
 	};
@@ -107,7 +107,7 @@ std::string NiPlanarCollider::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -136,7 +136,7 @@ void NiPlanarCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -144,7 +144,7 @@ void NiPlanarCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 
 std::list<NiObjectRef> NiPlanarCollider::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

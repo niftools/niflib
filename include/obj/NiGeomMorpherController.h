@@ -63,10 +63,10 @@ public:
 	//TODO: Lots of unknown data in this object
 
 	/*!
-	 * This function will adjust the times in all the keys stored in this
-	 * controller so that phase will equal 0 and frequency will equal one.  In
-	 * other words, it will cause the key times to be in seconds starting from
-	 * zero.
+	 * This function will adjust the times in all the keys in the data objects
+	 * referenced by this controller and any of its interpolators such that the
+	 * phase will equal 0 and frequency will equal one.  In other words, it
+	 * will cause the key times to be in seconds starting from zero.
 	 */
 	NIFLIB_API virtual void NormalizeKeys();
 

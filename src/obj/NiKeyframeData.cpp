@@ -255,6 +255,16 @@ std::list<NiObjectRef> NiKeyframeData::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+void NiKeyframeData::NormalizeKeys( float phase, float frequency ) {
+	NormalizeKeyVector( this->translations.keys, phase, frequency );
+	NormalizeKeyVector( this->scales.keys, phase, frequency );
+	NormalizeKeyVector( this->quaternionKeys, phase, frequency );
+	NormalizeKeyVector( this->xyzRotations[0].keys, phase, frequency );
+	NormalizeKeyVector( this->xyzRotations[1].keys, phase, frequency );
+	NormalizeKeyVector( this->xyzRotations[2].keys, phase, frequency );
+
+}
+
 KeyType NiKeyframeData::GetRotateType() const {
 	return rotationType;
 }

@@ -13,14 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 namespace Niflib {
 
 class NiParticleBomb;
 typedef Ref<NiParticleBomb> NiParticleBombRef;
 
 /*! A particle modifier. */
-class NiParticleBomb : public AParticleModifier {
+class NiParticleBomb : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiParticleBomb();
@@ -56,29 +56,21 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	float unknownFloat1;
+	float decay_;
 	/*! Unknown. */
-	float unknownFloat2;
+	float duration_;
 	/*! Unknown. */
-	float unknownFloat3;
+	float deltav_;
 	/*! Unknown. */
-	float unknownFloat4;
+	float start_;
 	/*! Unknown. */
-	unsigned int unknownInt1;
+	DecayType decayType_;
 	/*! Unknown. */
-	unsigned int unknownInt2;
-	/*! Unknown. */
-	float unknownFloat5;
-	/*! Unknown. */
-	float unknownFloat6;
-	/*! Unknown. */
-	float unknownFloat7;
-	/*! Unknown. */
-	float unknownFloat8;
-	/*! Unknown. */
-	float unknownFloat9;
-	/*! Unknown. */
-	float unknownFloat10;
+	SymmetryType symmetryType_;
+	/*! The position of the mass point relative to the particle system? */
+	Vector3 position_;
+	/*! The direction of the applied acceleration? */
+	Vector3 direction_;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

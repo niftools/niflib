@@ -43,7 +43,7 @@ ostream & operator<<( ostream & out, Key<T> const & val ) {
  * normalized to 1.
  */
 template <class T>
-void NormalizeKeys( vector< Key<T> > & keys, float phase, float frequency ) {
+void NormalizeKeyVector( vector< Key<T> > & keys, float phase, float frequency ) {
 	for ( size_t i = 0; i < keys.size(); ++i ) {
 		keys[i].time = ( keys[i].time - phase ) / frequency;
 	}

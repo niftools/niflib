@@ -189,7 +189,10 @@ public:
 protected:
 	/*! Property flags. */
 	unsigned short flags;
-	/*! 0=replace, 1=decal, 2=modulate, 3=hilight, 4=hilight2 */
+	/*!
+	 * Determines how the texture will be applied.  Seems to have special functions in
+	 * Oblivion.
+	 */
 	ApplyMode applyMode;
 	/*!
 	 * Number of textures. Always 7 in versions < 20.0.0.4. Can also be 8 in >=

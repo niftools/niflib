@@ -168,4 +168,10 @@ void NiTransformInterpolator::SetData( NiTransformData * value ) {
 	data = value;
 }
 
+void NiTransformInterpolator::NormalizeKeys( float phase, float frequency ) {
+	if ( data != NULL ) {
+		data->NormalizeKeys( phase, frequency );
+	}
+}
+
 //--END CUSTOM CODE--//

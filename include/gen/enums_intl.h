@@ -22,6 +22,12 @@ void NifStream( ForceType & val, istream& in, const NifInfo & info = NifInfo() )
 void NifStream( ForceType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---TexTransform---//
+
+void NifStream( TexTransform & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( TexTransform const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---HavokMaterial---//
 
 void NifStream( HavokMaterial & val, istream& in, const NifInfo & info = NifInfo() );
@@ -34,10 +40,22 @@ void NifStream( CompareMode & val, istream& in, const NifInfo & info = NifInfo()
 void NifStream( CompareMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---VelocityType---//
+
+void NifStream( VelocityType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( VelocityType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---TexFilterMode---//
 
 void NifStream( TexFilterMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( TexFilterMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SymmetryType---//
+
+void NifStream( SymmetryType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SymmetryType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---LightMode---//
@@ -76,6 +94,12 @@ void NifStream( AlphaFormat & val, istream& in, const NifInfo & info = NifInfo()
 void NifStream( AlphaFormat const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---EffectType---//
+
+void NifStream( EffectType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EffectType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---KeyType---//
 
 void NifStream( KeyType & val, istream& in, const NifInfo & info = NifInfo() );
@@ -86,6 +110,12 @@ void NifStream( KeyType const & val, ostream& out, const NifInfo & info = NifInf
 
 void NifStream( VertMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( VertMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---CoordGenType---//
+
+void NifStream( CoordGenType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( CoordGenType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---ApplyMode---//
@@ -106,10 +136,22 @@ void NifStream( BillboardMode & val, istream& in, const NifInfo & info = NifInfo
 void NifStream( BillboardMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---TargetColor---//
+
+void NifStream( TargetColor & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( TargetColor const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---TexType---//
 
 void NifStream( TexType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( TexType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---ImageType---//
+
+void NifStream( ImageType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ImageType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---PixelLayout---//
@@ -129,6 +171,9 @@ void NifStream( TexClampMode const & val, ostream& out, const NifInfo & info = N
 void NifStream( MotionQuality & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( EndianType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EndianType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---PixelFormat---//
 
@@ -146,6 +191,18 @@ void NifStream( CycleType const & val, ostream& out, const NifInfo & info = NifI
 
 void NifStream( FieldType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( FieldType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---DecayType---//
+
+void NifStream( DecayType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( DecayType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---EmitFrom---//
+
+void NifStream( EmitFrom & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EmitFrom const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 }
 #endif

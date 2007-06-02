@@ -17,9 +17,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleRotation::TYPE("NiParticleRotation", &AParticleModifier::TYPE );
+const Type NiParticleRotation::TYPE("NiParticleRotation", &NiParticleModifier::TYPE );
 
-NiParticleRotation::NiParticleRotation() : unknownByte((byte)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f) {
+NiParticleRotation::NiParticleRotation() : randomInitialAxis_((byte)0), rotationSpeed_(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -41,12 +41,10 @@ void NiParticleRotation::Read( istream& in, list<unsigned int> & link_stack, con
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
-	NifStream( unknownByte, in, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownFloat2, in, info );
-	NifStream( unknownFloat3, in, info );
-	NifStream( unknownFloat4, in, info );
+	NiParticleModifier::Read( in, link_stack, info );
+	NifStream( randomInitialAxis_, in, info );
+	NifStream( initialAxis_, in, info );
+	NifStream( rotationSpeed_, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -56,12 +54,10 @@ void NiParticleRotation::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
-	NifStream( unknownByte, out, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownFloat2, out, info );
-	NifStream( unknownFloat3, out, info );
-	NifStream( unknownFloat4, out, info );
+	NiParticleModifier::Write( out, link_map, info );
+	NifStream( randomInitialAxis_, out, info );
+	NifStream( initialAxis_, out, info );
+	NifStream( rotationSpeed_, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -73,12 +69,10 @@ std::string NiParticleRotation::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
-	out << "  Unknown Byte:  " << unknownByte << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
-	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
-	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
+	out << NiParticleModifier::asString();
+	out << "  Random Initial Axis?:  " << randomInitialAxis_ << endl;
+	out << "  Initial Axis?:  " << initialAxis_ << endl;
+	out << "  Rotation Speed?:  " << rotationSpeed_ << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -89,7 +83,7 @@ void NiParticleRotation::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -97,7 +91,7 @@ void NiParticleRotation::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 std::list<NiObjectRef> NiParticleRotation::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

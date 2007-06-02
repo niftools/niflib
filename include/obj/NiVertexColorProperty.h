@@ -98,15 +98,7 @@ public:
 protected:
 	/*! Property flags. */
 	unsigned short flags;
-	/*!
-	 * 0: SOURCE_IGNORE (ignore vertex colors, use material defaults)
-	 *             1: SOURCE_EMISSIVE (vertex colors override the material's emissive
-	 * color)
-	 *             2: SOURCE_AMB_DIFF (vertex colors are mapped to ambient and diffuse
-	 * color)
-	 * 
-	 *             related gl function: glColorMaterial
-	 */
+	/*! Determines how vertex and material colors are mixed. */
 	VertMode vertexMode;
 	/*! The light mode. */
 	LightMode lightingMode;

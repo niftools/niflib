@@ -138,4 +138,8 @@ void NiBoolData::SetKeys( vector< Key<unsigned char> > const & keys ) {
 	data.keys = keys;
 }
 
+void NiBoolData::NormalizeKeys( float phase, float frequency ) {
+	NormalizeKeyVector( this->data.keys, phase, frequency );
+}
+
 //--END CUSTOM CODE--//

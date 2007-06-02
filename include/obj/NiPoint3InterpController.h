@@ -73,11 +73,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Selects which color to control. 0 : ambient, 1 : diffuse, 2 : specular, 3 : self
-	 * illum
-	 */
-	unsigned short targetColor;
+	/*! Selects which color to control. */
+	TargetColor targetColor;
 	/*! Material color controller data object index. Points to NiPosData. */
 	Ref<NiPosData > data;
 public:

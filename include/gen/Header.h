@@ -37,13 +37,8 @@ struct Header {
 	 * 0x04020100, 0x04020200, 0x0A000100, 0x0A010000, 0x0A020000, 0x14000004, ...
 	 */
 	unsigned int version;
-	/*!
-	 * Determines the endian-ness of the data.
-	 * 
-	 *             1 = little endian (default)
-	 *             0 = big endian
-	 */
-	byte endianType;
+	/*! Determines the endianness of the data in the file. */
+	EndianType endianType;
 	/*! An extra version number, for companies that decide to modify the file format. */
 	unsigned int userVersion;
 	/*! Number of file objects. */

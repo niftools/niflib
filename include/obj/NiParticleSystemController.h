@@ -22,7 +22,7 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiObject;
-class AParticleModifier;
+class NiParticleModifier;
 class NiColorData;
 class NiParticleSystemController;
 typedef Ref<NiParticleSystemController> NiParticleSystemControllerRef;
@@ -81,19 +81,9 @@ protected:
 	/*! emitter's horizontal opening angle */
 	float horizontalAngle;
 	/*! Unknown. */
-	float unknownFloat5;
+	Vector3 unknownNormal_;
 	/*! Unknown. */
-	float unknownFloat6;
-	/*! Unknown. */
-	float unknownFloat7;
-	/*! Unknown. */
-	float unknownFloat8;
-	/*! Unknown. */
-	float unknownFloat9;
-	/*! Unknown. */
-	float unknownFloat10;
-	/*! Unknown. */
-	float unknownFloat11;
+	Color4 unknownColor_;
 	/*! Particle size */
 	float size;
 	/*! Particle emit start time */
@@ -144,7 +134,7 @@ protected:
 	 * Link to some optional particle modifiers (NiGravity, NiParticleGrowFade,
 	 * NiParticleBomb, ...)
 	 */
-	Ref<AParticleModifier > particleExtra;
+	Ref<NiParticleModifier > particleExtra;
 	/*! Unknown int (=0xffffffff) */
 	Ref<NiObject > unknownLink2;
 	/*! Trailing null byte */

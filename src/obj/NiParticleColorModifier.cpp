@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &AParticleModifier::TYPE );
+const Type NiParticleColorModifier::TYPE("NiParticleColorModifier", &NiParticleModifier::TYPE );
 
 NiParticleColorModifier::NiParticleColorModifier() : colorData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -43,7 +43,7 @@ void NiParticleColorModifier::Read( istream& in, list<unsigned int> & link_stack
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 
@@ -55,7 +55,7 @@ void NiParticleColorModifier::Write( ostream& out, const map<NiObjectRef,unsigne
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*colorData), out, info );
 	} else {
@@ -76,7 +76,7 @@ std::string NiParticleColorModifier::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	out << "  Color Data:  " << colorData << endl;
 	return out.str();
 
@@ -88,7 +88,7 @@ void NiParticleColorModifier::FixLinks( const map<unsigned int,NiObjectRef> & ob
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 	colorData = FixLink<NiColorData>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -97,7 +97,7 @@ void NiParticleColorModifier::FixLinks( const map<unsigned int,NiObjectRef> & ob
 
 std::list<NiObjectRef> NiParticleColorModifier::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	if ( colorData != NULL )
 		refs.push_back(StaticCast<NiObject>(colorData));
 	return refs;

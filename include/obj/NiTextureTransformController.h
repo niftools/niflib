@@ -64,14 +64,8 @@ protected:
 	byte unknown2;
 	/*! The target texture slot. */
 	TexType textureSlot;
-	/*!
-	 * 0: translate u
-	 *             1: translate v
-	 *             2: rotate ?
-	 *             3: tiling u
-	 *             4: tiling v
-	 */
-	unsigned int operation;
+	/*! Determines how this controller animates the UV Coordinates. */
+	TexTransform operation;
 	/*! Link to NiFloatData. */
 	Ref<NiFloatData > data;
 public:

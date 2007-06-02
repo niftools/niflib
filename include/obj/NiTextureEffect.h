@@ -120,7 +120,7 @@ public:
 	 * 3: FOG_MAP
 	 * \return The texture type.
 	 */
-	NIFLIB_API unsigned int GetTextureType() const;
+	NIFLIB_API EffectType GetTextureType() const;
 
 	/*!
 	 * Sets the texture type used by this effect.  Valid values are:
@@ -130,7 +130,7 @@ public:
 	 * 3: FOG_MAP
 	 * \param[in] value The new texture type.
 	 */
-	NIFLIB_API void SetTextureType( unsigned int value );
+	NIFLIB_API void SetTextureType( EffectType value );
 
 	/*!
 	 * Retrieves the texture coordinate generation mode.  Valid values are:
@@ -141,7 +141,7 @@ public:
 	 * 4: DIFFUSE_CUBE_MAP
 	 * \return The texture coordinate generation mode.
 	 */
-	NIFLIB_API unsigned int GetCoordinateGenerationType() const;
+	NIFLIB_API CoordGenType GetCoordinateGenerationType() const;
 
 	/*!
 	 * Sets the texture coordinate generation mode.  Valid values are:
@@ -152,7 +152,7 @@ public:
 	 * 4: DIFFUSE_CUBE_MAP
 	 * \return The new texture coordinate generation mode.
 	 */
-	NIFLIB_API void SetCoordinateGenerationType( unsigned int value );
+	NIFLIB_API void SetCoordinateGenerationType( CoordGenType value );
 
 	/*!
 	 * Retrieves the source texture index.
@@ -216,27 +216,13 @@ protected:
 	TexFilterMode textureFiltering;
 	/*! Texture Clamp mode. */
 	TexClampMode textureClamping;
-	/*!
-	 * 0: PROJECTED_LIGHT
-	 *             1: PROJECTED_SHADOW
-	 *             2: ENVIRONMENT_MAP (Usual value)
-	 *             3: FOG_MAP
-	 */
-	unsigned int textureType;
-	/*!
-	 * 0: WORLD_PARALLEL
-	 *             1: WORLD_PERSPECTIVE
-	 *             2: SPHERE_MAP (Usual value)
-	 *             3: SPECULAR_CUBE_MAP
-	 *             4: DIFFUSE_CUBE_MAP
-	 */
-	unsigned int coordinateGenerationType;
+	/*! The type of effect that the texture is used for. */
+	EffectType textureType;
+	/*! The method that will be used to generate UV coordinates for the texture effect. */
+	CoordGenType coordinateGenerationType;
 	/*! Source texture index. */
 	Ref<NiSourceTexture > sourceTexture;
-	/*!
-	 * 0: Disabled (Usual value)
-	 *             1: Enabled
-	 */
+	/*! Determines whether a clipping plane is used.  0 means that a plane is not used. */
 	byte clippingPlane;
 	/*! Unknown: (1,0,0)? */
 	Vector3 unknownVector;

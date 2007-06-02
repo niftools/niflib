@@ -87,4 +87,9 @@ std::list<NiObjectRef> NiKeyBasedInterpolator::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+void NiKeyBasedInterpolator::NormalizeKeys( float phase, float frequency ) {
+	//Do Nothing
+}
+
 //--END CUSTOM CODE--//

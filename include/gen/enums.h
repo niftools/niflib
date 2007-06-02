@@ -21,6 +21,17 @@ enum ForceType {
 
 ostream & operator<<( ostream & out, ForceType const & val );
 
+/*! Determines how a NiTextureTransformController animates the UV coordinates. */
+enum TexTransform {
+	TT_TRANSLATE_U = 0, /*!< Means this controller moves the U texture cooridnates. */
+	TT_TRANSLATE_V = 1, /*!< Means this controller moves the V texture cooridnates. */
+	TT_ROTATE = 2, /*!< Means this controller roates the UV texture cooridnates. */
+	TT_SCALE_U = 3, /*!< Means this controller scales the U texture cooridnates. */
+	TT_SCALE_V = 4, /*!< Means this controller scales the V texture cooridnates. */
+};
+
+ostream & operator<<( ostream & out, TexTransform const & val );
+
 /*! A material, used by havok shape objects. */
 enum HavokMaterial {
 	HAV_MAT_STONE = 0, /*!< Stone */
@@ -73,6 +84,18 @@ enum CompareMode {
 ostream & operator<<( ostream & out, CompareMode const & val );
 
 /*!
+ * Controls the way the a particle mesh emitter determines the starting speed and
+ * direction of the particles that are emitted.
+ */
+enum VelocityType {
+	VELOCITY_USE_NORMALS = 0, /*!< Uses the normals of the meshes to determine staring velocity. */
+	VELOCITY_USE_RANDOM = 1, /*!< Starts particles with a random velocity. */
+	VELOCITY_USE_DIRECTION = 2, /*!< Uses the emission axis to determine initial particle direction? */
+};
+
+ostream & operator<<( ostream & out, VelocityType const & val );
+
+/*!
  * Specifies the availiable texture filter modes.  That is, the way pixels within a
  * texture are blended together when textures are displayed on the screen at a size
  * other than their original dimentions.
@@ -87,6 +110,15 @@ enum TexFilterMode {
 };
 
 ostream & operator<<( ostream & out, TexFilterMode const & val );
+
+/*! Determines symetry type used by NiPSysBombModifier. */
+enum SymmetryType {
+	SPHERICAL_SYMMETRY = 0, /*!< Spherical Symmetry. */
+	CYLINDRICAL_SYMMETRY = 1, /*!< Cylindrical Symmetry. */
+	PLANAR_SYMMETRY = 2, /*!< Planar Symmetry. */
+};
+
+ostream & operator<<( ostream & out, SymmetryType const & val );
 
 /*! An unsigned 32-bit integer, describing how vertex colors influence lighting. */
 enum LightMode {
@@ -209,6 +241,16 @@ enum AlphaFormat {
 
 ostream & operator<<( ostream & out, AlphaFormat const & val );
 
+/*! The type of information that's store in a texture used by a NiTextureEffect. */
+enum EffectType {
+	EFFECT_PROJECTED_LIGHT = 0, /*!< Apply a projected light texture. */
+	EFFECT_PROJECTED_SHADOW = 1, /*!< Apply a projected shaddow texture. */
+	EFFECT_ENVIRONMENT_MAP = 2, /*!< Apply an environment map texture. */
+	EFFECT_FOG_MAP = 3, /*!< Apply a fog map texture. */
+};
+
+ostream & operator<<( ostream & out, EffectType const & val );
+
 /*!
  * The type of animation interpolation (blending) that will be used on the
  * associated key frames.
@@ -231,6 +273,17 @@ enum VertMode {
 };
 
 ostream & operator<<( ostream & out, VertMode const & val );
+
+/*! Determines the way that UV texture coordinates are generated. */
+enum CoordGenType {
+	CG_WORLD_PARALLEL = 0, /*!< Use plannar mapping. */
+	CG_WORLD_PERSPECTIVE = 1, /*!< Use perspective mapping. */
+	CG_SPHERE_MAP = 2, /*!< Use spherical mapping. */
+	CG_SPECULAR_CUBE_MAP = 3, /*!< Use specular cube mapping. */
+	CG_DIFFUSE_CUBE_MAP = 4, /*!< Use Diffuse cube mapping. */
+};
+
+ostream & operator<<( ostream & out, CoordGenType const & val );
 
 /*! An unsigned 32-bit integer, describing the apply mode of a texture. */
 enum ApplyMode {
@@ -277,6 +330,19 @@ enum BillboardMode {
 
 ostream & operator<<( ostream & out, BillboardMode const & val );
 
+/*!
+ * Used by NiPoint3InterpControllers to select which type of color in the
+ * controlled object that will be animated.
+ */
+enum TargetColor {
+	TC_AMBIENT = 0, /*!< Control the ambient color. */
+	TC_DIFFUSE = 1, /*!< Control the diffuse color. */
+	TC_SPECULAR = 2, /*!< Control the specular color. */
+	TC_SELF_ILLUM = 3, /*!< Control the self illumination color. */
+};
+
+ostream & operator<<( ostream & out, TargetColor const & val );
+
 /*! The type of texture. */
 enum TexType {
 	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
@@ -290,6 +356,14 @@ enum TexType {
 };
 
 ostream & operator<<( ostream & out, TexType const & val );
+
+/*! Determines how the raw image data is stored in NiRawImageData. */
+enum ImageType {
+	RGB = 1, /*!< Colors store red, blue, and green components. */
+	RGBA = 2, /*!< Colors store red, blue, green, and alpha components. */
+};
+
+ostream & operator<<( ostream & out, ImageType const & val );
 
 /*! An unsigned 32-bit integer, describing the color depth of a texture. */
 enum PixelLayout {
@@ -331,6 +405,13 @@ enum MotionQuality {
 
 ostream & operator<<( ostream & out, MotionQuality const & val );
 
+enum EndianType {
+	ENDIAN_BIG = 0, /*!< The numbers are stored in big endian format, such as those used by PowerPC Mac processors. */
+	ENDIAN_LITTLE = 1, /*!< The numbers are stored in little endian format, such as those used by Intel and AMD x86 processors. */
+};
+
+ostream & operator<<( ostream & out, EndianType const & val );
+
 /*! Specifies the pixel format used by the NiPixelData object to store a texture. */
 enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
@@ -356,6 +437,26 @@ enum FieldType {
 };
 
 ostream & operator<<( ostream & out, FieldType const & val );
+
+/*! Determines decay function.  Used by NiPSysBombModifier. */
+enum DecayType {
+	DECAY_NONE = 0, /*!< No decay. */
+	DECAY_LINEAR = 1, /*!< Linear decay. */
+	DECAY_EXPONENTIAL = 2, /*!< Exponential decay. */
+};
+
+ostream & operator<<( ostream & out, DecayType const & val );
+
+/*! Controls which parts of the mesh that the particles are emitted from. */
+enum EmitFrom {
+	EMIT_FROM_VERTICES = 0, /*!< Emit particles from the vertices of the mesh. */
+	EMIT_FROM_FACE_CENTER = 1, /*!< Emit particles from the center of the faces of the mesh. */
+	EMIT_FROM_EDGE_CENTER = 2, /*!< Emit particles from the center of the edges of the mesh. */
+	EMIT_FROM_FACE_SURFACE = 3, /*!< Perhaps randomly emit particles from anywhere on the faces of the mesh? */
+	EMIT_FROM_EDGE_SURFACE = 4, /*!< Perhaps randomly emit particles from anywhere on the edges of the mesh? */
+};
+
+ostream & operator<<( ostream & out, EmitFrom const & val );
 
 }
 #endif

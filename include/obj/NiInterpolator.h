@@ -53,6 +53,7 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

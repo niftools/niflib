@@ -176,6 +176,12 @@ std::list<NiObjectRef> NiMorphData::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+void NiMorphData::NormalizeKeys( float phase, float frequency ) {
+	for ( size_t i = 0; i < morphs.size(); ++i ) {
+		NormalizeKeyVector( morphs[i].keys, phase, frequency );
+	}
+}
+
 int NiMorphData::GetVertexCount() const {
 	
 	return numVertices;

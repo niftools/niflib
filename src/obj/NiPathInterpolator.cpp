@@ -152,4 +152,14 @@ void NiPathInterpolator::SetFloatData( NiFloatData * value ) {
 	floatData = value;
 }
 
+void NiPathInterpolator::NormalizeKeys( float phase, float frequency ) {
+	if ( posData != NULL ) {
+		posData->NormalizeKeys( phase, frequency );
+	}
+	if ( floatData != NULL ) {
+		floatData->NormalizeKeys( phase, frequency );
+	}
+}
+
+
 //--END CUSTOM CODE--//

@@ -17,9 +17,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleBomb::TYPE("NiParticleBomb", &AParticleModifier::TYPE );
+const Type NiParticleBomb::TYPE("NiParticleBomb", &NiParticleModifier::TYPE );
 
-NiParticleBomb::NiParticleBomb() : unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f) {
+NiParticleBomb::NiParticleBomb() : decay_(0.0f), duration_(0.0f), deltav_(0.0f), start_(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -41,19 +41,15 @@ void NiParticleBomb::Read( istream& in, list<unsigned int> & link_stack, const N
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownFloat2, in, info );
-	NifStream( unknownFloat3, in, info );
-	NifStream( unknownFloat4, in, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownFloat5, in, info );
-	NifStream( unknownFloat6, in, info );
-	NifStream( unknownFloat7, in, info );
-	NifStream( unknownFloat8, in, info );
-	NifStream( unknownFloat9, in, info );
-	NifStream( unknownFloat10, in, info );
+	NiParticleModifier::Read( in, link_stack, info );
+	NifStream( decay_, in, info );
+	NifStream( duration_, in, info );
+	NifStream( deltav_, in, info );
+	NifStream( start_, in, info );
+	NifStream( decayType_, in, info );
+	NifStream( symmetryType_, in, info );
+	NifStream( position_, in, info );
+	NifStream( direction_, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -63,19 +59,15 @@ void NiParticleBomb::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownFloat2, out, info );
-	NifStream( unknownFloat3, out, info );
-	NifStream( unknownFloat4, out, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownFloat5, out, info );
-	NifStream( unknownFloat6, out, info );
-	NifStream( unknownFloat7, out, info );
-	NifStream( unknownFloat8, out, info );
-	NifStream( unknownFloat9, out, info );
-	NifStream( unknownFloat10, out, info );
+	NiParticleModifier::Write( out, link_map, info );
+	NifStream( decay_, out, info );
+	NifStream( duration_, out, info );
+	NifStream( deltav_, out, info );
+	NifStream( start_, out, info );
+	NifStream( decayType_, out, info );
+	NifStream( symmetryType_, out, info );
+	NifStream( position_, out, info );
+	NifStream( direction_, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -87,19 +79,15 @@ std::string NiParticleBomb::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
-	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
-	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
-	out << "  Unknown Float 6:  " << unknownFloat6 << endl;
-	out << "  Unknown Float 7:  " << unknownFloat7 << endl;
-	out << "  Unknown Float 8:  " << unknownFloat8 << endl;
-	out << "  Unknown Float 9:  " << unknownFloat9 << endl;
-	out << "  Unknown Float 10:  " << unknownFloat10 << endl;
+	out << NiParticleModifier::asString();
+	out << "  Decay?:  " << decay_ << endl;
+	out << "  Duration?:  " << duration_ << endl;
+	out << "  DeltaV?:  " << deltav_ << endl;
+	out << "  Start?:  " << start_ << endl;
+	out << "  Decay Type?:  " << decayType_ << endl;
+	out << "  Symmetry Type?:  " << symmetryType_ << endl;
+	out << "  Position?:  " << position_ << endl;
+	out << "  Direction?:  " << direction_ << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -110,7 +98,7 @@ void NiParticleBomb::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -118,7 +106,7 @@ void NiParticleBomb::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 
 std::list<NiObjectRef> NiParticleBomb::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

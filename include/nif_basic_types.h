@@ -28,12 +28,6 @@ struct LineString {
 typedef unsigned char	byte;
 #endif
 
-/*! Specifies the low-level nature of the storage process */
-enum EndianType {
-	ENDIAN_BIG = 0, /*!< Big Endian storage, such as that used by PowerPC processors */
-	ENDIAN_LITTLE = 1 /*!< Little Endian storage, such as that used by x86 processors */
-};
-
 //--Structures--//
 
 /*! 

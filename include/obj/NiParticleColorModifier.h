@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 
 // Include structures
 #include "../Ref.h"
@@ -25,7 +25,7 @@ class NiParticleColorModifier;
 typedef Ref<NiParticleColorModifier> NiParticleColorModifierRef;
 
 /*! Unknown. */
-class NiParticleColorModifier : public AParticleModifier {
+class NiParticleColorModifier : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiParticleColorModifier();

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NiDynamicEffect::TYPE );
 
-NiTextureEffect::NiTextureEffect() : textureType((unsigned int)0), coordinateGenerationType((unsigned int)0), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((unsigned short)0), ps2K((unsigned short)0), unknownShort((unsigned short)0) {
+NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((unsigned short)0), ps2K((unsigned short)0), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -181,19 +181,19 @@ void NiTextureEffect::SetTextureClamping( TexClampMode value ) {
 	textureClamping = value;
 }
 
-unsigned int NiTextureEffect::GetTextureType() const {
+EffectType NiTextureEffect::GetTextureType() const {
 	return textureType;
 }
 
-void NiTextureEffect::SetTextureType( unsigned int value ) {
+void NiTextureEffect::SetTextureType( EffectType value ) {
 	textureType = value;
 }
 
-unsigned int NiTextureEffect::GetCoordinateGenerationType() const {
+CoordGenType NiTextureEffect::GetCoordinateGenerationType() const {
 	return coordinateGenerationType;
 }
 
-void NiTextureEffect::SetCoordinateGenerationType( unsigned int value ) {
+void NiTextureEffect::SetCoordinateGenerationType( CoordGenType value ) {
 	coordinateGenerationType = value;
 }
 

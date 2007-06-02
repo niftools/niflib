@@ -138,4 +138,8 @@ void NiPosData::SetKeys( vector< Key<Vector3> > const & keys ) {
 	data.keys = keys;
 }
 
+void NiPosData::NormalizeKeys( float phase, float frequency ) {
+	NormalizeKeyVector( this->data.keys, phase, frequency );
+}
+
 //--END CUSTOM CODE--//

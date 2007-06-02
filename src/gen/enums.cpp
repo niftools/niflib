@@ -39,6 +39,30 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 }
 
 
+//--TexTransform--//
+
+void NifStream( TexTransform & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = TexTransform(temp);
+}
+
+void NifStream( TexTransform const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, TexTransform const & val ) {
+	switch ( val ) {
+		case TT_TRANSLATE_U: return out << "TT_TRANSLATE_U";
+		case TT_TRANSLATE_V: return out << "TT_TRANSLATE_V";
+		case TT_ROTATE: return out << "TT_ROTATE";
+		case TT_SCALE_U: return out << "TT_SCALE_U";
+		case TT_SCALE_V: return out << "TT_SCALE_V";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--HavokMaterial--//
 
 void NifStream( HavokMaterial & val, istream& in, const NifInfo & info ) {
@@ -116,6 +140,28 @@ ostream & operator<<( ostream & out, CompareMode const & val ) {
 }
 
 
+//--VelocityType--//
+
+void NifStream( VelocityType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = VelocityType(temp);
+}
+
+void NifStream( VelocityType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, VelocityType const & val ) {
+	switch ( val ) {
+		case VELOCITY_USE_NORMALS: return out << "VELOCITY_USE_NORMALS";
+		case VELOCITY_USE_RANDOM: return out << "VELOCITY_USE_RANDOM";
+		case VELOCITY_USE_DIRECTION: return out << "VELOCITY_USE_DIRECTION";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TexFilterMode--//
 
 void NifStream( TexFilterMode & val, istream& in, const NifInfo & info ) {
@@ -136,6 +182,28 @@ ostream & operator<<( ostream & out, TexFilterMode const & val ) {
 		case FILTER_NEAREST_MIPNEAREST: return out << "FILTER_NEAREST_MIPNEAREST";
 		case FILTER_NEAREST_MIPLERP: return out << "FILTER_NEAREST_MIPLERP";
 		case FILTER_BILERP_MIPNEAREST: return out << "FILTER_BILERP_MIPNEAREST";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SymmetryType--//
+
+void NifStream( SymmetryType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SymmetryType(temp);
+}
+
+void NifStream( SymmetryType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SymmetryType const & val ) {
+	switch ( val ) {
+		case SPHERICAL_SYMMETRY: return out << "SPHERICAL_SYMMETRY";
+		case CYLINDRICAL_SYMMETRY: return out << "CYLINDRICAL_SYMMETRY";
+		case PLANAR_SYMMETRY: return out << "PLANAR_SYMMETRY";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -332,6 +400,29 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 }
 
 
+//--EffectType--//
+
+void NifStream( EffectType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = EffectType(temp);
+}
+
+void NifStream( EffectType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, EffectType const & val ) {
+	switch ( val ) {
+		case EFFECT_PROJECTED_LIGHT: return out << "EFFECT_PROJECTED_LIGHT";
+		case EFFECT_PROJECTED_SHADOW: return out << "EFFECT_PROJECTED_SHADOW";
+		case EFFECT_ENVIRONMENT_MAP: return out << "EFFECT_ENVIRONMENT_MAP";
+		case EFFECT_FOG_MAP: return out << "EFFECT_FOG_MAP";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--KeyType--//
 
 void NifStream( KeyType & val, istream& in, const NifInfo & info ) {
@@ -373,6 +464,30 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
 		case VERT_MODE_SRC_EMISSIVE: return out << "VERT_MODE_SRC_EMISSIVE";
 		case VERT_MODE_SRC_AMB_DIF: return out << "VERT_MODE_SRC_AMB_DIF";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--CoordGenType--//
+
+void NifStream( CoordGenType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = CoordGenType(temp);
+}
+
+void NifStream( CoordGenType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, CoordGenType const & val ) {
+	switch ( val ) {
+		case CG_WORLD_PARALLEL: return out << "CG_WORLD_PARALLEL";
+		case CG_WORLD_PERSPECTIVE: return out << "CG_WORLD_PERSPECTIVE";
+		case CG_SPHERE_MAP: return out << "CG_SPHERE_MAP";
+		case CG_SPECULAR_CUBE_MAP: return out << "CG_SPECULAR_CUBE_MAP";
+		case CG_DIFFUSE_CUBE_MAP: return out << "CG_DIFFUSE_CUBE_MAP";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -447,6 +562,29 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 }
 
 
+//--TargetColor--//
+
+void NifStream( TargetColor & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = TargetColor(temp);
+}
+
+void NifStream( TargetColor const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, TargetColor const & val ) {
+	switch ( val ) {
+		case TC_AMBIENT: return out << "TC_AMBIENT";
+		case TC_DIFFUSE: return out << "TC_DIFFUSE";
+		case TC_SPECULAR: return out << "TC_SPECULAR";
+		case TC_SELF_ILLUM: return out << "TC_SELF_ILLUM";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TexType--//
 
 void NifStream( TexType & val, istream& in, const NifInfo & info ) {
@@ -469,6 +607,27 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 		case BUMP_MAP: return out << "BUMP_MAP";
 		case DECAL_0_MAP: return out << "DECAL_0_MAP";
 		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--ImageType--//
+
+void NifStream( ImageType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = ImageType(temp);
+}
+
+void NifStream( ImageType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ImageType const & val ) {
+	switch ( val ) {
+		case RGB: return out << "RGB";
+		case RGBA: return out << "RGBA";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -550,6 +709,27 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 }
 
 
+//--EndianType--//
+
+void NifStream( EndianType & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = EndianType(temp);
+}
+
+void NifStream( EndianType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, EndianType const & val ) {
+	switch ( val ) {
+		case ENDIAN_BIG: return out << "ENDIAN_BIG";
+		case ENDIAN_LITTLE: return out << "ENDIAN_LITTLE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--PixelFormat--//
 
 void NifStream( PixelFormat & val, istream& in, const NifInfo & info ) {
@@ -610,6 +790,52 @@ ostream & operator<<( ostream & out, FieldType const & val ) {
 	switch ( val ) {
 		case FIELD_WIND: return out << "FIELD_WIND";
 		case FIELD_POINT: return out << "FIELD_POINT";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--DecayType--//
+
+void NifStream( DecayType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = DecayType(temp);
+}
+
+void NifStream( DecayType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, DecayType const & val ) {
+	switch ( val ) {
+		case DECAY_NONE: return out << "DECAY_NONE";
+		case DECAY_LINEAR: return out << "DECAY_LINEAR";
+		case DECAY_EXPONENTIAL: return out << "DECAY_EXPONENTIAL";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--EmitFrom--//
+
+void NifStream( EmitFrom & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = EmitFrom(temp);
+}
+
+void NifStream( EmitFrom const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, EmitFrom const & val ) {
+	switch ( val ) {
+		case EMIT_FROM_VERTICES: return out << "EMIT_FROM_VERTICES";
+		case EMIT_FROM_FACE_CENTER: return out << "EMIT_FROM_FACE_CENTER";
+		case EMIT_FROM_EDGE_CENTER: return out << "EMIT_FROM_EDGE_CENTER";
+		case EMIT_FROM_FACE_SURFACE: return out << "EMIT_FROM_FACE_SURFACE";
+		case EMIT_FROM_EDGE_SURFACE: return out << "EMIT_FROM_EDGE_SURFACE";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

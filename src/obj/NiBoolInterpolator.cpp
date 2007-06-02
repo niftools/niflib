@@ -124,4 +124,11 @@ void NiBoolInterpolator::SetData( NiBoolData * value ) {
 	data = value;
 }
 
+void NiBoolInterpolator::NormalizeKeys( float phase, float frequency ) {
+	if ( data != NULL ) {
+		data->NormalizeKeys( phase, frequency );
+	}
+}
+
+
 //--END CUSTOM CODE--//

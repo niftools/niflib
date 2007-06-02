@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleMeshModifier::TYPE("NiParticleMeshModifier", &AParticleModifier::TYPE );
+const Type NiParticleMeshModifier::TYPE("NiParticleMeshModifier", &NiParticleModifier::TYPE );
 
 NiParticleMeshModifier::NiParticleMeshModifier() : numParticleMeshes((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -43,7 +43,7 @@ void NiParticleMeshModifier::Read( istream& in, list<unsigned int> & link_stack,
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	NifStream( numParticleMeshes, in, info );
 	particleMeshes.resize(numParticleMeshes);
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
@@ -59,7 +59,7 @@ void NiParticleMeshModifier::Write( ostream& out, const map<NiObjectRef,unsigned
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	numParticleMeshes = (unsigned int)(particleMeshes.size());
 	NifStream( numParticleMeshes, out, info );
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
@@ -84,7 +84,7 @@ std::string NiParticleMeshModifier::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	numParticleMeshes = (unsigned int)(particleMeshes.size());
 	out << "  Num Particle Meshes:  " << numParticleMeshes << endl;
 	array_output_count = 0;
@@ -109,7 +109,7 @@ void NiParticleMeshModifier::FixLinks( const map<unsigned int,NiObjectRef> & obj
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
 		particleMeshes[i1] = FixLink<NiAVObject>( objects, link_stack, info );
 	};
@@ -120,7 +120,7 @@ void NiParticleMeshModifier::FixLinks( const map<unsigned int,NiObjectRef> & obj
 
 std::list<NiObjectRef> NiParticleMeshModifier::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
 		if ( particleMeshes[i1] != NULL )
 			refs.push_back(StaticCast<NiObject>(particleMeshes[i1]));

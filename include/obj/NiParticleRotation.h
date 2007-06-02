@@ -13,14 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 namespace Niflib {
 
 class NiParticleRotation;
 typedef Ref<NiParticleRotation> NiParticleRotationRef;
 
 /*! Unknown. */
-class NiParticleRotation : public AParticleModifier {
+class NiParticleRotation : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiParticleRotation();
@@ -56,15 +56,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	byte unknownByte;
+	byte randomInitialAxis_;
 	/*! Unknown. */
-	float unknownFloat1;
+	Vector3 initialAxis_;
 	/*! Unknown. */
-	float unknownFloat2;
-	/*! Unknown. */
-	float unknownFloat3;
-	/*! Unknown. */
-	float unknownFloat4;
+	float rotationSpeed_;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

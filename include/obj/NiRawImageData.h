@@ -63,8 +63,8 @@ protected:
 	mutable unsigned int width;
 	/*! Image height */
 	mutable unsigned int height;
-	/*! Type of image.  1 = RGB, 2 = RGBA */
-	unsigned int imageType;
+	/*! The format of the raw image data. */
+	ImageType imageType;
 	/*! Image pixel data. */
 	vector< vector<ByteColor3 > > rgbImageData;
 	/*! Image pixel data. */

@@ -7,7 +7,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/ObjectRegistry.h"
 #include "../../include/obj/NiObject.h"
-#include "../../include/obj/AParticleModifier.h"
+#include "../../include/obj/NiParticleModifier.h"
 #include "../../include/obj/NiPSysCollider.h"
 #include "../../include/obj/bhkRefObject.h"
 #include "../../include/obj/bhkSerializable.h"
@@ -259,7 +259,7 @@ namespace Niflib {
 	void RegisterObjects() {
 
 		ObjectRegistry::RegisterObject( "NiObject", NiObject::Create );
-		ObjectRegistry::RegisterObject( "AParticleModifier", AParticleModifier::Create );
+		ObjectRegistry::RegisterObject( "NiParticleModifier", NiParticleModifier::Create );
 		ObjectRegistry::RegisterObject( "NiPSysCollider", NiPSysCollider::Create );
 		ObjectRegistry::RegisterObject( "bhkRefObject", bhkRefObject::Create );
 		ObjectRegistry::RegisterObject( "bhkSerializable", bhkSerializable::Create );

@@ -124,4 +124,10 @@ void NiPoint3Interpolator::SetData( NiPosData * value ) {
 	data = value;
 }
 
+void NiPoint3Interpolator::NormalizeKeys( float phase, float frequency ) {
+	if ( data != NULL ) {
+		data->NormalizeKeys( phase, frequency );
+	}
+}
+
 //--END CUSTOM CODE--//

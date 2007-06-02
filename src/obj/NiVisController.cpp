@@ -110,4 +110,24 @@ std::list<NiObjectRef> NiVisController::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+Ref<NiVisData> NiVisController::GetData() const {
+	return data;
+}
+
+void NiVisController::SetData( NiVisData * n ) {
+	data = n;
+}
+
+void NiVisController::NormalizeKeys() {
+
+	//Normalize any keys that are stored in Morph Data
+	if ( data != NULL ) {
+		data->NormalizeKeys( this->phase, this->frequency );
+	}
+
+	//Call the parent version of this function to finish up
+	NiSingleInterpController::NormalizeKeys();
+}
+
 //--END CUSTOM CODE--//

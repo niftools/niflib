@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/NiKeyBasedInterpolator.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -117,6 +118,18 @@ Ref<NiInterpolator > NiSingleInterpController::GetInterpolator() const {
 
 void NiSingleInterpController::SetInterpolator( NiInterpolator * value ) {
 	interpolator = value;
+}
+
+void NiSingleInterpController::NormalizeKeys() {
+	//If this interpolator is key-based, normalize its keys
+	NiKeyBasedInterpolatorRef keyBased = DynamicCast<NiKeyBasedInterpolator>(this->interpolator);
+	if ( keyBased != NULL ) {
+		keyBased->NormalizeKeys( this->phase, this->frequency );
+	}
+
+	//Call the NiTimeController version of this function to normalize the start
+	//and stop times and reset the phase and frequency
+	NiTimeController::NormalizeKeys();
 }
 
 //--END CUSTOM CODE--//

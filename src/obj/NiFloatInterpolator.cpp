@@ -124,4 +124,10 @@ void NiFloatInterpolator::SetData( NiFloatData * value ) {
 	data = value;
 }
 
+void NiFloatInterpolator::NormalizeKeys( float phase, float frequency ) {
+	if ( data != NULL ) {
+		data->NormalizeKeys( phase, frequency );
+	}
+}
+
 //--END CUSTOM CODE--//

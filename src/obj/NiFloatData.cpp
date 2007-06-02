@@ -138,4 +138,9 @@ void NiFloatData::SetKeys( vector< Key<float> > const & keys ) {
 	data.keys = keys;
 }
 
+void NiFloatData::NormalizeKeys( float phase, float frequency ) {
+	NormalizeKeyVector( this->data.keys, phase, frequency );
+}
+
+
 //--END CUSTOM CODE--//

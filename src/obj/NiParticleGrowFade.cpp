@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiParticleGrowFade::TYPE("NiParticleGrowFade", &AParticleModifier::TYPE );
+const Type NiParticleGrowFade::TYPE("NiParticleGrowFade", &NiParticleModifier::TYPE );
 
 NiParticleGrowFade::NiParticleGrowFade() : grow(0.0f), fade(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -41,7 +41,7 @@ void NiParticleGrowFade::Read( istream& in, list<unsigned int> & link_stack, con
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	NifStream( grow, in, info );
 	NifStream( fade, in, info );
 
@@ -53,7 +53,7 @@ void NiParticleGrowFade::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	NifStream( grow, out, info );
 	NifStream( fade, out, info );
 
@@ -67,7 +67,7 @@ std::string NiParticleGrowFade::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	out << "  Grow:  " << grow << endl;
 	out << "  Fade:  " << fade << endl;
 	return out.str();
@@ -80,7 +80,7 @@ void NiParticleGrowFade::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -88,7 +88,7 @@ void NiParticleGrowFade::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 std::list<NiObjectRef> NiParticleGrowFade::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

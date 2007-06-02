@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/NiKeyBasedInterpolator.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -200,7 +201,17 @@ std::list<NiObjectRef> NiGeomMorpherController::GetRefs() const {
 void NiGeomMorpherController::NormalizeKeys() {
 
 	//Normalize any keys that are stored in Morph Data
-	if ( data != NULL ) {}
+	if ( data != NULL ) {
+		data->NormalizeKeys( this->phase, this->frequency );
+	}
+
+	//Normalize any keys stored in float interpolators
+	for ( size_t i = 0; i < this->interpolators.size(); ++i ) {
+		NiKeyBasedInterpolatorRef keyBased = DynamicCast<NiKeyBasedInterpolator>(interpolators[i]);
+		if ( keyBased != NULL ) {
+			keyBased->NormalizeKeys( this->phase, this->frequency );
+		}
+	}
 
 	//Call the NiTimeController version of this function to normalize the start
 	//and stop times and reset the phase and frequency

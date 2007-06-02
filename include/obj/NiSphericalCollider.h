@@ -13,14 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 namespace Niflib {
 
 class NiSphericalCollider;
 typedef Ref<NiSphericalCollider> NiSphericalColliderRef;
 
 /*! Unknown. */
-class NiSphericalCollider : public AParticleModifier {
+class NiSphericalCollider : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiSphericalCollider();

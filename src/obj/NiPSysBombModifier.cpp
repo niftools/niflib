@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysBombModifier::TYPE("NiPSysBombModifier", &NiPSysModifier::TYPE );
 
-NiPSysBombModifier::NiPSysBombModifier() : unknownLink(NULL) {
+NiPSysBombModifier::NiPSysBombModifier() : bombObject(NULL), decay(0.0f), deltaV(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,15 +46,11 @@ void NiPSysBombModifier::Read( istream& in, list<unsigned int> & link_stack, con
 	NiPSysModifier::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownInts1[i1], in, info );
-	};
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats[i1], in, info );
-	};
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownInts2[i1], in, info );
-	};
+	NifStream( bombAxis, in, info );
+	NifStream( decay, in, info );
+	NifStream( deltaV, in, info );
+	NifStream( decayType, in, info );
+	NifStream( symmetryType, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -66,23 +62,19 @@ void NiPSysBombModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	NiPSysModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink), out, info );
+		NifStream( (unsigned int)&(*bombObject), out, info );
 	} else {
-		if ( unknownLink != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+		if ( bombObject != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(bombObject) )->second, out, info );
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownInts1[i1], out, info );
-	};
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats[i1], out, info );
-	};
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		NifStream( unknownInts2[i1], out, info );
-	};
+	NifStream( bombAxis, out, info );
+	NifStream( decay, out, info );
+	NifStream( deltaV, out, info );
+	NifStream( decayType, out, info );
+	NifStream( symmetryType, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -95,43 +87,12 @@ std::string NiPSysBombModifier::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
-	out << "  Unknown Link:  " << unknownLink << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
-		array_output_count++;
-	};
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
-		array_output_count++;
-	};
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
-		array_output_count++;
-	};
+	out << "  Bomb Object:  " << bombObject << endl;
+	out << "  Bomb Axis:  " << bombAxis << endl;
+	out << "  Decay:  " << decay << endl;
+	out << "  Delta V:  " << deltaV << endl;
+	out << "  Decay Type:  " << decayType << endl;
+	out << "  Symmetry Type:  " << symmetryType << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -143,7 +104,7 @@ void NiPSysBombModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::FixLinks( objects, link_stack, info );
-	unknownLink = FixLink<NiNode>( objects, link_stack, info );
+	bombObject = FixLink<NiNode>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

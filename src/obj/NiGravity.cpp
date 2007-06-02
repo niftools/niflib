@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiGravity::TYPE("NiGravity", &AParticleModifier::TYPE );
+const Type NiGravity::TYPE("NiGravity", &NiParticleModifier::TYPE );
 
 NiGravity::NiGravity() : unknownFloat1(0.0f), force(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -41,7 +41,7 @@ void NiGravity::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	if ( info.version >= 0x04000002 ) {
 		NifStream( unknownFloat1, in, info );
 	};
@@ -58,7 +58,7 @@ void NiGravity::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	if ( info.version >= 0x04000002 ) {
 		NifStream( unknownFloat1, out, info );
 	};
@@ -77,7 +77,7 @@ std::string NiGravity::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Force:  " << force << endl;
 	out << "  Type:  " << type << endl;
@@ -93,7 +93,7 @@ void NiGravity::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<un
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -101,7 +101,7 @@ void NiGravity::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<un
 
 std::list<NiObjectRef> NiGravity::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

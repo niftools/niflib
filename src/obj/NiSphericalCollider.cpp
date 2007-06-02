@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSphericalCollider::TYPE("NiSphericalCollider", &AParticleModifier::TYPE );
+const Type NiSphericalCollider::TYPE("NiSphericalCollider", &NiParticleModifier::TYPE );
 
 NiSphericalCollider::NiSphericalCollider() : unknownFloat1(0.0f), unknownShort1((unsigned short)0), unknownFloat2(0.0f), unknownShort2((unsigned short)0), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -41,7 +41,7 @@ void NiSphericalCollider::Read( istream& in, list<unsigned int> & link_stack, co
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Read( in, link_stack, info );
+	NiParticleModifier::Read( in, link_stack, info );
 	NifStream( unknownFloat1, in, info );
 	NifStream( unknownShort1, in, info );
 	NifStream( unknownFloat2, in, info );
@@ -62,7 +62,7 @@ void NiSphericalCollider::Write( ostream& out, const map<NiObjectRef,unsigned in
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, info );
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownShort1, out, info );
 	NifStream( unknownFloat2, out, info );
@@ -85,7 +85,7 @@ std::string NiSphericalCollider::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << AParticleModifier::asString();
+	out << NiParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
@@ -103,7 +103,7 @@ void NiSphericalCollider::FixLinks( const map<unsigned int,NiObjectRef> & object
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	AParticleModifier::FixLinks( objects, link_stack, info );
+	NiParticleModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -111,7 +111,7 @@ void NiSphericalCollider::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 std::list<NiObjectRef> NiSphericalCollider::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = AParticleModifier::GetRefs();
+	refs = NiParticleModifier::GetRefs();
 	return refs;
 }
 

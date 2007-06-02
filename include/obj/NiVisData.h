@@ -53,6 +53,33 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*! Retrieves the visibility key data.
+	 * \return A vector containing visibility data which specify boolean values over time.
+	 * \sa NiBoolData::SetKeys, Key
+	 */
+	NIFLIB_API vector< Key<unsigned char> > GetKeys() const;
+
+	/*! Sets the visibility key data.
+	 * \param keys A vector containing new visibility data which will replace any existing data.
+	 * \sa NiBoolData::GetKeys, Key
+	 */
+	NIFLIB_API void SetKeys( vector< Key<unsigned char> > const & keys );
+
+
+	/*!
+	 * This function will adjust the times in all the keys stored in this data
+	 * object such that phase will equal 0 and frequency will equal one.  In
+	 * other words, it will cause the key times to be in seconds starting from
+	 * zero.
+	 * \param[in] frequency The frequency to normalize to 1.0 for any keys
+	 * stored in this object
+	 * \param[in] phase The phase shift to remove from any keys stored in this
+	 * object.
+	 */
+	NIFLIB_API virtual void NormalizeKeys( float phase, float frequency );
+
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of visibility keys that follow. */

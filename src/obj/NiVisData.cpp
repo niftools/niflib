@@ -111,4 +111,17 @@ std::list<NiObjectRef> NiVisData::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+vector< Key<unsigned char> > NiVisData::GetKeys() const {
+	return visKeys;
+}
+
+void NiVisData::SetKeys( vector< Key<unsigned char> > const & keys ) {
+	visKeys = keys;
+}
+
+void NiVisData::NormalizeKeys( float phase, float frequency ) {
+	NormalizeKeyVector( this->visKeys, phase, frequency );
+}
+
 //--END CUSTOM CODE--//

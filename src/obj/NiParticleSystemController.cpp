@@ -17,14 +17,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/gen/Particle.h"
 #include "../../include/gen/Particle.h"
 #include "../../include/obj/NiObject.h"
-#include "../../include/obj/AParticleModifier.h"
+#include "../../include/obj/NiParticleModifier.h"
 #include "../../include/obj/NiColorData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiParticleSystemController::TYPE("NiParticleSystemController", &NiTimeController::TYPE );
 
-NiParticleSystemController::NiParticleSystemController() : speed(0.0f), speedRandom(0.0f), verticalDirection(0.0f), verticalAngle(0.0f), horizontalDirection(0.0f), horizontalAngle(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f), unknownFloat8(0.0f), unknownFloat9(0.0f), unknownFloat10(0.0f), unknownFloat11(0.0f), size(0.0f), emitStartTime(0.0f), emitStopTime(0.0f), unknownByte((byte)0), emitRate(0.0f), lifetime(0.0f), lifetimeRandom(0.0f), emitFlags((unsigned short)0), emitter(NULL), unknownShort2_((unsigned short)0), unknownFloat13_(0.0f), unknownInt1_((unsigned int)0), unknownInt2_((unsigned int)0), unknownShort3_((unsigned short)0), numParticles((unsigned short)0), numValid((unsigned short)0), unknownLink(NULL), particleExtra(NULL), unknownLink2(NULL), trailer((byte)0), colorData(NULL) {
+NiParticleSystemController::NiParticleSystemController() : speed(0.0f), speedRandom(0.0f), verticalDirection(0.0f), verticalAngle(0.0f), horizontalDirection(0.0f), horizontalAngle(0.0f), size(0.0f), emitStartTime(0.0f), emitStopTime(0.0f), unknownByte((byte)0), emitRate(0.0f), lifetime(0.0f), lifetimeRandom(0.0f), emitFlags((unsigned short)0), emitter(NULL), unknownShort2_((unsigned short)0), unknownFloat13_(0.0f), unknownInt1_((unsigned int)0), unknownInt2_((unsigned int)0), unknownShort3_((unsigned short)0), numParticles((unsigned short)0), numValid((unsigned short)0), unknownLink(NULL), particleExtra(NULL), unknownLink2(NULL), trailer((byte)0), colorData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -54,13 +54,8 @@ void NiParticleSystemController::Read( istream& in, list<unsigned int> & link_st
 	NifStream( verticalAngle, in, info );
 	NifStream( horizontalDirection, in, info );
 	NifStream( horizontalAngle, in, info );
-	NifStream( unknownFloat5, in, info );
-	NifStream( unknownFloat6, in, info );
-	NifStream( unknownFloat7, in, info );
-	NifStream( unknownFloat8, in, info );
-	NifStream( unknownFloat9, in, info );
-	NifStream( unknownFloat10, in, info );
-	NifStream( unknownFloat11, in, info );
+	NifStream( unknownNormal_, in, info );
+	NifStream( unknownColor_, in, info );
 	NifStream( size, in, info );
 	NifStream( emitStartTime, in, info );
 	NifStream( emitStopTime, in, info );
@@ -139,13 +134,8 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 	NifStream( verticalAngle, out, info );
 	NifStream( horizontalDirection, out, info );
 	NifStream( horizontalAngle, out, info );
-	NifStream( unknownFloat5, out, info );
-	NifStream( unknownFloat6, out, info );
-	NifStream( unknownFloat7, out, info );
-	NifStream( unknownFloat8, out, info );
-	NifStream( unknownFloat9, out, info );
-	NifStream( unknownFloat10, out, info );
-	NifStream( unknownFloat11, out, info );
+	NifStream( unknownNormal_, out, info );
+	NifStream( unknownColor_, out, info );
 	NifStream( size, out, info );
 	NifStream( emitStartTime, out, info );
 	NifStream( emitStopTime, out, info );
@@ -260,13 +250,8 @@ std::string NiParticleSystemController::asString( bool verbose ) const {
 	out << "  Vertical Angle:  " << verticalAngle << endl;
 	out << "  Horizontal Direction:  " << horizontalDirection << endl;
 	out << "  Horizontal Angle:  " << horizontalAngle << endl;
-	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
-	out << "  Unknown Float 6:  " << unknownFloat6 << endl;
-	out << "  Unknown Float 7:  " << unknownFloat7 << endl;
-	out << "  Unknown Float 8:  " << unknownFloat8 << endl;
-	out << "  Unknown Float 9:  " << unknownFloat9 << endl;
-	out << "  Unknown Float 10:  " << unknownFloat10 << endl;
-	out << "  Unknown Float 11:  " << unknownFloat11 << endl;
+	out << "  Unknown Normal?:  " << unknownNormal_ << endl;
+	out << "  Unknown Color?:  " << unknownColor_ << endl;
 	out << "  Size:  " << size << endl;
 	out << "  Emit Start Time:  " << emitStartTime << endl;
 	out << "  Emit Stop Time:  " << emitStopTime << endl;
@@ -337,7 +322,7 @@ void NiParticleSystemController::FixLinks( const map<unsigned int,NiObjectRef> &
 	if ( info.version >= 0x04000002 ) {
 		unknownLink = FixLink<NiObject>( objects, link_stack, info );
 	};
-	particleExtra = FixLink<AParticleModifier>( objects, link_stack, info );
+	particleExtra = FixLink<NiParticleModifier>( objects, link_stack, info );
 	unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
 	if ( info.version <= 0x03010000 ) {
 		colorData = FixLink<NiColorData>( objects, link_stack, info );

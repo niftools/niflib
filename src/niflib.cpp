@@ -382,7 +382,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	header.version = info.version;
 	header.userVersion = info.userVersion;
 	header.userVersion2 = info.userVersion2;
-	header.endianType = byte(info.endian);
+	header.endianType = info.endian;
 	header.creator.str = info.creator;
 	header.exportInfo1.str = info.exportInfo1;
 	header.exportInfo2.str = info.exportInfo2;

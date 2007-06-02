@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "AParticleModifier.h"
+#include "NiParticleModifier.h"
 namespace Niflib {
 
 class NiParticleGrowFade;
@@ -24,7 +24,7 @@ typedef Ref<NiParticleGrowFade> NiParticleGrowFadeRef;
  * particles start with size 0.0 . Then they grow to their original size and stay
  * there until they fade to zero size again at the end of their lifetime cycle.
  */
-class NiParticleGrowFade : public AParticleModifier {
+class NiParticleGrowFade : public NiParticleModifier {
 public:
 	/*! Constructor */
 	NIFLIB_API NiParticleGrowFade();
