@@ -361,10 +361,6 @@
 				Name="obj"
 				>
 				<File
-					RelativePath=".\src\obj\AParticleModifier.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\obj\AvoidNode.cpp"
 					>
 				</File>
@@ -946,6 +942,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiParticleMeshModifier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiParticleModifier.cpp"
 					>
 				</File>
 				<File
@@ -1603,10 +1603,6 @@
 				Name="obj"
 				>
 				<File
-					RelativePath=".\include\obj\AParticleModifier.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\obj\AvoidNode.h"
 					>
 				</File>
@@ -2188,6 +2184,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiParticleMeshModifier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiParticleModifier.h"
 					>
 				</File>
 				<File

@@ -8,38 +8,42 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
-#include "../../include/obj/AParticleModifier.h"
+#include "../../include/obj/NiParticleModifier.h"
 #include "../../include/obj/NiParticleSystemController.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type AParticleModifier::TYPE("AParticleModifier", &NiObject::TYPE );
+const Type NiParticleModifier::TYPE("NiParticleModifier", &NiObject::TYPE );
 
-AParticleModifier::AParticleModifier() : nextModifier(NULL), controller(NULL) {
+NiParticleModifier::NiParticleModifier() : nextModifier(NULL), controller(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-AParticleModifier::~AParticleModifier() {
+NiParticleModifier::~NiParticleModifier() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-const Type & AParticleModifier::GetType() const {
+const Type & NiParticleModifier::GetType() const {
 	return TYPE;
 }
 
-NiObject * AParticleModifier::Create() {
-	return new AParticleModifier;
+NiObject * NiParticleModifier::Create() {
+	return new NiParticleModifier;
 }
 
-void AParticleModifier::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleModifier::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
@@ -52,11 +56,13 @@ void AParticleModifier::Read( istream& in, list<unsigned int> & link_stack, cons
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void AParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
@@ -82,11 +88,13 @@ void AParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::string AParticleModifier::asString( bool verbose ) const {
+std::string NiParticleModifier::asString( bool verbose ) const {
 	//--BEGIN PRE-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	stringstream out;
@@ -97,24 +105,27 @@ std::string AParticleModifier::asString( bool verbose ) const {
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void AParticleModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
-	nextModifier = FixLink<AParticleModifier>( objects, link_stack, info );
+	nextModifier = FixLink<NiParticleModifier>( objects, link_stack, info );
 	if ( info.version >= 0x04000002 ) {
 		controller = FixLink<NiParticleSystemController>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::list<NiObjectRef> AParticleModifier::GetRefs() const {
+std::list<NiObjectRef> NiParticleModifier::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
 	if ( nextModifier != NULL )
@@ -123,4 +134,5 @@ std::list<NiObjectRef> AParticleModifier::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
 //--END CUSTOM CODE--//

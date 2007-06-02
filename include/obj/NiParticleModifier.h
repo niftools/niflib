@@ -7,10 +7,11 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _APARTICLEMODIFIER_H_
-#define _APARTICLEMODIFIER_H_
+#ifndef _NIPARTICLEMODIFIER_H_
+#define _NIPARTICLEMODIFIER_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"
@@ -21,17 +22,17 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiParticleSystemController;
-class AParticleModifier;
-typedef Ref<AParticleModifier> AParticleModifierRef;
+class NiParticleModifier;
+typedef Ref<NiParticleModifier> NiParticleModifierRef;
 
 /*! A particle system modifier. */
-class AParticleModifier : public NiObject {
+class NiParticleModifier : public NiObject {
 public:
 	/*! Constructor */
-	NIFLIB_API AParticleModifier();
+	NIFLIB_API NiParticleModifier();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~AParticleModifier();
+	NIFLIB_API virtual ~NiParticleModifier();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -58,10 +59,11 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Next particle modifier. */
-	Ref<AParticleModifier > nextModifier;
+	Ref<NiParticleModifier > nextModifier;
 	/*! Points to the particle system controller parent. */
 	NiParticleSystemController * controller;
 public:
@@ -76,6 +78,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace
