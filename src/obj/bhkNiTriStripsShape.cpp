@@ -219,4 +219,12 @@ void bhkNiTriStripsShape::SetScale( const Vector3 & n ) {
 	scale = n;	
 }
 
+HavokMaterial bhkNiTriStripsShape::GetMaterial() const {
+	return material;
+}
+
+void bhkNiTriStripsShape::SetMaterial( HavokMaterial value ) {
+	material = value;
+}
+
 //--END CUSTOM CODE--//

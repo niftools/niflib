@@ -85,6 +85,18 @@ public:
 	 */
 	NIFLIB_API void	SetStripsData( int index, NiTriStripsData * strips );
 
+	/*!
+	* Get the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	* \return The Oblivion material used by this collision shape.
+	*/
+	NIFLIB_API HavokMaterial GetMaterial() const;
+
+	/*!
+	* Sets the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	* \param[in] value The new material for this shape to use.
+	*/
+	NIFLIB_API void SetMaterial( HavokMaterial value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The shape's material. */
