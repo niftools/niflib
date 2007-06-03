@@ -72,6 +72,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiMultiTargetTransformController.h"
 #include "../../include/obj/NiGeomMorpherController.h"
 #include "../../include/obj/NiSingleInterpController.h"
+#include "../../include/obj/NiKeyframeController.h"
 #include "../../include/obj/NiTransformController.h"
 #include "../../include/obj/NiPSysModifierCtlr.h"
 #include "../../include/obj/NiPSysEmitterCtlr.h"
@@ -152,7 +153,6 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiIntegerExtraData.h"
 #include "../../include/obj/BSXFlags.h"
 #include "../../include/obj/NiIntegersExtraData.h"
-#include "../../include/obj/NiKeyframeController.h"
 #include "../../include/obj/BSKeyframeController.h"
 #include "../../include/obj/NiKeyframeData.h"
 #include "../../include/obj/NiLookAtController.h"
@@ -324,6 +324,7 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiMultiTargetTransformController", NiMultiTargetTransformController::Create );
 		ObjectRegistry::RegisterObject( "NiGeomMorpherController", NiGeomMorpherController::Create );
 		ObjectRegistry::RegisterObject( "NiSingleInterpController", NiSingleInterpController::Create );
+		ObjectRegistry::RegisterObject( "NiKeyframeController", NiKeyframeController::Create );
 		ObjectRegistry::RegisterObject( "NiTransformController", NiTransformController::Create );
 		ObjectRegistry::RegisterObject( "NiPSysModifierCtlr", NiPSysModifierCtlr::Create );
 		ObjectRegistry::RegisterObject( "NiPSysEmitterCtlr", NiPSysEmitterCtlr::Create );
@@ -404,7 +405,6 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiIntegerExtraData", NiIntegerExtraData::Create );
 		ObjectRegistry::RegisterObject( "BSXFlags", BSXFlags::Create );
 		ObjectRegistry::RegisterObject( "NiIntegersExtraData", NiIntegersExtraData::Create );
-		ObjectRegistry::RegisterObject( "NiKeyframeController", NiKeyframeController::Create );
 		ObjectRegistry::RegisterObject( "BSKeyframeController", BSKeyframeController::Create );
 		ObjectRegistry::RegisterObject( "NiKeyframeData", NiKeyframeData::Create );
 		ObjectRegistry::RegisterObject( "NiLookAtController", NiLookAtController::Create );

@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/NiFloatInterpolator.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -110,4 +111,26 @@ std::list<NiObjectRef> NiAlphaController::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+Ref<NiFloatData> NiAlphaController::GetData() const {
+	return data;
+}
+
+void NiAlphaController::SetData( NiFloatData * n ) {
+	data = n;
+}
+
+void NiAlphaController::NormalizeKeys() {
+	// If data is not the same as The interpolator data, which will be
+	// normalized by the call to NiSingleInterpController's version of
+	// this function, then normalize it here.
+	NiFloatInterpolatorRef interp = DynamicCast<NiFloatInterpolator>(interpolator);
+	if ( (interp->GetData() != data) && ( data != NULL ) ) {
+		data->NormalizeKeys( this->phase, this->frequency );
+	}
+
+	//Call the parent version of this function to finish up
+	NiSingleInterpController::NormalizeKeys();
+}
+
 //--END CUSTOM CODE--//

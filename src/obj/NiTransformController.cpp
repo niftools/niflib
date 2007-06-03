@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiTransformController::TYPE("NiTransformController", &NiSingleInterpController::TYPE );
+const Type NiTransformController::TYPE("NiTransformController", &NiKeyframeController::TYPE );
 
 NiTransformController::NiTransformController() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -41,7 +41,7 @@ void NiTransformController::Read( istream& in, list<unsigned int> & link_stack, 
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSingleInterpController::Read( in, link_stack, info );
+	NiKeyframeController::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -51,7 +51,7 @@ void NiTransformController::Write( ostream& out, const map<NiObjectRef,unsigned 
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSingleInterpController::Write( out, link_map, info );
+	NiKeyframeController::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -63,7 +63,7 @@ std::string NiTransformController::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiSingleInterpController::asString();
+	out << NiKeyframeController::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -74,7 +74,7 @@ void NiTransformController::FixLinks( const map<unsigned int,NiObjectRef> & obje
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSingleInterpController::FixLinks( objects, link_stack, info );
+	NiKeyframeController::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -82,7 +82,7 @@ void NiTransformController::FixLinks( const map<unsigned int,NiObjectRef> & obje
 
 std::list<NiObjectRef> NiTransformController::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiSingleInterpController::GetRefs();
+	refs = NiKeyframeController::GetRefs();
 	return refs;
 }
 

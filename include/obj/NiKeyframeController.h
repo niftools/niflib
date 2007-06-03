@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "NiTimeController.h"
+#include "NiSingleInterpController.h"
 
 // Include structures
 #include "../Ref.h"
@@ -25,7 +25,7 @@ class NiKeyframeController;
 typedef Ref<NiKeyframeController> NiKeyframeControllerRef;
 
 /*! A time controller object for animation key frames. */
-class NiKeyframeController : public NiTimeController {
+class NiKeyframeController : public NiSingleInterpController {
 public:
 	/*! Constructor */
 	NIFLIB_API NiKeyframeController();

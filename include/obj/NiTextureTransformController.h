@@ -58,6 +58,51 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*
+	 * Retreives the texture slot that is the target of this texture transform controller.
+	 * \return The texture slot that will be animated by this controller.
+	 */
+	NIFLIB_API TexType GetTargetTextureSlot();
+
+	/*
+	 * Retreives the texture slot that will be the target of this texture transform controller.
+	 * \param[in] n The new texture slot that will be animated by this controller.
+	 */
+	NIFLIB_API void SetTargetTextureSlot( TexType n );
+
+	/*
+	 * Retreives the type of texture transformation that this controller applies.
+	 * \return The way this controller will animate the target texture.
+	 */
+	NIFLIB_API TexTransform GetTextureTransformType();
+
+	/*
+	 * Sets the type of texture transformation that this controller applies.
+	 * \param[in] n The new way that this controller will animate the target texture.
+	 */
+	NIFLIB_API void SetTextureTransformType( TexTransform n );
+
+	/*!
+	 * Retrives the float data used by this controller.
+	 * \return The float data.
+	 */
+	NIFLIB_API Ref<NiFloatData> GetData() const;
+
+	/*!
+	 * Sets the float data used by this controller.
+	 * \param[in] n The new float data.
+	 */
+	NIFLIB_API void SetData( NiFloatData * n );
+
+	/*!
+	 * This function will adjust the times in all the keys in the data objects
+	 * referenced by this controller and any of its interpolators such that the
+	 * phase will equal 0 and frequency will equal one.  In other words, it
+	 * will cause the key times to be in seconds starting from zero.
+	 */
+	NIFLIB_API virtual void NormalizeKeys();
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */

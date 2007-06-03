@@ -13,14 +13,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "NiSingleInterpController.h"
+#include "NiKeyframeController.h"
 namespace Niflib {
 
 class NiTransformController;
 typedef Ref<NiTransformController> NiTransformControllerRef;
 
 /*! NiTransformController replaces the NiKeyframeController. */
-class NiTransformController : public NiSingleInterpController {
+class NiTransformController : public NiKeyframeController {
 public:
 	/*! Constructor */
 	NIFLIB_API NiTransformController();

@@ -121,7 +121,9 @@ void NiVisController::SetData( NiVisData * n ) {
 
 void NiVisController::NormalizeKeys() {
 
-	//Normalize any keys that are stored in Morph Data
+	//Normalize any keys that are stored any NiVisData
+	//Future NIF versions use BoolData to store this,
+	//so no comparison to the Interpolator data is necessary.
 	if ( data != NULL ) {
 		data->NormalizeKeys( this->phase, this->frequency );
 	}

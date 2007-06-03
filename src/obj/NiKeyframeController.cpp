@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiKeyframeController::TYPE("NiKeyframeController", &NiTimeController::TYPE );
+const Type NiKeyframeController::TYPE("NiKeyframeController", &NiSingleInterpController::TYPE );
 
 NiKeyframeController::NiKeyframeController() : data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -43,9 +43,11 @@ void NiKeyframeController::Read( istream& in, list<unsigned int> & link_stack, c
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
-	NiTimeController::Read( in, link_stack, info );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	NiSingleInterpController::Read( in, link_stack, info );
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -55,16 +57,18 @@ void NiKeyframeController::Write( ostream& out, const map<NiObjectRef,unsigned i
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::Write( out, link_map, info );
-	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*data), out, info );
-	} else {
-		if ( data != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+	NiSingleInterpController::Write( out, link_map, info );
+	if ( info.version <= 0x0A010000 ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*data), out, info );
 		} else {
-			NifStream( 0xFFFFFFFF, out, info );
+			if ( data != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		}
-	}
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -76,7 +80,7 @@ std::string NiKeyframeController::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiTimeController::asString();
+	out << NiSingleInterpController::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();
 
@@ -88,8 +92,10 @@ void NiKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::FixLinks( objects, link_stack, info );
-	data = FixLink<NiKeyframeData>( objects, link_stack, info );
+	NiSingleInterpController::FixLinks( objects, link_stack, info );
+	if ( info.version <= 0x0A010000 ) {
+		data = FixLink<NiKeyframeData>( objects, link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -97,7 +103,7 @@ void NiKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objec
 
 std::list<NiObjectRef> NiKeyframeController::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiTimeController::GetRefs();
+	refs = NiSingleInterpController::GetRefs();
 	if ( data != NULL )
 		refs.push_back(StaticCast<NiObject>(data));
 	return refs;

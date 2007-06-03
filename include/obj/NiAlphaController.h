@@ -58,6 +58,27 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Retrives the alpha data used by this controller.
+	 * \return The alpha data.
+	 */
+	NIFLIB_API Ref<NiFloatData> GetData() const;
+
+	/*!
+	 * Sets the alpha data used by this controller.
+	 * \param[in] n The new alpha data.
+	 */
+	NIFLIB_API void SetData( NiFloatData * n );
+
+	/*!
+	 * This function will adjust the times in all the keys in the data objects
+	 * referenced by this controller and any of its interpolators such that the
+	 * phase will equal 0 and frequency will equal one.  In other words, it
+	 * will cause the key times to be in seconds starting from zero.
+	 */
+	NIFLIB_API virtual void NormalizeKeys();
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Alpha controller data index. */
