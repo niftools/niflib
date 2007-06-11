@@ -188,6 +188,9 @@ unsigned int MatTexCollection::GetMaterialIndex( const vector< Ref<NiProperty> >
 	NiAlphaPropertyRef alpha = NULL;
 
 	for ( unsigned i = 0; i < properties.size(); ++i ) {
+		if ( properties[i] == NULL ) {
+			continue;
+		}
 		if ( properties[i]->IsDerivedType( NiMaterialProperty::TYPE ) ) {
 			mat = DynamicCast<NiMaterialProperty>( properties[i] );
 		} else if ( properties[i]->IsDerivedType( NiTexturingProperty::TYPE ) ) {

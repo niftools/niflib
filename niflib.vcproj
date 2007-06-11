@@ -269,6 +269,7 @@
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_debug.dll"
 				Version="0.7.2"
+				GenerateDebugInformation="true"
 				ImportLibrary="lib/niflib_dll_debug.lib"
 			/>
 			<Tool

@@ -261,6 +261,9 @@ vector< Ref<NiProperty> > NiAVObject::GetProperties() const {
 
 Ref<NiProperty> NiAVObject::GetPropertyByType( const Type & compare_to ) {
 	for ( unsigned int i = 0; i < properties.size(); ++i ) {
+		if ( properties[i] == NULL ) {
+			continue;
+		}
 		if ( properties[i]->IsSameType( compare_to ) ) {
 			return properties[i];
 		}
