@@ -53,6 +53,25 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*! 
+	* Returns the number of vertices that make up this mesh.  This is also the number of normals, colors, and UV coordinates if these are used.
+	* \return The number of vertices that make up this mesh.
+	*/
+	NIFLIB_API int GetVertexCount() const;
+
+	/*! 
+	* Used to retrieve the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	* \return A vector containing the vertices used by this mesh.
+	*/
+	NIFLIB_API vector<Vector3> GetVertices() const;
+
+	/*! 
+	* Used to retrieve the normals used by this mesh.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	* \return A vector containing the normals used by this mesh, if any.
+	*/
+	NIFLIB_API vector<Vector3> GetNormals() const;
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */

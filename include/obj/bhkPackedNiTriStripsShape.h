@@ -59,6 +59,18 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+	/*!
+	 * Retrieves the geometry data object used by this geometry node, if any.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.
+	 * \return The geometry data object, or NULL if there is none.
+	 */
+	NIFLIB_API Ref<hkPackedNiTriStripsData> GetData() const;
+
+	/*!
+	 * Sets the geometry data object used by this geometry node.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.
+	 * \param[in] n The new geometry data object, or NULL to clear the current one.
+	 */
+	NIFLIB_API void SetData( hkPackedNiTriStripsData * n );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of subparts. */

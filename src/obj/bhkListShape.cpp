@@ -174,4 +174,25 @@ std::list<NiObjectRef> bhkListShape::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+HavokMaterial bhkListShape::GetMaterial() const {
+	return material;
+}
+
+void bhkListShape::SetMaterial( HavokMaterial value ) {
+	material = value;
+}
+
+vector<Ref<bhkShape > > bhkListShape::GetSubShapes() const {
+	return subShapes;
+}
+
+/*!
+* Sets the child shape objects that this body is using.
+* \param[in] shapes The shape objects being used by this body.
+*/
+void bhkListShape::SetSubShapes(const vector<Ref<bhkShape > >& shapes) {
+	subShapes = shapes;
+}
+
 //--END CUSTOM CODE--//

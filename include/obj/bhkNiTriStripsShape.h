@@ -73,10 +73,21 @@ public:
 	NIFLIB_API void SetScale( const Vector3 & n );
 
 	/*!
+	 * Gets the number of NiTriStripsData objects referenced by this shape.
+	 */
+	NIFLIB_API int GetNumStripsData( );
+
+	/*!
 	 * Sets the number of NiTriStripsData objects referenced by this shape.
 	 * \param[in] i The new number of NiTriStripsData objects.
 	 */
 	NIFLIB_API void	SetNumStripsData( int i );
+
+	/*!
+	 * Gets the NiTriStripsData object referenced by this shape at the specified index.
+	 * \param[in] index The index at which the given NiTriStripsData object will be referenced.  Should be lower than the value set with bhkNiTriStripsShape::SetNumStripsData.
+	 */
+	NIFLIB_API Ref<NiTriStripsData> GetStripsData( int index );
 
 	/*!
 	 * Sets the NiTriStripsData object referenced by this shape at the specified index.
@@ -96,6 +107,29 @@ public:
 	* \param[in] value The new material for this shape to use.
 	*/
 	NIFLIB_API void SetMaterial( HavokMaterial value );
+
+	unsigned int GetNumDataLayers() const;
+
+	/*!
+	* Sets the number of OblivionColFilter objects referenced by this shape.
+	* \param[in] i The new number of OblivionColFilter objects.
+	*/
+	NIFLIB_API void	SetNumDataLayers( unsigned int i );
+
+	/*!
+	 * Gets the OblivionLayer referenced for the filter at the specified index.
+	 * \param[in] index The index at which the given OblivionLayer will be referenced.  Should be lower than the value set with bhkNiTriStripsShape::SetNumDataLayers.
+	 */
+	NIFLIB_API OblivionLayer GetOblivionLayer( unsigned int index ) const;
+
+	/*!
+ 	 * Sets the OblivionLayer referenced for the filter at the specified index.
+	 * \param[in] index The index at which the given OblivionLayer will be referenced.  Should be lower than the value set with bhkNiTriStripsShape::SetNumDataLayers.
+	 */
+	NIFLIB_API void SetOblivionLayer( unsigned int index, OblivionLayer layer );
+
+	NIFLIB_API unsigned char GetOblivionFilter( unsigned int index ) const;
+	NIFLIB_API void SetOblivionFilter( unsigned int index, unsigned char filter ); 
 
 	//--END CUSTOM CODE--//
 protected:

@@ -58,6 +58,31 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Retrieves the child shape objects that this body is using.
+	 * \return The shape objects being used by this body.
+	 */
+	NIFLIB_API vector<Ref<bhkShape > > GetSubShapes() const;
+
+	/*!
+	* Sets the child shape objects that this body is using.
+	* \param[in] shapes The shape objects being used by this body.
+	*/
+	NIFLIB_API void SetSubShapes(const vector<Ref<bhkShape > >& shapes);
+
+	/*!
+	 * Get the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	 * \return The Oblivion material used by this collision shape.
+	 */
+	NIFLIB_API HavokMaterial GetMaterial() const;
+
+	/*!
+	 * Sets the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	 * \param[in] value The new material for this shape to use.
+	 */
+	NIFLIB_API void SetMaterial( HavokMaterial value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of sub shapes referenced. */

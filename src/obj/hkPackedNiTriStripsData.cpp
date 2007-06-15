@@ -138,4 +138,36 @@ std::list<NiObjectRef> hkPackedNiTriStripsData::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+vector<Triangle> hkPackedNiTriStripsData::GetTriangles() const {
+	//Remove any bad triangles
+	vector<Triangle> good_triangles;
+	for ( unsigned i = 0; i < triangles.size(); ++i ) {
+		const Triangle & t = triangles[i].triangle;
+		if ( t.v1 != t.v2 && t.v2 != t.v3 && t.v1 != t.v3 ) {
+			good_triangles.push_back(t);
+		}
+	}
+	return good_triangles;
+}
+
+vector<Vector3> hkPackedNiTriStripsData::GetNormals() const {
+	//Remove any bad triangles
+	vector<Vector3> good_normals;
+	for ( unsigned i = 0; i < triangles.size(); ++i ) {
+		const Vector3 & t = triangles[i].normal;
+		good_normals.push_back(t);
+	}
+	return good_normals;
+}
+
+int hkPackedNiTriStripsData::GetVertexCount() const {
+	return vertices.size();
+}
+
+vector<Vector3> hkPackedNiTriStripsData::GetVertices() const {
+	return vertices;
+}
+
+
 //--END CUSTOM CODE--//

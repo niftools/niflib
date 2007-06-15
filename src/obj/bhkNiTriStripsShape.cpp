@@ -193,23 +193,28 @@ std::list<NiObjectRef> bhkNiTriStripsShape::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+int bhkNiTriStripsShape::GetNumStripsData( )
+{
+	return numStripsData;
+}
+
 void bhkNiTriStripsShape::SetNumStripsData(int n)
 {
 	numStripsData = n;
 	stripsData.resize(n);
+}
 
-   // This is currently a kludge for compatibility with the max NifExporter as we dont know what this 
-   //   does but its always same number of strips and usually 1 or 4
-   //numUnknownInts2 = n;
-   //unknownInts2.assign(n, 1);
-
-	//TODO:  Understand why these are gone and what to do about it
+Ref<NiTriStripsData> bhkNiTriStripsShape::GetStripsData( int index )
+{
+	return Ref<NiTriStripsData>(stripsData[index]);
 }
 
 void bhkNiTriStripsShape::SetStripsData( int index, NiTriStripsData * strips )
 {
 	stripsData[index] = strips;
 }
+
+
 
 Vector3 bhkNiTriStripsShape::GetScale() const {
 	return scale;
@@ -225,6 +230,31 @@ HavokMaterial bhkNiTriStripsShape::GetMaterial() const {
 
 void bhkNiTriStripsShape::SetMaterial( HavokMaterial value ) {
 	material = value;
+}
+
+unsigned int bhkNiTriStripsShape::GetNumDataLayers() const {
+	return numDataLayers;
+}
+
+void bhkNiTriStripsShape::SetNumDataLayers( unsigned int i ) {
+	numDataLayers = i;
+	dataLayers.resize(i);
+}
+
+OblivionLayer bhkNiTriStripsShape::GetOblivionLayer( unsigned int index ) const {
+	return dataLayers[index].layer;
+}
+
+void bhkNiTriStripsShape::SetOblivionLayer( unsigned int index, OblivionLayer layer ){
+	dataLayers[index].layer = layer;
+}
+
+unsigned char bhkNiTriStripsShape::GetOblivionFilter( unsigned int index ) const {
+	return dataLayers[index].colFilter;
+}
+
+void bhkNiTriStripsShape::SetOblivionFilter( unsigned int index, unsigned char filter ) {
+	dataLayers[index].colFilter = filter;
 }
 
 //--END CUSTOM CODE--//

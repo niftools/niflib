@@ -236,7 +236,7 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 	}
 
 	// generate the byte data
-	unsigned vCount = verts.size();
+	size_t vCount = verts.size();
 	int fSize = sizeof(float[3]);
 	vector<byte> binData( 2 * vCount * fSize );
 

@@ -162,4 +162,21 @@ std::list<NiObjectRef> bhkMoppBvTreeShape::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+Ref<bhkShape > bhkMoppBvTreeShape::GetShape() const {
+	return shape;
+}
+
+void bhkMoppBvTreeShape::SetShape( bhkShape * value ) {
+	shape = value;
+}
+
+HavokMaterial bhkMoppBvTreeShape::GetMaterial() const {
+	return material;
+}
+
+void bhkMoppBvTreeShape::SetMaterial( HavokMaterial value ) {
+	material = value;
+}
+
 //--END CUSTOM CODE--//

@@ -153,4 +153,29 @@ std::list<NiObjectRef> bhkConvexVerticesShape::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+vector<Vector3> bhkConvexVerticesShape::GetNormals() const {
+	//Remove any bad triangles
+	vector<Vector3> good_normals;
+	for ( unsigned i = 0; i < normals.size(); ++i ) {
+		const Float4 & t = normals[i];
+		Vector3 v(t[0], t[1], t[2]);
+		good_normals.push_back(v);
+	}
+	return good_normals;
+}
+
+int bhkConvexVerticesShape::GetVertexCount() const {
+	return vertices.size();
+}
+
+vector<Vector3> bhkConvexVerticesShape::GetVertices() const {
+	//Remove any bad triangles
+	vector<Vector3> good_vertices;
+	for ( unsigned i = 0; i < vertices.size(); ++i ) {
+		const Float4 & t = vertices[i];
+		Vector3 v(t[0], t[1], t[2]); 
+		good_vertices.push_back(v);
+	}
+	return good_vertices;
+}
 //--END CUSTOM CODE--//
