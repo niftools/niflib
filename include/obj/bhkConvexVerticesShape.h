@@ -72,6 +72,30 @@ public:
 	*/
 	NIFLIB_API vector<Vector3> GetNormals() const;
 
+	/*! 
+	* Used to retrieve the distance to center for vertices.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	* \return A vector containing the normals used by this mesh, if any.
+	*/
+	NIFLIB_API vector<float> GetDistToCenter() const;
+
+	/*! 
+	* Used to set the vertex data used by this mesh.  Calling this function will clear all other data in this object.
+	* \param in A vector containing the vertices to replace those in the mesh with.  Note that there is no way to set vertices one at a time, they must be sent in one batch.
+	*/
+	NIFLIB_API void SetVertices( const vector<Vector3> & in );
+
+	/*!
+	* Used to set the normal data used by this mesh.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	* \param in A vector containing the normals to replace those in the mesh with.  Note that there is no way to set normals one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using normals.
+	*/
+	NIFLIB_API void SetNormals( const vector<Vector3> & in );
+
+	/*!
+	* Used to sets the distance to center for vertices.  The size of the vector must either be zero, or the same as the vertex count retrieved with the IShapeData::GetVertexCount function or the function will throw an exception.
+	* \param in A vector containing the normals to replace those in the mesh with.  Note that there is no way to set normals one at a time, they must be sent in one batch.  Use an empty vector to signify that this mesh will not be using normals.
+	*/
+	NIFLIB_API void SetDistToCenter( const vector<float> & in );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */

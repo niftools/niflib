@@ -102,4 +102,13 @@ void bhkSphereRepShape::SetMaterial( HavokMaterial value ) {
 	material = value;
 }
 
+float bhkSphereRepShape::GetRadius() const {
+	return radius;
+}
+
+void bhkSphereRepShape::SetRadius( float value ) {
+	radius = value;
+}
+
+
 //--END CUSTOM CODE--//

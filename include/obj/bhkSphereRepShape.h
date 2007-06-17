@@ -69,6 +69,18 @@ public:
 	 */
 	NIFLIB_API void SetMaterial( HavokMaterial value );
 
+	/*!
+	* Gets the capsule's radius.
+	* \return The radius of the capsule.
+	*/
+	NIFLIB_API float GetRadius() const;
+
+	/*!
+	* Sets the capsule's radius.
+	* \param[in] value The new radius for the capsule.
+	*/
+	NIFLIB_API void SetRadius( float value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The shape's material. */
