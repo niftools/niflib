@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkRigidBody::TYPE("bhkRigidBody", &bhkEntity::TYPE );
 
-bhkRigidBody::bhkRigidBody() : layerCopy((OblivionLayer)1), colFilterCopy((byte)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.1f), angularDamping(0.1f), friction(0.3f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.15f), motionSystem((MotionSystem)7), unknownByte1((byte)1), unknownByte2((byte)1), qualityType((MotionQuality)1), unknownInt6((unsigned int)0), unknownInt7((unsigned int)0), unknownInt8((unsigned int)0), numConstraints((unsigned int)0) {
+bhkRigidBody::bhkRigidBody() : layerCopy((OblivionLayer)1), colFilterCopy((byte)0), unknownFloat00(0.0f), unknownFloat01(0.0f), unknownFloat02(0.0f), unknownFloat03(0.0f), mass(0.0f), linearDamping(0.1f), angularDamping(0.1f), friction(0.3f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.415926535f), penetrationDepth(0.15f), motionSystem((MotionSystem)7), unknownByte1((byte)1), unknownByte2((byte)1), qualityType((MotionQuality)1), unknownInt6((unsigned int)0), unknownInt7((unsigned int)0), unknownInt8((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -94,7 +94,7 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	NifStream( unknownInt6, in, info );
+	NifStream( unknownInt9, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -161,7 +161,7 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 			}
 		}
 	};
-	NifStream( unknownInt6, out, info );
+	NifStream( unknownInt9, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -265,6 +265,7 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 		out << "    Constraints[" << i1 << "]:  " << constraints[i1] << endl;
 		array_output_count++;
 	};
+	out << "  Unknown Int 9:  " << unknownInt9 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

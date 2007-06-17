@@ -360,6 +360,8 @@ protected:
 	mutable unsigned int numConstraints;
 	/*! Unknown. */
 	vector<Ref<bhkConstraint > > constraints;
+	/*! Unknown. */
+	unsigned int unknownInt9;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
