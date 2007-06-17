@@ -537,7 +537,7 @@ void NifStream( Float4 const & val, ostream& out, const NifInfo & info ) {
 	WriteFloat( val.data[0], out );
 	WriteFloat( val.data[1], out );
 	WriteFloat( val.data[2], out );
-	WriteFloat( val.data[4], out );
+	WriteFloat( val.data[3], out );
 };
 
 //Matrix44
