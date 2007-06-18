@@ -58,6 +58,43 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Get the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	 * \return The Oblivion material used by this collision shape.
+	 */
+	NIFLIB_API HavokMaterial GetMaterial() const;
+
+	/*!
+	 * Sets the shape's material.  This determines the type of noises the object makes as it collides in Oblivion.
+	 * \param[in] value The new material for this shape to use.
+	 */
+	NIFLIB_API void SetMaterial( HavokMaterial value );
+
+	/*!
+	 * Retrieves the shape object that this body is using.
+	 * \return The shape object being used by this body.
+	 */
+	NIFLIB_API Ref<bhkShape > GetShape() const;
+
+	/*!
+	 * Sets the shape object that this body will use.
+	 * \param[in] value The new shape object for this body to use.
+	 */
+	NIFLIB_API void SetShape( bhkShape * value );
+
+	/* This is a conveniance function that allows you to retrieve the full 4x4 matrix transform of a node.  It accesses the "Rotation," "Translation," and "Scale" attributes and builds a complete 4x4 transformation matrix from them.
+	 * \return A 4x4 transformation matrix built from the node's transform attributes.
+	 */
+	NIFLIB_API virtual Matrix44 GetTransform() const;
+
+	/*! 
+	 * This is a conveniance function that allows you to set the rotation, scale, and translation of an AV object with a 4x4 matrix transform.
+	 * \n A 4x4 transformation matrix to set the AVObject's transform attributes with.
+	 */
+	NIFLIB_API virtual void SetTransform( const Matrix44 & value );
+
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The shape that this object transforms. */

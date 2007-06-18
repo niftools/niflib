@@ -131,4 +131,29 @@ std::list<NiObjectRef> bhkTransformShape::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+Ref<bhkShape > bhkTransformShape::GetShape() const {
+	return shape;
+}
+
+void bhkTransformShape::SetShape( bhkShape * value ) {
+	shape = value;
+}
+
+HavokMaterial bhkTransformShape::GetMaterial() const {
+	return material;
+}
+
+void bhkTransformShape::SetMaterial( HavokMaterial value ) {
+	material = value;
+}
+
+Matrix44 bhkTransformShape::GetTransform() const {
+	return transform;
+}
+
+void bhkTransformShape::SetTransform(const Matrix44 & value ) {
+	transform = value;
+}
+
 //--END CUSTOM CODE--//

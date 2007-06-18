@@ -55,14 +55,14 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
-	 * Gets the dimentions of the box.
-	 * \return The dimentions of the bounding box.
+	 * Gets the dimensions of the box.
+	 * \return The dimensions of the bounding box.
 	 */
 	NIFLIB_API Vector3 GetDimensions() const;
 
 	/*!
-	 * Sets the dimentions of the box.
-	 * \param value The new dimentions for the bounding box.
+	 * Sets the dimensions of the box.
+	 * \param value The new dimensions for the bounding box.
 	 */
 	NIFLIB_API void SetDimensions( const Vector3 & value );
 
