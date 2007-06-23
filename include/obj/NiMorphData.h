@@ -144,6 +144,19 @@ public:
 	 */
 	NIFLIB_API void SetMorphVerts( int n, const vector<Vector3> & in );
 
+	/*!
+	* Retrieves the morph frame name for a specified morph target.
+	* \return A string which specifies the name of the morph frame.
+	*/
+	NIFLIB_API string GetFrameName( int n ) const;
+
+	/*!
+	* Sets the morph frame name for a specified morph target.
+	* \param n The index of the morph target to set the name for.
+	* \param keys A frame name which will replace any existing data for this morph target.
+	*/
+	NIFLIB_API void SetFrameName( int n, string const & key );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of morphing object. */

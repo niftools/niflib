@@ -233,5 +233,15 @@ void bhkConvexVerticesShape::SetDistToCenter( const vector<float> & in )
 	}
 }
 
+vector<Float4> bhkConvexVerticesShape::GetNormalsAndDist() const
+{
+	return normals;
+}
+
+void bhkConvexVerticesShape::SetNormalsAndDist(const vector<Float4>& value) 
+{
+	normals = value;
+}
+
 
 //--END CUSTOM CODE--//

@@ -96,6 +96,17 @@ public:
 	*/
 	NIFLIB_API void SetDistToCenter( const vector<float> & in );
 
+	/*! 
+	* Used to retrieve the normal and the distance to center for vertices.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	* \return A vector containing the normals used by this mesh, if any.
+	*/
+	NIFLIB_API vector<Float4> GetNormalsAndDist() const;
+
+	/*! 
+	* Used to set the normal and the distance to center for vertices.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
+	*/
+	NIFLIB_API void SetNormalsAndDist(const vector<Float4>& value);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */

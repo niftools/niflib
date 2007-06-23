@@ -53,10 +53,72 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	* Gets the base value when a curve is not defined.
+	* \return The base value.
+	*/
+	NIFLIB_API float GetBase() const;
+
+	/*!
+	* Sets the base value when a curve is not defined.
+	* \param[in] value The new base value.
+	*/
+	NIFLIB_API void SetBase( float value );
+
+	/*!
+	* Gets value bias.
+	* \return The value bias.
+	*/
+	NIFLIB_API float GetBias() const;
+
+	/*!
+	* Sets value bias.
+	* \param[in] value The new value bias.
+	*/
+	NIFLIB_API void SetBias( float value );
+
+	/*!
+	* Gets value multiplier.
+	* \return The value multiplier.
+	*/
+	NIFLIB_API float GetMultiplier() const;
+
+	/*!
+	* Sets value multiplier.
+	* \param[in] value The new value multiplier.
+	*/
+	NIFLIB_API void SetMultiplier( float value );
+
+	/*!
+	* Retrieves the key data.
+	* \return A vector containing control float data which specify a value over time.
+	*/
+	NIFLIB_API vector< float > GetControlData() const;
+
+	/*!
+	* Retrieves the sampled data between start and stop time.
+	* \param npoints The number of data points to sample between start and stop time.
+	* \param degree N-th order degree of polynomial used to fit the data.
+	* \return A vector containing Key<float> data which specify a value over time.
+	*/
+	NIFLIB_API vector< Key<float> > SampleKeys(int npoints, int degree) const;
+
+	/*!
+	* Retrieves the number of control points used in the spline curve.
+	* \return The number of control points used in the spline curve.
+	*/
+	NIFLIB_API int GetNumControlPt() const;
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	array<4,float > unknownFloats;
+	/*! Base value when curve not defined. */
+	float base;
+	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
+	unsigned int offset;
+	/*! Bias */
+	float bias;
+	/*! Multiplier */
+	float multiplier;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -237,4 +237,13 @@ void NiMorphData::SetMorphVerts( int n, const vector<Vector3> & in ) {
 	morphs[n].vectors = in;
 }
 
+string NiMorphData::GetFrameName( int n ) const
+{
+	return morphs[n].frameName;
+}
+
+void NiMorphData::SetFrameName( int n, string const & key ) {
+	morphs[n].frameName = key;
+}
+
 //--END CUSTOM CODE--//
