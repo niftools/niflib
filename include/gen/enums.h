@@ -378,6 +378,18 @@ enum PixelLayout {
 ostream & operator<<( ostream & out, PixelLayout const & val );
 
 /*!
+ * Used by NiGeometryData to control the volatility of the mesh.  While they appear
+ * to be flags they behave as an enum.
+ */
+enum ConsistencyType {
+	CT_MUTABLE = 0, /*!< Mutable Mesh */
+	CT_STATIC = 16384, /*!< Static Mesh */
+	CT_VOLATILE = 32768, /*!< Volatile Mesh */
+};
+
+ostream & operator<<( ostream & out, ConsistencyType const & val );
+
+/*!
  * Specifies the availiable texture clamp modes.  That is, the behavior of pixels
  * outside the range of the texture.
  */

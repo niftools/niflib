@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), unknownShort1((unsigned short)0), hasVertices(false), numUvSets2((byte)0), unknownByte1((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((unsigned short)0), hasUv(false), unknownShort2((unsigned short)0), unknownLink1(NULL) {
+NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), unknownShort1((unsigned short)0), hasVertices(false), numUvSets2((byte)0), unknownByte1((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), numUvSets((unsigned short)0), hasUv(false), consistencyFlags((ConsistencyType)0), unknownLink1(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -113,7 +113,7 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 				NifStream( uvSets[i2][i3], in, info );
 			};
 		};
-		NifStream( unknownShort2, in, info );
+		NifStream( consistencyFlags, in, info );
 	};
 	if ( info.version >= 0x14000004 ) {
 		NifStream( block_num, in, info );
@@ -192,7 +192,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 				NifStream( uvSets[i2][i3], out, info );
 			};
 		};
-		NifStream( unknownShort2, out, info );
+		NifStream( consistencyFlags, out, info );
 	};
 	if ( info.version >= 0x14000004 ) {
 		if ( info.version < VER_3_3_0_13 ) {
@@ -314,7 +314,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
+	out << "  Consistency Flags:  " << consistencyFlags << endl;
 	out << "  Unknown Link 1:  " << unknownLink1 << endl;
 	return out.str();
 
@@ -344,6 +344,63 @@ std::list<NiObjectRef> NiGeometryData::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+// Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.
+static void CalcAxisAlignedBox(const vector<Vector3>& vertices, Vector3& center, float& radius)
+{
+	//--Calculate center & radius--//
+
+	//Set lows and highs to first vertex
+	Vector3 lows = vertices[ 0 ];
+	Vector3 highs = vertices[ 0 ];
+
+	//Iterate through the vertices, adjusting the stored values
+	//if a vertex with lower or higher values is found
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
+		const Vector3 & v = vertices[ i ];
+
+		if ( v.x > highs.x ) highs.x = v.x;
+		else if ( v.x < lows.x ) lows.x = v.x;
+
+		if ( v.y > highs.y ) highs.y = v.y;
+		else if ( v.y < lows.y ) lows.y = v.y;
+
+		if ( v.z > highs.z ) highs.z = v.z;
+		else if ( v.z < lows.z ) lows.z = v.z;
+	}
+
+	//Now we know the extent of the shape, so the center will be the average
+	//of the lows and highs
+	center = (highs + lows) / 2.0f;
+
+	//The radius will be the largest distance from the center
+	Vector3 diff;
+	float dist2(0.0f), maxdist2(0.0f);
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
+		const Vector3 & v = vertices[ i ];
+
+		diff = center - v;
+		dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+		if ( dist2 > maxdist2 ) maxdist2 = dist2;
+	};
+	radius = sqrt(maxdist2);
+}
+
+// Calculate bounding sphere using average position of the points.  Better fit but slower.
+static void CalcCenteredSphere(const vector<Vector3>& vertices, Vector3& center, float& radius)
+{
+	size_t nv = vertices.size();
+	Vector3 sum;
+	for (size_t i=0; i<nv; ++i)
+		sum += vertices[ i ];
+	center = sum / float(nv);
+	radius = 0.0f;
+	for (size_t i=0; i<nv; ++i){
+		Vector3 diff = vertices[ i ] - center;
+		float mag = diff.Magnitude();
+		radius = max(radius, mag);
+	}
+}
 
 int NiGeometryData::GetVertexCount() const {
 	return int(vertices.size());
@@ -470,6 +527,14 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 	for ( unsigned int i = 0; i < normals.size(); ++i ) {
 		normals[i] = rotation * normals[i];
 	}
+}
+
+ConsistencyType NiGeometryData::GetConsistencyFlags() const {
+	return consistencyFlags;
+}
+
+void NiGeometryData::SetConsistencyFlags( const ConsistencyType & value ) {
+	consistencyFlags = value;
 }
 
 //--END CUSTOM CODE--//

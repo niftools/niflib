@@ -55,10 +55,22 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	array<8,Float4 > unknownVectors;
-	/*! Unknown. */
-	array<3,float > unknownFloats2;
+	/*! Pivot A. */
+	Float4 pivotA;
+	/*! 4x4 rotation matrix, rotates the child entity. */
+	array<4,Float4 > rotation;
+	/*! Pivot B. */
+	Float4 pivotB;
+	/*! Describes the axis the object is able to travel along. Unit vector. */
+	Float4 slidingAxis;
+	/*! Plane normal. Describes the plane the object is able to move on. */
+	Float4 plane;
+	/*! Describe the min distance the object is able to travel. */
+	float minDistance;
+	/*! Describe the max distance the object is able to travel. */
+	float maxDistance;
+	/*! Friction. */
+	float friction;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

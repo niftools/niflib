@@ -658,6 +658,28 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 }
 
 
+//--ConsistencyType--//
+
+void NifStream( ConsistencyType & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = ConsistencyType(temp);
+}
+
+void NifStream( ConsistencyType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ConsistencyType const & val ) {
+	switch ( val ) {
+		case CT_MUTABLE: return out << "CT_MUTABLE";
+		case CT_STATIC: return out << "CT_STATIC";
+		case CT_VOLATILE: return out << "CT_VOLATILE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TexClampMode--//
 
 void NifStream( TexClampMode & val, istream& in, const NifInfo & info ) {

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticleSystem::TYPE("NiParticleSystem", &NiParticles::TYPE );
 
-NiParticleSystem::NiParticleSystem() : unknownBool(false), numModifiers((unsigned int)0) {
+NiParticleSystem::NiParticleSystem() : worldSpace(false), numModifiers((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,7 +45,7 @@ void NiParticleSystem::Read( istream& in, list<unsigned int> & link_stack, const
 	unsigned int block_num;
 	NiParticles::Read( in, link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownBool, in, info );
+		NifStream( worldSpace, in, info );
 		NifStream( numModifiers, in, info );
 		modifiers.resize(numModifiers);
 		for (unsigned int i2 = 0; i2 < modifiers.size(); i2++) {
@@ -65,7 +65,7 @@ void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NiParticles::Write( out, link_map, info );
 	numModifiers = (unsigned int)(modifiers.size());
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownBool, out, info );
+		NifStream( worldSpace, out, info );
 		NifStream( numModifiers, out, info );
 		for (unsigned int i2 = 0; i2 < modifiers.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
@@ -92,7 +92,7 @@ std::string NiParticleSystem::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiParticles::asString();
 	numModifiers = (unsigned int)(modifiers.size());
-	out << "  Unknown Bool:  " << unknownBool << endl;
+	out << "  World Space:  " << worldSpace << endl;
 	out << "  Num Modifiers:  " << numModifiers << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < modifiers.size(); i1++) {

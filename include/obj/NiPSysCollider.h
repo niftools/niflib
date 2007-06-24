@@ -62,11 +62,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*! Defines amount of bounce the collider object has. */
 	float bounce;
 	/*! Unknown. */
 	bool spawnOnCollide;
-	/*! Unknown. */
+	/*! Kill particles on impact if set to yes. */
 	bool dieOnCollide;
 	/*! Link to NiPSysSpawnModifier object? */
 	Ref<NiPSysSpawnModifier > spawnModifier;
@@ -74,7 +74,10 @@ protected:
 	NiObject * parent;
 	/*! The next collider. */
 	Ref<NiObject > nextCollider;
-	/*! Link to a NiNode? */
+	/*!
+	 * Links to a NiNode that will define where in object space the collider is
+	 * located/oriented.
+	 */
 	Ref<NiNode > colliderObject;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

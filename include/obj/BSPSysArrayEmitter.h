@@ -19,7 +19,11 @@ namespace Niflib {
 class BSPSysArrayEmitter;
 typedef Ref<BSPSysArrayEmitter> BSPSysArrayEmitterRef;
 
-/*! Unknown. */
+/*!
+ * Particle emitter that uses a node, its children and subchildren to emit from.
+ * Emission will be evenly spread along points from nodes leading to their direct
+ * parents/children only.
+ */
 class BSPSysArrayEmitter : public NiPSysVolumeEmitter {
 public:
 	/*! Constructor */

@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSParentVelocityModifier::TYPE("BSParentVelocityModifier", &NiPSysModifier::TYPE );
 
-BSParentVelocityModifier::BSParentVelocityModifier() : unknownFloat(0.0f) {
+BSParentVelocityModifier::BSParentVelocityModifier() : damping(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,7 +42,7 @@ void BSParentVelocityModifier::Read( istream& in, list<unsigned int> & link_stac
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Read( in, link_stack, info );
-	NifStream( unknownFloat, in, info );
+	NifStream( damping, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -53,7 +53,7 @@ void BSParentVelocityModifier::Write( ostream& out, const map<NiObjectRef,unsign
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Write( out, link_map, info );
-	NifStream( unknownFloat, out, info );
+	NifStream( damping, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -66,7 +66,7 @@ std::string BSParentVelocityModifier::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
-	out << "  Unknown Float:  " << unknownFloat << endl;
+	out << "  Damping:  " << damping << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -24,7 +24,10 @@ class NiPSysPlanarCollider;
 class NiPSysColliderManager;
 typedef Ref<NiPSysColliderManager> NiPSysColliderManagerRef;
 
-/*! Unknown. */
+/*!
+ * Particle modifier that adds a defined shape to act as a collision object for
+ * particles to interact with.
+ */
 class NiPSysColliderManager : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -60,7 +63,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Link to NiPSysPlanarCollider. */
+	/*! Link to a NiPSysPlanarCollider or NiPSysSphericalCollider. */
 	Ref<NiPSysPlanarCollider > collider;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

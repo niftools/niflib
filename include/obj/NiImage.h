@@ -99,10 +99,10 @@ protected:
 	string fileName;
 	/*! Link to the internally stored image data. */
 	Ref<NiRawImageData > imageData;
-	/*! Unknown.  Often seems to be 7. */
-	unsigned int unknownInt1;
-	/*! Unknown.  Perhaps some flags?  Two shorts? Default seems to be 0x43008000 */
-	unsigned int unknownInt2;
+	/*! Unknown.  Often seems to be 7. Perhaps m_uiMipLevels? */
+	unsigned int unknownInt;
+	/*! Unknown.  Perhaps fImageScale? */
+	float unknownFloat;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

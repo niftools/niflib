@@ -19,7 +19,11 @@ namespace Niflib {
 class NiPSysGrowFadeModifier;
 typedef Ref<NiPSysGrowFadeModifier> NiPSysGrowFadeModifierRef;
 
-/*! Unknown particle system modifier. */
+/*!
+ * Particle modifier that controls the time it takes to grow a particle from Size=0
+ * to the specified Size in the emitter, and then back to 0.  This modifer has no
+ * control over alpha settings.
+ */
 class NiPSysGrowFadeModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -55,11 +59,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*! Time in seconds to fade in. */
 	float growTime;
 	/*! Unknown. */
 	unsigned short growGeneration;
-	/*! Unknown. */
+	/*! Time in seconds to fade out. */
 	float fadeTime;
 	/*! Unknown. */
 	unsigned short fadeGeneration;

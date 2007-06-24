@@ -19,7 +19,10 @@ namespace Niflib {
 class BSWindModifier;
 typedef Ref<BSWindModifier> BSWindModifierRef;
 
-/*! Unknown. */
+/*!
+ * Particle Modifier that uses the wind value from the gamedata to alter the path
+ * of particles.
+ */
 class BSWindModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -55,8 +58,8 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	float unknownFloat;
+	/*! The amount of force wind will have on particles. */
+	float strength;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

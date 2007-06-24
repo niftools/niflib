@@ -19,7 +19,7 @@ namespace Niflib {
 class NiPSysCylinderEmitter;
 typedef Ref<NiPSysCylinderEmitter> NiPSysCylinderEmitterRef;
 
-/*! Unknown. */
+/*! Particle emitter that uses points within a defined Cylinder shape to emit from. */
 class NiPSysCylinderEmitter : public NiPSysVolumeEmitter {
 public:
 	/*! Constructor */
@@ -55,9 +55,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Radius of cylinders to emit? */
+	/*! Radius of the cylinder shape. */
 	float radius;
-	/*! Height of cylinders to emit? */
+	/*! Height of the cylinders shape. */
 	float height;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

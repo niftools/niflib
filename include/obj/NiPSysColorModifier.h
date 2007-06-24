@@ -24,7 +24,10 @@ class NiColorData;
 class NiPSysColorModifier;
 typedef Ref<NiPSysColorModifier> NiPSysColorModifierRef;
 
-/*! Unknown particle modifier. */
+/*!
+ * Particle modifier that adds keyframe data to modify color/alpha values of
+ * particles over time.
+ */
 class NiPSysColorModifier : public NiPSysModifier {
 public:
 	/*! Constructor */

@@ -19,7 +19,7 @@ namespace Niflib {
 class NiPSysPlanarCollider;
 typedef Ref<NiPSysPlanarCollider> NiPSysPlanarColliderRef;
 
-/*! Unknown. */
+/*! Particle Collider object which particles will interact with. */
 class NiPSysPlanarCollider : public NiPSysCollider {
 public:
 	/*! Constructor */
@@ -55,13 +55,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*! Defines the width of the plane. */
 	float width;
-	/*! Unknown. */
+	/*! Defines the height of the plane. */
 	float height;
-	/*! Unknown. */
+	/*! Defines Orientation. */
 	Vector3 xAxis;
-	/*! Unknown. */
+	/*! Defines Orientation. */
 	Vector3 yAxis;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

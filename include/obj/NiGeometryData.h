@@ -164,6 +164,14 @@ public:
 	 */
 	NIFLIB_API void Transform( const Matrix44 & transform );
 
+	// Consistency Flags
+	// \return The current value.
+	ConsistencyType GetConsistencyFlags() const;
+
+	// Consistency Flags
+	// \param[in] value The new value.
+	void SetConsistencyFlags( const ConsistencyType & value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Name of this object. */
@@ -234,8 +242,8 @@ protected:
 	 * require you to flip the second coordinate.
 	 */
 	vector< vector<TexCoord > > uvSets;
-	/*! Unknown. Usually zero. */
-	unsigned short unknownShort2;
+	/*! Consistency Flags */
+	ConsistencyType consistencyFlags;
 	/*! Unknown. */
 	Ref<NiObject > unknownLink1;
 public:

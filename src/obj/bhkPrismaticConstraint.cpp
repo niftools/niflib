@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &bhkConstraint::TYPE );
 
-bhkPrismaticConstraint::bhkPrismaticConstraint() {
+bhkPrismaticConstraint::bhkPrismaticConstraint() : minDistance(0.0f), maxDistance(0.0f), friction(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,12 +42,16 @@ void bhkPrismaticConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	//--END CUSTOM CODE--//
 
 	bhkConstraint::Read( in, link_stack, info );
-	for (unsigned int i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownVectors[i1], in, info );
+	NifStream( pivotA, in, info );
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
+		NifStream( rotation[i1], in, info );
 	};
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], in, info );
-	};
+	NifStream( pivotB, in, info );
+	NifStream( slidingAxis, in, info );
+	NifStream( plane, in, info );
+	NifStream( minDistance, in, info );
+	NifStream( maxDistance, in, info );
+	NifStream( friction, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -58,12 +62,16 @@ void bhkPrismaticConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 	//--END CUSTOM CODE--//
 
 	bhkConstraint::Write( out, link_map, info );
-	for (unsigned int i1 = 0; i1 < 8; i1++) {
-		NifStream( unknownVectors[i1], out, info );
+	NifStream( pivotA, out, info );
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
+		NifStream( rotation[i1], out, info );
 	};
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], out, info );
-	};
+	NifStream( pivotB, out, info );
+	NifStream( slidingAxis, out, info );
+	NifStream( plane, out, info );
+	NifStream( minDistance, out, info );
+	NifStream( maxDistance, out, info );
+	NifStream( friction, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -76,8 +84,9 @@ std::string bhkPrismaticConstraint::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
+	out << "  Pivot A:  " << pivotA << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 8; i1++) {
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -85,21 +94,15 @@ std::string bhkPrismaticConstraint::asString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Vectors[" << i1 << "]:  " << unknownVectors[i1] << endl;
+		out << "    Rotation[" << i1 << "]:  " << rotation[i1] << endl;
 		array_output_count++;
 	};
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl;
-		array_output_count++;
-	};
+	out << "  Pivot B:  " << pivotB << endl;
+	out << "  Sliding Axis:  " << slidingAxis << endl;
+	out << "  Plane:  " << plane << endl;
+	out << "  Min Distance:  " << minDistance << endl;
+	out << "  Max Distance:  " << maxDistance << endl;
+	out << "  Friction:  " << friction << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

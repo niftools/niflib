@@ -19,7 +19,7 @@ namespace Niflib {
 class NiPSysRotationModifier;
 typedef Ref<NiPSysRotationModifier> NiPSysRotationModifierRef;
 
-/*! Unknown particle system modifier. */
+/*! Particle modifier that adds rotations to particles. */
 class NiPSysRotationModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -55,13 +55,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*! The initial speed of rotation. */
 	float initialRotationSpeed;
-	/*! Unknown */
+	/*! Adds a ranged randomness to rotation speed. */
 	float initialRotationSpeedVariation;
-	/*! Unknown. */
+	/*! Sets the intial angle for particles to be birthed in. */
 	float initialRotationAngle;
-	/*! Unknown. */
+	/*! Adds a random range to Initial angle. */
 	float initialRotationAngleVariation;
 	/*! Unknown */
 	bool randomRotSpeedSign;

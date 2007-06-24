@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureModeProperty::TYPE("NiTextureModeProperty", &NiProperty::TYPE );
 
-NiTextureModeProperty::NiTextureModeProperty() : unknownShort((short)0) {
+NiTextureModeProperty::NiTextureModeProperty() : unknownShort((short)0), ps2L((unsigned short)0), ps2K((unsigned short)0xFFB5) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -43,10 +43,9 @@ void NiTextureModeProperty::Read( istream& in, list<unsigned int> & link_stack, 
 
 	NiProperty::Read( in, link_stack, info );
 	NifStream( unknownShort, in, info );
-	if ( info.version >= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( unknown2Shorts[i2], in, info );
-		};
+	if ( info.version <= 0x0A020000 ) {
+		NifStream( ps2L, in, info );
+		NifStream( ps2K, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -59,10 +58,9 @@ void NiTextureModeProperty::Write( ostream& out, const map<NiObjectRef,unsigned 
 
 	NiProperty::Write( out, link_map, info );
 	NifStream( unknownShort, out, info );
-	if ( info.version >= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( unknown2Shorts[i2], out, info );
-		};
+	if ( info.version <= 0x0A020000 ) {
+		NifStream( ps2L, out, info );
+		NifStream( ps2K, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -77,18 +75,8 @@ std::string NiTextureModeProperty::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 2; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown 2 Shorts[" << i1 << "]:  " << unknown2Shorts[i1] << endl;
-		array_output_count++;
-	};
+	out << "  PS2 L:  " << ps2L << endl;
+	out << "  PS2 K:  " << ps2K << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

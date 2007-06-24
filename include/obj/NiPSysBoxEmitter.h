@@ -19,7 +19,7 @@ namespace Niflib {
 class NiPSysBoxEmitter;
 typedef Ref<NiPSysBoxEmitter> NiPSysBoxEmitterRef;
 
-/*! Unknown particle modifier. */
+/*! Particle emitter that uses points within a defined Box shape to emit from.. */
 class NiPSysBoxEmitter : public NiPSysVolumeEmitter {
 public:
 	/*! Constructor */
@@ -55,11 +55,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Width of the boxes to emit? */
+	/*! Defines the Width of the box area. */
 	float width;
-	/*! Height of the boxes to emit? */
+	/*! Defines the Height of the box area. */
 	float height;
-	/*! Depth of the boxes to emit? */
+	/*! Defines the Depth of the box area. */
 	float depth;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

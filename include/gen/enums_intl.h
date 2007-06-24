@@ -160,6 +160,12 @@ void NifStream( PixelLayout & val, istream& in, const NifInfo & info = NifInfo()
 void NifStream( PixelLayout const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---ConsistencyType---//
+
+void NifStream( ConsistencyType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ConsistencyType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---TexClampMode---//
 
 void NifStream( TexClampMode & val, istream& in, const NifInfo & info = NifInfo() );

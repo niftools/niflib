@@ -57,8 +57,10 @@ public:
 protected:
 	/*! Unknown. Either 210 or 194. */
 	short unknownShort;
-	/*! Unknown. Either (0,-75) or (0,-75) */
-	array<2,short > unknown2Shorts;
+	/*! 0? */
+	unsigned short ps2L;
+	/*! 0xFFB5? */
+	unsigned short ps2K;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

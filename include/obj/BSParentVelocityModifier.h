@@ -19,7 +19,10 @@ namespace Niflib {
 class BSParentVelocityModifier;
 typedef Ref<BSParentVelocityModifier> BSParentVelocityModifierRef;
 
-/*! Unknown. */
+/*!
+ * Particle modifier that adds a blend of object space translation and rotation to
+ * particles born in world space.
+ */
 class BSParentVelocityModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -55,8 +58,8 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	float unknownFloat;
+	/*! Amount of blending? */
+	float damping;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

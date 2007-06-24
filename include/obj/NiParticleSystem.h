@@ -60,8 +60,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	bool unknownBool;
+	/*!
+	 * If true, Particles are birthed into world space.  If false, Particles are
+	 * birthed into object space.
+	 */
+	bool worldSpace;
 	/*! The number of modifier references. */
 	mutable unsigned int numModifiers;
 	/*! The list of particle modifiers. */

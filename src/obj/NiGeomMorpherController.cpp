@@ -63,7 +63,7 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 			link_stack.push_back( block_num );
 		};
 	};
-	if ( info.version >= 0x0A020000 ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000004 ) ) {
 		NifStream( numUnknownInts, in, info );
 		unknownInts.resize(numUnknownInts);
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
@@ -112,7 +112,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 			}
 		};
 	};
-	if ( info.version >= 0x0A020000 ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000004 ) ) {
 		NifStream( numUnknownInts, out, info );
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
 			NifStream( unknownInts[i2], out, info );

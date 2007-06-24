@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiImage::TYPE("NiImage", &NiObject::TYPE );
 
-NiImage::NiImage() : external((byte)0), imageData(NULL), unknownInt1((unsigned int)7), unknownInt2((unsigned int)0x43008000) {
+NiImage::NiImage() : external((byte)0), imageData(NULL), unknownInt((unsigned int)7), unknownFloat(128.5f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -52,9 +52,9 @@ void NiImage::Read( istream& in, list<unsigned int> & link_stack, const NifInfo 
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	NifStream( unknownInt1, in, info );
+	NifStream( unknownInt, in, info );
 	if ( info.version >= 0x03010000 ) {
-		NifStream( unknownInt2, in, info );
+		NifStream( unknownFloat, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -81,9 +81,9 @@ void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_ma
 			}
 		}
 	};
-	NifStream( unknownInt1, out, info );
+	NifStream( unknownInt, out, info );
 	if ( info.version >= 0x03010000 ) {
-		NifStream( unknownInt2, out, info );
+		NifStream( unknownFloat, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -104,8 +104,8 @@ std::string NiImage::asString( bool verbose ) const {
 	if ( (external == 0) ) {
 		out << "    Image Data:  " << imageData << endl;
 	};
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
+	out << "  Unknown Float:  " << unknownFloat << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

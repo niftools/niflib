@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-MultiTextureElement::MultiTextureElement() : hasImage(false), image(NULL), unknownInt1((unsigned int)3), unknownInt2((unsigned int)2), unknownInt3((unsigned int)1), unknownShort1((short)0), unknownShort2((short)-75), unknownShort3((short)0) {};
+MultiTextureElement::MultiTextureElement() : hasImage(false), image(NULL), clamp_((TexClampMode)3), filter_((TexFilterMode)2), uvSet_((unsigned int)1), ps2L((unsigned short)0), ps2K((unsigned short)0xFFB5), unknownShort3((short)0) {};
 
 //Copy Constructor
 MultiTextureElement::MultiTextureElement( const MultiTextureElement & src ) {
@@ -21,11 +21,11 @@ MultiTextureElement::MultiTextureElement( const MultiTextureElement & src ) {
 MultiTextureElement & MultiTextureElement::operator=( const MultiTextureElement & src ) {
 	this->hasImage = src.hasImage;
 	this->image = src.image;
-	this->unknownInt1 = src.unknownInt1;
-	this->unknownInt2 = src.unknownInt2;
-	this->unknownInt3 = src.unknownInt3;
-	this->unknownShort1 = src.unknownShort1;
-	this->unknownShort2 = src.unknownShort2;
+	this->clamp_ = src.clamp_;
+	this->filter_ = src.filter_;
+	this->uvSet_ = src.uvSet_;
+	this->ps2L = src.ps2L;
+	this->ps2K = src.ps2K;
 	this->unknownShort3 = src.unknownShort3;
 	return *this;
 };

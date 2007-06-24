@@ -113,7 +113,7 @@ public:
 protected:
 	/*! Base value when curve not defined. */
 	float base;
-	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
+	/*! Starting offset for the data. (USHRT_MAX for no data.) */
 	unsigned int offset;
 	/*! Bias */
 	float bias;

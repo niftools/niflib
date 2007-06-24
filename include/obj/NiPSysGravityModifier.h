@@ -21,7 +21,10 @@ class NiNode;
 class NiPSysGravityModifier;
 typedef Ref<NiPSysGravityModifier> NiPSysGravityModifierRef;
 
-/*! Unknown particle system modifier. */
+/*!
+ * Adds gravity to a particle system, when linked to a NiNode to use as a Gravity
+ * Object.
+ */
 class NiPSysGravityModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -57,19 +60,19 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Refers to a NiNode. */
+	/*! Refers to a NiNode for gravity location. */
 	NiNode * gravityObject;
-	/*! Unknown. */
+	/*! Orientation of gravity. */
 	Vector3 gravityAxis;
-	/*! Unknown. */
+	/*! Falloff range. */
 	float decay;
-	/*! Unknown. */
+	/*! The strength of gravity. */
 	float strength;
-	/*! The type of force? */
+	/*! Planar or Spherical type */
 	ForceType forceType;
-	/*! Unknown. */
+	/*! Adds a degree of randomness. */
 	float turbulence;
-	/*! Unknown. */
+	/*! Range for turbulence. */
 	float turbulenceScale;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineCompFloatInterpolator::TYPE("NiBSplineCompFloatInterpolator", &NiBSplineFloatInterpolator::TYPE );
 
-NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() {
+NiBSplineCompFloatInterpolator::NiBSplineCompFloatInterpolator() : base(0.0f), offset((unsigned int)0), bias(0.0f), multiplier(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -73,6 +73,7 @@ std::string NiBSplineCompFloatInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
+	unsigned int array_output_count = 0;
 	out << NiBSplineFloatInterpolator::asString();
 	out << "  Base:  " << base << endl;
 	out << "  Offset:  " << offset << endl;

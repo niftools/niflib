@@ -24,7 +24,7 @@ class NiTriBasedGeom;
 class NiPSysMeshEmitter;
 typedef Ref<NiPSysMeshEmitter> NiPSysMeshEmitterRef;
 
-/*! Unknown. */
+/*! Particle emitter that uses points on a specified mesh to emit from. */
 class NiPSysMeshEmitter : public NiPSysEmitter {
 public:
 	/*! Constructor */
