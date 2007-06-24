@@ -109,9 +109,13 @@ protected:
 	/*! List of interpolators. */
 	vector<Ref<NiInterpolator > > interpolators;
 	/*! A count. */
-	mutable unsigned int numUnknownInts;
+	mutable unsigned int numUnknownInts1;
 	/*! Unknown. */
-	vector<unsigned int > unknownInts;
+	vector<unsigned int > unknownInts1;
+	/*! A count. */
+	mutable unsigned int numUnknownInts2;
+	/*! Unknown. */
+	vector<unsigned int > unknownInts2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
