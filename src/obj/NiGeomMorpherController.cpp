@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeomMorpherController::TYPE("NiGeomMorpherController", &NiInterpController::TYPE );
 
-NiGeomMorpherController::NiGeomMorpherController() : unknown((unsigned short)0), unknown2((byte)0), data(NULL), unknownByte((byte)0), numInterpolators((unsigned int)0), numUnknownInts1((unsigned int)0), numUnknownInts2((unsigned int)0) {
+NiGeomMorpherController::NiGeomMorpherController() : unknown((unsigned short)0), unknown2((byte)0), data(NULL), unknownByte((byte)0), numInterpolators((unsigned int)0), numUnknownInts((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -64,17 +64,24 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 		};
 	};
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
-		NifStream( numUnknownInts1, in, info );
-		unknownInts1.resize(numUnknownInts1);
-		for (unsigned int i2 = 0; i2 < unknownInts1.size(); i2++) {
-			NifStream( unknownInts1[i2], in, info );
+		NifStream( numUnknownInts, in, info );
+		unknownInts.resize(numUnknownInts);
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], in, info );
 		};
 	};
 	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 10 ) ) {
-		NifStream( numUnknownInts2, in, info );
-		unknownInts2.resize(numUnknownInts2);
-		for (unsigned int i2 = 0; i2 < unknownInts2.size(); i2++) {
-			NifStream( unknownInts2[i2], in, info );
+		NifStream( numUnknownInts, in, info );
+		unknownInts.resize(numUnknownInts);
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], in, info );
+		};
+	};
+	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 11 ) ) {
+		NifStream( numUnknownInts, in, info );
+		unknownInts.resize(numUnknownInts);
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], in, info );
 		};
 	};
 
@@ -87,8 +94,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	//--END CUSTOM CODE--//
 
 	NiInterpController::Write( out, link_map, info );
-	numUnknownInts2 = (unsigned int)(unknownInts2.size());
-	numUnknownInts1 = (unsigned int)(unknownInts1.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
 	numInterpolators = (unsigned int)(interpolators.size());
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( unknown, out, info );
@@ -121,15 +127,21 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 		};
 	};
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
-		NifStream( numUnknownInts1, out, info );
-		for (unsigned int i2 = 0; i2 < unknownInts1.size(); i2++) {
-			NifStream( unknownInts1[i2], out, info );
+		NifStream( numUnknownInts, out, info );
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], out, info );
 		};
 	};
 	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 10 ) ) {
-		NifStream( numUnknownInts2, out, info );
-		for (unsigned int i2 = 0; i2 < unknownInts2.size(); i2++) {
-			NifStream( unknownInts2[i2], out, info );
+		NifStream( numUnknownInts, out, info );
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], out, info );
+		};
+	};
+	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 11 ) ) {
+		NifStream( numUnknownInts, out, info );
+		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
+			NifStream( unknownInts[i2], out, info );
 		};
 	};
 
@@ -144,8 +156,7 @@ std::string NiGeomMorpherController::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiInterpController::asString();
-	numUnknownInts2 = (unsigned int)(unknownInts2.size());
-	numUnknownInts1 = (unsigned int)(unknownInts1.size());
+	numUnknownInts = (unsigned int)(unknownInts.size());
 	numInterpolators = (unsigned int)(interpolators.size());
 	out << "  Unknown:  " << unknown << endl;
 	out << "  Unknown 2:  " << unknown2 << endl;
@@ -164,9 +175,9 @@ std::string NiGeomMorpherController::asString( bool verbose ) const {
 		out << "    Interpolators[" << i1 << "]:  " << interpolators[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Num Unknown Ints 1:  " << numUnknownInts1 << endl;
+	out << "  Num Unknown Ints:  " << numUnknownInts << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownInts1.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < unknownInts.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -174,20 +185,7 @@ std::string NiGeomMorpherController::asString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
-		array_output_count++;
-	};
-	out << "  Num Unknown Ints 2:  " << numUnknownInts2 << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownInts2.size(); i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Ints 2[" << i1 << "]:  " << unknownInts2[i1] << endl;
+		out << "    Unknown Ints[" << i1 << "]:  " << unknownInts[i1] << endl;
 		array_output_count++;
 	};
 	return out.str();
