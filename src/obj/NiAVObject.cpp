@@ -53,6 +53,8 @@ NiObject * NiAVObject::Create() {
 	return new NiAVObject;
 }
 
+extern "C" int __stdcall IsDebuggerPresent();
+
 void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -61,6 +63,12 @@ void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	NiObjectNET::Read( in, link_stack, info );
 	NifStream( flags, in, info );
 	NifStream( translation, in, info );
+
+	//if (name.compare("Bip01 R Finger01") == 0) {
+	//	if (IsDebuggerPresent()) 
+	//		__asm{ int 3 };
+	//}
+
 	NifStream( rotation, in, info );
 	NifStream( scale, in, info );
 	if ( info.version <= 0x04020200 ) {

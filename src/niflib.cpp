@@ -55,7 +55,7 @@ NiObjectRef GetObjectByType( NiObject * root, const Type & type );
  * \param kf_type What type of keyframe tree to write (Morrowind style, DAoC style, ...).
  * \param info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
+static void SplitNifTree( NiObject * root_object, NiObjectRef& xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info );
 
 //--Function Bodies--//
 
@@ -600,7 +600,7 @@ static std::string CreateFileName(std::string name) {
 }
 
 //TODO:  This was written by Amorilia.  Figure out how to fix it.
-static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
+static void SplitNifTree( NiObject* root_object, NiObjectRef& xnif_root, list<NiObjectRef> & xkf_roots, Kfm & kfm, int kf_type, const NifInfo & info ) {
 	// Do we have animation groups (a NiTextKeyExtraData object)?
 	// If so, create XNif and XKf trees.
 	NiObjectRef txtkey = GetObjectByType( root_object, NiTextKeyExtraData::TYPE );
@@ -611,7 +611,6 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 	if ( txtkey_obj != NULL ) {
 		if ( kf_type == KF_MW ) {
 			// Construct the XNif file...
-
 			xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
 				
 			// Now search and locate newer timeframe controllers and convert to keyframecontrollers
@@ -724,6 +723,7 @@ static void SplitNifTree( NiObject * root_object, NiObject * xnif_root, list<NiO
 				for (vector<NiControllerSequenceRef>::iterator itr = seqs.begin(); itr != seqs.end(); ++itr) {
 				   xkf_roots.push_back( StaticCast<NiObject>(*itr) );
 				}
+				mgr->ClearSequences();
 			}
 		} else {
 			throw runtime_error("KF splitting for the requested game is not yet implemented.");

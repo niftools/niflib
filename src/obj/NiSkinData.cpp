@@ -234,9 +234,10 @@ void NiSkinData::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
 
+	hasVertexWeights = true;
 	boneList[bone_index].vertexWeights = weights;
-   boneList[bone_index].boundingSphereOffset = center;
-   boneList[bone_index].boundingSphereRadius = radius;
+    boneList[bone_index].boundingSphereOffset = center;
+    boneList[bone_index].boundingSphereRadius = radius;
 }
 
 Matrix44 NiSkinData::GetOverallTransform() const {

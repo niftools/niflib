@@ -169,5 +169,40 @@ vector<Vector3> hkPackedNiTriStripsData::GetVertices() const {
 	return vertices;
 }
 
+int hkPackedNiTriStripsData::GetNumFace( ) const {
+	return int(triangles.size());
+}
+
+void hkPackedNiTriStripsData::SetNumFaces( int value ) {
+	if ( value > 65535 || value < 0 ) {
+		throw runtime_error("Invalid Face Count: must be between 0 and 65535.");
+	}
+	triangles.resize(value);
+}
+
+void hkPackedNiTriStripsData::SetTriangles( const vector<Triangle> & in ) {
+	if ( triangles.size() != in.size()) {
+		throw runtime_error("Invalid Face Count: triangle count must be same as face count.");
+	}
+	for (size_t i=0; i<triangles.size(); ++i) {
+		triangles[i].triangle = in[i];
+	}
+}
+
+void hkPackedNiTriStripsData::SetNormals( const vector<Vector3> & in ) {
+	if ( triangles.size() != in.size()) {
+		throw runtime_error("Invalid Face Count: normal count must be same as face count.");
+	}
+	for (size_t i=0; i<triangles.size(); ++i) {
+		triangles[i].normal = in[i];
+	}
+}
+
+void hkPackedNiTriStripsData::SetVertices( const vector<Vector3> & in ) {
+	if ( in.size() > 65535 || in.size() < 0 ) {
+		throw runtime_error("Invalid Vertex Count: must be between 0 and 65535.");
+	}
+	vertices = in;
+}
 
 //--END CUSTOM CODE--//

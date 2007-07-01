@@ -82,6 +82,32 @@ public:
 	 */
 	NIFLIB_API vector<Vector3> GetNormals() const;
 
+	/*! Returns the number of vertices that make up this mesh.
+	* \return The number of faces that make up this mesh.
+	*/
+	NIFLIB_API virtual int GetNumFace( ) const;
+
+	/*! Returns the number of vertices that make up this mesh.
+	* \param value The number of faces that make up this mesh.
+	*/
+	NIFLIB_API virtual void SetNumFaces( int value );
+
+	/*! Replaces the triangle face data in this mesh with new data.
+	* \param in A vector containing the new face data.  Maximum size is 65,535.
+	* \sa ITriShapeData::GetTriangles
+	*/
+	NIFLIB_API virtual void SetTriangles( const vector<Triangle> & in );
+
+	/*! Replaces the face normal data in this mesh with new data.
+	* \param in A vector containing the new face normal data.
+	*/
+	NIFLIB_API virtual void SetNormals( const vector<Vector3> & in );
+
+	/*! Replaces the vertex data in this mesh with new data.
+	* \param in A vector containing the new vertex data.
+	*/
+	NIFLIB_API virtual void SetVertices( const vector<Vector3> & in );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of triangles? */

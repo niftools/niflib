@@ -193,6 +193,9 @@ vector<Ref<bhkShape > > bhkListShape::GetSubShapes() const {
 */
 void bhkListShape::SetSubShapes(const vector<Ref<bhkShape > >& shapes) {
 	subShapes = shapes;
+
+	// Becuase this vector matches the subshape vector
+	unknownInts.resize(subShapes.size(), 0);
 }
 
 //--END CUSTOM CODE--//
