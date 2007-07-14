@@ -169,7 +169,7 @@ protected:
 	/*! The shader name. */
 	string shaderName;
 	/*! Unknown link, usually -1. */
-	Ref<NiObject > unknownLink;
+	NiObject * unknownLink;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

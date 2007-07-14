@@ -20,7 +20,6 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiObject;
 class NiNode;
 class NiMeshPSysData;
 typedef Ref<NiMeshPSysData> NiMeshPSysDataRef;
@@ -64,15 +63,18 @@ protected:
 	/*!
 	 * Unknown. Seems to refer to particle modifiers, however at least one file has a
 	 * NiNode here.  May indicate that this is really two separate links in different
-	 * versions or some other problem.
+	 * versions or some other problem.  Several files have number of verts here.
 	 */
-	Ref<NiObject > modifier;
+	unsigned int unknownModifier;
 	/*! Unknown. */
 	byte unknownByte2;
 	/*! The number of unknown links that follow. */
 	mutable unsigned int numUnknownLinks;
-	/*! Unknown. Seems to refer to particle modifiers. */
-	vector<Ref<NiObject > > unknownLinks;
+	/*!
+	 * Unknown. Seems to refer to particle modifiers.  Sometimes matches vertices
+	 * count.
+	 */
+	vector<unsigned int > unknownLinks;
 	/*! Repeat of Vertex Count? */
 	unsigned int numVertices2;
 	/*! Unknown. 0? */

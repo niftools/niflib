@@ -159,8 +159,6 @@ std::list<NiObjectRef> NiGeometry::GetRefs() const {
 		refs.push_back(StaticCast<NiObject>(data));
 	if ( skinInstance != NULL )
 		refs.push_back(StaticCast<NiObject>(skinInstance));
-	if ( unknownLink != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 

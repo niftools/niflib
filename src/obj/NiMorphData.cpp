@@ -59,7 +59,7 @@ void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 				NifStream( morphs[i1].keys[i3], in, info, morphs[i1].interpolation );
 			};
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, in, info );
 		};
 		if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 0 ) ) {
@@ -96,7 +96,7 @@ void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 				NifStream( morphs[i1].keys[i3], out, info, morphs[i1].interpolation );
 			};
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, out, info );
 		};
 		if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 0 ) ) {
