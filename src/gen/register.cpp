@@ -254,6 +254,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiZBufferProperty.h"
 #include "../../include/obj/RootCollisionNode.h"
 #include "../../include/obj/NiRawImageData.h"
+#include "../../include/obj/NiSortAdjustNode.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -506,6 +507,7 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiZBufferProperty", NiZBufferProperty::Create );
 		ObjectRegistry::RegisterObject( "RootCollisionNode", RootCollisionNode::Create );
 		ObjectRegistry::RegisterObject( "NiRawImageData", NiRawImageData::Create );
+		ObjectRegistry::RegisterObject( "NiSortAdjustNode", NiSortAdjustNode::Create );
 
 	}
 }

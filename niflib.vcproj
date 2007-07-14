@@ -1512,6 +1512,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiSortAdjustNode.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiSourceTexture.cpp"
 					>
 				</File>
@@ -2751,6 +2755,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiSkinPartition.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiSortAdjustNode.h"
 					>
 				</File>
 				<File
