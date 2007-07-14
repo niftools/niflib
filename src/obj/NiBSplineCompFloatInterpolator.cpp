@@ -134,7 +134,7 @@ vector< float > NiBSplineCompFloatInterpolator::GetControlData() const
 	if ((offset != USHRT_MAX) && splineData && basisData) { // has translation data
 		int nctrl = basisData->GetNumControlPt();
 		int npts = nctrl * SizeofValue;
-		vector<short> points = splineData->GetControlPointRange(offset, npts);
+		vector<short> points = splineData->GetShortControlPointRange(offset, npts);
 		value.reserve(nctrl);
 		for (int i=0; i<npts; ) {
 			float data = float(points[i++]) / float (32767) * multiplier + bias;
@@ -152,7 +152,7 @@ vector< Key<float> > NiBSplineCompFloatInterpolator::SampleKeys(int npoints, int
 	{
 		int nctrl = basisData->GetNumControlPt();
 		int npts = nctrl * SizeofValue;
-		vector<short> points = splineData->GetControlPointRange(offset, npts);
+		vector<short> points = splineData->GetShortControlPointRange(offset, npts);
 		vector<float> control(npts);
 		vector<float> output(npoints*SizeofValue);
 		for (int i=0, j=0; i<nctrl; ++i) {

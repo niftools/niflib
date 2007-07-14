@@ -53,7 +53,105 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	* Gets the base translation when a translate curve is not defined.
+	* \return The base translation.
+	*/
+	NIFLIB_API Vector3 GetTranslation() const;
+
+	/*!
+	* Sets the base translation when a translate curve is not defined.
+	* \param[in] value The new base translation.
+	*/
+	NIFLIB_API void SetTranslation( Vector3 value );
+
+	/*!
+	* Gets the base rotation when a translate curve is not defined.
+	* \return The base rotation.
+	*/
+	NIFLIB_API Quaternion GetRotation() const;
+
+	/*!
+	* Sets the base rotation when a translate curve is not defined.
+	* \param[in] value The new base rotation.
+	*/
+	NIFLIB_API void SetRotation( Quaternion value );
+
+	/*!
+	* Gets the base scale when a translate curve is not defined.
+	* \return The base scale.
+	*/
+	NIFLIB_API float GetScale() const;
+
+	/*!
+	* Sets the base scale when a translate curve is not defined.
+	* \param[in] value The new base scale.
+	*/
+	NIFLIB_API void SetScale( float value );
+
+
+	/*!
+	* Retrieves the control quaternion rotation data.
+	* \return A vector containing control Quaternion data which specify rotation over time.
+	*/
+	NIFLIB_API virtual vector< Quaternion > GetQuatRotateControlData() const;
+
+	/*!
+	* Retrieves the control translation data.
+	* \return A vector containing control Vector3 data which specify translation over time.
+	*/
+	NIFLIB_API virtual vector< Vector3 > GetTranslateControlData() const;
+
+	/*!
+	* Retrieves the scale key data.
+	* \return A vector containing control float data which specify scale over time.
+	*/
+	NIFLIB_API virtual vector< float > GetScaleControlData() const;
+
+	/*!
+	* Retrieves the sampled quaternion rotation key data between start and stop time.
+	* \param npoints The number of data points to sample between start and stop time.
+	* \param degree N-th order degree of polynomial used to fit the data.
+	* \return A vector containing Key<Quaternion> data which specify rotation over time.
+	*/
+	NIFLIB_API virtual vector< Key<Quaternion> > SampleQuatRotateKeys(int npoints, int degree) const;
+
+	/*!
+	* Retrieves the sampled scale key data between start and stop time.
+	* \param npoints The number of data points to sample between start and stop time.
+	* \param degree N-th order degree of polynomial used to fit the data.
+	* \return A vector containing Key<Vector3> data which specify translation over time.
+	*/
+	NIFLIB_API virtual vector< Key<Vector3> > SampleTranslateKeys(int npoints, int degree) const;
+
+	/*!
+	* Retrieves the sampled scale key data between start and stop time.
+	* \param npoints The number of data points to sample between start and stop time.
+	* \param degree N-th order degree of polynomial used to fit the data.
+	* \return A vector containing Key<float> data which specify scale over time.
+	*/
+	NIFLIB_API virtual vector< Key<float> > SampleScaleKeys(int npoints, int degree) const;
+
+	/*!
+	* Retrieves the number of control points used in the spline curve.
+	* \return The number of control points used in the spline curve.
+	*/
+	NIFLIB_API virtual int GetNumControlPt() const;
 	//--END CUSTOM CODE--//
+protected:
+	/*! Base translation when translate curve not defined. */
+	Vector3 translation;
+	/*! Base rotation when rotation curve not defined. */
+	Quaternion rotation;
+	/*! Base scale when scale curve not defined. */
+	float scale;
+	/*! Starting offset for the translation data. (USHRT_MAX for no data.) */
+	unsigned int translateOffset;
+	/*! Starting offset for the rotation data. (USHRT_MAX for no data.) */
+	unsigned int rotateOffset;
+	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
+	unsigned int scaleOffset;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

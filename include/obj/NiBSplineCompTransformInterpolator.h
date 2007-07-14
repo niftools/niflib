@@ -55,42 +55,6 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
-	 * Gets the base translation when a translate curve is not defined.
-	 * \return The base translation.
-	 */
-	NIFLIB_API Vector3 GetTranslation() const;
-
-	/*!
-	 * Sets the base translation when a translate curve is not defined.
-	 * \param[in] value The new base translation.
-	 */
-	NIFLIB_API void SetTranslation( Vector3 value );
-
-	/*!
-	 * Gets the base rotation when a translate curve is not defined.
-	 * \return The base rotation.
-	 */
-	NIFLIB_API Quaternion GetRotation() const;
-
-	/*!
-	 * Sets the base rotation when a translate curve is not defined.
-	 * \param[in] value The new base rotation.
-	 */
-	NIFLIB_API void SetRotation( Quaternion value );
-
-	/*!
-	 * Gets the base scale when a translate curve is not defined.
-	 * \return The base scale.
-	 */
-	NIFLIB_API float GetScale() const;
-
-	/*!
-	 * Sets the base scale when a translate curve is not defined.
-	 * \param[in] value The new base scale.
-	 */
-	NIFLIB_API void SetScale( float value );
-
-	/*!
 	 * Gets translate bias.
 	 * \return The translate bias.
 	 */
@@ -212,18 +176,6 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Base translation when translate curve not defined. */
-	Vector3 translation;
-	/*! Base rotation when rotation curve not defined. */
-	Quaternion rotation;
-	/*! Base scale when scale curve not defined. */
-	float scale;
-	/*! Starting offset for the translation data. (USHRT_MAX for no data.) */
-	unsigned int translateOffset;
-	/*! Starting offset for the rotation data. (USHRT_MAX for no data.) */
-	unsigned int rotateOffset;
-	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
-	unsigned int scaleOffset;
 	/*! Translate Bias */
 	float translateBias;
 	/*! Translate Multiplier */

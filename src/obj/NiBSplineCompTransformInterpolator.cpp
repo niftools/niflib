@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NiBSplineTransformInterpolator::TYPE );
 
-NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : scale(0.0f), translateOffset((unsigned int)0), rotateOffset((unsigned int)0), scaleOffset((unsigned int)0), translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
+NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,12 +49,6 @@ void NiBSplineCompTransformInterpolator::Read( istream& in, list<unsigned int> &
 	//--END CUSTOM CODE--//
 
 	NiBSplineTransformInterpolator::Read( in, link_stack, info );
-	NifStream( translation, in, info );
-	NifStream( rotation, in, info );
-	NifStream( scale, in, info );
-	NifStream( translateOffset, in, info );
-	NifStream( rotateOffset, in, info );
-	NifStream( scaleOffset, in, info );
 	NifStream( translateBias, in, info );
 	NifStream( translateMultiplier, in, info );
 	NifStream( rotationBias, in, info );
@@ -71,12 +65,6 @@ void NiBSplineCompTransformInterpolator::Write( ostream& out, const map<NiObject
 	//--END CUSTOM CODE--//
 
 	NiBSplineTransformInterpolator::Write( out, link_map, info );
-	NifStream( translation, out, info );
-	NifStream( rotation, out, info );
-	NifStream( scale, out, info );
-	NifStream( translateOffset, out, info );
-	NifStream( rotateOffset, out, info );
-	NifStream( scaleOffset, out, info );
 	NifStream( translateBias, out, info );
 	NifStream( translateMultiplier, out, info );
 	NifStream( rotationBias, out, info );
@@ -95,12 +83,6 @@ std::string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiBSplineTransformInterpolator::asString();
-	out << "  Translation:  " << translation << endl;
-	out << "  Rotation:  " << rotation << endl;
-	out << "  Scale:  " << scale << endl;
-	out << "  Translate Offset:  " << translateOffset << endl;
-	out << "  Rotate Offset:  " << rotateOffset << endl;
-	out << "  Scale Offset:  " << scaleOffset << endl;
 	out << "  Translate Bias:  " << translateBias << endl;
 	out << "  Translate Multiplier:  " << translateMultiplier << endl;
 	out << "  Rotation Bias:  " << rotationBias << endl;
@@ -130,30 +112,6 @@ std::list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
-
-Vector3 NiBSplineCompTransformInterpolator::GetTranslation() const {
-	return translation;
-}
-
-void NiBSplineCompTransformInterpolator::SetTranslation( Vector3 value ) {
-	translation = value;
-}
-
-Quaternion NiBSplineCompTransformInterpolator::GetRotation() const {
-	return rotation;
-}
-
-void NiBSplineCompTransformInterpolator::SetRotation( Quaternion value ) {
-	rotation = value;
-}
-
-float NiBSplineCompTransformInterpolator::GetScale() const {
-	return scale;
-}
-
-void NiBSplineCompTransformInterpolator::SetScale( float value ) {
-	scale = value;
-}
 
 float NiBSplineCompTransformInterpolator::GetTranslateBias() const {
 	return translateBias;
@@ -209,7 +167,7 @@ vector< Quaternion > NiBSplineCompTransformInterpolator::GetQuatRotateControlDat
    if ((rotateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofQuat;
-      vector<short> points = splineData->GetControlPointRange(rotateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(rotateOffset, npts);
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Quaternion key;
@@ -229,7 +187,7 @@ vector< Vector3 > NiBSplineCompTransformInterpolator::GetTranslateControlData() 
    if ((translateOffset != USHRT_MAX) && splineData && basisData) { // has translation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofTrans;
-      vector<short> points = splineData->GetControlPointRange(translateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(translateOffset, npts);
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Vector3 key;
@@ -248,7 +206,7 @@ vector< float > NiBSplineCompTransformInterpolator::GetScaleControlData() const
    if ((scaleOffset != USHRT_MAX) && splineData && basisData) { // has translation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofScale;
-      vector<short> points = splineData->GetControlPointRange(scaleOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(scaleOffset, npts);
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          float data = float(points[i++]) / float (32767) * scaleMultiplier + scaleBias;
@@ -264,7 +222,7 @@ vector< Key<Quaternion> > NiBSplineCompTransformInterpolator::SampleQuatRotateKe
    if ((rotateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofQuat;
-      vector<short> points = splineData->GetControlPointRange(rotateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(rotateOffset, npts);
       vector<float> control(npts);
       vector<float> output(npoints*SizeofQuat);
       for (int i=0, j=0; i<nctrl; ++i) {
@@ -302,7 +260,7 @@ vector< Key<Vector3> > NiBSplineCompTransformInterpolator::SampleTranslateKeys(i
    if ((translateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofTrans;
-      vector<short> points = splineData->GetControlPointRange(translateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(translateOffset, npts);
       vector<float> control(npts);
       vector<float> output(npoints*SizeofTrans);
       for (int i=0, j=0; i<nctrl; ++i) {
@@ -338,7 +296,7 @@ vector< Key<float> > NiBSplineCompTransformInterpolator::SampleScaleKeys(int npo
    {
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofScale;
-      vector<short> points = splineData->GetControlPointRange(scaleOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(scaleOffset, npts);
       vector<float> control(npts);
       vector<float> output(npoints*SizeofScale);
       for (int i=0, j=0; i<nctrl; ++i) {

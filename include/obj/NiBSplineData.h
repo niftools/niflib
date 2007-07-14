@@ -55,10 +55,10 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
-	 * Get Signed shorts representing the spline data scaled by SHRT_MAX.
+	 * Get floats representing the spline data.
 	 * \return The spline data.
 	 */
-	NIFLIB_API vector<short> GetControlPoints() const;
+	NIFLIB_API vector<float> GetFloatControlPoints() const;
 
 	/*!
 	 * Get Range of signed shorts representing the data scaled by SHRT_MAX.
@@ -66,16 +66,32 @@ public:
 	 * \param[in] count The number of control points to get.
 	 * \return The control points that fall within the specified range.
 	 */
-	NIFLIB_API vector<short> GetControlPointRange(int offset, int count) const;
+	NIFLIB_API vector<float> GetFloatControlPointRange(int offset, int count) const;
+
+	/*!
+	 * Get Signed shorts representing the spline data scaled by SHRT_MAX.
+	 * \return The spline data.
+	 */
+	NIFLIB_API vector<short> GetShortControlPoints() const;
+
+	/*!
+	 * Get Range of signed shorts representing the data scaled by SHRT_MAX.
+	 * \param[in] offset The start of the range.
+	 * \param[in] count The number of control points to get.
+	 * \return The control points that fall within the specified range.
+	 */
+	NIFLIB_API vector<short> GetShortControlPointRange(int offset, int count) const;
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. Zero? */
-	unsigned int unknownInt;
-	/*! Number of Data Points */
-	mutable unsigned int count;
+	/*! Number of Float Data Points */
+	mutable unsigned int floatCount;
+	/*! Float values representing the control data. */
+	vector<float > floatControlPoints;
+	/*! Number of Short Data Points */
+	mutable unsigned int shortCount;
 	/*! Signed shorts representing the data from 0 to 1 (scaled by SHRT_MAX). */
-	vector<short > controlPoints;
+	vector<short > shortControlPoints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
