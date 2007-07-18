@@ -266,7 +266,8 @@ void NiControllerSequence::AddInterpolator( NiSingleInterpController * obj, byte
 
 	cl.interpolator = interp;
 	cl.priority_ = priority;
-   cl.stringPalette = stringPalette;
+	cl.stringPalette = stringPalette;
+	cl.nodeName = target->GetName();
 	cl.nodeNameOffset = stringPalette->AddSubStr( target->GetName() );
 
 	NiPropertyRef prop = DynamicCast<NiProperty>(target);

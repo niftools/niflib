@@ -90,31 +90,46 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].nodeName, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].nodeName, in, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].nodeNameOffset, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].propertyType, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].propertyType, in, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].propertyTypeOffset, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].controllerType, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].controllerType, in, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].controllerTypeOffset, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable1, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].variable1, in, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].variableOffset1, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable2, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].variable2, in, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].variableOffset2, in, info );
 		};
 	};
@@ -211,31 +226,46 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].nodeName, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].nodeName, out, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].nodeNameOffset, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].propertyType, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].propertyType, out, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].propertyTypeOffset, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].controllerType, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].controllerType, out, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].controllerTypeOffset, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable1, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].variable1, out, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].variableOffset1, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable2, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( info.version >= 0x14010003 ) {
+			NifStream( controlledBlocks[i1].variable2, out, info );
+		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( controlledBlocks[i1].variableOffset2, out, info );
 		};
 	};
