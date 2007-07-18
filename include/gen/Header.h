@@ -11,6 +11,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../NIF_IO.h"
 #include "../obj/NiObject.h"
 
+// Include structures
+#include "ExportInfo.h"
 namespace Niflib {
 
 
@@ -48,15 +50,8 @@ struct Header {
 	 * circumstances.
 	 */
 	unsigned int userVersion2;
-	/*! Could be the name of the creator of the NIF file? */
-	ShortString creator;
-	/*! Unknown. Can be something like 'TriStrip Process Script'. */
-	ShortString exportInfo1;
-	/*!
-	 * Unknown. Possibly the selected option of the export script. Can be something
-	 * like 'Default Export Script'.
-	 */
-	ShortString exportInfo2;
+	/*! Unknown. */
+	ExportInfo exportInfo;
 	/*! Number of object types in this NIF file. */
 	mutable unsigned short numBlockTypes;
 	/*! List of all object types used in this NIF file. */
@@ -67,6 +62,14 @@ struct Header {
 	 * object_types[object_type_index[1]], etc.
 	 */
 	vector<unsigned short > blockTypeIndex;
+	/*! Array of block sizes? */
+	vector<unsigned int > blockSize;
+	/*! Number of strings. */
+	mutable unsigned int numStrings;
+	/*! Maximum string length. */
+	unsigned int maxStringLength;
+	/*! Strings. */
+	vector<string > strings;
 	/*! Unknown. */
 	unsigned int unknownInt2;
 	NIFLIB_HIDDEN NifInfo Read( istream& in );

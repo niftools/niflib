@@ -175,7 +175,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Name of this object. */
-	string name;
+	IndexString name;
 	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
 	/*! Unknown. */
@@ -186,11 +186,10 @@ protected:
 	vector<Vector3 > vertices;
 	/*!
 	 * The lower 6 (or less?) bits of this field represent the number of UV texture
-	 * sets. The other bits are probably flag bits.
+	 * sets. The other bits are probably flag bits. For versions 10.1.0.0 and up, if
+	 * bit 12 is set then extra vectors are present after the normals.
 	 */
-	mutable byte numUvSets2;
-	/*! Unknown. If bit 4 is set then extra vectors are present after the normals. */
-	byte unknownByte1;
+	mutable unsigned short numUvSets;
 	/*!
 	 * Do we have lighting normals? These are essential for proper lighting: if not
 	 * present, the model will only be influenced by ambient light.
@@ -228,8 +227,6 @@ protected:
 	bool hasVertexColors;
 	/*! The vertex colors. */
 	vector<Color4 > vertexColors;
-	/*! Number of texture sets. */
-	mutable unsigned short numUvSets;
 	/*!
 	 * Do we have UV coordinates?
 	 * 

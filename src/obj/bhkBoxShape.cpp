@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkBoxShape::TYPE("bhkBoxShape", &bhkConvexShape::TYPE );
 
-bhkBoxShape::bhkBoxShape() : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0), min_Size(0.0f) {
+bhkBoxShape::bhkBoxShape() : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0), minimumSize(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -47,7 +47,7 @@ void bhkBoxShape::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	NifStream( unknownShort3, in, info );
 	NifStream( unknownShort4, in, info );
 	NifStream( dimensions, in, info );
-	NifStream( min_Size, in, info );
+	NifStream( minimumSize, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -63,7 +63,7 @@ void bhkBoxShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	NifStream( unknownShort3, out, info );
 	NifStream( unknownShort4, out, info );
 	NifStream( dimensions, out, info );
-	NifStream( min_Size, out, info );
+	NifStream( minimumSize, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -81,7 +81,7 @@ std::string bhkBoxShape::asString( bool verbose ) const {
 	out << "  Unknown Short 3:  " << unknownShort3 << endl;
 	out << "  Unknown Short 4:  " << unknownShort4 << endl;
 	out << "  Dimensions:  " << dimensions << endl;
-	out << "  Min. size:  " << min_Size << endl;
+	out << "  Minimum Size:  " << minimumSize << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

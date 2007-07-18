@@ -29,13 +29,12 @@ struct TexDesc {
 	NIFLIB_API TexDesc & operator=( const TexDesc & src );
 	/*! NiSourceTexture object index. */
 	Ref<NiSourceTexture > source;
-	/*!
-	 * Determines how UV coordinaes that are outside the 0-1 range will be mapped to
-	 * the texture.
-	 */
+	/*! 0=clamp S clamp T, 1=clamp S wrap T, 2=wrap S clamp T, 3=wrap S wrap T */
 	TexClampMode clampMode;
-	/*! Determines how the texture will be scaled up and down. */
+	/*! 0=nearest, 1=bilinear, 2=trilinear, 3=..., 4=..., 5=... */
 	TexFilterMode filterMode;
+	/*! Texture mode flags. */
+	unsigned short flags;
 	/*! The texture coordinate set in NiGeometryData that this texture slot will use. */
 	unsigned int uvSet;
 	/*! 0? */

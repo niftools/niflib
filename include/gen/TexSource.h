@@ -38,7 +38,7 @@ struct TexSource {
 	 * is due to a feature in Morrowind resource manager: it loads name.ext,
 	 * textures/name.ext and textures/subdir/name.ext but NOT subdir/name.ext.
 	 */
-	string fileName;
+	IndexString fileName;
 	/*! Unknown. */
 	Ref<NiObject > unknownLink;
 	/*! Unknown. */
@@ -47,7 +47,7 @@ struct TexSource {
 	 * The original source filename of the image embedded by the referred NiPixelData
 	 * object.
 	 */
-	string originalFileName_;
+	IndexString originalFileName_;
 	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
 };

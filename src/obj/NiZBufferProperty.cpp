@@ -43,7 +43,7 @@ void NiZBufferProperty::Read( istream& in, list<unsigned int> & link_stack, cons
 
 	NiProperty::Read( in, link_stack, info );
 	NifStream( flags, in, info );
-	if ( info.version >= 0x0401000C ) {
+	if ( ( info.version >= 0x0401000C ) && ( info.version <= 0x14000005 ) ) {
 		NifStream( function, in, info );
 	};
 
@@ -57,7 +57,7 @@ void NiZBufferProperty::Write( ostream& out, const map<NiObjectRef,unsigned int>
 
 	NiProperty::Write( out, link_map, info );
 	NifStream( flags, out, info );
-	if ( info.version >= 0x0401000C ) {
+	if ( ( info.version >= 0x0401000C ) && ( info.version <= 0x14000005 ) ) {
 		NifStream( function, out, info );
 	};
 

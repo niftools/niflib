@@ -54,6 +54,11 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
+protected:
+	/*! Unknown value. */
+	int unknownInt1;
+	/*! Unknown value. */
+	bool unknownBoolean1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

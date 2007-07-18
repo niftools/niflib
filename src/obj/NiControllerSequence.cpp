@@ -75,7 +75,7 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 		link_stack.push_back( block_num );
 		NifStream( targetName, in, info );
 	};
-	if ( info.version >= 0x0A020000 ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
@@ -128,7 +128,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 		}
 		NifStream( targetName, out, info );
 	};
-	if ( info.version >= 0x0A020000 ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			NifStream( (unsigned int)&(*stringPalette), out, info );
 		} else {
@@ -178,7 +178,7 @@ void NiControllerSequence::FixLinks( const map<unsigned int,NiObjectRef> & objec
 		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
 		manager = FixLink<NiControllerManager>( objects, link_stack, info );
 	};
-	if ( info.version >= 0x0A020000 ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
 	};
 

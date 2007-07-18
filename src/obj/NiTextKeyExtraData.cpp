@@ -46,9 +46,17 @@ void NiTextKeyExtraData::Read( istream& in, list<unsigned int> & link_stack, con
 		NifStream( unknownInt1, in, info );
 	};
 	NifStream( numTextKeys, in, info );
-	textKeys.resize(numTextKeys);
-	for (unsigned int i1 = 0; i1 < textKeys.size(); i1++) {
-		NifStream( textKeys[i1], in, info, 1 );
+	if ( info.version >= 0x14010003 ) {
+		textKeys.resize(numTextKeys);
+		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
+			NifStream( textKeys[i2], in, info, 1 );
+		};
+	};
+	if ( info.version <= 0x14000005 ) {
+		textKeys.resize(numTextKeys);
+		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
+			NifStream( textKeys[i2], in, info, 1 );
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -65,8 +73,15 @@ void NiTextKeyExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int
 		NifStream( unknownInt1, out, info );
 	};
 	NifStream( numTextKeys, out, info );
-	for (unsigned int i1 = 0; i1 < textKeys.size(); i1++) {
-		NifStream( textKeys[i1], out, info, 1 );
+	if ( info.version >= 0x14010003 ) {
+		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
+			NifStream( textKeys[i2], out, info, 1 );
+		};
+	};
+	if ( info.version <= 0x14000005 ) {
+		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
+			NifStream( textKeys[i2], out, info, 1 );
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -120,11 +135,31 @@ std::list<NiObjectRef> NiTextKeyExtraData::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 vector< Key<string> > NiTextKeyExtraData::GetKeys() const {
-	return textKeys;
+	vector< Key<string> > value;
+	for (vector< Key<IndexString> >::const_iterator itr = textKeys.begin(); itr != textKeys.end(); ++itr) {
+		Key<string> key;
+		key.time = (*itr).time;
+		key.data = (*itr).data;
+		key.tension = (*itr).tension;
+		key.bias = (*itr).bias;
+		key.continuity = (*itr).continuity;
+		value.push_back(key);
+	}
+	return value;
 }
 
 void NiTextKeyExtraData::SetKeys( vector< Key<string> > const & keys ) {
-	textKeys = keys;
+	vector< Key<string> > value;
+	textKeys.clear();
+	for (vector< Key<string> >::const_iterator itr = keys.begin(); itr != keys.end(); ++itr) {
+		Key<IndexString> key;
+		key.time = (*itr).time;
+		key.data = (*itr).data;
+		key.tension = (*itr).tension;
+		key.bias = (*itr).bias;
+		key.continuity = (*itr).continuity;
+		textKeys.push_back(key);
+	}
 }
 
 //--END CUSTOM CODE--//

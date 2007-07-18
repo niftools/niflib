@@ -58,7 +58,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! The object name. */
-	string name;
+	IndexString name;
 	/*! Modifier ID in the particle modifier chain (always a multiple of 1000)? */
 	unsigned int order;
 	/*! NiParticleSystem parent of this modifier. */

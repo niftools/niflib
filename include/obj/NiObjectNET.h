@@ -133,7 +133,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Name of this controllable object, used to refer to the object in .kf files. */
-	string name;
+	IndexString name;
 	/*! Extra data object index. (The first in a chain) */
 	Ref<NiExtraData > extraData;
 	/*! The number of Extra Data objects referenced through the list. */

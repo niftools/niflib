@@ -43,8 +43,10 @@ void NiVertexColorProperty::Read( istream& in, list<unsigned int> & link_stack, 
 
 	NiProperty::Read( in, link_stack, info );
 	NifStream( flags, in, info );
-	NifStream( vertexMode, in, info );
-	NifStream( lightingMode, in, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( vertexMode, in, info );
+		NifStream( lightingMode, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -56,8 +58,10 @@ void NiVertexColorProperty::Write( ostream& out, const map<NiObjectRef,unsigned 
 
 	NiProperty::Write( out, link_map, info );
 	NifStream( flags, out, info );
-	NifStream( vertexMode, out, info );
-	NifStream( lightingMode, out, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( vertexMode, out, info );
+		NifStream( lightingMode, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//

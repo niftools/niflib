@@ -24,7 +24,7 @@ struct Morph {
 	/*! Copy Operator */
 	NIFLIB_API Morph & operator=( const Morph & src );
 	/*! Name of the frame. */
-	string frameName;
+	IndexString frameName;
 	/*! The number of morph keys that follow. */
 	mutable unsigned int numKeys;
 	/*!

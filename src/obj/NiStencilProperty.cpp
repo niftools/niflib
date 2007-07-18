@@ -47,12 +47,19 @@ void NiStencilProperty::Read( istream& in, list<unsigned int> & link_stack, cons
 	};
 	NifStream( stencilEnabled, in, info );
 	NifStream( stencilFunction, in, info );
-	NifStream( stencilRef, in, info );
-	NifStream( stencilMask, in, info );
-	NifStream( failAction, in, info );
-	NifStream( zFailAction, in, info );
-	NifStream( passAction, in, info );
-	NifStream( drawMode, in, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( stencilRef, in, info );
+		NifStream( stencilMask, in, info );
+		NifStream( failAction, in, info );
+		NifStream( zFailAction, in, info );
+		NifStream( passAction, in, info );
+		NifStream( drawMode, in, info );
+	};
+	if ( info.version >= 0x14010003 ) {
+		for (unsigned int i2 = 0; i2 < 5; i2++) {
+			NifStream( unknownBytes[i2], in, info );
+		};
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -68,12 +75,19 @@ void NiStencilProperty::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	};
 	NifStream( stencilEnabled, out, info );
 	NifStream( stencilFunction, out, info );
-	NifStream( stencilRef, out, info );
-	NifStream( stencilMask, out, info );
-	NifStream( failAction, out, info );
-	NifStream( zFailAction, out, info );
-	NifStream( passAction, out, info );
-	NifStream( drawMode, out, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( stencilRef, out, info );
+		NifStream( stencilMask, out, info );
+		NifStream( failAction, out, info );
+		NifStream( zFailAction, out, info );
+		NifStream( passAction, out, info );
+		NifStream( drawMode, out, info );
+	};
+	if ( info.version >= 0x14010003 ) {
+		for (unsigned int i2 = 0; i2 < 5; i2++) {
+			NifStream( unknownBytes[i2], out, info );
+		};
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -95,6 +109,18 @@ std::string NiStencilProperty::asString( bool verbose ) const {
 	out << "  Z Fail Action:  " << zFailAction << endl;
 	out << "  Pass Action:  " << passAction << endl;
 	out << "  Draw Mode:  " << drawMode << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 5; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Bytes[" << i1 << "]:  " << unknownBytes[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

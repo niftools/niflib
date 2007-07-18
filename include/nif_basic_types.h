@@ -23,6 +23,16 @@ struct LineString {
 	string line;
 };
 
+struct IndexString : public std::string {
+	IndexString() {}
+	IndexString( const IndexString & ref ) : std::string((std::string const &)ref) {}
+	IndexString( const std::string & ref ) : std::string(ref) {}
+	IndexString& operator=( const IndexString & ref ) { assign((std::string const &)ref); return *this; }
+	IndexString& operator=( const std::string & ref ) { assign(ref); return *this; }
+	operator std::string const &() const { return *this; }
+	operator std::string &() { return *this; }
+};
+
 //--Non-mathematical Basic Types--//
 #ifndef byte
 typedef unsigned char	byte;
@@ -49,7 +59,7 @@ struct NifInfo {
 	EndianType endian;
 	/*! This is only supported in Oblivion.  It contains the name of the person who created the NIF file. */
 	string creator;
-	/*! This is only supported in Oblivion.  It seems to contiain the type of script or program used to export the file. */
+	/*! This is only supported in Oblivion.  It seems to contain the type of script or program used to export the file. */
 	string exportInfo1;
 	/*! This is only supported in Oblivion.  It seems to contain the more specific script or options of the above. */
 	string exportInfo2;

@@ -57,6 +57,13 @@ void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( hasShader, in, info );
+	};
+	if ( info.version >= 0x14030003 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownBools[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, in, info );
 			NifStream( block_num, in, info );
@@ -95,6 +102,13 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( hasShader, out, info );
+	};
+	if ( info.version >= 0x14030003 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownBools[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, out, info );
 			if ( info.version < VER_3_3_0_13 ) {
@@ -123,6 +137,18 @@ std::string NiGeometry::asString( bool verbose ) const {
 	out << "  Data:  " << data << endl;
 	out << "  Skin Instance:  " << skinInstance << endl;
 	out << "  Has Shader:  " << hasShader << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Bools[" << i1 << "]:  " << unknownBools[i1] << endl;
+		array_output_count++;
+	};
 	if ( (hasShader != 0) ) {
 		out << "    Shader Name:  " << shaderName << endl;
 		out << "    Unknown Link:  " << unknownLink << endl;

@@ -128,6 +128,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	//--Read Header--//
 	Header header;
 
+	// set the header pointer in the stream
+	in >> hdrInfo(&header);
+
 	//Create a new NifInfo if one isn't given.
 	bool delete_info = false;
 	if ( info == NULL ) {
@@ -143,9 +146,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	info->userVersion = header.userVersion;
 	info->userVersion2 = header.userVersion2;
 	info->endian = EndianType(header.endianType);
-	info->creator = header.creator.str;
-	info->exportInfo1 = header.exportInfo1.str;
-	info->exportInfo2 = header.exportInfo2.str;
+	info->creator = header.exportInfo.creator.str;
+	info->exportInfo1 = header.exportInfo.exportInfo1.str;
+	info->exportInfo2 = header.exportInfo.exportInfo2.str;
 
 #ifdef DEBUG_HEADER_FOOTER
 	//Print debug output for header
@@ -164,10 +167,25 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	string objectType;
 	stringstream errStream;
 
+	std::streampos headerpos = in.tellg();
+	std::streampos nextobjpos = headerpos;
+
 	//Loop through all objects in the file
 	unsigned int i = 0;
 	NiObjectRef new_obj;
 	while (true) {
+
+		// Check if the size information matches in version 20.3 and greater
+		if ( header.version >= VER_20_3_0_3 ) {
+			if (nextobjpos != in.tellg()) {
+				// incorrect positioning seek to expected location
+				in.seekg(nextobjpos);				
+			}
+			// update next location
+			nextobjpos += header.blockSize[i];
+		}
+
+
 		//Check for EOF
 		if (in.eof() ) {
 			errStream << "End of file reached prematurely.  This NIF may be corrupt or improperly supported." << endl;
@@ -180,6 +198,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 			}
 			throw runtime_error( errStream.str() );
 		}
+
+		// Starting position of block in stream
+		std::streampos startobjpos = in.tellg();
 	
 		//There are two main ways to read objects
 		//One before version 5.0.0.1 and one after
@@ -267,7 +288,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		if ( new_obj == NULL ) {
 			errStream << "Unknown object type encountered during file read:  " << objectType << endl;
 			if ( new_obj != NULL ) {
-				errStream << "Last successfuly read object was:  " << endl;
+				errStream << "Last successfully read object was:  " << endl;
 				errStream << "====[ " << "Object " << i - 1 << " | " << new_obj->GetType().GetTypeName() << " ]====" << endl;
 				errStream << new_obj->asString();
 			} else {
@@ -294,7 +315,22 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 		//Add object to list
 		obj_list.push_back(new_obj);
-			
+
+		// Ending position of block in stream
+		std::streampos endobjpos = in.tellg();
+
+		// Check if the size information matches
+		if ( header.version >= VER_20_3_0_3 ) {
+			std::streamsize calcobjsize = endobjpos - startobjpos;
+			unsigned int objsize = header.blockSize[i];
+			if (calcobjsize != objsize) {
+				errStream << "Object size mismatch occurred during file read:" << endl;
+				errStream << "====[ " << "Object " << i << " | " << objectType << " ]====" << endl;
+				errStream << "  Start: " << startobjpos << "  Expected Size: " << objsize << "  Read Size: " << calcobjsize << endl;
+				errStream << endl;
+			}
+		}
+
 #ifdef PRINT_OBJECT_CONTENTS
 		cout << endl << new_obj->asString() << endl;
 #endif
@@ -317,6 +353,11 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	//Print footer debug output
 	footer.asString();
 #endif
+
+	// Check for accumulated warnings
+	if (errStream.tellp() > 0) {
+		throw runtime_error( errStream.str() );
+	}
 	
 	//This should fail, and trigger the in.eof() flag
 	ReadByte( in ); 
@@ -349,12 +390,16 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		delete info;
 	}
 
+	// clear the header pointer in the stream.  Should be in try/catch block
+	in >> hdrInfo(NULL);
+
 	//Return completed object list
 	return obj_list;
 }
 
 // Writes a valid Nif File given an ostream, a list to the root objects of a file tree
 void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info ) {
+
 	//Enumerate all objects in tree
 	map<Type*,unsigned int> type_map;
 	map<NiObjectRef, unsigned int> link_map;
@@ -383,24 +428,46 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	header.userVersion = info.userVersion;
 	header.userVersion2 = info.userVersion2;
 	header.endianType = info.endian;
-	header.creator.str = info.creator;
-	header.exportInfo1.str = info.exportInfo1;
-	header.exportInfo2.str = info.exportInfo2;
+	header.exportInfo.creator.str = info.creator;
+	header.exportInfo.exportInfo1.str = info.exportInfo1;
+	header.exportInfo.exportInfo2.str = info.exportInfo2;
 	header.copyright[0].line = "Numerical Design Limited, Chapel Hill, NC 27514";
 	header.copyright[1].line = "Copyright (c) 1996-2000";
 	header.copyright[2].line = "All Rights Reserved";
 	
+	// set the header pointer in the stream
+	out << hdrInfo(&header);
+
 	//Set Type Names
 	header.blockTypes.resize( types.size() );
 	for ( unsigned int i = 0; i < types.size(); ++i ) {
 		header.blockTypes[i] = types[i]->GetTypeName();
-
 	}
 
 	//Set type number of each object
 	header.blockTypeIndex.resize( objects.size() );
 	for ( unsigned int i = 0; i < objects.size(); ++i ) {
 		header.blockTypeIndex[i] = type_map[(Type*)&(objects[i]->GetType())];
+	}
+
+	// Set object sizes and accumulate string types
+	if (header.version >= VER_20_1_0_3)
+	{
+		// Zero string information
+		header.maxStringLength = 0;
+		header.numStrings = 0;
+		header.strings.clear();
+
+		NifSizeStream ostr;
+		ostr << hdrInfo(&header);
+
+		header.blockSize.resize( objects.size() );
+		for ( unsigned int i = 0; i < objects.size(); ++i ) {
+			ostr.reset();
+			objects[i]->Write( ostr, link_map, info );
+			header.blockSize[i] = ostr.tellp();
+		}
+		header.numStrings = header.strings.size();
 	}
 
 	//Write header to file
@@ -471,6 +538,9 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 		}
 		footer.Write( out, link_map, info );
 	}
+
+	// clear the header pointer in the stream.  Should be in try/catch block
+	out << hdrInfo(NULL);
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root object of a file tree
@@ -1019,6 +1089,9 @@ bool IsSupportedVersion( unsigned int version ) {
 		case VER_10_2_0_0:
 		case VER_20_0_0_4:
 		case VER_20_0_0_5:
+		case VER_20_1_0_3:
+		case VER_20_3_0_3:
+		case VER_20_3_0_6:
 			return true;
    }
    return false;

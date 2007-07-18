@@ -3,6 +3,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../include/NIF_IO.h"
 #include "../include/niflib.h"
+#include "../include/gen/header.h"
 namespace Niflib {
 
 //--Endian Support Functions--//
@@ -639,7 +640,7 @@ void NifStream( Key<Quaternion> & key, istream& file, const NifInfo & info, KeyT
 	}
 
 	//Read data based on the type of key
-	NifStream( key.data, file );
+	NifStream( key.data, file, info );
 	if ( type == TBC_KEY ) {
 		//Uses TBC interpolation
 		key.tension = ReadFloat( file );
@@ -659,13 +660,147 @@ void NifStream( Key<Quaternion> const & key, ostream& file, const NifInfo & info
 	}
 
 	//Read data based on the type of key
-	NifStream( key.data, file );
+	NifStream( key.data, file, info );
 	if ( type == TBC_KEY ) {
 		//Uses TBC interpolation
 		WriteFloat( key.tension, file);
 		WriteFloat( key.bias, file);
 		WriteFloat( key.continuity, file);
 	}
+}
+
+static void FromIndexString(IndexString const &value, Header* header, unsigned int& idx)
+{
+	if (header == NULL)
+		throw runtime_error("stream not properly configured");
+	if (value.empty()) {
+		idx = 0xffffffff;
+	} else {
+		size_t i = 0;
+		for ( ; i < header->strings.size(); i++) {
+			if (header->strings[i] == value)
+				break;
+		}
+		if (i >= header->numStrings)
+			header->numStrings = i;
+		size_t len = value.length();
+		if (header->maxStringLength < len)
+			header->maxStringLength = len;
+		header->strings.push_back(value);
+		idx = i;
+	}
+}
+
+static void ToIndexString(unsigned int idx, Header* header, IndexString & value)
+{
+	if (header == NULL)
+		throw runtime_error("stream not properly configured");
+	if ( idx == 0xffffffff ) {
+		value.clear();
+	} else if (idx >= 0 && idx <= header->strings.size()) {
+		value = header->strings[idx];
+	} else {
+		throw runtime_error("invalid string index");
+	}
+}
+
+void NifStream( IndexString & val, istream& in, const NifInfo & info ) {
+	if (info.version >= VER_20_1_0_3) {
+		std::streampos pos = in.tellg();
+
+		ToIndexString(ReadUInt(in), hdrInfo::getInfo(in), val);
+	} else {
+		val = ReadString( in );
+	}
+}
+
+void NifStream( IndexString const & val, ostream& out, const NifInfo & info ) {
+	if (info.version >= VER_20_1_0_3) {
+		unsigned idx = 0xffffffff;
+		FromIndexString(val, hdrInfo::getInfo(out), idx);
+		WriteInt(idx, out);
+	} else {
+		WriteString( val, out );
+	}
+}
+
+ostream & operator<<( ostream & out, IndexString const & val ) {
+	out << static_cast<string const &>(val);
+	return out;
+}
+
+template <> void NifStream( Key<IndexString> & key, istream& file, const NifInfo & info, KeyType type )
+{
+	if (info.version >= VER_20_1_0_3) {
+		Key<int> ikey;
+		NifStream(ikey, file, info, type);
+		key.time = ikey.time;
+		ToIndexString(ikey.data, hdrInfo::getInfo(file), key.data);
+		key.tension = ikey.tension;
+		key.bias = ikey.bias;
+		key.continuity = ikey.continuity;
+	} else {
+		Key<string> skey;
+		NifStream(skey, file, info, type);
+		key.time = skey.time;
+		key.data = skey.data;
+		key.tension = skey.tension;
+		key.bias = skey.bias;
+		key.continuity = skey.continuity;
+	}
+}
+
+template <> void NifStream( Key<IndexString> const & key, ostream& file, const NifInfo & info,  KeyType type ) {
+	if (info.version >= VER_20_1_0_3) {
+		Key<unsigned int> ikey;
+		ikey.time = key.time;
+		ikey.tension = key.tension;
+		ikey.bias = key.bias;
+		ikey.continuity = key.continuity;
+		FromIndexString(key.data, hdrInfo::getInfo(file), ikey.data);
+		NifStream(ikey, file, info, type);
+	} else {
+		Key<string> skey;
+		skey.time = key.time;
+		skey.data = key.data;
+		skey.tension = key.tension;
+		skey.bias = key.bias;
+		skey.continuity = key.continuity;
+		NifStream(skey, file, info, type);
+	}
+}
+
+
+const int strInfo::infoIdx = ios_base::xalloc();
+const int hdrInfo::infoIdx = ios_base::xalloc();
+
+std::streamsize NifStreamBuf::xsputn(const char_type *_Ptr, std::streamsize _Count) {
+	pos += _Count;
+	if (size < pos) size = pos;
+	return _Count;
+}
+
+std::streampos NifStreamBuf::seekoff(std::streamoff offset, std::ios_base::seekdir dir, std::ios_base::openmode mode)
+{	// change position by offset, according to way and mode
+	switch (dir)
+	{
+	case std::ios_base::beg:
+		pos = offset;
+		return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;
+	case std::ios_base::cur:
+		pos += offset;
+		return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;
+	case std::ios_base::end:
+		pos = size - offset;
+		return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;		
+	}
+	return streampos(-1);
+}
+
+std::streampos NifStreamBuf::seekpos(std::streampos offset, std::ios_base::openmode mode)
+{	// change to specified position, according to mode
+	pos = offset;
+	return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;
 }
 
 }

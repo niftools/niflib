@@ -83,7 +83,7 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
 			NifStream( controlledBlocks[i1].priority_, in, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( block_num, in, info );
 			link_stack.push_back( block_num );
 		};
@@ -197,7 +197,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
 			NifStream( controlledBlocks[i1].priority_, out, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			if ( info.version < VER_3_3_0_13 ) {
 				NifStream( (unsigned int)&(*controlledBlocks[i1].stringPalette), out, info );
 			} else {
@@ -306,7 +306,7 @@ void NiSequence::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
 		};
-		if ( info.version >= 0x0A020000 ) {
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
 		};
 	};

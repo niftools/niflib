@@ -32,7 +32,8 @@ NiSkinInstance::~NiSkinInstance() {
 
 	//Unflag any bones that were part of this skin instance
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(false);
+		if (NULL != bones[i])
+			bones[i]->SetSkinFlag(false);
 	}
 
 	//Inform Skeleton Root of detatchment and clear it.

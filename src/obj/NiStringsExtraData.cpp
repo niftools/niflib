@@ -113,12 +113,17 @@ std::list<NiObjectRef> NiStringsExtraData::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<string> NiStringsExtraData::GetData() const {
-	return data;
+	vector<string> value;
+	value.resize(data.size());
+	std::copy(data.begin(), data.end(), value.begin());
+	return value;
 };
 	
 void NiStringsExtraData::SetData( const vector<string> & n ) {
 	numStrings = (unsigned int)(n.size());
-	data = n;
+	vector<string> value;
+	data.resize(n.size());
+	std::copy(n.begin(), n.end(), data.begin());
 };
 
 //--END CUSTOM CODE--//

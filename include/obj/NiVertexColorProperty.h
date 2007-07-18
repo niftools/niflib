@@ -98,9 +98,13 @@ public:
 protected:
 	/*! Property flags. */
 	unsigned short flags;
-	/*! Determines how vertex and material colors are mixed. */
+	/*!
+	 * Determines how vertex and material colors are mixed.
+	 *             related gl function: glColorMaterial
+	 *             In Flags from version 20.1.0.3 onwards.
+	 */
 	VertMode vertexMode;
-	/*! The light mode. */
+	/*! The light mode. In Flags from 20.1.0.3 on. */
 	LightMode lightingMode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

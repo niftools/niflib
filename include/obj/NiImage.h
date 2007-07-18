@@ -96,7 +96,7 @@ protected:
 	/*! 0 if the texture is internal to the NIF file. */
 	byte external;
 	/*! The filepath to the texture. */
-	string fileName;
+	IndexString fileName;
 	/*! Link to the internally stored image data. */
 	Ref<NiRawImageData > imageData;
 	/*! Unknown.  Often seems to be 7. Perhaps m_uiMipLevels? */

@@ -86,7 +86,7 @@ protected:
 	 * (1)
 	 */
 	unsigned short flags;
-	/*! Z-Test function (see: glDepthFunc) */
+	/*! Z-Test function (see: glDepthFunc). In Flags from 20.1.0.3 on. */
 	CompareMode function;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

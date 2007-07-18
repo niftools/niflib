@@ -132,7 +132,7 @@ protected:
 	/*! Is the texture external? */
 	byte useExternal;
 	/*! The external texture file name. */
-	string fileName;
+	IndexString fileName;
 	/*! Unknown. */
 	Ref<NiObject > unknownLink;
 	/*! Unknown. */
@@ -141,7 +141,7 @@ protected:
 	 * The original source filename of the image embedded by the referred NiPixelData
 	 * object.
 	 */
-	string originalFileName_;
+	IndexString originalFileName_;
 	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
 	/*! Specifies the way the image will be stored. */
@@ -153,8 +153,12 @@ protected:
 	 * list of properties to enable material and/or texture transparency.
 	 */
 	AlphaFormat alphaFormat;
+	/*! Unknown, usually 1. */
+	byte unknownByte1;
 	/*! Set to one if textures have mipmaps? */
 	byte unknownByte2;
+	/*! Set to one if textures have mipmaps? */
+	byte unknownByte3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

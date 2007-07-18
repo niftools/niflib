@@ -78,7 +78,7 @@ protected:
 	 * List of textual notes and at which time they take effect. Used for designating
 	 * the start and stop of animations and the triggering of sounds.
 	 */
-	vector<Key<string > > textKeys;
+	vector<Key<IndexString > > textKeys;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

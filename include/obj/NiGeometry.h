@@ -166,8 +166,10 @@ protected:
 	Ref<NiSkinInstance > skinInstance;
 	/*! Shader. */
 	bool hasShader;
+	/*! Unknown Booleans. */
+	array<3,bool > unknownBools;
 	/*! The shader name. */
-	string shaderName;
+	IndexString shaderName;
 	/*! Unknown link, usually -1. */
 	NiObject * unknownLink;
 public:

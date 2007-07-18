@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTriShape::TYPE("NiTriShape", &NiTriBasedGeom::TYPE );
 
-NiTriShape::NiTriShape() {
+NiTriShape::NiTriShape() : unknownInt1((int)0), unknownBoolean1(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,6 +42,10 @@ void NiTriShape::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 
 	NiTriBasedGeom::Read( in, link_stack, info );
+	if ( info.version >= 0x14030003 ) {
+		NifStream( unknownInt1, in, info );
+		NifStream( unknownBoolean1, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -52,6 +56,10 @@ void NiTriShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	//--END CUSTOM CODE--//
 
 	NiTriBasedGeom::Write( out, link_map, info );
+	if ( info.version >= 0x14030003 ) {
+		NifStream( unknownInt1, out, info );
+		NifStream( unknownBoolean1, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -64,6 +72,8 @@ std::string NiTriShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTriBasedGeom::asString();
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Unknown Boolean 1:  " << unknownBoolean1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -251,7 +251,7 @@ protected:
 	/*! Refers to NiControllerManager which references this object, if any. */
 	NiControllerManager * manager;
 	/*! Name of target node Controller acts on. */
-	string targetName;
+	IndexString targetName;
 	/*! Refers to NiStringPalette. */
 	Ref<NiStringPalette > stringPalette;
 public:

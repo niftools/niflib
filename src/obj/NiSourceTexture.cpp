@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiSourceTexture::TYPE("NiSourceTexture", &NiTexture::TYPE );
 
-NiSourceTexture::NiSourceTexture() : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte2((byte)1) {
+NiSourceTexture::NiSourceTexture() : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte1((byte)1), unknownByte2((byte)1), unknownByte3((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -72,9 +72,12 @@ void NiSourceTexture::Read( istream& in, list<unsigned int> & link_stack, const 
 	NifStream( pixelLayout, in, info );
 	NifStream( useMipmaps, in, info );
 	NifStream( alphaFormat, in, info );
-	NifStream( unknownByte, in, info );
+	NifStream( unknownByte1, in, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( unknownByte2, in, info );
+	};
+	if ( info.version >= 0x14030003 ) {
+		NifStream( unknownByte3, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -127,9 +130,12 @@ void NiSourceTexture::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( pixelLayout, out, info );
 	NifStream( useMipmaps, out, info );
 	NifStream( alphaFormat, out, info );
-	NifStream( unknownByte, out, info );
+	NifStream( unknownByte1, out, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( unknownByte2, out, info );
+	};
+	if ( info.version >= 0x14030003 ) {
+		NifStream( unknownByte3, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -156,7 +162,9 @@ std::string NiSourceTexture::asString( bool verbose ) const {
 	out << "  Pixel Layout:  " << pixelLayout << endl;
 	out << "  Use Mipmaps:  " << useMipmaps << endl;
 	out << "  Alpha Format:  " << alphaFormat << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
+	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

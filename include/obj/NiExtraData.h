@@ -99,7 +99,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Name of this object. */
-	string name;
+	IndexString name;
 	/*! Block number of the next extra data object. */
 	Ref<NiExtraData > nextExtraData;
 public:

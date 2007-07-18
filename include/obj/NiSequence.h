@@ -67,9 +67,9 @@ protected:
 	 * animation file contains an attack sequence, then the file would be called
 	 * "demon_attack1.kf" and this field would contain the string "attack1".
 	 */
-	string name;
+	IndexString name;
 	/*! Name of following referenced NiTextKeyExtraData class. */
-	string textKeysName;
+	IndexString textKeysName;
 	/*! Link to NiTextKeyExtraData. */
 	Ref<NiTextKeyExtraData > textKeys;
 	/*! Number of controlled objects. */
