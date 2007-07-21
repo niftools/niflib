@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkBoxShape::TYPE("bhkBoxShape", &bhkConvexShape::TYPE );
 
-bhkBoxShape::bhkBoxShape() : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0), minimumSize(0.0f) {
+bhkBoxShape::bhkBoxShape() : minimumSize(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,10 +42,7 @@ void bhkBoxShape::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Read( in, link_stack, info );
-	NifStream( unknownShort1, in, info );
-	NifStream( unknownShort2, in, info );
-	NifStream( unknownShort3, in, info );
-	NifStream( unknownShort4, in, info );
+	NifStream( unknownString, in, info );
 	NifStream( dimensions, in, info );
 	NifStream( minimumSize, in, info );
 
@@ -58,10 +55,7 @@ void bhkBoxShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Write( out, link_map, info );
-	NifStream( unknownShort1, out, info );
-	NifStream( unknownShort2, out, info );
-	NifStream( unknownShort3, out, info );
-	NifStream( unknownShort4, out, info );
+	NifStream( unknownString, out, info );
 	NifStream( dimensions, out, info );
 	NifStream( minimumSize, out, info );
 
@@ -76,10 +70,7 @@ std::string bhkBoxShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConvexShape::asString();
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown Short 3:  " << unknownShort3 << endl;
-	out << "  Unknown Short 4:  " << unknownShort4 << endl;
+	out << "  Unknown String:  " << unknownString << endl;
 	out << "  Dimensions:  " << dimensions << endl;
 	out << "  Minimum Size:  " << minimumSize << endl;
 	return out.str();

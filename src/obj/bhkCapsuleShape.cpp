@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkCapsuleShape::TYPE("bhkCapsuleShape", &bhkConvexShape::TYPE );
 
-bhkCapsuleShape::bhkCapsuleShape() : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0), radius1(0.0f), radius2(0.0f) {
+bhkCapsuleShape::bhkCapsuleShape() : radius1(0.0f), radius2(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,10 +42,7 @@ void bhkCapsuleShape::Read( istream& in, list<unsigned int> & link_stack, const 
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Read( in, link_stack, info );
-	NifStream( unknownShort1, in, info );
-	NifStream( unknownShort2, in, info );
-	NifStream( unknownShort3, in, info );
-	NifStream( unknownShort4, in, info );
+	NifStream( unknownString, in, info );
 	NifStream( firstPoint, in, info );
 	NifStream( radius1, in, info );
 	NifStream( secondPoint, in, info );
@@ -60,10 +57,7 @@ void bhkCapsuleShape::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Write( out, link_map, info );
-	NifStream( unknownShort1, out, info );
-	NifStream( unknownShort2, out, info );
-	NifStream( unknownShort3, out, info );
-	NifStream( unknownShort4, out, info );
+	NifStream( unknownString, out, info );
 	NifStream( firstPoint, out, info );
 	NifStream( radius1, out, info );
 	NifStream( secondPoint, out, info );
@@ -80,10 +74,7 @@ std::string bhkCapsuleShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConvexShape::asString();
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown Short 3:  " << unknownShort3 << endl;
-	out << "  Unknown Short 4:  " << unknownShort4 << endl;
+	out << "  Unknown String:  " << unknownString << endl;
 	out << "  First Point:  " << firstPoint << endl;
 	out << "  Radius 1:  " << radius1 << endl;
 	out << "  Second Point:  " << secondPoint << endl;

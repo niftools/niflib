@@ -33,6 +33,16 @@ struct IndexString : public std::string {
 	operator std::string &() { return *this; }
 };
 
+struct Char8String : public std::string {
+	Char8String() {}
+	Char8String( const Char8String & ref ) : std::string((std::string const &)ref) {}
+	Char8String( const std::string & ref ) : std::string(ref) {}
+	Char8String& operator=( const Char8String & ref ) { assign((std::string const &)ref); return *this; }
+	Char8String& operator=( const std::string & ref ) { assign(ref); return *this; }
+	operator std::string const &() const { return *this; }
+	operator std::string &() { return *this; }
+};
+
 //--Non-mathematical Basic Types--//
 #ifndef byte
 typedef unsigned char	byte;

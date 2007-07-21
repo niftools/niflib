@@ -200,6 +200,12 @@ void NifStream( IndexString & val, istream& in, const NifInfo & info );
 void NifStream( IndexString const & val, ostream& out, const NifInfo & info );
 ostream & operator<<( ostream & out, IndexString const & val );
 
+//Char8String
+void NifStream( Char8String & val, istream& in, const NifInfo & info );
+void NifStream( Char8String const & val, ostream& out, const NifInfo & info );
+ostream & operator<<( ostream & out, Char8String const & val );
+
+
 //--Templates--//
 
 void NifStream( Key<Quaternion> & key, istream& file, const NifInfo & info, KeyType type );

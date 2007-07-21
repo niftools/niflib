@@ -803,4 +803,24 @@ std::streampos NifStreamBuf::seekpos(std::streampos offset, std::ios_base::openm
 	return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;
 }
 
+void NifStream( Char8String & val, istream& in, const NifInfo & info ) {
+	val.resize(8, '\x0');
+	for (int i=0; i<8; ++i)
+		in.read( &val[i], 1 );
+}
+
+void NifStream( Char8String const & val, ostream& out, const NifInfo & info ) {
+	size_t i = 0, n = std::min<size_t>(8, val.size());
+	for (i=0;i<n;++i)
+		out.write( &val[i], 1 );
+	for (;i<8;++i)
+		out.write( "\x0", 1 );
+}
+
+ostream & operator<<( ostream & out, Char8String const & val ) {
+	out << static_cast<string const &>(val);
+	return out;
+}
+
+
 }

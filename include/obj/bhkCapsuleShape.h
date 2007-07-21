@@ -117,13 +117,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	unsigned short unknownShort1;
-	/*! Unknown. */
-	unsigned short unknownShort2;
-	/*! Unknown. */
-	unsigned short unknownShort3;
-	/*! Unknown. */
-	unsigned short unknownShort4;
+	Char8String unknownString;
 	/*! First point on the capsule's axis. */
 	Vector3 firstPoint;
 	/*! Matches first capsule radius. */

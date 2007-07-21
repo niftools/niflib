@@ -69,13 +69,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	unsigned short unknownShort1;
-	/*! Unknown. */
-	unsigned short unknownShort2;
-	/*! Unknown. */
-	unsigned short unknownShort3;
-	/*! Unknown. */
-	unsigned short unknownShort4;
+	Char8String unknownString;
 	/*! Looks like this could be the box size. */
 	Vector3 dimensions;
 	/*! The smallest of the three sizes. Might be used for optimization. */
