@@ -505,6 +505,7 @@ void NiGeometryData::Transform( const Matrix44 & transform ) {
 	for ( unsigned int i = 0; i < normals.size(); ++i ) {
 		normals[i] = rotation * normals[i];
 	}
+	CalcAxisAlignedBox(vertices, center, radius);
 }
 
 ConsistencyType NiGeometryData::GetConsistencyFlags() const {
