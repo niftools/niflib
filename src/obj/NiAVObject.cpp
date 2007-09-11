@@ -338,10 +338,12 @@ Ref<NiCollisionObject > NiAVObject::GetCollisionObject() const {
 }
 
 void NiAVObject::SetCollisionObject( NiCollisionObject * value ) {
-	if ( value->GetTarget() != NULL ) {
-		throw runtime_error( "You have attempted to add a collision object to a NiAVObject which is already attached to another NiAVObject." );
+	if ( value != NULL ) {
+		if ( value->GetTarget() != NULL ) {
+			throw runtime_error( "You have attempted to add a collision object to a NiAVObject which is already attached to another NiAVObject." );
+		}
+		value->SetTarget( this );
 	}
-	value->SetTarget( this );
 
 	if ( collisionObject !=NULL ) {
 		//Remove unlink previous collision object from this node
