@@ -94,6 +94,11 @@ public:
 	 */
 	NIFLIB_API void SetData( NiMorphData * n );
 
+	/*!
+	* Update the Model Bounds
+	*/
+	NIFLIB_API void UpdateModelBound();
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */

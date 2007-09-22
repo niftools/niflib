@@ -9,6 +9,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 #include "../../include/obj/NiKeyBasedInterpolator.h"
+#include "../../include/obj/NiGeometry.h"
+#include "../../include/obj/NiGeometryData.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -247,5 +249,70 @@ Ref<NiMorphData> NiGeomMorpherController::GetData() const {
 void NiGeomMorpherController::SetData( NiMorphData * n ) {
 	data = n;
 }
+
+// Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.
+static void CalcAxisAlignedBox(vector<Vector3> const & vertices, Vector3& center, float& radius)
+{
+	//--Calculate center & radius--//
+
+	//Set lows and highs to first vertex
+	Vector3 lows = vertices[ 0 ];
+	Vector3 highs = vertices[ 0 ];
+
+	if (radius != 0.0f) // Initialize from previous box
+	{
+		lows = Vector3(center.x - radius, center.y - radius, center.z - radius);
+		highs = Vector3(center.x + radius, center.y + radius, center.z + radius);
+	}
+
+	//Iterate through the vertices, adjusting the stored values
+	//if a vertex with lower or higher values is found
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
+		const Vector3 & v = vertices[ i ];
+
+		if ( v.x > highs.x ) highs.x = v.x;
+		else if ( v.x < lows.x ) lows.x = v.x;
+
+		if ( v.y > highs.y ) highs.y = v.y;
+		else if ( v.y < lows.y ) lows.y = v.y;
+
+		if ( v.z > highs.z ) highs.z = v.z;
+		else if ( v.z < lows.z ) lows.z = v.z;
+	}
+
+	//Now we know the extent of the shape, so the center will be the average
+	//of the lows and highs
+	center = (highs + lows) / 2.0f;
+
+	//The radius will be the largest distance from the center
+	Vector3 diff;
+	float dist2(0.0f), maxdist2(0.0f);
+	for ( unsigned int i = 0; i < vertices.size(); ++i ) {
+		const Vector3 & v = vertices[ i ];
+
+		diff = center - v;
+		dist2 = diff.x * diff.x + diff.y * diff.y + diff.z * diff.z;
+		if ( dist2 > maxdist2 ) maxdist2 = dist2;
+	};
+	radius = sqrt(maxdist2);
+}
+
+void NiGeomMorpherController::UpdateModelBound() {
+	if (NiGeometryRef geom = DynamicCast<NiGeometry>(target))
+	{
+		if (NiGeometryDataRef gdata = geom->GetData())
+		{
+			Vector3 center = gdata->GetCenter();
+			float radius = gdata->GetRadius();
+			int nmorph = data->GetMorphCount();
+			for (int i=0; i<nmorph; i++)
+			{
+				CalcAxisAlignedBox(data->GetMorphVerts(i), center, radius);
+			}
+			gdata->SetBound(center, radius);
+		}
+	}
+}
+
 
 //--END CUSTOM CODE--//

@@ -516,4 +516,10 @@ void NiGeometryData::SetConsistencyFlags( const ConsistencyType & value ) {
 	consistencyFlags = value;
 }
 
+void NiGeometryData::SetBound(Vector3 const & center, float radius)
+{
+	this->center = center;
+	this->radius = radius;
+}
+
 //--END CUSTOM CODE--//

@@ -98,6 +98,12 @@ public:
 	NIFLIB_API float GetRadius() const;
 
 	/*! 
+	 * Assigns the center and radius of the spherical bound of this data.
+	 * \remark GeoMorpher controllers will alter the model bound.
+	 */
+	NIFLIB_API void SetBound(Vector3 const & center, float radius);
+
+	/*! 
 	 * Used to retrive the vertices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
 	 * \return A vector cntaining the vertices used by this mesh.
 	 * \sa IShapeData::SetVertices, IShapeData::GetVertexCount, IShapeData::SetVertexCount.

@@ -103,6 +103,7 @@ Vector3 bhkBoxShape::GetDimensions() const {
 
 void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	dimensions = value;
+	minimumSize = min( min(value.x, value.y), value.z );
 }
 
 //--END CUSTOM CODE--//
