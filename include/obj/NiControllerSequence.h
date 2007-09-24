@@ -98,6 +98,13 @@ public:
 	 */
 	NIFLIB_API void AddController( NiTimeController * obj );
 
+	/*! 
+	* Attaches a controler to this KF file for a KF file of version 10.2.0.0 or below.  Versions above this use interpolators.
+	* \param[in] obj A reference to the new NiTimeController to attach.
+	* \sa NiControllerSequence::ClearChildren, NiControllersequence::AddInterpolator
+	*/
+	NIFLIB_API void AddController( string const & targetName, NiTimeController * obj );
+
 	/*!
 	 * Attatches an interpolator to this KF file for a KF file of version greater than 10.2.0.0.  Versions below this use controllers.
 	 * \param[in] obj A reference to the new controller which has an interpolator to attach.

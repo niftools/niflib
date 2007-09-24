@@ -222,7 +222,6 @@ void NiControllerSequence::AddController( NiTimeController * obj ) {
 	if ( target == NULL ) {
 		throw runtime_error("Controller must have a target to be added to a NiControllerSequence.");
 	}
-
 	//Make a new ControllerLink and fill out necessary data
 	ControllerLink cl;
 	cl.controller = obj;
@@ -233,6 +232,24 @@ void NiControllerSequence::AddController( NiTimeController * obj ) {
 	if ( prop != NULL ) {
 		cl.propertyType = prop->GetType().GetTypeName();
 	}
+
+	cl.controllerType = obj->GetType().GetTypeName();
+
+	//Add finished ControllerLink to list
+	controlledBlocks.push_back( cl );
+}
+
+void NiControllerSequence::AddController( string const & targetName, NiTimeController * obj ) {
+	//Make sure the link isn't null
+	if ( obj == NULL ) {
+		throw runtime_error("Attempted to add a null controller to NiControllerSequence.");
+	}
+
+	//Make a new ControllerLink and fill out necessary data
+	ControllerLink cl;
+	cl.controller = obj;
+	cl.targetName = targetName;
+	cl.nodeName = targetName;
 
 	cl.controllerType = obj->GetType().GetTypeName();
 
