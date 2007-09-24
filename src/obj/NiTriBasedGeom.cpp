@@ -126,7 +126,7 @@ void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, i
    }
 }
 
-void NiTriBasedGeom::UpdateTangentSpace() {
+void NiTriBasedGeom::UpdateTangentSpace(int method) {
 
 	NiTriBasedGeomDataRef niTriGeomData = DynamicCast<NiTriBasedGeomData>(this->data);
 
@@ -157,81 +157,116 @@ void NiTriBasedGeom::UpdateTangentSpace() {
 		verts.size() != norms.size() ||
 		verts.size() != uvs.size() ||
 		tris.empty()
-	) {
-		//Do nothing, there is no shape in this data.
-		return;
+		) {
+			//Do nothing, there is no shape in this data.
+			return;
 	}
 
 	vector<Vector3> tangents( verts.size() );
 	vector<Vector3> binormals( verts.size() );
+	if ( method == 0 ) // Nifskope algorithm
+	{
+		for( int t = 0; t < (int)tris.size(); t++ ) {
+			Triangle & tri = tris[t];
 
-	for( int t = 0; t < (int)tris.size(); t++ ) {
-		Triangle & tri = tris[t];
+			int i1 = tri[0];
+			int i2 = tri[1];
+			int i3 = tri[2];
 
-		int i1 = tri[0];
-		int i2 = tri[1];
-		int i3 = tri[2];
-		
-		const Vector3 v1 = verts[i1];
-		const Vector3 v2 = verts[i2];
-		const Vector3 v3 = verts[i3];
-		
-		const TexCoord w1 = uvs[i1];
-		const TexCoord w2 = uvs[i2];
-		const TexCoord w3 = uvs[i3];
-		
-		Vector3 v2v1 = v2 - v1;
-		Vector3 v3v1 = v3 - v1;
-		
-		TexCoord w2w1(w2.u - w1.u, w2.v - w1.v);
-		TexCoord w3w1(w3.u - w1.u, w3.v - w1.v);
-		
-		float r = w2w1.u * w3w1.v - w3w1.u * w2w1.v;
-		
-		if ( abs( r ) <= 10e-5 ){
-			continue;
+			const Vector3 v1 = verts[i1];
+			const Vector3 v2 = verts[i2];
+			const Vector3 v3 = verts[i3];
+
+			const TexCoord w1 = uvs[i1];
+			const TexCoord w2 = uvs[i2];
+			const TexCoord w3 = uvs[i3];
+
+			Vector3 v2v1 = v2 - v1;
+			Vector3 v3v1 = v3 - v1;
+
+			TexCoord w2w1(w2.u - w1.u, w2.v - w1.v);
+			TexCoord w3w1(w3.u - w1.u, w3.v - w1.v);
+
+			float r = w2w1.u * w3w1.v - w3w1.u * w2w1.v;
+
+			r = ( r >= 0.0f ? +1.0f : -1.0f );
+
+			Vector3 sdir( 
+				( w3w1.v * v2v1.x - w2w1.v * v3v1.x ) * r,
+				( w3w1.v * v2v1.y - w2w1.v * v3v1.y ) * r,
+				( w3w1.v * v2v1.z - w2w1.v * v3v1.z ) * r
+				);
+
+			Vector3 tdir( 
+				( w2w1.u * v3v1.x - w3w1.u * v2v1.x ) * r,
+				( w2w1.u * v3v1.y - w3w1.u * v2v1.y ) * r,
+				( w2w1.u * v3v1.z - w3w1.u * v2v1.z ) * r
+				);
+			sdir = sdir.Normalized();
+			tdir = tdir.Normalized();
+
+			// no duplication, just smoothing
+			for ( int j = 0; j < 3; j++ ) {	
+				int i = tri[j];
+				tangents[i] += sdir;
+				binormals[i] += tdir;
+			}
 		}
-		
-		r = 1.0f / r;
-		
-		Vector3 sdir( 
-			( w3w1.v * v2v1.x - w2w1.v * v3v1.x ) * r,
-			( w3w1.v * v2v1.y - w2w1.v * v3v1.y ) * r,
-			( w3w1.v * v2v1.z - w2w1.v * v3v1.z ) * r
-		);
-		
-		Vector3 tdir( 
-			( w2w1.u * v3v1.x - w3w1.u * v2v1.x ) * r,
-			( w2w1.u * v3v1.y - w3w1.u * v2v1.y ) * r,
-			( w2w1.u * v3v1.z - w3w1.u * v2v1.z ) * r
-		);
 
-		// no duplication, just smoothing
-		for ( int j = 0; j < 3; j++ ) {	
-			int i = tri[j];
-			
-			tangents[i] += sdir.Normalized();
-			binormals[i] += tdir.Normalized();
+		// for each vertex calculate tangent and binormal
+		for ( unsigned i = 0; i < verts.size(); i++ ) {	
+			const Vector3 & n = norms[i];
+
+			Vector3 & t = tangents[i];
+			Vector3 & b = binormals[i];
+
+			if ( t == Vector3() || b == Vector3() ) {
+				t.x = n.y;
+				t.y = n.z;
+				t.z = n.x;
+				b = n.CrossProduct(t);
+			} else {
+				t = t.Normalized();
+				t = ( t - n * n.DotProduct(t) );
+				t = t.Normalized();
+
+				b = b.Normalized();
+				b = ( b - n * n.DotProduct(b) );
+				b = ( b - t * t.DotProduct(b) );
+				b = b.Normalized();
+			}
 		}
 	}
+	else if (method == 1) // Obsidian Algorithm
+	{
+		for ( unsigned int faceNo = 0; faceNo < tris.size(); ++faceNo )   // for each face
+		{
+			Triangle & t = tris[faceNo];  // get face
+			int i0 = t[0], i1 = t[1], i2 = t[2];		// get vertex numbers
+			Vector3 side_0 = verts[i0] - verts[i1];
+			Vector3 side_1 = verts[i2] - verts[i1];
 
-	// for each vertex calculate tangent and binormal
-	for ( unsigned i = 0; i < verts.size(); i++ ) {	
-		const Vector3 & n = norms[i];
-		
-		Vector3 & t = tangents[i];
-		Vector3 & b = binormals[i];
-		
-		if ( t == Vector3() || b == Vector3() ) {
-			t.x = n.y;
-			t.y = n.z;
-			t.z = n.x;
-			b = n.CrossProduct(t);
-		} else {
-			t = ( t - n * n.DotProduct(t) );
-			t = t.Normalized();
-			b = ( b - n * n.DotProduct(b) );
-			b = b.Normalized();
+			float delta_U_0 = uvs[i0].u - uvs[i1].u;
+			float delta_U_1 = uvs[i2].u - uvs[i1].u;
+			float delta_V_0 = uvs[i0].v - uvs[i1].v;
+			float delta_V_1 = uvs[i2].v - uvs[i1].v;
+
+			Vector3 face_tangent = ( side_0 * delta_V_1 - side_1 * delta_V_0 ).Normalized();
+			Vector3 face_bi_tangent = ( side_0 * delta_U_1 - side_1 * delta_U_0 ).Normalized();
+			Vector3 face_normal = ( side_0 ^ side_1 ).Normalized();
+
+			// no duplication, just smoothing
+			for ( int j = 0; j <= 2; j++ ) {	
+				int i = t[j];
+				tangents[i] += face_tangent;
+				binormals[i] += face_bi_tangent;
+			}
+		}
+
+		// for each.getPosition(), normalize the Tangent and Binormal
+		for ( unsigned int i = 0; i < verts.size(); i++ ) {	
+			binormals[i] = binormals[i].Normalized();
+			tangents[i] = tangents[i].Normalized();
 		}
 	}
 

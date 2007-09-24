@@ -69,8 +69,9 @@ public:
 	/*!
 	 * Generate or update a NiStringExtraData object with precalculated
 	 * tangent and binormal data (Oblivion specific)
+	 * \param[in] method Calculation method. [0 - Nifskope; 1 - Obsidian]
 	 */
-	NIFLIB_API void UpdateTangentSpace();
+	NIFLIB_API void UpdateTangentSpace(int method = 0);
 
 	//--END CUSTOM CODE--//
 public:
