@@ -253,7 +253,7 @@ NIFLIB_API string FormatVersionString( unsigned version );
 
 While it is possible to use the pre-compiled DLL file if you are using Microsoft Visual Studio 2005 as your compiler, you may also want to compile it yourself.  You may also want to use Niflib on a platform other than Windows, in which case compiling yourself is the only option.
 
-If you need help to do this, there is information about it on our main website here:  <a href="http://www.niftools.org/wiki/index.php/Niflib/Compile">Compiling Niflib</a>.
+If you need help to do this, there is information about it on our main website here:  <a href="http://niftools.sourceforge.net/wiki/Niflib/Compile">Compiling Niflib</a>.
 
 \section include_lib Including the Library
 
