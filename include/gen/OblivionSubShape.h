@@ -34,8 +34,8 @@ struct OblivionSubShape {
 	byte colFilter;
 	/*! Unknown. */
 	unsigned short unknownShort;
-	/*! Seems to be the number of vertices that form this sub shape. */
-	unsigned int vertexCount___;
+	/*! The number of vertices that form this sub shape. */
+	unsigned int numVertices;
 	/*! The material of the subshape. */
 	HavokMaterial material;
 };

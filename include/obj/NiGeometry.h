@@ -23,7 +23,6 @@ namespace Niflib {
 // Forward define of referenced NIF objects
 class NiGeometryData;
 class NiSkinInstance;
-class NiObject;
 class NiGeometry;
 typedef Ref<NiGeometry> NiGeometryRef;
 
@@ -103,25 +102,13 @@ public:
 	NIFLIB_API void SetData( NiGeometryData * n );
 
 	/*!
-	 * Retrieves the object pointed to by the unknown link in this geometry node, if any.
-	 * \return The target of the unknown link, or NULL if there is none.
-	 */
-	NIFLIB_API Ref<NiObject> GetUnknownLink() const;
-
-	/*!
-	 * Sets the object pointed to by the unknown link in this geometry node.
-	 * \param[in] n The new object to be pointed to by the unknown link, or NULL to clear the current one.
-	 */
-	NIFLIB_API void SetUnknownLink( const Ref<NiObject> & n );
-
-	/*!
-	 * Retrieves the name of the shader used by this geometry node.  The allowable values are game-dependant.
+	 * Retrieves the name of the shader used by this geometry node.  The allowable values are game-dependent.
 	 * \return The shader name.
 	 */
 	NIFLIB_API string GetShader() const;
 
 	/*!
-	 * Sets the name of the shader used by this geometry node.  The allowable values are game-dependant.
+	 * Sets the name of the shader used by this geometry node.  The allowable values are game-dependent.
 	 * \param[in] n The new shader name.
 	 */
 	NIFLIB_API void SetShader( const string & n );
@@ -164,14 +151,22 @@ protected:
 	Ref<NiGeometryData > data;
 	/*! Skin instance index. */
 	Ref<NiSkinInstance > skinInstance;
+	/*! Num Materials */
+	mutable unsigned int numMaterials;
+	/*! Unknown string.  Shader? */
+	vector<IndexString > materialName;
+	/*! Unknown integer. */
+	vector<unsigned int > materialExtraData;
+	/*! Active Material. */
+	int activeMaterial;
 	/*! Shader. */
 	bool hasShader;
-	/*! Unknown Booleans. */
-	array<3,bool > unknownBools;
 	/*! The shader name. */
 	IndexString shaderName;
-	/*! Unknown link, usually -1. */
-	NiObject * unknownLink;
+	/*! Unknown value, usually -1. (Not a link) */
+	int unknownInteger;
+	/*! Dirty Flag? */
+	bool dirtyFlag_;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

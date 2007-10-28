@@ -22,7 +22,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiTriShape;
+class NiTriBasedGeom;
 class NiBoneLODController;
 typedef Ref<NiBoneLODController> NiBoneLODControllerRef;
 
@@ -124,7 +124,7 @@ protected:
 	/*! The size of the second list of shape groups. */
 	mutable unsigned int numShapeGroups2;
 	/*! Group of NiTriShape indices. */
-	vector<Ref<NiTriShape > > shapeGroups2;
+	vector<Ref<NiTriBasedGeom > > shapeGroups2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

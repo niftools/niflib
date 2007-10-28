@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiSourceTexture::TYPE("NiSourceTexture", &NiTexture::TYPE );
 
-NiSourceTexture::NiSourceTexture() : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), unknownByte1((byte)1), unknownByte2((byte)1), unknownByte3((byte)0) {
+NiSourceTexture::NiSourceTexture() : useExternal((byte)1), unknownLink(NULL), unknownByte((byte)0), pixelData(NULL), pixelLayout((PixelLayout)5), useMipmaps((MipMapFormat)2), alphaFormat((AlphaFormat)3), isStatic(1), directRender(1), persistRenderData(0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -62,7 +62,7 @@ void NiSourceTexture::Read( istream& in, list<unsigned int> & link_stack, const 
 	};
 	if ( info.version >= 0x0A010000 ) {
 		if ( (useExternal == 0) ) {
-			NifStream( originalFileName_, in, info );
+			NifStream( fileName, in, info );
 		};
 	};
 	if ( (useExternal == 0) ) {
@@ -72,12 +72,12 @@ void NiSourceTexture::Read( istream& in, list<unsigned int> & link_stack, const 
 	NifStream( pixelLayout, in, info );
 	NifStream( useMipmaps, in, info );
 	NifStream( alphaFormat, in, info );
-	NifStream( unknownByte1, in, info );
+	NifStream( isStatic, in, info );
 	if ( info.version >= 0x0A01006A ) {
-		NifStream( unknownByte2, in, info );
+		NifStream( directRender, in, info );
 	};
-	if ( info.version >= 0x14030003 ) {
-		NifStream( unknownByte3, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( persistRenderData, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -113,7 +113,7 @@ void NiSourceTexture::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( info.version >= 0x0A010000 ) {
 		if ( (useExternal == 0) ) {
-			NifStream( originalFileName_, out, info );
+			NifStream( fileName, out, info );
 		};
 	};
 	if ( (useExternal == 0) ) {
@@ -130,12 +130,12 @@ void NiSourceTexture::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( pixelLayout, out, info );
 	NifStream( useMipmaps, out, info );
 	NifStream( alphaFormat, out, info );
-	NifStream( unknownByte1, out, info );
+	NifStream( isStatic, out, info );
 	if ( info.version >= 0x0A01006A ) {
-		NifStream( unknownByte2, out, info );
+		NifStream( directRender, out, info );
 	};
-	if ( info.version >= 0x14030003 ) {
-		NifStream( unknownByte3, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( persistRenderData, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -156,15 +156,14 @@ std::string NiSourceTexture::asString( bool verbose ) const {
 	};
 	if ( (useExternal == 0) ) {
 		out << "    Unknown Byte:  " << unknownByte << endl;
-		out << "    Original File Name?:  " << originalFileName_ << endl;
 		out << "    Pixel Data:  " << pixelData << endl;
 	};
 	out << "  Pixel Layout:  " << pixelLayout << endl;
 	out << "  Use Mipmaps:  " << useMipmaps << endl;
 	out << "  Alpha Format:  " << alphaFormat << endl;
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
-	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
-	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
+	out << "  Is Static:  " << isStatic << endl;
+	out << "  Direct Render:  " << directRender << endl;
+	out << "  Persist Render Data:  " << persistRenderData << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -208,8 +207,6 @@ bool NiSourceTexture::IsTextureExternal() const {
 void NiSourceTexture::SetExternalTexture( string file_name ) {
 	useExternal = 1;
 	pixelData = NULL;
-	this->originalFileName_.clear();
-
 	fileName = file_name;
 	unknownLink = NULL;
 }
@@ -220,16 +217,12 @@ void NiSourceTexture::SetInternalTexture( string original_file_name, NiPixelData
 	
 	//TODO: Fix name problem with Unknown Byte in XML
 	unknownByte = 0;
-	originalFileName_ = original_file_name;
+	fileName = original_file_name;
 	pixelData = pixel_data;
 }
 
 string NiSourceTexture::GetTextureFileName() const {
-	if ( IsTextureExternal() ) {
-		return fileName;
-	} else {
-		return originalFileName_;
-	}
+   return fileName;
 }
 
 Ref<NiPixelData> NiSourceTexture::GetPixelData() const {

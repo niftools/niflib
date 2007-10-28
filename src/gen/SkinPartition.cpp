@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-SkinPartition::SkinPartition() : numVertices((unsigned short)0), numTriangles((unsigned short)0), numBones((unsigned short)0), numStrips((unsigned short)0), numWeightsPerVertex((unsigned short)0), hasVertexMap(false), hasVertexWeights(false), hasStrips(false), hasBoneIndices(false) {};
+SkinPartition::SkinPartition() : numVertices((unsigned short)0), numTriangles((unsigned short)0), numBones((unsigned short)0), numStrips((unsigned short)0), numWeightsPerVertex((unsigned short)0), hasVertexMap((byte)0), hasVertexWeights(false), hasFaces((byte)0), hasBoneIndices((byte)0) {};
 
 //Copy Constructor
 SkinPartition::SkinPartition( const SkinPartition & src ) {
@@ -29,7 +29,7 @@ SkinPartition & SkinPartition::operator=( const SkinPartition & src ) {
 	this->hasVertexWeights = src.hasVertexWeights;
 	this->vertexWeights = src.vertexWeights;
 	this->stripLengths = src.stripLengths;
-	this->hasStrips = src.hasStrips;
+	this->hasFaces = src.hasFaces;
 	this->strips = src.strips;
 	this->triangles = src.triangles;
 	this->hasBoneIndices = src.hasBoneIndices;

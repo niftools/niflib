@@ -39,6 +39,30 @@ ostream & operator<<( ostream & out, ForceType const & val ) {
 }
 
 
+//--CollisionMode--//
+
+void NifStream( CollisionMode & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = CollisionMode(temp);
+}
+
+void NifStream( CollisionMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, CollisionMode const & val ) {
+	switch ( val ) {
+		case CM_USE_OBB: return out << "CM_USE_OBB";
+		case CM_USE_TRI: return out << "CM_USE_TRI";
+		case CM_USE_ABV: return out << "CM_USE_ABV";
+		case CM_NOTEST: return out << "CM_NOTEST";
+		case CM_USE_NIBOUND: return out << "CM_USE_NIBOUND";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TexTransform--//
 
 void NifStream( TexTransform & val, istream& in, const NifInfo & info ) {
@@ -400,6 +424,31 @@ ostream & operator<<( ostream & out, AlphaFormat const & val ) {
 }
 
 
+//--BoundVolumeType--//
+
+void NifStream( BoundVolumeType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = BoundVolumeType(temp);
+}
+
+void NifStream( BoundVolumeType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BoundVolumeType const & val ) {
+	switch ( val ) {
+		case BASE_BV: return out << "BASE_BV";
+		case SPHERE_BV: return out << "SPHERE_BV";
+		case BOX_BV: return out << "BOX_BV";
+		case CAPSULE_BV: return out << "CAPSULE_BV";
+		case UNION_BV: return out << "UNION_BV";
+		case HALFSPACE_BV: return out << "HALFSPACE_BV";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--EffectType--//
 
 void NifStream( EffectType & val, istream& in, const NifInfo & info ) {
@@ -464,6 +513,27 @@ ostream & operator<<( ostream & out, VertMode const & val ) {
 		case VERT_MODE_SRC_IGNORE: return out << "VERT_MODE_SRC_IGNORE";
 		case VERT_MODE_SRC_EMISSIVE: return out << "VERT_MODE_SRC_EMISSIVE";
 		case VERT_MODE_SRC_AMB_DIF: return out << "VERT_MODE_SRC_AMB_DIF";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SortingMode--//
+
+void NifStream( SortingMode & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SortingMode(temp);
+}
+
+void NifStream( SortingMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SortingMode const & val ) {
+	switch ( val ) {
+		case SORTING_INHERIT: return out << "SORTING_INHERIT";
+		case SORTING_OFF: return out << "SORTING_OFF";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -747,6 +817,29 @@ ostream & operator<<( ostream & out, EndianType const & val ) {
 	switch ( val ) {
 		case ENDIAN_BIG: return out << "ENDIAN_BIG";
 		case ENDIAN_LITTLE: return out << "ENDIAN_LITTLE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--PropagationMode--//
+
+void NifStream( PropagationMode & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = PropagationMode(temp);
+}
+
+void NifStream( PropagationMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, PropagationMode const & val ) {
+	switch ( val ) {
+		case PROPAGATE_ON_SUCCESS: return out << "PROPAGATE_ON_SUCCESS";
+		case PROPAGATE_ON_FAILURE: return out << "PROPAGATE_ON_FAILURE";
+		case PROPAGATE_ALWAYS: return out << "PROPAGATE_ALWAYS";
+		case PROPAGATE_NEVER: return out << "PROPAGATE_NEVER";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiLookAtInterpolator::TYPE("NiLookAtInterpolator", &NiInterpolator::TYPE );
 
-NiLookAtInterpolator::NiLookAtInterpolator() : unknownShort((unsigned short)0), lookAt(NULL), unknownFloat(0.0f), scale(0.0f), unknownLink1(NULL), unknownLink2(NULL), unknownLink3(NULL) {
+NiLookAtInterpolator::NiLookAtInterpolator() : unknownShort((unsigned short)0), lookAt(NULL), scale(0.0f), unknownLink1(NULL), unknownLink2(NULL), unknownLink3(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,7 +49,7 @@ void NiLookAtInterpolator::Read( istream& in, list<unsigned int> & link_stack, c
 	NifStream( unknownShort, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( unknownFloat, in, info );
+	NifStream( target, in, info );
 	NifStream( translation, in, info );
 	NifStream( rotation, in, info );
 	NifStream( scale, in, info );
@@ -79,7 +79,7 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
-	NifStream( unknownFloat, out, info );
+	NifStream( target, out, info );
 	NifStream( translation, out, info );
 	NifStream( rotation, out, info );
 	NifStream( scale, out, info );
@@ -124,7 +124,7 @@ std::string NiLookAtInterpolator::asString( bool verbose ) const {
 	out << NiInterpolator::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Look At:  " << lookAt << endl;
-	out << "  Unknown Float:  " << unknownFloat << endl;
+	out << "  Target:  " << target << endl;
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Scale:  " << scale << endl;

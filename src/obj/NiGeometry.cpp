@@ -19,13 +19,12 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiGeometry.h"
 #include "../../include/obj/NiGeometryData.h"
 #include "../../include/obj/NiSkinInstance.h"
-#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiGeometry::TYPE("NiGeometry", &NiAVObject::TYPE );
 
-NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), hasShader(false), unknownLink(NULL) {
+NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)-1), hasShader(false), unknownInteger((int)0), dirtyFlag_(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -55,20 +54,31 @@ void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	if ( info.version >= 0x0A000100 ) {
-		NifStream( hasShader, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( numMaterials, in, info );
+		materialName.resize(numMaterials);
+		for (unsigned int i2 = 0; i2 < materialName.size(); i2++) {
+			NifStream( materialName[i2], in, info );
+		};
+		materialExtraData.resize(numMaterials);
+		for (unsigned int i2 = 0; i2 < materialExtraData.size(); i2++) {
+			NifStream( materialExtraData[i2], in, info );
+		};
+		NifStream( activeMaterial, in, info );
 	};
-	if ( info.version >= 0x14030003 ) {
-		for (unsigned int i2 = 0; i2 < 3; i2++) {
-			NifStream( unknownBools[i2], in, info );
+	if ( ( info.version >= 0x0A000100 ) && ( info.version <= 0x14010003 ) ) {
+		NifStream( hasShader, in, info );
+		if ( (hasShader != 0) ) {
+			NifStream( shaderName, in, info );
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
-			NifStream( shaderName, in, info );
-			NifStream( block_num, in, info );
-			link_stack.push_back( block_num );
+			NifStream( unknownInteger, in, info );
 		};
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( dirtyFlag_, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -80,6 +90,7 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	//--END CUSTOM CODE--//
 
 	NiAVObject::Write( out, link_map, info );
+	numMaterials = (unsigned int)(materialName.size());
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*data), out, info );
 	} else {
@@ -100,27 +111,29 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			}
 		}
 	};
-	if ( info.version >= 0x0A000100 ) {
-		NifStream( hasShader, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( numMaterials, out, info );
+		for (unsigned int i2 = 0; i2 < materialName.size(); i2++) {
+			NifStream( materialName[i2], out, info );
+		};
+		for (unsigned int i2 = 0; i2 < materialExtraData.size(); i2++) {
+			NifStream( materialExtraData[i2], out, info );
+		};
+		NifStream( activeMaterial, out, info );
 	};
-	if ( info.version >= 0x14030003 ) {
-		for (unsigned int i2 = 0; i2 < 3; i2++) {
-			NifStream( unknownBools[i2], out, info );
+	if ( ( info.version >= 0x0A000100 ) && ( info.version <= 0x14010003 ) ) {
+		NifStream( hasShader, out, info );
+		if ( (hasShader != 0) ) {
+			NifStream( shaderName, out, info );
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
 		if ( (hasShader != 0) ) {
-			NifStream( shaderName, out, info );
-			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*unknownLink), out, info );
-			} else {
-				if ( unknownLink != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
-				} else {
-					NifStream( 0xFFFFFFFF, out, info );
-				}
-			}
+			NifStream( unknownInteger, out, info );
 		};
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( dirtyFlag_, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -134,11 +147,12 @@ std::string NiGeometry::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiAVObject::asString();
+	numMaterials = (unsigned int)(materialName.size());
 	out << "  Data:  " << data << endl;
 	out << "  Skin Instance:  " << skinInstance << endl;
-	out << "  Has Shader:  " << hasShader << endl;
+	out << "  Num Materials:  " << numMaterials << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
+	for (unsigned int i1 = 0; i1 < materialName.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -146,13 +160,28 @@ std::string NiGeometry::asString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Unknown Bools[" << i1 << "]:  " << unknownBools[i1] << endl;
+		out << "    Material Name[" << i1 << "]:  " << materialName[i1] << endl;
 		array_output_count++;
 	};
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < materialExtraData.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Material Extra Data[" << i1 << "]:  " << materialExtraData[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Active Material:  " << activeMaterial << endl;
+	out << "  Has Shader:  " << hasShader << endl;
 	if ( (hasShader != 0) ) {
 		out << "    Shader Name:  " << shaderName << endl;
-		out << "    Unknown Link:  " << unknownLink << endl;
+		out << "    Unknown Integer:  " << unknownInteger << endl;
 	};
+	out << "  Dirty Flag?:  " << dirtyFlag_ << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -167,11 +196,6 @@ void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 	data = FixLink<NiGeometryData>( objects, link_stack, info );
 	if ( info.version >= 0x0303000D ) {
 		skinInstance = FixLink<NiSkinInstance>( objects, link_stack, info );
-	};
-	if ( info.version >= 0x0A000100 ) {
-		if ( (hasShader != 0) ) {
-			unknownLink = FixLink<NiObject>( objects, link_stack, info );
-		};
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -196,14 +220,6 @@ Ref<NiGeometryData> NiGeometry::GetData() const {
 
 void NiGeometry::SetData( NiGeometryData * n ) {
 	data = n;
-}
-
-Ref<NiObject> NiGeometry::GetUnknownLink() const {
-	return unknownLink;
-}
-
-void NiGeometry::SetUnknownLink( const Ref<NiObject> & n ) {
-	unknownLink = n;
 }
 
 string NiGeometry::GetShader() const {

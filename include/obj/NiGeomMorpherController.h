@@ -17,6 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../Ref.h"
+#include "../gen/MorphWeight.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -102,17 +103,19 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	unsigned short unknown;
+	unsigned short flags;
 	/*! Unknown. */
 	byte unknown2;
 	/*! Geometry morphing data index. */
 	Ref<NiMorphData > data;
-	/*! Unknown byte (always zero?). */
-	byte unknownByte;
+	/*! Always Update */
+	byte alwaysUpdate;
 	/*! The number of interpolator objects. */
 	mutable unsigned int numInterpolators;
 	/*! List of interpolators. */
 	vector<Ref<NiInterpolator > > interpolators;
+	/*! Weighted Interpolators? */
+	vector<MorphWeight > interpolatorWeights;
 	/*! A count. */
 	mutable unsigned int numUnknownInts;
 	/*! Unknown. */

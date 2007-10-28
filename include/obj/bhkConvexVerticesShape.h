@@ -19,7 +19,7 @@ namespace Niflib {
 class bhkConvexVerticesShape;
 typedef Ref<bhkConvexVerticesShape> bhkConvexVerticesShapeRef;
 
-/*! A convex shape built from vertices? */
+/*! A convex shape built from vertices. */
 class bhkConvexVerticesShape : public bhkConvexShape {
 public:
 	/*! Constructor */
@@ -109,17 +109,23 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*!
+	 * Unknown. Must be (0.0,0.0,-0.0,0.0,0.0,-0.0) for arrow detection to work (mind
+	 * the minus signs, -0.0 is 0x80000000 in hex).
+	 */
 	array<6,float > unknown6Floats;
 	/*! Number of vertices. */
 	mutable unsigned int numVertices;
-	/*! Vertices. Fourth component is 0. */
+	/*! Vertices. Fourth component is 0. Lexicographically sorted. */
 	vector<Float4 > vertices;
-	/*! The number of normals. */
+	/*! The number of half spaces. */
 	mutable unsigned int numNormals;
 	/*!
-	 * The normals of the shape's outer faces. Fourth component is the distance from
-	 * center, negative.
+	 * Half spaces as determined by the set of vertices above. First three components
+	 * define the normal pointing to the exterior, fourth component is the signed
+	 * distance of the separating plane to the origin: it is minus the dot product of v
+	 * and n, where v is any vertex on the separating plane, and n is the normal.
+	 * Lexicographically sorted.
 	 */
 	vector<Float4 > normals;
 public:

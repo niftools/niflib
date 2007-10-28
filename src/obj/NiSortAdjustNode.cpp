@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiSortAdjustNode::TYPE("NiSortAdjustNode", &NiNode::TYPE );
 
-NiSortAdjustNode::NiSortAdjustNode() : unknownInt1((int)1), unknownInt2((int)-1) {
+NiSortAdjustNode::NiSortAdjustNode() : sortingMode((SortingMode)SORTING_INHERIT), unknownInt2((int)-1) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,8 +46,10 @@ void NiSortAdjustNode::Read( istream& in, list<unsigned int> & link_stack, const
 	//--END CUSTOM CODE--//
 
 	NiNode::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
+	NifStream( sortingMode, in, info );
+	if ( info.version <= 0x0A020000 ) {
+		NifStream( unknownInt2, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -60,8 +62,10 @@ void NiSortAdjustNode::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--END CUSTOM CODE--//
 
 	NiNode::Write( out, link_map, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
+	NifStream( sortingMode, out, info );
+	if ( info.version <= 0x0A020000 ) {
+		NifStream( unknownInt2, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -76,7 +80,7 @@ std::string NiSortAdjustNode::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Sorting Mode:  " << sortingMode << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	return out.str();
 

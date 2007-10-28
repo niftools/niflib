@@ -115,8 +115,8 @@ protected:
 	unsigned short unknownShort;
 	/*! Refers to a Node to focus on. */
 	Ref<NiNode > lookAt;
-	/*! Unknown. */
-	float unknownFloat;
+	/*! Target node name. */
+	IndexString target;
 	/*! Translate. */
 	Vector3 translation;
 	/*! Rotation. */

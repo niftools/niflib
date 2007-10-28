@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &bhkBvTreeShape::TYPE );
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), unknownFloat(0.0f), moppDataSize((unsigned int)0), scalingFactor(0.0f) {
+bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), unknownFloat(0.0f), moppDataSize((unsigned int)0), scale(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -53,8 +53,8 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 	NifStream( unknownFloat, in, info );
 	NifStream( moppDataSize, in, info );
 	if ( info.version >= 0x14000005 ) {
-		NifStream( objectCorner, in, info );
-		NifStream( scalingFactor, in, info );
+		NifStream( origin, in, info );
+		NifStream( scale, in, info );
 	};
 	moppData.resize(moppDataSize);
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
@@ -87,8 +87,8 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( unknownFloat, out, info );
 	NifStream( moppDataSize, out, info );
 	if ( info.version >= 0x14000005 ) {
-		NifStream( objectCorner, out, info );
-		NifStream( scalingFactor, out, info );
+		NifStream( origin, out, info );
+		NifStream( scale, out, info );
 	};
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		NifStream( moppData[i1], out, info );
@@ -122,8 +122,8 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	};
 	out << "  Unknown Float:  " << unknownFloat << endl;
 	out << "  MOPP Data Size:  " << moppDataSize << endl;
-	out << "  Object Corner:  " << objectCorner << endl;
-	out << "  Scaling Factor:  " << scalingFactor << endl;
+	out << "  Origin:  " << origin << endl;
+	out << "  Scale:  " << scale << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

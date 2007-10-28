@@ -16,7 +16,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "bhkSphereRepShape.h"
 
 // Include structures
-#include "../gen/Sphere.h"
+#include "../gen/SphereBV.h"
 namespace Niflib {
 
 class bhkMultiSphereShape;
@@ -61,14 +61,14 @@ public:
 	 * Gets the spheres which make up the multi sphere shape.
 	 * \return The spheres which make up the multi sphere shape.
 	 */
-	NIFLIB_API vector<Sphere> GetSpheres() const;
+	NIFLIB_API vector<SphereBV> GetSpheres() const;
 
 	/*!
 	 * Sets the spheres which make up the multi sphere shape.
 	 * \param[in] value The new spheres which will make up the multi sphere shape.
 	 */
 
-	NIFLIB_API void SetSpheres( const vector<Sphere> & value );
+	NIFLIB_API void SetSpheres( const vector<SphereBV> & value );
 
 	//--END CUSTOM CODE--//
 protected:
@@ -79,7 +79,7 @@ protected:
 	/*! The number of spheres in this multi sphere shape. */
 	mutable unsigned int numSpheres;
 	/*! This array holds the spheres which make up the multi sphere shape. */
-	vector<Sphere > spheres;
+	vector<SphereBV > spheres;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

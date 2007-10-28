@@ -69,7 +69,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	Char8String unknownString;
+	array<8,byte > unknown8Bytes;
 	/*! Looks like this could be the box size. */
 	Vector3 dimensions;
 	/*! The smallest of the three sizes. Might be used for optimization. */

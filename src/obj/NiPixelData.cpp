@@ -14,15 +14,17 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPixelData.h"
+#include "../../include/gen/ChannelData.h"
 #include "../../include/gen/MipMap.h"
 #include "../../include/gen/ByteArray.h"
+#include "../../include/gen/ByteMatrix.h"
 #include "../../include/obj/NiPalette.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NiObject::TYPE );
 
-NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((unsigned int)0), unknownInt((unsigned int)0), palette(NULL), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0), unknownInt2((unsigned int)0) {
+NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((unsigned int)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), palette(NULL), unknownByte1((byte)0), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -61,12 +63,23 @@ void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		NifStream( unknownInt, in, info );
 	};
 	if ( info.version >= 0x14000004 ) {
-		for (unsigned int i2 = 0; i2 < 54; i2++) {
-			NifStream( unknown54Bytes[i2], in, info );
+		NifStream( bitsPerPixel, in, info );
+		NifStream( unknownInt2, in, info );
+		NifStream( unknownInt3, in, info );
+		NifStream( flags, in, info );
+		NifStream( unknownInt4, in, info );
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( channels[i2].type, in, info );
+			NifStream( channels[i2].unknownFlag, in, info );
+			NifStream( channels[i2].bitsPerChannel, in, info );
+			NifStream( channels[i2].unknownByte1, in, info );
 		};
 	};
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
+	if ( info.version >= 0x14030006 ) {
+		NifStream( unknownByte1, in, info );
+	};
 	NifStream( numMipmaps, in, info );
 	NifStream( bytesPerPixel, in, info );
 	mipmaps.resize(numMipmaps);
@@ -75,13 +88,23 @@ void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		NifStream( mipmaps[i1].height, in, info );
 		NifStream( mipmaps[i1].offset, in, info );
 	};
-	NifStream( pixelData.dataSize, in, info );
-	pixelData.data.resize(pixelData.dataSize);
-	for (unsigned int i1 = 0; i1 < pixelData.data.size(); i1++) {
-		NifStream( pixelData.data[i1], in, info );
+	if ( info.version <= 0x0A020000 ) {
+		NifStream( pixelData.dataSize, in, info );
+		pixelData.data.resize(pixelData.dataSize);
+		for (unsigned int i2 = 0; i2 < pixelData.data.size(); i2++) {
+			NifStream( pixelData.data[i2], in, info );
+		};
 	};
 	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownInt2, in, info );
+		NifStream( pixelDataMatrix.dataSize1, in, info );
+		NifStream( pixelDataMatrix.dataSize2, in, info );
+		pixelDataMatrix.data.resize(pixelDataMatrix.dataSize2);
+		for (unsigned int i2 = 0; i2 < pixelDataMatrix.data.size(); i2++) {
+			pixelDataMatrix.data[i2].resize(pixelDataMatrix.dataSize1);
+			for (unsigned int i3 = 0; i3 < pixelDataMatrix.data[i2].size(); i3++) {
+				NifStream( pixelDataMatrix.data[i2][i3], in, info );
+			};
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -109,8 +132,16 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		NifStream( unknownInt, out, info );
 	};
 	if ( info.version >= 0x14000004 ) {
-		for (unsigned int i2 = 0; i2 < 54; i2++) {
-			NifStream( unknown54Bytes[i2], out, info );
+		NifStream( bitsPerPixel, out, info );
+		NifStream( unknownInt2, out, info );
+		NifStream( unknownInt3, out, info );
+		NifStream( flags, out, info );
+		NifStream( unknownInt4, out, info );
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( channels[i2].type, out, info );
+			NifStream( channels[i2].unknownFlag, out, info );
+			NifStream( channels[i2].bitsPerChannel, out, info );
+			NifStream( channels[i2].unknownByte1, out, info );
 		};
 	};
 	if ( info.version < VER_3_3_0_13 ) {
@@ -122,6 +153,9 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
+	if ( info.version >= 0x14030006 ) {
+		NifStream( unknownByte1, out, info );
+	};
 	NifStream( numMipmaps, out, info );
 	NifStream( bytesPerPixel, out, info );
 	for (unsigned int i1 = 0; i1 < mipmaps.size(); i1++) {
@@ -129,13 +163,23 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		NifStream( mipmaps[i1].height, out, info );
 		NifStream( mipmaps[i1].offset, out, info );
 	};
-	pixelData.dataSize = (unsigned int)(pixelData.data.size());
-	NifStream( pixelData.dataSize, out, info );
-	for (unsigned int i1 = 0; i1 < pixelData.data.size(); i1++) {
-		NifStream( pixelData.data[i1], out, info );
+	if ( info.version <= 0x0A020000 ) {
+		pixelData.dataSize = (unsigned int)(pixelData.data.size());
+		NifStream( pixelData.dataSize, out, info );
+		for (unsigned int i2 = 0; i2 < pixelData.data.size(); i2++) {
+			NifStream( pixelData.data[i2], out, info );
+		};
 	};
 	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownInt2, out, info );
+		pixelDataMatrix.dataSize2 = (unsigned int)(pixelDataMatrix.data.size());
+		pixelDataMatrix.dataSize1 = (unsigned int)((pixelDataMatrix.data.size() > 0) ? pixelDataMatrix.data[0].size() : 0);
+		NifStream( pixelDataMatrix.dataSize1, out, info );
+		NifStream( pixelDataMatrix.dataSize2, out, info );
+		for (unsigned int i2 = 0; i2 < pixelDataMatrix.data.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < pixelDataMatrix.data[i2].size(); i3++) {
+				NifStream( pixelDataMatrix.data[i2][i3], out, info );
+			};
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -169,19 +213,23 @@ std::string NiPixelData::asString( bool verbose ) const {
 		array_output_count++;
 	};
 	out << "  Unknown Int:  " << unknownInt << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Flags:  " << flags << endl;
+	out << "  Unknown Int 4:  " << unknownInt4 << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 54; i1++) {
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown 54 Bytes[" << i1 << "]:  " << unknown54Bytes[i1] << endl;
-		array_output_count++;
+		out << "    Type:  " << channels[i1].type << endl;
+		out << "    Unknown Flag:  " << channels[i1].unknownFlag << endl;
+		out << "    Bits Per Channel:  " << channels[i1].bitsPerChannel << endl;
+		out << "    Unknown Byte 1:  " << channels[i1].unknownByte1 << endl;
 	};
 	out << "  Palette:  " << palette << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Num Mipmaps:  " << numMipmaps << endl;
 	out << "  Bytes Per Pixel:  " << bytesPerPixel << endl;
 	array_output_count = 0;
@@ -208,7 +256,24 @@ std::string NiPixelData::asString( bool verbose ) const {
 		out << "    Data[" << i1 << "]:  " << pixelData.data[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	pixelDataMatrix.dataSize2 = (unsigned int)(pixelDataMatrix.data.size());
+	pixelDataMatrix.dataSize1 = (unsigned int)((pixelDataMatrix.data.size() > 0) ? pixelDataMatrix.data[0].size() : 0);
+	out << "  Data Size 1:  " << pixelDataMatrix.dataSize1 << endl;
+	out << "  Data Size 2:  " << pixelDataMatrix.dataSize2 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < pixelDataMatrix.data.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		for (unsigned int i2 = 0; i2 < pixelDataMatrix.data[i1].size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Data[" << i2 << "]:  " << pixelDataMatrix.data[i1][i2] << endl;
+			array_output_count++;
+		};
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

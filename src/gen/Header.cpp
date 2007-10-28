@@ -97,7 +97,7 @@ NifInfo Header::Read( istream& in ) {
 			NifStream( blockTypeIndex[i2], in, info );
 		};
 	};
-	if ( info.version >= 0x14030003 ) {
+	if ( info.version >= 0x14020007 ) {
 		blockSize.resize(numBlocks);
 		for (unsigned int i2 = 0; i2 < blockSize.size(); i2++) {
 			NifStream( blockSize[i2], in, info );
@@ -183,7 +183,7 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 			NifStream( blockTypeIndex[i2], out, info );
 		};
 	};
-	if ( info.version >= 0x14030003 ) {
+	if ( info.version >= 0x14020007 ) {
 		for (unsigned int i2 = 0; i2 < blockSize.size(); i2++) {
 			NifStream( blockSize[i2], out, info );
 		};

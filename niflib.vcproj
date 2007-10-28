@@ -597,7 +597,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\src\gen\BoundingVolume.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\BoxBV.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\ByteMatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\CapsuleBV.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\ChannelData.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ComplexShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\HalfSpaceBV.cpp"
 				>
 			</File>
 			<File
@@ -606,6 +630,10 @@
 			</File>
 			<File
 				RelativePath=".\src\MatTexCollection.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\MorphWeight.cpp"
 				>
 			</File>
 			<File
@@ -653,6 +681,42 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\src\obj\NiPhysXActorDesc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXKinematicSrc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXMaterialDesc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXMeshDesc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXPropDesc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXShapeDesc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiPhysXTransformDest.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\obj\NiSourceCubeMap.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ObjectRegistry.cpp"
 				>
 			</File>
@@ -661,7 +725,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\gen\SphereBV.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Type.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\gen\UnionBV.cpp"
 				>
 			</File>
 			<Filter
@@ -1796,10 +1868,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\gen\Sphere.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\gen\StringPalette.cpp"
 					>
 				</File>
@@ -1855,6 +1923,26 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\include\gen\BoundingVolume.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\BoxBV.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\ByteMatrix.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\CapsuleBV.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\ChannelData.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\ComplexShape.h"
 				>
 			</File>
@@ -1867,6 +1955,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\gen\HalfSpaceBV.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\Key.h"
 				>
 			</File>
@@ -1876,6 +1968,10 @@
 			</File>
 			<File
 				RelativePath=".\include\MatTexCollection.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\MorphWeight.h"
 				>
 			</File>
 			<File
@@ -1899,6 +1995,42 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\obj\NiPhysXActorDesc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXKinematicSrc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXMaterialDesc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXMeshDesc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXProp.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXPropDesc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXShapeDesc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiPhysXTransformDest.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\obj\NiSourceCubeMap.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\ObjectRegistry.h"
 				>
 			</File>
@@ -1911,7 +2043,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\gen\SphereBV.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\Type.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\gen\UnionBV.h"
 				>
 			</File>
 			<Filter
@@ -3051,10 +3191,6 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\SkinWeight.h"
-					>
-				</File>
-				<File
-					RelativePath=".\include\gen\Sphere.h"
 					>
 				</File>
 				<File

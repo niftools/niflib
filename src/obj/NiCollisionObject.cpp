@@ -15,13 +15,12 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiCollisionObject.h"
 #include "../../include/obj/NiAVObject.h"
-#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiCollisionObject::TYPE("NiCollisionObject", &NiObject::TYPE );
 
-NiCollisionObject::NiCollisionObject() : target(NULL), unknownShort((unsigned short)1), body(NULL) {
+NiCollisionObject::NiCollisionObject() : target(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -47,11 +46,6 @@ void NiCollisionObject::Read( istream& in, list<unsigned int> & link_stack, cons
 	NiObject::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownShort, in, info );
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -71,18 +65,6 @@ void NiCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned int>
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
-	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownShort, out, info );
-		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*body), out, info );
-		} else {
-			if ( body != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
-			} else {
-				NifStream( 0xFFFFFFFF, out, info );
-			}
-		}
-	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -96,8 +78,6 @@ std::string NiCollisionObject::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Target:  " << target << endl;
-	out << "  Unknown Short:  " << unknownShort << endl;
-	out << "  Body:  " << body << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -110,9 +90,6 @@ void NiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objects,
 
 	NiObject::FixLinks( objects, link_stack, info );
 	target = FixLink<NiAVObject>( objects, link_stack, info );
-	if ( info.version >= 0x14000004 ) {
-		body = FixLink<NiObject>( objects, link_stack, info );
-	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -121,8 +98,6 @@ void NiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objects,
 std::list<NiObjectRef> NiCollisionObject::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
-	if ( body != NULL )
-		refs.push_back(StaticCast<NiObject>(body));
 	return refs;
 }
 
@@ -134,14 +109,6 @@ Ref<NiAVObject> NiCollisionObject::GetTarget() const {
 
 void NiCollisionObject::SetTarget( NiAVObject * value ) {
 	target = value;
-}
-
-Ref<NiObject > NiCollisionObject::GetBody() const {
-	return body;
-}
-
-void NiCollisionObject::SetBody( NiObject * value ) {
-	body = value;
 }
 
 //--END CUSTOM CODE--//

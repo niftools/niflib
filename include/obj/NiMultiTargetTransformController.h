@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiNode;
+class NiAVObject;
 class NiMultiTargetTransformController;
 typedef Ref<NiMultiTargetTransformController> NiMultiTargetTransformControllerRef;
 
@@ -57,23 +57,23 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	/*!
-	 * Retrives a list of the extra NiNode targets to be controlled.
-	 * \return The NiNode targets to be controlled.
+	 * Retrieves a list of the extra NiAVObject targets to be controlled.
+	 * \return The NiAVObject targets to be controlled.
 	 */
-	NIFLIB_API vector<Ref<NiNode> > GetExtraTargets() const;
+	NIFLIB_API vector<Ref<NiAVObject> > GetExtraTargets() const;
 
 	/*!
-	 * Sets the list of the extra NiNode targets to be controlled.
-	 * \param[in] value The new NiNode targets to be controlled.
+	 * Sets the list of the extra NiAVObject targets to be controlled.
+	 * \param[in] value The new NiAVObject targets to be controlled.
 	 */
-	NIFLIB_API void SetExtraTargets( const vector< Ref<NiNode> > & value );
+	NIFLIB_API void SetExtraTargets( const vector< Ref<NiAVObject> > & value );
 
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of target pointers that follow. */
 	mutable unsigned short numExtraTargets;
 	/*! NiNode Targets to be controlled. */
-	vector<NiNode * > extraTargets;
+	vector<NiAVObject * > extraTargets;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

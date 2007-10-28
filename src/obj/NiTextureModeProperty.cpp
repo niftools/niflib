@@ -43,7 +43,7 @@ void NiTextureModeProperty::Read( istream& in, list<unsigned int> & link_stack, 
 
 	NiProperty::Read( in, link_stack, info );
 	NifStream( unknownShort, in, info );
-	if ( info.version <= 0x0A020000 ) {
+	if ( ( info.version >= 0x03010000 ) && ( info.version <= 0x0A020000 ) ) {
 		NifStream( ps2L, in, info );
 		NifStream( ps2K, in, info );
 	};
@@ -58,7 +58,7 @@ void NiTextureModeProperty::Write( ostream& out, const map<NiObjectRef,unsigned 
 
 	NiProperty::Write( out, link_map, info );
 	NifStream( unknownShort, out, info );
-	if ( info.version <= 0x0A020000 ) {
+	if ( ( info.version >= 0x03010000 ) && ( info.version <= 0x0A020000 ) ) {
 		NifStream( ps2L, out, info );
 		NifStream( ps2K, out, info );
 	};

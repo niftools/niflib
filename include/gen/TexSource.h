@@ -43,11 +43,6 @@ struct TexSource {
 	Ref<NiObject > unknownLink;
 	/*! Unknown. */
 	byte unknownByte;
-	/*!
-	 * The original source filename of the image embedded by the referred NiPixelData
-	 * object.
-	 */
-	IndexString originalFileName_;
 	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
 };

@@ -24,7 +24,15 @@ class bhkShape;
 class bhkListShape;
 typedef Ref<bhkListShape> bhkListShapeRef;
 
-/*! A list of shapes. */
+/*!
+ * A list of shapes.
+ * 
+ *         Do not put a bhkPackedNiTriStripsShape in the Sub Shapes. Use a
+ *         separate collision nodes without a list shape for those.
+ * 
+ *         Also, shapes collected in a bhkListShape may not have the correct
+ *         walking noise, so only use it for non-walkable objects.
+ */
 class bhkListShape : public bhkShapeCollection {
 public:
 	/*! Constructor */
@@ -91,7 +99,7 @@ protected:
 	vector<Ref<bhkShape > > subShapes;
 	/*! The shape's material. */
 	HavokMaterial material;
-	/*! Unknown. */
+	/*! Unknown. Set to (0.0,0.0,-0.0,0.0,0.0,-0.0), where -0.0 is 0x80000000 in hex. */
 	array<6,float > unknownFloats;
 	/*! Count. */
 	mutable unsigned int numUnknownInts;

@@ -21,6 +21,16 @@ enum ForceType {
 
 ostream & operator<<( ostream & out, ForceType const & val );
 
+enum CollisionMode {
+	CM_USE_OBB = 0, /*!< Use Bounding Box */
+	CM_USE_TRI = 1, /*!< Use Triangles */
+	CM_USE_ABV = 2, /*!< Use Alternate Bounding Volumes */
+	CM_NOTEST = 3, /*!< No Test */
+	CM_USE_NIBOUND = 4, /*!< Use NiBound */
+};
+
+ostream & operator<<( ostream & out, CollisionMode const & val );
+
 /*! Determines how a NiTextureTransformController animates the UV coordinates. */
 enum TexTransform {
 	TT_TRANSLATE_U = 0, /*!< Means this controller moves the U texture cooridnates. */
@@ -241,6 +251,17 @@ enum AlphaFormat {
 
 ostream & operator<<( ostream & out, AlphaFormat const & val );
 
+enum BoundVolumeType {
+	BASE_BV = -1, /*!< Default */
+	SPHERE_BV = 0, /*!< Sphere */
+	BOX_BV = 1, /*!< Box */
+	CAPSULE_BV = 2, /*!< Capsule */
+	UNION_BV = 4, /*!< Union */
+	HALFSPACE_BV = 5, /*!< Half Space */
+};
+
+ostream & operator<<( ostream & out, BoundVolumeType const & val );
+
 /*! The type of information that's store in a texture used by a NiTextureEffect. */
 enum EffectType {
 	EFFECT_PROJECTED_LIGHT = 0, /*!< Apply a projected light texture. */
@@ -273,6 +294,13 @@ enum VertMode {
 };
 
 ostream & operator<<( ostream & out, VertMode const & val );
+
+enum SortingMode {
+	SORTING_INHERIT = 0, /*!< Inherit */
+	SORTING_OFF = 1, /*!< Disable */
+};
+
+ostream & operator<<( ostream & out, SortingMode const & val );
 
 /*! Determines the way that UV texture coordinates are generated. */
 enum CoordGenType {
@@ -423,6 +451,15 @@ enum EndianType {
 };
 
 ostream & operator<<( ostream & out, EndianType const & val );
+
+enum PropagationMode {
+	PROPAGATE_ON_SUCCESS = 0, /*!< On Success */
+	PROPAGATE_ON_FAILURE = 1, /*!< On Failure */
+	PROPAGATE_ALWAYS = 2, /*!< Always */
+	PROPAGATE_NEVER = 3, /*!< Never */
+};
+
+ostream & operator<<( ostream & out, PropagationMode const & val );
 
 /*! Specifies the pixel format used by the NiPixelData object to store a texture. */
 enum PixelFormat {

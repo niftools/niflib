@@ -57,8 +57,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
-	int unknownInt1;
+	/*! Sorting */
+	SortingMode sortingMode;
 	/*! Unknown. */
 	int unknownInt2;
 public:

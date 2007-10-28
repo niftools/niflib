@@ -54,7 +54,7 @@ void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	NifStream( translation, in, info );
 	NifStream( scale, in, info );
 	NifStream( numBones, in, info );
-	if ( info.version <= 0x0A010000 ) {
+	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
@@ -101,7 +101,7 @@ void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NifStream( translation, out, info );
 	NifStream( scale, out, info );
 	NifStream( numBones, out, info );
-	if ( info.version <= 0x0A010000 ) {
+	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			NifStream( (unsigned int)&(*skinPartition), out, info );
 		} else {
@@ -191,7 +191,7 @@ void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
-	if ( info.version <= 0x0A010000 ) {
+	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, info );
 	};
 

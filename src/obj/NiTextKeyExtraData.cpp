@@ -46,7 +46,7 @@ void NiTextKeyExtraData::Read( istream& in, list<unsigned int> & link_stack, con
 		NifStream( unknownInt1, in, info );
 	};
 	NifStream( numTextKeys, in, info );
-		textKeys.resize(numTextKeys);
+	textKeys.resize(numTextKeys);
 	for (unsigned int i1 = 0; i1 < textKeys.size(); i1++) {
 		NifStream( textKeys[i1], in, info, 1 );
 	};
@@ -65,15 +65,8 @@ void NiTextKeyExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int
 		NifStream( unknownInt1, out, info );
 	};
 	NifStream( numTextKeys, out, info );
-	if ( info.version >= 0x14010003 ) {
-		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
-			NifStream( textKeys[i2], out, info, 1 );
-		};
-	};
-	if ( info.version <= 0x14000005 ) {
-		for (unsigned int i2 = 0; i2 < textKeys.size(); i2++) {
-			NifStream( textKeys[i2], out, info, 1 );
-		};
+	for (unsigned int i1 = 0; i1 < textKeys.size(); i1++) {
+		NifStream( textKeys[i1], out, info, 1 );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

@@ -112,9 +112,9 @@ protected:
 	bool hasTriangles;
 	/*! Triangle data. */
 	vector<Triangle > triangles;
-	/*! Number of vertex matching groups. */
+	/*! Number of shared normals groups. */
 	mutable unsigned short numMatchGroups;
-	/*! The matching vertex groups. */
+	/*! The shared normals. */
 	vector<MatchGroup > matchGroups;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -82,6 +82,8 @@ public:
 protected:
 	/*! The opening angle of the spot. */
 	float cutoffAngle;
+	/*! Unknown */
+	float unknownFloat;
 	/*! Describes the distribution of light. (see: glLight) */
 	float exponent;
 public:

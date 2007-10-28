@@ -42,7 +42,9 @@ void bhkCapsuleShape::Read( istream& in, list<unsigned int> & link_stack, const 
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Read( in, link_stack, info );
-	NifStream( unknownString, in, info );
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown8Bytes[i1], in, info );
+	};
 	NifStream( firstPoint, in, info );
 	NifStream( radius1, in, info );
 	NifStream( secondPoint, in, info );
@@ -57,7 +59,9 @@ void bhkCapsuleShape::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Write( out, link_map, info );
-	NifStream( unknownString, out, info );
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown8Bytes[i1], out, info );
+	};
 	NifStream( firstPoint, out, info );
 	NifStream( radius1, out, info );
 	NifStream( secondPoint, out, info );
@@ -74,7 +78,18 @@ std::string bhkCapsuleShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConvexShape::asString();
-	out << "  Unknown String:  " << unknownString << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 8 Bytes[" << i1 << "]:  " << unknown8Bytes[i1] << endl;
+		array_output_count++;
+	};
 	out << "  First Point:  " << firstPoint << endl;
 	out << "  Radius 1:  " << radius1 << endl;
 	out << "  Second Point:  " << secondPoint << endl;

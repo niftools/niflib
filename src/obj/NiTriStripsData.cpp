@@ -60,7 +60,7 @@ void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, const 
 	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
 		NifStream( stripLengths[i1], in, info );
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A000103 ) {
 		NifStream( hasPoints, in, info );
 	};
 	if ( info.version <= 0x0A000102 ) {
@@ -72,7 +72,7 @@ void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A000103 ) {
 		if ( (hasPoints != 0) ) {
 			points.resize(numStrips);
 			for (unsigned int i3 = 0; i3 < points.size(); i3++) {
@@ -100,7 +100,7 @@ void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	for (unsigned int i1 = 0; i1 < stripLengths.size(); i1++) {
 		NifStream( stripLengths[i1], out, info );
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A000103 ) {
 		NifStream( hasPoints, out, info );
 	};
 	if ( info.version <= 0x0A000102 ) {
@@ -110,7 +110,7 @@ void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0A000103 ) {
 		if ( (hasPoints != 0) ) {
 			for (unsigned int i3 = 0; i3 < points.size(); i3++) {
 				for (unsigned int i4 = 0; i4 < stripLengths[i3]; i4++) {

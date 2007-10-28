@@ -137,11 +137,6 @@ protected:
 	Ref<NiObject > unknownLink;
 	/*! Unknown. */
 	byte unknownByte;
-	/*!
-	 * The original source filename of the image embedded by the referred NiPixelData
-	 * object.
-	 */
-	IndexString originalFileName_;
 	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
 	/*! Specifies the way the image will be stored. */
@@ -153,12 +148,12 @@ protected:
 	 * list of properties to enable material and/or texture transparency.
 	 */
 	AlphaFormat alphaFormat;
-	/*! Unknown, usually 1. */
-	byte unknownByte1;
-	/*! Set to one if textures have mipmaps? */
-	byte unknownByte2;
-	/*! Set to one if textures have mipmaps? */
-	byte unknownByte3;
+	/*! Is Static? */
+	bool isStatic;
+	/*! Load direct to renderer */
+	bool directRender;
+	/*! Render data is persistant */
+	bool persistRenderData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

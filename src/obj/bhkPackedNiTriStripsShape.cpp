@@ -51,7 +51,7 @@ void bhkPackedNiTriStripsShape::Read( istream& in, list<unsigned int> & link_sta
 		NifStream( subShapes[i1].layer, in, info );
 		NifStream( subShapes[i1].colFilter, in, info );
 		NifStream( subShapes[i1].unknownShort, in, info );
-		NifStream( subShapes[i1].vertexCount___, in, info );
+		NifStream( subShapes[i1].numVertices, in, info );
 		NifStream( subShapes[i1].material, in, info );
 	};
 	for (unsigned int i1 = 0; i1 < 9; i1++) {
@@ -79,7 +79,7 @@ void bhkPackedNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsig
 		NifStream( subShapes[i1].layer, out, info );
 		NifStream( subShapes[i1].colFilter, out, info );
 		NifStream( subShapes[i1].unknownShort, out, info );
-		NifStream( subShapes[i1].vertexCount___, out, info );
+		NifStream( subShapes[i1].numVertices, out, info );
 		NifStream( subShapes[i1].material, out, info );
 	};
 	for (unsigned int i1 = 0; i1 < 9; i1++) {
@@ -121,7 +121,7 @@ std::string bhkPackedNiTriStripsShape::asString( bool verbose ) const {
 		out << "    Layer:  " << subShapes[i1].layer << endl;
 		out << "    Col Filter:  " << subShapes[i1].colFilter << endl;
 		out << "    Unknown Short:  " << subShapes[i1].unknownShort << endl;
-		out << "    Vertex Count (?):  " << subShapes[i1].vertexCount___ << endl;
+		out << "    Num Vertices:  " << subShapes[i1].numVertices << endl;
 		out << "    Material:  " << subShapes[i1].material << endl;
 	};
 	array_output_count = 0;

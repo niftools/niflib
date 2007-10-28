@@ -5,23 +5,24 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#include "../../include/gen/Sphere.h"
+#include "../../include/gen/BoxBV.h"
 using namespace Niflib;
 
 //Constructor
-Sphere::Sphere() : radius(0.0f) {};
+BoxBV::BoxBV() {};
 
 //Copy Constructor
-Sphere::Sphere( const Sphere & src ) {
+BoxBV::BoxBV( const BoxBV & src ) {
 	*this = src;
 };
 
 //Copy Operator
-Sphere & Sphere::operator=( const Sphere & src ) {
+BoxBV & BoxBV::operator=( const BoxBV & src ) {
 	this->center = src.center;
-	this->radius = src.radius;
+	this->axis = src.axis;
+	this->extent = src.extent;
 	return *this;
 };
 
 //Destructor
-Sphere::~Sphere() {};
+BoxBV::~BoxBV() {};

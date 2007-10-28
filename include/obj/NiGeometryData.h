@@ -184,16 +184,17 @@ protected:
 	IndexString name;
 	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
+	/*! Used with NiCollision objects when OBB or TRI is set. */
+	byte keepFlags;
 	/*! Unknown. */
-	unsigned short unknownShort1;
+	byte compressFlags;
 	/*! Is the vertex array present? (Always non-zero.) */
 	bool hasVertices;
 	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
 	/*!
-	 * The lower 6 (or less?) bits of this field represent the number of UV texture
-	 * sets. The other bits are probably flag bits. For versions 10.1.0.0 and up, if
-	 * bit 12 is set then extra vectors are present after the normals.
+	 * Methods for saving binormals and tangents saved in upper byte.  Texture flags in
+	 * lower byte.
 	 */
 	mutable unsigned short numUvSets;
 	/*!
@@ -207,9 +208,9 @@ protected:
 	 * Unknown. Binormal & tangents? has_normals must be set as well for this field to
 	 * be present.
 	 */
-	vector<Vector3 > unknownVectors1;
+	vector<Vector3 > binormals;
 	/*! Unknown. Binormal & tangents? */
-	vector<Vector3 > unknownVectors2;
+	vector<Vector3 > tangents;
 	/*!
 	 * Center of the bounding box (smallest box that contains all vertices) of the
 	 * mesh.

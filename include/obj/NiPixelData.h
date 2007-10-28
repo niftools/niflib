@@ -16,9 +16,11 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiObject.h"
 
 // Include structures
+#include "../gen/ChannelData.h"
 #include "../Ref.h"
 #include "../gen/MipMap.h"
 #include "../gen/ByteArray.h"
+#include "../gen/ByteMatrix.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -129,10 +131,20 @@ protected:
 	array<8,byte > unknown8Bytes;
 	/*! Seems to always be zero. */
 	unsigned int unknownInt;
-	/*! Unknown. */
-	array<54,byte > unknown54Bytes;
+	/*! Unknown.  Could be reference pointer. */
+	int unknownInt2;
+	/*! Seems to always be zero. */
+	unsigned int unknownInt3;
+	/*! Flags */
+	byte flags;
+	/*! Seems to always be zero. */
+	unsigned int unknownInt4;
+	/*! Channel Data */
+	array<4,ChannelData > channels;
 	/*! Link to NiPalette, for 8-bit textures. */
 	Ref<NiPalette > palette;
+	/*! Unknown. */
+	byte unknownByte1;
 	/*! Number of mipmaps in the texture. */
 	mutable unsigned int numMipmaps;
 	/*! Bytes per pixel (Bits Per Pixel / 8). */
@@ -144,8 +156,11 @@ protected:
 	 * they get smaller by half as the number increases.
 	 */
 	ByteArray pixelData;
-	/*! Unknown. */
-	unsigned int unknownInt2;
+	/*!
+	 * Raw pixel data holding the mipmaps.  Mipmap zero is the full-size texture and
+	 * they get smaller by half as the number increases.
+	 */
+	ByteMatrix pixelDataMatrix;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -255,6 +255,15 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/RootCollisionNode.h"
 #include "../../include/obj/NiRawImageData.h"
 #include "../../include/obj/NiSortAdjustNode.h"
+#include "../../include/obj/NiSourceCubeMap.h"
+#include "../../include/obj/NiPhysXProp.h"
+#include "../../include/obj/NiPhysXPropDesc.h"
+#include "../../include/obj/NiPhysXActorDesc.h"
+#include "../../include/obj/NiPhysXShapeDesc.h"
+#include "../../include/obj/NiPhysXMeshDesc.h"
+#include "../../include/obj/NiPhysXMaterialDesc.h"
+#include "../../include/obj/NiPhysXKinematicSrc.h"
+#include "../../include/obj/NiPhysXTransformDest.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -508,6 +517,15 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "RootCollisionNode", RootCollisionNode::Create );
 		ObjectRegistry::RegisterObject( "NiRawImageData", NiRawImageData::Create );
 		ObjectRegistry::RegisterObject( "NiSortAdjustNode", NiSortAdjustNode::Create );
+		ObjectRegistry::RegisterObject( "NiSourceCubeMap", NiSourceCubeMap::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXProp", NiPhysXProp::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXPropDesc", NiPhysXPropDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXActorDesc", NiPhysXActorDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXShapeDesc", NiPhysXShapeDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXMeshDesc", NiPhysXMeshDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXMaterialDesc", NiPhysXMaterialDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXKinematicSrc", NiPhysXKinematicSrc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXTransformDest", NiPhysXTransformDest::Create );
 
 	}
 }

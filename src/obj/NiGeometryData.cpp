@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), unknownShort1((unsigned short)0), hasVertices(1), numUvSets((unsigned short)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), unknownLink1(NULL) {
+NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), unknownLink1(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,7 +49,8 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	};
 	NifStream( numVertices, in, info );
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownShort1, in, info );
+		NifStream( keepFlags, in, info );
+		NifStream( compressFlags, in, info );
 	};
 	NifStream( hasVertices, in, info );
 	if ( (hasVertices != 0) ) {
@@ -69,14 +70,14 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (((hasNormals != 0)) && ((numUvSets & 4096))) ) {
-			unknownVectors1.resize(numVertices);
-			for (unsigned int i3 = 0; i3 < unknownVectors1.size(); i3++) {
-				NifStream( unknownVectors1[i3], in, info );
+		if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
+			binormals.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
+				NifStream( binormals[i3], in, info );
 			};
-			unknownVectors2.resize(numVertices);
-			for (unsigned int i3 = 0; i3 < unknownVectors2.size(); i3++) {
-				NifStream( unknownVectors2[i3], in, info );
+			tangents.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < tangents.size(); i3++) {
+				NifStream( tangents[i3], in, info );
 			};
 		};
 	};
@@ -126,7 +127,8 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	};
 	NifStream( numVertices, out, info );
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownShort1, out, info );
+		NifStream( keepFlags, out, info );
+		NifStream( compressFlags, out, info );
 	};
 	NifStream( hasVertices, out, info );
 	if ( (hasVertices != 0) ) {
@@ -144,12 +146,12 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (((hasNormals != 0)) && ((numUvSets & 4096))) ) {
-			for (unsigned int i3 = 0; i3 < unknownVectors1.size(); i3++) {
-				NifStream( unknownVectors1[i3], out, info );
+		if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
+			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
+				NifStream( binormals[i3], out, info );
 			};
-			for (unsigned int i3 = 0; i3 < unknownVectors2.size(); i3++) {
-				NifStream( unknownVectors2[i3], out, info );
+			for (unsigned int i3 = 0; i3 < tangents.size(); i3++) {
+				NifStream( tangents[i3], out, info );
 			};
 		};
 	};
@@ -202,7 +204,8 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Name:  " << name << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Keep Flags:  " << keepFlags << endl;
+	out << "  Compress Flags:  " << compressFlags << endl;
 	out << "  Has Vertices:  " << hasVertices << endl;
 	if ( (hasVertices != 0) ) {
 		array_output_count = 0;
@@ -234,9 +237,9 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	if ( (((hasNormals != 0)) && ((numUvSets & 4096))) ) {
+	if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < unknownVectors1.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < binormals.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -244,11 +247,11 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Vectors 1[" << i2 << "]:  " << unknownVectors1[i2] << endl;
+			out << "      Binormals[" << i2 << "]:  " << binormals[i2] << endl;
 			array_output_count++;
 		};
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < unknownVectors2.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < tangents.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -256,7 +259,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Vectors 2[" << i2 << "]:  " << unknownVectors2[i2] << endl;
+			out << "      Tangents[" << i2 << "]:  " << tangents[i2] << endl;
 			array_output_count++;
 		};
 	};

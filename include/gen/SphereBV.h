@@ -5,8 +5,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#ifndef _SPHERE_H_
-#define _SPHERE_H_
+#ifndef _SPHEREBV_H_
+#define _SPHEREBV_H_
 
 #include "../NIF_IO.h"
 
@@ -14,15 +14,15 @@ namespace Niflib {
 
 
 /*! A sphere. */
-struct Sphere {
+struct SphereBV {
 	/*! Default Constructor */
-	NIFLIB_API Sphere();
+	NIFLIB_API SphereBV();
 	/*! Default Destructor */
-	NIFLIB_API ~Sphere();
+	NIFLIB_API ~SphereBV();
 	/*! Copy Constructor */
-	NIFLIB_API Sphere( const Sphere & src );
+	NIFLIB_API SphereBV( const SphereBV & src );
 	/*! Copy Operator */
-	NIFLIB_API Sphere & operator=( const Sphere & src );
+	NIFLIB_API SphereBV & operator=( const SphereBV & src );
 	/*! The sphere's center. */
 	Vector3 center;
 	/*! The sphere's radius. */

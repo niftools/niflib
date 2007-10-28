@@ -42,7 +42,9 @@ void bhkBoxShape::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Read( in, link_stack, info );
-	NifStream( unknownString, in, info );
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown8Bytes[i1], in, info );
+	};
 	NifStream( dimensions, in, info );
 	NifStream( minimumSize, in, info );
 
@@ -55,7 +57,9 @@ void bhkBoxShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	//--END CUSTOM CODE--//
 
 	bhkConvexShape::Write( out, link_map, info );
-	NifStream( unknownString, out, info );
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		NifStream( unknown8Bytes[i1], out, info );
+	};
 	NifStream( dimensions, out, info );
 	NifStream( minimumSize, out, info );
 
@@ -70,7 +74,18 @@ std::string bhkBoxShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConvexShape::asString();
-	out << "  Unknown String:  " << unknownString << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 8; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 8 Bytes[" << i1 << "]:  " << unknown8Bytes[i1] << endl;
+		array_output_count++;
+	};
 	out << "  Dimensions:  " << dimensions << endl;
 	out << "  Minimum Size:  " << minimumSize << endl;
 	return out.str();

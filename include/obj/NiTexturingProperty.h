@@ -229,6 +229,19 @@ protected:
 	float bumpMapLumaOffset;
 	/*! Unknown. */
 	Matrix22 bumpMapMatrix;
+	/*!
+	 * Do we have a normal texture?  (Noraml guess based on file suffix in sample
+	 * files)
+	 */
+	bool hasNormalTexture;
+	/*! Normal texture. */
+	TexDesc normalTexture;
+	/*! Do we have a unknown texture 2? */
+	bool hasUnknown2Texture;
+	/*! Unknown texture 2. */
+	TexDesc unknown2Texture;
+	/*! Unknown. */
+	float unknown2Float;
 	/*! Do we have a decal 0 texture? */
 	bool hasDecal0Texture;
 	/*! The decal texture. */

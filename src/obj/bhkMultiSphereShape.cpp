@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkMultiSphereShape.h"
-#include "../../include/gen/Sphere.h"
+#include "../../include/gen/SphereBV.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -118,11 +118,11 @@ std::list<NiObjectRef> bhkMultiSphereShape::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-vector<Sphere > bhkMultiSphereShape::GetSpheres() const {
+vector<SphereBV > bhkMultiSphereShape::GetSpheres() const {
 	return spheres;
 }
 
-void bhkMultiSphereShape::SetSpheres( const vector<Sphere >& value ) {
+void bhkMultiSphereShape::SetSpheres( const vector<SphereBV >& value ) {
 	spheres = value;
 }
 

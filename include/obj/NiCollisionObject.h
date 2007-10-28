@@ -14,14 +14,10 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"
-
-// Include structures
-#include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiAVObject;
-class NiObject;
 class NiCollisionObject;
 typedef Ref<NiCollisionObject> NiCollisionObjectRef;
 
@@ -74,18 +70,6 @@ public:
 	 */
 	NIFLIB_API Ref<NiAVObject> GetTarget() const;
 
-	/*!
-	 * Gets the rigid body that this collision object uses, if any.
-	 * \return The rigid body that this object references, or a NULL reference if it does not reference any.
-	 */
-	NIFLIB_API Ref<NiObject> GetBody() const;
-
-	/*!
-	 * Sets the new rigid body that this collision object uses.
-	 * \param[in] value The new rigid body for this collision object to use, or NULL to clear the current reference.
-	 */
-	NIFLIB_API void SetBody( NiObject * value );
-
 	/*! NIFLIB_HIDDEN function.  For internal use only */
 	NIFLIB_HIDDEN void SetTarget( NiAVObject * value );
 
@@ -93,10 +77,6 @@ public:
 protected:
 	/*! Index of the AV object referring to this collision object. */
 	NiAVObject * target;
-	/*! Set to "1" for most objects. */
-	unsigned short unknownShort;
-	/*! Links to the collision object data */
-	Ref<NiObject > body;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

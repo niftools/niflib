@@ -15,7 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiMultiTargetTransformController.h"
-#include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiAVObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -112,7 +112,7 @@ void NiMultiTargetTransformController::FixLinks( const map<unsigned int,NiObject
 
 	NiInterpController::FixLinks( objects, link_stack, info );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
-		extraTargets[i1] = FixLink<NiNode>( objects, link_stack, info );
+		extraTargets[i1] = FixLink<NiAVObject>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -129,22 +129,22 @@ std::list<NiObjectRef> NiMultiTargetTransformController::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-vector<NiNodeRef> NiMultiTargetTransformController::GetExtraTargets() const {
-   vector<NiNodeRef> retval;
+vector<NiAVObjectRef> NiMultiTargetTransformController::GetExtraTargets() const {
+   vector<NiAVObjectRef> retval;
    size_t n = extraTargets.size();
    retval.reserve(n);
    for (size_t i=0; i<n; ++i)
-      retval.push_back( NiNodeRef(extraTargets[i]) );
+      retval.push_back( NiAVObjectRef(extraTargets[i]) );
 	return retval;
 }
 
-void NiMultiTargetTransformController::SetExtraTargets( const vector< Ref<NiNode> > & value ) {
+void NiMultiTargetTransformController::SetExtraTargets( const vector< Ref<NiAVObject> > & value ) {
    extraTargets.clear();
    size_t n = value.size();
    extraTargets.reserve(n);
    for (size_t i=0; i<n; ++i)
       extraTargets.push_back( value[i] );
-   extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiNode*)NULL), extraTargets.end());
+   extraTargets.erase(std::remove(extraTargets.begin(), extraTargets.end(), (NiAVObject*)NULL), extraTargets.end());
 }
 
 //--END CUSTOM CODE--//

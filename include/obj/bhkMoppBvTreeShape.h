@@ -95,10 +95,18 @@ protected:
 	float unknownFloat;
 	/*! Number of bytes for MOPP data. */
 	mutable unsigned int moppDataSize;
-	/*! Corner of the object with min. coordinates. */
-	Vector3 objectCorner;
-	/*! The scaling factor to quantize the MOPP. Determined by 255*255*255 / size. */
-	float scalingFactor;
+	/*!
+	 * Origin of the object in mopp coordinates. This is the minimum of all vertices in
+	 * the packed shape along each axis, minus 0.1.
+	 */
+	Vector3 origin;
+	/*!
+	 * The scaling factor to quantize the MOPP: the quantization factor is equal to
+	 * 256*256 divided by this number. In Oblivion files, scale is taken equal to
+	 * 256*256*254 / (size + 0.2) where size is the largest dimension of the bounding
+	 * box of the packed shape.
+	 */
+	float scale;
 	/*! The tree of bounding volume data. */
 	vector<byte > moppData;
 public:

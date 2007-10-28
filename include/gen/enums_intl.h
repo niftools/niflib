@@ -21,6 +21,9 @@ namespace Niflib {
 void NifStream( ForceType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( ForceType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( CollisionMode & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( CollisionMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---TexTransform---//
 
@@ -93,6 +96,9 @@ void NifStream( FaceDrawMode const & val, ostream& out, const NifInfo & info = N
 void NifStream( AlphaFormat & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( AlphaFormat const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( BoundVolumeType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BoundVolumeType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---EffectType---//
 
@@ -110,6 +116,9 @@ void NifStream( KeyType const & val, ostream& out, const NifInfo & info = NifInf
 
 void NifStream( VertMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( VertMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( SortingMode & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SortingMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---CoordGenType---//
@@ -179,6 +188,9 @@ void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info = 
 
 void NifStream( EndianType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( EndianType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( PropagationMode & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( PropagationMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---PixelFormat---//

@@ -117,7 +117,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	Char8String unknownString;
+	array<8,byte > unknown8Bytes;
 	/*! First point on the capsule's axis. */
 	Vector3 firstPoint;
 	/*! Matches first capsule radius. */
