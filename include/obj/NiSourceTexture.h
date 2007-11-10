@@ -149,7 +149,7 @@ protected:
 	 */
 	AlphaFormat alphaFormat;
 	/*! Is Static? */
-	bool isStatic;
+	byte isStatic;
 	/*! Load direct to renderer */
 	bool directRender;
 	/*! Render data is persistant */
