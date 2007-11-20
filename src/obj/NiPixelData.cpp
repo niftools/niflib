@@ -24,7 +24,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NiObject::TYPE );
 
-NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((unsigned int)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), palette(NULL), unknownByte1((byte)0), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
+NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((byte)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), palette(NULL), unknownByte1((byte)0), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -55,6 +55,9 @@ void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		NifStream( blueMask, in, info );
 		NifStream( alphaMask, in, info );
 		NifStream( bitsPerPixel, in, info );
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknown3Bytes[i2], in, info );
+		};
 		for (unsigned int i2 = 0; i2 < 8; i2++) {
 			NifStream( unknown8Bytes[i2], in, info );
 		};
@@ -124,6 +127,9 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		NifStream( blueMask, out, info );
 		NifStream( alphaMask, out, info );
 		NifStream( bitsPerPixel, out, info );
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknown3Bytes[i2], out, info );
+		};
 		for (unsigned int i2 = 0; i2 < 8; i2++) {
 			NifStream( unknown8Bytes[i2], out, info );
 		};
@@ -200,6 +206,18 @@ std::string NiPixelData::asString( bool verbose ) const {
 	out << "  Blue Mask:  " << blueMask << endl;
 	out << "  Alpha Mask:  " << alphaMask << endl;
 	out << "  Bits Per Pixel:  " << bitsPerPixel << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 3 Bytes[" << i1 << "]:  " << unknown3Bytes[i1] << endl;
+		array_output_count++;
+	};
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

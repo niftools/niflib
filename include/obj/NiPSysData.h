@@ -60,7 +60,7 @@ protected:
 	/*! Unknown. */
 	bool hasUnknownFloats3;
 	/*! Unknown */
-	vector<float > unknownFloats1;
+	vector<float > unknownFloats3;
 	/*! Unknown. */
 	bool hasUnknownFloats4;
 	/*! Unknown. */

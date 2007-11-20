@@ -264,6 +264,11 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiPhysXMaterialDesc.h"
 #include "../../include/obj/NiPhysXKinematicSrc.h"
 #include "../../include/obj/NiPhysXTransformDest.h"
+#include "../../include/obj/NiArkAnimationExtraData.h"
+#include "../../include/obj/NiArkImporterExtraData.h"
+#include "../../include/obj/NiArkTextureExtraData.h"
+#include "../../include/obj/NiArkViewportInfoExtraData.h"
+#include "../../include/obj/NiArkShaderExtraData.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -526,6 +531,11 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiPhysXMaterialDesc", NiPhysXMaterialDesc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXKinematicSrc", NiPhysXKinematicSrc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXTransformDest", NiPhysXTransformDest::Create );
+		ObjectRegistry::RegisterObject( "NiArkAnimationExtraData", NiArkAnimationExtraData::Create );
+		ObjectRegistry::RegisterObject( "NiArkImporterExtraData", NiArkImporterExtraData::Create );
+		ObjectRegistry::RegisterObject( "NiArkTextureExtraData", NiArkTextureExtraData::Create );
+		ObjectRegistry::RegisterObject( "NiArkViewportInfoExtraData", NiArkViewportInfoExtraData::Create );
+		ObjectRegistry::RegisterObject( "NiArkShaderExtraData", NiArkShaderExtraData::Create );
 
 	}
 }

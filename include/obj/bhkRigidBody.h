@@ -360,7 +360,7 @@ protected:
 	mutable unsigned int numConstraints;
 	/*! Unknown. */
 	vector<Ref<bhkConstraint > > constraints;
-	/*! Unknown. */
+	/*! 0 = do not respond to wind, 1 = respond to wind (?) */
 	unsigned int unknownInt9;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -121,7 +121,9 @@ protected:
 	/*! 0xff000000 (for 32bpp) or 0x00000000 (for 24bpp and 8bpp) */
 	unsigned int alphaMask;
 	/*! Bits per pixel, 0 (?), 8, 24 or 32. */
-	unsigned int bitsPerPixel;
+	byte bitsPerPixel;
+	/*! Zero? */
+	array<3,byte > unknown3Bytes;
 	/*!
 	 * [96,8,130,0,0,65,0,0] if 24 bits per pixel
 	 *             [129,8,130,32,0,65,12,0] if 32 bits per pixel

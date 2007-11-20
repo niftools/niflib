@@ -366,7 +366,7 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 		case OL_R_FOOT: return out << "OL_R_FOOT";
 		case OL_TAIL: return out << "OL_TAIL";
 		case OL_SIDE_WEAPON: return out << "OL_SIDE_WEAPON";
-		case OL_SHEILD: return out << "OL_SHEILD";
+		case OL_SHIELD: return out << "OL_SHIELD";
 		case OL_QUIVER: return out << "OL_QUIVER";
 		case OL_BACK_WEAPON: return out << "OL_BACK_WEAPON";
 		case OL_BACK_WEAPON2: return out << "OL_BACK_WEAPON2";

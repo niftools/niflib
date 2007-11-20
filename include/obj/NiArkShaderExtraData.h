@@ -7,33 +7,27 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIGEOMMORPHERCONTROLLER_H_
-#define _NIGEOMMORPHERCONTROLLER_H_
+#ifndef _NIARKSHADEREXTRADATA_H_
+#define _NIARKSHADEREXTRADATA_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiInterpController.h"
-
-// Include structures
-#include "../Ref.h"
-#include "../gen/MorphWeight.h"
+#include "NiExtraData.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiMorphData;
-class NiInterpolator;
-class NiGeomMorpherController;
-typedef Ref<NiGeomMorpherController> NiGeomMorpherControllerRef;
+class NiArkShaderExtraData;
+typedef Ref<NiArkShaderExtraData> NiArkShaderExtraDataRef;
 
-/*! Time controller for geometry morphing. */
-class NiGeomMorpherController : public NiInterpController {
+/*! Unknown node. */
+class NiArkShaderExtraData : public NiExtraData {
 public:
 	/*! Constructor */
-	NIFLIB_API NiGeomMorpherController();
+	NIFLIB_API NiArkShaderExtraData();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiGeomMorpherController();
+	NIFLIB_API virtual ~NiArkShaderExtraData();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -61,65 +55,12 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
-	//TODO: Lots of unknown data in this object
-
-	/*!
-	 * This function will adjust the times in all the keys in the data objects
-	 * referenced by this controller and any of its interpolators such that the
-	 * phase will equal 0 and frequency will equal one.  In other words, it
-	 * will cause the key times to be in seconds starting from zero.
-	 */
-	NIFLIB_API virtual void NormalizeKeys();
-
-	/*!
-	 * Retrives a list of the interpolators used by this controller.
-	 * \return The interpolators.
-	 */
-	NIFLIB_API vector< Ref<NiInterpolator> > GetInterpolators() const;
-
-	/*!
-	 * Sets the list of the interpolators used by this controller.
-	 * \param[in] n The new interpolators.
-	 */
-	NIFLIB_API void SetInterpolators( const vector< Ref<NiInterpolator> > & n );
-
-	/*!
-	 * Retrives the morph data used by this controller.
-	 * \return The morph data.
-	 */
-	NIFLIB_API Ref<NiMorphData> GetData() const;
-
-	/*!
-	 * Sets the morph data used by this controller.
-	 * \param[in] n The new morph data.
-	 */
-	NIFLIB_API void SetData( NiMorphData * n );
-
-	/*!
-	* Update the Model Bounds
-	*/
-	NIFLIB_API void UpdateModelBound();
-
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	unsigned short extraFlags;
+	int unknownInt;
 	/*! Unknown. */
-	byte unknown2;
-	/*! Geometry morphing data index. */
-	Ref<NiMorphData > data;
-	/*! Always Update */
-	byte alwaysUpdate;
-	/*! The number of interpolator objects. */
-	mutable unsigned int numInterpolators;
-	/*! List of interpolators. */
-	vector<Ref<NiInterpolator > > interpolators;
-	/*! Weighted Interpolators? */
-	vector<MorphWeight > interpolatorWeights;
-	/*! A count. */
-	mutable unsigned int numUnknownInts;
-	/*! Unknown. */
-	vector<unsigned int > unknownInts;
+	IndexString unknownString;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -132,6 +73,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

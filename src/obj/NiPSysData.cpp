@@ -53,9 +53,9 @@ void NiPSysData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	if ( info.version >= 0x14000004 ) {
 		NifStream( hasUnknownFloats3, in, info );
 		if ( (hasUnknownFloats3 != 0) ) {
-			unknownFloats1.resize(numVertices);
-			for (unsigned int i3 = 0; i3 < unknownFloats1.size(); i3++) {
-				NifStream( unknownFloats1[i3], in, info );
+			unknownFloats3.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < unknownFloats3.size(); i3++) {
+				NifStream( unknownFloats3[i3], in, info );
 			};
 		};
 		NifStream( hasUnknownFloats4, in, info );
@@ -104,8 +104,8 @@ void NiPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	if ( info.version >= 0x14000004 ) {
 		NifStream( hasUnknownFloats3, out, info );
 		if ( (hasUnknownFloats3 != 0) ) {
-			for (unsigned int i3 = 0; i3 < unknownFloats1.size(); i3++) {
-				NifStream( unknownFloats1[i3], out, info );
+			for (unsigned int i3 = 0; i3 < unknownFloats3.size(); i3++) {
+				NifStream( unknownFloats3[i3], out, info );
 			};
 		};
 		NifStream( hasUnknownFloats4, out, info );
@@ -160,7 +160,7 @@ std::string NiPSysData::asString( bool verbose ) const {
 	out << "  Has Unknown Floats 3:  " << hasUnknownFloats3 << endl;
 	if ( (hasUnknownFloats3 != 0) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < unknownFloats1.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < unknownFloats3.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -168,7 +168,7 @@ std::string NiPSysData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Floats 1[" << i2 << "]:  " << unknownFloats1[i2] << endl;
+			out << "      Unknown Floats 3[" << i2 << "]:  " << unknownFloats3[i2] << endl;
 			array_output_count++;
 		};
 	};

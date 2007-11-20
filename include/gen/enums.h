@@ -220,7 +220,7 @@ enum OblivionLayer {
 	OL_R_FOOT = 48, /*!< RFoot */
 	OL_TAIL = 49, /*!< Tail */
 	OL_SIDE_WEAPON = 50, /*!< SideWeapon */
-	OL_SHEILD = 51, /*!< Shield */
+	OL_SHIELD = 51, /*!< Shield */
 	OL_QUIVER = 52, /*!< Quiver */
 	OL_BACK_WEAPON = 53, /*!< BackWeapon */
 	OL_BACK_WEAPON2 = 54, /*!< BackWeapon (?) */

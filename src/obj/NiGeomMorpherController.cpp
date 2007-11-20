@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeomMorpherController::TYPE("NiGeomMorpherController", &NiInterpController::TYPE );
 
-NiGeomMorpherController::NiGeomMorpherController() : flags((unsigned short)0), unknown2((byte)0), data(NULL), alwaysUpdate((byte)0), numInterpolators((unsigned int)0), numUnknownInts((unsigned int)0) {
+NiGeomMorpherController::NiGeomMorpherController() : extraFlags((unsigned short)0), unknown2((byte)0), data(NULL), alwaysUpdate((byte)0), numInterpolators((unsigned int)0), numUnknownInts((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -51,7 +51,7 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 	unsigned int block_num;
 	NiInterpController::Read( in, link_stack, info );
 	if ( info.version >= 0x0A000102 ) {
-		NifStream( flags, in, info );
+		NifStream( extraFlags, in, info );
 	};
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 		NifStream( unknown2, in, info );
@@ -104,7 +104,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	numUnknownInts = (unsigned int)(unknownInts.size());
 	numInterpolators = (unsigned int)(interpolators.size());
 	if ( info.version >= 0x0A000102 ) {
-		NifStream( flags, out, info );
+		NifStream( extraFlags, out, info );
 	};
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 		NifStream( unknown2, out, info );
@@ -175,7 +175,7 @@ std::string NiGeomMorpherController::asString( bool verbose ) const {
 	out << NiInterpController::asString();
 	numUnknownInts = (unsigned int)(unknownInts.size());
 	numInterpolators = (unsigned int)(interpolators.size());
-	out << "  Flags:  " << flags << endl;
+	out << "  Extra Flags:  " << extraFlags << endl;
 	out << "  Unknown 2:  " << unknown2 << endl;
 	out << "  Data:  " << data << endl;
 	out << "  Always Update:  " << alwaysUpdate << endl;
