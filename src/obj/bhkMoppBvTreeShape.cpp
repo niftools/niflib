@@ -52,10 +52,8 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 	};
 	NifStream( unknownFloat, in, info );
 	NifStream( moppDataSize, in, info );
-	if ( info.version >= 0x14000005 ) {
-		NifStream( origin, in, info );
-		NifStream( scale, in, info );
-	};
+	NifStream( origin, in, info );
+	NifStream( scale, in, info );
 	moppData.resize(moppDataSize);
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		NifStream( moppData[i1], in, info );
@@ -86,10 +84,8 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	};
 	NifStream( unknownFloat, out, info );
 	NifStream( moppDataSize, out, info );
-	if ( info.version >= 0x14000005 ) {
-		NifStream( origin, out, info );
-		NifStream( scale, out, info );
-	};
+	NifStream( origin, out, info );
+	NifStream( scale, out, info );
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		NifStream( moppData[i1], out, info );
 	};
