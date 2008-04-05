@@ -366,7 +366,7 @@ array<12,float>  bhkRigidBody::GetInertia() const {
 	result[9] = inertia.m32;
 	result[10] = inertia.m33;
 	result[11] = inertia.m34;
-	return inertia;
+	return result;
 }
 
 void bhkRigidBody::SetInertia( const array<12,float>&  value ) {
