@@ -67,7 +67,7 @@ protected:
 	/*! Unknown */
 	float unknownFloat1;
 	/*! Unknown */
-	unsigned int unknownInt1;
+	mutable unsigned int unknownInt1;
 	/*! Unknown */
 	vector<Ref<NiObject > > unknownRefs1;
 	/*! Number of NiPhysXTransformDest references */

@@ -52,7 +52,7 @@ void NiPhysXProp::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	NiObjectNET::Read( in, link_stack, info );
 	NifStream( unknownFloat1, in, info );
 	NifStream( unknownInt1, in, info );
-	unknownRefs1.resize(unknownRef1);
+	unknownRefs1.resize(unknownInt1);
 	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
@@ -79,6 +79,7 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 
 	NiObjectNET::Write( out, link_map, info );
 	numDests = (int)(transformDests.size());
+	unknownInt1 = (unsigned int)(unknownRefs1.size());
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownInt1, out, info );
 	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
@@ -129,6 +130,7 @@ std::string NiPhysXProp::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObjectNET::asString();
 	numDests = (int)(transformDests.size());
+	unknownInt1 = (unsigned int)(unknownRefs1.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	array_output_count = 0;
