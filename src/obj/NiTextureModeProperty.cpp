@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureModeProperty::TYPE("NiTextureModeProperty", &NiProperty::TYPE );
 
-NiTextureModeProperty::NiTextureModeProperty() : unknownShort((short)0), ps2L((unsigned short)0), ps2K((unsigned short)0xFFB5) {
+NiTextureModeProperty::NiTextureModeProperty() : unknownShort((short)0), ps2L((short)0), ps2K((short)-75) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

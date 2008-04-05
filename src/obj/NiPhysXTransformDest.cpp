@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPhysXTransformDest.h"
+#include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPhysXTransformDest::TYPE("NiPhysXTransformDest", &NiObject::TYPE );
 
-NiPhysXTransformDest::NiPhysXTransformDest() {
+NiPhysXTransformDest::NiPhysXTransformDest() : unknownByte1((byte)0), unknownByte2((byte)0), node(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,7 +46,12 @@ void NiPhysXTransformDest::Read( istream& in, list<unsigned int> & link_stack, c
 
 	//--END CUSTOM CODE--//
 
+	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
+	NifStream( unknownByte1, in, info );
+	NifStream( unknownByte2, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -58,6 +64,17 @@ void NiPhysXTransformDest::Write( ostream& out, const map<NiObjectRef,unsigned i
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
+	NifStream( unknownByte1, out, info );
+	NifStream( unknownByte2, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*node), out, info );
+	} else {
+		if ( node != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(node) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -72,6 +89,9 @@ std::string NiPhysXTransformDest::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
+	out << "  Node:  " << node << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -85,6 +105,7 @@ void NiPhysXTransformDest::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
+	node = FixLink<NiNode>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

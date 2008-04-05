@@ -24,7 +24,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPixelData::TYPE("NiPixelData", &NiObject::TYPE );
 
-NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((byte)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), palette(NULL), unknownByte1((byte)0), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
+NiPixelData::NiPixelData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((byte)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), unknownByte1((byte)0), palette(NULL), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -78,11 +78,11 @@ void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 			NifStream( channels[i2].unknownByte1, in, info );
 		};
 	};
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
 	if ( info.version >= 0x14030006 ) {
 		NifStream( unknownByte1, in, info );
 	};
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 	NifStream( numMipmaps, in, info );
 	NifStream( bytesPerPixel, in, info );
 	mipmaps.resize(numMipmaps);
@@ -150,6 +150,9 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			NifStream( channels[i2].unknownByte1, out, info );
 		};
 	};
+	if ( info.version >= 0x14030006 ) {
+		NifStream( unknownByte1, out, info );
+	};
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*palette), out, info );
 	} else {
@@ -159,9 +162,6 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
-	if ( info.version >= 0x14030006 ) {
-		NifStream( unknownByte1, out, info );
-	};
 	NifStream( numMipmaps, out, info );
 	NifStream( bytesPerPixel, out, info );
 	for (unsigned int i1 = 0; i1 < mipmaps.size(); i1++) {
@@ -246,8 +246,8 @@ std::string NiPixelData::asString( bool verbose ) const {
 		out << "    Bits Per Channel:  " << channels[i1].bitsPerChannel << endl;
 		out << "    Unknown Byte 1:  " << channels[i1].unknownByte1 << endl;
 	};
-	out << "  Palette:  " << palette << endl;
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Palette:  " << palette << endl;
 	out << "  Num Mipmaps:  " << numMipmaps << endl;
 	out << "  Bytes Per Pixel:  " << bytesPerPixel << endl;
 	array_output_count = 0;

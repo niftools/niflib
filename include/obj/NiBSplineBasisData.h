@@ -19,7 +19,7 @@ namespace Niflib {
 class NiBSplineBasisData;
 typedef Ref<NiBSplineBasisData> NiBSplineBasisDataRef;
 
-/*! Unknown. */
+/*! Stores the number of control points of a B-spline. */
 class NiBSplineBasisData : public NiObject {
 public:
 	/*! Constructor */

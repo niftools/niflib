@@ -21,6 +21,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
+class NiPhysXTransformDest;
 class NiPhysXPropDesc;
 class NiPhysXProp;
 typedef Ref<NiPhysXProp> NiPhysXPropRef;
@@ -65,11 +66,15 @@ protected:
 	/*! Unknown */
 	float unknownFloat1;
 	/*! Unknown */
-	unsigned int unknownInt1;
+	mutable unsigned int unknownInt1;
 	/*! Unknown */
-	unsigned int unknownInt2;
+	vector<Ref > unknownRefs1;
+	/*! Number of NiPhysXTransformDest references */
+	mutable int numDests;
 	/*! Unknown */
-	byte unknownByte1;
+	vector<Ref<NiPhysXTransformDest > > transformDests;
+	/*! Unknown */
+	byte unknownByte;
 	/*! PhysX Property Description. */
 	Ref<NiPhysXPropDesc > propDescription;
 public:

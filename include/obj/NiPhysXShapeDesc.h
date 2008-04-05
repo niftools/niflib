@@ -92,6 +92,8 @@ protected:
 	int unknownInt7;
 	/*! Unknown */
 	int unknownInt8;
+	/*! Unknown. Wrong, but better than nothing. */
+	array<8,byte > unknownBytes1;
 	/*! PhysX Mesh Description */
 	Ref<NiPhysXMeshDesc > meshDescription;
 public:

@@ -24,7 +24,7 @@ class NiTransformData;
 class NiTransformInterpolator;
 typedef Ref<NiTransformInterpolator> NiTransformInterpolatorRef;
 
-/*! Unknown. */
+/*! An interpolator for transform keyframes. */
 class NiTransformInterpolator : public NiKeyBasedInterpolator {
 public:
 	/*! Constructor */

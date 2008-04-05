@@ -17,6 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../gen/QuaternionXYZW.h"
+#include "../gen/InertiaMatrix.h"
 #include "../Ref.h"
 namespace Niflib {
 
@@ -309,7 +310,7 @@ protected:
 	/*! Unknown. */
 	float unknownFloat02;
 	/*! Defines how the mass is distributed among the body. */
-	array<12,float > inertia;
+	InertiaMatrix inertia;
 	/*!
 	 * This seems to be used to relocate the object's center of mass. Useful for
 	 * balancing objects in contraints.

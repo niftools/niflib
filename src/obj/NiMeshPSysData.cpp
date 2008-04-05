@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NiPSysData::TYPE );
 
-NiMeshPSysData::NiMeshPSysData() : unknownModifier((unsigned int)0), unknownByte2((byte)0), numUnknownLinks((unsigned int)0), numVertices2((unsigned int)0), unknownByte3((byte)0), unknownInt2((unsigned int)1), numVertices3((unsigned int)0), unknownLink2(NULL) {
+NiMeshPSysData::NiMeshPSysData() : numVertices2((unsigned int)0), unknownByte3((byte)0), unknownInt2((unsigned int)1), numVertices3((unsigned int)0), unknownNode(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -44,27 +44,14 @@ void NiMeshPSysData::Read( istream& in, list<unsigned int> & link_stack, const N
 
 	unsigned int block_num;
 	NiPSysData::Read( in, link_stack, info );
-	if ( info.version <= 0x14000004 ) {
-		NifStream( unknownModifier, in, info );
-	};
-	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000004 ) ) {
-		NifStream( unknownByte2, in, info );
-		NifStream( numUnknownLinks, in, info );
-		unknownLinks.resize(numUnknownLinks);
-		for (unsigned int i2 = 0; i2 < unknownLinks.size(); i2++) {
-			NifStream( unknownLinks[i2], in, info );
-		};
-	};
-	if ( info.version >= 0x14000005 ) {
+	if ( info.version >= 0x0A020000 ) {
 		NifStream( numVertices2, in, info );
 		NifStream( unknownByte3, in, info );
 		NifStream( unknownInt2, in, info );
 		NifStream( numVertices3, in, info );
 	};
-	if ( info.version >= 0x0A020000 ) {
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-	};
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -75,34 +62,21 @@ void NiMeshPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--END CUSTOM CODE--//
 
 	NiPSysData::Write( out, link_map, info );
-	numUnknownLinks = (unsigned int)(unknownLinks.size());
-	if ( info.version <= 0x14000004 ) {
-		NifStream( unknownModifier, out, info );
-	};
-	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000004 ) ) {
-		NifStream( unknownByte2, out, info );
-		NifStream( numUnknownLinks, out, info );
-		for (unsigned int i2 = 0; i2 < unknownLinks.size(); i2++) {
-			NifStream( unknownLinks[i2], out, info );
-		};
-	};
-	if ( info.version >= 0x14000005 ) {
+	if ( info.version >= 0x0A020000 ) {
 		NifStream( numVertices2, out, info );
 		NifStream( unknownByte3, out, info );
 		NifStream( unknownInt2, out, info );
 		NifStream( numVertices3, out, info );
 	};
-	if ( info.version >= 0x0A020000 ) {
-		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*unknownLink2), out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownNode), out, info );
+	} else {
+		if ( unknownNode != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownNode) )->second, out, info );
 		} else {
-			if ( unknownLink2 != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
-			} else {
-				NifStream( 0xFFFFFFFF, out, info );
-			}
+			NifStream( 0xFFFFFFFF, out, info );
 		}
-	};
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -115,27 +89,11 @@ std::string NiMeshPSysData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysData::asString();
-	numUnknownLinks = (unsigned int)(unknownLinks.size());
-	out << "  Unknown Modifier:  " << unknownModifier << endl;
-	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
-	out << "  Num Unknown Links:  " << numUnknownLinks << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownLinks.size(); i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Links[" << i1 << "]:  " << unknownLinks[i1] << endl;
-		array_output_count++;
-	};
 	out << "  Num Vertices 2:  " << numVertices2 << endl;
 	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Num Vertices 3:  " << numVertices3 << endl;
-	out << "  Unknown Link 2:  " << unknownLink2 << endl;
+	out << "  Unknown Node:  " << unknownNode << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -147,9 +105,7 @@ void NiMeshPSysData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	//--END CUSTOM CODE--//
 
 	NiPSysData::FixLinks( objects, link_stack, info );
-	if ( info.version >= 0x0A020000 ) {
-		unknownLink2 = FixLink<NiNode>( objects, link_stack, info );
-	};
+	unknownNode = FixLink<NiNode>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -158,8 +114,8 @@ void NiMeshPSysData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 std::list<NiObjectRef> NiMeshPSysData::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiPSysData::GetRefs();
-	if ( unknownLink2 != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownLink2));
+	if ( unknownNode != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownNode));
 	return refs;
 }
 

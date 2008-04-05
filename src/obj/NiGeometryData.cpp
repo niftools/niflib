@@ -70,7 +70,7 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
+		if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
 			binormals.resize(numVertices);
 			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
 				NifStream( binormals[i3], in, info );
@@ -146,7 +146,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
+		if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
 			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
 				NifStream( binormals[i3], out, info );
 			};
@@ -237,7 +237,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	if ( (((hasNormals != 0)) && ((numUvSets & 61440))) ) {
+	if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < binormals.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

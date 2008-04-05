@@ -38,9 +38,9 @@ struct MultiTextureElement {
 	/*! This may be the UV set counting from 1 instead of zero. */
 	unsigned int uvSet_;
 	/*! 0? */
-	unsigned short ps2L;
-	/*! 0xFFB5? */
-	unsigned short ps2K;
+	short ps2L;
+	/*! -75? */
+	short ps2K;
 	/*! Unknown.  Usually 0 but sometimes 257 */
 	short unknownShort3;
 };

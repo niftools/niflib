@@ -19,7 +19,7 @@ namespace Niflib {
 class NiBSplineTransformInterpolator;
 typedef Ref<NiBSplineTransformInterpolator> NiBSplineTransformInterpolatorRef;
 
-/*! Unknown. */
+/*! An interpolator for storing transform keyframes via a B-spline. */
 class NiBSplineTransformInterpolator : public NiBSplineInterpolator {
 public:
 	/*! Constructor */

@@ -17,11 +17,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiExtraData.h"
 
 // Include structures
-#include "../Ref.h"
+#include "../gen/ArkTexture.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiTexturingProperty;
 class NiArkTextureExtraData;
 typedef Ref<NiArkTextureExtraData> NiArkTextureExtraDataRef;
 
@@ -69,15 +67,9 @@ protected:
 	/*! Unknown. */
 	int unknownInt2;
 	/*! Unknown. */
-	IndexString unknownString;
+	mutable int numTextures;
 	/*! Unknown. */
-	int unknownInt3;
-	/*! Unknown. */
-	int unknownInt4;
-	/*! Unknown. */
-	Ref<NiTexturingProperty > texturingProperty;
-	/*! Unknown. */
-	array<9,byte > unknownBytes;
+	vector<ArkTexture > textures;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

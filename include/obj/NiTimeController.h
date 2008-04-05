@@ -159,9 +159,10 @@ protected:
 	Ref<NiTimeController > nextController;
 	/*!
 	 * Controller flags (usually 0x000C). Probably controls loops.
-	 *              Bit 0-1 : unknown
-	 *              Bit 2 : if set, loop only once, otherwise loop infinitely?
-	 *              Bit 3 : enable animation?
+	 *              Bit 0 : Anim type, 0=APP_TIME 1=APP_INIT
+	 *              Bit 1-2 : Cycle type  00=Loop 01=Reverse 10=Loop
+	 *              Bit 3 : Active
+	 *              Bit 4 : Play backwards
 	 */
 	unsigned short flags;
 	/*! Frequency (is usually 1.0). */
@@ -177,6 +178,8 @@ protected:
 	 * object).
 	 */
 	NiObjectNET * target;
+	/*! Unknown integer. */
+	unsigned int unknownInteger;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

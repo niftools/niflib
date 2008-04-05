@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTimeController::TYPE("NiTimeController", &NiObject::TYPE );
 
-NiTimeController::NiTimeController() : nextController(NULL), flags((unsigned short)0), frequency(0.0f), phase(0.0f), startTime(0.0f), stopTime(0.0f), target(NULL) {
+NiTimeController::NiTimeController() : nextController(NULL), flags((unsigned short)0), frequency(0.0f), phase(0.0f), startTime(0.0f), stopTime(0.0f), target(NULL), unknownInteger((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -51,8 +51,13 @@ void NiTimeController::Read( istream& in, list<unsigned int> & link_stack, const
 	NifStream( phase, in, info );
 	NifStream( startTime, in, info );
 	NifStream( stopTime, in, info );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	if ( info.version >= 0x0303000D ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInteger, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -77,15 +82,20 @@ void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( phase, out, info );
 	NifStream( startTime, out, info );
 	NifStream( stopTime, out, info );
-	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*target), out, info );
-	} else {
-		if ( target != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
+	if ( info.version >= 0x0303000D ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*target), out, info );
 		} else {
-			NifStream( 0xFFFFFFFF, out, info );
+			if ( target != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		}
-	}
+	};
+	if ( info.version <= 0x03010000 ) {
+		NifStream( unknownInteger, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -105,6 +115,7 @@ std::string NiTimeController::asString( bool verbose ) const {
 	out << "  Start Time:  " << startTime << endl;
 	out << "  Stop Time:  " << stopTime << endl;
 	out << "  Target:  " << target << endl;
+	out << "  Unknown Integer:  " << unknownInteger << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -117,7 +128,9 @@ void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 
 	NiObject::FixLinks( objects, link_stack, info );
 	nextController = FixLink<NiTimeController>( objects, link_stack, info );
-	target = FixLink<NiObjectNET>( objects, link_stack, info );
+	if ( info.version >= 0x0303000D ) {
+		target = FixLink<NiObjectNET>( objects, link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

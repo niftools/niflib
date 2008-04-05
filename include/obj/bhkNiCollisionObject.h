@@ -71,8 +71,8 @@ public:
    NIFLIB_API void SetBody( NiObject * value );
 	//--END CUSTOM CODE--//
 protected:
-	/*! Set to "1" for most objects. */
-	unsigned short unknownShort;
+	/*! Set to "1" for most objects. Bits: 0=Active 2=Notify 3=Set Local 6=Reset */
+	unsigned short flags;
 	/*! Links to the collision object data */
 	Ref<NiObject > body;
 public:

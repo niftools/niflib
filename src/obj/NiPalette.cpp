@@ -14,12 +14,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPalette.h"
+#include "../../include/gen/ByteColor4.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPalette::TYPE("NiPalette", &NiObject::TYPE );
 
-NiPalette::NiPalette() : unknownByte((byte)0), numEntries_((unsigned int)0) {
+NiPalette::NiPalette() : unknownByte((byte)0), numEntries((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -43,11 +44,12 @@ void NiPalette::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 
 	NiObject::Read( in, link_stack, info );
 	NifStream( unknownByte, in, info );
-	NifStream( numEntries_, in, info );
+	NifStream( numEntries, in, info );
 	for (unsigned int i1 = 0; i1 < 256; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( palette[i1][i2], in, info );
-		};
+		NifStream( palette[i1].r, in, info );
+		NifStream( palette[i1].g, in, info );
+		NifStream( palette[i1].b, in, info );
+		NifStream( palette[i1].a, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -60,11 +62,12 @@ void NiPalette::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 
 	NiObject::Write( out, link_map, info );
 	NifStream( unknownByte, out, info );
-	NifStream( numEntries_, out, info );
+	NifStream( numEntries, out, info );
 	for (unsigned int i1 = 0; i1 < 256; i1++) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( palette[i1][i2], out, info );
-		};
+		NifStream( palette[i1].r, out, info );
+		NifStream( palette[i1].g, out, info );
+		NifStream( palette[i1].b, out, info );
+		NifStream( palette[i1].a, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -79,20 +82,17 @@ std::string NiPalette::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Unknown Byte:  " << unknownByte << endl;
-	out << "  Num Entries?:  " << numEntries_ << endl;
+	out << "  Num Entries:  " << numEntries << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 256; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Palette[" << i2 << "]:  " << palette[i1][i2] << endl;
-			array_output_count++;
-		};
+		out << "    r:  " << palette[i1].r << endl;
+		out << "    g:  " << palette[i1].g << endl;
+		out << "    b:  " << palette[i1].b << endl;
+		out << "    a:  " << palette[i1].a << endl;
 	};
 	return out.str();
 

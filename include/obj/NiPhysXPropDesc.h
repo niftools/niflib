@@ -18,11 +18,12 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../Ref.h"
+#include "../gen/physXMaterialRef.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiPhysXActorDesc;
-class NiPhysXMaterialDesc;
+class NiPhysXD6JointDesc;
 class NiPhysXPropDesc;
 typedef Ref<NiPhysXPropDesc> NiPhysXPropDescRef;
 
@@ -63,24 +64,22 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
+	/*! Number of NiPhysXActorDesc references */
+	mutable int numDests;
 	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! PhysX Actor Description */
-	Ref<NiPhysXActorDesc > actorDescription;
+	vector<Ref<NiPhysXActorDesc > > actorDescs;
+	/*! Unknown */
+	mutable unsigned int numJoints;
+	/*! PhysX Joint Descriptions */
+	vector<Ref<NiPhysXD6JointDesc > > jointDescs;
+	/*! Unknown */
+	int unknownInt1;
+	/*! Unknown */
+	mutable unsigned int numMaterials;
+	/*! PhysX Material Descriptions */
+	vector<physXMaterialRef > materialDescs;
 	/*! Unknown */
 	unsigned int unknownInt2;
-	/*! Unknown */
-	unsigned int unknownInt3;
-	/*! Unknown */
-	unsigned int unknownInt4;
-	/*! Unknown */
-	byte unknownByte1;
-	/*! Unknown */
-	byte unknownByte2;
-	/*! PhysX Material Description */
-	Ref<NiPhysXMaterialDesc > materialDescription;
-	/*! Unknown */
-	unsigned int unknownInt5;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkNiCollisionObject::TYPE("bhkNiCollisionObject", &NiCollisionObject::TYPE );
 
-bhkNiCollisionObject::bhkNiCollisionObject() : unknownShort((unsigned short)1), body(NULL) {
+bhkNiCollisionObject::bhkNiCollisionObject() : flags((unsigned short)1), body(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -44,11 +44,9 @@ void bhkNiCollisionObject::Read( istream& in, list<unsigned int> & link_stack, c
 
 	unsigned int block_num;
 	NiCollisionObject::Read( in, link_stack, info );
-	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownShort, in, info );
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-	};
+	NifStream( flags, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -59,18 +57,16 @@ void bhkNiCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned i
 	//--END CUSTOM CODE--//
 
 	NiCollisionObject::Write( out, link_map, info );
-	if ( info.version >= 0x14000004 ) {
-		NifStream( unknownShort, out, info );
-		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*body), out, info );
+	NifStream( flags, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*body), out, info );
+	} else {
+		if ( body != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
 		} else {
-			if ( body != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
-			} else {
-				NifStream( 0xFFFFFFFF, out, info );
-			}
+			NifStream( 0xFFFFFFFF, out, info );
 		}
-	};
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -83,7 +79,7 @@ std::string bhkNiCollisionObject::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiCollisionObject::asString();
-	out << "  Unknown Short:  " << unknownShort << endl;
+	out << "  Flags:  " << flags << endl;
 	out << "  Body:  " << body << endl;
 	return out.str();
 
@@ -96,9 +92,7 @@ void bhkNiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiCollisionObject::FixLinks( objects, link_stack, info );
-	if ( info.version >= 0x14000004 ) {
-		body = FixLink<NiObject>( objects, link_stack, info );
-	};
+	body = FixLink<NiObject>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

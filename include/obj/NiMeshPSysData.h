@@ -60,21 +60,6 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Unknown. Seems to refer to particle modifiers, however at least one file has a
-	 * NiNode here.  May indicate that this is really two separate links in different
-	 * versions or some other problem.  Several files have number of verts here.
-	 */
-	unsigned int unknownModifier;
-	/*! Unknown. */
-	byte unknownByte2;
-	/*! The number of unknown links that follow. */
-	mutable unsigned int numUnknownLinks;
-	/*!
-	 * Unknown. Seems to refer to particle modifiers.  Sometimes matches vertices
-	 * count.
-	 */
-	vector<unsigned int > unknownLinks;
 	/*! Repeat of Vertex Count? */
 	unsigned int numVertices2;
 	/*! Unknown. 0? */
@@ -83,8 +68,8 @@ protected:
 	unsigned int unknownInt2;
 	/*! Repeat of Vertex Count? */
 	unsigned int numVertices3;
-	/*! Links to a NiNode; but this NiNode doesn't seem to be a mesh? */
-	Ref<NiNode > unknownLink2;
+	/*! Unknown NiNode. */
+	Ref<NiNode > unknownNode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

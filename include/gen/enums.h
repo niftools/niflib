@@ -341,8 +341,10 @@ ostream & operator<<( ostream & out, ApplyMode const & val );
  *         9+: Keyframed?
  */
 enum MotionSystem {
+	MO_SYS_SPHERE = 2, /*!< Sphere */
 	MO_SYS_BOX = 4, /*!< Box */
-	MO_SYS_KEYFRAMED = 7, /*!< Keyframed */
+	MO_SYS_KEYFRAMED_BIPED = 6, /*!< Keyframed (used for creatures) */
+	MO_SYS_KEYFRAMED = 7, /*!< Keyframed (used for weapons) */
 };
 
 ostream & operator<<( ostream & out, MotionSystem const & val );
@@ -354,6 +356,7 @@ enum BillboardMode {
 	RIGID_FACE_CAMERA = 2, /*!< Rigid Face Camera. */
 	ALWAYS_FACE_CENTER = 3, /*!< Always Face Center. */
 	RIGID_FACE_CENTER = 4, /*!< Rigid Face Center. */
+	ROTATE_ABOUT_UP2 = 9, /*!< The billboard will only rotate around the up axis (same as ROTATE_ABOUT_UP?). */
 };
 
 ostream & operator<<( ostream & out, BillboardMode const & val );

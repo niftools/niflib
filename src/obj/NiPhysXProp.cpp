@@ -15,13 +15,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPhysXProp.h"
+#include "../../include/obj/NiPhysXTransformDest.h"
 #include "../../include/obj/NiPhysXPropDesc.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPhysXProp::TYPE("NiPhysXProp", &NiObjectNET::TYPE );
 
-NiPhysXProp::NiPhysXProp() : unknownFloat1(0.0f), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownByte1((byte)0), propDescription(NULL) {
+NiPhysXProp::NiPhysXProp() : unknownFloat1(0.0f), unknownInt1((unsigned int)0), numDests((int)0), unknownByte((byte)0), propDescription(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -50,8 +51,18 @@ void NiPhysXProp::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	NiObjectNET::Read( in, link_stack, info );
 	NifStream( unknownFloat1, in, info );
 	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownByte1, in, info );
+	unknownRefs1.resize(unknownInt1);
+	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	NifStream( numDests, in, info );
+	transformDests.resize(numDests);
+	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	NifStream( unknownByte, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 
@@ -66,10 +77,34 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	//--END CUSTOM CODE--//
 
 	NiObjectNET::Write( out, link_map, info );
+	numDests = (int)(transformDests.size());
+	unknownInt1 = (unsigned int)(unknownRefs1.size());
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownByte1, out, info );
+	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*unknownRefs1[i1]), out, info );
+		} else {
+			if ( unknownRefs1[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(unknownRefs1[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
+	};
+	NifStream( numDests, out, info );
+	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*transformDests[i1]), out, info );
+		} else {
+			if ( transformDests[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(transformDests[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
+	};
+	NifStream( unknownByte, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*propDescription), out, info );
 	} else {
@@ -93,10 +128,36 @@ std::string NiPhysXProp::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObjectNET::asString();
+	numDests = (int)(transformDests.size());
+	unknownInt1 = (unsigned int)(unknownRefs1.size());
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Refs 1[" << i1 << "]:  " << unknownRefs1[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Num Dests:  " << numDests << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Transform Dests[" << i1 << "]:  " << transformDests[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Prop Description:  " << propDescription << endl;
 	return out.str();
 
@@ -111,6 +172,12 @@ void NiPhysXProp::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 	//--END CUSTOM CODE--//
 
 	NiObjectNET::FixLinks( objects, link_stack, info );
+	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
+		unknownRefs1[i1] = FixLink<>( objects, link_stack, info );
+	};
+	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
+		transformDests[i1] = FixLink<NiPhysXTransformDest>( objects, link_stack, info );
+	};
 	propDescription = FixLink<NiPhysXPropDesc>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -121,6 +188,14 @@ void NiPhysXProp::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 std::list<NiObjectRef> NiPhysXProp::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObjectNET::GetRefs();
+	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
+		if ( unknownRefs1[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(unknownRefs1[i1]));
+	};
+	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
+		if ( transformDests[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(transformDests[i1]));
+	};
 	if ( propDescription != NULL )
 		refs.push_back(StaticCast<NiObject>(propDescription));
 	return refs;

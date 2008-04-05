@@ -46,6 +46,11 @@ void NiPhysXKinematicSrc::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 
 	NiObject::Read( in, link_stack, info );
+	if ( info.version >= 0x14030006 ) {
+		for (unsigned int i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownBytes[i2], in, info );
+		};
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -58,6 +63,11 @@ void NiPhysXKinematicSrc::Write( ostream& out, const map<NiObjectRef,unsigned in
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
+	if ( info.version >= 0x14030006 ) {
+		for (unsigned int i2 = 0; i2 < 6; i2++) {
+			NifStream( unknownBytes[i2], out, info );
+		};
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -72,6 +82,18 @@ std::string NiPhysXKinematicSrc::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 6; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Bytes[" << i1 << "]:  " << unknownBytes[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

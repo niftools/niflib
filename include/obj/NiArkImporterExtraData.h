@@ -58,8 +58,10 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	int unknownInt;
-	/*! Contains "Gamebryo_1_1" */
+	int unknownInt1;
+	/*! Unknown. */
+	int unknownInt2;
+	/*! Contains a string like "Gamebryo_1_1" or "4.1.0.12" */
 	IndexString importerName;
 	/*! Unknown. */
 	array<13,byte > unknownBytes;

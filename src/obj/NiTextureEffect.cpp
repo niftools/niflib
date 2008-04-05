@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NiDynamicEffect::TYPE );
 
-NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((unsigned short)0), ps2K((unsigned short)0), unknownShort((unsigned short)0) {
+NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

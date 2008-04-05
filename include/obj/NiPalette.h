@@ -14,6 +14,9 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"
+
+// Include structures
+#include "../gen/ByteColor4.h"
 namespace Niflib {
 
 class NiPalette;
@@ -70,12 +73,12 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown, always = 0. */
+	/*! Unknown, Usually = 0. */
 	byte unknownByte;
-	/*! The number of palette entries?  Always = 256. */
-	unsigned int numEntries_;
+	/*! The number of palette entries.  Always = 256. */
+	unsigned int numEntries;
 	/*! The color palette. */
-	array< 256, array<4,byte > > palette;
+	array<256,ByteColor4 > palette;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -38,9 +38,9 @@ struct TexDesc {
 	/*! The texture coordinate set in NiGeometryData that this texture slot will use. */
 	unsigned int uvSet;
 	/*! 0? */
-	unsigned short ps2L;
-	/*! 0xFFB5? */
-	unsigned short ps2K;
+	short ps2L;
+	/*! -75? */
+	short ps2K;
 	/*! Unknown, 0 or 0x0101? */
 	unsigned short unknown1;
 	/*! Determines whether or not the texture's coordinates are transformed. */

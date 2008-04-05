@@ -43,7 +43,7 @@ void NiSpotLight::Read( istream& in, list<unsigned int> & link_stack, const NifI
 
 	NiPointLight::Read( in, link_stack, info );
 	NifStream( cutoffAngle, in, info );
-	if ( info.version >= 0x14030006 ) {
+	if ( info.version >= 0x14030001 ) {
 		NifStream( unknownFloat, in, info );
 	};
 	NifStream( exponent, in, info );
@@ -58,7 +58,7 @@ void NiSpotLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 
 	NiPointLight::Write( out, link_map, info );
 	NifStream( cutoffAngle, out, info );
-	if ( info.version >= 0x14030006 ) {
+	if ( info.version >= 0x14030001 ) {
 		NifStream( unknownFloat, out, info );
 	};
 	NifStream( exponent, out, info );

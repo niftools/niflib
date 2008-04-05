@@ -15,6 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkRigidBody.h"
 #include "../../include/gen/QuaternionXYZW.h"
+#include "../../include/gen/InertiaMatrix.h"
 #include "../../include/obj/bhkConstraint.h"
 using namespace Niflib;
 
@@ -48,15 +49,13 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( unknown5Floats[i1], in, info );
 	};
-	if ( info.version >= 0x14000004 ) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknown4Shorts[i2], in, info );
-		};
-		NifStream( layerCopy, in, info );
-		NifStream( colFilterCopy, in, info );
-		for (unsigned int i2 = 0; i2 < 7; i2++) {
-			NifStream( unknown7Shorts[i2], in, info );
-		};
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
+		NifStream( unknown4Shorts[i1], in, info );
+	};
+	NifStream( layerCopy, in, info );
+	NifStream( colFilterCopy, in, info );
+	for (unsigned int i1 = 0; i1 < 7; i1++) {
+		NifStream( unknown7Shorts[i1], in, info );
 	};
 	NifStream( translation, in, info );
 	NifStream( unknownFloat00, in, info );
@@ -68,9 +67,18 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	NifStream( unknownFloat01, in, info );
 	NifStream( angularVelocity, in, info );
 	NifStream( unknownFloat02, in, info );
-	for (unsigned int i1 = 0; i1 < 12; i1++) {
-		NifStream( inertia[i1], in, info );
-	};
+	NifStream( inertia.m11, in, info );
+	NifStream( inertia.m12, in, info );
+	NifStream( inertia.m13, in, info );
+	NifStream( inertia.m14, in, info );
+	NifStream( inertia.m21, in, info );
+	NifStream( inertia.m22, in, info );
+	NifStream( inertia.m23, in, info );
+	NifStream( inertia.m24, in, info );
+	NifStream( inertia.m31, in, info );
+	NifStream( inertia.m32, in, info );
+	NifStream( inertia.m33, in, info );
+	NifStream( inertia.m34, in, info );
 	NifStream( center, in, info );
 	NifStream( unknownFloat03, in, info );
 	NifStream( mass, in, info );
@@ -109,15 +117,13 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		NifStream( unknown5Floats[i1], out, info );
 	};
-	if ( info.version >= 0x14000004 ) {
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( unknown4Shorts[i2], out, info );
-		};
-		NifStream( layerCopy, out, info );
-		NifStream( colFilterCopy, out, info );
-		for (unsigned int i2 = 0; i2 < 7; i2++) {
-			NifStream( unknown7Shorts[i2], out, info );
-		};
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
+		NifStream( unknown4Shorts[i1], out, info );
+	};
+	NifStream( layerCopy, out, info );
+	NifStream( colFilterCopy, out, info );
+	for (unsigned int i1 = 0; i1 < 7; i1++) {
+		NifStream( unknown7Shorts[i1], out, info );
 	};
 	NifStream( translation, out, info );
 	NifStream( unknownFloat00, out, info );
@@ -129,9 +135,18 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	NifStream( unknownFloat01, out, info );
 	NifStream( angularVelocity, out, info );
 	NifStream( unknownFloat02, out, info );
-	for (unsigned int i1 = 0; i1 < 12; i1++) {
-		NifStream( inertia[i1], out, info );
-	};
+	NifStream( inertia.m11, out, info );
+	NifStream( inertia.m12, out, info );
+	NifStream( inertia.m13, out, info );
+	NifStream( inertia.m14, out, info );
+	NifStream( inertia.m21, out, info );
+	NifStream( inertia.m22, out, info );
+	NifStream( inertia.m23, out, info );
+	NifStream( inertia.m24, out, info );
+	NifStream( inertia.m31, out, info );
+	NifStream( inertia.m32, out, info );
+	NifStream( inertia.m33, out, info );
+	NifStream( inertia.m34, out, info );
 	NifStream( center, out, info );
 	NifStream( unknownFloat03, out, info );
 	NifStream( mass, out, info );
@@ -223,18 +238,18 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 	out << "  Unknown Float 01:  " << unknownFloat01 << endl;
 	out << "  Angular Velocity:  " << angularVelocity << endl;
 	out << "  Unknown Float 02:  " << unknownFloat02 << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 12; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Inertia[" << i1 << "]:  " << inertia[i1] << endl;
-		array_output_count++;
-	};
+	out << "  m11:  " << inertia.m11 << endl;
+	out << "  m12:  " << inertia.m12 << endl;
+	out << "  m13:  " << inertia.m13 << endl;
+	out << "  m14:  " << inertia.m14 << endl;
+	out << "  m21:  " << inertia.m21 << endl;
+	out << "  m22:  " << inertia.m22 << endl;
+	out << "  m23:  " << inertia.m23 << endl;
+	out << "  m24:  " << inertia.m24 << endl;
+	out << "  m31:  " << inertia.m31 << endl;
+	out << "  m32:  " << inertia.m32 << endl;
+	out << "  m33:  " << inertia.m33 << endl;
+	out << "  m34:  " << inertia.m34 << endl;
 	out << "  Center:  " << center << endl;
 	out << "  Unknown Float 03:  " << unknownFloat03 << endl;
 	out << "  Mass:  " << mass << endl;

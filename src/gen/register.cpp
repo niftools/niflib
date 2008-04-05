@@ -259,6 +259,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiPhysXProp.h"
 #include "../../include/obj/NiPhysXPropDesc.h"
 #include "../../include/obj/NiPhysXActorDesc.h"
+#include "../../include/obj/NiPhysXBodyDesc.h"
+#include "../../include/obj/NiPhysXD6JointDesc.h"
 #include "../../include/obj/NiPhysXShapeDesc.h"
 #include "../../include/obj/NiPhysXMeshDesc.h"
 #include "../../include/obj/NiPhysXMaterialDesc.h"
@@ -269,6 +271,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiArkTextureExtraData.h"
 #include "../../include/obj/NiArkViewportInfoExtraData.h"
 #include "../../include/obj/NiArkShaderExtraData.h"
+#include "../../include/obj/NiLines.h"
+#include "../../include/obj/NiLinesData.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -526,6 +530,8 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiPhysXProp", NiPhysXProp::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXPropDesc", NiPhysXPropDesc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXActorDesc", NiPhysXActorDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXBodyDesc", NiPhysXBodyDesc::Create );
+		ObjectRegistry::RegisterObject( "NiPhysXD6JointDesc", NiPhysXD6JointDesc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXShapeDesc", NiPhysXShapeDesc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXMeshDesc", NiPhysXMeshDesc::Create );
 		ObjectRegistry::RegisterObject( "NiPhysXMaterialDesc", NiPhysXMaterialDesc::Create );
@@ -536,6 +542,8 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiArkTextureExtraData", NiArkTextureExtraData::Create );
 		ObjectRegistry::RegisterObject( "NiArkViewportInfoExtraData", NiArkViewportInfoExtraData::Create );
 		ObjectRegistry::RegisterObject( "NiArkShaderExtraData", NiArkShaderExtraData::Create );
+		ObjectRegistry::RegisterObject( "NiLines", NiLines::Create );
+		ObjectRegistry::RegisterObject( "NiLinesData", NiLinesData::Create );
 
 	}
 }

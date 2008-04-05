@@ -229,9 +229,9 @@ protected:
 	/*! Unknown. 0? */
 	float unknownFloat;
 	/*! 0? */
-	unsigned short ps2L;
-	/*! 0xFFB5? */
-	unsigned short ps2K;
+	short ps2L;
+	/*! -75? */
+	short ps2K;
 	/*! Unknown: 0. */
 	unsigned short unknownShort;
 public:

@@ -140,7 +140,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (((skinPartitionBlocks[i1].hasFaces != 0)) && ((skinPartitionBlocks[i1].numStrips != 0))) ) {
+			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips != 0)) ) {
 				skinPartitionBlocks[i1].strips.resize(skinPartitionBlocks[i1].numStrips);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].strips.size(); i4++) {
 					skinPartitionBlocks[i1].strips[i4].resize(skinPartitionBlocks[i1].stripLengths[i4]);
@@ -159,7 +159,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (((skinPartitionBlocks[i1].hasFaces != 0)) && ((skinPartitionBlocks[i1].numStrips == 0))) ) {
+			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips == 0)) ) {
 				skinPartitionBlocks[i1].triangles.resize(skinPartitionBlocks[i1].numTriangles);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].triangles.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].triangles[i4], in, info );
@@ -253,7 +253,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (((skinPartitionBlocks[i1].hasFaces != 0)) && ((skinPartitionBlocks[i1].numStrips != 0))) ) {
+			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips != 0)) ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].strips.size(); i4++) {
 					for (unsigned int i5 = 0; i5 < skinPartitionBlocks[i1].stripLengths[i4]; i5++) {
 						NifStream( skinPartitionBlocks[i1].strips[i4][i5], out, info );
@@ -269,7 +269,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (((skinPartitionBlocks[i1].hasFaces != 0)) && ((skinPartitionBlocks[i1].numStrips == 0))) ) {
+			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips == 0)) ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].triangles.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].triangles[i4], out, info );
 				};

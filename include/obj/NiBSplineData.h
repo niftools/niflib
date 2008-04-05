@@ -19,7 +19,7 @@ namespace Niflib {
 class NiBSplineData;
 typedef Ref<NiBSplineData> NiBSplineDataRef;
 
-/*! Unknown. */
+/*! B-spline data points as floats, or as shorts for compressed B-splines. */
 class NiBSplineData : public NiObject {
 public:
 	/*! Constructor */

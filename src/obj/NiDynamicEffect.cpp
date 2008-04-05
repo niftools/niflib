@@ -44,7 +44,7 @@ void NiDynamicEffect::Read( istream& in, list<unsigned int> & link_stack, const 
 
 	unsigned int block_num;
 	NiAVObject::Read( in, link_stack, info );
-	if ( info.version >= 0x0A020000 ) {
+	if ( info.version >= 0x0A01006A ) {
 		NifStream( switchState, in, info );
 	};
 	if ( info.version <= 0x04000002 ) {
@@ -78,7 +78,7 @@ void NiDynamicEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NiAVObject::Write( out, link_map, info );
 	numAffectedNodes = (unsigned int)(affectedNodes.size());
 	numAffectedNodeListPointers = (unsigned int)(affectedNodeListPointers.size());
-	if ( info.version >= 0x0A020000 ) {
+	if ( info.version >= 0x0A01006A ) {
 		NifStream( switchState, out, info );
 	};
 	if ( info.version <= 0x04000002 ) {

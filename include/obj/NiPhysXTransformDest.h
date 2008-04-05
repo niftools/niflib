@@ -17,10 +17,12 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiObject.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiNode;
 class NiPhysXTransformDest;
 typedef Ref<NiPhysXTransformDest> NiPhysXTransformDestRef;
 
-/*! Unknown node. */
+/*! Unknown PhysX node. */
 class NiPhysXTransformDest : public NiObject {
 public:
 	/*! Constructor */
@@ -56,6 +58,13 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
+protected:
+	/*! Unknown. =1? */
+	byte unknownByte1;
+	/*! Unknown. =0 */
+	byte unknownByte2;
+	/*! Affected node? */
+	NiNode * node;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

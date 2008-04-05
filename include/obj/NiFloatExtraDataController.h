@@ -57,6 +57,12 @@ public:
 protected:
 	/*! Refers to a NiFloatExtraData name. */
 	IndexString controllerData;
+	/*! Number of extra bytes. */
+	mutable byte numExtraBytes;
+	/*! Unknown. */
+	array<7,byte > unknownBytes;
+	/*! Unknown. */
+	vector<byte > unknownExtraBytes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

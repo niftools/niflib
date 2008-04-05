@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiFloatExtraDataController::TYPE("NiFloatExtraDataController", &NiExtraDataController::TYPE );
 
-NiFloatExtraDataController::NiFloatExtraDataController() {
+NiFloatExtraDataController::NiFloatExtraDataController() : numExtraBytes((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,7 +42,19 @@ void NiFloatExtraDataController::Read( istream& in, list<unsigned int> & link_st
 	//--END CUSTOM CODE--//
 
 	NiExtraDataController::Read( in, link_stack, info );
-	NifStream( controllerData, in, info );
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( controllerData, in, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( numExtraBytes, in, info );
+		for (unsigned int i2 = 0; i2 < 7; i2++) {
+			NifStream( unknownBytes[i2], in, info );
+		};
+		unknownExtraBytes.resize(numExtraBytes);
+		for (unsigned int i2 = 0; i2 < unknownExtraBytes.size(); i2++) {
+			NifStream( unknownExtraBytes[i2], in, info );
+		};
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -53,7 +65,19 @@ void NiFloatExtraDataController::Write( ostream& out, const map<NiObjectRef,unsi
 	//--END CUSTOM CODE--//
 
 	NiExtraDataController::Write( out, link_map, info );
-	NifStream( controllerData, out, info );
+	numExtraBytes = (byte)(unknownExtraBytes.size());
+	if ( info.version >= 0x0A020000 ) {
+		NifStream( controllerData, out, info );
+	};
+	if ( info.version <= 0x0A010000 ) {
+		NifStream( numExtraBytes, out, info );
+		for (unsigned int i2 = 0; i2 < 7; i2++) {
+			NifStream( unknownBytes[i2], out, info );
+		};
+		for (unsigned int i2 = 0; i2 < unknownExtraBytes.size(); i2++) {
+			NifStream( unknownExtraBytes[i2], out, info );
+		};
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -66,7 +90,33 @@ std::string NiFloatExtraDataController::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraDataController::asString();
+	numExtraBytes = (byte)(unknownExtraBytes.size());
 	out << "  Controller Data:  " << controllerData << endl;
+	out << "  Num Extra Bytes:  " << numExtraBytes << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 7; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Bytes[" << i1 << "]:  " << unknownBytes[i1] << endl;
+		array_output_count++;
+	};
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < unknownExtraBytes.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Extra Bytes[" << i1 << "]:  " << unknownExtraBytes[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

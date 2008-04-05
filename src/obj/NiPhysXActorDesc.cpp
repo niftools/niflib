@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPhysXActorDesc::TYPE("NiPhysXActorDesc", &NiObject::TYPE );
 
-NiPhysXActorDesc::NiPhysXActorDesc() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownInt4(0.0f), unknownInt5((int)0), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((int)0), shapeDescription(NULL), unknownRef1(NULL), unknownRef2(NULL), unknownRef3(NULL) {
+NiPhysXActorDesc::NiPhysXActorDesc() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownInt4(0.0f), unknownInt5((int)0), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((int)0), shapeDescription(NULL), unknownRef1(NULL), unknownRef2(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -66,8 +66,11 @@ void NiPhysXActorDesc::Read( istream& in, list<unsigned int> & link_stack, const
 	link_stack.push_back( block_num );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	unknownRefs3.resize(unknownInt6);
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -80,6 +83,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
+	unknownInt6 = (int)(unknownRefs3.size());
 	NifStream( unknownInt1, out, info );
 	NifStream( unknownInt2, out, info );
 	NifStream( unknownQuat1, out, info );
@@ -118,15 +122,17 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 			NifStream( 0xFFFFFFFF, out, info );
 		}
 	}
-	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownRef3), out, info );
-	} else {
-		if ( unknownRef3 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownRef3) )->second, out, info );
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*unknownRefs3[i1]), out, info );
 		} else {
-			NifStream( 0xFFFFFFFF, out, info );
+			if ( unknownRefs3[i1] != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(unknownRefs3[i1]) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		}
-	}
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -141,6 +147,7 @@ std::string NiPhysXActorDesc::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
+	unknownInt6 = (int)(unknownRefs3.size());
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Unknown Quat 1:  " << unknownQuat1 << endl;
@@ -155,7 +162,18 @@ std::string NiPhysXActorDesc::asString( bool verbose ) const {
 	out << "  Shape Description:  " << shapeDescription << endl;
 	out << "  Unknown Ref 1:  " << unknownRef1 << endl;
 	out << "  Unknown Ref 2:  " << unknownRef2 << endl;
-	out << "  Unknown Ref 3:  " << unknownRef3 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Refs 3[" << i1 << "]:  " << unknownRefs3[i1] << endl;
+		array_output_count++;
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -172,7 +190,9 @@ void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	shapeDescription = FixLink<NiPhysXShapeDesc>( objects, link_stack, info );
 	unknownRef1 = FixLink<NiObject>( objects, link_stack, info );
 	unknownRef2 = FixLink<NiObject>( objects, link_stack, info );
-	unknownRef3 = FixLink<NiObject>( objects, link_stack, info );
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+		unknownRefs3[i1] = FixLink<NiObject>( objects, link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -188,8 +208,10 @@ std::list<NiObjectRef> NiPhysXActorDesc::GetRefs() const {
 		refs.push_back(StaticCast<NiObject>(unknownRef1));
 	if ( unknownRef2 != NULL )
 		refs.push_back(StaticCast<NiObject>(unknownRef2));
-	if ( unknownRef3 != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownRef3));
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+		if ( unknownRefs3[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(unknownRefs3[i1]));
+	};
 	return refs;
 }
 

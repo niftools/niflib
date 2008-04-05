@@ -84,7 +84,7 @@ protected:
 	/*! Unknown */
 	byte unknownByte2;
 	/*! Unknown */
-	int unknownInt6;
+	mutable int unknownInt6;
 	/*! PhysX Shape Description */
 	Ref<NiPhysXShapeDesc > shapeDescription;
 	/*! Unknown */
@@ -92,7 +92,7 @@ protected:
 	/*! Unknown */
 	Ref<NiObject > unknownRef2;
 	/*! Unknown */
-	Ref<NiObject > unknownRef3;
+	vector<Ref<NiObject > > unknownRefs3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -25,7 +25,7 @@ class NiBSplineBasisData;
 class NiBSplineInterpolator;
 typedef Ref<NiBSplineInterpolator> NiBSplineInterpolatorRef;
 
-/*! A B-spline (component?) interpolator. */
+/*! For interpolators storing data via a B-spline. */
 class NiBSplineInterpolator : public NiInterpolator {
 public:
 	/*! Constructor */

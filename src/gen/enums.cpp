@@ -601,7 +601,9 @@ void NifStream( MotionSystem const & val, ostream& out, const NifInfo & info ) {
 
 ostream & operator<<( ostream & out, MotionSystem const & val ) {
 	switch ( val ) {
+		case MO_SYS_SPHERE: return out << "MO_SYS_SPHERE";
 		case MO_SYS_BOX: return out << "MO_SYS_BOX";
+		case MO_SYS_KEYFRAMED_BIPED: return out << "MO_SYS_KEYFRAMED_BIPED";
 		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
@@ -627,6 +629,7 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 		case RIGID_FACE_CAMERA: return out << "RIGID_FACE_CAMERA";
 		case ALWAYS_FACE_CENTER: return out << "ALWAYS_FACE_CENTER";
 		case RIGID_FACE_CENTER: return out << "RIGID_FACE_CENTER";
+		case ROTATE_ABOUT_UP2: return out << "ROTATE_ABOUT_UP2";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
