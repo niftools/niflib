@@ -123,10 +123,10 @@ vector<Color4> NiPalette::GetPalette() const {
 
 	for ( unsigned int i = 0; i < 256; ++i ) {
 		
-		color_pal[i].r = float(palette[i][0]) / 255.0f;
-		color_pal[i].g = float(palette[i][1]) / 255.0f;
-		color_pal[i].b = float(palette[i][2]) / 255.0f;
-		color_pal[i].a = float(palette[i][3]) / 255.0f;
+		color_pal[i].r = float(palette[i].r) / 255.0f;
+		color_pal[i].g = float(palette[i].g) / 255.0f;
+		color_pal[i].b = float(palette[i].b) / 255.0f;
+		color_pal[i].a = float(palette[i].a) / 255.0f;
 	}
 
 	return color_pal;
@@ -138,10 +138,10 @@ void NiPalette::SetPalette( const vector<Color4> & new_pal ) {
 	}
 
 	for ( unsigned int i = 0; i < 256; ++i ) {
-		palette[i][0] = int( new_pal[i].r * 255.0f );
-		palette[i][1] = int( new_pal[i].g * 255.0f );
-		palette[i][2] = int( new_pal[i].b * 255.0f );
-		palette[i][3] = int( new_pal[i].a * 255.0f );
+		palette[i].r = int( new_pal[i].r * 255.0f );
+		palette[i].g = int( new_pal[i].g * 255.0f );
+		palette[i].b = int( new_pal[i].b * 255.0f );
+		palette[i].a = int( new_pal[i].a * 255.0f );
 	}
 }
 

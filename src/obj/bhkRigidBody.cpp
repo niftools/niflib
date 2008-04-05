@@ -353,11 +353,35 @@ void bhkRigidBody::SetAngularVelocity( const Vector3 & value ) {
 }
 
 array<12,float>  bhkRigidBody::GetInertia() const {
+	array<12, float> result;
+	result[0] = inertia.m11;
+	result[1] = inertia.m12;
+	result[2] = inertia.m13;
+	result[3] = inertia.m14;
+	result[4] = inertia.m21;
+	result[5] = inertia.m22;
+	result[6] = inertia.m23;
+	result[7] = inertia.m24;
+	result[8] = inertia.m31;
+	result[9] = inertia.m32;
+	result[10] = inertia.m33;
+	result[11] = inertia.m34;
 	return inertia;
 }
 
 void bhkRigidBody::SetInertia( const array<12,float>&  value ) {
-	inertia = value;
+	inertia.m11 = value[0];
+	inertia.m12 = value[1];
+	inertia.m13 = value[2];
+	inertia.m14 = value[3];
+	inertia.m21 = value[4];
+	inertia.m22 = value[5];
+	inertia.m23 = value[6];
+	inertia.m24 = value[7];
+	inertia.m31 = value[8];
+	inertia.m32 = value[9];
+	inertia.m33 = value[10];
+	inertia.m34 = value[11];
 }
 
 Vector3 bhkRigidBody::GetCenter() const {
