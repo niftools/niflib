@@ -52,7 +52,6 @@ OBJ_FILES = src/ComplexShape.o \
            src/ObjectRegistry.o \
            src/pch.o \
            src/Type.o \
-           src/obj/AParticleModifier.o \
            src/obj/AvoidNode.o \
            src/obj/bhkBlendCollisionObject.o \
            src/obj/bhkBlendController.o \
@@ -82,8 +81,8 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/bhkRigidBody.o \
            src/obj/bhkRigidBodyT.o \
            src/obj/bhkSerializable.o \
-           src/obj/bhkShape.o \
            src/obj/bhkShapeCollection.o \
+           src/obj/bhkShape.o \
            src/obj/bhkShapePhantom.o \
            src/obj/bhkSimpleShapePhantom.o \
            src/obj/bhkSPCollisionObject.o \
@@ -106,6 +105,11 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiAlphaController.o \
            src/obj/NiAlphaProperty.o \
            src/obj/NiAmbientLight.o \
+           src/obj/NiArkAnimationExtraData.o \
+           src/obj/NiArkImporterExtraData.o \
+           src/obj/NiArkShaderExtraData.o \
+           src/obj/NiArkTextureExtraData.o \
+           src/obj/NiArkViewportInfoExtraData.o \
            src/obj/NiAutoNormalParticles.o \
            src/obj/NiAutoNormalParticlesData.o \
            src/obj/NiAVObject.o \
@@ -153,12 +157,12 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiDirectionalLight.o \
            src/obj/NiDitherProperty.o \
            src/obj/NiDynamicEffect.o \
-           src/obj/NiExtraData.o \
            src/obj/NiExtraDataController.o \
+           src/obj/NiExtraData.o \
            src/obj/NiFlipController.o \
            src/obj/NiFloatData.o \
-           src/obj/NiFloatExtraData.o \
            src/obj/NiFloatExtraDataController.o \
+           src/obj/NiFloatExtraData.o \
            src/obj/NiFloatInterpController.o \
            src/obj/NiFloatInterpolator.o \
            src/obj/NiFloatsExtraData.o \
@@ -175,9 +179,11 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiKeyBasedInterpolator.o \
            src/obj/NiKeyframeController.o \
            src/obj/NiKeyframeData.o \
-           src/obj/NiLight.o \
            src/obj/NiLightColorController.o \
+           src/obj/NiLight.o \
            src/obj/NiLightDimmerController.o \
+           src/obj/NiLines.o \
+           src/obj/NiLinesData.o \
            src/obj/NiLODData.o \
            src/obj/NiLODNode.o \
            src/obj/NiLookAtController.o \
@@ -199,13 +205,24 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiParticleMeshes.o \
            src/obj/NiParticleMeshesData.o \
            src/obj/NiParticleMeshModifier.o \
+           src/obj/NiParticleModifier.o \
            src/obj/NiParticleRotation.o \
            src/obj/NiParticles.o \
            src/obj/NiParticlesData.o \
-           src/obj/NiParticleSystem.o \
            src/obj/NiParticleSystemController.o \
+           src/obj/NiParticleSystem.o \
            src/obj/NiPathController.o \
            src/obj/NiPathInterpolator.o \
+           src/obj/NiPhysXActorDesc.o \
+           src/obj/NiPhysXBodyDesc.o \
+           src/obj/NiPhysXD6JointDesc.o \
+           src/obj/NiPhysXKinematicSrc.o \
+           src/obj/NiPhysXMaterialDesc.o \
+           src/obj/NiPhysXMeshDesc.o \
+           src/obj/NiPhysXProp.o \
+           src/obj/NiPhysXPropDesc.o \
+           src/obj/NiPhysXShapeDesc.o \
+           src/obj/NiPhysXTransformDest.o \
            src/obj/NiPixelData.o \
            src/obj/NiPlanarCollider.o \
            src/obj/NiPoint3InterpController.o \
@@ -236,9 +253,9 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiPSysGrowFadeModifier.o \
            src/obj/NiPSysMeshEmitter.o \
            src/obj/NiPSysMeshUpdateModifier.o \
-           src/obj/NiPSysModifier.o \
            src/obj/NiPSysModifierActiveCtlr.o \
            src/obj/NiPSysModifierBoolCtlr.o \
+           src/obj/NiPSysModifier.o \
            src/obj/NiPSysModifierCtlr.o \
            src/obj/NiPSysModifierFloatCtlr.o \
            src/obj/NiPSysPlanarCollider.o \
@@ -263,6 +280,8 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiSkinData.o \
            src/obj/NiSkinInstance.o \
            src/obj/NiSkinPartition.o \
+           src/obj/NiSortAdjustNode.o \
+           src/obj/NiSourceCubeMap.o \
            src/obj/NiSourceTexture.o \
            src/obj/NiSpecularProperty.o \
            src/obj/NiSphericalCollider.o \
@@ -300,30 +319,41 @@ OBJ_FILES = src/ComplexShape.o \
            src/obj/NiWireframeProperty.o \
            src/obj/NiZBufferProperty.o \
            src/obj/RootCollisionNode.o \
+           src/gen/ArkTexture.o \
            src/gen/AVObject.o \
            src/gen/BoundingBox.o \
+           src/gen/BoundingVolume.o \
+           src/gen/BoxBV.o \
            src/gen/ByteArray.o \
            src/gen/ByteColor3.o \
            src/gen/ByteColor4.o \
+           src/gen/ByteMatrix.o \
+           src/gen/CapsuleBV.o \
+           src/gen/ChannelData.o \
            src/gen/ControllerLink.o \
            src/gen/enums.o \
+           src/gen/ExportInfo.o \
            src/gen/Footer.o \
            src/gen/FurniturePosition.o \
+           src/gen/HalfSpaceBV.o \
            src/gen/Header.o \
            src/gen/hkTriangle.o \
+           src/gen/InertiaMatrix.o \
            src/gen/LimitedHingeDescriptor.o \
            src/gen/LODRange.o \
            src/gen/MatchGroup.o \
            src/gen/MipMap.o \
            src/gen/Morph.o \
+           src/gen/MorphWeight.o \
            src/gen/MultiTextureElement.o \
            src/gen/NodeGroup.o \
            src/gen/OblivionColFilter.o \
            src/gen/OblivionSubShape.o \
            src/gen/OldSkinData.o \
            src/gen/Particle.o \
+           src/gen/physXMaterialRef.o \
            src/gen/QuaternionXYZW.o \
-           src/gen/RagDollDescriptor.o \
+           src/gen/RagdollDescriptor.o \
            src/gen/register.o \
            src/gen/ShaderTexDesc.o \
            src/gen/SkinData.o \
@@ -331,11 +361,13 @@ OBJ_FILES = src/ComplexShape.o \
            src/gen/SkinShape.o \
            src/gen/SkinShapeGroup.o \
            src/gen/SkinWeight.o \
-           src/gen/Sphere.o \
+           src/gen/SphereBV.o \
            src/gen/StringPalette.o \
            src/gen/TBC.o \
            src/gen/TexDesc.o \
-           src/gen/TexSource.o
+           src/gen/TexSource.o \
+           src/gen/UnionBV.o
+
 
 all: Makefile  $(TARGET)
 
