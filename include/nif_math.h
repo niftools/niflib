@@ -30,7 +30,7 @@ struct Matrix33;
 struct Float4;
 struct Matrix44;
 
-/*! Stores 2D texture coordinates – two floating point variables, u and v. */
+/*! Stores 2D texture coordinates as two floating point variables, u and v. */
 struct TexCoord {
 	float u; /*!< The U value in this coordinate pair. */ 
 	float v; /*!< The V value in this coordinate pair. */ 
