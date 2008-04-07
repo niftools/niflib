@@ -22,6 +22,19 @@ typedef Ref<NiBillboardNode> NiBillboardNodeRef;
 /*!
  * These nodes will always be rotated to face the camera creating a billboard
  * effect for any attached objects.
+ * 
+ *         In pre-10.1.0.0 the Flags field is used for BillboardMode.
+ *         Here is what alphax says about these Flags after checking SceneImmerse:
+ * 
+ *         0x0000 - 0x0010 is ALWAYS_FACE_CAMERA (somewhat misleadingly named, but
+ * that is what the format calls it),
+ *         0x0020 is ROTATE_ABOUT_UP,
+ *         0x0040 is RIGID_FACE_CAMERA (always face the viewport), and
+ *         0x0060 is ALWAYS_FACE_CENTER.
+ *         That is where "left shift the corresponding value from v10 NIFs 5 bits"
+ * falls down - I do not know if v4 NIFs support the others, or if they actually
+ * mean anything, but these seem the most useful. The rotation of the node does
+ * seem to affect the axis of constraint.
  */
 class NiBillboardNode : public NiNode {
 public:

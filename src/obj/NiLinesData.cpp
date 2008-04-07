@@ -48,7 +48,11 @@ void NiLinesData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	NiGeometryData::Read( in, link_stack, info );
 	lines.resize(numVertices);
 	for (unsigned int i1 = 0; i1 < lines.size(); i1++) {
-		NifStream( lines[i1], in, info );
+		{
+			bool tmp;
+			NifStream( tmp, in, info );
+			lines[i1] = tmp;
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -63,7 +67,10 @@ void NiLinesData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 
 	NiGeometryData::Write( out, link_map, info );
 	for (unsigned int i1 = 0; i1 < lines.size(); i1++) {
-		NifStream( lines[i1], out, info );
+		{
+			bool tmp = lines[i1];
+			NifStream( tmp, out, info );
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
