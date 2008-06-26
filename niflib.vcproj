@@ -1260,6 +1260,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiLines.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiLinesData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiLODData.cpp"
 					>
 				</File>
@@ -1373,6 +1381,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPathInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXBodyDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXD6JointDesc.cpp"
 					>
 				</File>
 				<File
@@ -1760,6 +1776,10 @@
 				Name="gen"
 				>
 				<File
+					RelativePath=".\src\gen\ArkTexture.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\AVObject.cpp"
 					>
 				</File>
@@ -1808,6 +1828,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\InertiaMatrix.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\LimitedHingeDescriptor.cpp"
 					>
 				</File>
@@ -1849,6 +1873,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\Particle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\physXMaterialRef.cpp"
 					>
 				</File>
 				<File
@@ -2578,6 +2606,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiLines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiLinesData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiLODData.h"
 					>
 				</File>
@@ -2691,6 +2727,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPathInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXBodyDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXD6JointDesc.h"
 					>
 				</File>
 				<File
@@ -3078,6 +3122,10 @@
 				Name="gen"
 				>
 				<File
+					RelativePath=".\include\gen\ArkTexture.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\AVObject.h"
 					>
 				</File>
@@ -3130,6 +3178,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\InertiaMatrix.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\KeyGroup.h"
 					>
 				</File>
@@ -3175,6 +3227,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\Particle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\physXMaterialRef.h"
 					>
 				</File>
 				<File
