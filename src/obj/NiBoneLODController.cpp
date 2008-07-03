@@ -259,10 +259,6 @@ std::list<NiObjectRef> NiBoneLODController::GetRefs() const {
 	};
 	for (unsigned int i1 = 0; i1 < shapeGroups1.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
-			if ( shapeGroups1[i1].linkPairs[i2].shape != NULL )
-				refs.push_back(StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].shape));
-			if ( shapeGroups1[i1].linkPairs[i2].skinInstance != NULL )
-				refs.push_back(StaticCast<NiObject>(shapeGroups1[i1].linkPairs[i2].skinInstance));
 		};
 	};
 	for (unsigned int i1 = 0; i1 < shapeGroups2.size(); i1++) {

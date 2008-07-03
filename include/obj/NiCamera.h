@@ -227,7 +227,7 @@ protected:
 	/*! Level of detail adjust. */
 	float lodAdjust;
 	/*! Unknown. */
-	Ref<NiObject > unknownLink_;
+	Ref<NiObject > unknownLink;
 	/*! Unknown.  Changing value crashes viewer. */
 	unsigned int unknownInt;
 	/*! Unknown.  Changing value crashes viewer. */

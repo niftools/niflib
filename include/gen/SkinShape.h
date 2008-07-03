@@ -10,8 +10,6 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../NIF_IO.h"
 
-// Include structures
-#include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -29,9 +27,9 @@ struct SkinShape {
 	/*! Copy Operator */
 	NIFLIB_API SkinShape & operator=( const SkinShape & src );
 	/*! The shape. */
-	Ref<NiTriBasedGeom > shape;
+	NiTriBasedGeom * shape;
 	/*! Skinning instance for the shape? */
-	Ref<NiSkinInstance > skinInstance;
+	NiSkinInstance * skinInstance;
 };
 
 }

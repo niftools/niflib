@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiCamera::TYPE("NiCamera", &NiAVObject::TYPE );
 
-NiCamera::NiCamera() : unknownShort((unsigned short)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink_(NULL), unknownInt((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0) {
+NiCamera::NiCamera() : unknownShort((unsigned short)0), frustumLeft(0.0f), frustumRight(0.0f), frustumTop(0.0f), frustumBottom(0.0f), frustumNear(0.0f), frustumFar(0.0f), useOrthographicProjection(false), viewportLeft(0.0f), viewportRight(0.0f), viewportTop(0.0f), viewportBottom(0.0f), lodAdjust(0.0f), unknownLink(NULL), unknownInt((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -98,10 +98,10 @@ void NiCamera::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 	NifStream( viewportBottom, out, info );
 	NifStream( lodAdjust, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink_), out, info );
+		NifStream( (unsigned int)&(*unknownLink), out, info );
 	} else {
-		if ( unknownLink_ != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink_) )->second, out, info );
+		if ( unknownLink != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -138,7 +138,7 @@ std::string NiCamera::asString( bool verbose ) const {
 	out << "  Viewport Top:  " << viewportTop << endl;
 	out << "  Viewport Bottom:  " << viewportBottom << endl;
 	out << "  LOD Adjust:  " << lodAdjust << endl;
-	out << "  Unknown Link?:  " << unknownLink_ << endl;
+	out << "  Unknown Link:  " << unknownLink << endl;
 	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
@@ -153,7 +153,7 @@ void NiCamera::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uns
 	//--END CUSTOM CODE--//
 
 	NiAVObject::FixLinks( objects, link_stack, info );
-	unknownLink_ = FixLink<NiObject>( objects, link_stack, info );
+	unknownLink = FixLink<NiObject>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -162,8 +162,8 @@ void NiCamera::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uns
 std::list<NiObjectRef> NiCamera::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiAVObject::GetRefs();
-	if ( unknownLink_ != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownLink_));
+	if ( unknownLink != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownLink));
 	return refs;
 }
 
