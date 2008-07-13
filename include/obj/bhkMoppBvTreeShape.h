@@ -83,6 +83,53 @@ public:
 	 */
 	NIFLIB_API void SetMaterial( HavokMaterial value );
 
+	/*!
+	* Get the shape's bounding volume code.  The code is specific to the Havok Physics engine.
+	* \return A byte vector containing the code representing the MOPP.
+	*/
+	NIFLIB_API vector<byte> GetMoppCode() const;
+
+	/*!
+	* Sets the shape's bounding volume code.  The code is specific to the Havok Physics engine.
+	* \param[in] value A byte vector containing the code representing the MOPP.
+	*/
+	NIFLIB_API void SetMoppCode( vector<byte> & value );
+
+	/*!
+	* Get the origin for the shape's mopp code in mopp coordinates. This is the minimum of all vertices in
+	* the packed shape along each axis, minus 0.1.
+	* \return The origin value in mopp coordinates.
+	*/
+	NIFLIB_API Vector3 GetMoppOrigin() const;
+
+	/*!
+	* Sets the origin for the shape's mopp code in mopp coordinates. This is the minimum of all vertices in
+	* the packed shape along each axis, minus 0.1.
+	* \param[in] value The origin in mopp coordinates.
+	*/
+	NIFLIB_API void SetMoppOrigin( Vector3 value );
+
+
+	/*!
+	* Gets the scale for the shape's mopp code in mopp coordinates. 
+	*   The scaling factor to quantize the MOPP: the quantization factor is equal to
+	*   256*256 divided by this number. In Oblivion files, scale is taken equal to
+	*   256*256*254 / (size + 0.2) where size is the largest dimension of the bounding
+	*   box of the packed shape.	
+	* \return The scale value in mopp coordinates.
+	*/
+	NIFLIB_API float GetMoppScale() const;
+
+	/*!
+	* Sets the scale for the shape's mopp code in mopp coordinates. 
+	*   The scaling factor to quantize the MOPP: the quantization factor is equal to
+	*   256*256 divided by this number. In Oblivion files, scale is taken equal to
+	*   256*256*254 / (size + 0.2) where size is the largest dimension of the bounding
+	*   box of the packed shape.	
+	* \param[in] value The scale in mopp coordinates.
+	*/
+	NIFLIB_API void SetMoppScale( float value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The shape. */

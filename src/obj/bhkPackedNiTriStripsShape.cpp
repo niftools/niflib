@@ -184,4 +184,14 @@ void bhkPackedNiTriStripsShape::SetData( hkPackedNiTriStripsData * n ) {
 	data = n;
 }
 
+vector<OblivionSubShape> bhkPackedNiTriStripsShape::GetSubShapes() const {
+	return subShapes;
+}
+
+void bhkPackedNiTriStripsShape::SetSubShapes( vector<OblivionSubShape>& value ) {
+	numSubShapes = value.size();
+	subShapes = value;
+}
+
+
 //--END CUSTOM CODE--//

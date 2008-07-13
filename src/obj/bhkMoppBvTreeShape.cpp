@@ -175,4 +175,29 @@ void bhkMoppBvTreeShape::SetMaterial( HavokMaterial value ) {
 	material = value;
 }
 
+vector<byte> bhkMoppBvTreeShape::GetMoppCode() const {
+	return moppData;
+}
+
+void bhkMoppBvTreeShape::SetMoppCode( vector<byte> & value ) {
+	moppDataSize = value.size();
+	moppData = value;
+}
+
+Vector3 bhkMoppBvTreeShape::GetMoppOrigin() const {
+	return origin;
+}
+
+void bhkMoppBvTreeShape::SetMoppOrigin( Vector3 value ) {
+	origin = value;
+}
+
+float bhkMoppBvTreeShape::GetMoppScale() const {
+	return scale;
+}
+
+void bhkMoppBvTreeShape::SetMoppScale( float value ) {
+	scale = value;
+}
+
 //--END CUSTOM CODE--//

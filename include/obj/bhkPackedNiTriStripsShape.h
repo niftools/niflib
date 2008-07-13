@@ -71,6 +71,18 @@ public:
 	 */
 	NIFLIB_API void SetData( hkPackedNiTriStripsData * n );
 
+	/*!
+	* Retrieves the subshape data object used by this geometry node, if any.
+	* \return The subshape data object.
+	*/
+	NIFLIB_API vector<OblivionSubShape> GetSubShapes() const;
+
+	/*!
+	* Sets the subshape data object used by this geometry node. 
+	* \param[in] value The subshape data.
+	*/
+	NIFLIB_API void SetSubShapes( vector<OblivionSubShape>& value );	
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of subparts. */
