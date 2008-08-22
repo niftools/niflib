@@ -23,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
 
-NiAVObject::NiAVObject() : flags((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), hasBoundingBox(false), collisionObject(NULL) {
+NiAVObject::NiAVObject() : flags((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), unknown2((byte)0), hasBoundingBox(false), collisionObject(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	parent = NULL;
@@ -59,7 +59,9 @@ void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 
 	unsigned int block_num;
 	NiObjectNET::Read( in, link_stack, info );
-	NifStream( flags, in, info );
+	if ( info.version >= 0x03000000 ) {
+		NifStream( flags, in, info );
+	};
 	NifStream( translation, in, info );
 	NifStream( rotation, in, info );
 	NifStream( scale, in, info );
@@ -72,7 +74,13 @@ void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	if ( info.version <= 0x04020200 ) {
+	if ( info.version <= 0x02030000 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( unknown1[i2], in, info );
+		};
+		NifStream( unknown2, in, info );
+	};
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
 		NifStream( hasBoundingBox, in, info );
 		if ( (hasBoundingBox != 0) ) {
 			NifStream( boundingBox.unknownInt, in, info );
@@ -96,7 +104,9 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 
 	NiObjectNET::Write( out, link_map, info );
 	numProperties = (unsigned int)(properties.size());
-	NifStream( flags, out, info );
+	if ( info.version >= 0x03000000 ) {
+		NifStream( flags, out, info );
+	};
 	NifStream( translation, out, info );
 	NifStream( rotation, out, info );
 	NifStream( scale, out, info );
@@ -115,7 +125,13 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			}
 		}
 	};
-	if ( info.version <= 0x04020200 ) {
+	if ( info.version <= 0x02030000 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( unknown1[i2], out, info );
+		};
+		NifStream( unknown2, out, info );
+	};
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
 		NifStream( hasBoundingBox, out, info );
 		if ( (hasBoundingBox != 0) ) {
 			NifStream( boundingBox.unknownInt, out, info );
@@ -166,6 +182,19 @@ std::string NiAVObject::asString( bool verbose ) const {
 		out << "    Properties[" << i1 << "]:  " << properties[i1] << endl;
 		array_output_count++;
 	};
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 4; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 1[" << i1 << "]:  " << unknown1[i1] << endl;
+		array_output_count++;
+	};
+	out << "  Unknown 2:  " << unknown2 << endl;
 	out << "  Has Bounding Box:  " << hasBoundingBox << endl;
 	if ( (hasBoundingBox != 0) ) {
 		out << "    Unknown Int:  " << boundingBox.unknownInt << endl;

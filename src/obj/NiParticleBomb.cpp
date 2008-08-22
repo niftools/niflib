@@ -47,7 +47,9 @@ void NiParticleBomb::Read( istream& in, list<unsigned int> & link_stack, const N
 	NifStream( deltav_, in, info );
 	NifStream( start_, in, info );
 	NifStream( decayType_, in, info );
-	NifStream( symmetryType_, in, info );
+	if ( info.version >= 0x0401000C ) {
+		NifStream( symmetryType_, in, info );
+	};
 	NifStream( position_, in, info );
 	NifStream( direction_, in, info );
 
@@ -65,7 +67,9 @@ void NiParticleBomb::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NifStream( deltav_, out, info );
 	NifStream( start_, out, info );
 	NifStream( decayType_, out, info );
-	NifStream( symmetryType_, out, info );
+	if ( info.version >= 0x0401000C ) {
+		NifStream( symmetryType_, out, info );
+	};
 	NifStream( position_, out, info );
 	NifStream( direction_, out, info );
 

@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/gen/Header.h"
 #include "../../include/gen/ExportInfo.h"
 #include "../../include/gen/ExportInfo.h"
+#include "../../include/gen/ExportInfo.h"
 using namespace Niflib;
 
 //Constructor
@@ -64,7 +65,10 @@ NifInfo Header::Read( istream& in ) {
 		NifStream( numBlocks, in, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion != 0) ) {
+		if ( (userVersion == 10) ) {
+			NifStream( userVersion2, in, info );
+		};
+		if ( (userVersion == 11) ) {
 			NifStream( userVersion2, in, info );
 		};
 	};
@@ -77,7 +81,15 @@ NifInfo Header::Read( istream& in ) {
 		NifStream( exportInfo.exportInfo2, in, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion != 0) ) {
+		if ( (userVersion == 10) ) {
+			if ( info.version <= 0x0A000102 ) {
+				NifStream( exportInfo.unknown, in, info );
+			};
+			NifStream( exportInfo.creator, in, info );
+			NifStream( exportInfo.exportInfo1, in, info );
+			NifStream( exportInfo.exportInfo2, in, info );
+		};
+		if ( (userVersion == 11) ) {
 			if ( info.version <= 0x0A000102 ) {
 				NifStream( exportInfo.unknown, in, info );
 			};
@@ -152,7 +164,10 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 		NifStream( numBlocks, out, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion != 0) ) {
+		if ( (userVersion == 10) ) {
+			NifStream( userVersion2, out, info );
+		};
+		if ( (userVersion == 11) ) {
 			NifStream( userVersion2, out, info );
 		};
 	};
@@ -165,7 +180,15 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 		NifStream( exportInfo.exportInfo2, out, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion != 0) ) {
+		if ( (userVersion == 10) ) {
+			if ( info.version <= 0x0A000102 ) {
+				NifStream( exportInfo.unknown, out, info );
+			};
+			NifStream( exportInfo.creator, out, info );
+			NifStream( exportInfo.exportInfo1, out, info );
+			NifStream( exportInfo.exportInfo2, out, info );
+		};
+		if ( (userVersion == 11) ) {
 			if ( info.version <= 0x0A000102 ) {
 				NifStream( exportInfo.unknown, out, info );
 			};
@@ -223,7 +246,7 @@ string Header::asString( bool verbose ) const {
 	out << "  Endian Type:  " << endianType << endl;
 	out << "  User Version:  " << userVersion << endl;
 	out << "  Num Blocks:  " << numBlocks << endl;
-	if ( (userVersion != 0) ) {
+	if ( (userVersion == 10) ) {
 		out << "    User Version 2:  " << userVersion2 << endl;
 	};
 	out << "  Unknown:  " << exportInfo.unknown << endl;

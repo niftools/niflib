@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
 
-NiObjectNET::NiObjectNET() : extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
+NiObjectNET::NiObjectNET() : hasOldExtraData((unsigned int)0), oldExtraInternalId((unsigned int)0), unknownByte((byte)0), extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -51,7 +51,16 @@ void NiObjectNET::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
 	NifStream( name, in, info );
-	if ( info.version <= 0x04020200 ) {
+	if ( info.version <= 0x02030000 ) {
+		NifStream( hasOldExtraData, in, info );
+		if ( hasOldExtraData ) {
+			NifStream( oldExtraPropName, in, info );
+			NifStream( oldExtraInternalId, in, info );
+			NifStream( oldExtraString, in, info );
+		};
+		NifStream( unknownByte, in, info );
+	};
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
@@ -63,8 +72,10 @@ void NiObjectNET::Read( istream& in, list<unsigned int> & link_stack, const NifI
 			link_stack.push_back( block_num );
 		};
 	};
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	if ( info.version >= 0x03000000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -77,7 +88,16 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	NiObject::Write( out, link_map, info );
 	numExtraDataList = (unsigned int)(extraDataList.size());
 	NifStream( name, out, info );
-	if ( info.version <= 0x04020200 ) {
+	if ( info.version <= 0x02030000 ) {
+		NifStream( hasOldExtraData, out, info );
+		if ( hasOldExtraData ) {
+			NifStream( oldExtraPropName, out, info );
+			NifStream( oldExtraInternalId, out, info );
+			NifStream( oldExtraString, out, info );
+		};
+		NifStream( unknownByte, out, info );
+	};
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			NifStream( (unsigned int)&(*extraData), out, info );
 		} else {
@@ -102,15 +122,17 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			}
 		};
 	};
-	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*controller), out, info );
-	} else {
-		if ( controller != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+	if ( info.version >= 0x03000000 ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*controller), out, info );
 		} else {
-			NifStream( 0xFFFFFFFF, out, info );
+			if ( controller != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		}
-	}
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -125,6 +147,13 @@ std::string NiObjectNET::asString( bool verbose ) const {
 	out << NiObject::asString();
 	numExtraDataList = (unsigned int)(extraDataList.size());
 	out << "  Name:  " << name << endl;
+	out << "  Has Old Extra Data:  " << hasOldExtraData << endl;
+	if ( hasOldExtraData ) {
+		out << "    Old Extra Prop Name:  " << oldExtraPropName << endl;
+		out << "    Old Extra Internal Id:  " << oldExtraInternalId << endl;
+		out << "    Old Extra String:  " << oldExtraString << endl;
+	};
+	out << "  Unknown Byte:  " << unknownByte << endl;
 	out << "  Extra Data:  " << extraData << endl;
 	out << "  Num Extra Data List:  " << numExtraDataList << endl;
 	array_output_count = 0;
@@ -151,7 +180,7 @@ void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
-	if ( info.version <= 0x04020200 ) {
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
 		extraData = FixLink<NiExtraData>( objects, link_stack, info );
 	};
 	if ( info.version >= 0x0A000100 ) {
@@ -159,7 +188,9 @@ void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 			extraDataList[i2] = FixLink<NiExtraData>( objects, link_stack, info );
 		};
 	};
-	controller = FixLink<NiTimeController>( objects, link_stack, info );
+	if ( info.version >= 0x03000000 ) {
+		controller = FixLink<NiTimeController>( objects, link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

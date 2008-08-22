@@ -56,14 +56,16 @@ void NiMultiTextureProperty::Read( istream& in, list<unsigned int> & link_stack,
 			NifStream( textureElements[i1].filter_, in, info );
 			NifStream( textureElements[i1].uvSet_, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( ( info.version >= 0x03000300 ) && ( info.version <= 0x0A020000 ) ) {
 			if ( textureElements[i1].hasImage ) {
 				NifStream( textureElements[i1].ps2L, in, info );
 				NifStream( textureElements[i1].ps2K, in, info );
 			};
 		};
-		if ( textureElements[i1].hasImage ) {
-			NifStream( textureElements[i1].unknownShort3, in, info );
+		if ( info.version >= 0x03000300 ) {
+			if ( textureElements[i1].hasImage ) {
+				NifStream( textureElements[i1].unknownShort3, in, info );
+			};
 		};
 	};
 
@@ -94,14 +96,16 @@ void NiMultiTextureProperty::Write( ostream& out, const map<NiObjectRef,unsigned
 			NifStream( textureElements[i1].filter_, out, info );
 			NifStream( textureElements[i1].uvSet_, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( ( info.version >= 0x03000300 ) && ( info.version <= 0x0A020000 ) ) {
 			if ( textureElements[i1].hasImage ) {
 				NifStream( textureElements[i1].ps2L, out, info );
 				NifStream( textureElements[i1].ps2K, out, info );
 			};
 		};
-		if ( textureElements[i1].hasImage ) {
-			NifStream( textureElements[i1].unknownShort3, out, info );
+		if ( info.version >= 0x03000300 ) {
+			if ( textureElements[i1].hasImage ) {
+				NifStream( textureElements[i1].unknownShort3, out, info );
+			};
 		};
 	};
 

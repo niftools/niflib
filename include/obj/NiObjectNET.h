@@ -134,6 +134,16 @@ public:
 protected:
 	/*! Name of this controllable object, used to refer to the object in .kf files. */
 	IndexString name;
+	/*! Extra data for pre-3.0 versions. */
+	unsigned int hasOldExtraData;
+	/*! (=NiStringExtraData) */
+	IndexString oldExtraPropName;
+	/*! ref */
+	unsigned int oldExtraInternalId;
+	/*! Extra string data. */
+	IndexString oldExtraString;
+	/*! Always 0. */
+	byte unknownByte;
 	/*! Extra data object index. (The first in a chain) */
 	Ref<NiExtraData > extraData;
 	/*! The number of Extra Data objects referenced through the list. */

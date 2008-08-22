@@ -7,32 +7,32 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIFLIPCONTROLLER_H_
-#define _NIFLIPCONTROLLER_H_
+#ifndef _NIBEZIERMESH_H_
+#define _NIBEZIERMESH_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiFloatInterpController.h"
+#include "NiAVObject.h"
 
 // Include structures
 #include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiSourceTexture;
-class NiImage;
-class NiFlipController;
-typedef Ref<NiFlipController> NiFlipControllerRef;
+class NiBezierTriangle4;
+class NiBezierMesh;
+typedef Ref<NiBezierMesh> NiBezierMeshRef;
 
-/*! Texture flipping controller. */
-class NiFlipController : public NiFloatInterpController {
+/*! Unknown */
+class NiBezierMesh : public NiAVObject {
 public:
 	/*! Constructor */
-	NIFLIB_API NiFlipController();
+	NIFLIB_API NiBezierMesh();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiFlipController();
+	NIFLIB_API virtual ~NiBezierMesh();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -59,23 +59,31 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 protected:
-	/*! Target texture slot (0=base, 4=glow). */
-	unsigned int textureSlot;
-	/*! 0? */
-	unsigned int unknownInt2;
-	/*!
-	 * Time between two flips.
-	 *             delta = (start_time - stop_time) / sources.num_indices
-	 */
-	float delta;
-	/*! The number of source objects. */
-	mutable unsigned int numSources;
-	/*! The texture sources. */
-	vector<Ref<NiSourceTexture > > sources;
-	/*! The image sources */
-	vector<Ref<NiImage > > images;
+	/*! references. */
+	mutable unsigned int numBezierTriangles;
+	/*! unknown */
+	vector<Ref<NiBezierTriangle4 > > bezierTriangle;
+	/*! Unknown. */
+	unsigned int unknown1;
+	/*! Data count. */
+	mutable unsigned short count1;
+	/*! Unknown. */
+	unsigned short unknown2;
+	/*! data. */
+	vector<Vector3 > points1;
+	/*! Unknown (illegal link?). */
+	unsigned int unknown3;
+	/*! data. */
+	vector< array<2,float > > points2;
+	/*! unknown */
+	unsigned int unknown4;
+	/*! data count 2. */
+	mutable unsigned short count2;
+	/*! data count. */
+	vector< array<4,unsigned short > > data2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -88,6 +96,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

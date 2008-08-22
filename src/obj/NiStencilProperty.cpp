@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiStencilProperty::TYPE("NiStencilProperty", &NiProperty::TYPE );
 
-NiStencilProperty::NiStencilProperty() : flags((unsigned short)0), stencilEnabled((byte)0), stencilRef((unsigned int)0), stencilMask((unsigned int)4294967295) {
+NiStencilProperty::NiStencilProperty() : flags((unsigned short)0), stencilEnabled((byte)0), stencilRef((unsigned int)0), stencilMask((unsigned int)4294967295), drawMode((FaceDrawMode)3) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

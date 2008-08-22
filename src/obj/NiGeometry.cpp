@@ -24,7 +24,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometry::TYPE("NiGeometry", &NiAVObject::TYPE );
 
-NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)-1), hasShader(false), unknownInteger((int)0), dirtyFlag_(false) {
+NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)-1), hasShader(false), unknownInteger((int)0), unknownByte((byte)255), dirtyFlag(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -77,8 +77,11 @@ void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			NifStream( unknownInteger, in, info );
 		};
 	};
+	if ( info.userVersion == 1 ) {
+		NifStream( unknownByte, in, info );
+	};
 	if ( info.version >= 0x14020007 ) {
-		NifStream( dirtyFlag_, in, info );
+		NifStream( dirtyFlag, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -132,8 +135,11 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			NifStream( unknownInteger, out, info );
 		};
 	};
+	if ( info.userVersion == 1 ) {
+		NifStream( unknownByte, out, info );
+	};
 	if ( info.version >= 0x14020007 ) {
-		NifStream( dirtyFlag_, out, info );
+		NifStream( dirtyFlag, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -181,7 +187,8 @@ std::string NiGeometry::asString( bool verbose ) const {
 		out << "    Shader Name:  " << shaderName << endl;
 		out << "    Unknown Integer:  " << unknownInteger << endl;
 	};
-	out << "  Dirty Flag?:  " << dirtyFlag_ << endl;
+	out << "  Unknown Byte:  " << unknownByte << endl;
+	out << "  Dirty Flag:  " << dirtyFlag << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

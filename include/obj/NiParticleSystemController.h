@@ -16,8 +16,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiTimeController.h"
 
 // Include structures
-#include "../gen/Particle.h"
 #include "../Ref.h"
+#include "../gen/Particle.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -63,6 +63,8 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
+	/*! Particle speed in old files */
+	unsigned int oldSpeed;
 	/*! Particle speed */
 	float speed;
 	/*! Particle random speed modifier */
@@ -92,6 +94,8 @@ protected:
 	float emitStopTime;
 	/*! Unknown byte, (=0) */
 	byte unknownByte;
+	/*! Particle emission rate in old files */
+	unsigned int oldEmitRate;
 	/*! Particle emission rate (particles per second) */
 	float emitRate;
 	/*! Particle lifetime */
@@ -117,8 +121,20 @@ protected:
 	unsigned int unknownInt2_;
 	/*! ? short=0 ? */
 	unsigned short unknownShort3_;
-	/*! The particle (older NIF versions only have a single particle per controller?) */
-	Particle particle;
+	/*! Particle velocity */
+	Vector3 particleVelocity;
+	/*! Unknown */
+	Vector3 particleUnknownVector;
+	/*! The particle's age. */
+	float particleLifetime;
+	/*! Unknown. */
+	Ref<NiObject > particleLink;
+	/*! Timestamp of the last update. */
+	unsigned int particleTimestamp;
+	/*! Unknown short */
+	mutable unsigned short particleUnknownShort;
+	/*! Particle/vertex index matches array index */
+	unsigned short particleVertexId;
 	/*! Size of the following array. (Maximum number of simultaneous active particles) */
 	mutable unsigned short numParticles;
 	/*!
@@ -142,7 +158,9 @@ protected:
 	/*! Unknown. */
 	Ref<NiColorData > colorData;
 	/*! Unknown. */
-	array<2,float > unkownFloats;
+	float unknownFloat1;
+	/*! Unknown. */
+	vector<float > unknownFloats2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

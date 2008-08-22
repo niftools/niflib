@@ -865,6 +865,9 @@ ostream & operator<<( ostream & out, PixelFormat const & val ) {
 		case PX_FMT_RGB8: return out << "PX_FMT_RGB8";
 		case PX_FMT_RGBA8: return out << "PX_FMT_RGBA8";
 		case PX_FMT_PAL8: return out << "PX_FMT_PAL8";
+		case PX_FMT_DXT1: return out << "PX_FMT_DXT1";
+		case PX_FMT_DXT5: return out << "PX_FMT_DXT5";
+		case PX_FMT_DXT5_ALT: return out << "PX_FMT_DXT5_ALT";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

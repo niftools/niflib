@@ -594,43 +594,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\gen\BoundingVolume.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\BoxBV.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\ByteMatrix.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\CapsuleBV.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\ChannelData.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\ComplexShape.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\HalfSpaceBV.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\kfm.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\MatTexCollection.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\MorphWeight.cpp"
 				>
 			</File>
 			<File
@@ -678,42 +646,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\src\obj\NiPhysXActorDesc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXKinematicSrc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXMaterialDesc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXMeshDesc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXProp.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXPropDesc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXShapeDesc.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiPhysXTransformDest.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\obj\NiSourceCubeMap.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ObjectRegistry.cpp"
 				>
 			</File>
@@ -722,15 +654,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\gen\SphereBV.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\Type.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\gen\UnionBV.cpp"
 				>
 			</File>
 			<Filter
@@ -937,6 +861,30 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\Ni3dsAlphaAnimator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Ni3dsAnimationNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Ni3dsColorAnimator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Ni3dsMorphShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Ni3dsParticleSystem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Ni3dsPathController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiAlphaController.cpp"
 					>
 				</File>
@@ -982,6 +930,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiAVObjectPalette.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBezierMesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiBezierTriangle4.cpp"
 					>
 				</File>
 				<File
@@ -1157,6 +1113,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiEnvMappedTriShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiEnvMappedTriShapeData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiExtraData.cpp"
 					>
 				</File>
@@ -1297,7 +1261,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiMorphController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiMorphData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiMorpherController.cpp"
 					>
 				</File>
 				<File
@@ -1381,11 +1353,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPhysXActorDesc.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPhysXBodyDesc.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPhysXD6JointDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXKinematicSrc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXMaterialDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXMeshDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXProp.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXPropDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXShapeDesc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPhysXTransformDest.cpp"
 					>
 				</File>
 				<File
@@ -1621,6 +1625,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiSourceCubeMap.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiSourceTexture.cpp"
 					>
 				</File>
@@ -1698,6 +1706,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiTransformInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiTransparentProperty.cpp"
 					>
 				</File>
 				<File
@@ -1785,6 +1797,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\BoundingVolume.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\BoxBV.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\ByteArray.cpp"
 					>
 				</File>
@@ -1794,6 +1814,22 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\ByteColor4.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\ByteMatrix.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\CapsuleBV.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\ChannelData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\ComplexShape.cpp"
 					>
 				</File>
 				<File
@@ -1814,6 +1850,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\FurniturePosition.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\HalfSpaceBV.cpp"
 					>
 				</File>
 				<File
@@ -1846,6 +1886,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\Morph.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\MorphWeight.cpp"
 					>
 				</File>
 				<File
@@ -1913,6 +1957,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\SphereBV.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\StringPalette.cpp"
 					>
 				</File>
@@ -1926,6 +1974,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\TexSource.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\UnionBV.cpp"
 					>
 				</File>
 			</Filter>
@@ -1968,26 +2020,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\gen\BoundingVolume.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\BoxBV.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\ByteMatrix.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\CapsuleBV.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\ChannelData.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\ComplexShape.h"
 				>
 			</File>
@@ -2000,10 +2032,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\gen\HalfSpaceBV.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\Key.h"
 				>
 			</File>
@@ -2013,10 +2041,6 @@
 			</File>
 			<File
 				RelativePath=".\include\MatTexCollection.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\MorphWeight.h"
 				>
 			</File>
 			<File
@@ -2040,42 +2064,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\obj\NiPhysXActorDesc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXKinematicSrc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXMaterialDesc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXMeshDesc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXProp.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXPropDesc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXShapeDesc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiPhysXTransformDest.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\obj\NiSourceCubeMap.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\ObjectRegistry.h"
 				>
 			</File>
@@ -2088,15 +2076,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\include\gen\SphereBV.h"
-				>
-			</File>
-			<File
 				RelativePath=".\include\Type.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\gen\UnionBV.h"
 				>
 			</File>
 			<Filter
@@ -2303,6 +2283,30 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\Ni3dsAlphaAnimator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Ni3dsAnimationNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Ni3dsColorAnimator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Ni3dsMorphShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Ni3dsParticleSystem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Ni3dsPathController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiAlphaController.h"
 					>
 				</File>
@@ -2312,6 +2316,26 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiAmbientLight.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiArkAnimationExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiArkImporterExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiArkShaderExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiArkTextureExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiArkViewportInfoExtraData.h"
 					>
 				</File>
 				<File
@@ -2328,6 +2352,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiAVObjectPalette.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBezierMesh.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiBezierTriangle4.h"
 					>
 				</File>
 				<File
@@ -2503,6 +2535,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiEnvMappedTriShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiEnvMappedTriShapeData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiExtraData.h"
 					>
 				</File>
@@ -2643,7 +2683,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiMorphController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiMorphData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiMorpherController.h"
 					>
 				</File>
 				<File
@@ -2727,11 +2775,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPhysXActorDesc.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPhysXBodyDesc.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPhysXD6JointDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXKinematicSrc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXMaterialDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXMeshDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXProp.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXPropDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXShapeDesc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPhysXTransformDest.h"
 					>
 				</File>
 				<File
@@ -2967,6 +3047,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiSourceCubeMap.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiSourceTexture.h"
 					>
 				</File>
@@ -3044,6 +3128,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiTransformInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiTransparentProperty.h"
 					>
 				</File>
 				<File
@@ -3131,6 +3219,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\BoundingVolume.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\BoxBV.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\ByteArray.h"
 					>
 				</File>
@@ -3140,6 +3236,18 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\ByteColor4.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\ByteMatrix.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\CapsuleBV.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\ChannelData.h"
 					>
 				</File>
 				<File
@@ -3164,6 +3272,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\FurniturePosition.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\HalfSpaceBV.h"
 					>
 				</File>
 				<File
@@ -3200,6 +3312,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\Morph.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\MorphWeight.h"
 					>
 				</File>
 				<File
@@ -3267,6 +3383,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\SphereBV.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\StringPalette.h"
 					>
 				</File>
@@ -3280,6 +3400,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\TexSource.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\UnionBV.h"
 					>
 				</File>
 			</Filter>

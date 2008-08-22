@@ -20,6 +20,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
+class NiImage;
 class NiSourceTexture;
 class NiTextureEffect;
 typedef Ref<NiTextureEffect> NiTextureEffectRef;
@@ -220,6 +221,8 @@ protected:
 	EffectType textureType;
 	/*! The method that will be used to generate UV coordinates for the texture effect. */
 	CoordGenType coordinateGenerationType;
+	/*! Image index. */
+	Ref<NiImage > image;
 	/*! Source texture index. */
 	Ref<NiSourceTexture > sourceTexture;
 	/*! Determines whether a clipping plane is used.  0 means that a plane is not used. */

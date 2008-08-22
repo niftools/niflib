@@ -7,32 +7,27 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIFLIPCONTROLLER_H_
-#define _NIFLIPCONTROLLER_H_
+#ifndef _NITRANSPARENTPROPERTY_H_
+#define _NITRANSPARENTPROPERTY_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiFloatInterpController.h"
-
-// Include structures
-#include "../Ref.h"
+#include "NiProperty.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiSourceTexture;
-class NiImage;
-class NiFlipController;
-typedef Ref<NiFlipController> NiFlipControllerRef;
+class NiTransparentProperty;
+typedef Ref<NiTransparentProperty> NiTransparentPropertyRef;
 
-/*! Texture flipping controller. */
-class NiFlipController : public NiFloatInterpController {
+/*! Unknown */
+class NiTransparentProperty : public NiProperty {
 public:
 	/*! Constructor */
-	NIFLIB_API NiFlipController();
+	NIFLIB_API NiTransparentProperty();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiFlipController();
+	NIFLIB_API virtual ~NiTransparentProperty();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -59,23 +54,11 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 protected:
-	/*! Target texture slot (0=base, 4=glow). */
-	unsigned int textureSlot;
-	/*! 0? */
-	unsigned int unknownInt2;
-	/*!
-	 * Time between two flips.
-	 *             delta = (start_time - stop_time) / sources.num_indices
-	 */
-	float delta;
-	/*! The number of source objects. */
-	mutable unsigned int numSources;
-	/*! The texture sources. */
-	vector<Ref<NiSourceTexture > > sources;
-	/*! The image sources */
-	vector<Ref<NiImage > > images;
+	/*! Unknown. */
+	array<6,byte > unknown;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -88,6 +71,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

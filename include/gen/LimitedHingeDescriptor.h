@@ -23,25 +23,29 @@ struct LimitedHingeDescriptor {
 	NIFLIB_API LimitedHingeDescriptor( const LimitedHingeDescriptor & src );
 	/*! Copy Operator */
 	NIFLIB_API LimitedHingeDescriptor & operator=( const LimitedHingeDescriptor & src );
-	/*! Unknown. */
+	/*! Pivot point around which the object will rotate. */
 	Float4 pivotA;
-	/*! Unknown. */
+	/*! Axis of rotation. */
 	Float4 axleA;
-	/*! Unknown. */
+	/*! Vector in the rotation plane which defines the zero angle. */
 	Float4 perp2axleina1;
-	/*! Unknown. */
+	/*!
+	 * Vector in the rotation plane, orthogonal on the previous one, which defines the
+	 * positive direction of rotation. This is always the vector product of Axle A and
+	 * Perp2 Axle In A1.
+	 */
 	Float4 perp2axleina2;
-	/*! Unknown. */
+	/*! Pivot A in second entity coordinate system. */
 	Float4 pivotB;
-	/*! Unknown. */
+	/*! Axle A in second entity coordinate system. */
 	Float4 axleB;
-	/*! Unknown. */
+	/*! Perp2 Axle In A2 in second entity coordinate system. */
 	Float4 perp2axleinb2;
-	/*! Unknown. */
+	/*! Minimum rotation angle. */
 	float minAngle;
-	/*! Unknown. */
+	/*! Maximum rotation angle. */
 	float maxAngle;
-	/*! Unknown. */
+	/*! Maximum friction, typically either 0 or 10. */
 	float maxFriction;
 };
 

@@ -281,6 +281,10 @@ protected:
 	mutable unsigned int numProperties;
 	/*! List of node properties. */
 	vector<Ref<NiProperty > > properties;
+	/*! Always 2,0,2,0. */
+	array<4,unsigned int > unknown1;
+	/*! 0 or 1. */
+	byte unknown2;
 	/*! Do we have a bounding box? */
 	bool hasBoundingBox;
 	/*! The bounding box. */

@@ -7,6 +7,12 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../../include/ObjectRegistry.h"
 #include "../../include/obj/NiObject.h"
+#include "../../include/obj/Ni3dsAlphaAnimator.h"
+#include "../../include/obj/Ni3dsAnimationNode.h"
+#include "../../include/obj/Ni3dsColorAnimator.h"
+#include "../../include/obj/Ni3dsMorphShape.h"
+#include "../../include/obj/Ni3dsParticleSystem.h"
+#include "../../include/obj/Ni3dsPathController.h"
 #include "../../include/obj/NiParticleModifier.h"
 #include "../../include/obj/NiPSysCollider.h"
 #include "../../include/obj/bhkRefObject.h"
@@ -64,6 +70,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiDynamicEffect.h"
 #include "../../include/obj/NiLight.h"
 #include "../../include/obj/NiProperty.h"
+#include "../../include/obj/NiTransparentProperty.h"
 #include "../../include/obj/NiPSysModifier.h"
 #include "../../include/obj/NiPSysEmitter.h"
 #include "../../include/obj/NiPSysVolumeEmitter.h"
@@ -71,6 +78,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiInterpController.h"
 #include "../../include/obj/NiMultiTargetTransformController.h"
 #include "../../include/obj/NiGeomMorpherController.h"
+#include "../../include/obj/NiMorphController.h"
+#include "../../include/obj/NiMorpherController.h"
 #include "../../include/obj/NiSingleInterpController.h"
 #include "../../include/obj/NiKeyframeController.h"
 #include "../../include/obj/NiTransformController.h"
@@ -242,6 +251,10 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiTriShapeData.h"
 #include "../../include/obj/NiTriStrips.h"
 #include "../../include/obj/NiTriStripsData.h"
+#include "../../include/obj/NiEnvMappedTriShape.h"
+#include "../../include/obj/NiEnvMappedTriShapeData.h"
+#include "../../include/obj/NiBezierTriangle4.h"
+#include "../../include/obj/NiBezierMesh.h"
 #include "../../include/obj/NiClod.h"
 #include "../../include/obj/NiClodData.h"
 #include "../../include/obj/NiUVController.h"
@@ -278,6 +291,12 @@ namespace Niflib {
 	void RegisterObjects() {
 
 		ObjectRegistry::RegisterObject( "NiObject", NiObject::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsAlphaAnimator", Ni3dsAlphaAnimator::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsAnimationNode", Ni3dsAnimationNode::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsColorAnimator", Ni3dsColorAnimator::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsMorphShape", Ni3dsMorphShape::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsParticleSystem", Ni3dsParticleSystem::Create );
+		ObjectRegistry::RegisterObject( "Ni3dsPathController", Ni3dsPathController::Create );
 		ObjectRegistry::RegisterObject( "NiParticleModifier", NiParticleModifier::Create );
 		ObjectRegistry::RegisterObject( "NiPSysCollider", NiPSysCollider::Create );
 		ObjectRegistry::RegisterObject( "bhkRefObject", bhkRefObject::Create );
@@ -335,6 +354,7 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiDynamicEffect", NiDynamicEffect::Create );
 		ObjectRegistry::RegisterObject( "NiLight", NiLight::Create );
 		ObjectRegistry::RegisterObject( "NiProperty", NiProperty::Create );
+		ObjectRegistry::RegisterObject( "NiTransparentProperty", NiTransparentProperty::Create );
 		ObjectRegistry::RegisterObject( "NiPSysModifier", NiPSysModifier::Create );
 		ObjectRegistry::RegisterObject( "NiPSysEmitter", NiPSysEmitter::Create );
 		ObjectRegistry::RegisterObject( "NiPSysVolumeEmitter", NiPSysVolumeEmitter::Create );
@@ -342,6 +362,8 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiInterpController", NiInterpController::Create );
 		ObjectRegistry::RegisterObject( "NiMultiTargetTransformController", NiMultiTargetTransformController::Create );
 		ObjectRegistry::RegisterObject( "NiGeomMorpherController", NiGeomMorpherController::Create );
+		ObjectRegistry::RegisterObject( "NiMorphController", NiMorphController::Create );
+		ObjectRegistry::RegisterObject( "NiMorpherController", NiMorpherController::Create );
 		ObjectRegistry::RegisterObject( "NiSingleInterpController", NiSingleInterpController::Create );
 		ObjectRegistry::RegisterObject( "NiKeyframeController", NiKeyframeController::Create );
 		ObjectRegistry::RegisterObject( "NiTransformController", NiTransformController::Create );
@@ -513,6 +535,10 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiTriShapeData", NiTriShapeData::Create );
 		ObjectRegistry::RegisterObject( "NiTriStrips", NiTriStrips::Create );
 		ObjectRegistry::RegisterObject( "NiTriStripsData", NiTriStripsData::Create );
+		ObjectRegistry::RegisterObject( "NiEnvMappedTriShape", NiEnvMappedTriShape::Create );
+		ObjectRegistry::RegisterObject( "NiEnvMappedTriShapeData", NiEnvMappedTriShapeData::Create );
+		ObjectRegistry::RegisterObject( "NiBezierTriangle4", NiBezierTriangle4::Create );
+		ObjectRegistry::RegisterObject( "NiBezierMesh", NiBezierMesh::Create );
 		ObjectRegistry::RegisterObject( "NiClod", NiClod::Create );
 		ObjectRegistry::RegisterObject( "NiClodData", NiClodData::Create );
 		ObjectRegistry::RegisterObject( "NiUVController", NiUVController::Create );

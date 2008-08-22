@@ -14,13 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiTextureEffect.h"
+#include "../../include/obj/NiImage.h"
 #include "../../include/obj/NiSourceTexture.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NiDynamicEffect::TYPE );
 
-NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
+NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), image(NULL), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -50,8 +51,14 @@ void NiTextureEffect::Read( istream& in, list<unsigned int> & link_stack, const 
 	NifStream( textureClamping, in, info );
 	NifStream( textureType, in, info );
 	NifStream( coordinateGenerationType, in, info );
-	NifStream( block_num, in, info );
-	link_stack.push_back( block_num );
+	if ( info.version <= 0x03010000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( info.version >= 0x04000000 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 	NifStream( clippingPlane, in, info );
 	NifStream( unknownVector, in, info );
 	NifStream( unknownFloat, in, info );
@@ -78,15 +85,28 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( textureClamping, out, info );
 	NifStream( textureType, out, info );
 	NifStream( coordinateGenerationType, out, info );
-	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*sourceTexture), out, info );
-	} else {
-		if ( sourceTexture != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );
+	if ( info.version <= 0x03010000 ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*image), out, info );
 		} else {
-			NifStream( 0xFFFFFFFF, out, info );
+			if ( image != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		}
-	}
+	};
+	if ( info.version >= 0x04000000 ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			NifStream( (unsigned int)&(*sourceTexture), out, info );
+		} else {
+			if ( sourceTexture != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
+		}
+	};
 	NifStream( clippingPlane, out, info );
 	NifStream( unknownVector, out, info );
 	NifStream( unknownFloat, out, info );
@@ -115,6 +135,7 @@ std::string NiTextureEffect::asString( bool verbose ) const {
 	out << "  Texture Clamping:  " << textureClamping << endl;
 	out << "  Texture Type:  " << textureType << endl;
 	out << "  Coordinate Generation Type:  " << coordinateGenerationType << endl;
+	out << "  Image:  " << image << endl;
 	out << "  Source Texture:  " << sourceTexture << endl;
 	out << "  Clipping Plane:  " << clippingPlane << endl;
 	out << "  Unknown Vector:  " << unknownVector << endl;
@@ -133,7 +154,12 @@ void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 	//--END CUSTOM CODE--//
 
 	NiDynamicEffect::FixLinks( objects, link_stack, info );
-	sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, info );
+	if ( info.version <= 0x03010000 ) {
+		image = FixLink<NiImage>( objects, link_stack, info );
+	};
+	if ( info.version >= 0x04000000 ) {
+		sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -142,6 +168,8 @@ void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 std::list<NiObjectRef> NiTextureEffect::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiDynamicEffect::GetRefs();
+	if ( image != NULL )
+		refs.push_back(StaticCast<NiObject>(image));
 	if ( sourceTexture != NULL )
 		refs.push_back(StaticCast<NiObject>(sourceTexture));
 	return refs;

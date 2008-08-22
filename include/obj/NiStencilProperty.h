@@ -180,7 +180,7 @@ protected:
 	StencilAction zFailAction;
 	/*! Unknown. */
 	StencilAction passAction;
-	/*! Used to enabled double sided faces. */
+	/*! Used to enabled double sided faces. Default is 3 (DRAW_BOTH). */
 	FaceDrawMode drawMode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -61,8 +61,8 @@ void NiFlipController::Read( istream& in, list<unsigned int> & link_stack, const
 		};
 	};
 	if ( info.version <= 0x03010000 ) {
-		image.resize(numSources);
-		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+		images.resize(numSources);
+		for (unsigned int i2 = 0; i2 < images.size(); i2++) {
 			NifStream( block_num, in, info );
 			link_stack.push_back( block_num );
 		};
@@ -100,12 +100,12 @@ void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		};
 	};
 	if ( info.version <= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < images.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*image[i2]), out, info );
+				NifStream( (unsigned int)&(*images[i2]), out, info );
 			} else {
-				if ( image[i2] != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(image[i2]) )->second, out, info );
+				if ( images[i2] != NULL ) {
+					NifStream( link_map.find( StaticCast<NiObject>(images[i2]) )->second, out, info );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}
@@ -142,7 +142,7 @@ std::string NiFlipController::asString( bool verbose ) const {
 		array_output_count++;
 	};
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < images.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -150,7 +150,7 @@ std::string NiFlipController::asString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Image[" << i1 << "]:  " << image[i1] << endl;
+		out << "    Images[" << i1 << "]:  " << images[i1] << endl;
 		array_output_count++;
 	};
 	return out.str();
@@ -170,8 +170,8 @@ void NiFlipController::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 		};
 	};
 	if ( info.version <= 0x03010000 ) {
-		for (unsigned int i2 = 0; i2 < image.size(); i2++) {
-			image[i2] = FixLink<NiImage>( objects, link_stack, info );
+		for (unsigned int i2 = 0; i2 < images.size(); i2++) {
+			images[i2] = FixLink<NiImage>( objects, link_stack, info );
 		};
 	};
 
@@ -186,9 +186,9 @@ std::list<NiObjectRef> NiFlipController::GetRefs() const {
 		if ( sources[i1] != NULL )
 			refs.push_back(StaticCast<NiObject>(sources[i1]));
 	};
-	for (unsigned int i1 = 0; i1 < image.size(); i1++) {
-		if ( image[i1] != NULL )
-			refs.push_back(StaticCast<NiObject>(image[i1]));
+	for (unsigned int i1 = 0; i1 < images.size(); i1++) {
+		if ( images[i1] != NULL )
+			refs.push_back(StaticCast<NiObject>(images[i1]));
 	};
 	return refs;
 }

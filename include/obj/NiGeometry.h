@@ -165,8 +165,10 @@ protected:
 	IndexString shaderName;
 	/*! Unknown value, usually -1. (Not a link) */
 	int unknownInteger;
+	/*! Cyanide extension (only in version 10.2.0.0?). */
+	byte unknownByte;
 	/*! Dirty Flag? */
-	bool dirtyFlag_;
+	bool dirtyFlag;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

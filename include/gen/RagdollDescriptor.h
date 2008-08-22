@@ -13,7 +13,10 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!  */
+/*!
+ * This constraint defines a cone in which an object can rotate. The shape of the
+ * cone can be controlled in two (orthogonal) directions.
+ */
 struct RagdollDescriptor {
 	/*! Default Constructor */
 	NIFLIB_API RagdollDescriptor();
@@ -23,29 +26,39 @@ struct RagdollDescriptor {
 	NIFLIB_API RagdollDescriptor( const RagdollDescriptor & src );
 	/*! Copy Operator */
 	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
-	/*! Unknown. */
+	/*! Point around which the object will rotate. */
 	Float4 pivotA;
-	/*! Unknown. */
+	/*!
+	 * Defines the orthogonal directions in which the shape can be controlled (namely
+	 * in this direction, and in the direction orthogonal on this one and Twist A).
+	 */
 	Float4 planeA;
-	/*! Unknown. */
+	/*!
+	 * Central directed axis of the cone in which the object can rotate. Orthogonal on
+	 * Plane A.
+	 */
 	Float4 twistA;
-	/*! Unknown. */
+	/*! Pivot A in second entity coordinate system. */
 	Float4 pivotB;
-	/*! Unknown. */
+	/*! Plane A in second entity coordinate system. */
 	Float4 planeB;
-	/*! Unknown. */
+	/*! Twist A in second entity coordinate system. */
 	Float4 twistB;
-	/*! Unknown. */
+	/*!
+	 * Maximum angle the object can rotate around the vector orthogonal on Plane A and
+	 * Twist A relative to the Twist A vector. Note that Cone Min Angle is not stored,
+	 * but is simply minus this angle.
+	 */
 	float coneMinAngle;
-	/*! Unknown. */
+	/*! Minimum angle the object can rotate around Plane A, relative to Twist A. */
 	float planeMinAngle;
-	/*! Unknown. */
+	/*! Maximum angle the object can rotate around Plane A, relative to Twist A. */
 	float planeMaxAngle;
-	/*! Unknown. */
+	/*! Minimum angle the object can rotate around Twist A, relative to Plane A. */
 	float twistMinAngle;
-	/*! Unknown. */
+	/*! Maximum angle the object can rotate around Twist A, relative to Plane A. */
 	float twistMaxAngle;
-	/*! Unknown. */
+	/*! Maximum friction, typically 0 or 10. */
 	float maxFriction;
 };
 
