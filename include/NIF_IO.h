@@ -144,6 +144,10 @@ void NifStream( Triangle const & val, ostream& out, const NifInfo & info);
 void NifStream( Vector3 & val, istream& in, const NifInfo & info);
 void NifStream( Vector3 const & val, ostream& out, const NifInfo & info );
 
+//Vector4
+void NifStream( Vector4 & val, istream& in, const NifInfo & info);
+void NifStream( Vector4 const & val, ostream& out, const NifInfo & info );
+
 //Float2
 void NifStream( Float2 & val, istream& in, const NifInfo & info);
 void NifStream( Float2 const & val, ostream& out, const NifInfo & info );

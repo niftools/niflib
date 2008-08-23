@@ -748,7 +748,7 @@ static bool containsBones( BoneList& a, BoneList& b ) {
    return true;
 }
 template <typename I, typename V>
-int indexOf(I begin, I end, const V& val) {
+size_t indexOf(I begin, I end, const V& val) {
    return std::distance(begin, std::find(begin, end, val));
 }
 

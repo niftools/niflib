@@ -27,23 +27,23 @@ struct RagdollDescriptor {
 	/*! Copy Operator */
 	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
 	/*! Point around which the object will rotate. */
-	Float4 pivotA;
+	Vector4 pivotA;
 	/*!
 	 * Defines the orthogonal directions in which the shape can be controlled (namely
 	 * in this direction, and in the direction orthogonal on this one and Twist A).
 	 */
-	Float4 planeA;
+	Vector4 planeA;
 	/*!
 	 * Central directed axis of the cone in which the object can rotate. Orthogonal on
 	 * Plane A.
 	 */
-	Float4 twistA;
+	Vector4 twistA;
 	/*! Pivot A in second entity coordinate system. */
-	Float4 pivotB;
+	Vector4 pivotB;
 	/*! Plane A in second entity coordinate system. */
-	Float4 planeB;
+	Vector4 planeB;
 	/*! Twist A in second entity coordinate system. */
-	Float4 twistB;
+	Vector4 twistB;
 	/*!
 	 * Maximum angle the object can rotate around the vector orthogonal on Plane A and
 	 * Twist A relative to the Twist A vector. Note that Cone Min Angle is not stored,

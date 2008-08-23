@@ -157,7 +157,7 @@ vector<Vector3> bhkConvexVerticesShape::GetNormals() const {
 	//Remove any bad triangles
 	vector<Vector3> good_normals;
 	for ( unsigned i = 0; i < normals.size(); ++i ) {
-		const Float4 & t = normals[i];
+		const Vector4 & t = normals[i];
 		Vector3 v(t[0], t[1], t[2]);
 		good_normals.push_back(v);
 	}
@@ -172,7 +172,7 @@ vector<Vector3> bhkConvexVerticesShape::GetVertices() const {
 	//Remove any bad triangles
 	vector<Vector3> good_vertices;
 	for ( unsigned i = 0; i < vertices.size(); ++i ) {
-		const Float4 & t = vertices[i];
+		const Vector4 & t = vertices[i];
 		Vector3 v(t[0], t[1], t[2]); 
 		good_vertices.push_back(v);
 	}
@@ -195,7 +195,7 @@ void bhkConvexVerticesShape::SetVertices( const vector<Vector3> & in )
 	vertices.resize(size);
 	for (int i=0; i<size; ++i)
 	{
-		Float4 &f = vertices[i];
+		Vector4 &f = vertices[i];
 		const Vector3 &v = in[i];
 		f[0] = v.x;
 		f[1] = v.y;
@@ -210,7 +210,7 @@ void bhkConvexVerticesShape::SetNormals( const vector<Vector3> & in )
 	normals.resize(size);
 	for (int i=0; i<size; ++i)
 	{
-		Float4 &f = normals[i];
+		Vector4 &f = normals[i];
 		const Vector3 &v = in[i];
 		f[0] = v.x;
 		f[1] = v.y;
@@ -228,17 +228,17 @@ void bhkConvexVerticesShape::SetDistToCenter( const vector<float> & in )
 	normals.resize(size);
 	for (int i=0; i<size; ++i)
 	{
-		Float4 &f = normals[i];
+		Vector4 &f = normals[i];
 		f[3] = in[i];
 	}
 }
 
-vector<Float4> bhkConvexVerticesShape::GetNormalsAndDist() const
+vector<Vector4> bhkConvexVerticesShape::GetNormalsAndDist() const
 {
 	return normals;
 }
 
-void bhkConvexVerticesShape::SetNormalsAndDist(const vector<Float4>& value) 
+void bhkConvexVerticesShape::SetNormalsAndDist(const vector<Vector4>& value) 
 {
 	normals = value;
 }

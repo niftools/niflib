@@ -31,6 +31,23 @@ enum CollisionMode {
 
 ostream & operator<<( ostream & out, CollisionMode const & val );
 
+enum DeactivatorType {
+	DEACTIVATOR_INVALID = 0, /*!< Invalid */
+	DEACTIVATOR_NEVER = 1, /*!< This will force the rigid body to never deactivate. */
+	DEACTIVATOR_SPATIAL = 2, /*!< Tells Havok to use a spatial deactivation scheme. This makes use of high and low frequencies of positional motion to determine when deactivation should occur. */
+};
+
+ostream & operator<<( ostream & out, DeactivatorType const & val );
+
+enum hkResponseType {
+	RESPONSE_INVALID = 0, /*!< Invalid Response */
+	RESPONSE_SIMPLE_CONTACT = 1, /*!< Do normal collision resolution */
+	RESPONSE_REPORTING = 2, /*!< No collision resolution is performed but listeners are called */
+	RESPONSE_NONE = 3, /*!< Do nothing, ignore all the results. */
+};
+
+ostream & operator<<( ostream & out, hkResponseType const & val );
+
 /*! Determines how a NiTextureTransformController animates the UV coordinates. */
 enum TexTransform {
 	TT_TRANSLATE_U = 0, /*!< Means this controller moves the U texture cooridnates. */
@@ -231,6 +248,25 @@ enum OblivionLayer {
 
 ostream & operator<<( ostream & out, OblivionLayer const & val );
 
+/*!
+ * A list of possible solver deactivation settings. This value defines how the
+ *                 solver deactivates objects. The solver works on a per object
+ * basis.
+ *                 Note: Solver deactivation does not save CPU, but reduces
+ * creeping of
+ *                 movable objects in a pile quite dramatically.
+ */
+enum SolverDeactivation {
+	SOLVER_DEACTIVATION_INVALID = 0, /*!< Invalid */
+	SOLVER_DEACTIVATION_OFF = 1, /*!< No solver deactivation */
+	SOLVER_DEACTIVATION_LOW = 2, /*!< Very conservative deactivation, typically no visible artifacts. */
+	SOLVER_DEACTIVATION_MEDIUM = 3, /*!< Normal deactivation, no serious visible artifacts in most cases */
+	SOLVER_DEACTIVATION_HIGH = 4, /*!< Fast deactivation, visible artifacts */
+	SOLVER_DEACTIVATION_MAX = 5, /*!< Very fast deactivation, visible artifacts */
+};
+
+ostream & operator<<( ostream & out, SolverDeactivation const & val );
+
 /*! This enum lists the different face culling options. */
 enum FaceDrawMode {
 	DRAW_CCW_OR_BOTH = 0, /*!< use application defaults? */
@@ -327,24 +363,18 @@ ostream & operator<<( ostream & out, ApplyMode const & val );
 /*!
  * The motion system. 4 (Box) is used for everything movable. 7 (Keyframed) is used
  * on statics and animated stuff.
- * 
- *         Oblivion's ssg commando reveals even more values:
- *         0: Keyframed
- *         1: Box
- *         2: Sphere
- *         3: Sphere
- *         4: Box
- *         5: Box
- *         6: Keyframed
- *         7: Keyframed
- *         8: Box
- *         9+: Keyframed?
  */
 enum MotionSystem {
-	MO_SYS_SPHERE = 2, /*!< Sphere */
-	MO_SYS_BOX = 4, /*!< Box */
-	MO_SYS_KEYFRAMED_BIPED = 6, /*!< Keyframed (used for creatures) */
-	MO_SYS_KEYFRAMED = 7, /*!< Keyframed (used for weapons) */
+	MO_SYS_INVALID = 0, /*!< Invalid */
+	MO_SYS_DYNAMIC = 1, /*!< A fully-simulated, movable rigid body. At construction time the engine checks the input inertia and selects MO_SYS_SPHERE_INERTIA or MO_SYS_BOX_INERTIA as appropriate. */
+	MO_SYS_SPHERE = 2, /*!< Simulation is performed using a sphere inertia tensor. */
+	MO_SYS_SPHERE_INERTIA = 3, /*!< This is the same as MO_SYS_SPHERE_INERTIA, except that simulation of the rigid body is "softened". */
+	MO_SYS_BOX = 4, /*!< Simulation is performed using a box inertia tensor. */
+	MO_SYS_BOX_STABILIZED = 5, /*!< This is the same as MO_SYS_BOX_INERTIA, except that simulation of the rigid body is "softened". */
+	MO_SYS_KEYFRAMED = 6, /*!< Simulation is not performed as a normal rigid body. The keyframed rigid body has an infinite mass when viewed by the rest of the system. (used for creatures) */
+	MO_SYS_FIXED = 7, /*!< This motion type is used for the static elements of a game scene, e.g. the landscape. Faster than MO_SYS_KEYFRAMED at velocity 0. (used for weapons) */
+	MO_SYS_THIN_BOX = 8, /*!< A box inertia motion which is optimized for thin boxes and has less stability problems */
+	MO_SYS_CHARACTER = 9, /*!< A specialized motion used for character controllers */
 };
 
 ostream & operator<<( ostream & out, MotionSystem const & val );
@@ -435,15 +465,16 @@ ostream & operator<<( ostream & out, TexClampMode const & val );
 
 /*! The motion type. Determines quality of motion? */
 enum MotionQuality {
-	MO_QUAL_MOVING = 0, /*!< Moving */
-	MO_QUAL_FIXED = 1, /*!< Fixed */
-	MO_QUAL_KEYFRAMED = 2, /*!< Keyframed */
-	MO_QUAL_MOVING2 = 3, /*!< Moving(?) */
-	MO_QUAL_MOVING3 = 4, /*!< Moving(?) */
-	MO_QUAL_CRITICAL = 5, /*!< Critical */
-	MO_QUAL_BULLET = 6, /*!< Bullet */
-	MO_QUAL_USER = 7, /*!< User */
-	MO_QUAL_NULL = 8, /*!< Null */
+	MO_QUAL_INVALID = 0, /*!< Automatically assigned to MO_QUAL_FIXED, MO_QUAL_KEYFRAMED or MO_QUAL_DEBRIS */
+	MO_QUAL_FIXED = 1, /*!< Use this for fixed bodies. */
+	MO_QUAL_KEYFRAMED = 2, /*!< Use this for moving objects with infinite mass. */
+	MO_QUAL_DEBRIS = 3, /*!< Use this for all your debris objects */
+	MO_QUAL_MOVING = 4, /*!< Use this for moving bodies, which should not leave the world. */
+	MO_QUAL_CRITICAL = 5, /*!< Use this for all objects, which you cannot afford to tunnel through the world at all */
+	MO_QUAL_BULLET = 6, /*!< Use this for very fast objects */
+	MO_QUAL_USER = 7, /*!< For user. */
+	MO_QUAL_CHARACTER = 8, /*!< Use this for rigid body character controllers */
+	MO_QUAL_KEYFRAMED_REPORT = 9, /*!< Use this for moving objects with infinite mass which should report contact points and Toi-collisions against all other bodies, including other fixed and keyframed bodies. */
 };
 
 ostream & operator<<( ostream & out, MotionQuality const & val );

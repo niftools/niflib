@@ -56,9 +56,9 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Pivot A. */
-	Float4 pivotA;
+	Vector4 pivotA;
 	/*! Pivot B. */
-	Float4 pivotB;
+	Vector4 pivotB;
 	/*! Length. */
 	float length;
 public:

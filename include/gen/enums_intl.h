@@ -24,6 +24,12 @@ void NifStream( ForceType const & val, ostream& out, const NifInfo & info = NifI
 void NifStream( CollisionMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( CollisionMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( DeactivatorType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( DeactivatorType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( hkResponseType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( hkResponseType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---TexTransform---//
 
@@ -83,6 +89,12 @@ void NifStream( StencilAction const & val, ostream& out, const NifInfo & info = 
 
 void NifStream( OblivionLayer & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( OblivionLayer const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SolverDeactivation---//
+
+void NifStream( SolverDeactivation & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SolverDeactivation const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---FaceDrawMode---//

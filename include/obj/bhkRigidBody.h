@@ -85,13 +85,13 @@ public:
 	 * Gets the current translation of this rigid body.
 	 * \return The translation of this rigid body.
 	 */
-	NIFLIB_API Vector3 GetTranslation() const;
+	NIFLIB_API Vector4 GetTranslation() const;
 
 	/*!
 	 * Sets a new translation for this rigid body.
 	 * \param[in] value  The new translation for this rigid body.
 	 */
-	NIFLIB_API void SetTranslation( const Vector3 & value );
+	NIFLIB_API void SetTranslation( const Vector4 & value );
 
 	/*!
 	 * Gets the current rotation of this rigid body.
@@ -109,25 +109,25 @@ public:
 	 * Gets the current linear velocity of this rigid body.
 	 * \return The linear velocity of this rigid body.
 	 */
-	NIFLIB_API Vector3 GetLinearVelocity() const;
+	NIFLIB_API Vector4 GetLinearVelocity() const;
 
 	/*!
 	 * Sets a new linear velocity for this rigid body.
 	 * \param[in] value The new linear velocity for this rigid body.
 	 */
-	NIFLIB_API void SetLinearVelocity( const Vector3 & value );
+	NIFLIB_API void SetLinearVelocity( const Vector4 & value );
 
 	/*!
 	 * Gets the current angular velocity of this rigid body.
 	 * \return The angular velocity of this rigid body.
 	 */
-	NIFLIB_API Vector3 GetAngularVelocity() const;
+	NIFLIB_API Vector4 GetAngularVelocity() const;
 
 	/*!
 	 * Sets a new angular velocity for this rigid body.
 	 * \param[in] value The new angular velocity for this rigid body.
 	 */
-	NIFLIB_API void SetAngularVelocity( const Vector3 & value );
+	NIFLIB_API void SetAngularVelocity( const Vector4 & value );
 
 	/*!
 	 * Gets the current inertia of this rigid body.
@@ -145,13 +145,13 @@ public:
 	 * Gets the current center point of this rigid body.
 	 * \return The center point of this rigid body.
 	 */
-	NIFLIB_API Vector3 GetCenter() const;
+	NIFLIB_API Vector4 GetCenter() const;
 
 	/*!
 	 * Sets a new center point for this rigid body.
 	 * \param[in] value The new center point for this rigid body.
 	 */
-	NIFLIB_API void SetCenter( const Vector3 & value );
+	NIFLIB_API void SetCenter( const Vector4 & value );
 
 	/*!
 	 * Gets the current mass of this rigid body.
@@ -273,12 +273,44 @@ public:
 	 */
 	NIFLIB_API void SetQualityType( MotionQuality value );
 
+	// The initial deactivator type of the body.
+	// \return The current value.
+	NIFLIB_API DeactivatorType GetDeactivatorType() const;
+
+	// The initial deactivator type of the body.
+	// \param[in] value The new value.
+	NIFLIB_API void SetDeactivatorType( const DeactivatorType & value );
+
+	// Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
+	// always be same as Unknown Byte 1.
+	// \return The current value.
+	SolverDeactivation GetSolverDeactivation() const;
+
+	// Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
+	// always be same as Unknown Byte 1.
+	// \param[in] value The new value.
+	void SetSolverDeactivation( const SolverDeactivation & value );
+
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	array<5,float > unknown5Floats;
+	int unknownInt1;
 	/*! Unknown. */
-	array<4,unsigned short > unknown4Shorts;
+	int unknownInt2;
+	/*! Unknown. */
+	array<3,int > unknown3Ints;
+	/*! The collision response. See hkResponseType for hkpWorld default implementations. */
+	hkResponseType collisionResponse_;
+	/*! Unknown */
+	byte unknownByte;
+	/*!
+	 * Lowers the frequency for processContactCallbacks. A value of 5 means that a
+	 * callback is raised every 5th frame.
+	 */
+	unsigned short processContactCallbackDelay_;
+	/*! Unknown. */
+	array<2,unsigned short > unknown2Shorts;
 	/*! Copy of Layer value? */
 	OblivionLayer layerCopy;
 	/*! Copy of Col Filter value? */
@@ -289,35 +321,23 @@ protected:
 	 * A vector that moves the body by the specified amount. Only enabled in
 	 * bhkRigidBodyT objects.
 	 */
-	Vector3 translation;
-	/*!
-	 * This seems to often be 1 for single objects, or the first one in a
-	 *             a linked object group. This may be due to those objects often being
-	 * bhkRigidBodyT as well.
-	 */
-	float unknownFloat00;
+	Vector4 translation;
 	/*!
 	 * The rotation Yaw/Pitch/Roll to apply to the body. Only enabled in bhkRigidBodyT
 	 * objects.
 	 */
 	QuaternionXYZW rotation;
 	/*! Linear velocity. */
-	Vector3 linearVelocity;
-	/*! Unknown. */
-	float unknownFloat01;
+	Vector4 linearVelocity;
 	/*! Angular velocity. */
-	Vector3 angularVelocity;
-	/*! Unknown. */
-	float unknownFloat02;
+	Vector4 angularVelocity;
 	/*! Defines how the mass is distributed among the body. */
 	InertiaMatrix inertia;
 	/*!
 	 * This seems to be used to relocate the object's center of mass. Useful for
 	 * balancing objects in contraints.
 	 */
-	Vector3 center;
-	/*! Unknown float. */
-	float unknownFloat03;
+	Vector4 center;
 	/*! The body's mass. */
 	float mass;
 	/*!
@@ -329,34 +349,48 @@ protected:
 	float angularDamping;
 	/*! The body's friction. */
 	float friction;
-	/*! The body's restitution (elasticity). */
+	/*!
+	 * The body's restitution (elasticity).
+	 *             If the restitution is not 0.0 the object will need extra CPU for all
+	 * new collisions.
+	 *             Try to set restitution to 0 for maximum performance (e.g. collapsing
+	 * buildings)
+	 */
 	float restitution;
 	/*! Maximal linear velocity. */
 	float maxLinearVelocity;
 	/*! Maximal angular velocity. Pi x 10? */
 	float maxAngularVelocity;
-	/*! Penetration depth. */
+	/*!
+	 * The maximum allowed penetration for this object.
+	 *             This is a hint to the engine to see how much CPU the engine should
+	 * invest to keep this object from penetrating.
+	 *             A good choice is 5% - 20% of the smallest diameter of the object.
+	 */
 	float penetrationDepth;
 	/*! Motion system? Overrides Quality when on Keyframed? */
 	MotionSystem motionSystem;
-	/*!
-	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
-	 * always be same as Unknown Byte 2.
-	 */
-	byte unknownByte1;
+	/*! The initial deactivator type of the body. */
+	DeactivatorType deactivatorType;
 	/*!
 	 * Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
 	 * always be same as Unknown Byte 1.
 	 */
-	byte unknownByte2;
+	SolverDeactivation solverDeactivation;
 	/*! The motion type. Determines quality of motion? */
 	MotionQuality qualityType;
-	/*! Unknown. */
-	unsigned int unknownInt6;
-	/*! Unknown. */
-	unsigned int unknownInt7;
-	/*! Unknown. */
-	unsigned int unknownInt8;
+	/*!
+	 * This is a user flag which you can set to give you a hint as to which objects to
+	 * remove from the simulation if the memory overhead becomes too high.
+	 */
+	unsigned int autoRemoveLevel;
+	/*!
+	 * Requests a number of extra fields in each hkpContactPointProperties for this
+	 * rigid body.
+	 */
+	unsigned int userDatasInContactPointProperties_;
+	/*! Ps3 only */
+	unsigned int forceCollideOntoPpu_;
 	/*! The number of constraints this object is bound to. */
 	mutable unsigned int numConstraints;
 	/*! Unknown. */

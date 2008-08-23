@@ -20,6 +20,7 @@ namespace Niflib {
 struct TexCoord;
 struct Triangle;
 struct Vector3;
+struct Vector4;
 struct Color3;
 struct Color4;
 struct Quaternion;
@@ -156,7 +157,7 @@ struct Vector3 {
 	 */
 	NIFLIB_API float Magnitude() const;
 
-	/* This function returns a normalization of this vector.  A vecctor pointing in the same
+	/* This function returns a normalization of this vector.  A vector pointing in the same
 	 * direction but with a magnitude, or length, of 1.
 	 */
 	NIFLIB_API Vector3 Normalized() const;
@@ -254,6 +255,153 @@ struct Vector3 {
 	// * \return This vector is returned.
 	// */
 	//Vector3 & operator*=( const Matrix44 & rh );
+};
+
+/*!Represents a position or direction in 3D space*/
+struct Vector4 {
+	float x; /*!< The X component of this vector. */ 
+	float y; /*!< The Y component of this vector. */ 
+	float z; /*!< The Z component of this vector. */ 
+	float w; /*!< The W component of this vector. */ 
+
+	/*!Default constructor.*/
+	NIFLIB_API Vector4() { x = y = z = w = 0.0f; }
+
+	/*! This constructor can be used to set all values in this structure during initialization
+	* \param[in] x The value to set X to.
+	* \param[in] y The value to set Y to.
+	* \param[in] z The value to set Z to.
+	* \param[in] w The value to set W to.
+	*/
+	NIFLIB_API Vector4(float x, float y, float z, float w = 0.0f) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+
+	/*! This constructor can be used to initialize this Vector4 with another Vector4
+	* \param[in] v The Vector4 to construct this one from
+	*/
+	NIFLIB_API Vector4( const Vector4 & v) { x = v.x; y = v.y; z = v.z; w = v.w;}
+
+	/*! This constructor can be used to initialize this Vector4 with a Vector3
+	* \param[in] v The Vector3 to construct this one from
+	*/
+	NIFLIB_API Vector4( const Vector3 & v) { x = v.x; y = v.y; z = v.z; w = 0.0f;}
+
+	/*! This constructor can be used to initialize this Vector4 with a Float4
+	* \param[in] v The Float4 to construct this one from
+	*/
+	NIFLIB_API Vector4( const Float4 & v);
+
+	/*! Destructor */
+	NIFLIB_API ~Vector4() {}
+
+	/*! This function can be used to set all values in the structure at the same time.
+	* \param[in] x The value to set X to.
+	* \param[in] y The value to set Y to.
+	* \param[in] z The value to set Z to.
+	* \param[in] w The value to set W to.
+	*/
+	NIFLIB_API void Set(float x, float y, float z, float w = 0.0f) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+
+	/* This function calculates the magnitude of this vector
+	* \return the magnitude of the vector; its length.
+	*/
+	NIFLIB_API float Magnitude() const;
+
+	/* This function returns a normalization of this vector.  A vector pointing in the same
+	* direction but with a magnitude, or length, of 1.
+	*/
+	NIFLIB_API Vector4 Normalized() const;
+
+	/* Allows the addition of vectors.  Each component, x, y, z, w is added with
+	* the same component of the other vector.
+	* \return The result of the addition.
+	*/
+	NIFLIB_API Vector4 operator+( const Vector4 & rh ) const;
+
+	/* Adds the two vectors and then sets the result to the left-hand vector.
+	* \return This vector is returned.
+	*/
+	NIFLIB_API Vector4 & operator+=( const Vector4 & rh );
+
+	/* Allows the subtraction of vectors.  Each component, x, y, y, is subtracted from
+	* the same component of the other vector.
+	* \return The result of the subtraction.
+	*/
+	NIFLIB_API Vector4 operator-( const Vector4 & rh ) const;
+
+	/* This operator subtracts the two vectors and then sets the result to the left-hand vector.
+	* \return This vector is returned.
+	*/
+	NIFLIB_API Vector4 & operator-=( const Vector4 & rh);
+
+	/* Allows scaler multiplication, that is multiplying all components of the
+	* vector, x, y and z, by the same number.
+	* \return The result of the multiplication.
+	*/
+	NIFLIB_API Vector4 operator*( const float & rh) const; //Scalar Multiply
+
+	/* Multiplies a vector by a scalar and then sets the result to the left-hand vector.
+	* \return This vector is returned.
+	*/
+	Vector4 & operator*=( const float & rh );
+
+	/* Multiplies a vector by a vector using the dot product
+	* \return The dot product of the two vectors.
+	*/
+	NIFLIB_API float operator*( const Vector4 & v ) const;
+
+	/* Multiplies a vector by a vector using the cross product
+	* \return The cross product of the two vectors.
+	*/
+	NIFLIB_API Vector4 operator^( const Vector4 & v ) const;
+
+	/* Allows scaler division, that is dividing all components of the
+	* vector, x, y and z, by the same number.
+	* \return The result of the division.
+	*/
+	NIFLIB_API Vector4 operator/( const float & rh ) const;
+
+	/* Divides a vector by a scalar and then sets the result to the left-hand vector.
+	* \return This vector is returned.
+	*/
+	Vector4 & operator/=( const float & rh );
+
+	/* Sets the components of this Vector4 to those of another Vector4 
+	* \return This vector is returned.
+	*/
+	NIFLIB_API Vector4 & operator=( const Vector4 & v ) { x = v.x; y = v.y; z = v.z; w = v.w;  return *this; }
+
+	/* Tests the equality of two Vector4 structures.  Vectors are considered equal if all
+	* three components are equal.
+	*/
+	NIFLIB_API bool operator==( const Vector4 & rh ) const;
+
+	/* Tests the inequality of two Vector4 structures.  Vectors are considered equal if all
+	* three components are equal.
+	*/
+	NIFLIB_API bool operator!=( const Vector4 & rh ) const;
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	* \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
+	* \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	*/
+	NIFLIB_API float & operator[](int n);
+
+	/*! The bracket operator makes it possible to use this structure like a C++ array.
+	* \param[in] n The index into the data array.  Should be 0, 1, 2, or 3.
+	* \return The value at the given array index by reference so it can be read or set via the bracket operator.
+	*/
+	NIFLIB_API float operator[](int n) const;
+
 };
 
 /* Stores two floating point numbers.  Used as a row of a Matrix22 */
@@ -513,6 +661,11 @@ struct Float4 {
 		data[3] = f3;
 		data[4] = f4;
 	}
+
+	/*! This constructor can be used to initialize this Float4 with a Vector4
+	* \param[in] v The Vector4 to construct this one from
+	*/
+	NIFLIB_API Float4( const Vector4 & v) { Set(v.x, v.y, v.z, v.w); }
 
 	/*! This function can be used to set all values in the structure at the same time.
 	 * \param[in] f1 The value to set the first floating point number to.

@@ -63,6 +63,51 @@ ostream & operator<<( ostream & out, CollisionMode const & val ) {
 }
 
 
+//--DeactivatorType--//
+
+void NifStream( DeactivatorType & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = DeactivatorType(temp);
+}
+
+void NifStream( DeactivatorType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, DeactivatorType const & val ) {
+	switch ( val ) {
+		case DEACTIVATOR_INVALID: return out << "DEACTIVATOR_INVALID";
+		case DEACTIVATOR_NEVER: return out << "DEACTIVATOR_NEVER";
+		case DEACTIVATOR_SPATIAL: return out << "DEACTIVATOR_SPATIAL";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--hkResponseType--//
+
+void NifStream( hkResponseType & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = hkResponseType(temp);
+}
+
+void NifStream( hkResponseType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, hkResponseType const & val ) {
+	switch ( val ) {
+		case RESPONSE_INVALID: return out << "RESPONSE_INVALID";
+		case RESPONSE_SIMPLE_CONTACT: return out << "RESPONSE_SIMPLE_CONTACT";
+		case RESPONSE_REPORTING: return out << "RESPONSE_REPORTING";
+		case RESPONSE_NONE: return out << "RESPONSE_NONE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TexTransform--//
 
 void NifStream( TexTransform & val, istream& in, const NifInfo & info ) {
@@ -378,6 +423,31 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 }
 
 
+//--SolverDeactivation--//
+
+void NifStream( SolverDeactivation & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = SolverDeactivation(temp);
+}
+
+void NifStream( SolverDeactivation const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SolverDeactivation const & val ) {
+	switch ( val ) {
+		case SOLVER_DEACTIVATION_INVALID: return out << "SOLVER_DEACTIVATION_INVALID";
+		case SOLVER_DEACTIVATION_OFF: return out << "SOLVER_DEACTIVATION_OFF";
+		case SOLVER_DEACTIVATION_LOW: return out << "SOLVER_DEACTIVATION_LOW";
+		case SOLVER_DEACTIVATION_MEDIUM: return out << "SOLVER_DEACTIVATION_MEDIUM";
+		case SOLVER_DEACTIVATION_HIGH: return out << "SOLVER_DEACTIVATION_HIGH";
+		case SOLVER_DEACTIVATION_MAX: return out << "SOLVER_DEACTIVATION_MAX";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--FaceDrawMode--//
 
 void NifStream( FaceDrawMode & val, istream& in, const NifInfo & info ) {
@@ -601,10 +671,16 @@ void NifStream( MotionSystem const & val, ostream& out, const NifInfo & info ) {
 
 ostream & operator<<( ostream & out, MotionSystem const & val ) {
 	switch ( val ) {
+		case MO_SYS_INVALID: return out << "MO_SYS_INVALID";
+		case MO_SYS_DYNAMIC: return out << "MO_SYS_DYNAMIC";
 		case MO_SYS_SPHERE: return out << "MO_SYS_SPHERE";
+		case MO_SYS_SPHERE_INERTIA: return out << "MO_SYS_SPHERE_INERTIA";
 		case MO_SYS_BOX: return out << "MO_SYS_BOX";
-		case MO_SYS_KEYFRAMED_BIPED: return out << "MO_SYS_KEYFRAMED_BIPED";
+		case MO_SYS_BOX_STABILIZED: return out << "MO_SYS_BOX_STABILIZED";
 		case MO_SYS_KEYFRAMED: return out << "MO_SYS_KEYFRAMED";
+		case MO_SYS_FIXED: return out << "MO_SYS_FIXED";
+		case MO_SYS_THIN_BOX: return out << "MO_SYS_THIN_BOX";
+		case MO_SYS_CHARACTER: return out << "MO_SYS_CHARACTER";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -790,15 +866,16 @@ void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info ) 
 
 ostream & operator<<( ostream & out, MotionQuality const & val ) {
 	switch ( val ) {
-		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
+		case MO_QUAL_INVALID: return out << "MO_QUAL_INVALID";
 		case MO_QUAL_FIXED: return out << "MO_QUAL_FIXED";
 		case MO_QUAL_KEYFRAMED: return out << "MO_QUAL_KEYFRAMED";
-		case MO_QUAL_MOVING2: return out << "MO_QUAL_MOVING2";
-		case MO_QUAL_MOVING3: return out << "MO_QUAL_MOVING3";
+		case MO_QUAL_DEBRIS: return out << "MO_QUAL_DEBRIS";
+		case MO_QUAL_MOVING: return out << "MO_QUAL_MOVING";
 		case MO_QUAL_CRITICAL: return out << "MO_QUAL_CRITICAL";
 		case MO_QUAL_BULLET: return out << "MO_QUAL_BULLET";
 		case MO_QUAL_USER: return out << "MO_QUAL_USER";
-		case MO_QUAL_NULL: return out << "MO_QUAL_NULL";
+		case MO_QUAL_CHARACTER: return out << "MO_QUAL_CHARACTER";
+		case MO_QUAL_KEYFRAMED_REPORT: return out << "MO_QUAL_KEYFRAMED_REPORT";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

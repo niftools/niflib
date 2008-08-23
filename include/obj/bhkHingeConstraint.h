@@ -56,15 +56,15 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Pivot A. */
-	Float4 pivotA;
+	Vector4 pivotA;
 	/*! Unknown. */
-	Float4 perp2axleina1;
+	Vector4 perp2axleina1;
 	/*! Unknown. */
-	Float4 perp2axleina2;
+	Vector4 perp2axleina2;
 	/*! Pivot B. */
-	Float4 pivotB;
+	Vector4 pivotB;
 	/*! Unknown. */
-	Float4 axleB;
+	Vector4 axleB;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

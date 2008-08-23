@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NIF_BASIC_TYPES_H_
 
 #include <string>
+#include <stdarg.h>
 #include "gen/enums.h"
 #include "nif_versions.h"
 
@@ -79,9 +80,16 @@ struct NifInfo {
 template<int size, class T>
 struct array {
 	array() {
-		for ( size_t i = 0; i < size; ++i ) {
+		for ( size_t i = 0; i < size; ++i )
 			data[i] = T();
-		}
+	}
+	array(size_t n, ...) {
+		va_list argptr;
+		va_start(argptr, n);
+		for ( size_t i = 0; i < n && i < size; ++i )
+			data[i] = va_arg( argptr, T );
+		for ( size_t i = n; i < size; ++i )
+			data[i] = T();
 	}
 	~array() {}
 	T & operator[]( unsigned int index ) {

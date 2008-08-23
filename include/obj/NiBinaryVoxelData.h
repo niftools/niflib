@@ -68,7 +68,7 @@ protected:
 	/*! Unknown. */
 	mutable unsigned int numUnknownVectors;
 	/*! Vectors on the unit sphere. */
-	vector<Float4 > unknownVectors;
+	vector<Vector4 > unknownVectors;
 	/*! Unknown. */
 	mutable unsigned int numUnknownBytes2;
 	/*! Unknown. */

@@ -145,6 +145,120 @@ Vector3 Vector3::CrossProduct( const Vector3 & rh) const {
 //	return *this;
 //}
 
+
+/*
+* Vector4 Methods
+*/
+Vector4::Vector4( const Float4 & v) { 
+	x = v[0]; y = v[1]; z = v[2]; w = v[3];
+}
+
+float Vector4::Magnitude() const {
+	return sqrt( x * x + y * y + z * z + w * w );
+}
+
+Vector4 Vector4::Normalized() const {
+	Vector4 v(*this);
+	float m = Magnitude();
+	return Vector4(
+		x / m, //x
+		y / m, //y
+		z / m, //z
+		w / m
+		);
+}
+
+Vector4 Vector4::operator+( const Vector4 & rh) const {
+	Vector4 v(*this);
+	v += rh;
+	return v;
+}
+
+Vector4 & Vector4::operator+=( const Vector4 & rh ) {
+	x += rh.x;
+	y += rh.y;
+	z += rh.z;
+	w += rh.w;
+	return *this;
+}
+
+Vector4 Vector4::operator-( const Vector4 & rh) const {
+	Vector4 v(*this);
+	v -= rh;
+	return v;
+}
+
+Vector4 & Vector4::operator-=( const Vector4 & rh ) {
+	x -= rh.x;
+	y -= rh.y;
+	z -= rh.z;
+	w -= rh.w;
+	return *this;
+}
+
+Vector4 Vector4::operator*( const float & rh) const {
+	Vector4 v(*this);
+	v *= rh;
+	return v;
+}
+
+Vector4 & Vector4::operator*=( const float & rh) {
+	x *= rh;
+	y *= rh;
+	z *= rh;
+	w *= rh;
+	return *this;
+}
+
+Vector4 Vector4::operator/( const float & rh ) const {
+	Vector4 v(*this);
+	v /= rh;
+	return v;
+}
+
+Vector4 & Vector4::operator/=( const float & rh ) {
+	x /= rh;
+	y /= rh;
+	z /= rh;
+	w /= rh;
+	return *this;
+}
+
+bool Vector4::operator==( const Vector4 & rh) const {
+	if (rh.x == x && rh.y == y && rh.z == z && rh.w == w)
+		return true;
+	else
+		return false;
+}
+
+bool Vector4::operator!=( const Vector4 & rh) const {
+	if (rh.x == x && rh.y == y && rh.z == z && rh.w == w)
+		return false;
+	else
+		return true;
+}
+
+float & Vector4::operator[](int n) {
+	switch (n) {
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: throw runtime_error("Invalid index");
+	}
+}
+
+float Vector4::operator[](int n) const {
+	switch (n) {
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: throw runtime_error("Invalid index");
+	}
+}
+
+
 /*
  * Matrix22 Methods
  */

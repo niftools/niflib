@@ -56,15 +56,15 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Pivot A. */
-	Float4 pivotA;
+	Vector4 pivotA;
 	/*! 4x4 rotation matrix, rotates the child entity. */
-	array<4,Float4 > rotation;
+	array<4,Vector4 > rotation;
 	/*! Pivot B. */
-	Float4 pivotB;
+	Vector4 pivotB;
 	/*! Describes the axis the object is able to travel along. Unit vector. */
-	Float4 slidingAxis;
+	Vector4 slidingAxis;
 	/*! Plane normal. Describes the plane the object is able to move on. */
-	Float4 plane;
+	Vector4 plane;
 	/*! Describe the min distance the object is able to travel. */
 	float minDistance;
 	/*! Describe the max distance the object is able to travel. */

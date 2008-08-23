@@ -468,6 +468,21 @@ void NifStream( Vector3 const & val, ostream& out, const NifInfo & info ) {
 	WriteFloat( val.z, out );
 };
 
+//Vector3
+void NifStream( Vector4 & val, istream& in, const NifInfo & info ) {
+	val.x = ReadFloat( in );
+	val.y = ReadFloat( in );
+	val.z = ReadFloat( in );
+	val.w = ReadFloat( in );
+};
+
+void NifStream( Vector4 const & val, ostream& out, const NifInfo & info ) {
+	WriteFloat( val.x, out );
+	WriteFloat( val.y, out );
+	WriteFloat( val.z, out );
+	WriteFloat( val.w, out );
+};
+
 //Float2
 void NifStream( Float2 & val, istream& in, const NifInfo & info ) {
 	val.data[0] = ReadFloat( in );

@@ -104,12 +104,12 @@ public:
 	* Used to retrieve the normal and the distance to center for vertices.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
 	* \return A vector containing the normals used by this mesh, if any.
 	*/
-	NIFLIB_API vector<Float4> GetNormalsAndDist() const;
+	NIFLIB_API vector<Vector4> GetNormalsAndDist() const;
 
 	/*! 
 	* Used to set the normal and the distance to center for vertices.  The size of the vector will either be zero if no normals are used, or be the same as the vertex count retrieved with the IShapeData::GetVertexCount function.
 	*/
-	NIFLIB_API void SetNormalsAndDist(const vector<Float4>& value);
+	NIFLIB_API void SetNormalsAndDist(const vector<Vector4>& value);
 
 	//--END CUSTOM CODE--//
 protected:
@@ -121,7 +121,7 @@ protected:
 	/*! Number of vertices. */
 	mutable unsigned int numVertices;
 	/*! Vertices. Fourth component is 0. Lexicographically sorted. */
-	vector<Float4 > vertices;
+	vector<Vector4 > vertices;
 	/*! The number of half spaces. */
 	mutable unsigned int numNormals;
 	/*!
@@ -131,7 +131,7 @@ protected:
 	 * and n, where v is any vertex on the separating plane, and n is the normal.
 	 * Lexicographically sorted.
 	 */
-	vector<Float4 > normals;
+	vector<Vector4 > normals;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
