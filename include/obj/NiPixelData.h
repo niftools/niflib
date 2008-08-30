@@ -141,10 +141,10 @@ protected:
 	byte flags;
 	/*! Seems to always be zero. */
 	unsigned int unknownInt4;
-	/*! Channel Data */
-	array<4,ChannelData > channels;
 	/*! Unknown. */
 	byte unknownByte1;
+	/*! Channel Data */
+	array<4,ChannelData > channels;
 	/*! Link to NiPalette, for 8-bit textures. */
 	Ref<NiPalette > palette;
 	/*! Number of mipmaps in the texture. */

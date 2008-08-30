@@ -164,7 +164,7 @@ protected:
 	/*! Number of vertices. */
 	unsigned int numVertices;
 	/*! This byte is always 1 in all official files. */
-	byte unknownByte;
+	bool relativeTargets;
 	/*! The geometry morphing objects. */
 	vector<Morph > morphs;
 public:

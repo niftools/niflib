@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiMorphData::TYPE("NiMorphData", &NiObject::TYPE );
 
-NiMorphData::NiMorphData() : numMorphs((unsigned int)0), numVertices((unsigned int)0), unknownByte((byte)1) {
+NiMorphData::NiMorphData() : numMorphs((unsigned int)0), numVertices((unsigned int)0), relativeTargets(1) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,7 +45,7 @@ void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	NiObject::Read( in, link_stack, info );
 	NifStream( numMorphs, in, info );
 	NifStream( numVertices, in, info );
-	NifStream( unknownByte, in, info );
+	NifStream( relativeTargets, in, info );
 	morphs.resize(numMorphs);
 	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
 		if ( info.version >= 0x0A01006A ) {
@@ -62,7 +62,7 @@ void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, in, info );
 		};
-		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14020008 ) && ( info.userVersion == 0 ) ) {
+		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) && ( info.userVersion == 0 ) ) {
 			NifStream( morphs[i1].unknownInt, in, info );
 		};
 		morphs[i1].vectors.resize(numVertices);
@@ -83,7 +83,7 @@ void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	numMorphs = (unsigned int)(morphs.size());
 	NifStream( numMorphs, out, info );
 	NifStream( numVertices, out, info );
-	NifStream( unknownByte, out, info );
+	NifStream( relativeTargets, out, info );
 	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
 		morphs[i1].numKeys = (unsigned int)(morphs[i1].keys.size());
 		if ( info.version >= 0x0A01006A ) {
@@ -99,7 +99,7 @@ void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, out, info );
 		};
-		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14020008 ) && ( info.userVersion == 0 ) ) {
+		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) && ( info.userVersion == 0 ) ) {
 			NifStream( morphs[i1].unknownInt, out, info );
 		};
 		for (unsigned int i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {
@@ -121,7 +121,7 @@ std::string NiMorphData::asString( bool verbose ) const {
 	numMorphs = (unsigned int)(morphs.size());
 	out << "  Num Morphs:  " << numMorphs << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
-	out << "  Unknown Byte:  " << unknownByte << endl;
+	out << "  Relative Targets:  " << relativeTargets << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < morphs.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

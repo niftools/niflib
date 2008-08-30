@@ -84,6 +84,9 @@ void NifStream( MipMapFormat const & val, ostream& out, const NifInfo & info = N
 void NifStream( StencilAction & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( StencilAction const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( ChannelType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ChannelType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---OblivionLayer---//
 
@@ -167,6 +170,9 @@ void NifStream( TargetColor const & val, ostream& out, const NifInfo & info = Ni
 
 void NifStream( TexType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( TexType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( ChannelConvention & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ChannelConvention const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---ImageType---//

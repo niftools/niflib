@@ -71,15 +71,17 @@ void NiPixelData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		NifStream( unknownInt3, in, info );
 		NifStream( flags, in, info );
 		NifStream( unknownInt4, in, info );
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( channels[i2].type, in, info );
-			NifStream( channels[i2].unknownFlag, in, info );
-			NifStream( channels[i2].bitsPerChannel, in, info );
-			NifStream( channels[i2].unknownByte1, in, info );
-		};
 	};
 	if ( info.version >= 0x14030006 ) {
 		NifStream( unknownByte1, in, info );
+	};
+	if ( info.version >= 0x14000004 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( channels[i2].type, in, info );
+			NifStream( channels[i2].convention, in, info );
+			NifStream( channels[i2].bitsPerChannel, in, info );
+			NifStream( channels[i2].unknownByte1, in, info );
+		};
 	};
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
@@ -143,15 +145,17 @@ void NiPixelData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		NifStream( unknownInt3, out, info );
 		NifStream( flags, out, info );
 		NifStream( unknownInt4, out, info );
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( channels[i2].type, out, info );
-			NifStream( channels[i2].unknownFlag, out, info );
-			NifStream( channels[i2].bitsPerChannel, out, info );
-			NifStream( channels[i2].unknownByte1, out, info );
-		};
 	};
 	if ( info.version >= 0x14030006 ) {
 		NifStream( unknownByte1, out, info );
+	};
+	if ( info.version >= 0x14000004 ) {
+		for (unsigned int i2 = 0; i2 < 4; i2++) {
+			NifStream( channels[i2].type, out, info );
+			NifStream( channels[i2].convention, out, info );
+			NifStream( channels[i2].bitsPerChannel, out, info );
+			NifStream( channels[i2].unknownByte1, out, info );
+		};
 	};
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*palette), out, info );
@@ -235,6 +239,7 @@ std::string NiPixelData::asString( bool verbose ) const {
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Flags:  " << flags << endl;
 	out << "  Unknown Int 4:  " << unknownInt4 << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -242,11 +247,10 @@ std::string NiPixelData::asString( bool verbose ) const {
 			break;
 		};
 		out << "    Type:  " << channels[i1].type << endl;
-		out << "    Unknown Flag:  " << channels[i1].unknownFlag << endl;
+		out << "    Convention:  " << channels[i1].convention << endl;
 		out << "    Bits Per Channel:  " << channels[i1].bitsPerChannel << endl;
 		out << "    Unknown Byte 1:  " << channels[i1].unknownByte1 << endl;
 	};
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Palette:  " << palette << endl;
 	out << "  Num Mipmaps:  " << numMipmaps << endl;
 	out << "  Bytes Per Pixel:  " << bytesPerPixel << endl;

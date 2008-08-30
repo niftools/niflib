@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-ChannelData::ChannelData() : type((unsigned int)0), unknownFlag((unsigned int)0), bitsPerChannel((byte)0), unknownByte1((byte)0) {};
+ChannelData::ChannelData() : bitsPerChannel((byte)0), unknownByte1((byte)0) {};
 
 //Copy Constructor
 ChannelData::ChannelData( const ChannelData & src ) {
@@ -19,7 +19,7 @@ ChannelData::ChannelData( const ChannelData & src ) {
 //Copy Operator
 ChannelData & ChannelData::operator=( const ChannelData & src ) {
 	this->type = src.type;
-	this->unknownFlag = src.unknownFlag;
+	this->convention = src.convention;
 	this->bitsPerChannel = src.bitsPerChannel;
 	this->unknownByte1 = src.unknownByte1;
 	return *this;

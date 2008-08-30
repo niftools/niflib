@@ -181,6 +181,18 @@ enum StencilAction {
 
 ostream & operator<<( ostream & out, StencilAction const & val );
 
+enum ChannelType {
+	CHNL_RED = 0, /*!< Red */
+	CHNL_GREEN = 1, /*!< Green */
+	CHNL_BLUE = 2, /*!< Blue */
+	CHNL_ALPHA = 3, /*!< Alpha */
+	CHNL_COMPRESSED = 4, /*!< Compressed */
+	CHNL_INDEX = 16, /*!< Index */
+	CHNL_EMPTY = 19, /*!< Empty */
+};
+
+ostream & operator<<( ostream & out, ChannelType const & val );
+
 /*!
  * Sets mesh color in Oblivion Construction Set.  Anything higher than 57 is also
  * null.
@@ -417,6 +429,15 @@ enum TexType {
 };
 
 ostream & operator<<( ostream & out, TexType const & val );
+
+enum ChannelConvention {
+	CC_FIXED = 0, /*!< Fixed */
+	CC_INDEX = 3, /*!< Palettized */
+	CC_COMPRESSED = 4, /*!< Compressed */
+	CC_EMPTY = 5, /*!< Empty */
+};
+
+ostream & operator<<( ostream & out, ChannelConvention const & val );
 
 /*! Determines how the raw image data is stored in NiRawImageData. */
 enum ImageType {

@@ -62,14 +62,14 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( numInterpolators, in, info );
 	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020008 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020007 ) ) {
 		interpolators.resize(numInterpolators);
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			NifStream( block_num, in, info );
 			link_stack.push_back( block_num );
 		};
 	};
-	if ( info.version >= 0x14030006 ) {
+	if ( info.version >= 0x14020008 ) {
 		interpolatorWeights.resize(numInterpolators);
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			NifStream( block_num, in, info );
@@ -122,7 +122,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( numInterpolators, out, info );
 	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020008 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020007 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
 				NifStream( (unsigned int)&(*interpolators[i2]), out, info );
@@ -135,7 +135,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 			}
 		};
 	};
-	if ( info.version >= 0x14030006 ) {
+	if ( info.version >= 0x14020008 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
 				NifStream( (unsigned int)&(*interpolatorWeights[i2].interpolator), out, info );
@@ -226,12 +226,12 @@ void NiGeomMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & ob
 
 	NiInterpController::FixLinks( objects, link_stack, info );
 	data = FixLink<NiMorphData>( objects, link_stack, info );
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020008 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020007 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			interpolators[i2] = FixLink<NiInterpolator>( objects, link_stack, info );
 		};
 	};
-	if ( info.version >= 0x14030006 ) {
+	if ( info.version >= 0x14020008 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			interpolatorWeights[i2].interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
 		};

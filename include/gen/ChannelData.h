@@ -24,9 +24,9 @@ struct ChannelData {
 	/*! Copy Operator */
 	NIFLIB_API ChannelData & operator=( const ChannelData & src );
 	/*! Channel Type */
-	unsigned int type;
-	/*! Unknown */
-	unsigned int unknownFlag;
+	ChannelType type;
+	/*! Data Storage Convention */
+	ChannelConvention convention;
 	/*! Bits per channel */
 	byte bitsPerChannel;
 	/*! Unknown */

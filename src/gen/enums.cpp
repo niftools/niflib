@@ -346,6 +346,32 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 }
 
 
+//--ChannelType--//
+
+void NifStream( ChannelType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = ChannelType(temp);
+}
+
+void NifStream( ChannelType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ChannelType const & val ) {
+	switch ( val ) {
+		case CHNL_RED: return out << "CHNL_RED";
+		case CHNL_GREEN: return out << "CHNL_GREEN";
+		case CHNL_BLUE: return out << "CHNL_BLUE";
+		case CHNL_ALPHA: return out << "CHNL_ALPHA";
+		case CHNL_COMPRESSED: return out << "CHNL_COMPRESSED";
+		case CHNL_INDEX: return out << "CHNL_INDEX";
+		case CHNL_EMPTY: return out << "CHNL_EMPTY";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--OblivionLayer--//
 
 void NifStream( OblivionLayer & val, istream& in, const NifInfo & info ) {
@@ -756,6 +782,29 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 		case BUMP_MAP: return out << "BUMP_MAP";
 		case DECAL_0_MAP: return out << "DECAL_0_MAP";
 		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--ChannelConvention--//
+
+void NifStream( ChannelConvention & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = ChannelConvention(temp);
+}
+
+void NifStream( ChannelConvention const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ChannelConvention const & val ) {
+	switch ( val ) {
+		case CC_FIXED: return out << "CC_FIXED";
+		case CC_INDEX: return out << "CC_INDEX";
+		case CC_COMPRESSED: return out << "CC_COMPRESSED";
+		case CC_EMPTY: return out << "CC_EMPTY";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
