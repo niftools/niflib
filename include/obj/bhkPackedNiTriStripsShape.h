@@ -89,12 +89,27 @@ protected:
 	mutable unsigned short numSubShapes;
 	/*! The subparts. */
 	vector<OblivionSubShape > subShapes;
-	/*! Unknown. A rotation matrix? */
-	array<9,float > unknownFloats;
+	/*! Unknown. */
+	unsigned int unknownInt1;
+	/*! Unknown. Looks like a memory pointer and may be garbage. */
+	unsigned int unknownInt2;
+	/*! Unknown. Same as Unknown Float 3 */
+	float unknownFloat1;
+	/*!
+	 * Unknown. Sometimes 0.0f or -1.0f but sometimes really large number.  Suspect its
+	 * garbage.
+	 */
+	unsigned int unknownInt3;
+	/*! Unknown. Same as scale below? */
+	Vector3 scaleCopy_;
+	/*! Unknown. Usually 0.0 but sometimes 1.0.  Same as Unknown Float 4 */
+	float unknownFloat2;
+	/*! Unknown. Same as Unknown Float 1 */
+	float unknownFloat3;
 	/*! Scale. */
-	float scale;
-	/*! Unknown. Translation? */
-	array<3,float > unknownFloats2;
+	Vector3 scale;
+	/*! Unknown. Usually 0.0 but sometimes 1.0.  Same as Unknown Float 2 */
+	float unknownFloat4;
 	/*! A link to the shape's NiTriStripsData. */
 	Ref<hkPackedNiTriStripsData > data;
 public:

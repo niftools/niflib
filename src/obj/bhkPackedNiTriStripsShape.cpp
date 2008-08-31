@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkPackedNiTriStripsShape::TYPE("bhkPackedNiTriStripsShape", &bhkShapeCollection::TYPE );
 
-bhkPackedNiTriStripsShape::bhkPackedNiTriStripsShape() : numSubShapes((unsigned short)0), scale(1.0f), data(NULL) {
+bhkPackedNiTriStripsShape::bhkPackedNiTriStripsShape() : numSubShapes((unsigned short)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0x014E9DD8), unknownFloat1(0.1f), unknownInt3((unsigned int)0), scaleCopy_(1.0f, 1.0f, 1.0f), unknownFloat2(0.0f), unknownFloat3(0.1f), scale(1.0f, 1.0f, 1.0f), unknownFloat4(0.0f), data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -54,13 +54,15 @@ void bhkPackedNiTriStripsShape::Read( istream& in, list<unsigned int> & link_sta
 		NifStream( subShapes[i1].numVertices, in, info );
 		NifStream( subShapes[i1].material, in, info );
 	};
-	for (unsigned int i1 = 0; i1 < 9; i1++) {
-		NifStream( unknownFloats[i1], in, info );
-	};
+	NifStream( unknownInt1, in, info );
+	NifStream( unknownInt2, in, info );
+	NifStream( unknownFloat1, in, info );
+	NifStream( unknownInt3, in, info );
+	NifStream( scaleCopy_, in, info );
+	NifStream( unknownFloat2, in, info );
+	NifStream( unknownFloat3, in, info );
 	NifStream( scale, in, info );
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], in, info );
-	};
+	NifStream( unknownFloat4, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 
@@ -82,13 +84,15 @@ void bhkPackedNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsig
 		NifStream( subShapes[i1].numVertices, out, info );
 		NifStream( subShapes[i1].material, out, info );
 	};
-	for (unsigned int i1 = 0; i1 < 9; i1++) {
-		NifStream( unknownFloats[i1], out, info );
-	};
+	NifStream( unknownInt1, out, info );
+	NifStream( unknownInt2, out, info );
+	NifStream( unknownFloat1, out, info );
+	NifStream( unknownInt3, out, info );
+	NifStream( scaleCopy_, out, info );
+	NifStream( unknownFloat2, out, info );
+	NifStream( unknownFloat3, out, info );
 	NifStream( scale, out, info );
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		NifStream( unknownFloats2[i1], out, info );
-	};
+	NifStream( unknownFloat4, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*data), out, info );
 	} else {
@@ -124,31 +128,15 @@ std::string bhkPackedNiTriStripsShape::asString( bool verbose ) const {
 		out << "    Num Vertices:  " << subShapes[i1].numVertices << endl;
 		out << "    Material:  " << subShapes[i1].material << endl;
 	};
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 9; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats[" << i1 << "]:  " << unknownFloats[i1] << endl;
-		array_output_count++;
-	};
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Scale Copy?:  " << scaleCopy_ << endl;
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
 	out << "  Scale:  " << scale << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 3; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats 2[" << i1 << "]:  " << unknownFloats2[i1] << endl;
-		array_output_count++;
-	};
+	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
 	out << "  Data:  " << data << endl;
 	return out.str();
 
