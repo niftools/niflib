@@ -286,6 +286,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiArkShaderExtraData.h"
 #include "../../include/obj/NiLines.h"
 #include "../../include/obj/NiLinesData.h"
+#include "../../include/obj/NiScreenElementsData.h"
+#include "../../include/obj/NiScreenElements.h"
+#include "../../include/obj/NiPersistentSrcTextureRendererData.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -570,6 +573,9 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiArkShaderExtraData", NiArkShaderExtraData::Create );
 		ObjectRegistry::RegisterObject( "NiLines", NiLines::Create );
 		ObjectRegistry::RegisterObject( "NiLinesData", NiLinesData::Create );
+		ObjectRegistry::RegisterObject( "NiScreenElementsData", NiScreenElementsData::Create );
+		ObjectRegistry::RegisterObject( "NiScreenElements", NiScreenElements::Create );
+		ObjectRegistry::RegisterObject( "NiPersistentSrcTextureRendererData", NiPersistentSrcTextureRendererData::Create );
 
 	}
 }

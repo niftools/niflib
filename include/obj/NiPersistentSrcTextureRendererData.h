@@ -7,10 +7,11 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIPIXELDATA_H_
-#define _NIPIXELDATA_H_
+#ifndef _NIPERSISTENTSRCTEXTURERENDERERDATA_H_
+#define _NIPERSISTENTSRCTEXTURERENDERERDATA_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"
@@ -23,17 +24,17 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiPalette;
-class NiPixelData;
-typedef Ref<NiPixelData> NiPixelDataRef;
+class NiPersistentSrcTextureRendererData;
+typedef Ref<NiPersistentSrcTextureRendererData> NiPersistentSrcTextureRendererDataRef;
 
-/*! A texture. */
-class NiPixelData : public NiObject {
+/*!  */
+class NiPersistentSrcTextureRendererData : public NiObject {
 public:
 	/*! Constructor */
-	NIFLIB_API NiPixelData();
+	NIFLIB_API NiPersistentSrcTextureRendererData();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiPixelData();
+	NIFLIB_API virtual ~NiPersistentSrcTextureRendererData();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -60,51 +61,6 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
-
-	/*!
-	 * Retrieves the height of the texture image stored in this object.
-	 * \return The height of the texture image stored in this object.
-	 * \sa NiPixelData::GetWidth, NiPixelData::GetPixelFormat
-	 */
-	NIFLIB_API int GetHeight() const;
-
-	/*!
-	 * Retrieves the width of the texture image stored in this object.
-	 * \return The width of the texture image stored in this object.
-	 * \sa NiPixelData::GetHeight, NiPixelData::GetPixelFormat
-	 */
-	NIFLIB_API int GetWidth() const;
-
-    /*!
-	 * Retrieves the pixel format of the texture image stored in this object.
-	 * \return The pixel format of the texture image stored in this object.
-	 * \sa NiPixelData::GetWidth, NiPixelData::GetHeight
-	 */
-	NIFLIB_API PixelFormat GetPixelFormat() const;
-
-    /*!
-	 * Deletes all image data and sets a new size and format in preparation for new data to be provided.
-	 * \param new_width The width of the new texture image.
-	 * \param new_height The height of the new texture image.
-	 * \param px_fmt The pixel format of the new texture image.
-	 * \sa NiPixelData::GetWidth, NiPixelData::GetHeight
-	 */
-	NIFLIB_API void Reset( int new_width, int new_height, PixelFormat px_fmt );
-	
-	/*!
-	 * Retrieves the the pixels of the texture image stored in this object.  This function does not work on palettized textures.
-	 * \return A vector containing the colors of each pixel in the texture image stored in this object, one row after another starting from the bottom of the image.  The width of the image must be used to interpret them correctly.
-	 * \sa NiPixelData::SetColors, NiPixelData::GetWidth
-	 */
-	NIFLIB_API vector<Color4> GetColors() const;
-
-	/*!
-	 * Sets the the pixels of the texture image stored in this object and optionally generates mipmaps.  This function does not work for palettized textures.
-	 * \param new_pixels A vector containing the colors of each new pixel to be set in the texture image stored in this object, one row after another starting from the botom of the image.
-	 * \param generate_mipmaps If true, mipmaps will be generated for the new image and stored in the file.
-	 * \sa NiPixelData::GetColors, NiPixelData::GetWidth
-	 */
-	NIFLIB_API void SetColors( const vector<Color4> & new_pixels, bool generate_mipmaps );
 
 	//--END CUSTOM CODE--//
 protected:
@@ -151,10 +107,14 @@ protected:
 	unsigned int bytesPerPixel;
 	/*! Mipmap descriptions (width, height, offset). */
 	vector<MipMap > mipmaps;
-	/*! Total number of pixels */
+	/*! Unknown */
 	mutable unsigned int numPixels;
 	/*! Unknown */
+	unsigned int unknownInt6;
+	/*! Unknown */
 	mutable unsigned int numFaces;
+	/*! Unknown */
+	unsigned int unknownInt7;
 	/*!
 	 * Raw pixel data holding the mipmaps.  Mipmap zero is the full-size texture and
 	 * they get smaller by half as the number increases.
@@ -172,6 +132,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

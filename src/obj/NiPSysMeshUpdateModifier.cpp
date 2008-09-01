@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPSysMeshUpdateModifier.h"
-#include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiAVObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -111,7 +111,7 @@ void NiPSysMeshUpdateModifier::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiPSysModifier::FixLinks( objects, link_stack, info );
 	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
-		meshes[i1] = FixLink<NiNode>( objects, link_stack, info );
+		meshes[i1] = FixLink<NiAVObject>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

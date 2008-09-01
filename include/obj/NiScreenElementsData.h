@@ -7,31 +7,30 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIPSYSMESHUPDATEMODIFIER_H_
-#define _NIPSYSMESHUPDATEMODIFIER_H_
+#ifndef _NISCREENELEMENTSDATA_H_
+#define _NISCREENELEMENTSDATA_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiPSysModifier.h"
+#include "NiTriShapeData.h"
 
 // Include structures
-#include "../Ref.h"
+#include "../gen/Polygon.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiAVObject;
-class NiPSysMeshUpdateModifier;
-typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;
+class NiScreenElementsData;
+typedef Ref<NiScreenElementsData> NiScreenElementsDataRef;
 
-/*! Unknown. */
-class NiPSysMeshUpdateModifier : public NiPSysModifier {
+/*! Two dimensional screen elements. */
+class NiScreenElementsData : public NiTriShapeData {
 public:
 	/*! Constructor */
-	NIFLIB_API NiPSysMeshUpdateModifier();
+	NIFLIB_API NiScreenElementsData();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiPSysMeshUpdateModifier();
+	NIFLIB_API virtual ~NiScreenElementsData();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -58,12 +57,27 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 protected:
-	/*! The number of object references that follow. */
-	mutable unsigned int numMeshes;
-	/*! Group of target NiNodes or NiTriShapes? */
-	vector<Ref<NiAVObject > > meshes;
+	/*! Maximum number of polygons? */
+	mutable unsigned short maxPolygons;
+	/*! Polygons */
+	vector<Polygon > polygons;
+	/*! Polygon Indices */
+	vector<unsigned short > polygonIndices;
+	/*! Unknown */
+	unsigned short unknownUshort1;
+	/*! Number of Polygons actually in use */
+	unsigned short numPolygons;
+	/*! Number of in-use vertices */
+	unsigned short usedVertices;
+	/*! Unknown */
+	unsigned short unknownUshort2;
+	/*! Number of in-use triangles */
+	unsigned short usedTrianglePoints;
+	/*! Maximum number of faces */
+	unsigned short unknownUshort3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -76,6 +90,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

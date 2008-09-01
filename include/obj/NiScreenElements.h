@@ -7,31 +7,27 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIPSYSMESHUPDATEMODIFIER_H_
-#define _NIPSYSMESHUPDATEMODIFIER_H_
+#ifndef _NISCREENELEMENTS_H_
+#define _NISCREENELEMENTS_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiPSysModifier.h"
-
-// Include structures
-#include "../Ref.h"
+#include "NiTriShape.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
-class NiAVObject;
-class NiPSysMeshUpdateModifier;
-typedef Ref<NiPSysMeshUpdateModifier> NiPSysMeshUpdateModifierRef;
+class NiScreenElements;
+typedef Ref<NiScreenElements> NiScreenElementsRef;
 
-/*! Unknown. */
-class NiPSysMeshUpdateModifier : public NiPSysModifier {
+/*! Two dimensional screen elements. */
+class NiScreenElements : public NiTriShape {
 public:
 	/*! Constructor */
-	NIFLIB_API NiPSysMeshUpdateModifier();
+	NIFLIB_API NiScreenElements();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiPSysMeshUpdateModifier();
+	NIFLIB_API virtual ~NiScreenElements();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -58,12 +54,8 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
-protected:
-	/*! The number of object references that follow. */
-	mutable unsigned int numMeshes;
-	/*! Group of target NiNodes or NiTriShapes? */
-	vector<Ref<NiAVObject > > meshes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -76,6 +68,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

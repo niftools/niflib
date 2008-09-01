@@ -338,7 +338,7 @@ protected:
 	 * balancing objects in contraints.
 	 */
 	Vector4 center;
-	/*! The body's mass. */
+	/*! The body's mass in kg. A mass of zero represents an immovable object. */
 	float mass;
 	/*!
 	 * Damping value for linear movement. A value that is too small fixes the object in

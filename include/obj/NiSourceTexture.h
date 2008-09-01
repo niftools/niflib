@@ -11,6 +11,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NISOURCETEXTURE_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "NiPixelData.h"
 //--END CUSTOM CODE--//
 
 #include "NiTexture.h"
@@ -21,7 +22,6 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiObject;
-class NiPixelData;
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;
 
@@ -137,8 +137,8 @@ protected:
 	Ref<NiObject > unknownLink;
 	/*! Unknown. */
 	byte unknownByte;
-	/*! Pixel data object index. */
-	Ref<NiPixelData > pixelData;
+	/*! Pixel data object index. NiPixelData or NiPersistentSrcTextureRendererData */
+	Ref<NiObject > pixelData;
 	/*! Specifies the way the image will be stored. */
 	PixelLayout pixelLayout;
 	/*! Specifies whether mip maps are used. */

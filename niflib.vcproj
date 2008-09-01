@@ -1360,6 +1360,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPersistentSrcTextureRendererData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPhysXActorDesc.cpp"
 					>
 				</File>
@@ -1593,6 +1597,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiRotatingParticlesData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiScreenElements.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiScreenElementsData.cpp"
 					>
 				</File>
 				<File
@@ -1921,6 +1933,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\physXMaterialRef.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\Polygon.cpp"
 					>
 				</File>
 				<File
@@ -2778,6 +2794,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPersistentSrcTextureRendererData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPhysXActorDesc.h"
 					>
 				</File>
@@ -3011,6 +3031,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiRotatingParticlesData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiScreenElements.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiScreenElementsData.h"
 					>
 				</File>
 				<File
@@ -3347,6 +3375,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\physXMaterialRef.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\Polygon.h"
 					>
 				</File>
 				<File
