@@ -58,13 +58,13 @@ public:
 	 * Retrives the current number of spline control points.  This is usually the number of frames for animation.
 	 * \return The number of spline control points.
 	 */
-	NIFLIB_API unsigned int GetNumControlPt() const;
+	NIFLIB_API unsigned int GetNumControlPoints() const;
 
 	/*!
 	 * Sets the number of spline control points.  This is usually the number of frames for animation.
 	 * \param[in] value The new number of spline control points.
 	 */
-	NIFLIB_API void SetNumControlPt( unsigned int value );
+	NIFLIB_API void SetNumControlPoints( unsigned int value );
 
 	//--END CUSTOM CODE--//
 protected:

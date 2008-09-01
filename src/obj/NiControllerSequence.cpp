@@ -282,7 +282,7 @@ void NiControllerSequence::AddInterpolator( NiSingleInterpController * obj, byte
 	ControllerLink cl;
 
 	cl.interpolator = interp;
-	cl.priority_ = priority;
+	cl.priority = priority;
 	cl.stringPalette = stringPalette;
 	cl.nodeName = target->GetName();
 	cl.nodeNameOffset = stringPalette->AddSubStr( target->GetName() );
@@ -355,7 +355,7 @@ int NiControllerSequence::GetControllerPriority( int controller ) const {
    if (controller < 0 && controller < int(controlledBlocks.size())) {
       throw runtime_error("Invalid controller index.");
    }   
-   return int(controlledBlocks[controller].priority_);
+   return int(controlledBlocks[controller].priority);
 }
 
 void NiControllerSequence::SetControllerPriority( int controller, int priority ) {
@@ -365,7 +365,7 @@ void NiControllerSequence::SetControllerPriority( int controller, int priority )
    if (priority < 0 || priority > int(0xFF)) {
       throw runtime_error("Invalid priority must be between 0 and 255.");
    }
-   controlledBlocks[controller].priority_ = priority;
+   controlledBlocks[controller].priority = priority;
 }
 
 string NiControllerSequence::GetName() const {

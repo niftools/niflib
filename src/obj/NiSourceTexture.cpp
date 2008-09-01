@@ -15,6 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSourceTexture.h"
 #include "../../include/obj/NiObject.h"
+#include "../../include/obj/ATextureRenderData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -180,7 +181,7 @@ void NiSourceTexture::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 		};
 	};
 	if ( (useExternal == 0) ) {
-		pixelData = FixLink<NiObject>( objects, link_stack, info );
+		pixelData = FixLink<ATextureRenderData>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

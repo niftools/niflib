@@ -176,7 +176,7 @@ public:
 	 * Retrieves the number of control points used in the spline curve.
 	 * \return The number of control points used in the spline curve.
 	 */
-	NIFLIB_API int GetNumControlPt() const;
+	NIFLIB_API int GetNumControlPoints() const;
 
 	//--END CUSTOM CODE--//
 protected:

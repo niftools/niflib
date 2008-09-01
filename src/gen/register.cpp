@@ -194,6 +194,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiParticleSystemController.h"
 #include "../../include/obj/NiBSPArrayController.h"
 #include "../../include/obj/NiPathController.h"
+#include "../../include/obj/ATextureRenderData.h"
+#include "../../include/obj/NiPersistentSrcTextureRendererData.h"
 #include "../../include/obj/NiPixelData.h"
 #include "../../include/obj/NiPlanarCollider.h"
 #include "../../include/obj/NiPointLight.h"
@@ -288,7 +290,6 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiLinesData.h"
 #include "../../include/obj/NiScreenElementsData.h"
 #include "../../include/obj/NiScreenElements.h"
-#include "../../include/obj/NiPersistentSrcTextureRendererData.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -481,6 +482,8 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiParticleSystemController", NiParticleSystemController::Create );
 		ObjectRegistry::RegisterObject( "NiBSPArrayController", NiBSPArrayController::Create );
 		ObjectRegistry::RegisterObject( "NiPathController", NiPathController::Create );
+		ObjectRegistry::RegisterObject( "ATextureRenderData", ATextureRenderData::Create );
+		ObjectRegistry::RegisterObject( "NiPersistentSrcTextureRendererData", NiPersistentSrcTextureRendererData::Create );
 		ObjectRegistry::RegisterObject( "NiPixelData", NiPixelData::Create );
 		ObjectRegistry::RegisterObject( "NiPlanarCollider", NiPlanarCollider::Create );
 		ObjectRegistry::RegisterObject( "NiPointLight", NiPointLight::Create );
@@ -575,7 +578,6 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiLinesData", NiLinesData::Create );
 		ObjectRegistry::RegisterObject( "NiScreenElementsData", NiScreenElementsData::Create );
 		ObjectRegistry::RegisterObject( "NiScreenElements", NiScreenElements::Create );
-		ObjectRegistry::RegisterObject( "NiPersistentSrcTextureRendererData", NiPersistentSrcTextureRendererData::Create );
 
 	}
 }

@@ -661,6 +661,10 @@
 				Name="obj"
 				>
 				<File
+					RelativePath=".\src\obj\ATextureRenderData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\AvoidNode.cpp"
 					>
 				</File>
@@ -2098,6 +2102,10 @@
 			<Filter
 				Name="obj"
 				>
+				<File
+					RelativePath=".\include\obj\ATextureRenderData.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\obj\AvoidNode.h"
 					>

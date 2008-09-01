@@ -7,26 +7,34 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NIBSPLINECOMPFLOATINTERPOLATOR_H_
-#define _NIBSPLINECOMPFLOATINTERPOLATOR_H_
+#ifndef _ATEXTURERENDERDATA_H_
+#define _ATEXTURERENDERDATA_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
-#include "NiBSplineFloatInterpolator.h"
+#include "NiObject.h"
+
+// Include structures
+#include "../gen/ChannelData.h"
+#include "../Ref.h"
+#include "../gen/MipMap.h"
 namespace Niflib {
 
-class NiBSplineCompFloatInterpolator;
-typedef Ref<NiBSplineCompFloatInterpolator> NiBSplineCompFloatInterpolatorRef;
+// Forward define of referenced NIF objects
+class NiPalette;
+class ATextureRenderData;
+typedef Ref<ATextureRenderData> ATextureRenderDataRef;
 
-/*! Unknown. */
-class NiBSplineCompFloatInterpolator : public NiBSplineFloatInterpolator {
+/*!  */
+class ATextureRenderData : public NiObject {
 public:
 	/*! Constructor */
-	NIFLIB_API NiBSplineCompFloatInterpolator();
+	NIFLIB_API ATextureRenderData();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~NiBSplineCompFloatInterpolator();
+	NIFLIB_API virtual ~ATextureRenderData();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -54,71 +62,51 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
-	/*!
-	* Gets the base value when a curve is not defined.
-	* \return The base value.
-	*/
-	NIFLIB_API float GetBase() const;
-
-	/*!
-	* Sets the base value when a curve is not defined.
-	* \param[in] value The new base value.
-	*/
-	NIFLIB_API void SetBase( float value );
-
-	/*!
-	* Gets value bias.
-	* \return The value bias.
-	*/
-	NIFLIB_API float GetBias() const;
-
-	/*!
-	* Sets value bias.
-	* \param[in] value The new value bias.
-	*/
-	NIFLIB_API void SetBias( float value );
-
-	/*!
-	* Gets value multiplier.
-	* \return The value multiplier.
-	*/
-	NIFLIB_API float GetMultiplier() const;
-
-	/*!
-	* Sets value multiplier.
-	* \param[in] value The new value multiplier.
-	*/
-	NIFLIB_API void SetMultiplier( float value );
-
-	/*!
-	* Retrieves the key data.
-	* \return A vector containing control float data which specify a value over time.
-	*/
-	NIFLIB_API vector< float > GetControlData() const;
-
-	/*!
-	* Retrieves the sampled data between start and stop time.
-	* \param npoints The number of data points to sample between start and stop time.
-	* \param degree N-th order degree of polynomial used to fit the data.
-	* \return A vector containing Key<float> data which specify a value over time.
-	*/
-	NIFLIB_API vector< Key<float> > SampleKeys(int npoints, int degree) const;
-
-	/*!
-	* Retrieves the number of control points used in the spline curve.
-	* \return The number of control points used in the spline curve.
-	*/
-	NIFLIB_API int GetNumControlPoints() const;
 	//--END CUSTOM CODE--//
 protected:
-	/*! Base value when curve not defined. */
-	float base;
-	/*! Starting offset for the data. (USHRT_MAX for no data.) */
-	unsigned int offset;
-	/*! Bias */
-	float bias;
-	/*! Multiplier */
-	float multiplier;
+	/*! The format of the pixels in this internally stored image. */
+	PixelFormat pixelFormat;
+	/*! 0x000000ff (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
+	unsigned int redMask;
+	/*! 0x0000ff00 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
+	unsigned int greenMask;
+	/*! 0x00ff0000 (for 24bpp and 32bpp) or 0x00000000 (for 8bpp) */
+	unsigned int blueMask;
+	/*! 0xff000000 (for 32bpp) or 0x00000000 (for 24bpp and 8bpp) */
+	unsigned int alphaMask;
+	/*! Bits per pixel, 0 (?), 8, 24 or 32. */
+	byte bitsPerPixel;
+	/*! Zero? */
+	array<3,byte > unknown3Bytes;
+	/*!
+	 * [96,8,130,0,0,65,0,0] if 24 bits per pixel
+	 *             [129,8,130,32,0,65,12,0] if 32 bits per pixel
+	 *             [34,0,0,0,0,0,0,0] if 8 bits per pixel
+	 *             [4,0,0,0,0,0,0,0] if 0 (?) bits per pixel
+	 */
+	array<8,byte > unknown8Bytes;
+	/*! Seems to always be zero. */
+	unsigned int unknownInt;
+	/*! Unknown.  Could be reference pointer. */
+	int unknownInt2;
+	/*! Seems to always be zero. */
+	unsigned int unknownInt3;
+	/*! Flags */
+	byte flags;
+	/*! Seems to always be zero. */
+	unsigned int unknownInt4;
+	/*! Unknown. */
+	byte unknownByte1;
+	/*! Channel Data */
+	array<4,ChannelData > channels;
+	/*! Link to NiPalette, for 8-bit textures. */
+	Ref<NiPalette > palette;
+	/*! Number of mipmaps in the texture. */
+	mutable unsigned int numMipmaps;
+	/*! Bytes per pixel (Bits Per Pixel / 8). */
+	unsigned int bytesPerPixel;
+	/*! Mipmap descriptions (width, height, offset). */
+	vector<MipMap > mipmaps;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
@@ -131,6 +119,7 @@ public:
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 } //End Niflib namespace

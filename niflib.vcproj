@@ -668,6 +668,10 @@
 				Name="obj"
 				>
 				<File
+					RelativePath=".\src\obj\ATextureRenderData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\AvoidNode.cpp"
 					>
 				</File>

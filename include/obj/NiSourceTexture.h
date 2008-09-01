@@ -22,6 +22,7 @@ namespace Niflib {
 
 // Forward define of referenced NIF objects
 class NiObject;
+class ATextureRenderData;
 class NiSourceTexture;
 typedef Ref<NiSourceTexture> NiSourceTextureRef;
 
@@ -138,7 +139,7 @@ protected:
 	/*! Unknown. */
 	byte unknownByte;
 	/*! Pixel data object index. NiPixelData or NiPersistentSrcTextureRendererData */
-	Ref<NiObject > pixelData;
+	Ref<ATextureRenderData > pixelData;
 	/*! Specifies the way the image will be stored. */
 	PixelLayout pixelLayout;
 	/*! Specifies whether mip maps are used. */
