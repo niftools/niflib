@@ -147,9 +147,9 @@ protected:
 	/*! Base scale when scale curve not defined. */
 	float scale;
 	/*! Starting offset for the translation data. (USHRT_MAX for no data.) */
-	unsigned int translateOffset;
+	unsigned int translationOffset;
 	/*! Starting offset for the rotation data. (USHRT_MAX for no data.) */
-	unsigned int rotateOffset;
+	unsigned int rotationOffset;
 	/*! Starting offset for the scale data. (USHRT_MAX for no data.) */
 	unsigned int scaleOffset;
 public:

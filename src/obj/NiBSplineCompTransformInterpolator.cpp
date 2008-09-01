@@ -164,10 +164,10 @@ void NiBSplineCompTransformInterpolator::SetScaleMultiplier( float value ) {
 vector< Quaternion > NiBSplineCompTransformInterpolator::GetQuatRotateControlData() const
 {
    vector< Quaternion > value;
-   if ((rotateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
+   if ((rotationOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofQuat;
-      vector<short> points = splineData->GetShortControlPointRange(rotateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(rotationOffset, npts);
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Quaternion key;
@@ -184,10 +184,10 @@ vector< Quaternion > NiBSplineCompTransformInterpolator::GetQuatRotateControlDat
 vector< Vector3 > NiBSplineCompTransformInterpolator::GetTranslateControlData() const
 {
    vector< Vector3 > value;
-   if ((translateOffset != USHRT_MAX) && splineData && basisData) { // has translation data
+   if ((translationOffset != USHRT_MAX) && splineData && basisData) { // has translation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofTrans;
-      vector<short> points = splineData->GetShortControlPointRange(translateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(translationOffset, npts);
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Vector3 key;
@@ -219,10 +219,10 @@ vector< float > NiBSplineCompTransformInterpolator::GetScaleControlData() const
 vector< Key<Quaternion> > NiBSplineCompTransformInterpolator::SampleQuatRotateKeys(int npoints, int degree) const
 {
    vector< Key<Quaternion> > value;
-   if ((rotateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
+   if ((rotationOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofQuat;
-      vector<short> points = splineData->GetShortControlPointRange(rotateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(rotationOffset, npts);
       vector<float> control(npts);
       vector<float> output(npoints*SizeofQuat);
       for (int i=0, j=0; i<nctrl; ++i) {
@@ -257,10 +257,10 @@ vector< Key<Quaternion> > NiBSplineCompTransformInterpolator::SampleQuatRotateKe
 vector< Key<Vector3> > NiBSplineCompTransformInterpolator::SampleTranslateKeys(int npoints, int degree) const
 {
    vector< Key<Vector3> > value;
-   if ((translateOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
+   if ((translationOffset != USHRT_MAX) && splineData && basisData) { // has rotation data
       int nctrl = basisData->GetNumControlPt();
       int npts = nctrl * SizeofTrans;
-      vector<short> points = splineData->GetShortControlPointRange(translateOffset, npts);
+      vector<short> points = splineData->GetShortControlPointRange(translationOffset, npts);
       vector<float> control(npts);
       vector<float> output(npoints*SizeofTrans);
       for (int i=0, j=0; i<nctrl; ++i) {
