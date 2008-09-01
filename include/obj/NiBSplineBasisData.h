@@ -69,7 +69,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of control points (Usually number of frames for animation). */
-	unsigned int numControlPt;
+	unsigned int numControlPoints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

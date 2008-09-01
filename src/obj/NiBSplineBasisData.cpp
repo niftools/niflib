@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineBasisData::TYPE("NiBSplineBasisData", &NiObject::TYPE );
 
-NiBSplineBasisData::NiBSplineBasisData() : numControlPt((unsigned int)0) {
+NiBSplineBasisData::NiBSplineBasisData() : numControlPoints((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,7 +42,7 @@ void NiBSplineBasisData::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 
 	NiObject::Read( in, link_stack, info );
-	NifStream( numControlPt, in, info );
+	NifStream( numControlPoints, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -53,7 +53,7 @@ void NiBSplineBasisData::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	NifStream( numControlPt, out, info );
+	NifStream( numControlPoints, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -66,7 +66,7 @@ std::string NiBSplineBasisData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	out << "  Num Control Pt:  " << numControlPt << endl;
+	out << "  Num Control Points:  " << numControlPoints << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -92,11 +92,11 @@ std::list<NiObjectRef> NiBSplineBasisData::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned int NiBSplineBasisData::GetNumControlPt() const {
-	return numControlPt;
+	return numControlPoints;
 }
 
 void NiBSplineBasisData::SetNumControlPt( unsigned int value ) {
-	numControlPt = value;
+	numControlPoints = value;
 }
 
 //--END CUSTOM CODE--//
