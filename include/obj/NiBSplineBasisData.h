@@ -68,7 +68,10 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! The number of control points (Usually number of frames for animation). */
+	/*!
+	 * The number of control points of the B-spline (number of frames of animation plus
+	 * degree of B-spline minus one).
+	 */
 	unsigned int numControlPoints;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
