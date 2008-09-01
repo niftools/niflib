@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-RagdollDescriptor::RagdollDescriptor() : coneMinAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};
+RagdollDescriptor::RagdollDescriptor() : coneMaxAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};
 
 //Copy Constructor
 RagdollDescriptor::RagdollDescriptor( const RagdollDescriptor & src ) {
@@ -24,7 +24,7 @@ RagdollDescriptor & RagdollDescriptor::operator=( const RagdollDescriptor & src 
 	this->pivotB = src.pivotB;
 	this->planeB = src.planeB;
 	this->twistB = src.twistB;
-	this->coneMinAngle = src.coneMinAngle;
+	this->coneMaxAngle = src.coneMaxAngle;
 	this->planeMinAngle = src.planeMinAngle;
 	this->planeMaxAngle = src.planeMaxAngle;
 	this->twistMinAngle = src.twistMinAngle;

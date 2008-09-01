@@ -49,7 +49,7 @@ struct RagdollDescriptor {
 	 * Twist A relative to the Twist A vector. Note that Cone Min Angle is not stored,
 	 * but is simply minus this angle.
 	 */
-	float coneMinAngle;
+	float coneMaxAngle;
 	/*! Minimum angle the object can rotate around Plane A, relative to Twist A. */
 	float planeMinAngle;
 	/*! Maximum angle the object can rotate around Plane A, relative to Twist A. */

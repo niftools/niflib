@@ -49,7 +49,7 @@ void bhkRagdollConstraint::Read( istream& in, list<unsigned int> & link_stack, c
 	NifStream( ragdoll.pivotB, in, info );
 	NifStream( ragdoll.planeB, in, info );
 	NifStream( ragdoll.twistB, in, info );
-	NifStream( ragdoll.coneMinAngle, in, info );
+	NifStream( ragdoll.coneMaxAngle, in, info );
 	NifStream( ragdoll.planeMinAngle, in, info );
 	NifStream( ragdoll.planeMaxAngle, in, info );
 	NifStream( ragdoll.twistMinAngle, in, info );
@@ -71,7 +71,7 @@ void bhkRagdollConstraint::Write( ostream& out, const map<NiObjectRef,unsigned i
 	NifStream( ragdoll.pivotB, out, info );
 	NifStream( ragdoll.planeB, out, info );
 	NifStream( ragdoll.twistB, out, info );
-	NifStream( ragdoll.coneMinAngle, out, info );
+	NifStream( ragdoll.coneMaxAngle, out, info );
 	NifStream( ragdoll.planeMinAngle, out, info );
 	NifStream( ragdoll.planeMaxAngle, out, info );
 	NifStream( ragdoll.twistMinAngle, out, info );
@@ -95,7 +95,7 @@ std::string bhkRagdollConstraint::asString( bool verbose ) const {
 	out << "  Pivot B:  " << ragdoll.pivotB << endl;
 	out << "  Plane B:  " << ragdoll.planeB << endl;
 	out << "  Twist B:  " << ragdoll.twistB << endl;
-	out << "  Cone Min Angle:  " << ragdoll.coneMinAngle << endl;
+	out << "  Cone Max Angle:  " << ragdoll.coneMaxAngle << endl;
 	out << "  Plane Min Angle:  " << ragdoll.planeMinAngle << endl;
 	out << "  Plane Max Angle:  " << ragdoll.planeMaxAngle << endl;
 	out << "  Twist Min Angle:  " << ragdoll.twistMinAngle << endl;
