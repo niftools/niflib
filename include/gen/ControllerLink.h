@@ -49,7 +49,7 @@ struct ControllerLink {
 	 * Idle animations tend to have low values for this, and NIF objects that have high
 	 * values tend to correspond with the important parts of the animation.
 	 */
-	byte priority_;
+	byte priority;
 	/*!
 	 * Refers to the NiStringPalette which contains the name of the controlled NIF
 	 * object.

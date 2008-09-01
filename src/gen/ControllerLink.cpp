@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-ControllerLink::ControllerLink() : controller(NULL), interpolator(NULL), unknownLink2(NULL), unknownShort0((unsigned short)0), priority_((byte)0), stringPalette(NULL), nodeNameOffset((unsigned int)-1), propertyTypeOffset((unsigned int)-1), controllerTypeOffset((unsigned int)-1), variableOffset1((unsigned int)-1), variableOffset2((unsigned int)-1) {};
+ControllerLink::ControllerLink() : controller(NULL), interpolator(NULL), unknownLink2(NULL), unknownShort0((unsigned short)0), priority((byte)0), stringPalette(NULL), nodeNameOffset((unsigned int)-1), propertyTypeOffset((unsigned int)-1), controllerTypeOffset((unsigned int)-1), variableOffset1((unsigned int)-1), variableOffset2((unsigned int)-1) {};
 
 //Copy Constructor
 ControllerLink::ControllerLink( const ControllerLink & src ) {
@@ -27,7 +27,7 @@ ControllerLink & ControllerLink::operator=( const ControllerLink & src ) {
 	this->interpolator = src.interpolator;
 	this->unknownLink2 = src.unknownLink2;
 	this->unknownShort0 = src.unknownShort0;
-	this->priority_ = src.priority_;
+	this->priority = src.priority;
 	this->stringPalette = src.stringPalette;
 	this->nodeName = src.nodeName;
 	this->nodeNameOffset = src.nodeNameOffset;

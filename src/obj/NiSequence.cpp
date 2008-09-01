@@ -78,10 +78,10 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			NifStream( controlledBlocks[i1].unknownShort0, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 10 ) ) {
-			NifStream( controlledBlocks[i1].priority_, in, info );
+			NifStream( controlledBlocks[i1].priority, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
-			NifStream( controlledBlocks[i1].priority_, in, info );
+			NifStream( controlledBlocks[i1].priority, in, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			NifStream( block_num, in, info );
@@ -207,10 +207,10 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			NifStream( controlledBlocks[i1].unknownShort0, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 10 ) ) {
-			NifStream( controlledBlocks[i1].priority_, out, info );
+			NifStream( controlledBlocks[i1].priority, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
-			NifStream( controlledBlocks[i1].priority_, out, info );
+			NifStream( controlledBlocks[i1].priority, out, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			if ( info.version < VER_3_3_0_13 ) {
@@ -298,7 +298,7 @@ std::string NiSequence::asString( bool verbose ) const {
 		out << "    Interpolator:  " << controlledBlocks[i1].interpolator << endl;
 		out << "    Unknown Link 2:  " << controlledBlocks[i1].unknownLink2 << endl;
 		out << "    Unknown Short 0:  " << controlledBlocks[i1].unknownShort0 << endl;
-		out << "    Priority?:  " << controlledBlocks[i1].priority_ << endl;
+		out << "    Priority:  " << controlledBlocks[i1].priority << endl;
 		out << "    String Palette:  " << controlledBlocks[i1].stringPalette << endl;
 		out << "    Node Name:  " << controlledBlocks[i1].nodeName << endl;
 		out << "    Node Name Offset:  " << controlledBlocks[i1].nodeNameOffset << endl;
