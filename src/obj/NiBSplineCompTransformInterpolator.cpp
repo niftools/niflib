@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NiBSplineTransformInterpolator::TYPE );
 
-NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : translationBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
+NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : translationBias(0.0f), translationMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -50,7 +50,7 @@ void NiBSplineCompTransformInterpolator::Read( istream& in, list<unsigned int> &
 
 	NiBSplineTransformInterpolator::Read( in, link_stack, info );
 	NifStream( translationBias, in, info );
-	NifStream( translateMultiplier, in, info );
+	NifStream( translationMultiplier, in, info );
 	NifStream( rotationBias, in, info );
 	NifStream( rotationMultiplier, in, info );
 	NifStream( scaleBias, in, info );
@@ -66,7 +66,7 @@ void NiBSplineCompTransformInterpolator::Write( ostream& out, const map<NiObject
 
 	NiBSplineTransformInterpolator::Write( out, link_map, info );
 	NifStream( translationBias, out, info );
-	NifStream( translateMultiplier, out, info );
+	NifStream( translationMultiplier, out, info );
 	NifStream( rotationBias, out, info );
 	NifStream( rotationMultiplier, out, info );
 	NifStream( scaleBias, out, info );
@@ -84,7 +84,7 @@ std::string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiBSplineTransformInterpolator::asString();
 	out << "  Translation Bias:  " << translationBias << endl;
-	out << "  Translate Multiplier:  " << translateMultiplier << endl;
+	out << "  Translation Multiplier:  " << translationMultiplier << endl;
 	out << "  Rotation Bias:  " << rotationBias << endl;
 	out << "  Rotation Multiplier:  " << rotationMultiplier << endl;
 	out << "  Scale Bias:  " << scaleBias << endl;
@@ -122,11 +122,11 @@ void NiBSplineCompTransformInterpolator::SetTranslateBias( float value ) {
 }
 
 float NiBSplineCompTransformInterpolator::GetTranslateMultiplier() const {
-	return translateMultiplier;
+	return translationMultiplier;
 }
 
 void NiBSplineCompTransformInterpolator::SetTranslateMultiplier( float value ) {
-	translateMultiplier = value;
+	translationMultiplier = value;
 }
 
 float NiBSplineCompTransformInterpolator::GetRotationBias() const {
@@ -191,9 +191,9 @@ vector< Vector3 > NiBSplineCompTransformInterpolator::GetTranslateControlData() 
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Vector3 key;
-         key.x = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
-         key.y = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
-         key.z = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
+         key.x = float(points[i++]) / float (32767) * translationMultiplier + translationBias;
+         key.y = float(points[i++]) / float (32767) * translationMultiplier + translationBias;
+         key.z = float(points[i++]) / float (32767) * translationMultiplier + translationBias;
          value.push_back(key);
       }
    }
@@ -279,9 +279,9 @@ vector< Key<Vector3> > NiBSplineCompTransformInterpolator::SampleTranslateKeys(i
          key.time = time;
          key.backward_tangent.Set(0.0f,0.0f,0.0f);
          key.forward_tangent.Set(0.0f,0.0f,0.0f); 
-         key.data.x = output[j++] * translateMultiplier + translationBias;
-         key.data.y = output[j++] * translateMultiplier + translationBias;
-         key.data.z = output[j++] * translateMultiplier + translationBias;
+         key.data.x = output[j++] * translationMultiplier + translationBias;
+         key.data.y = output[j++] * translationMultiplier + translationBias;
+         key.data.z = output[j++] * translationMultiplier + translationBias;
          value.push_back(key);
          time += incr;
       }

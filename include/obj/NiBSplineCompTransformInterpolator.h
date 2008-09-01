@@ -182,8 +182,8 @@ public:
 protected:
 	/*! Translation Bias */
 	float translationBias;
-	/*! Translate Multiplier */
-	float translateMultiplier;
+	/*! Translation Multiplier */
+	float translationMultiplier;
 	/*! Rotation Bias */
 	float rotationBias;
 	/*! Rotation Multiplier */
