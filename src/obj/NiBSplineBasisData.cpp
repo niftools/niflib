@@ -91,11 +91,11 @@ std::list<NiObjectRef> NiBSplineBasisData::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-unsigned int NiBSplineBasisData::GetNumControlPt() const {
+unsigned int NiBSplineBasisData::GetNumControlPoints() const {
 	return numControlPoints;
 }
 
-void NiBSplineBasisData::SetNumControlPt( unsigned int value ) {
+void NiBSplineBasisData::SetNumControlPoints( unsigned int value ) {
 	numControlPoints = value;
 }
 
