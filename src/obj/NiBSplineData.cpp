@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineData::TYPE("NiBSplineData", &NiObject::TYPE );
 
-NiBSplineData::NiBSplineData() : floatCount((unsigned int)0), shortCount((unsigned int)0) {
+NiBSplineData::NiBSplineData() : numFloatControlPoints((unsigned int)0), numShortControlPoints((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,13 +42,13 @@ void NiBSplineData::Read( istream& in, list<unsigned int> & link_stack, const Ni
 	//--END CUSTOM CODE--//
 
 	NiObject::Read( in, link_stack, info );
-	NifStream( floatCount, in, info );
-	floatControlPoints.resize(floatCount);
+	NifStream( numFloatControlPoints, in, info );
+	floatControlPoints.resize(numFloatControlPoints);
 	for (unsigned int i1 = 0; i1 < floatControlPoints.size(); i1++) {
 		NifStream( floatControlPoints[i1], in, info );
 	};
-	NifStream( shortCount, in, info );
-	shortControlPoints.resize(shortCount);
+	NifStream( numShortControlPoints, in, info );
+	shortControlPoints.resize(numShortControlPoints);
 	for (unsigned int i1 = 0; i1 < shortControlPoints.size(); i1++) {
 		NifStream( shortControlPoints[i1], in, info );
 	};
@@ -62,13 +62,13 @@ void NiBSplineData::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	shortCount = (unsigned int)(shortControlPoints.size());
-	floatCount = (unsigned int)(floatControlPoints.size());
-	NifStream( floatCount, out, info );
+	numShortControlPoints = (unsigned int)(shortControlPoints.size());
+	numFloatControlPoints = (unsigned int)(floatControlPoints.size());
+	NifStream( numFloatControlPoints, out, info );
 	for (unsigned int i1 = 0; i1 < floatControlPoints.size(); i1++) {
 		NifStream( floatControlPoints[i1], out, info );
 	};
-	NifStream( shortCount, out, info );
+	NifStream( numShortControlPoints, out, info );
 	for (unsigned int i1 = 0; i1 < shortControlPoints.size(); i1++) {
 		NifStream( shortControlPoints[i1], out, info );
 	};
@@ -84,9 +84,9 @@ std::string NiBSplineData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	shortCount = (unsigned int)(shortControlPoints.size());
-	floatCount = (unsigned int)(floatControlPoints.size());
-	out << "  Float Count:  " << floatCount << endl;
+	numShortControlPoints = (unsigned int)(shortControlPoints.size());
+	numFloatControlPoints = (unsigned int)(floatControlPoints.size());
+	out << "  Num Float Control Points:  " << numFloatControlPoints << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < floatControlPoints.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -99,7 +99,7 @@ std::string NiBSplineData::asString( bool verbose ) const {
 		out << "    Float Control Points[" << i1 << "]:  " << floatControlPoints[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Short Count:  " << shortCount << endl;
+	out << "  Num Short Control Points:  " << numShortControlPoints << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < shortControlPoints.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

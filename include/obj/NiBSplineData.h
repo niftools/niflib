@@ -85,11 +85,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of Float Data Points */
-	mutable unsigned int floatCount;
+	mutable unsigned int numFloatControlPoints;
 	/*! Float values representing the control data. */
 	vector<float > floatControlPoints;
 	/*! Number of Short Data Points */
-	mutable unsigned int shortCount;
+	mutable unsigned int numShortControlPoints;
 	/*! Signed shorts representing the data from 0 to 1 (scaled by SHRT_MAX). */
 	vector<short > shortControlPoints;
 public:
