@@ -121,7 +121,7 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			NifStream( controlledBlocks[i1].variable1, in, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-			NifStream( controlledBlocks[i1].variableOffset1, in, info );
+			NifStream( controlledBlocks[i1].variable1Offset, in, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable2, in, info );
@@ -130,7 +130,7 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			NifStream( controlledBlocks[i1].variable2, in, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-			NifStream( controlledBlocks[i1].variableOffset2, in, info );
+			NifStream( controlledBlocks[i1].variable2Offset, in, info );
 		};
 	};
 
@@ -257,7 +257,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			NifStream( controlledBlocks[i1].variable1, out, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-			NifStream( controlledBlocks[i1].variableOffset1, out, info );
+			NifStream( controlledBlocks[i1].variable1Offset, out, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			NifStream( controlledBlocks[i1].variable2, out, info );
@@ -266,7 +266,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			NifStream( controlledBlocks[i1].variable2, out, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-			NifStream( controlledBlocks[i1].variableOffset2, out, info );
+			NifStream( controlledBlocks[i1].variable2Offset, out, info );
 		};
 	};
 
@@ -307,9 +307,9 @@ std::string NiSequence::asString( bool verbose ) const {
 		out << "    Controller Type:  " << controlledBlocks[i1].controllerType << endl;
 		out << "    Controller Type Offset:  " << controlledBlocks[i1].controllerTypeOffset << endl;
 		out << "    Variable 1:  " << controlledBlocks[i1].variable1 << endl;
-		out << "    Variable Offset 1:  " << controlledBlocks[i1].variableOffset1 << endl;
+		out << "    Variable 1 Offset:  " << controlledBlocks[i1].variable1Offset << endl;
 		out << "    Variable 2:  " << controlledBlocks[i1].variable2 << endl;
-		out << "    Variable Offset 2:  " << controlledBlocks[i1].variableOffset2 << endl;
+		out << "    Variable 2 Offset:  " << controlledBlocks[i1].variable2Offset << endl;
 	};
 	return out.str();
 

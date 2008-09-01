@@ -94,7 +94,7 @@ struct ControllerLink {
 	 * Offset in the string palette where some variable string starts (such as
 	 * 'SELF_ILLUM', '0-0-TT_TRANSLATE_U', 'tongue_out', etc.). Usually, -1.
 	 */
-	unsigned int variableOffset1;
+	unsigned int variable1Offset;
 	/*! Another variable string, apparently used for particle system controllers. */
 	IndexString variable2;
 	/*!
@@ -102,7 +102,7 @@ struct ControllerLink {
 	 * 'EmitterActive' and 'BirthRate' have been observed in official files, used for
 	 * particle system controllers). Usually, -1.
 	 */
-	unsigned int variableOffset2;
+	unsigned int variable2Offset;
 };
 
 }
