@@ -43,8 +43,8 @@ void bhkHingeConstraint::Read( istream& in, list<unsigned int> & link_stack, con
 
 	bhkConstraint::Read( in, link_stack, info );
 	NifStream( pivotA, in, info );
-	NifStream( perp2axleina1, in, info );
-	NifStream( perp2axleina2, in, info );
+	NifStream( perp2AxleInA1, in, info );
+	NifStream( perp2AxleInA2, in, info );
 	NifStream( pivotB, in, info );
 	NifStream( axleB, in, info );
 
@@ -58,8 +58,8 @@ void bhkHingeConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	bhkConstraint::Write( out, link_map, info );
 	NifStream( pivotA, out, info );
-	NifStream( perp2axleina1, out, info );
-	NifStream( perp2axleina2, out, info );
+	NifStream( perp2AxleInA1, out, info );
+	NifStream( perp2AxleInA2, out, info );
 	NifStream( pivotB, out, info );
 	NifStream( axleB, out, info );
 
@@ -75,8 +75,8 @@ std::string bhkHingeConstraint::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
 	out << "  Pivot A:  " << pivotA << endl;
-	out << "  Perp2AxleInA1:  " << perp2axleina1 << endl;
-	out << "  Perp2AxleInA2:  " << perp2axleina2 << endl;
+	out << "  Perp2 Axle In A1:  " << perp2AxleInA1 << endl;
+	out << "  Perp2 Axle In A2:  " << perp2AxleInA2 << endl;
 	out << "  Pivot B:  " << pivotB << endl;
 	out << "  Axle B:  " << axleB << endl;
 	return out.str();

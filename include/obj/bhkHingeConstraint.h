@@ -58,9 +58,9 @@ protected:
 	/*! Pivot A. */
 	Vector4 pivotA;
 	/*! Unknown. */
-	Vector4 perp2axleina1;
+	Vector4 perp2AxleInA1;
 	/*! Unknown. */
-	Vector4 perp2axleina2;
+	Vector4 perp2AxleInA2;
 	/*! Pivot B. */
 	Vector4 pivotB;
 	/*! Unknown. */

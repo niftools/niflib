@@ -70,11 +70,11 @@ void bhkMalleableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, in, info );
 		NifStream( limitedHinge.axleA, in, info );
-		NifStream( limitedHinge.perp2axleina1, in, info );
-		NifStream( limitedHinge.perp2axleina2, in, info );
+		NifStream( limitedHinge.perp2AxleInA1, in, info );
+		NifStream( limitedHinge.perp2AxleInA2, in, info );
 		NifStream( limitedHinge.pivotB, in, info );
 		NifStream( limitedHinge.axleB, in, info );
-		NifStream( limitedHinge.perp2axleinb2, in, info );
+		NifStream( limitedHinge.perp2AxleInB2, in, info );
 		NifStream( limitedHinge.minAngle, in, info );
 		NifStream( limitedHinge.maxAngle, in, info );
 		NifStream( limitedHinge.maxFriction, in, info );
@@ -129,11 +129,11 @@ void bhkMalleableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, out, info );
 		NifStream( limitedHinge.axleA, out, info );
-		NifStream( limitedHinge.perp2axleina1, out, info );
-		NifStream( limitedHinge.perp2axleina2, out, info );
+		NifStream( limitedHinge.perp2AxleInA1, out, info );
+		NifStream( limitedHinge.perp2AxleInA2, out, info );
 		NifStream( limitedHinge.pivotB, out, info );
 		NifStream( limitedHinge.axleB, out, info );
-		NifStream( limitedHinge.perp2axleinb2, out, info );
+		NifStream( limitedHinge.perp2AxleInB2, out, info );
 		NifStream( limitedHinge.minAngle, out, info );
 		NifStream( limitedHinge.maxAngle, out, info );
 		NifStream( limitedHinge.maxFriction, out, info );
@@ -174,11 +174,11 @@ std::string bhkMalleableConstraint::asString( bool verbose ) const {
 	if ( (type == 2) ) {
 		out << "    Pivot A:  " << limitedHinge.pivotA << endl;
 		out << "    Axle A:  " << limitedHinge.axleA << endl;
-		out << "    Perp2AxleInA1:  " << limitedHinge.perp2axleina1 << endl;
-		out << "    Perp2AxleInA2:  " << limitedHinge.perp2axleina2 << endl;
+		out << "    Perp2 Axle In A1:  " << limitedHinge.perp2AxleInA1 << endl;
+		out << "    Perp2 Axle In A2:  " << limitedHinge.perp2AxleInA2 << endl;
 		out << "    Pivot B:  " << limitedHinge.pivotB << endl;
 		out << "    Axle B:  " << limitedHinge.axleB << endl;
-		out << "    Perp2AxleInB2:  " << limitedHinge.perp2axleinb2 << endl;
+		out << "    Perp2 Axle In B2:  " << limitedHinge.perp2AxleInB2 << endl;
 		out << "    Min Angle:  " << limitedHinge.minAngle << endl;
 		out << "    Max Angle:  " << limitedHinge.maxAngle << endl;
 		out << "    Max Friction:  " << limitedHinge.maxFriction << endl;

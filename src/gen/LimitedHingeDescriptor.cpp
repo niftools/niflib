@@ -20,11 +20,11 @@ LimitedHingeDescriptor::LimitedHingeDescriptor( const LimitedHingeDescriptor & s
 LimitedHingeDescriptor & LimitedHingeDescriptor::operator=( const LimitedHingeDescriptor & src ) {
 	this->pivotA = src.pivotA;
 	this->axleA = src.axleA;
-	this->perp2axleina1 = src.perp2axleina1;
-	this->perp2axleina2 = src.perp2axleina2;
+	this->perp2AxleInA1 = src.perp2AxleInA1;
+	this->perp2AxleInA2 = src.perp2AxleInA2;
 	this->pivotB = src.pivotB;
 	this->axleB = src.axleB;
-	this->perp2axleinb2 = src.perp2axleinb2;
+	this->perp2AxleInB2 = src.perp2AxleInB2;
 	this->minAngle = src.minAngle;
 	this->maxAngle = src.maxAngle;
 	this->maxFriction = src.maxFriction;

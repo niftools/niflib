@@ -28,19 +28,19 @@ struct LimitedHingeDescriptor {
 	/*! Axis of rotation. */
 	Vector4 axleA;
 	/*! Vector in the rotation plane which defines the zero angle. */
-	Vector4 perp2axleina1;
+	Vector4 perp2AxleInA1;
 	/*!
 	 * Vector in the rotation plane, orthogonal on the previous one, which defines the
 	 * positive direction of rotation. This is always the vector product of Axle A and
 	 * Perp2 Axle In A1.
 	 */
-	Vector4 perp2axleina2;
+	Vector4 perp2AxleInA2;
 	/*! Pivot A in second entity coordinate system. */
 	Vector4 pivotB;
 	/*! Axle A in second entity coordinate system. */
 	Vector4 axleB;
 	/*! Perp2 Axle In A2 in second entity coordinate system. */
-	Vector4 perp2axleinb2;
+	Vector4 perp2AxleInB2;
 	/*! Minimum rotation angle. */
 	float minAngle;
 	/*! Maximum rotation angle. */
