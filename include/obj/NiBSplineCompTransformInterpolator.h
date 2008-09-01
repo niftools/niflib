@@ -180,8 +180,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Translate Bias */
-	float translateBias;
+	/*! Translation Bias */
+	float translationBias;
 	/*! Translate Multiplier */
 	float translateMultiplier;
 	/*! Rotation Bias */

@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBSplineCompTransformInterpolator::TYPE("NiBSplineCompTransformInterpolator", &NiBSplineTransformInterpolator::TYPE );
 
-NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : translateBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
+NiBSplineCompTransformInterpolator::NiBSplineCompTransformInterpolator() : translationBias(0.0f), translateMultiplier(0.0f), rotationBias(0.0f), rotationMultiplier(0.0f), scaleBias(0.0f), scaleMultiplier(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,7 +49,7 @@ void NiBSplineCompTransformInterpolator::Read( istream& in, list<unsigned int> &
 	//--END CUSTOM CODE--//
 
 	NiBSplineTransformInterpolator::Read( in, link_stack, info );
-	NifStream( translateBias, in, info );
+	NifStream( translationBias, in, info );
 	NifStream( translateMultiplier, in, info );
 	NifStream( rotationBias, in, info );
 	NifStream( rotationMultiplier, in, info );
@@ -65,7 +65,7 @@ void NiBSplineCompTransformInterpolator::Write( ostream& out, const map<NiObject
 	//--END CUSTOM CODE--//
 
 	NiBSplineTransformInterpolator::Write( out, link_map, info );
-	NifStream( translateBias, out, info );
+	NifStream( translationBias, out, info );
 	NifStream( translateMultiplier, out, info );
 	NifStream( rotationBias, out, info );
 	NifStream( rotationMultiplier, out, info );
@@ -83,7 +83,7 @@ std::string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiBSplineTransformInterpolator::asString();
-	out << "  Translate Bias:  " << translateBias << endl;
+	out << "  Translation Bias:  " << translationBias << endl;
 	out << "  Translate Multiplier:  " << translateMultiplier << endl;
 	out << "  Rotation Bias:  " << rotationBias << endl;
 	out << "  Rotation Multiplier:  " << rotationMultiplier << endl;
@@ -114,11 +114,11 @@ std::list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiBSplineCompTransformInterpolator::GetTranslateBias() const {
-	return translateBias;
+	return translationBias;
 }
 
 void NiBSplineCompTransformInterpolator::SetTranslateBias( float value ) {
-	translateBias = value;
+	translationBias = value;
 }
 
 float NiBSplineCompTransformInterpolator::GetTranslateMultiplier() const {
@@ -191,9 +191,9 @@ vector< Vector3 > NiBSplineCompTransformInterpolator::GetTranslateControlData() 
       value.reserve(nctrl);
       for (int i=0; i<npts; ) {
          Vector3 key;
-         key.x = float(points[i++]) / float (32767) * translateMultiplier + translateBias;
-         key.y = float(points[i++]) / float (32767) * translateMultiplier + translateBias;
-         key.z = float(points[i++]) / float (32767) * translateMultiplier + translateBias;
+         key.x = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
+         key.y = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
+         key.z = float(points[i++]) / float (32767) * translateMultiplier + translationBias;
          value.push_back(key);
       }
    }
@@ -279,9 +279,9 @@ vector< Key<Vector3> > NiBSplineCompTransformInterpolator::SampleTranslateKeys(i
          key.time = time;
          key.backward_tangent.Set(0.0f,0.0f,0.0f);
          key.forward_tangent.Set(0.0f,0.0f,0.0f); 
-         key.data.x = output[j++] * translateMultiplier + translateBias;
-         key.data.y = output[j++] * translateMultiplier + translateBias;
-         key.data.z = output[j++] * translateMultiplier + translateBias;
+         key.data.x = output[j++] * translateMultiplier + translationBias;
+         key.data.y = output[j++] * translateMultiplier + translationBias;
+         key.data.z = output[j++] * translateMultiplier + translationBias;
          value.push_back(key);
          time += incr;
       }
