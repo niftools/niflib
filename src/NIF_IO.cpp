@@ -837,5 +837,22 @@ ostream & operator<<( ostream & out, Char8String const & val ) {
 	return out;
 }
 
+//InertiaMatrix
+void NifStream( InertiaMatrix & val, istream& in, const NifInfo & info ) {
+	for (int c = 0; c < 3; ++c) {
+		for (int r = 0; r < 4; ++r) {
+			val[r][c] = ReadFloat( in );
+		}
+	}
+}
+
+void NifStream( InertiaMatrix const & val, ostream& out, const NifInfo & info ) {
+	for (int c = 0; c < 3; ++c) {
+		for (int r = 0; r < 4; ++r) {
+			WriteFloat( val[r][c], out );
+		}
+	}
+}
+
 
 }

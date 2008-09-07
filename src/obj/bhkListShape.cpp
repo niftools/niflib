@@ -198,4 +198,29 @@ void bhkListShape::SetSubShapes(const vector<Ref<bhkShape > >& shapes) {
 	unknownInts.resize(subShapes.size(), 0);
 }
 
+void bhkListShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+{
+	center = Vector3(0,0,0);
+	mass = 0.0f;
+	inertia = InertiaMatrix::IDENTITY;
+
+	vector<float> masses;
+	vector<Vector3> centers;
+	vector<InertiaMatrix> inertias;
+	for (vector<bhkShapeRef>::iterator itr = subShapes.begin(); itr != subShapes.end(); ++itr)
+	{
+		float m; Vector3 c; InertiaMatrix i;
+		(*itr)->CalcMassCenterInertia(density, solid, m, c, i);
+		masses.push_back(m);
+		centers.push_back(c);
+		inertias.push_back(i);
+		mass += m;
+	}
+
+	// TODO: doubt this inertia calculation is even remotely close
+	for (size_t i=0; i < masses.size(); ++i) {
+		center += centers[i] * (masses[i] / mass);
+		inertia *= inertias[i];
+	}
+}
 //--END CUSTOM CODE--//

@@ -200,4 +200,14 @@ void bhkMoppBvTreeShape::SetMoppScale( float value ) {
 	scale = value;
 }
 
+void bhkMoppBvTreeShape::CalcMassCenterInertia( float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia )
+{
+	center = Vector3(0,0,0);
+	mass = 0.0f;
+	inertia = InertiaMatrix::IDENTITY;
+
+	if (shape != NULL)
+		shape->CalcMassCenterInertia(density, solid, mass, center, inertia);
+}
+
 //--END CUSTOM CODE--//

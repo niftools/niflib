@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/Inertia.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -156,6 +157,21 @@ float bhkCapsuleShape::GetRadius2() const {
 
 void bhkCapsuleShape::SetRadius2( float value ) {
 	radius2 = value;
+}
+
+/*! Helper routine for calculating mass properties.
+*  \param[in]  density Uniform density of object
+*  \param[in]  solid Determines whether the object is assumed to be solid or not
+*  \param[out] mass Calculated mass of the object
+*  \param[out] center Center of mass
+*  \param[out] inertia Mass Inertia Tensor
+*  \return Return mass, center, and inertia tensor.
+*/
+void bhkCapsuleShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+{
+	center = Vector3();
+	float height = (secondPoint - firstPoint).Magnitude();
+	Inertia::GetMassInertiaCapsule(radius, height, density, solid, mass, inertia);
 }
 
 //--END CUSTOM CODE--//

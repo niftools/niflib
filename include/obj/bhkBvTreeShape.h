@@ -52,6 +52,17 @@ public:
 	 */
 	NIFLIB_API virtual const Type & GetType() const;
 
+
+	/*! Helper routine for calculating mass properties.
+	*  \param[in]  density Uniform density of object
+	*  \param[in]  solid Determines whether the object is assumed to be solid or not
+	*  \param[out] mass Calculated mass of the object
+	*  \param[out] center Center of mass
+	*  \param[out] inertia Mass Inertia Tensor
+	*  \return Return mass, center, and inertia tensor.
+	*/
+	NIFLIB_API virtual void CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia);
+
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 public:

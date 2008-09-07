@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/obj/bhkShape.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -15,7 +16,6 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkRigidBody.h"
 #include "../../include/gen/QuaternionXYZW.h"
-#include "../../include/gen/InertiaMatrix.h"
 #include "../../include/obj/bhkConstraint.h"
 using namespace Niflib;
 
@@ -69,18 +69,7 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	NifStream( rotation.w, in, info );
 	NifStream( linearVelocity, in, info );
 	NifStream( angularVelocity, in, info );
-	NifStream( inertia.m11, in, info );
-	NifStream( inertia.m12, in, info );
-	NifStream( inertia.m13, in, info );
-	NifStream( inertia.m14, in, info );
-	NifStream( inertia.m21, in, info );
-	NifStream( inertia.m22, in, info );
-	NifStream( inertia.m23, in, info );
-	NifStream( inertia.m24, in, info );
-	NifStream( inertia.m31, in, info );
-	NifStream( inertia.m32, in, info );
-	NifStream( inertia.m33, in, info );
-	NifStream( inertia.m34, in, info );
+	NifStream( inertia, in, info );
 	NifStream( center, in, info );
 	NifStream( mass, in, info );
 	NifStream( linearDamping, in, info );
@@ -138,18 +127,7 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	NifStream( rotation.w, out, info );
 	NifStream( linearVelocity, out, info );
 	NifStream( angularVelocity, out, info );
-	NifStream( inertia.m11, out, info );
-	NifStream( inertia.m12, out, info );
-	NifStream( inertia.m13, out, info );
-	NifStream( inertia.m14, out, info );
-	NifStream( inertia.m21, out, info );
-	NifStream( inertia.m22, out, info );
-	NifStream( inertia.m23, out, info );
-	NifStream( inertia.m24, out, info );
-	NifStream( inertia.m31, out, info );
-	NifStream( inertia.m32, out, info );
-	NifStream( inertia.m33, out, info );
-	NifStream( inertia.m34, out, info );
+	NifStream( inertia, out, info );
 	NifStream( center, out, info );
 	NifStream( mass, out, info );
 	NifStream( linearDamping, out, info );
@@ -242,18 +220,7 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 	out << "  w:  " << rotation.w << endl;
 	out << "  Linear Velocity:  " << linearVelocity << endl;
 	out << "  Angular Velocity:  " << angularVelocity << endl;
-	out << "  m11:  " << inertia.m11 << endl;
-	out << "  m12:  " << inertia.m12 << endl;
-	out << "  m13:  " << inertia.m13 << endl;
-	out << "  m14:  " << inertia.m14 << endl;
-	out << "  m21:  " << inertia.m21 << endl;
-	out << "  m22:  " << inertia.m22 << endl;
-	out << "  m23:  " << inertia.m23 << endl;
-	out << "  m24:  " << inertia.m24 << endl;
-	out << "  m31:  " << inertia.m31 << endl;
-	out << "  m32:  " << inertia.m32 << endl;
-	out << "  m33:  " << inertia.m33 << endl;
-	out << "  m34:  " << inertia.m34 << endl;
+	out << "  Inertia:  " << inertia << endl;
 	out << "  Center:  " << center << endl;
 	out << "  Mass:  " << mass << endl;
 	out << "  Linear Damping:  " << linearDamping << endl;
@@ -355,36 +322,12 @@ void bhkRigidBody::SetAngularVelocity( const Vector4 & value ) {
 	angularVelocity = value;
 }
 
-array<12,float>  bhkRigidBody::GetInertia() const {
-	array<12, float> result;
-	result[0] = inertia.m11;
-	result[1] = inertia.m12;
-	result[2] = inertia.m13;
-	result[3] = inertia.m14;
-	result[4] = inertia.m21;
-	result[5] = inertia.m22;
-	result[6] = inertia.m23;
-	result[7] = inertia.m24;
-	result[8] = inertia.m31;
-	result[9] = inertia.m32;
-	result[10] = inertia.m33;
-	result[11] = inertia.m34;
-	return result;
+InertiaMatrix  bhkRigidBody::GetInertia() const {
+	return inertia;
 }
 
-void bhkRigidBody::SetInertia( const array<12,float>&  value ) {
-	inertia.m11 = value[0];
-	inertia.m12 = value[1];
-	inertia.m13 = value[2];
-	inertia.m14 = value[3];
-	inertia.m21 = value[4];
-	inertia.m22 = value[5];
-	inertia.m23 = value[6];
-	inertia.m24 = value[7];
-	inertia.m31 = value[8];
-	inertia.m32 = value[9];
-	inertia.m33 = value[10];
-	inertia.m34 = value[11];
+void bhkRigidBody::SetInertia( const InertiaMatrix&  value ) {
+	inertia = value;
 }
 
 Vector4 bhkRigidBody::GetCenter() const {
@@ -489,6 +432,47 @@ SolverDeactivation bhkRigidBody::GetSolverDeactivation() const {
 
 void bhkRigidBody::SetSolverDeactivation( const SolverDeactivation & value ) {
 	solverDeactivation = value;
+}
+
+
+
+// Apply scale factor <scale> on data.
+void bhkRigidBody::ApplyScale(float scale)
+{
+    // apply scale on transform
+    translation *= scale;
+
+    // apply scale on center of gravity
+    center *= scale;
+
+    // apply scale on inertia tensor
+    inertia *= pow(scale, 2.0f);
+
+    //# apply scale on all blocks down the hierarchy
+    //ApplyScale(scale)
+}
+
+void bhkRigidBody::UpdateMassCenterInertia(float density, bool solid, float mass)
+{
+    // Look at all the objects under this rigid body and update the mass
+    //  center of gravity, and inertia tensor accordingly. If the C{mass} parameter
+    //  is given then the C{density} argument is ignored.
+
+	if (mass != 0.0f)
+        density = 1.0f;
+
+	if (shape != NULL)
+	{
+		Vector3 com;
+		shape->CalcMassCenterInertia(density, solid, this->mass, com, inertia);
+		center = com;
+		if (mass != 0.0f)
+		{
+			float mass_correction = (this->mass != 0.0f) ? mass / this->mass : 1.0f;
+			this->mass = mass;
+			inertia *= mass_correction;
+		}
+	}
 }
 
 //--END CUSTOM CODE--//

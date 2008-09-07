@@ -87,4 +87,12 @@ std::list<NiObjectRef> bhkConvexTransformShape::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+void bhkConvexTransformShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+{
+	center = Vector3(0,0,0);
+	mass = 0.0f;
+	inertia = InertiaMatrix::IDENTITY;
+}
+
+
 //--END CUSTOM CODE--//

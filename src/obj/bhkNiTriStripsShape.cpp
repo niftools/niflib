@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/Inertia.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -257,4 +258,24 @@ void bhkNiTriStripsShape::SetOblivionFilter( unsigned int index, unsigned char f
 	dataLayers[index].colFilter = filter;
 }
 
+void bhkNiTriStripsShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+{
+	center = Vector3(0,0,0);
+	mass = 0.0f;
+	inertia = InertiaMatrix::IDENTITY;
+
+	vector<Vector3> verts;
+	vector<Triangle> tris;
+	for ( vector<NiTriStripsDataRef>::iterator itr = stripsData.begin(); itr != stripsData.end(); ++itr )
+	{
+		size_t nv = verts.size(), nt = tris.size();
+		vector<Vector3> v = (*itr)->GetVertices();
+		vector<Triangle> t = (*itr)->GetTriangles();
+		for (size_t i=0; i<nv; ++i)
+			verts.push_back( v[i] );
+		for (size_t i=0; i<nt; ++i)
+			tris.push_back( Triangle(t[i][0] + nt, t[i][1] + nt, t[i][2] + nt) );
+	}
+	Inertia::GetMassCenterInertiaPolyhedron(verts, tris, density, solid, mass, center, inertia);
+}
 //--END CUSTOM CODE--//

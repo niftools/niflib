@@ -594,6 +594,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\src\Inertia.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\kfm.cpp"
 				>
 			</File>
@@ -644,6 +648,10 @@
 						PrecompiledHeaderThrough=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\src\nifqhull.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\src\ObjectRegistry.cpp"
@@ -1881,10 +1889,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\gen\InertiaMatrix.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\src\gen\LimitedHingeDescriptor.cpp"
 					>
 				</File>
@@ -2052,6 +2056,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\Inertia.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\Key.h"
 				>
 			</File>
@@ -2081,6 +2089,10 @@
 			</File>
 			<File
 				RelativePath=".\include\niflib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\nifqhull.h"
 				>
 			</File>
 			<File
@@ -2799,6 +2811,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPersistentSrcTextureRendererData.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPhysXActorDesc.h"
 					>
 				</File>
@@ -3032,6 +3048,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiRotatingParticlesData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiScreenElements.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiScreenElementsData.h"
 					>
 				</File>
 				<File
@@ -3368,6 +3392,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\physXMaterialRef.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\Polygon.h"
 					>
 				</File>
 				<File

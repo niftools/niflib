@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/Inertia.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -121,4 +122,9 @@ void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	minimumSize = min( min(value.x, value.y), value.z );
 }
 
+void bhkBoxShape::CalcMassCenterInertia( float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia )
+{
+	center = Vector3(0,0,0);
+	Inertia::GetMassInertiaBox( dimensions * 2.0f, density, solid, mass, inertia ); 
+}
 //--END CUSTOM CODE--//

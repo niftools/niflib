@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiMorphData::TYPE("NiMorphData", &NiObject::TYPE );
 
-NiMorphData::NiMorphData() : numMorphs((unsigned int)0), numVertices((unsigned int)0), relativeTargets(1) {
+NiMorphData::NiMorphData() : numMorphs((unsigned int)0), numVertices((unsigned int)0), relativeTargets((byte)1) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -19,6 +19,11 @@ const Matrix33 Matrix33::IDENTITY( 1.0f, 0.0f, 0.0f,
 const Matrix22 Matrix22::IDENTITY( 1.0f, 0.0f,
 								   0.0f, 1.0f );
 
+const InertiaMatrix InertiaMatrix::IDENTITY( 
+								  1.0f, 0.0f, 0.0f, 0.0f,
+								  0.0f, 1.0f, 0.0f, 0.0f,
+								  0.0f, 0.0f, 1.0f, 0.0f );
+
 /* TexCoord Methods
  *
  */
@@ -122,6 +127,24 @@ bool Vector3::operator!=( const Vector3 & rh) const {
 		return false;
 	else
 		return true;
+}
+
+float & Vector3::operator[](int n) {
+	switch (n) {
+			case 0: return x; break;
+			case 1: return y; break;
+			case 2: return z; break;
+			default: throw std::out_of_range("Index out of range for Vector3");
+	};
+}
+
+float Vector3::operator[](int n) const {
+	switch (n) {
+			case 0: return x; break;
+			case 1: return y; break;
+			case 2: return z; break;
+			default: throw std::out_of_range("Index out of range for Vector3");
+	};
 }
 
 float Vector3::DotProduct( const Vector3 & rh) const {
@@ -475,6 +498,19 @@ Matrix44 & Matrix44::operator+=( const Matrix44 & rh ) {
 	return *this;
 }
 
+Matrix44 Matrix44::operator-( const Matrix44 & rh ) const {
+	return Matrix44(*this) -= rh;
+} 
+
+Matrix44 & Matrix44::operator-=( const Matrix44 & rh ) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*this)[i][j] -= rh[i][j];
+		}
+	}
+	return *this;
+}
+
 Matrix44 & Matrix44::operator=( const Matrix44 & rh ) {
 	memcpy(rows, rh.rows, sizeof(Float4) * 4);
 	return *this;
@@ -623,6 +659,157 @@ Matrix33 Quaternion::AsMatrix() {
 	return m;
 }
 
+
+/*
+* InertiaMatrix Methods
+*/
+
+InertiaMatrix::InertiaMatrix() {
+	*this = InertiaMatrix::IDENTITY;
+}
+
+InertiaMatrix::InertiaMatrix( const Matrix33 & r ) {
+	//Set this matrix with rotate and translate information
+	InertiaMatrix & m = *this;
+	m[0][0] = r[0][0];  m[0][1] = r[0][1];  m[0][2] = r[0][2];  m[0][3] = 0.0f;
+	m[1][0] = r[1][0];  m[1][1] = r[1][1];  m[1][2] = r[1][2];  m[1][3] = 0.0f;
+	m[2][0] = r[2][0];  m[2][1] = r[2][1];  m[2][2] = r[2][2];  m[2][3] = 0.0f;
+}
+
+InertiaMatrix InertiaMatrix::operator*( const InertiaMatrix & rh ) const {
+	return InertiaMatrix(*this) *= rh;
+}
+
+InertiaMatrix & InertiaMatrix::operator*=( const InertiaMatrix & rh ) {
+	InertiaMatrix r;
+	InertiaMatrix & lh = *this;
+	float t;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			t = 0.0f;
+			for (int k = 0; k < 4; k++) {
+				t += lh[i][k] * rh[k][j];
+			}
+			r[i][j] = t;
+		}
+	}
+
+	*this = r;
+	return *this;
+}
+
+InertiaMatrix InertiaMatrix::operator*( float rh ) const {
+	return InertiaMatrix(*this) *= rh;
+}
+
+InertiaMatrix & InertiaMatrix::operator*=( float rh ) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*this)[i][j] *= rh;
+		}
+	}
+	return *this;
+}
+
+Vector3 InertiaMatrix::operator*( const Vector3 & rh ) const {
+	const InertiaMatrix & t = *this;
+	Vector3 v;
+	//Multiply, ignoring w
+	v.x = rh.x * t[0][0] + rh.y * t[1][0] + rh.z * t[2][0];
+	v.y = rh.x * t[0][1] + rh.y * t[1][1] + rh.z * t[2][1];
+	v.z = rh.x * t[0][2] + rh.y * t[1][2] + rh.z * t[2][2];
+	return v;
+}
+
+InertiaMatrix InertiaMatrix::operator+( const InertiaMatrix & rh ) const {
+	return InertiaMatrix(*this) += rh;
+} 
+
+InertiaMatrix & InertiaMatrix::operator+=( const InertiaMatrix & rh ) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*this)[i][j] += rh[i][j];
+		}
+	}
+	return *this;
+}
+
+InertiaMatrix & InertiaMatrix::operator=( const InertiaMatrix & rh ) {
+	memcpy(rows, rh.rows, sizeof(Float4) * 4);
+	return *this;
+}
+
+bool InertiaMatrix::operator==( const InertiaMatrix & rh ) const {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			if ( (*this)[i][j] != rh[i][j] )
+				return false;
+		}
+	}
+	return true;
+}
+
+bool InertiaMatrix::operator!=( const InertiaMatrix & rh ) const {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 4; j++) {
+			if ( (*this)[i][j] != rh[i][j] )
+				return true;
+		}
+	}
+	return false;
+}
+
+InertiaMatrix InertiaMatrix::Transpose() const {
+	const InertiaMatrix & t = *this;
+	return InertiaMatrix( t[0][0], t[1][0], t[2][0], t[3][0],
+		t[0][1], t[1][1], t[2][1], t[3][1],
+		t[0][2], t[1][2], t[2][2], t[3][2]);
+}
+
+Matrix33 InertiaMatrix::Submatrix( int skip_r, int skip_c ) const {
+	Matrix33 sub;
+	int i = 0, j = 0;
+	for (int r = 0; r < 3; r++) {
+		if (r == skip_r)
+			continue;
+		for (int c = 0; c < 4; c++) {
+			if (c == skip_c)
+				continue;
+			sub[i][j] = (*this)[r][c];
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	return sub;
+}
+
+float InertiaMatrix::Adjoint( int skip_r, int skip_c ) const {
+	Matrix33 sub = Submatrix( skip_r, skip_c );
+	return pow(-1.0f, float(skip_r + skip_c)) * sub.Determinant();
+}
+
+InertiaMatrix InertiaMatrix::Inverse() const {
+	InertiaMatrix result;
+
+	float det = Determinant();
+	for (int r = 0; r < 3; r++) {
+		for (int c = 0; c < 4; c++) {
+			result[c][r] = Adjoint(r, c) / det;
+		}
+	}
+
+	return result;
+}
+
+float InertiaMatrix::Determinant() const {
+	const InertiaMatrix & t = *this;
+	return  t[0][0] * Submatrix(0, 0).Determinant()
+		- t[0][1] * Submatrix(0, 1).Determinant()
+		+ t[0][2] * Submatrix(0, 2).Determinant()
+		- t[0][3] * Submatrix(0, 3).Determinant();
+}
+
 /*
  * ostream functions for printing with cout
  */
@@ -686,4 +873,13 @@ ostream & operator<<( ostream & out, Color4 const & val ) {
 ostream & operator<<( ostream & out, Quaternion const & val ) {
 	return out << "[" << setw(6) << val.w << ",(" << setw(6) << val.x << "," << setw(6) << val.y << "," << setw(6) << val.z << ")]";
 }
+
+ostream & operator<<( ostream & out, InertiaMatrix const & val ) {
+	out << endl
+		<< "   |" << setw(6) << val[0][0] << "," << setw(6) << val[0][1] << "," << setw(6) << val[0][2] << "," << setw(6) << val[0][3] << " |" << endl
+		<< "   |" << setw(6) << val[1][0] << "," << setw(6) << val[1][1] << "," << setw(6) << val[1][2] << "," << setw(6) << val[1][3] << " |" << endl
+		<< "   |" << setw(6) << val[2][0] << "," << setw(6) << val[2][1] << "," << setw(6) << val[2][2] << "," << setw(6) << val[2][3] << " |";
+	return out;
+}
+
 }

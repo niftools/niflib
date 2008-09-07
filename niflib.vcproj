@@ -597,7 +597,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\ComplexShape.cpp"
+				RelativePath=".\src\Inertia.cpp"
 				>
 			</File>
 			<File
@@ -651,6 +651,10 @@
 						PrecompiledHeaderThrough=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\src\nifqhull.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\src\ObjectRegistry.cpp"
@@ -1852,6 +1856,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\ComplexShape.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\ControllerLink.cpp"
 					>
 				</File>
@@ -1881,10 +1889,6 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\hkTriangle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\src\gen\InertiaMatrix.cpp"
 					>
 				</File>
 				<File
@@ -2055,6 +2059,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\Inertia.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\Key.h"
 				>
 			</File>
@@ -2087,6 +2095,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\nifqhull.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\ObjectRegistry.h"
 				>
 			</File>
@@ -2105,6 +2117,10 @@
 			<Filter
 				Name="obj"
 				>
+				<File
+					RelativePath=".\include\obj\ATextureRenderData.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\obj\AvoidNode.h"
 					>

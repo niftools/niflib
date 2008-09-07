@@ -8,6 +8,8 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/nifqhull.h"
+#include "../../include/Inertia.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -243,5 +245,13 @@ void bhkConvexVerticesShape::SetNormalsAndDist(const vector<Vector4>& value)
 	normals = value;
 }
 
-
+void bhkConvexVerticesShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+{
+	center = Vector3(0,0,0);
+	mass = 0.0f;
+	inertia = InertiaMatrix::IDENTITY;
+	vector<Vector3> verts = GetVertices();
+	vector<Triangle> tris = NifQHull::compute_convex_hull(verts);
+	Inertia::GetMassCenterInertiaPolyhedron(verts, tris, density, solid, mass, center, inertia);
+}
 //--END CUSTOM CODE--//

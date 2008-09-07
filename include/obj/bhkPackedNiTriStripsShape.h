@@ -83,6 +83,16 @@ public:
 	*/
 	NIFLIB_API void SetSubShapes( vector<OblivionSubShape>& value );	
 
+	/*! Helper routine for calculating mass properties.
+	 *  \param[in]  density Uniform density of object
+	 *  \param[in]  solid Determines whether the object is assumed to be solid or not
+	 *  \param[out] mass Calculated mass of the object
+	 *  \param[out] center Center of mass
+	 *  \param[out] inertia Mass Inertia Tensor
+	 *  \return Return mass, center, and inertia tensor.
+	 */
+	NIFLIB_API virtual void CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of subparts. */

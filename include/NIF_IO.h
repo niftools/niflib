@@ -209,6 +209,9 @@ void NifStream( Char8String & val, istream& in, const NifInfo & info );
 void NifStream( Char8String const & val, ostream& out, const NifInfo & info );
 ostream & operator<<( ostream & out, Char8String const & val );
 
+//InertiaMatrix
+void NifStream( InertiaMatrix & val, istream& in, const NifInfo & info);
+void NifStream( InertiaMatrix const & val, ostream& out, const NifInfo & info);
 
 //--Templates--//
 

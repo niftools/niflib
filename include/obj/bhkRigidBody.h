@@ -17,7 +17,6 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../gen/QuaternionXYZW.h"
-#include "../gen/InertiaMatrix.h"
 #include "../Ref.h"
 namespace Niflib {
 
@@ -133,13 +132,13 @@ public:
 	 * Gets the current inertia of this rigid body.
 	 * \return The inertia of this rigid body.
 	 */
-	NIFLIB_API array<12,float> GetInertia() const;
+	NIFLIB_API InertiaMatrix GetInertia() const;
 
 	/*!
 	 * Sets a new inertia for this rigid body.
 	 * \param[in] value The new inertia for this rigid body.
 	 */
-	NIFLIB_API void SetInertia( const array<12,float> & value );
+	NIFLIB_API void SetInertia( const InertiaMatrix & value );
 
 	/*!
 	 * Gets the current center point of this rigid body.
@@ -284,13 +283,21 @@ public:
 	// Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
 	// always be same as Unknown Byte 1.
 	// \return The current value.
-	SolverDeactivation GetSolverDeactivation() const;
+	NIFLIB_API SolverDeactivation GetSolverDeactivation() const;
 
 	// Usually set to 1 for fixed objects, or set to 2 for moving ones.  Seems to
 	// always be same as Unknown Byte 1.
 	// \param[in] value The new value.
-	void SetSolverDeactivation( const SolverDeactivation & value );
+	NIFLIB_API void SetSolverDeactivation( const SolverDeactivation & value );
 
+	// Apply scale factor <scale> on data.
+	// \param[in] scale Factor to scale by
+	NIFLIB_API void ApplyScale(float scale);
+
+	// Look at all the objects under this rigid body and update the mass
+	//  center of gravity, and inertia tensor accordingly. If the mass parameter
+	//  is given then the density argument is ignored.
+	NIFLIB_API void UpdateMassCenterInertia(float density = 1.0f, bool solid = true, float mass = 0.0f);
 
 	//--END CUSTOM CODE--//
 protected:
