@@ -88,10 +88,10 @@ std::list<NiObjectRef> bhkShape::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-void bhkShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 }
 //--END CUSTOM CODE--//

@@ -126,11 +126,11 @@ void bhkMultiSphereShape::SetSpheres( const vector<SphereBV >& value ) {
 	spheres = value;
 }
 
-void bhkMultiSphereShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkMultiSphereShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	// TODO: Calculate this properly
 	center = Vector3(0,0,0);
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 }
 //--END CUSTOM CODE--//

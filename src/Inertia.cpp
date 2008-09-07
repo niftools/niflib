@@ -2,6 +2,7 @@
 All rights reserved.  Please see niflib.h for license. */
 
 #include "../include/Inertia.h"
+#include "../include/nifqhull.h"
 #include <vector>
 #include <algorithm>
 #include <functional>
@@ -10,9 +11,48 @@ All rights reserved.  Please see niflib.h for license. */
 #include <math.h>
 using namespace Niflib;
 
-void Inertia::GetMassInertiaSphere(float radius, float density, bool solid, 
-								   float& mass, InertiaMatrix &inertia)
+static Inertia::fnCalcMassPropertiesSphere extCalcMassPropertiesSphereRoutine = NULL;
+static Inertia::fnCalcMassPropertiesBox extCalcMassPropertiesBoxRoutine = NULL;
+static Inertia::fnCalcMassPropertiesCylinder extCalcMassPropertiesCylinderRoutine = NULL;
+static Inertia::fnCalcMassPropertiesCapsule extCalcMassPropertiesCapsuleRoutine = NULL;
+static Inertia::fnCalcMassPropertiesPolyhedron extCalcMassPropertiesPolyhedronRoutine = NULL;
+static Inertia::fnCombineMassProperties extCombineMassPropertiesRoutine = NULL;
+
+void Inertia::SetCalcMassPropertiesSphere(Inertia::fnCalcMassPropertiesSphere extRoutine) {
+	extCalcMassPropertiesSphereRoutine = extRoutine;
+}
+
+void Inertia::SetCalcMassPropertiesBox(Inertia::fnCalcMassPropertiesBox extRoutine) {
+	extCalcMassPropertiesBoxRoutine = extRoutine;
+}
+
+void Inertia::SetCalcMassPropertiesCylinder(Inertia::fnCalcMassPropertiesCylinder extRoutine) {
+	extCalcMassPropertiesCylinderRoutine = extRoutine;
+}
+
+void Inertia::SetCalcMassPropertiesCapsule(Inertia::fnCalcMassPropertiesCapsule extRoutine) {
+	extCalcMassPropertiesCapsuleRoutine = extRoutine;
+}
+
+void Inertia::SetCalcMassPropertiesPolyhedron(Inertia::fnCalcMassPropertiesPolyhedron extRoutine) {
+	extCalcMassPropertiesPolyhedronRoutine = extRoutine;
+}
+
+/*! Define external mass property combination routine */
+void Inertia::SetCombineMassProperties(Inertia::fnCombineMassProperties extRoutine) {
+	extCombineMassPropertiesRoutine = extRoutine;
+}
+
+
+
+void Inertia::CalcMassPropertiesSphere(float radius, 
+								   float density, bool solid, 
+								   float& mass, float& volume, Vector3& center, InertiaMatrix &inertia)
 {
+	if (extCalcMassPropertiesSphereRoutine) {
+		extCalcMassPropertiesSphereRoutine(radius, density, solid, mass, volume, center, inertia);
+		return;
+	}
 	float inertiaScalar;
     if (solid) {
         mass = density * (4.0f * float(M_PI) * pow(radius, 3.0f)) / 3.0f;
@@ -21,15 +61,22 @@ void Inertia::GetMassInertiaSphere(float radius, float density, bool solid,
         mass = density * 4.0f * float(M_PI) * pow(radius, 2.0f);
         inertiaScalar = (2.0f * mass * pow(radius, 2.0f)) / 3.0f;
 	}
+	center = Vector3();
 	inertia = InertiaMatrix::IDENTITY;
 	inertia[0][0] = inertia[1][1] = inertia[2][2] = inertiaScalar;
 }
 
 
 
-void Inertia::GetMassInertiaBox(Vector3 size, float density, bool solid,
-								float& mass, InertiaMatrix &inertia)
+void Inertia::CalcMassPropertiesBox(Vector3 size, 
+								float density, bool solid,
+								float& mass, float& volume, Vector3& center, InertiaMatrix &inertia)
 {
+	if (extCalcMassPropertiesBoxRoutine) {
+		extCalcMassPropertiesBoxRoutine(size, density, solid, mass, volume, center, inertia);
+		return;
+	}
+
 	Vector3 tmp;
     if (solid)
 	{
@@ -50,12 +97,20 @@ void Inertia::GetMassInertiaBox(Vector3 size, float density, bool solid,
 	inertia[0][0] = tmp[1] + tmp[2];
 	inertia[1][1] = tmp[2] + tmp[0];
 	inertia[2][2] = tmp[0] + tmp[1];
+	center = Vector3();
 }
 
-void Inertia::GetMassInertiaCylinder(float radius, float height, 
-								float density, bool solid,
-								float& mass, InertiaMatrix &inertia)
+void Inertia::CalcMassPropertiesCylinder(Vector3 startAxis, Vector3 endAxis, float radius,
+									 float density, bool solid,
+									 float& mass, float& volume, Vector3& center, InertiaMatrix &inertia)
 {
+	if (extCalcMassPropertiesCylinderRoutine) {
+		extCalcMassPropertiesCylinderRoutine(startAxis, endAxis, radius, density, solid, mass, volume, center, inertia);
+		return;
+	}
+	float height = (startAxis - endAxis).Magnitude();
+	center = (startAxis + endAxis) / 2.0f;
+
 	inertia = InertiaMatrix::IDENTITY;
 	if (solid)
 	{
@@ -73,10 +128,18 @@ void Inertia::GetMassInertiaCylinder(float radius, float height,
 	}
 }
 
-void Inertia::GetMassInertiaCapsule(float radius, float height, 
+void Inertia::CalcMassPropertiesCapsule(Vector3 startAxis, Vector3 endAxis, float radius, 
 									float density, bool solid,
-									float& mass, InertiaMatrix &inertia)
+									float& mass, float& volume, Vector3& center, InertiaMatrix &inertia)
 {
+	if (extCalcMassPropertiesCapsuleRoutine) {
+		extCalcMassPropertiesCapsuleRoutine(startAxis, endAxis, radius, density, solid, mass, volume, center, inertia);
+		return;
+	}
+
+	float height = (startAxis - endAxis).Magnitude();
+	center = (startAxis + endAxis) / 2.0f;
+
     // cylinder + caps, and caps have volume of a sphere
 	inertia = InertiaMatrix::IDENTITY;
 	if (solid)
@@ -110,11 +173,33 @@ void Inertia::GetMassInertiaCapsule(float radius, float height,
 // The function is an implementation of the Blow and Binstock algorithm,
 // extended for the case where the polygon is a surface (set parameter
 // solid = False).
-void Inertia::GetMassCenterInertiaPolyhedron(const vector<Vector3>& vertices, 
+void Inertia::CalcMassPropertiesPolyhedron(const vector<Vector3>& vertices, 
 											 const vector<Triangle>& triangles, 
 											 float density, bool solid,
-											 float& mass, Vector3& center, InertiaMatrix &inertia)
+											 float& mass, float& volume, Vector3& center, InertiaMatrix &inertia)
 {
+	if (extCalcMassPropertiesPolyhedronRoutine) {
+		extCalcMassPropertiesPolyhedronRoutine(
+			vertices.size(), &vertices[0],
+			triangles.size(), triangles.empty() ? NULL : &triangles[0],
+			density, solid, mass, volume, center, inertia);
+		return;
+	}
+
+	vector<Triangle>::const_iterator triBegin, triEnd;
+	vector<Triangle> tris;
+	if (triangles.size() == 0)
+	{
+		tris = NifQHull::compute_convex_hull(vertices);
+		triBegin = tris.begin();
+		triEnd = tris.end();
+	}
+	else
+	{
+		triBegin = triangles.begin();
+		triEnd = triangles.end();
+	}
+
     // 120 times the covariance matrix of the canonical tetrahedron
     // (0,0,0),(1,0,0),(0,1,0),(0,0,1)
     // integrate(integrate(integrate(z*z, x=0..1-y-z), y=0..1-z), z=0..1) = 1/120
@@ -132,9 +217,9 @@ void Inertia::GetMassCenterInertiaPolyhedron(const vector<Vector3>& vertices,
     // construct a tetrahedron from triangle + (0,0,0)
     // find its matrix, mass, and center (for density = 1, will be corrected at
     // the end of the algorithm)
-	for (vector<Triangle>::const_iterator itr=triangles.begin(), end=triangles.end(); itr != end; ++itr)
+	for (vector<Triangle>::const_iterator itr=triBegin, end=triEnd; itr != end; ++itr)
 	{
-        // get vertices
+        // Calc vertices
         const Vector3& vert0 = vertices[ (*itr)[0] ];
 		const Vector3& vert1 = vertices[ (*itr)[1] ];
 		const Vector3& vert2 = vertices[ (*itr)[2] ];
@@ -193,7 +278,7 @@ void Inertia::GetMassCenterInertiaPolyhedron(const vector<Vector3>& vertices,
         // dimension is probably badly chosen
         //raise ZeroDivisionError("mass is zero (consider calculating inertia with a lower dimension)")
         //printf("WARNING: mass is zero");
-		mass = 0.0f;
+		mass = 0.0f, volume = 0.0f;
 		center = Vector3();
 		inertia = InertiaMatrix::IDENTITY;
 		return;
@@ -235,4 +320,31 @@ void Inertia::GetMassCenterInertiaPolyhedron(const vector<Vector3>& vertices,
 	// correct for given density
     inertia = InertiaMatrix((trace_matrix - total_covariance).GetRotation()) * density;
     mass *= density;
+}
+
+void Inertia::CombineMassProperties( 
+	vector<float> masses, 
+	vector<float> volumes, 
+	vector<Vector3> centers, 
+	vector<InertiaMatrix> inertias, 
+	vector<Matrix44> transforms, 
+	float& mass, float& volume, Vector3& center, InertiaMatrix &inertia )
+{
+	if (extCombineMassPropertiesRoutine) {
+		extCombineMassPropertiesRoutine(
+			masses.size(),
+			&masses[0], &volumes[0], &centers[0], &inertias[0], &transforms[0],
+			mass, volume, center, inertia);
+		return;
+	}
+
+	for (size_t i=0; i < masses.size(); ++i) {
+		mass += masses[i];
+	}
+	// TODO: doubt this inertia calculation is even remotely close
+	for (size_t i=0; i < masses.size(); ++i) {
+		center += centers[i] * (masses[i] / mass);
+		inertia *= inertias[i];
+	}
+
 }

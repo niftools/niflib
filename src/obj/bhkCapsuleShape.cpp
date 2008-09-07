@@ -167,11 +167,9 @@ void bhkCapsuleShape::SetRadius2( float value ) {
 *  \param[out] inertia Mass Inertia Tensor
 *  \return Return mass, center, and inertia tensor.
 */
-void bhkCapsuleShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkCapsuleShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
-	center = Vector3();
-	float height = (secondPoint - firstPoint).Magnitude();
-	Inertia::GetMassInertiaCapsule(radius, height, density, solid, mass, inertia);
+	Inertia::CalcMassPropertiesCapsule(firstPoint, secondPoint, radius, density, solid, mass, volume, center, inertia);
 }
 
 //--END CUSTOM CODE--//

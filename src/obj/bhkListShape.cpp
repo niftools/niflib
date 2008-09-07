@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../../include/Inertia.h"
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -198,29 +199,31 @@ void bhkListShape::SetSubShapes(const vector<Ref<bhkShape > >& shapes) {
 	unknownInts.resize(subShapes.size(), 0);
 }
 
-void bhkListShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkListShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);
 	mass = 0.0f;
+	volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 
 	vector<float> masses;
+	vector<float> volumes;
 	vector<Vector3> centers;
 	vector<InertiaMatrix> inertias;
+	vector<Matrix44> transforms;
 	for (vector<bhkShapeRef>::iterator itr = subShapes.begin(); itr != subShapes.end(); ++itr)
 	{
-		float m; Vector3 c; InertiaMatrix i;
-		(*itr)->CalcMassCenterInertia(density, solid, m, c, i);
+		float m; float v; Vector3 c; InertiaMatrix i;
+		(*itr)->CalcMassProperties(density, solid, m, v, c, i);
 		masses.push_back(m);
+		volumes.push_back(v);
 		centers.push_back(c);
 		inertias.push_back(i);
-		mass += m;
+		transforms.push_back(Matrix44::IDENTITY);
 	}
-
-	// TODO: doubt this inertia calculation is even remotely close
-	for (size_t i=0; i < masses.size(); ++i) {
-		center += centers[i] * (masses[i] / mass);
-		inertia *= inertias[i];
-	}
+	Inertia::CombineMassProperties(
+		masses, volumes, centers, inertias, transforms, 
+		mass, volume, center, inertia
+		);
 }
 //--END CUSTOM CODE--//

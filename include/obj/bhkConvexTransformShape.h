@@ -61,7 +61,7 @@ public:
 	 *  \param[out] inertia Mass Inertia Tensor
 	 *  \return Return mass, center, and inertia tensor.
 	 */
-	NIFLIB_API virtual void CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia);
+	NIFLIB_API virtual void CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia);
 
 	//--END CUSTOM CODE--//
 public:

@@ -122,9 +122,8 @@ void bhkBoxShape::SetDimensions(const Vector3 &value) {
 	minimumSize = min( min(value.x, value.y), value.z );
 }
 
-void bhkBoxShape::CalcMassCenterInertia( float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia )
+void bhkBoxShape::CalcMassProperties( float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia )
 {
-	center = Vector3(0,0,0);
-	Inertia::GetMassInertiaBox( dimensions * 2.0f, density, solid, mass, inertia ); 
+	Inertia::CalcMassPropertiesBox( dimensions, density, solid, mass, volume, center, inertia ); 
 }
 //--END CUSTOM CODE--//

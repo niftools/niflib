@@ -97,11 +97,11 @@ void bhkSphereShape::SetRadius( float value ) {
 	radius = value;
 }
 
-void bhkSphereShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkSphereShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
-	Inertia::GetMassInertiaSphere(radius, density, solid, mass, inertia);
+	Inertia::CalcMassPropertiesSphere(radius, density, solid, mass, volume, center, inertia);
 }
 //--END CUSTOM CODE--//

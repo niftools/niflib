@@ -182,17 +182,17 @@ void bhkPackedNiTriStripsShape::SetSubShapes( vector<OblivionSubShape>& value ) 
 	subShapes = value;
 }
 
-void bhkPackedNiTriStripsShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkPackedNiTriStripsShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 
 	if (data != NULL)
 	{
 		vector<Vector3> verts = data->GetVertices();
 		vector<Triangle> tris = data->GetTriangles();
-		Inertia::GetMassCenterInertiaPolyhedron(verts, tris, density, solid, mass, center, inertia);
+		Inertia::CalcMassPropertiesPolyhedron(verts, tris, density, solid, mass, volume, center, inertia);
 	}
 }
 //--END CUSTOM CODE--//

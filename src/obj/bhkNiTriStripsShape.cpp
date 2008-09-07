@@ -258,10 +258,10 @@ void bhkNiTriStripsShape::SetOblivionFilter( unsigned int index, unsigned char f
 	dataLayers[index].colFilter = filter;
 }
 
-void bhkNiTriStripsShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkNiTriStripsShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 
 	vector<Vector3> verts;
@@ -276,6 +276,6 @@ void bhkNiTriStripsShape::CalcMassCenterInertia(float density, bool solid, float
 		for (size_t i=0; i<nt; ++i)
 			tris.push_back( Triangle(t[i][0] + nt, t[i][1] + nt, t[i][2] + nt) );
 	}
-	Inertia::GetMassCenterInertiaPolyhedron(verts, tris, density, solid, mass, center, inertia);
+	Inertia::CalcMassPropertiesPolyhedron(verts, tris, density, solid, mass, volume, center, inertia);
 }
 //--END CUSTOM CODE--//

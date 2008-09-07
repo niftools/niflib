@@ -297,7 +297,7 @@ public:
 	// Look at all the objects under this rigid body and update the mass
 	//  center of gravity, and inertia tensor accordingly. If the mass parameter
 	//  is given then the density argument is ignored.
-	NIFLIB_API void UpdateMassCenterInertia(float density = 1.0f, bool solid = true, float mass = 0.0f);
+	NIFLIB_API void UpdateMassProperties(float density = 1.0f, bool solid = true, float mass = 0.0f);
 
 	//--END CUSTOM CODE--//
 protected:

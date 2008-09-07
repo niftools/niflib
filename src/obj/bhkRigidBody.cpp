@@ -452,7 +452,7 @@ void bhkRigidBody::ApplyScale(float scale)
     //ApplyScale(scale)
 }
 
-void bhkRigidBody::UpdateMassCenterInertia(float density, bool solid, float mass)
+void bhkRigidBody::UpdateMassProperties(float density, bool solid, float mass)
 {
     // Look at all the objects under this rigid body and update the mass
     //  center of gravity, and inertia tensor accordingly. If the C{mass} parameter
@@ -463,8 +463,9 @@ void bhkRigidBody::UpdateMassCenterInertia(float density, bool solid, float mass
 
 	if (shape != NULL)
 	{
+		float volume;
 		Vector3 com;
-		shape->CalcMassCenterInertia(density, solid, this->mass, com, inertia);
+		shape->CalcMassProperties(density, solid, this->mass, volume, com, inertia);
 		center = com;
 		if (mass != 0.0f)
 		{

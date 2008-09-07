@@ -156,15 +156,15 @@ void bhkTransformShape::SetTransform(const Matrix44 & value ) {
 	transform = value;
 }
 
-void bhkTransformShape::CalcMassCenterInertia(float density, bool solid, float &mass, Vector3 &center, InertiaMatrix& inertia)
+void bhkTransformShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = transform.GetTranslation();
-	mass = 0.0f;
+	mass = 0.0f, volume = 0.0f;
 	inertia = InertiaMatrix::IDENTITY;
 	if (shape != NULL)
 	{
 		Matrix44 transform_transposed = transform.Transpose();
-		shape->CalcMassCenterInertia(density, solid, mass, center, inertia);
+		shape->CalcMassProperties(density, solid, mass, volume, center, inertia);
 		center = transform * center;
 
 		Matrix44 tm(inertia.Submatrix(0, 0));
