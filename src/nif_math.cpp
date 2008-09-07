@@ -684,7 +684,7 @@ InertiaMatrix & InertiaMatrix::operator*=( const InertiaMatrix & rh ) {
 	InertiaMatrix r;
 	InertiaMatrix & lh = *this;
 	float t;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			t = 0.0f;
 			for (int k = 0; k < 4; k++) {
@@ -703,7 +703,7 @@ InertiaMatrix InertiaMatrix::operator*( float rh ) const {
 }
 
 InertiaMatrix & InertiaMatrix::operator*=( float rh ) {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			(*this)[i][j] *= rh;
 		}
@@ -726,7 +726,7 @@ InertiaMatrix InertiaMatrix::operator+( const InertiaMatrix & rh ) const {
 } 
 
 InertiaMatrix & InertiaMatrix::operator+=( const InertiaMatrix & rh ) {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			(*this)[i][j] += rh[i][j];
 		}
@@ -735,12 +735,12 @@ InertiaMatrix & InertiaMatrix::operator+=( const InertiaMatrix & rh ) {
 }
 
 InertiaMatrix & InertiaMatrix::operator=( const InertiaMatrix & rh ) {
-	memcpy(rows, rh.rows, sizeof(Float4) * 4);
+	memcpy(rows, rh.rows, sizeof(Float4) * _countof(rows));
 	return *this;
 }
 
 bool InertiaMatrix::operator==( const InertiaMatrix & rh ) const {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			if ( (*this)[i][j] != rh[i][j] )
 				return false;
@@ -750,7 +750,7 @@ bool InertiaMatrix::operator==( const InertiaMatrix & rh ) const {
 }
 
 bool InertiaMatrix::operator!=( const InertiaMatrix & rh ) const {
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			if ( (*this)[i][j] != rh[i][j] )
 				return true;
@@ -769,7 +769,7 @@ InertiaMatrix InertiaMatrix::Transpose() const {
 Matrix33 InertiaMatrix::Submatrix( int skip_r, int skip_c ) const {
 	Matrix33 sub;
 	int i = 0, j = 0;
-	for (int r = 0; r < 3; r++) {
+	for (int r = 0; r < _countof(rows); r++) {
 		if (r == skip_r)
 			continue;
 		for (int c = 0; c < 4; c++) {
@@ -793,7 +793,7 @@ InertiaMatrix InertiaMatrix::Inverse() const {
 	InertiaMatrix result;
 
 	float det = Determinant();
-	for (int r = 0; r < 3; r++) {
+	for (int r = 0; r < _countof(rows); r++) {
 		for (int c = 0; c < 4; c++) {
 			result[c][r] = Adjoint(r, c) / det;
 		}

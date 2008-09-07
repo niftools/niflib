@@ -16,6 +16,10 @@ namespace Niflib {
 #define PI 3.14159265358979323846f  //Probably more accurate than a float can be, but it will just be rounded off anyway
 #endif
 
+#ifndef _countof
+#define _countof(x) ((sizeof (x))/(sizeof((x)[0])))
+#endif
+
 //Forward declarations
 struct TexCoord;
 struct Triangle;
@@ -1065,7 +1069,7 @@ struct InertiaMatrix {
 	/*! Copy constructor.  Initializes Matrix to another InertiaMatrix.
 	* \param[in] m The matrix to initialize this one to. 
 	*/
-	NIFLIB_API InertiaMatrix( const InertiaMatrix & m ) { memcpy(rows, m.rows, sizeof(Float4) * 4); }
+	NIFLIB_API InertiaMatrix( const InertiaMatrix & m ) { memcpy(rows, m.rows, sizeof(Float4) * _countof(rows)); }
 
 	/*! This constructor can be used to set all values in this matrix during initialization
 	* \param[in] m11 The value to set at row 1, column 1.
