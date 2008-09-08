@@ -687,7 +687,7 @@ InertiaMatrix & InertiaMatrix::operator*=( const InertiaMatrix & rh ) {
 	for (int i = 0; i < _countof(rows); i++) {
 		for (int j = 0; j < 4; j++) {
 			t = 0.0f;
-			for (int k = 0; k < 4; k++) {
+			for (int k = 0; k < _countof(rows); k++) {
 				t += lh[i][k] * rh[k][j];
 			}
 			r[i][j] = t;
