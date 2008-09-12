@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &bhkBvTreeShape::TYPE );
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), unknownFloat(0.0f), moppDataSize((unsigned int)0), scale(0.0f) {
+bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
