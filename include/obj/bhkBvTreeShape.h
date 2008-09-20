@@ -52,6 +52,7 @@ public:
 	 */
 	NIFLIB_API virtual const Type & GetType() const;
 
+	//--BEGIN MISC CUSTOM CODE--//
 
 	/*! Helper routine for calculating mass properties.
 	*  \param[in]  density Uniform density of object
@@ -63,7 +64,6 @@ public:
 	*/
 	NIFLIB_API virtual void CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia);
 
-	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

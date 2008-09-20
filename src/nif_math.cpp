@@ -659,6 +659,10 @@ Matrix33 Quaternion::AsMatrix() {
 	return m;
 }
 
+Quaternion Quaternion::Inverse() const {
+	return Quaternion(w, -x, -y, -z);
+}
+
 
 /*
 * InertiaMatrix Methods

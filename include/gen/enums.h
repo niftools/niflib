@@ -454,7 +454,8 @@ enum PixelLayout {
 	PIX_LAY_TRUE_COLOR_32 = 2, /*!< Texture is in 32-bit true color format. */
 	PIX_LAY_COMPRESSED = 3, /*!< Texture is compressed. */
 	PIX_LAY_BUMPMAP = 4, /*!< Texture is a grayscale bump map. */
-	PIX_LAY_DEFAULT = 5, /*!< Use default setting. */
+	PIX_LAY_PALETTISED_4 = 5, /*!< Texture is in 4-bit paletized format. */
+	PIX_LAY_DEFAULT = 6, /*!< Use default setting. */
 };
 
 ostream & operator<<( ostream & out, PixelLayout const & val );

@@ -850,6 +850,7 @@ ostream & operator<<( ostream & out, PixelLayout const & val ) {
 		case PIX_LAY_TRUE_COLOR_32: return out << "PIX_LAY_TRUE_COLOR_32";
 		case PIX_LAY_COMPRESSED: return out << "PIX_LAY_COMPRESSED";
 		case PIX_LAY_BUMPMAP: return out << "PIX_LAY_BUMPMAP";
+		case PIX_LAY_PALETTISED_4: return out << "PIX_LAY_PALETTISED_4";
 		case PIX_LAY_DEFAULT: return out << "PIX_LAY_DEFAULT";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}

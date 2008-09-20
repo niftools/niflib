@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPSysColliderManager.h"
-#include "../../include/obj/NiPSysPlanarCollider.h"
+#include "../../include/obj/NiPSysCollider.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -89,7 +89,7 @@ void NiPSysColliderManager::FixLinks( const map<unsigned int,NiObjectRef> & obje
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::FixLinks( objects, link_stack, info );
-	collider = FixLink<NiPSysPlanarCollider>( objects, link_stack, info );
+	collider = FixLink<NiPSysCollider>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

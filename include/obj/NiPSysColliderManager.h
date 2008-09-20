@@ -20,7 +20,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiPSysPlanarCollider;
+class NiPSysCollider;
 class NiPSysColliderManager;
 typedef Ref<NiPSysColliderManager> NiPSysColliderManagerRef;
 
@@ -64,7 +64,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Link to a NiPSysPlanarCollider or NiPSysSphericalCollider. */
-	Ref<NiPSysPlanarCollider > collider;
+	Ref<NiPSysCollider > collider;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

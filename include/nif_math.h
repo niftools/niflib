@@ -1042,6 +1042,11 @@ struct Quaternion {
 	 * and the third the roll.  The values are in radians.
 	 */
 	NIFLIB_API Float3 AsEulerYawPitchRoll();
+
+	/*! Calculates the inverse of this quaternion.
+	* \return The inverse of this quaternion.
+	*/
+	NIFLIB_API Quaternion Inverse() const;
 };
 
 

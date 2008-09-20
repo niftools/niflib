@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiSwitchNode::TYPE("NiSwitchNode", &NiNode::TYPE );
 
-NiSwitchNode::NiSwitchNode() {
+NiSwitchNode::NiSwitchNode() : unknownFlags1((unsigned short)0), unknownInt1((int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,6 +42,8 @@ void NiSwitchNode::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	//--END CUSTOM CODE--//
 
 	NiNode::Read( in, link_stack, info );
+	NifStream( unknownFlags1, in, info );
+	NifStream( unknownInt1, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -52,6 +54,8 @@ void NiSwitchNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	//--END CUSTOM CODE--//
 
 	NiNode::Write( out, link_map, info );
+	NifStream( unknownFlags1, out, info );
+	NifStream( unknownInt1, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -64,6 +68,8 @@ std::string NiSwitchNode::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
+	out << "  Unknown Flags 1:  " << unknownFlags1 << endl;
+	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

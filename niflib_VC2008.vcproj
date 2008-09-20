@@ -3335,10 +3335,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\gen\InertiaMatrix.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\gen\KeyGroup.h"
 					>
 				</File>
