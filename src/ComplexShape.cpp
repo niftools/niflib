@@ -712,7 +712,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				if (niTexProp->HasTexture(tex_num)) {
 					shapeTexCoordSets.push_back(tex_num);
 					TexDesc td = niTexProp->GetTexture(tex_num);
-					td.uvSet = shapeTexCoordSets.size() - 1;
+					td.uvSet = int(shapeTexCoordSets.size()) - 1;
 					niTexProp->SetTexture(tex_num, td);
 				}
 			}

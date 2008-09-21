@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <math.h>
 #include "gen/enums.h"
 
 namespace Niflib {

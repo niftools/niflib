@@ -299,7 +299,7 @@ void NiTriStripsData::SetNvTriangles( const vector<Triangle> & in ) {
    SetCacheSize(CACHESIZE_GEFORCE3);
    // don't generate hundreds of strips
    SetStitchStrips(true);
-   GenerateStrips(data, in.size()*3, &groups, &numGroups);
+   GenerateStrips(data, int(in.size()*3), &groups, &numGroups);
 
    delete [] data;
 
@@ -351,14 +351,14 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
    {
       if (groups[i].Type == TRIANGLE_STRIP)
       {			
-         strips.push_back(TriStrip(groups[i].Indices.size()));
+         strips.push_back( TriStrip( (unsigned short)(groups[i].Indices.size()) ) );
          TriStrip &strip = strips.back();
 
          for (j=0; j<groups[i].Indices.size(); j++)
             strip[j] = groups[i].Indices[j];
       } else
       {
-         int size = stris.size();
+         size_t size = stris.size();
          stris.resize(size + groups[i].Indices.size()/3);
          for (j=(size>0)?(size-1):0; j<stris.size(); j++)
          {
@@ -397,7 +397,7 @@ void NiTriStripsData::SetTSTriangles( const vector<Triangle> & in ) {
 
    if (strips.size() > 0)
    {
-      SetStripCount(strips.size());
+      SetStripCount( int(strips.size()) );
 
       int i = 0;
       TriStrips::const_iterator it;

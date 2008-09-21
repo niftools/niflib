@@ -162,7 +162,7 @@ vector<Vector3> hkPackedNiTriStripsData::GetNormals() const {
 }
 
 int hkPackedNiTriStripsData::GetVertexCount() const {
-	return vertices.size();
+	return int(vertices.size());
 }
 
 vector<Vector3> hkPackedNiTriStripsData::GetVertices() const {

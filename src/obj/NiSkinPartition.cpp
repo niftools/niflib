@@ -646,7 +646,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
          boneIndex.push_back(i);
 
          // Adjust upper limit on number of weights per vertex if necessary.
-         int nWeights = vertexWeight.size();
+         int nWeights = int(vertexWeight.size());
          if (nWeights > nWeightsPerVertex)
             nWeightsPerVertex = nWeights;
       }
@@ -661,7 +661,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
       BoneList& boneIndex = boneIndexList[i];
       vertexWeight.reserve(nWeightsPerVertex);
       boneIndex.reserve(nWeightsPerVertex);
-      for (int j = nWeightsPerVertex - vertexWeight.size(); j>0; --j) {
+      for (size_t j = nWeightsPerVertex - vertexWeight.size(); j>0; --j) {
          vertexWeight.push_back(0.0f);
          boneIndex.push_back(0);
       }
@@ -704,7 +704,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape) {
       SetCacheSize(CACHESIZE_GEFORCE3);
       // don't generate hundreds of strips
       SetStitchStrips(true);
-      GenerateStrips(data, triangles.size()*3, &groups, &numGroups);
+      GenerateStrips(data, int(triangles.size()*3), &groups, &numGroups);
 
       delete [] data;
 
@@ -795,9 +795,9 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
 
    // count min and max bones per vertex
    int minBones, maxBones;
-   minBones = maxBones = weights[0].size();
+   minBones = maxBones = int(weights[0].size());
    for(vector< BoneWeightList >::iterator itr = weights.begin(); itr != weights.end(); ++itr ){
-      int n = (*itr).size();
+      int n = int((*itr).size());
       minBones = min(n, minBones);
       maxBones = max(n, maxBones);
    }
@@ -898,9 +898,9 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
 
             // do a vertex match detect
             if ( doMatch ) {
-               for ( size_t a = 0; a < verts.size(); a++ ) {
+               for ( int a = 0; a < int(verts.size()); a++ ) {
                   match.insert(matchmap::value_type(a, a));
-                  for ( size_t b = a + 1; b < verts.size(); b++ ) {
+                  for ( int b = a + 1; b < int(verts.size()); b++ ) {
                      if ( verts[a] == verts[b] && weights[a] == weights[b] ) {
                         match.insert(matchmap::value_type(a, b));
                         match.insert(matchmap::value_type(b, a));
@@ -1038,14 +1038,14 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
          }
       }
       sort( vertices.begin(), vertices.end() );
-      part.numVertices = vertices.size();
+      part.numVertices = int(vertices.size());
       part.hasVertexMap = true;
 
       // map the vertices
 
       for ( int tri = 0; tri < int(triangles.size()); tri++ ) {
          for ( int t = 0; t < 3; t++ ) {
-            triangles[tri][t] = indexOf(vertices.begin(), vertices.end(), triangles[tri][t]);
+            triangles[tri][t] = (int)indexOf(vertices.begin(), vertices.end(), triangles[tri][t]);
          }
       }
 
@@ -1094,7 +1094,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       for (size_t v = 0; v < vertices.size(); ++v) {
          BoneWeightList& bwl = weights[vertices[v]];
          for ( int b = 0; b < maxBones; b++ ) {
-            part.boneIndices[v][b] = (int(bwl.size()) > b) ? indexOf(bones.begin(), bones.end(), bwl[b].first) : 0 ;
+            part.boneIndices[v][b] = (int(bwl.size()) > b) ? (int)indexOf(bones.begin(), bones.end(), bwl[b].first) : 0 ;
             part.vertexWeights[v][b] = (int(bwl.size()) > b ? bwl[b].second : 0.0f);
          }
       }

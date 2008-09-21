@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define NIF_MATH_H
 
 #include <cmath>
+#include <cstring> // memcpy has been moved in GCC 4.3
 #include <iostream>
 #include <stdexcept>
 #include "dll_export.h"

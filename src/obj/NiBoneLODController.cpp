@@ -297,7 +297,7 @@ vector<Ref<NiNode> > NiBoneLODController::GetNodeGroup( int index ) const {
 void NiBoneLODController::AddNodeToGroup( int index, NiNode * node ) {
    while (index >= int(nodeGroups.size()))
       nodeGroups.insert(nodeGroups.end(), NodeGroup() );
-   numNodeGroups2 = nodeGroups.size();
+   numNodeGroups2 = int(nodeGroups.size());
 
    vector<NiNode*>& nodes = nodeGroups[index].nodes;
    vector<NiNode*>::iterator itr = std::find(nodes.begin(), nodes.end(), node);
@@ -319,7 +319,7 @@ void NiBoneLODController::RemoveNodeFromGroup( int index, NiNode * node ) {
 void NiBoneLODController::SetNodeGroup( int index, const vector<Ref<NiNode> >& group ) {
    while (index >= int(nodeGroups.size()))
       nodeGroups.insert(nodeGroups.end(), NodeGroup() );
-   numNodeGroups2 = nodeGroups.size();
+   numNodeGroups2 = int(nodeGroups.size());
    nodeGroups[index].nodes.assign(group.begin(), group.end());
 }
 
@@ -330,12 +330,12 @@ void NiBoneLODController::RemoveNodeGroup( int index ) {
    vector<NodeGroup>::iterator itr = nodeGroups.begin();
    std::advance(itr, index);
    nodeGroups.erase(itr);
-   numNodeGroups2 = nodeGroups.size();
+   numNodeGroups2 = int(nodeGroups.size());
 }
 
 void NiBoneLODController::ClearNodeGroups() {
    nodeGroups.clear();
-   numNodeGroups2 = nodeGroups.size();
+   numNodeGroups2 = int(nodeGroups.size());
 }
 
 

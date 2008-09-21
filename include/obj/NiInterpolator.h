@@ -11,6 +11,9 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NIINTERPOLATOR_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#if (!defined USHRT_MAX)
+#define USHRT_MAX 0xffff
+#endif
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"

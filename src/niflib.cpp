@@ -127,9 +127,10 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 	//--Read Header--//
 	Header header;
+	hdrInfo hinfo(&header);
 
 	// set the header pointer in the stream
-	in >> hdrInfo(&header);
+	in >> hinfo;
 
 	//Create a new NifInfo if one isn't given.
 	bool delete_info = false;
@@ -391,7 +392,8 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	}
 
 	// clear the header pointer in the stream.  Should be in try/catch block
-	in >> hdrInfo(NULL);
+	hdrInfo hinfo2(NULL);
+	in >> hinfo2;
 
 	//Return completed object list
 	return obj_list;

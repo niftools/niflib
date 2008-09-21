@@ -180,8 +180,8 @@ void Inertia::CalcMassPropertiesPolyhedron(const vector<Vector3>& vertices,
 {
 	if (extCalcMassPropertiesPolyhedronRoutine) {
 		extCalcMassPropertiesPolyhedronRoutine(
-			vertices.size(), &vertices[0],
-			triangles.size(), triangles.empty() ? NULL : &triangles[0],
+			int(vertices.size()), &vertices[0],
+			int(triangles.size()), triangles.empty() ? NULL : &triangles[0],
 			density, solid, mass, volume, center, inertia);
 		return;
 	}
@@ -332,7 +332,7 @@ void Inertia::CombineMassProperties(
 {
 	if (extCombineMassPropertiesRoutine) {
 		extCombineMassPropertiesRoutine(
-			masses.size(),
+			int(masses.size()),
 			&masses[0], &volumes[0], &centers[0], &inertias[0], &transforms[0],
 			mass, volume, center, inertia);
 		return;

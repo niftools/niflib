@@ -51,7 +51,7 @@ bool UnpackFlag( storage src, size_t lshift ) {
 	//Generate mask
 	storage mask = 1 << lshift;
 
-	return (( src & mask) << lshift) != 0;
+	return (( src & mask) >> lshift) != 0;
 }
 
 template <class storage>
@@ -297,23 +297,13 @@ public:
 private:
 	NifInfo *info;
 	static const int infoIdx;
-	friend static ostream & operator<<( ostream & out, strInfo const & val );
-	friend static istream & operator>>( istream & out, strInfo & val );
+	friend ostream & operator<<( ostream & out, strInfo const & val );
+	friend istream & operator>>( istream & out, strInfo & val );
 public:
 	static NifInfo * getInfo(ios_base& str) {
 		return (NifInfo *)str.pword(infoIdx);
 	}
 };
-
-static ostream & operator<<( ostream & out, strInfo const & val ) {
-	out.pword(strInfo::infoIdx) = (void*)val.info;
-	return (out);
-}
-
-static istream & operator>>( istream & istr, strInfo & val ) {
-	istr.pword(strInfo::infoIdx) = (void*)val.info;
-	return (istr);
-}
 
 
 // hdrInfo
@@ -325,23 +315,13 @@ public:
 private:
 	Header *info;
 	static const int infoIdx;
-	friend static ostream & operator<<( ostream & out, hdrInfo const & val );
-	friend static istream & operator>>( istream & out, hdrInfo & val );
+	friend ostream & operator<<( ostream & out, hdrInfo const & val );
+	friend istream & operator>>( istream & out, hdrInfo & val );
 public:
 	static Header * getInfo(ios_base& str) {
 		return (Header *)str.pword(infoIdx);
 	}
 };
-
-static ostream & operator<<( ostream & out, hdrInfo const & val ) {
-	out.pword(hdrInfo::infoIdx) = (void*)val.info;
-	return (out);
-}
-
-static istream & operator>>( istream & istr, hdrInfo & val ) {
-	istr.pword(hdrInfo::infoIdx) = (void*)val.info;
-	return (istr);
-}
 
 class NifStreamBuf : public std::streambuf {
 	streamsize size; 

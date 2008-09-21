@@ -11,6 +11,9 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NISKINPARTITION_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+namespace Niflib {
+class NiTriBasedGeom;
+}
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"

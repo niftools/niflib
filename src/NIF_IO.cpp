@@ -3,7 +3,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../include/NIF_IO.h"
 #include "../include/niflib.h"
-#include "../include/gen/header.h"
+#include "../include/gen/Header.h"
 namespace Niflib {
 
 //--Endian Support Functions--//
@@ -854,5 +854,25 @@ void NifStream( InertiaMatrix const & val, ostream& out, const NifInfo & info ) 
 	}
 }
 
+ostream & operator<<( ostream & out, hdrInfo const & val ) {
+	out.pword(hdrInfo::infoIdx) = (void*)val.info;
+	return (out);
+}
+
+istream & operator>>( istream & istr, hdrInfo & val ) {
+	istr.pword(hdrInfo::infoIdx) = (void*)val.info;
+	return (istr);
+}
+
+
+ostream & operator<<( ostream & out, strInfo const & val ) {
+	out.pword(strInfo::infoIdx) = (void*)val.info;
+	return (out);
+}
+
+istream & operator>>( istream & istr, strInfo & val ) {
+	istr.pword(strInfo::infoIdx) = (void*)val.info;
+	return (istr);
+}
 
 }
