@@ -93,6 +93,22 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
+
+	// Synchronize the interpolator and morphweight structures.
+	if (info.version >= 0x14020007)
+	{
+		interpolators.resize(numInterpolators);
+		for (unsigned int i2 = 0; i2 < numInterpolators; i2++) {
+			interpolators[i2] = interpolatorWeights[i2].interpolator;
+		}
+	}
+	else
+	{
+		interpolatorWeights.resize(numInterpolators);
+		for (unsigned int i2 = 0; i2 < numInterpolators; i2++) {
+			interpolatorWeights[i2].interpolator = interpolators[i2];
+		}
+	}
 	//--END CUSTOM CODE--//
 }
 
@@ -286,6 +302,12 @@ vector< Ref<NiInterpolator> > NiGeomMorpherController::GetInterpolators() const 
 void NiGeomMorpherController::SetInterpolators( const vector< Ref<NiInterpolator> > & n ) {
 	numInterpolators = (unsigned int)(n.size());
 	interpolators = n;
+
+	// synchronize interpolator weights.  Weights will sync later
+	interpolatorWeights.resize(numInterpolators);
+	for ( size_t i = 0; i < numInterpolators; ++i ) {
+		interpolatorWeights[i].interpolator = interpolators[i];
+	}
 }
 
 Ref<NiMorphData> NiGeomMorpherController::GetData() const {
