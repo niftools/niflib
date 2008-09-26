@@ -391,6 +391,10 @@ short NiGeometryData::GetUVSetCount() const {
 	return short(uvSets.size());
 }
 
+int NiGeometryData::GetVertexIndexCount() const {
+	return int(vertexIndices.size());
+}
+
 vector<Vector3> NiGeometryData::GetVertices() const {
 	return vertices;
 }
@@ -405,6 +409,10 @@ vector<Color4> NiGeometryData::GetColors() const {
 
 vector<TexCoord> NiGeometryData::GetUVSet( int index ) const {
 	return uvSets[index];
+}
+
+vector<int> NiGeometryData::GetVertexIndices() const {
+	return vertexIndices;
 }
 
 void NiGeometryData::SetUVSetCount(int n) {
@@ -489,6 +497,13 @@ void NiGeometryData::SetUVSet( int index, const vector<TexCoord> & in ) {
 		throw runtime_error("Vector size must equal Vertex Count.");
 	uvSets[index] = in;
 }
+
+void NiGeometryData::SetVertexIndices( const vector<int> & in ) {
+	if (in.size() != vertices.size() && in.size() != 0 )
+		throw runtime_error("Vector size must equal Vertex Count or zero.");
+	vertexIndices = in;
+}
+
 
 Vector3 NiGeometryData::GetCenter() const {
 	return center;

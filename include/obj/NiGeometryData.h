@@ -58,6 +58,10 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+protected:
+	/*! The mesh vertex indices. */
+	vector<int > vertexIndices;
+public:
 
 	//--Counts--//
 
@@ -81,6 +85,13 @@ public:
 	 * \sa IShapeData::GetUVSetCount, ITexturingProperty
 	 */
 	NIFLIB_API void SetUVSetCount(int n);
+
+	/*! 
+	 * Returns the number of vertec indices that make up this mesh.
+	 * \return The number of vertex indices that make up this mesh.
+	 * \sa IShapeData::SetVertexIndexCount
+	 */
+	NIFLIB_API int GetVertexIndexCount() const;
 
 	//--Getters--//
 
@@ -132,6 +143,13 @@ public:
 	 */
 	NIFLIB_API vector<TexCoord> GetUVSet( int index ) const;
 	
+	/*! 
+	 * Used to retrive the vertex indices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexIndexCount function.
+	 * \return A vector cntaining the vertex indices used by this mesh.
+	 * \sa IShapeData::SetVertexIndices, IShapeData::GetVertexIndexCount, IShapeData::SetVertexIndexCount.
+	 */
+	NIFLIB_API vector<int> GetVertexIndices() const;
+
 	//--Setters--//
 
 	/*! 
@@ -162,6 +180,13 @@ public:
 	 * \sa IShapeData::GetUVSet, IShapeData::GetUVSetCount, IShapeData::SetUVSetCount, IShapeData::GetVertexCount, IShapeData::SetVertexCount.
 	 */
 	NIFLIB_API void SetUVSet( int index, const vector<TexCoord> & in );
+
+	/*! 
+	 * Used to set the vertex index data used by this mesh.  Calling this function will clear all other data in this object.
+	 * \param in A vector containing the vertex indices to replace those in the mesh with.  Note that there is no way to set vertices one at a time, they must be sent in one batch.
+	 * \sa IShapeData::GetVertexIndices, IShapeData::GetVertexIndexCount
+	 */
+	NIFLIB_API virtual void SetVertexIndices( const vector<int> & in );
 
 	/*!
 	 * Used to apply a transformation directly to all the vertices and normals in
