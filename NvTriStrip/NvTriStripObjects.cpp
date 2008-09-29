@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <set>
+#include <string.h> // memset
 #include "NvTriStripObjects.h"
 #include "VertexCache.h"
 
