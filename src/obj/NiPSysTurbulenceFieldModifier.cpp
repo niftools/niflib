@@ -8,93 +8,98 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
-#include "../../include/obj/NiSwitchNode.h"
+#include "../../include/obj/NiPSysTurbulenceFieldModifier.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSwitchNode::TYPE("NiSwitchNode", &NiNode::TYPE );
+const Type NiPSysTurbulenceFieldModifier::TYPE("NiPSysTurbulenceFieldModifier", &NiPSysFieldModifier::TYPE );
 
-NiSwitchNode::NiSwitchNode() : unknownFlags1((unsigned short)0), unknownInt1((int)0) {
+NiPSysTurbulenceFieldModifier::NiPSysTurbulenceFieldModifier() : unknownFloat2(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-NiSwitchNode::~NiSwitchNode() {
+NiPSysTurbulenceFieldModifier::~NiPSysTurbulenceFieldModifier() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-const Type & NiSwitchNode::GetType() const {
+const Type & NiPSysTurbulenceFieldModifier::GetType() const {
 	return TYPE;
 }
 
-NiObject * NiSwitchNode::Create() {
-	return new NiSwitchNode;
+NiObject * NiPSysTurbulenceFieldModifier::Create() {
+	return new NiPSysTurbulenceFieldModifier;
 }
 
-void NiSwitchNode::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPSysTurbulenceFieldModifier::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::Read( in, link_stack, info );
-	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownFlags1, in, info );
-	};
-	NifStream( unknownInt1, in, info );
+	NiPSysFieldModifier::Read( in, link_stack, info );
+	NifStream( unknownFloat2, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void NiSwitchNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPSysTurbulenceFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::Write( out, link_map, info );
-	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownFlags1, out, info );
-	};
-	NifStream( unknownInt1, out, info );
+	NiPSysFieldModifier::Write( out, link_map, info );
+	NifStream( unknownFloat2, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::string NiSwitchNode::asString( bool verbose ) const {
+std::string NiPSysTurbulenceFieldModifier::asString( bool verbose ) const {
 	//--BEGIN PRE-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiNode::asString();
-	out << "  Unknown Flags 1:  " << unknownFlags1 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << NiPSysFieldModifier::asString();
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void NiSwitchNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPSysTurbulenceFieldModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::FixLinks( objects, link_stack, info );
+	NiPSysFieldModifier::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::list<NiObjectRef> NiSwitchNode::GetRefs() const {
+std::list<NiObjectRef> NiPSysTurbulenceFieldModifier::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiNode::GetRefs();
+	refs = NiPSysFieldModifier::GetRefs();
 	return refs;
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
 //--END CUSTOM CODE--//

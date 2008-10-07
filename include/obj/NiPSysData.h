@@ -14,6 +14,9 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiRotatingParticlesData.h"
+
+// Include structures
+#include "../gen/ParticleDesc.h"
 namespace Niflib {
 
 class NiPSysData;
@@ -56,23 +59,15 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	vector< array<10,float > > unknownFloats2;
+	vector<ParticleDesc > particleDescriptions;
 	/*! Unknown. */
 	bool hasUnknownFloats3;
-	/*! Unknown */
+	/*! Unknown. */
 	vector<float > unknownFloats3;
 	/*! Unknown. */
-	bool hasUnknownFloats4;
+	unsigned short unknownShort1;
 	/*! Unknown. */
-	vector< array<4,float > > unknownFloats4;
-	/*! Unknown. */
-	vector< array<7,float > > unknownFloats5;
-	/*! Unknown. */
-	bool hasUnknownFloats6;
-	/*! Unknown. */
-	vector<float > unknownFloats6;
-	/*! Unknown. */
-	unsigned int unknownInt1;
+	unsigned short unknownShort2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

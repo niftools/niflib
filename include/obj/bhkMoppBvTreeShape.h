@@ -146,8 +146,10 @@ protected:
 	Ref<bhkShape > shape;
 	/*! The shape's material. */
 	HavokMaterial material;
-	/*! Unknown bytes, probably MOPP Header. */
-	array<8,byte > unknown8Bytes;
+	/*! Unknown */
+	unsigned int unknownInt1;
+	/*! Unknown */
+	unsigned int unknownInt2;
 	/*! Unknown float, might be scale. */
 	float unknownFloat;
 	/*! Number of bytes for MOPP data. */

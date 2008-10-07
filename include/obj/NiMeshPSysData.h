@@ -60,14 +60,14 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Repeat of Vertex Count? */
-	unsigned int numVertices2;
+	/*! Unknown. Possible vertex count but probably not. */
+	unsigned int unknownInt2;
 	/*! Unknown. 0? */
 	byte unknownByte3;
-	/*! Unknown.  1? */
-	unsigned int unknownInt2;
-	/*! Repeat of Vertex Count? */
-	unsigned int numVertices3;
+	/*! Unknown. */
+	mutable unsigned int numUnknownInts1;
+	/*! Unknown integers */
+	vector<unsigned int > unknownInts1;
 	/*! Unknown NiNode. */
 	Ref<NiNode > unknownNode;
 public:

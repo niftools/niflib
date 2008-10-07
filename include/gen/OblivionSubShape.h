@@ -32,8 +32,8 @@ struct OblivionSubShape {
 	 * of this part in a linked body list.
 	 */
 	byte colFilter;
-	/*! Unknown. */
-	unsigned short unknownShort;
+	/*! Vertex Wielding Type? */
+	unsigned short wieldingType_;
 	/*! The number of vertices that form this sub shape. */
 	unsigned int numVertices;
 	/*! The material of the subshape. */

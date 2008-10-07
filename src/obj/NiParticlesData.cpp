@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticlesData::TYPE("NiParticlesData", &NiGeometryData::TYPE );
 
-NiParticlesData::NiParticlesData() : numParticles((unsigned short)0), size(0.0f), numActive((unsigned short)0), unknownShort((unsigned short)0), hasSizes(false), hasUnknownFloats1(false), hasRotations1(false) {
+NiParticlesData::NiParticlesData() : numParticles((unsigned short)0), size(0.0f), numActive((unsigned short)0), unknownShort((unsigned short)0), hasSizes(false), hasUnknownFloats1(false), hasRotations1(false), hasUnknownFloats2(false), hasUnknownVertices1(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -80,6 +80,24 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 	};
+	if ( info.version >= 0x14000004 ) {
+		NifStream( hasUnknownFloats2, in, info );
+	};
+	if ( (hasUnknownFloats2 != 0) ) {
+		unknownFloats2.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < unknownFloats2.size(); i2++) {
+			NifStream( unknownFloats2[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x14000004 ) {
+		NifStream( hasUnknownVertices1, in, info );
+		if ( (hasUnknownVertices1 != 0) ) {
+			unknownVertices1.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < unknownVertices1.size(); i3++) {
+				NifStream( unknownVertices1[i3], in, info );
+			};
+		};
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -122,6 +140,22 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		if ( (hasRotations1 != 0) ) {
 			for (unsigned int i3 = 0; i3 < rotations1.size(); i3++) {
 				NifStream( rotations1[i3], out, info );
+			};
+		};
+	};
+	if ( info.version >= 0x14000004 ) {
+		NifStream( hasUnknownFloats2, out, info );
+	};
+	if ( (hasUnknownFloats2 != 0) ) {
+		for (unsigned int i2 = 0; i2 < unknownFloats2.size(); i2++) {
+			NifStream( unknownFloats2[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x14000004 ) {
+		NifStream( hasUnknownVertices1, out, info );
+		if ( (hasUnknownVertices1 != 0) ) {
+			for (unsigned int i3 = 0; i3 < unknownVertices1.size(); i3++) {
+				NifStream( unknownVertices1[i3], out, info );
 			};
 		};
 	};
@@ -183,6 +217,36 @@ std::string NiParticlesData::asString( bool verbose ) const {
 				break;
 			};
 			out << "      Rotations 1[" << i2 << "]:  " << rotations1[i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Has Unknown Floats 2:  " << hasUnknownFloats2 << endl;
+	if ( (hasUnknownFloats2 != 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < unknownFloats2.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Floats 2[" << i2 << "]:  " << unknownFloats2[i2] << endl;
+			array_output_count++;
+		};
+	};
+	out << "  Has Unknown Vertices 1:  " << hasUnknownVertices1 << endl;
+	if ( (hasUnknownVertices1 != 0) ) {
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < unknownVertices1.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown Vertices 1[" << i2 << "]:  " << unknownVertices1[i2] << endl;
 			array_output_count++;
 		};
 	};

@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-hkTriangle::hkTriangle() : unknownShort((unsigned short)0) {};
+hkTriangle::hkTriangle() : weldingInformation_((unsigned short)0) {};
 
 //Copy Constructor
 hkTriangle::hkTriangle( const hkTriangle & src ) {
@@ -19,7 +19,7 @@ hkTriangle::hkTriangle( const hkTriangle & src ) {
 //Copy Operator
 hkTriangle & hkTriangle::operator=( const hkTriangle & src ) {
 	this->triangle = src.triangle;
-	this->unknownShort = src.unknownShort;
+	this->weldingInformation_ = src.weldingInformation_;
 	this->normal = src.normal;
 	return *this;
 };

@@ -8,93 +8,95 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
-#include "../../include/obj/NiSwitchNode.h"
+#include "../../include/obj/NiLightIntensityController.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type NiSwitchNode::TYPE("NiSwitchNode", &NiNode::TYPE );
+const Type NiLightIntensityController::TYPE("NiLightIntensityController", &NiFloatInterpController::TYPE );
 
-NiSwitchNode::NiSwitchNode() : unknownFlags1((unsigned short)0), unknownInt1((int)0) {
+NiLightIntensityController::NiLightIntensityController() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-NiSwitchNode::~NiSwitchNode() {
+NiLightIntensityController::~NiLightIntensityController() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-const Type & NiSwitchNode::GetType() const {
+const Type & NiLightIntensityController::GetType() const {
 	return TYPE;
 }
 
-NiObject * NiSwitchNode::Create() {
-	return new NiSwitchNode;
+NiObject * NiLightIntensityController::Create() {
+	return new NiLightIntensityController;
 }
 
-void NiSwitchNode::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiLightIntensityController::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::Read( in, link_stack, info );
-	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownFlags1, in, info );
-	};
-	NifStream( unknownInt1, in, info );
+	NiFloatInterpController::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void NiSwitchNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiLightIntensityController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::Write( out, link_map, info );
-	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownFlags1, out, info );
-	};
-	NifStream( unknownInt1, out, info );
+	NiFloatInterpController::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::string NiSwitchNode::asString( bool verbose ) const {
+std::string NiLightIntensityController::asString( bool verbose ) const {
 	//--BEGIN PRE-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiNode::asString();
-	out << "  Unknown Flags 1:  " << unknownFlags1 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << NiFloatInterpController::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-void NiSwitchNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiLightIntensityController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 
-	NiNode::FixLinks( objects, link_stack, info );
+	NiFloatInterpController::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
 	//--END CUSTOM CODE--//
 }
 
-std::list<NiObjectRef> NiSwitchNode::GetRefs() const {
+std::list<NiObjectRef> NiLightIntensityController::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiNode::GetRefs();
+	refs = NiFloatInterpController::GetRefs();
 	return refs;
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
 //--END CUSTOM CODE--//

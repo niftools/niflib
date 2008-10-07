@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiMeshPSysData::TYPE("NiMeshPSysData", &NiPSysData::TYPE );
 
-NiMeshPSysData::NiMeshPSysData() : numVertices2((unsigned int)0), unknownByte3((byte)0), unknownInt2((unsigned int)1), numVertices3((unsigned int)0), unknownNode(NULL) {
+NiMeshPSysData::NiMeshPSysData() : unknownInt2((unsigned int)0), unknownByte3((byte)0), numUnknownInts1((unsigned int)0), unknownNode(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,10 +45,13 @@ void NiMeshPSysData::Read( istream& in, list<unsigned int> & link_stack, const N
 	unsigned int block_num;
 	NiPSysData::Read( in, link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( numVertices2, in, info );
-		NifStream( unknownByte3, in, info );
 		NifStream( unknownInt2, in, info );
-		NifStream( numVertices3, in, info );
+		NifStream( unknownByte3, in, info );
+		NifStream( numUnknownInts1, in, info );
+		unknownInts1.resize(numUnknownInts1);
+		for (unsigned int i2 = 0; i2 < unknownInts1.size(); i2++) {
+			NifStream( unknownInts1[i2], in, info );
+		};
 	};
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
@@ -62,11 +65,14 @@ void NiMeshPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--END CUSTOM CODE--//
 
 	NiPSysData::Write( out, link_map, info );
+	numUnknownInts1 = (unsigned int)(unknownInts1.size());
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( numVertices2, out, info );
-		NifStream( unknownByte3, out, info );
 		NifStream( unknownInt2, out, info );
-		NifStream( numVertices3, out, info );
+		NifStream( unknownByte3, out, info );
+		NifStream( numUnknownInts1, out, info );
+		for (unsigned int i2 = 0; i2 < unknownInts1.size(); i2++) {
+			NifStream( unknownInts1[i2], out, info );
+		};
 	};
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*unknownNode), out, info );
@@ -89,10 +95,22 @@ std::string NiMeshPSysData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiPSysData::asString();
-	out << "  Num Vertices 2:  " << numVertices2 << endl;
-	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
+	numUnknownInts1 = (unsigned int)(unknownInts1.size());
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Num Vertices 3:  " << numVertices3 << endl;
+	out << "  Unknown Byte 3:  " << unknownByte3 << endl;
+	out << "  Num Unknown Ints 1:  " << numUnknownInts1 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < unknownInts1.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Ints 1[" << i1 << "]:  " << unknownInts1[i1] << endl;
+		array_output_count++;
+	};
 	out << "  Unknown Node:  " << unknownNode << endl;
 	return out.str();
 

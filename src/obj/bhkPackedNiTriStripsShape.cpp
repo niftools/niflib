@@ -51,7 +51,7 @@ void bhkPackedNiTriStripsShape::Read( istream& in, list<unsigned int> & link_sta
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		NifStream( subShapes[i1].layer, in, info );
 		NifStream( subShapes[i1].colFilter, in, info );
-		NifStream( subShapes[i1].unknownShort, in, info );
+		NifStream( subShapes[i1].wieldingType_, in, info );
 		NifStream( subShapes[i1].numVertices, in, info );
 		NifStream( subShapes[i1].material, in, info );
 	};
@@ -81,7 +81,7 @@ void bhkPackedNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsig
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		NifStream( subShapes[i1].layer, out, info );
 		NifStream( subShapes[i1].colFilter, out, info );
-		NifStream( subShapes[i1].unknownShort, out, info );
+		NifStream( subShapes[i1].wieldingType_, out, info );
 		NifStream( subShapes[i1].numVertices, out, info );
 		NifStream( subShapes[i1].material, out, info );
 	};
@@ -125,7 +125,7 @@ std::string bhkPackedNiTriStripsShape::asString( bool verbose ) const {
 		};
 		out << "    Layer:  " << subShapes[i1].layer << endl;
 		out << "    Col Filter:  " << subShapes[i1].colFilter << endl;
-		out << "    Unknown Short:  " << subShapes[i1].unknownShort << endl;
+		out << "    Wielding Type?:  " << subShapes[i1].wieldingType_ << endl;
 		out << "    Num Vertices:  " << subShapes[i1].numVertices << endl;
 		out << "    Material:  " << subShapes[i1].material << endl;
 	};

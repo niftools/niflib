@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiLODNode::TYPE("NiLODNode", &NiSwitchNode::TYPE );
 
-NiLODNode::NiLODNode() : numLodLevels((unsigned int)0), unknownShort((unsigned short)0), lodLevelData(NULL) {
+NiLODNode::NiLODNode() : numLodLevels((unsigned int)0), lodLevelData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,9 +45,6 @@ void NiLODNode::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 
 	unsigned int block_num;
 	NiSwitchNode::Read( in, link_stack, info );
-	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		NifStream( unknown4Bytes[i1], in, info );
-	};
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A000100 ) ) {
 		NifStream( lodCenter, in, info );
 	};
@@ -65,7 +62,6 @@ void NiLODNode::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownShort, in, info );
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
@@ -80,9 +76,6 @@ void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 
 	NiSwitchNode::Write( out, link_map, info );
 	numLodLevels = (unsigned int)(lodLevels.size());
-	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		NifStream( unknown4Bytes[i1], out, info );
-	};
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A000100 ) ) {
 		NifStream( lodCenter, out, info );
 	};
@@ -99,7 +92,6 @@ void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		NifStream( unknownShort, out, info );
 		if ( info.version < VER_3_3_0_13 ) {
 			NifStream( (unsigned int)&(*lodLevelData), out, info );
 		} else {
@@ -123,18 +115,6 @@ std::string NiLODNode::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiSwitchNode::asString();
 	numLodLevels = (unsigned int)(lodLevels.size());
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 4; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown 4 Bytes[" << i1 << "]:  " << unknown4Bytes[i1] << endl;
-		array_output_count++;
-	};
 	out << "  LOD Center:  " << lodCenter << endl;
 	out << "  Num LOD Levels:  " << numLodLevels << endl;
 	array_output_count = 0;
@@ -158,7 +138,6 @@ std::string NiLODNode::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  LOD Level Data:  " << lodLevelData << endl;
 	return out.str();
 

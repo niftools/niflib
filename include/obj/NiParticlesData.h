@@ -78,6 +78,14 @@ protected:
 	bool hasRotations1;
 	/*! The individual particle rotations. */
 	vector<Quaternion > rotations1;
+	/*! Unknown in Warhammer. Guess at version. */
+	bool hasUnknownFloats2;
+	/*! Unknown */
+	vector<float > unknownFloats2;
+	/*! Unknown. */
+	bool hasUnknownVertices1;
+	/*! Unknown */
+	vector<Vector3 > unknownVertices1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

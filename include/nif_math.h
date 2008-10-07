@@ -671,8 +671,8 @@ struct Float4 {
 	NIFLIB_API Float4( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
-		data[3] = f3;
-		data[4] = f4;
+		data[2] = f3;
+		data[3] = f4;
 	}
 
 	/*! This constructor can be used to initialize this Float4 with a Vector4
@@ -689,8 +689,8 @@ struct Float4 {
 	NIFLIB_API void Set( float f1, float f2, float f3, float f4 ) {
 		data[0] = f1;
 		data[1] = f2;
-		data[3] = f3;
-		data[4] = f4;
+		data[2] = f3;
+		data[3] = f4;
 	}
 };
 

@@ -79,6 +79,7 @@ OBJ_FILES = \
             src/gen/OblivionSubShape.o \
             src/gen/OldSkinData.o \
             src/gen/Particle.o \
+            src/gen/ParticleDesc.o \
             src/gen/physXMaterialRef.o \
             src/gen/Polygon.o \
             src/gen/QuaternionXYZW.o \
@@ -388,6 +389,17 @@ OBJ_FILES = \
             src/obj/NiWireframeProperty.o \
             src/obj/NiZBufferProperty.o \
             src/obj/RootCollisionNode.o \
+            src/obj/NiLightIntensityController.o \
+            src/obj/NiPortal.o \
+            src/obj/NiPSysAirFieldModifier.o \
+            src/obj/NiPSysDragFieldModifier.o \
+            src/obj/NiPSysFieldMagnitudeCtlr.o \
+            src/obj/NiPSysFieldModifier.o \
+            src/obj/NiPSysGravityFieldModifier.o \
+            src/obj/NiPSysTurbulenceFieldModifier.o \
+            src/obj/NiPSysVortexFieldModifier.o \
+            src/obj/NiRoom.o \
+            src/obj/NiRoomGroup.o \
             src/RefObject.o \
             src/Type.o \
             TriStripper/connectivity_graph.o \

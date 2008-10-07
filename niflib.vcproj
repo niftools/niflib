@@ -1236,6 +1236,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiLightIntensityController.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiLines.cpp"
 					>
 				</File>
@@ -1432,6 +1436,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPortal.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPosData.cpp"
 					>
 				</File>
@@ -1441,6 +1449,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPSysAgeDeathModifier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysAirFieldModifier.cpp"
 					>
 				</File>
 				<File
@@ -1473,6 +1485,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPSysData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysDragFieldModifier.cpp"
 					>
 				</File>
 				<File
@@ -1509,6 +1525,18 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPSysEmitterSpeedCtlr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysFieldMagnitudeCtlr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysFieldModifier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysGravityFieldModifier.cpp"
 					>
 				</File>
 				<File
@@ -1580,11 +1608,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPSysTurbulenceFieldModifier.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPSysUpdateCtlr.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\obj\NiPSysVolumeEmitter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiPSysVortexFieldModifier.cpp"
 					>
 				</File>
 				<File
@@ -1597,6 +1633,14 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\NiRollController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiRoom.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiRoomGroup.cpp"
 					>
 				</File>
 				<File
@@ -1937,6 +1981,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\Particle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\ParticleDesc.cpp"
 					>
 				</File>
 				<File
@@ -2682,6 +2730,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiLightIntensityController.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiLines.h"
 					>
 				</File>
@@ -2878,6 +2930,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPortal.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPosData.h"
 					>
 				</File>
@@ -2887,6 +2943,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysAgeDeathModifier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysAirFieldModifier.h"
 					>
 				</File>
 				<File
@@ -2919,6 +2979,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysDragFieldModifier.h"
 					>
 				</File>
 				<File
@@ -2955,6 +3019,18 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysEmitterSpeedCtlr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysFieldMagnitudeCtlr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysFieldModifier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysGravityFieldModifier.h"
 					>
 				</File>
 				<File
@@ -3026,11 +3102,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\NiPSysTurbulenceFieldModifier.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\NiPSysUpdateCtlr.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysVolumeEmitter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysVortexFieldModifier.h"
 					>
 				</File>
 				<File
@@ -3043,6 +3127,14 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiRollController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiRoom.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiRoomGroup.h"
 					>
 				</File>
 				<File
@@ -3338,10 +3430,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\gen\InertiaMatrix.h"
-					>
-				</File>
-				<File
 					RelativePath=".\include\gen\KeyGroup.h"
 					>
 				</File>
@@ -3391,6 +3479,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\Particle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\ParticleDesc.h"
 					>
 				</File>
 				<File

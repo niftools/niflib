@@ -221,6 +221,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiPSysSpawnModifier.h"
 #include "../../include/obj/NiPSysSphereEmitter.h"
 #include "../../include/obj/NiPSysUpdateCtlr.h"
+#include "../../include/obj/NiPSysFieldModifier.h"
+#include "../../include/obj/NiPSysVortexFieldModifier.h"
+#include "../../include/obj/NiPSysGravityFieldModifier.h"
+#include "../../include/obj/NiPSysDragFieldModifier.h"
+#include "../../include/obj/NiPSysTurbulenceFieldModifier.h"
+#include "../../include/obj/NiPSysFieldMagnitudeCtlr.h"
+#include "../../include/obj/NiPSysAirFieldModifier.h"
+#include "../../include/obj/NiLightIntensityController.h"
 #include "../../include/obj/NiLODData.h"
 #include "../../include/obj/NiRangeLODData.h"
 #include "../../include/obj/NiScreenLODData.h"
@@ -290,6 +298,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiLinesData.h"
 #include "../../include/obj/NiScreenElementsData.h"
 #include "../../include/obj/NiScreenElements.h"
+#include "../../include/obj/NiRoomGroup.h"
+#include "../../include/obj/NiRoom.h"
+#include "../../include/obj/NiPortal.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -509,6 +520,14 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiPSysSpawnModifier", NiPSysSpawnModifier::Create );
 		ObjectRegistry::RegisterObject( "NiPSysSphereEmitter", NiPSysSphereEmitter::Create );
 		ObjectRegistry::RegisterObject( "NiPSysUpdateCtlr", NiPSysUpdateCtlr::Create );
+		ObjectRegistry::RegisterObject( "NiPSysFieldModifier", NiPSysFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysVortexFieldModifier", NiPSysVortexFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysGravityFieldModifier", NiPSysGravityFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysDragFieldModifier", NiPSysDragFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysTurbulenceFieldModifier", NiPSysTurbulenceFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysFieldMagnitudeCtlr", NiPSysFieldMagnitudeCtlr::Create );
+		ObjectRegistry::RegisterObject( "NiPSysAirFieldModifier", NiPSysAirFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiLightIntensityController", NiLightIntensityController::Create );
 		ObjectRegistry::RegisterObject( "NiLODData", NiLODData::Create );
 		ObjectRegistry::RegisterObject( "NiRangeLODData", NiRangeLODData::Create );
 		ObjectRegistry::RegisterObject( "NiScreenLODData", NiScreenLODData::Create );
@@ -578,6 +597,9 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiLinesData", NiLinesData::Create );
 		ObjectRegistry::RegisterObject( "NiScreenElementsData", NiScreenElementsData::Create );
 		ObjectRegistry::RegisterObject( "NiScreenElements", NiScreenElements::Create );
+		ObjectRegistry::RegisterObject( "NiRoomGroup", NiRoomGroup::Create );
+		ObjectRegistry::RegisterObject( "NiRoom", NiRoom::Create );
+		ObjectRegistry::RegisterObject( "NiPortal", NiPortal::Create );
 
 	}
 }

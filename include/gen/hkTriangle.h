@@ -25,8 +25,8 @@ struct hkTriangle {
 	NIFLIB_API hkTriangle & operator=( const hkTriangle & src );
 	/*! The triangle. */
 	Triangle triangle;
-	/*! Another short, doesn't look like a vertex index. */
-	unsigned short unknownShort;
+	/*! Additional welding info computed when subshapes are in use. */
+	unsigned short weldingInformation_;
 	/*! This is the triangle's normal. */
 	Vector3 normal;
 };
