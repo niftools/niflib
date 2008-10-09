@@ -208,8 +208,8 @@ void NiTriBasedGeom::UpdateTangentSpace(int method) {
 			// no duplication, just smoothing
 			for ( int j = 0; j < 3; j++ ) {	
 				int i = tri[j];
-				tangents[i] += sdir;
-				binormals[i] += tdir;
+				tangents[i] += tdir;
+				binormals[i] += sdir;
 			}
 		}
 
