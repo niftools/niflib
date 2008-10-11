@@ -83,7 +83,7 @@ OBJ_FILES = \
             src/gen/physXMaterialRef.o \
             src/gen/Polygon.o \
             src/gen/QuaternionXYZW.o \
-            src/gen/RagDollDescriptor.o \
+            src/gen/RagdollDescriptor.o \
             src/gen/register.o \
             src/gen/ShaderTexDesc.o \
             src/gen/SkinData.o \
