@@ -78,7 +78,7 @@ protected:
 	 * Links to a NiNode that will define where in object space the collider is
 	 * located/oriented.
 	 */
-	Ref<NiNode > colliderObject;
+	NiNode * colliderObject;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

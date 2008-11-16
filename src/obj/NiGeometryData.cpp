@@ -14,13 +14,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiGeometryData.h"
-#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiAdditionalGeometryData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), unknownLink1(NULL) {
+NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -96,11 +96,22 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, in, info );
 	};
-	uvSets.resize((numUvSets & 63));
-	for (unsigned int i1 = 0; i1 < uvSets.size(); i1++) {
-		uvSets[i1].resize(numVertices);
-		for (unsigned int i2 = 0; i2 < uvSets[i1].size(); i2++) {
-			NifStream( uvSets[i1][i2], in, info );
+	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
+		uvSets.resize((numUvSets & 63));
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			uvSets[i2].resize(numVertices);
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], in, info );
+			};
+		};
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
+		uvSets.resize((numUvSets & 1));
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			uvSets[i2].resize(numVertices);
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], in, info );
+			};
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
@@ -169,9 +180,18 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, out, info );
 	};
-	for (unsigned int i1 = 0; i1 < uvSets.size(); i1++) {
-		for (unsigned int i2 = 0; i2 < uvSets[i1].size(); i2++) {
-			NifStream( uvSets[i1][i2], out, info );
+	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], out, info );
+			};
+		};
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
+		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
+			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
+				NifStream( uvSets[i2][i3], out, info );
+			};
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
@@ -179,10 +199,10 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	};
 	if ( info.version >= 0x14000004 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*unknownLink1), out, info );
+			NifStream( (unsigned int)&(*additionalData), out, info );
 		} else {
-			if ( unknownLink1 != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
+			if ( additionalData != NULL ) {
+				NifStream( link_map.find( StaticCast<NiObject>(additionalData) )->second, out, info );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -296,7 +316,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 		};
 	};
 	out << "  Consistency Flags:  " << consistencyFlags << endl;
-	out << "  Unknown Link 1:  " << unknownLink1 << endl;
+	out << "  Additional Data:  " << additionalData << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -309,7 +329,7 @@ void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 
 	NiObject::FixLinks( objects, link_stack, info );
 	if ( info.version >= 0x14000004 ) {
-		unknownLink1 = FixLink<NiObject>( objects, link_stack, info );
+		additionalData = FixLink<NiAdditionalGeometryData>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -319,8 +339,8 @@ void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 std::list<NiObjectRef> NiGeometryData::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
-	if ( unknownLink1 != NULL )
-		refs.push_back(StaticCast<NiObject>(unknownLink1));
+	if ( additionalData != NULL )
+		refs.push_back(StaticCast<NiObject>(additionalData));
 	return refs;
 }
 

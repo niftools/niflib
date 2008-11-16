@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/hkPackedNiTriStripsData.h"
 #include "../../include/gen/hkTriangle.h"
+#include "../../include/gen/OblivionSubShape.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type hkPackedNiTriStripsData::TYPE("hkPackedNiTriStripsData", &bhkShapeCollection::TYPE );
 
-hkPackedNiTriStripsData::hkPackedNiTriStripsData() : numTriangles((unsigned int)0), numVertices((unsigned int)0) {
+hkPackedNiTriStripsData::hkPackedNiTriStripsData() : numTriangles((unsigned int)0), numVertices((unsigned int)0), unknownByte1((byte)0), numSubShapes((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -48,12 +49,28 @@ void hkPackedNiTriStripsData::Read( istream& in, list<unsigned int> & link_stack
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
 		NifStream( triangles[i1].triangle, in, info );
 		NifStream( triangles[i1].weldingInformation_, in, info );
-		NifStream( triangles[i1].normal, in, info );
+		if ( info.version <= 0x14000005 ) {
+			NifStream( triangles[i1].normal, in, info );
+		};
 	};
 	NifStream( numVertices, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, in, info );
+	};
 	vertices.resize(numVertices);
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {
 		NifStream( vertices[i1], in, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( numSubShapes, in, info );
+		subShapes.resize(numSubShapes);
+		for (unsigned int i2 = 0; i2 < subShapes.size(); i2++) {
+			NifStream( subShapes[i2].layer, in, info );
+			NifStream( subShapes[i2].colFilter, in, info );
+			NifStream( subShapes[i2].wieldingType_, in, info );
+			NifStream( subShapes[i2].numVertices, in, info );
+			NifStream( subShapes[i2].material, in, info );
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -65,17 +82,33 @@ void hkPackedNiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigne
 	//--END CUSTOM CODE--//
 
 	bhkShapeCollection::Write( out, link_map, info );
+	numSubShapes = (unsigned short)(subShapes.size());
 	numVertices = (unsigned int)(vertices.size());
 	numTriangles = (unsigned int)(triangles.size());
 	NifStream( numTriangles, out, info );
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
 		NifStream( triangles[i1].triangle, out, info );
 		NifStream( triangles[i1].weldingInformation_, out, info );
-		NifStream( triangles[i1].normal, out, info );
+		if ( info.version <= 0x14000005 ) {
+			NifStream( triangles[i1].normal, out, info );
+		};
 	};
 	NifStream( numVertices, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, out, info );
+	};
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {
 		NifStream( vertices[i1], out, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( numSubShapes, out, info );
+		for (unsigned int i2 = 0; i2 < subShapes.size(); i2++) {
+			NifStream( subShapes[i2].layer, out, info );
+			NifStream( subShapes[i2].colFilter, out, info );
+			NifStream( subShapes[i2].wieldingType_, out, info );
+			NifStream( subShapes[i2].numVertices, out, info );
+			NifStream( subShapes[i2].material, out, info );
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -89,6 +122,7 @@ std::string hkPackedNiTriStripsData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkShapeCollection::asString();
+	numSubShapes = (unsigned short)(subShapes.size());
 	numVertices = (unsigned int)(vertices.size());
 	numTriangles = (unsigned int)(triangles.size());
 	out << "  Num Triangles:  " << numTriangles << endl;
@@ -103,6 +137,7 @@ std::string hkPackedNiTriStripsData::asString( bool verbose ) const {
 		out << "    Normal:  " << triangles[i1].normal << endl;
 	};
 	out << "  Num Vertices:  " << numVertices << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -114,6 +149,19 @@ std::string hkPackedNiTriStripsData::asString( bool verbose ) const {
 		};
 		out << "    Vertices[" << i1 << "]:  " << vertices[i1] << endl;
 		array_output_count++;
+	};
+	out << "  Num Sub Shapes:  " << numSubShapes << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		out << "    Layer:  " << subShapes[i1].layer << endl;
+		out << "    Col Filter:  " << subShapes[i1].colFilter << endl;
+		out << "    Wielding Type?:  " << subShapes[i1].wieldingType_ << endl;
+		out << "    Num Vertices:  " << subShapes[i1].numVertices << endl;
+		out << "    Material:  " << subShapes[i1].material << endl;
 	};
 	return out.str();
 

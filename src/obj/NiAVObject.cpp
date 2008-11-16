@@ -23,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
 
-NiAVObject::NiAVObject() : flags((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), unknown2((byte)0), hasBoundingBox(false), collisionObject(NULL) {
+NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), unknown2((byte)0), hasBoundingBox(false), collisionObject(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	parent = NULL;
@@ -61,6 +61,9 @@ void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	NiObjectNET::Read( in, link_stack, info );
 	if ( info.version >= 0x03000000 ) {
 		NifStream( flags, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 > 26)) ) ) {
+		NifStream( unknownShort1, in, info );
 	};
 	NifStream( translation, in, info );
 	NifStream( rotation, in, info );
@@ -106,6 +109,9 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	numProperties = (unsigned int)(properties.size());
 	if ( info.version >= 0x03000000 ) {
 		NifStream( flags, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 > 26)) ) ) {
+		NifStream( unknownShort1, out, info );
 	};
 	NifStream( translation, out, info );
 	NifStream( rotation, out, info );
@@ -165,6 +171,7 @@ std::string NiAVObject::asString( bool verbose ) const {
 	out << NiObjectNET::asString();
 	numProperties = (unsigned int)(properties.size());
 	out << "  Flags:  " << flags << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;
 	out << "  Scale:  " << scale << endl;

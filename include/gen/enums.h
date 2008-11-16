@@ -262,11 +262,9 @@ ostream & operator<<( ostream & out, OblivionLayer const & val );
 
 /*!
  * A list of possible solver deactivation settings. This value defines how the
- *                 solver deactivates objects. The solver works on a per object
- * basis.
- *                 Note: Solver deactivation does not save CPU, but reduces
- * creeping of
- *                 movable objects in a pile quite dramatically.
+ *         solver deactivates objects. The solver works on a per object basis.
+ *         Note: Solver deactivation does not save CPU, but reduces creeping of
+ *         movable objects in a pile quite dramatically.
  */
 enum SolverDeactivation {
 	SOLVER_DEACTIVATION_INVALID = 0, /*!< Invalid */

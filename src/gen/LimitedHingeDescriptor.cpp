@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-LimitedHingeDescriptor::LimitedHingeDescriptor() : minAngle(0.0f), maxAngle(0.0f), maxFriction(0.0f) {};
+LimitedHingeDescriptor::LimitedHingeDescriptor() : minAngle(0.0f), maxAngle(0.0f), maxFriction(0.0f), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f) {};
 
 //Copy Constructor
 LimitedHingeDescriptor::LimitedHingeDescriptor( const LimitedHingeDescriptor & src ) {
@@ -28,6 +28,9 @@ LimitedHingeDescriptor & LimitedHingeDescriptor::operator=( const LimitedHingeDe
 	this->minAngle = src.minAngle;
 	this->maxAngle = src.maxAngle;
 	this->maxFriction = src.maxFriction;
+	this->unknownFloat1 = src.unknownFloat1;
+	this->unknownFloat2 = src.unknownFloat2;
+	this->unknownFloat3 = src.unknownFloat3;
 	return *this;
 };
 

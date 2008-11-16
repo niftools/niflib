@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-RagdollDescriptor::RagdollDescriptor() : coneMaxAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f) {};
+RagdollDescriptor::RagdollDescriptor() : coneMaxAngle(0.0f), planeMinAngle(0.0f), planeMaxAngle(0.0f), twistMinAngle(0.0f), twistMaxAngle(0.0f), maxFriction(0.0f), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f), unknownFloat7(0.0f) {};
 
 //Copy Constructor
 RagdollDescriptor::RagdollDescriptor( const RagdollDescriptor & src ) {
@@ -30,6 +30,13 @@ RagdollDescriptor & RagdollDescriptor::operator=( const RagdollDescriptor & src 
 	this->twistMinAngle = src.twistMinAngle;
 	this->twistMaxAngle = src.twistMaxAngle;
 	this->maxFriction = src.maxFriction;
+	this->unknownFloat1 = src.unknownFloat1;
+	this->unknownFloat2 = src.unknownFloat2;
+	this->unknownFloat3 = src.unknownFloat3;
+	this->unknownFloat4 = src.unknownFloat4;
+	this->unknownFloat5 = src.unknownFloat5;
+	this->unknownFloat6 = src.unknownFloat6;
+	this->unknownFloat7 = src.unknownFloat7;
 	return *this;
 };
 

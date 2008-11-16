@@ -301,6 +301,52 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiRoomGroup.h"
 #include "../../include/obj/NiRoom.h"
 #include "../../include/obj/NiPortal.h"
+#include "../../include/obj/BSFadeNode.h"
+#include "../../include/obj/BSShaderLightingProperty.h"
+#include "../../include/obj/BSShaderNoLightingProperty.h"
+#include "../../include/obj/BSShaderPPLightingProperty.h"
+#include "../../include/obj/BSShaderTextureSet.h"
+#include "../../include/obj/BSDismemberSkinInstance.h"
+#include "../../include/obj/BSDecalPlacementVectorExtraData.h"
+#include "../../include/obj/WaterShaderProperty.h"
+#include "../../include/obj/SkyShaderProperty.h"
+#include "../../include/obj/BSPSysSimpleColorModifier.h"
+#include "../../include/obj/BSValueNode.h"
+#include "../../include/obj/BSStripParticleSystem.h"
+#include "../../include/obj/BSStripPSysData.h"
+#include "../../include/obj/BSPSysStripUpdateModifier.h"
+#include "../../include/obj/BSMaterialEmittanceMultController.h"
+#include "../../include/obj/BSMasterParticleSystem.h"
+#include "../../include/obj/BSPSysMultiTargetEmitterCtlr.h"
+#include "../../include/obj/BSRefractionStrengthController.h"
+#include "../../include/obj/BSOrderedNode.h"
+#include "../../include/obj/BSBlastNode.h"
+#include "../../include/obj/BSDamageStage.h"
+#include "../../include/obj/BSShaderProperty.h"
+#include "../../include/obj/TileShaderProperty.h"
+#include "../../include/obj/DistantLODShaderProperty.h"
+#include "../../include/obj/BSDistantTreeShaderProperty.h"
+#include "../../include/obj/TallGrassShaderProperty.h"
+#include "../../include/obj/VolumetricFogShaderProperty.h"
+#include "../../include/obj/HairShaderProperty.h"
+#include "../../include/obj/Lighting30ShaderProperty.h"
+#include "../../include/obj/BSRefractionFirePeriodController.h"
+#include "../../include/obj/bhkConvexListShape.h"
+#include "../../include/obj/BSTreadTransfInterpolator.h"
+#include "../../include/obj/BSAnimNotes.h"
+#include "../../include/obj/bhkLiquidAction.h"
+#include "../../include/obj/BSMultiBoundNode.h"
+#include "../../include/obj/BSMultiBound.h"
+#include "../../include/obj/BSMultiBoundSphere.h"
+#include "../../include/obj/BSSegmentedTriShape.h"
+#include "../../include/obj/BSMultiBoundAABB.h"
+#include "../../include/obj/NiAdditionalGeometryData.h"
+#include "../../include/obj/BSWArray.h"
+#include "../../include/obj/bhkAabbPhantom.h"
+#include "../../include/obj/BSFrustumFOVController.h"
+#include "../../include/obj/BSDebrisNode.h"
+#include "../../include/obj/bhkBreakableConstraint.h"
+#include "../../include/obj/bhkOrientHingedBodyAction.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -600,6 +646,52 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiRoomGroup", NiRoomGroup::Create );
 		ObjectRegistry::RegisterObject( "NiRoom", NiRoom::Create );
 		ObjectRegistry::RegisterObject( "NiPortal", NiPortal::Create );
+		ObjectRegistry::RegisterObject( "BSFadeNode", BSFadeNode::Create );
+		ObjectRegistry::RegisterObject( "BSShaderLightingProperty", BSShaderLightingProperty::Create );
+		ObjectRegistry::RegisterObject( "BSShaderNoLightingProperty", BSShaderNoLightingProperty::Create );
+		ObjectRegistry::RegisterObject( "BSShaderPPLightingProperty", BSShaderPPLightingProperty::Create );
+		ObjectRegistry::RegisterObject( "BSShaderTextureSet", BSShaderTextureSet::Create );
+		ObjectRegistry::RegisterObject( "BSDismemberSkinInstance", BSDismemberSkinInstance::Create );
+		ObjectRegistry::RegisterObject( "BSDecalPlacementVectorExtraData", BSDecalPlacementVectorExtraData::Create );
+		ObjectRegistry::RegisterObject( "WaterShaderProperty", WaterShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "SkyShaderProperty", SkyShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSPSysSimpleColorModifier", BSPSysSimpleColorModifier::Create );
+		ObjectRegistry::RegisterObject( "BSValueNode", BSValueNode::Create );
+		ObjectRegistry::RegisterObject( "BSStripParticleSystem", BSStripParticleSystem::Create );
+		ObjectRegistry::RegisterObject( "BSStripPSysData", BSStripPSysData::Create );
+		ObjectRegistry::RegisterObject( "BSPSysStripUpdateModifier", BSPSysStripUpdateModifier::Create );
+		ObjectRegistry::RegisterObject( "BSMaterialEmittanceMultController", BSMaterialEmittanceMultController::Create );
+		ObjectRegistry::RegisterObject( "BSMasterParticleSystem", BSMasterParticleSystem::Create );
+		ObjectRegistry::RegisterObject( "BSPSysMultiTargetEmitterCtlr", BSPSysMultiTargetEmitterCtlr::Create );
+		ObjectRegistry::RegisterObject( "BSRefractionStrengthController", BSRefractionStrengthController::Create );
+		ObjectRegistry::RegisterObject( "BSOrderedNode", BSOrderedNode::Create );
+		ObjectRegistry::RegisterObject( "BSBlastNode", BSBlastNode::Create );
+		ObjectRegistry::RegisterObject( "BSDamageStage", BSDamageStage::Create );
+		ObjectRegistry::RegisterObject( "BSShaderProperty", BSShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "TileShaderProperty", TileShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "DistantLODShaderProperty", DistantLODShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSDistantTreeShaderProperty", BSDistantTreeShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "TallGrassShaderProperty", TallGrassShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "VolumetricFogShaderProperty", VolumetricFogShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "HairShaderProperty", HairShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "Lighting30ShaderProperty", Lighting30ShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSRefractionFirePeriodController", BSRefractionFirePeriodController::Create );
+		ObjectRegistry::RegisterObject( "bhkConvexListShape", bhkConvexListShape::Create );
+		ObjectRegistry::RegisterObject( "BSTreadTransfInterpolator", BSTreadTransfInterpolator::Create );
+		ObjectRegistry::RegisterObject( "BSAnimNotes", BSAnimNotes::Create );
+		ObjectRegistry::RegisterObject( "bhkLiquidAction", bhkLiquidAction::Create );
+		ObjectRegistry::RegisterObject( "BSMultiBoundNode", BSMultiBoundNode::Create );
+		ObjectRegistry::RegisterObject( "BSMultiBound", BSMultiBound::Create );
+		ObjectRegistry::RegisterObject( "BSMultiBoundSphere", BSMultiBoundSphere::Create );
+		ObjectRegistry::RegisterObject( "BSSegmentedTriShape", BSSegmentedTriShape::Create );
+		ObjectRegistry::RegisterObject( "BSMultiBoundAABB", BSMultiBoundAABB::Create );
+		ObjectRegistry::RegisterObject( "NiAdditionalGeometryData", NiAdditionalGeometryData::Create );
+		ObjectRegistry::RegisterObject( "BSWArray", BSWArray::Create );
+		ObjectRegistry::RegisterObject( "bhkAabbPhantom", bhkAabbPhantom::Create );
+		ObjectRegistry::RegisterObject( "BSFrustumFOVController", BSFrustumFOVController::Create );
+		ObjectRegistry::RegisterObject( "BSDebrisNode", BSDebrisNode::Create );
+		ObjectRegistry::RegisterObject( "bhkBreakableConstraint", bhkBreakableConstraint::Create );
+		ObjectRegistry::RegisterObject( "bhkOrientHingedBodyAction", bhkOrientHingedBodyAction::Create );
 
 	}
 }

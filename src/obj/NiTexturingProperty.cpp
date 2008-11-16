@@ -534,7 +534,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 						NifStream( shaderTextures[i2].textureData.centerOffset, in, info );
 					};
 				};
-				NifStream( shaderTextures[i2].unknownInt, in, info );
+				NifStream( shaderTextures[i2].mapIndex, in, info );
 			};
 		};
 	};
@@ -1103,7 +1103,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 						NifStream( shaderTextures[i2].textureData.centerOffset, out, info );
 					};
 				};
-				NifStream( shaderTextures[i2].unknownInt, out, info );
+				NifStream( shaderTextures[i2].mapIndex, out, info );
 			};
 		};
 	};
@@ -1386,7 +1386,7 @@ std::string NiTexturingProperty::asString( bool verbose ) const {
 				out << "        Transform Type?:  " << shaderTextures[i1].textureData.transformType_ << endl;
 				out << "        Center Offset:  " << shaderTextures[i1].textureData.centerOffset << endl;
 			};
-			out << "      Unknown Int:  " << shaderTextures[i1].unknownInt << endl;
+			out << "      Map Index:  " << shaderTextures[i1].mapIndex << endl;
 		};
 	};
 	return out.str();

@@ -77,14 +77,7 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 			NifStream( interpolatorWeights[i2].weight_, in, info );
 		};
 	};
-	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 10 ) ) {
-		NifStream( numUnknownInts, in, info );
-		unknownInts.resize(numUnknownInts);
-		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
-			NifStream( unknownInts[i2], in, info );
-		};
-	};
-	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 11 ) ) {
+	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
 		NifStream( numUnknownInts, in, info );
 		unknownInts.resize(numUnknownInts);
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
@@ -165,13 +158,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 			NifStream( interpolatorWeights[i2].weight_, out, info );
 		};
 	};
-	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 10 ) ) {
-		NifStream( numUnknownInts, out, info );
-		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
-			NifStream( unknownInts[i2], out, info );
-		};
-	};
-	if ( ( info.version >= 0x14000004 ) && ( info.userVersion == 11 ) ) {
+	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
 		NifStream( numUnknownInts, out, info );
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
 			NifStream( unknownInts[i2], out, info );

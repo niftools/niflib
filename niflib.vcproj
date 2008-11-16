@@ -282,8 +282,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release - DLL|Win32"
-			OutputDirectory="$(ProjectDir)obj\$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)obj\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)obj\$(ConfigurationName)\"
+			IntermediateDirectory="$(ProjectDir)obj\$(ConfigurationName)\"
 			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -680,6 +680,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\bhkAabbPhantom.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\bhkBlendCollisionObject.cpp"
 					>
 				</File>
@@ -689,6 +693,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkBoxShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkBreakableConstraint.cpp"
 					>
 				</File>
 				<File
@@ -705,6 +713,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkConstraint.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkConvexListShape.cpp"
 					>
 				</File>
 				<File
@@ -732,6 +744,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\bhkLiquidAction.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\bhkListShape.cpp"
 					>
 				</File>
@@ -753,6 +769,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\bhkNiTriStripsShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\bhkOrientHingedBodyAction.cpp"
 					>
 				</File>
 				<File
@@ -832,7 +852,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\BSAnimNotes.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSBlastNode.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\BSBound.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSDamageStage.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSDebrisNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSDecalPlacementVectorExtraData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSDismemberSkinInstance.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSDistantTreeShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSFadeNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSFrustumFOVController.cpp"
 					>
 				</File>
 				<File
@@ -844,6 +900,34 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\BSMasterParticleSystem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSMaterialEmittanceMultController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSMultiBound.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSMultiBoundAABB.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSMultiBoundNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSMultiBoundSphere.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSOrderedNode.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\BSParentVelocityModifier.cpp"
 					>
 				</File>
@@ -852,11 +936,79 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\BSPSysMultiTargetEmitterCtlr.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSPSysSimpleColorModifier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSPSysStripUpdateModifier.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSRefractionFirePeriodController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSRefractionStrengthController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSSegmentedTriShape.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSShaderLightingProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSShaderNoLightingProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSShaderPPLightingProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSShaderTextureSet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSStripParticleSystem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSStripPSysData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSTreadTransfInterpolator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSValueNode.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\BSWArray.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\BSWindModifier.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\obj\BSXFlags.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\DistantLODShaderProperty.cpp"
 					>
 				</File>
 				<File
@@ -872,7 +1024,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\HairShaderProperty.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\hkPackedNiTriStripsData.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\Lighting30ShaderProperty.cpp"
 					>
 				</File>
 				<File
@@ -897,6 +1057,10 @@
 				</File>
 				<File
 					RelativePath=".\src\obj\Ni3dsPathController.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\NiAdditionalGeometryData.cpp"
 					>
 				</File>
 				<File
@@ -1851,16 +2015,48 @@
 					RelativePath=".\src\obj\RootCollisionNode.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\src\obj\SkyShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\TallGrassShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\TileShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\VolumetricFogShaderProperty.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\obj\WaterShaderProperty.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="gen"
 				>
+				<File
+					RelativePath=".\src\gen\AdditionalDataBlock.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\AdditionalDataInfo.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\src\gen\ArkTexture.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\src\gen\AVObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\BodyPartList.cpp"
 					>
 				</File>
 				<File
@@ -1873,6 +2069,18 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\BoxBV.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\BSSegmentedTriangle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\BSTreadTransfInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\BSTreadTransfSubInfo.cpp"
 					>
 				</File>
 				<File
@@ -1908,6 +2116,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\gen\DecalVectorArray.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\gen\enums.cpp"
 					>
 				</File>
@@ -1929,6 +2141,10 @@
 				</File>
 				<File
 					RelativePath=".\src\gen\Header.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\gen\HingeDescriptor.cpp"
 					>
 				</File>
 				<File
@@ -2174,6 +2390,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\bhkAabbPhantom.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\bhkBlendCollisionObject.h"
 					>
 				</File>
@@ -2183,6 +2403,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkBoxShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkBreakableConstraint.h"
 					>
 				</File>
 				<File
@@ -2199,6 +2423,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkConstraint.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkConvexListShape.h"
 					>
 				</File>
 				<File
@@ -2226,6 +2454,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\bhkLiquidAction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\bhkListShape.h"
 					>
 				</File>
@@ -2247,6 +2479,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\bhkNiTriStripsShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\bhkOrientHingedBodyAction.h"
 					>
 				</File>
 				<File
@@ -2326,7 +2562,43 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\BSAnimNotes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSBlastNode.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\BSBound.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSDamageStage.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSDebrisNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSDecalPlacementVectorExtraData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSDismemberSkinInstance.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSDistantTreeShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSFadeNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSFrustumFOVController.h"
 					>
 				</File>
 				<File
@@ -2338,6 +2610,34 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\BSMasterParticleSystem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMaterialEmittanceMultController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMultiBound.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMultiBoundAABB.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMultiBoundNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMultiBoundSphere.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSOrderedNode.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\BSParentVelocityModifier.h"
 					>
 				</File>
@@ -2346,11 +2646,79 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\BSPSysMultiTargetEmitterCtlr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSPSysSimpleColorModifier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSPSysStripUpdateModifier.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSRefractionFirePeriodController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSRefractionStrengthController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSSegmentedTriShape.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSShaderLightingProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSShaderNoLightingProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSShaderPPLightingProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSShaderTextureSet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSStripParticleSystem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSStripPSysData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSTreadTransfInterpolator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSValueNode.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSWArray.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\BSWindModifier.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\obj\BSXFlags.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\DistantLODShaderProperty.h"
 					>
 				</File>
 				<File
@@ -2366,7 +2734,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\obj\HairShaderProperty.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\obj\hkPackedNiTriStripsData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\Lighting30ShaderProperty.h"
 					>
 				</File>
 				<File
@@ -2391,6 +2767,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\Ni3dsPathController.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiAdditionalGeometryData.h"
 					>
 				</File>
 				<File
@@ -3345,16 +3725,48 @@
 					RelativePath=".\include\obj\RootCollisionNode.h"
 					>
 				</File>
+				<File
+					RelativePath=".\include\obj\SkyShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\TallGrassShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\TileShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\VolumetricFogShaderProperty.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\WaterShaderProperty.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="gen"
 				>
+				<File
+					RelativePath=".\include\gen\AdditionalDataBlock.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\AdditionalDataInfo.h"
+					>
+				</File>
 				<File
 					RelativePath=".\include\gen\ArkTexture.h"
 					>
 				</File>
 				<File
 					RelativePath=".\include\gen\AVObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\BodyPartList.h"
 					>
 				</File>
 				<File
@@ -3367,6 +3779,18 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\BoxBV.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\BSSegmentedTriangle.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\BSTreadTransfInfo.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\BSTreadTransfSubInfo.h"
 					>
 				</File>
 				<File
@@ -3398,6 +3822,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\include\gen\DecalVectorArray.h"
+					>
+				</File>
+				<File
 					RelativePath=".\include\gen\enums.h"
 					>
 				</File>
@@ -3423,6 +3851,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\Header.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\HingeDescriptor.h"
 					>
 				</File>
 				<File

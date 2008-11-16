@@ -7,8 +7,8 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NICONTROLLERSEQUENCE_H_
-#define _NICONTROLLERSEQUENCE_H_
+#ifndef _NiControllerSequence_H_
+#define _NiControllerSequence_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 namespace Niflib {
@@ -94,14 +94,14 @@ public:
 	/*! 
 	 * Attatches a controler to this KF file for a KF file of version 10.2.0.0 or below.  Versions above this use interpolators.
 	 * \param[in] obj A reference to the new NiTimeController to attach.
-	 * \sa NiControllerSequence::ClearChildren, NiControllersequence::AddInterpolator
+	 * \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddInterpolator
 	 */
 	NIFLIB_API void AddController( NiTimeController * obj );
 
 	/*! 
 	* Attaches a controler to this KF file for a KF file of version 10.2.0.0 or below.  Versions above this use interpolators.
 	* \param[in] obj A reference to the new NiTimeController to attach.
-	* \sa NiControllerSequence::ClearChildren, NiControllersequence::AddInterpolator
+	* \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddInterpolator
 	*/
 	NIFLIB_API void AddController( string const & targetName, NiTimeController * obj );
 
@@ -115,16 +115,23 @@ public:
 
 	/*! 
 	 * Removes all controllers and interpolators from this Kf file root object.
-	 * \sa NiControllerSequence::AddController, NiControllersequence::AddInterpolator
+	 * \sa NiControllerSequence::AddController, NiControllerSequence::AddInterpolator
 	 */
 	NIFLIB_API void ClearControllerData();
 
 	/*!
 	 * Retrieves the data for the controllers or interpolators which are attached to this controller sequence.
 	 * \return A vector containing the data for all controllers.
-	 * \sa NiControllerSequence::AddController, NiControllersequence::AddInterpolator, ClearKfChildren
+	 * \sa NiControllerSequence::AddController, NiControllerSequence::AddInterpolator, NiControllerSequence::SetContollerData
 	 */
 	NIFLIB_API vector<ControllerLink> GetControllerData() const;
+
+	/*!
+	* Retrieves the data for the controllers or interpolators which are attached to this controller sequence.
+	* \return A vector containing the data for all controllers.
+	* \sa NiControllerSequence::AddController, NiControllerSequence::AddInterpolator, NiControllerSequence::GetContollerData
+	*/
+	NIFLIB_API void SetControllerData(const vector<ControllerLink>& value);
 
 	/*!
 	 * Retrieves the text keys, which are tags associated with keyframe times that mark the start and stop of each sequence, among other things such as the triggering of sound effects.
@@ -227,6 +234,18 @@ public:
 	 */
 	NIFLIB_API void SetTargetName( const string & value );
 
+	/*!
+	* Gets the string palette for this controller.
+	* \return The string palette.
+	*/
+	NIFLIB_API Ref<NiStringPalette > GetStringPalette() const;
+
+	/*!
+	* Sets the string palette for this controller.
+	* \param[in] value The string palette.
+	*/
+	NIFLIB_API void SetStringPalette( const Ref<NiStringPalette >& value );
+
 protected:
    friend class NiControllerManager;
    NiControllerManager * GetParent() const;
@@ -261,6 +280,10 @@ protected:
 	IndexString targetName;
 	/*! Refers to NiStringPalette. */
 	Ref<NiStringPalette > stringPalette;
+	/*! Unknown */
+	short unknownShort1;
+	/*! Unknown */
+	short unknownShort2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -16,7 +16,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkRigidBody.h"
 #include "../../include/gen/QuaternionXYZW.h"
-#include "../../include/obj/bhkConstraint.h"
+#include "../../include/obj/bhkSerializable.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -263,7 +263,7 @@ void bhkRigidBody::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 
 	bhkEntity::FixLinks( objects, link_stack, info );
 	for (unsigned int i1 = 0; i1 < constraints.size(); i1++) {
-		constraints[i1] = FixLink<bhkConstraint>( objects, link_stack, info );
+		constraints[i1] = FixLink<bhkSerializable>( objects, link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

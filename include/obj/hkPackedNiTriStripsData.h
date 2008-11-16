@@ -17,6 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../gen/hkTriangle.h"
+#include "../gen/OblivionSubShape.h"
 namespace Niflib {
 
 class hkPackedNiTriStripsData;
@@ -116,8 +117,14 @@ protected:
 	vector<hkTriangle > triangles;
 	/*! Number of vertices. */
 	mutable unsigned int numVertices;
+	/*! Unknown. */
+	byte unknownByte1;
 	/*! The vertices? */
 	vector<Vector3 > vertices;
+	/*! Number of subparts. */
+	mutable unsigned short numSubShapes;
+	/*! The subparts. */
+	vector<OblivionSubShape > subShapes;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

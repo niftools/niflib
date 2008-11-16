@@ -27,7 +27,8 @@ DEBUGGING	=
 # Example: -march=k8 would generate enhancements for the k8 family (opterons and some athlons).or -march=pentium4 for a pentium4
 # For more info read this: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/i386-and-x86_002d64-Options.html#i386-and-x86_002d64-Options
 #
-CFLAGS 		= -O2 -Wall -fPIC $(DEBUGGING) -fpermissive -Iinclude -D BUILDING_NIFLIB_DLL
+#CFLAGS      = -fPIC 
+CFLAGS 		= -O2 -Wall $(DEBUGGING) -fpermissive -Iinclude -D BUILDING_NIFLIB_DLL
 CXXFLAGS	= $(CFLAGS)
 #IT should find the libs used, but if it doesn't specify here. Ex: -lm for libm.so.<whatever>
 LIBS		=
@@ -48,11 +49,28 @@ OBJ_FILES = \
             NvTriStrip/NvTriStripObjects.o \
             NvTriStrip/VertexCache.o \
             src/ComplexShape.o \
+            src/Inertia.o \
+            src/kfm.o \
+            src/MatTexCollection.o \
+            src/niflib.o \
+            src/nifqhull.o \
+            src/NIF_IO.o \
+            src/nif_math.o \
+            src/ObjectRegistry.o \
+            src/pch.o \
+            src/RefObject.o \
+            src/Type.o \
+            src/gen/AdditionalDataBlock.o \
+            src/gen/AdditionalDataInfo.o \
             src/gen/ArkTexture.o \
             src/gen/AVObject.o \
+            src/gen/BodyPartList.o \
             src/gen/BoundingBox.o \
             src/gen/BoundingVolume.o \
             src/gen/BoxBV.o \
+            src/gen/BSSegmentedTriangle.o \
+            src/gen/BSTreadTransfInfo.o \
+            src/gen/BSTreadTransfSubInfo.o \
             src/gen/ByteArray.o \
             src/gen/ByteColor3.o \
             src/gen/ByteColor4.o \
@@ -60,12 +78,14 @@ OBJ_FILES = \
             src/gen/CapsuleBV.o \
             src/gen/ChannelData.o \
             src/gen/ControllerLink.o \
+            src/gen/DecalVectorArray.o \
             src/gen/enums.o \
             src/gen/ExportInfo.o \
             src/gen/Footer.o \
             src/gen/FurniturePosition.o \
             src/gen/HalfSpaceBV.o \
             src/gen/Header.o \
+            src/gen/HingeDescriptor.o \
             src/gen/hkTriangle.o \
             src/gen/LimitedHingeDescriptor.o \
             src/gen/LODRange.o \
@@ -97,35 +117,32 @@ OBJ_FILES = \
             src/gen/TexDesc.o \
             src/gen/TexSource.o \
             src/gen/UnionBV.o \
-            src/Inertia.o \
-            src/kfm.o \
-            src/MatTexCollection.o \
-            src/niflib.o \
-            src/nifqhull.o \
-            src/NIF_IO.o \
-            src/nif_math.o \
-            src/ObjectRegistry.o \
             src/obj/ATextureRenderData.o \
             src/obj/AvoidNode.o \
+            src/obj/bhkAabbPhantom.o \
             src/obj/bhkBlendCollisionObject.o \
             src/obj/bhkBlendController.o \
             src/obj/bhkBoxShape.o \
+            src/obj/bhkBreakableConstraint.o \
             src/obj/bhkBvTreeShape.o \
             src/obj/bhkCapsuleShape.o \
             src/obj/bhkCollisionObject.o \
             src/obj/bhkConstraint.o \
+            src/obj/bhkConvexListShape.o \
             src/obj/bhkConvexShape.o \
             src/obj/bhkConvexTransformShape.o \
             src/obj/bhkConvexVerticesShape.o \
             src/obj/bhkEntity.o \
             src/obj/bhkHingeConstraint.o \
             src/obj/bhkLimitedHingeConstraint.o \
+            src/obj/bhkLiquidAction.o \
             src/obj/bhkListShape.o \
             src/obj/bhkMalleableConstraint.o \
             src/obj/bhkMoppBvTreeShape.o \
             src/obj/bhkMultiSphereShape.o \
             src/obj/bhkNiCollisionObject.o \
             src/obj/bhkNiTriStripsShape.o \
+            src/obj/bhkOrientHingedBodyAction.o \
             src/obj/bhkPackedNiTriStripsShape.o \
             src/obj/bhkPCollisionObject.o \
             src/obj/bhkPhantom.o \
@@ -145,23 +162,59 @@ OBJ_FILES = \
             src/obj/bhkStiffSpringConstraint.o \
             src/obj/bhkTransformShape.o \
             src/obj/bhkWorldObject.o \
+            src/obj/BSAnimNotes.o \
+            src/obj/BSBlastNode.o \
             src/obj/BSBound.o \
+            src/obj/BSDamageStage.o \
+            src/obj/BSDebrisNode.o \
+            src/obj/BSDecalPlacementVectorExtraData.o \
+            src/obj/BSDismemberSkinInstance.o \
+            src/obj/BSDistantTreeShaderProperty.o \
+            src/obj/BSFadeNode.o \
+            src/obj/BSFrustumFOVController.o \
             src/obj/BSFurnitureMarker.o \
             src/obj/BSKeyframeController.o \
+            src/obj/BSMasterParticleSystem.o \
+            src/obj/BSMaterialEmittanceMultController.o \
+            src/obj/BSMultiBound.o \
+            src/obj/BSMultiBoundAABB.o \
+            src/obj/BSMultiBoundNode.o \
+            src/obj/BSMultiBoundSphere.o \
+            src/obj/BSOrderedNode.o \
             src/obj/BSParentVelocityModifier.o \
             src/obj/BSPSysArrayEmitter.o \
+            src/obj/BSPSysMultiTargetEmitterCtlr.o \
+            src/obj/BSPSysSimpleColorModifier.o \
+            src/obj/BSPSysStripUpdateModifier.o \
+            src/obj/BSRefractionFirePeriodController.o \
+            src/obj/BSRefractionStrengthController.o \
+            src/obj/BSSegmentedTriShape.o \
+            src/obj/BSShaderLightingProperty.o \
+            src/obj/BSShaderNoLightingProperty.o \
+            src/obj/BSShaderPPLightingProperty.o \
+            src/obj/BSShaderProperty.o \
+            src/obj/BSShaderTextureSet.o \
+            src/obj/BSStripParticleSystem.o \
+            src/obj/BSStripPSysData.o \
+            src/obj/BSTreadTransfInterpolator.o \
+            src/obj/BSValueNode.o \
+            src/obj/BSWArray.o \
             src/obj/BSWindModifier.o \
             src/obj/BSXFlags.o \
+            src/obj/DistantLODShaderProperty.o \
             src/obj/FxButton.o \
             src/obj/FxRadioButton.o \
             src/obj/FxWidget.o \
+            src/obj/HairShaderProperty.o \
             src/obj/hkPackedNiTriStripsData.o \
+            src/obj/Lighting30ShaderProperty.o \
             src/obj/Ni3dsAlphaAnimator.o \
             src/obj/Ni3dsAnimationNode.o \
             src/obj/Ni3dsColorAnimator.o \
             src/obj/Ni3dsMorphShape.o \
             src/obj/Ni3dsParticleSystem.o \
             src/obj/Ni3dsPathController.o \
+            src/obj/NiAdditionalGeometryData.o \
             src/obj/NiAlphaController.o \
             src/obj/NiAlphaProperty.o \
             src/obj/NiAmbientLight.o \
@@ -246,6 +299,7 @@ OBJ_FILES = \
             src/obj/NiLight.o \
             src/obj/NiLightColorController.o \
             src/obj/NiLightDimmerController.o \
+            src/obj/NiLightIntensityController.o \
             src/obj/NiLines.o \
             src/obj/NiLinesData.o \
             src/obj/NiLODData.o \
@@ -295,9 +349,11 @@ OBJ_FILES = \
             src/obj/NiPoint3InterpController.o \
             src/obj/NiPoint3Interpolator.o \
             src/obj/NiPointLight.o \
+            src/obj/NiPortal.o \
             src/obj/NiPosData.o \
             src/obj/NiProperty.o \
             src/obj/NiPSysAgeDeathModifier.o \
+            src/obj/NiPSysAirFieldModifier.o \
             src/obj/NiPSysBombModifier.o \
             src/obj/NiPSysBoundUpdateModifier.o \
             src/obj/NiPSysBoxEmitter.o \
@@ -306,6 +362,7 @@ OBJ_FILES = \
             src/obj/NiPSysColorModifier.o \
             src/obj/NiPSysCylinderEmitter.o \
             src/obj/NiPSysData.o \
+            src/obj/NiPSysDragFieldModifier.o \
             src/obj/NiPSysDragModifier.o \
             src/obj/NiPSysEmitter.o \
             src/obj/NiPSysEmitterCtlr.o \
@@ -315,6 +372,9 @@ OBJ_FILES = \
             src/obj/NiPSysEmitterInitialRadiusCtlr.o \
             src/obj/NiPSysEmitterLifeSpanCtlr.o \
             src/obj/NiPSysEmitterSpeedCtlr.o \
+            src/obj/NiPSysFieldMagnitudeCtlr.o \
+            src/obj/NiPSysFieldModifier.o \
+            src/obj/NiPSysGravityFieldModifier.o \
             src/obj/NiPSysGravityModifier.o \
             src/obj/NiPSysGravityStrengthCtlr.o \
             src/obj/NiPSysGrowFadeModifier.o \
@@ -332,11 +392,15 @@ OBJ_FILES = \
             src/obj/NiPSysSpawnModifier.o \
             src/obj/NiPSysSphereEmitter.o \
             src/obj/NiPSysSphericalCollider.o \
+            src/obj/NiPSysTurbulenceFieldModifier.o \
             src/obj/NiPSysUpdateCtlr.o \
             src/obj/NiPSysVolumeEmitter.o \
+            src/obj/NiPSysVortexFieldModifier.o \
             src/obj/NiRangeLODData.o \
             src/obj/NiRawImageData.o \
             src/obj/NiRollController.o \
+            src/obj/NiRoom.o \
+            src/obj/NiRoomGroup.o \
             src/obj/NiRotatingParticles.o \
             src/obj/NiRotatingParticlesData.o \
             src/obj/NiScreenElements.o \
@@ -389,19 +453,11 @@ OBJ_FILES = \
             src/obj/NiWireframeProperty.o \
             src/obj/NiZBufferProperty.o \
             src/obj/RootCollisionNode.o \
-            src/obj/NiLightIntensityController.o \
-            src/obj/NiPortal.o \
-            src/obj/NiPSysAirFieldModifier.o \
-            src/obj/NiPSysDragFieldModifier.o \
-            src/obj/NiPSysFieldMagnitudeCtlr.o \
-            src/obj/NiPSysFieldModifier.o \
-            src/obj/NiPSysGravityFieldModifier.o \
-            src/obj/NiPSysTurbulenceFieldModifier.o \
-            src/obj/NiPSysVortexFieldModifier.o \
-            src/obj/NiRoom.o \
-            src/obj/NiRoomGroup.o \
-            src/RefObject.o \
-            src/Type.o \
+            src/obj/SkyShaderProperty.o \
+            src/obj/TallGrassShaderProperty.o \
+            src/obj/TileShaderProperty.o \
+            src/obj/VolumetricFogShaderProperty.o \
+            src/obj/WaterShaderProperty.o \
             TriStripper/connectivity_graph.o \
             TriStripper/policy.o \
             TriStripper/tri_stripper.o \

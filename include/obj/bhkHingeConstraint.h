@@ -14,6 +14,9 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "bhkConstraint.h"
+
+// Include structures
+#include "../gen/HingeDescriptor.h"
 namespace Niflib {
 
 class bhkHingeConstraint;
@@ -55,16 +58,12 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Pivot A. */
-	Vector4 pivotA;
-	/*! Unknown. */
-	Vector4 perp2AxleInA1;
-	/*! Unknown. */
-	Vector4 perp2AxleInA2;
-	/*! Pivot B. */
-	Vector4 pivotB;
-	/*! Unknown. */
-	Vector4 axleB;
+	/*! Hinge constraing. */
+	HingeDescriptor hinge;
+	/*! Unknown */
+	float unknownFloat1;
+	/*! Unknown */
+	byte unknownByte1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

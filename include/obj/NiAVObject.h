@@ -269,6 +269,8 @@ protected:
 protected:
 	/*! Some flags; commonly 0x000C or 0x000A. */
 	unsigned short flags;
+	/*! Unknown Flag */
+	unsigned short unknownShort1;
 	/*! The translation vector. */
 	Vector3 translation;
 	/*! The rotation part of the transformation matrix. */

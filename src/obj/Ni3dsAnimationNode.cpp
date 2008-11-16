@@ -70,13 +70,11 @@ void Ni3dsAnimationNode::Read( istream& in, list<unsigned int> & link_stack, con
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 }
 
 void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
@@ -109,13 +107,11 @@ void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 }
 
 std::string Ni3dsAnimationNode::asString( bool verbose ) const {
 	//--BEGIN PRE-STRING CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 
 	stringstream out;
@@ -170,13 +166,11 @@ std::string Ni3dsAnimationNode::asString( bool verbose ) const {
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 }
 
 void Ni3dsAnimationNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
@@ -185,7 +179,6 @@ void Ni3dsAnimationNode::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
-
 	//--END CUSTOM CODE--//
 }
 
@@ -198,5 +191,4 @@ std::list<NiObjectRef> Ni3dsAnimationNode::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
-
 //--END CUSTOM CODE--//

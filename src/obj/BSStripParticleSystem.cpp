@@ -1,0 +1,102 @@
+/* Copyright (c) 2006, NIF File Format Library and Tools
+All rights reserved.  Please see niflib.h for license. */
+
+//-----------------------------------NOTICE----------------------------------//
+// Some of this file is automatically filled in by a Python script.  Only    //
+// add custom code in the designated areas or it will be overwritten during  //
+// the next update.                                                          //
+//-----------------------------------NOTICE----------------------------------//
+
+//--BEGIN FILE HEAD CUSTOM CODE--//
+
+//--END CUSTOM CODE--//
+
+#include "../../include/FixLink.h"
+#include "../../include/ObjectRegistry.h"
+#include "../../include/NIF_IO.h"
+#include "../../include/obj/BSStripParticleSystem.h"
+using namespace Niflib;
+
+//Definition of TYPE constant
+const Type BSStripParticleSystem::TYPE("BSStripParticleSystem", &NiParticleSystem::TYPE );
+
+BSStripParticleSystem::BSStripParticleSystem() {
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+BSStripParticleSystem::~BSStripParticleSystem() {
+	//--BEGIN DESTRUCTOR CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+const Type & BSStripParticleSystem::GetType() const {
+	return TYPE;
+}
+
+NiObject * BSStripParticleSystem::Create() {
+	return new BSStripParticleSystem;
+}
+
+void BSStripParticleSystem::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-READ CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+	NiParticleSystem::Read( in, link_stack, info );
+
+	//--BEGIN POST-READ CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+void BSStripParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+	//--BEGIN PRE-WRITE CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+	NiParticleSystem::Write( out, link_map, info );
+
+	//--BEGIN POST-WRITE CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+std::string BSStripParticleSystem::asString( bool verbose ) const {
+	//--BEGIN PRE-STRING CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+	stringstream out;
+	unsigned int array_output_count = 0;
+	out << NiParticleSystem::asString();
+	return out.str();
+
+	//--BEGIN POST-STRING CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+void BSStripParticleSystem::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+
+	NiParticleSystem::FixLinks( objects, link_stack, info );
+
+	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
+
+	//--END CUSTOM CODE--//
+}
+
+std::list<NiObjectRef> BSStripParticleSystem::GetRefs() const {
+	list<Ref<NiObject> > refs;
+	refs = NiParticleSystem::GetRefs();
+	return refs;
+}
+
+//--BEGIN MISC CUSTOM CODE--//
+
+//--END CUSTOM CODE--//

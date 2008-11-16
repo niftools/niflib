@@ -67,6 +67,8 @@ protected:
 	float fadeTime;
 	/*! Unknown. */
 	unsigned short fadeGeneration;
+	/*! Unknown */
+	float baseScale;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

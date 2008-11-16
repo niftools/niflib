@@ -63,7 +63,7 @@ void NiBoneLODController::Read( istream& in, list<unsigned int> & link_stack, co
 			link_stack.push_back( block_num );
 		};
 	};
-	if ( ( info.version >= 0x04020200 ) && ( info.userVersion == 0 ) ) {
+	if ( info.version >= 0x04020200 ) {
 		NifStream( numShapeGroups, in, info );
 		shapeGroups1.resize(numShapeGroups);
 		for (unsigned int i2 = 0; i2 < shapeGroups1.size(); i2++) {
@@ -114,7 +114,7 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 			}
 		};
 	};
-	if ( ( info.version >= 0x04020200 ) && ( info.userVersion == 0 ) ) {
+	if ( info.version >= 0x04020200 ) {
 		NifStream( numShapeGroups, out, info );
 		for (unsigned int i2 = 0; i2 < shapeGroups1.size(); i2++) {
 			shapeGroups1[i2].numLinkPairs = (unsigned int)(shapeGroups1[i2].linkPairs.size());
@@ -240,7 +240,7 @@ void NiBoneLODController::FixLinks( const map<unsigned int,NiObjectRef> & object
 			nodeGroups[i1].nodes[i2] = FixLink<NiNode>( objects, link_stack, info );
 		};
 	};
-	if ( ( info.version >= 0x04020200 ) && ( info.userVersion == 0 ) ) {
+	if ( info.version >= 0x04020200 ) {
 		for (unsigned int i2 = 0; i2 < shapeGroups1.size(); i2++) {
 			for (unsigned int i3 = 0; i3 < shapeGroups1[i2].linkPairs.size(); i3++) {
 				shapeGroups1[i2].linkPairs[i3].shape = FixLink<NiTriBasedGeom>( objects, link_stack, info );

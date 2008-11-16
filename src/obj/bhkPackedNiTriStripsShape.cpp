@@ -46,14 +46,16 @@ void bhkPackedNiTriStripsShape::Read( istream& in, list<unsigned int> & link_sta
 
 	unsigned int block_num;
 	bhkShapeCollection::Read( in, link_stack, info );
-	NifStream( numSubShapes, in, info );
-	subShapes.resize(numSubShapes);
-	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
-		NifStream( subShapes[i1].layer, in, info );
-		NifStream( subShapes[i1].colFilter, in, info );
-		NifStream( subShapes[i1].wieldingType_, in, info );
-		NifStream( subShapes[i1].numVertices, in, info );
-		NifStream( subShapes[i1].material, in, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( numSubShapes, in, info );
+		subShapes.resize(numSubShapes);
+		for (unsigned int i2 = 0; i2 < subShapes.size(); i2++) {
+			NifStream( subShapes[i2].layer, in, info );
+			NifStream( subShapes[i2].colFilter, in, info );
+			NifStream( subShapes[i2].wieldingType_, in, info );
+			NifStream( subShapes[i2].numVertices, in, info );
+			NifStream( subShapes[i2].material, in, info );
+		};
 	};
 	NifStream( unknownInt1, in, info );
 	NifStream( unknownInt2, in, info );
@@ -77,13 +79,15 @@ void bhkPackedNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsig
 
 	bhkShapeCollection::Write( out, link_map, info );
 	numSubShapes = (unsigned short)(subShapes.size());
-	NifStream( numSubShapes, out, info );
-	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
-		NifStream( subShapes[i1].layer, out, info );
-		NifStream( subShapes[i1].colFilter, out, info );
-		NifStream( subShapes[i1].wieldingType_, out, info );
-		NifStream( subShapes[i1].numVertices, out, info );
-		NifStream( subShapes[i1].material, out, info );
+	if ( info.version <= 0x14000005 ) {
+		NifStream( numSubShapes, out, info );
+		for (unsigned int i2 = 0; i2 < subShapes.size(); i2++) {
+			NifStream( subShapes[i2].layer, out, info );
+			NifStream( subShapes[i2].colFilter, out, info );
+			NifStream( subShapes[i2].wieldingType_, out, info );
+			NifStream( subShapes[i2].numVertices, out, info );
+			NifStream( subShapes[i2].material, out, info );
+		};
 	};
 	NifStream( unknownInt1, out, info );
 	NifStream( unknownInt2, out, info );

@@ -26,7 +26,7 @@ struct AVObject {
 	/*! Copy Operator */
 	NIFLIB_API AVObject & operator=( const AVObject & src );
 	/*! Object name. */
-	IndexString name;
+	string name;
 	/*! Object reference. */
 	NiAVObject * avObject;
 };

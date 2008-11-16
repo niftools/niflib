@@ -21,7 +21,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class bhkConstraint;
+class bhkSerializable;
 class bhkRigidBody;
 typedef Ref<bhkRigidBody> bhkRigidBodyRef;
 
@@ -401,7 +401,7 @@ protected:
 	/*! The number of constraints this object is bound to. */
 	mutable unsigned int numConstraints;
 	/*! Unknown. */
-	vector<Ref<bhkConstraint > > constraints;
+	vector<Ref<bhkSerializable > > constraints;
 	/*! 0 = do not respond to wind, 1 = respond to wind (?) */
 	unsigned int unknownInt9;
 public:

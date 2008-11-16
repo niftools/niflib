@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkPrismaticConstraint::TYPE("bhkPrismaticConstraint", &bhkConstraint::TYPE );
 
-bhkPrismaticConstraint::bhkPrismaticConstraint() : minDistance(0.0f), maxDistance(0.0f), friction(0.0f) {
+bhkPrismaticConstraint::bhkPrismaticConstraint() : minDistance(0.0f), maxDistance(0.0f), friction(0.0f), unknownByte1((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -52,6 +52,9 @@ void bhkPrismaticConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	NifStream( minDistance, in, info );
 	NifStream( maxDistance, in, info );
 	NifStream( friction, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -72,6 +75,9 @@ void bhkPrismaticConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 	NifStream( minDistance, out, info );
 	NifStream( maxDistance, out, info );
 	NifStream( friction, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -103,6 +109,7 @@ std::string bhkPrismaticConstraint::asString( bool verbose ) const {
 	out << "  Min Distance:  " << minDistance << endl;
 	out << "  Max Distance:  " << maxDistance << endl;
 	out << "  Friction:  " << friction << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -12,6 +12,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 #include "../gen/SkinWeight.h"
+#include "../obj/NiGeometryData.h"
 //--END CUSTOM CODE--//
 
 #include "NiAVObject.h"
@@ -21,7 +22,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiGeometryData;
+class NiObject;
 class NiSkinInstance;
 class NiGeometry;
 typedef Ref<NiGeometry> NiGeometryRef;
@@ -148,7 +149,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Data index (NiTriShapeData/NiTriStripData). */
-	Ref<NiGeometryData > data;
+	Ref<NiObject > data;
 	/*! Skin instance index. */
 	Ref<NiSkinInstance > skinInstance;
 	/*! Num Materials */

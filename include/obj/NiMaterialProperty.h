@@ -157,6 +157,8 @@ protected:
 	 * in this material's parent NiTriShape object, when alpha is not 1.
 	 */
 	float alpha;
+	/*! Unknown */
+	float emitmulti;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

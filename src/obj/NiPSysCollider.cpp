@@ -152,8 +152,6 @@ std::list<NiObjectRef> NiPSysCollider::GetRefs() const {
 		refs.push_back(StaticCast<NiObject>(spawnModifier));
 	if ( nextCollider != NULL )
 		refs.push_back(StaticCast<NiObject>(nextCollider));
-	if ( colliderObject != NULL )
-		refs.push_back(StaticCast<NiObject>(colliderObject));
 	return refs;
 }
 

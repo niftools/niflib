@@ -60,6 +60,20 @@ struct RagdollDescriptor {
 	float twistMaxAngle;
 	/*! Maximum friction, typically 0 or 10. */
 	float maxFriction;
+	/*! Unknown */
+	float unknownFloat1;
+	/*! Unknown */
+	float unknownFloat2;
+	/*! Unknown */
+	float unknownFloat3;
+	/*! Unknown */
+	float unknownFloat4;
+	/*! Unknown */
+	float unknownFloat5;
+	/*! Unknown */
+	float unknownFloat6;
+	/*! Unknown */
+	float unknownFloat7;
 };
 
 }

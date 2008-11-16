@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysGrowFadeModifier::TYPE("NiPSysGrowFadeModifier", &NiPSysModifier::TYPE );
 
-NiPSysGrowFadeModifier::NiPSysGrowFadeModifier() : growTime(0.0f), growGeneration((unsigned short)0), fadeTime(0.0f), fadeGeneration((unsigned short)0) {
+NiPSysGrowFadeModifier::NiPSysGrowFadeModifier() : growTime(0.0f), growGeneration((unsigned short)0), fadeTime(0.0f), fadeGeneration((unsigned short)0), baseScale(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,6 +46,9 @@ void NiPSysGrowFadeModifier::Read( istream& in, list<unsigned int> & link_stack,
 	NifStream( growGeneration, in, info );
 	NifStream( fadeTime, in, info );
 	NifStream( fadeGeneration, in, info );
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+		NifStream( baseScale, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -60,6 +63,9 @@ void NiPSysGrowFadeModifier::Write( ostream& out, const map<NiObjectRef,unsigned
 	NifStream( growGeneration, out, info );
 	NifStream( fadeTime, out, info );
 	NifStream( fadeGeneration, out, info );
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+		NifStream( baseScale, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -76,6 +82,7 @@ std::string NiPSysGrowFadeModifier::asString( bool verbose ) const {
 	out << "  Grow Generation:  " << growGeneration << endl;
 	out << "  Fade Time:  " << fadeTime << endl;
 	out << "  Fade Generation:  " << fadeGeneration << endl;
+	out << "  Base Scale:  " << baseScale << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -17,6 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../Ref.h"
+#include "../gen/HingeDescriptor.h"
 #include "../gen/RagdollDescriptor.h"
 #include "../gen/LimitedHingeDescriptor.h"
 namespace Niflib {
@@ -73,11 +74,15 @@ protected:
 	/*! Unknown. 1? */
 	unsigned int unknownInt3;
 	/*! Unknown. */
+	HingeDescriptor hinge;
+	/*! Unknown. */
 	RagdollDescriptor ragdoll;
 	/*! Unknown. */
 	LimitedHingeDescriptor limitedHinge;
 	/*! Unknown. */
 	float tau;
+	/*! Unknown */
+	byte unknownByte1;
 	/*! Unknown. */
 	float damping;
 public:

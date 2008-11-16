@@ -60,6 +60,24 @@ public:
 protected:
 	/*! Describes a limited hinge constraint */
 	LimitedHingeDescriptor limitedHinge;
+	/*! Unknown */
+	float unknownFloat1;
+	/*! Unknown */
+	byte isDeathPose;
+	/*! Unknown */
+	int unknownInt1;
+	/*! Unknown */
+	int unknownInt2;
+	/*! Unknown */
+	int unknownInt3;
+	/*! Unknown */
+	int unknownInt4;
+	/*! Unknown */
+	int unknownInt5;
+	/*! Unknown */
+	int unknownInt6;
+	/*! Unknown */
+	byte unknownByte1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

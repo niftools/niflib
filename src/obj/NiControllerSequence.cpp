@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NiSequence::TYPE );
 
-NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL) {
+NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), stopTime(0.0f), unknownFloat2(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL), unknownShort1((short)0), unknownShort2((short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -78,6 +78,12 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 >= 24)) ) ) {
+		NifStream( unknownShort1, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
+		NifStream( unknownShort2, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -139,6 +145,12 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 			}
 		}
 	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 >= 24)) ) ) {
+		NifStream( unknownShort1, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
+		NifStream( unknownShort2, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -163,6 +175,8 @@ std::string NiControllerSequence::asString( bool verbose ) const {
 	out << "  Manager:  " << manager << endl;
 	out << "  Target Name:  " << targetName << endl;
 	out << "  String Palette:  " << stringPalette << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -300,7 +314,7 @@ void NiControllerSequence::AddInterpolator( NiSingleInterpController * obj, byte
 
 void NiControllerSequence::ClearControllerData() {
 	
-	throw runtime_error("The AddInterpolator function cannot be implemented until prolems in the XML are solved.");
+	throw runtime_error("The AddInterpolator function cannot be implemented until problems in the XML are solved.");
 
 	//Clear list
 	controlledBlocks.clear();
@@ -309,6 +323,13 @@ void NiControllerSequence::ClearControllerData() {
 vector<ControllerLink> NiControllerSequence::GetControllerData() const {
 	return controlledBlocks;
 }
+
+void NiControllerSequence::SetControllerData(const vector<ControllerLink>& value) {
+	if ( value.size() != controlledBlocks.size() ) 
+		throw runtime_error("The SetControllerData requires the ControllerLink array size to match the existing array.");
+	controlledBlocks = value;
+}
+
 
 Ref<NiTextKeyExtraData> NiControllerSequence::GetTextKeyExtraData() const {
 	return textKeys;
@@ -392,4 +413,12 @@ void NiControllerSequence::SetWeight( const float value ) {
 	weight = value;
 }
 
+
+Ref<NiStringPalette > Niflib::NiControllerSequence::GetStringPalette() const {
+	return stringPalette;
+}
+
+void Niflib::NiControllerSequence::SetStringPalette( const Ref<NiStringPalette >& value ) {
+	stringPalette = value;
+}
 //--END CUSTOM CODE--//

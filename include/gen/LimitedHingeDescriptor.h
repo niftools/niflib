@@ -47,6 +47,12 @@ struct LimitedHingeDescriptor {
 	float maxAngle;
 	/*! Maximum friction, typically either 0 or 10. */
 	float maxFriction;
+	/*! Unknown */
+	float unknownFloat1;
+	/*! Unknown */
+	float unknownFloat2;
+	/*! Unknown */
+	float unknownFloat3;
 };
 
 }

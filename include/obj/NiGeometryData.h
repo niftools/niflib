@@ -20,7 +20,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiObject;
+class NiAdditionalGeometryData;
 class NiGeometryData;
 typedef Ref<NiGeometryData> NiGeometryDataRef;
 
@@ -274,7 +274,7 @@ protected:
 	/*! Consistency Flags */
 	ConsistencyType consistencyFlags;
 	/*! Unknown. */
-	Ref<NiObject > unknownLink1;
+	Ref<NiAdditionalGeometryData > additionalData;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

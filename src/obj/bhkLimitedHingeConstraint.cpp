@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkLimitedHingeConstraint::TYPE("bhkLimitedHingeConstraint", &bhkConstraint::TYPE );
 
-bhkLimitedHingeConstraint::bhkLimitedHingeConstraint() {
+bhkLimitedHingeConstraint::bhkLimitedHingeConstraint() : unknownFloat1(0.0f), isDeathPose((byte)0), unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownInt4((int)0), unknownInt5((int)0), unknownInt6((int)0), unknownByte1((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -53,6 +53,24 @@ void bhkLimitedHingeConstraint::Read( istream& in, list<unsigned int> & link_sta
 	NifStream( limitedHinge.minAngle, in, info );
 	NifStream( limitedHinge.maxAngle, in, info );
 	NifStream( limitedHinge.maxFriction, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( limitedHinge.unknownFloat1, in, info );
+		NifStream( limitedHinge.unknownFloat2, in, info );
+		NifStream( limitedHinge.unknownFloat3, in, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownFloat1, in, info );
+		NifStream( isDeathPose, in, info );
+		if ( isDeathPose ) {
+			NifStream( unknownInt1, in, info );
+			NifStream( unknownInt2, in, info );
+			NifStream( unknownInt3, in, info );
+			NifStream( unknownInt4, in, info );
+			NifStream( unknownInt5, in, info );
+			NifStream( unknownInt6, in, info );
+			NifStream( unknownByte1, in, info );
+		};
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -73,6 +91,24 @@ void bhkLimitedHingeConstraint::Write( ostream& out, const map<NiObjectRef,unsig
 	NifStream( limitedHinge.minAngle, out, info );
 	NifStream( limitedHinge.maxAngle, out, info );
 	NifStream( limitedHinge.maxFriction, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( limitedHinge.unknownFloat1, out, info );
+		NifStream( limitedHinge.unknownFloat2, out, info );
+		NifStream( limitedHinge.unknownFloat3, out, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownFloat1, out, info );
+		NifStream( isDeathPose, out, info );
+		if ( isDeathPose ) {
+			NifStream( unknownInt1, out, info );
+			NifStream( unknownInt2, out, info );
+			NifStream( unknownInt3, out, info );
+			NifStream( unknownInt4, out, info );
+			NifStream( unknownInt5, out, info );
+			NifStream( unknownInt6, out, info );
+			NifStream( unknownByte1, out, info );
+		};
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -95,6 +131,20 @@ std::string bhkLimitedHingeConstraint::asString( bool verbose ) const {
 	out << "  Min Angle:  " << limitedHinge.minAngle << endl;
 	out << "  Max Angle:  " << limitedHinge.maxAngle << endl;
 	out << "  Max Friction:  " << limitedHinge.maxFriction << endl;
+	out << "  Unknown Float 1:  " << limitedHinge.unknownFloat1 << endl;
+	out << "  Unknown Float 2:  " << limitedHinge.unknownFloat2 << endl;
+	out << "  Unknown Float 3:  " << limitedHinge.unknownFloat3 << endl;
+	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Is Death Pose:  " << isDeathPose << endl;
+	if ( isDeathPose ) {
+		out << "    Unknown Int 1:  " << unknownInt1 << endl;
+		out << "    Unknown Int 2:  " << unknownInt2 << endl;
+		out << "    Unknown Int 3:  " << unknownInt3 << endl;
+		out << "    Unknown Int 4:  " << unknownInt4 << endl;
+		out << "    Unknown Int 5:  " << unknownInt5 << endl;
+		out << "    Unknown Int 6:  " << unknownInt6 << endl;
+		out << "    Unknown Byte 1:  " << unknownByte1 << endl;
+	};
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

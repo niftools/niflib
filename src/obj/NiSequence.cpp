@@ -77,10 +77,7 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			link_stack.push_back( block_num );
 			NifStream( controlledBlocks[i1].unknownShort0, in, info );
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 10 ) ) {
-			NifStream( controlledBlocks[i1].priority, in, info );
-		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
 			NifStream( controlledBlocks[i1].priority, in, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
@@ -206,10 +203,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			}
 			NifStream( controlledBlocks[i1].unknownShort0, out, info );
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 10 ) ) {
-			NifStream( controlledBlocks[i1].priority, out, info );
-		};
-		if ( ( info.version >= 0x0A01006A ) && ( info.userVersion == 11 ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
 			NifStream( controlledBlocks[i1].priority, out, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {

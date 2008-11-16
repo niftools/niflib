@@ -14,12 +14,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkHingeConstraint.h"
+#include "../../include/gen/HingeDescriptor.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type bhkHingeConstraint::TYPE("bhkHingeConstraint", &bhkConstraint::TYPE );
 
-bhkHingeConstraint::bhkHingeConstraint() {
+bhkHingeConstraint::bhkHingeConstraint() : unknownFloat1(0.0f), unknownByte1((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,11 +43,30 @@ void bhkHingeConstraint::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 
 	bhkConstraint::Read( in, link_stack, info );
-	NifStream( pivotA, in, info );
-	NifStream( perp2AxleInA1, in, info );
-	NifStream( perp2AxleInA2, in, info );
-	NifStream( pivotB, in, info );
-	NifStream( axleB, in, info );
+	NifStream( hinge.pivotA, in, info );
+	NifStream( hinge.perp2AxleInA1, in, info );
+	NifStream( hinge.perp2AxleInA2, in, info );
+	NifStream( hinge.pivotB, in, info );
+	NifStream( hinge.axleB, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( hinge.unknownFloat1, in, info );
+		NifStream( hinge.unknownInt2, in, info );
+		NifStream( hinge.unknownInt3, in, info );
+		NifStream( hinge.unknownInt4, in, info );
+		NifStream( hinge.unknownInt5, in, info );
+		NifStream( hinge.unknownInt6, in, info );
+		NifStream( hinge.unknownInt7, in, info );
+		NifStream( hinge.unknownInt8, in, info );
+		NifStream( hinge.unknownInt9, in, info );
+		NifStream( hinge.unknownInt10, in, info );
+		NifStream( hinge.unknownByte1, in, info );
+		NifStream( hinge.unknownByte2, in, info );
+		NifStream( hinge.unknownByte3, in, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownFloat1, in, info );
+		NifStream( unknownByte1, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -57,11 +77,30 @@ void bhkHingeConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	bhkConstraint::Write( out, link_map, info );
-	NifStream( pivotA, out, info );
-	NifStream( perp2AxleInA1, out, info );
-	NifStream( perp2AxleInA2, out, info );
-	NifStream( pivotB, out, info );
-	NifStream( axleB, out, info );
+	NifStream( hinge.pivotA, out, info );
+	NifStream( hinge.perp2AxleInA1, out, info );
+	NifStream( hinge.perp2AxleInA2, out, info );
+	NifStream( hinge.pivotB, out, info );
+	NifStream( hinge.axleB, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( hinge.unknownFloat1, out, info );
+		NifStream( hinge.unknownInt2, out, info );
+		NifStream( hinge.unknownInt3, out, info );
+		NifStream( hinge.unknownInt4, out, info );
+		NifStream( hinge.unknownInt5, out, info );
+		NifStream( hinge.unknownInt6, out, info );
+		NifStream( hinge.unknownInt7, out, info );
+		NifStream( hinge.unknownInt8, out, info );
+		NifStream( hinge.unknownInt9, out, info );
+		NifStream( hinge.unknownInt10, out, info );
+		NifStream( hinge.unknownByte1, out, info );
+		NifStream( hinge.unknownByte2, out, info );
+		NifStream( hinge.unknownByte3, out, info );
+	};
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownFloat1, out, info );
+		NifStream( unknownByte1, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -74,11 +113,26 @@ std::string bhkHingeConstraint::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
-	out << "  Pivot A:  " << pivotA << endl;
-	out << "  Perp2 Axle In A1:  " << perp2AxleInA1 << endl;
-	out << "  Perp2 Axle In A2:  " << perp2AxleInA2 << endl;
-	out << "  Pivot B:  " << pivotB << endl;
-	out << "  Axle B:  " << axleB << endl;
+	out << "  Pivot A:  " << hinge.pivotA << endl;
+	out << "  Perp2 Axle In A1:  " << hinge.perp2AxleInA1 << endl;
+	out << "  Perp2 Axle In A2:  " << hinge.perp2AxleInA2 << endl;
+	out << "  Pivot B:  " << hinge.pivotB << endl;
+	out << "  Axle B:  " << hinge.axleB << endl;
+	out << "  Unknown Float 1:  " << hinge.unknownFloat1 << endl;
+	out << "  Unknown Int 2:  " << hinge.unknownInt2 << endl;
+	out << "  Unknown Int 3:  " << hinge.unknownInt3 << endl;
+	out << "  Unknown Int 4:  " << hinge.unknownInt4 << endl;
+	out << "  Unknown Int 5:  " << hinge.unknownInt5 << endl;
+	out << "  Unknown Int 6:  " << hinge.unknownInt6 << endl;
+	out << "  Unknown Int 7:  " << hinge.unknownInt7 << endl;
+	out << "  Unknown Int 8:  " << hinge.unknownInt8 << endl;
+	out << "  Unknown Int 9:  " << hinge.unknownInt9 << endl;
+	out << "  Unknown Int 10:  " << hinge.unknownInt10 << endl;
+	out << "  Unknown Byte 1:  " << hinge.unknownByte1 << endl;
+	out << "  Unknown Byte 2:  " << hinge.unknownByte2 << endl;
+	out << "  Unknown Byte 3:  " << hinge.unknownByte3 << endl;
+	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

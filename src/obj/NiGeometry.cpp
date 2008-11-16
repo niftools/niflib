@@ -17,7 +17,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiGeometry.h"
-#include "../../include/obj/NiGeometryData.h"
+#include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiSkinInstance.h"
 using namespace Niflib;
 
@@ -200,7 +200,7 @@ void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 	//--END CUSTOM CODE--//
 
 	NiAVObject::FixLinks( objects, link_stack, info );
-	data = FixLink<NiGeometryData>( objects, link_stack, info );
+	data = FixLink<NiObject>( objects, link_stack, info );
 	if ( info.version >= 0x0303000D ) {
 		skinInstance = FixLink<NiSkinInstance>( objects, link_stack, info );
 	};
@@ -222,7 +222,7 @@ std::list<NiObjectRef> NiGeometry::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiGeometryData> NiGeometry::GetData() const {
-	return data;
+	return DynamicCast<NiGeometryData>(data);
 }
 
 void NiGeometry::SetData( NiGeometryData * n ) {

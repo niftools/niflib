@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysGravityModifier::TYPE("NiPSysGravityModifier", &NiPSysModifier::TYPE );
 
-NiPSysGravityModifier::NiPSysGravityModifier() : gravityObject(NULL), decay(0.0f), strength(0.0f), turbulence(0.0f), turbulenceScale(1.0f) {
+NiPSysGravityModifier::NiPSysGravityModifier() : gravityObject(NULL), decay(0.0f), strength(0.0f), turbulence(0.0f), turbulenceScale(1.0f), unknownByte((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -52,6 +52,9 @@ void NiPSysGravityModifier::Read( istream& in, list<unsigned int> & link_stack, 
 	NifStream( forceType, in, info );
 	NifStream( turbulence, in, info );
 	NifStream( turbulenceScale, in, info );
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+		NifStream( unknownByte, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -77,6 +80,9 @@ void NiPSysGravityModifier::Write( ostream& out, const map<NiObjectRef,unsigned 
 	NifStream( forceType, out, info );
 	NifStream( turbulence, out, info );
 	NifStream( turbulenceScale, out, info );
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+		NifStream( unknownByte, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -96,6 +102,7 @@ std::string NiPSysGravityModifier::asString( bool verbose ) const {
 	out << "  Force Type:  " << forceType << endl;
 	out << "  Turbulence:  " << turbulence << endl;
 	out << "  Turbulence Scale:  " << turbulenceScale << endl;
+	out << "  Unknown Byte:  " << unknownByte << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -14,6 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkMalleableConstraint.h"
+#include "../../include/gen/HingeDescriptor.h"
 #include "../../include/gen/RagdollDescriptor.h"
 #include "../../include/gen/LimitedHingeDescriptor.h"
 #include "../../include/obj/NiObject.h"
@@ -22,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMalleableConstraint::TYPE("bhkMalleableConstraint", &bhkConstraint::TYPE );
 
-bhkMalleableConstraint::bhkMalleableConstraint() : type((unsigned int)0), unknownInt2((unsigned int)0), unknownLink1(NULL), unknownLink2(NULL), unknownInt3((unsigned int)0), tau(0.0f), damping(0.0f) {
+bhkMalleableConstraint::bhkMalleableConstraint() : type((unsigned int)0), unknownInt2((unsigned int)0), unknownLink1(NULL), unknownLink2(NULL), unknownInt3((unsigned int)0), tau(0.0f), unknownByte1((byte)0), damping(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -53,6 +54,28 @@ void bhkMalleableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 	NifStream( unknownInt3, in, info );
+	if ( (type == 1) ) {
+		NifStream( hinge.pivotA, in, info );
+		NifStream( hinge.perp2AxleInA1, in, info );
+		NifStream( hinge.perp2AxleInA2, in, info );
+		NifStream( hinge.pivotB, in, info );
+		NifStream( hinge.axleB, in, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( hinge.unknownFloat1, in, info );
+			NifStream( hinge.unknownInt2, in, info );
+			NifStream( hinge.unknownInt3, in, info );
+			NifStream( hinge.unknownInt4, in, info );
+			NifStream( hinge.unknownInt5, in, info );
+			NifStream( hinge.unknownInt6, in, info );
+			NifStream( hinge.unknownInt7, in, info );
+			NifStream( hinge.unknownInt8, in, info );
+			NifStream( hinge.unknownInt9, in, info );
+			NifStream( hinge.unknownInt10, in, info );
+			NifStream( hinge.unknownByte1, in, info );
+			NifStream( hinge.unknownByte2, in, info );
+			NifStream( hinge.unknownByte3, in, info );
+		};
+	};
 	if ( (type == 7) ) {
 		NifStream( ragdoll.pivotA, in, info );
 		NifStream( ragdoll.planeA, in, info );
@@ -66,6 +89,15 @@ void bhkMalleableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 		NifStream( ragdoll.twistMinAngle, in, info );
 		NifStream( ragdoll.twistMaxAngle, in, info );
 		NifStream( ragdoll.maxFriction, in, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( ragdoll.unknownFloat1, in, info );
+			NifStream( ragdoll.unknownFloat2, in, info );
+			NifStream( ragdoll.unknownFloat3, in, info );
+			NifStream( ragdoll.unknownFloat4, in, info );
+			NifStream( ragdoll.unknownFloat5, in, info );
+			NifStream( ragdoll.unknownFloat6, in, info );
+			NifStream( ragdoll.unknownFloat7, in, info );
+		};
 	};
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, in, info );
@@ -78,8 +110,16 @@ void bhkMalleableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 		NifStream( limitedHinge.minAngle, in, info );
 		NifStream( limitedHinge.maxAngle, in, info );
 		NifStream( limitedHinge.maxFriction, in, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( limitedHinge.unknownFloat1, in, info );
+			NifStream( limitedHinge.unknownFloat2, in, info );
+			NifStream( limitedHinge.unknownFloat3, in, info );
+		};
 	};
 	NifStream( tau, in, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, in, info );
+	};
 	NifStream( damping, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -112,6 +152,28 @@ void bhkMalleableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 		}
 	}
 	NifStream( unknownInt3, out, info );
+	if ( (type == 1) ) {
+		NifStream( hinge.pivotA, out, info );
+		NifStream( hinge.perp2AxleInA1, out, info );
+		NifStream( hinge.perp2AxleInA2, out, info );
+		NifStream( hinge.pivotB, out, info );
+		NifStream( hinge.axleB, out, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( hinge.unknownFloat1, out, info );
+			NifStream( hinge.unknownInt2, out, info );
+			NifStream( hinge.unknownInt3, out, info );
+			NifStream( hinge.unknownInt4, out, info );
+			NifStream( hinge.unknownInt5, out, info );
+			NifStream( hinge.unknownInt6, out, info );
+			NifStream( hinge.unknownInt7, out, info );
+			NifStream( hinge.unknownInt8, out, info );
+			NifStream( hinge.unknownInt9, out, info );
+			NifStream( hinge.unknownInt10, out, info );
+			NifStream( hinge.unknownByte1, out, info );
+			NifStream( hinge.unknownByte2, out, info );
+			NifStream( hinge.unknownByte3, out, info );
+		};
+	};
 	if ( (type == 7) ) {
 		NifStream( ragdoll.pivotA, out, info );
 		NifStream( ragdoll.planeA, out, info );
@@ -125,6 +187,15 @@ void bhkMalleableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 		NifStream( ragdoll.twistMinAngle, out, info );
 		NifStream( ragdoll.twistMaxAngle, out, info );
 		NifStream( ragdoll.maxFriction, out, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( ragdoll.unknownFloat1, out, info );
+			NifStream( ragdoll.unknownFloat2, out, info );
+			NifStream( ragdoll.unknownFloat3, out, info );
+			NifStream( ragdoll.unknownFloat4, out, info );
+			NifStream( ragdoll.unknownFloat5, out, info );
+			NifStream( ragdoll.unknownFloat6, out, info );
+			NifStream( ragdoll.unknownFloat7, out, info );
+		};
 	};
 	if ( (type == 2) ) {
 		NifStream( limitedHinge.pivotA, out, info );
@@ -137,8 +208,16 @@ void bhkMalleableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 		NifStream( limitedHinge.minAngle, out, info );
 		NifStream( limitedHinge.maxAngle, out, info );
 		NifStream( limitedHinge.maxFriction, out, info );
+		if ( info.version >= 0x14020007 ) {
+			NifStream( limitedHinge.unknownFloat1, out, info );
+			NifStream( limitedHinge.unknownFloat2, out, info );
+			NifStream( limitedHinge.unknownFloat3, out, info );
+		};
 	};
 	NifStream( tau, out, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( unknownByte1, out, info );
+	};
 	NifStream( damping, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -157,6 +236,26 @@ std::string bhkMalleableConstraint::asString( bool verbose ) const {
 	out << "  Unknown Link 1:  " << unknownLink1 << endl;
 	out << "  Unknown Link 2:  " << unknownLink2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	if ( (type == 1) ) {
+		out << "    Pivot A:  " << hinge.pivotA << endl;
+		out << "    Perp2 Axle In A1:  " << hinge.perp2AxleInA1 << endl;
+		out << "    Perp2 Axle In A2:  " << hinge.perp2AxleInA2 << endl;
+		out << "    Pivot B:  " << hinge.pivotB << endl;
+		out << "    Axle B:  " << hinge.axleB << endl;
+		out << "    Unknown Float 1:  " << hinge.unknownFloat1 << endl;
+		out << "    Unknown Int 2:  " << hinge.unknownInt2 << endl;
+		out << "    Unknown Int 3:  " << hinge.unknownInt3 << endl;
+		out << "    Unknown Int 4:  " << hinge.unknownInt4 << endl;
+		out << "    Unknown Int 5:  " << hinge.unknownInt5 << endl;
+		out << "    Unknown Int 6:  " << hinge.unknownInt6 << endl;
+		out << "    Unknown Int 7:  " << hinge.unknownInt7 << endl;
+		out << "    Unknown Int 8:  " << hinge.unknownInt8 << endl;
+		out << "    Unknown Int 9:  " << hinge.unknownInt9 << endl;
+		out << "    Unknown Int 10:  " << hinge.unknownInt10 << endl;
+		out << "    Unknown Byte 1:  " << hinge.unknownByte1 << endl;
+		out << "    Unknown Byte 2:  " << hinge.unknownByte2 << endl;
+		out << "    Unknown Byte 3:  " << hinge.unknownByte3 << endl;
+	};
 	if ( (type == 7) ) {
 		out << "    Pivot A:  " << ragdoll.pivotA << endl;
 		out << "    Plane A:  " << ragdoll.planeA << endl;
@@ -170,6 +269,13 @@ std::string bhkMalleableConstraint::asString( bool verbose ) const {
 		out << "    Twist Min Angle:  " << ragdoll.twistMinAngle << endl;
 		out << "    Twist Max Angle:  " << ragdoll.twistMaxAngle << endl;
 		out << "    Max Friction:  " << ragdoll.maxFriction << endl;
+		out << "    Unknown Float 1:  " << ragdoll.unknownFloat1 << endl;
+		out << "    Unknown Float 2:  " << ragdoll.unknownFloat2 << endl;
+		out << "    Unknown Float 3:  " << ragdoll.unknownFloat3 << endl;
+		out << "    Unknown Float 4:  " << ragdoll.unknownFloat4 << endl;
+		out << "    Unknown Float 5:  " << ragdoll.unknownFloat5 << endl;
+		out << "    Unknown Float 6:  " << ragdoll.unknownFloat6 << endl;
+		out << "    Unknown Float 7:  " << ragdoll.unknownFloat7 << endl;
 	};
 	if ( (type == 2) ) {
 		out << "    Pivot A:  " << limitedHinge.pivotA << endl;
@@ -182,8 +288,12 @@ std::string bhkMalleableConstraint::asString( bool verbose ) const {
 		out << "    Min Angle:  " << limitedHinge.minAngle << endl;
 		out << "    Max Angle:  " << limitedHinge.maxAngle << endl;
 		out << "    Max Friction:  " << limitedHinge.maxFriction << endl;
+		out << "    Unknown Float 1:  " << limitedHinge.unknownFloat1 << endl;
+		out << "    Unknown Float 2:  " << limitedHinge.unknownFloat2 << endl;
+		out << "    Unknown Float 3:  " << limitedHinge.unknownFloat3 << endl;
 	};
 	out << "  Tau:  " << tau << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Damping:  " << damping << endl;
 	return out.str();
 

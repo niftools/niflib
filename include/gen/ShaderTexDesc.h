@@ -29,8 +29,8 @@ struct ShaderTexDesc {
 	bool isUsed;
 	/*! The texture data. */
 	TexDesc textureData;
-	/*! Unknown. */
-	unsigned int unknownInt;
+	/*! Map Index */
+	unsigned int mapIndex;
 };
 
 }

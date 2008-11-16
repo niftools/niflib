@@ -1092,6 +1092,7 @@ bool IsSupportedVersion( unsigned int version ) {
 		case VER_20_0_0_4:
 		case VER_20_0_0_5:
 		case VER_20_1_0_3:
+		case VER_20_2_0_7:
 		case VER_20_3_0_3:
 		case VER_20_3_0_6:
 			return true;
